@@ -386,7 +386,7 @@ fn load_record_rows(repo_root: &Path) -> Vec<RecordRow> {
 /// `equipment/equipmods/` record, or the served catalog is empty.
 fn load_record_rows_in(corpus_root: &Path) -> Vec<RecordRow> {
     let mut out = Vec::new();
-    let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+    let Ok(books) = std::fs::read_dir(corpus_root) else { return out };
     let mut book_dirs: Vec<_> = books.flatten().collect();
     book_dirs.sort_by_key(|e| e.file_name());
     for book_entry in book_dirs {
