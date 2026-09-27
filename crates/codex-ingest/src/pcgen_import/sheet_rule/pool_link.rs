@@ -196,6 +196,62 @@ pub fn link_pool_choices(views: &BTreeMap<String, (String, Vec<String>)>, files:
     out
 }
 
+/// SD-36 F6c: a `BONUS:DOMAIN|NUMBER` count on a CLASS record whose class grants its domains
+/// itself -- some domain record carries that class's own automatic grant (`Granter::Class`, the
+/// class's `DOMAIN:` rows) -- is the oracle's slot for those grants, not a pick the player makes:
+/// the granted records hold and print under their own labels. ONE rule, no class named: such a
+/// count keeps no `offers` and does not print (`print: false`). Measured: the shaman's count
+/// (`acg_classes.lst:221` `BONUS:DOMAIN|NUMBER|1`), whose ten `DOMAIN:<X> (Spirit)` rows
+/// (`acg_classes.lst:259-268`) are its spirit-magic lists (ACG p.35: the shaman takes a spirit,
+/// never a domain). The domain records such a class alone grants (every `granted_by` edge is that
+/// class's automatic grant) are the oracle's filler for that slot, not domains the character takes:
+/// they stay held but print no line of their own (`print: false`) -- the class feature whose
+/// holding gates the grant prints the rule once (the shaman's `Life (Spirit)` spirit prints its
+/// spirit-magic spells; its `Life (Spirit)` DOMAIN record carries no prose). Runs after the grant
+/// edges are attached. Returns the count rule ids withheld and the domain records unprinted.
+pub fn withhold_class_granted_domain_counts(files: &mut BTreeMap<String, Vec<SheetRule>>) -> (Vec<String>, Vec<String>) {
+    use codex::rules_core::sheet_rule::{split_rule_id, Granter};
+    let mut granting: std::collections::BTreeSet<String> = std::collections::BTreeSet::new();
+    for rules in files.values() {
+        for rule in rules.iter().filter(|r| !r.id.contains('#') && split_rule_id(&r.id).1 == "domain") {
+            for g in &rule.granted_by {
+                if let Granter::Class { id, .. } = &g.by {
+                    granting.insert(id.clone());
+                }
+            }
+        }
+    }
+    let mut withheld = Vec::new();
+    for rules in files.values_mut() {
+        for rule in rules.iter_mut() {
+            let (_, kind, owner) = split_rule_id(&rule.id);
+            let is_domain_count = rule.offers.as_ref().is_some_and(|o| matches!(o.from, OptionSet::Domains) && o.id == rule.id)
+                && matches!(&rule.target, Some(codex::rules_core::sheet_rule::BonusTarget::Other(t)) if t == DOMAIN_COUNT_TARGET);
+            if kind == "class" && is_domain_count && granting.contains(owner) {
+                rule.offers = None;
+                rule.print = false;
+                withheld.push(rule.id.clone());
+            }
+        }
+    }
+    let withheld_classes: std::collections::BTreeSet<String> =
+        withheld.iter().map(|id| split_rule_id(id).2.to_owned()).collect();
+    let mut unprinted = Vec::new();
+    for rules in files.values_mut() {
+        for rule in rules.iter_mut().filter(|r| !r.id.contains('#') && split_rule_id(&r.id).1 == "domain") {
+            let only_withheld_class = !rule.granted_by.is_empty()
+                && rule.granted_by.iter().all(|g| matches!(&g.by, Granter::Class { id, .. } if withheld_classes.contains(id)));
+            if only_withheld_class && rule.print {
+                rule.print = false;
+                unprinted.push(rule.id.clone());
+            }
+        }
+    }
+    withheld.sort();
+    unprinted.sort();
+    (withheld, unprinted)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -270,5 +326,40 @@ mod tests {
             assert_eq!(offers(id), None, "{id}");
         }
         assert_eq!(offers("b:class_feature:offering_pick").map(|c| c.from), Some(OptionSet::FreeText));
+    }
+
+    /// SD-36 F6c: a class's domain count is withheld exactly when a domain record carries that
+    /// class's own automatic grant; another class's count, and a class-feature's count, keep theirs.
+    #[test]
+    fn a_domain_count_its_own_class_grants_fill_is_withheld() {
+        use codex::rules_core::sheet_rule::{Grant, Granter};
+        let count = |id: &str| {
+            let mut r = rule(id, "", &[], SheetValue::Number(Expr::Const(1)), Some(BonusTarget::Other(DOMAIN_COUNT_TARGET.into())));
+            r.offers = Some(Choice { id: id.into(), count: Expr::Const(1), from: OptionSet::Domains });
+            r
+        };
+        let mut spirit = rule("b:domain:battle_spirit", "", &[], SheetValue::Text, None);
+        spirit.granted_by.push(Grant { by: Granter::Class { id: "fx".into(), at_level: 0 }, when: Applies::Always });
+        let mut files: BTreeMap<String, Vec<SheetRule>> = BTreeMap::new();
+        for r in [count("b:class:fx#bonus1"), count("b:class:cleric#bonus1"), count("b:class_feature:fx_bond#bonus1"), spirit] {
+            files.insert(r.id.clone(), vec![r]);
+        }
+        let mut feature = count("b:class_feature:fx#bonus1");
+        feature.id = "b:class_feature:fx#bonus1".into();
+        files.insert(feature.id.clone(), vec![feature]);
+        let mut druidic = rule("b:domain:air", "", &[], SheetValue::Text, None);
+        druidic.granted_by.push(Grant { by: Granter::Class { id: "druid".into(), at_level: 0 }, when: Applies::Always });
+        files.insert(druidic.id.clone(), vec![druidic]);
+        let (withheld, unprinted) = withhold_class_granted_domain_counts(&mut files);
+        assert_eq!(withheld, vec!["b:class:fx#bonus1".to_string()]);
+        // The domain only fx's own grant reaches stops printing; a domain another class grants (whose
+        // count, if any, was not withheld) still prints.
+        assert_eq!(unprinted, vec!["b:domain:battle_spirit".to_string()]);
+        assert!(!files["b:domain:battle_spirit"][0].print && files["b:domain:air"][0].print);
+        let r = &files["b:class:fx#bonus1"][0];
+        assert!(r.offers.is_none() && !r.print);
+        for id in ["b:class:cleric#bonus1", "b:class_feature:fx_bond#bonus1", "b:class_feature:fx#bonus1"] {
+            assert!(files[id][0].offers.is_some() && files[id][0].print, "{id}");
+        }
     }
 }

@@ -4975,6 +4975,28 @@ pub struct LevelUpClassOptionDto {
     pub current_level: u8,
     pub next_level: u8,
     pub max_level: u8,
+    /// SD-36 F6c: the engine's named refusal of this level-up, read before it is taken
+    /// (`None` when the level can be taken). An option with a blocker is shown, not selectable.
+    pub blocker: Option<LevelUpBlockerDto>,
+}
+
+/// Why the engine refuses a level-up option: the mix gate's diagnostic id, its plain reading,
+/// and the fold's full words (`pilot_compute::level_up_mix_blocker`).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpBlockerDto {
+    pub id: String,
+    pub summary: String,
+    pub message: String,
+}
+
+/// The engine's named refusal of taking the next level in `class_id`, if any: the level-up is
+/// applied (with its seeds, as Accept would) and the mix gate is asked.
+fn level_up_blocker(input: &CharacterInput, class_id: &str) -> Option<LevelUpBlockerDto> {
+    let mut leveled = input.clone();
+    crate::pf1_adapter::apply_level_up(&mut leveled, class_id);
+    codex::rules_core::pilot_compute::level_up_mix_blocker(&leveled, class_id)
+        .map(|b| LevelUpBlockerDto { id: b.id, summary: b.summary, message: b.message })
 }
 
 /// One printed entry requirement and its met/unmet note for this character.
@@ -5005,6 +5027,8 @@ pub struct PrestigeClassOptionDto {
     pub entry_requirements: Vec<EntryRequirementDto>,
     /// `true` when no printed requirement is `unmet`. A note, never a gate.
     pub requirements_all_met: bool,
+    /// SD-36 F6c: the engine's named refusal (see [`LevelUpClassOptionDto::blocker`]).
+    pub blocker: Option<LevelUpBlockerDto>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -5069,6 +5093,7 @@ pub fn build_level_up_class_options(input: &CharacterInput) -> Result<LevelUpCla
             current_level: held.level,
             next_level: held.level + 1,
             max_level: entry.max_level,
+            blocker: level_up_blocker(input, &held.class_id),
         });
     }
 
@@ -5084,6 +5109,7 @@ pub fn build_level_up_class_options(input: &CharacterInput) -> Result<LevelUpCla
             current_level: 0,
             next_level: 1,
             max_level: class.max_level,
+            blocker: level_up_blocker(input, &class.class_id),
         })
         .collect();
 
@@ -5104,6 +5130,7 @@ pub fn build_level_up_class_options(input: &CharacterInput) -> Result<LevelUpCla
                 max_level: entry.max_level,
                 hit_die: roster_hit_die(entry),
                 requirements_all_met: requirements.iter().all(|r| r.verdict != EntryRequirementVerdict::Unmet),
+                blocker: level_up_blocker(input, &entry.class_id),
                 entry_requirements: requirements
                     .into_iter()
                     .map(|r| EntryRequirementDto { text: r.text, status: r.verdict.as_str().to_owned(), condition: r.condition })
@@ -10588,6 +10615,121 @@ mod tests {
                 assert!(["met", "unmet", "situational"].contains(&requirement.status.as_str()), "{requirement:?}");
             }
         }
+    }
+
+    /// SD-36 F6c (a): Level Up names the engine's refusal on the option BEFORE Accept. For a
+    /// Fighter 6, every prestige option is taken for real (the leveled build computed through
+    /// `resolve_unified_pilot_snapshot`, what Accept runs): an option carries a blocker exactly
+    /// when the build is refused by the mix gate, and the blocked options are the six FS-15 prestige
+    /// classes, named `multiclass.save_shape.unrecognized`.
+    #[test]
+    fn level_up_options_name_the_engines_mix_refusal_before_accept() {
+        let input = fighter_at(6);
+        let started = std::time::Instant::now();
+        let options = build_level_up_class_options(&input).expect("options load");
+        eprintln!("build_level_up_class_options(fighter 6), cold (census sweep included): {:?}", started.elapsed());
+        let warm = std::time::Instant::now();
+        assert_eq!(build_level_up_class_options(&input).expect("options load"), options);
+        eprintln!("build_level_up_class_options(fighter 6), warm (the dialog's cost): {:?}", warm.elapsed());
+
+        let mut blocked: Vec<(&str, &LevelUpBlockerDto)> = options
+            .add_prestige
+            .iter()
+            .filter_map(|o| o.blocker.as_ref().map(|b| (o.class_id.as_str(), b)))
+            .collect();
+        blocked.sort_by_key(|(id, _)| *id);
+        let ids: Vec<&str> = blocked.iter().map(|(id, _)| *id).collect();
+        assert_eq!(
+            ids,
+            vec![
+                "class:evangelist",
+                "class:exalted",
+                "class:mammoth_rider",
+                "class:pure_legion_enforcer",
+                "class:sentinel",
+                "class:ulfen_guard",
+            ],
+            "the prestige options carrying a blocker are the six FS-15 classes"
+        );
+        for (id, blocker) in &blocked {
+            assert_eq!(blocker.id, "multiclass.save_shape.unrecognized", "{id}");
+            assert_eq!(blocker.summary, "save progression in the source data matches no PF1 form", "{id}");
+            assert!(blocker.message.contains(*id), "{id}: {}", blocker.message);
+        }
+        assert!(options.advance.iter().all(|o| o.blocker.is_none()), "{:?}", options.advance);
+        // The four Pathfinder Unchained classes: no class table and no converted chassis record
+        // states their saves, so the mix gate refuses them by name (`a_class_with_no_table_and_no_record_is_named_unknown`).
+        let base_blocked: Vec<(&str, &str)> = options
+            .add_base
+            .iter()
+            .filter_map(|o| o.blocker.as_ref().map(|b| (o.class_id.as_str(), b.id.as_str())))
+            .collect();
+        assert_eq!(
+            base_blocked,
+            vec![
+                ("class:unchained_barbarian", "multiclass.save_shape.unknown"),
+                ("class:unchained_monk", "multiclass.save_shape.unknown"),
+                ("class:unchained_rogue", "multiclass.save_shape.unknown"),
+                ("class:unchained_summoner", "multiclass.save_shape.unknown"),
+            ],
+            "base classes a Fighter 6 cannot add"
+        );
+
+        // Accept, for real, for every option in every group.
+        let every: Vec<(&str, Option<&LevelUpBlockerDto>)> = options
+            .advance
+            .iter()
+            .chain(&options.add_base)
+            .map(|o| (o.class_id.as_str(), o.blocker.as_ref()))
+            .chain(options.add_prestige.iter().map(|o| (o.class_id.as_str(), o.blocker.as_ref())))
+            .collect();
+        let (mut computed, mut refused_named, mut refused_other) = (0usize, 0usize, Vec::new());
+        for (class_id, blocker) in &every {
+            let option = LevelUpOptionProbe { class_id, blocker: *blocker };
+            let mut leveled = input.clone();
+            apply_level_up(&mut leveled, option.class_id);
+            match resolve_unified_pilot_snapshot(&leveled, corpus_fixture_bundle()) {
+                Ok(_) => {
+                    assert!(option.blocker.is_none(), "{}: blocker shown but the engine computes it", option.class_id);
+                    computed += 1;
+                }
+                Err(diagnostics) => {
+                    let gate: Vec<&str> = diagnostics
+                        .iter()
+                        .filter(|d| d.claim_blocking && d.id.starts_with("multiclass."))
+                        .map(|d| d.id.as_str())
+                        .collect();
+                    match &option.blocker {
+                        Some(blocker) => {
+                            assert!(gate.contains(&blocker.id.as_str()), "{}: {gate:?}", option.class_id);
+                            refused_named += 1;
+                        }
+                        None => {
+                            assert!(gate.is_empty(), "{}: refused by the mix gate with no blocker shown: {gate:?}", option.class_id);
+                            let ids: Vec<&str> =
+                                diagnostics.iter().filter(|d| d.claim_blocking).map(|d| d.id.as_str()).collect();
+                            refused_other.push(format!("{}: {ids:?}", option.class_id));
+                        }
+                    }
+                }
+            }
+        }
+        eprintln!(
+            "fighter 6, each of {} level-up options (advance {}, add_base {}, add_prestige {}) taken for real: \
+             computed {computed}, refused with the blocker shown {refused_named}, \
+             refused by something other than the mix gate {}: {refused_other:#?}",
+            every.len(),
+            options.advance.len(),
+            options.add_base.len(),
+            options.add_prestige.len(),
+            refused_other.len()
+        );
+        assert_eq!(refused_named, 10, "6 FS-15 prestige + 4 Unchained base classes");
+    }
+
+    struct LevelUpOptionProbe<'a> {
+        class_id: &'a str,
+        blocker: Option<&'a LevelUpBlockerDto>,
     }
 
     #[test]

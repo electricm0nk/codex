@@ -589,6 +589,28 @@ pub struct Provenance {
     /// the converter wrote `Const(0)` for it; the names are kept here so the reading is visible.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub undeclared_in_pinned_tree: Vec<String>,
+    /// SD-36 F6c: on a class record whose slug another book's class record also states, the
+    /// converter's supersession reading (`decisions.md` §12) -- the one place publication order
+    /// and the one-object proof exist (`codex-ingest` `sheet_rule::reprint`); the runtime package
+    /// carries neither otherwise. Absent on every other record.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub printing: Option<Printing>,
+}
+
+/// SD-36 F6c: one printing of an object several books state, as the converter reads it.
+#[derive(Debug, Clone, PartialEq, Eq, Default, Serialize, Deserialize)]
+pub struct Printing {
+    /// This record's book's `.pcc` `SOURCEDATE:` (`YYYY-MM`); `None` when the book states none (or
+    /// two), so its printings are never ordered by it.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_date: Option<String>,
+    /// Every record of this kind and slug across books, this one included, sorted.
+    pub printings: Vec<RuleId>,
+    /// The reprint resolver's verdict: the newest printing when it proved the printings one
+    /// object (`reprint::newest_printing`); `None` when it did not (a variant, or rows it cannot
+    /// prove identical).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub newest: Option<RuleId>,
 }
 
 #[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]

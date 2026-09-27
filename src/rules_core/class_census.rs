@@ -3938,6 +3938,109 @@ mod tests {
         assert_eq!(roster_ids, offered_ids);
     }
 
+    /// SD-36 F6c (b): a printed prestige entry requirement names things by their LABEL, never
+    /// by a raw converted id (`core_rulebook:feat:weapon_focus`). Scans every top-level printed
+    /// term of every census prestige gate (the lines `prestige_entry_requirements` prints).
+    #[test]
+    fn no_prestige_requirement_line_prints_a_raw_id() {
+        use crate::rules_core::level_up_option_filter::describe_gate;
+        let package = crate::rules_core::sheet_rule_package::package().as_ref().expect("package");
+        let is_raw_id = |line: &str| {
+            let bytes = line.as_bytes();
+            (1..bytes.len().saturating_sub(1)).any(|i| {
+                bytes[i] == b':' && !bytes[i - 1].is_ascii_whitespace() && !bytes[i + 1].is_ascii_whitespace()
+            })
+        };
+        let (mut gates, mut lines, mut raw) = (0usize, 0usize, Vec::new());
+        let mut archer_line = None;
+        for entry in census().values().filter(|entry| entry.is_prestige) {
+            let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
+            let gate = prestige_entry_gate_in(package, &entry.books, slug).expect("prestige gate");
+            gates += 1;
+            for term in top_level_terms(&gate).into_iter().filter(|t| !matches!(classify_term(t), TermClass::AlwaysMet)) {
+                lines += 1;
+                let text = describe_gate(package, term);
+                if is_raw_id(&text) {
+                    raw.push(format!("{}: {text}", entry.class_id));
+                }
+                if entry.class_id == "class:arcane_archer" && text.to_lowercase().contains("longbow") {
+                    archer_line = Some(text.clone());
+                }
+            }
+        }
+        println!("prestige gates {gates}, printed requirement lines {lines}, lines with a raw id {}", raw.len());
+        for line in &raw {
+            println!("  RAW {line}");
+        }
+        assert_eq!(gates, 74, "the census prestige population moved");
+        assert!(raw.is_empty(), "{} of {lines} printed requirement lines print a raw id:\n{}", raw.len(), raw.join("\n"));
+        let archer_line = archer_line.expect("arcane archer's Weapon Focus (longbow) line");
+        assert!(archer_line.contains("requires Longbow chosen for Weapon Focus"), "{archer_line}");
+    }
+
+    /// SD-36 F6c (c): a domain count a class's own `DOMAIN:` grants fill is no pick and prints no
+    /// line (`pool_link::withhold_class_granted_domain_counts`). The shaman's
+    /// `BONUS:DOMAIN|NUMBER|1` (`acg_classes.lst:221`) is filled by its ten `DOMAIN:<X> (Spirit)`
+    /// rows (`acg_classes.lst:259-268`), its spirit-magic lists: ACG p.35 gives the shaman a
+    /// spirit, never a domain. Scans every domain-count line in the package.
+    #[test]
+    fn no_printed_domain_count_is_filled_by_its_own_class_grants() {
+        use crate::rules_core::sheet_rule::{split_rule_id, BonusTarget, Granter, OptionSet};
+        let package = crate::rules_core::sheet_rule_package::package().as_ref().expect("package");
+        let mut granting = std::collections::BTreeSet::new();
+        for rule in package.rules.values().filter(|r| !r.id.contains('#') && split_rule_id(&r.id).1 == "domain") {
+            for g in &rule.granted_by {
+                if let Granter::Class { id, .. } = &g.by {
+                    granting.insert(id.clone());
+                }
+            }
+        }
+        let counts: Vec<&crate::rules_core::sheet_rule::SheetRule> = package
+            .rules
+            .values()
+            .filter(|r| matches!(&r.target, Some(BonusTarget::Other(t)) if t == "domains"))
+            .collect();
+        let offered = counts.iter().filter(|r| r.offers.as_ref().is_some_and(|o| matches!(o.from, OptionSet::Domains))).count();
+        let class_owned: Vec<(&str, bool, bool)> = counts
+            .iter()
+            .filter(|r| split_rule_id(&r.id).1 == "class")
+            .map(|r| (r.id.as_str(), r.print, granting.contains(split_rule_id(&r.id).2)))
+            .collect();
+        let wrong: Vec<&str> =
+            class_owned.iter().filter(|(_, print, own)| *print && *own).map(|(id, ..)| *id).collect();
+        println!(
+            "domain-count lines {}, offering a domain {offered}; on a class record {}: {class_owned:?}; \
+             classes whose own DOMAIN: rows grant domains {}: {granting:?}; printed and filled by the class's own grants {}",
+            counts.len(),
+            class_owned.len(),
+            granting.len(),
+            wrong.len()
+        );
+        assert!(wrong.is_empty(), "a domain count its own class's grants fill still prints: {wrong:?}");
+        let shaman = package.rule("advanced_class_guide:class:shaman#bonus1").expect("shaman count");
+        assert!(!shaman.print && shaman.offers.is_none(), "{shaman:?}");
+        // The domain records only such a class grants are its slot's filler: held, never printed
+        // under a "Domains" heading (the shaman's ten `<X> (Spirit)` spirit-magic lists).
+        let withheld: std::collections::BTreeSet<&str> =
+            class_owned.iter().filter(|(_, print, own)| !*print && *own).map(|(id, ..)| split_rule_id(id).2).collect();
+        let class_only: Vec<(&str, bool)> = package
+            .rules
+            .values()
+            .filter(|r| !r.id.contains('#') && split_rule_id(&r.id).1 == "domain" && !r.granted_by.is_empty())
+            .filter(|r| r.granted_by.iter().all(|g| matches!(&g.by, Granter::Class { id, .. } if withheld.contains(id.as_str()))))
+            .map(|r| (r.id.as_str(), r.print))
+            .collect();
+        println!("domain records only a withheld-count class grants: {} ({} printing): {class_only:?}", class_only.len(), class_only.iter().filter(|(_, p)| *p).count());
+        assert_eq!(class_only.len(), 10, "the shaman's ten spirit-magic lists");
+        assert!(class_only.iter().all(|(_, print)| !print), "{class_only:?}");
+        assert!(package.rule("core_rulebook:domain:air").is_some_and(|r| r.print), "a druid/cleric domain still prints");
+        // Cleric and Paladin grant no domain by class row: their counts are the player's picks.
+        for id in ["core_rulebook:class:cleric#bonus1", "core_rulebook:class:paladin#bonus1"] {
+            let rule = package.rule(id).expect(id);
+            assert!(rule.print && rule.offers.is_some(), "{id}");
+        }
+    }
+
     /// An `ex_` id is an Ex-* state because its record is hidden, not because of its name.
     #[test]
     fn ex_state_reads_the_record_not_the_name() {

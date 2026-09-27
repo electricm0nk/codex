@@ -823,6 +823,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         pi: PiStamp { declared: dedup(ctx.pi_declared.clone()), term_hits: dedup(ctx.pi_term_hits.clone()) },
         overlay: closure.overlay.clone(),
         undeclared_in_pinned_tree: ctx.undeclared_in_pinned_tree.iter().cloned().collect(),
+        printing: None,
     };
     let pool = slug(&acc.category);
     // SD-35 AT-35-E3-001. A term this record carried could not be lowered, so no number the

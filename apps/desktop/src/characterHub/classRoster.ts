@@ -82,6 +82,18 @@ export interface LevelUpClassOptionDto {
   currentLevel: number;
   nextLevel: number;
   maxLevel: number;
+  /** SD-36 F6c: the engine's named refusal of this level-up; `null` when it can be taken. */
+  blocker: LevelUpBlockerDto | null;
+}
+
+/**
+ * `LevelUpBlockerDto`: why the engine refuses a level-up option, read before it is taken — the mix
+ * gate's diagnostic id, its plain reading, and the fold's full words.
+ */
+export interface LevelUpBlockerDto {
+  id: string;
+  summary: string;
+  message: string;
 }
 
 /** `EntryRequirementDto`: one printed prestige entry requirement and its note for this character. */
@@ -102,6 +114,8 @@ export interface PrestigeClassOptionDto {
   entryRequirements: EntryRequirementDto[];
   /** A note, never a gate (ruling §9.2). */
   requirementsAllMet: boolean;
+  /** SD-36 F6c: the engine's named refusal of this level-up; `null` when it can be taken. */
+  blocker: LevelUpBlockerDto | null;
 }
 
 /** `LevelUpClassOptionsResponse`. */
@@ -271,8 +285,13 @@ export interface LevelUpChoice {
   /** Prestige only: the printed entry requirements with their notes. Empty otherwise. */
   requirements: EntryRequirementDto[];
   requirementsAllMet: boolean;
-  /** Always `true`: an unmet prestige requirement is printed, never a block (§9.2). */
-  selectable: true;
+  /**
+   * The engine's named refusal (SD-36 F6c), shown on the option. An unmet prestige requirement is
+   * printed, never a block (§9.2); only an engine refusal makes an option unselectable.
+   */
+  blocker: LevelUpBlockerDto | null;
+  /** `false` exactly when `blocker` is set: Accept never reaches the engine's refusal. */
+  selectable: boolean;
 }
 
 export interface LevelUpChoiceGroup {
@@ -292,7 +311,8 @@ export function levelUpChoiceGroups(response: LevelUpClassOptionsResponse): Leve
     maxLevel: option.maxLevel,
     requirements: [],
     requirementsAllMet: true,
-    selectable: true,
+    blocker: option.blocker ?? null,
+    selectable: !option.blocker,
   });
   return [
     { kind: 'advance', heading: 'Advance a class you have', choices: response.advance.map(fromOption('advance')) },
@@ -309,10 +329,38 @@ export function levelUpChoiceGroups(response: LevelUpClassOptionsResponse): Leve
         maxLevel: option.maxLevel,
         requirements: option.entryRequirements,
         requirementsAllMet: option.requirementsAllMet,
-        selectable: true as const,
+        blocker: option.blocker ?? null,
+        selectable: !option.blocker,
       })),
     },
   ];
+}
+
+/** The text an option prints after its label in the Level Up picker. */
+export function levelUpChoiceSuffix(choice: LevelUpChoice): string {
+  if (choice.blocker) {
+    return ` (cannot be taken — ${choice.blocker.summary})`;
+  }
+  if (choice.kind === 'advance') {
+    return ` (currently ${choice.currentLevel} → ${choice.nextLevel})`;
+  }
+  if (choice.kind === 'add_base') {
+    return ' (new class)';
+  }
+  return choice.requirementsAllMet ? ' (prestige — requirements met)' : ' (prestige — requirements not all met)';
+}
+
+/** The choice Level Up selects first: the first selectable one, in group order. */
+export function defaultLevelUpChoice(choices: readonly LevelUpChoice[], current: string): string {
+  if (current && choices.some((choice) => choice.classId === current && choice.selectable)) {
+    return current;
+  }
+  return choices.find((choice) => choice.selectable)?.classId ?? '';
+}
+
+/** Whether Accept may run for `classId`: a selectable offered choice. */
+export function canAcceptLevelUp(choices: readonly LevelUpChoice[], classId: string): boolean {
+  return choices.some((choice) => choice.classId === classId && choice.selectable);
 }
 
 /** PF1's character level cap (`CHARACTER_LEVEL_CAP` in `character_hub.rs`). */
@@ -351,6 +399,7 @@ export function fallbackLevelUpResponse(
     currentLevel,
     nextLevel: currentLevel + 1,
     maxLevel: option.levelOptions[option.levelOptions.length - 1] ?? 1,
+    blocker: null,
   });
   for (const held of heldClasses) {
     const option = catalogOptions.find((entry) => entry.id === held.classId);

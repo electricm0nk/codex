@@ -1199,6 +1199,11 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
     for (target, g) in &grants_out {
         defects.entry("grants-to-unconverted-targets".into()).or_default().push(format!("{target}: {} grant(s)", g.len()));
     }
+    // SD-36 F6c: a class's domain count that its own `DOMAIN:` grants fill is no pick
+    // (`pool_link::withhold_class_granted_domain_counts`), and a class several books state carries
+    // the converter's supersession reading (`reprint::stamp_class_printings`).
+    let _ = pool_link::withhold_class_granted_domain_counts(&mut files);
+    reprint::stamp_class_printings(tree, index, &mut files);
     // D4: the closure-complete attestation on every class principal.
     let defective = attest::defective_records(&defects, &grants_out);
     attest::attest_class_closures(&mut files, &defective);

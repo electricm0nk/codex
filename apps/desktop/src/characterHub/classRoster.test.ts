@@ -15,6 +15,9 @@ import {
   installClassRoster,
   installClassRosterFailure,
   levelUpChoiceGroups,
+  levelUpChoiceSuffix,
+  canAcceptLevelUp,
+  defaultLevelUpChoice,
   describeEntryRequirement,
   fallbackLevelUpResponse,
   type ClassCreationRosterResponse,
@@ -171,11 +174,53 @@ function verifiesLevelUpChoiceGroupsForAFighter6() {
   assertEqual(archer!.requirements.length, 4, 'four printed requirement lines (f4b-receipt §3)');
   assertEqual(archer!.requirements.map((line) => line.status).join(','), 'unmet,unmet,unmet,met', 'met/unmet notes');
   assertEqual(archer!.requirements[3].text, 'base attack bonus at least 6', 'BAB line in the rule’s words');
-  assert(addPrestige.choices.every((choice) => choice.selectable), 'every prestige option is selectable');
+  // SD-36 F6c: the six FS-15 prestige classes are shown with the engine's named refusal and are
+  // not selectable; every other option is.
+  const blocked = addPrestige.choices.filter((choice) => !choice.selectable);
+  assertEqual(
+    blocked.map((choice) => choice.classId).sort().join(','),
+    'class:evangelist,class:exalted,class:mammoth_rider,class:pure_legion_enforcer,class:sentinel,class:ulfen_guard',
+    'the prestige options the engine refuses are the six FS-15 classes'
+  );
+  for (const choice of blocked) {
+    assertEqual(choice.blocker?.id ?? null, 'multiclass.save_shape.unrecognized', `${choice.classId} blocker id`);
+    assertEqual(
+      levelUpChoiceSuffix(choice),
+      ' (cannot be taken — save progression in the source data matches no PF1 form)',
+      `${choice.classId} prints its blocker on the option`
+    );
+    assert(!canAcceptLevelUp(groups.flatMap((group) => group.choices), choice.classId), `${choice.classId}: Accept is refused before the engine`);
+  }
+  assertEqual(addPrestige.choices.length - blocked.length, 68, 'the other 68 of 74 prestige options are selectable');
+  assert(advance.choices.every((choice) => choice.selectable), 'the held Fighter can advance');
+  assertEqual(
+    addBase.choices.filter((choice) => !choice.selectable).map((choice) => `${choice.classId}=${choice.blocker?.id}`).join(','),
+    'class:unchained_barbarian=multiclass.save_shape.unknown,class:unchained_monk=multiclass.save_shape.unknown,' +
+      'class:unchained_rogue=multiclass.save_shape.unknown,class:unchained_summoner=multiclass.save_shape.unknown',
+    'the base classes a Fighter 6 cannot add: the four Unchained classes, whose saves no table or record states'
+  );
+  assert(canAcceptLevelUp(groups.flatMap((group) => group.choices), 'class:arcane_archer'), 'Arcane Archer can be accepted');
+  assertEqual(
+    levelUpChoiceSuffix(archer!),
+    ' (prestige — requirements not all met)',
+    'an unmet requirement is a note, not a refusal'
+  );
   assert(
     addPrestige.choices.every((choice) => choice.requirements.every((line) => line.text.length > 0)),
     'no empty requirement line'
   );
+}
+
+/** SD-36 F6c: Level Up never selects an option the engine refuses, even when it is asked to. */
+function verifiesTheDefaultChoiceIsNeverARefusedOption() {
+  const response = levelUpFighter6Wire();
+  const choices = levelUpChoiceGroups(response).flatMap((group) => group.choices);
+  assertEqual(defaultLevelUpChoice(choices, ''), 'class:fighter', 'first selectable: the held Fighter');
+  assertEqual(defaultLevelUpChoice(choices, 'class:ulfen_guard'), 'class:fighter', 'a refused option is not kept as the selection');
+  assertEqual(defaultLevelUpChoice(choices, 'class:arcane_archer'), 'class:arcane_archer', 'a selectable option is kept');
+  const onlyRefused = choices.filter((choice) => !choice.selectable);
+  assertEqual(defaultLevelUpChoice(onlyRefused, ''), '', 'nothing is selected when every option is refused');
+  assert(!canAcceptLevelUp(onlyRefused, ''), 'Accept is disabled with nothing selectable');
 }
 
 function verifiesTheLevelCapEmptiesEveryGroupWithTheReason() {
@@ -224,6 +269,7 @@ async function main() {
   verifiesTheFallbackAgreesWithTheRosterOnEveryRowItCarries();
   await verifiesEnsureInstallsTheCommandOutcome();
   verifiesLevelUpChoiceGroupsForAFighter6();
+  verifiesTheDefaultChoiceIsNeverARefusedOption();
   verifiesTheLevelCapEmptiesEveryGroupWithTheReason();
   verifiesRequirementNotesPrintTheirStatus();
   verifiesTheLevelUpFallbackIsAnnouncedAndCapped();

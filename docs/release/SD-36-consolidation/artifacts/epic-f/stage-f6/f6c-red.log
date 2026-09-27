@@ -1,0 +1,42 @@
+# F6c RED (each test run against the pre-F6c behaviour; worktree codex-epic-f6)
+
+## (a) Level Up blockers -- desktop: cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml level_up_options_name_the_engines_mix_refusal_before_accept -- --test-threads=8 --nocapture
+## pre-F6c behaviour: level_up_blocker returned None (the options carried no blocker, as before F6c), via a temporary env switch removed before GREEN
+thread 'character_hub::tests::level_up_options_name_the_engines_mix_refusal_before_accept' (596784) panicked at src/character_hub.rs:10640:9:
+assertion `left == right` failed: the prestige options carrying a blocker are the six FS-15 classes
+  left: []
+ right: ["class:evangelist", "class:exalted", "class:mammoth_rider", "class:pure_legion_enforcer", "class:sentinel", "class:ulfen_guard"]
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 625 filtered out; finished in 90.09s
+
+## (a) frontend: tsx src/characterHub/classRoster.test.ts against the pre-F6c served wire (f4c-level-up-fighter6-wire.json at 0a234a035a)
+Error: the prestige options the engine refuses are the six FS-15 classes: expected class:evangelist,class:exalted,class:mammoth_rider,class:pure_legion_enforcer,class:sentinel,class:ulfen_guard, got 
+    at assertEqual (/home/ubuntu/workspace/worktrees/codex-epic-f6/apps/desktop/src/testSupport/asserts.ts:10:11)
+    at verifiesLevelUpChoiceGroupsForAFighter6 (/home/ubuntu/workspace/worktrees/codex-epic-f6/apps/desktop/src/characterHub/classRoster.test.ts:180:3)
+    at main (/home/ubuntu/workspace/worktrees/codex-epic-f6/apps/desktop/src/characterHub/classRoster.test.ts:265:3)
+
+## (b) requirement labels -- cargo test --locked -j 8 --lib no_prestige_requirement_line_prints_a_raw_id -- --test-threads=8 --nocapture (describe_gate's Chosen arm before F6c)
+prestige gates 74, printed requirement lines 286, lines with a raw id 12
+  RAW class:aldori_swordlord: at least 4 of: requires Dazzling Display, requires Exotic Weapon Proficiency and requires aldori dueling sword chosen for core rulebook:feat:exotic weapon proficiency, requires Weapon Finesse, requires Weapon Focus and requires aldori dueling sword chosen for core rulebook:feat:weapon focus
+  RAW class:arcane_archer: at least 1 of: requires Weapon Focus and requires longbow chosen for core rulebook:feat:weapon focus, requires Weapon Focus and requires shortbow chosen for core rulebook:feat:weapon focus
+  RAW class:argent_dramaturge: requires perform chosen for core rulebook:feat:skill focus
+  RAW class:death_slayer: at least 3 of: requires Exotic Weapon Proficiency and requires sawtooth sabre chosen for core rulebook:feat:exotic weapon proficiency, requires Great Fortitude, requires Weapon Focus and requires sawtooth sabre chosen for core rulebook:feat:weapon focus
+  RAW class:enchanting_courtesan: at least 1 of: requires Spell Focus and requires divination chosen for core rulebook:feat:spell focus, requires Spell Focus and requires enchantment chosen for core rulebook:feat:spell focus
+  RAW class:loremaster: requires knowledge chosen for core rulebook:feat:skill focus
+  RAW class:phrenic_slayer: at least 1 of: requires Skill Focus and requires survival chosen for core rulebook:feat:skill focus, requires Track
+  RAW class:red_mantis_assassin: at least 4 of: requires Alertness (Perception), requires Exotic Weapon Proficiency and requires sawtooth sabre chosen for core rulebook:feat:exotic weapon proficiency, requires Two-Weapon Fighting (attack), requires Weapon Focus and requires sawtooth sabre chosen for core rulebook:feat:weapon focus
+  RAW class:sanguine_angel: at least 3 of: requires Improved Shield Bash, requires Iron Will, requires Weapon Focus and requires longsword chosen for core rulebook:feat:weapon focus
+  RAW class:sighted_seeker: at least 1 of: requires Skill Focus and requires survival chosen for core rulebook:feat:skill focus, requires Track
+  RAW class:student_of_war: requires knowledge chosen for core rulebook:feat:skill focus
+  RAW class:thrallherd: at least 1 of: requires Inquisitor, requires Skill Focus and requires diplomacy chosen for core rulebook:feat:skill focus
+thread 'rules_core::class_census::tests::no_prestige_requirement_line_prints_a_raw_id' (594137) panicked at src/rules_core/class_census.rs:3972:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2747 filtered out; finished in 4.14s
+
+## (c)+(d) -- cargo test --locked -j 8 --lib -- --test-threads=8 --nocapture no_printed_domain_count_is_filled_by_its_own_class_grants the_chassis_cites_the_newest_printing_in_any_order (engine changed, data/sheet_rules still the tranche/16 package)
+thread 'rules_core::pilot_compute::multiclass_fold::tests::the_chassis_cites_the_newest_printing_in_any_order' (605686) panicked at src/rules_core/pilot_compute/multiclass_fold.rs:746:17:
+assertion `left == right` failed: cyphermage (reversed: true)
+  left: Some("inner_sea_magic")
+ right: Some("adventurers_guide")
+domain-count lines 47, offering a domain 47; on a class record 4: [("advanced_class_guide:class:shaman#bonus1", true, true), ("core_rulebook:class:cleric#bonus1", true, false), ("core_rulebook:class:paladin#bonus1", true, false), ("inner_sea_world_guide:class:daughter_of_urgathoa#bonus5", true, false)]; classes whose own DOMAIN: rows grant domains 4: {"druid", "ex_antipaladin", "magus", "shaman"}; printed and filled by the class's own grants 1
+thread 'rules_core::class_census::tests::no_printed_domain_count_is_filled_by_its_own_class_grants' (605685) panicked at src/rules_core/class_census.rs:4019:9:
+a domain count its own class's grants fill still prints: ["advanced_class_guide:class:shaman#bonus1"]
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 2748 filtered out; finished in 3.87s

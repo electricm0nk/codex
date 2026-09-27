@@ -105,6 +105,9 @@ pub struct ClassChassis {
     /// F3b2 no class record did (F0-check finding 5,
     /// `docs/retro/events/sub-agent-f0-check-fix.jsonl`).
     pub skill_ranks_per_level: Option<u8>,
+    /// SD-36 F6c: the converter's supersession reading of this record, present when another
+    /// book's class record states the same slug (`Provenance::printing`).
+    pub printing: Option<crate::rules_core::sheet_rule::Printing>,
 }
 
 /// A class's base-save progression as read off its converted `Expr`
@@ -537,6 +540,7 @@ fn chassis_from_rules(book: &str, slug: &str, rules: &[SheetRule]) -> Option<Cla
         save_words,
         hit_die,
         skill_ranks_per_level,
+        printing: principal.provenance.printing.clone(),
     })
 }
 

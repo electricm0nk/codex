@@ -189,9 +189,15 @@ pub fn describe_gate(package: &SheetRulePackage, gate: &Applies) -> String {
             describe_expr(package, rhs)
         ),
         Applies::Holds { what, count } => describe_holdable(package, what, *count),
+        // SD-36 F6c (b): a choice is named by its owning record's LABEL and an option by its
+        // label (a rule id) or its words, never by a raw converted id.
         Applies::Chosen { choice, option } => match option {
-            Some(option) => format!("requires {} chosen for {}", pretty(option), pretty(choice)),
-            None => format!("requires a choice made for {}", pretty(choice)),
+            Some(option) => format!(
+                "requires {} chosen for {}",
+                capitalize_first(&label_or_words(package, option)),
+                label_or_words(package, choice)
+            ),
+            None => format!("requires a choice made for {}", label_or_words(package, choice)),
         },
         Applies::ItemHas { tags, n } => {
             format!("an item with at least {n} of: {}", join(tags.clone(), ", "))
@@ -506,6 +512,21 @@ pub fn expr_words(package: &SheetRulePackage, expr: &Expr) -> String {
 /// A slug or an internal id as words -- [`pretty`] for callers outside this module.
 pub fn words_of_id(value: &str) -> String {
     pretty(value)
+}
+
+/// An id-shaped value (`book:kind:slug`) as its record's label ([`label_of`]); any other value
+/// (a weapon, skill or school word) as words ([`pretty`]).
+fn label_or_words(package: &SheetRulePackage, value: &str) -> String {
+    if value.contains(':') { label_of(package, value) } else { pretty(value) }
+}
+
+/// `"longbow"` -> `"Longbow"`: an option printed as a name.
+fn capitalize_first(value: &str) -> String {
+    let mut chars = value.chars();
+    match chars.next() {
+        Some(first) => first.to_uppercase().chain(chars).collect(),
+        None => String::new(),
+    }
 }
 
 /// A slug or an internal id as words: `"power_attack"` -> `"power attack"`.
