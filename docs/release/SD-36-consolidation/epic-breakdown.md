@@ -116,8 +116,8 @@ Ex-Antipaladin and Ex-Inquisitor records); non-prestige **63 of 63** `Computed` 
 **74 of 74** Blocked alone (the game rule) and **68 of 74** `Computed` in a carrier mix, the other 6
 Blocked on an oracle save formula (FS-15); mix panel **185 of 185**; Create roster **59** (the 4 Ex-*
 states census-only by ruling). The target "135 of 135" reads, measured: every non-prestige id Computed,
-every prestige id Computed in its mix except the 6 named. F0–F4 are done; F5a (docs) is done; F5.3
-(baselines, PR body, graphify) is open (`kanban.md`). Artifacts cited below are under
+every prestige id Computed in its mix except the 6 named. F0–F5 are done (2026-09-26; F5.3's
+baselines, PR body and graphify-last record in `receipts.md` "Epic F closed"). Artifacts cited below are under
 `docs/release/SD-36-consolidation/artifacts/epic-f/`.
 
 ### F0 — Permanent census instrument (RED first)
@@ -188,7 +188,7 @@ every prestige id Computed in its mix except the 6 named. F0–F4 are done; F5a 
 |---|---|---|
 | F5.1 | `docs/architecture/status.md` class table regenerated between markers, `scripts/gen_class_status_table.py --check` exits 0; five head-count sites updated together; grep at `status.md:70` re-run to zero stale hits | met 2026-09-26 (F5a): `--check` exit 0; five sites updated; retired-figure grep 0 hits (`status.md` §Posture) |
 | F5.2 | `decisions.md` §11–§14, `technical-design.md` Epic F section, `workflow-instruction.md` §0/§3 rows, `kanban.md`/`progress.md`/`receipts.md`/`release-notes.md`/`forward-scope-register.md` all updated | met 2026-09-26 (F5a): every file named, `technical-design.md` §6 "Outcome as built" added |
-| F5.3 | `scripts/verify-baselines.env` re-derived; PR #393 body updated; graphify run LAST against the final tree | open: F5b (baselines, PR #393 body, graphify last) |
+| F5.3 | `scripts/verify-baselines.env` re-derived; PR #393 body updated; graphify run LAST against the final tree | met 2026-09-26 (F5b): baselines re-derived from `stage-f4-f5/verify-f4-f5-1.log` (PASS 51/0); PR #393 body updated; graphify run last, outcome recorded in `receipts.md` |
 
 ---
 

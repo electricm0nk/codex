@@ -750,3 +750,22 @@ Nothing above was deleted; this is inventory only, for the operator to action af
 - files: README.md; docs/architecture/{status,rules-engine,desktop-app,corpus-ingest,testing,glossary,rules-data-tables}.md; docs/release/SD-36-consolidation/{epic-breakdown,decisions,technical-design,workflow-instruction,forward-scope-register,release-notes,kanban,progress,receipts}.md; docs/retro/sd36-retrospective.md
 - open (F5.3): scripts/verify-baselines.env re-derived from the verify-f4-1.log stale notices (ROOT_LIB 2727, ROOT_FULL 6398, ROOT_BIN 293, INGEST 1764/166, DESKTOP 621, FRONTEND 126, CENSUS_IDS 137); PR #393 body; graphify last against the final tree
 
+
+## Epic F closed (2026-09-26)
+
+- head_at_start: 3d0bd58564 (tranche/16, up to date with origin); session restarted after a crash: the full verify run started 18:29 had finished (EXIT=0 at 21:24), no cargo process running, nothing lost
+- verify_log: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/verify-f4-f5-1.log (run against 3d0bd58564, the F5a + claims-critic tree)
+- verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68; class-coverage table matches the census)"
+- critic_receipt: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/f5-claims-critic.md (round 1: 4 blockers; round 2: 0 blockers, 5 polish items open)
+- baselines (F5.3): scripts/verify-baselines.env re-derived from the verify-f4-f5-1.log BASELINE NOTES: ROOT_LIB 2587 -> 2727, ROOT_FULL 6203 -> 6398, ROOT_BIN 285 -> 293, INGEST_FULL 1679 -> 1764, INGEST_BIN 157 -> 166, DESKTOP 612 -> 621, FRONTEND_FILES 125 -> 126, CENSUS_IDS 135 -> 137; `python3 scripts/check_class_census_baselines.py` with the new floors over census-f5.json -> OK, exit 0
+- headline_numbers (`cargo run --locked -j 8 --bin class_census -- --json <path>`, census-f5.json): ids 137; non-prestige Computed 63 of 63 (Epic F start 42 of 135 ids / 61 non-prestige); prestige alone Blocked 74 of 74 (`prestige_class.requires_base_class_levels`); prestige carrier mix Computed 68 of 74 (6 Blocked, FS-15 `multiclass.save_shape.unrecognized`); mix panel 185 of 185; Create roster 59 of 63 non-prestige (4 Ex-* census-only); unresolved references 11,925 -> 6,252 (by mechanism: A 0, B 63, D 2,646, E 2,764, F 779); records 49,450 converted, 0 refused
+- stage_dirs:
+  - docs/release/SD-36-consolidation/artifacts/epic-f/ (census-f0*.json through census-f4a.json, scripts/, reader-remainder.md, mix-panel-histogram.md, README.md)
+  - docs/release/SD-36-consolidation/artifacts/epic-f/stage3/, stage4/, stage5/ (F1/F1b step receipts)
+  - docs/release/SD-36-consolidation/artifacts/epic-f/stage-f1c/
+  - docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/
+  - docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/
+  - docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/
+- pr: #393 body gains the Epic F closure Summary bullet and a Verification line (this step)
+- graphify: runs LAST against the final tree; its record follows this block
+- receipt_note: Epic F closes: F0, F1, F1b, F1c, F2, F3, F4, F5 = 8 of 8 batches. D5 (PR merge) is the operator's; D6 (worktree/branch sweep) is listed for the operator after merge, nothing deleted.
