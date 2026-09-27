@@ -289,16 +289,7 @@ impl ClassChassis {
                 self.display_name, self.book, self.slug
             ),
         })?;
-        let mut total = 0_i16;
-        for level in 1..=levels {
-            let die_value = if level == 1 && includes_first_character_level {
-                i16::from(die)
-            } else {
-                crate::rules_core::durability::average_hit_die_value(die)
-            };
-            total += (die_value + constitution_modifier).max(1);
-        }
-        Ok(total)
+        Ok(super::hit_die_source::hit_points_from_die(die, levels, includes_first_character_level, constitution_modifier))
     }
 
     /// The skill points `levels` levels of this class contribute: skill ranks

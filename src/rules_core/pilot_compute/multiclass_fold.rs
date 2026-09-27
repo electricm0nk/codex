@@ -24,7 +24,8 @@
 //!   class's converted row).
 //! - Saves: each class's EXACT (untruncated) save value summed, floored once
 //!   (`compute_multiclass_base_chassis`, unchanged rule, now in exact rationals).
-//! - HP ([`explain_multiclass_fold`]): per class `ClassChassis::hit_points`, the maximized
+//! - HP ([`explain_multiclass_fold`]): per class `hit_die_source::class_hit_points` (SD-36
+//!   F6b: the bespoke class module's die first, then the converted record's), the maximized
 //!   die only for the first-listed class's first level (character level 1), + Con each
 //!   level; any class with no hit die => [`HIT_POINTS_UNKNOWN`], no total printed.
 //! - Skill points: per class `ClassChassis::skill_points`; a class whose record states no
@@ -51,7 +52,7 @@ use std::sync::OnceLock;
 #[allow(unused_imports)]
 pub(crate) use super::*;
 use super::class_chassis_sheet_rules::{
-    self, ChassisUnknown, ClassChassis, SaveProgression, HIT_POINTS_UNKNOWN, SKILL_POINTS_UNKNOWN,
+    self, ChassisUnknown, ClassChassis, SaveProgression, SKILL_POINTS_UNKNOWN,
 };
 use crate::rules_core::sheet_rule::Rat;
 
@@ -402,22 +403,16 @@ pub(crate) fn explain_multiclass_fold(
     let mut sp_unknown = false;
     for (index, class_level) in class_levels.iter().enumerate() {
         let class_id = &class_level.class_id;
-        let record = chassis_record(class_id);
-        // SD-36 F3 polish P4: the fold reads a class's hit die off its converted CHASSIS record
-        // (a class record whose base attack bonus and saves converted); a class without one may
-        // still state a hit die on its principal (the CRB Monk's `Hit die`), so the Unknown names
-        // the missing chassis, not a missing hit die.
-        let no_chassis = || ChassisUnknown {
-            id: HIT_POINTS_UNKNOWN,
-            message: format!(
-                "{class_id}: no converted class chassis record (a class record whose base attack \
-                 bonus and save progressions converted, the record the fold reads a hit die from), \
-                 so its hit points are Unknown"
-            ),
-        };
-        let hp = record
-            .ok_or_else(no_chassis)
-            .and_then(|r| r.hit_points(class_level.level, index == 0, ability_modifiers.constitution));
+        // SD-36 F6b: the one hit-die rule (`hit_die_source`): the bespoke class module that
+        // computes the class's hit points first (the CRB Monk's d8), then the converted record
+        // (a class-selection class reads the base class line it is taken on).
+        let hp = super::hit_die_source::class_hit_points(
+            class_id,
+            class_level.level,
+            index == 0,
+            ability_modifiers.constitution,
+        )
+        .map(|(value, _)| value);
         let sp = class_skill_points(class_id, class_level.level, ability_modifiers.intelligence)
             .map(|(total, ..)| total);
         for (result, terms, unknown) in [(hp, &mut hp_terms, &mut hp_unknown), (sp, &mut sp_terms, &mut sp_unknown)] {

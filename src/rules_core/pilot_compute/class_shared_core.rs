@@ -49,6 +49,8 @@ impl PilotBaseChassisComputation {
         // SD-36 F3c4: the character's Path-A picks linked to the converted options they name.
         let facts = CharacterFacts::from_character(input, &self).with_linked_picks(package, &seed);
         self.sheet_lines = render_sheet(package, &seed, &facts);
+        // SD-36 F6b: a class line's hit die is the one its hit points are computed from.
+        super::hit_die_source::print_hit_die_lines(&mut self.sheet_lines);
         self
     }
 }

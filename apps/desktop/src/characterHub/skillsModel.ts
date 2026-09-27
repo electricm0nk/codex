@@ -1,5 +1,6 @@
 import type { AbilityScoresDto } from '../boundary/loadCreateCharacter';
 import type { ClassSkillFactsDto } from '../boundary/listClassFacts';
+import type { FeatSkillBonusesDto } from '../boundary/loadSavedCharacterDetail';
 import { buildLevelEntries, totalSkillPoints, type HeldClass } from './characterProgression';
 import type { ClassFactsState } from './classFactsModel';
 
@@ -123,9 +124,44 @@ export function isClassSkill(lookup: ClassSkillLookup, skillName: string): boole
   return lookup.isClassSkill(skillName);
 }
 
-/** PF1: a skill's total modifier is ability mod + ranks + (a +3 class-skill bonus once at least 1 rank is invested). */
-export function skillModifier(abilityModifier: number, ranks: number, classSkill: boolean): number {
-  return abilityModifier + ranks + (classSkill && ranks > 0 ? 3 : 0);
+/**
+ * PF1: a skill's total modifier is ability mod + ranks + (a +3 class-skill bonus once at least 1
+ * rank is invested) + the feat bonus the engine folded for it ({@link featSkillBonusFor}).
+ */
+export function skillModifier(abilityModifier: number, ranks: number, classSkill: boolean, featBonus = 0): number {
+  return abilityModifier + ranks + (classSkill && ranks > 0 ? 3 : 0) + featBonus;
+}
+
+/**
+ * SD-36 F6b: the feat bonus the engine folded for `skillName` (a `SKILLS` display name): the
+ * served per-skill total for its package id (`skillIdFor` without `skill:`), plus every served
+ * family total the skill belongs to (`knowledge` for `Knowledge (Local)`) -- the same membership
+ * rule as {@link classSkillFactsGrant}. Nothing is computed here; the engine folded by bonus type.
+ */
+export function featSkillBonusFor(bonuses: FeatSkillBonusesDto, skillName: string): number {
+  const id = skillIdFor(skillName).slice('skill:'.length);
+  let total = bonuses.skills[id] ?? 0;
+  for (const [family, value] of Object.entries(bonuses.groups)) {
+    if (id === family || id.startsWith(`${family}_`)) {
+      total += value;
+    }
+  }
+  return total;
+}
+
+/**
+ * Folded feat bonuses whose skill has no row on the panel (`craft_alchemy`, `perform_oratory`,
+ * `knowledge_psionics`, ...): printed as a note under the panel so no served bonus is dropped.
+ */
+export function featSkillBonusesWithoutARow(bonuses: FeatSkillBonusesDto): Array<{ skill: string; value: number; labels: string[] }> {
+  const rowIds = new Set(SKILLS.map((skill) => skillIdFor(skill.name).slice('skill:'.length)));
+  return Object.entries(bonuses.skills)
+    .filter(([skill]) => !rowIds.has(skill))
+    .map(([skill, value]) => ({
+      skill,
+      value,
+      labels: bonuses.contributions.filter((c) => !c.group && c.skill === skill).map((c) => c.label),
+    }));
 }
 
 /** Max ranks investable in a class skill at the given total character level. */

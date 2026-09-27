@@ -526,7 +526,7 @@
         ],
         "reason": null
       },
-      "hitDie": null
+      "hitDie": 8
     },
     {
       "classId": "class:monk",
@@ -588,7 +588,7 @@
         ],
         "reason": null
       },
-      "hitDie": null
+      "hitDie": 8
     },
     {
       "classId": "class:paladin",
@@ -2221,7 +2221,7 @@
         ],
         "reason": null
       },
-      "hitDie": null
+      "hitDie": 12
     },
     {
       "classId": "class:unchained_barbarian",
@@ -2262,7 +2262,7 @@
         ],
         "reason": null
       },
-      "hitDie": null
+      "hitDie": 12
     },
     {
       "classId": "class:unchained_monk",
@@ -2323,7 +2323,7 @@
         ],
         "reason": null
       },
-      "hitDie": null
+      "hitDie": 10
     },
     {
       "classId": "class:unchained_monk",
@@ -2384,7 +2384,7 @@
         ],
         "reason": null
       },
-      "hitDie": null
+      "hitDie": 10
     },
     {
       "classId": "class:unchained_rogue",
@@ -2441,7 +2441,7 @@
         ],
         "reason": null
       },
-      "hitDie": null
+      "hitDie": 8
     },
     {
       "classId": "class:unchained_rogue",
@@ -2498,7 +2498,7 @@
         ],
         "reason": null
       },
-      "hitDie": null
+      "hitDie": 8
     },
     {
       "classId": "class:unchained_summoner",
@@ -2537,7 +2537,7 @@
         ],
         "reason": null
       },
-      "hitDie": null
+      "hitDie": 8
     },
     {
       "classId": "class:unchained_summoner",
@@ -2576,7 +2576,7 @@
         ],
         "reason": null
       },
-      "hitDie": null
+      "hitDie": 8
     },
     {
       "classId": "class:gunslinger",

@@ -1,4 +1,5 @@
-import { classSkillLookup, isClassSkill, skillIdFor, totalSkillPointsAvailable } from './skillsModel';
+import { classSkillLookup, featSkillBonusFor, isClassSkill, skillIdFor, skillModifier, SKILLS, totalSkillPointsAvailable } from './skillsModel';
+import { featSkillBonusWire } from '../testSupport/featSkillBonusWire';
 import { LOADING_CLASS_FACTS, failedClassFacts, loadedClassFacts, type ClassFactsState } from './classFactsModel';
 import { classFactsWire } from '../testSupport/classFactsWire';
 import { installClassRoster } from './classRoster';
@@ -117,6 +118,28 @@ function verifiesTotalSkillPointsAvailableReadsTheRoster() {
   installClassRoster(classRosterWire());
 }
 
+/**
+ * SD-36 F6b: Alertness (CRB p.117) on the census fixture (Human Fighter 1, Wis 12 = +1) adds +2 to
+ * Perception and Sense Motive, off the engine's served fold. Perception with 0 ranks:
+ * +1 Wis + 0 ranks + 2 Alertness = +3; Sense Motive the same. No other skill moves.
+ */
+function verifiesAlertnessAddsTwoToPerceptionAndSenseMotive() {
+  const served = featSkillBonusWire();
+  assertEqual(featSkillBonusFor(served, 'Perception'), 2, 'Alertness +2 Perception, off the served fold');
+  assertEqual(featSkillBonusFor(served, 'Sense Motive'), 2, 'Alertness +2 Sense Motive');
+  assertEqual(skillModifier(1, 0, false, featSkillBonusFor(served, 'Perception')), 3, 'Perception total: Wis +1, 0 ranks, Alertness +2');
+  const moved = SKILLS.filter((skill) => featSkillBonusFor(served, skill.name) !== 0).map((skill) => skill.name);
+  assertEqual(moved.join(','), 'Perception,Sense Motive', 'exactly the two skills Alertness names');
+}
+
+/** A family bonus (`SkillGroup`) reaches every member of the family, and only them. */
+function verifiesAFamilyBonusReachesEveryMember() {
+  const bonuses = { skills: { knowledge_local: 1 }, groups: { knowledge: 2 }, contributions: [], situational: [], unknown: [] };
+  assertEqual(featSkillBonusFor(bonuses, 'Knowledge (Local)'), 3, 'family +2 and the exact +1 add');
+  assertEqual(featSkillBonusFor(bonuses, 'Knowledge (Arcana)'), 2, 'family only');
+  assertEqual(featSkillBonusFor(bonuses, 'Linguistics'), 0, 'not a member');
+}
+
 async function main() {
   verifiesSkillIdForOnAParentheticalSkillName();
   verifiesSkillIdForOnMultiWordNonParentheticalNames();
@@ -127,6 +150,8 @@ async function main() {
   verifiesEveryRosterClassIsAnsweredOrNamed();
   verifiesLoadingAndFailureNameEveryClass();
   verifiesTotalSkillPointsAvailableReadsTheRoster();
+  verifiesAlertnessAddsTwoToPerceptionAndSenseMotive();
+  verifiesAFamilyBonusReachesEveryMember();
 }
 
 main().catch((error: unknown) => {

@@ -84,17 +84,7 @@ pub fn compute_max_hp(class_levels: &[CharacterClassLevel], constitution_modifie
     // the Unchained Monk returns d10 against the Core Rulebook Monk's
     // operator-ruled d8, which is a real, visible HP difference and is
     // pinned by `unchained_monk_hp_uses_its_own_d10_not_the_crb_monks_d8`.
-    let hit_die_size = match table_class_id(&class_level.class_id).and_then(hit_die_for) {
-        Some(hit_die_size) => hit_die_size,
-        None => match ApgClassId::from_class_id_str(&class_level.class_id) {
-            Some(apg_class_id) => apg::hit_die_for(apg_class_id),
-            None => match AcgClassId::from_class_id_str(&class_level.class_id) {
-                Some(acg_class_id) => acg::hit_die_for(acg_class_id),
-                None => PuClassId::from_class_id_str(&class_level.class_id)
-                    .map(pu_class_chassis::hit_die_for)?,
-            },
-        },
-    };
+    let (hit_die_size, _) = bespoke_hit_die(&class_level.class_id)?;
 
     let mut total = 0_i16;
     for level in 1..=class_level.level {
@@ -106,6 +96,25 @@ pub fn compute_max_hp(class_levels: &[CharacterClassLevel], constitution_modifie
         total += (die_value + constitution_modifier).max(1);
     }
     Some(total)
+}
+
+/// SD-36 F6b: the hit die a BESPOKE class module states for `class_id` -- the chain
+/// [`compute_max_hp`] reads: the Core Rulebook class table (`table_class_id`), then the APG, ACG
+/// and Pathfinder Unchained class modules. `Some((die, module cited))`; `None` for a class no
+/// bespoke module carries (the converted-record tier of
+/// `pilot_compute::hit_die_source::hit_die_source` answers those).
+pub fn bespoke_hit_die(class_id: &str) -> Option<(u8, &'static str)> {
+    if let Some(die) = table_class_id(class_id).and_then(hit_die_for) {
+        return Some((die, "rules_tables::crb::class_tables"));
+    }
+    if let Some(apg_class_id) = ApgClassId::from_class_id_str(class_id) {
+        return Some((apg::hit_die_for(apg_class_id), "rules_tables::apg"));
+    }
+    if let Some(acg_class_id) = AcgClassId::from_class_id_str(class_id) {
+        return Some((acg::hit_die_for(acg_class_id), "rules_tables::acg"));
+    }
+    PuClassId::from_class_id_str(class_id)
+        .map(|pu| (pu_class_chassis::hit_die_for(pu), "rules_tables::pathfinder_unchained::class_chassis"))
 }
 
 /// A character's current survivability state, in ascending order of

@@ -669,6 +669,11 @@ pub struct LoadSavedCharacterResponse {
     /// holds no rule": the package directory could not be resolved or read. `None` when the
     /// package loaded. Carried so the sheet can say so instead of showing an empty section.
     pub sheet_rules_unavailable_reason: Option<String>,
+    /// SD-36 F6b: the skill bonuses the character's held FEAT records grant, folded per skill by
+    /// the engine off the same rendered lines (`feat_skill_bonus_sheet_rules::feat_skill_bonuses`)
+    /// -- the Skills panel adds `skills[<id>]` (and `groups[<family>]` to every family member) to
+    /// each skill's total. Empty when the package is unavailable.
+    pub feat_skill_bonuses: codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses,
 }
 
 /// Wire form of `sheet_rule::SheetLine` -- one line of the "Rules and features" section.
@@ -738,19 +743,26 @@ fn sheet_rule_package() -> &'static Result<codex::rules_core::sheet_rule::SheetR
 
 /// The "Rules and features" lines for a character: the chassis computation's held set --
 /// the character's own selections, the class-feature records the chassis grounded, and the
-/// racial traits the race resolver applied -- rendered through the live evaluator.
+/// racial traits the race resolver applied -- rendered through the live evaluator; and (SD-36
+/// F6b) the feat skill bonuses folded off those same lines.
 pub(crate) fn sheet_lines_for(
     input: &CharacterInput,
     base: &PilotBaseChassisComputation,
-) -> (Vec<SheetLineDto>, Option<String>) {
+) -> (
+    Vec<SheetLineDto>,
+    Option<String>,
+    codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses,
+) {
+    use codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::{feat_skill_bonuses, FeatSkillBonuses};
     match sheet_rule_package() {
         Ok(package) => {
             let race_traits: Vec<String> =
                 resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()).collect();
             let computed = base.clone().with_sheet_rules(input, package, &race_traits);
-            (map_sheet_lines_dto(&computed.sheet_lines), None)
+            let bonuses = feat_skill_bonuses(package, &computed.sheet_lines);
+            (map_sheet_lines_dto(&computed.sheet_lines), None, bonuses)
         }
-        Err(reason) => (Vec::new(), Some(reason.clone())),
+        Err(reason) => (Vec::new(), Some(reason.clone()), FeatSkillBonuses::default()),
     }
 }
 
@@ -1852,7 +1864,7 @@ pub(crate) fn load_saved_character_at_root(
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
     ));
-    let (sheet_lines, sheet_rules_unavailable_reason) =
+    let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses) =
         sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
 
     Ok(LoadSavedCharacterResponse {
@@ -1873,6 +1885,7 @@ pub(crate) fn load_saved_character_at_root(
         equipment_selections: map_equipment_selections_dto(&envelope.character_input),
         sheet_lines,
         sheet_rules_unavailable_reason,
+        feat_skill_bonuses,
     })
 }
 
@@ -4801,13 +4814,14 @@ pub struct ClassCreationEntryDto {
     pub family_label: String,
     /// The first book the census found the class in.
     pub book: String,
+    /// The class's hit die -- SD-36 F6b: the engine's one hit-die rule
+    /// (`pilot_compute::hit_die_source`: the bespoke class module that computes the class's hit
+    /// points first, then the converted record). The roster rule's input: a class is offered iff
+    /// it has one.
     pub hit_die: u8,
-    /// The hit die the engine's hit-point fold reads: the class's converted CHASSIS record's
-    /// (`class_chassis_sheet_rules::record`), `None` when the class has no chassis record -- the
-    /// fold then reports the class's hit points Unknown (`class_chassis.hit_points.unknown`), and
-    /// so does the frontend. Differs from [`Self::hit_die`] (the principal's printed `Hit die` row,
-    /// the roster rule's input) for exactly the classes with no chassis record, e.g. the CRB Monk,
-    /// whose printed row carries the FS-23 oracle defect (`HD:10`; CRB p.56 says d8).
+    /// The hit die the engine's hit-point fold reads -- the same source as [`Self::hit_die`]
+    /// (SD-36 F6b), so it equals it on every offered class. The CRB Monk is d8 (the CRB table that
+    /// computes its hit points), not its converted record's FS-23 `HD:10`.
     pub hit_points_die: Option<u8>,
     /// Skill ranks gained per level, off the converted principal's `Skill ranks per level` row
     /// (`skill_ranks_per_level_from_package`); `None` when no principal states it -- the sheet
@@ -4858,37 +4872,23 @@ fn roster_reason_word(reason: codex::rules_core::class_census::RosterReason) -> 
     }
 }
 
-fn census_books(class_id: &str) -> Option<Vec<String>> {
-    codex::rules_core::class_census::census().get(class_id).map(|entry| entry.books.clone())
-}
-
 fn class_skill_ranks(class_id: &str) -> Option<u8> {
     let slug = class_id.strip_prefix("class:")?;
     codex::rules_core::pilot_compute::class_chassis_sheet_rules::skill_ranks_per_level_from_package(slug)
         .map(|(ranks, _)| ranks)
 }
 
-/// The hit die the hit-point fold reads for `class_id`: its chassis record's, in the first census
-/// book that carries one (every chassis-bearing record, loaded once per process).
-fn class_hit_points_die(class_id: &str, books: &[String]) -> Option<u8> {
-    use codex::rules_core::pilot_compute::class_chassis_sheet_rules::{records, ClassChassis};
-    use std::collections::BTreeMap;
-    static CHASSIS: std::sync::OnceLock<BTreeMap<(String, String), ClassChassis>> = std::sync::OnceLock::new();
-    let chassis = CHASSIS.get_or_init(|| {
-        let census = codex::rules_core::class_census::census();
-        let mut all_books: Vec<&str> = census.values().flat_map(|entry| entry.books.iter().map(String::as_str)).collect();
-        all_books.sort_unstable();
-        all_books.dedup();
-        records(&all_books)
-    });
-    let slug = class_id.strip_prefix("class:")?;
-    books.iter().find_map(|book| chassis.get(&(book.clone(), slug.to_owned()))).and_then(|record| record.hit_die)
+/// The hit die the hit-point fold reads for `class_id` -- SD-36 F6b: the engine's one hit-die rule
+/// (`pilot_compute::hit_die_source::hit_die_source`), the same one the roster reason and the
+/// sheet's printed `Hit die:` line read.
+fn class_hit_points_die(class_id: &str) -> Option<u8> {
+    codex::rules_core::pilot_compute::hit_die_source::hit_die_source(class_id).map(|source| source.die)
 }
 
-/// The hit die the hit-point fold reads for `class_id` (its census books' chassis record), for
-/// the read-only `list_class_facts` command.
+/// The hit die the hit-point fold reads for `class_id`, for the read-only `list_class_facts`
+/// command.
 pub(crate) fn class_hit_die_for(class_id: &str) -> Option<u8> {
-    census_books(class_id).and_then(|books| class_hit_points_die(class_id, &books))
+    class_hit_points_die(class_id)
 }
 
 fn family_word(family: codex::rules_core::class_census::ClassFamily) -> String {
@@ -4916,7 +4916,7 @@ pub fn build_class_creation_roster() -> Result<ClassCreationRosterResponse, Stri
         .into_iter()
         .map(|entry| ClassCreationEntryDto {
             skill_ranks_per_level: class_skill_ranks(&entry.id),
-            hit_points_die: census_books(&entry.id).and_then(|books| class_hit_points_die(&entry.id, &books)),
+            hit_points_die: class_hit_points_die(&entry.id),
             class_id: entry.id,
             label: entry.display_name,
             family: family_word(entry.family),
@@ -4941,7 +4941,7 @@ pub fn build_class_creation_roster() -> Result<ClassCreationRosterResponse, Stri
             label: roster_display_name(entry),
             reason: roster_reason_word(*reason).to_owned(),
             hit_die: roster_hit_die(entry),
-            hit_points_die: class_hit_points_die(&entry.class_id, &entry.books),
+            hit_points_die: class_hit_points_die(&entry.class_id),
             skill_ranks_per_level: class_skill_ranks(&entry.class_id),
         });
     }
@@ -10446,6 +10446,39 @@ mod tests {
         assert!(committed == live, "{} drifted from the live command; rerun with CODEX_WRITE_F4C_WIRE=1", path.display());
     }
 
+    /// SD-36 F6b: the feat skill bonuses the sheet serves for the census fixture (Human Fighter 1)
+    /// with Alertness as its level-1 character feat (in place of Power Attack), pinned as the wire
+    /// the frontend's Skills-panel tests read. CRB p.117: +2 Perception and +2 Sense Motive below
+    /// 10 ranks. `CODEX_WRITE_F6B_WIRE=1` rewrites the artifact.
+    #[test]
+    fn feat_skill_bonuses_wire_for_the_census_fixture_with_alertness_matches_the_committed_artifact() {
+        let fixture = codex::rules_core::class_census::load_sweep_fixture().expect("census fixture");
+        let mut input = codex::rules_core::class_seeds::input_for(&fixture, "fighter", 1);
+        input.chosen.selected_feats.retain(|f| f != "feat:power_attack");
+        input.chosen.selected_feats.push("feat:alertness".to_owned());
+        for choice in input.chosen.selected_choices.iter_mut() {
+            if choice.choice_set_id == "choice:level_1_character_feat" {
+                choice.selection_id = "feat:alertness".to_owned();
+            }
+        }
+        let base = compute_pilot_base_chassis(&input);
+        let (lines, unavailable, bonuses) = sheet_lines_for(&input, &base);
+        assert_eq!(unavailable, None);
+        assert!(lines.iter().any(|l| l.id == "core_rulebook:feat:alertness"), "Alertness line printed");
+        assert_eq!(bonuses.skills.get("perception"), Some(&2));
+        assert_eq!(bonuses.skills.get("sense_motive"), Some(&2));
+        let path = crate::authoring_workbench::codex_repo_root()
+            .expect("repo root")
+            .join("docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/f6b-feat-skill-bonus-wire.json");
+        let live = serde_json::to_string_pretty(&serde_json::to_value(&bonuses).expect("json")).expect("serialize") + "\n";
+        if std::env::var_os("CODEX_WRITE_F6B_WIRE").is_some() {
+            std::fs::write(&path, &live).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+            return;
+        }
+        let committed = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+        assert!(committed == live, "{} drifted from the live fold; rerun with CODEX_WRITE_F6B_WIRE=1", path.display());
+    }
+
     #[test]
     fn list_class_roster_wire_carries_hit_die_and_skill_ranks_for_every_census_class() {
         let roster = build_class_creation_roster().expect("roster");
@@ -10458,22 +10491,27 @@ mod tests {
             .map(|c| c.class_id.as_str())
             .collect();
         assert!(missing.is_empty(), "offered classes with no skill ranks per level: {missing:?}");
-        // The hit-point die is the chassis record's: stated for every offered class with a chassis
-        // record, equal to the printed die there; absent (HP Unknown) for exactly the five with none.
-        let no_chassis: Vec<&str> = roster
-            .classes
-            .iter()
-            .filter(|c| c.hit_points_die.is_none())
-            .map(|c| c.class_id.as_str())
-            .collect();
-        eprintln!("offered classes whose hit points are Unknown (no chassis record): {} of {}: {no_chassis:?}", no_chassis.len(), roster.classes.len());
-        assert_eq!(
-            no_chassis,
-            vec!["class:monk", "class:unchained_barbarian", "class:unchained_monk", "class:unchained_rogue", "class:unchained_summoner"],
-            "the classes with no converted chassis record"
-        );
-        for class in roster.classes.iter().filter(|c| c.hit_points_die.is_some()) {
-            assert_eq!(class.hit_points_die, Some(class.hit_die), "{}: chassis die vs printed die", class.class_id);
+        // SD-36 F6b: the hit-point die is the engine's one hit-die rule (bespoke class module
+        // first, then the converted record): stated for every offered class, equal to the printed
+        // die. The five F4c left Unknown now state one; the CRB Monk's is the CRB table's d8, never
+        // its converted record's FS-23 d10.
+        let no_die: Vec<&str> =
+            roster.classes.iter().filter(|c| c.hit_points_die.is_none()).map(|c| c.class_id.as_str()).collect();
+        eprintln!("offered classes whose hit points are Unknown: {} of {}: {no_die:?}", no_die.len(), roster.classes.len());
+        assert!(no_die.is_empty(), "offered classes with no hit-point die: {no_die:?}");
+        assert_eq!(roster.classes.len(), 59, "roster still 59");
+        for class in &roster.classes {
+            assert_eq!(class.hit_points_die, Some(class.hit_die), "{}: HP die vs printed die", class.class_id);
+        }
+        let die = |id: &str| roster.classes.iter().find(|c| c.class_id == id).and_then(|c| c.hit_points_die);
+        for (id, expected) in [
+            ("class:monk", 8),
+            ("class:unchained_barbarian", 12),
+            ("class:unchained_monk", 10),
+            ("class:unchained_rogue", 8),
+            ("class:unchained_summoner", 8),
+        ] {
+            assert_eq!(die(id), Some(expected), "{id}");
         }
         // A withheld prestige class carries its own chassis figures (or an explicit `None`), so a
         // character holding one prints its HP and skill points or names the gap.

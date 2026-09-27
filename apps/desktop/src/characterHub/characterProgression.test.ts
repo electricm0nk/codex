@@ -119,7 +119,7 @@ function verifiesClassHitDieReadsTheRoster() {
   assertEqual(classHitDie('class:wizard'), 6, 'Wizard has a d6 hit die');
   assertEqual(classHitDie('class:fighter'), 10, 'Fighter has a d10 hit die');
   assertEqual(classHitDie('class:arcanist'), 6, 'Arcanist has a d6 hit die');
-  assertEqual(classHitDie('class:monk'), null, 'Monk: no chassis record (FS-23 defect row): Unknown, never d10');
+  assertEqual(classHitDie('class:monk'), 8, 'Monk d8 (CRB p.56): the die its HP is computed from, never the FS-23 d10 (SD-36 F6b)');
   assertEqual(classHitDie('class:samurai'), 10, 'Samurai: a newly offered class');
   assertEqual(classHitDie('class:some_future_class'), null, 'an unrecognized class has no hit die (no assumed d8)');
 }

@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { AbilityScoresDto } from '../boundary/loadCreateCharacter';
 import type { HeldClass } from './characterProgression';
+import type { FeatSkillBonusesDto } from '../boundary/loadSavedCharacterDetail';
 import {
   SKILLS,
+  featSkillBonusFor,
   isClassSkill,
   type ClassSkillLookup,
   maxClassSkillRanks,
@@ -38,6 +40,8 @@ export function SkillAllocationDialog(props: {
   /** `null` when a held class states no skill ranks per level: nothing can be allocated. */
   totalPoints: number | null;
   allocation: Record<string, number>;
+  /** SD-36 F6b: the engine's feat skill-bonus fold; each previewed total includes its bonus. */
+  featSkillBonuses: FeatSkillBonusesDto;
   onAccept: (allocation: Record<string, number>) => void;
 }) {
   const [draft, setDraft] = useState<Record<string, number>>(props.allocation);
@@ -131,7 +135,7 @@ export function SkillAllocationDialog(props: {
             const classSkill = isClassSkill(props.classSkills, skill.name);
             const ranks = draft[skill.name] ?? 0;
             const abilityMod = props.abilities[skill.ability];
-            const total = skillModifier(abilityMod, ranks, classSkill);
+            const total = skillModifier(abilityMod, ranks, classSkill, featSkillBonusFor(props.featSkillBonuses, skill.name));
             const max = classSkill ? maxClassSkillRanks(props.characterLevel) : maxCrossClassSkillRanks(props.characterLevel);
             return (
               <div key={skill.name} style={{ alignItems: 'center', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.5rem', padding: '0.4rem 0' }}>

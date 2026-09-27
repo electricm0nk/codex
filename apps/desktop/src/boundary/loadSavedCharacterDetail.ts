@@ -126,7 +126,44 @@ export interface LoadSavedCharacterResponse {
    * loaded.
    */
   sheetRulesUnavailableReason: string | null;
+  /**
+   * SD-36 F6b: the skill bonuses the character's held FEAT records grant, folded per skill by
+   * the engine (`feat_skill_bonus_sheet_rules::feat_skill_bonuses`) off the same rendered lines.
+   * The Skills panel adds `skills[<id>]`, and `groups[<family>]` to every member of the family.
+   */
+  featSkillBonuses: FeatSkillBonusesDto;
 }
+
+/** Mirrors `FeatSkillContribution` (engine): one feat line's contribution to a skill. */
+export interface FeatSkillContributionDto {
+  /** Package skill id (`perception`), or the family (`knowledge`) when `group`. */
+  skill: string;
+  group: boolean;
+  value: number;
+  ruleId: string;
+  label: string;
+  bonusType: string | null;
+}
+
+/** Mirrors `FeatSkillNotFolded` (engine): a skill-targeting feat line not added, and why. */
+export interface FeatSkillNotFoldedDto {
+  skill: string;
+  ruleId: string;
+  label: string;
+  reason: string;
+}
+
+/** Mirrors `FeatSkillBonuses` (engine). */
+export interface FeatSkillBonusesDto {
+  skills: Record<string, number>;
+  groups: Record<string, number>;
+  contributions: FeatSkillContributionDto[];
+  situational: FeatSkillNotFoldedDto[];
+  unknown: FeatSkillNotFoldedDto[];
+}
+
+/** No feat skill bonus: the value a response carries before the engine has answered. */
+export const NO_FEAT_SKILL_BONUSES: FeatSkillBonusesDto = { skills: {}, groups: {}, contributions: [], situational: [], unknown: [] };
 
 /** Mirrors `SheetLineDto` in `character_hub.rs` -- one line of the "Rules and features" section. */
 export interface SheetLineDto {

@@ -207,6 +207,12 @@ pub mod class_skill_sheet_rules;
 /// SD-36 Epic F6a: one class's weapon proficiency, caster level and class skills as the engine
 /// answers them -- the desktop's `list_class_facts` command reads this instead of a class table.
 pub mod class_facts_sheet_rules;
+/// SD-36 Epic F6b: the one hit-die rule -- the source that computes a class's hit points is the
+/// source the sheet prints and the roster reads (bespoke class module first, then the converted
+/// record).
+pub mod hit_die_source;
+/// SD-36 Epic F6b: skill bonuses from held feat records, folded per skill off the rendered lines.
+pub mod feat_skill_bonus_sheet_rules;
 mod generic_class_chassis;
 mod multiclass_fold;
 /// SD-34 `AT-34-E3-001` (`decisions.md §14`, mechanism `class_absent_from_

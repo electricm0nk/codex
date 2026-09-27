@@ -24,6 +24,7 @@ import { LOADING_CLASS_CATALOG, findClassOption, getClassCatalog, knownClass, se
 import { CLASS_OPTIONS_FALLBACK, MAX_CLASS_LEVEL, getLevelOptionsForClass } from './characterHubModel';
 import { classRosterWire, levelUpFighter6Wire } from '../testSupport/classRosterWire';
 import { assert, assertEqual } from '../testSupport/asserts';
+import { maxHitPoints } from './characterProgression';
 
 const wire = classRosterWire();
 
@@ -80,11 +81,18 @@ function verifiesAnInstalledRosterIsWhatLookupsRead() {
   assertEqual(catalog.options.length, 59, 'options');
   assertEqual(findClassOption('class:samurai')?.label, 'Samurai', 'a newly offered class resolves');
   assertEqual(getLevelOptionsForClass('class:samurai').length, MAX_CLASS_LEVEL, 'Samurai 1-20');
-  // The CRB Monk has no chassis record; its printed row is the FS-23 oracle defect (HD:10 against
-  // CRB p.56's d8). Its HP is Unknown, as the engine's fold reports it — never the defective d10.
-  assertEqual(findClassOption('class:monk')?.hitDie, null, 'Monk: no chassis record, HP Unknown (FS-23)');
-  const noChassis = wire.classes.filter((row) => row.hitPointsDie === null).map((row) => row.classId);
-  assertEqual(noChassis.join(','), 'class:monk,class:unchained_barbarian,class:unchained_monk,class:unchained_rogue,class:unchained_summoner', '5 of 59 roster classes: HP Unknown');
+  // SD-36 F6b: the served die is the engine's one hit-die rule (the bespoke class module that
+  // computes the class's hit points first, then the converted record). The CRB Monk is the CRB
+  // table's d8 (CRB p.56) — never its converted record's FS-23 d10 — and the four Unchained classes
+  // read their own module's die. No offered class is HP Unknown.
+  assertEqual(findClassOption('class:monk')?.hitDie, 8, 'Monk d8 (CRB p.56), from the source that computes its HP');
+  assertEqual(findClassOption('class:unchained_monk')?.hitDie, 10, 'Unchained Monk d10 (Pathfinder Unchained)');
+  assertEqual(findClassOption('class:unchained_rogue')?.hitDie, 8, 'Unchained Rogue d8 (Pathfinder Unchained)');
+  const noDie = wire.classes.filter((row) => row.hitPointsDie === null).map((row) => row.classId);
+  assertEqual(noDie.join(','), '', '0 of 59 roster classes: HP Unknown');
+  // Monk 5 on Con +2: 8+2 + 4 x (5+2) = 38 (level 1 the full die, then the average die/2 + 1).
+  assertEqual(maxHitPoints([{ classId: 'class:monk', classLabel: 'Monk', level: 5 }], 2), 38, 'Monk 5 HP');
+  assertEqual(maxHitPoints([{ classId: 'class:unchained_rogue', classLabel: 'Unchained Rogue', level: 5 }], 2), 38, 'Unchained Rogue 5 HP');
   const archer = knownClass('class:arcane_archer');
   assert(archer !== undefined, 'a withheld prestige class is still known (label, hit die) for a character holding it');
   assertEqual(archer!.label, 'Arcane Archer', 'prestige label');
@@ -108,9 +116,8 @@ function verifiesAFailedCommandInstallsTheFallbackWithAVisibleNotice() {
 
 /**
  * The fallback may not drift from what the engine serves: every fallback id is served, with the
- * same label, and the same hit die wherever the engine's HP fold states one (26 of 31; the other
- * 5 — Monk and the four Unchained — have no chassis record, so the engine states no HP die to
- * compare against).
+ * same label and the same hit die (31 of 31 since SD-36 F6b: the engine states a die for every
+ * offered class).
  */
 function verifiesTheFallbackAgreesWithTheRosterOnEveryRowItCarries() {
   const served = new Map(wire.classes.map((row) => [row.classId, row]));
@@ -124,7 +131,7 @@ function verifiesTheFallbackAgreesWithTheRosterOnEveryRowItCarries() {
       compared += 1;
     }
   }
-  assertEqual(compared, 26, 'hit dice compared');
+  assertEqual(compared, 31, 'hit dice compared');
 }
 
 /** `ensureClassRosterLoaded` installs whichever outcome the command produced. */

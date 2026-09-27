@@ -82,23 +82,22 @@ fn p2_multiclass_save_explanation_lists_each_class_s_save_term() {
     }
 }
 
-// ---- P4: the hit-point Unknown names what is actually missing ---------------------------------
+// ---- P4 / SD-36 F6b: the Monk's hit points come from the source that computes them ------------
 
-/// Monk has no converted BAB/save chassis record (its CRB principal states `Hit die`, so "no
-/// record states this class's hit points" is false). The Unknown names the missing chassis.
+/// Monk has no converted BAB/save chassis record, and its converted principal's `Hit die d10` is
+/// the FS-23 oracle defect. Since SD-36 F6b the fold reads the one hit-die rule
+/// (`hit_die_source`: the bespoke CRB table first, d8 per CRB p.56), so a Monk mix prints hit
+/// points instead of Unknown. Monk 4 / Rogue 3 on the census fixture (Con 14, +2), Monk listed
+/// first: Monk 8+2 + 3 x (5+2) = 31; Rogue d8 3 x (5+2) = 21; total **52**.
 #[test]
-fn p4_hit_points_unknown_names_the_missing_chassis_record() {
+fn p4_monk_mix_hit_points_come_from_the_bespoke_d8() {
     let receipt = build_pilot_headless_receipt(&mix(&[("monk", 4), ("rogue", 3)]));
-    let unknown: Vec<_> = receipt
-        .computation
-        .diagnostics
-        .iter()
-        .filter(|d| d.id == "class_chassis.hit_points.unknown" && d.message.contains("class:monk"))
-        .collect();
-    assert_eq!(unknown.len(), 1, "{:#?}", receipt.computation.diagnostics);
-    let message = &unknown[0].message;
-    assert!(!message.contains("no converted class record states"), "{message}");
-    assert!(message.contains("chassis"), "{message}");
+    let unknown: Vec<_> =
+        receipt.computation.diagnostics.iter().filter(|d| d.id == "class_chassis.hit_points.unknown").collect();
+    assert!(unknown.is_empty(), "{unknown:#?}");
+    let hp = explanation(&receipt, "multiclass.hit_points");
+    assert_eq!(hp.value, 52, "{}", hp.detail);
+    assert!(hp.detail.contains("class:monk 4: 31") && hp.detail.contains("class:rogue 3: 21"), "{}", hp.detail);
 }
 
 // ---- P5: an option-gated grant needs the option -----------------------------------------------

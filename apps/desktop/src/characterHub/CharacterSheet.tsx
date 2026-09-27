@@ -2,7 +2,9 @@ import { Fragment, useEffect, useState, type CSSProperties, type ReactNode } fro
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import {
   loadSavedCharacterDetail,
+  NO_FEAT_SKILL_BONUSES,
   type ExplanationDto,
+  type FeatSkillBonusesDto,
   type LoadSavedCharacterResponse,
   type SheetLineDto,
   type SpellSelectionDto,
@@ -127,6 +129,8 @@ import {
   DEFAULT_SKILL_ALLOCATION,
   SKILLS,
   classSkillLookup,
+  featSkillBonusFor,
+  featSkillBonusesWithoutARow,
   isClassSkill,
   type ClassSkillLookup,
   skillIdFor,
@@ -614,6 +618,12 @@ function SkillsPanel(props: {
   classFactsLoading: boolean;
   allocation: Record<string, number>;
   realModifiers?: { climb: number; intimidate: number; swim: number };
+  /**
+   * SD-36 F6b: the engine's feat skill-bonus fold (`featSkillBonuses` on the sheet response). Added
+   * to every row the panel totals itself; a row the engine totals (`realModifiers`) prints the
+   * engine's own figure.
+   */
+  featSkillBonuses: FeatSkillBonusesDto;
   onOpenDialog: () => void;
 }) {
   const REAL_MODIFIER_BY_SKILL: Record<string, number | undefined> = {
@@ -631,6 +641,9 @@ function SkillsPanel(props: {
   // SD-36 F6a: a held class the engine's class-skill reader cannot answer is named with its
   // reason, not silently scored as all-cross-class.
   const withoutClassSkills = props.classSkills.unanswered;
+  // SD-36 F6b: a served feat bonus whose skill has no row here is printed, never dropped.
+  const featBonusesWithoutARow = featSkillBonusesWithoutARow(props.featSkillBonuses);
+  const featBonusesNotAdded = [...props.featSkillBonuses.situational, ...props.featSkillBonuses.unknown];
 
   return (
     <StatBox title="Skills">
@@ -675,7 +688,7 @@ function SkillsPanel(props: {
           const ranks = props.allocation[skill.name] ?? 0;
           const abilityMod = props.abilities[skill.ability];
           const real = REAL_MODIFIER_BY_SKILL[skill.name];
-          const total = real ?? skillModifier(abilityMod, ranks, classSkill);
+          const total = real ?? skillModifier(abilityMod, ranks, classSkill, featSkillBonusFor(props.featSkillBonuses, skill.name));
           return (
             <div key={skill.name} style={{ alignItems: 'center', display: 'flex', fontSize: '0.85rem', gap: '0.4rem' }}>
               <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{fmt(total)}</span>
@@ -685,6 +698,17 @@ function SkillsPanel(props: {
           );
         })}
       </div>
+      {featBonusesWithoutARow.length > 0 ? (
+        <p role="note" style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.4rem 0 0' }}>
+          Feat skill bonuses:{' '}
+          {featBonusesWithoutARow.map((entry) => `${fmt(entry.value)} ${entry.labels.join(', ')}`).join('; ')}
+        </p>
+      ) : null}
+      {featBonusesNotAdded.length > 0 ? (
+        <p role="note" style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.4rem 0 0' }}>
+          Not added to a total: {featBonusesNotAdded.map((entry) => `${entry.label} (${entry.reason})`).join('; ')}
+        </p>
+      ) : null}
       <hr style={{ border: 'none', borderTop: '1px solid var(--color-border)', margin: '0.6rem 0' }} />
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.03em', margin: '0 0 0.3rem', textTransform: 'uppercase' }}>
         Languages
@@ -3077,12 +3101,15 @@ export function CharacterSheet(props: {
     /** SD-35 AT-35-E2-002: the "Rules and features" lines, re-read with the rest. */
     sheetLines: SheetLineDto[];
     sheetRulesUnavailableReason: string | null;
+    /** SD-36 F6b: the engine's feat skill-bonus fold, re-read with the sheet lines. */
+    featSkillBonuses: FeatSkillBonusesDto;
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
     resolvedRacialTraits: props.detail?.resolvedRacialTraits ?? null,
     sheetLines: props.detail?.sheetLines ?? [],
     sheetRulesUnavailableReason: props.detail?.sheetRulesUnavailableReason ?? null,
+    featSkillBonuses: props.detail?.featSkillBonuses ?? NO_FEAT_SKILL_BONUSES,
   });
   useEffect(() => {
     let cancelled = false;
@@ -3092,6 +3119,7 @@ export function CharacterSheet(props: {
       resolvedRacialTraits: props.detail?.resolvedRacialTraits ?? null,
       sheetLines: props.detail?.sheetLines ?? [],
       sheetRulesUnavailableReason: props.detail?.sheetRulesUnavailableReason ?? null,
+    featSkillBonuses: props.detail?.featSkillBonuses ?? NO_FEAT_SKILL_BONUSES,
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
@@ -3102,6 +3130,7 @@ export function CharacterSheet(props: {
             resolvedRacialTraits: loaded.resolvedRacialTraits,
             sheetLines: loaded.sheetLines,
             sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
+      featSkillBonuses: loaded.featSkillBonuses,
           });
         }
       })
@@ -3348,6 +3377,7 @@ export function CharacterSheet(props: {
         // what the character holds; absent until re-read, never stale.
         sheetLines: [],
         sheetRulesUnavailableReason: null,
+        featSkillBonuses: NO_FEAT_SKILL_BONUSES,
       });
       setMoney(outcome.money);
       // Buying a weapon is exactly what makes a new Weapons row appear.
@@ -3410,6 +3440,7 @@ export function CharacterSheet(props: {
         // what the character holds; absent until re-read, never stale.
         sheetLines: [],
         sheetRulesUnavailableReason: null,
+        featSkillBonuses: NO_FEAT_SKILL_BONUSES,
       });
       setMoney(outcome.money);
       // Attaching a +1 enhancement changes that weapon's Enh. columns.
@@ -3655,6 +3686,7 @@ export function CharacterSheet(props: {
       resolvedRacialTraits: loaded.resolvedRacialTraits,
       sheetLines: loaded.sheetLines,
       sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
+      featSkillBonuses: loaded.featSkillBonuses,
     });
     await refreshDurability();
   }
@@ -3962,6 +3994,7 @@ export function CharacterSheet(props: {
         resolvedRacialTraits: loaded.resolvedRacialTraits,
         sheetLines: loaded.sheetLines,
         sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
+      featSkillBonuses: loaded.featSkillBonuses,
       });
     } catch {
       // Intentionally keeps the current records.
@@ -4607,6 +4640,7 @@ export function CharacterSheet(props: {
             isHuman={isHuman}
             allocation={skillAllocation}
             realModifiers={snapshot?.selectedSkillModifiers}
+            featSkillBonuses={engineRecords.featSkillBonuses}
             onOpenDialog={() => setSkillDialogOpen(true)}
           />
         </div>
@@ -4621,6 +4655,7 @@ export function CharacterSheet(props: {
         abilities={abilities}
         totalPoints={totalSkillPointsAvailable(heldClasses, abilities.intelligence, isHuman)}
         allocation={skillAllocation}
+        featSkillBonuses={engineRecords.featSkillBonuses}
         onAccept={(draft) => void handleSkillAllocationAccept(draft)}
       />
 

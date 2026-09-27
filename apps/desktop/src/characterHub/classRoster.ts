@@ -12,11 +12,10 @@
  * Arcanist 3 against the record's 2; every class it did not list silently defaulted to 2), and an
  * unknown class's hit die silently defaulted to d8.
  *
- * Hit points read `hitPointsDie`, the die the engine's own hit-point fold reads (the class's
- * chassis record). 5 of the 59 roster classes have no chassis record — the CRB Monk (whose printed
- * row carries the FS-23 oracle defect, `HD:10` against CRB p.56's d8) and the four Pathfinder
- * Unchained classes — so their HP prints Unknown, as the engine's does, rather than a total built
- * on a defective or borrowed die.
+ * Hit points read `hitPointsDie`, the die the engine's own hit-point fold reads. SD-36 F6b: that is
+ * the engine's one hit-die rule (`pilot_compute::hit_die_source`: the bespoke class module that
+ * computes the class's hit points first, then the converted record), so every one of the 59 roster
+ * classes has one — the CRB Monk's is the CRB table's d8, never its converted record's FS-23 `HD:10`.
  *
  * `CLASS_OPTIONS_FALLBACK` is that table, kept ONLY for the case the command fails, and then
  * installed with a visible notice (`class roster unavailable: <diagnostic>`) that the Create form
@@ -45,11 +44,11 @@ export interface ClassCreationEntryDto {
   family: string;
   familyLabel: string;
   book: string;
-  /** The principal's printed `Hit die` row (the roster rule's input). */
+  /** The class's hit die: the engine's one hit-die rule (the roster rule's input). */
   hitDie: number;
   /**
-   * The die the engine's hit-point fold reads (the chassis record's); `null` when the class has
-   * no chassis record — the engine then reports its HP Unknown, and so does every HP here.
+   * The die the engine's hit-point fold reads — the same rule as `hitDie` (SD-36 F6b); `null` only
+   * for a class no source states a die for, and then every HP here is Unknown too.
    */
   hitPointsDie: number | null;
   skillRanksPerLevel: number | null;

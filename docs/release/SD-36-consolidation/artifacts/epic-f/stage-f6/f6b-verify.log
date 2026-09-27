@@ -1,0 +1,39 @@
+# F6b verification (one pass, after all changes; worktree codex-epic-f6, CARGO_TARGET_DIR=codex-epic-f6-target)
+## root lib: cargo test --locked -j 8 --lib -- --test-threads=8
+test result: ok. 2741 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 282.42s
+EXIT=0
+## sd36 test files: cargo test --locked -j 8 --test sd36_* (7 files) -- --test-threads=8
+     Running tests/sd36_bloodline_pick_option.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_bloodline_pick_option-972edb87b3dcfbcb)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.34s
+     Running tests/sd36_class_skill_from_record.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_class_skill_from_record-7314d3254af7ac76)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 69.50s
+     Running tests/sd36_f3_polish.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_f3_polish-2b3088d512d05512)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 131.18s
+     Running tests/sd36_f4_link_pick_namespace.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_f4_link_pick_namespace-caa5bade4b5ed959)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 191.27s
+     Running tests/sd36_f4pre_pool_choices.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_f4pre_pool_choices-3e1ffb1d3d5bf42d)
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.38s
+     Running tests/sd36_multiclass_any_class.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_multiclass_any_class-3e5cd4b045cf56f7)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 70.53s
+     Running tests/sd36_sorcerer_bloodline_record.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/sd36_sorcerer_bloodline_record-c46438d0ba193f6f)
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 37.36s
+EXIT=0
+## root clippy: cargo clippy --locked --tests -j 8 (warnings/errors counted: 0)
+EXIT=0
+## desktop: cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8
+test result: ok. 625 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 433.65s
+EXIT=0
+## desktop clippy: cargo clippy --locked --tests -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml (warnings/errors: 0)
+EXIT=0
+## frontend: npm run typecheck && npm test (apps/desktop)
+127/127 test files passed.
+EXIT=0
+## PCGen residue: python3 scripts/pcgen_residue_gate.py --check --closure
+live_files=0 live_hits=0 verdict=PASS
+EXIT=0
+## census: cargo run --locked -j 8 --quiet --bin class_census -- --json <scratch>/census-f6b.json
+ids=137 computed=63 blocked=0
+prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=68 prestige_mix_unknown=0
+mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0
+EXIT=0
+## census-f6b.json vs stage-f4-f5/census-f5.json (recursive JSON diff): 1 difference, /generated_at only; ids 137, computed 63, roster_offered 59, prestige_mix_computed 68 on both

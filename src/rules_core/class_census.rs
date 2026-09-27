@@ -2197,11 +2197,13 @@ pub fn is_ex_state(entry: &ClassCensusEntry) -> bool {
     package.find("class", slug).and_then(|id| package.rule(id)).is_some_and(|rule| !rule.print)
 }
 
-/// The hit die the roster reads for `entry` -- [`class_chassis_sheet_rules::hit_die_from_package`],
-/// the class principal's own `Hit die` row.
+/// The hit die the roster reads for `entry` -- SD-36 F6b: the engine's one hit-die rule,
+/// [`hit_die_source`](crate::rules_core::pilot_compute::hit_die_source::hit_die_source) (the
+/// bespoke class module that computes the class's hit points first, then the converted record),
+/// so a class is offered iff the engine has a source to compute its hit points from, and the die
+/// the roster serves is the die they are computed from.
 pub fn roster_hit_die(entry: &ClassCensusEntry) -> Option<u8> {
-    let slug = entry.class_id.strip_prefix("class:")?;
-    class_chassis_sheet_rules::hit_die_from_package(slug).map(|(die, _)| die)
+    crate::rules_core::pilot_compute::hit_die_source::hit_die_source(&entry.class_id).map(|source| source.die)
 }
 
 /// The roster rule, for one census row. `computed_every_level` is the row's own sweep result
