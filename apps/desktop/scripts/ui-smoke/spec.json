@@ -445,6 +445,36 @@
       "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (CRB NPC class). Picks Race=Human (CRB) and Class=class:warrior by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Warrior' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Charlie' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Warrior 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green."
     },
     {
+      "id": "sheet-f6a-samurai-weapons",
+      "screen": "sheet",
+      "setup": ["create-character-render", "create-character-samurai"],
+      "steps": [{ "op": "click", "target": "Weapons" }],
+      "marker": "Add Weapon",
+      "expect": ["✓ Martial Weapons"],
+      "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
+      "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Samurai 1 (create-character-samurai's steps reach its sheet) opens the Weapons tab: the tier line reads '✓ Martial Weapons' (the deleted table printed '✗'), and the Skills panel names no class-skill Unknown."
+    },
+    {
+      "id": "sheet-f6a-warrior-weapons",
+      "screen": "sheet",
+      "setup": ["create-character-render", "create-character-warrior"],
+      "steps": [{ "op": "click", "target": "Weapons" }],
+      "marker": "Add Weapon",
+      "expect": ["✓ Martial Weapons"],
+      "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
+      "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Warrior 1 (CRB NPC class): '✓ Martial Weapons'."
+    },
+    {
+      "id": "sheet-f6a-magus-caster-level",
+      "screen": "sheet",
+      "setup": ["create-character-render", "create-character-magus"],
+      "steps": [{ "op": "click", "target": "Weapons" }],
+      "marker": "Add Weapon",
+      "expect": ["✓ Martial Weapons", "Caster Level"],
+      "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
+      "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Magus 1: '✓ Martial Weapons' and a Caster Level of 1 (the deleted table printed '—' for every caster outside six ids)."
+    },
+    {
       "id": "create-character-kineticist",
       "screen": "create",
       "setup": ["create-character-render"],

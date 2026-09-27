@@ -204,6 +204,9 @@ pub mod class_chassis_sheet_rules;
 /// codex-ingest oracle pin (`class_weapon_proficiency_via_converter.rs`) can call it.
 pub mod class_proficiency_sheet_rules;
 pub mod class_skill_sheet_rules;
+/// SD-36 Epic F6a: one class's weapon proficiency, caster level and class skills as the engine
+/// answers them -- the desktop's `list_class_facts` command reads this instead of a class table.
+pub mod class_facts_sheet_rules;
 mod generic_class_chassis;
 mod multiclass_fold;
 /// SD-34 `AT-34-E3-001` (`decisions.md §14`, mechanism `class_absent_from_

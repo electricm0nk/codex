@@ -5,6 +5,7 @@ import type { HeldClass } from './characterProgression';
 import {
   SKILLS,
   isClassSkill,
+  type ClassSkillLookup,
   maxClassSkillRanks,
   maxCrossClassSkillRanks,
   skillModifier,
@@ -30,6 +31,8 @@ export function SkillAllocationDialog(props: {
   open: boolean;
   onClose: () => void;
   heldClasses: HeldClass[];
+  /** SD-36 F6a: the engine's class skills for the held classes (`classSkillLookup`). */
+  classSkills: ClassSkillLookup;
   characterLevel: number;
   abilities: AbilityScoresDto;
   /** `null` when a held class states no skill ranks per level: nothing can be allocated. */
@@ -59,7 +62,7 @@ export function SkillAllocationDialog(props: {
 
   const spent = SKILLS.reduce((sum, skill) => {
     const ranks = draft[skill.name] ?? 0;
-    return sum + ranks * skillRankCost(isClassSkill(props.heldClasses, skill.name));
+    return sum + ranks * skillRankCost(isClassSkill(props.classSkills, skill.name));
   }, 0);
   const remaining = props.totalPoints === null ? null : props.totalPoints - spent;
   /** Spendable budget for the +/- controls; an Unknown total allows no spend. */
@@ -75,7 +78,7 @@ export function SkillAllocationDialog(props: {
       }
       if (delta === 1) {
         const cost = skillRankCost(classSkill);
-        const currentSpent = SKILLS.reduce((sum, skill) => sum + (prev[skill.name] ?? 0) * skillRankCost(isClassSkill(props.heldClasses, skill.name)), 0);
+        const currentSpent = SKILLS.reduce((sum, skill) => sum + (prev[skill.name] ?? 0) * skillRankCost(isClassSkill(props.classSkills, skill.name)), 0);
         if (props.totalPoints === null || currentSpent + cost > props.totalPoints) {
           return prev;
         }
@@ -125,7 +128,7 @@ export function SkillAllocationDialog(props: {
 
         <div style={{ flex: 1, overflowY: 'auto', padding: '0.5rem 1.5rem' }}>
           {SKILLS.map((skill) => {
-            const classSkill = isClassSkill(props.heldClasses, skill.name);
+            const classSkill = isClassSkill(props.classSkills, skill.name);
             const ranks = draft[skill.name] ?? 0;
             const abilityMod = props.abilities[skill.ability];
             const total = skillModifier(abilityMod, ranks, classSkill);

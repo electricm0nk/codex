@@ -1,5 +1,7 @@
 import type { AbilityScoresDto } from '../boundary/loadCreateCharacter';
+import type { ClassSkillFactsDto } from '../boundary/listClassFacts';
 import { buildLevelEntries, totalSkillPoints, type HeldClass } from './characterProgression';
+import type { ClassFactsState } from './classFactsModel';
 
 /** The full PF1 core rulebook skill list with governing ability. */
 export const SKILLS: ReadonlyArray<{ name: string; ability: keyof AbilityScoresDto }> = [
@@ -41,72 +43,6 @@ export const SKILLS: ReadonlyArray<{ name: string; ability: keyof AbilityScoresD
 ];
 
 /**
- * Class skill lists by class id, hand-entered for 12 classes. The Create picker offers the
- * engine's served roster (59 classes, SD-36 F4c), so most selectable classes have no list here.
- * A held class missing from here is not a harmless gap: `isClassSkill` cannot answer for it, so
- * the Skills panel prints `heldClassesWithoutClassSkillList` by name rather than quietly scoring
- * every skill as cross-class. The mechanism that closes the remainder is reading the converted
- * records' `CSKILL` grants (`data/sheet_rules/**` `*_class_skills` class features), not widening
- * this table.
- */
-const CLASS_SKILLS: Record<string, ReadonlySet<string>> = {
-  // ACG Arcanist: Appraise, Craft, Fly, Knowledge (all), Linguistics,
-  // Profession, Spellcraft, Use Magic Device. Same list as Wizard plus Use
-  // Magic Device, which Wizard does not get.
-  'class:arcanist': new Set([
-    'Appraise', 'Craft', 'Fly', 'Knowledge (Arcana)', 'Knowledge (Dungeoneering)', 'Knowledge (Engineering)',
-    'Knowledge (Geography)', 'Knowledge (History)', 'Knowledge (Local)', 'Knowledge (Nature)', 'Knowledge (Nobility)',
-    'Knowledge (Planes)', 'Knowledge (Religion)', 'Linguistics', 'Profession', 'Spellcraft', 'Use Magic Device',
-  ]),
-  'class:barbarian': new Set([
-    'Acrobatics', 'Climb', 'Craft', 'Handle Animal', 'Intimidate', 'Knowledge (Nature)', 'Perception', 'Ride', 'Survival', 'Swim',
-  ]),
-  'class:bard': new Set([
-    'Acrobatics', 'Appraise', 'Bluff', 'Climb', 'Craft', 'Diplomacy', 'Disguise', 'Escape Artist', 'Fly', 'Handle Animal',
-    'Knowledge (Arcana)', 'Knowledge (Dungeoneering)', 'Knowledge (Engineering)', 'Knowledge (Geography)', 'Knowledge (History)',
-    'Knowledge (Local)', 'Knowledge (Nature)', 'Knowledge (Nobility)', 'Knowledge (Planes)', 'Knowledge (Religion)', 'Linguistics',
-    'Perception', 'Perform', 'Profession', 'Sense Motive', 'Sleight of Hand', 'Spellcraft', 'Stealth', 'Use Magic Device',
-  ]),
-  'class:cleric': new Set([
-    'Appraise', 'Craft', 'Diplomacy', 'Heal', 'Knowledge (Arcana)', 'Knowledge (History)', 'Knowledge (Nobility)',
-    'Knowledge (Planes)', 'Knowledge (Religion)', 'Linguistics', 'Profession', 'Sense Motive', 'Spellcraft',
-  ]),
-  'class:druid': new Set([
-    'Climb', 'Craft', 'Fly', 'Handle Animal', 'Heal', 'Knowledge (Geography)', 'Knowledge (Nature)', 'Perception', 'Profession',
-    'Ride', 'Spellcraft', 'Survival', 'Swim',
-  ]),
-  'class:fighter': new Set([
-    'Climb', 'Craft', 'Handle Animal', 'Intimidate', 'Knowledge (Dungeoneering)', 'Knowledge (Engineering)', 'Profession', 'Ride',
-    'Survival', 'Swim',
-  ]),
-  'class:monk': new Set([
-    'Acrobatics', 'Climb', 'Craft', 'Escape Artist', 'Handle Animal', 'Intimidate', 'Knowledge (History)', 'Knowledge (Religion)',
-    'Perception', 'Profession', 'Ride', 'Sense Motive', 'Stealth', 'Swim',
-  ]),
-  'class:paladin': new Set([
-    'Craft', 'Diplomacy', 'Handle Animal', 'Heal', 'Knowledge (Nobility)', 'Knowledge (Religion)', 'Profession', 'Ride',
-    'Sense Motive', 'Spellcraft',
-  ]),
-  'class:ranger': new Set([
-    'Climb', 'Craft', 'Handle Animal', 'Heal', 'Intimidate', 'Knowledge (Dungeoneering)', 'Knowledge (Geography)',
-    'Knowledge (Nature)', 'Perception', 'Profession', 'Ride', 'Spellcraft', 'Stealth', 'Survival', 'Swim',
-  ]),
-  'class:rogue': new Set([
-    'Acrobatics', 'Appraise', 'Bluff', 'Climb', 'Craft', 'Diplomacy', 'Disable Device', 'Disguise', 'Escape Artist',
-    'Handle Animal', 'Intimidate', 'Knowledge (Dungeoneering)', 'Knowledge (Local)', 'Linguistics', 'Perception', 'Perform',
-    'Profession', 'Ride', 'Sense Motive', 'Sleight of Hand', 'Stealth', 'Swim', 'Use Magic Device',
-  ]),
-  'class:sorcerer': new Set([
-    'Appraise', 'Bluff', 'Craft', 'Fly', 'Intimidate', 'Knowledge (Arcana)', 'Profession', 'Spellcraft', 'Use Magic Device',
-  ]),
-  'class:wizard': new Set([
-    'Appraise', 'Craft', 'Fly', 'Knowledge (Arcana)', 'Knowledge (Dungeoneering)', 'Knowledge (Engineering)',
-    'Knowledge (Geography)', 'Knowledge (History)', 'Knowledge (Local)', 'Knowledge (Nature)', 'Knowledge (Nobility)',
-    'Knowledge (Planes)', 'Knowledge (Religion)', 'Linguistics', 'Profession', 'Spellcraft',
-  ]),
-};
-
-/**
  * Maps a `SKILLS` display name to the `skill:<snake_case>` wire id the
  * `set_skill_allocations` Tauri command expects (`SkillAllocation.skill_id`
  * in `character_input.rs`). Only 5 ids are actually recognized by the
@@ -130,30 +66,61 @@ export function skillIdFor(skillName: string): string {
   return `skill:${normalized}`;
 }
 
-/** Whether this module holds a class-skill list for `classId`. */
-export function hasClassSkillList(classId: string): boolean {
-  return classId in CLASS_SKILLS;
-}
-
-/** Held class ids with no class-skill list here: the Skills panel names them. */
-export function heldClassesWithoutClassSkillList(heldClasses: HeldClass[]): string[] {
-  return heldClasses.filter((held) => !hasClassSkillList(held.classId)).map((held) => held.classId);
-}
-
-/** Splits `classIds` (e.g. the served roster's) into those with and without a class-skill list. */
-export function classSkillListCoverage(classIds: readonly string[]): { covered: string[]; uncovered: string[] } {
-  return {
-    covered: classIds.filter(hasClassSkillList),
-    uncovered: classIds.filter((classId) => !hasClassSkillList(classId)),
-  };
+/**
+ * Whether the served class-skill answer grants `skillName` (a `SKILLS` display name): named
+ * directly by its package id (`skillIdFor` without the `skill:` prefix), or a member of a granted
+ * family (`Knowledge (Nature)` under `Knowledge`, `Craft` itself under `Craft`) -- the engine's own
+ * `ClassSkillView::contains` rule.
+ */
+export function classSkillFactsGrant(facts: ClassSkillFactsDto, skillName: string): boolean {
+  if (facts.status !== 'known') {
+    return false;
+  }
+  const id = skillIdFor(skillName).slice('skill:'.length);
+  return (
+    facts.skills.includes(id) ||
+    facts.groups.some((group) => {
+      const family = group.toLowerCase();
+      return id === family || id.startsWith(`${family}_`);
+    })
+  );
 }
 
 /**
- * Whether `skillName` is a class skill for any class the character holds (multiclass union).
- * A held class with no list contributes nothing here; `heldClassesWithoutClassSkillList` names it.
+ * SD-36 F6a: which skills are class skills for the classes a character holds, read from the
+ * engine's class-skill reader (`list_class_facts`). PF1's union rule: a skill is a class skill when
+ * ANY held class grants it. A held class the engine cannot answer contributes nothing and is named
+ * in `unanswered` (the Skills panel prints it) -- never silently scored all-cross-class.
  */
-export function isClassSkill(heldClasses: HeldClass[], skillName: string): boolean {
-  return heldClasses.some((held) => CLASS_SKILLS[held.classId]?.has(skillName));
+export interface ClassSkillLookup {
+  isClassSkill: (skillName: string) => boolean;
+  /** `{ classLabel, reason }` for each held class with no served class-skill answer. */
+  unanswered: Array<{ classLabel: string; reason: string }>;
+}
+
+export function classSkillLookup(heldClasses: readonly HeldClass[], state: ClassFactsState): ClassSkillLookup {
+  const known: ClassSkillFactsDto[] = [];
+  const unanswered: ClassSkillLookup['unanswered'] = [];
+  for (const held of heldClasses) {
+    const served = state.kind === 'loaded' ? state.byClassId.get(held.classId) : undefined;
+    const facts = served && served.level === held.level ? served.classSkills : undefined;
+    if (facts && facts.status === 'known') {
+      known.push(facts);
+    } else {
+      const reason =
+        facts?.reason ?? (state.kind === 'loading' ? 'loading' : state.kind === 'failed' ? state.notice : 'not served');
+      unanswered.push({ classLabel: held.classLabel, reason });
+    }
+  }
+  return {
+    isClassSkill: (skillName) => known.some((facts) => classSkillFactsGrant(facts, skillName)),
+    unanswered,
+  };
+}
+
+/** Whether `skillName` is a class skill under `lookup` (see {@link classSkillLookup}). */
+export function isClassSkill(lookup: ClassSkillLookup, skillName: string): boolean {
+  return lookup.isClassSkill(skillName);
 }
 
 /** PF1: a skill's total modifier is ability mod + ranks + (a +3 class-skill bonus once at least 1 rank is invested). */

@@ -1,11 +1,7 @@
-import {
-  classSkillListCoverage,
-  heldClassesWithoutClassSkillList,
-  isClassSkill,
-  skillIdFor,
-  totalSkillPointsAvailable,
-} from './skillsModel';
-import { classOptionsFromRoster, installClassRoster } from './classRoster';
+import { classSkillLookup, isClassSkill, skillIdFor, totalSkillPointsAvailable } from './skillsModel';
+import { LOADING_CLASS_FACTS, failedClassFacts, loadedClassFacts, type ClassFactsState } from './classFactsModel';
+import { classFactsWire } from '../testSupport/classFactsWire';
+import { installClassRoster } from './classRoster';
 import { LOADING_CLASS_CATALOG, setClassCatalog } from './classCatalog';
 import { classRosterWire } from '../testSupport/classRosterWire';
 import type { HeldClass } from './characterProgression';
@@ -35,51 +31,80 @@ function verifiesSkillIdForOnMultiWordNonParentheticalNames() {
   assertEqual(skillIdFor('Sleight of Hand'), 'skill:sleight_of_hand', 'a three-word skill name joins on underscore');
 }
 
+/** The engine's served facts for every roster class at level 1 (the committed live wire). */
+function servedAtLevel1(): ClassFactsState {
+  const wire = classFactsWire();
+  return loadedClassFacts({ classes: wire.classes.filter((facts) => facts.level === 1) });
+}
+
+function lookup(classIds: string[], state: ClassFactsState = servedAtLevel1()) {
+  return classSkillLookup(classIds.map(heldClass), state);
+}
+
 function verifiesIsClassSkillForAConfirmedBoundary() {
-  assert(isClassSkill([heldClass('class:fighter')], 'Climb'), 'Climb is a Fighter class skill');
-  assert(!isClassSkill([heldClass('class:fighter')], 'Bluff'), 'Bluff is not a Fighter class skill');
+  assert(isClassSkill(lookup(['class:fighter']), 'Climb'), 'Climb is a Fighter class skill');
+  assert(!isClassSkill(lookup(['class:fighter']), 'Bluff'), 'Bluff is not a Fighter class skill');
 }
 
 function verifiesIsClassSkillMulticlassUnion() {
-  const heldClasses = [heldClass('class:fighter'), heldClass('class:rogue')];
   assert(
-    isClassSkill(heldClasses, 'Bluff'),
+    isClassSkill(lookup(['class:fighter', 'class:rogue']), 'Bluff'),
     'a Fighter/Rogue multiclass counts Bluff as a class skill via the Rogue side of the union, even though Fighter alone does not grant it'
   );
 }
 
-// Arcanist became selectable in the class picker once the engine dump confirmed
-// it computes at every level 1-20. A selectable class with no entry in
-// CLASS_SKILLS silently reports *every* skill as a cross-class skill on the
-// Skills tab -- a wrong sheet, not an absent one -- so its list has to land
-// with it. ACG Arcanist: Appraise, Craft, Fly, Knowledge (all), Linguistics,
-// Profession, Spellcraft, Use Magic Device.
-function verifiesIsClassSkillCoversArcanist() {
-  const arcanist = [heldClass('class:arcanist')];
-  assert(isClassSkill(arcanist, 'Spellcraft'), 'Spellcraft is an Arcanist class skill');
-  assert(isClassSkill(arcanist, 'Use Magic Device'), 'Use Magic Device is an Arcanist class skill (unlike Wizard)');
-  assert(isClassSkill(arcanist, 'Knowledge (Planes)'), 'Arcanist gets Knowledge (all), including the Planes');
-  assert(isClassSkill(arcanist, 'Knowledge (Nature)'), 'Arcanist gets Knowledge (all), including Nature');
-  assert(!isClassSkill(arcanist, 'Stealth'), 'Stealth is not an Arcanist class skill');
-  assert(!isClassSkill(arcanist, 'Perception'), 'Perception is not an Arcanist class skill');
+/** A granted family covers each member: Wizard's Knowledge (all) and Craft. */
+function verifiesAGrantedFamilyCoversItsMembers() {
+  const wizard = lookup(['class:wizard']);
+  assert(isClassSkill(wizard, 'Knowledge (Planes)'), 'Wizard gets Knowledge (all), including the Planes');
+  assert(isClassSkill(wizard, 'Craft'), 'Wizard gets Craft');
+  assert(isClassSkill(wizard, 'Spellcraft'), 'Spellcraft is a Wizard class skill');
+  assert(!isClassSkill(wizard, 'Stealth') && !isClassSkill(wizard, 'Climb'), 'Stealth and Climb are not');
 }
 
 /**
- * SD-36 F4c: the Create picker offers the served roster (59 classes), and this module's class-skill
- * lists are a 12-row hand table. A held class with no list must be NAMED (the Skills panel prints
- * it), never silently scored as all-cross-class. Denominator: the 59 roster ids.
+ * SD-36 F6a: newly offered classes read their class skills off the engine, not a 12-row table.
+ * Samurai (UC) and Magus (UM) had no list in the deleted table.
  */
-function verifiesEveryRosterClassWithoutAClassSkillListIsNamed() {
-  const rosterIds = classOptionsFromRoster(classRosterWire()).map((option) => option.id);
-  const coverage = classSkillListCoverage(rosterIds);
-  assertEqual(coverage.covered.length + coverage.uncovered.length, 59, 'every roster id counted once');
-  assertEqual(coverage.covered.length, 12, 'roster classes with a class-skill list here');
-  assertEqual(coverage.uncovered.length, 47, 'roster classes without one');
-  for (const classId of coverage.uncovered) {
-    const named = heldClassesWithoutClassSkillList([{ classId, classLabel: classId, level: 1 }]);
-    assertEqual(named.join(','), classId, `${classId} is named, not silently all-cross-class`);
+function verifiesNewlyOfferedClassesHaveTheirClassSkills() {
+  const samurai = lookup(['class:samurai']);
+  assertEqual(samurai.unanswered.length, 0, 'Samurai answered');
+  assert(isClassSkill(samurai, 'Ride') && isClassSkill(samurai, 'Intimidate'), 'Samurai: Ride, Intimidate');
+  const magus = lookup(['class:magus']);
+  assert(isClassSkill(magus, 'Spellcraft') && isClassSkill(magus, 'Use Magic Device'), 'Magus: Spellcraft, UMD');
+}
+
+/**
+ * Denominator: the 59 roster classes, each at level 1, as `list_class_facts` serves them. The
+ * engine answers 50; the 9 ACG classes are Unknown by one mechanism (their class line's
+ * `Class|<Class>` grant is an unresolved reference in the converted package, so the reader's walk
+ * never reaches the class's own `<Class> ~ Class Skills` record) and each is NAMED with that reason.
+ */
+function verifiesEveryRosterClassIsAnsweredOrNamed() {
+  const served = classFactsWire().classes.filter((facts) => facts.level === 1);
+  assertEqual(served.length, 59, 'every roster class served once at level 1');
+  const answered = served.filter((facts) => facts.classSkills.status === 'known').map((facts) => facts.classId);
+  const unknown = served.filter((facts) => facts.classSkills.status === 'unknown').map((facts) => facts.classId);
+  assertEqual(answered.length, 50, 'roster classes the engine answers');
+  assertEqual(
+    unknown.join(','),
+    'class:arcanist,class:brawler,class:hunter,class:investigator,class:shaman,class:skald,class:slayer,class:swashbuckler,class:warpriest',
+    'the 9 Unknown roster classes'
+  );
+  for (const classId of unknown) {
+    const named = lookup([classId]).unanswered;
+    assertEqual(named.length, 1, `${classId} is named`);
+    assert(named[0].reason.includes('reaches no class-skill grant'), `${classId}: reason carried (${named[0].reason})`);
   }
-  assertEqual(heldClassesWithoutClassSkillList([heldClass('class:fighter')]).length, 0, 'Fighter has its list');
+}
+
+/** Loading and failure never score a skill as a class skill; both name every held class. */
+function verifiesLoadingAndFailureNameEveryClass() {
+  const loading = lookup(['class:fighter'], LOADING_CLASS_FACTS);
+  assert(!isClassSkill(loading, 'Climb'), 'no bonus while loading');
+  assertEqual(loading.unanswered[0].reason, 'loading', 'loading named');
+  const failed = lookup(['class:fighter'], failedClassFacts(new Error('boom')));
+  assertEqual(failed.unanswered[0].reason, 'class facts unavailable: boom', 'failure notice carried');
 }
 
 /** Skill points available read the served skill ranks; unknown ranks are Unknown, not 2. */
@@ -97,8 +122,10 @@ async function main() {
   verifiesSkillIdForOnMultiWordNonParentheticalNames();
   verifiesIsClassSkillForAConfirmedBoundary();
   verifiesIsClassSkillMulticlassUnion();
-  verifiesIsClassSkillCoversArcanist();
-  verifiesEveryRosterClassWithoutAClassSkillListIsNamed();
+  verifiesAGrantedFamilyCoversItsMembers();
+  verifiesNewlyOfferedClassesHaveTheirClassSkills();
+  verifiesEveryRosterClassIsAnsweredOrNamed();
+  verifiesLoadingAndFailureNameEveryClass();
   verifiesTotalSkillPointsAvailableReadsTheRoster();
 }
 

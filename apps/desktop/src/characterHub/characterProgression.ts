@@ -40,36 +40,18 @@ import { knownClass } from './classCatalog';
  * level-up engine.
  *
  * What remains in this module is deliberately not class-table data: skill
- * points per class, the universal PF1 benefits (a feat at every odd
+ * points per class (read off the served roster), the universal PF1 benefits (a feat at every odd
  * character level, an ability score increase every 4th), class-summary
  * parsing, and hit points.
  */
 
-export interface WeaponProficiency {
-  simple: boolean;
-  martial: boolean;
-  exotic: boolean;
-}
-
-// PF1 martial-weapon classes. Exotic weapons always require a feat, so no class
-// grants them by default. Restricted-list casters (wizard, druid, monk) are
-// approximated as simple-proficient at the category level.
-// `class:unchained_barbarian` joins the set on the same evidence as the
-// rest: its own corpus proficiency record grants `Weapon Prof ~ Simple`
-// AND `Weapon Prof ~ Martial` (SD-27, 2026-07-31). The other three
-// Unchained classes are deliberately absent -- the Unchained Monk and
-// Rogue and Summoner grant no Martial tier, exactly like their namesakes.
-const MARTIAL_WEAPON_CLASSES = new Set([
-  'class:fighter',
-  'class:barbarian',
-  'class:paladin',
-  'class:ranger',
-  'class:unchained_barbarian',
-]);
-
-export function classWeaponProficiency(classId: string): WeaponProficiency {
-  return { simple: true, martial: MARTIAL_WEAPON_CLASSES.has(classId), exotic: false };
-}
+/*
+ * SD-36 F6a: the hand-kept `MARTIAL_WEAPON_CLASSES` (5 ids) and `CASTER_CLASSES` (6 ids) tables
+ * that lived here are gone. With 59 classes offered they marked Samurai, Warrior, Magus and every
+ * other newly offered martial class "✗ Martial Weapons" and printed "—" for every caster outside
+ * the six. Weapon proficiency and caster level now come from the engine per held class
+ * (`list_class_facts`, folded by `classFactsModel.ts`).
+ */
 
 export interface HeldClass {
   classId: string;
@@ -232,25 +214,6 @@ export function formatHeldClasses(classSummary: string): string {
 /** Total character level across all held classes. */
 export function totalCharacterLevel(classSummary: string): number {
   return parseHeldClasses(classSummary).reduce((sum, held) => sum + held.level, 0);
-}
-
-// PF1 full spellcasting classes — their levels sum into the caster level.
-// Arcanist (ACG) is a full arcane caster like Wizard: caster level equals its
-// class level, so it belongs here the moment it becomes selectable.
-const CASTER_CLASSES = new Set([
-  'class:wizard',
-  'class:sorcerer',
-  'class:cleric',
-  'class:druid',
-  'class:bard',
-  'class:arcanist',
-]);
-
-/** Caster level: total levels in full spellcasting classes (0 for a non-caster). */
-export function casterLevel(classSummary: string): number {
-  return parseHeldClasses(classSummary)
-    .filter((held) => CASTER_CLASSES.has(held.classId))
-    .reduce((sum, held) => sum + held.level, 0);
 }
 
 /** The class's hit die, off the served roster; `null` when not known (never an assumed d8). */

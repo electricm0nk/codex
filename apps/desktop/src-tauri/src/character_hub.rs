@@ -4885,6 +4885,12 @@ fn class_hit_points_die(class_id: &str, books: &[String]) -> Option<u8> {
     books.iter().find_map(|book| chassis.get(&(book.clone(), slug.to_owned()))).and_then(|record| record.hit_die)
 }
 
+/// The hit die the hit-point fold reads for `class_id` (its census books' chassis record), for
+/// the read-only `list_class_facts` command.
+pub(crate) fn class_hit_die_for(class_id: &str) -> Option<u8> {
+    census_books(class_id).and_then(|books| class_hit_points_die(class_id, &books))
+}
+
 fn family_word(family: codex::rules_core::class_census::ClassFamily) -> String {
     serde_json::to_value(family)
         .ok()

@@ -1,0 +1,63 @@
+# cargo test --locked -j 8 --lib class_facts_sheet_rules -- --test-threads=8 --nocapture
+# (every_roster_class_answer_is_counted; roster = class_census::class_creation_roster(), each class at every level 1..=max_level)
+ROW | class:barbarian | weapons known | martial true | class skills known | caster not a caster |
+ROW | class:bard | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:cleric | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:druid | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:fighter | weapons known | martial true | class skills known | caster not a caster |
+ROW | class:monk | weapons known | martial false | class skills known | caster not a caster |
+ROW | class:paladin | weapons known | martial true | class skills known | caster caster from L4 |
+ROW | class:ranger | weapons known | martial true | class skills known | caster caster from L4 |
+ROW | class:rogue | weapons known | martial false | class skills known | caster not a caster |
+ROW | class:sorcerer | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:wizard | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:alchemist | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:cavalier | weapons known | martial true | class skills known | caster not a caster |
+ROW | class:inquisitor | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:oracle | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:summoner | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:witch | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:arcanist | weapons known | martial false | class skills L1: the converted closure of `arcanist` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list) | caster caster from L1 |
+ROW | class:bloodrager | weapons known | martial true | class skills known | caster caster from L1 |
+ROW | class:brawler | weapons known | martial false | class skills L1: the converted closure of `brawler` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list) | caster not a caster |
+ROW | class:hunter | weapons known | martial true | class skills L1: the converted closure of `hunter` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list) | caster caster from L1 |
+ROW | class:investigator | weapons known | martial false | class skills L1: the converted closure of `investigator` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list) | caster caster from L1 |
+ROW | class:shaman | weapons known | martial false | class skills L1: the converted closure of `shaman` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list) | caster caster from L1 |
+ROW | class:skald | weapons known | martial true | class skills L1: the converted closure of `skald` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list) | caster caster from L1 |
+ROW | class:slayer | weapons known | martial true | class skills L1: the converted closure of `slayer` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list) | caster not a caster |
+ROW | class:swashbuckler | weapons known | martial true | class skills L1: the converted closure of `swashbuckler` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list) | caster not a caster |
+ROW | class:warpriest | weapons known | martial true | class skills L1: the converted closure of `warpriest` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list) | caster caster from L1 |
+ROW | class:unchained_barbarian | weapons known | martial true | class skills known | caster not a caster |
+ROW | class:unchained_monk | weapons known | martial false | class skills known | caster not a caster |
+ROW | class:unchained_rogue | weapons known | martial false | class skills known | caster not a caster |
+ROW | class:unchained_summoner | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:gunslinger | weapons known | martial true | class skills known | caster not a caster |
+ROW | class:ninja | weapons known | martial false | class skills known | caster not a caster |
+ROW | class:samurai | weapons known | martial true | class skills known | caster not a caster |
+ROW | class:aegis | weapons known | martial true | class skills known | caster not a caster |
+ROW | class:antipaladin | weapons known | martial true | class skills known | caster caster from L4 |
+ROW | class:cryptic | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:dread | weapons known | martial true | class skills known | caster caster from L1 |
+ROW | class:kineticist | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:magus | weapons known | martial true | class skills known | caster caster from L1 |
+ROW | class:marksman | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:medium | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:mesmerist | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:occultist | weapons known | martial true | class skills known | caster caster from L1 |
+ROW | class:psion | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:psychic | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:psychic_warrior | weapons known | martial true | class skills known | caster caster from L1 |
+ROW | class:shifter | weapons known | martial false | class skills known | caster not a caster |
+ROW | class:soulknife | weapons known | martial false | class skills known | caster not a caster |
+ROW | class:spiritualist | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:tactician | weapons known | martial true | class skills known | caster caster from L1 |
+ROW | class:vigilante | weapons known | martial true | class skills known | caster not a caster |
+ROW | class:vitalist | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:wilder | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:adept | weapons known | martial false | class skills known | caster caster from L1 |
+ROW | class:aristocrat | weapons known | martial true | class skills known | caster not a caster |
+ROW | class:commoner | weapons known | martial false | class skills known | caster not a caster |
+ROW | class:expert | weapons known | martial false | class skills known | caster not a caster |
+ROW | class:warrior | weapons known | martial true | class skills known | caster not a caster |
+roster 59: weapon proficiency known at every level 59; class skills known at every level 50; caster level answered at every level 59 (37 casters)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 2733 filtered out; finished in 218.22s

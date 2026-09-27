@@ -1,0 +1,5428 @@
+{
+  "classes": [
+    {
+      "classId": "class:barbarian",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`barbarian` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "handle_animal",
+          "intimidate",
+          "knowledge_nature",
+          "perception",
+          "ride",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft"
+        ],
+        "reason": null
+      },
+      "hitDie": 12
+    },
+    {
+      "classId": "class:barbarian",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`barbarian` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "handle_animal",
+          "intimidate",
+          "knowledge_nature",
+          "perception",
+          "ride",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft"
+        ],
+        "reason": null
+      },
+      "hitDie": 12
+    },
+    {
+      "classId": "class:bard",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Longsword",
+          "Rapier",
+          "Sap",
+          "Sword (Short)",
+          "Shortbow",
+          "Whip"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "core_rulebook:class:bard#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "spellcraft",
+          "stealth",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:bard",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Longsword",
+          "Rapier",
+          "Sap",
+          "Sword (Short)",
+          "Shortbow",
+          "Whip"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "core_rulebook:class:bard#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "spellcraft",
+          "stealth",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:cleric",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "core_rulebook:class:cleric#bonus5"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "diplomacy",
+          "heal",
+          "knowledge_arcana",
+          "knowledge_history",
+          "knowledge_nobility",
+          "knowledge_planes",
+          "knowledge_religion",
+          "linguistics",
+          "sense_motive",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:cleric",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "core_rulebook:class:cleric#bonus5"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "diplomacy",
+          "heal",
+          "knowledge_arcana",
+          "knowledge_history",
+          "knowledge_nobility",
+          "knowledge_planes",
+          "knowledge_religion",
+          "linguistics",
+          "sense_motive",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:druid",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Dagger",
+          "Dart",
+          "Quarterstaff",
+          "Scimitar",
+          "Scythe",
+          "Sickle",
+          "Shortspear",
+          "Sling",
+          "Spear"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "core_rulebook:class:druid#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "fly",
+          "handle_animal",
+          "heal",
+          "knowledge_geography",
+          "knowledge_nature",
+          "perception",
+          "ride",
+          "spellcraft",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:druid",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Dagger",
+          "Dart",
+          "Quarterstaff",
+          "Scimitar",
+          "Scythe",
+          "Sickle",
+          "Shortspear",
+          "Sling",
+          "Spear"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "core_rulebook:class:druid#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "fly",
+          "handle_animal",
+          "heal",
+          "knowledge_geography",
+          "knowledge_nature",
+          "perception",
+          "ride",
+          "spellcraft",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:fighter",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`fighter` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "handle_animal",
+          "intimidate",
+          "knowledge_dungeoneering",
+          "knowledge_engineering",
+          "ride",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:fighter",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`fighter` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "handle_animal",
+          "intimidate",
+          "knowledge_dungeoneering",
+          "knowledge_engineering",
+          "ride",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:monk",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Crossbow (Light)",
+          "Crossbow (Heavy)",
+          "Dagger",
+          "Handaxe",
+          "Javelin",
+          "Kama",
+          "Nunchaku",
+          "Quarterstaff",
+          "Sai",
+          "Shortspear",
+          "Sword (Short)",
+          "Shuriken",
+          "Siangham",
+          "Sling",
+          "Spear",
+          "Unarmed Strike",
+          "Flurry of Blows",
+          "Sword (Temple)"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`monk` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "escape_artist",
+          "intimidate",
+          "knowledge_history",
+          "knowledge_religion",
+          "perception",
+          "ride",
+          "sense_motive",
+          "stealth",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": null
+    },
+    {
+      "classId": "class:monk",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Crossbow (Light)",
+          "Crossbow (Heavy)",
+          "Dagger",
+          "Handaxe",
+          "Javelin",
+          "Kama",
+          "Nunchaku",
+          "Quarterstaff",
+          "Sai",
+          "Shortspear",
+          "Sword (Short)",
+          "Shuriken",
+          "Siangham",
+          "Sling",
+          "Spear",
+          "Unarmed Strike",
+          "Flurry of Blows",
+          "Sword (Temple)"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`monk` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "escape_artist",
+          "intimidate",
+          "knowledge_history",
+          "knowledge_religion",
+          "perception",
+          "ride",
+          "sense_motive",
+          "stealth",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": null
+    },
+    {
+      "classId": "class:paladin",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "core_rulebook:class:paladin#bonus5 resolves to -2 at level 1: no caster level yet"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "diplomacy",
+          "handle_animal",
+          "heal",
+          "knowledge_nobility",
+          "knowledge_religion",
+          "ride",
+          "sense_motive",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:paladin",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 4,
+        "source": "core_rulebook:class:paladin#bonus5"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "diplomacy",
+          "handle_animal",
+          "heal",
+          "knowledge_nobility",
+          "knowledge_religion",
+          "ride",
+          "sense_motive",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:ranger",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "core_rulebook:class:ranger#bonus4 resolves to -2 at level 1: no caster level yet"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "handle_animal",
+          "heal",
+          "intimidate",
+          "knowledge_dungeoneering",
+          "knowledge_geography",
+          "knowledge_nature",
+          "perception",
+          "ride",
+          "spellcraft",
+          "stealth",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:ranger",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 4,
+        "source": "core_rulebook:class:ranger#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "handle_animal",
+          "heal",
+          "intimidate",
+          "knowledge_dungeoneering",
+          "knowledge_geography",
+          "knowledge_nature",
+          "perception",
+          "ride",
+          "spellcraft",
+          "stealth",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:rogue",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Crossbow (Hand)",
+          "Rapier",
+          "Sap",
+          "Shortbow",
+          "Sword (Short)"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`rogue` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "knowledge_dungeoneering",
+          "knowledge_local",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "stealth",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:rogue",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Crossbow (Hand)",
+          "Rapier",
+          "Sap",
+          "Shortbow",
+          "Sword (Short)"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`rogue` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "knowledge_dungeoneering",
+          "knowledge_local",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "stealth",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:sorcerer",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "core_rulebook:class:sorcerer#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "bluff",
+          "fly",
+          "intimidate",
+          "knowledge_arcana",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:sorcerer",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "core_rulebook:class:sorcerer#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "bluff",
+          "fly",
+          "intimidate",
+          "knowledge_arcana",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:wizard",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Dagger",
+          "Crossbow (Heavy)",
+          "Crossbow (Light)",
+          "Quarterstaff"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "core_rulebook:class:wizard#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "fly",
+          "linguistics",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:wizard",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Dagger",
+          "Crossbow (Heavy)",
+          "Crossbow (Light)",
+          "Quarterstaff"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "core_rulebook:class:wizard#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "fly",
+          "linguistics",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:alchemist",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Bomb"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_players_guide:class:alchemist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "disable_device",
+          "fly",
+          "heal",
+          "knowledge_arcana",
+          "knowledge_nature",
+          "perception",
+          "sleight_of_hand",
+          "spellcraft",
+          "survival",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:alchemist",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Bomb"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_players_guide:class:alchemist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "disable_device",
+          "fly",
+          "heal",
+          "knowledge_arcana",
+          "knowledge_nature",
+          "perception",
+          "sleight_of_hand",
+          "spellcraft",
+          "survival",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:cavalier",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`cavalier` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "climb",
+          "diplomacy",
+          "handle_animal",
+          "intimidate",
+          "ride",
+          "sense_motive",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:cavalier",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`cavalier` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "climb",
+          "diplomacy",
+          "handle_animal",
+          "intimidate",
+          "ride",
+          "sense_motive",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:inquisitor",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Crossbow (Hand)",
+          "Longbow",
+          "Crossbow (Repeating Heavy)",
+          "Crossbow (Repeating Light)",
+          "Shortbow"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_players_guide:class:inquisitor#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disguise",
+          "heal",
+          "intimidate",
+          "knowledge_arcana",
+          "knowledge_dungeoneering",
+          "knowledge_nature",
+          "knowledge_planes",
+          "knowledge_religion",
+          "perception",
+          "ride",
+          "sense_motive",
+          "spellcraft",
+          "stealth",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:inquisitor",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Crossbow (Hand)",
+          "Longbow",
+          "Crossbow (Repeating Heavy)",
+          "Crossbow (Repeating Light)",
+          "Shortbow"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_players_guide:class:inquisitor#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disguise",
+          "heal",
+          "intimidate",
+          "knowledge_arcana",
+          "knowledge_dungeoneering",
+          "knowledge_nature",
+          "knowledge_planes",
+          "knowledge_religion",
+          "perception",
+          "ride",
+          "sense_motive",
+          "spellcraft",
+          "stealth",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:oracle",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_players_guide:class:oracle#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "diplomacy",
+          "heal",
+          "knowledge_history",
+          "knowledge_planes",
+          "knowledge_religion",
+          "sense_motive",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:oracle",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_players_guide:class:oracle#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "diplomacy",
+          "heal",
+          "knowledge_history",
+          "knowledge_planes",
+          "knowledge_religion",
+          "sense_motive",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:summoner",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_players_guide:class:summoner#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "fly",
+          "handle_animal",
+          "linguistics",
+          "ride",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:summoner",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_players_guide:class:summoner#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "fly",
+          "handle_animal",
+          "linguistics",
+          "ride",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:witch",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_players_guide:class:witch#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "fly",
+          "heal",
+          "intimidate",
+          "knowledge_arcana",
+          "knowledge_history",
+          "knowledge_nature",
+          "knowledge_planes",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:witch",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_players_guide:class:witch#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "fly",
+          "heal",
+          "intimidate",
+          "knowledge_arcana",
+          "knowledge_history",
+          "knowledge_nature",
+          "knowledge_planes",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:arcanist",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_class_guide:class:arcanist#bonus4"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `arcanist` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:arcanist",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_class_guide:class:arcanist#bonus4"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `arcanist` at level 7 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:bloodrager",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_class_guide:class:bloodrager#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "handle_animal",
+          "intimidate",
+          "knowledge_arcana",
+          "perception",
+          "ride",
+          "spellcraft",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:bloodrager",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_class_guide:class:bloodrager#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "handle_animal",
+          "intimidate",
+          "knowledge_arcana",
+          "perception",
+          "ride",
+          "spellcraft",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:brawler",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Handaxe",
+          "Sword (Short)"
+        ],
+        "groups": [
+          "Close"
+        ],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`brawler` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `brawler` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:brawler",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Handaxe",
+          "Sword (Short)"
+        ],
+        "groups": [
+          "Close"
+        ],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`brawler` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `brawler` at level 7 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:hunter",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_class_guide:class:hunter#bonus4"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `hunter` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:hunter",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_class_guide:class:hunter#bonus4"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `hunter` at level 7 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:investigator",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Crossbow (Hand)",
+          "Rapier",
+          "Sap",
+          "Shortbow",
+          "Sword (Short)",
+          "Sword Cane"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_class_guide:class:investigator#bonus4"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `investigator` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:investigator",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Crossbow (Hand)",
+          "Rapier",
+          "Sap",
+          "Shortbow",
+          "Sword (Short)",
+          "Sword Cane"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_class_guide:class:investigator#bonus4"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `investigator` at level 7 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:shaman",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_class_guide:class:shaman#bonus5"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `shaman` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:shaman",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_class_guide:class:shaman#bonus5"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `shaman` at level 7 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:skald",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_class_guide:class:skald#bonus4"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `skald` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:skald",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_class_guide:class:skald#bonus4"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `skald` at level 7 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:slayer",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`slayer` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `slayer` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:slayer",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`slayer` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `slayer` at level 7 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:swashbuckler",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`swashbuckler` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `swashbuckler` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:swashbuckler",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`swashbuckler` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `swashbuckler` at level 7 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:warpriest",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_class_guide:class:warpriest#bonus4"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `warpriest` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:warpriest",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_class_guide:class:warpriest#bonus4"
+      },
+      "classSkills": {
+        "status": "unknown",
+        "skills": [],
+        "groups": [],
+        "reason": "the converted closure of `warpriest` at level 7 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)"
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:unchained_barbarian",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`unchained_barbarian` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "handle_animal",
+          "intimidate",
+          "knowledge_nature",
+          "perception",
+          "ride",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft"
+        ],
+        "reason": null
+      },
+      "hitDie": null
+    },
+    {
+      "classId": "class:unchained_barbarian",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`unchained_barbarian` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "handle_animal",
+          "intimidate",
+          "knowledge_nature",
+          "perception",
+          "ride",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft"
+        ],
+        "reason": null
+      },
+      "hitDie": null
+    },
+    {
+      "classId": "class:unchained_monk",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Crossbow (Light)",
+          "Crossbow (Heavy)",
+          "Dagger",
+          "Handaxe",
+          "Javelin",
+          "Kama",
+          "Nunchaku",
+          "Quarterstaff",
+          "Sai",
+          "Sword (Short)",
+          "Shortspear",
+          "Shuriken",
+          "Siangham",
+          "Sling",
+          "Spear",
+          "Flurry of Blows",
+          "Sword (Temple)"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`unchained_monk` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "escape_artist",
+          "intimidate",
+          "knowledge_history",
+          "knowledge_religion",
+          "perception",
+          "ride",
+          "sense_motive",
+          "stealth",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": null
+    },
+    {
+      "classId": "class:unchained_monk",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Crossbow (Light)",
+          "Crossbow (Heavy)",
+          "Dagger",
+          "Handaxe",
+          "Javelin",
+          "Kama",
+          "Nunchaku",
+          "Quarterstaff",
+          "Sai",
+          "Sword (Short)",
+          "Shortspear",
+          "Shuriken",
+          "Siangham",
+          "Sling",
+          "Spear",
+          "Flurry of Blows",
+          "Sword (Temple)"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`unchained_monk` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "escape_artist",
+          "intimidate",
+          "knowledge_history",
+          "knowledge_religion",
+          "perception",
+          "ride",
+          "sense_motive",
+          "stealth",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": null
+    },
+    {
+      "classId": "class:unchained_rogue",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Crossbow (Hand)",
+          "Rapier",
+          "Sap",
+          "Shortbow",
+          "Sword (Short)"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`unchained_rogue` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "knowledge_dungeoneering",
+          "knowledge_local",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "stealth",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": null
+    },
+    {
+      "classId": "class:unchained_rogue",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Crossbow (Hand)",
+          "Rapier",
+          "Sap",
+          "Shortbow",
+          "Sword (Short)"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`unchained_rogue` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "knowledge_dungeoneering",
+          "knowledge_local",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "stealth",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": null
+    },
+    {
+      "classId": "class:unchained_summoner",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "advanced_players_guide:class:summoner#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "fly",
+          "handle_animal",
+          "linguistics",
+          "ride",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": null
+    },
+    {
+      "classId": "class:unchained_summoner",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "advanced_players_guide:class:summoner#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "fly",
+          "handle_animal",
+          "linguistics",
+          "ride",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": null
+    },
+    {
+      "classId": "class:gunslinger",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`gunslinger` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "bluff",
+          "climb",
+          "handle_animal",
+          "heal",
+          "intimidate",
+          "knowledge_engineering",
+          "knowledge_local",
+          "perception",
+          "ride",
+          "sleight_of_hand",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:gunslinger",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`gunslinger` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "bluff",
+          "climb",
+          "handle_animal",
+          "heal",
+          "intimidate",
+          "knowledge_engineering",
+          "knowledge_local",
+          "perception",
+          "ride",
+          "sleight_of_hand",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:ninja",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Shortbow",
+          "Sword (Short)",
+          "Kama",
+          "Kusarigama (Sickle and Chain)",
+          "Nunchaku",
+          "Sai",
+          "Shuriken",
+          "Siangham",
+          "Wakizashi",
+          "Unarmed Strike",
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`ninja` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "knowledge_local",
+          "knowledge_nobility",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "stealth",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:ninja",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Shortbow",
+          "Sword (Short)",
+          "Kama",
+          "Kusarigama (Sickle and Chain)",
+          "Nunchaku",
+          "Sai",
+          "Shuriken",
+          "Siangham",
+          "Wakizashi",
+          "Unarmed Strike",
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`ninja` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "knowledge_local",
+          "knowledge_nobility",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "stealth",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:samurai",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [
+          {
+            "label": "Samurai",
+            "members": [
+              "Katana",
+              "Naginata",
+              "Wakizashi"
+            ]
+          }
+        ],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`samurai` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "climb",
+          "diplomacy",
+          "handle_animal",
+          "intimidate",
+          "ride",
+          "samurai_mount",
+          "sense_motive",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:samurai",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [
+          {
+            "label": "Samurai",
+            "members": [
+              "Katana",
+              "Naginata",
+              "Wakizashi"
+            ]
+          }
+        ],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`samurai` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "climb",
+          "diplomacy",
+          "handle_animal",
+          "intimidate",
+          "ride",
+          "samurai_mount",
+          "sense_motive",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:aegis",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`aegis` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "climb",
+          "fly",
+          "intimidate",
+          "knowledge_engineering",
+          "knowledge_psionics",
+          "spellcraft",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:aegis",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`aegis` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "climb",
+          "fly",
+          "intimidate",
+          "knowledge_engineering",
+          "knowledge_psionics",
+          "spellcraft",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:antipaladin",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [
+          {
+            "label": "Auto",
+            "members": [
+              "Grapple",
+              "Spells (Ray)",
+              "Spells (Touch)",
+              "Splash Weapon",
+              "Unarmed Strike"
+            ]
+          }
+        ],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "advanced_players_guide:class:antipaladin#bonus4 resolves to -2 at level 1: no caster level yet"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "disguise",
+          "handle_animal",
+          "intimidate",
+          "knowledge_religion",
+          "ride",
+          "sense_motive",
+          "spellcraft",
+          "stealth"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:antipaladin",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [
+          {
+            "label": "Auto",
+            "members": [
+              "Grapple",
+              "Spells (Ray)",
+              "Spells (Touch)",
+              "Splash Weapon",
+              "Unarmed Strike"
+            ]
+          }
+        ],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 4,
+        "source": "advanced_players_guide:class:antipaladin#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "disguise",
+          "handle_animal",
+          "intimidate",
+          "knowledge_religion",
+          "ride",
+          "sense_motive",
+          "spellcraft",
+          "stealth"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:cryptic",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Rapier",
+          "Shortbow",
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "ultimate_psionics:class:cryptic#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "autohypnosis",
+          "climb",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "spellcraft",
+          "stealth",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:cryptic",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Rapier",
+          "Shortbow",
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "ultimate_psionics:class:cryptic#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "autohypnosis",
+          "climb",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "spellcraft",
+          "stealth",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:dread",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "ultimate_psionics:class:dread#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "bluff",
+          "climb",
+          "escape_artist",
+          "intimidate",
+          "knowledge_psionics",
+          "perception",
+          "sense_motive",
+          "spellcraft",
+          "stealth",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:dread",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "ultimate_psionics:class:dread#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "bluff",
+          "climb",
+          "escape_artist",
+          "intimidate",
+          "knowledge_psionics",
+          "perception",
+          "sense_motive",
+          "spellcraft",
+          "stealth",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:kineticist",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "occult_adventures:class:kineticist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "heal",
+          "intimidate",
+          "perception",
+          "stealth",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:kineticist",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "occult_adventures:class:kineticist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "heal",
+          "intimidate",
+          "perception",
+          "stealth",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:magus",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [
+          {
+            "label": "Auto",
+            "members": [
+              "Grapple",
+              "Spells (Ray)",
+              "Spells (Touch)",
+              "Splash Weapon",
+              "Unarmed Strike"
+            ]
+          }
+        ],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "ultimate_magic:class:magus#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "fly",
+          "intimidate",
+          "knowledge_arcana",
+          "knowledge_dungeoneering",
+          "knowledge_planes",
+          "ride",
+          "spellcraft",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:magus",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [
+          {
+            "label": "Auto",
+            "members": [
+              "Grapple",
+              "Spells (Ray)",
+              "Spells (Touch)",
+              "Splash Weapon",
+              "Unarmed Strike"
+            ]
+          }
+        ],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "ultimate_magic:class:magus#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "fly",
+          "intimidate",
+          "knowledge_arcana",
+          "knowledge_dungeoneering",
+          "knowledge_planes",
+          "ride",
+          "spellcraft",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:marksman",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike",
+          "Martial Ranged"
+        ],
+        "groups": [],
+        "sets": [
+          {
+            "label": "Light.Martial",
+            "members": [
+              "Axe (Throwing)",
+              "Butterfly Sword",
+              "Dogslicer",
+              "Gladius",
+              "Hammer (Light)",
+              "Handaxe",
+              "Iron Brush",
+              "Jutte",
+              "Kerambit",
+              "Kukri",
+              "Lungchuan Tamo",
+              "Pick (Light)",
+              "Sap",
+              "Sea-Knife",
+              "Shang Gou",
+              "Spiked Armor",
+              "Starknife",
+              "Sword (Short)",
+              "Tonfa",
+              "War Razor",
+              "Wushu Dart"
+            ]
+          },
+          {
+            "label": "Martial.Thrown",
+            "members": [
+              "Amentum",
+              "Atlatl",
+              "Axe (Throwing)",
+              "Chakram",
+              "Hammer (Light)",
+              "Hunga Munga",
+              "Iron Brush",
+              "Lungchuan Tamo",
+              "Poisoned Sand Tube",
+              "Sibat",
+              "Starknife",
+              "Trident",
+              "Wushu Dart"
+            ]
+          }
+        ],
+        "printed": [
+          "Sling Staff (Halfling) -- only when: requires Weapon Familiarity ~ Halfling from special ability (no record in the corpus)"
+        ],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "ultimate_psionics:class:marksman#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "climb",
+          "escape_artist",
+          "intimidate",
+          "knowledge_psionics",
+          "perception",
+          "sense_motive",
+          "stealth",
+          "survival",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:marksman",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike",
+          "Martial Ranged"
+        ],
+        "groups": [],
+        "sets": [
+          {
+            "label": "Light.Martial",
+            "members": [
+              "Axe (Throwing)",
+              "Butterfly Sword",
+              "Dogslicer",
+              "Gladius",
+              "Hammer (Light)",
+              "Handaxe",
+              "Iron Brush",
+              "Jutte",
+              "Kerambit",
+              "Kukri",
+              "Lungchuan Tamo",
+              "Pick (Light)",
+              "Sap",
+              "Sea-Knife",
+              "Shang Gou",
+              "Spiked Armor",
+              "Starknife",
+              "Sword (Short)",
+              "Tonfa",
+              "War Razor",
+              "Wushu Dart"
+            ]
+          },
+          {
+            "label": "Martial.Thrown",
+            "members": [
+              "Amentum",
+              "Atlatl",
+              "Axe (Throwing)",
+              "Chakram",
+              "Hammer (Light)",
+              "Hunga Munga",
+              "Iron Brush",
+              "Lungchuan Tamo",
+              "Poisoned Sand Tube",
+              "Sibat",
+              "Starknife",
+              "Trident",
+              "Wushu Dart"
+            ]
+          }
+        ],
+        "printed": [
+          "Sling Staff (Halfling) -- only when: requires Weapon Familiarity ~ Halfling from special ability (no record in the corpus)"
+        ],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "ultimate_psionics:class:marksman#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "climb",
+          "escape_artist",
+          "intimidate",
+          "knowledge_psionics",
+          "perception",
+          "sense_motive",
+          "stealth",
+          "survival",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:medium",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "occult_adventures:class:medium#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "diplomacy",
+          "fly",
+          "heal",
+          "intimidate",
+          "knowledge_arcana",
+          "knowledge_planes",
+          "knowledge_religion",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:medium",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "occult_adventures:class:medium#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "diplomacy",
+          "fly",
+          "heal",
+          "intimidate",
+          "knowledge_arcana",
+          "knowledge_planes",
+          "knowledge_religion",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:mesmerist",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Crossbow (Hand)",
+          "Sap",
+          "Sword Cane",
+          "Whip"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "occult_adventures:class:mesmerist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "bluff",
+          "diplomacy",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "knowledge_arcana",
+          "knowledge_dungeoneering",
+          "knowledge_history",
+          "knowledge_local",
+          "knowledge_nobility",
+          "knowledge_religion",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "spellcraft",
+          "stealth",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:mesmerist",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Crossbow (Hand)",
+          "Sap",
+          "Sword Cane",
+          "Whip"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "occult_adventures:class:mesmerist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "bluff",
+          "diplomacy",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "knowledge_arcana",
+          "knowledge_dungeoneering",
+          "knowledge_history",
+          "knowledge_local",
+          "knowledge_nobility",
+          "knowledge_religion",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "spellcraft",
+          "stealth",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:occultist",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "occult_adventures:class:occultist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "fly",
+          "knowledge_arcana",
+          "knowledge_engineering",
+          "knowledge_history",
+          "knowledge_planes",
+          "knowledge_religion",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:occultist",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "occult_adventures:class:occultist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "fly",
+          "knowledge_arcana",
+          "knowledge_engineering",
+          "knowledge_history",
+          "knowledge_planes",
+          "knowledge_religion",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "sleight_of_hand",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:psion",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Dagger",
+          "Crossbow (Heavy)",
+          "Crossbow (Light)",
+          "Quarterstaff",
+          "Shortspear",
+          "Unarmed Strike",
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "ultimate_psionics:class:psion#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "heal",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:psion",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Dagger",
+          "Crossbow (Heavy)",
+          "Crossbow (Light)",
+          "Quarterstaff",
+          "Shortspear",
+          "Unarmed Strike",
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "ultimate_psionics:class:psion#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "heal",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:psychic",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "occult_adventures:class:psychic#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "diplomacy",
+          "fly",
+          "intimidate",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:psychic",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "occult_adventures:class:psychic#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "diplomacy",
+          "fly",
+          "intimidate",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "spellcraft"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:psychic_warrior",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "ultimate_psionics:class:psychic_warrior#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "climb",
+          "knowledge_psionics",
+          "perception",
+          "ride",
+          "spellcraft",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:psychic_warrior",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "ultimate_psionics:class:psychic_warrior#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "climb",
+          "knowledge_psionics",
+          "perception",
+          "ride",
+          "spellcraft",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:shifter",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Dagger",
+          "Dart",
+          "Quarterstaff",
+          "Scimitar",
+          "Scythe",
+          "Sickle",
+          "Shortspear",
+          "Sling",
+          "Spear"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`shifter` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "fly",
+          "handle_animal",
+          "knowledge_nature",
+          "perception",
+          "ride",
+          "stealth",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:shifter",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [],
+        "named": [
+          "Club",
+          "Dagger",
+          "Dart",
+          "Quarterstaff",
+          "Scimitar",
+          "Scythe",
+          "Sickle",
+          "Shortspear",
+          "Sling",
+          "Spear"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`shifter` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "climb",
+          "fly",
+          "handle_animal",
+          "knowledge_nature",
+          "perception",
+          "ride",
+          "stealth",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:soulknife",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Mind Blade",
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`soulknife` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "climb",
+          "intimidate",
+          "knowledge_psionics",
+          "perception",
+          "stealth",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:soulknife",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Mind Blade",
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`soulknife` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "climb",
+          "intimidate",
+          "knowledge_psionics",
+          "perception",
+          "stealth",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:spiritualist",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Kukri",
+          "Sap",
+          "Scythe"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "occult_adventures:class:spiritualist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "fly",
+          "heal",
+          "intimidate",
+          "linguistics",
+          "sense_motive",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:spiritualist",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Kukri",
+          "Sap",
+          "Scythe"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "occult_adventures:class:spiritualist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "bluff",
+          "fly",
+          "heal",
+          "intimidate",
+          "linguistics",
+          "sense_motive",
+          "spellcraft",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:tactician",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "ultimate_psionics:class:tactician#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "autohypnosis",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "intimidate",
+          "knowledge_engineering",
+          "knowledge_history",
+          "knowledge_psionics",
+          "linguistics",
+          "perception",
+          "ride",
+          "sense_motive",
+          "spellcraft",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:tactician",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "ultimate_psionics:class:tactician#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "autohypnosis",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "intimidate",
+          "knowledge_engineering",
+          "knowledge_history",
+          "knowledge_psionics",
+          "linguistics",
+          "perception",
+          "ride",
+          "sense_motive",
+          "spellcraft",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:vigilante",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`vigilante` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "knowledge_dungeoneering",
+          "knowledge_engineering",
+          "knowledge_local",
+          "knowledge_nobility",
+          "perception",
+          "ride",
+          "sense_motive",
+          "sleight_of_hand",
+          "stealth",
+          "survival",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:vigilante",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "staticRow",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`vigilante` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "intimidate",
+          "knowledge_dungeoneering",
+          "knowledge_engineering",
+          "knowledge_local",
+          "knowledge_nobility",
+          "perception",
+          "ride",
+          "sense_motive",
+          "sleight_of_hand",
+          "stealth",
+          "survival",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:vitalist",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "ultimate_psionics:class:vitalist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "autohypnosis",
+          "bluff",
+          "diplomacy",
+          "heal",
+          "intimidate",
+          "knowledge_history",
+          "knowledge_local",
+          "knowledge_psionics",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "spellcraft",
+          "survival"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:vitalist",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "ultimate_psionics:class:vitalist#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "autohypnosis",
+          "bluff",
+          "diplomacy",
+          "heal",
+          "intimidate",
+          "knowledge_history",
+          "knowledge_local",
+          "knowledge_psionics",
+          "linguistics",
+          "perception",
+          "sense_motive",
+          "spellcraft",
+          "survival"
+        ],
+        "groups": [
+          "Craft",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:wilder",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "ultimate_psionics:class:wilder#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "escape_artist",
+          "intimidate",
+          "knowledge_psionics",
+          "perception",
+          "sense_motive",
+          "spellcraft",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:wilder",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "ultimate_psionics:class:wilder#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "autohypnosis",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "escape_artist",
+          "intimidate",
+          "knowledge_psionics",
+          "perception",
+          "sense_motive",
+          "spellcraft",
+          "swim",
+          "use_magic_device"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:adept",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 1,
+        "source": "core_rulebook:class:adept#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "handle_animal",
+          "heal",
+          "spellcraft",
+          "survival"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:adept",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "caster",
+        "value": 7,
+        "source": "core_rulebook:class:adept#bonus4"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "handle_animal",
+          "heal",
+          "spellcraft",
+          "survival"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:aristocrat",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`aristocrat` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "bluff",
+          "diplomacy",
+          "disguise",
+          "handle_animal",
+          "intimidate",
+          "linguistics",
+          "perception",
+          "ride",
+          "sense_motive",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:aristocrat",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`aristocrat` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "appraise",
+          "bluff",
+          "diplomacy",
+          "disguise",
+          "handle_animal",
+          "intimidate",
+          "linguistics",
+          "perception",
+          "ride",
+          "sense_motive",
+          "survival",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Knowledge",
+          "Perform",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:commoner",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [
+          "Weapon and Armor Proficiency: one weapon of the player's choice (39 options)"
+        ],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`commoner` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "handle_animal",
+          "perception",
+          "ride",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:commoner",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [
+          "Weapon and Armor Proficiency: one weapon of the player's choice (39 options)"
+        ],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`commoner` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "handle_animal",
+          "perception",
+          "ride",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 6
+    },
+    {
+      "classId": "class:expert",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`expert` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "fly",
+          "handle_animal"
+        ],
+        "groups": [],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:expert",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`expert` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "acrobatics",
+          "appraise",
+          "bluff",
+          "climb",
+          "diplomacy",
+          "disable_device",
+          "disguise",
+          "escape_artist",
+          "fly",
+          "handle_animal"
+        ],
+        "groups": [],
+        "reason": null
+      },
+      "hitDie": 8
+    },
+    {
+      "classId": "class:warrior",
+      "level": 1,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`warrior` at level 1 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "handle_animal",
+          "intimidate",
+          "ride",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    },
+    {
+      "classId": "class:warrior",
+      "level": 7,
+      "weaponProficiency": {
+        "status": "known",
+        "source": "convertedRecord",
+        "tiers": [
+          "Simple",
+          "Martial"
+        ],
+        "named": [
+          "Spells (Ray)",
+          "Spells (Touch)",
+          "Splash Weapon",
+          "Unarmed Strike"
+        ],
+        "groups": [],
+        "sets": [],
+        "printed": [],
+        "reason": null
+      },
+      "casterLevel": {
+        "status": "notACaster",
+        "value": null,
+        "source": "`warrior` at level 7 declares no SpellType and holds no rule naming a caster level"
+      },
+      "classSkills": {
+        "status": "known",
+        "skills": [
+          "climb",
+          "handle_animal",
+          "intimidate",
+          "ride",
+          "swim"
+        ],
+        "groups": [
+          "Craft",
+          "Profession"
+        ],
+        "reason": null
+      },
+      "hitDie": 10
+    }
+  ]
+}
