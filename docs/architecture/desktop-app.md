@@ -201,6 +201,41 @@ through the mutation commands in the table above (`add_spell_selection`,
 `record_and_prepare_spell_selection`, `purchase_equipment`, `add_equipment_selection`,
 `add_feat_selection`, `add_trait_selection`).
 
+## Starter seed characters
+
+`main.rs`'s `.setup()` calls `character_hub::seed_default_character_if_needed`, which resolves the
+app-data dir and runs `seed_default_characters_at(app_data_dir, app_version)` over the starter seeds
+(`starter_seeds()` in `character_hub.rs`):
+
+| id | label | build | marker |
+|---|---|---|---|
+| `00000000-0000-0000-0000-000000000001` | Aldric Ironhand | Human Fighter 3 (Str 17 Dex 13 Con 14 Int 14 Wis 12 Cha 8, Human +2 → Str) | `.default_character_seeded` |
+| `00000000-0000-0000-0000-000000000002` | Elowen Ashgrave | Human Wizard 5 (Str 8 Dex 14 Con 13 Int 16 Wis 12 Cha 10, Human +2 → Int 18); canonical Wizard seeds (Evocation, Light) plus **Fireball** recorded and prepared | `.default_character_seeded_2` |
+
+- **Built through the create path, never a hand-written file.** Each seed is a
+  `CreateCharacterRequest` run through `compose_character_input` (the composer `create_character`
+  uses), plus `apply_record_and_prepare_spell_selection` for Elowen's Fireball (the mutation the
+  Spells tab's first-spell path runs). A seed saves only when `build_pilot_headless_receipt` is
+  `Computed`. Fireball's wire id is `"Fireball"`: the CRB spell-list key the engine and the Add Spell
+  picker resolve, which is the label of the converted record `core_rulebook:spell:fireball`
+  (`ClassSpellList { id: "wizard", spell_level: 3 }`) — pinned by
+  `the_fireball_seed_id_is_the_converted_crb_record`.
+- **One marker per seed.** An install that already holds Aldric's marker gains Elowen on its next
+  launch. A marker keeps a deleted seed deleted.
+- **Never overwrite.** A seed whose character directory already exists is skipped (its marker is
+  written), marker or not — a player's edits survive a lost marker.
+- **Tests.** `character_hub::starter_seed_tests` (6 + the list-wire pin); the Load list the frontend
+  test reads is the pinned artifact
+  `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/f6e-starter-seed-list-wire.json`
+  (`CODEX_WRITE_F6E_WIRE=1` rewrites it). ui-smoke rows `load-seed-list-both` and
+  `load-seed-wizard-fireball` prove both in the real app against an isolated app-data root.
+- **Known limit, by mechanism.** `compose_character_input` applies one fixed starter loadout to every
+  created character regardless of class (Power Attack, Dodge from the Human bonus-feat slot, Weapon
+  Focus (longsword); longsword + chain shirt equipped; 1 rank each in Climb/Intimidate/Swim). Elowen
+  carries it too, so her sheet lists Power Attack although Str 8 is below its Str 13 prerequisite, and
+  her AC counts the chain shirt. That is the create path's posture for every class, not a seed-only
+  choice; see the F6e receipt.
+
 ## Corpus root resolution
 
 Every catalog loader, `character_hub.rs`, and `authoring_workbench.rs` need to find `data/corpus/`

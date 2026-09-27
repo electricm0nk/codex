@@ -1,6 +1,8 @@
 import { buildCharacterHubListSurface, replaceRowInSurface, toRowSurface } from './buildCharacterHubListSurface';
 import { makeCharacterSummary } from '../testSupport/makeCharacterSummary';
 import { assert, assertEqual } from '../testSupport/asserts';
+import { formatHeldClasses } from './characterProgression';
+import { starterSeedListWire } from '../testSupport/starterSeedListWire';
 
 async function main() {
   verifiesEmptyState();
@@ -8,6 +10,7 @@ async function main() {
   verifiesUnreadableNotice();
   verifiesReplaceRowInSurfaceUpdatesTheMatchingRowOnly();
   verifiesReplaceRowInSurfaceLeavesAnUnknownCharacterIdUnchanged();
+  verifiesAFreshInstallListsBothStarterSeeds();
 }
 
 function verifiesEmptyState() {
@@ -88,3 +91,27 @@ main().catch((error: unknown) => {
   console.error(error);
   throw error;
 });
+
+/**
+ * SD-36 F6e: a fresh install's Load list, as the backend serves it, shows both starter seeds --
+ * Aldric Ironhand (Human Fighter 3) and Elowen Ashgrave (Human Wizard 5).
+ */
+function verifiesAFreshInstallListsBothStarterSeeds() {
+  const surface = buildCharacterHubListSurface(starterSeedListWire());
+
+  assertEqual(surface.unreadableNotice, null, 'no unreadable entries');
+  const rows = surface.rows.map((row) => `${row.displayLabel} | ${row.raceLabel} | ${row.classSummary}`).sort();
+  assertEqual(
+    JSON.stringify(rows),
+    JSON.stringify(['Aldric Ironhand | Human | class:fighter:3', 'Elowen Ashgrave | Human | class:wizard:5']),
+    'the Load list shows both starter seeds'
+  );
+  const printed = surface.rows.map((row) => formatHeldClasses(row.classSummary)).sort();
+  assertEqual(JSON.stringify(printed), JSON.stringify(['Fighter 3', 'Wizard 5']), 'the rows print Fighter 3 and Wizard 5');
+  const ids = surface.rows.map((row) => row.characterId).sort();
+  assertEqual(
+    JSON.stringify(ids),
+    JSON.stringify(['00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000002']),
+    'the seeds keep their fixed ids'
+  );
+}

@@ -631,6 +631,16 @@
       "notes": "Real row+Load, confirmed live 2026-09-17. The setup mints a fresh 'Smoke Test PC' (see create-character-fill-and-submit's own note on why not the seeded/legacy 'Aldric Ironhand' -- ambiguous by exact-name match on this profile), then this row's own steps back out to landing, open Load Character, click the row by its own displayLabel (matches via the prefix tier: CharacterListRow's button textContent is displayLabel followed by raceLabel/classSummary/savedAt with no separator, so an exact name is a startsWith prefix of it, same mechanism the existing landing-render rows already rely on), and Load into the sheet. Every sheet-* row below points its own `setup` at this row."
     },
     {
+      "id": "load-seed-list-both",
+      "screen": "load",
+      "steps": [
+        { "op": "click", "target": "Load\nCharacter" }
+      ],
+      "marker": "Elowen Ashgrave",
+      "expect": ["Aldric Ironhand", "Fighter 3", "Elowen Ashgrave", "Wizard 5"],
+      "notes": "SD-36 F6e (operator ruling 2026-09-27, option 3): a fresh install's Load screen lists BOTH starter seeds -- Aldric Ironhand (Human Fighter 3) and Elowen Ashgrave (Human Wizard 5). run.mjs gives every run a fresh isolated app-data root (F6d), so the app seeds both on its first launch; no setup row is needed and nothing is created, so the row's cleanup deletes nothing. The seeds come from character_hub.rs seed_default_characters_at, built through compose_character_input (the create path)."
+    },
+    {
       "id": "load-character-delete-clone",
       "screen": "load",
       "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-menu-clone"],
@@ -1196,6 +1206,22 @@
       "expect": [],
       "manual": "PortraitUpload opens a native OS file-open dialog for the image file.",
       "notes": "PortraitUpload control in the sheet's left rail (save_character_portrait)."
+    },
+    {
+      "id": "load-seed-wizard-fireball",
+      "screen": "sheet",
+      "steps": [
+        { "op": "click", "target": "Load\nCharacter" },
+        { "op": "click", "target": "Elowen Ashgrave" },
+        { "op": "click", "target": "Load" },
+        { "op": "click", "target": "Spells" },
+        { "op": "wait", "ms": 8000 },
+        { "op": "scroll", "ticks": 6, "direction": "down" },
+        { "op": "key", "key": "Shift" }
+      ],
+      "marker": "Wizard level 3",
+      "expect": ["Elowen Ashgrave", "Wizard 5", "HIT POINTS\n27", "Skill points: 7", "Fireball", "Wizard level 3"],
+      "notes": "SD-36 F6e: opens the second starter seed, Elowen Ashgrave (Human Wizard 5), on her Spells tab: Fireball, recorded and prepared, labelled with its Wizard spell level (3) from list_class_spell_levels -- the spell the operator named. Clicks the row by its displayLabel prefix (same mechanism as load-character-select-and-open). The seed is a real saved character built through the create path (compose_character_input + the record-and-prepare spell mutation), never a hand-written file. LAST row of the spec on purpose: it ends scrolled down so the screenshot shows the Fireball rows, and a row scrolled down is the one resetToLanding cannot recover from (see the $comment's scroll note) -- nothing runs after it."
     }
   ]
 }
