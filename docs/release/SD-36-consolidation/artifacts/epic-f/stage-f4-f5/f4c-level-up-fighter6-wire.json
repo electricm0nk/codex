@@ -611,7 +611,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: autohypnosis ranks at least 5, sense motive ranks at least 5"
+          "text": "at least 2 of: Autohypnosis ranks at least 5, Sense Motive ranks at least 5"
         },
         {
           "condition": null,
@@ -643,7 +643,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 4 of: acrobatics ranks at least 3, intimidate ranks at least 5, knowledge nobility ranks at least 3, sense motive ranks at least 3"
+          "text": "at least 4 of: Acrobatics ranks at least 3, Intimidate ranks at least 5, Knowledge (Nobility) ranks at least 3, Sense Motive ranks at least 3"
         }
       ],
       "hitDie": 10,
@@ -697,7 +697,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: disable device ranks at least 4, escape artist ranks at least 4, knowledge arcana ranks at least 4"
+          "text": "at least 3 of: Disable Device ranks at least 4, Escape Artist ranks at least 4, Knowledge (Arcana) ranks at least 4"
         },
         {
           "condition": null,
@@ -739,7 +739,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 4 of: knowledge arcana ranks at least 2, knowledge history ranks at least 2, perform sing ranks at least 6, spellcraft ranks at least 6"
+          "text": "at least 4 of: Knowledge (Arcana) ranks at least 2, Knowledge (History) ranks at least 2, Perform (Sing) ranks at least 6, Spellcraft ranks at least 6"
         },
         {
           "condition": "requires a spell with the named descriptor",
@@ -771,7 +771,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: handle animal ranks at least 5, ride ranks at least 5"
+          "text": "at least 2 of: Handle Animal ranks at least 5, Ride ranks at least 5"
         }
       ],
       "hitDie": 10,
@@ -788,7 +788,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 7 of: appraise ranks at least 5, bluff ranks at least 5, craft traps ranks at least 5, disable device ranks at least 5, intimidate ranks at least 5, knowledge history ranks at least 5, perception ranks at least 5"
+          "text": "at least 7 of: Appraise ranks at least 5, Bluff ranks at least 5, Craft (Traps) ranks at least 5, Disable Device ranks at least 5, Intimidate ranks at least 5, Knowledge (History) ranks at least 5, Perception ranks at least 5"
         },
         {
           "condition": null,
@@ -820,7 +820,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: disguise ranks at least 2, stealth ranks at least 5"
+          "text": "at least 2 of: Disguise ranks at least 2, Stealth ranks at least 5"
         }
       ],
       "hitDie": 8,
@@ -842,7 +842,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 4 of: diplomacy ranks at least 5, intimidate ranks at least 5, perform oratory ranks at least 5, profession soldier ranks at least 2"
+          "text": "at least 4 of: Diplomacy ranks at least 5, Intimidate ranks at least 5, Perform (Oratory) ranks at least 5, Profession (Soldier) ranks at least 2"
         },
         {
           "condition": null,
@@ -874,7 +874,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 4 of: disguise ranks at least 5, knowledge local ranks at least 3, stealth ranks at least 5, survival ranks at least 5"
+          "text": "at least 4 of: Disguise ranks at least 5, Knowledge (Local) ranks at least 3, Stealth ranks at least 5, Survival ranks at least 5"
         },
         {
           "condition": null,
@@ -906,7 +906,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: bluff ranks at least 10, perform act ranks at least 3, sense motive ranks at least 3"
+          "text": "at least 3 of: Bluff ranks at least 10, Perform (Act) ranks at least 3, Sense Motive ranks at least 3"
         },
         {
           "condition": null,
@@ -933,7 +933,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: knowledge arcana ranks at least 3, knowledge psionics ranks at least 3"
+          "text": "at least 2 of: Knowledge (Arcana) ranks at least 3, Knowledge (Psionics) ranks at least 3"
         },
         {
           "condition": null,
@@ -970,7 +970,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: knowledge arcana ranks at least 5, knowledge history ranks at least 5, linguistics ranks at least 5"
+          "text": "at least 3 of: Knowledge (Arcana) ranks at least 5, Knowledge (History) ranks at least 5, Linguistics ranks at least 5"
         },
         {
           "condition": null,
@@ -1002,7 +1002,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "knowledge psionics ranks at least 6"
+          "text": "Knowledge (Psionics) ranks at least 6"
         },
         {
           "condition": null,
@@ -1029,7 +1029,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: knowledge religion ranks at least 5, perception ranks at least 5, stealth ranks at least 5"
+          "text": "at least 3 of: Knowledge (Religion) ranks at least 5, Perception ranks at least 5, Stealth ranks at least 5"
         },
         {
           "condition": null,
@@ -1071,7 +1071,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: knowledge planes ranks at least 7, intimidate ranks at least 7, spellcraft ranks at least 7"
+          "text": "at least 3 of: Knowledge (Planes) ranks at least 7, Intimidate ranks at least 7, Spellcraft ranks at least 7"
         },
         {
           "condition": "Must have been physically traumatized by a demon",
@@ -1103,7 +1103,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: knowledge planes ranks at least 5, knowledge religion ranks at least 3, spellcraft ranks at least 5"
+          "text": "at least 3 of: Knowledge (Planes) ranks at least 5, Knowledge (Religion) ranks at least 3, Spellcraft ranks at least 5"
         },
         {
           "condition": "Must have conjured a devil using Lesser Planar Ally or Lesser Planar Binding (or a similar spell) and successfully coaxed the fiend into performing a task lasting longer than 1 day.",
@@ -1140,7 +1140,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: knowledge planes ranks at least 5, knowledge religion ranks at least 5, spellcraft ranks at least 5"
+          "text": "at least 3 of: Knowledge (Planes) ranks at least 5, Knowledge (Religion) ranks at least 5, Spellcraft ranks at least 5"
         },
         {
           "condition": null,
@@ -1177,7 +1177,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "knowledge arcana ranks at least 5"
+          "text": "Knowledge (Arcana) ranks at least 5"
         },
         {
           "condition": null,
@@ -1204,7 +1204,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: acrobatics ranks at least 2, requires 2 ranks in a perform skill"
+          "text": "at least 2 of: Acrobatics ranks at least 2, requires 2 ranks in a perform skill"
         },
         {
           "condition": null,
@@ -1258,7 +1258,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "acrobatics ranks at least 5"
+          "text": "Acrobatics ranks at least 5"
         },
         {
           "condition": null,
@@ -1290,12 +1290,12 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 1 of: perform act ranks at least 2, perform dance ranks at least 2"
+          "text": "at least 1 of: Perform (Act) ranks at least 2, Perform (Dance) ranks at least 2"
         },
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: bluff ranks at least 5, knowledge arcana ranks at least 2, sense motive ranks at least 5"
+          "text": "at least 3 of: Bluff ranks at least 5, Knowledge (Arcana) ranks at least 2, Sense Motive ranks at least 5"
         },
         {
           "condition": "requires 2 Divination school spells of level 1 or higher",
@@ -1382,7 +1382,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: diplomacy ranks at least 5, knowledge religion ranks at least 5"
+          "text": "at least 2 of: Diplomacy ranks at least 5, Knowledge (Religion) ranks at least 5"
         },
         {
           "condition": null,
@@ -1424,7 +1424,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: diplomacy ranks at least 5, intimidate ranks at least 5"
+          "text": "at least 2 of: Diplomacy ranks at least 5, Intimidate ranks at least 5"
         }
       ],
       "hitDie": 10,
@@ -1451,7 +1451,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: acrobatics ranks at least 5, profession sailor ranks at least 5, stealth ranks at least 5"
+          "text": "at least 3 of: Acrobatics ranks at least 5, Profession (Sailor) ranks at least 5, Stealth ranks at least 5"
         }
       ],
       "hitDie": 8,
@@ -1478,7 +1478,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 1 of: knowledge arcana ranks at least 5, knowledge religion ranks at least 5"
+          "text": "at least 1 of: Knowledge (Arcana) ranks at least 5, Knowledge (Religion) ranks at least 5"
         },
         {
           "condition": "requires 5 ranks in a perform skill",
@@ -1525,7 +1525,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: intimidate ranks at least 5, knowledge planes ranks at least 2"
+          "text": "at least 2 of: Intimidate ranks at least 5, Knowledge (Planes) ranks at least 2"
         },
         {
           "condition": "Must slay a devil with HD greater than your own. This must be witnessed by a Hellknight",
@@ -1567,7 +1567,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: intimidate ranks at least 2, knowledge planes ranks at least 5, spellcraft ranks at least 5"
+          "text": "at least 3 of: Intimidate ranks at least 2, Knowledge (Planes) ranks at least 5, Spellcraft ranks at least 5"
         },
         {
           "condition": null,
@@ -1599,7 +1599,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "knowledge religion ranks at least 5"
+          "text": "Knowledge (Religion) ranks at least 5"
         },
         {
           "condition": null,
@@ -1631,7 +1631,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "knowledge geography ranks at least 6"
+          "text": "Knowledge (Geography) ranks at least 6"
         }
       ],
       "hitDie": 10,
@@ -1653,7 +1653,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: knowledge dungeoneering ranks at least 5, knowledge nature ranks at least 2, survival ranks at least 5"
+          "text": "at least 3 of: Knowledge (Dungeoneering) ranks at least 5, Knowledge (Nature) ranks at least 2, Survival ranks at least 5"
         },
         {
           "condition": null,
@@ -1685,12 +1685,12 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: bluff ranks at least 3, disguise ranks at least 5, stealth ranks at least 5"
+          "text": "at least 3 of: Bluff ranks at least 3, Disguise ranks at least 5, Stealth ranks at least 5"
         },
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 1 of: perform sing ranks at least 3, perform act ranks at least 3"
+          "text": "at least 1 of: Perform (Sing) ranks at least 3, Perform (Act) ranks at least 3"
         },
         {
           "condition": "Servant of Taldor or the Sovereign Court affiliation",
@@ -1764,12 +1764,12 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: bluff ranks at least 5, ride ranks at least 5"
+          "text": "at least 2 of: Bluff ranks at least 5, Ride ranks at least 5"
         },
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 1 of: knowledge nobility ranks at least 2, knowledge planes ranks at least 2"
+          "text": "at least 1 of: Knowledge (Nobility) ranks at least 2, Knowledge (Planes) ranks at least 2"
         }
       ],
       "hitDie": 10,
@@ -1796,7 +1796,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: spellcraft ranks at least 5, knowledge arcana ranks at least 5, knowledge nature ranks at least 5"
+          "text": "at least 3 of: Spellcraft ranks at least 5, Knowledge (Arcana) ranks at least 5, Knowledge (Nature) ranks at least 5"
         },
         {
           "condition": null,
@@ -1832,7 +1832,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: handle animal ranks at least 9, ride ranks at least 9, survival ranks at least 5"
+          "text": "at least 3 of: Handle Animal ranks at least 9, Ride ranks at least 9, Survival ranks at least 5"
         },
         {
           "condition": null,
@@ -1881,7 +1881,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 4 of: bluff ranks at least 7, disguise ranks at least 7, perception ranks at least 5, sense motive ranks at least 5"
+          "text": "at least 4 of: Bluff ranks at least 7, Disguise ranks at least 7, Perception ranks at least 5, Sense Motive ranks at least 5"
         }
       ],
       "hitDie": 8,
@@ -1925,7 +1925,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: knowledge psionics ranks at least 5, spellcraft ranks at least 2"
+          "text": "at least 2 of: Knowledge (Psionics) ranks at least 5, Spellcraft ranks at least 2"
         },
         {
           "condition": null,
@@ -1952,7 +1952,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: autohypnosis ranks at least 5, knowledge psionics ranks at least 5"
+          "text": "at least 2 of: Autohypnosis ranks at least 5, Knowledge (Psionics) ranks at least 5"
         },
         {
           "condition": null,
@@ -1979,7 +1979,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "perception ranks at least 6"
+          "text": "Perception ranks at least 6"
         },
         {
           "condition": null,
@@ -2006,7 +2006,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: knowledge arcana ranks at least 3, knowledge religion ranks at least 3"
+          "text": "at least 2 of: Knowledge (Arcana) ranks at least 3, Knowledge (Religion) ranks at least 3"
         },
         {
           "condition": null,
@@ -2043,7 +2043,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 4 of: handle animal ranks at least 5, knowledge geography ranks at least 5, knowledge nature ranks at least 5, survival ranks at least 5"
+          "text": "at least 4 of: Handle Animal ranks at least 5, Knowledge (Geography) ranks at least 5, Knowledge (Nature) ranks at least 5, Survival ranks at least 5"
         },
         {
           "condition": null,
@@ -2075,7 +2075,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: linguistics ranks at least 3, perform oratory ranks at least 5, profession scribe ranks at least 5"
+          "text": "at least 3 of: Linguistics ranks at least 3, Perform (Oratory) ranks at least 5, Profession (Scribe) ranks at least 5"
         }
       ],
       "hitDie": 8,
@@ -2092,7 +2092,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 4 of: acrobatics ranks at least 5, disable device ranks at least 4, knowledge history ranks at least 4, perception ranks at least 5"
+          "text": "at least 4 of: Acrobatics ranks at least 5, Disable Device ranks at least 4, Knowledge (History) ranks at least 4, Perception ranks at least 5"
         }
       ],
       "hitDie": 8,
@@ -2119,7 +2119,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: knowledge arcana ranks at least 5, spellcraft ranks at least 5, use magic device ranks at least 5"
+          "text": "at least 3 of: Knowledge (Arcana) ranks at least 5, Spellcraft ranks at least 5, Use Magic Device ranks at least 5"
         },
         {
           "condition": null,
@@ -2146,7 +2146,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "knowledge psionics ranks at least 1"
+          "text": "Knowledge (Psionics) ranks at least 1"
         },
         {
           "condition": "Must have had hostile encouter with the psionic creature to be selected as a favored enemy, alone or with a small group.",
@@ -2183,7 +2183,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: knowledge psionics ranks at least 1, spellcraft ranks at least 5"
+          "text": "at least 2 of: Knowledge (Psionics) ranks at least 1, Spellcraft ranks at least 5"
         }
       ],
       "hitDie": 6,
@@ -2205,7 +2205,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: knowledge psionics ranks at least 5, spellcraft ranks at least 5"
+          "text": "at least 2 of: Knowledge (Psionics) ranks at least 5, Spellcraft ranks at least 5"
         },
         {
           "condition": null,
@@ -2237,7 +2237,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "acrobatics ranks at least 6"
+          "text": "Acrobatics ranks at least 6"
         },
         {
           "condition": null,
@@ -2293,7 +2293,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: knowledge religion ranks at least 5, sense motive ranks at least 4"
+          "text": "at least 2 of: Knowledge (Religion) ranks at least 5, Sense Motive ranks at least 4"
         },
         {
           "condition": null,
@@ -2325,7 +2325,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: autohypnosis ranks at least 5, craft alchemy ranks at least 1, knowledge psionics ranks at least 2"
+          "text": "at least 3 of: Autohypnosis ranks at least 5, Craft (Alchemy) ranks at least 1, Knowledge (Psionics) ranks at least 2"
         },
         {
           "condition": "Must have set fire to a structure of any size just to watch it burn.",
@@ -2357,7 +2357,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "knowledge religion ranks at least 5"
+          "text": "Knowledge (Religion) ranks at least 5"
         },
         {
           "condition": null,
@@ -2389,7 +2389,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: intimidate ranks at least 5, perception ranks at least 5, stealth ranks at least 5"
+          "text": "at least 3 of: Intimidate ranks at least 5, Perception ranks at least 5, Stealth ranks at least 5"
         }
       ],
       "hitDie": 8,
@@ -2411,7 +2411,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: diplomacy ranks at least 5, knowledge religion ranks at least 5"
+          "text": "at least 2 of: Diplomacy ranks at least 5, Knowledge (Religion) ranks at least 5"
         },
         {
           "condition": null,
@@ -2516,7 +2516,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: stealth ranks at least 5, perform dance ranks at least 2"
+          "text": "at least 2 of: Stealth ranks at least 5, Perform (Dance) ranks at least 2"
         }
       ],
       "hitDie": 8,
@@ -2538,7 +2538,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: diplomacy ranks at least 2, perception ranks at least 5, survival ranks at least 2"
+          "text": "at least 3 of: Diplomacy ranks at least 2, Perception ranks at least 5, Survival ranks at least 2"
         },
         {
           "condition": null,
@@ -2624,7 +2624,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 4 of: diplomacy ranks at least 5, knowledge history ranks at least 2, knowledge local ranks at least 2, sense motive ranks at least 5"
+          "text": "at least 4 of: Diplomacy ranks at least 5, Knowledge (History) ranks at least 2, Knowledge (Local) ranks at least 2, Sense Motive ranks at least 5"
         }
       ],
       "hitDie": 10,
@@ -2656,7 +2656,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 4 of: fly ranks at least 3, knowledge history ranks at least 6, knowledge nature ranks at least 6, swim ranks at least 3"
+          "text": "at least 4 of: Fly ranks at least 3, Knowledge (History) ranks at least 6, Knowledge (Nature) ranks at least 6, Swim ranks at least 3"
         },
         {
           "condition": null,
@@ -2688,12 +2688,12 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 1 of: acrobatics ranks at least 5, climb ranks at least 5, escape artist ranks at least 5, stealth ranks at least 5, swim ranks at least 5"
+          "text": "at least 1 of: Acrobatics ranks at least 5, Climb ranks at least 5, Escape Artist ranks at least 5, Stealth ranks at least 5, Swim ranks at least 5"
         },
         {
           "condition": "requires 5 ranks in a craft skill; requires 5 ranks in a knowledge skill; requires 5 ranks in a perform skill",
           "status": "situational",
-          "text": "at least 1 of: requires 5 ranks in a craft skill, requires 5 ranks in a knowledge skill, perception ranks at least 5, requires 5 ranks in a perform skill, sense motive ranks at least 5"
+          "text": "at least 1 of: requires 5 ranks in a craft skill, requires 5 ranks in a knowledge skill, Perception ranks at least 5, requires 5 ranks in a perform skill, Sense Motive ranks at least 5"
         }
       ],
       "hitDie": 10,
@@ -2794,7 +2794,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: knowledge psionics ranks at least 5, diplomacy ranks at least 4"
+          "text": "at least 2 of: Knowledge (Psionics) ranks at least 5, Diplomacy ranks at least 4"
         }
       ],
       "hitDie": 6,
@@ -2821,7 +2821,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 5 of: bluff ranks at least 5, disguise ranks at least 5, knowledge local ranks at least 2, linguistics ranks at least 2, stealth ranks at least 5"
+          "text": "at least 5 of: Bluff ranks at least 5, Disguise ranks at least 5, Knowledge (Local) ranks at least 2, Linguistics ranks at least 2, Stealth ranks at least 5"
         }
       ],
       "hitDie": 8,
@@ -2842,7 +2842,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: knowledge nobility ranks at least 2, perception ranks at least 5, sense motive ranks at least 3"
+          "text": "at least 3 of: Knowledge (Nobility) ranks at least 2, Perception ranks at least 5, Sense Motive ranks at least 3"
         },
         {
           "condition": "Base Attack Bonus: +5. Skills: Knowledge (nobility) 2 ranks, Perception 5 ranks, Sense Motive 3 ranks. Special: Ulfen descent.",
@@ -2874,7 +2874,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 2 of: knowledge history ranks at least 2, knowledge psionics ranks at least 5"
+          "text": "at least 2 of: Knowledge (History) ranks at least 2, Knowledge (Psionics) ranks at least 5"
         },
         {
           "condition": "Instruction from another war mind or Codex of War.",
@@ -2926,12 +2926,12 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "knowledge local ranks at least 5"
+          "text": "Knowledge (Local) ranks at least 5"
         },
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: acrobatics ranks at least 5, bluff ranks at least 5, climb ranks at least 5, disable device ranks at least 5, knowledge history ranks at least 5, knowledge nobility ranks at least 5, sense motive ranks at least 5, sleight of hand ranks at least 5, stealth ranks at least 5, use magic device ranks at least 5"
+          "text": "at least 3 of: Acrobatics ranks at least 5, Bluff ranks at least 5, Climb ranks at least 5, Disable Device ranks at least 5, Knowledge (History) ranks at least 5, Knowledge (Nobility) ranks at least 5, Sense Motive ranks at least 5, Sleight of Hand ranks at least 5, Stealth ranks at least 5, Use Magic Device ranks at least 5"
         }
       ],
       "hitDie": 8,

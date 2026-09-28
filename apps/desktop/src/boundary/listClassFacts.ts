@@ -43,6 +43,13 @@ export interface ClassSkillFactsDto {
   skills: string[];
   /** Whole families (`Craft`, `Knowledge`). */
   groups: string[];
+  /**
+   * SD-36 F7c: the members of `skills` held only through a Path-A canonical seed (Expert's ten,
+   * the Psion's discipline) -- the sheet marks each `(default pick)`.
+   */
+  defaultPicks: string[];
+  /** The same for `groups`. */
+  defaultPickGroups: string[];
   reason: string | null;
 }
 

@@ -93,8 +93,37 @@ export function classSkillFactsGrant(facts: ClassSkillFactsDto, skillName: strin
  * ANY held class grants it. A held class the engine cannot answer contributes nothing and is named
  * in `unanswered` (the Skills panel prints it) -- never silently scored all-cross-class.
  */
+/**
+ * SD-36 F7c: the marker printed beside a class skill held only through a Path-A canonical seed --
+ * the engine's `class_seeds::DEFAULT_PICK_MARKER`, the same words the Weapons tab's seeded-pick
+ * lines end with.
+ */
+export const DEFAULT_PICK_MARKER = 'default pick';
+
+/**
+ * Whether the served answer grants `skillName` ONLY as a canonical default pick: granted, and
+ * every grant of it is a `defaultPicks` / `defaultPickGroups` entry.
+ */
+export function classSkillFactsDefaultPick(facts: ClassSkillFactsDto, skillName: string): boolean {
+  if (!classSkillFactsGrant(facts, skillName)) {
+    return false;
+  }
+  const fixed: ClassSkillFactsDto = {
+    ...facts,
+    skills: facts.skills.filter((skill) => !(facts.defaultPicks ?? []).includes(skill)),
+    groups: facts.groups.filter((group) => !(facts.defaultPickGroups ?? []).includes(group)),
+  };
+  return !classSkillFactsGrant(fixed, skillName);
+}
+
 export interface ClassSkillLookup {
   isClassSkill: (skillName: string) => boolean;
+  /**
+   * SD-36 F7c: a class skill that holds only because the engine applied a Path-A canonical seed in
+   * every held class that grants it (no held class grants it outright) -- printed with
+   * `(default pick)`.
+   */
+  isDefaultPick: (skillName: string) => boolean;
   /** `{ classLabel, reason }` for each held class with no served class-skill answer. */
   unanswered: Array<{ classLabel: string; reason: string }>;
 }
@@ -115,6 +144,9 @@ export function classSkillLookup(heldClasses: readonly HeldClass[], state: Class
   }
   return {
     isClassSkill: (skillName) => known.some((facts) => classSkillFactsGrant(facts, skillName)),
+    isDefaultPick: (skillName) =>
+      known.some((facts) => classSkillFactsGrant(facts, skillName)) &&
+      known.every((facts) => !classSkillFactsGrant(facts, skillName) || classSkillFactsDefaultPick(facts, skillName)),
     unanswered,
   };
 }

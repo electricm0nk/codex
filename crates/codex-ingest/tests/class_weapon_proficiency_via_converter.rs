@@ -307,7 +307,9 @@ fn summoner_reads_simple_through_the_standard_class_pick() {
     assert!(view.named.is_empty() && view.groups.is_empty(), "{view:?}");
     assert!(view.unresolved_picks.is_empty(), "the seeded pick is decided: {view:?}");
     assert_eq!(view.seeded_picks.len(), 1, "the seeded pick is printed once: {view:?}");
-    assert!(view.seeded_picks[0].contains("summoner_standard_class"), "{view:?}");
+    // SD-36 F7c: the line names the pick by its labels and ends with the one default-pick marker.
+    assert!(view.seeded_picks[0].ends_with("(default pick)"), "{view:?}");
+    assert!(!view.seeded_picks[0].contains("summoner_standard_class"), "labels, not ids: {view:?}");
 }
 
 /// (c) F1.8 (review finding 1): a PRE-gated weapon grant the class-level facts cannot decide is

@@ -126,6 +126,7 @@ import { PortraitUpload } from './PortraitUpload';
 import { LevelUpDialog } from './LevelUpDialog';
 import { SkillAllocationDialog } from './SkillAllocationDialog';
 import {
+  DEFAULT_PICK_MARKER,
   SKILLS,
   allocationFromPersisted,
   classSkillLookup,
@@ -691,6 +692,9 @@ function SkillsPanel(props: {
               <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{fmt(total)}</span>
               <span style={{ color: classSkill ? 'var(--color-text)' : 'var(--color-text-secondary)' }}>{skill.name}</span>
               {ranks > 0 ? <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem' }}>({ranks})</span> : null}
+              {classSkill && props.classSkills.isDefaultPick(skill.name) ? (
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem' }}>({DEFAULT_PICK_MARKER})</span>
+              ) : null}
             </div>
           );
         })}

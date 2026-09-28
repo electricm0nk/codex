@@ -3978,6 +3978,73 @@ mod tests {
         assert!(archer_line.contains("requires Longbow chosen for Weapon Focus"), "{archer_line}");
     }
 
+    /// SD-36 F7c (b): every skill term in every census prestige gate prints the skill's LABEL.
+    /// Scans the printed top-level terms of all 74 gates; a term that names a skill (ranks, total,
+    /// or class skill) must print `skill_label` and must not print the id's lowercased slug.
+    #[test]
+    fn no_prestige_requirement_line_prints_a_skill_slug() {
+        use crate::rules_core::level_up_option_filter::{describe_gate, skill_label};
+        let package = crate::rules_core::sheet_rule_package::package().as_ref().expect("package");
+        let skill_ids = |term: &crate::rules_core::sheet_rule::Applies| -> Vec<String> {
+            let json = serde_json::to_value(term).expect("term serializes");
+            let mut out = Vec::new();
+            let mut stack = vec![json];
+            while let Some(v) = stack.pop() {
+                match v {
+                    serde_json::Value::Object(map) => {
+                        for (k, v) in map {
+                            match (k.as_str(), &v) {
+                                ("SkillRanks" | "SkillTotal" | "ClassSkill", serde_json::Value::String(id)) => out.push(id.clone()),
+                                _ => stack.push(v),
+                            }
+                        }
+                    }
+                    serde_json::Value::Array(items) => stack.extend(items),
+                    _ => {}
+                }
+            }
+            out
+        };
+        let (mut gates, mut lines, mut skill_lines, mut terms) = (0usize, 0usize, 0usize, 0usize);
+        let mut slugs = Vec::new();
+        let mut examples = Vec::new();
+        for entry in census().values().filter(|entry| entry.is_prestige) {
+            let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
+            let gate = prestige_entry_gate_in(package, &entry.books, slug).expect("prestige gate");
+            gates += 1;
+            for term in top_level_terms(&gate).into_iter().filter(|t| !matches!(classify_term(t), TermClass::AlwaysMet)) {
+                lines += 1;
+                let ids = skill_ids(term);
+                if ids.is_empty() {
+                    continue;
+                }
+                skill_lines += 1;
+                let text = describe_gate(package, term);
+                for id in ids {
+                    terms += 1;
+                    let label = skill_label(package, &id);
+                    let ok = label.as_ref().is_some_and(|label| text.contains(label.as_str()));
+                    if !ok || (id.contains('_') && text.contains(&id.replace('_', " "))) {
+                        slugs.push(format!("{}: `{id}` in {text:?}", entry.class_id));
+                    }
+                }
+                if examples.len() < 6 {
+                    examples.push(format!("{}: {text}", entry.class_id));
+                }
+            }
+        }
+        println!(
+            "F7c(b) prestige gates {gates}; printed requirement lines {lines}; lines with a skill term {skill_lines}; skill terms {terms}; terms printing a slug {}",
+            slugs.len()
+        );
+        for line in &examples {
+            println!("  EXAMPLE {line}");
+        }
+        assert_eq!(gates, 74, "the census prestige population moved");
+        assert!(terms > 0, "the scan found no skill term");
+        assert!(slugs.is_empty(), "{} of {terms} skill terms print a slug:\n{}", slugs.len(), slugs.join("\n"));
+    }
+
     /// SD-36 F6c (c): a domain count a class's own `DOMAIN:` grants fill is no pick and prints no
     /// line (`pool_link::withhold_class_granted_domain_counts`). The shaman's
     /// `BONUS:DOMAIN|NUMBER|1` (`acg_classes.lst:221`) is filled by its ten `DOMAIN:<X> (Spirit)`

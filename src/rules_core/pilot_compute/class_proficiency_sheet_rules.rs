@@ -122,7 +122,8 @@ pub struct ClassWeaponProficiencyView {
     /// SD-36 F1c-5 (D8): a pick among an ability category's members (`offers: Rules` with
     /// `Granter::Choice` edges onto the members) that the walk decided from the class's Path-A
     /// canonical default (`class_seeds::canonical_seeds_for`), printed once so the sheet says
-    /// which member the answer assumes.
+    /// which member the answer assumes: `<chooser label>: <member label> (default pick)`
+    /// (SD-36 F7c, `class_seeds::DEFAULT_PICK_MARKER`).
     pub seeded_picks: Vec<String>,
 }
 
@@ -209,12 +210,12 @@ pub fn class_weapon_proficiency_view_in(package: &SheetRulePackage, class_slug: 
             }
         }
         if let Some(pick) = seeded.iter().find(|p| &p.choice == id) {
+            // SD-36 F7c (c): labels only, with the one default-pick marker.
             acc.seeded.insert(format!(
-                "{} ({}) picks {} ({}) -- the Path-A canonical default",
+                "{}: {} ({})",
                 rule.label,
-                id,
-                package.rule(&pick.member).map_or(pick.member.as_str(), |m| m.label.as_str()),
-                pick.member
+                package.rule(&pick.member).map_or_else(|| crate::rules_core::sheet_rule::id_slug(&pick.member), |m| m.label.clone()),
+                crate::rules_core::class_seeds::DEFAULT_PICK_MARKER
             ));
         }
         let ctx = EvalContext { holder_class: entry.holder_class.clone(), ..EvalContext::default() };
@@ -764,6 +765,19 @@ mod tests {
     }
 
     /// A class slug the package does not carry is Unknown with a reason, never an empty Known.
+    /// SD-36 F7c (c): a Path-A canonical pick the Weapons tab prints carries the one
+    /// `default pick` marker (`class_seeds::DEFAULT_PICK_MARKER`) and names the chooser and the
+    /// member by their labels, never by a raw converted id.
+    #[test]
+    fn a_seeded_weapon_pick_prints_labels_and_the_default_pick_marker() {
+        let answer = class_weapon_proficiency_view("summoner", 1);
+        let view = answer.known().unwrap_or_else(|| panic!("{answer:?}"));
+        assert_eq!(view.seeded_picks.len(), 1, "{view:?}");
+        let line = &view.seeded_picks[0];
+        assert!(line.ends_with(&format!("({})", crate::rules_core::class_seeds::DEFAULT_PICK_MARKER)), "{line}");
+        assert!(!line.contains("summoner_standard_class") && !line.contains("advanced_players_guide:"), "{line}");
+    }
+
     #[test]
     fn an_unconverted_class_is_unknown_not_empty() {
         let answer = class_weapon_proficiency_view("no_such_class_anywhere", 1);

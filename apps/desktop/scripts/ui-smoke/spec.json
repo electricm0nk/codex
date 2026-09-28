@@ -1209,6 +1209,69 @@
       "notes": "PortraitUpload control in the sheet's left rail (save_character_portrait)."
     },
     {
+      "id": "sheet-f7c-expert-skills-default-picks",
+      "screen": "sheet",
+      "setup": ["create-character-render"],
+      "steps": [
+        { "op": "click", "target": "character-name" },
+        { "op": "type", "text": "F7 Smoke India" },
+        { "op": "click", "target": "player-name" },
+        { "op": "type", "text": "UI Smoke Harness" },
+        { "op": "select", "target": "Human (CRB)", "text": "Human (CRB)" },
+        { "op": "select", "target": "Expert", "text": "class:expert" },
+        { "op": "click", "target": "Create character" },
+        { "op": "wait", "ms": 3000 },
+        { "op": "scroll", "ticks": 40, "direction": "up" },
+        { "op": "key", "key": "Shift" },
+        { "op": "click", "target": "Back" },
+        { "op": "click", "target": "Load\nCharacter" },
+        { "op": "click", "target": "F7 Smoke India" },
+        { "op": "click", "target": "Load" }
+      ],
+      "marker": "Manage skill allocation",
+      "expect": ["F7 Smoke India", "Expert 1", "Handle Animal", "(default pick)"],
+      "forbid": ["Class skills Unknown", "class facts unavailable", "samurai_mount"],
+      "notes": "SD-36 F7c (c): Expert's ten class skills (CRB p.450, 'any ten', the player's choice) are the Path-A canonical picks the engine seeds (class_seeds::EXPERT_CANONICAL_CLASS_SKILLS). The Skills panel prints each with the one marker '(default pick)' (class_seeds::DEFAULT_PICK_MARKER), read off list_class_facts' defaultPicks. Creates a Human Expert 1 under its own name and asserts the marker is on the sheet."
+    },
+    {
+      "id": "sheet-f7c-samurai-skills-only-skills",
+      "screen": "sheet",
+      "setup": ["create-character-render", "create-character-samurai"],
+      "steps": [],
+      "marker": "Manage skill allocation",
+      "expect": ["Samurai 1", "Ride"],
+      "forbid": ["Class skills Unknown", "class facts unavailable", "samurai_mount", "samurai mount", "(default pick)"],
+      "notes": "SD-36 F7c (a): the Samurai's class-skill list carries only skills (the reader drops the Mount record's ClassSkill(samurai_mount) and names it in not_skills). Samurai's list is fixed, so no row carries '(default pick)'."
+    },
+    {
+      "id": "level-up-f7c-prestige-skill-labels",
+      "screen": "sheet",
+      "setup": ["create-character-render"],
+      "steps": [
+        { "op": "click", "target": "character-name" },
+        { "op": "type", "text": "F7 Smoke Juliet" },
+        { "op": "click", "target": "player-name" },
+        { "op": "type", "text": "UI Smoke Harness" },
+        { "op": "select", "target": "Human (CRB)", "text": "Human (CRB)" },
+        { "op": "select", "target": "Fighter", "text": "class:fighter" },
+        { "op": "select", "target": "12345678910", "text": "6" },
+        { "op": "click", "target": "Create character" },
+        { "op": "wait", "ms": 3000 },
+        { "op": "scroll", "ticks": 40, "direction": "up" },
+        { "op": "key", "key": "Shift" },
+        { "op": "click", "target": "Back" },
+        { "op": "click", "target": "Load\nCharacter" },
+        { "op": "click", "target": "F7 Smoke Juliet" },
+        { "op": "click", "target": "Load" },
+        { "op": "click", "target": "+" },
+        { "op": "select", "target": "Aldori Swordlord", "text": "class:aldori_swordlord" }
+      ],
+      "marker": "Level up",
+      "expect": ["Knowledge (Nobility) ranks at least 3", "Sense Motive ranks at least 3"],
+      "forbid": ["knowledge nobility", "sense motive ranks"],
+      "notes": "SD-36 F7c (b): a prestige entry requirement's skill term prints the converted skill record's label (level_up_option_filter::skill_label), never the lowercased id slug it printed before ('knowledge nobility ranks at least 3'). Human Fighter 6 under its own name opens Level Up and picks Aldori Swordlord, whose gate names Knowledge (nobility) and Sense Motive."
+    },
+    {
       "id": "load-seed-wizard-fireball",
       "screen": "sheet",
       "steps": [

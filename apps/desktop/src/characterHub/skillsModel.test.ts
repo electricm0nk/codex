@@ -1,6 +1,7 @@
 import {
   allocationFromPersisted,
   classSkillLookup,
+  DEFAULT_PICK_MARKER,
   featSkillBonusFor,
   isClassSkill,
   persistedFromAllocation,
@@ -226,6 +227,32 @@ function verifiesAnUnlistedIdRoundTrips() {
   assertEqual(JSON.stringify(back), JSON.stringify([{ skillId: 'skill:knowledge_psionics', ranks: 2 }, { skillId: 'skill:climb', ranks: 1 }]), 'round trip');
 }
 
+/**
+ * SD-36 F7c: a class skill held only through a Path-A canonical seed is a default pick, read off
+ * the served wire. Expert's ten (CRB p.450, "any ten", the player's choice) are all default picks;
+ * a Fighter's fixed list has none; an Expert/Fighter multiclass's Climb is granted outright by the
+ * Fighter side, so it is no longer a default pick; Samurai's list carries no `samurai_mount`.
+ */
+function verifiesCanonicalClassSkillPicksAreDefaultPicks() {
+  assertEqual(DEFAULT_PICK_MARKER, 'default pick', 'the marker is the engine class_seeds::DEFAULT_PICK_MARKER');
+  const expert = lookup(['class:expert']);
+  for (const name of ['Acrobatics', 'Appraise', 'Bluff', 'Climb', 'Diplomacy', 'Disable Device', 'Disguise', 'Escape Artist', 'Fly', 'Handle Animal']) {
+    assert(isClassSkill(expert, name), `${name} is an Expert class skill`);
+    assert(expert.isDefaultPick(name), `${name} is an Expert default pick`);
+  }
+  assert(!isClassSkill(expert, 'Swim') && !expert.isDefaultPick('Swim'), 'Swim is neither');
+  const fighter = lookup(['class:fighter']);
+  assert(isClassSkill(fighter, 'Climb') && !fighter.isDefaultPick('Climb'), 'Fighter Climb is a fixed class skill');
+  const both = lookup(['class:expert', 'class:fighter']);
+  assert(isClassSkill(both, 'Climb') && !both.isDefaultPick('Climb'), 'the Fighter side grants Climb outright');
+  assert(both.isDefaultPick('Bluff'), 'Bluff still holds only through the Expert pick');
+  const samurai = classFactsWire().classes.find((facts) => facts.classId === 'class:samurai' && facts.level === 1);
+  if (samurai === undefined || samurai.classSkills.status !== 'known') {
+    throw new Error('samurai is served');
+  }
+  assert(!samurai.classSkills.skills.includes('samurai_mount'), 'samurai_mount is not a skill');
+}
+
 async function main() {
   verifiesSkillIdForOnAParentheticalSkillName();
   verifiesSkillIdForOnMultiWordNonParentheticalNames();
@@ -241,6 +268,7 @@ async function main() {
   verifiesElowenPersistedAllocationLeavesNothingUnallocated();
   verifiesACrossClassRankCostsOnePoint();
   verifiesAnUnlistedIdRoundTrips();
+  verifiesCanonicalClassSkillPicksAreDefaultPicks();
 }
 
 main().catch((error: unknown) => {

@@ -231,7 +231,7 @@ fn describe_holdable(package: &SheetRulePackage, what: &Holdable, count: u8) -> 
         Holdable::DeityAlignment(list) => {
             format!("requires a deity of alignment {}", join(list.clone(), " or "))
         }
-        Holdable::ClassSkill(skill) => format!("requires {} as a class skill", pretty(skill)),
+        Holdable::ClassSkill(skill) => format!("requires {} as a class skill", skill_words(package, skill)),
         Holdable::Proficiency(prof) => format!("requires proficiency with {}", describe_prof(prof)),
         Holdable::Language(language) => format!("requires the {language} language"),
         Holdable::Movement { mode, min } => format!("requires a {mode} speed of {min} feet"),
@@ -412,8 +412,8 @@ fn describe_expr(package: &SheetRulePackage, expr: &Expr) -> String {
         Expr::HitDice => "hit dice".to_owned(),
         Expr::BaseAttack => "base attack bonus".to_owned(),
         Expr::BaseSave(save) => format!("base {} save", save_word(*save)),
-        Expr::SkillRanks(skill) => format!("{} ranks", pretty(skill)),
-        Expr::SkillTotal(skill) => format!("{} bonus", pretty(skill)),
+        Expr::SkillRanks(skill) => format!("{} ranks", skill_words(package, skill)),
+        Expr::SkillTotal(skill) => format!("{} bonus", skill_words(package, skill)),
         Expr::HeldCount { pool, filter } => match filter {
             HeldFilter::Any => format!("{} held", pretty(pool)),
             HeldFilter::Tag(tag) => format!("{} {} held", pretty(tag), pretty(pool)),
@@ -530,6 +530,53 @@ fn capitalize_first(value: &str) -> String {
 }
 
 /// A slug or an internal id as words: `"power_attack"` -> `"power attack"`.
+/// SD-36 F7c (b): a skill's printed name -- the converted skill record's LABEL. One rule for
+/// every skill: the record label carries the source's key as a trailing parenthetical
+/// (`Knowledge (Nobility) (Knowledge (Nobility))`, `Climb (Climb)`,
+/// `Craft (Tattoos) (Craft (Alchemy))`); when that parenthetical names a converted skill (its
+/// slug is a skill record's), it is the key, not the name, and the name is the text before it.
+/// Any other trailing parenthetical is the name's own qualifier (`Perception (Dim Light)`). The
+/// record's own capitalization is kept (`Lore (Dagon)` must not lowercase). `None` when `skill`
+/// names no converted skill record.
+pub fn skill_label(package: &SheetRulePackage, skill: &str) -> Option<String> {
+    let rule = package.rule(package.find("skill", skill)?)?;
+    let label = rule.label.trim();
+    let Some(inner_end) = label.strip_suffix(')') else { return Some(label.to_owned()) };
+    // The matching open parenthesis of the trailing group.
+    let mut depth = 0usize;
+    let mut open = None;
+    for (i, c) in inner_end.char_indices().rev() {
+        match c {
+            ')' => depth += 1,
+            '(' if depth == 0 => {
+                open = Some(i);
+                break;
+            }
+            '(' => depth -= 1,
+            _ => {}
+        }
+    }
+    let Some(open) = open else { return Some(label.to_owned()) };
+    let (name, key) = (label[..open].trim_end(), &inner_end[open + 1..]);
+    let key_slug: String = key
+        .to_ascii_lowercase()
+        .split(|c: char| !c.is_ascii_alphanumeric())
+        .filter(|w| !w.is_empty())
+        .collect::<Vec<_>>()
+        .join("_");
+    if !name.is_empty() && package.find("skill", &key_slug).is_some() {
+        Some(name.to_owned())
+    } else {
+        Some(label.to_owned())
+    }
+}
+
+/// [`skill_label`], or -- for an id no skill record carries -- the id's words marked as such,
+/// never a bare slug passed off as a skill name.
+fn skill_words(package: &SheetRulePackage, skill: &str) -> String {
+    skill_label(package, skill).unwrap_or_else(|| format!("{} (no skill record)", pretty(skill)))
+}
+
 fn pretty(value: &str) -> String {
     let words = value.replace(['_', '-'], " ");
     let words = words.trim();
@@ -638,6 +685,30 @@ mod tests {
             labels.contains(&"Power Attack"),
             "Strength 16 meets Power Attack's Strength 13: {labels:?}"
         );
+    }
+
+    /// SD-36 F7c (b): a skill term prints the converted skill record's LABEL, never the
+    /// lowercased id slug (`knowledge nobility ranks at least 3`). The record label carries the
+    /// source's key as a trailing parenthetical (`Knowledge (Nobility) (Knowledge (Nobility))`,
+    /// `Climb (Climb)`); the printed label is the name before it.
+    #[test]
+    fn a_skill_term_prints_the_skill_label() {
+        let package = crate::rules_core::sheet_rule_package::package().as_ref().expect("package");
+        let ranks = |skill: &str, n: i32| Applies::Compare {
+            lhs: Expr::SkillRanks(skill.to_owned()),
+            op: Cmp::Gte,
+            rhs: Expr::Const(n),
+        };
+        assert_eq!(describe_gate(package, &ranks("knowledge_nobility", 3)), "Knowledge (Nobility) ranks at least 3");
+        assert_eq!(describe_gate(package, &ranks("climb", 5)), "Climb ranks at least 5");
+        assert_eq!(describe_gate(package, &ranks("use_magic_device", 1)), "Use Magic Device ranks at least 1");
+        assert_eq!(skill_label(package, "perception_dim_light"), Some("Perception (Dim Light)".to_owned()));
+        assert_eq!(skill_label(package, "craft_tattoos"), Some("Craft (Tattoos)".to_owned()));
+        assert_eq!(
+            describe_gate(package, &Applies::Holds { what: Holdable::ClassSkill("knowledge_arcana".to_owned()), count: 1 }),
+            "requires Knowledge (Arcana) as a class skill"
+        );
+        assert_eq!(skill_label(package, "samurai_mount"), None, "not a converted skill");
     }
 
     /// The same ability gate, one point short, moves the option to the refused list carrying

@@ -1,0 +1,132 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f7)
+error[E0432]: unresolved import `crate::rules_core::level_up_option_filter::skill_label`
+    --> src/rules_core/class_census.rs:3986:72
+     |
+3986 |         use crate::rules_core::level_up_option_filter::{describe_gate, skill_label};
+     |                                                                        ^^^^^^^^^^^ no `skill_label` in `rules_core::level_up_option_filter`
+
+error[E0425]: cannot find value `DEFAULT_PICK_MARKER` in module `crate::rules_core::class_seeds`
+   --> src/rules_core/pilot_compute/class_proficiency_sheet_rules.rs:776:81
+    |
+776 |         assert!(line.ends_with(&format!("({})", crate::rules_core::class_seeds::DEFAULT_PICK_MARKER)), "{line}");
+    |                                                                                 ^^^^^^^^^^^^^^^^^^^ not found in `crate::rules_core::class_seeds`
+
+error[E0308]: mismatched types
+   --> src/rules_core/level_up_option_filter.rs:653:30
+    |
+653 |             rhs: Expr::Const(n),
+    |                  ----------- ^ expected `i32`, found `i64`
+    |                  |
+    |                  arguments to this enum variant are incorrect
+    |
+note: tuple variant defined here
+   --> src/rules_core/sheet_rule.rs:179:5
+    |
+179 |     Const(i32),
+    |     ^^^^^
+help: you can convert an `i64` to an `i32` and panic if the converted value doesn't fit
+    |
+653 |             rhs: Expr::Const(n.try_into().unwrap()),
+    |                               ++++++++++++++++++++
+
+error[E0425]: cannot find function `skill_label` in this scope
+   --> src/rules_core/level_up_option_filter.rs:658:20
+    |
+658 |         assert_eq!(skill_label(package, "perception_dim_light"), Some("Perception (Dim Light)".to_owned()));
+    |                    ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `skill_label` in this scope
+   --> src/rules_core/level_up_option_filter.rs:659:20
+    |
+659 |         assert_eq!(skill_label(package, "craft_tattoos"), Some("Craft (Tattoos)".to_owned()));
+    |                    ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `skill_label` in this scope
+   --> src/rules_core/level_up_option_filter.rs:664:20
+    |
+664 |         assert_eq!(skill_label(package, "samurai_mount"), None, "not a converted skill");
+    |                    ^^^^^^^^^^^ not found in this scope
+
+error[E0609]: no field `not_skills` on type `pilot_compute::class_skill_sheet_rules::ClassSkillView`
+   --> src/rules_core/pilot_compute/class_skill_sheet_rules.rs:287:22
+    |
+287 |         assert!(view.not_skills.contains("samurai_mount"), "the dropped id is named: {view:?}");
+    |                      ^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `skills`, `groups`, `granted_by`
+
+error[E0609]: no field `not_skills` on type `pilot_compute::class_skill_sheet_rules::ClassSkillView`
+   --> src/rules_core/pilot_compute/class_skill_sheet_rules.rs:308:26
+    |
+308 |                 if !view.not_skills.is_empty() {
+    |                          ^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `skills`, `groups`, `granted_by`
+
+error[E0609]: no field `not_skills` on type `pilot_compute::class_skill_sheet_rules::ClassSkillView`
+   --> src/rules_core/pilot_compute/class_skill_sheet_rules.rs:309:78
+    |
+309 |                     dropped.entry(slug.to_string()).or_default().extend(view.not_skills.iter().cloned());
+    |                                                                              ^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `skills`, `groups`, `granted_by`
+
+error[E0609]: no field `default_picks` on type `pilot_compute::class_skill_sheet_rules::ClassSkillView`
+   --> src/rules_core/pilot_compute/class_skill_sheet_rules.rs:326:27
+    |
+326 |         assert_eq!(expert.default_picks, expert.skills, "every Expert class skill is a canonical pick: {expert:?}");
+    |                           ^^^^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `skills`, `groups`, `granted_by`
+
+error[E0609]: no field `default_picks` on type `pilot_compute::class_skill_sheet_rules::ClassSkillView`
+   --> src/rules_core/pilot_compute/class_skill_sheet_rules.rs:327:27
+    |
+327 |         assert_eq!(expert.default_picks.len(), 10, "{expert:?}");
+    |                           ^^^^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `skills`, `groups`, `granted_by`
+
+error[E0609]: no field `default_picks` on type `pilot_compute::class_skill_sheet_rules::ClassSkillView`
+   --> src/rules_core/pilot_compute/class_skill_sheet_rules.rs:329:27
+    |
+329 |         assert!(barbarian.default_picks.is_empty() && barbarian.default_pick_groups.is_empty(), "{barbarian:?}");
+    |                           ^^^^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `skills`, `groups`, `granted_by`
+
+error[E0609]: no field `default_pick_groups` on type `pilot_compute::class_skill_sheet_rules::ClassSkillView`
+   --> src/rules_core/pilot_compute/class_skill_sheet_rules.rs:329:65
+    |
+329 |         assert!(barbarian.default_picks.is_empty() && barbarian.default_pick_groups.is_empty(), "{barbarian:?}");
+    |                                                                 ^^^^^^^^^^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `skills`, `groups`, `granted_by`
+
+error[E0609]: no field `default_picks` on type `pilot_compute::class_skill_sheet_rules::ClassSkillView`
+   --> src/rules_core/pilot_compute/class_skill_sheet_rules.rs:337:23
+    |
+337 |         assert!(psion.default_picks.contains("autohypnosis") && psion.default_picks.contains("heal"), "{psion:?}");
+    |                       ^^^^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `skills`, `groups`, `granted_by`
+
+error[E0609]: no field `default_picks` on type `pilot_compute::class_skill_sheet_rules::ClassSkillView`
+   --> src/rules_core/pilot_compute/class_skill_sheet_rules.rs:337:71
+    |
+337 |         assert!(psion.default_picks.contains("autohypnosis") && psion.default_picks.contains("heal"), "{psion:?}");
+    |                                                                       ^^^^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `skills`, `groups`, `granted_by`
+
+error[E0609]: no field `default_pick_groups` on type `pilot_compute::class_skill_sheet_rules::ClassSkillView`
+   --> src/rules_core/pilot_compute/class_skill_sheet_rules.rs:338:23
+    |
+338 |         assert!(psion.default_pick_groups.contains("Knowledge"), "{psion:?}");
+    |                       ^^^^^^^^^^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `skills`, `groups`, `granted_by`
+
+Some errors have detailed explanations: E0308, E0425, E0432, E0609.
+For more information about an error, try `rustc --explain E0308`.
+error: could not compile `codex` (lib test) due to 16 previous errors

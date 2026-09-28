@@ -4,6 +4,7 @@ import type { AbilityScoresDto } from '../boundary/loadCreateCharacter';
 import type { HeldClass } from './characterProgression';
 import type { FeatSkillBonusesDto } from '../boundary/loadSavedCharacterDetail';
 import {
+  DEFAULT_PICK_MARKER,
   SKILLS,
   featSkillBonusFor,
   isClassSkill,
@@ -139,6 +140,9 @@ export function SkillAllocationDialog(props: {
                 <span style={{ flex: 1, fontSize: '0.85rem' }}>
                   {skill.name}
                   {classSkill ? <span style={{ color: 'var(--color-accent)', fontSize: '0.68rem', fontWeight: 700 }}> · class</span> : null}
+                  {classSkill && props.classSkills.isDefaultPick(skill.name) ? (
+                    <span style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem' }}> ({DEFAULT_PICK_MARKER})</span>
+                  ) : null}
                 </span>
                 <button
                   type="button"
