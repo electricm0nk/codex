@@ -11,12 +11,53 @@ Measured baselines (before/after, each row re-derived with its own command) and 
 
 **Status at time of writing (2026-09-26, `tranche/16` HEAD `e70a8745ed`):** Epics B, A, E, C1, C2
 and D1 are closed, and Epic F — class completion, scoped in by the operator's 2026-09-21 ruling — is
-closed through F5a (this docs pass): the class census measures **137** class ids, **63 of 63**
+closed (F0–F6; F6 desktop polish landed 2026-09-27, merge `509244a2b6`): the class census measures **137** class ids, **63 of 63**
 non-prestige `Computed` at every level, prestige **68 of 74** `Computed` in a carrier mix, mix panel **185
 of 185**, and the desktop Create roster offers **59** classes from the engine. Still to run, in order: F5.3
 (`scripts/verify-baselines.env` re-derived, PR #393 body), graphify against the final tree, the PR merge
 (operator), the worktree sweep. The "Measured baselines at Epic F closure" table below is the current
 one; the table after it is kept as the C2-closure record it was written as.
+---
+
+## Summary
+
+SD-36 consolidates the tree (Epics B, A, E, C1, C2, D1) and completes class coverage (Epic F, F0–F6):
+census 137 class ids, 63 of 63 non-prestige `Computed` at every level, prestige 68 of 74 in a carrier mix,
+mix panel 185 of 185, desktop roster 59 classes served by the engine (figures and commands below).
+
+## User-Visible Changes
+
+The Create picker offers 59 classes from the engine; Level Up adds any base or prestige class and names
+each refused option's reason; the sheet's weapon proficiency, caster level, class skills and hit points
+come from the engine; a second starter character (Elowen Ashgrave, Human Wizard 5) is seeded. See
+"Desktop change set" and "Epic F" below.
+
+## Defects Fixed
+
+22 SD-35 code-review findings (Epic E); desktop HP `Unknown` on 5 of 59 classes, wrong Martial tier and
+caster level from hand tables, missing class skills, a shaman domain line the book does not grant, and raw
+choice ids in prestige requirements (Epic F6). See the Epic E and Epic F sections.
+
+## Operational Notes
+
+ui-smoke runs against an isolated app-data root and never writes the real character store (F6d). The
+public status site stays frozen (Epic B).
+
+## Verification Evidence
+
+`scripts/verify.sh` full PASS 51/0 at `08f8cb5ace`
+(`artifacts/epic-f/stage-f6/verify-f6-2.log`); ui-smoke F6 rows in `artifacts/ui-smoke/f6/`; per-epic
+receipts in `receipts.md`.
+
+## Known Issues
+
+See "Known follow-ups" and `forward-scope-register.md` (FS-15: 6 of 74 prestige carrier mixes; FS-23
+package row; 9 of 59 roster classes with class skills Unknown; unresolved references 6,252 by mechanism).
+
+## Update Eligibility
+
+Set at publish by the release manifest (`tools/release/check_release_manifest.py`, repo keeps the version placeholder until then); not decided in this document.
+
 ---
 
 ## Build 0.16.0
@@ -268,16 +309,16 @@ prestige class computes in its carrier mix except 6 of 74, named; every multicla
 | F2 | generic gate arm; prestige-alone game rule | done 2026-09-25 | 63 of 63 (137 ids); prestige alone 74 of 74 Blocked |
 | F3 | multiclass fold for every class with a chassis; skill ranks, sub-classes, bloodline picks, helper rows | done 2026-09-25 | prestige mixes 0 -> 68 of 74; mix panel 185 of 185; 187 negative controls at status parity |
 | F4 | desktop class roster from the census; single-source seeds; prestige level-up | done 2026-09-26 | roster 31 -> 59; ui-smoke 7 of 7 |
-| F5 | closure deltas | F5a done 2026-09-26; F5.3 open | this document, status/architecture docs, decisions §11–§14, forward-scope register, retrospective |
+| F5 | closure deltas | done 2026-09-26 | this document, status/architecture docs, decisions §11–§14, forward-scope register, retrospective |
+| F6 | desktop polish: class facts from the engine; HP source rule; feat skill bonuses from the record; Level Up blockers and requirement labels; shaman domain line; newest-printing verdict; isolated ui-smoke app data; second seed character | done 2026-09-27 (merge `509244a2b6`) | hand tables 3 -> 0; HP Unknown 5 -> 0 of 59; class skills 12 -> 50 of 59; Level Up 10 of 133 options refused with the blocker shown, 0 without; raw-id requirement lines 12 -> 0 of 286; shaman domain lines 10 -> 0 of 10; `verify.sh` PASS 51/0 |
 
 **Named remainder** (`forward-scope-register.md`): 6 of 74 prestige carrier mixes on an oracle save
 formula (FS-15, a book-cited override path); 3 prestige classes whose proficiency answer is Unknown by
 mechanism G (diabolist and rivethun_emissary still compute in their fighter carrier mix, whose
 weapon union the fighter decides; exalted is one of the FS-15 six); unresolved references
 6,252 by mechanism (B 63, D 2,646, E 2,764, F 779; FS-10..FS-13); FS-14, FS-18, FS-19, FS-21, FS-22, FS-23.
-Desktop remainders on the 59-class roster (F4c receipt §6): hit points `Unknown` for 5 of 59 (monk,
-unchained_barbarian, unchained_monk, unchained_rogue, unchained_summoner; no chassis record, so
-`hitPointsDie` is null; FS-24, behind FS-23); no class-skill list for 47 of 59 (`CLASS_SKILLS` is a
-12-row hand table; FS-25, read the converted `CSKILL` grants); caster level and the Martial weapon
-tier still read the hand tables `CASTER_CLASSES` (6 ids) and `MARTIAL_WEAPON_CLASSES` (5 ids) in
-`characterProgression.ts` (FS-26).
+Desktop remainders on the 59-class roster, after F6 (`artifacts/epic-f/stage-f6/`): HP `Unknown` 0 of 59
+(was 5; FS-24 closed, FS-23 sheet side closed); class skills answered for 50 of 59 (was 12 from a hand
+table; the 9 ACG classes print `Class skills Unknown` — an unresolved `Class|<Class>` edge, a converter
+step; FS-25 desktop side closed); weapon proficiency and caster level 59 of 59 from the engine, hand-kept
+desktop class tables 0 (FS-26 closed).

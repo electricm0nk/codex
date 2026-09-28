@@ -1,7 +1,7 @@
 # Desktop App
 
 > Scope: How the Tauri desktop shell is built, how it talks to the Rust backend, and how its frontend surfaces are organized.
-> Last verified: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
+> Last verified: **2026-09-27 against `tranche/16`, HEAD `08f8cb5ace`** (SD-36 Epic F6: class facts from the engine, HP source rule, Level Up blockers). Earlier pass: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Corrections since the last pass
@@ -456,18 +456,22 @@ and falls back to the compiled-in 31-row `CLASS_OPTIONS_FALLBACK` (`characterHub
 The census sweep holds race fixed to a single Human fixture, so "every level" is proven, "every race"
 is not proven by this instrument — see [status.md](./status.md) §Posture for race-creation breadth.
 
-Offered is not the same as every sheet line computed. Three frontend remainders stay open on the
-59 offered classes (SD-36 F4c receipt §6; [status.md](./status.md) §"Known gaps and stubs"):
-hit points print `Unknown` for **5 of 59** (monk, unchained_barbarian, unchained_monk,
-unchained_rogue, unchained_summoner — no chassis record, so the roster's `hitPointsDie` is null;
-FS-24); `skillsModel.ts`'s `CLASS_SKILLS` is a 12-row hand table, so **47 of 59** have no
-class-skill list and are named on the Skills panel (FS-25); and `characterProgression.ts` still
-decides caster level from `CASTER_CLASSES` (6 ids) and the Martial weapon tier from
-`MARTIAL_WEAPON_CLASSES` (5 ids), hand tables rather than the class records (FS-26).
+Class facts come from the engine, not desktop tables (SD-36 F6a/F6b,
+`docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/`): `list_class_facts`
+(`class_facts_sheet_rules.rs`) serves each held class's weapon proficiency, caster level and class
+skills; `classFactsModel.ts` folds them for the Weapons tab, the Caster Level box and the Skills panel.
+Answered at every level on the 59 offered classes (`every_roster_class_answer_is_counted`): weapon
+proficiency 59 of 59, caster level 59 of 59, class skills 50 of 59 — the 9 ACG classes print
+`Class skills Unknown for <Class> (<reason>)` (an unresolved `Class|<Class>` edge in the package, a
+converter step). Hit points: the roster's die is `hit_die_source` (bespoke module first, then the
+converted record), so 0 of 59 print HP `Unknown`. Hand-kept class tables in `apps/desktop/src`: 0
+(`MARTIAL_WEAPON_CLASSES`, `CASTER_CLASSES`, `CLASS_SKILLS` deleted); `CLASS_OPTIONS_FALLBACK` is
+read only when the roster command fails, with the failure printed. Feat skill bonuses (Alertness and
+39 more of 43) fold from the feat record into the skill totals.
 
 **Level Up** (`LevelUpDialog.tsx`) reads `list_level_up_class_options`: advance a held class, add a
 roster base class, or add any census prestige class. Prestige classes are always offered; each
-prints its entry requirements met/unmet/situational and never blocks the choice (SD-36 Epic F §9).
+prints its entry requirements met/unmet/situational (by label, not raw choice id: 0 of 286 requirement lines carry a raw id) and never blocks the choice (SD-36 Epic F §9). An option the multiclass gate refuses (`level_up_mix_blocker`) is shown disabled with the gate's named reason, listed under "Cannot be taken (N)", and Accept stays disabled for it (SD-36 F6c: on a Human Fighter 6, 123 of 133 options compute, 10 are refused with the blocker shown — the 6 FS-15 prestige classes and 4 Unchained base classes).
 UI evidence: ui-smoke rows `create-character-{samurai,magus,warrior,kineticist,inquisitor-generic}`
 and `level-up-fighter6-into-arcane-archer[-accept]`, 7 of 7 green
 (`docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/results.json`). See

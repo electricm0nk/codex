@@ -794,3 +794,27 @@ Nothing above was deleted; this is inventory only, for the operator to action af
 - mechanism: `cluster-only` loads the existing graph.json and re-clusters it (648,327 nodes loaded, 655,946 edges); it does not re-extract the tree, so the Epic F source changes are not in the graph either way. The -1 is its load/dedup of the existing file, not a shrink of the codebase.
 - not done, by rule: no retry with `--force`, nothing restored (nothing was overwritten). graphify's own pre-run backup landed at `graphify-out/2026-09-26/` (7 files, identical sizes to the live files). A full semantic re-extraction against the final tree is the operator's call.
 - log: graphify-out/.truth-up-run-2026-09-27T01:28:14Z.log (gitignored); graphify-out/ is gitignored, so no graphify output is committed
+
+## Epic F6 landed (2026-09-27)
+
+- merge_sha: 509244a2b6 ("merge(sd36,epic-f6): desktop reads class facts from the engine; HP source rule; Level Up blockers and labels; offer labels; newest-printing verdict"); post-merge fix 08f8cb5ace (clippy `needless_borrows_for_generic_args`; five test-count floors re-recorded)
+- branch: tranche/16 (PR #393 -> develop)
+- verify_log: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/verify-f6-2.log (run against 08f8cb5ace; first post-merge run verify-f6-1.log failed clippy only, fixed in 08f8cb5ace)
+- verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68; class-coverage table matches the census)"
+- stage_receipts: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/ (polish.json, f6a-receipt.md, f6b-receipt.md, f6c-receipt.md, f6d-receipt.md, f6e-receipt.md, merge-readiness-receipt.md + merge-readiness-blockers.json, fixture-receipts.md, per-step red/green/verify logs, suite logs, wire JSON)
+- ui_smoke_evidence: docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/ (first run 11 of 12 green, `create-character-render` red on a cold build, first-run/; warm re-run 11 of 11 green, warm-rerun/; seed rows 2 of 2 green, seed/)
+- headline_numbers (commands in each stage receipt):
+  - F6-1: hand-kept desktop class tables 3 -> 0; weapon proficiency 59 of 59 and caster level 59 of 59 roster classes answered at every level from `list_class_facts` (`cargo test --locked -j 8 --lib class_facts_sheet_rules -- --test-threads=8`, `every_roster_class_answer_is_counted`)
+  - F6-2: class skills 12 -> 50 of 59 (remainder 9 of 59: ACG classes, unresolved `Class|<Class>` edge, printed Unknown with the reason); feat skill bonuses folded 40 of 43 (Alertness +2 Perception/Sense Motive)
+  - F6-3: offered classes with HP Unknown 5 -> 0 of 59 (`hit_die_source`; Monk d8, 38 HP at level 5; roster still 59, 0 `hit_die_absent`)
+  - F6-4: Level Up on Human Fighter 6: 123 of 133 options compute, 10 of 133 refused with the blocker shown, 0 refused without it; raw-id requirement lines 12 -> 0 of 286
+  - F6-5: shaman domain lines 10 -> 0 of 10 (converter step under the structural-diff protocol, f6c-structural-diff.txt, f6c-planted-mutations.txt)
+  - F6-6: chassis cites the newest printing (`the_chassis_cites_the_newest_printing_in_any_order`)
+  - critic polish P1, P2, P3-critic, P4, #28 closed in this docs step (forward-scope FS-14 row, status.md census-f5 citation, FS-26 command + denominator, list-screen catalog gap named, release-notes 7 required sections)
+  - F6d: ui-smoke on an isolated app-data root; real store unchanged (15,380 of 15,380 entries by path+size+mtime); F6e: second starter seed Elowen Ashgrave (Human Wizard 5, Fireball prepared)
+- gate_checks:
+  - class_status_table_check: OK (verify-f6-2.log class-census row)
+  - pcgen_residue_gate: PASS (verify-f6-2.log)
+  - frozen_corpus_record_count: 49,450 unmoved; unresolved references 6,252; data/corpus/** and site/** untouched
+- forward_scope: FS-23 sheet side closed (package row open by design), FS-24 closed, FS-25 desktop side closed (9 of 59 converter remainder), FS-26 closed
+- receipt_note: Epic F = 9 of 9 batches (F0, F1, F1b, F1c, F2, F3, F4, F5, F6). graphify is not re-run in this step; D5 (PR merge) is the operator's.

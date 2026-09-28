@@ -211,11 +211,11 @@ app" — the `run-desktop` skill launches and drives it under a virtual (Xvfb) d
   mix, and the other 6 are Blocked on an unrecognized source save formula (FS-15) — see
   [`docs/architecture/status.md`](docs/architecture/status.md)'s class-coverage table for the exact
   figures and evidence
-- the desktop app offers 59 classes, but three sheet surfaces still lag the engine: hit points print
-  `Unknown` for 5 of 59 (monk and four Unchained classes, which have no chassis record — FS-23/FS-24);
-  47 of 59 have no class-skill list because the Skills panel reads a 12-row hand table (the panel
-  names each such class; FS-25); caster level and the Martial weapon tier come from two hand tables
-  of 6 and 5 class ids (FS-26) — see `docs/architecture/status.md` §"Known gaps and stubs"
+- the desktop app offers 59 classes and reads their class facts from the engine (SD-36 F6): 0 of 59
+  print HP `Unknown`; weapon proficiency and caster level answered for 59 of 59; class skills for 50
+  of 59 (the other 9, the ACG classes, print `Class skills Unknown` with the engine's reason — an
+  unresolved `Class|<Class>` edge in the converted package); 0 hand-kept class tables in the desktop
+  — see `docs/architecture/status.md` §"Known gaps and stubs"
 - multiclass joins any class with a chassis (mix panel 185 of 185 `Computed`); a member that cannot
   join is named (`multiclass.class_unsupported`, `multiclass.save_shape.*`)
 - character level is capped at 20, matching PF1's own rule; the engine refuses level 21+ rather
