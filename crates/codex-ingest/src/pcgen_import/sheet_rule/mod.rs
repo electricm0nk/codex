@@ -1001,6 +1001,10 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             refusals: c.refusal_under.iter().map(|(shape, under)| (shape.clone(), under.iter().cloned().collect())).collect(),
             degradations: c.degraded_under.iter().map(|(shape, under)| (shape.clone(), under.iter().cloned().collect())).collect(),
         });
+        // SD-36 F7b: a record whose prose rows WERE stated, and every one of them was decided never
+        // to print (its condition names a record outside the inventory), states prose; the
+        // description fallback below must not print those same words with the condition dropped.
+        let prose_decided_never = c.defects.get("prose-line-out-of-inventory").is_some_and(|rows| !rows.is_empty());
         for (k, v) in c.defects {
             defects.entry(k).or_default().extend(v);
         }
@@ -1054,6 +1058,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         // one the no-source-row path has always applied, so a record cannot reach the sheet
         // through this door with words the other door would have refused.
         if !rules.iter().any(|rule| !rule.prose.is_empty())
+            && !prose_decided_never
             && let Some(text) = printable_description(r)
             && let Some(first) = rules.first_mut()
         {

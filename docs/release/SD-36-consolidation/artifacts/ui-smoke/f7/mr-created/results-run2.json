@@ -1,0 +1,102 @@
+[
+  {
+    "id": "create-character-render",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr2-out/create-character-render.FAILED.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nLoading classes from the rules engine…",
+    "reason": "expected string missing: 'Character name'; expected string missing: 'Player name'; expected string missing: 'Race'; expected string missing: 'Class'; expected string missing: 'Create character'; 'Loading' still present after the row's wait budget; select not found: 'character-race'; select not found: 'character-class'",
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-r15Blh/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-create-halfling",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr2-out/mr-create-halfling.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF7MR Halfling — Monk 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHalfling\nCLASS\nMonk 1\nLevel 1 Monk\nSkill points: 4\nFeat\nNEXT\nLevel 2 Monk\nSkill points: 4\nCharacter Name\nF7MR Halfling\nCampaign\n—\nABILITIES\n\nSTR\n14\n+2\nDEX\n17\n+3\nCON\n13\n+1\nINT\n10\n+0\nWIS\n11\n+0\nCHA\n11\n+0\nINITIATIVE\n+3\nHIT POINTS\n9 / 9\nARMOR CLASS\n\nAC\n19\nTOUCH\n15\nFLAT-FOOTED\n15\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+1\nCMD\n14\nSAVING THROWS\n\nFORTITUDE\n+3\nREFLEX\n+5\nWILL\n+2\nSPEED\n\nLAND\n20 ft.\nFLY\n—\nSWIM\n—\nCLIMB\n—\nWeapons\nDefense\nGear\nSpells\nPets\nFeats\nActions\n✗ Simple Weapons\n✗ Martial Weapons\n✗ Exotic Weapons\nAlso proficient with: Club, Crossbow (Heavy), Crossbow (Light), Dagger, Handaxe, Javelin, Kama, Nunchaku, Quarterstaff, Sai, Shortspear, Shuriken, Siangham, Sling, Spear, Sword (Short), Sword (Temple)\nProficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.\n\nAdd Weapon\nPrint\nWEAPON\nBASE DICE\nSTR\nENH. DMG\nENH. ATK\nCRITICAL\nWIELD\nLongsword\n1d8\n+2\n+0\n+0\n19-20/x2\nOne Handed\nDrop\nDropping an item removes it from the loadout but does not refund what it cost — selling equipment back is a real Pathfinder rule (usually half price) that this build does not model, and crediting a made-up amount would be worse than crediting none.\nFacets are shown separately, not summed: the damage total depends on how you wield the weapon this round, which the engine cannot know. — means the weapon's corpus record carries no value for that facet.\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nSmall\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you leave the field.\nSKILLS\n\n\nManage skill allocation\n1 unallocated\n+3\nAcrobatics\n+0\nAppraise\n+0\nBluff\n+4\nClimb\n(1)\n+0\nCraft\n+0\nDiplomacy\n+3\nDisable Device\n+0\nDisguise\n+3\nEscape Artist\n+3\nFly\n+0\nHandle Animal\n+0\nHeal\n+4\nIntimidate\n(1)\n+0\nKnowledge (Arcana)\n+0\nKnowledge (Dungeoneering)\n+0\nKnowledge (Engineering)\n+0\nKnowledge (Geography)\n+0\nKnowledge (History)\n+0\nKnowledge (Local)\n+0\nKnowledge (Nature)\n+0\nKnowledge (Nobility)\n+0\nKnowledge (Planes)\n+0\nKnowledge (Religion)\n+0\nLinguistics\n+0\nPerception\n+0\nPerform\n+0\nProfession\n+3\nRide\n+0\nSense Motive\n+3\nSleight of Hand\n+0\nSpellcraft\n+3\nStealth\n+0\nSurvival\n+4\nSwim\n(1)\n+0\nUse Magic Device\nLANGUAGES\nCommon",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-r15Blh/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "f3a36cfb-a69c-4f98-b80b-941efbc2c90e"
+      ],
+      "deleted": [
+        "f3a36cfb-a69c-4f98-b80b-941efbc2c90e"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-create-gnome",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr2-out/mr-create-gnome.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF7MR Gnome — Cleric 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nGnome\nCLASS\nCleric 1\nLevel 1 Cleric\nSkill points: 2\nFeat\nNEXT\nLevel 2 Cleric\nSkill points: 2\nCharacter Name\nF7MR Gnome\nCampaign\n—\nABILITIES\n\nSTR\n14\n+2\nDEX\n15\n+2\nCON\n15\n+2\nINT\n10\n+0\nWIS\n11\n+0\nCHA\n11\n+0\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n15\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+1\nCMD\n13\nSAVING THROWS\n\nFORTITUDE\n+4\nREFLEX\n+2\nWILL\n+2\nSPEED\n\nLAND\n20 ft.\nFLY\n—\nSWIM\n—\nCLIMB\n—\nWeapons\nDefense\nGear\nSpells\nPets\nFeats\nActions\n✓ Simple Weapons\n✗ Martial Weapons\n✗ Exotic Weapons\nProficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.\n\nAdd Weapon\nPrint\nWEAPON\nBASE DICE\nSTR\nENH. DMG\nENH. ATK\nCRITICAL\nWIELD\nLongsword\n1d8\n+2\n+0\n+0\n19-20/x2\nOne Handed\nDrop\nDropping an item removes it from the loadout but does not refund what it cost — selling equipment back is a real Pathfinder rule (usually half price) that this build does not model, and crediting a made-up amount would be worse than crediting none.\nFacets are shown separately, not summed: the damage total depends on how you wield the weapon this round, which the engine cannot know. — means the weapon's corpus record carries no value for that facet.\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nLow-light vision\nSIZE\nSmall\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you leave the field.\nSKILLS\n\n\nManage skill allocation\nfully allocated\n+2\nAcrobatics\n+0\nAppraise\n+0\nBluff\n+1\nClimb\n(1)\n+0\nCraft\n+0\nDiplomacy\n+2\nDisable Device\n+0\nDisguise\n+2\nEscape Artist\n+2\nFly\n+0\nHandle Animal\n+0\nHeal\n+1\nIntimidate\n(1)\n+0\nKnowledge (Arcana)\n+0\nKnowledge (Dungeoneering)\n+0\nKnowledge (Engineering)\n+0\nKnowledge (Geography)\n+0\nKnowledge (History)\n+0\nKnowledge (Local)\n+0\nKnowledge (Nature)\n+0\nKnowledge (Nobility)\n+0\nKnowledge (Planes)\n+0\nKnowledge (Religion)\n+0\nLinguistics\n+0\nPerception\n+0\nPerform\n+0\nProfession\n+2\nRide\n+0\nSense Motive\n+2\nSleight of Hand\n+0\nSpellcraft\n+2\nStealth\n+0\nSurvival\n+1\nSwim\n(1)\n+0\nUse Magic Device\nLANGUAGES\nCommon",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-r15Blh/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "6bdbff21-40d3-4f10-a234-ed3c1f5efca2"
+      ],
+      "deleted": [
+        "6bdbff21-40d3-4f10-a234-ed3c1f5efca2"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-create-halforc",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr2-out/mr-create-halforc.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF7MR HalfOrc — Samurai 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHalf-orc\nCLASS\nSamurai 1\nLevel 1 Samurai\nSkill points: 4\nFeat\nNEXT\nLevel 2 Samurai\nSkill points: 4\nCharacter Name\nF7MR HalfOrc\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n15\n+2\nCON\n13\n+1\nINT\n10\n+0\nWIS\n11\n+0\nCHA\n9\n-1\nINITIATIVE\n+2\nHIT POINTS\n11 / 11\nARMOR CLASS\n\nAC\n16\nTOUCH\n12\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+5\nCMB\n+4\nCMD\n16\nSAVING THROWS\n\nFORTITUDE\n+3\nREFLEX\n+2\nWILL\n+0\nSPEED\n\nLAND\n30 ft.\nFLY\n—\nSWIM\n—\nCLIMB\n—\nWeapons\nDefense\nGear\nSpells\nPets\nFeats\nActions\n✓ Simple Weapons\n✓ Martial Weapons\n✗ Exotic Weapons\nAlso proficient with: Katana, Naginata, Wakizashi\nProficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.\n\nAdd Weapon\nPrint\nWEAPON\nBASE DICE\nSTR\nENH. DMG\nENH. ATK\nCRITICAL\nWIELD\nLongsword\n1d8\n+3\n+0\n+0\n19-20/x2\nOne Handed\nDrop\nDropping an item removes it from the loadout but does not refund what it cost — selling equipment back is a real Pathfinder rule (usually half price) that this build does not model, and crediting a made-up amount would be worse than crediting none.\nFacets are shown separately, not summed: the damage total depends on how you wield the weapon this round, which the engine cannot know. — means the weapon's corpus record carries no value for that facet.\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nDarkvision 60 ft.\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you leave the field.\nSKILLS\n\n\nManage skill allocation\n1 unallocated\n+2\nAcrobatics\n+0\nAppraise\n-1\nBluff\n+5\nClimb\n(1)\n+0\nCraft\n-1\nDiplomacy\n+2\nDisable Device\n-1\nDisguise\n+2\nEscape Artist\n+2\nFly\n-1\nHandle Animal\n+0\nHeal\n+3\nIntimidate\n(1)\n+0\nKnowledge (Arcana)\n+0\nKnowledge (Dungeoneering)\n+0\nKnowledge (Engineering)\n+0\nKnowledge (Geography)\n+0\nKnowledge (History)\n+0\nKnowledge (Local)\n+0\nKnowledge (Nature)\n+0\nKnowledge (Nobility)\n+0\nKnowledge (Planes)\n+0\nKnowledge (Religion)\n+0\nLinguistics\n+0\nPerception\n-1\nPerform\n+0\nProfession\n+2\nRide\n+0\nSense Motive\n+2\nSleight of Hand\n+0\nSpellcraft\n+2\nStealth\n+0\nSurvival\n+5\nSwim\n(1)\n-1\nUse Magic Device\nLANGUAGES\nCommon",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-r15Blh/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "f0c04564-9bf7-4ad1-8eb7-d9abe5be5d86"
+      ],
+      "deleted": [
+        "f0c04564-9bf7-4ad1-8eb7-d9abe5be5d86"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-create-human",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr2-out/mr-create-human.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF7MR Human — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nF7MR Human\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n15\n+2\nCON\n13\n+1\nINT\n10\n+0\nWIS\n11\n+0\nCHA\n9\n-1\nINITIATIVE\n+2\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+1\nCMB\n+4\nCMD\n16\nSAVING THROWS\n\nFORTITUDE\n+1\nREFLEX\n+2\nWILL\n+2\nSPEED\n\nLAND\n30 ft.\nFLY\n—\nSWIM\n—\nCLIMB\n—\nWeapons\nDefense\nGear\nSpells\nPets\nFeats\nActions\n✗ Simple Weapons\n✗ Martial Weapons\n✗ Exotic Weapons\nAlso proficient with: Club, Crossbow (Heavy), Crossbow (Light), Dagger, Quarterstaff\nProficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.\n\nAdd Weapon\nPrint\nWEAPON\nBASE DICE\nSTR\nENH. DMG\nENH. ATK\nCRITICAL\nWIELD\nLongsword\n1d8\n+4\n+0\n+0\n19-20/x2\nOne Handed\nDrop\nDropping an item removes it from the loadout but does not refund what it cost — selling equipment back is a real Pathfinder rule (usually half price) that this build does not model, and crediting a made-up amount would be worse than crediting none.\nFacets are shown separately, not summed: the damage total depends on how you wield the weapon this round, which the engine cannot know. — means the weapon's corpus record carries no value for that facet.\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you leave the field.\nSKILLS\n\n\nManage skill allocation\nfully allocated\n+2\nAcrobatics\n+0\nAppraise\n-1\nBluff\n+3\nClimb\n(1)\n+0\nCraft\n-1\nDiplomacy\n+2\nDisable Device\n-1\nDisguise\n+2\nEscape Artist\n+2\nFly\n-1\nHandle Animal\n+0\nHeal\n+0\nIntimidate\n(1)\n+0\nKnowledge (Arcana)\n+0\nKnowledge (Dungeoneering)\n+0\nKnowledge (Engineering)\n+0\nKnowledge (Geography)\n+0\nKnowledge (History)\n+0\nKnowledge (Local)\n+0\nKnowledge (Nature)\n+0\nKnowledge (Nobility)\n+0\nKnowledge (Planes)\n+0\nKnowledge (Religion)\n+0\nLinguistics\n+0\nPerception\n-1\nPerform\n+0\nProfession\n+2\nRide\n+0\nSense Motive\n+2\nSleight of Hand\n+0\nSpellcraft\n+2\nStealth\n+0\nSurvival\n+3\nSwim\n(1)\n-1\nUse Magic Device\nLANGUAGES\nCommon",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-r15Blh/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "f09dccb1-e173-4864-ad04-acdacbdb6bcf"
+      ],
+      "deleted": [
+        "f09dccb1-e173-4864-ad04-acdacbdb6bcf"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "mr-elowen-skills",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f7/mr/smoke-mr2-out/mr-elowen-skills.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nPROGRESSION\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nLevel 1 Wizard\nSkill points: 7\nFeat\nLevel 2 Wizard\nSkill points: 7\nLevel 3 Wizard\nSkill points: 7\nFeat\nLevel 4 Wizard\nSkill points: 7\nAbility score increase\nLevel 5 Wizard\nSkill points: 7\nFeat\nNEXT\nLevel 6 Wizard\nSkill points: 7\nCharacter Name\nElowen Ashgrave\nCampaign\n—\nABILITIES\n\nSTR\n8\n-1\nDEX\n14\n+2\nCON\n13\n+1\nINT\n18\n+4\nWIS\n12\n+1\nCHA\n10\n+0\nINITIATIVE\n+2\nHIT POINTS\n27 / 27\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+2\nMELEE\n-2\nCMB\n+1\nCMD\n13\nSAVING THROWS\n\nFORTITUDE\n+2\nREFLEX\n+3\nWILL\n+5\nSPEED\n\nLAND\n30 ft.\nFLY\n—\nSWIM\n—\nCLIMB\n—\nWeapons\nDefense\nGear\nSpells\nPets\nFeats\nActions\n✗ Simple Weapons\n✗ Martial Weapons\n✗ Exotic Weapons\nAlso proficient with: Club, Crossbow (Heavy), Crossbow (Light), Dagger, Quarterstaff\nProficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.\n\nAdd Weapon\nPrint\nWEAPON\nBASE DICE\nSTR\nENH. DMG\nENH. ATK\nCRITICAL\nWIELD\nLongsword\n1d8\n-1\n+0\n+0\n19-20/x2\nOne Handed\nDrop\nDropping an item removes it from the loadout but does not refund what it cost — selling equipment back is a real Pathfinder rule (usually half price) that this build does not model, and crediting a made-up amount would be worse than crediting none.\nFacets are shown separately, not summed: the damage total depends on how you wield the weapon this round, which the engine cannot know. — means the weapon's corpus record carries no value for that facet.\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you leave the field.\nSKILLS\n\n\nManage skill allocation\nfully allocated\n+2\nAcrobatics\n+4\nAppraise\n+0\nBluff\n-2\nClimb\n(1)\n+4\nCraft\n+0\nDiplomacy\n+2\nDisable Device\n+0\nDisguise\n+2\nEscape Artist\n+10\nFly\n(5)\n+0\nHandle Animal\n+1\nHeal\n+1\nIntimidate\n(1)\n+12\nKnowledge (Arcana)\n(5)\n+12\nKnowledge (Dungeoneering)\n(5)\n+4\nKnowledge (Engineering)\n+4\nKnowledge (Geography)\n+4\nKnowledge (History)\n+4\nKnowledge (Local)\n+4\nKnowledge (Nature)\n+4\nKnowledge (Nobility)\n+12\nKnowledge (Planes)\n(5)\n+12\nKnowledge (Religion)\n(5)\n+9\nLinguistics\n(2)\n+1\nPerception\n+0\nPerform\n+1\nProfession\n+2\nRide\n+1\nSense Motive\n+2\nSleight of Hand\n+12\nSpellcraft\n(5)\n+2\nStealth\n+1\nSurvival\n-2\nSwim\n(1)\n+0\nUse Magic Device\nLANGUAGES\nCommon, +4 bonus language slots (not yet selectable)",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7-mr-r15Blh/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

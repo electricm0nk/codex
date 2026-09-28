@@ -165,6 +165,11 @@ pub enum ProsePiece {
     ChoiceName(ChoiceId),
     /// `"1d6+"` with a modifier stays dice.
     Dice { dice: String, modifier: Option<Expr> },
+    /// SD-36 F7b: dice whose NUMBER is a formula the source wrote into the words
+    /// (`(min(10,CASTERLEVEL))d6`, the Fireball damage): `count` dice of `sides` sides. The sheet
+    /// prints `5d6` for a caster level 5 character; with no character the catalog prints the
+    /// rule's words ("1d6 per caster level (maximum 10d6)").
+    DiceCount { count: Expr, sides: u32 },
 }
 
 /// Our expression form. Closed vocabulary; every variant names a fact the live character has.
@@ -802,6 +807,7 @@ impl SheetRule {
                 match p {
                     ProsePiece::Slot(e) => e.var_ids(&mut out),
                     ProsePiece::Dice { modifier: Some(m), .. } => m.var_ids(&mut out),
+                    ProsePiece::DiceCount { count, .. } => count.var_ids(&mut out),
                     _ => {}
                 }
             }
@@ -2076,6 +2082,13 @@ impl<'a> Evaluator<'a> {
                         if self.unresolved.replace(false) {
                             seg_unresolved = true;
                         }
+                    }
+                    ProsePiece::DiceCount { count, sides } => {
+                        let n = self.expr(count).trunc();
+                        if self.unresolved.replace(false) {
+                            seg_unresolved = true;
+                        }
+                        text.push_str(&format!("{n}d{sides}"));
                     }
                 }
             }

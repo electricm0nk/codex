@@ -14,6 +14,15 @@
 //! canonical picks from `class_seeds` (SD-36 F3c2, [`add_canonical_class_skill_picks`]): one rule
 //! over the converted chooser (`offers: Skills` + `ClassSkillChosen(<own id>)`).
 //!
+//! # Only skills; default picks named (SD-36 F7c)
+//!
+//! A `ClassSkill` id that names no converted skill record (Samurai's `samurai_mount`) is not a
+//! skill: it is dropped from `skills` and named in [`ClassSkillView::not_skills`]. A class skill
+//! (or family) every one of whose granting rules the walk holds only because of a Path-A canonical
+//! seed -- held with the seeds, not held by the same walk without them -- or that an Expert-style
+//! chooser pick adds, is a [`ClassSkillView::default_picks`] entry: the sheet marks it
+//! `(default pick)` (`class_seeds::DEFAULT_PICK_MARKER`), because the player never chose it.
+//!
 //! # Unknown, never "no class skills"
 //!
 //! Every PF1 class has class skills. A walk that reaches no class-skill grant at all, a class
@@ -39,6 +48,15 @@ pub struct ClassSkillView {
     pub groups: BTreeSet<String>,
     /// The rules that granted them (display/provenance only).
     pub granted_by: BTreeSet<String>,
+    /// SD-36 F7c (a): ids a held rule granted as `ClassSkill` that name no converted skill
+    /// record (Samurai's `samurai_mount`). Not skills: never in `skills`, named here.
+    pub not_skills: BTreeSet<String>,
+    /// SD-36 F7c (c): the members of `skills` that hold only because the reader applied a
+    /// Path-A canonical seed (`class_seeds::canonical_seeds_for`) -- a default pick, not the
+    /// player's. A skill any other held rule also grants is not listed.
+    pub default_picks: BTreeSet<String>,
+    /// The same for `groups`.
+    pub default_pick_groups: BTreeSet<String>,
 }
 
 impl ClassSkillView {
@@ -127,6 +145,12 @@ pub fn class_skill_view_with(
     let mut held = held_set(package, &seed, &facts);
     let own: Vec<&(String, String)> =
         picks.iter().filter(|(chooser, _)| chooser_offered(package, &held, &facts, chooser)).collect();
+    // SD-36 F7c (c): the same walk with the player's own picks only (no canonical seed). A rule
+    // held here is not a default pick; a rule held only in `held` is there because of a seed.
+    let mut unseeded_facts = CharacterFacts { level, class_levels: vec![(class_slug.to_string(), level)], ..CharacterFacts::default() };
+    for (chooser, option) in &own {
+        unseeded_facts.choices.entry(chooser.clone()).or_default().push((option.clone(), option.clone()));
+    }
     if !own.is_empty() {
         for (chooser, option) in own {
             let entry = facts.choices.entry(chooser.clone()).or_default();
@@ -141,6 +165,11 @@ pub fn class_skill_view_with(
             reason: format!("the class principal rule {principal} is not held at level {class_level}"),
         };
     }
+    let unseeded = held_set(package, &seed, &unseeded_facts);
+    let seed_only = |id: &String| !unseeded.rules.contains_key(id) || unseeded.removed.contains(id);
+    // Per skill / group: whether some grant of it is NOT seed-only.
+    let mut fixed_skills: BTreeSet<String> = BTreeSet::new();
+    let mut fixed_groups: BTreeSet<String> = BTreeSet::new();
     let mut view = ClassSkillView::default();
     for (id, entry) in &held.rules {
         if held.removed.contains(id) {
@@ -160,11 +189,22 @@ pub fn class_skill_view_with(
                 _ => None,
             };
             match fact {
+                // SD-36 F7c (a): one rule -- a class skill is a converted skill record. An id
+                // that names none is not a skill; it is named in `not_skills`, never listed.
+                Some(Fact::ClassSkill(skill)) if package.find("skill", &skill).is_none() => {
+                    view.not_skills.insert(skill);
+                }
                 Some(Fact::ClassSkill(skill)) => {
+                    if !seed_only(id) {
+                        fixed_skills.insert(skill.clone());
+                    }
                     view.skills.insert(skill);
                     view.granted_by.insert(id.clone());
                 }
                 Some(Fact::ClassSkillGroup(group)) => {
+                    if !seed_only(id) {
+                        fixed_groups.insert(group.clone());
+                    }
                     view.groups.insert(group);
                     view.granted_by.insert(id.clone());
                 }
@@ -175,6 +215,10 @@ pub fn class_skill_view_with(
     if let Err(reason) = add_canonical_class_skill_picks(package, class_slug, class_level, &mut view) {
         return ClassSkillAnswer::Unknown { reason };
     }
+    // A chooser pick (Expert) is a canonical seed by construction: it is a default pick unless
+    // a rule the unseeded walk holds grants the same skill outright.
+    view.default_picks = view.skills.iter().filter(|skill| !fixed_skills.contains(*skill)).cloned().collect();
+    view.default_pick_groups = view.groups.iter().filter(|group| !fixed_groups.contains(*group)).cloned().collect();
     if view.skills.is_empty() && view.groups.is_empty() {
         return ClassSkillAnswer::Unknown {
             reason: format!(
@@ -274,6 +318,68 @@ mod tests {
             assert!(!view.contains(skill), "{skill}: {view:?}");
         }
         assert!(view.contains("knowledge_arcana") && view.contains("spellcraft"), "{view:?}");
+    }
+
+    /// SD-36 F7c (a): a class-skill list holds only skills. Samurai's Mount record
+    /// (`ultimate_combat:class_feature:samurai_mount`, uc_abilities_class.lst:188) grants
+    /// `ClassSkill("samurai_mount")`, which names no converted skill record: it is dropped from
+    /// the list and named in `not_skills`, never printed as a skill.
+    #[test]
+    fn samurai_class_skills_hold_only_skills() {
+        let view = known("samurai");
+        assert!(!view.skills.contains("samurai_mount"), "{view:?}");
+        assert!(view.not_skills.contains("samurai_mount"), "the dropped id is named: {view:?}");
+        let package = sheet_rule_package::package().as_ref().expect("package");
+        for skill in &view.skills {
+            assert!(package.find("skill", skill).is_some(), "{skill} is not a converted skill: {view:?}");
+        }
+    }
+
+    /// SD-36 F7c (a): the scan. Every census class at levels 1 and 20: no Known class-skill list
+    /// names an id that is not a converted skill record.
+    #[test]
+    fn no_census_class_skill_list_names_a_non_skill() {
+        let package = sheet_rule_package::package().as_ref().expect("package");
+        let (mut answers, mut dropped) = (0usize, BTreeMap::<String, BTreeSet<String>>::new());
+        for entry in crate::rules_core::class_census::census().values() {
+            let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
+            for level in [1u8, 20] {
+                let ClassSkillAnswer::Known(view) = class_skill_view(slug, level) else { continue };
+                answers += 1;
+                for skill in &view.skills {
+                    assert!(package.find("skill", skill).is_some(), "{slug} {level}: {skill} is not a skill");
+                }
+                if !view.not_skills.is_empty() {
+                    dropped.entry(slug.to_string()).or_default().extend(view.not_skills.iter().cloned());
+                }
+            }
+        }
+        println!("F7c(a) census class-skill answers {answers} (census x levels 1,20); classes with a dropped non-skill id: {}", dropped.len());
+        for (class, ids) in &dropped {
+            println!("  DROPPED {class}: {ids:?}");
+        }
+        assert!(dropped.contains_key("samurai"), "{dropped:?}");
+    }
+
+    /// SD-36 F7c (c): a class skill held only through a Path-A canonical seed is a default pick.
+    /// Expert's ten (CRB p.450, "any ten": the player's choice) are all default picks; a class
+    /// skill the class line grants outright (Barbarian's list) never is.
+    #[test]
+    fn expert_picks_are_default_picks_and_a_fixed_list_has_none() {
+        let expert = known("expert");
+        assert_eq!(expert.default_picks, expert.skills, "every Expert class skill is a canonical pick: {expert:?}");
+        assert_eq!(expert.default_picks.len(), 10, "{expert:?}");
+        let barbarian = known("barbarian");
+        assert!(barbarian.default_picks.is_empty() && barbarian.default_pick_groups.is_empty(), "{barbarian:?}");
+    }
+
+    /// SD-36 F7c (c): Psion's class skills come from its canonical discipline (Egoist, F3c3), a
+    /// seeded sub-class pick, so each is a default pick too -- the same rule, no class case.
+    #[test]
+    fn psion_discipline_class_skills_are_default_picks() {
+        let psion = known("psion");
+        assert!(psion.default_picks.contains("autohypnosis") && psion.default_picks.contains("heal"), "{psion:?}");
+        assert!(psion.default_pick_groups.contains("Knowledge"), "{psion:?}");
     }
 
     #[test]

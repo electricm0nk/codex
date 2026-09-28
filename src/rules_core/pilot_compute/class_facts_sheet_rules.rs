@@ -93,13 +93,22 @@ pub fn class_facts(class_id: &str, class_level: u8) -> ClassFacts {
     }
 }
 
-/// The engine's per-class weapon-proficiency rule: the static row first, else the reader.
+/// The engine's per-class weapon-proficiency rule: the static row first, else the reader. Every
+/// weapon NAME either source grants (a named weapon, a set member) is then kept only when it is a
+/// weapon record ([`WeaponRecordNames`]) -- SD-36 F7a.
 pub fn class_weapon_facts(class_id: &str, class_level: u8) -> WeaponFacts {
+    let package = match sheet_rule_package::package() {
+        Ok(package) => package,
+        Err(reason) => {
+            return WeaponFacts::Unknown { reason: format!("the converted rule package did not load: {reason}") };
+        }
+    };
+    let weapons = WeaponRecordNames::of(package);
     if let Some(row) = class_weapon_proficiency(class_id) {
         return WeaponFacts::Known {
             source: WeaponFactSource::StaticRow,
             tiers: row.tiers.to_vec(),
-            named: row.named.iter().map(|s| (*s).to_owned()).collect(),
+            named: row.named.iter().filter(|name| weapons.names_a_weapon(name)).map(|s| (*s).to_owned()).collect(),
             groups: row.weapon_groups.iter().map(|s| (*s).to_owned()).collect(),
             sets: Vec::new(),
             printed: Vec::new(),
@@ -115,19 +124,66 @@ pub fn class_weapon_facts(class_id: &str, class_level: u8) -> WeaponFacts {
             }));
             printed.extend(view.unresolved_picks.iter().map(|pick| format!("{pick} (unresolved pick)")));
             printed.extend(view.seeded_picks.iter().cloned());
-            let mut named: Vec<String> = view.named.iter().cloned().collect();
+            let mut named: Vec<String> = view.named.iter().filter(|name| weapons.names_a_weapon(name)).cloned().collect();
+            // A conjunction (`Martial Ranged`) is a tier/reach selector, not a weapon name: kept.
             for conj in &view.all_of {
                 named.push(conj.join(" "));
             }
+            let sets = view
+                .sets
+                .iter()
+                .map(|set| WeaponSetView {
+                    label: set.label.clone(),
+                    members: set.members.iter().filter(|name| weapons.names_a_weapon(name)).cloned().collect(),
+                })
+                .filter(|set| !set.members.is_empty())
+                .collect();
             WeaponFacts::Known {
                 source: WeaponFactSource::ConvertedRecord,
                 tiers: view.tiers.clone(),
                 named,
                 groups: view.groups.iter().cloned().collect(),
-                sets: view.sets.clone(),
+                sets,
                 printed,
             }
         }
+    }
+}
+
+/// SD-36 F7a (F7-2): which weapon-proficiency names are WEAPONS. One rule: a name is a weapon
+/// when it is the label of a converted equipment record tagged `Weapon` that carries a
+/// proficiency category (`Simple`, `Martial` or `Exotic` -- CRB Chapter 6: every weapon is one
+/// of the three). A proficiency spelled `Base (Qualifier)` (`Sword (Short)`, `Crossbow (Light)`)
+/// is looked up as its record label `Qualifier Base` (`Short Sword`, `Light Crossbow`) when the
+/// literal name is not a label -- the one spelling difference between the two record families.
+///
+/// Names this rule drops on the 59-class roster: `Flurry of Blows` and `Unarmed Strike` (their
+/// records carry no category -- `Special`), `Grapple`, `Spells (Ray)`, `Spells (Touch)`,
+/// `Splash Weapon`, `Mind Blade` (no equipment record at all).
+pub struct WeaponRecordNames {
+    labels: std::collections::BTreeSet<String>,
+}
+
+impl WeaponRecordNames {
+    pub fn of(package: &SheetRulePackage) -> Self {
+        const CATEGORIES: [&str; 3] = ["Simple", "Martial", "Exotic"];
+        let labels = package
+            .rules_of_kind("equipment")
+            .filter(|rule| !rule.id.contains('#'))
+            .filter(|rule| rule.tags.iter().any(|t| t == "Weapon"))
+            .filter(|rule| rule.tags.iter().any(|t| CATEGORIES.contains(&t.as_str())))
+            .map(|rule| rule.label.clone())
+            .collect();
+        Self { labels }
+    }
+
+    pub fn names_a_weapon(&self, name: &str) -> bool {
+        if self.labels.contains(name) {
+            return true;
+        }
+        name.strip_suffix(')')
+            .and_then(|rest| rest.split_once(" ("))
+            .is_some_and(|(base, qualifier)| self.labels.contains(&format!("{qualifier} {base}")))
     }
 }
 
@@ -224,6 +280,78 @@ mod tests {
 
     fn caster(slug: &str, level: u8) -> CasterLevelFact {
         class_facts(&format!("class:{slug}"), level).caster_level
+    }
+
+    /// Every weapon name a Known answer prints under "Also proficient with": the named weapons
+    /// and every set member (the `WeaponAllOf` conjunctions are selectors, not names).
+    fn printed_weapon_names(class_id: &str, level: u8) -> Vec<String> {
+        match class_weapon_facts(class_id, level) {
+            WeaponFacts::Known { named, sets, .. } => {
+                named.into_iter().chain(sets.into_iter().flat_map(|set| set.members)).collect()
+            }
+            WeaponFacts::Unknown { reason } => panic!("{class_id}: {reason}"),
+        }
+    }
+
+    const PSEUDO_WEAPONS: [&str; 6] =
+        ["Flurry of Blows", "Spells (Ray)", "Spells (Touch)", "Splash Weapon", "Unarmed Strike", "Grapple"];
+
+    /// SD-36 F7a (F7-2): the Monk's static row names `Flurry of Blows` and `Unarmed Strike`
+    /// beside its weapons. Neither resolves to a converted weapon record with a proficiency
+    /// category, so neither prints; its real weapons (including the PCGen spellings
+    /// `Sword (Short)` / `Crossbow (Light)`) still do.
+    #[test]
+    fn monk_prints_only_weapon_records() {
+        let names = printed_weapon_names("class:monk", 1);
+        for pseudo in PSEUDO_WEAPONS {
+            assert!(!names.iter().any(|n| n == pseudo), "monk prints `{pseudo}`: {names:?}");
+        }
+        for weapon in ["Club", "Kama", "Sword (Short)", "Crossbow (Light)", "Sword (Temple)"] {
+            assert!(names.iter().any(|n| n == weapon), "monk lost `{weapon}`: {names:?}");
+        }
+        assert_eq!(names.len(), 17, "{names:?}");
+    }
+
+    /// SD-36 F7a (F7-2): the Magus's converted `Auto` set is Grapple, Spells (Ray), Spells
+    /// (Touch), Splash Weapon, Unarmed Strike -- none a weapon record, so the Magus prints no
+    /// named weapon beyond its Simple and Martial tiers.
+    #[test]
+    fn magus_prints_no_pseudo_weapons() {
+        let names = printed_weapon_names("class:magus", 1);
+        assert!(names.is_empty(), "magus: {names:?}");
+        match class_weapon_facts("class:magus", 1) {
+            WeaponFacts::Known { tiers, sets, .. } => {
+                assert!(tiers.contains(&WeaponProficiency::Martial));
+                assert!(sets.is_empty(), "an emptied set is dropped, not printed as a bare label: {sets:?}");
+            }
+            WeaponFacts::Unknown { reason } => panic!("{reason}"),
+        }
+    }
+
+    /// SD-36 F7a (F7-2) measurement: every roster class at levels 1 and 7 (118 rows), the names
+    /// printed under "Also proficient with" (named weapons, conjunctions, set members). Before
+    /// the weapon-record rule (the F6a wire at tranche/16 7b240e8fb5): 466 names, 69 distinct,
+    /// 164 of them one of 7 non-weapons on 21 classes. After: 302 names, 62 distinct.
+    #[test]
+    fn every_roster_class_prints_only_weapon_records() {
+        let roster = crate::rules_core::class_census::class_creation_roster().expect("roster");
+        assert_eq!(roster.len(), 59);
+        let mut printed = 0usize;
+        let mut distinct = std::collections::BTreeSet::new();
+        for entry in &roster {
+            for level in [1u8, 7] {
+                if let WeaponFacts::Known { named, sets, .. } = class_weapon_facts(&entry.id, level) {
+                    for name in named.into_iter().chain(sets.into_iter().flat_map(|set| set.members)) {
+                        assert!(!PSEUDO_WEAPONS.contains(&name.as_str()), "{} L{level}: `{name}`", entry.id);
+                        printed += 1;
+                        distinct.insert(name);
+                    }
+                }
+            }
+        }
+        eprintln!("F7a roster weapons: {printed} names printed over 118 rows, {} distinct: {distinct:?}", distinct.len());
+        assert_eq!((printed, distinct.len()), (302, 62));
+        assert!(!distinct.contains("Mind Blade"));
     }
 
     #[test]

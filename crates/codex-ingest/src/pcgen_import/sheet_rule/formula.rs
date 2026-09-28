@@ -686,6 +686,103 @@ pub fn convert_formula(ctx: &mut RecordCtx, formula: &str) -> Result<Expr, Strin
     lower(ctx, &ast, false)
 }
 
+/// The functions a formula written into prose text may call (`min(10,CASTERLEVEL)`): the four the
+/// corpus's prose formulas use, every one of which [`lower_call`] lowers.
+const PROSE_FORMULA_FUNCTIONS: [&str; 4] = ["min", "max", "floor", "ceil"];
+
+/// The formula leaves a span of prose may name, spelled as the source spells them (upper case).
+fn is_prose_formula_leaf(name: &str) -> bool {
+    matches!(
+        name,
+        "CASTERLEVEL" | "SPELLLEVEL" | "CL" | "TL" | "HD" | "BAB" | "CR" | "SIZE" | "SIZEMOD" | "STR" | "DEX" | "CON" | "INT" | "WIS" | "CHA"
+    ) || (name.len() > 5 && name.ends_with("SCORE") && ability(&name[..name.len() - 5]).is_some())
+}
+
+/// A source variable's own spelling: `ConjurationSummonersCharmBonus` (camel case, two or more
+/// capitalised words run together) or an upper-case name of four or more letters (`CASTERLEVEL`,
+/// and the corpus's one misspelling of it). English prose writes neither inside a formula-shaped
+/// group; `DC10` (two letters, "DC 10" run together) is the book's words.
+fn is_source_variable_name(name: &str) -> bool {
+    let chars: Vec<char> = name.chars().collect();
+    let all_upper = chars.iter().filter(|c| c.is_ascii_uppercase()).count() >= 4
+        && chars.iter().all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || *c == '_');
+    let camel = chars.first().is_some_and(|c| c.is_ascii_alphabetic())
+        && chars.iter().all(|c| c.is_ascii_alphanumeric())
+        && chars.windows(2).any(|w| w[0].is_ascii_lowercase() && w[1].is_ascii_uppercase());
+    all_upper || camel
+}
+
+/// SD-36 F7b: whether `span` -- a parenthesised group, or a function call, cut out of a prose
+/// text -- is a source FORMULA the source wrote into the words (`(min(10,CASTERLEVEL))`,
+/// `(CASTERLEVEL*10)`), not an aside the book wrote (`(DC 15)`, `(APG)`, `(see text)`).
+///
+/// One structural test, no word list of asides: the span must parse whole under this module's
+/// formula grammar; every identifier in it must be a formula function in call position
+/// ([`PROSE_FORMULA_FUNCTIONS`], one case throughout), a formula leaf spelled as the source spells
+/// it ([`is_prose_formula_leaf`]) or a source variable's own spelling ([`is_source_variable_name`]);
+/// and it must carry at least one mark no English aside carries -- a function call, a leaf or
+/// variable name of four or more characters, or an arithmetic operator next to a leaf, inside
+/// the span or (`arithmetic_context`) right before it: `1d8+(TL)` is a formula, where the book's
+/// own `Headband (CHA)` is not.
+pub fn is_prose_formula(span: &str, arithmetic_context: bool) -> bool {
+    let Ok(toks) = tokenize(span) else { return false };
+    if toks.is_empty() {
+        return false;
+    }
+    let mut p = Parser { toks: &toks, pos: 0 };
+    if p.parse_or().is_err() || p.pos != toks.len() {
+        return false;
+    }
+    // A short leaf (`CL`, `HD`, `CR`) is also an English abbreviation, and the book writes
+    // "(CR +1)" beside a template's name: it marks a formula only in the source's own tight
+    // spelling (`(HD+2)`, no space) or right after an operator (`1d8+(TL)`).
+    let tight = !span.contains(char::is_whitespace);
+    let has_operator = arithmetic_context || (tight && toks.iter().any(|t| matches!(t, Tok::Plus | Tok::Minus | Tok::Star | Tok::Slash)));
+    let mut marked = false;
+    for (i, t) in toks.iter().enumerate() {
+        match t {
+            Tok::Ident(name) => {
+                if toks.get(i + 1) == Some(&Tok::LParen) {
+                    let lower = name.to_ascii_lowercase();
+                    let one_case = name == &lower || name == &name.to_ascii_uppercase();
+                    if !one_case || !PROSE_FORMULA_FUNCTIONS.contains(&lower.as_str()) {
+                        return false;
+                    }
+                    marked = true;
+                } else if is_prose_formula_leaf(name) {
+                    marked |= name.len() >= 4 || has_operator;
+                } else if is_source_variable_name(name) {
+                    marked = true;
+                } else {
+                    return false;
+                }
+            }
+            Tok::Str(_) | Tok::Ge | Tok::Le | Tok::Eq | Tok::Ne | Tok::Gt | Tok::Lt | Tok::AndAnd | Tok::OrOr => return false,
+            _ => {}
+        }
+    }
+    marked
+}
+
+/// SD-36 F7b: convert a formula found in prose ([`is_prose_formula`]) to `Expr`, by the same
+/// lowering every formula takes, with ONE refusal added: a name DEFINEd nowhere whose zero the
+/// oracle does not provably read (an `undefined-variables` row, row 30) refuses here instead of
+/// reading `Const(0)`, because a zero printed into a sentence ("0 creatures", the corpus's one
+/// misspelt `CASTERLEVEL`) is a number the source never states. A name the oracle provably reads
+/// as 0 (`undeclared-in-pinned-tree`, `oracle_terms.rs`) keeps that reading, as in a `%N` slot.
+pub fn convert_prose_formula(ctx: &mut RecordCtx, span: &str) -> Result<Expr, String> {
+    let ast = parse(span.trim())?;
+    let undefined_before = ctx.defects.get("undefined-variables").map_or(0, Vec::len);
+    let lowered = lower(ctx, &ast, false);
+    if let Some(rows) = ctx.defects.get_mut("undefined-variables")
+        && rows.len() > undefined_before
+    {
+        rows.truncate(undefined_before);
+        return Err("FORMULA:identifier DEFINEd nowhere (in prose)".into());
+    }
+    lowered
+}
+
 /// Whether a formula is a plain integer literal.
 pub fn integer_literal(formula: &str) -> Option<i32> {
     formula.trim().parse::<i32>().ok()

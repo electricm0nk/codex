@@ -1,0 +1,9 @@
+Error: Acrobatics is an Expert default pick
+    at assert (apps/desktop/src/testSupport/asserts.ts:16:11)
+    at verifiesCanonicalClassSkillPicksAreDefaultPicks (apps/desktop/src/characterHub/skillsModel.test.ts:241:5)
+    at main (apps/desktop/src/characterHub/skillsModel.test.ts:269:3)
+    at <anonymous> (apps/desktop/src/characterHub/skillsModel.test.ts:272:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+EXIT=1

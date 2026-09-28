@@ -282,6 +282,9 @@ fn render_segment(segment: &ProseSegment, values: &DisplayValues) -> Option<Stri
                     out.push_str(&value.to_string());
                 }
             }
+            ProsePiece::DiceCount { count, sides } => {
+                out.push_str(&format!("{}d{sides}", eval(count, values)?.trunc()?));
+            }
             // A term the player settles at pick time. This path has no picks in hand, so it is
             // unresolved rather than guessed — the same treatment a `%CHOICE` got.
             ProsePiece::ChoiceName(_) => return None,
@@ -312,7 +315,7 @@ pub fn resolved_description(rule_id: &str, values: &DisplayValues) -> Option<Str
             && segment
                 .pieces
                 .iter()
-                .any(|piece| matches!(piece, ProsePiece::Slot(_) | ProsePiece::Dice { .. }))
+                .any(|piece| matches!(piece, ProsePiece::Slot(_) | ProsePiece::Dice { .. } | ProsePiece::DiceCount { .. }))
     }) {
         return None;
     }
@@ -469,6 +472,17 @@ pub fn render_description(
                     }
                     gap_open = false;
                 }
+                ProsePiece::DiceCount { count, sides } => match eval(count, values).and_then(Exact::trunc) {
+                    Some(value) => {
+                        out.push_str(&format!("{value}d{sides}"));
+                        gap_open = false;
+                    }
+                    None => {
+                        unresolved_labels(count, values, package, &mut dropped_args);
+                        dropped_any = true;
+                        gap_open = true;
+                    }
+                },
                 // A term the player settles at pick time, which this path never has in hand.
                 ProsePiece::ChoiceName(_) => {
                     dropped_args.push("a choice this character has not made".to_string());
@@ -525,6 +539,7 @@ pub fn first_desc_slot_value(rule: &SheetRule, values: &DisplayValues) -> Option
                 ProsePiece::Dice { modifier: Some(modifier), .. } => {
                     return eval(modifier, values).and_then(Exact::trunc)
                 }
+                ProsePiece::DiceCount { count, .. } => return eval(count, values).and_then(Exact::trunc),
                 _ => {}
             }
         }

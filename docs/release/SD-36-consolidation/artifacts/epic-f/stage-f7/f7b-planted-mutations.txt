@@ -1,0 +1,33 @@
+control (unmodified): exit=0 verdict=PASS
+    F7b: 2317 of 2317 pinned field deltas on 2308 records (by class: {'bracket_escape': 1095, 'former_words': 110, 'formula_oracle_zero_note': 9, 'formula_render': 1929, 'formula_unconverted': 1, 'out_of_inventory_condition': 36, 'out_of_inventory_line': 314}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)
+M1 Fireball's rendered damage cap moves from 10d6 to 20d6: exit=1 verdict=FAIL (unexpected field deltas: 1; F7b pin failures: 1)
+    F7b: 2316 of 2317 pinned field deltas on 2307 records (by class: {'bracket_escape': 1094, 'former_words': 110, 'formula_oracle_zero_note': 9, 'formula_render': 1928, 'formula_unconverted': 1, 'out_of_inventory_condition': 36, 'out_of_inventory_line': 313}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)
+    F7b pinned delta moved or withdrawn: core_rulebook:spell:fireball: prose
+    unexpected field deltas: 1
+M2 a lowered duration spelled as the source formula again (primal regression): exit=1 verdict=FAIL (unexpected field deltas: 1; F7b pin failures: 1)
+    F7b: 2316 of 2317 pinned field deltas on 2307 records (by class: {'bracket_escape': 1095, 'former_words': 110, 'formula_oracle_zero_note': 9, 'formula_render': 1928, 'formula_unconverted': 1, 'out_of_inventory_condition': 36, 'out_of_inventory_line': 314}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)
+    F7b pinned delta moved or withdrawn: occult_adventures:spell:primal_regression: prose
+    unexpected field deltas: 1
+M3 Fireball's out-of-inventory mythic line printed again: exit=1 verdict=FAIL (unexpected field deltas: 1; F7b pin failures: 1)
+    F7b: 2316 of 2317 pinned field deltas on 2307 records (by class: {'bracket_escape': 1094, 'former_words': 110, 'formula_oracle_zero_note': 9, 'formula_render': 1928, 'formula_unconverted': 1, 'out_of_inventory_condition': 36, 'out_of_inventory_line': 313}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)
+    F7b pinned delta moved or withdrawn: core_rulebook:spell:fireball: prose
+    unexpected field deltas: 1
+M4 brackets escaped in a feat's text (not spell text): exit=1 verdict=FAIL (unexpected field deltas: 1)
+    F7b: 2317 of 2317 pinned field deltas on 2308 records (by class: {'bracket_escape': 1095, 'former_words': 110, 'formula_oracle_zero_note': 9, 'formula_render': 1929, 'formula_unconverted': 1, 'out_of_inventory_condition': 36, 'out_of_inventory_line': 314}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)
+    unexpected field deltas: 1
+M5 an ordinary gated prose line dropped (Deadly Aim): exit=1 verdict=FAIL (unexpected field deltas: 1)
+    F7b: 2317 of 2317 pinned field deltas on 2308 records (by class: {'bracket_escape': 1095, 'former_words': 110, 'formula_oracle_zero_note': 9, 'formula_render': 1929, 'formula_unconverted': 1, 'out_of_inventory_condition': 36, 'out_of_inventory_line': 314}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)
+    unexpected field deltas: 1
+M6 the words around a pinned delta change (Fireball fire -> cold): exit=1 verdict=FAIL (unexpected field deltas: 1; F7b pin failures: 1)
+    F7b: 2316 of 2317 pinned field deltas on 2307 records (by class: {'bracket_escape': 1094, 'former_words': 110, 'formula_oracle_zero_note': 9, 'formula_render': 1928, 'formula_unconverted': 1, 'out_of_inventory_condition': 36, 'out_of_inventory_line': 313}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)
+    F7b pinned delta moved or withdrawn: core_rulebook:spell:fireball: prose
+    unexpected field deltas: 1
+M7 a decided out-of-inventory condition left undecided (amulet of the blooded, aberrant): exit=1 verdict=FAIL (F7b pin failures: 1)
+    F7b: 2316 of 2317 pinned field deltas on 2307 records (by class: {'bracket_escape': 1095, 'former_words': 110, 'formula_oracle_zero_note': 9, 'formula_render': 1929, 'formula_unconverted': 1, 'out_of_inventory_condition': 35, 'out_of_inventory_line': 313}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)
+    F7b pinned delta moved or withdrawn: advanced_class_guide:equipment:amulet_of_the_blooded_aberrant: prose
+M8 the oracle-zero provenance note withdrawn (naturalist summon nature's ally I): exit=1 verdict=FAIL (unexpected field deltas: 1; F7b pin failures: 1)
+    F7b: 2316 of 2317 pinned field deltas on 2308 records (by class: {'bracket_escape': 1095, 'former_words': 110, 'formula_oracle_zero_note': 8, 'formula_render': 1929, 'formula_unconverted': 1, 'out_of_inventory_condition': 36, 'out_of_inventory_line': 314}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)
+    F7b pinned delta moved or withdrawn: advanced_class_guide:spell:naturalist_summon_nature_s_ally_i: provenance
+    unexpected field deltas: 1
+control (restored): exit=0 verdict=PASS
+    F7b: 2317 of 2317 pinned field deltas on 2308 records (by class: {'bracket_escape': 1095, 'former_words': 110, 'formula_oracle_zero_note': 9, 'formula_render': 1929, 'formula_unconverted': 1, 'out_of_inventory_condition': 36, 'out_of_inventory_line': 314}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)

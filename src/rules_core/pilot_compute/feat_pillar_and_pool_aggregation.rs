@@ -2380,15 +2380,10 @@ pub(super) fn unmet_selected_skill_posture_conditions(input: &CharacterInput) ->
         require_selected_skill_rank(allocations, skill_id, &mut unmet);
     }
 
-    // Refuse any widening beyond exactly the three selected skills.
-    for allocation in allocations {
-        if !expected.contains(&allocation.skill_id.as_str()) {
-            unmet.push(format!(
-                "skill allocation {} is outside the selected Climb/Intimidate/Swim slice",
-                allocation.skill_id
-            ));
-        }
-    }
+    // SD-36 F7a (F7-8): ranks in any OTHER skill no longer refuse the slice. They feed none of
+    // the three totals computed here (each total reads its own skill's ranks), and refusing them
+    // made every real allocation -- a Wizard's Spellcraft -- a Blocked build. The three
+    // selected skills themselves stay at the GE-06 rank-1 posture above.
 
     // Climb and Swim totals depend on the grounded Chain Shirt armor-check posture.
     require_active_state(

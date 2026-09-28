@@ -1,0 +1,160 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.10s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/codex-epic-f7-target/debug/deps/codex-a13c5cad8ad2bb59)
+
+running 141 tests
+F7c(b) prestige gates 74; printed requirement lines 286; lines with a skill term 67; skill terms 180; terms printing a slug 0
+  EXAMPLE class:adaptive_warrior: at least 2 of: Autohypnosis ranks at least 5, Sense Motive ranks at least 5
+  EXAMPLE class:aldori_swordlord: at least 4 of: Acrobatics ranks at least 3, Intimidate ranks at least 5, Knowledge (Nobility) ranks at least 3, Sense Motive ranks at least 3
+  EXAMPLE class:arcane_trickster: at least 3 of: Disable Device ranks at least 4, Escape Artist ranks at least 4, Knowledge (Arcana) ranks at least 4
+  EXAMPLE class:argent_dramaturge: at least 4 of: Knowledge (Arcana) ranks at least 2, Knowledge (History) ranks at least 2, Perform (Sing) ranks at least 6, Spellcraft ranks at least 6
+  EXAMPLE class:asavir: at least 2 of: Handle Animal ranks at least 5, Ride ranks at least 5
+  EXAMPLE class:aspis_agent: at least 7 of: Appraise ranks at least 5, Bluff ranks at least 5, Craft (Traps) ranks at least 5, Disable Device ranks at least 5, Intimidate ranks at least 5, Knowledge (History) ranks at least 5, Perception ranks at least 5
+test rules_core::class_census::tests::no_prestige_requirement_line_prints_a_skill_slug ... ok
+prestige gates 74, printed requirement lines 286, lines with a raw id 0
+test rules_core::class_census::tests::no_prestige_requirement_line_prints_a_raw_id ... ok
+test rules_core::class_census::tests::a_dual_caster_prestige_class_gets_two_independent_carriers ... ok
+test rules_core::class_census::tests::a_bare_bab_prestige_class_gets_the_fighter_floor ... ok
+test rules_core::class_census::tests::a_prestige_row_referencing_caster_level_names_a_caster_carrier_or_reports_unknown ... ok
+test rules_core::class_census::tests::prestige_scan_books_is_measured_not_guessed ... ok
+test rules_core::class_census::tests::every_prestige_class_gets_a_carrier_or_is_named_unknown ... ok
+test rules_core::class_census::tests::prestige_carrier_distribution_is_measured_and_printed ... ok
+test rules_core::pilot_compute::class_chassis_sheet_rules::tests::a_prestige_class_carries_its_own_ten_level_ceiling ... ok
+test rules_core::class_census::tests::prestige_carrier_is_deterministic ... ok
+test rules_core::class_census::tests::prestige_list_matches_the_entry_requirement_fixture ... ok
+test rules_core::pilot_compute::class_shared_core::generic_class_family_gate_tests::a_prestige_class_never_passes_the_generic_family_arm ... ok
+test rules_core::pilot_compute::generic_class_chassis::tests::crb_and_apg_prestige_classes_resolve_a_real_chassis ... ok
+test rules_core::pilot_compute::generic_class_chassis::tests::is_prestige_reads_the_record_s_own_prestige_tag ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::a_prestige_save_folds_its_own_table_form_exactly ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::the_four_unrecognized_prestige_saves_are_oracle_formula_defects_not_a_missed_shape ... ok
+test rules_core::pilot_compute::multiclass_fold::tests::two_more_prestige_saves_the_f3c_carriers_reach_are_the_same_oracle_formula_defect ... ok
+test rules_core::pilot_compute::prestige_class_entry_gate::prestige_class_entry_gate_tests::arcane_archer_with_no_feats_is_unmet ... ok
+test rules_core::pilot_compute::prestige_class_entry_gate::prestige_class_entry_gate_tests::arcane_archer_with_the_real_feats_qualifies ... ok
+test rules_core::pilot_compute::prestige_class_entry_gate::prestige_class_entry_gate_tests::mutation_proof_a_fabricated_impossible_clause_is_caught ... ok
+test rules_core::pilot_compute::prestige_class_entry_gate::prestige_class_entry_gate_tests::registry_loads_and_matches_the_re_derive_command ... ok
+test rules_core::pilot_compute::prestige_class_entry_gate::prestige_class_entry_gate_tests::unknown_class_id_returns_none ... ok
+test rules_core::pilot_compute::prestige_class_features::prestige_class_entry_gate_wiring_tests::missing_feats_surfaces_the_unmet_entry_gate_diagnostic ... ok
+test rules_core::pilot_compute::prestige_class_features::prestige_class_entry_gate_wiring_tests::prestige_class_alone_dispatch_states_the_game_rule_and_the_shared_gate_refuses_it ... ok
+test rules_core::pilot_compute::prestige_class_features::prestige_class_entry_gate_wiring_tests::real_feats_surface_the_met_entry_gate_diagnostic ... ok
+test rules_core::pilot_compute::prestige_class_features::prestige_class_feature_generic_grant_tests::an_unrecognized_class_id_still_grounds_nothing_from_the_widened_gate ... ok
+test rules_core::pilot_compute::class_occult_and_psionic::prestige_alone_tests::a_prestige_class_alone_prints_no_chassis_cell ... ok
+test rules_core::pilot_compute::class_occult_and_psionic::prestige_alone_tests::a_base_class_alone_never_gets_the_prestige_alone_rule ... ok
+test rules_core::pilot_compute::prestige_class_features::prestige_class_feature_generic_grant_tests::duelist_deflect_arrows_grounds_without_a_half_sheet ... ok
+test rules_core::pilot_compute::prestige_class_features::prestige_class_feature_generic_grant_tests::shadowdancer_class_features_ground_without_a_half_sheet ... ok
+test rules_core::pilot_compute::prestige_class_features::wave43_prestige_class_new_compute_tests::assassin_formulas_match_the_corpus_tokens ... ok
+test rules_core::pilot_compute::prestige_class_features::prestige_class_feature_generic_grant_tests::assassin_class_features_ground_without_a_half_sheet ... ok
+test rules_core::pilot_compute::prestige_class_features::wave43_prestige_class_new_compute_tests::duelist_formulas_match_the_corpus_tokens ... ok
+test rules_core::pilot_compute::prestige_class_features::wave43_prestige_class_new_compute_tests::assassin_class_features_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave43_prestige_class_new_compute_tests::loremaster_formulas_match_the_corpus_tokens ... ok
+test rules_core::pilot_compute::prestige_class_features::wave43_prestige_class_new_compute_tests::loremaster_class_features_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave43_prestige_class_new_compute_tests::duelist_class_features_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave43_prestige_class_new_compute_tests::shadowdancer_formulas_match_the_corpus_tokens ... ok
+test rules_core::pilot_compute::prestige_class_features::wave44_pathfinder_delver_padfe_tests::all_three_padfe_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave44_pathfinder_delver_padfe_tests::padfe_bonus_formula_matches_the_corpus_tokens ... ok
+test rules_core::pilot_compute::prestige_class_features::wave44_pathfinder_delver_padfe_tests::padfe_ids_never_leak_onto_an_unrelated_class ... ok
+test rules_core::pilot_compute::prestige_class_features::wave43_prestige_class_new_compute_tests::shadowdancer_class_features_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave45_phrenic_slayer_favored_enemy_tests::all_thirty_two_ids_reach_the_real_pipeline_at_a_higher_level ... ok
+test rules_core::pilot_compute::prestige_class_features::wave45_phrenic_slayer_favored_enemy_tests::favored_enemy_bonus_formula_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave45_phrenic_slayer_favored_enemy_tests::ids_never_leak_onto_an_unrelated_class ... ok
+test rules_core::pilot_compute::prestige_class_features::wave45_phrenic_slayer_favored_enemy_tests::member_list_has_exactly_thirty_one_creature_types_matching_the_real_corpus ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::ac_bonus_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave45_phrenic_slayer_favored_enemy_tests::all_thirty_two_ids_reach_the_real_pipeline_at_level_one ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::argent_performance_dc_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::argent_performance_rounds_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::companion_bond_and_survivalist_level_are_the_raw_class_level ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::damage_reduction_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::defensive_powers_pool_size_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::defensive_stance_duration_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::dramaturgical_flourish_pool_size_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::favored_terrain_pool_size_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::fortunate_soul_uses_per_day_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::holy_vindicator_id_reaches_the_real_pipeline_at_level_five ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::argent_dramaturge_ids_reach_the_real_pipeline_at_level_five ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::master_explorer_skill_bonus_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::mystery_and_ragecaster_level_are_the_raw_class_level ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::nature_warden_ids_reach_the_real_pipeline_at_level_five ... ok
+test rules_core::pilot_compute::prestige_class_features::wave43_prestige_class_new_compute_tests::none_of_the_fifteen_ids_leak_onto_an_unrelated_or_sibling_prestige_class ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::horizon_walker_ids_reach_the_real_pipeline_at_level_five ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::none_of_the_twenty_ids_leak_onto_an_unrelated_class ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::rage_prophet_ids_reach_the_real_pipeline_at_level_five ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::stigmata_bonus_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::terrain_dominance_pool_size_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::terrain_mastery_pool_size_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::thrilling_escape_uses_per_day_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::true_seeing_caster_level_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::vigilant_combatant_initiative_bonus_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::deific_defense_and_opposition_alignment_dr_match_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::stalwart_defender_ids_reach_the_real_pipeline_at_level_ten ... ok
+test rules_core::pilot_compute::prestige_class_features::wave46_registered_prestige_magnitude_formulas_tests::pathfinder_delver_ids_reach_the_real_pipeline_at_level_ten ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::divine_scion_domain_caster_level_is_total_character_level_not_class_level ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::divine_scion_opposition_alignment_dr_surfaces_only_the_recorded_alignment ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::divine_scion_choice_gated_ids_are_absent_with_no_recorded_selection ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::divine_scion_ids_are_absent_below_their_own_level_gates ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::divine_wrath_bonus_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::domain_specialization_pool_size_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::domain_specialization_uses_per_day_table_matches_the_real_oracle ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::divine_scion_unconditional_static_ids_reach_the_real_pipeline_at_level_ten ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::total_character_level_sums_every_class_not_just_the_swept_one ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::divine_scion_uses_per_day_is_present_for_numeric_times_and_absent_for_atwill ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::weapon_and_armor_proficiency_qualify_flag_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave48_registered_prestige_magnitude_formulas_tests::golden_legionnaire_step_bonuses_match_the_corpus_tokens ... ok
+test rules_core::pilot_compute::prestige_class_features::wave47_divine_scion_class_features_tests::none_of_the_static_ids_leak_onto_an_unrelated_class ... ok
+test rules_core::pilot_compute::prestige_class_features::wave48_registered_prestige_magnitude_formulas_tests::twilight_talon_enhanced_tattoo_save_dc_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave48_registered_prestige_magnitude_formulas_tests::twilight_talon_sneak_attack_dice_matches_the_corpus_token ... ok
+test rules_core::pilot_compute::prestige_class_features::wave48_registered_prestige_magnitude_formulas_tests::none_of_the_wave48_ids_leak_onto_an_unrelated_class ... ok
+test rules_core::pilot_compute::prestige_class_features::wave48_registered_prestige_magnitude_formulas_tests::twilight_talon_tattoo_ids_are_absent_below_their_own_tier_gate ... ok
+test rules_core::pilot_compute::prestige_class_features::wave48_registered_prestige_magnitude_formulas_tests::golden_legionnaire_unconditional_ids_reach_the_real_pipeline_at_level_ten ... ok
+test rules_core::pilot_compute::prestige_class_features::wave48_registered_prestige_magnitude_formulas_tests::twilight_talon_tattoo_ids_are_absent_with_no_recorded_selection ... ok
+test rules_core::pilot_compute::prestige_class_features::wave48_registered_prestige_magnitude_formulas_tests::twilight_talon_unconditional_ids_reach_the_real_pipeline_at_level_ten ... ok
+test rules_core::pilot_compute::prestige_class_features::wave48_registered_prestige_magnitude_formulas_tests::twilight_talon_tattoo_surfaces_only_the_recorded_member_per_tier ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::adaptive_warrior_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::aspis_agent_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::battle_herald_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::asavir_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::body_snatcher_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::dark_tempest_blade_skills_pool_size_is_none_below_level_five ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::bellflower_tiller_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::cyphermage_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::demoniac_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::dark_tempest_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::enchanting_courtesan_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::evangelist_id_reaches_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::gray_corsair_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::diabolist_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::class_occult_and_psionic::prestige_alone_tests::a_prestige_class_alone_states_the_game_rule ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::hellknight_signifer_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::lion_blade_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::lantern_bearer_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::master_spy_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::mammoth_rider_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::mystic_archer_heightened_senses_range_is_none_below_level_three ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::master_chymist_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::hellknight_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::none_of_wave_49s_ids_leak_onto_an_unrelated_class ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::metamorph_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::mystic_archer_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::pyrokineticist_leech_heat_is_none_below_the_level_it_turns_positive ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::pyrokineticist_nimbus_bonus_is_none_below_the_level_it_turns_positive ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::psychic_fist_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::pathfinder_savant_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::sanguine_angel_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::steel_falcon_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::rivethun_emissary_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::pyrokineticist_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::student_of_war_mind_over_metal_requires_int_above_dex ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::ulfen_guard_id_reaches_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::student_of_war_additional_skill_reaches_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::storm_kindler_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::war_mind_ids_reach_the_real_pipeline ... ok
+test rules_core::pilot_compute::untabled_base_class_features::untabled_class_chassis_gate_tests::a_prestige_class_id_still_fails_the_gate ... ok
+test rules_core::pilot_compute::prestige_class_features::wave49_registered_prestige_magnitude_formulas_tests::westcrown_devil_ids_reach_the_real_pipeline ... ok
+test rules_core::class_census::tests::build_prestige_row_covers_every_prestige_class_with_a_mix_per_carrier ... ok
+test rules_core::class_census::tests::every_prestige_class_alone_is_measured_today has been running for over 60 seconds
+test rules_core::class_census::tests::prestige_alone_is_blocked_with_the_game_rule has been running for over 60 seconds
+test rules_core::class_census::tests::sweep_covers_exactly_the_non_prestige_ids has been running for over 60 seconds
+test rules_core::class_census::tests::every_prestige_class_alone_is_measured_today ... ok
+test rules_core::class_census::tests::prestige_alone_is_blocked_with_the_game_rule ... ok
+test rules_core::class_census::tests::sweep_covers_exactly_the_non_prestige_ids ... ok
+
+test result: ok. 141 passed; 0 failed; 0 ignored; 0 measured; 2623 filtered out; finished in 608.79s
+
+EXIT=0

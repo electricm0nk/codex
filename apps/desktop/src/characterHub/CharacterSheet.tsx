@@ -126,20 +126,22 @@ import { PortraitUpload } from './PortraitUpload';
 import { LevelUpDialog } from './LevelUpDialog';
 import { SkillAllocationDialog } from './SkillAllocationDialog';
 import {
-  DEFAULT_SKILL_ALLOCATION,
+  DEFAULT_PICK_MARKER,
   SKILLS,
+  allocationFromPersisted,
   classSkillLookup,
   featSkillBonusFor,
   featSkillBonusesWithoutARow,
   isClassSkill,
   type ClassSkillLookup,
-  skillIdFor,
+  persistedFromAllocation,
   skillModifier,
-  skillRankCost,
+  skillPointsSpent,
   totalSkillPointsAvailable,
 } from './skillsModel';
+import { printedAbilityScore } from './abilityScoresModel';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
-import { setSkillAllocations } from '../boundary/setSkillAllocations';
+import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/setSkillAllocations';
 import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
 import { adjustCharacterMoney, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
 import { adjustCharacterHp, loadCharacterDurability, type CharacterDurabilityDto } from '../boundary/characterDurability';
@@ -466,11 +468,6 @@ function StatTile(props: { label: string; value: ReactNode; emphasize?: boolean 
   );
 }
 
-/** Approximate the ability score from its modifier for display (exact for even scores). */
-function scoreFromModifier(modifier: number): number {
-  return 10 + modifier * 2;
-}
-
 function IdentityPanel(props: { name: string; campaign: string }) {
   return (
     <div style={{ ...panel, alignItems: 'center', display: 'flex', gap: '0.75rem', justifyContent: 'space-between', padding: '0.6rem 0.75rem' }}>
@@ -486,14 +483,18 @@ function IdentityPanel(props: { name: string; campaign: string }) {
   );
 }
 
-function AbilitiesPanel(props: { abilities: AbilityScoresDto }) {
+/**
+ * `scores` is the engine's effective score (`printedAbilityScore`); `abilities` its modifiers.
+ * SD-36 F7a: the score used to be reconstructed as `10 + 2 x modifier`, one low for every odd score.
+ */
+function AbilitiesPanel(props: { scores: AbilityScoresDto | null; abilities: AbilityScoresDto }) {
   return (
     <StatBox title="Abilities">
       <div style={{ display: 'grid', gap: '0.25rem', gridTemplateColumns: 'repeat(6, 1fr)', textAlign: 'center' }}>
         {ABILITY_COLUMNS.map((col) => (
           <div key={col.key}>
             <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', fontWeight: 700, margin: 0 }}>{col.label}</p>
-            <p style={{ fontSize: '1.05rem', fontWeight: 800, margin: '0.1rem 0 0' }}>{scoreFromModifier(props.abilities[col.key])}</p>
+            <p style={{ fontSize: '1.05rem', fontWeight: 800, margin: '0.1rem 0 0' }}>{printedAbilityScore(props.scores, col.key)}</p>
             <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: 0 }}>{fmt(props.abilities[col.key])}</p>
           </div>
         ))}
@@ -632,10 +633,7 @@ function SkillsPanel(props: {
     Swim: props.realModifiers?.swim,
   };
 
-  const spent = SKILLS.reduce(
-    (sum, skill) => sum + (props.allocation[skill.name] ?? 0) * skillRankCost(isClassSkill(props.classSkills, skill.name)),
-    0
-  );
+  const spent = skillPointsSpent(props.allocation);
   const available = totalSkillPointsAvailable(props.heldClasses, props.abilities.intelligence, props.isHuman);
   const remaining = available === null ? null : available - spent;
   // SD-36 F6a: a held class the engine's class-skill reader cannot answer is named with its
@@ -694,6 +692,9 @@ function SkillsPanel(props: {
               <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{fmt(total)}</span>
               <span style={{ color: classSkill ? 'var(--color-text)' : 'var(--color-text-secondary)' }}>{skill.name}</span>
               {ranks > 0 ? <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem' }}>({ranks})</span> : null}
+              {classSkill && props.classSkills.isDefaultPick(skill.name) ? (
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem' }}>({DEFAULT_PICK_MARKER})</span>
+              ) : null}
             </div>
           );
         })}
@@ -3103,6 +3104,10 @@ export function CharacterSheet(props: {
     sheetRulesUnavailableReason: string | null;
     /** SD-36 F6b: the engine's feat skill-bonus fold, re-read with the sheet lines. */
     featSkillBonuses: FeatSkillBonusesDto;
+    /** SD-36 F7a: the engine's effective ability scores (the Abilities panel prints them). */
+    abilityScores: AbilityScoresDto | null;
+    /** SD-36 F7a: the persisted skill allocation; `null` until a read carries it. */
+    skillAllocations: SkillAllocationEntryDto[] | null;
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
@@ -3110,6 +3115,8 @@ export function CharacterSheet(props: {
     sheetLines: props.detail?.sheetLines ?? [],
     sheetRulesUnavailableReason: props.detail?.sheetRulesUnavailableReason ?? null,
     featSkillBonuses: props.detail?.featSkillBonuses ?? NO_FEAT_SKILL_BONUSES,
+    abilityScores: props.detail?.abilityScores ?? null,
+    skillAllocations: props.detail?.skillAllocations ?? null,
   });
   useEffect(() => {
     let cancelled = false;
@@ -3120,6 +3127,8 @@ export function CharacterSheet(props: {
       sheetLines: props.detail?.sheetLines ?? [],
       sheetRulesUnavailableReason: props.detail?.sheetRulesUnavailableReason ?? null,
     featSkillBonuses: props.detail?.featSkillBonuses ?? NO_FEAT_SKILL_BONUSES,
+    abilityScores: props.detail?.abilityScores ?? null,
+    skillAllocations: props.detail?.skillAllocations ?? null,
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
@@ -3131,6 +3140,8 @@ export function CharacterSheet(props: {
             sheetLines: loaded.sheetLines,
             sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
       featSkillBonuses: loaded.featSkillBonuses,
+      abilityScores: loaded.abilityScores ?? null,
+      skillAllocations: loaded.skillAllocations ?? null,
           });
         }
       })
@@ -3171,7 +3182,15 @@ export function CharacterSheet(props: {
       cancelled = true;
     };
   }, [props.row.characterId]);
-  const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>({ ...DEFAULT_SKILL_ALLOCATION });
+  // SD-36 F7a: the persisted allocation, re-read with the engine records -- never a constant.
+  const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>(() =>
+    allocationFromPersisted(props.detail?.skillAllocations ?? [])
+  );
+  useEffect(() => {
+    if (engineRecords.skillAllocations) {
+      setSkillAllocation(allocationFromPersisted(engineRecords.skillAllocations));
+    }
+  }, [engineRecords.skillAllocations]);
   const [skillDialogOpen, setSkillDialogOpen] = useState(false);
   // Freshly recomputed derived stats from the "Recompute" menu action —
   // null until the operator explicitly triggers a recompute, so display
@@ -3687,6 +3706,8 @@ export function CharacterSheet(props: {
       sheetLines: loaded.sheetLines,
       sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
       featSkillBonuses: loaded.featSkillBonuses,
+      abilityScores: loaded.abilityScores ?? null,
+      skillAllocations: loaded.skillAllocations ?? null,
     });
     await refreshDurability();
   }
@@ -3995,6 +4016,8 @@ export function CharacterSheet(props: {
         sheetLines: loaded.sheetLines,
         sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
       featSkillBonuses: loaded.featSkillBonuses,
+      abilityScores: loaded.abilityScores ?? null,
+      skillAllocations: loaded.skillAllocations ?? null,
       });
     } catch {
       // Intentionally keeps the current records.
@@ -4025,19 +4048,17 @@ export function CharacterSheet(props: {
    * (a wholesale replace, not a delta — see `setSkillAllocations`'s doc
    * comment). On `Blocked` the on-disk character (and this panel's
    * `skillAllocation` state) is left exactly as it was — the compute
-   * engine's `Computed` path only accepts one exact hardcoded posture
-   * today (Climb/Intimidate/Swim at rank 1, chain shirt equipped; see
-   * `pilot_compute.rs`), so most allocations legitimately come back
-   * blocked with real diagnostics rather than silently applying.
+   * engine still holds Climb/Intimidate/Swim at the GE-06 rank-1 posture
+   * (chain shirt equipped), so moving any of those three off rank 1 comes
+   * back blocked with real diagnostics; ranks in every other skill are
+   * accepted (SD-36 F7a).
    */
   async function handleSkillAllocationAccept(draft: Record<string, number>) {
     setMutationError(null);
     try {
       const outcome = await setSkillAllocations({
         characterId: props.row.characterId,
-        skillAllocations: Object.entries(draft)
-          .filter(([, ranks]) => ranks > 0)
-          .map(([skillName, ranks]) => ({ skillId: skillIdFor(skillName), ranks })),
+        skillAllocations: persistedFromAllocation(draft),
         savedAt: new Date().toISOString(),
       });
       const refresh = toCharacterMutationRefresh(
@@ -4512,7 +4533,7 @@ export function CharacterSheet(props: {
         {/* MIDDLE: stat panels on top, weapons/defense/gear at the bottom */}
         <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
           <IdentityPanel name={props.row.displayLabel} campaign={props.row.campaign ?? '—'} />
-          <AbilitiesPanel abilities={abilities} />
+          <AbilitiesPanel scores={engineRecords.abilityScores} abilities={abilities} />
           <InitiativeHpPanel initiative={dexMod} hp={hp} />
 
           <div style={{ display: 'flex', gap: '0.6rem' }}>

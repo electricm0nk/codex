@@ -156,10 +156,13 @@ fn missing_selected_skill_allocation_blocks_skill_modifiers() {
     assert_eq!(computation.selected_skill_modifiers.swim, 0);
 }
 
+/// SD-36 F7a (F7-8): a rank in a skill OUTSIDE the Climb/Intimidate/Swim slice feeds none of the
+/// three totals the slice computes, so it no longer refuses the slice (it used to: this test was
+/// `widened_selected_skill_allocation_blocks_skill_modifiers`, and every real allocation -- a
+/// Wizard's Spellcraft -- came back Blocked). The three totals and their explanations are exactly
+/// the unwidened fixture's.
 #[test]
-fn widened_selected_skill_allocation_blocks_skill_modifiers() {
-    // Widen beyond this slice by adding an out-of-scope skill allocation. The
-    // narrow selected-skill surface must refuse rather than silently extend.
+fn an_allocation_outside_the_slice_leaves_the_three_totals_unchanged() {
     let mutated = DETERMINISTIC_FIXTURE.replace(
         "skill=skill:swim:1\n",
         "skill=skill:swim:1\nskill=skill:stealth:1\n",
@@ -168,23 +171,24 @@ fn widened_selected_skill_allocation_blocks_skill_modifiers() {
         mutated.contains("skill=skill:stealth:1"),
         "test setup should have widened the skill allocations"
     );
-    let input = load(&mutated);
-
-    let computation = compute_pilot_base_chassis(&input);
+    let widened = compute_pilot_base_chassis(&load(&mutated));
+    let baseline = compute_pilot_base_chassis(&load(DETERMINISTIC_FIXTURE));
 
     assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "widened selected skill allocation must produce a claim-blocking diagnostic: {:?}",
-        computation.diagnostics
+        !widened.diagnostics.iter().any(|d| d.id == "skill.selected_modifier.unsupported"),
+        "an out-of-slice allocation must not refuse the slice: {:?}",
+        widened.diagnostics
     );
-    assert!(
-        !computation
-            .explanations
+    assert_eq!(widened.selected_skill_modifiers, baseline.selected_skill_modifiers);
+    let selected = |c: &codex::rules_core::pilot_compute::PilotBaseChassisComputation| {
+        c.explanations
             .iter()
-            .any(|e| e.id.starts_with("skill.selected_modifier.")),
-        "widened selected skill allocation must withhold selected-skill explanations: {:?}",
-        computation.explanations
-    );
+            .filter(|e| e.id.starts_with("skill.selected_modifier."))
+            .map(|e| (e.id.clone(), e.value))
+            .collect::<Vec<_>>()
+    };
+    assert_eq!(selected(&widened), selected(&baseline));
+    assert_eq!(selected(&widened).len(), 3);
 }
 
 #[test]

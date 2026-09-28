@@ -1237,14 +1237,17 @@ fn tabletop_readiness_combat_baseline_deviation_is_blocked_not_zeroed() {
 fn tabletop_readiness_selected_skill_posture_deviation_no_longer_blocks_skill_cells() {
     let fixture = load_fixture();
     let mut input = character_input_from_fixture(fixture.get("input"));
-    // Same deviation as before this cycle: widen beyond the exact
-    // Climb/Intimidate/Swim rank-1 posture `unmet_selected_skill_posture_conditions`
-    // requires -- a single extra, otherwise perfectly legal skill
-    // allocation is enough to trip it.
-    input.chosen.skill_allocations.push(SkillAllocation {
-        skill_id: "skill:diplomacy".to_string(),
-        ranks: 1,
-    });
+    // A deviation from the exact Climb/Intimidate/Swim rank-1 posture
+    // `unmet_selected_skill_posture_conditions` requires: 2 ranks in Climb. (Before SD-36 F7a
+    // this pushed an extra Diplomacy allocation; F7a stopped refusing ranks in skills outside
+    // the three -- they feed none of the three totals -- so the deviation is now on Climb.)
+    input
+        .chosen
+        .skill_allocations
+        .iter_mut()
+        .find(|allocation| allocation.skill_id == "skill:climb")
+        .expect("the fixture allocates Climb")
+        .ranks = 2;
 
     let corpus = corpus_with_fighter_gear();
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
@@ -1258,15 +1261,15 @@ fn tabletop_readiness_selected_skill_posture_deviation_no_longer_blocks_skill_ce
             .diagnostics
             .iter()
             .any(|d| d.id == "skill.selected_modifier.unsupported" && d.claim_blocking),
-        "adding a diplomacy allocation must still trip skill.selected_modifier.unsupported \
+        "2 ranks in Climb must still trip skill.selected_modifier.unsupported \
          (claim_blocking: true) at the chassis level: {:?}",
         receipt.diagnostics
     );
     assert_eq!(receipt.chassis.selected_skill_modifiers.climb, 0);
 
     // Epic 4's allocate_skill_ranks has no notion of that chassis posture
-    // and computes climb/intimidate/swim exactly as it would without the
-    // extra diplomacy allocation (each skill is computed independently).
+    // and computes climb/intimidate/swim from their own ranks (each skill is computed
+    // independently).
     let direct = allocate_skill_ranks(&input);
     let expected_climb = direct.totals.get("skill:climb").expect("climb resolves").total_modifier;
     let expected_intimidate = direct

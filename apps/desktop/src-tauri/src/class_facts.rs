@@ -71,6 +71,11 @@ pub struct ClassSkillFactsDto {
     pub skills: Vec<String>,
     /// Whole families (`Craft`, `Knowledge`).
     pub groups: Vec<String>,
+    /// SD-36 F7c (c): the members of `skills` held only through a Path-A canonical seed -- the
+    /// sheet marks each `(default pick)` (`class_seeds::DEFAULT_PICK_MARKER`).
+    pub default_picks: Vec<String>,
+    /// The same for `groups`.
+    pub default_pick_groups: Vec<String>,
     pub reason: Option<String>,
 }
 
@@ -151,11 +156,18 @@ fn class_skill_dto(answer: ClassSkillAnswer) -> ClassSkillFactsDto {
             status: "known".to_owned(),
             skills: view.skills.into_iter().collect(),
             groups: view.groups.into_iter().collect(),
+            default_picks: view.default_picks.into_iter().collect(),
+            default_pick_groups: view.default_pick_groups.into_iter().collect(),
             reason: None,
         },
-        ClassSkillAnswer::Unknown { reason } => {
-            ClassSkillFactsDto { status: "unknown".to_owned(), skills: Vec::new(), groups: Vec::new(), reason: Some(reason) }
-        }
+        ClassSkillAnswer::Unknown { reason } => ClassSkillFactsDto {
+            status: "unknown".to_owned(),
+            skills: Vec::new(),
+            groups: Vec::new(),
+            default_picks: Vec::new(),
+            default_pick_groups: Vec::new(),
+            reason: Some(reason),
+        },
     }
 }
 
@@ -207,6 +219,85 @@ mod tests {
         let magus = one("class:magus", 7);
         assert_eq!((magus.caster_level.status.as_str(), magus.caster_level.value), ("caster", Some(7)));
         assert_eq!(one("class:samurai", 7).caster_level.status, "notACaster");
+    }
+
+    /// SD-36 F7c (a) + (c), measured over the 59-class roster at levels 1, 7 and 20:
+    /// - every served class skill is a converted skill record (the reader drops `samurai_mount`
+    ///   and names it; `not_skills` per class is counted from the engine view);
+    /// - every Path-A canonical pick the sheet prints carries the one `(default pick)` marker:
+    ///   class skills (`defaultPicks` / `defaultPickGroups`) and the Weapons tab's seeded-pick
+    ///   lines; no printed line names a canonical pick any other way.
+    #[test]
+    fn roster_class_skills_hold_only_skills_and_canonical_picks_are_marked() {
+        use codex::rules_core::class_seeds::DEFAULT_PICK_MARKER;
+        use codex::rules_core::pilot_compute::class_skill_sheet_rules::class_skill_view;
+        let package = codex::rules_core::sheet_rule_package::package().as_ref().expect("package");
+        let roster = crate::character_hub::build_class_creation_roster().expect("roster");
+        assert_eq!(roster.classes.len(), 59);
+        let marker = format!("({DEFAULT_PICK_MARKER})");
+        let mut dropped: std::collections::BTreeMap<String, std::collections::BTreeSet<String>> = Default::default();
+        let mut skill_picks: std::collections::BTreeMap<String, usize> = Default::default();
+        let mut weapon_picks: std::collections::BTreeMap<String, Vec<String>> = Default::default();
+        let (mut answers, mut known) = (0usize, 0usize);
+        for class in &roster.classes {
+            let slug = class.class_id.strip_prefix("class:").unwrap_or(&class.class_id);
+            for level in [1u8, 7, 20] {
+                answers += 1;
+                let facts = one(&class.class_id, level);
+                if let ClassSkillAnswer::Known(view) = class_skill_view(slug, level) {
+                    if !view.not_skills.is_empty() {
+                        dropped.entry(slug.to_owned()).or_default().extend(view.not_skills.iter().cloned());
+                    }
+                }
+                if facts.class_skills.status == "known" {
+                    known += 1;
+                    for skill in &facts.class_skills.skills {
+                        assert!(package.find("skill", skill).is_some(), "{slug} {level}: `{skill}` is not a skill");
+                    }
+                    for pick in &facts.class_skills.default_picks {
+                        assert!(facts.class_skills.skills.contains(pick), "{slug} {level}: {pick}");
+                    }
+                    let n = facts.class_skills.default_picks.len() + facts.class_skills.default_pick_groups.len();
+                    if n > 0 {
+                        let entry = skill_picks.entry(slug.to_owned()).or_default();
+                        *entry = (*entry).max(n);
+                    }
+                }
+                for line in &facts.weapon_proficiency.printed {
+                    assert!(!line.contains("canonical default"), "{slug} {level}: {line}");
+                    if line.ends_with(&marker) {
+                        let lines = weapon_picks.entry(slug.to_owned()).or_default();
+                        if !lines.contains(line) {
+                            lines.push(line.clone());
+                        }
+                    }
+                }
+            }
+        }
+        println!("F7c roster class facts: {answers} answers (59 classes x levels 1,7,20); class skills Known {known}");
+        println!("F7c(a) roster classes with a dropped non-skill id: {} of 59", dropped.len());
+        for (class, ids) in &dropped {
+            println!("  DROPPED {class}: {ids:?}");
+        }
+        println!("F7c(c) roster classes printing a default-pick class skill: {} of 59", skill_picks.len());
+        for (class, n) in &skill_picks {
+            println!("  SKILL-PICKS {class}: {n} (max over levels)");
+        }
+        println!("F7c(c) roster classes printing a default-pick Weapons line: {} of 59", weapon_picks.len());
+        for (class, lines) in &weapon_picks {
+            println!("  WEAPON-PICK {class}: {lines:?}");
+        }
+        assert_eq!(dropped.keys().collect::<Vec<_>>(), vec!["samurai"], "{dropped:?}");
+        // Measured: the Weapons tab prints no seeded-pick line for any roster class (every roster
+        // class whose reader walk seeds a weapon pick -- Summoner's class selection -- answers
+        // from its static `CLASS_WEAPON_PROFICIENCIES` row, which prints nothing extra). The
+        // reader's own line carries the marker (`class_proficiency_sheet_rules` test).
+        assert!(weapon_picks.is_empty(), "{weapon_picks:?}");
+        assert_eq!(
+            skill_picks.keys().map(String::as_str).collect::<Vec<_>>(),
+            vec!["expert", "psion", "summoner"],
+            "{skill_picks:?}"
+        );
     }
 
     #[test]

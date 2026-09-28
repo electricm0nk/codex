@@ -45,6 +45,12 @@ pub const COMMONER_WEAPON_CHOICE_ID: &str = "core_rulebook:class_feature:single_
 /// melee attack; Blowgun, listed first, is ranged only). A Path-A default, not a player's pick.
 pub const COMMONER_CANONICAL_WEAPON: &str = "weapon:Club";
 
+/// SD-36 F7c (c): the one marker the sheet prints beside a fact that holds only because the
+/// class reader applied a Path-A canonical seed from [`canonical_seeds_for`] -- a default the
+/// app chose, not the player (Expert's ten class skills, CRB p.450 "any ten"; the Psion's
+/// discipline; the Summoner's class selection). Printed as `(default pick)`.
+pub const DEFAULT_PICK_MARKER: &str = "default pick";
+
 /// The class-conditional canonical seeds `compose_character_input`
 /// (`apps/desktop/src-tauri/src/pf1_adapter.rs`) applies at creation time.
 /// Returned as `(selected_choices, spells_selected)`.

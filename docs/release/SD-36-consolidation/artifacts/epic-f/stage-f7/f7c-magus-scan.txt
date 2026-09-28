@@ -1,0 +1,9 @@
+corpus records walked: 51474
+Magus records (data.class == "Magus" or key/name "Magus"): 1036; with prose (non-empty description): 393
+CSKILL tokens on Magus records: 4
+  data/corpus/advanced_race_guide/class_feature/spell_dancer/class_skills.json (pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst:121): Acrobatics|Perform (Dance)|Climb|TYPE=Craft|Fly|Knowledge (Arcana)|Knowledge (Dungeoneering)|Knowledge (Planes)|TYPE=Profession|Spellcraft|Swim|Use Magic Device
+  data/corpus/adventurers_guide/class_feature/magic_warrior/class_skills.json (pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:885): Climb|TYPE=Craft|Fly|Intimidate|Knowledge (arcana)|Knowledge (history)|Knowledge (nature)|TYPE=Profession|Ride|Spellcraft|Swim|Use Magic Device
+  data/corpus/inner_sea_intrigue/class_feature/magic_warrior/class_skills.json (pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst:183): Climb|TYPE=Craft|Fly|Intimidate|Knowledge (arcana)|Knowledge (history)|Knowledge (nature)|TYPE=Profession|Ride|Spellcraft|Swim|Use Magic Device
+  data/corpus/ultimate_magic/class_feature/magus/class_skills.json (pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_class.lst:68): Climb|TYPE=Craft|Fly|Intimidate|Knowledge (Arcana)|Knowledge (Dungeoneering)|Knowledge (Planes)|TYPE=Profession|Ride|Spellcraft|Swim|Use Magic Device
+Magus records whose any field names Knowledge (religion): 0
+records anywhere whose prose names "magus" and "class skill": 0

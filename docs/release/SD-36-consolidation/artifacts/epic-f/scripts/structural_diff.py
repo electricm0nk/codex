@@ -1099,6 +1099,72 @@ def f6c_apply(fresh_rules: dict[str, dict]) -> tuple[Counter, list[str]]:
     return found, failures
 
 
+# SD-36 Epic F7b (converter step): a formula the source wrote into a prose TEXT prints as a typed
+# piece (`Slot` / `DiceCount` / a `Dice` modifier), spell text's bracket escape prints as the book's
+# parentheses, and a prose line whose condition names a record outside the converted inventory is
+# decided as the evaluator decides it (never held) -- dropped when that decides it never prints
+# (`sheet_rule/prose.rs::lower_prose_formulas`, `decide_out_of_inventory`). Every delta is a
+# (rule id, field) pinned by `f7b_delta_pins.py` into `structural_diff_f7b_deltas.json` with its
+# class and the sha256 of the new value; `f7b_shapes.py` re-checks the class shape against the
+# baseline record here, on the RAW records (read before any older stage's undo touches them). A
+# pinned delta that moved or vanished fails; an unpinned one surfaces as an ordinary field delta.
+# Active only when the fresh tree carries F7b and the baseline does not (`f7b_shapes.is_active`).
+_F7B_DELTAS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "structural_diff_f7b_deltas.json")
+F7B_CLASS_CAUSE = "F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them"
+
+
+def _load_f7b() -> dict:
+    try:
+        with open(_F7B_DELTAS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return {"owner": "", "pins": {}}
+    pins = data.get("pins", [])
+    assert len(pins) == data.get("_count", 0), f"{_F7B_DELTAS_PATH}: _count mismatch"
+    return {"owner": data.get("owner", ""), "pins": {(rid, field): (cls, sha) for rid, field, cls, sha in pins}}
+
+
+F7B = _load_f7b()
+
+
+def f7b_snapshot(base_rules: dict[str, dict], fresh_rules: dict[str, dict], base_other: dict[str, bytes], fresh_other: dict[str, bytes]) -> dict:
+    import copy as _copy
+
+    import f7b_shapes
+
+    if not F7B["owner"] or not f7b_shapes.is_active(fresh_rules, base_rules, F7B["owner"]):
+        return {"active": False}
+    raw = {key: (_copy.deepcopy(base_rules.get(key[0], {}).get(key[1])), _copy.deepcopy(fresh_rules.get(key[0], {}).get(key[1]))) for key in F7B["pins"]}
+    return {
+        "active": True,
+        "raw": raw,
+        "unconverted": f7b_shapes.defect_records(fresh_other, "inline-formula-unconverted"),
+        "former": f7b_shapes.defect_records(base_other, "inline-formula-in-prose"),
+    }
+
+
+def f7b_field_delta_holds(snap: dict, rid: str, field: str) -> str | None:
+    """The pinned F7b class when (rid, field) is pinned, its new value's sha256 holds and its class
+    shape holds against the baseline record; else None."""
+    import f7b_shapes
+
+    if not snap.get("active"):
+        return None
+    pin = F7B["pins"].get((rid, field))
+    if pin is None:
+        return None
+    old, new = snap["raw"][(rid, field)]
+    if f3b2_field_sha(new) != pin[1]:
+        return None
+    if field == "prose":
+        cls = f7b_shapes.classify_prose(rid, old or [], new or [], rid in snap["unconverted"], rid in snap["former"])
+    elif field == "provenance":
+        cls = f7b_shapes.classify_provenance(old, new)
+    else:
+        cls = None
+    return cls if cls == pin[0] else None
+
+
 def _F3C5_DEFECT_FILES() -> set[str]:
     return set(F3C5["defect_rows"])
 
@@ -1577,6 +1643,9 @@ def main() -> int:
 
     base_rules = rules_by_id(base["rule_files"])
     fresh_rules = rules_by_id(fresh["rule_files"])
+    # SD-36 F7b: read the pinned F7b fields RAW, before any older stage's undo below touches them.
+    f7b_snap = f7b_snapshot(base_rules, fresh_rules, base["other_files"], fresh["other_files"])
+    f7b_deltas: dict[str, list[tuple[str, str]]] = defaultdict(list)
     # SD-36 F6c: undo every pinned F6c delta first (see `f6c_apply`), so the F4pre pins below see
     # the offer F6c withholds.
     f6c_found, f6c_failures = f6c_apply(fresh_rules)
@@ -1645,6 +1714,11 @@ def main() -> int:
             # delta on this same id, or any delta on an id off the pinned list, still gates.
             if rid in NATURALATTACKS_CONTENT_SHIFT_IDS and field in _NATURALATTACKS_CONTENT_SHIFT_ALLOWED_FIELDS:
                 naturalattacks_content_shift_deltas.append((rid, field))
+                continue
+            # SD-36 Epic F7b: checked FIRST -- the newest stage names the mechanism that moved it.
+            f7b_class = f7b_field_delta_holds(f7b_snap, rid, field)
+            if f7b_class is not None:
+                f7b_deltas[f7b_class].append((rid, field))
                 continue
             # SD-36 Epic F3b2: an exact pinned (rule id, field, value) triple whose class shape
             # holds on these two records -- checked BEFORE the F1c pins, so a pair both name (the
@@ -1796,6 +1870,22 @@ def main() -> int:
         f"{f6c_found.get('class_granted_domain_record', 0)} of {len(F6C['unprinted'])} pinned unprinted domain records undone before the diff "
         f"-- {F6C_CLASS_CAUSE} (see structural_diff_f6c_deltas.json)"
     )
+    f7b_found = sum(len(v) for v in f7b_deltas.values())
+    f7b_by_class: Counter = Counter()
+    for cls, pairs in f7b_deltas.items():
+        for c in cls.split("+"):
+            f7b_by_class[c] += len(pairs)
+    print(
+        f"  F7b: {f7b_found} of {len(F7B['pins']) if f7b_snap.get('active') else 0} pinned field deltas on "
+        f"{len({r for v in f7b_deltas.values() for r, _ in v})} records (by class: {dict(sorted(f7b_by_class.items()))}) "
+        f"-- {F7B_CLASS_CAUSE} (see structural_diff_f7b_deltas.json)"
+    )
+    f7b_failures: list[str] = []
+    if f7b_snap.get("active"):
+        found_keys = {pair for v in f7b_deltas.values() for pair in v}
+        for key in F7B["pins"]:
+            if key not in found_keys:
+                f7b_failures.append(f"F7b pinned delta moved or withdrawn: {key[0]}: {key[1]}")
     print(f"  F3c5 pinned NaturalAttack grants: {len(F3C5['required_added_grants'])}; pinned added _vars/ tables: {len(F3C5['added_var_tables'])}; pinned _defects/ row counts: {F3C5['defect_rows']}")
     if added_rule_ids:
         unnamed = [r for r in added_rule_ids if r not in KNOWN_ADDED_RULE_CAUSES and r not in F3C3["added_rules"] and r not in F3C4B["added_rules"] and r not in F3C5["added_rules"]]
@@ -1879,6 +1969,10 @@ def main() -> int:
         for line in f6c_failures[: args.max_examples]:
             print(f"  {line}")
         failures.append(f"F6c pin failures: {len(f6c_failures)}")
+    if f7b_failures:
+        for line in f7b_failures[: args.max_examples]:
+            print(f"  {line}")
+        failures.append(f"F7b pin failures: {len(f7b_failures)}")
     for key, old_v, new_v in moved_counts:
         failures.append(f"{key} moved: {old_v} -> {new_v}")
 

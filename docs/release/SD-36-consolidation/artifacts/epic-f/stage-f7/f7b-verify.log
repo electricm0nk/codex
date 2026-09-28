@@ -1,0 +1,75 @@
+# F7b verification. Pass 1 (after the regenerated package; every source file touched first), then pass 2 (the cargo gates again, after the catalog fix pass 1's desktop run called for).
+# worktree codex-epic-f7, CARGO_TARGET_DIR=/home/ubuntu/workspace/worktrees/codex-epic-f7-target, one cargo process at a time
+
+######## PASS 1
+## converter --check: cargo run --locked --quiet -j 8 -p codex-ingest --bin sheet_rule_convert -- --check
+exit=0
+records=49450 converted=49450 refused=0 rules=73363 var_tables=6211 verdict=PASS (450.4s)
+## census: cargo run --locked -j 8 --quiet --bin class_census -- --json <scratch>/census-after.json
+exit=0
+ids=137 computed=63 blocked=0
+prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=68 prestige_mix_unknown=0
+mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0
+## residue gate: python3 scripts/pcgen_residue_gate.py --check --closure
+exit=0
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=70049
+live_files=0 live_hits=0 verdict=PASS
+## frozen: python3 scripts/site/check_frozen_status.py --check
+OK: /home/ubuntu/workspace/worktrees/codex-epic-f7/site/status-data.json is frozen at 100% (49450 units)
+exit=0
+## bundle: node scripts/gen-corpus-bundle.mjs
+files_copied=14029 dst=/home/ubuntu/workspace/worktrees/codex-epic-f7/apps/desktop/src-tauri/resources/corpus_bundle
+exit=0
+git status lines outside the F7b change set: 0
+## residue gate unit tests
+Ran 48 tests in 0.346s
+
+OK
+## structural diff self-test
+Ran 39 tests in 0.499s
+
+OK
+## workspace tests: cargo test --locked -j 8 --workspace --no-fail-fast -- --test-threads=8
+exit=0
+test-result lines 461 passed 8188 failed 0 ignored 70
+## desktop tests: cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8
+exit=101
+test result: FAILED. 633 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 425.00s
+test class_feature_descriptions::tests::the_served_population_never_falls_below_its_recorded_floor ... FAILED
+test equipment_catalog::tests::no_catalog_serves_a_description_carrying_raw_pcgen_syntax ... FAILED
+test spell_catalog::tests::converted_spell_prose_population ... FAILED
+test spell_catalog::tests::crb_acg_and_arg_records_are_always_fully_populated ... FAILED
+test spell_catalog::tests::no_served_spell_description_carries_raw_pcgen_syntax ... FAILED
+## root+ingest clippy: cargo clippy --locked -j 8 --workspace --all-targets -- -D warnings
+exit=0
+0
+## desktop clippy: cargo clippy --locked -j 8 --tests --manifest-path apps/desktop/src-tauri/Cargo.toml -- -D warnings
+exit=0
+0
+## class status table: python3 scripts/gen_class_status_table.py --check
+OK class-coverage table matches the census (ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185)
+exit=0
+DONE
+
+######## PASS 2
+## census: cargo run --locked -j 8 --quiet --bin class_census -- --json <scratch>/census-after.json
+exit=0
+ids=137 computed=63 blocked=0
+prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=68 prestige_mix_unknown=0
+mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0
+## workspace tests: cargo test --locked -j 8 --workspace --no-fail-fast -- --test-threads=8
+exit=0
+test-result lines 461 passed 8189 failed 0 ignored 70
+## desktop tests: cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8
+exit=0
+test result: ok. 638 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 417.86s
+## root+ingest clippy: cargo clippy --locked -j 8 --workspace --all-targets -- -D warnings
+exit=0
+0
+## desktop clippy: cargo clippy --locked -j 8 --tests --manifest-path apps/desktop/src-tauri/Cargo.toml -- -D warnings
+exit=0
+0
+## class status table: python3 scripts/gen_class_status_table.py --check
+OK class-coverage table matches the census (ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185)
+exit=0
+DONE

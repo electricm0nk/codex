@@ -1,0 +1,57 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f7)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 42.34s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/codex-epic-f7-target/debug/deps/codex-a13c5cad8ad2bb59)
+
+running 47 tests
+test rules_core::class_feature_pool_catalog::tests::class_skill_list_grant_owner_id_excludes_companion_mount_records ... ok
+test rules_core::class_feature_pool_catalog::tests::class_skill_list_grant_owner_table_matches_resolve_to_real_rows ... ok
+test rules_core::pilot_compute::class_skill_sheet_rules::tests::a_class_with_no_converted_record_is_unknown_never_empty ... ok
+test rules_core::pilot_compute::class_skill_sheet_rules::tests::barbarian_reads_its_core_class_skill_record ... ok
+test rules_core::pilot_compute::class_skill_sheet_rules::tests::expert_picks_are_default_picks_and_a_fixed_list_has_none ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::class_skills_are_the_class_skill_reader_verbatim ... ok
+test rules_core::pilot_compute::class_skill_sheet_rules::tests::psion_discipline_class_skills_are_default_picks ... ok
+test rules_core::pilot_compute::class_skill_sheet_rules::tests::samurai_class_skills_hold_only_skills ... ok
+test rules_core::pilot_compute::class_skill_sheet_rules::tests::wizard_reads_none_of_the_three_selected_skills ... ok
+test rules_core::pilot_compute::class_hunter_cavalier_swashbuckler::cavalier_named_feature_tests::no_cavalier_diagnostic_claims_the_class_has_no_class_skill_list ... ok
+test rules_core::pilot_compute::class_hunter_cavalier_swashbuckler::cavalier_named_feature_tests::cavalier_earns_the_class_skill_bonus_on_all_three_tracked_skills ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::brawler_gets_the_class_skill_bonus_on_all_three_skills ... ok
+test rules_core::pilot_compute::class_barbarian::bloodrager_dispatch_widening_safety_tests::no_bloodrager_diagnostic_claims_the_class_has_no_class_skill_list ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::arcanist_gets_no_class_skill_bonus_on_any_of_the_three_skills ... ok
+test rules_core::pilot_compute::class_barbarian::bloodrager_dispatch_widening_safety_tests::bloodrager_earns_the_class_skill_bonus_on_all_three_tracked_skills ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::investigator_gets_the_class_skill_bonus_on_climb_and_intimidate_but_not_swim ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::hunter_gets_the_class_skill_bonus_on_all_three_skills ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::slayer_gets_the_class_skill_bonus_on_all_three_skills ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::inquisitor_gets_the_class_skill_bonus_on_all_three_skills ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::skald_gets_the_class_skill_bonus_on_all_three_skills ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::swashbuckler_gets_the_class_skill_bonus_on_all_three_skills ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::warpriest_gets_the_class_skill_bonus_on_all_three_skills ... ok
+test rules_core::pilot_compute::untabled_base_class_feature_roster::tests::kineticist_class_skills_matches_the_oracle_s_uppercase_category_shape_1_grant ... ok
+test rules_core::rules_tables::crb::class_skill_tables::class_skill_list_tests::unknown_owner_returns_none ... ok
+test rules_core::rules_tables::pathfinder_unchained::rogue_features::tests::class_skill_list_is_the_verbatim_cskill_row ... ok
+test rules_core::rules_tables::pathfinder_unchained::summoner_features::tests::class_skill_list_is_the_verbatim_cskill_row ... ok
+test rules_core::skill_allocation::at_34_e3_003_full_class_skill_list_tests::a_non_trained_only_skill_still_reports_untrained_use_at_zero_ranks ... ok
+test rules_core::skill_allocation::at_34_e3_003_full_class_skill_list_tests::class_skill_bonus_is_grounded_actually_executes_the_engine_not_just_asserts ... ok
+test rules_core::skill_allocation::at_34_e3_003_full_class_skill_list_tests::fighter_gets_the_class_skill_bonus_on_a_directly_named_skill_the_old_slice_omitted ... ok
+test rules_core::skill_allocation::at_34_e3_003_full_class_skill_list_tests::fighter_type_craft_wildcard_grants_every_craft_subtype_the_class_skill_bonus ... ok
+test rules_core::skill_allocation::at_34_e3_003_full_class_skill_list_tests::fighter_type_profession_wildcard_grants_every_profession_subtype ... ok
+test rules_core::skill_allocation::at_34_e3_003_full_class_skill_list_tests::is_class_skill_for_matches_class_skill_bonus_is_grounded ... ok
+test rules_core::skill_allocation::at_34_e3_003_full_class_skill_list_tests::skill_bonus_is_grounded_for_display_name_normalizes_and_checks_every_recognized_class ... ok
+test rules_core::skill_allocation::at_34_e3_003_full_class_skill_list_tests::trained_only_family_skills_cannot_be_attempted_at_zero_ranks ... ok
+test rules_core::skill_allocation::at_34_e3_003_full_class_skill_list_tests::wizard_type_craft_and_profession_wildcards_grant_every_subtype ... ok
+test rules_core::skill_allocation::at_34_e3_003_full_class_skill_list_tests::wizard_type_knowledge_wildcard_grants_every_knowledge_subtype ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::fighter_still_gets_the_class_skill_bonus_on_all_three_skills ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::wizard_gets_no_class_skill_bonus_on_any_of_the_three_skills ... ok
+test rules_core::skill_allocation::wizard_and_rogue_class_skill_grounding_tests::wizard_cross_class_over_allocation_is_now_capped_and_flagged ... ok
+test rules_core::skill_allocation::wizard_and_rogue_class_skill_grounding_tests::wizard_within_cross_class_cap_is_not_flagged ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::multiclass_fighter_wizard_still_gets_the_bonus_via_the_fighter_side ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::witch_gets_the_class_skill_bonus_on_intimidate_only ... ok
+test rules_core::pilot_compute::skills_and_saves::selected_skill_class_skill_bonus_tests::rogue_still_gets_the_class_skill_bonus_on_all_three_skills ... ok
+test rules_core::skill_allocation::wizard_and_rogue_class_skill_grounding_tests::rogue_class_skill_over_allocation_uses_the_wider_class_cap_not_the_cross_class_cap ... ok
+test rules_core::skill_allocation::wizard_and_rogue_class_skill_grounding_tests::rogue_gets_the_class_skill_bonus_on_all_five_bounded_skills ... ok
+test rules_core::pilot_compute::class_skill_sheet_rules::tests::every_fallback_row_is_a_class_the_reader_cannot_answer ... ok
+F7c(a) census class-skill answers 256 (census x levels 1,20); classes with a dropped non-skill id: 1
+  DROPPED samurai: {"samurai_mount"}
+test rules_core::pilot_compute::class_skill_sheet_rules::tests::no_census_class_skill_list_names_a_non_skill ... ok
+
+test result: ok. 47 passed; 0 failed; 0 ignored; 0 measured; 2717 filtered out; finished in 43.17s
+

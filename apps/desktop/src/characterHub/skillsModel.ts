@@ -93,8 +93,37 @@ export function classSkillFactsGrant(facts: ClassSkillFactsDto, skillName: strin
  * ANY held class grants it. A held class the engine cannot answer contributes nothing and is named
  * in `unanswered` (the Skills panel prints it) -- never silently scored all-cross-class.
  */
+/**
+ * SD-36 F7c: the marker printed beside a class skill held only through a Path-A canonical seed --
+ * the engine's `class_seeds::DEFAULT_PICK_MARKER`, the same words the Weapons tab's seeded-pick
+ * lines end with.
+ */
+export const DEFAULT_PICK_MARKER = 'default pick';
+
+/**
+ * Whether the served answer grants `skillName` ONLY as a canonical default pick: granted, and
+ * every grant of it is a `defaultPicks` / `defaultPickGroups` entry.
+ */
+export function classSkillFactsDefaultPick(facts: ClassSkillFactsDto, skillName: string): boolean {
+  if (!classSkillFactsGrant(facts, skillName)) {
+    return false;
+  }
+  const fixed: ClassSkillFactsDto = {
+    ...facts,
+    skills: facts.skills.filter((skill) => !(facts.defaultPicks ?? []).includes(skill)),
+    groups: facts.groups.filter((group) => !(facts.defaultPickGroups ?? []).includes(group)),
+  };
+  return !classSkillFactsGrant(fixed, skillName);
+}
+
 export interface ClassSkillLookup {
   isClassSkill: (skillName: string) => boolean;
+  /**
+   * SD-36 F7c: a class skill that holds only because the engine applied a Path-A canonical seed in
+   * every held class that grants it (no held class grants it outright) -- printed with
+   * `(default pick)`.
+   */
+  isDefaultPick: (skillName: string) => boolean;
   /** `{ classLabel, reason }` for each held class with no served class-skill answer. */
   unanswered: Array<{ classLabel: string; reason: string }>;
 }
@@ -115,6 +144,9 @@ export function classSkillLookup(heldClasses: readonly HeldClass[], state: Class
   }
   return {
     isClassSkill: (skillName) => known.some((facts) => classSkillFactsGrant(facts, skillName)),
+    isDefaultPick: (skillName) =>
+      known.some((facts) => classSkillFactsGrant(facts, skillName)) &&
+      known.every((facts) => !classSkillFactsGrant(facts, skillName) || classSkillFactsDefaultPick(facts, skillName)),
     unanswered,
   };
 }
@@ -174,23 +206,36 @@ export function maxCrossClassSkillRanks(characterLevel: number): number {
   return Math.floor((characterLevel + 3) / 2);
 }
 
-/** Points cost per rank: 1 for a class skill, 2 for cross-class. */
-export function skillRankCost(classSkill: boolean): number {
-  return classSkill ? 1 : 2;
+/**
+ * Skill points spent: PF1 (CRB Chapter 4, Acquiring Skills) buys one rank with one point, class
+ * skill or not -- a class skill adds +3 instead of costing less (3.5's two-point cross-class rank
+ * is not a PF1 rule). Every allocation entry counts, including an id with no panel row.
+ */
+export function skillPointsSpent(allocation: Record<string, number>): number {
+  return Object.values(allocation).reduce((sum, ranks) => sum + ranks, 0);
 }
 
 /**
- * The fixed three-skill demo allocation every saved character currently
- * receives server-side (`compose_character_input` in character_hub.rs hard-
- * codes Climb/Intimidate/Swim at 1 rank each, regardless of the caller's
- * choices — there is no per-character allocation command yet). Used to seed
- * the allocation dialog with what's actually true today rather than a guess.
+ * The persisted `chosen.skill_allocations` (`LoadSavedCharacterResponse.skillAllocations`) keyed
+ * by panel row name (`skill:knowledge_arcana` -> `Knowledge (Arcana)`). An id with no panel row
+ * keeps its wire id as the key, so it is still counted and written back unchanged.
  */
-export const DEFAULT_SKILL_ALLOCATION: Record<string, number> = {
-  Climb: 1,
-  Intimidate: 1,
-  Swim: 1,
-};
+export function allocationFromPersisted(entries: ReadonlyArray<{ skillId: string; ranks: number }>): Record<string, number> {
+  const nameById = new Map(SKILLS.map((skill) => [skillIdFor(skill.name), skill.name]));
+  const allocation: Record<string, number> = {};
+  for (const entry of entries) {
+    const key = nameById.get(entry.skillId) ?? entry.skillId;
+    allocation[key] = (allocation[key] ?? 0) + entry.ranks;
+  }
+  return allocation;
+}
+
+/** The inverse of {@link allocationFromPersisted}: the wire list `set_skill_allocations` takes. */
+export function persistedFromAllocation(allocation: Record<string, number>): Array<{ skillId: string; ranks: number }> {
+  return Object.entries(allocation)
+    .filter(([, ranks]) => ranks > 0)
+    .map(([key, ranks]) => ({ skillId: key.startsWith('skill:') ? key : skillIdFor(key), ranks }));
+}
 
 /**
  * Total skill points earned across every class level already taken; `null` when any level's

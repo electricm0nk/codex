@@ -509,6 +509,19 @@ fn no_token_less_refusal_still_has_words_to_print() {
 #[test]
 fn a_converted_record_never_drops_the_description_its_corpus_row_states() {
     let pkg = package_files();
+    // SD-36 F7b: a record whose prose rows WERE stated, every one of them gated on a record outside
+    // the converted inventory and so decided never to print (`_defects/prose-line-out-of-inventory.json`),
+    // prints no description either -- the corpus description is those same words with the
+    // condition dropped (`mythic_adventures:spell:elemental_body_iiimod` states only its Mythic
+    // text). Counted and named here, never folded into "dropped".
+    let decided_never: BTreeSet<String> = pkg
+        .get("_defects/prose-line-out-of-inventory.json")
+        .and_then(|bytes| serde_json::from_slice::<Vec<String>>(bytes).ok())
+        .unwrap_or_default()
+        .into_iter()
+        .filter_map(|row| row.split_once(": ").map(|(id, _)| id.to_string()))
+        .collect();
+    let mut withheld: Vec<String> = Vec::new();
     let mut examined = 0usize;
     let mut with_description = 0usize;
     let mut dropped: Vec<String> = Vec::new();
@@ -536,12 +549,21 @@ fn a_converted_record_never_drops_the_description_its_corpus_row_states() {
         with_description += 1;
         let has_prose = rules.iter().any(|r| r["prose"].as_array().is_some_and(|p| !p.is_empty()));
         if !has_prose {
-            dropped.push(format!("{book}:{kind}:{file}"));
+            if rules.iter().any(|r| r["id"].as_str().is_some_and(|id| decided_never.contains(id))) {
+                withheld.push(format!("{book}:{kind}:{file}"));
+            } else {
+                dropped.push(format!("{book}:{kind}:{file}"));
+            }
         }
     }
     assert!(examined > 1000, "package walk collapsed: only {examined} rule file(s) examined");
     assert!(with_description > 100, "corpus walk collapsed: only {with_description} record(s) state a description");
-    eprintln!("converted rule files={examined} whose corpus record states a description={with_description} dropping it={}", dropped.len());
+    eprintln!(
+        "converted rule files={examined} whose corpus record states a description={with_description} dropping it={} \
+         withheld because every stated prose line is decided never (F7b)={} {withheld:?}",
+        dropped.len(),
+        withheld.len()
+    );
     assert!(
         dropped.is_empty(),
         "{} converted record(s) of {with_description} drop the description their corpus row states, e.g. {:?}",
