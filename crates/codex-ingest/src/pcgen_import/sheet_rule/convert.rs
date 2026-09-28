@@ -1058,7 +1058,10 @@ fn text_stat(ctx: &mut RecordCtx, acc: &mut Acc, label: &str, value: &str, field
         ctx.pi_term_hits.push(field.to_string());
         return;
     }
-    push_stat(acc, label, vec![ProsePiece::Text(text)]);
+    // SD-36 F7b: a stat-block line is prose that prints, so a formula the source wrote into it
+    // (`DURATION:(CASTERLEVEL) rounds`) lowers by the same rule as a description's.
+    let pieces = super::prose::lower_prose_formulas(ctx, vec![ProsePiece::Text(text)], field);
+    push_stat(acc, label, pieces);
 }
 
 /// A number-or-formula field as a stat-block piece: a literal stays text, anything else is a slot.

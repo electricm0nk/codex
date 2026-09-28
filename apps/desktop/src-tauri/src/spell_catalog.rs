@@ -768,6 +768,45 @@ pub fn list_spells(filter: SpellCatalogFilter) -> SpellCatalogResponse {
 mod tests {
     use super::*;
 
+    /// SD-36 F7b (worklist F7-5). The Spells tab prints a prepared spell's effect text from
+    /// this catalog (`spellsTabModel.ts` `effectText` is the matched entry's `description`), so
+    /// this is Elowen's Fireball exactly as her sheet shows it. Hand-checked against the Core
+    /// Rulebook p.284, *Fireball*: "deals 1d6 points of fire damage per caster level (maximum
+    /// 10d6) to every creature within the area".
+    ///
+    /// Before F7b the text carried the source's own formula, `(min(10,CASTERLEVEL))d6`, from
+    /// the record's short-form description (a line the source shows only when the full text is
+    /// off), and a mythic line under the sentence "If requires Fireball from mythic spell (no
+    /// record in the corpus)": a condition whose target is outside the converted inventory.
+    #[test]
+    fn fireball_prints_its_damage_as_prose() {
+        let entry = build_spell_catalog()
+            .entries
+            .into_iter()
+            .find(|entry| entry.book == BOOK_CRB && entry.key == "Fireball")
+            .expect("the CRB catalog serves Fireball");
+        let text = entry.description.expect("Fireball has a description");
+        println!("{text}");
+        assert!(
+            text.contains(
+                "deals 1d6 points of fire damage per caster level (maximum 10d6) to every creature within the area"
+            ),
+            "the CRB p.284 damage sentence is printed: {text}"
+        );
+        for forbidden in [
+            "CASTERLEVEL",
+            "min(",
+            "))d",
+            "[maximum",
+            "no record in the corpus",
+            "If requires",
+            "not available to a character",
+            "Mythic:",
+        ] {
+            assert!(!text.contains(forbidden), "{forbidden:?} printed in: {text}");
+        }
+    }
+
     fn book_entries(book: &str) -> Vec<SpellCatalogEntryDto> {
         build_spell_catalog()
             .entries

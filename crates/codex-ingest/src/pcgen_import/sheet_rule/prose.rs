@@ -6,9 +6,9 @@
 //! the segment and stamps `provenance.pi.term_hits`.
 
 use super::ctx::{split_gates, RecordCtx};
-use super::formula::{convert_formula, integer_literal};
+use super::formula::{convert_formula, convert_prose_formula, integer_literal, is_prose_formula};
 use codex::rules_core::pi_screening::normalized_term_hit;
-use codex::rules_core::sheet_rule::{Applies, Expr, ProseFamily, ProsePiece, ProseSegment};
+use codex::rules_core::sheet_rule::{Applies, Expr, Holdable, ProseFamily, ProsePiece, ProseSegment};
 
 /// PCGen's eight entities (`EntityEncoder.java:42-49`).
 pub fn decode_entities(s: &str) -> String {
@@ -378,64 +378,234 @@ fn normalize_percentile_dice(ctx: &mut RecordCtx, text: &str) -> String {
     out
 }
 
-/// A parenthesised formula written into the prose TEXT itself, rather than as a `%N` slot,
-/// printed as the rule's words.
-///
-/// `inner_sea_world_guide:spell:ancestral_memory` states
-/// "(70+CASTERLEVEL)% chance of obtaining specific ancestral memory" in the body of its
-/// description: the variable name is source-format text in a sentence, so no slot converts it
-/// and it reached the Spell Catalog screen verbatim (SD-35 `AT-35-E6-003` cycle 2's
-/// `correction 1789093674266`, still open at cycle 5). The rewrite is closed-vocabulary: a
-/// group only qualifies when its whole content is formula punctuation AND it names at least
-/// one leaf [`leaf_words`] knows, so an ordinary parenthetical aside is never touched.
-fn scrub_inline_formula(ctx: &mut RecordCtx, text: &str, field_name: &str) -> String {
-    match rewrite_inline_formula(text) {
-        Some(rewritten) => {
-            ctx.defect("inline-formula-in-prose", format!("{}: {field_name}", ctx.record.id));
-            rewritten
+/// SD-36 F7b: the byte ranges of every formula the source wrote into a prose TEXT itself
+/// (rather than as a `%N` slot): a parenthesised group, or a function call, that
+/// [`is_prose_formula`] reads as a source formula. `(min(10,CASTERLEVEL))` in Fireball's
+/// short-form description; `(CASTERLEVEL) rounds` in 1,700-odd spell durations.
+pub(crate) fn prose_formula_spans(text: &str) -> Vec<(usize, usize)> {
+    let b = text.as_bytes();
+    let matching_close = |open: usize| -> Option<usize> {
+        let mut depth = 0usize;
+        for (j, c) in b.iter().enumerate().skip(open) {
+            match c {
+                b'(' => depth += 1,
+                b')' => {
+                    depth -= 1;
+                    if depth == 0 {
+                        return Some(j);
+                    }
+                }
+                _ => {}
+            }
         }
-        None => text.to_string(),
+        None
+    };
+    let mut out = Vec::new();
+    let mut i = 0;
+    while i < b.len() {
+        let boundary = i == 0 || !(b[i - 1].is_ascii_alphanumeric() || b[i - 1] == b'_');
+        let open = if b[i] == b'(' {
+            Some(i)
+        } else if boundary && b[i].is_ascii_alphabetic() {
+            let mut j = i;
+            while j < b.len() && (b[j].is_ascii_alphanumeric() || b[j] == b'_') {
+                j += 1;
+            }
+            (j < b.len() && b[j] == b'(').then_some(j)
+        } else {
+            None
+        };
+        if let Some(open) = open
+            && let Some(close) = matching_close(open)
+            && text.is_char_boundary(i)
+            && is_prose_formula(&text[i..=close], text[..i].trim_end().ends_with(['+', '-']))
+        {
+            out.push((i, close + 1));
+            i = close + 1;
+            continue;
+        }
+        i += 1;
+    }
+    out
+}
+
+/// `d<sides>` right after a formula (`(min(10,CASTERLEVEL))d6`): the die size and the bytes it
+/// takes, when the die is a whole word.
+fn dice_suffix(rest: &str) -> Option<(u32, usize)> {
+    let b = rest.as_bytes();
+    if b.first() != Some(&b'd') {
+        return None;
+    }
+    let digits = b[1..].iter().take_while(|c| c.is_ascii_digit()).count();
+    if digits == 0 || b.get(1 + digits).is_some_and(|c| c.is_ascii_alphanumeric()) {
+        return None;
+    }
+    Some((rest[1..1 + digits].parse().ok()?, 1 + digits))
+}
+
+/// `NdM+` right before a formula (`1d8+(min(5,CASTERLEVEL))`): the dice and where they start.
+fn dice_prefix(before: &str) -> Option<(String, usize)> {
+    let trimmed = before.trim_end();
+    let without_plus = trimmed.strip_suffix('+')?.trim_end();
+    let b = without_plus.as_bytes();
+    let sides = b.iter().rev().take_while(|c| c.is_ascii_digit()).count();
+    let d_at = b.len().checked_sub(sides + 1)?;
+    if sides == 0 || b[d_at] != b'd' {
+        return None;
+    }
+    let count = b[..d_at].iter().rev().take_while(|c| c.is_ascii_digit()).count();
+    let start = d_at - count;
+    if count == 0 || (start > 0 && b[start - 1].is_ascii_alphanumeric()) {
+        return None;
+    }
+    Some((without_plus[start..].to_string(), start))
+}
+
+/// SD-36 F7b: a formula the source wrote into a prose TEXT prints as the rule's words, never as
+/// its source spelling -- ONE rule for every family and every record (`epic-f` stage F7,
+/// `f7b-receipt.md`).
+///
+/// Each span [`prose_formula_spans`] finds converts through the same formula converter every
+/// `%N` argument goes through ([`convert_prose_formula`]) and becomes a typed piece the live
+/// printers already render: a [`ProsePiece::DiceCount`] when the formula counts dice
+/// (`(min(10,CASTERLEVEL))d6`), a [`ProsePiece::Dice`] modifier when it follows `NdM+`
+/// (`1d8+(min(5,CASTERLEVEL))`), else a [`ProsePiece::Slot`]. Each is one
+/// `inline-formula-in-prose` defect row. A span that does not convert is an
+/// `inline-formula-unconverted` row and the words print without it -- never the token.
+///
+/// In a spell's (or psionic power's) text the source writes the book's own parentheses as
+/// brackets (`[maximum 10d6]`, `[D]`), because a parenthesis there is a formula; with the
+/// formulas lowered, the brackets print as the book's parentheses (Core Rulebook p.284:
+/// "(maximum 10d6)"). One `bracket-escape-in-spell-text` row per field.
+pub(crate) fn lower_prose_formulas(ctx: &mut RecordCtx, pieces: Vec<ProsePiece>, field_name: &str) -> Vec<ProsePiece> {
+    let spell_text = matches!(ctx.record.kind.as_str(), "spell" | "power");
+    let mut escaped = false;
+    let mut out: Vec<ProsePiece> = Vec::new();
+    let flush = |buf: &mut String, out: &mut Vec<ProsePiece>, escaped: &mut bool| {
+        if buf.is_empty() {
+            return;
+        }
+        let mut text = std::mem::take(buf);
+        if spell_text && text.contains(['[', ']']) {
+            text = text.replace('[', "(").replace(']', ")");
+            *escaped = true;
+        }
+        out.push(ProsePiece::Text(text));
+    };
+    for piece in pieces {
+        let text = match piece {
+            ProsePiece::Text(t) => t,
+            other => {
+                out.push(other);
+                continue;
+            }
+        };
+        let mut buf = String::new();
+        let mut cursor = 0;
+        for (a, b) in prose_formula_spans(&text) {
+            if a < cursor {
+                continue;
+            }
+            buf.push_str(&text[cursor..a]);
+            let mut next = b;
+            match convert_prose_formula(ctx, &text[a..b]) {
+                Ok(expr) => {
+                    ctx.defect("inline-formula-in-prose", format!("{}: {field_name}", ctx.record.id));
+                    if let Some((sides, len)) = dice_suffix(&text[b..]) {
+                        flush(&mut buf, &mut out, &mut escaped);
+                        out.push(ProsePiece::DiceCount { count: expr, sides });
+                        next = b + len;
+                    } else if let Some((dice, start)) = dice_prefix(&buf) {
+                        buf.truncate(start);
+                        flush(&mut buf, &mut out, &mut escaped);
+                        out.push(ProsePiece::Dice { dice, modifier: Some(expr) });
+                    } else {
+                        flush(&mut buf, &mut out, &mut escaped);
+                        out.push(ProsePiece::Slot(expr));
+                    }
+                }
+                Err(_) => {
+                    ctx.defect("inline-formula-unconverted", format!("{}: {field_name}", ctx.record.id));
+                    // The words without the formula; the seam keeps one space.
+                    if (buf.is_empty() || buf.ends_with(' ')) && text[b..].starts_with(' ') {
+                        next = b + 1;
+                    }
+                }
+            }
+            cursor = next;
+        }
+        buf.push_str(&text[cursor..]);
+        flush(&mut buf, &mut out, &mut escaped);
+    }
+    if escaped {
+        ctx.defect("bracket-escape-in-spell-text", format!("{}: {field_name}", ctx.record.id));
+    }
+    out
+}
+
+/// Whether a gate names a record outside the converted inventory (`Holdable::MissingRule`).
+fn names_out_of_inventory(gate: &Applies) -> bool {
+    match gate {
+        Applies::Holds { what: Holdable::MissingRule { .. }, .. } => true,
+        Applies::All(terms) | Applies::AtLeast { of: terms, .. } => terms.iter().any(names_out_of_inventory),
+        Applies::Not(inner) => names_out_of_inventory(inner),
+        _ => false,
     }
 }
 
-/// The pure half of [`scrub_inline_formula`]: `Some(rewritten)` when at least one group was
-/// rewritten, `None` when the text carries no inline formula at all.
-fn rewrite_inline_formula(text: &str) -> Option<String> {
-    if !text.contains('(') {
-        return None;
-    }
-    let mut out = String::with_capacity(text.len());
-    let mut rest = text;
-    let mut rewrote = false;
-    while let Some(open) = rest.find('(') {
-        let Some(close_rel) = rest[open + 1..].find(')') else { break };
-        let close = open + 1 + close_rel;
-        let inner = &rest[open + 1..close];
-        let formula_shaped = !inner.is_empty()
-            && inner.chars().all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || matches!(c, '+' | '-' | '*' | '/' | '.' | ' ' | '_'))
-            && inner
-                .split(|c: char| !(c.is_ascii_alphanumeric() || c == '_'))
-                .any(|w| !w.is_empty() && !w.chars().all(|c| c.is_ascii_digit()) && leaf_words(w).is_some());
-        out.push_str(&rest[..=open]);
-        if formula_shaped {
-            out.push_str(&words_for_unlowerable(inner));
-            rewrote = true;
-        } else {
-            out.push_str(inner);
+/// SD-36 F7b: a prose line's condition with every out-of-inventory term DECIDED, the way the sheet
+/// evaluator decides it (`Holdable::MissingRule` never holds): the term is `Never`, its
+/// negation `Always`, and the conjunctions fold. A line whose condition is then `Never` is a line
+/// no character is ever shown, and a condition that folds to `Always` is no condition -- so no
+/// "If requires Fireball from mythic spell (no record in the corpus)" sentence reaches a page.
+fn decide_out_of_inventory(gate: Applies) -> Applies {
+    match gate {
+        Applies::Holds { what: Holdable::MissingRule { .. }, .. } => Applies::Never,
+        Applies::Not(inner) => match decide_out_of_inventory(*inner) {
+            Applies::Never => Applies::Always,
+            Applies::Always => Applies::Never,
+            other => Applies::Not(Box::new(other)),
+        },
+        Applies::All(terms) => Applies::all(terms.into_iter().map(decide_out_of_inventory).collect()),
+        Applies::AtLeast { n, of } => {
+            let decided: Vec<Applies> = of.into_iter().map(decide_out_of_inventory).collect();
+            let met = decided.iter().filter(|t| **t == Applies::Always).count();
+            let open: Vec<Applies> = decided.into_iter().filter(|t| *t != Applies::Always && *t != Applies::Never).collect();
+            let need = usize::from(n).saturating_sub(met);
+            if need == 0 {
+                Applies::Always
+            } else if open.len() < need {
+                Applies::Never
+            } else if open.len() == 1 {
+                open.into_iter().next().expect("one open term")
+            } else if need == open.len() {
+                Applies::all(open)
+            } else {
+                Applies::AtLeast { n: u8::try_from(need).unwrap_or(u8::MAX), of: open }
+            }
         }
-        out.push(')');
-        rest = &rest[close + 1..];
-        // `(70+CASTERLEVEL)%` -- the percent sign belongs to the rewritten term, and a `%`
-        // that no digit precedes reads as a hole to every reader and every leak check. The
-        // words carry it.
-        if formula_shaped && rest.starts_with('%') {
-            out.push_str(" percent");
-            // The source writes the sign as the `%%` literal-percent escape as often as bare.
-            rest = rest.strip_prefix("%%").unwrap_or_else(|| rest.strip_prefix('%').unwrap_or(rest));
+        other => other,
+    }
+}
+
+/// [`segment_gate`] with [`decide_out_of_inventory`] applied: `Err(())` when the line is decided
+/// never to print (one `prose-line-out-of-inventory` row), else its gate (one
+/// `prose-condition-out-of-inventory` row when a decided term changed it).
+fn segment_gate_decided(ctx: &mut RecordCtx, gates: &[String], field_name: &str) -> Result<Result<Option<Applies>, ()>, String> {
+    let Some(gate) = segment_gate(ctx, gates)? else { return Ok(Ok(None)) };
+    if !names_out_of_inventory(&gate) {
+        return Ok(Ok(Some(gate)));
+    }
+    match decide_out_of_inventory(gate) {
+        Applies::Never => {
+            ctx.defect("prose-line-out-of-inventory", format!("{}: {field_name}", ctx.record.id));
+            Ok(Err(()))
+        }
+        decided => {
+            ctx.defect("prose-condition-out-of-inventory", format!("{}: {field_name}", ctx.record.id));
+            Ok(Ok(if decided == Applies::Always { None } else { Some(decided) }))
         }
     }
-    out.push_str(rest);
-    if rewrote { Some(out) } else { None }
 }
 
 /// Lower one prose argument, degrading to [`Slot::Words`] when the formula side refuses it.
@@ -544,13 +714,13 @@ pub fn convert_desc_like(ctx: &mut RecordCtx, family: ProseFamily, value: &str, 
     let text = scrub_literal_glyphs(ctx, &text, field_name);
     let text = scrub_editorial_markers(ctx, &text, field_name);
     let text = normalize_percentile_dice(ctx, &text);
-    let text = scrub_inline_formula(ctx, &text, field_name);
     let mut args = Vec::new();
     for a in fields.iter().skip(1) {
         args.push(argument_or_words(ctx, a, field_name)?);
     }
-    let applies = segment_gate(ctx, &gates)?;
+    let Ok(applies) = segment_gate_decided(ctx, &gates, field_name)? else { return Ok(None) };
     let pieces = template_pieces(ctx, &text, &args);
+    let pieces = lower_prose_formulas(ctx, pieces, field_name);
     Ok(Some(ProseSegment { family, pieces, applies, pick_last: false, suppress_when_all_zero: false }))
 }
 
@@ -574,12 +744,11 @@ pub fn convert_positional(ctx: &mut RecordCtx, family: ProseFamily, value: &str,
     let text = scrub_literal_glyphs(ctx, &text, field_name);
     let text = scrub_editorial_markers(ctx, &text, field_name);
     let text = normalize_percentile_dice(ctx, &text);
-    let text = scrub_inline_formula(ctx, &text, field_name);
     let mut vars: Vec<Slot> = Vec::new();
     for a in fields.iter().skip(1) {
         vars.push(argument_or_words(ctx, a, field_name)?);
     }
-    let applies = segment_gate(ctx, &gates)?;
+    let Ok(applies) = segment_gate_decided(ctx, &gates, field_name)? else { return Ok(None) };
     // Each bare `%` (not `%%`, not `%CHOICE`/`%LIST`) is the next slot.
     let chars: Vec<char> = text.chars().collect();
     let mut pieces: Vec<ProsePiece> = Vec::new();
@@ -624,7 +793,10 @@ pub fn convert_positional(ctx: &mut RecordCtx, family: ProseFamily, value: &str,
     if !buf.is_empty() {
         pieces.push(ProsePiece::Text(buf));
     }
+    // The `%` slots decide the all-zero suppression, as before F7b; a formula lowered out of the
+    // words is the rule's text, never a reason to hide the line.
     let has_slots = pieces.iter().any(|p| matches!(p, ProsePiece::Slot(_)));
+    let pieces = lower_prose_formulas(ctx, pieces, field_name);
     Ok(Some(ProseSegment { family, pieces, applies, pick_last: false, suppress_when_all_zero: has_slots }))
 }
 
@@ -685,15 +857,65 @@ mod tests {
         assert_eq!(words_for_unlowerable("+"), "a rules variable");
     }
 
-    /// A parenthesised formula in the prose BODY (no slot converts it) prints as words; an
-    /// ordinary parenthetical aside is untouched.
+    /// SD-36 F7b: the formula-shaped groups the corpus's prose carries are found; the book's
+    /// own asides are not.
     #[test]
-    fn an_inline_formula_in_the_prose_body_prints_as_words() {
-        assert_eq!(rewrite_inline_formula("(70+CASTERLEVEL)% chance").as_deref(), Some("(70 plus caster level) percent chance"));
-        assert_eq!(rewrite_inline_formula("(70+CASTERLEVEL)%% chance").as_deref(), Some("(70 plus caster level) percent chance"));
-        assert_eq!(rewrite_inline_formula("Skill Focus (Knowledge [Arcana])"), None);
-        assert_eq!(rewrite_inline_formula("a bonus (see below)"), None);
-        assert_eq!(rewrite_inline_formula("(10)"), None);
+    fn prose_formula_spans_find_source_formulas_and_leave_the_books_asides() {
+        let spans = |t: &str| prose_formula_spans(t).into_iter().map(|(a, b)| t[a..b].to_string()).collect::<Vec<_>>();
+        assert_eq!(spans("deals (min(10,CASTERLEVEL))d6 points"), vec!["(min(10,CASTERLEVEL))"]);
+        assert_eq!(spans("(CASTERLEVEL) rounds [D]"), vec!["(CASTERLEVEL)"]);
+        assert_eq!(spans("takes min(10,CASTERLEVEL/2)d6 points"), vec!["min(10,CASTERLEVEL/2)"]);
+        assert_eq!(spans("converts 2d6+min(5,CASTERLEVEL) points"), vec!["min(5,CASTERLEVEL)"]);
+        assert_eq!(spans("(ConjurationSummonersCharmBonus+(CASTERLEVEL)) rounds"), vec!["(ConjurationSummonersCharmBonus+(CASTERLEVEL))"]);
+        assert_eq!(spans("(CASTERLELVEL) creatures"), vec!["(CASTERLELVEL)"]);
+        assert_eq!(spans("Heal yourself 1d8+(TL) hp"), vec!["(TL)"]);
+        assert!(spans("Headband (CHA) +4").is_empty());
+        assert!(spans("Dusk Kamadan (CR +1)").is_empty());
+        assert_eq!(spans("(HD+2) rounds"), vec!["(HD+2)"]);
+        for aside in [
+            "(DC 15)",
+            "(APG)",
+            "(see text)",
+            "(CL 12th)",
+            "(Ex)",
+            "(and/or)",
+            "(Str/Dex)",
+            "(1/2)",
+            "(10)",
+            "(2,500GP)",
+            "(NOT IMPLEMENTED)",
+            "(DC10+HD)",
+            "(DC 10 + 1/2 your character level + your Wis modifier)",
+        ] {
+            assert!(spans(aside).is_empty(), "{aside} is the book's words");
+        }
+    }
+
+    #[test]
+    fn dice_around_a_formula_are_read_as_dice() {
+        assert_eq!(dice_suffix("d6 points"), Some((6, 2)));
+        assert_eq!(dice_suffix("d10."), Some((10, 3)));
+        assert_eq!(dice_suffix("damage"), None);
+        assert_eq!(dice_suffix("d6x"), None);
+        assert_eq!(dice_prefix("cure 1d8+"), Some(("1d8".to_string(), 5)));
+        assert_eq!(dice_prefix("converts 2d6 + "), Some(("2d6".to_string(), 9)));
+        assert_eq!(dice_prefix("a +"), None);
+        assert_eq!(dice_prefix("x1d8+"), None);
+    }
+
+    /// SD-36 F7b: a condition naming a record outside the inventory is decided as the evaluator
+    /// decides it, so the line either never prints or prints with no such sentence.
+    #[test]
+    fn an_out_of_inventory_condition_is_decided_never_printed() {
+        let missing = || Applies::Holds { what: Holdable::MissingRule { pool: "mythic_spell".into(), name: "Fireball".into() }, count: 1 };
+        let other = Applies::Situational { text: "when active".into() };
+        assert_eq!(decide_out_of_inventory(missing()), Applies::Never);
+        assert_eq!(decide_out_of_inventory(Applies::Not(Box::new(missing()))), Applies::Always);
+        assert_eq!(decide_out_of_inventory(Applies::All(vec![missing(), other.clone()])), Applies::Never);
+        assert_eq!(decide_out_of_inventory(Applies::All(vec![Applies::Not(Box::new(missing())), other.clone()])), other);
+        assert_eq!(decide_out_of_inventory(Applies::AtLeast { n: 1, of: vec![missing(), other.clone()] }), other);
+        assert_eq!(decide_out_of_inventory(Applies::AtLeast { n: 1, of: vec![missing(), missing()] }), Applies::Never);
+        assert!(!names_out_of_inventory(&other));
     }
 
     #[test]

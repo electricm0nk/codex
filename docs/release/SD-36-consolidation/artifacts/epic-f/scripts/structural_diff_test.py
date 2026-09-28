@@ -941,6 +941,37 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertEqual(fresh[shaman]["offers"], {"id": shaman, "count": {"Const": 1}, "from": "Domains"})
         self.assertIs(fresh[shaman]["print"], True)
 
+    def test_f7b_shapes_classify_exactly_the_f7b_prose_deltas(self):
+        """SD-36 F7b: a formula lowered to a typed piece, spell brackets printed as parentheses and
+        an out-of-inventory line dropped are each named; the same delta with the words around the
+        formula changed, or an ordinary gated line dropped, is not explained."""
+        import f7b_shapes
+
+        rid = "core_rulebook:spell:fireball"
+        missing = {"Holds": {"what": {"MissingRule": {"pool": "mythic_spell", "name": "Fireball"}}, "count": 1}}
+        old = [
+            {"family": "Desc", "pieces": [{"Text": "deals (min(10,CASTERLEVEL))d6 points [maximum 10d6]"}], "pick_last": False, "suppress_when_all_zero": False},
+            {"family": "Desc", "pieces": [{"Text": "Mythic: more."}], "applies": missing, "pick_last": False, "suppress_when_all_zero": False},
+        ]
+        new = [
+            {"family": "Desc", "pieces": [{"Text": "deals "}, {"DiceCount": {"count": {"Min": [{"Const": 10}, {"CasterLevel": "Holder"}]}, "sides": 6}}, {"Text": " points (maximum 10d6)"}], "pick_last": False, "suppress_when_all_zero": False},
+        ]
+        self.assertEqual(
+            f7b_shapes.classify_prose(rid, old, new, False, False),
+            "bracket_escape+formula_render+out_of_inventory_line",
+        )
+        moved = json.loads(json.dumps(new))
+        moved[0]["pieces"][2]["Text"] = " cold points (maximum 10d6)"
+        self.assertIsNone(f7b_shapes.classify_prose(rid, old, moved, False, False))
+        # Brackets escape in a spell's text only.
+        self.assertIsNone(f7b_shapes.classify_prose("core_rulebook:feat:x", old, new, False, False))
+        # A line gated on an ordinary condition that is dropped is not an F7b delta.
+        ordinary = json.loads(json.dumps(old))
+        ordinary[1]["applies"] = {"Situational": {"text": "when active"}}
+        self.assertIsNone(f7b_shapes.classify_prose(rid, ordinary, new, False, False))
+        # A formula still spelled in the new words is not explained.
+        self.assertIsNone(f7b_shapes.classify_prose(rid, old[:1], old[:1], False, False))
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()

@@ -698,6 +698,46 @@ class TestLstFileAndCrateWallPatterns(_TreeCase):
         self.assertIn("codex_ingest", prg.RUNTIME_IMPORT_PATTERNS)
 
 
+class TestProseFormulaClass(_TreeCase):
+    """SD-36 Epic F7b: a source formula written into a converted rule's printed
+    words (`(min(10,CASTERLEVEL))d6`) carries no token head, so the pattern
+    classes above read 0 over it. The prose-formula class counts it; the book's
+    own asides (`(DC 15)`, `Headband (CHA) +4`) are not counted."""
+
+    def _manifest(self):
+        _write(self.root, "apps/desktop/src-tauri/tauri.conf.json",
+               '{"bundle": {"resources": ["resources/rules/"]}}\n')
+
+    def _rule(self, pieces):
+        import json as _json
+        return _json.dumps([{"id": "core_rulebook:spell:fireball", "label": "Fireball",
+                             "prose": [{"family": "Desc", "pieces": pieces}]}])
+
+    def test_a_formula_in_a_printed_string_is_a_hit_and_its_typed_piece_is_not(self):
+        self._manifest()
+        rel = "apps/desktop/src-tauri/resources/rules/fireball.json"
+        _write(self.root, rel, self._rule([
+            {"Text": "deals (min(10,CASTERLEVEL))d6 points of fire damage; (CASTERLEVEL) rounds"}]))
+        res = prg.scan(self.root)
+        self.assertEqual(res.data_hits_by_pattern[prg.PROSE_FORMULA_PATTERN], 2)
+        self.assertIn(rel, res.shipped_data_file_list)
+        _write(self.root, rel, self._rule([
+            {"Text": "deals "},
+            {"DiceCount": {"count": {"Min": [{"Const": 10}, {"CasterLevel": "Holder"}]}, "sides": 6}},
+            {"Text": " points of fire damage (maximum 10d6)"}]))
+        res = prg.scan(self.root)
+        self.assertEqual(res.data_hits_by_pattern[prg.PROSE_FORMULA_PATTERN], 0)
+        self.assertEqual(res.shipped_data_files, 0)
+
+    def test_the_books_own_asides_are_not_formulas(self):
+        for text in ["(DC 15)", "Headband (CHA) +4", "(APG)", "(see text)", "(CL 12th)",
+                     "(DC10+HD)", "(and/or)", "(1/2)", "Dusk Kamadan (CR +1)"]:
+            self.assertEqual(prg.prose_formula_count(text), 0, text)
+        for text in ["(CASTERLEVEL*10) minutes", "1d8+(TL) hp", "takes min(10,CASTERLEVEL/2)d6",
+                     "(ConjurationSummonersCharmBonus+(CASTERLEVEL)) rounds"]:
+            self.assertEqual(prg.prose_formula_count(text), 1, text)
+
+
 class TestLiveRootsAreTheDesignBoundary(unittest.TestCase):
     """`technical-design.md §0`'s path table, pinned so a quiet widening of
     the allow-list (`acceptance-and-verification.md §3a`) fails here."""
