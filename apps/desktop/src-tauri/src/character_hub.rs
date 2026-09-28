@@ -1736,7 +1736,42 @@ struct StarterSeed {
     marker: &'static str,
     request: CreateCharacterRequest,
     record_and_prepare_spells: Vec<(&'static str, &'static str)>,
+    /// The seed's whole skill-rank spend, written through the same input the sheet's "Manage
+    /// skill allocation" dialog writes (`apply_set_skill_allocations`, replace-wholesale) --
+    /// SD-36 F7a (F7-8). Every point the character earns is placed; see [`starter_seeds`].
+    skill_ranks: &'static [(&'static str, u8)],
 }
+
+/// Aldric Ironhand (Human Fighter 3, Int 14 = +2): (2 fighter + 2 Int + 1 Human Skilled) x 3
+/// = 15 ranks. Climb, Intimidate and Swim at 1 are the create path's GE-06 posture (the engine
+/// computes those three totals only at rank 1); the other 12 go 3 each (max ranks = character
+/// level 3) into four more Fighter class skills.
+const ALDRIC_SEED_SKILL_RANKS: &[(&str, u8)] = &[
+    ("skill:climb", 1),
+    ("skill:intimidate", 1),
+    ("skill:swim", 1),
+    ("skill:ride", 3),
+    ("skill:survival", 3),
+    ("skill:knowledge_dungeoneering", 3),
+    ("skill:knowledge_engineering", 3),
+];
+
+/// Elowen Ashgrave (Human Wizard 5, Int 18 = +4): (2 wizard + 4 Int + 1 Human Skilled) x 5
+/// = 35 ranks. Climb, Intimidate and Swim at 1 are the create path's GE-06 posture (3 points,
+/// cross-class for a Wizard); the other 32 go into Wizard class skills, at most 5 each (max
+/// ranks = character level 5).
+const ELOWEN_SEED_SKILL_RANKS: &[(&str, u8)] = &[
+    ("skill:climb", 1),
+    ("skill:intimidate", 1),
+    ("skill:swim", 1),
+    ("skill:spellcraft", 5),
+    ("skill:knowledge_arcana", 5),
+    ("skill:knowledge_planes", 5),
+    ("skill:knowledge_dungeoneering", 5),
+    ("skill:knowledge_religion", 5),
+    ("skill:fly", 5),
+    ("skill:linguistics", 2),
+];
 
 fn starter_seed_request(
     character_id: &str,
@@ -1797,6 +1832,7 @@ fn starter_seeds() -> Vec<StarterSeed> {
                 "strength",
             ),
             record_and_prepare_spells: Vec::new(),
+            skill_ranks: ALDRIC_SEED_SKILL_RANKS,
         },
         StarterSeed {
             marker: SECOND_SEED_MARKER,
@@ -1816,6 +1852,7 @@ fn starter_seeds() -> Vec<StarterSeed> {
                 "intelligence",
             ),
             record_and_prepare_spells: vec![(FIREBALL_SPELL_ID, WIZARD_CLASS_ID_FOR_SEED)],
+            skill_ranks: ELOWEN_SEED_SKILL_RANKS,
         },
     ]
 }
@@ -1879,10 +1916,24 @@ fn seed_one_starter(app_data_dir: &Path, app_version: &str, seed: StarterSeed) -
     for (spell_id, source_class_id) in &seed.record_and_prepare_spells {
         crate::pf1_adapter::apply_record_and_prepare_spell_selection(&mut character_input, spell_id, source_class_id);
     }
+    crate::pf1_adapter::apply_set_skill_allocations(
+        &mut character_input,
+        seed.skill_ranks
+            .iter()
+            .map(|(skill_id, ranks)| SkillAllocation { skill_id: (*skill_id).to_owned(), ranks: *ranks })
+            .collect(),
+    );
     let receipt = build_pilot_headless_receipt(&character_input);
     if receipt.status != HeadlessReceiptStatus::Computed {
+        let blocking: Vec<&str> = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .filter(|diagnostic| diagnostic.claim_blocking)
+            .map(|diagnostic| diagnostic.id.as_str())
+            .collect();
         return Err(format!(
-            "starter character '{}' did not compute; not seeding",
+            "starter character '{}' did not compute (blocking: {blocking:?}); not seeding",
             request.display_label
         ));
     }
@@ -11977,6 +12028,141 @@ mod starter_seed_tests {
         assert!(loaded.snapshot.is_some(), "diagnostics: {:?}", loaded.diagnostics);
 
         std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// Skill points a single-class Human character earns (CRB Chapter 4: the class's ranks per
+    /// level + Int modifier, at least 1, each level; Human Skilled: +1 rank per level), with the
+    /// class's ranks per level read from the converted package (`class_skill_ranks`), and the
+    /// ranks it has spent (one point per rank, class skill or not).
+    fn earned_and_spent(loaded: &LoadSavedCharacterResponse, class_id: &str, level: u8) -> (i32, i32) {
+        let per_level = i32::from(class_skill_ranks(class_id).expect("the class states skill ranks"));
+        let int_mod = i32::from(loaded.snapshot.as_ref().expect("computed").ability_modifiers.intelligence);
+        let earned = ((per_level + int_mod).max(1) + 1) * i32::from(level);
+        let spent = loaded.skill_allocations.iter().map(|a| i32::from(a.ranks)).sum();
+        (earned, spent)
+    }
+
+    /// Every allocated skill holds at most `level` ranks (CRB Chapter 4: max ranks = character
+    /// level); Climb/Intimidate/Swim sit at the GE-06 posture rank 1, every other one is a class
+    /// skill of `class_slug` (the engine's class-skill reader).
+    fn assert_class_skills_within_max(loaded: &LoadSavedCharacterResponse, class_slug: &str, level: u8) {
+        let view = match codex::rules_core::pilot_compute::class_skill_sheet_rules::class_skill_view(class_slug, level) {
+            codex::rules_core::pilot_compute::class_skill_sheet_rules::ClassSkillAnswer::Known(view) => view,
+            other => panic!("{class_slug}: {other:?}"),
+        };
+        for allocation in &loaded.skill_allocations {
+            let id = allocation.skill_id.strip_prefix("skill:").unwrap_or(&allocation.skill_id);
+            assert!(allocation.ranks <= level, "{id}: {} ranks > max {level}", allocation.ranks);
+            if ["climb", "intimidate", "swim"].contains(&id) {
+                assert_eq!(allocation.ranks, 1, "{id}: the GE-06 posture rank");
+            } else {
+                assert!(view.contains(id), "{class_slug}: {id} is not a class skill");
+            }
+        }
+    }
+
+    /// SD-36 F7a (F7-8): Elowen Ashgrave, Human Wizard 5, Int 16 + 2 Human = 18 (+4).
+    /// Earned: (2 wizard + 4 Int + 1 Human Skilled) x 5 = 35; allocated: Climb/Intimidate/Swim 1
+    /// each (GE-06 posture) + 6 wizard class skills x 5 + Linguistics 2 = 35 -> 0 unallocated.
+    /// Spellcraft: 5 ranks + 3 class skill + 4 Int = +12.
+    #[test]
+    fn elowen_loads_with_zero_unallocated_skill_points() {
+        let app_data_dir = temp_app_data_dir("elowen-skills");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let loaded = load_saved_character_at_root(&character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID))
+            .expect("load succeeds");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+
+        assert_eq!(class_skill_ranks("class:wizard"), Some(2));
+        let (earned, spent) = earned_and_spent(&loaded, "class:wizard", 5);
+        assert_eq!(earned, 35, "(2 + 4 + 1) x 5");
+        assert_eq!(spent, 35, "{:?}", loaded.skill_allocations);
+        assert_class_skills_within_max(&loaded, "wizard", 5);
+        let spellcraft = loaded
+            .skill_allocations
+            .iter()
+            .find(|a| a.skill_id == "skill:spellcraft")
+            .map(|a| i32::from(a.ranks))
+            .expect("Spellcraft allocated");
+        let int_mod = i32::from(loaded.snapshot.as_ref().expect("computed").ability_modifiers.intelligence);
+        assert_eq!(spellcraft + 3 + int_mod, 12, "Spellcraft 5 + 3 + 4");
+    }
+
+    /// SD-36 F7a (F7-8): Aldric Ironhand, Human Fighter 3, Int 14 (+2).
+    /// Earned: (2 fighter + 2 Int + 1 Human Skilled) x 3 = 15; allocated: Climb/Intimidate/Swim 1
+    /// each (GE-06 posture) + 4 fighter class skills x 3 = 15 -> 0 unallocated.
+    #[test]
+    fn aldric_loads_with_zero_unallocated_skill_points() {
+        let app_data_dir = temp_app_data_dir("aldric-skills");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let loaded = load_saved_character_at_root(&character_root(&app_data_dir, DEFAULT_CHARACTER_ID))
+            .expect("load succeeds");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+
+        assert_eq!(class_skill_ranks("class:fighter"), Some(2));
+        let (earned, spent) = earned_and_spent(&loaded, "class:fighter", 3);
+        assert_eq!(earned, 15, "(2 + 2 + 1) x 3");
+        assert_eq!(spent, 15, "{:?}", loaded.skill_allocations);
+        assert_class_skills_within_max(&loaded, "fighter", 3);
+    }
+
+    /// SD-36 F7a (F7-1): the load response carries the ENGINE's effective scores, the ones the
+    /// Abilities panel prints. Elowen Con 13 (odd: `10 + 2 x mod` printed 12); Aldric Str 17 +
+    /// 2 Human = 19 (printed 18). A Dwarf's stored score already carries its +2 Con: a created
+    /// Dwarf with Con 15 loads Con 15, modifier +2.
+    #[test]
+    fn seeded_and_created_characters_load_the_engines_effective_scores() {
+        let app_data_dir = temp_app_data_dir("scores");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let elowen = load_saved_character_at_root(&character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID))
+            .expect("Elowen loads");
+        let aldric = load_saved_character_at_root(&character_root(&app_data_dir, DEFAULT_CHARACTER_ID))
+            .expect("Aldric loads");
+        assert_eq!((elowen.ability_scores.constitution, elowen.ability_scores.intelligence), (13, 18));
+        assert_eq!((aldric.ability_scores.strength, aldric.ability_scores.dexterity), (19, 13));
+
+        let dwarf_id = "f7a-dwarf-odd-con";
+        let dwarf_root = characters_root_from_app_data_dir(&app_data_dir).join(dwarf_id);
+        let mut request = starter_seed_request(
+            dwarf_id,
+            "Dwarf Odd Con",
+            "class:fighter",
+            1,
+            AbilityScoresDto { strength: 14, dexterity: 12, constitution: 15, intelligence: 10, wisdom: 13, charisma: 8 },
+            "strength",
+        );
+        request.race_id = "race:dwarf".to_owned();
+        create_character_at_root(&dwarf_root, &request, "0.0.0-test".to_owned()).expect("dwarf created");
+        let dwarf = load_saved_character_at_root(&dwarf_root).expect("dwarf loads");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+        assert_eq!((dwarf.ability_scores.constitution, dwarf.ability_scores.wisdom), (15, 13));
+        assert_eq!(dwarf.snapshot.as_ref().expect("computed").ability_modifiers.constitution, 2);
+    }
+
+    /// SD-36 F7a finding (not changed here): `compose_character_input` places 1 rank each in
+    /// Climb, Intimidate and Swim on EVERY created character (the GE-06 posture). Counted over
+    /// the 59-class roster at level 1: how many classes hold all three as class skills.
+    #[test]
+    fn the_create_paths_fixed_ranks_measured_over_the_roster() {
+        use codex::rules_core::pilot_compute::class_skill_sheet_rules::{class_skill_view, ClassSkillAnswer};
+        let roster = build_class_creation_roster().expect("roster");
+        assert_eq!(roster.classes.len(), 59);
+        let (mut all_three, mut some_cross_class, mut unknown) = (0usize, 0usize, 0usize);
+        for class in &roster.classes {
+            let slug = class.class_id.strip_prefix("class:").unwrap_or(&class.class_id);
+            match class_skill_view(slug, 1) {
+                ClassSkillAnswer::Known(view) => {
+                    if ["climb", "intimidate", "swim"].iter().all(|id| view.contains(id)) {
+                        all_three += 1;
+                    } else {
+                        some_cross_class += 1;
+                    }
+                }
+                ClassSkillAnswer::Unknown { .. } => unknown += 1,
+            }
+        }
+        eprintln!("F7a create-path Climb/Intimidate/Swim: {all_three} of 59 classes hold all three as class skills; {some_cross_class} hold at least one cross-class; {unknown} Unknown");
+        assert_eq!(all_three + some_cross_class + unknown, 59);
     }
 
     #[test]

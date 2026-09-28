@@ -49,6 +49,26 @@ function verifiesNewlyOfferedMartialClassesAreMartial() {
   assertEqual(tier(served(7), [held('class:fighter', 'Fighter', 7)], 'Exotic'), 'no', 'no class grants Exotic');
 }
 
+/**
+ * SD-36 F7a (F7-2): "Also proficient with" prints weapon records only. The Monk printed `Flurry
+ * of Blows` and `Unarmed Strike` beside its weapons; the Magus printed its `Auto` set -- Grapple,
+ * Spells (Ray), Spells (Touch), Splash Weapon, Unarmed Strike. None is a weapon record with a
+ * proficiency category, so no roster class prints one at level 1 or 7.
+ */
+function verifiesNoRosterClassPrintsAPseudoWeapon() {
+  const pseudo = ['Flurry of Blows', 'Spells (Ray)', 'Spells (Touch)', 'Splash Weapon', 'Unarmed Strike', 'Grapple', 'Mind Blade'];
+  const monk = summarizeWeaponProficiency([held('class:monk', 'Monk', 1)], served(1)).alsoProficientWith;
+  assert(monk.includes('Kama') && monk.includes('Sword (Short)'), `Monk keeps its weapons: ${monk.join(', ')}`);
+  const magus = summarizeWeaponProficiency([held('class:magus', 'Magus', 1)], served(1)).alsoProficientWith;
+  assertEqual(magus.join(', '), '', 'Magus prints no named weapon beyond Simple and Martial');
+  for (const facts of classFactsWire().classes) {
+    const level = facts.level as 1 | 7;
+    const printed = summarizeWeaponProficiency([held(facts.classId, facts.classId, level)], served(level)).alsoProficientWith;
+    const found = printed.filter((name) => pseudo.includes(name));
+    assertEqual(found.join(', '), '', `${facts.classId} ${level} prints no pseudo-weapon`);
+  }
+}
+
 /** Wizard has no blanket tier: five named weapons, printed; the table said "Simple ✓". */
 function verifiesANamedListClassPrintsItsWeapons() {
   const wizard = summarizeWeaponProficiency([held('class:wizard', 'Wizard', 1)], served(1));
@@ -144,6 +164,7 @@ async function main() {
   verifiesEveryRosterClassAnswersACasterLevel();
   verifiesLoadingFailureAndUnservedAreUnknownNeverDefaults();
   verifiesQueriesAskForEachHeldClassAtItsLevel();
+  verifiesNoRosterClassPrintsAPseudoWeapon();
 }
 
 main().catch((error: unknown) => {

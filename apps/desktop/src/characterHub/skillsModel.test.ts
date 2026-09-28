@@ -1,4 +1,15 @@
-import { classSkillLookup, featSkillBonusFor, isClassSkill, skillIdFor, skillModifier, SKILLS, totalSkillPointsAvailable } from './skillsModel';
+import {
+  allocationFromPersisted,
+  classSkillLookup,
+  featSkillBonusFor,
+  isClassSkill,
+  persistedFromAllocation,
+  skillIdFor,
+  skillModifier,
+  SKILLS,
+  skillPointsSpent,
+  totalSkillPointsAvailable,
+} from './skillsModel';
 import { featSkillBonusWire } from '../testSupport/featSkillBonusWire';
 import { LOADING_CLASS_FACTS, failedClassFacts, loadedClassFacts, type ClassFactsState } from './classFactsModel';
 import { classFactsWire } from '../testSupport/classFactsWire';
@@ -140,6 +151,81 @@ function verifiesAFamilyBonusReachesEveryMember() {
   assertEqual(featSkillBonusFor(bonuses, 'Linguistics'), 0, 'not a member');
 }
 
+/** The served wizard facts re-keyed to `level` (the wizard's class-skill list does not move with level). */
+function wizardFactsAt(level: number): ClassFactsState {
+  const wizard = classFactsWire().classes.find((entry) => entry.classId === 'class:wizard' && entry.level === 1);
+  if (!wizard) {
+    throw new Error('no served wizard facts');
+  }
+  return loadedClassFacts({ classes: [{ ...wizard, level }] });
+}
+
+/**
+ * SD-36 F7a (F7-8): Elowen Ashgrave as the seed persists her (`character_hub.rs`
+ * `ELOWEN_SEED_SKILL_RANKS`): Human Wizard 5, Int 18 (+4).
+ * Earned: (2 wizard + 4 Int + 1 Human Skilled) x 5 levels = 35.
+ * Persisted: the create path's Climb, Intimidate, Swim at 1 (the GE-06 posture; cross-class, one
+ * point each) + Spellcraft, Fly and Knowledge (Arcana, Dungeoneering, Planes, Religion) at 5 (max
+ * ranks = character level 5) + Linguistics 2 = 3 + 30 + 2 = 35 -> 0 unallocated.
+ * Spellcraft: 5 ranks + 3 class skill + 4 Int = +12.
+ */
+function verifiesElowenPersistedAllocationLeavesNothingUnallocated() {
+  installClassRoster(classRosterWire());
+  const posture = [
+    { skillId: 'skill:climb', ranks: 1 },
+    { skillId: 'skill:intimidate', ranks: 1 },
+    { skillId: 'skill:swim', ranks: 1 },
+  ];
+  const wizardSkills = [
+    { skillId: 'skill:spellcraft', ranks: 5 },
+    { skillId: 'skill:knowledge_arcana', ranks: 5 },
+    { skillId: 'skill:knowledge_planes', ranks: 5 },
+    { skillId: 'skill:knowledge_dungeoneering', ranks: 5 },
+    { skillId: 'skill:knowledge_religion', ranks: 5 },
+    { skillId: 'skill:fly', ranks: 5 },
+    { skillId: 'skill:linguistics', ranks: 2 },
+  ];
+  const allocation = allocationFromPersisted([...posture, ...wizardSkills]);
+  assertEqual(allocation['Spellcraft'], 5, 'the persisted id maps to its panel row');
+  assertEqual(allocation['Knowledge (Arcana)'], 5, 'a parenthetical id maps back to its row');
+  const held = [{ classId: 'class:wizard', classLabel: 'Wizard', level: 5 }];
+  const lookup = classSkillLookup(held, wizardFactsAt(5));
+  for (const entry of wizardSkills) {
+    const name = SKILLS.find((skill) => skillIdFor(skill.name) === entry.skillId)?.name ?? entry.skillId;
+    assert(isClassSkill(lookup, name), `${name} is a wizard class skill`);
+  }
+  assert(!isClassSkill(lookup, 'Climb'), 'Climb is cross-class for a Wizard');
+  const earned = totalSkillPointsAvailable(held, 4, true);
+  assertEqual(earned, 35, '(2 + 4 + 1) x 5');
+  assertEqual((earned ?? 0) - skillPointsSpent(allocation), 0, 'Elowen loads with 0 unallocated');
+  assertEqual(skillModifier(4, allocation['Spellcraft'] ?? 0, isClassSkill(lookup, 'Spellcraft')), 12, 'Spellcraft 5 + 3 + 4');
+}
+
+/**
+ * PF1 (CRB Chapter 4, Acquiring Skills): one skill point buys one rank, class skill or not; a
+ * class skill adds +3 instead. A Human Wizard 1 with Int 10 carrying the create path's Climb,
+ * Intimidate and Swim (all cross-class) at 1 rank has spent 3 of its 3 points, not 6.
+ */
+function verifiesACrossClassRankCostsOnePoint() {
+  const allocation = allocationFromPersisted([
+    { skillId: 'skill:climb', ranks: 1 },
+    { skillId: 'skill:intimidate', ranks: 1 },
+    { skillId: 'skill:swim', ranks: 1 },
+  ]);
+  assertEqual(skillPointsSpent(allocation), 3, 'three ranks, three points');
+}
+
+/** An id with no panel row is kept verbatim, counted, and written back unchanged. */
+function verifiesAnUnlistedIdRoundTrips() {
+  const allocation = allocationFromPersisted([
+    { skillId: 'skill:knowledge_psionics', ranks: 2 },
+    { skillId: 'skill:climb', ranks: 1 },
+  ]);
+  assertEqual(skillPointsSpent(allocation), 3, 'the unlisted id is counted');
+  const back = persistedFromAllocation(allocation);
+  assertEqual(JSON.stringify(back), JSON.stringify([{ skillId: 'skill:knowledge_psionics', ranks: 2 }, { skillId: 'skill:climb', ranks: 1 }]), 'round trip');
+}
+
 async function main() {
   verifiesSkillIdForOnAParentheticalSkillName();
   verifiesSkillIdForOnMultiWordNonParentheticalNames();
@@ -152,6 +238,9 @@ async function main() {
   verifiesTotalSkillPointsAvailableReadsTheRoster();
   verifiesAlertnessAddsTwoToPerceptionAndSenseMotive();
   verifiesAFamilyBonusReachesEveryMember();
+  verifiesElowenPersistedAllocationLeavesNothingUnallocated();
+  verifiesACrossClassRankCostsOnePoint();
+  verifiesAnUnlistedIdRoundTrips();
 }
 
 main().catch((error: unknown) => {

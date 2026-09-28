@@ -174,23 +174,36 @@ export function maxCrossClassSkillRanks(characterLevel: number): number {
   return Math.floor((characterLevel + 3) / 2);
 }
 
-/** Points cost per rank: 1 for a class skill, 2 for cross-class. */
-export function skillRankCost(classSkill: boolean): number {
-  return classSkill ? 1 : 2;
+/**
+ * Skill points spent: PF1 (CRB Chapter 4, Acquiring Skills) buys one rank with one point, class
+ * skill or not -- a class skill adds +3 instead of costing less (3.5's two-point cross-class rank
+ * is not a PF1 rule). Every allocation entry counts, including an id with no panel row.
+ */
+export function skillPointsSpent(allocation: Record<string, number>): number {
+  return Object.values(allocation).reduce((sum, ranks) => sum + ranks, 0);
 }
 
 /**
- * The fixed three-skill demo allocation every saved character currently
- * receives server-side (`compose_character_input` in character_hub.rs hard-
- * codes Climb/Intimidate/Swim at 1 rank each, regardless of the caller's
- * choices — there is no per-character allocation command yet). Used to seed
- * the allocation dialog with what's actually true today rather than a guess.
+ * The persisted `chosen.skill_allocations` (`LoadSavedCharacterResponse.skillAllocations`) keyed
+ * by panel row name (`skill:knowledge_arcana` -> `Knowledge (Arcana)`). An id with no panel row
+ * keeps its wire id as the key, so it is still counted and written back unchanged.
  */
-export const DEFAULT_SKILL_ALLOCATION: Record<string, number> = {
-  Climb: 1,
-  Intimidate: 1,
-  Swim: 1,
-};
+export function allocationFromPersisted(entries: ReadonlyArray<{ skillId: string; ranks: number }>): Record<string, number> {
+  const nameById = new Map(SKILLS.map((skill) => [skillIdFor(skill.name), skill.name]));
+  const allocation: Record<string, number> = {};
+  for (const entry of entries) {
+    const key = nameById.get(entry.skillId) ?? entry.skillId;
+    allocation[key] = (allocation[key] ?? 0) + entry.ranks;
+  }
+  return allocation;
+}
+
+/** The inverse of {@link allocationFromPersisted}: the wire list `set_skill_allocations` takes. */
+export function persistedFromAllocation(allocation: Record<string, number>): Array<{ skillId: string; ranks: number }> {
+  return Object.entries(allocation)
+    .filter(([, ranks]) => ranks > 0)
+    .map(([key, ranks]) => ({ skillId: key.startsWith('skill:') ? key : skillIdFor(key), ranks }));
+}
 
 /**
  * Total skill points earned across every class level already taken; `null` when any level's

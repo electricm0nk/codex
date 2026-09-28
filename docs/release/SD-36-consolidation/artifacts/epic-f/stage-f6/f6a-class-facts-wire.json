@@ -490,8 +490,6 @@
           "Siangham",
           "Sling",
           "Spear",
-          "Unarmed Strike",
-          "Flurry of Blows",
           "Sword (Temple)"
         ],
         "groups": [],
@@ -552,8 +550,6 @@
           "Siangham",
           "Sling",
           "Spear",
-          "Unarmed Strike",
-          "Flurry of Blows",
           "Sword (Temple)"
         ],
         "groups": [],
@@ -2288,7 +2284,6 @@
           "Siangham",
           "Sling",
           "Spear",
-          "Flurry of Blows",
           "Sword (Temple)"
         ],
         "groups": [],
@@ -2349,7 +2344,6 @@
           "Siangham",
           "Sling",
           "Spear",
-          "Flurry of Blows",
           "Sword (Temple)"
         ],
         "groups": [],
@@ -2688,11 +2682,7 @@
           "Sai",
           "Shuriken",
           "Siangham",
-          "Wakizashi",
-          "Unarmed Strike",
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon"
+          "Wakizashi"
         ],
         "groups": [],
         "sets": [],
@@ -2753,11 +2743,7 @@
           "Sai",
           "Shuriken",
           "Siangham",
-          "Wakizashi",
-          "Unarmed Strike",
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon"
+          "Wakizashi"
         ],
         "groups": [],
         "sets": [],
@@ -2810,12 +2796,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [
           {
@@ -2866,12 +2847,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [
           {
@@ -2922,12 +2898,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -2970,12 +2941,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -3020,18 +2986,7 @@
         ],
         "named": [],
         "groups": [],
-        "sets": [
-          {
-            "label": "Auto",
-            "members": [
-              "Grapple",
-              "Spells (Ray)",
-              "Spells (Touch)",
-              "Splash Weapon",
-              "Unarmed Strike"
-            ]
-          }
-        ],
+        "sets": [],
         "printed": [],
         "reason": null
       },
@@ -3073,18 +3028,7 @@
         ],
         "named": [],
         "groups": [],
-        "sets": [
-          {
-            "label": "Auto",
-            "members": [
-              "Grapple",
-              "Spells (Ray)",
-              "Spells (Touch)",
-              "Splash Weapon",
-              "Unarmed Strike"
-            ]
-          }
-        ],
+        "sets": [],
         "printed": [],
         "reason": null
       },
@@ -3125,11 +3069,7 @@
         ],
         "named": [
           "Rapier",
-          "Shortbow",
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
+          "Shortbow"
         ],
         "groups": [],
         "sets": [],
@@ -3181,11 +3121,7 @@
         ],
         "named": [
           "Rapier",
-          "Shortbow",
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
+          "Shortbow"
         ],
         "groups": [],
         "sets": [],
@@ -3236,12 +3172,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -3286,12 +3217,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -3414,18 +3340,7 @@
         ],
         "named": [],
         "groups": [],
-        "sets": [
-          {
-            "label": "Auto",
-            "members": [
-              "Grapple",
-              "Spells (Ray)",
-              "Spells (Touch)",
-              "Splash Weapon",
-              "Unarmed Strike"
-            ]
-          }
-        ],
+        "sets": [],
         "printed": [],
         "reason": null
       },
@@ -3468,18 +3383,7 @@
         ],
         "named": [],
         "groups": [],
-        "sets": [
-          {
-            "label": "Auto",
-            "members": [
-              "Grapple",
-              "Spells (Ray)",
-              "Spells (Touch)",
-              "Splash Weapon",
-              "Unarmed Strike"
-            ]
-          }
-        ],
+        "sets": [],
         "printed": [],
         "reason": null
       },
@@ -3520,10 +3424,6 @@
           "Simple"
         ],
         "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike",
           "Martial Ranged"
         ],
         "groups": [],
@@ -3617,10 +3517,6 @@
           "Simple"
         ],
         "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike",
           "Martial Ranged"
         ],
         "groups": [],
@@ -4021,11 +3917,7 @@
           "Crossbow (Heavy)",
           "Crossbow (Light)",
           "Quarterstaff",
-          "Shortspear",
-          "Unarmed Strike",
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon"
+          "Shortspear"
         ],
         "groups": [],
         "sets": [],
@@ -4067,11 +3959,7 @@
           "Crossbow (Heavy)",
           "Crossbow (Light)",
           "Quarterstaff",
-          "Shortspear",
-          "Unarmed Strike",
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon"
+          "Shortspear"
         ],
         "groups": [],
         "sets": [],
@@ -4192,12 +4080,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -4238,12 +4121,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -4385,13 +4263,7 @@
         "tiers": [
           "Simple"
         ],
-        "named": [
-          "Mind Blade",
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -4431,13 +4303,7 @@
         "tiers": [
           "Simple"
         ],
-        "named": [
-          "Mind Blade",
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -4568,12 +4434,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -4622,12 +4483,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -4785,12 +4641,7 @@
         "tiers": [
           "Simple"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -4836,12 +4687,7 @@
         "tiers": [
           "Simple"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -4887,12 +4733,7 @@
         "tiers": [
           "Simple"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -4937,12 +4778,7 @@
         "tiers": [
           "Simple"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -4987,12 +4823,7 @@
         "tiers": [
           "Simple"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -5029,12 +4860,7 @@
         "tiers": [
           "Simple"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -5072,12 +4898,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -5124,12 +4945,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -5173,12 +4989,7 @@
         "status": "known",
         "source": "convertedRecord",
         "tiers": [],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [
@@ -5215,12 +5026,7 @@
         "status": "known",
         "source": "convertedRecord",
         "tiers": [],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [
@@ -5259,12 +5065,7 @@
         "tiers": [
           "Simple"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -5303,12 +5104,7 @@
         "tiers": [
           "Simple"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -5348,12 +5144,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],
@@ -5391,12 +5182,7 @@
           "Simple",
           "Martial"
         ],
-        "named": [
-          "Spells (Ray)",
-          "Spells (Touch)",
-          "Splash Weapon",
-          "Unarmed Strike"
-        ],
+        "named": [],
         "groups": [],
         "sets": [],
         "printed": [],

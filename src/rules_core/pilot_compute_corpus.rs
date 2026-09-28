@@ -660,8 +660,8 @@ pub fn compute_combat_baseline_from_corpus(
 /// requirement to any resolvable armor loadout (or none), using real
 /// `armor_check_penalty_total` (`equipment_effects::compute_equipment_effects`)
 /// in place of the old Chain-Shirt-specific constant -- the skill-allocation
-/// posture itself (exactly Climb/Intimidate/Swim at rank 1, no other
-/// allocations) is unchanged, same as `compute_combat_baseline_from_corpus`
+/// posture itself (exactly Climb/Intimidate/Swim at rank 1; since SD-36 F7a, ranks in other
+/// skills no longer refuse it) is unchanged, same as `compute_combat_baseline_from_corpus`
 /// leaves the weapon/feat requirements unchanged.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub struct CorpusAwareSelectedSkillModifiers {
@@ -689,14 +689,8 @@ pub fn compute_selected_skill_modifiers_from_corpus(
     for skill_id in expected {
         require_selected_skill_rank(allocations, skill_id, &mut unmet);
     }
-    for allocation in allocations {
-        if !expected.contains(&allocation.skill_id.as_str()) {
-            unmet.push(format!(
-                "skill allocation {} is outside the selected Climb/Intimidate/Swim slice",
-                allocation.skill_id
-            ));
-        }
-    }
+    // SD-36 F7a (F7-8): ranks in any other skill feed none of the three totals; not refused
+    // (the headless twin's `unmet_selected_skill_posture_conditions` says the same).
 
     // v0.6 alpha swarm sub-task 4: deliberately does not require every
     // EquippedActive selection to resolve against corpus -- see
