@@ -102,11 +102,8 @@
 //! Barbarian/Bard/Cleric/Fighter/Paladin level-N-to-level-(N+1) sibling-fix
 //! precedent exactly.
 
-use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
-use crate::common::{load, explanation, has_explanation};
+use codex::rules_core::pilot_compute::PilotBaseChassisComputation;
+use crate::common::{explanation, has_explanation};
 
 const RANGER_LEVEL18_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_ranger_level18_sd18_fourth_favored_terrain_and_fifth_combat_style_feat_deterministic_input.txt"
@@ -116,9 +113,6 @@ const RANGER_LEVEL19_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_ranger_level19_sd18_improved_quarry_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 const PER_DAY_PREFIX: &str = "class_chassis.ranger.partial_caster.base_spells_per_day.";
 
@@ -141,8 +135,7 @@ fn values_with_prefix(
 
 #[test]
 fn ranger_level19_base_attack_bonus_genuinely_rises() {
-    let input = load(RANGER_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL19_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.ranger.base_attack_bonus");
     assert_eq!(
@@ -156,8 +149,7 @@ fn ranger_level19_base_attack_bonus_genuinely_rises() {
 
 #[test]
 fn ranger_level19_base_saves_stay_unchanged() {
-    let input = load(RANGER_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL19_FIXTURE);
 
     let fortitude = explanation(&computation, "class_chassis.ranger.base_save.fortitude");
     assert_eq!(
@@ -182,8 +174,7 @@ fn ranger_level19_base_saves_stay_unchanged() {
 
 #[test]
 fn ranger_level19_base_spells_per_day_match_the_raw_table_row() {
-    let input = load(RANGER_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL19_FIXTURE);
 
     assert_eq!(
         values_with_prefix(&computation, PER_DAY_PREFIX),
@@ -202,8 +193,7 @@ fn ranger_level19_base_spells_per_day_match_the_raw_table_row() {
 
 #[test]
 fn ranger_level19_spell_level_access_stays_four() {
-    let input = load(RANGER_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL19_FIXTURE);
 
     let access = explanation(
         &computation,
@@ -220,8 +210,7 @@ fn ranger_level19_spell_level_access_stays_four() {
 
 #[test]
 fn ranger_level19_improved_quarry_is_granted() {
-    let input = load(RANGER_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL19_FIXTURE);
 
     let improved_quarry = explanation(&computation, IMPROVED_QUARRY_ID);
     assert_eq!(
@@ -250,8 +239,7 @@ fn ranger_level19_improved_quarry_is_granted() {
 
 #[test]
 fn ranger_level18_improved_quarry_grounds_no_record() {
-    let input = load(RANGER_LEVEL18_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL18_FIXTURE);
 
     assert!(
         !has_explanation(&computation, IMPROVED_QUARRY_ID),
@@ -265,8 +253,7 @@ fn ranger_level18_improved_quarry_grounds_no_record() {
 
 #[test]
 fn ranger_level19_quarry_attack_bonus_rises_to_four() {
-    let input = load(RANGER_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL19_FIXTURE);
 
     let bonus = explanation(&computation, QUARRY_ATTACK_BONUS_ID);
     assert_eq!(
@@ -281,8 +268,7 @@ fn ranger_level19_quarry_attack_bonus_rises_to_four() {
 
 #[test]
 fn ranger_level18_quarry_attack_bonus_stays_two() {
-    let input = load(RANGER_LEVEL18_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL18_FIXTURE);
 
     let bonus = explanation(&computation, QUARRY_ATTACK_BONUS_ID);
     assert_eq!(
@@ -297,8 +283,7 @@ fn ranger_level18_quarry_attack_bonus_stays_two() {
 
 #[test]
 fn ranger_level19_still_claim_blocks_overall() {
-    let input = load(RANGER_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL19_FIXTURE);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
@@ -311,8 +296,7 @@ fn ranger_level19_still_claim_blocks_overall() {
 
 #[test]
 fn ranger_level18_truth_is_unchanged_by_this_slice() {
-    let input = load(RANGER_LEVEL18_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL18_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.ranger.base_attack_bonus");
     assert_eq!(base_attack.value, 18, "Ranger level 18 base attack bonus must stay 18");
@@ -331,77 +315,11 @@ fn ranger_level18_truth_is_unchanged_by_this_slice() {
 
 // ----- Negative control: the ranger path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_ranger_level19_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger.")),
-        "the Fighter chassis must not surface any ranger-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_ranger_level19_recognition, "ranger");
 
 // ----- Negative control: multiclass Ranger is not promoted -----
 
-#[test]
-fn multiclass_ranger_level19_is_not_promoted_by_this_slice() {
-    let multiclass = RANGER_LEVEL19_FIXTURE.replace(
-        "class_level=class:ranger:19",
-        "class_level=class:ranger:19\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| (e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger."))
-                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
-                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
-                // receipt.md`): Ranger's own Weapon and Armor Proficiency identity
-                // grant is now genuinely grounded as a level-independent, always-on
-                // +0 record (true since level 1, mirrors the same "no gate to lift"
-                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
-                // this slice's negative control is checking for.
-                && e.id != "class_feature.ranger.weapon_and_armor_proficiency"),
-        "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Ranger must stay claim-blocked in this slice"
-    );
-}
+crate::sd18_multiclass_neg_control_test!(multiclass_ranger_level19_is_not_promoted_by_this_slice, "ranger_level19", RANGER_LEVEL19_FIXTURE);
 
 // ----- Control plane: the matrix note names the level-19 widening -----
 
-#[test]
-fn matrix_ranger_row_names_level_19_widening() {
-    let matrix = seeded_current_truth();
-    let ranger = matrix
-        .row("class.ranger.hybrid_chassis_and_spell_burden")
-        .expect("ranger hybrid_chassis_and_spell_burden row must exist");
-
-    assert_eq!(ranger.support_state, SupportState::Supported);
-    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        ranger.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        ranger.grounding_ref.contains("sd18_ranger_level19_widening"),
-        "ranger row must cite the live SD18 level-19 proof surface: {}",
-        ranger.grounding_ref
-    );
-    let note = ranger.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 19") || note.contains("level-19"),
-        "ranger partial note must name the level-19 widening: {note}"
-    );
-}

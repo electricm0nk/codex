@@ -1,0 +1,76 @@
+# F3b2 verify log (sd36/epic-f2-f3, 2026-09-24). Excerpts of the scratch logs; every command ran in this worktree.
+
+## cargo run --locked --quiet -j 8 -p codex-ingest --bin sheet_rule_convert -- --write
+records=49450 converted=49450 refused=0 rules=73016 var_tables=6205 files=55678 (384.9s)
+kind class: records=185 converted=185 refused=0
+kind class_feature: records=18043 converted=18043 refused=0
+EXIT=0
+
+## ... -- --check
+records=49450 converted=49450 refused=0 rules=73016 var_tables=6205 verdict=PASS (393.7s)
+EXIT=0
+
+## cargo test --locked -j 8 -p codex-ingest --test sheet_rule_convert_gate -- --test-threads=8
+test result: ok. 41 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 556.43s
+EXIT=0
+
+## (after the RED test's rename) ... sheet_rule_convert_gate -- --test-threads=8 a_placeholder_keyed_record a_class_principal_states; cargo test --locked -j 8 --test sd36_multiclass_any_class -- --test-threads=8
+test a_placeholder_keyed_record_is_found_by_the_key_its_row_declares ... ok
+test a_class_principal_states_its_skill_ranks_per_level ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 39 filtered out; finished in 233.33s
+EXIT=0
+test an_unrecognized_save_shape_blocks_the_mix_by_name ... ok
+test a_mix_of_prestige_classes_only_states_the_game_rule ... ok
+test magus4_samurai2_computes_the_hand_worked_sheet ... ok
+test wizard5_loremaster2_computes_the_hand_worked_numbers_and_names_its_one_blocker ... ok
+test each_class_keeps_its_own_feature_lines_rescoped_by_class ... ok
+test barbarian12_fighter1_computes_the_hand_worked_sheet ... ok
+test fighter6_arcane_archer3_computes_the_hand_worked_sheet ... ok
+test a_class_with_no_proficiency_answer_cannot_undo_another_class_s_grant ... ok
+test a_prestige_class_in_a_mix_prints_its_entry_requirements_without_blocking ... ok
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.91s
+EXIT=0
+
+## cargo test --locked -j 8 --lib every_census_class_has_a_known_proficiency_answer -- --test-threads=8 --nocapture (after reader-remainder.md regeneration; from the full lib run)
+test rules_core::rules_tables::crb::weapon_tables::class_weapon_proficiency_tests::every_census_class_has_a_known_proficiency_answer ... ok
+
+## cargo test --locked -j 8 --no-fail-fast -- --test-threads=8 (root, full)
+test binaries: 288
+test rules_core::feat_prereqs::prerequisite_tests::a_starting_fighter_keeps_a_real_catalog_and_every_denial_states_why ... FAILED
+test result: FAILED. 2712 passed; 1 failed; 6 ignored; 0 measured; 0 filtered out; finished in 170.74s
+EXIT=101
+(the one failure: the feat eligible count 539 -> 534, attributed in f3b2-converter-receipt.md §2 and re-pinned)
+
+## cargo test --locked -j 8 --lib feat_prereqs -- --test-threads=8 (after the re-pin)
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 2694 filtered out
+
+## cargo test --locked -j 8 --no-fail-fast --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8
+test result: ok. 615 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 376.16s
+EXIT=0
+
+## cargo clippy --locked -j 8 -p codex-ingest --tests -- -D warnings; cargo clippy --locked --tests -j 8 -- -D warnings
+clean (Finished, 0 warnings)
+
+## cargo run --locked -j 8 --bin class_census -- --json docs/release/SD-36-consolidation/artifacts/epic-f/census-f3b2.json
+ids=137 computed=63 blocked=0
+prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=57 prestige_mix_unknown=11
+mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0
+EXIT=0
+
+## python3 scripts/pcgen_residue_gate.py --check --closure
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=69719
+live_files=0 live_hits=0 verdict=PASS
+
+## python3 scripts/site/check_frozen_status.py --check
+OK: site/status-data.json is frozen at 100% (49450 units)
+
+## node scripts/gen-corpus-bundle.mjs
+files_copied=14029 (tree unchanged)
+
+## structural_diff.py data/sheet_rules --baseline <tranche/16 cc21cac195 git archive>/data/sheet_rules
+  records: 49450 -> 49450
+  converted: 49450 -> 49450
+verdict=PASS
+
+## python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/structural_diff_test.py
+Ran 31 tests ... OK

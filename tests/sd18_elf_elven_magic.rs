@@ -38,9 +38,6 @@ use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation};
 
@@ -164,36 +161,3 @@ fn elf_bounded_semantics_note_names_elven_magic_as_grounded() {
 
 // ----- Control plane: the matrix row stays Partial/Computed, widened note -----
 
-#[test]
-fn matrix_elf_row_stays_partial_computed_and_grounding_ref_names_this_slice() {
-    let matrix = seeded_current_truth();
-    let elf = matrix
-        .row("race.elf.bounded_semantics")
-        .expect("elf row must exist");
-
-    // NOTE (2026-07-16, SD-19 Full-matrix closure): this slice's own honest
-    // Partial -> Partial widening claim below is historically accurate for THIS
-    // slice, but the row was later promoted to Supported/ProductVisible by the
-    // separate SD-19 Race Trait Catalog browser UI-surfacing work, which is why
-    // the assertions after this comment now read Supported/ProductVisible.
-    // Honest promotion: Partial -> Partial widening, NOT a jump to Supported.
-    // Elven Magic is one more grounded family among several still-unproven
-    // ones (weapon familiarity, bonus languages), so the row does not reach
-    // Supported this cycle.
-    assert_eq!(elf.support_state, SupportState::Supported);
-    assert_eq!(elf.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        elf.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        elf.grounding_ref.contains("sd18_elf_elven_magic"),
-        "elf row grounding_ref must cite this slice's proof surface: {}",
-        elf.grounding_ref
-    );
-    assert!(
-        elf.blocker_or_lossiness_note.contains("Elven Magic"),
-        "elf row note must name Elven Magic as grounded: {}",
-        elf.blocker_or_lossiness_note
-    );
-}

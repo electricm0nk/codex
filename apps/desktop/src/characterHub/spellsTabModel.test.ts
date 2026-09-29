@@ -8,6 +8,8 @@ import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import type { ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import type { SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
 import { assert, assertEqual } from '../testSupport/asserts';
+import { installClassRoster } from './classRoster';
+import { classRosterWire } from '../testSupport/classRosterWire';
 
 /**
  * The Spells tab previously rendered ONLY `corpusDerived.schoolCoverage`,
@@ -180,6 +182,18 @@ function verifiesAcquisitionDescriptionReadsForAPlayer() {
     'Prepared · Wizard',
     'the acquisition line names the mode and the human-readable source class'
   );
+}
+
+/**
+ * SD-36 F4c: the source-class label is the served roster's, for any class a character can hold —
+ * a newly offered base class and a prestige class taken at level-up alike — not a title-cased id.
+ */
+function verifiesTheSourceClassLabelIsTheServedRosterLabel() {
+  installClassRoster(classRosterWire());
+  const psychicWarrior = resolveSelectedSpellEntries([selection('Shield', 'Known', 'class:psychic_warrior')], CATALOG)[0];
+  assertEqual(describeSpellAcquisition(psychicWarrior), 'Known · Psychic Warrior', 'a newly offered base class');
+  const theurge = resolveSelectedSpellEntries([selection('Shield', 'Prepared', 'class:mystic_theurge')], CATALOG)[0];
+  assertEqual(describeSpellAcquisition(theurge), 'Prepared · Mystic Theurge', 'a prestige class, off its withheld row');
 }
 
 function verifiesAnEmptyCatalogStillRendersEverySelectionAsRawIds() {
@@ -399,9 +413,10 @@ async function main() {
   verifiesAcquisitionAndSourceClassReachTheRow();
   verifiesAcquisitionDescriptionReadsForAPlayer();
   verifiesAnEmptyCatalogStillRendersEverySelectionAsRawIds();
+  verifiesTheSourceClassLabelIsTheServedRosterLabel();
 }
 
 main().catch((error: unknown) => {
   console.error(error);
-  throw error;
+  process.exit(1);
 });

@@ -1,0 +1,1 @@
+{"var":"vfa73bbdbc4712d89","label":"Vigilante CFP Level","declared_by":["ultimate_intrigue:class_feature:vigilante"],"contributions":[{"rule_id":"inner_sea_gods:ability:vigilante","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"},{"rule_id":"ultimate_intrigue:class_feature:vigilante","expr":{"Var":"v8ccc14706e4a7097"},"when":"Always"}],"provenance":{}}

@@ -1,0 +1,1 @@
+{"var":"v56dfc1ef0030b792","label":"Diabolist Damned LVL","declared_by":["book_of_the_damned_volume_1:class_feature:diabolist_damned"],"contributions":[{"rule_id":"book_of_the_damned_volume_1:class:diabolist","expr":{"ClassLevel":"diabolist"},"when":{"Compare":{"lhs":{"ClassLevel":"diabolist"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

@@ -73,9 +73,12 @@ The script's gates are necessary, not sufficient. Add these:
 - **Prove the gate can fail.** Seed a declared-PI name into the payload, run the gate, confirm
   it goes red, then remove the seed. A gate that cannot fail is worse than no gate, and this
   repo has shipped several.
-- **Check the data is current.** Cloudflare serves what is committed. Stale JSON publishes a
-  stale number as fact. Run `./scripts/publish-site-dashboard.sh` first if the feeds have not
-  been refreshed this cycle.
+- **Check the data is current.** Cloudflare serves what is committed. The PF1e status feeds
+  (`site/status-data.json` + `site/status-data/<book>.json`) are FROZEN as of SD-36 Epic B
+  (operator ruling D3) — nothing regenerates them any more. `site-status-frozen-check`
+  (`python3 scripts/site/check_frozen_status.py`) is the gate that the committed snapshot
+  still reads 100% of 49,450 and has not silently drifted; run it, don't try to refresh the
+  feeds.
 - **Say what is going.** Report the file count, the redaction count, and the gate results
   before the operator merges. They are deciding, not rubber-stamping.
 
@@ -103,12 +106,15 @@ and move on" — read the row first.
 
 ## Keeping it self-maintaining
 
-The published data must be **generated, never hand-maintained** — a hand-edit is silently
-undone by the next refresh and is invisible in review. The generators are wired into
-`scripts/publish-site-dashboard.sh`, and `verify.sh` carries staleness gates that fail when a
-committed feed drifts from what the generator would produce.
+The published PF1e status data is now a **FROZEN snapshot** (SD-36 D3): the generators
+(`src/bin/v06_work_inventory.rs`, `scripts/publish-site-dashboard.sh`) are retired, and
+`verify.sh`'s `site-status-frozen-check` stage fails if the committed feed ever drifts from
+that frozen state instead of checking it against a live regeneration.
 
-If you find yourself editing a JSON file under `site/` by hand, stop: fix the generator.
+If you find yourself editing `site/status-data.json` or `site/status-data/*.json` by hand,
+stop: that is exactly the frozen-drift failure mode the gate above exists to catch. Any other
+JSON file under `site/` should still be generated, never hand-maintained, by the convention
+this section originally described.
 
 ## When it goes wrong
 

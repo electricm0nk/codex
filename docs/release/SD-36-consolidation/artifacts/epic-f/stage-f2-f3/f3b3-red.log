@@ -1,0 +1,107 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 29.10s
+     Running tests/sd36_class_skill_from_record.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd36_class_skill_from_record-7314d3254af7ac76)
+
+running 2 tests
+
+thread 'barbarian_gets_the_class_skill_bonus_its_record_grants' (993879) panicked at tests/sd36_class_skill_from_record.rs:33:5:
+assertion `left == right` failed: Some("Selected Climb modifier: rank 1 + Strength modifier (+4) + no class-skill bonus (Climb is not a class skill for this character's class) + Chain Shirt armor-check penalty (-2) + feat bonus (+0, Athletic if selected) = 3")
+  left: Some(3)
+ right: Some(6)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test barbarian_gets_the_class_skill_bonus_its_record_grants ... FAILED
+census ids 137; record Known at level 1: 126; (class, skill) lines checked: 156; mismatches: 79
+
+thread 'every_census_class_prints_the_class_skill_bonus_its_record_grants' (993880) panicked at tests/sd36_class_skill_from_record.rs:69:5:
+79 of 156 lines disagree with the record: [
+    "class:aegis climb: record true / sheet false",
+    "class:aegis intimidate: record true / sheet false",
+    "class:aegis swim: record true / sheet false",
+    "class:antipaladin intimidate: record true / sheet false",
+    "class:aristocrat intimidate: record true / sheet false",
+    "class:aristocrat swim: record true / sheet false",
+    "class:barbarian climb: record true / sheet false",
+    "class:barbarian intimidate: record true / sheet false",
+    "class:barbarian swim: record true / sheet false",
+    "class:bard climb: record true / sheet false",
+    "class:bard intimidate: record true / sheet false",
+    "class:commoner climb: record true / sheet false",
+    "class:commoner swim: record true / sheet false",
+    "class:cryptic climb: record true / sheet false",
+    "class:cryptic swim: record true / sheet false",
+    "class:dread climb: record true / sheet false",
+    "class:dread intimidate: record true / sheet false",
+    "class:dread swim: record true / sheet false",
+    "class:druid climb: record true / sheet false",
+    "class:druid swim: record true / sheet false",
+    "class:ex_antipaladin intimidate: record true / sheet false",
+    "class:ex_barbarian climb: record true / sheet false",
+    "class:ex_barbarian intimidate: record true / sheet false",
+    "class:ex_barbarian swim: record true / sheet false",
+    "class:ex_inquisitor climb: record true / sheet false",
+    "class:ex_inquisitor intimidate: record true / sheet false",
+    "class:ex_inquisitor swim: record true / sheet false",
+    "class:gunslinger climb: record true / sheet false",
+    "class:gunslinger intimidate: record true / sheet false",
+    "class:gunslinger swim: record true / sheet false",
+    "class:kineticist intimidate: record true / sheet false",
+    "class:magus climb: record true / sheet false",
+    "class:magus intimidate: record true / sheet false",
+    "class:magus swim: record true / sheet false",
+    "class:marksman climb: record true / sheet false",
+    "class:marksman intimidate: record true / sheet false",
+    "class:medium intimidate: record true / sheet false",
+    "class:mesmerist intimidate: record true / sheet false",
+    "class:ninja climb: record true / sheet false",
+    "class:ninja intimidate: record true / sheet false",
+    "class:ninja swim: record true / sheet false",
+    "class:psychic intimidate: record true / sheet false",
+    "class:psychic_warrior climb: record true / sheet false",
+    "class:psychic_warrior swim: record true / sheet false",
+    "class:ranger climb: record true / sheet false",
+    "class:ranger intimidate: record true / sheet false",
+    "class:ranger swim: record true / sheet false",
+    "class:samurai climb: record true / sheet false",
+    "class:samurai intimidate: record true / sheet false",
+    "class:samurai swim: record true / sheet false",
+    "class:shifter climb: record true / sheet false",
+    "class:shifter swim: record true / sheet false",
+    "class:sorcerer intimidate: record true / sheet false",
+    "class:soulknife climb: record true / sheet false",
+    "class:soulknife intimidate: record true / sheet false",
+    "class:soulknife swim: record true / sheet false",
+    "class:spiritualist intimidate: record true / sheet false",
+    "class:tactician climb: record true / sheet false",
+    "class:tactician intimidate: record true / sheet false",
+    "class:tactician swim: record true / sheet false",
+    "class:unchained_barbarian climb: record true / sheet false",
+    "class:unchained_barbarian intimidate: record true / sheet false",
+    "class:unchained_barbarian swim: record true / sheet false",
+    "class:unchained_monk climb: record true / sheet false",
+    "class:unchained_monk intimidate: record true / sheet false",
+    "class:unchained_monk swim: record true / sheet false",
+    "class:unchained_rogue climb: record true / sheet false",
+    "class:unchained_rogue intimidate: record true / sheet false",
+    "class:unchained_rogue swim: record true / sheet false",
+    "class:vigilante climb: record true / sheet false",
+    "class:vigilante intimidate: record true / sheet false",
+    "class:vigilante swim: record true / sheet false",
+    "class:vitalist intimidate: record true / sheet false",
+    "class:warrior climb: record true / sheet false",
+    "class:warrior intimidate: record true / sheet false",
+    "class:warrior swim: record true / sheet false",
+    "class:wilder climb: record true / sheet false",
+    "class:wilder intimidate: record true / sheet false",
+    "class:wilder swim: record true / sheet false",
+]
+test every_census_class_prints_the_class_skill_bonus_its_record_grants ... FAILED
+
+failures:
+
+failures:
+    barbarian_gets_the_class_skill_bonus_its_record_grants
+    every_census_class_prints_the_class_skill_bonus_its_record_grants
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 45.62s
+
+error: test failed, to rerun pass `--test sd36_class_skill_from_record`
+EXIT=101

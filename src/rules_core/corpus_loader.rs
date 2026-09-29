@@ -72,9 +72,22 @@ pub struct BookCorpusRoot<'a> {
 pub fn load_equipment_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageContent<'a> {
     let mut package = SourcePackageContent::empty(
         "corpus_loader",
-        SourceRef { lst_file: String::new(), line: 0 },
+        SourceRef { source_path: String::new(), line: 0 },
     );
     for root in roots {
+        // A whole book directory missing (e.g. a packaged build whose
+        // resolved root has no bundled `data/corpus`) is a different fact
+        // from a present book that simply carries no `equipment/`
+        // subdirectory -- the latter stays silent below, unchanged. See
+        // `race_resolver::load_race_corpus`'s identical guard for the same
+        // "loud, not silent" fix.
+        if !root.dir.is_dir() {
+            package.push_diagnostic(load_diagnostic(
+                root.dir,
+                &format!("book directory not found: {}", root.dir.display()),
+            ));
+            continue;
+        }
         let equipment_dir = root.dir.join("equipment");
         if !equipment_dir.is_dir() {
             continue;
@@ -136,9 +149,17 @@ pub fn load_equipment_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageC
 pub fn load_spell_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageContent<'a> {
     let mut package = SourcePackageContent::empty(
         "corpus_loader",
-        SourceRef { lst_file: String::new(), line: 0 },
+        SourceRef { source_path: String::new(), line: 0 },
     );
     for root in roots {
+        // See `load_equipment_corpus`'s identical guard above.
+        if !root.dir.is_dir() {
+            package.push_diagnostic(load_diagnostic(
+                root.dir,
+                &format!("book directory not found: {}", root.dir.display()),
+            ));
+            continue;
+        }
         let spell_dir = root.dir.join("spell");
         if !spell_dir.is_dir() {
             continue;
@@ -161,7 +182,7 @@ pub fn load_spell_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageConte
                     let record: &'static CorpusSpellRecord = Box::leak(Box::new(record));
                     package.push(SourceContentRecord::spell(
                         SourceRef {
-                            lst_file: record.source_path.clone(),
+                            source_path: record.source_path.clone(),
                             line: record.line_number as u32,
                         },
                         record,
@@ -190,40 +211,10 @@ fn spell_record_from_json(path: &Path, data: &serde_json::Value) -> Option<Corpu
     Some(CorpusSpellRecord::from_corpus_json_fields(path.display().to_string(), name, school))
 }
 
-fn find_json_files(dir: &Path) -> Vec<std::path::PathBuf> {
-    let mut out = Vec::new();
-    let mut stack = vec![dir.to_path_buf()];
-    while let Some(current) = stack.pop() {
-        let Ok(entries) = fs::read_dir(&current) else { continue };
-        for entry in entries.flatten() {
-            let path = entry.path();
-            let file_name = entry.file_name();
-            let file_name = file_name.to_string_lossy();
-            if path.is_dir() {
-                if file_name == "_parity" {
-                    continue;
-                }
-                stack.push(path);
-            } else if file_name == "LICENSE.json" {
-                continue;
-            } else if path.extension().and_then(|e| e.to_str()) == Some("json") {
-                out.push(path);
-            }
-        }
-    }
-    // Sorted, because the ORDER records are pushed into a
-    // `SourcePackageContent` is significant -- a resolver reading that package
-    // decides a key collision by position. Unsorted, that order is `read_dir`
-    // order, which is the filesystem's, which is stable for one directory on
-    // one machine and NOT stable across two checkouts of the same corpus. That
-    // is the shape of nondeterminism that looks like a code change when two
-    // agents compare measurements taken in different worktrees. Path order is a
-    // property of the corpus itself, so every checkout of it agrees.
-    // `race_resolver::find_json_files`, which copied this traversal, already
-    // sorts for the same reason.
-    out.sort();
-    out
-}
+// `find_json_files` moved to `crate::support::paths` (SD-36 Epic C1): this
+// traversal used to be copied byte-for-byte in `race_resolver.rs` too. See
+// that module for the note on why the result is sorted.
+use crate::support::paths::find_json_files;
 
 /// The result of loading `data/sheet_rules/` (SD-35 AT-35-E2-002).
 pub struct SheetRuleLoad {
@@ -241,7 +232,11 @@ pub struct SheetRuleLoad {
 ///
 /// `_refused.json`, `_report.json`, `_defects/` and `GENERATED` are the converter's own
 /// reports, not rules, and are skipped. Files are parsed on `available_parallelism` threads
-/// (the package is ~52,000 files); the result is deterministic because rules are keyed by id.
+/// (the package is ~52,000 files); the result is deterministic because rules are keyed by id
+/// -- but a key collision between two DIFFERENT rules is a real defect, not mere
+/// non-determinism, and is surfaced as a [`SourceContentDiagnosticKind::DuplicateRuleId`]
+/// (`crate::rules_core::source_content::SourceContentDiagnosticKind::DuplicateRuleId`)
+/// diagnostic rather than dropped silently.
 pub fn load_sheet_rules(dir: &Path) -> SheetRuleLoad {
     load_sheet_rules_filtered(dir, &|_, _| true)
 }
@@ -313,9 +308,24 @@ pub fn load_sheet_rules_filtered(dir: &Path, keep: &dyn Fn(&str, &str) -> bool) 
     let mut package = SheetRulePackage::new();
     let rule_files = rule_paths.len();
     let var_files = var_paths.len();
-    for parsed in parse_all::<Vec<SheetRule>>(&rule_paths) {
+    // SD-36 Epic F1 rule-gap investigation: `package.rules` is a `BTreeMap<RuleId,
+    // SheetRule>` -- inserting a second rule under an id already present silently drops the
+    // first one, with no diagnostic, no error, nothing (`_report.json`'s `rules_written` read
+    // 369 more than the loaded package ever held before this loop started checking). Every
+    // write is checked against what is already in the map BEFORE it overwrites, so a
+    // collision becomes a named, loud `DuplicateRuleId` diagnostic naming the exact id and
+    // the file that lost -- never a silent shadow (`docs/release/SD-36-consolidation/
+    // artifacts/epic-f/stage4/rule-gap-receipt.md`).
+    for (path, parsed) in rule_paths.iter().zip(parse_all::<Vec<SheetRule>>(&rule_paths)) {
         match parsed {
-            Ok(rules) => rules.into_iter().for_each(|r| package.insert_rule(r)),
+            Ok(rules) => {
+                for rule in rules {
+                    if package.rules.contains_key(&rule.id) {
+                        diagnostics.push(duplicate_rule_id_diagnostic(path, &rule.id));
+                    }
+                    package.insert_rule(rule);
+                }
+            }
             Err((path, message)) => diagnostics.push(load_diagnostic(&path, message)),
         }
     }
@@ -364,7 +374,25 @@ fn load_diagnostic(path: &Path, message: &str) -> crate::rules_core::source_cont
         severity: SourceContentSeverity::Error,
         kind: SourceContentDiagnosticKind::MalformedRecord,
         message: message.to_string(),
-        source_ref: SourceRef { lst_file: path.display().to_string(), line: 0 },
+        source_ref: SourceRef { source_path: path.display().to_string(), line: 0 },
+    }
+}
+
+/// A `SheetRule` at `path` collided with an id already in the package -- the id's EARLIER
+/// rule is dropped, silently, unless this diagnostic is read. `path` is the file carrying
+/// the colliding (later, kept) write; the earlier write it shadows may be in the same file
+/// or a different one.
+fn duplicate_rule_id_diagnostic(path: &Path, id: &crate::rules_core::sheet_rule::RuleId) -> crate::rules_core::source_content::SourceContentDiagnostic {
+    use crate::rules_core::source_content::{SourceContentDiagnostic, SourceContentDiagnosticKind, SourceContentSeverity};
+    SourceContentDiagnostic {
+        severity: SourceContentSeverity::Error,
+        kind: SourceContentDiagnosticKind::DuplicateRuleId,
+        message: format!(
+            "duplicate rule id `{id}` in {}: an earlier rule under the same id is shadowed and \
+             dropped from the live package",
+            path.display()
+        ),
+        source_ref: SourceRef { source_path: path.display().to_string(), line: 0 },
     }
 }
 
@@ -637,6 +665,51 @@ mod tests {
             .expect("this record's real +4 competence bonus to Diplomacy must be settled");
         assert_eq!(bonus.skill, "Diplomacy");
         assert_eq!(bonus.bonus, 4);
+    }
+
+    /// SD-36 Epic F1 rule-gap investigation
+    /// (`docs/release/SD-36-consolidation/artifacts/epic-f/stage4/rule-gap-receipt.md`,
+    /// closed by stage 5's population run,
+    /// `docs/release/SD-36-consolidation/artifacts/epic-f/stage5/population-receipt.md`):
+    /// `data/sheet_rules/_report.json`'s `rules_written` -- the converter's own count of
+    /// `SheetRule` JSON entries it wrote -- must equal the loaded package's rule count
+    /// exactly, with ZERO [`DuplicateRuleId`](crate::rules_core::source_content::
+    /// SourceContentDiagnosticKind::DuplicateRuleId) diagnostics. Stage 4 found and fixed the
+    /// root cause (`crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs`'s
+    /// `NATURALATTACKS` arm minted a per-occurrence-local `#naturalN` suffix instead of the
+    /// record-global running count every other multi-emit arm uses); stage 5's
+    /// `sheet_rule_convert -- --write` regenerated the tracked package with that fix, so the
+    /// 369 previously-shadowed rules (306 duplicate-id groups) are now live, distinct ids,
+    /// and NO rule vanishes into a silent `BTreeMap` overwrite any more. If this test ever
+    /// sees a non-zero diagnostic count again, that means a FUTURE converter change reopened
+    /// the collision (or a new one) -- it is a live defect, not an expected class, and must
+    /// be investigated and fixed at the source (see
+    /// `crates/codex-ingest/tests/sheet_rule_natural_attack_suffix_collision.rs` for the
+    /// regression fixtures), never re-pinned to a new number.
+    #[test]
+    fn the_real_package_accounts_for_every_converted_rule() {
+        let dir = crate::support::paths::repo_root().join("data/sheet_rules");
+        let load = load_sheet_rules(&dir);
+
+        let report_text = std::fs::read_to_string(dir.join("_report.json")).expect("_report.json is tracked alongside the rule files it reports on");
+        let report: serde_json::Value = serde_json::from_str(&report_text).expect("_report.json is valid JSON");
+        let rules_written = report["rules_written"].as_u64().expect("_report.json carries a rules_written count") as usize;
+
+        assert!(
+            load.diagnostics.is_empty(),
+            "every converted rule must load as a distinct, live rule -- a DuplicateRuleId (or \
+             any other) diagnostic here means a rule is being silently shadowed again: {:?}",
+            &load.diagnostics[..load.diagnostics.len().min(3)]
+        );
+
+        assert_eq!(
+            load.package.rules.len(),
+            rules_written,
+            "package.rules.len() ({}) must equal _report.json's rules_written ({rules_written}) \
+             now that no rule is shadowed by a duplicate id -- every converted rule is \
+             accounted for as LIVE, never an unexplained gap",
+            load.package.rules.len()
+        );
     }
 }
 

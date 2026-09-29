@@ -26,7 +26,6 @@
 use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
-use tauri::Manager;
 
 use codex::saved_character::local_store::SavedCharacterStore;
 
@@ -34,8 +33,6 @@ use crate::corpus_fixtures::corpus_fixture_bundle;
 use crate::pf1_adapter::{resolve_unified_pilot_snapshot, Pf1Adapter};
 use crate::rule_system_adapter::RuleSystemAdapter;
 use crate::stub_adapter::StubAdapter;
-
-const CHARACTERS_ROOT_DIR_NAME: &str = "characters";
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -91,18 +88,6 @@ pub struct RecomputeCharacterResponse {
     pub success: bool,
     pub character: Option<CharacterSnapshotDto>,
     pub error: Option<String>,
-}
-
-fn characters_root_from_app_data_dir(app_data_dir: &Path) -> PathBuf {
-    app_data_dir.join(CHARACTERS_ROOT_DIR_NAME)
-}
-
-fn resolve_character_root(app: &tauri::AppHandle, character_id: &str) -> Result<PathBuf, String> {
-    let app_data_dir = app
-        .path()
-        .app_data_dir()
-        .map_err(|err| format!("could not resolve app data directory: {err}"))?;
-    Ok(characters_root_from_app_data_dir(&app_data_dir).join(character_id))
 }
 
 /// `recompute_character`'s real implementation: load the saved envelope
@@ -209,7 +194,11 @@ pub fn recompute_character(
     app: tauri::AppHandle,
     request: RecomputeCharacterRequest,
 ) -> Result<RecomputeCharacterResponse, String> {
-    let root = resolve_character_root(&app, &request.character_id)?;
+    // SD-36 Epic E desktop-P1-01 (review-caught bypass): delegates to the ONE validated
+    // choke point every other character-scoped command already uses -- see
+    // `this_module_defines_no_local_unvalidated_character_root_resolver` below, which fails
+    // hard if a local duplicate is ever reintroduced.
+    let root = crate::character_hub::resolve_character_root(&app, &request.character_id)?;
     Ok(recompute_character_via_rule_system(
         &request.rule_system_id,
         &root,
@@ -554,5 +543,45 @@ mod tests {
         );
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-36 Epic E desktop-P1-01 (review-caught bypass): this module used to define its OWN
+    /// private `resolve_character_root` that joined a client-supplied `character_id` onto the
+    /// characters root with NO call to `character_hub::validate_character_id` at all -- a
+    /// `character_id` of `"../../.."` escaped the characters root on the `recompute_character`
+    /// command specifically, even though `character_hub::resolve_character_root` was already
+    /// the validated choke point for every other character-scoped command. Fixed by deleting
+    /// the duplicate and delegating the Tauri command straight to
+    /// `crate::character_hub::resolve_character_root`. Source-grepped, not just "we didn't
+    /// call it", so a reintroduced duplicate fails this exact assertion the moment it is
+    /// typed -- the same technique `scripts/pcgen_residue_gate.py` and the wired-integration
+    /// audit already use elsewhere in this repo (a warning is not a control; AGENTS.md rule 8).
+    #[test]
+    fn this_module_defines_no_local_unvalidated_character_root_resolver() {
+        let source = include_str!("recomputeCharacter.rs");
+        // Assembled at runtime, deliberately, and never spelled out as one contiguous
+        // literal anywhere else in this file (including this comment): the marker below
+        // must not appear anywhere in this very file's own source, or the self-check
+        // would trivially fail forever by matching its own definition.
+        let fn_keyword = "fn ";
+        let resolver_name = "resolve_character_root";
+        let local_definition_marker = format!("{fn_keyword}{resolver_name}");
+        assert!(
+            !source.contains(&local_definition_marker),
+            "this module must not define its own character-root resolver -- delegate to \
+             crate::character_hub's validated choke point instead"
+        );
+    }
+
+    /// The validator `crate::character_hub::resolve_character_root` now runs on this
+    /// command's path is reachable and behaves as documented -- mirrors
+    /// `character_hub.rs`'s own `resolve_character_root_rejects_a_traversal_id_before_
+    /// touching_the_filesystem` test, which notes the same AppHandle-in-a-unit-test
+    /// limitation: the guard runs and returns `Err` before the handle-dependent app-data-dir
+    /// lookup is ever reached.
+    #[test]
+    fn the_shared_validator_this_command_now_delegates_to_rejects_traversal() {
+        assert!(crate::character_hub::validate_character_id("../../elsewhere").is_err());
+        assert!(crate::character_hub::validate_character_id("plain-uuid-1234").is_ok());
     }
 }

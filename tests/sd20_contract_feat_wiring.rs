@@ -54,7 +54,7 @@ use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
 fn empty_corpus(name: &str) -> SourcePackageContent<'static> {
     let source_ref = SourceRef {
-        lst_file: name.to_string(),
+        source_path: name.to_string(),
         line: 1,
     };
     SourcePackageContent::empty(name.to_string(), source_ref)

@@ -475,6 +475,32 @@ class TestFigureProvenanceGate(unittest.TestCase):
         finally:
             os.unlink(path)
 
+    def test_retired_script_citation_is_not_a_violation(self):
+        # SD-36 D3: a receipt written before shape_engine_boundary.py was
+        # retired correctly named a real, resolvable script at the time.
+        # Retiring the tool later must not retroactively fail that citation.
+        text = (
+            self.FIGURES_HEADER
+            + "  - magnitude-bearing units: **26,396** -- "
+              "`python3 scripts/shape_engine_boundary.py --check`\n"
+            + self.NEXT_FIELD
+        )
+        self.assertEqual(dg.find_provenance_violations(text, source="fixture.md"), [])
+
+    def test_retired_script_registry_does_not_widen_reachability_generally(self):
+        # A path NOT on the retired-script registry must still fail --
+        # the registry only narrows what "unresolvable" catches for its
+        # own reviewed entries, never a blanket exemption.
+        text = (
+            self.FIGURES_HEADER
+            + "  - The corpus holds **49,438** units -- "
+              "`python3 scripts/does_not_exist_anywhere.py --check`\n"
+            + self.NEXT_FIELD
+        )
+        violations = dg.find_provenance_violations(text, source="fixture.md")
+        self.assertEqual(len(violations), 1)
+        self.assertEqual(violations[0]["reason"], "unresolvable")
+
     def test_missing_explicit_path_exits_2(self):
         out = io.StringIO()
         status = dg.run_provenance_check(

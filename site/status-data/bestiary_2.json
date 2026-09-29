@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 21,
+      "done": 28,
       "partial": 0,
       "not_started": 0,
-      "denominator": 21,
+      "denominator": 28,
       "pct": 100.0,
-      "excluded_from_percentage": 7,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 21,
         "unclassified": 7
@@ -217,11 +217,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 10,
-      "partial": 6,
+      "done": 16,
+      "partial": 0,
       "not_started": 0,
       "denominator": 16,
-      "pct": 62.5,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 16
@@ -229,21 +229,21 @@
       "items": [
         {
           "name": "Familiar (Arbiter)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin",
           "display_name": "Familiar (Arbiter)"
         },
         {
           "name": "Familiar (Brownie)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Fey",
           "standing": "origin",
           "display_name": "Familiar (Brownie)"
         },
         {
           "name": "Familiar (Cacodaemon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin",
           "display_name": "Familiar (Cacodaemon)"
@@ -299,14 +299,14 @@
         },
         {
           "name": "Familiar (Lyrakien)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin",
           "display_name": "Familiar (Lyrakien)"
         },
         {
           "name": "Familiar (Paracletus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin",
           "display_name": "Familiar (Paracletus)"
@@ -327,7 +327,7 @@
         },
         {
           "name": "Familiar (Voidworm)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar.Outsider",
           "standing": "origin",
           "display_name": "Familiar (Voidworm)"
@@ -344,12 +344,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 5,
+      "done": 7,
       "partial": 0,
       "not_started": 0,
-      "denominator": 5,
+      "denominator": 7,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 5,
         "unclassified": 2
@@ -409,12 +409,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 5,
+      "done": 6,
       "partial": 0,
       "not_started": 0,
-      "denominator": 5,
+      "denominator": 6,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 1,
         "origin": 5
@@ -467,12 +467,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 306,
-      "partial": 80,
+      "done": 667,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 386,
-      "pct": 79.3,
-      "excluded_from_percentage": 281,
+      "denominator": 667,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 281,
         "origin": 386
@@ -620,14 +620,14 @@
         },
         {
           "name": "Aging Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Aging Strike"
         },
         {
           "name": "Air Walk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.ModifyMovement",
           "standing": "origin",
           "display_name": "Air Walk"
@@ -683,14 +683,14 @@
         },
         {
           "name": "Arcane Sight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin",
           "display_name": "Arcane Sight"
         },
         {
           "name": "Armored Stomach",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Armored Stomach"
@@ -718,21 +718,21 @@
         },
         {
           "name": "Aura of Courage/Fear Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Spellike.Aura.EmotiveDuality",
           "standing": "origin",
           "display_name": "Aura of Courage/Fear Aura"
         },
         {
           "name": "Aura of Empathy/Apathy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Spellike.Aura.EmotiveDuality",
           "standing": "origin",
           "display_name": "Aura of Empathy/Apathy"
         },
         {
           "name": "Aura of Hope/Despair",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Spellike.Aura.EmotiveDuality",
           "standing": "origin",
           "display_name": "Aura of Hope/Despair"
@@ -795,7 +795,7 @@
         },
         {
           "name": "Black Cloud",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Black Cloud"
@@ -844,7 +844,7 @@
         },
         {
           "name": "Blink",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Blink"
@@ -886,14 +886,14 @@
         },
         {
           "name": "Blood Siphon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Blood Siphon"
         },
         {
           "name": "Blur",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Blur"
@@ -1019,7 +1019,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural) #13"
@@ -1201,7 +1201,7 @@
         },
         {
           "name": "Change Shape",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural) #8"
@@ -1243,7 +1243,7 @@
         },
         {
           "name": "Channel Energy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Channel Energy"
@@ -1278,28 +1278,28 @@
         },
         {
           "name": "Cloak of Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Cloak of Chaos"
         },
         {
           "name": "Cloud Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Cloud Breath"
         },
         {
           "name": "Cloud Form",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Cloud Form"
         },
         {
           "name": "Coalesce Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Coalesce Chaos"
@@ -1474,14 +1474,14 @@
         },
         {
           "name": "Confusion Gaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Confusion Gaze"
         },
         {
           "name": "Constrict",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Constrict"
@@ -1523,7 +1523,7 @@
         },
         {
           "name": "Create Shadows",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Create Shadows"
@@ -1537,7 +1537,7 @@
         },
         {
           "name": "Critical Hits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Critical Hits"
@@ -1558,7 +1558,7 @@
         },
         {
           "name": "Cunning Reflexes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Cunning Reflexes"
@@ -1684,7 +1684,7 @@
         },
         {
           "name": "Deathwatch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin",
           "display_name": "Deathwatch"
@@ -1719,70 +1719,70 @@
         },
         {
           "name": "Destructive Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Destructive Strike"
         },
         {
           "name": "Detect Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin",
           "display_name": "Detect Chaos"
         },
         {
           "name": "Detect Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified",
           "display_name": "Detect Evil"
         },
         {
           "name": "Detect Good",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified",
           "display_name": "Detect Good"
         },
         {
           "name": "Detect Law",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin",
           "display_name": "Detect Law"
         },
         {
           "name": "Detect Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified",
           "display_name": "Detect Magic"
         },
         {
           "name": "Detect Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin",
           "display_name": "Detect Poison"
         },
         {
           "name": "Detect Snares and Pits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin",
           "display_name": "Detect Snares and Pits"
         },
         {
           "name": "Detect Thoughts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "unclassified",
           "display_name": "Detect Thoughts (SpecialQuality.SpellLike.Sense)"
         },
         {
           "name": "Detect Thoughts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sense.Spelllike",
           "standing": "unclassified",
           "display_name": "Detect Thoughts (Sense.Spelllike)"
@@ -1817,7 +1817,7 @@
         },
         {
           "name": "Discern Lies",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Communicate",
           "standing": "origin",
           "display_name": "Discern Lies"
@@ -1873,7 +1873,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Disease (SpecialAttack.Extraordinary) #7"
@@ -1901,7 +1901,7 @@
         },
         {
           "name": "Divine Insight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Divine Insight"
@@ -1964,7 +1964,7 @@
         },
         {
           "name": "Earthquake",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Earthquake"
@@ -2090,7 +2090,7 @@
         },
         {
           "name": "Entrap",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Entrap (SpecialAttack.Extraordinary)"
@@ -2111,7 +2111,7 @@
         },
         {
           "name": "Entropic Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Entropic Shield"
@@ -2146,7 +2146,7 @@
         },
         {
           "name": "Extension of All",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Extension of All"
@@ -2181,7 +2181,7 @@
         },
         {
           "name": "Fate Drain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Fate Drain"
@@ -2258,7 +2258,7 @@
         },
         {
           "name": "Fire Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Fire Shield"
@@ -2272,7 +2272,7 @@
         },
         {
           "name": "Fists of Lightning and Thunder",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Fists of Lightning and Thunder"
@@ -2286,7 +2286,7 @@
         },
         {
           "name": "Floating Disk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Floating Disk"
@@ -2300,7 +2300,7 @@
         },
         {
           "name": "Fly",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Fly"
@@ -2321,7 +2321,7 @@
         },
         {
           "name": "Foresight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Foresight"
@@ -2335,7 +2335,7 @@
         },
         {
           "name": "Freedom of Movement",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Defensive",
           "standing": "unclassified",
           "display_name": "Freedom of Movement"
@@ -2524,7 +2524,7 @@
         },
         {
           "name": "Grind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Grind"
@@ -2587,21 +2587,21 @@
         },
         {
           "name": "Hide from Undead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Hide from Undead"
         },
         {
           "name": "Hold Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Hold Breath"
         },
         {
           "name": "Holy Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Aura",
           "standing": "origin",
           "display_name": "Holy Aura"
@@ -2825,7 +2825,7 @@
         },
         {
           "name": "Know Direction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Know Direction"
@@ -2853,7 +2853,7 @@
         },
         {
           "name": "Lava Puddle",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Lava Puddle"
@@ -2909,7 +2909,7 @@
         },
         {
           "name": "Mage Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Mage Armor"
@@ -2923,7 +2923,7 @@
         },
         {
           "name": "Magic Fang",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "origin",
           "display_name": "Magic Fang"
@@ -3063,7 +3063,7 @@
         },
         {
           "name": "Nondetection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Nondetection"
@@ -3133,7 +3133,7 @@
         },
         {
           "name": "Painful Strikes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Painful Strikes"
@@ -3175,7 +3175,7 @@
         },
         {
           "name": "Pass without Trace",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Pass without Trace"
@@ -3196,7 +3196,7 @@
         },
         {
           "name": "Perfect Prediction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Perfect Prediction"
@@ -3567,7 +3567,7 @@
         },
         {
           "name": "Poison (Vile Disjunction)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Poison (Vile Disjunction)"
@@ -3602,7 +3602,7 @@
         },
         {
           "name": "Powerful Bite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Powerful Bite"
@@ -3644,14 +3644,14 @@
         },
         {
           "name": "Radiant Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Radiant Armor"
         },
         {
           "name": "Rake",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Rake"
@@ -3679,7 +3679,7 @@
         },
         {
           "name": "Reason to Hate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Reason to Hate"
@@ -3756,7 +3756,7 @@
         },
         {
           "name": "Rend",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Rend"
@@ -3770,14 +3770,14 @@
         },
         {
           "name": "Reshape Reality",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "origin",
           "display_name": "Reshape Reality"
         },
         {
           "name": "Resist Energy (one at a time)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Resist Energy (one at a time)"
@@ -3833,7 +3833,7 @@
         },
         {
           "name": "Runes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Runes"
@@ -3847,7 +3847,7 @@
         },
         {
           "name": "Savage Bite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Savage Bite"
@@ -3889,7 +3889,7 @@
         },
         {
           "name": "See Invisibility",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin",
           "display_name": "See Invisibility"
@@ -3917,14 +3917,14 @@
         },
         {
           "name": "Sense Murderer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sense.Supernatural",
           "standing": "origin",
           "display_name": "Sense Murderer"
         },
         {
           "name": "Shadow Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Shadow Breath"
@@ -3945,7 +3945,7 @@
         },
         {
           "name": "Shard Spike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Shard Spike"
@@ -3980,7 +3980,7 @@
         },
         {
           "name": "Shillelagh",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Shillelagh"
@@ -4015,7 +4015,7 @@
         },
         {
           "name": "Siren Song",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Siren Song"
@@ -4085,21 +4085,21 @@
         },
         {
           "name": "Smite Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Smite Chaos"
         },
         {
           "name": "Smite Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Smite Evil"
         },
         {
           "name": "Smite Law",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Smite Law"
@@ -4127,7 +4127,7 @@
         },
         {
           "name": "Solid Blow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Solid Blow"
@@ -4148,7 +4148,7 @@
         },
         {
           "name": "Soul Consumption",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Soul Consumption"
@@ -4183,7 +4183,7 @@
         },
         {
           "name": "Soul Lock",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Soul Lock"
@@ -4197,7 +4197,7 @@
         },
         {
           "name": "Soul Siphoning",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Soul Siphoning"
@@ -4232,14 +4232,14 @@
         },
         {
           "name": "Spark Shower",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Spark Shower"
         },
         {
           "name": "Speak with Plants",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Communicate",
           "standing": "origin",
           "display_name": "Speak with Plants"
@@ -4302,7 +4302,7 @@
         },
         {
           "name": "Spell Turning",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Spell Turning"
@@ -4323,21 +4323,21 @@
         },
         {
           "name": "Sphere of Creation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sphere of Creation"
         },
         {
           "name": "Sphere of Oblivion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sphere of Oblivion"
         },
         {
           "name": "Spider Climb",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spider Climb"
@@ -4372,14 +4372,14 @@
         },
         {
           "name": "Split",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Split"
         },
         {
           "name": "Spore Cloud",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Aura.Supernatural",
           "standing": "unclassified",
           "display_name": "Spore Cloud"
@@ -4582,7 +4582,7 @@
         },
         {
           "name": "Swallow Whole",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Swallow Whole"
@@ -4596,7 +4596,7 @@
         },
         {
           "name": "Swift Claw",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Swift Claw"
@@ -4652,7 +4652,7 @@
         },
         {
           "name": "Temporal Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Temporal Strike"
@@ -4666,7 +4666,7 @@
         },
         {
           "name": "Tentacle Cage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Tentacle Cage"
@@ -4701,7 +4701,7 @@
         },
         {
           "name": "The Damned",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Petitioner",
           "standing": "origin",
           "display_name": "The Damned"
@@ -4736,7 +4736,7 @@
         },
         {
           "name": "The Shapeless",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Petitioner",
           "standing": "origin",
           "display_name": "The Shapeless"
@@ -4771,7 +4771,7 @@
         },
         {
           "name": "Tongues",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Communicate",
           "standing": "origin",
           "display_name": "Tongues"
@@ -4827,7 +4827,7 @@
         },
         {
           "name": "True Seeing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Sense",
           "standing": "origin",
           "display_name": "True Seeing"
@@ -4855,14 +4855,14 @@
         },
         {
           "name": "Unearthly Grace",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Unearthly Grace"
         },
         {
           "name": "Unholy Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Aura",
           "standing": "origin",
           "display_name": "Unholy Aura"
@@ -4876,7 +4876,7 @@
         },
         {
           "name": "Unseen Servant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Unseen Servant"
@@ -4932,7 +4932,7 @@
         },
         {
           "name": "Void Form",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Void Form"
@@ -4995,7 +4995,7 @@
         },
         {
           "name": "Water Breathing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Water Breathing"
@@ -5016,7 +5016,7 @@
         },
         {
           "name": "Water Dependency",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Water Dependency (SpecialQuality.Extraordinary) #3"
@@ -5030,7 +5030,7 @@
         },
         {
           "name": "Water Walk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.ModifyMovement",
           "standing": "unclassified",
           "display_name": "Water Walk"
@@ -5058,7 +5058,7 @@
         },
         {
           "name": "Wendigo Psychosis",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Wendigo Psychosis"
@@ -5135,7 +5135,7 @@
         },
         {
           "name": "Wreath of Fate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Wreath of Fate"
@@ -5152,11 +5152,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 218,
-      "partial": 98,
+      "done": 316,
+      "partial": 0,
       "not_started": 0,
       "denominator": 316,
-      "pct": 69.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 316
@@ -5192,7 +5192,7 @@
         },
         {
           "name": "Aeon (Pleroma)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Aeon (Pleroma)"
@@ -5255,14 +5255,14 @@
         },
         {
           "name": "Amoeba (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Amoeba (Giant)"
         },
         {
           "name": "Amoeba Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Amoeba Swarm"
@@ -5276,7 +5276,7 @@
         },
         {
           "name": "Angel (Cassisian)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Angel (Cassisian)"
@@ -5332,7 +5332,7 @@
         },
         {
           "name": "Attic Whisperer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Attic Whisperer"
@@ -5395,42 +5395,42 @@
         },
         {
           "name": "Bat (Mobat)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bat (Mobat)"
         },
         {
           "name": "Bat (Skaveling)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bat (Skaveling)"
         },
         {
           "name": "Bee (Giant Queen)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bee (Giant Queen)"
         },
         {
           "name": "Bee (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bee (Giant)"
         },
         {
           "name": "Beetle (Goliath Stag)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beetle (Goliath Stag)"
         },
         {
           "name": "Beetle (Slicer)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beetle (Slicer)"
@@ -5472,21 +5472,21 @@
         },
         {
           "name": "Bumblebee (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bumblebee (Giant)"
         },
         {
           "name": "Bunyip",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bunyip"
         },
         {
           "name": "Carnivorous Blob",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Carnivorous Blob"
@@ -5528,63 +5528,63 @@
         },
         {
           "name": "Cockroach (Dragonroach)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cockroach (Dragonroach)"
         },
         {
           "name": "Cockroach (Giant Hissing)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cockroach (Giant Hissing)"
         },
         {
           "name": "Cockroach (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cockroach (Giant)"
         },
         {
           "name": "Cockroach (Sawback)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cockroach (Sawback)"
         },
         {
           "name": "Cockroach (Spitting)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cockroach (Spitting)"
         },
         {
           "name": "Cockroach (Venomroach)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cockroach (Venomroach)"
         },
         {
           "name": "Cockroach Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cockroach Swarm"
         },
         {
           "name": "Crawling Hand",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crawling Hand"
         },
         {
           "name": "Crawling Hand (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crawling Hand (Giant)"
@@ -5598,7 +5598,7 @@
         },
         {
           "name": "Crysmal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crysmal"
@@ -5710,14 +5710,14 @@
         },
         {
           "name": "Death Worm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Death Worm"
         },
         {
           "name": "Decapus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Decapus"
@@ -5794,7 +5794,7 @@
         },
         {
           "name": "Devilfish",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devilfish"
@@ -5815,14 +5815,14 @@
         },
         {
           "name": "Dinosaur (Parasaurolophus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dinosaur (Parasaurolophus)"
         },
         {
           "name": "Dinosaur (Tylosaurus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dinosaur (Tylosaurus)"
@@ -5871,14 +5871,14 @@
         },
         {
           "name": "Dragonfly (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dragonfly (Giant)"
         },
         {
           "name": "Dragonfly Nymph (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dragonfly Nymph (Giant)"
@@ -5913,14 +5913,14 @@
         },
         {
           "name": "Draugr",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Draugr"
         },
         {
           "name": "Draugr Captain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Draugr Captain"
@@ -5941,7 +5941,7 @@
         },
         {
           "name": "Dust Digger",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dust Digger"
@@ -5976,14 +5976,14 @@
         },
         {
           "name": "Elemental (Ice/Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Ice/Medium)"
         },
         {
           "name": "Elemental (Ice/Small)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Ice/Small)"
@@ -6018,14 +6018,14 @@
         },
         {
           "name": "Elemental (Lightning/Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Lightning/Medium)"
         },
         {
           "name": "Elemental (Lightning/Small)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Lightning/Small)"
@@ -6060,14 +6060,14 @@
         },
         {
           "name": "Elemental (Magma/Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Magma/Medium)"
         },
         {
           "name": "Elemental (Magma/Small)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Magma/Small)"
@@ -6102,14 +6102,14 @@
         },
         {
           "name": "Elemental (Mud/Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Mud/Medium)"
         },
         {
           "name": "Elemental (Mud/Small)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Mud/Small)"
@@ -6123,7 +6123,7 @@
         },
         {
           "name": "Fly (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fly (Giant)"
@@ -6137,7 +6137,7 @@
         },
         {
           "name": "Frost Worm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Frost Worm"
@@ -6151,14 +6151,14 @@
         },
         {
           "name": "Gar",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gar"
         },
         {
           "name": "Gar (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gar (Giant)"
@@ -6207,7 +6207,7 @@
         },
         {
           "name": "Golem (Adamantine)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Golem (Adamantine)"
@@ -6249,7 +6249,7 @@
         },
         {
           "name": "Gray Render",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gray Render"
@@ -6305,14 +6305,14 @@
         },
         {
           "name": "Gryph",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gryph"
         },
         {
           "name": "Gug",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gug"
@@ -6326,7 +6326,7 @@
         },
         {
           "name": "Hangman Tree",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hangman Tree"
@@ -6340,14 +6340,14 @@
         },
         {
           "name": "Herd Animal (Camel)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Herd Animal (Camel)"
         },
         {
           "name": "Herd Animal (Ram)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Herd Animal (Ram)"
@@ -6375,14 +6375,14 @@
         },
         {
           "name": "Hippopotamus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hippopotamus"
         },
         {
           "name": "Hippopotamus (Behemoth)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hippopotamus (Behemoth)"
@@ -6410,7 +6410,7 @@
         },
         {
           "name": "Inevitable (Kolyarut)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inevitable (Kolyarut)"
@@ -6438,14 +6438,14 @@
         },
         {
           "name": "Jabberwock",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Jabberwock"
         },
         {
           "name": "Jabberwock (Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Jabberwock (Lesser)"
@@ -6494,7 +6494,7 @@
         },
         {
           "name": "Jellyfish Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Jellyfish Swarm"
@@ -6557,7 +6557,7 @@
         },
         {
           "name": "Leucrotta (Crocotta)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Leucrotta (Crocotta)"
@@ -6578,14 +6578,14 @@
         },
         {
           "name": "Maggot (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Maggot (Giant)"
         },
         {
           "name": "Magma Ooze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Magma Ooze"
@@ -6606,35 +6606,35 @@
         },
         {
           "name": "Megafauna (Arsinoitherium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Megafauna (Arsinoitherium)"
         },
         {
           "name": "Megafauna (Gylptodon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Megafauna (Gylptodon)"
         },
         {
           "name": "Megafauna (Megaloceros)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Megafauna (Megaloceros)"
         },
         {
           "name": "Megafauna (Megatherium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Megafauna (Megatherium)"
         },
         {
           "name": "Mercane",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mercane"
@@ -6662,7 +6662,7 @@
         },
         {
           "name": "Mongrelman",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mongrelman"
@@ -6676,14 +6676,14 @@
         },
         {
           "name": "Mosquito (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mosquito (Giant)"
         },
         {
           "name": "Mosquito Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mosquito Swarm"
@@ -6697,28 +6697,28 @@
         },
         {
           "name": "Mu Spore",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mu Spore"
         },
         {
           "name": "Necrophidius",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Necrophidius"
         },
         {
           "name": "Neh-Thalggu",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Neh-Thalggu"
         },
         {
           "name": "Nereid",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nereid"
@@ -6795,7 +6795,7 @@
         },
         {
           "name": "Primate (Monkey Swarm)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Primate (Monkey Swarm)"
@@ -6858,7 +6858,7 @@
         },
         {
           "name": "Qlippoth (Nyogoth)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Qlippoth (Nyogoth)"
@@ -6900,14 +6900,14 @@
         },
         {
           "name": "Ray (Manta)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ray (Manta)"
         },
         {
           "name": "Ray (Stingray)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ray (Stingray)"
@@ -6928,14 +6928,14 @@
         },
         {
           "name": "Revenant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Revenant"
         },
         {
           "name": "Sandman",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sandman"
@@ -6977,7 +6977,7 @@
         },
         {
           "name": "Serpentfolk (Degenerate)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Serpentfolk (Degenerate)"
@@ -6998,7 +6998,7 @@
         },
         {
           "name": "Shining Child",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shining Child"
@@ -7068,49 +7068,49 @@
         },
         {
           "name": "Slime Mold",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Slime Mold"
         },
         {
           "name": "Slithering Tracker",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Slithering Tracker"
         },
         {
           "name": "Slurk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Slurk"
         },
         {
           "name": "Snake (Emperor Cobra)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Snake (Emperor Cobra)"
         },
         {
           "name": "Snake (Giant Anaconda)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Snake (Giant Anaconda)"
         },
         {
           "name": "Solifugid (Albino Cave)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Solifugid (Albino Cave)"
         },
         {
           "name": "Solifugid (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Solifugid (Giant)"
@@ -7131,7 +7131,7 @@
         },
         {
           "name": "Spider (Giant Black Widow)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spider (Giant Black Widow)"
@@ -7152,7 +7152,7 @@
         },
         {
           "name": "Tenebrous Worm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Tenebrous Worm"
@@ -7194,7 +7194,7 @@
         },
         {
           "name": "Tick Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Tick Swarm"
@@ -7215,14 +7215,14 @@
         },
         {
           "name": "Toad (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Toad (Giant)"
         },
         {
           "name": "Toad (Glacier)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Toad (Glacier)"
@@ -7243,7 +7243,7 @@
         },
         {
           "name": "Troll (Ice)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Troll (Ice)"
@@ -7257,7 +7257,7 @@
         },
         {
           "name": "Turtle (Giant Snapping)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Turtle (Giant Snapping)"
@@ -7299,7 +7299,7 @@
         },
         {
           "name": "Viper Vine",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Viper Vine"
@@ -7341,7 +7341,7 @@
         },
         {
           "name": "Witchfire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Witchfire"
@@ -7379,12 +7379,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 164,
+      "done": 243,
       "partial": 0,
       "not_started": 0,
-      "denominator": 164,
+      "denominator": 243,
       "pct": 100.0,
-      "excluded_from_percentage": 79,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 79,
         "origin": 164
@@ -9175,12 +9175,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 147,
+      "done": 149,
       "partial": 0,
       "not_started": 0,
-      "denominator": 147,
+      "denominator": 149,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 147,
         "unclassified": 2

@@ -1,0 +1,33 @@
+# F3c RED evidence (2026-09-24, sd36/epic-f2-f3)
+
+## 1. Census before the chooser change (f7f1488ecf): cargo run --locked -j 8 --bin class_census -- --json <scratch>/census-f3c-0.json
+ids=137 computed=61 blocked=2
+prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=59 prestige_mix_unknown=11
+mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0
+EXIT=0
+
+## 2. Carrier pins after the chooser change, before re-pinning (old pins 7 wizard / 11 ungroundable fail by number)
+thread 'rules_core::class_census::tests::prestige_carrier_distribution_is_measured_and_printed' (1055644) panicked at src/rules_core/class_census.rs:2650:9:
+  left: 15
+ right: 7
+test rules_core::class_census::tests::prestige_carrier_distribution_is_measured_and_printed ... FAILED
+test rules_core::class_census::tests::prestige_carrier_is_deterministic ... ok
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 2724 filtered out; finished in 4.06s
+test rules_core::class_census::tests::every_prestige_class_gets_a_carrier_or_is_named_unknown ... FAILED
+thread 'rules_core::class_census::tests::every_prestige_class_gets_a_carrier_or_is_named_unknown' (1055679) panicked at src/rules_core/class_census.rs:2440:9:
+  left: 1
+ right: 11
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2725 filtered out; finished in 3.90s
+test rules_core::class_census::tests::a_prestige_row_referencing_caster_level_names_a_caster_carrier_or_reports_unknown ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2725 filtered out; finished in 4.05s
+test rules_core::class_census::tests::carrier_rule_is_pure_over_synthetic_gates ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2725 filtered out; finished in 0.00s
+
+## 3. Baseline checker: new prestige_mix_computed tests before the checker change (python3 scripts/tests/test_check_class_census_baselines.py)
+ERROR: test_main_exits_one_on_unparseable_json (__main__.MainCliTests.test_main_exits_one_on_unparseable_json)
+ERROR: test_main_exits_one_when_prestige_alone_blocked_drops (__main__.MainCliTests.test_main_exits_one_when_prestige_alone_blocked_drops)
+ERROR: test_main_exits_zero_and_prints_actuals_when_all_baselines_met (__main__.MainCliTests.test_main_exits_zero_and_prints_actuals_when_all_baselines_met)
+FAIL: test_missing_prestige_mix_computed_raises_keyerror (__main__.CheckTests.test_missing_prestige_mix_computed_raises_keyerror)
+FAIL: test_prestige_mix_computed_drop_by_one_fails_by_name (__main__.CheckTests.test_prestige_mix_computed_drop_by_one_fails_by_name)
+Ran 15 tests in 0.013s
+FAILED (failures=2, errors=3)

@@ -64,10 +64,8 @@
 use codex::rules_core::pilot_compute::{
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
+use crate::rows::{multiclass_negative_controls, recognition_negative_controls};
 
 const BARBARIAN_LEVEL3_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_barbarian_level3_sd13_deterministic_input.txt"
@@ -321,50 +319,6 @@ fn barbarian_level_5_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the barbarian path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_barbarian_level4_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.barbarian.")
-                || e.id == BARBARIAN_UNCANNY_DODGE_ID
-                || e.id == BARBARIAN_TRAP_SENSE_ID),
-        "the Fighter chassis must not surface any barbarian-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
-// ----- Negative control: multiclass Barbarian is not promoted -----
-
-#[test]
-fn multiclass_barbarian_level4_is_not_promoted_by_this_slice() {
-    let multiclass = BARBARIAN_LEVEL4_FIXTURE.replace(
-        "class_level=class:barbarian:4",
-        "class_level=class:barbarian:4\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.barbarian.")
-                || e.id == BARBARIAN_UNCANNY_DODGE_ID
-                || e.id == BARBARIAN_TRAP_SENSE_ID),
-        "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Barbarian must stay claim-blocked in this slice"
-    );
-}
-
 // ----- Barbarian level 1/level 2/level 3 stays unchanged -----
 
 #[test]
@@ -387,41 +341,21 @@ fn barbarian_level3_truth_is_unchanged_by_the_level4_widening() {
 
 // ----- Control plane: the matrix note names the level-4 widening -----
 
-#[test]
-fn matrix_barbarian_row_names_level_4_widening() {
-    let matrix = seeded_current_truth();
-    let barbarian = matrix
-        .row("class.barbarian.bounded_progression")
-        .expect("barbarian bounded_progression row must exist");
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
 
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(barbarian.support_state, SupportState::Supported);
-    assert_eq!(barbarian.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        barbarian.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        barbarian
-            .grounding_ref
-            .contains("sd13_barbarian_level4_progression"),
-        "barbarian row must cite the live SD13-E5 level-4 proof surface: {}",
-        barbarian.grounding_ref
-    );
-    let note = barbarian.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 4") || note.contains("level-4"),
-        "barbarian partial note must name the level-4 widening: {note}"
-    );
-    assert!(
-        note.contains("rage execution") || note.contains("rage-state execution"),
-        "barbarian partial note must keep naming the rage-state execution engine as unproven: \
-         {note}"
-    );
-    assert!(
-        note.to_lowercase().contains("rage power"),
-        "barbarian partial note must keep naming the Rage Power choice-list feature as \
-         unproven: {note}"
-    );
+recognition_negative_controls! {
+    fighter_does_not_gain_barbarian_level4_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.barbarian."],
+        exact: [BARBARIAN_UNCANNY_DODGE_ID, BARBARIAN_TRAP_SENSE_ID],
+        message: "the Fighter chassis must not surface any barbarian-namespaced explanation: {:?}",
+    },
 }
+
+multiclass_negative_controls! {
+    multiclass_barbarian_level4_is_not_promoted_by_this_slice(BARBARIAN_LEVEL4_FIXTURE, "class_level=class:barbarian:4" => "class_level=class:barbarian:4\nclass_level=class:fighter:1") {
+        prefixes: ["class_chassis.barbarian."],
+        exact: [BARBARIAN_UNCANNY_DODGE_ID, BARBARIAN_TRAP_SENSE_ID],
+        message: "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+    },
+}
+

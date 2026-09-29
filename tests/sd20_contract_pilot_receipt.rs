@@ -29,7 +29,7 @@ use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
 fn empty_corpus() -> SourcePackageContent<'static> {
     let source_ref = SourceRef {
-        lst_file: "sd20_contract_pilot_receipt".to_string(),
+        source_path: "sd20_contract_pilot_receipt".to_string(),
         line: 1,
     };
     SourcePackageContent::empty("sd20_contract_pilot_receipt", source_ref)

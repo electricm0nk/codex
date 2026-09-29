@@ -1,0 +1,31 @@
+control (unmodified): exit=0 verdict=PASS
+M1 Draconic's pick option loses its Choice(Standard Bloodline) edge: exit=1 verdict=FAIL (F3c4b pin failures: 1)
+    F3c4b core_rulebook:pool_option:sorcerer_bloodline_draconic_bloodline: content moved from its pinned sha256
+M2 the Draconic option -> Sorcerer Bloodline ~ Draconic edge dropped: exit=1 verdict=FAIL (F3c4b pin failures: 1)
+    F3c4b pinned granted_by edge missing on core_rulebook:class_feature:sorcerer_bloodline_draconic: {"by": {"Rule": "core_rulebook:pool_option:sorcerer_bloodline_draconic_bloodline"}, "when": "Always"}
+M3 Draconic's BloodlineClassSkill1 contribution dropped: exit=1 verdict=FAIL (F3c4b pin failures: 1)
+    F3c4b pinned contribution missing in _vars/v763e68437947d610.json: {"expr": {"Min": [{"Min": [{"Const": 1}, {"Max": [{"Const": 0}, {"Sum": [{"Var": "vc5a64d08bb055964"}, {"Const": 1}]}]}]}, {"Sum": [{"Const": 1}, {"Mul": [{"Const": -1}, {"Min": [{"Const": 1}, {"Max": [{"Const": 0}, {"Sum": [{"Var": "vc5a64d08bb055964"}, {"Const": -1}, {"Const": 1}]}]}]}]}]}]}, "rule_id": "core_rulebook:pool_option:sorcerer_bloodline_draconic_bloodline", "when": "Always"}
+M4 one pool-option-unconverted row dropped: exit=1 verdict=FAIL (F3c4b pin failures: 1)
+    F3c4b _defects/pool-option-unconverted.json: 1 rows, pinned 2
+M5 an unpinned pool option planted: exit=1 verdict=FAIL (F3c4b pin failures: 1)
+    F3c4b unpinned f3c4b_pool_option rule core_rulebook:pool_option:sorcerer_bloodline_planted
+M6 Draconic's option moved out of the sorcerer_bloodline pool (content sha): exit=1 verdict=FAIL (F3c4b pin failures: 1)
+    F3c4b core_rulebook:pool_option:sorcerer_bloodline_draconic_bloodline: content moved from its pinned sha256
+M7 the Standard Bloodline -> Bloodline Tracker edge dropped: exit=1 verdict=FAIL (F3c4b pin failures: 3)
+    F3c4b pinned granted_by edge missing on core_rulebook:class_feature:bloodline_tracker: {"by": {"Rule": "core_rulebook:class_feature:dragon_disciple_draconic_bloodline"}, "when": "Always"}
+    F3c4b pinned granted_by edge missing on core_rulebook:class_feature:bloodline_tracker: {"by": {"Rule": "core_rulebook:class_feature:sorcerer_standard_bloodline"}, "when": "Always"}
+    F3c4b pinned granted_by edge missing on core_rulebook:class_feature:bloodline_tracker: {"by": {"Rule": "ultimate_magic:class_feature:crossblooded_crossblooded_bloodline"}, "when": "Always"}
+M8 Power Attack (Flurry)'s replacement edges dropped (the replaced fallback edge is then a removal): exit=1 verdict=FAIL (removed granted_by edges: 2; F3c4b pin failures: 1)
+    removed granted_by edges: 2  (never allowed -- SS3.5 permits growth only)
+    F3c4b core_rulebook:pool_option:feat_power_attack_flurry: content moved from its pinned sha256
+    verdict=FAIL (removed granted_by edges: 2; F3c4b pin failures: 1)
+M9 a pinned MissingRule -> Rule gate delta replaced by a different value: exit=1 verdict=FAIL (unexpected field deltas: 1; F3c4b pin failures: 1)
+    unexpected field deltas: 1
+    F3c4b pinned f3c4b_gate_term_resolves field delta withdrawn or moved: advanced_class_guide:ability:aberrant_bloodline: applies
+M10 a pinned closure_complete attestation withdrawn: exit=1 verdict=FAIL (F3c4b pin failures: 1)
+    F3c4b pinned f3c4b_closure_complete field delta withdrawn or moved: core_rulebook:class:expert: closure_complete
+M11 every core_rulebook pool option deleted: exit=1 verdict=FAIL (removed granted_by edges: 6; F3c4b pin failures: 42)
+    removed granted_by edges: 6  (never allowed -- SS3.5 permits growth only)
+    F3c4b pinned f3c4b_pool_option rule missing: core_rulebook:pool_option:feat_power_attack_flurry
+    F3c4b pinned f3c4b_pool_option rule missing: core_rulebook:pool_option:feat_power_attack_flurry#bonus0
+control (restored): exit=0 verdict=PASS

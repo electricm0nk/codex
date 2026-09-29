@@ -1,0 +1,128 @@
+[
+  {
+    "id": "sheet-f7c-expert-skills-default-picks",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f7/docs/release/SD-36-consolidation/artifacts/ui-smoke/f7/f7c/sheet-f7c-expert-skills-default-picks.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF7 Smoke India — Expert 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nExpert 1\nLevel 1 Expert\nSkill points: 7\nFeat\nNEXT\nLevel 2 Expert\nSkill points: 7\nCharacter Name\nF7 Smoke India\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+1\nCMB\n+4\nCMD\n16\n",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7c-smoke-CsXhEt/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "94def6ba-4947-41d0-b9aa-a7b7299602b4"
+      ],
+      "deleted": [
+        "94def6ba-4947-41d0-b9aa-a7b7299602b4"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f7c-samurai-skills-only-skills",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f7/docs/release/SD-36-consolidation/artifacts/ui-smoke/f7/f7c/sheet-f7c-samurai-skills-only-skills.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Alpha — Samurai 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nSamurai 1\nLevel 1 Samurai\nSkill points: 5\nFeat\nNEXT\nLevel 2 Samurai\nSkill points: 5\nCharacter Name\nF4 Smoke Alpha\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5\nCMD",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7c-smoke-CsXhEt/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "608ace74-739f-4a68-8191-0e3ee88fbc40"
+      ],
+      "deleted": [
+        "608ace74-739f-4a68-8191-0e3ee88fbc40"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-f7c-prestige-skill-labels",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f7/docs/release/SD-36-consolidation/artifacts/ui-smoke/f7/f7c/level-up-f7c-prestige-skill-labels.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF7 Smoke Juliet — Fighter 6\nPROGRESSION\n«\n\nLevel\n6\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6\nLevel 1 Fighter\nSkill points: 3\nFeat\nLevel 2 Fighter\nSkill points: 3\nLevel 3 Fighter\nSkill points: 3\nFeat\nLevel 4 Fighter\nSkill points: 3\nAbility score increase\nLevel 5 Fighter\nSkill points: 3\nFeat\nLevel 6 Fighter\nSkill points: 3\nNEXT\nLevel 7 Fighter\nSkill points: 3\nFeat\nCharacter Name\nF7 Smok",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7c-smoke-CsXhEt/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "5809125f-f7c8-4585-9487-4b5f43de1afc"
+      ],
+      "deleted": [
+        "5809125f-f7c8-4585-9487-4b5f43de1afc"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6a-samurai-weapons",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f7/docs/release/SD-36-consolidation/artifacts/ui-smoke/f7/f7c/sheet-f6a-samurai-weapons.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Alpha — Samurai 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nSamurai 1\nLevel 1 Samurai\nSkill points: 5\nFeat\nNEXT\nLevel 2 Samurai\nSkill points: 5\nCharacter Name\nF4 Smoke Alpha\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5\nCMD",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7c-smoke-CsXhEt/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "a6b21513-d835-47cf-ad55-1cf75e7c5548"
+      ],
+      "deleted": [
+        "a6b21513-d835-47cf-ad55-1cf75e7c5548"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-skill-allocation-dialog",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f7/docs/release/SD-36-consolidation/artifacts/ui-smoke/f7/f7c/sheet-action-skill-allocation-dialog.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7c-smoke-CsXhEt/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "47ad3dc0-b9ea-49c8-9d88-7c150a75a760"
+      ],
+      "deleted": [
+        "47ad3dc0-b9ea-49c8-9d88-7c150a75a760"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-level-up-dialog",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f7/docs/release/SD-36-consolidation/artifacts/ui-smoke/f7/f7c/sheet-action-level-up-dialog.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7c-smoke-CsXhEt/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "711806d6-026b-47db-8015-198fe832d140"
+      ],
+      "deleted": [
+        "711806d6-026b-47db-8015-198fe832d140"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-blockers-and-labels",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f7/docs/release/SD-36-consolidation/artifacts/ui-smoke/f7/f7c/level-up-fighter6-blockers-and-labels.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF6 Smoke Hotel — Fighter 6\nPROGRESSION\n«\n\nLevel\n6\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6\nLevel 1 Fighter\nSkill points: 3\nFeat\nLevel 2 Fighter\nSkill points: 3\nLevel 3 Fighter\nSkill points: 3\nFeat\nLevel 4 Fighter\nSkill points: 3\nAbility score increase\nLevel 5 Fighter\nSkill points: 3\nFeat\nLevel 6 Fighter\nSkill points: 3\nNEXT\nLevel 7 Fighter\nSkill points: 3\nFeat\nCharacter Name\nF6 Smoke",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f7c-smoke-CsXhEt/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "6a32b5c0-cd2a-48ee-8824-b0543672eeaf"
+      ],
+      "deleted": [
+        "6a32b5c0-cd2a-48ee-8824-b0543672eeaf"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

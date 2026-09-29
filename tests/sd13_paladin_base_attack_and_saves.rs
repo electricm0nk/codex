@@ -32,7 +32,6 @@
 //! named-but-unproven exactly as before.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -343,28 +342,3 @@ fn fighter_and_ranger_do_not_gain_paladin_base_attack_or_save_grounding() {
 
 // ----- Control plane: the matrix row's note names the newly grounded pillar -----
 
-#[test]
-fn matrix_paladin_row_note_names_base_attack_and_base_save_as_grounded() {
-    let matrix = seeded_current_truth();
-    let paladin = matrix
-        .row("class.paladin.hybrid_chassis_and_spell_burden")
-        .expect("paladin row must exist");
-
-    assert_eq!(paladin.support_state, SupportState::Supported);
-    for token in ["base attack", "base save", "standalone"] {
-        assert!(
-            paladin.blocker_or_lossiness_note.contains(token),
-            "paladin blocker note must name '{token}' now that base attack/base save are \
-             grounded: {}",
-            paladin.blocker_or_lossiness_note
-        );
-    }
-    // The still-unproven burdens stay named.
-    for token in ["hybrid", "spell"] {
-        assert!(
-            paladin.blocker_or_lossiness_note.contains(token),
-            "paladin blocker note must still name the unproven '{token}' burden: {}",
-            paladin.blocker_or_lossiness_note
-        );
-    }
-}

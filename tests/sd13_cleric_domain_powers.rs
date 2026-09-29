@@ -31,7 +31,6 @@ use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -274,25 +273,3 @@ fn cleric_level1_without_healing_domain_selection_does_not_fabricate_rebuke_deat
 
 // ----- Control plane: the matrix row stays Partial and names the narrowed burden -----
 
-#[test]
-fn matrix_cleric_row_names_touch_of_good_grounded_and_rebuke_death_heal_amount_unproven() {
-    let matrix = seeded_current_truth();
-    let cleric = matrix
-        .row("class.cleric.progression_and_spell_burden")
-        .expect("cleric row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
-    // Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(cleric.support_state, SupportState::Supported);
-    assert!(
-        cleric.blocker_or_lossiness_note.contains("Touch of Good")
-            && cleric.blocker_or_lossiness_note.contains("Rebuke Death"),
-        "cleric blocker note must still name both granted powers: {}",
-        cleric.blocker_or_lossiness_note
-    );
-    assert!(
-        cleric.blocker_or_lossiness_note.contains("heal amount"),
-        "cleric blocker note must name the still-unproven Rebuke Death heal amount: {}",
-        cleric.blocker_or_lossiness_note
-    );
-}

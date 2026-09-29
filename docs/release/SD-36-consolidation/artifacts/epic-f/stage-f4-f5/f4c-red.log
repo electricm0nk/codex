@@ -1,0 +1,29 @@
+# SD-36 F4c RED evidence (each block: the new test run against the pre-F4c behaviour)
+
+## rust: list_class_roster_wire_carries_hit_die_and_skill_ranks_for_every_census_class (DTO fields absent)
+error[E0609]: no field `skill_ranks_per_level` on type `&&ClassCreationEntryDto`
+     --> src/character_hub.rs:10399:27
+error[E0609]: no field `hit_die` on type `&&WithheldClassDto`
+     --> src/character_hub.rs:10405:95
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 2 previous errors
+
+## tsx src/characterHub/classRoster.test.ts (module absent)
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ubuntu/workspace/worktrees/codex-epic-f4/apps/desktop/src/characterHub/classRoster' imported from /home/ubuntu/workspace/worktrees/codex-epic-f4/apps/desktop/src/characterHub/classRoster.test.ts
+
+## tsx src/characterHub/classRoster.test.ts (roster option hit die = printed row, not the HP fold's chassis die)
+Error: class:monk hit die: the one the HP fold reads: expected null, got 10
+
+## tsx src/characterHub/characterHubModel.test.ts (catalog = the hardcoded 31)
+Error: class:adept level option count: expected 20, got 1
+
+## tsx src/characterHub/characterProgression.test.ts (HEAD module, CLASS_OPTIONS -> CLASS_OPTIONS_FALLBACK)
+Error: Arcanist: 2 + Int (the record), not the old table’s 3: expected 2, got 3
+
+## tsx src/characterHub/skillsModel.test.ts (HEAD module + coverage shim; no held class named)
+Error: class:alchemist is named, not silently all-cross-class: expected class:alchemist, got 
+
+## tsx src/characterHub/spellsTabModel.test.ts (label lookup against CLASS_OPTIONS_FALLBACK)
+Error: a newly offered base class: expected Known · Psychic Warrior, got Known · Psychic_warrior
+
+## tsx src/characterHub/classPreviewModel.test.ts (HEAD module: joins on a label string)
+Error: a catalogued class at a catalogued level yields a row: expected Row, got Unavailable

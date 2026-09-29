@@ -42,10 +42,8 @@
 //! control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
+use crate::rows::{multiclass_negative_controls, recognition_negative_controls};
 
 const ROGUE_LEVEL2_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_rogue_level2_sd13_deterministic_input.txt");
@@ -309,77 +307,23 @@ fn rogue_level_5_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the rogue path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_rogue_level3_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")
-                || e.id == ROGUE_EVASION_ID
-                || e.id == ROGUE_TRAP_SENSE_ID),
-        "the Fighter chassis must not surface any rogue-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
-// ----- Negative control: multiclass Rogue is not promoted -----
-
-#[test]
-fn multiclass_rogue_level3_is_not_promoted_by_this_slice() {
-    let multiclass = ROGUE_LEVEL3_FIXTURE.replace(
-        "class_level=class:rogue:3",
-        "class_level=class:rogue:3\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")
-                || e.id == ROGUE_EVASION_ID
-                || e.id == ROGUE_TRAP_SENSE_ID),
-        "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Rogue must stay claim-blocked in this slice"
-    );
-}
-
 // ----- Control plane: the matrix note names the level-3 widening and Trap Sense -----
 
-#[test]
-fn matrix_rogue_row_names_level_3_widening_and_trap_sense() {
-    let matrix = seeded_current_truth();
-    let rogue = matrix
-        .row("class.rogue.bounded_progression")
-        .expect("rogue bounded_progression row must exist");
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
 
-    assert_eq!(rogue.support_state, SupportState::Supported); // promoted by SD-19 Class Progression Catalog browser
-    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        rogue.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        rogue.grounding_ref.contains("sd13_rogue_level3_progression"),
-        "rogue row must cite the live SD13-E5 level-3 proof surface: {}",
-        rogue.grounding_ref
-    );
-    let note = rogue.blocker_or_lossiness_note;
-    assert!(
-        note.to_lowercase().contains("trap sense"),
-        "rogue partial note must name Trap Sense as newly grounded: {note}"
-    );
-    assert!(
-        note.contains("rogue talent"),
-        "rogue partial note must keep naming rogue talents as unproven: {note}"
-    );
+recognition_negative_controls! {
+    fighter_does_not_gain_rogue_level3_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.rogue."],
+        exact: [ROGUE_EVASION_ID, ROGUE_TRAP_SENSE_ID],
+        message: "the Fighter chassis must not surface any rogue-namespaced explanation: {:?}",
+    },
 }
+
+multiclass_negative_controls! {
+    multiclass_rogue_level3_is_not_promoted_by_this_slice(ROGUE_LEVEL3_FIXTURE, "class_level=class:rogue:3" => "class_level=class:rogue:3\nclass_level=class:fighter:1") {
+        prefixes: ["class_chassis.rogue."],
+        exact: [ROGUE_EVASION_ID, ROGUE_TRAP_SENSE_ID],
+        message: "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
+    },
+}
+

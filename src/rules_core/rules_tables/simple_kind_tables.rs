@@ -234,11 +234,7 @@ pub fn transcript_line(table: &SimpleKindTable, sample_book: &str, sample_key: &
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::path::PathBuf;
-
-    fn repo_root() -> PathBuf {
-        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-    }
+    use crate::support::paths::repo_root;
 
     /// `trait`'s directory is `trait_generic`, not `trait` -- confirming
     /// `AT-34-E2-001`'s own header comment holds against the live file

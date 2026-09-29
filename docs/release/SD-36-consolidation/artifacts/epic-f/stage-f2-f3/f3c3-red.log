@@ -1,0 +1,21 @@
+== RED 1: cargo test --locked -j 8 -p codex-ingest --test sheet_rule_convert_gate -- --test-threads=8 a_subclass_choice_converts a_wizard_school_subclass (skeleton subclass.rs returning an empty run)
+test a_subclass_choice_converts_with_its_class_skill_grants has been running for over 60 seconds
+test a_wizard_school_subclass_converts_through_the_same_rule has been running for over 60 seconds
+test a_wizard_school_subclass_converts_through_the_same_rule ... FAILED
+test a_subclass_choice_converts_with_its_class_skill_grants ... FAILED
+
+--
+thread 'a_wizard_school_subclass_converts_through_the_same_rule' (1106463) panicked at crates/codex-ingest/tests/sheet_rule_convert_gate.rs:853:5:
+assertion failed: out.choosers.iter().any(|(_, r)| r.id == chooser_id)
+--
+thread 'a_subclass_choice_converts_with_its_class_skill_grants' (1106462) panicked at crates/codex-ingest/tests/sheet_rule_convert_gate.rs:810:119:
+psion carries a subclass choice
+--
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 43 filtered out; finished in 239.46s
+
+
+== RED 2: cargo test --locked -j 8 --test sd36_class_skill_from_record -- --test-threads=8 psion_class_skills_answer_through_its_canonical_discipline
+test psion_class_skills_answer_through_its_canonical_discipline ... FAILED
+thread 'psion_class_skills_answer_through_its_canonical_discipline' (1107389) panicked at tests/sd36_class_skill_from_record.rs:146:9:
+psion: Unknown { reason: "the converted closure of `psion` at level 1 reaches no class-skill grant (every PF1 class has class skills, so an empty walk is an incomplete closure, not an empty list)" }
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 3.69s

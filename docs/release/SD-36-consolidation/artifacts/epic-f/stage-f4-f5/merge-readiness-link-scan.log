@@ -1,0 +1,90 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f4)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 13.11s
+     Running tests/sd36_f4_link_pick_namespace.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd36_f4_link_pick_namespace-caa5bade4b5ed959)
+
+running 1 test
+ROW| adept 5: links 0 reached 0 | 
+ROW| aegis 5: links 0 reached 0 | 
+ROW| alchemist 5: links 0 reached 0 | 
+ROW| antipaladin 5: links 0 reached 0 | 
+ROW| arcanist 5: links 0 reached 0 | 
+ROW| aristocrat 5: links 0 reached 0 | 
+ROW| barbarian 5: links 0 reached 0 | 
+ROW| bard 5: links 0 reached 0 | 
+ROW| bloodrager 5: links 1 reached 4 | choice:bloodrager_bloodline -> advanced_class_guide:pool_option:bloodrager_bloodline_arcane_bloodline
+REACHED| bloodrager 5: advanced_class_guide:class_feature:arcane_bloodrager_bloodline_arcane_bloodrage
+REACHED| bloodrager 5: advanced_class_guide:class_feature:arcane_bloodrager_bloodline_disruptive_bloodrage
+REACHED| bloodrager 5: advanced_class_guide:class_feature:arcane_bloodrager_bloodline_feat_tracker
+REACHED| bloodrager 5: advanced_class_guide:pool_option:bloodrager_bloodline_arcane_bloodline
+ROW| brawler 5: links 0 reached 0 | 
+ROW| cavalier 5: links 0 reached 0 | 
+ROW| cleric 5: links 1 reached 0 | choice:cleric_domain -> core_rulebook:domain:good
+ROW| commoner 5: links 0 reached 0 | 
+ROW| cryptic 5: links 0 reached 0 | 
+ROW| dread 5: links 0 reached 0 | 
+ROW| druid 5: links 0 reached 0 | 
+test no_linked_pick_over_the_non_prestige_population_comes_from_a_foreign_pool has been running for over 60 seconds
+ROW| ex_antipaladin 5: links 0 reached 0 | 
+ROW| ex_barbarian 5: links 0 reached 0 | 
+ROW| ex_inquisitor 5: links 0 reached 0 | 
+ROW| ex_paladin 5: links 0 reached 0 | 
+ROW| expert 5: links 0 reached 0 | 
+ROW| fighter 5: links 2 reached 0 | choice:human_bonus_feat -> core_rulebook:feat:dodge; choice:level_1_character_feat -> core_rulebook:feat:power_attack
+ROW| gunslinger 5: links 0 reached 0 | 
+ROW| hunter 5: links 0 reached 0 | 
+ROW| inquisitor 5: links 1 reached 0 | choice:inquisitor_domain -> advanced_players_guide:class_feature:inquisitor_domain_good
+ROW| investigator 5: links 0 reached 0 | 
+ROW| kineticist 5: links 0 reached 0 | 
+ROW| magus 5: links 0 reached 0 | 
+ROW| marksman 5: links 0 reached 0 | 
+ROW| medium 5: links 0 reached 0 | 
+ROW| mesmerist 5: links 0 reached 0 | 
+ROW| monk 5: links 0 reached 0 | 
+ROW| ninja 5: links 0 reached 0 | 
+ROW| occultist 5: links 0 reached 0 | 
+ROW| oracle 5: links 0 reached 0 | 
+ROW| paladin 5: links 0 reached 0 | 
+ROW| psion 5: links 0 reached 0 | 
+ROW| psychic 5: links 0 reached 0 | 
+ROW| psychic_warrior 5: links 0 reached 0 | 
+ROW| ranger 5: links 0 reached 0 | 
+ROW| rogue 5: links 0 reached 0 | 
+ROW| samurai 5: links 0 reached 0 | 
+ROW| shaman 5: links 1 reached 3 | choice:shaman_spirit -> advanced_class_guide:class_feature:shaman_spirit_life
+REACHED| shaman 5: advanced_class_guide:class_feature:life_spirit_channel
+REACHED| shaman 5: advanced_class_guide:class_feature:shaman_spirit_life
+REACHED| shaman 5: advanced_class_guide:domain:life_spirit
+ROW| shifter 5: links 0 reached 0 | 
+ROW| skald 5: links 0 reached 0 | 
+ROW| slayer 5: links 0 reached 0 | 
+ROW| sorcerer 5: links 1 reached 9 | choice:sorcerer_bloodline -> core_rulebook:pool_option:sorcerer_bloodline_arcane_bloodline
+REACHED| sorcerer 5: core_rulebook:class_feature:arcane_bloodline_arcane_bond
+REACHED| sorcerer 5: core_rulebook:class_feature:arcane_bloodline_bloodline_arcana
+REACHED| sorcerer 5: core_rulebook:class_feature:arcane_bloodline_bloodline_powers
+REACHED| sorcerer 5: core_rulebook:class_feature:arcane_bloodline_bonus_spells
+REACHED| sorcerer 5: core_rulebook:class_feature:arcane_bloodline_feat_tracker
+REACHED| sorcerer 5: core_rulebook:class_feature:arcane_bloodline_metamagic_adept
+REACHED| sorcerer 5: core_rulebook:class_feature:sorcerer_bloodline_arcane
+REACHED| sorcerer 5: core_rulebook:class_feature:sorcerer_bloodline_arcane#bonus0
+REACHED| sorcerer 5: core_rulebook:pool_option:sorcerer_bloodline_arcane_bloodline
+ROW| soulknife 5: links 0 reached 0 | 
+ROW| spiritualist 5: links 0 reached 0 | 
+ROW| summoner 5: links 0 reached 0 | 
+ROW| swashbuckler 5: links 0 reached 0 | 
+ROW| tactician 5: links 0 reached 0 | 
+ROW| unchained_barbarian 5: links 0 reached 0 | 
+ROW| unchained_monk 5: links 0 reached 0 | 
+ROW| unchained_rogue 5: links 0 reached 0 | 
+ROW| unchained_summoner 5: links 0 reached 0 | 
+ROW| vigilante 5: links 0 reached 0 | 
+ROW| vitalist 5: links 0 reached 0 | 
+ROW| warpriest 5: links 0 reached 0 | 
+ROW| warrior 5: links 0 reached 0 | 
+ROW| wilder 5: links 0 reached 0 | 
+ROW| witch 5: links 0 reached 0 | 
+ROW| wizard 5: links 0 reached 0 | 
+linked picks over 63 non-prestige classes at min(5, max level): 7; foreign 0; held rules reached through a linked pick: 16
+test no_linked_pick_over_the_non_prestige_population_comes_from_a_foreign_pool ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 196.20s
+

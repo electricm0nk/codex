@@ -1,0 +1,303 @@
+
+> codex@0.16.0 typecheck
+> tsc --noEmit
+
+TYPECHECK_EXIT=0
+
+> codex@0.16.0 test
+> node scripts/run-tests.mjs
+
+PASS src/boundary/addEquipmentSelection.test.ts
+PASS src/boundary/addFeatSelection.test.ts
+PASS src/boundary/addSpellSelection.test.ts
+PASS src/boundary/attachEquipmentModifier.test.ts
+PASS src/boundary/characterBio.test.ts
+PASS src/boundary/characterDurability.test.ts
+PASS src/boundary/characterMoney.test.ts
+PASS src/boundary/exportCharacter.test.ts
+PASS src/boundary/levelUpCharacter.test.ts
+PASS src/boundary/listEquipment.test.ts
+PASS src/boundary/listFeats.test.ts
+PASS src/boundary/listSpells.test.ts
+PASS src/boundary/loadCreateCharacter.test.ts
+PASS src/boundary/loadDeleteCharacter.test.ts
+PASS src/boundary/loadImportCharacter.test.ts
+PASS src/boundary/loadSavedCharacterDetail.test.ts
+strict mode: required property "tag" is not defined at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/0/if" (strictRequired)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/0/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/1/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/2/then/properties/tag" (strictTypes)
+unknown format "uri" ignored in schema at path "#/properties/release_url"
+unknown format "uri" ignored in schema at path "#/properties/release_url"
+unknown format "uri" ignored in schema at path "#/properties/manifest_url"
+unknown format "uri" ignored in schema at path "#/properties/manifest_url"
+unknown format "date-time" ignored in schema at path "#/properties/publication_timestamp"
+unknown format "date-time" ignored in schema at path "#/properties/publication_timestamp"
+strict mode: required property "tag" is not defined at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/0/if" (strictRequired)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/0/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/1/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/2/then/properties/tag" (strictTypes)
+unknown format "uri" ignored in schema at path "#/properties/release_notes_url"
+unknown format "uri" ignored in schema at path "#/properties/release_notes_url"
+unknown format "uri" ignored in schema at path "#/properties/linux_appimage/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/linux_appimage/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/windows_msi/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/windows_msi/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/macos_dmg/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/macos_dmg/properties/url"
+unknown format "date-time" ignored in schema at path "#/properties/promotion_lineage/properties/promoted_at"
+unknown format "date-time" ignored in schema at path "#/properties/promotion_lineage/properties/promoted_at"
+PASS src/boundary/loadUpdateAction.test.ts
+PASS src/boundary/purchaseEquipment.test.ts
+PASS src/boundary/recomputeCharacter.test.ts
+PASS src/boundary/recordAndPrepareSpellSelection.test.ts
+PASS src/boundary/removeSelection.test.ts
+PASS src/boundary/setSkillAllocations.test.ts
+campaignManagerAccessGate.test.ts OK
+PASS src/campaign/campaignManagerAccessGate.test.ts
+campaignModel.test.ts OK
+PASS src/campaign/campaignModel.test.ts
+PASS src/characterHub/abilityScoreMethods.test.ts
+addSpellAffordanceModel tests passed
+PASS src/characterHub/addSpellAffordanceModel.test.ts
+alternateTraitSelection: all assertions passed
+PASS src/characterHub/alternateTraitSelection.test.ts
+attackPanelModel tests passed
+PASS src/characterHub/attackPanelModel.test.ts
+PASS src/characterHub/buildCharacterHubListSurface.test.ts
+PASS src/characterHub/buildCreateCharacterOutcomeSurface.test.ts
+PASS src/characterHub/buildItemPickerConfig.test.ts
+characterExport tests passed
+PASS src/characterHub/characterExport.test.ts
+PASS src/characterHub/characterHubModel.test.ts
+PASS src/characterHub/characterHubRuntime.test.ts
+PASS src/characterHub/characterProgression.test.ts
+PASS src/characterHub/characterSheetRefresh.test.ts
+PASS src/characterHub/classFeaturesModel.test.ts
+classPreviewModel tests passed
+PASS src/characterHub/classPreviewModel.test.ts
+classRoster: all assertions passed
+PASS src/characterHub/classRoster.test.ts
+PASS src/characterHub/composeCreateCharacterRequest.test.ts
+creationBio tests passed
+PASS src/characterHub/creationBio.test.ts
+creationRacialTraitsPreview tests passed
+PASS src/characterHub/creationRacialTraitsPreview.test.ts
+defenseSavesModel tests passed
+PASS src/characterHub/defenseSavesModel.test.ts
+encumbranceTabModel.test.ts: all assertions passed
+PASS src/characterHub/encumbranceTabModel.test.ts
+featEligibilityDelta tests passed
+PASS src/characterHub/featEligibilityDelta.test.ts
+featPickerEligibility.test.ts: all assertions passed
+PASS src/characterHub/featPickerEligibility.test.ts
+featsTabModel.test.ts: all assertions passed
+PASS src/characterHub/featsTabModel.test.ts
+PASS src/characterHub/itemPickerFilter.test.ts
+noAgingPreview tests passed
+PASS src/characterHub/noAgingPreview.test.ts
+PASS src/characterHub/petsTabModel.test.ts
+PASS src/characterHub/portraitImageProcessing.test.ts
+raceCreationCoverage: ok
+PASS src/characterHub/raceCreationCoverage.test.ts
+raceRoster: all assertions passed
+PASS src/characterHub/raceRoster.test.ts
+racialTraitsModel: all assertions passed
+PASS src/characterHub/racialTraitsModel.test.ts
+PASS src/characterHub/rosterErrorMessage.test.ts
+rulesAndFeaturesSection: 19 per-kind tests + 5 section tests passed
+PASS src/characterHub/rulesAndFeaturesSection.test.ts
+sheetTabs tests passed
+PASS src/characterHub/sheetTabs.test.ts
+PASS src/characterHub/skillsModel.test.ts
+PASS src/characterHub/spellPickerOffering.test.ts
+PASS src/characterHub/spellRoutingModel.test.ts
+PASS src/characterHub/spellsPerDayModel.test.ts
+PASS src/characterHub/spellsTabModel.test.ts
+traitsTabModel tests passed
+PASS src/characterHub/traitsTabModel.test.ts
+PASS src/characterHub/weaponsTabModel.test.ts
+PASS src/companionCatalog/CompanionCatalogScreen.test.ts
+dmConsoleExport tests passed
+PASS src/dmToolkit/dmConsoleExport.test.ts
+dmConsoleExportFlow tests passed
+PASS src/dmToolkit/dmConsoleExportFlow.test.ts
+dmConsoleModel tests passed
+PASS src/dmToolkit/dmConsoleModel.test.ts
+dmHistoryModel tests passed
+PASS src/dmToolkit/dmHistoryModel.test.ts
+dmLinksModel tests passed
+PASS src/dmToolkit/dmLinksModel.test.ts
+dmRecordForm tests passed
+PASS src/dmToolkit/dmRecordForm.test.ts
+dmRecordModel tests passed
+PASS src/dmToolkit/dmRecordModel.test.ts
+encounterBuilderModel tests passed
+PASS src/dmToolkit/encounterBuilderModel.test.ts
+encounterRecord tests passed
+PASS src/dmToolkit/encounterRecord.test.ts
+encounterViewModel tests passed
+PASS src/dmToolkit/encounterViewModel.test.ts
+PASS src/equipmentCatalog/EquipmentCatalogScreen.test.ts
+PASS src/feedback/browserHandoff.test.ts
+controlledDefectPayload.test.ts: all assertions passed
+PASS src/feedback/controlledDefectPayload.test.ts
+docCommentHygiene.test.ts: 6/6 feedback/ files clean of SD-16/AV-PAY-N tags
+PASS src/feedback/docCommentHygiene.test.ts
+submissionState.test.ts: 8/8 assertions passed
+PASS src/feedback/submissionState.test.ts
+submissionUiState.test.ts: 7/7 assertions passed
+PASS src/feedback/submissionUiState.test.ts
+PASS src/intelligentItemCatalog/IntelligentItemCatalogScreen.test.ts
+PASS src/monsterCatalog/MonsterCatalogScreen.test.ts
+PASS src/operatorTriage/buildOperatorTriageDraft.test.ts
+RaceCatalogScreen.test.ts: all assertions passed
+PASS src/raceCatalog/RaceCatalogScreen.test.ts
+alternateTraitPickerModel: all assertions passed
+PASS src/raceCatalog/alternateTraitPickerModel.test.ts
+PASS src/referenceListKey.test.ts
+PASS src/release/buildVersionTriple.test.ts
+PASS src/release/releaseClosureChecklistDoc.test.ts
+PASS src/releaseChecks/buildLabelFixtureFreshness.test.ts
+PASS src/releaseChecks/buildVersionTriple.test.ts
+PASS src/releaseChecks/releaseClosureChecklistDoc.test.ts
+PASS src/spellCatalog/SpellCatalogScreen.test.ts
+  ok - exact match wins over prefix and contains
+  ok - prefix wins over contains when no exact match exists
+  ok - contains is the last-resort tier
+  ok - no match returns -1
+  ok - index selects within the matched tier
+  ok - an out-of-range index falls back to the first match in tier
+  ok - an empty names list reports no match
+All 7 matchCommandTarget cases passed.
+PASS src/testSupport/uiSmokeCommandChannel.test.ts
+PASS src/testSupport/uiSmokeProbe.test.ts
+PASS src/testSupport/uiSmokeSpecSchema.test.ts
+PASS src/testerWorkbench/feedback/bug/composeBugReport.test.ts
+PASS src/testerWorkbench/feedback/bug/submitBugReport.test.ts
+PASS src/testerWorkbench/feedback/enhancement/composeEnhancementRequest.test.ts
+PASS src/testerWorkbench/feedback/enhancement/submitEnhancementRequest.test.ts
+PASS src/testerWorkbench/feedback/evidence/captureFeedbackEvidence.test.ts
+PASS src/testerWorkbench/feedback/evidence/evidenceFields.test.ts
+PASS src/testerWorkbench/feedback/evidence/redaction.test.ts
+PASS src/testerWorkbench/feedback/evidence/sanitizeReportableOutput.test.ts
+PASS src/testerWorkbench/loadTesterWorkbenchSurface.test.ts
+PASS src/testerWorkbench/sourcebookSupportStatus.test.ts
+PASS src/testerWorkbench/status/createWorkbenchStatus.test.ts
+PASS src/testerWorkbench/update/deriveWorkbenchUpdateAction.test.ts
+Ui.test.ts: all assertions passed
+PASS src/update/Ui.test.ts
+channelSelector.test.ts: 4/4 assertions passed
+PASS src/update/channelSelector.test.ts
+controlledDefect.test.ts: all assertions passed
+PASS src/update/controlledDefect.test.ts
+strict mode: required property "tag" is not defined at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/0/if" (strictRequired)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/0/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/1/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/2/then/properties/tag" (strictTypes)
+unknown format "uri" ignored in schema at path "#/properties/release_url"
+unknown format "uri" ignored in schema at path "#/properties/release_url"
+unknown format "uri" ignored in schema at path "#/properties/manifest_url"
+unknown format "uri" ignored in schema at path "#/properties/manifest_url"
+unknown format "date-time" ignored in schema at path "#/properties/publication_timestamp"
+unknown format "date-time" ignored in schema at path "#/properties/publication_timestamp"
+strict mode: required property "tag" is not defined at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/0/if" (strictRequired)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/0/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/1/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/2/then/properties/tag" (strictTypes)
+unknown format "uri" ignored in schema at path "#/properties/release_notes_url"
+unknown format "uri" ignored in schema at path "#/properties/release_notes_url"
+unknown format "uri" ignored in schema at path "#/properties/linux_appimage/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/linux_appimage/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/windows_msi/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/windows_msi/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/macos_dmg/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/macos_dmg/properties/url"
+unknown format "date-time" ignored in schema at path "#/properties/promotion_lineage/properties/promoted_at"
+unknown format "date-time" ignored in schema at path "#/properties/promotion_lineage/properties/promoted_at"
+controllerAdapter.test.ts: all assertions passed
+PASS src/update/controllerAdapter.test.ts
+diagnostics.test.ts: all diagnostics model assertions passed
+PASS src/update/diagnostics.test.ts
+eligibility.test.ts: all assertions passed
+PASS src/update/eligibility.test.ts
+strict mode: required property "tag" is not defined at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/0/if" (strictRequired)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/0/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/1/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/2/then/properties/tag" (strictTypes)
+unknown format "uri" ignored in schema at path "#/properties/release_url"
+unknown format "uri" ignored in schema at path "#/properties/release_url"
+unknown format "uri" ignored in schema at path "#/properties/manifest_url"
+unknown format "uri" ignored in schema at path "#/properties/manifest_url"
+unknown format "date-time" ignored in schema at path "#/properties/publication_timestamp"
+unknown format "date-time" ignored in schema at path "#/properties/publication_timestamp"
+strict mode: required property "tag" is not defined at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/0/if" (strictRequired)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/0/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/1/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/2/then/properties/tag" (strictTypes)
+unknown format "uri" ignored in schema at path "#/properties/release_notes_url"
+unknown format "uri" ignored in schema at path "#/properties/release_notes_url"
+unknown format "uri" ignored in schema at path "#/properties/linux_appimage/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/linux_appimage/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/windows_msi/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/windows_msi/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/macos_dmg/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/macos_dmg/properties/url"
+unknown format "date-time" ignored in schema at path "#/properties/promotion_lineage/properties/promoted_at"
+unknown format "date-time" ignored in schema at path "#/properties/promotion_lineage/properties/promoted_at"
+PASS src/update/fetch.test.ts
+indexSource.test.ts: 6/6 AV-SCH-7 assertions passed
+PASS src/update/indexSource.test.ts
+installAction.test.ts: all assertions passed
+PASS src/update/installAction.test.ts
+installEnablement.test.ts: 5/5 assertions passed
+PASS src/update/installEnablement.test.ts
+installedPanel.test.ts: 4/4 assertions passed
+PASS src/update/installedPanel.test.ts
+lastCheckPanel.test.ts: 4/4 assertions passed
+PASS src/update/lastCheckPanel.test.ts
+nonEligible.test.ts: 3/3 assertions passed
+PASS src/update/nonEligible.test.ts
+strict mode: required property "tag" is not defined at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/0/if" (strictRequired)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/0/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/1/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/channel-index.schema.json#/allOf/2/then/properties/tag" (strictTypes)
+unknown format "uri" ignored in schema at path "#/properties/release_url"
+unknown format "uri" ignored in schema at path "#/properties/release_url"
+unknown format "uri" ignored in schema at path "#/properties/manifest_url"
+unknown format "uri" ignored in schema at path "#/properties/manifest_url"
+unknown format "date-time" ignored in schema at path "#/properties/publication_timestamp"
+unknown format "date-time" ignored in schema at path "#/properties/publication_timestamp"
+parseChannelIndex.test.ts: 7/7 AV-SCH-* assertions passed
+PASS src/update/parseChannelIndex.test.ts
+strict mode: required property "tag" is not defined at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/0/if" (strictRequired)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/0/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/1/then/properties/tag" (strictTypes)
+strict mode: missing type "string" for keyword "pattern" at "https://codex.electricm0nk/schemas/update/update-manifest.schema.json#/allOf/2/then/properties/tag" (strictTypes)
+unknown format "uri" ignored in schema at path "#/properties/release_notes_url"
+unknown format "uri" ignored in schema at path "#/properties/release_notes_url"
+unknown format "uri" ignored in schema at path "#/properties/linux_appimage/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/linux_appimage/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/windows_msi/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/windows_msi/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/macos_dmg/properties/url"
+unknown format "uri" ignored in schema at path "#/properties/macos_dmg/properties/url"
+unknown format "date-time" ignored in schema at path "#/properties/promotion_lineage/properties/promoted_at"
+unknown format "date-time" ignored in schema at path "#/properties/promotion_lineage/properties/promoted_at"
+parseUpdateManifest.test.ts: 7/7 AV-SCH-* + Windows MSI + macOS DMG assertions passed
+PASS src/update/parseUpdateManifest.test.ts
+pendingRollbackPanel.test.ts: 6/6 assertions passed
+PASS src/update/pendingRollbackPanel.test.ts
+releaseNotesDisplay.test.ts: 5/5 assertions passed
+PASS src/update/releaseNotesDisplay.test.ts
+restoreOffer.test.ts: all assertions passed
+PASS src/update/restoreOffer.test.ts
+
+126/126 test files passed.
+TEST_EXIT=0
+rowSelection.test.mjs: all assertions passed
+rowSelection=0
+commandChannel.test.mjs: all assertions passed
+commandChannel=0
+resultsSkeleton.test.mjs OK
+resultsSkeleton=0

@@ -292,11 +292,7 @@ mod tests {
     use super::*;
     use crate::rules_core::corpus_loader::BookCorpusRoot;
     use crate::rules_core::race_resolver::load_race_corpus;
-    use std::path::PathBuf;
-
-    fn repo_root() -> PathBuf {
-        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-    }
+    use crate::support::paths::repo_root;
 
     fn skinwalker_corpus() -> RaceCorpus {
         let dir = repo_root().join("data/corpus/bestiary_5");

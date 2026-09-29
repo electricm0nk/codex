@@ -1,0 +1,166 @@
+codex retrospective — event log summary
+window: 2026-09-15  (since 2026-09-15T00:00:00+00:00)
+
+EVENTS  264 total
+     75  resolution
+     65  verification
+     59  correction
+     32  note
+     16  incident
+     15  deferral
+      1  near_miss
+      1  rework
+  origin: agent=178, derived=86
+
+CORRECTIONS  59
+  who was wrong:
+       3  converter   <-- repeated
+       2  SD-36 dashboard-retirement design appendix   <-- repeated
+       2  sheet_rule evaluate_tests kind pin   <-- repeated
+       1  AT-35-E6-WRAPUP-FIX cycle 1 receipt: 'Worktree sweep' claim that the Epic 6 worktree artifacts were folded
+       1  AT-35-E7-001 cycle 3's S8 (the full verify.sh is RED on sd26_pilot_case_verification.rs)
+       1  AT-35-E7-001 cycle 4's first sample method (static value-kind read of the rule JSON)
+       1  AT-35-E7-001 cycle-3 receipt S2/S3 and the closure-cleanup brief
+       1  AT-35-E7-001 cycle-3 receipt, shortfall S8
+       1  F3c4 brief expected prestige mix figure
+       1  F3c5 brief (FS-19)
+       1  F3c5 brief (Fact shape)
+       1  SD-35 closure readiness as implied by criterion-level 'complete' labels on AT-35-E6-002 and AT-35-E6-003
+       1  SD-36 Epic B dashboard-retirement design appendix §8 (public status book grid)
+       1  SD-36 Epic B fix-cycle tooling (rounds 3-6)
+       1  SD-36 Epic B round-5 commit 69a7d99852 (docs/verify.sh completeness)
+       1  This round's own site-stage verify.sh --only run (commit pending, round 5)
+       1  b068fa596c census baseline (F1-reader step 3)
+       1  class_census census_id_set_matches_the_published_partition pin
+       1  class_census f3c_carriers_named_through_at_least_any_and_not_reach_the_engine dragon_disciple pin
+       1  class_census::census_id_set_matches_the_published_partition (non-prestige Computed pin)
+       1  commit 9caaf702d9's own mandated full verify.sh pass (fix cycle round 4, ruling (f))
+       1  commit d22950cd1f (SD-36 Epic B, docs sweep/closure commit)
+       1  docs/architecture/status.md (SD-36 earlier pass)
+       1  docs/architecture/testing.md
+       1  docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/EPIC-6_wrapup_gate_report.md (committed at 4b69eb7aab)
+       1  docs/release/SD-35-corpus-sheet-completion/progress.md:209 (the AT-35-E7-001 cycle-4 final-acceptance entry, committed at 17ea4c1595)
+       1  docs/release/SD-35-corpus-sheet-completion/release-notes.md (AT-35-E7-003 release-notes step)
+       1  docs/release/SD-36-consolidation/epic-breakdown.md A2 acceptance row
+       1  docs/release/SD-36-consolidation/epic-breakdown.md C2.1/C2.2
+       1  docs/release/SD-36-consolidation/epic-breakdown.md C2.4
+       1  docs/release/SD-36-consolidation/receipts/epic-b_receipt.md
+       1  docs/release/SD-36-consolidation/receipts/epic-b_receipt.md (fix cycle round 1, commit 30f824f26e)
+       1  docs/release/SD-36-consolidation/receipts/epic-b_receipt.md (this epic's own receipt, commit d22950cd1f)
+       1  engine-P1-4 fix (epic-e_receipt.md, fix-cycle addendum items 2-3)
+       1  epic-e_receipt.md PC4-1 disposition
+       1  epic-f-class-completion.md §2 (review finding 14 evidence)
+       1  epic-f-class-completion.md §4 F2.1 ceiling
+       1  epic-f-class-completion.md §4 F2.3 / class_census pins
+       1  f3b3-receipt / class_census pin
+       1  f3c-remainder / carrier chooser pin
+       1  f3c2-receipt / class_census pin
+       1  pool_groups generic pass pins (celestial, abyssal, bloodrager undead, bloodrager arcane)
+       1  scripts/tests/test_shape_engine_boundary.py:121 magnitude_bearing equality pin
+       1  scripts/verify-baselines.env / docs/release/SD-36-consolidation/release-notes.md
+       1  scripts/verify-baselines.env BASELINE_ROOT_LIB_TESTS/BASELINE_ROOT_FULL_TESTS/BASELINE_ROOT_TEST_BINARIES
+       1  scripts/verify-baselines.env lines 3897-3906 and docs/release/SD-36-consolidation/receipts/epic-b_receipt.md line 226 (top-level Verification section)
+       1  sd13_sorcerer_level1_spell_baseline sorcerer_level1_with_non_arcane_bloodline_choice_stays_bloodline_agnostic
+       1  sd36-epic-f1c
+       1  src/bin/class_census.rs run_json / scripts/gen_class_status_table.py
+       1  src/rules_core/class_census.rs f3c_carriers_named_through_at_least_any_and_not_reach_the_engine
+       1  src/rules_core/pilot_compute/pool_groups.rs::cleric_generic_domain_pass_grounds_a_never_hand_modelled_domain
+       1  src/rules_core/pilot_compute/pool_groups.rs::cleric_generic_domain_pass_grounds_animal_via_the_class_record_merge
+       1  tests/sd36_bloodline_pick_option.rs a_draconic_pick_reaches_its_lines_at_the_levels_the_book_states
+       1  tests/sd36_multiclass_any_class.rs a_class_with_no_proficiency_answer_cannot_undo_another_class_s_grant
+       1  this cycle's own full verify.sh run's derived verification event
+  who caught it:
+      12  sd36-epic-b
+       5  sd31-transcribe
+       5  sd36-f3c5-executor
+       4  sd36-epic-f1c
+       4  sd36-f3c4-executor
+       3  AT-35-E6-WRAPUP-FIX2
+       3  AT-35-E7-001
+       2  AT-35-E7-CLOSURE-CLEANUP
+       2  epic-c2-test-rewrite
+       2  epic-c2d-gap-closure
+       2  sd36-epic-e-fix2
+       2  sd36-f2a-executor
+       2  sd36-f3c2-executor
+       2  sd36-f3c3-executor
+       2  sd36-f4pre-executor
+       2  sub-agent-f0-check-fix
+       1  AT-35-E7-002
+       1  AT-35-E7-003-arch
+       1  SD35-E6-WRAPUP-GATE4
+       1  sd36-f3b3-executor
+       1  sd36-f3c4b-executor
+  31 had already propagated when caught
+    - 2026-09-25T05:38:26Z  pool_groups generic pass pins (celestial, abyssal, bloodrager undead, bloodrager arcane) claimed the SD-32 generic pool-group pass grounds >0 member values for a linked bloodline selection; actual 0: a selection linked to a held pick option yields to the held-set path, which prints the members from the record at the levels it states (the pass printed Breath Weapon DC 14 at Draconic 5, Arcane Apotheosis -1 at Arcane 5)
+    - 2026-09-25T05:38:26Z  F3c4 brief expected prestige mix figure claimed prestige mixes 67 -> 68 of 74 (dragon_disciple Computed); actual 67 of 74: dragon_disciple keeps one named blocker, combat.baseline_weapon_proficiency_unknown (Internal|Bite outside the inventory, mechanism N, FS-20), which no engine change can decide
+    - 2026-09-25T05:56:10Z  sd13_sorcerer_level1_spell_baseline sorcerer_level1_with_non_arcane_bloodline_choice_stays_bloodline_agnostic claimed a Draconic sorcerer 1 is Blocked on arcane_bond_and_bloodline_progression.unsupported (bloodline-agnostic message); actual a Draconic pick links to its converted option and yields to the record (no blocker; recognition record names the Draconic option); the agnostic blocker is pinned on an unlinkable bloodline instead
+    - 2026-09-25T09:16:15Z  src/rules_core/class_census.rs f3c_carriers_named_through_at_least_any_and_not_reach_the_engine claimed dragon_disciple's sorcerer 5 mix is Blocked on 1 line, combat.baseline_weapon_proficiency_unknown (Internal|Bite); actual Computed at 10 of 10 levels, no blocker: Internal|Bite converts as Fact::NaturalAttack(Bite) on Dragon Bite, the closure is attested, the reader answers Known(empty) (CRB p.380)
+    - 2026-09-25T09:16:16Z  tests/sd36_bloodline_pick_option.rs a_draconic_pick_reaches_its_lines_at_the_levels_the_book_states claimed Draconic Claws is held only from sorcerer 7 (CONV-02 single-line principal, FS-18); actual held from sorcerer 1 as CRB p.75 states: the record now carries its Internal|Claw fact, so its claw-size line moves (gate >= 7 intact) to a #weapon0 sibling
+    - 2026-09-25T09:16:16Z  tests/sd36_multiclass_any_class.rs a_class_with_no_proficiency_answer_cannot_undo_another_class_s_grant claimed Dragon Disciple is a class with no proficiency answer; actual Dragon Disciple answers Known(empty) since F3c5; Diabolist (G-U, Hunter's Bond ~ Companion declared nowhere) serves as the no-answer class
+    - 2026-09-25T09:16:16Z  F3c5 brief (FS-19) claimed the Imperious/Kobold race gate is decidable, so the options simply stay ungranted for a human, which is correct; actual decidable and correctly converted, but NOT correct: Imperious is human-only, and neither a human nor a kobold holds template:is<race> because racial_traits_<race> is filed from its .MOD row and its closure omits the base row carrying TEMPLATE:Race ~ <Race> (mechanism M, FS-22)
+    - 2026-09-25T09:16:16Z  F3c5 brief (Fact shape) claimed the converter already emits natural-attack facts from NATURALATTACKS; reuse that Fact shape; actual NATURALATTACKS converts to #natural<n> Dice lines (convert.rs NATURALATTACKS arm), no Fact; a Fact::NaturalAttack(String) variant was added (sheet_rule.rs), never a Proficiency
+    - 2026-09-26T03:09:10Z  src/rules_core/pilot_compute/pool_groups.rs::cleric_generic_domain_pass_grounds_a_never_hand_modelled_domain claimed a cleric 5 with domain:plant prints generic pool-pass member values (count > 0); actual domain:plant links to core_rulebook:domain:plant through the F4pre domain choice (core_rulebook:class:cleric#bonus1 offers Domains); the pass yields (count 0) and the held set prints the domain's own powers at the book's levels
+    - 2026-09-26T03:09:10Z  src/rules_core/pilot_compute/pool_groups.rs::cleric_generic_domain_pass_grounds_animal_via_the_class_record_merge claimed a cleric 5 with domain:animal prints generic pool-pass member values (count > 0); actual domain:animal links to core_rulebook:domain:animal through the F4pre domain choice (core_rulebook:class:cleric#bonus1 offers Domains); the pass yields (count 0) and the held set prints the domain's own powers at the book's levels
+
+INCIDENTS  16  (0 produced plausible wrong results)
+  RECURRING x2  oracle-gate-without-absent-guard
+    - 2026-09-15T08:55:22Z  AT-35-E7-001 cycle 3 final-acceptance scan FAILS at HEAD 486c7f0cf0 on 7 shortfalls (S1 57/104 kanban rows not complete; S2 _refused.json holds 142 entries; S3 token_coverage refused=142 vs bar zero; S4 88 open deferrals; S5 2 of 125 receipts carry no scope-gate line; S6 the 3 named oracle-parity artifacts do not exist at their paths; S7 completion-manifest.json is stale at 49438 units / SHA 39dfd59b7e vs atlas population 49450). Closure stops: no retrospective, no sweep, no PR. (detected by python3 scripts/completion_atlas.py --check; python3 scripts/token_coverage.py --check; python3 scripts/pcgen_residue_gate.py --check --closure; awk -F'|' kanban status census; python3 scripts/retro.py summary --since 2026-09-07 --json)
+    - 2026-09-15T11:03:32Z  Full verify.sh at HEAD 486c7f0cf0 is RED: passed=48 FAILED=1 root-full, RESULT: FAIL. Exactly 1 'test result: FAILED' of 420 Running/Doc-tests lines (8925 passed across 419 suites). Suite tests/sd26_pilot_case_verification.rs, test full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch, panic at line 377: PCGen's own gradle build failed at pcgen/build.gradle:79 - Could not create task ':downloadJavaFXLocal', Unable to process url https://api.adoptium.net/v3/assets/feature_releases/25/ga, BUILD FAILED in 16m. NOT excused as environmental: that URL returns HTTP 200 re-queried from this box right after the run and the host pings at 10ms, so the cause is not established; and sd26_pilot_case_verification.rs was itself touched in this bundle at b91d16a66b. Needs one clean re-run to classify. (detected by scripts/verify.sh (all stages); grep -c 'test result: FAILED' /tmp/codex-verify-0vc2D9/root-full.log; curl -o /dev/null -w '%{http_code}' on the adoptium URL; git log 4c6c57eb9f..HEAD -- tests/sd26_pilot_case_verification.rs)
+    - 2026-09-16T02:33:57Z  Oracle-reading test lacked the cache_gen convention's presence guard, so its own self-check ('this gate proved nothing') fired for real in CI instead of being prevented by an early skip
+    - 2026-09-16T04:19:40Z  Ran 'git stash' investigating a diagnostic side-question mid-Epic-B, momentarily forgetting the standing rule against it on this checkout; recovered cleanly via stash pop
+    - 2026-09-16T14:55:18Z  CI never fetched the pinned PCGen oracle; cargo test panicked on 7 oracle-reading tests, and once fixed by fetching, 5 more tests either panicked on a fixture outside the sparse cone or a guard that only checked gradlew's executable bit, not the code/ Gradle project it also needs
+    - 2026-09-17T02:41:16Z  SD-36 Epic B: pgrep -f self-matched its own invocation, the exact hazard this repo's own memory already names ('pgrep wait loops must not match themselves'); root cause was not applying that known lesson
+    - 2026-09-17T10:17:14Z  python3 -m json.tool with two file args from a find() expansion clobbered a data file
+    - 2026-09-17T16:58:30Z  Edited source files mid-flight while a full verify.sh pass was still running its later stages; root-full's own FAIL had to be independently re-verified since it was captured before the edit
+    - 2026-09-19T17:19:55Z  sdkman's java/current is an empty directory on this box (not a symlink to 25-tem), so every pcgen-run-character.sh (gradlew) invocation panics with JAVA_HOME is set to an invalid directory; /usr/bin/java (OpenJDK 25.0.4) works fine outside sdkman. Pre-existing host condition, not an Epic A code regression -- identical failure regardless of which crate hosts the file.
+    - 2026-09-20T18:47:00Z  An agent 'resolved' a guarded graphify exit 1 with update --force and replaced the semantic graph with an AST-only one; a same-day snapshot made recovery possible.
+
+NEAR MISSES  1  (1 escaped and were fixed after the fact)
+       1  caught by manual audit of the SD-36 Epic C2 table-driven rewrite (commit 909942637d), followed by this cycle's vacuity-guard + sabotage-4 pass
+
+DEFERRALS  15 total, 14 open, 1 resolved
+    - Removal of the four folded, merged, unlocked Epic 6 worktrees (.claude/worktrees/wf_291be5c8-5f3-{89,90,91,94}) — workflow-instruction.md §10 step 2 — Not a judgment call and not a carve-out: removal was proved LOSSLESS after the fold was pushed (9 of 9 retro shards byte-identical; every report a strict superset with zero lines removed; no unmerged branch; no tracked mods) and then ATTEMPTED. 'git worktree remove --force' was refused by the harness permission layer, not by git. No workaround attempted  [revisit: Operator grants the wrap-up correction cycle git worktree remove permission, or moves removal to an operator step; in either case §10 step 2 needs a fold-first sub-step, since losslessness had to be proved here and was assumed by the two preceding sweeps]
+    - 17 of the 90 SD-35-window deferrals are NOT resolved by this cycle and stay open, named, in three groups with counts that sum to 17: (1) WORKTREE SWEEP = 10 (AT-35-E2-WRAPUP, AT-35-E2-REGATE, at-35-e2-regate2, at-35-e2-regate3, epic2-sheet-rule-fix2, AT-35-E3-WRAPUP, AT-35-E3-WRAPUP-RERUN, AT-35-E4-REGATE, AT-35-E5-REGATE, AT-35-E6-WRAPUP-FIX2) - 16 worktrees under .claude/worktrees/ holding 13G still exist at HEAD (ls | wc -l -> 16; du -sh -> 13G), so the sweep genuinely has not run and closing these would be a false resolution; (2) CONTENT/INVENTORY HOLES = 4, each a named record set, not a bucket: AT-35-E6-003 1789101548545 (the 2 advanced_race_guide/adventurers_guide '~ Elemental Fist' records of its 26 - the 24 population ones ARE answered by this cycle's census re-derivation but the selector/full-version label split is not), AT-35-E6-003 1789109174107 (advanced_players_guide:spell:wall_of_thorms still has no rule file at HEAD; mythic_adventures:spell:elemental_body_iiimod does), AT-35-E6-003 1789114924902 (reference_library_catalog.rs, 1,150 of 9,679 descriptions), at-35-e6-003-sweep 1789319139730-ish (docs/work-inventory.json rung-ordering defect, left unfixed); (3) AT-35-E1-003's 244 grounding_ref citations + AT-35-E7-001's own 2 (step 9 gate re-proving, and cycle 2's zero-close) = 3. NO refused token type: this cycle's converter refusal set is EMPTY (records=49450 converted=49450 refused=0) — groups (1) and (3, AT-35-E1-003 half) are AT-35-E7-003's scope - the bundle-closure sweep and the architecture-docs refresh - which is live kanban row 29, so the scope is owned, not dropped; a dispatched agent's permission classifier has refused git worktree remove on the shared checkout five times running (AT-35-E2-REGATE through AT-35-E6-WRAPUP-FIX2 each recorded it), so it is an orchestrator/operator action. Group (2) is real engine scope this cycle did not take and must not pretend to have taken. AT-35-E7-001's two are the acceptance scan's own steps and close when the scan re-runs and PASSES  [revisit: AT-35-E7-003 (kanban row 29) for group 1 and the AT-35-E1-003 citations; a named converter/consumer criterion for each of group 2's four record sets; AT-35-E7-001's next run for its own two]
+    - acceptance-and-verification.md §1's artifact column names 'artifacts/epic-5-residues/capability-register-closed.json'; the file committed and cited by AT-35-E5-005's receipts and the Epic 5 wrap-up report is 'capability-register-rederived.json'. §3a's substantive bar ('the capability register has no third state') IS met — 11 rows, 5 built, 6 unnecessary-under-sheet-rule, 0 open, units_covered_not_done_at_head=0 — so this is a name alignment in the package doc, not a missing deliverable — a scan cycle does not rewrite its own acceptance document mid-scan; §3a's checked bullet is the no-third-state condition, which passes, and renaming a committed artifact would break every receipt that cites it  [revisit: AT-35-E7-003 (kanban row 29), when the package docs are refreshed for the PR: align §1's artifact cell to the committed filename]
+    - decisions.md §3's one-build-per-cycle target was overrun by 36 of the 126 receipts carrying builds_recorded (73 read 0, 17 read 1, 36 read 2-6). Not converted into an acceptance shortfall: builds_recorded is a MEASURED count of compile sessions in the cycle's CARGO_TARGET_DIR, the overruns are self-declared in the receipts' own text, and no unit is un-done, no gate population narrowed and no figure falsified by any of them — acceptance-and-verification.md §3a says plainly 'Do not manufacture a shortfall either'; this is a cost-discipline miss, already recorded against itself by the cycles that made it, and the right home for it is the retrospective's cadence analysis rather than a closure stop  [revisit: AT-35-E7-002, the SD-35 retrospective: report the builds-per-cycle distribution with its denominator alongside build time before/after]
+    - removal of the 16 .claude/worktrees/wf_291be5c8-5f3-* dispatcher worktrees and the 15 worktree-wf_* branches they hold checked out — the Claude Code auto-mode permission classifier refuses `git worktree remove` on this shared checkout for a dispatched agent -- refused both as a loop and as a single explicit path; this is the eleventh recurrence of the same refusal (10 earlier deferrals from AT-35-E2/E3/E4/E5/E6 wrap-ups name it)
+    - The bundle-closure worktree sweep: 16 worktrees under .claude/worktrees/ holding 13G, and their 15 worktree-wf_* branches (workflow-instruction.md §11 step 3). Carried into AT-35-E7-003 by AT-35-E7-CLOSURE-CLEANUP's deferral 1789476280499. — SIXTH consecutive refusal of 'git worktree remove --force' by the Claude Code auto-mode permission classifier on this shared checkout (AT-35-E2-REGATE, AT-35-E2-REGATE2, AT-35-E2-REGATE3, AT-35-E3-WRAPUP-RERUN, AT-35-E6-WRAPUP-FIX2, and now this cycle). It is refused by the harness, not by git: AT-35-E6-WRAPUP-FIX2 already proved removal LOSSLESS for four of them (9 of 9 retro shards byte-identical, every report a strict superset, no unmerged branch, no tracked mods). No agent can clear it; per AGENTS.md rule 8 a warning copied forward six times is a missing mechanism, and per the blocker doctrine this is disposition 2 -- raise your hand and name the permission.  [revisit: Operator action, and it is the one thing standing between this bundle and a clean closure sweep: either run 'git worktree remove --force .claude/worktrees/wf_291be5c8-5f3-*' plus 'git branch -D worktree-wf_291be5c8-5f3-*' directly, or add a Bash permission rule for 'git worktree remove' so a dispatched agent can do it. Named in the PR body.]
+    - Resolution of PR #390's merge conflicts with origin/develop (template.md §6 step 5). 3 conflicted files, all apps/desktop/src-tauri/src/: character_hub.rs, rule_system_adapter.rs (both purely additive, resolved correctly in a trial merge), and class_catalog_generic.rs (NOT resolvable by an agent -- see reason). Trial merge done with git merge --no-commit, analysed, then git merge --abort; tranche/15 is byte-identical to what was pushed at d122d22b33. — class_catalog_generic.rs is a SEMANTIC collision, not a textual one, and resolving it either way is an operator ruling. SD-35 Epic 6 DELETED classify_class_record/select_baseab_formula/select_save_formulas/max_level_for/tokens_from from this live-side file because tokens_from reads data['raw_tokens'] -- a PCGen read in apps/desktop/**, which decisions.md §11 forbids and pcgen_residue_gate.py --closure fails on. Meanwhile origin/develop's v0.8 work added apps/desktop/src-tauri/src/class_spell_levels.rs:38, 'use crate::class_catalog_generic::{tokens_from, walk_json_files};'. So: take ours -> develop's new class_spell_levels feature does not compile; take theirs -> live_files goes above 0 and the bundle's central deliverable is undone. Neither is an agent's call. ../template/template.md §6 step 5 anticipates exactly this: on conflicts the script 'emits a merge_conflict:* receipt and exits non-zero -- the loop self-heals, OPERATOR RESOLVES MANUALLY'.  [revisit: Operator ruling needed at PR #390 merge time, one of: (a) port class_spell_levels.rs onto the converter-side sheet-rule data (data/sheet_rules/) so it needs no PCGen token read -- the SD-35-consistent fix, and the one the boundary implies; or (b) grant class_spell_levels.rs a named, registered exception in docs/governance/wired-integration-stubs-registry.md and rebaseline pcgen_residue_gate.py, accepting live_files>0. The other two conflicts are mechanical: both sides add struct fields to LoadSavedCharacterResponse and its two constructors -- keep both sides, develop's three (ability_scores, skill_allocations, equipment_selections) then SD-35's two (sheet_lines, sheet_rules_unavailable_reason).]
+    - Delete scripts/observer/pf1e_dashboard_producer.py (5,168 lines) and scripts/tests/test_pf1e_dashboard_producer.py (1,075 lines) entirely, and the producer-selftest verify.sh stage — The design appendix's own plan asked for this ('extract ~150 lines into doneness.py, then delete the producer') but also explicitly lists producer-selftest in the SAME epic's verify.sh KEEP list — a direct conflict the appendix did not resolve. Investigation this cycle found only 2 real remaining live importers of the producer: scripts/coverage_ledger.py (doneness_verdict/EXCLUDED_BOOKS only, now decoupled via the new scripts/observer/doneness.py) and scripts/reachability_audit.py (a dynamic importlib load using producer.EXCLUDED_BOOKS AND producer.WIRING_CLASS_VALUES, the latter not extracted). scripts/shape_ledger.py's import was dead code (removed). Deleting the producer file now would break reachability_audit.py (a KEPT verify.sh stage) and would need auditing whatever else in its 5,168 lines still matters beyond doneness_verdict/WIRING_CLASS_VALUES -- a materially bigger, riskier task than this epic's narrow ask, so left for a dedicated future cycle.  [revisit: A future cycle that (a) extracts WIRING_CLASS_VALUES into a shared module the same way doneness.py extracted the doneness ladder, and (b) re-audits every remaining pf1e_dashboard_producer.py reference (prose and code) for other hidden live dependencies, can then delete the producer file, its test, and the producer-selftest stage together in one pass.]
+    - Sweep src/ and apps/ for live-voice doc-comment citations of instruments this epic retired (reach_gate.rs, v06_work_inventory.rs, support_state_matrix.rs) the same way round 6 marked docs/architecture/status.md's 9 citations '(retired, SD-36 D3)' — The SD-36 design plan's own appendix section 4 classifies these as 'prose only; tidy optional', so leaving them is not a scope violation of the brief. But round 6 selectively fixed the equivalent citations in ONE file (status.md, 9 markers) while docs/architecture/testing.md's own sibling architecture docs were already fixed in earlier rounds (round 3 item 5-7) -- src/ and apps/ were never swept, so the repo is now internally inconsistent about the same defect class: some retired-instrument citations carry a marker, most do not.  [revisit: A dedicated cleanup cycle scoped to doc-comment/prose-only edits across src/ and apps/, verified with the same two grep counts (target: 0, or an explicit allow-list of narrative-history comments that intentionally still name the retired file for historical context)]
+    - Extends the original pf1e_dashboard_producer.py deletion deferral (1789532346156-sd36-epic-b-fe7d41): its 'remaining work' did not name 3 concrete no-stub-doctrine smells a round-7 verifier found in the deferred, untouched producer file and its sidecar: (1) scripts/observer/pf1e_dashboard_producer.py:680-699 load_work_inventory() still calls _load_cached_dump('v06_work_inventory', ...bin_args=['--summary']), which ultimately shells out to 'cargo run --bin v06_work_inventory' -- a binary this epic deleted (src/bin/v06_work_inventory.rs, D3), so that code path is permanently dead/erroring, not merely unused; (2) the same file's module docstring at lines 515-520 still instructs a reader to use 'scripts/publish-site-dashboard.sh --check', a script this epic also deleted; (3) site/dashboard/inventory-pin.json's own '_comment' field describes itself as 'Written by scripts/publish-site-dashboard.sh' and describes a '--check-pin' flow that no longer exists in any script in the tree. — pf1e_dashboard_producer.py is intentionally untouched per the original deferral (deleting it now would break the KEPT producer-selftest verify.sh stage and scripts/reachability_audit.py's live WIRING_CLASS_VALUES dependency), and neither the producer file nor site/dashboard/inventory-pin.json is in this epic's declared write scope (brief's allowed-write-scope list: the appendix's §3/§4/§5 files only -- pf1e_dashboard_producer.py is untouched by design and inventory-pin.json is not in the §5 snapshot list). Naming the smells here, rather than silently leaving them for a future reader to rediscover, is the no-stub-doctrine-compliant disclosure this deferral type exists for.  [revisit: The same future cycle named in the original deferral's revisit field (extract WIRING_CLASS_VALUES, then delete the producer) should also delete or rewrite these 3 sites rather than carry them forward a second time; if that cycle is still blocked, a narrower interim fix could rewrite load_work_inventory() to return None immediately (matching its already-None-tolerant callers) and reword both docstring/comment pointers to name the frozen docs/work-inventory.FROZEN.md sidecar instead of the deleted scripts.]
+    - CONV-06 (formula-paraphrase leaks placeholder English into prose), CONV-07 (PI redaction over-triggers on internal variable/token names, wiping whole records), CONV-08 (a negated PREABILITY gate against a never-independently-selectable ability silently resolves always-true via Holdable::MissingRule=false) -- SD-35 code review P2s in src/pcgen_import/sheet_rule/prose.rs, pcgen_desc.rs, prereq.rs — each fix changes semantics that ripple across the full 49,450-record corpus (a prose-paraphrase refusal-vs-verbatim decision, PI redaction scoping, and unresolved-reference gate polarity) and needs its own RED/GREEN cycle with a corpus-wide before/after diff to avoid trading one silent-wrong-output class for another; SD-36 Epic E's time budget covered the 4 P1s (CONV-01..04), CONV-05, both P1 gates and the desktop P1s/orphan-command wiring instead
+    - PC4-1: Warpriest Blessing chooser 'recognized' contradiction (pilot_compute/mod.rs ~20867, blessing_recognized flag only checks Destruction/Strength selections while push_generic_pool_group_selection_description_magnitude already grounds 6 other real Blessing groups -- Earth/Trickery/Rune/Protection/Repose/Knowledge -- generically, so choosing e.g. Rune Blessing gets a real magnitude AND a claim_blocking=true 'unsupported' diagnostic saying no Blessing choice is recognized, at the same time — the review's own p1-status.md marked this COMPLEX and unresolved pending a trace of grounding order; confirmed the contradiction is real by reading push_generic_pool_group_selection_description_magnitude's second call site (the already_hand_modelled_keys exclusion list proves 6 other groups ARE generically grounded), but the correct fix needs to detect, per-player-choice, whether that generic pass actually SUCCEEDED for their specific group (member-level formula resolution can silently skip) rather than assuming success from group membership alone -- a check that touches the same complex per-member resolution path GATE-01 already flagged as easy to get subtly wrong, and this cycle's time budget went to the mandatory P1s (CONV-01..04, engine P1-1/2/4, desktop P1-01/02) plus PC8-1/PC8-2/R12-01 instead
+    - GATE-02: widen scripts/oracle_harness/sheet_parity.py's roster beyond the 29 CRB characters to a stratified cross-book sample, and re-run the export/compare PCGen pipeline against it — the roster/export/compare pipeline requires a real PCGen BatchExporter invocation per new character (Java process, per-character .pcg authoring against each target book's own class/race/feat/equipment naming conventions) -- a real infrastructure task, not a doc or code-only change, and this cycle's time budget went to the mandatory P1s plus the achievable P2s (CONV-05, engine-P2-1, GATE-01, PC8-1/PC8-2, R12-01) instead. Completed the finding's smaller, achievable half instead: decisions.md now states the 29-character/Core-Rulebook-only/0.2%-of-corpus denominator inline wherever the 156->159 figure is cited, and the 8 individual disagreements (2 lines + 6 chassis) are now tracked as named open items in risks-and-open-questions.md §11 rather than left undriven
+    - Consolidate corpus_loader::live_sheet_rules() (Option-returning, no named reason) with the new rules_core::sheet_rule_package::package() (Result-returning, named Err per §3.4a's contract) into one process-wide package handle — F1.9 (§3.4a, review finding 5) required a Result<&'static SheetRulePackage,String> handle reachable from rules_core pure functions / the class_census bin with a NAMED reason on failure; corpus_loader::live_sheet_rules() already existed as a similar but weaker (Option-returning, no reason) OnceLock and is already used by class_census.rs's own prestige-carrier gate lookup. Consolidating the two was outside this step's owned files (src/rules_core/class_census.rs, src/bin/class_census.rs, the new package-handle module) and would have expanded scope into an existing, working call site with no test coverage for the change in hand.  [revisit: Whenever a future step touches corpus_loader.rs or wires build_pilot_headless_receipt/compute_pilot_base_chassis to the package handle directly (the rest of F1.9's own acceptance row, not scoped to this step)]
+
+REWORK  1
+       1  assumed Rust source text's braces are all structural without accounting for braces inside string literals
+
+VERIFICATION  65 runs, 20 with a failing stage
+       8  root-full
+       5  clippy
+       4  shape-engine-boundary-selftest
+       3  crate-wall
+       3  ingest-full
+       3  pcgen-residue-gate
+       2  0
+       2  token-coverage
+       1  class-dump
+       1  corpus-bundle
+       1  corpus-sweep
+       1  corpus-sweep-selftest
+       1  corpus-trap-audit
+       1  declared-pi-audit
+       1  denominator-gate
+       1  desktop
+       1  pi-sweep
+       1  producer-selftest
+       1  root-lib
+       1  sheet-rules-check
+
+GIT (same window)  173 commits by 1 authors
+    1.526 events per commit
+
+LOG  30 shards at /home/ubuntu/workspace/repos/codex/docs/retro/events

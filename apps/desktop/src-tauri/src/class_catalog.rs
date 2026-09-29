@@ -64,11 +64,11 @@ fn map_catalog_entry(
 /// picks one of the two, and the catalog's job is to let a reader compare
 /// them.
 ///
-/// **The 16 APG/ACG classes are still absent from this catalog.** That is a
-/// pre-existing gap, not one this change introduced, and it was deliberately
-/// left alone: those books have their own `class_chassis_resolve` seams and
-/// widening the catalog to them is a separate piece of work with its own
-/// row-count expectations. The screen's caption is derived from the data
+/// **ACG's ten classes are still absent from this catalog.** APG's six joined
+/// it in SD-36 Epic F2a, through `class_catalog_generic`'s appended
+/// `advanced_players_guide` book (alongside CRB's NPC, `Ex-*` and prestige
+/// classes); ACG has its own `class_chassis_resolve` seam and no converted
+/// generic path here yet. The screen's caption is derived from the data
 /// rather than hardcoded, so it states the true class count either way.
 pub fn build_class_catalog() -> ClassCatalogResponse {
     let mut entries: Vec<ClassCatalogEntryDto> =
@@ -157,7 +157,32 @@ mod tests {
         //     degraded, so every magnitude on it is the rule's own WORDS
         //     (`decisions.md` §1) and it is not a chassis at all.
         // 1108 + 10 + 10 + 10 - 10 = 1128.
-        assert_eq!(response.entries.len(), 1128);
+        //
+        // SD-36 Epic E CONV-05 fixed degradation to be per-occurrence rather
+        // than record-wide (`src/pcgen_import/sheet_rule/convert.rs`): a
+        // class record's clean BAB/save formulas now print their real
+        // numbers even when an unrelated token elsewhere on the SAME record
+        // degrades. This un-hid Evangelist's real chassis (10 more prestige
+        // levels, reversing the "- Evangelist" line above) plus 18 other
+        // (book, slug) pairs across `CLASS_FAMILY_BOOKS` with the identical
+        // masking bug (verified by hand for Evangelist: 3/4 BAB, good Reflex
+        // -- a genuine PF1 progression). 19 newly-resolving records x 10
+        // prestige levels each = 190 more rows: 1128 + 190 = 1318. Re-derive
+        // the 19 count: `generic_class_catalog_entries`' own
+        // `load_generic_class_progressions` now returns 81 records, not 62
+        // (see `class_catalog_generic.rs`'s tests).
+        //
+        // SD-36 Epic F2a appended `core_rulebook` and `advanced_players_guide`
+        // to `CLASS_FAMILY_BOOKS`: +500 rows, 1318 + 500 = 1818.
+        //   core_rulebook          +240 = 5 NPC + Ex-Barbarian + Ex-Paladin (7 x 20)
+        //                                 + 10 prestige (10 x 10); its 10 base
+        //                                 classes are NOT re-listed (the table
+        //                                 above already prints them; Monk has no
+        //                                 converted chassis row at all)
+        //   advanced_players_guide +260 = 6 base + Antipaladin + Ex-Antipaladin +
+        //                                 Ex-Inquisitor (9 x 20) + 8 prestige (8 x 10)
+        // The eleven CRB counts below stay 20 each: no CRB class is listed twice.
+        assert_eq!(response.entries.len(), 1818);
 
         let counts = |class_id: &str| {
             response
@@ -224,17 +249,11 @@ mod tests {
                 response.entries.iter().filter(|e| e.class_id == unchained).collect();
             assert_eq!(unchained_rows.len(), 20, "{unchained}");
 
+            // SD-36 Epic F2a: the APG Summoner is in this catalog now (its
+            // converted record, via `class_catalog_generic`'s appended
+            // `advanced_players_guide`), so all three pairs are compared.
             let base_rows: Vec<_> =
                 response.entries.iter().filter(|e| e.class_id == base).collect();
-            if base == "Summoner" {
-                // The APG Summoner is not in this catalog at all yet (see
-                // `build_class_catalog`'s note on the 16 absent APG/ACG
-                // classes), so there is no base row to compare against --
-                // recorded explicitly rather than letting the loop skip it
-                // silently.
-                assert_eq!(base_rows.len(), 0, "APG Summoner is not in this catalog yet");
-                continue;
-            }
             assert_eq!(base_rows.len(), 20, "{base}");
             for level in 1..=20u8 {
                 let u = unchained_rows.iter().find(|e| e.level == level).expect("level");

@@ -1,0 +1,841 @@
+---
+canonical: true
+bundle_id: SD-36
+---
+
+# SD-36 Receipts
+
+Closure-gate receipt blocks and cycle receipts. Populated as the bundle runs.
+
+---
+
+## Architecture-truth-up receipt
+
+(Populated at Epic D step 2)
+
+```yaml
+architecture_truth_up:
+  bundle: SD-36
+  integration_target: develop
+  documents_touched: []
+  exit_code: null
+  timestamp: null
+```
+
+---
+
+## Graphify-update receipt
+
+(Populated at Epic D step 3)
+
+```yaml
+graphify_update:
+  bundle: SD-36
+  integration_target: develop
+  exit_code: null
+  timestamp: null
+```
+
+---
+
+## Epic A evidence (criteria A5, A10 — 2026-09-19)
+
+### A5 — `CARGO_MANIFEST_DIR` path rewrites
+
+`git grep -n 'CARGO_MANIFEST_DIR' -- crates` finds exactly one live, non-comment
+use: `crates/codex-ingest/src/lib.rs`'s own `pub fn repo_root()`, whose entire
+job IS resolving `CARGO_MANIFEST_DIR` (this crate's own manifest dir, two
+levels under the repo root, joined with `../..`) into the real repo root
+for every other caller in the crate to use instead of a bare
+`env!("CARGO_MANIFEST_DIR")` or a `"."`/relative-path fallback. The remaining
+hits are doc comments explaining that resolver's own provenance (`bonus_stack_reader.rs`,
+`corpus_trap_baseline.rs`, `parity_report.rs`, `pcgen_runner.rs`, two test
+files) — not further definitions. This is the single-definition shape the
+criterion intends: one canonical resolver, every caller routed through it.
+
+`git grep -c 'crate::pcgen_import' -- crates/codex-ingest` shows in-crate
+callers already spelled `crate::pcgen_import::…` (the crate's own internal
+path), never `codex::pcgen_import` or `codex_ingest::pcgen_import` from
+inside the crate itself — correct for code living inside the crate.
+
+This cycle's own contribution (previously 18 uncommitted files, reviewed and
+correctness-checked): 8 `crates/codex-ingest/src/bin/*.rs` tool bins and 6
+test files that read `data/corpus` via a bare relative path or a
+`CODEX_REPO_ROOT`/`"."` fallback (both silently wrong once the crate's
+manifest dir stopped being the repo root) now resolve it via
+`codex_ingest::repo_root()` / `crate::repo_root()`. Verified line-by-line;
+no behavior change beyond the path source.
+
+### A2 — residue gate `--check --closure` does NOT exit zero (open gap)
+
+`grep 'lst_file' scripts/pcgen_residue_gate.py` and the identifier-scan part
+of the acceptance command both hold: `lst_file files=0 hits=0` and
+`codex_ingest files=0 hits=0` — Epic A's own code-wall patterns are clean.
+But `python3 scripts/pcgen_residue_gate.py --check --closure` itself exits 1
+(`verdict=FAIL`, `live_files=49885 live_hits=181711`), because the gate's
+shipped-data class (ruling B17) folds in every file the Tauri bundle ships,
+and `apps/desktop/src-tauri/tauri.conf.json` now bundles
+`"../../../data/corpus/": "data/corpus/"` whole (this tranche's separate
+desktop-corpus-root commit, `217f712bab`, explicitly out of this cycle's
+write scope to undo). The recorded ratchet baseline
+(`scripts/pcgen-residue-baseline.env`, `files=260 hits=12736`, 2026-09-07)
+predates that bundling change by 10 days, so even plain `--check` (not just
+`--closure`) now fails too (`verdict=FAIL_INCREASED`). Logged as
+`scripts/retro.py correction` (`docs/retro/events/sd31-transcribe.jsonl`).
+**Not fixed here** — resolving it means either the corpus ships redacted
+(provenance fields stripped before bundling) or the residue gate's
+shipped-data scan is deliberately re-scoped for a corpus that is meant to
+ship, both of which are decisions past Epic A's "PCGen crate wall" scope.
+
+### A10 — `codex-ingest` baselines (first recording)
+
+See `scripts/verify-baselines.env`'s SD-36 Epic A section for the full
+derivation. Headline: `BASELINE_INGEST_FULL_TESTS=1673`,
+`BASELINE_INGEST_TEST_BINARIES=157`, `BASELINE_CLIPPY_WARNINGS_INGEST=0`,
+measured from `cargo test --locked --no-fail-fast -p codex-ingest -j 6` and
+`cargo clippy --locked --tests -j 6` (in `crates/codex-ingest`). The test run
+is NOT clean: 6 suites each fail exactly 1 test, all six panicking inside
+`pcgen-run-character.sh` with an identical `JAVA_HOME is set to an invalid
+directory` error — `~/.sdkman/candidates/java/current` is an empty directory
+on this box, not a symlink to a real JDK. Verified as a pre-existing host
+condition, not an Epic A regression: `/usr/bin/java` works, the failure is
+identical regardless of which crate hosts the file, and none of the six
+files' content changed beyond the path move. Logged as
+`scripts/retro.py incident` (`docs/retro/events/sd31-transcribe.jsonl`,
+`recurrence_key=sdkman-java-current-broken`). Net effect: `verify.sh`'s
+`ingest-full` stage will report FAIL (cargo exit 101) on this box until
+either the box's `JAVA_HOME` is fixed, or these 6 tests gain the same
+checkout-unavailable-skip pattern `sd27_feat_prerequisite_enforcement.rs`
+already uses for `PCGEN_CORPUS_ROOT`. Neither fix is in this cycle's write
+scope (`~/.sdkman` is outside the repo; the skip-pattern rewrite is new
+production-test-logic scope beyond the A5/A9/A10 batch this cycle inherited).
+
+---
+
+## Epic C2.1/C2.2 evidence — table-driven test rewrite (2026-09-20)
+
+The rewrite converts the two near-universal negative-control shapes (found in
+both families) from hand-written per-(class,level) bodies to a `const` row +
+`macro_rules!` invocation, while leaving every test's fn name, module, file,
+and every bespoke (non-uniform) body untouched. Full per-cluster survey and
+per-shape rationale: `sd18_widening-progress.md` and
+`sd13_progression-progress.md` (this cycle's scratchpad,
+`/tmp/.../scratchpad/sd36/c2/`).
+
+### Before/after line counts and test counts, per family
+
+| family | lines before | lines after | command | tests before | tests after | command |
+|---|---|---|---|---|---|---|
+| `tests/sd18_widening` | 33,621 | **29,041** of 33,621 (-4,580 lines, -13.6%) | `git ls-tree -r --name-only HEAD -- tests/sd18_widening \| grep '\.rs$'` piped through `git show HEAD:<f> \| wc -l` per file for "before" (matches `cat tests/sd18_widening/*.rs \| wc -l` run on the untouched HEAD tree); `cat tests/sd18_widening/*.rs \| wc -l` for "after" (live tree) | 891 | **891** of 891, unchanged | `cargo test --locked --test sd18_widening -- --list \| grep -c ': test$'`, both before and after |
+| `tests/sd13_progression` | 35,704 | **34,258** of 35,704 (-1,446 lines, -4.05%) | same method as above, `-- tests/sd13_progression` | 1,136 | **1,136** of 1,136, unchanged | `cargo test --locked --test sd13_progression -- --list \| grep -c ': test$'`, both before and after |
+
+Re-derived live in this docs pass (2026-09-20, same HEAD `5ee77f8d85` + this
+cycle's uncommitted working tree): the "after" test counts above were
+re-confirmed by a fresh `cargo test --locked -j 2 --test sd13_progression
+--test sd18_widening -- --list` run, `grep -c ': test$'` = 1136 and 891
+respectively, and a fresh full run, `cargo test --locked -j 2 --no-fail-fast
+--test sd13_progression --test sd18_widening`, both green: `test result: ok.
+1136 passed; 0 failed` / `test result: ok. 891 passed; 0 failed`. Note the
+`sd13_progression` "after" line count above (34,258) is 3 lines lower than
+the 34,261 the rewrite's own progress note recorded — re-derived directly
+from the live tree rather than carried forward from that note, per this
+program's own "every figure carries the command that produced it" rule; the
+3-line gap is small enough to be later formatting/import cleanup and does not
+change any test-count or pass/fail figure.
+
+Rows converted: **182** in `sd18_widening` (`tests/sd18_widening/rows.rs`:
+80 `FighterNegRow` + 38 `NegControlRow` (boundary) + 64
+`MulticlassNegControlRow`) and **143** in `sd13_progression`
+(`tests/sd13_progression/rows.rs`: 84 `recognition_negative_controls!` rows +
+59 `multiclass_negative_controls!` rows, mechanically extracted by
+`c2sd13_extract.py`, JSON: `c2sd13_extracted.json` — `shape1` 84, `shape2`
+59, `anomalies` 29 left bespoke). `sd18_widening` additionally collapsed the
+two-line `load()` + `compute_pilot_base_chassis()` preamble shared by 816 of
+its 891 tests into `tests/sd18_widening/support.rs`'s `support::compute()`
+(the assert lines themselves were never touched by this collapse).
+
+### `--list` diff result (both families, both directions)
+
+Byte-identical, re-run live in this docs pass:
+
+```
+$ diff <(cargo test --locked --test sd13_progression -- --list | sort) <(sort list-sd13-before.txt)
+(only the trailing "N tests, 0 benchmarks" summary line differs — the sorted test-entry lines themselves match exactly)
+$ diff <(cargo test --locked --test sd18_widening -- --list | sort) <(sort list-sd18-before.txt)
+(no output — exact match)
+```
+
+`list-sd13-before.txt` / `list-sd18-before.txt` are this cycle's own
+pre-rewrite `--list` captures (`baseline.md`), taken from the same untouched
+HEAD the line-count table above uses.
+
+### The three sabotages — identical failing-set counts before/after (`baseline.md`)
+
+Each sabotage is a single-line edit inside `src/rules_core/pilot_compute`
+(never `tests/`), applied, tested, reverted (`git apply -R`), confirmed clean
+(`git status -- src`) before the next. Re-run three times against the
+rewritten tree (`sabotage-N-after-1`, `-after-2`, `-after-9`) to rule out
+flake; every run's failing-NAME set diffs empty against the pre-rewrite
+baseline (`sabotage-N-before.failed.txt`):
+
+| sabotage | site | edit | failing (sd13 / sd18 / total), before == after (×3 re-runs) |
+|---|---|---|---|
+| 1 | `src/rules_core/pilot_compute/class_barbarian.rs:2381` | `level_value / 2 + 2` → `+ 3` (Barbarian good-Fortitude save) | 9 / 13 / **22**, identical |
+| 2 | `src/rules_core/pilot_compute/class_cleric.rs:1023` | `(3 + ability_modifiers.charisma).max(0)` → `(4 + ...)` (Channel Energy uses/day) | 9 / 10 / **19**, identical |
+| 3 | `src/rules_core/pilot_compute/class_paladin_ranger.rs:2096` | `(paladin_level - 3).max(0)` → `(paladin_level - 2)` (effective caster level) | 13 / 1 / **14**, identical |
+
+`diff sabotage-N-before.failed.txt sabotage-N-after-9.failed.txt` (and
+`-after-1`, `-after-2`) all produce no output for N in 1,2,3 — the same test
+NAMES fail, not merely the same count, which is what the safety rule
+("assertions are moved, never rewritten") actually requires proof of. All
+three sabotages individually clear the required 10-test floor and hit both
+families.
+
+### Self-audit result
+
+- **`sd18_widening`**: `self_audit.py` extracted the multiset of every
+  string/numeric literal inside each `assert!`/`assert_eq!`/`assert_ne!`/
+  `.expect(` in the OLD body (`git show HEAD:<file>`) and in the NEW
+  representation (direct source for bespoke/setup-collapsed tests, or
+  macro-invocation args + the generating row's fields for the 182 row-driven
+  tests), and reported any OLD literal missing from the NEW set. First pass:
+  83 apparent mismatches, both traced to audit-script bugs (comments inside
+  the old `assert!(...)` parens contributing stray literals; the Sorcerer
+  row's `extra_exact` field not yet in the reconstruction) — fixed, re-run.
+  **Final: `self_audit_result.json` → `{"total_checked": 891, "total_macro":
+  182, "total_direct": 709, "mismatches": []}`.**
+- **`sd13_progression`**: no separate old-vs-new literal diff script exists
+  in this cycle's scratchpad (unlike `sd18_widening`'s `self_audit.py`) —
+  correcting this doc's own would-be overclaim: the equivalent verification
+  actually performed for this family is (a) `c2sd13_extract.py`'s
+  extraction-time template match, which only converts a test into a row if
+  its body matches the shape's regex exactly (`parse_predicate` must
+  succeed) and marks anything that doesn't as an `anomaly`, left bespoke
+  rather than guessed at (29 anomalies recorded, `c2sd13_extracted.json`);
+  (b) the byte-identical `--list` diff above; (c) the green full-suite run;
+  and (d) the sabotage-gate re-run above. Together (b)+(c)+(d) are the same
+  externally-observable proof the sabotage gate is designed to give — a
+  literal-by-literal audit was simply not built for this family this pass.
+
+### What stayed bespoke, and why
+
+- **`sd18_widening`** (709 of 891 tests untouched beyond the setup-collapse):
+  19 Fighter/Wizard multiclass tests whose assertion polarity flipped
+  (now-genuinely-gains, not a negative control); 10 Druid boundary/multiclass
+  tests using a custom `is_gated_druid_chassis_record` predicate + a
+  9-argument `assert_wolf_companion_stat_block` call; 89
+  `*_truth_is_unchanged_by_this_slice` tests (only 31/89 fit a plain
+  checks-list — the rest mix `values_with_prefix` vector comparisons,
+  `.detail.contains(...)` string checks, `has_explanation(...)` booleans,
+  and direct field reads, each its own shape); ~591 inherently one-off
+  per-(class,level) tests (base-attack/save progressions, feature-magnitude
+  rises, spell tables).
+- **`sd13_progression`** (993 of 1,136 tests untouched): the 29 extraction
+  anomalies above (4 Paladin two-checker `fighter_and_ranger_do_not_gain_*`
+  rows; 25 `multiclass_*` rows carrying a named helper-fn predicate, an
+  in-expression exclusion comment, or — for Wizard — a flipped
+  now-genuinely-positive assertion); the 92
+  `was_later_widened_into_the_supported_tranche` tests (mixed
+  predicate-only/full-recompute shapes); the 67+67
+  `base_attack_bonus`/`base_saves` tests (regular outline, but per-class
+  assert-count/message variance); the 35+28 `truth_is_unchanged` tests; the
+  25 `spell_bearing_baseline` tests; the 19 `base_attack_and_saves` tests;
+  and ~640 smaller/singleton feature-specific tests (rage, channel energy,
+  domain choice, bloodline, wild shape, flurry, evasion, animal companion,
+  etc.). None of these were forced into a template — the safety rule
+  (assertions moved, never rewritten, never guessed through) forbids it, and
+  converting them correctly would need a separately-verified, richer
+  per-shape row schema this pass did not build.
+
+### Correction — commit `45ef7e2327`'s subject does not match its contents
+
+Commit `45ef7e232755b457d3c6f0afbbbf8c812eaaa875`'s subject line reads
+`refactor(sd36,epic-c2,epic-d): table-driven widening tests, shared test path
+helper, closure docs` — but `git show 45ef7e2327 --name-status` touches zero
+files under `tests/sd18_widening/` or `tests/sd13_progression/`; its actual
+content is the `tests/support/paths.rs` consolidation (Epic C2.3) and the
+Epic D closure-doc refresh. The table-driven rewrite itself (`rows.rs` /
+`support.rs`, both families) landed as **uncommitted working-tree changes**
+at the time that commit was made, and lands in the commit that follows this
+docs pass, not in `45ef7e2327`. Verified: `git show 45ef7e2327 --name-status
+| grep -c 'tests/sd18_widening\|tests/sd13_progression'` → `0`.
+
+### Vacuity guards + multiclass sabotage parity (2026-09-20 follow-up)
+
+An audit of the table-driven rewrite found that all 64 rows of
+`MULTICLASS_NEG_ROWS` (`tests/sd18_widening/rows.rs`) had been passing
+vacuously: `new_sub` held a literal backslash-n instead of a real newline, so
+`fixture.replace(row.old_sub, row.new_sub)` never added the second
+`class_level=` line, the character loaded with one garbage class, and both
+negative-control asserts passed for the wrong reason. The escaping had
+already been fixed by the time of this follow-up, but only 1 of the 64 rows
+had been sensitivity-checked, and none of the three sabotages above ever
+touched a multiclass test — a real gap in the safety net.
+
+**Guards added** (all additions, no pre-existing assert changed): in
+`tests/sd18_widening/rows.rs`, `sd18_boundary_neg_control_test!` and
+`sd18_multiclass_neg_control_test!` now assert the fixture contains
+`old_sub` exactly once before the substitution, that the substitution
+actually changed the fixture, and that the LOADED character (`tests/common`'s
+`load`, parsed via `src/rules_core/character_input.rs`'s own
+`apply_class_level` rule) carries the class id/level `new_sub` claims — for
+the multiclass macro, that the mutated fixture has exactly two
+`class_level=` lines and the loaded character has exactly two class entries
+matching `new_sub`. `tests/sd13_progression/rows.rs`'s
+`multiclass_negative_controls!` macro gets the identical guard (its
+`recognition_negative_controls!` macro does no substitution, so needs none).
+Two new helper fns (`parse_class_colon_level`, `parse_class_level_lines`)
+derive the expected class id/level by parsing the row's own `new_sub`/`$to`
+string, rather than widening every row by hand with a duplicate field.
+
+**Guard-bite proof**: re-introduced the original defect (`\\n` in place of a
+real newline) in `MULTICLASS_NEG_ROWS`'s `barbarian_level12` row —
+`multiclass_barbarian_level12_is_not_promoted_by_this_slice` now fails on
+`"barbarian_level12: multiclass fixture must have exactly two class_level
+lines after substitution, got 1"`. Separately mismatched one boundary row's
+`old_sub` (`barbarian_level12`'s `NegControlRow`) — `barbarian_level_21_is_
+not_promoted_by_this_slice` now fails on `"fixture must contain old_sub
+'class:barbarian:99' exactly once ... left: 0 right: 1"`. Both edits
+reverted; `git diff --stat tests/sd18_widening/rows.rs
+tests/sd13_progression/rows.rs` shows only the guard additions themselves.
+
+**Sabotage 4 — multiclass promotion, sabotage-parity proof**: the two
+existing sabotage sites above (class chassis magnitude constants) don't
+touch the multiclass gate at all, so they were never going to trip a
+multiclass negative control; sabotage 4 targets the gate directly.
+`src/rules_core/pilot_compute/class_barbarian.rs`'s
+`supported_barbarian_level` widened from matching only a genuinely
+single-class Barbarian (`[class_level]` slice pattern) to `.find()`-ing a
+Barbarian entry anywhere in `class_levels`, so a Barbarian+Fighter mix
+wrongly grounds Barbarian's namespaced `class_chassis.barbarian.*`/
+`class_feature.barbarian.*` explanations (patch:
+`/tmp/.../scratchpad/sd36/c2/sabotage-4.patch`). Run against the CURRENT
+(rewritten) tree, `cargo test --locked -j 2 --no-fail-fast --test
+sd18_widening --test sd13_progression`: **18 failures**, all multiclass
+Barbarian negative controls — the 9 Barbarian rows of `sd18_widening`'s 64
+`MULTICLASS_NEG_ROWS` (`barbarian_level12`..`barbarian_level20`) plus the 9
+Barbarian multiclass tests in `sd13_progression`
+(`barbarian_level2`..`barbarian_level10`); every other multiclass negative
+control (bard, cleric, monk, paladin, ranger, rogue, sorcerer) stays green,
+as expected for a Barbarian-only gate change
+(`sabotage-4-after.failed.txt`). Ran the identical patch against a worktree
+of the PRE-REWRITE commit `5ee77f8d85` (`git worktree add
+<scratch>/wt-before 5ee77f8d85`, `CARGO_TARGET_DIR=<scratch>/wt-before-target`,
+same command; worktree removed after): **18 failures**, the same 18 test
+names (`sabotage-4-before.failed.txt`). `diff sabotage-4-before.failed.txt
+sabotage-4-after.failed.txt` — no output, identical sets. The rewrite did not
+weaken these 18 tests' sensitivity to this defect shape.
+
+**Re-verification after the guards landed**: `-- --list` for both families,
+sorted and diffed against `list-sd18-before.txt`/`list-sd13-before.txt` —
+identical (no output). Full run, `cargo test --locked -j 2 --no-fail-fast
+--test sd18_widening --test sd13_progression`: `test result: ok. 1136
+passed; 0 failed` / `test result: ok. 891 passed; 0 failed`. `cargo clippy
+--locked --tests -j 2 -- -D warnings`: clean.
+
+---
+
+## Epic C2 evidence (criterion C2.5 — 2026-09-20)
+
+### C2.5 — Oracle tests kept, run once against the real PCGen corpus
+
+Nothing under `#[ignore]` was deleted or edited by this cycle: `git grep -c
+'^#\[ignore\]\|    #\[ignore\]' -- tests` shows 21 hits across 20 files
+(`tests/sd22_*_resolves.rs`), and the same pattern over
+`crates/codex-ingest/tests` shows 31 hits across 6 files (a 7th match,
+`pcgen_runner_smoke.rs`, only mentions `` `#[ignore]` `` in a doc comment —
+it has zero real `#[ignore]` attributes, confirmed by `grep -c '#\[ignore\]'
+crates/codex-ingest/tests/pcgen_runner_smoke.rs` = 0).
+
+Both sets were run once, for real, against the pinned PCGen checkout's data
+directory (`PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data`, the same
+default `tests/support/paths.rs`'s `pcgen_data_root()` resolves to):
+
+```
+PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data cargo test --locked \
+  --no-fail-fast --test sd22_acg_class_hunter_resolves \
+  --test sd22_apg_class_inquisitor_resolves --test sd22_acg_class_warpriest_resolves \
+  --test sd22_apg_class_oracle_resolves --test sd22_acg_class_skald_resolves \
+  --test sd22_acg_class_shaman_resolves --test sd22_acg_class_arcanist_resolves \
+  --test sd22_apg_class_summoner_resolves --test sd22_acg_class_bloodrager_resolves \
+  --test sd22_acg_class_brawler_resolves --test sd22_acg_class_swashbuckler_resolves \
+  --test sd22_apg_class_alchemist_resolves --test sd22_acg_class_investigator_resolves \
+  --test sd22_acg_spell_list_resolves --test sd22_apg_spell_list_resolves \
+  --test sd22_apg_equipment_resolves --test sd22_apg_class_witch_resolves \
+  --test sd22_acg_class_slayer_resolves --test sd22_apg_class_cavalier_resolves \
+  --test sd22_acg_equipment_resolves -- --ignored --test-threads=2
+```
+
+Result: **21 passed, 0 failed** (root `tests/`, one file —
+`sd22_acg_class_warpriest_resolves.rs` — carries 2 `#[ignore]` tests, all
+others 1 each). Same shape for `crates/codex-ingest`:
+
+```
+PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data cargo test --locked \
+  --no-fail-fast -p codex-ingest --test sd17_a_include_graph \
+  --test sd17_b_spellcasting_class --test sd31_e2_ground_truth_agreement \
+  --test sd27_feat_prerequisite_enforcement --test pcgen_runner_smoke \
+  --test sd17_b_monster_stat_block --test sd17_b1_martial_class -- \
+  --ignored --test-threads=2
+```
+
+Result: **31 passed, 0 failed** (`sd17_a_include_graph` 1,
+`sd17_b1_martial_class` 5, `sd17_b_monster_stat_block` 7,
+`sd17_b_spellcasting_class` 14, `sd27_feat_prerequisite_enforcement` 3,
+`sd31_e2_ground_truth_agreement` 1; `pcgen_runner_smoke` has none, all its
+tests are unconditional). Total: **52 oracle/grounding tests kept, run once
+against the real PCGen corpus this cycle, 52/52 green** — the JAVA_HOME
+hazard recorded in A10 above did not recur (`java -version` on this box now
+resolves through `~/.sdkman/candidates/java/current` to Temurin 25).
+
+---
+
+## Cycle receipts
+
+| Cycle | Epic | Status | Baseline command | Output |
+|---|---|---|---|---|
+| — | — | — | — | — |
+
+---
+
+## Docs capability-truth pass (2026-09-20)
+
+**Why:** the operator read `docs/architecture/status.md` and found it called
+Codex "a developer proof-harness and a buildable desktop workbench" and
+said "single-class Fighter at levels 1-3 ... is the only path that reaches
+a fully Computed receipt" — false against the shipped engine. A spot check
+agreed: 23 class modules declare `MAX_SUPPORTED_LEVEL = 20`, all 11 Core
+Rulebook classes have their own level-20 ceiling, and the cited desktop
+test `compose_character_input_reaches_computed_status_for_supported_fighter_levels_1_to_3`
+asserts a FLOOR (those cases compute), not a ceiling — no test anywhere
+asserts non-Fighter classes fail. The earlier SD-36 docs rewrite checked
+paths, commands, diagrams and counts but never checked CAPABILITY claims
+against the engine. The operator further corrected scope: the posture is
+corpus-wide across all 37/38 processed books, not just the 11 Core
+Rulebook classes.
+
+**Instruments run:**
+- `tests/zz_class_census.rs` — one-time temporary integration test, built
+  and run via `cargo test --locked -j 2 --test zz_class_census --
+  --nocapture`, then deleted (not a committed binary). Merged every class
+  id from every registry `compute_class_chassis` reads (`ClassId::ALL`,
+  `ApgClassId::ALL`, `AcgClassId::ALL`, `PuClassId::ALL`, `UcClassId::ALL`,
+  `untabled_base_class_chassis::untabled_base_class_registry()`,
+  `crb_untabled_class_chassis::covered_classes()`,
+  `class_chassis_sheet_rules::records(&CLASS_FAMILY_BOOKS)` filtered to
+  `is_conventional()`, and the 74-entry prestige-class fixture) into one
+  `BTreeMap<slug, Row>`, then swept `build_pilot_headless_receipt` across
+  levels 1-20 (or a class's own lower ceiling) recording `receipt.status`
+  per class/level.
+- `cargo run --locked --bin v06_class_state_dump`, run 2026-09-20:
+  `class_count=31, computed_count=31, blocked_count=0, max_level=20`
+  across all 31 fully-tabled classes (CRB 11, APG 6, ACG 10, Unchained 4).
+  Race is held fixed to one Human fixture in this dump — it proves the
+  level range, not a race sweep.
+
+**Measured class census (full detail: `docs/architecture/status.md` §
+"Class/level compute coverage — corpus-wide", the one committed table that
+is now the source of truth for these figures):**
+- **135 distinct class ids** merged across every engine registry.
+- **31 fully-tabled classes** (11 CRB + 6 APG + 10 ACG + 4 Unchained) reach
+  `Computed` at every level 1-20, zero blocked levels.
+- Plus 2 Ultimate Combat classes (Gunslinger, Ninja) and 9 of 27 untabled
+  exotic/NPC base classes (Kineticist, Medium, Mesmerist, Occultist,
+  Vigilante, Psychic, Spiritualist, Psion, Shifter) also reach `Computed`
+  — **42 of 135** distinct class ids total reach `Computed`.
+- Prestige classes: of the 74-entry prestige fixture, a subset reaches a
+  chassis-only (not full `Computed`) receipt; see status.md's table for the
+  exact roster and the exceptions.
+- **Named exceptions** (not fully served — stated with their evidence, not
+  as the headline): race sweep is Fighter-only (`character_hub.rs:6007-6021`)
+  for the full race roster; race-creation-chassis instrument
+  (`raceCreationCoverage.test.ts`) covers only 3 of 6 race-bearing books
+  (18-of-30 chassis, not 18-of-39 total race records); multiclass grounds
+  base-chassis stacking (not full `Computed`) for the 11 CRB base classes;
+  remaining untabled/exotic classes and most prestige classes do not reach
+  `Computed`.
+- **Corpus size:** frozen public status figure and its own denominator are
+  carried in `docs/work-inventory.FROZEN.md`; book count reconciled against
+  the operator's "37 books" and the `RuleSetId` variant / `data/corpus`
+  directory count in `docs/architecture/status.md`'s corpus-coverage
+  section — see that file for the exact reconciled figures, not repeated
+  here to avoid a second hand-maintained copy.
+
+**Claims judged:** 415 capability/limitation statements across the 13
+changed docs files (README.md + 12 `docs/architecture/*.md` files +
+`docs/work-inventory.FROZEN.md`) were checked against an instrument run or
+a read of the enforcing code path, per the rules of evidence above.
+**0 false claims remain** after this pass; the Fighter-1-3-ceiling and
+"proof-harness" claims were the ones corrected, plus the four other files
+that keep a local headline class-count figure in sync by hand.
+
+**Lesson:** a docs review that checks paths, commands and numbers but not
+capability claims lets a false product posture through; a test that
+asserts a floor (`..._reaches_computed_status_for_supported_fighter_levels_1_to_3`)
+was read as a ceiling ("only Fighter 1-3 reaches Computed"). Logged to
+`scripts/retro.py` and cited in `docs/retro/sd36-retrospective.md` — see
+below.
+
+---
+
+## Closure block (Epic D, steps 2–5)
+
+(Populated at closure. Records: architecture-truth-up, graphify, merge-conflict resolution, if any.)
+
+| Step | Status | Notes |
+|---|---|---|
+| Acceptance criteria 100% | awaiting | all epics → complete |
+| Retrospective written | awaiting | Epic D step 1 (workflow-instruction §11) |
+| Worktree sweep | awaiting | Epic D step 1 (workflow-instruction §11) |
+| Architecture docs updated | done | D1 (2026-09-20 full-set rewrite) |
+| Graphify run | **NOT refreshed for SD-36** (corrected 2026-09-20) | `cluster-only` against the final tree exits 1 on its dedup-collapse guard (non-blocking per the 2026-07-20 policy — SD-36 removed dead/superseded test code, so a node-count shrink is expected and correct to refuse without `--force`). An earlier record in this file called `update --force` a "success" that resolved the run; in effect that command **replaced the live 648,328-node semantic graph with a 51,852-node AST-only build** (`update` performs a raw AST re-extraction, not the `cluster-only` semantic pass — see its own receipt block below). The orchestrator restored the live `graphify-out/` files from the `graphify-out/2026-09-20/` snapshot on 2026-09-20 (confirmed: current `graphify-out/graph.json` has 648,328 nodes, matching the snapshot) and parked the thin AST-only build at `graphify-out/2026-09-20-ast-force-run/` rather than deleting it. A full semantic re-extraction that would make `cluster-only` succeed clean is the **operator's call**, not run here. |
+| PR open and merged | pending | Step 5/6 — PR to be opened; operator merges |
+
+---
+
+
+- cycle_id: 2026-09-20T10:27:50Z
+  row_or_kind: graphify:update
+  bundle: SD-36
+  branch: 45ef7e232755b457d3c6f0afbbbf8c812eaaa875
+  integration_target: develop
+  branch_tip: 45ef7e23
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 1365.9
+  log_path: graphify-out/.truth-up-run-2026-09-20T10:27:50Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
+
+---
+
+## Epic D6 — worktree/branch inventory (read-only, 2026-09-20)
+
+`git worktree list`:
+
+```
+/home/ubuntu/workspace/repos/codex                45ef7e2327 [tranche/16]
+/home/ubuntu/workspace/worktrees/codex-ci-oracle  29cbe1fa2a [fix/ci-fetch-pcgen-oracle]
+```
+
+`git branch -a`:
+
+```
+  develop
++ fix/ci-fetch-pcgen-oracle
+  fix/pcgen-pinned-tree-ci-guard
+  sd36/package
+* tranche/16
+  remotes/origin/HEAD -> origin/develop
+  remotes/origin/develop
+  remotes/origin/fix/ci-fetch-pcgen-oracle
+  remotes/origin/fix/pcgen-pinned-tree-ci-guard
+  remotes/origin/main
+  remotes/origin/sd36/package
+  remotes/origin/test
+  remotes/origin/tranche/16
+  remotes/origin/update-index
+```
+
+`tranche/15` is already gone (no local or remote ref) — confirmed closed per prior
+SD-35 record. POST-MERGE cleanup for the operator (nothing deleted here):
+
+- Worktree `~/workspace/worktrees/codex-ci-oracle` (branch `fix/ci-fetch-pcgen-oracle`) —
+  stale lane; sweep after tranche/16 merges if the branch is confirmed superseded.
+- Local branch `fix/ci-fetch-pcgen-oracle` — mirrors the worktree above.
+- Local branch `fix/pcgen-pinned-tree-ci-guard` — no active worktree; verify merged-by-content
+  (not commit count, per standing convention) before deleting.
+- Local branch `sd36/package` — SD-36 packaging scratch branch; verify superseded by
+  `tranche/16` before deleting.
+- `test` and `update-index` remote branches are infra (self-healing release gate,
+  updater feed) — never delete per standing convention.
+
+Nothing above was deleted; this is inventory only, for the operator to action after merge.
+
+- cycle_id: 2026-09-20T14:02:52Z (marker-A)
+  row_or_kind: graphify:update
+  bundle: SD-36
+  branch: c1d38d3c4ecf2c9b864ce730f70c63bada372acd
+  integration_target: develop
+  branch_tip: c1d38d3c
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 1423.5
+  log_path: graphify-out/.truth-up-run-2026-09-20T14:02:52Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
+
+- cycle_id: 2026-09-20T14:26:00Z
+  row_or_kind: graphify:update (retry, final tree)
+  bundle: SD-36
+  branch: c1d38d3c4ecf2c9b864ce730f70c63bada372acd
+  integration_target: develop
+  branch_tip: c1d38d3c
+  command: /home/ubuntu/.local/bin/graphify cluster-only /home/ubuntu/workspace/repos/codex --budget 500000 --exclude node_modules,target,dist,build,.git,out,dist-ssr,.next,coverage
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 1423.5
+  log_path: graphify-out/.truth-up-run-2026-09-20T14:02:52Z.log
+  receipt_note: >
+    Identical failure on retry against the FINAL tree: dedup-collapse guard
+    refused to overwrite graph.json because the rebuild had 648327 nodes vs
+    existing 648328 (net -1). Also tried GRAPHIFY_FORCE=1 env var with
+    `cluster-only` directly (not honored by that subcommand -- same
+    refusal). Escalated per instructions to `graphify --help`, which
+    documents `update <path> --force` ("overwrite graph.json even if the
+    rebuild has fewer nodes ... use after refactors that delete code"),
+    exactly this bundle's situation (SD-36 removed dead/superseded test
+    code). Ran the documented command below instead.
+
+- cycle_id: 2026-09-20T14:47:32Z
+  row_or_kind: graphify:update (force, documented flag)
+  bundle: SD-36
+  branch: c1d38d3c4ecf2c9b864ce730f70c63bada372acd
+  integration_target: develop
+  branch_tip: c1d38d3c
+  command: /home/ubuntu/.local/bin/graphify update /home/ubuntu/workspace/repos/codex --force
+  graphify_exit_code: 0
+  outcome: success
+  result: "graphify-out/graph.json, graph.html, GRAPH_REPORT.md rewritten: 51852 nodes, 92977 edges, 2749 communities"
+  receipt_note: >
+    Used graphify's own documented `--force` flag on the `update` subcommand
+    (accepts a node-count shrink after refactors that delete code -- SD-36's
+    dead-test/superseded-code removal is exactly that case). Ran only
+    against the gitignored graphify-out/ output directory; graph.json was
+    not hand-edited. Node/edge counts differ from the `cluster-only` run's
+    648327/655946 because `update` performs a raw AST re-extraction+rebuild
+    rather than the prior semantic cluster-only pass; graph.json is
+    regenerated, gitignored corpus data, not a tracked artifact.
+
+    **CORRECTION (2026-09-20, docs capability-truth pass):** this was NOT a
+    successful resolution of the guarded `cluster-only` refusal above — it
+    silently swapped the live 648,328-node semantic graph for a 51,852-node
+    AST-only one (7.4% of the node count, no semantic clustering), which is
+    a real loss of graph fidelity, not an equivalent rebuild. The
+    orchestrator restored the live `graphify-out/` files from the
+    `graphify-out/2026-09-20/` pre-force snapshot the same day and moved
+    this run's output to `graphify-out/2026-09-20-ast-force-run/` for the
+    record. Do not repeat `update --force` as a fix for the `cluster-only`
+    dedup-collapse guard; that guard is correct and non-blocking, and a
+    full semantic re-extraction is the operator's call.
+
+- cycle_id: 2026-09-20T15:10:00Z
+  row_or_kind: graphify:restore
+  bundle: SD-36
+  branch: c1d38d3c4ecf2c9b864ce730f70c63bada372acd
+  integration_target: develop
+  outcome: success
+  result: "graphify-out/ live files restored from graphify-out/2026-09-20/ snapshot; 648328 nodes confirmed matching (python3 -c \"import json; print(len(json.load(open('graphify-out/graph.json'))['nodes']))\")"
+  receipt_note: >
+    Restoration step for the update --force incident above. The thin
+    AST-only build remains parked at graphify-out/2026-09-20-ast-force-run/
+    for reference; it was not deleted, only removed from the live path.
+
+---
+
+## Epic F1/F1b landed (2026-09-22)
+
+- merge_sha: d56a93d1d8 ("merge(sd36,epic-f1): converter link repair, gated grants, weapon sets, de-dup join, repaired rule package (Epic F1/F1b)")
+- post_merge_fix_sha: 6ae4093252 ("fix(sd36,epic-f1): post-merge verify fixes round 1")
+- branch: tranche/16
+- verify_log: /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f1/verify-f1-2.log
+- verify_result: "verify.sh full: PASS (51/51 stages, including token-coverage, clippy, class-census, corpus-sweep, corpus-trap-audit, supersession-gate)"
+- stage_receipts: docs/release/SD-36-consolidation/artifacts/epic-f/ (stage3/ blast-radius classify + receipt; scripts/ structural-diff tooling and its own deltas JSON; census-f0*.json; mix-panel-histogram.md)
+- headline_numbers:
+  - links_closed: 4456 (converter child-category link repair, corpus-wide)
+  - links_unresolved_remaining: 7469 (by mechanism, post-repair)
+  - edges_added: 4491
+  - shadowed_rules_recovered: 369
+  - changed_sheet_values: 33 (all cited to PF1 text — Barbarian/Bloodrager Greater Rage and Mighty Rage, Track, Precise Strike now match the Core Rulebook)
+  - join_population_builds: 313
+- gate_checks:
+  - pcgen_residue_gate: "python3 scripts/pcgen_residue_gate.py --check --closure" → PASS (0 hits, verdict=PASS)
+  - sheet_rule_convert_check: "cargo run --locked --quiet -j 8 -p codex-ingest --bin sheet_rule_convert -- --check" → exit 0
+  - class_status_table_check: "python3 scripts/gen_class_status_table.py --check" → OK, unchanged (ids=135 computed=42, matches docs/architecture/status.md and README.md "42 of 61")
+  - frozen_corpus_record_count: 49,450 — unmoved this cycle
+  - data/corpus/** and site/**: untouched this cycle
+- receipt_note: >
+    F1 (converter link repair, Option A, + weapon proficiency reader) and
+    F1b (print-path reconciliation) landed together in one merge to
+    tranche/16, followed by one post-merge verify-fix round that took the
+    branch from token-coverage FAIL (root cause: stale coverage baseline
+    after the link-repair change, see
+    docs/retro/events/sd31-transcribe.jsonl id
+    1790078285617-sd31-transcribe-9fead3) to full verify.sh PASS (id
+    1790082796980-sd31-transcribe-28bec4). F2-F5 remain open on this
+    branch; D2-D6 bundle closure (including the final graphify run) stays
+    blocked on F5 per the standing "graphify runs against the FINAL repo
+    state" rule.
+
+## Epic F1c landed (2026-09-24)
+
+- merge_sha: 03836d09ec ("merge(sd36,epic-f1c): converter fixes the proficiency reader exposed — type grants, line-scoped conditions, Unchained records, closure attestation; regenerated package")
+- post_merge_fix_sha: 247c7a023f ("fix(sd36,epic-f1c): post-merge verify fixes round 1" — token-coverage ledger refresh, no sheet value changed)
+- branch: tranche/16
+- verify_log: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f1c/verify-f1c-2.log
+- verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=135 computed=61 prestige_alone_blocked=74 mix_panel_computed=185)"
+- stage_receipts: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f1c/ (regenerate-receipt.md, render-receipt.md, fixture-receipts.md, render/); census docs/release/SD-36-consolidation/artifacts/epic-f/census-f1c.json; remainder artifacts/epic-f/reader-remainder.md
+- defects_closed: D1 grant-by-type (1e6b2db9ee), D2 line-scoped conditions (5979ef4668), D3 Unchained class records + D4 closure-complete attestation + D6 weapon-choice offers (e61473e9c9), D5 stale static rows monk/psion/ninja (af70b72679), D7 always-held globals (ea4d64eca8), D8 variable-pool picks (641691e283)
+- headline_numbers:
+  - census_non_prestige_computed: 61 of 61 (was 42 of 61 at F0, 58 of 61 at F1-reader); `cargo run --locked -j 8 --bin class_census` -> ids=135 computed=61 blocked=0
+  - f1_2_reader_vs_static: 42 of 42 static rows reproduced at level 1, 0 disagreements
+  - f1_5_blocked_on_proficiency: 0 of 135
+  - prestige_reader_remainder: 17 of 74 prestige classes Unknown (0 of 19 walked non-prestige); prestige Blocked alone until F2 (74 of 74)
+  - package: records 49,450 -> 49,450; rules_written 71,869 -> 73,016; removed rule ids 0
+- gate_checks:
+  - structural_diff: "structural_diff.py data/sheet_rules --baseline <pre-merge tranche/16>" → verdict=PASS
+  - pcgen_residue_gate: "python3 scripts/pcgen_residue_gate.py --check --closure" → PASS (0 hits)
+  - sheet_rule_convert_check: "cargo run --locked --quiet -j 8 -p codex-ingest --bin sheet_rule_convert -- --check" → exit 0
+  - class_status_table_check: "python3 scripts/gen_class_status_table.py --check" → OK (ids=135 computed=61 prestige_swept=74 mix_panel_computed=185 of 185)
+  - frozen_corpus_record_count: 49,450 — unmoved
+  - data/corpus/** and site/**: untouched
+- receipt_note: F1 and F1-reader close with this landing. F2-F5 remain open; D2-D6 bundle closure (graphify last) stays blocked on F5.
+
+## Epic F2/F3 landed (2026-09-25)
+
+- merge_sha: bb1c4251a3 ("merge(sd36,epic-f2-f3): generic gate arm, prestige-alone rule, multiclass for every class with a chassis, prestige carrier mixes Computed")
+- branch: tranche/16
+- verify_log: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/verify-f2f3-1.log
+- verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68)"
+- stage_receipts: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/ (f2a-census-before-after.md, f2b-prestige-alone.md, f3a-save-shapes.md, f3b-multiclass-fold.md, f3b-hand-worked.md, f3c-remainder.md, f3c5-receipt.md, f3d-sabotage-log.md, f3d-sites.tsv, merge-readiness-receipt.md, per-step red/verify logs and structural diffs)
+- headline_numbers (command `cargo run --locked -j 8 --bin class_census -- --json <path>`):
+  - census: ids 135 -> 137; non-prestige Computed 61 of 61 -> 63 of 63 (the +2 are APG Ex-Antipaladin/Ex-Inquisitor, new ids; no existing id moved)
+  - prestige_alone_blocked: 74 of 74 (`prestige_class.requires_base_class_levels`)
+  - prestige_mix_computed: 0 of 74 -> 68 of 74; remainder 6 of 74 Blocked on `multiclass.save_shape.unrecognized` (FS-15)
+  - mix_panel_computed: 185 of 185
+  - generic resolver pin: 78 -> 122 distinct slugs
+  - negative controls flipped to status parity: 187 of 187; sabotage 14 of 187 red, 0 of 187 restored
+  - `--list` parity: sd18_widening 891 of 891, sd13_progression 1,136 of 1,136
+  - hand-worked oracle: 16 of 16 builds match the rendered sheet
+- gate_checks:
+  - class_status_table_check: "python3 scripts/gen_class_status_table.py --check" → OK (ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185)
+  - pcgen_residue_gate: "python3 scripts/pcgen_residue_gate.py --check --closure" → PASS
+  - frozen_corpus_record_count: 49,450 — unmoved
+  - data/corpus/** and site/**: untouched; data/sheet_rules/** regenerated on the branch (converter receipts per step)
+- receipt_note: F2 and F3 close with this landing. F4 (desktop roster) and F5 (closure deltas) remain open; D2-D6 bundle closure (graphify last) stays blocked on F5.
+
+## Epic F4 landed (2026-09-26)
+
+- merge_sha: c2b7e03dd5 ("merge(sd36,epic-f4): desktop class roster from the census, single-source seeds, prestige level-up, ui-smoke rows; F2/F3 polish; selection pools converted")
+- branch: tranche/16
+- verify_log: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/verify-f4-1.log
+- verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68)"
+- stage_receipts: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/ (f4pre-receipt.md, f4a-receipt.md, f4b-receipt.md, f4c-receipt.md, f4d-receipt.md, merge-readiness-blockers-receipt.md, fixture-receipts.md, per-step red/green/verify logs, suite logs, wire JSON, census-merge-readiness.json)
+- ui_smoke_evidence: docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/ (results.json, run.log, one .png per row; regression/; run1-run3 red runs)
+- headline_numbers (command `cargo run --locked -j 8 --bin class_census -- --json <path>`, artifact census-merge-readiness.json):
+  - F4.1: Create roster 59 classes == census `roster_offered=59` (non-prestige 63 of 63 Computed; `roster_reason` offered 59, ex_state 4: ex_antipaladin, ex_barbarian, ex_inquisitor, ex_paladin; prestige 74 of 74 `prestige`)
+  - F4.2: `npm test -- classRoster characterHubModel characterProgression skillsModel` + `npm run typecheck` green (f4c-green.log, f4-suite-desktop-frontend.log)
+  - F4.3: `git grep -c 'fn canonical_seeds_for' -- src apps` -> 1; `git grep -n 'use .*canonical_seeds_for' -- src/bin apps` -> 2 (pf1_adapter.rs, v06_class_state_dump.rs)
+  - F4.4: ui-smoke 7 of 7 new rows green (6 F4.4 rows + arcane-archer accept), regression 4 of 4 green
+  - F4.5: `no_computed_class_is_unoffered_without_a_named_reason` green; 0 of 63 non-prestige ids withheld as `not_computed` or `hit_die_absent`
+  - desktop `CLASS_OPTIONS` (31) -> `CLASS_OPTIONS_FALLBACK`, read only when the roster command fails (failure printed)
+- gate_checks:
+  - class_status_table_check: "python3 scripts/gen_class_status_table.py --check" → OK (verify-f4-1.log class-census row)
+  - pcgen_residue_gate: PASS (verify-f4-1.log)
+  - frozen_corpus_record_count: 49,450 — unmoved; data/corpus/** and site/** untouched
+- receipt_note: F4 closes with this landing. F5 (closure deltas) remains open; D2-D6 bundle closure (graphify last) stays blocked on F5.
+
+## Epic F5a closure deltas (2026-09-26)
+
+- head_at_start: e70a8745ed (tranche/16, clean, up to date with origin); session restarted after a crash, no work lost (F4 committed and pushed; no cargo process running)
+- fact_sheet: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/f5-facts.md (every figure with its command)
+- census: `cargo run --locked -j 8 --bin class_census -- --json <path>` -> `ids=137 computed=63 blocked=0`, `prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=68 prestige_mix_unknown=0`, `mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0`, `roster_offered=59` (artifact stage-f4-f5/census-f5.json, generated_at 2026-09-26T21:55:17Z)
+- status_table_check: `python3 scripts/gen_class_status_table.py --check --json stage-f4-f5/census-f5.json` -> OK (exit 0), before and again after every doc edit of this step (the generated region was not touched); `denominator_gate.py --check` and `--check-provenance` 0 violations
+- unresolved_references: 6,252 (`unres2.py`: A 0, B 63, D 2,646, E 2,764, F 779; artifact stage-f4-f5/f5-unres2.txt)
+- package: records 49,450, converted 49,450, refused 0, rules_written 73,363, var_tables 6,211 (`data/sheet_rules/_report.json`); data/sheet_rules/**, data/corpus/**, site/** untouched this step
+- retired_figure_grep (status.md §Posture): 0 hits
+- retro_summary: `python3 scripts/retro.py summary --since 2026-09-21` -> 47 events, 27 corrections, 12 verification runs (2 with a failing stage); artifacts stage-f4-f5/f5-retro-summary-since-2026-09-{21,15}.txt
+- files: README.md; docs/architecture/{status,rules-engine,desktop-app,corpus-ingest,testing,glossary,rules-data-tables}.md; docs/release/SD-36-consolidation/{epic-breakdown,decisions,technical-design,workflow-instruction,forward-scope-register,release-notes,kanban,progress,receipts}.md; docs/retro/sd36-retrospective.md
+- open (F5.3): scripts/verify-baselines.env re-derived from the verify-f4-1.log stale notices (ROOT_LIB 2727, ROOT_FULL 6398, ROOT_BIN 293, INGEST 1764/166, DESKTOP 621, FRONTEND 126, CENSUS_IDS 137); PR #393 body; graphify last against the final tree
+
+
+## Epic F closed (2026-09-26)
+
+- head_at_start: 3d0bd58564 (tranche/16, up to date with origin); session restarted after a crash: the full verify run started 18:29 had finished (EXIT=0 at 21:24), no cargo process running, nothing lost
+- verify_log: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/verify-f4-f5-1.log (run against 3d0bd58564, the F5a + claims-critic tree)
+- verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68; class-coverage table matches the census)"
+- critic_receipt: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/f5-claims-critic.md (round 1: 4 blockers; round 2: 0 blockers, 5 polish items open)
+- baselines (F5.3): scripts/verify-baselines.env re-derived from the verify-f4-f5-1.log BASELINE NOTES: ROOT_LIB 2587 -> 2727, ROOT_FULL 6203 -> 6398, ROOT_BIN 285 -> 293, INGEST_FULL 1679 -> 1764, INGEST_BIN 157 -> 166, DESKTOP 612 -> 621, FRONTEND_FILES 125 -> 126, CENSUS_IDS 135 -> 137; `python3 scripts/check_class_census_baselines.py` with the new floors over census-f5.json -> OK, exit 0
+- headline_numbers (`cargo run --locked -j 8 --bin class_census -- --json <path>`, census-f5.json): ids 137; non-prestige Computed 63 of 63 (Epic F start 42 of 135 ids / 61 non-prestige); prestige alone Blocked 74 of 74 (`prestige_class.requires_base_class_levels`); prestige carrier mix Computed 68 of 74 (6 Blocked, FS-15 `multiclass.save_shape.unrecognized`); mix panel 185 of 185; Create roster 59 of 63 non-prestige (4 Ex-* census-only); unresolved references 11,925 -> 6,252 (by mechanism: A 0, B 63, D 2,646, E 2,764, F 779); records 49,450 converted, 0 refused
+- stage_dirs:
+  - docs/release/SD-36-consolidation/artifacts/epic-f/ (census-f0*.json through census-f4a.json, scripts/, reader-remainder.md, mix-panel-histogram.md, README.md)
+  - docs/release/SD-36-consolidation/artifacts/epic-f/stage3/, stage4/, stage5/ (F1/F1b step receipts)
+  - docs/release/SD-36-consolidation/artifacts/epic-f/stage-f1c/
+  - docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/
+  - docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/
+  - docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/
+- pr: #393 body gains the Epic F closure Summary bullet and a Verification line (this step)
+- graphify: runs LAST against the final tree; its record follows this block
+- receipt_note: Epic F closes: F0, F1, F1b, F1c, F2, F3, F4, F5 = 8 of 8 batches. D5 (PR merge) is the operator's; D6 (worktree/branch sweep) is listed for the operator after merge, nothing deleted.
+
+- cycle_id: 2026-09-27T01:28:14Z
+  row_or_kind: graphify:update
+  bundle: SD-36
+  branch: 014e8a5d19cd81e1dcbeb4a8bc883d6385158080
+  integration_target: develop
+  branch_tip: 014e8a5d
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 1233.2
+  log_path: graphify-out/.truth-up-run-2026-09-27T01:28:14Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
+
+## Graphify (Epic F final tree, 2026-09-26)
+
+- result: **graphify not refreshed: `cluster-only` exited 1 on its node-count guard ("new graph has 648327 nodes but existing graph.json has 648328 (net -1). Refusing to overwrite"), counts before/after 648,328 / 648,328**
+- tree: tranche/16 HEAD 014e8a5d19 (clean, pushed; Epic F closed)
+- command: `python3 ~/.hermes/profiles/god-emporer/skills/devops/graphify-update/scripts/update_graphify.py --integration-target develop --receipts-md docs/release/SD-36-consolidation/receipts.md --bundle SD-36` (workflow-instruction.md §"Graphify"), which ran `graphify cluster-only /home/ubuntu/workspace/repos/codex --budget 500000 --exclude node_modules,target,dist,build,.git,out,dist-ssr,.next,coverage`; wall 1,233 s; wrapper receipt block above (cycle 2026-09-27T01:28:14Z)
+- nodes_before: 648,328 (`python3 -c "import json;print(len(json.load(open('graphify-out/graph.json'))['nodes']))"`, graph.json 452,764,742 bytes, mtime 2026-09-15 17:39)
+- nodes_after: 648,328 (same command; graph.json byte size and mtime unchanged — not written)
+- mechanism: `cluster-only` loads the existing graph.json and re-clusters it (648,327 nodes loaded, 655,946 edges); it does not re-extract the tree, so the Epic F source changes are not in the graph either way. The -1 is its load/dedup of the existing file, not a shrink of the codebase.
+- not done, by rule: no retry with `--force`, nothing restored (nothing was overwritten). graphify's own pre-run backup landed at `graphify-out/2026-09-26/` (7 files, identical sizes to the live files). A full semantic re-extraction against the final tree is the operator's call.
+- log: graphify-out/.truth-up-run-2026-09-27T01:28:14Z.log (gitignored); graphify-out/ is gitignored, so no graphify output is committed
+
+## Epic F6 landed (2026-09-27)
+
+- merge_sha: 509244a2b6 ("merge(sd36,epic-f6): desktop reads class facts from the engine; HP source rule; Level Up blockers and labels; offer labels; newest-printing verdict"); post-merge fix 08f8cb5ace (clippy `needless_borrows_for_generic_args`; five test-count floors re-recorded)
+- branch: tranche/16 (PR #393 -> develop)
+- verify_log: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/verify-f6-2.log (run against 08f8cb5ace; first post-merge run verify-f6-1.log failed clippy only, fixed in 08f8cb5ace)
+- verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68; class-coverage table matches the census)"
+- stage_receipts: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/ (polish.json, f6a-receipt.md, f6b-receipt.md, f6c-receipt.md, f6d-receipt.md, f6e-receipt.md, merge-readiness-receipt.md + merge-readiness-blockers.json, fixture-receipts.md, per-step red/green/verify logs, suite logs, wire JSON)
+- ui_smoke_evidence: docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/ (first run 11 of 12 green, `create-character-render` red on a cold build, first-run/; warm re-run 11 of 11 green, warm-rerun/; seed rows 2 of 2 green, seed/)
+- headline_numbers (commands in each stage receipt):
+  - F6-1: hand-kept desktop class tables 3 -> 0; weapon proficiency 59 of 59 and caster level 59 of 59 roster classes answered at every level from `list_class_facts` (`cargo test --locked -j 8 --lib class_facts_sheet_rules -- --test-threads=8`, `every_roster_class_answer_is_counted`)
+  - F6-2: class skills 12 -> 50 of 59 (remainder 9 of 59: ACG classes, unresolved `Class|<Class>` edge, printed Unknown with the reason); feat skill bonuses folded 40 of 43 (Alertness +2 Perception/Sense Motive)
+  - F6-3: offered classes with HP Unknown 5 -> 0 of 59 (`hit_die_source`; Monk d8, 38 HP at level 5; roster still 59, 0 `hit_die_absent`)
+  - F6-4: Level Up on Human Fighter 6: 123 of 133 options compute, 10 of 133 refused with the blocker shown, 0 refused without it; raw-id requirement lines 12 -> 0 of 286
+  - F6-5: shaman domain lines 10 -> 0 of 10 (converter step under the structural-diff protocol, f6c-structural-diff.txt, f6c-planted-mutations.txt)
+  - F6-6: chassis cites the newest printing (`the_chassis_cites_the_newest_printing_in_any_order`)
+  - critic polish P1, P2, P3-critic, P4, #28 closed in this docs step (forward-scope FS-14 row, status.md census-f5 citation, FS-26 command + denominator, list-screen catalog gap named, release-notes 7 required sections)
+  - F6d: ui-smoke on an isolated app-data root; real store unchanged (15,380 of 15,380 entries by path+size+mtime); F6e: second starter seed Elowen Ashgrave (Human Wizard 5, Fireball prepared)
+- gate_checks:
+  - class_status_table_check: OK (verify-f6-2.log class-census row)
+  - pcgen_residue_gate: PASS (verify-f6-2.log)
+  - frozen_corpus_record_count: 49,450 unmoved; unresolved references 6,252; data/corpus/** and site/** untouched
+- forward_scope: FS-23 sheet side closed (package row open by design), FS-24 closed, FS-25 desktop side closed (9 of 59 converter remainder), FS-26 closed
+- receipt_note: Epic F = 9 of 9 batches (F0, F1, F1b, F1c, F2, F3, F4, F5, F6). graphify is not re-run in this step; D5 (PR merge) is the operator's.
+
+## Epic F7 landed (2026-09-28)
+
+- merge_sha: `0325a99ab1` ("merge(sd36,epic-f7): ability scores from the engine; spell prose without formulas; seed skill ranks; Weapons tab weapons only; labels"); post-merge fix `b021509e23` (full `verify.sh` re-run found no failing stage; five stale test-count floors re-recorded in `scripts/verify-baselines.env`: root-lib 2745->2758, root-full 6416->6429, ingest-full 1765->1767, desktop 633->639, frontend test files 131->132)
+- branch: tranche/16 (PR #393 -> develop)
+- verify_log: `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f7/verify-f7-2.log` (second post-merge run; first, `verify-f7-1.log` at `0325a99ab1`, already PASSED — the fix commit corrected the stale baseline notes it carried, not a code failure)
+- verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68; class-coverage table matches the census)"
+- stage_receipts: `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f7/` (worklist.json, f7a-receipt.md, f7b-receipt.md, f7c-receipt.md, merge-readiness-receipt.md, fixture-receipts.md, per-step red/green/verify logs, suite logs, census diffs, structural-diff/planted-mutation evidence)
+- ui_smoke_evidence: `docs/release/SD-36-consolidation/artifacts/ui-smoke/f7/` (f7c: 7 of 7 new/regression rows green; merge-readiness: 82 of 86 green, 1 blocked with a green targeted rerun, 3 manual native-dialog rows; isolated app-data root each run, real store unchanged)
+- headline_numbers (commands in each stage receipt):
+  - F7a (worklist F7-1, F7-8, F7-2): Abilities panel prints the engine's `abilityScores` field, not `10 + 2×modifier` — Elowen Con 12 -> **13**, Aldric Str 18 -> **19** (48 of 48 scores match the CRB racial table across 8 app characters). Elowen's skill points load fully allocated (create-path fixed ranks). Weapons tab "Also proficient with" lists only weapon records — pseudo-weapons (Flurry of Blows, Spells (Ray)/(Touch), Splash Weapon, Unarmed Strike, Grapple) **0 of 8** app characters (root roster pin 302/62; `classFactsModel.test.ts`).
+  - F7b (worklist F7-5, converter step): spell/ability prose formulas print as the rule's own words, not PCGen syntax — `pcgen_residue_gate.py`'s new formula-shape class: **2,361 live hits on 1,997 shipped files -> 0** (`verdict=PASS`); Fireball prints "1d6 points of fire damage per caster level (maximum 10d6)"; 315 out-of-inventory condition lines (274 spells, 25 equipment, 5 feats, 5 class features, 2 equipment modifiers, 2 abilities, 1 race trait) no longer print; 37 more print with no "(no record in the corpus)" sentence. Structural diff `verdict=PASS`: 2,317 of 2,317 pinned field deltas on 2,308 records, 0 unexplained; 8 of 8 planted mutations FAIL, both controls PASS; records 49,450 -> 49,450 unmoved.
+  - F7c (worklist F7-6, F7-7, F7-3, F7-4): a class-skill list holds only converted skill records — Samurai's `samurai_mount` dropped, **0 of 148** converted skill slugs named by a class-skill list that names no skill record (was 3 on 2 records). Prestige/Level-Up/catalog requirement lines print the skill's label, never a slug — **0 of 286** printed requirement lines across 74 prestige gates carry one (Aldori Swordlord: "Knowledge (Nobility) ranks at least 3"). Expert/Summoner/Psion canonical Path-A picks print `(default pick)` — **3 of 59** roster classes carry one (Expert 10, Summoner 9, Psion 7), **0 of 59** on the Weapons tab. Magus Knowledge (religion): closed **oracle correct**, no corpus text (0 of 1,036 Magus records, 393 with prose) states or contradicts the base CSKILL row; no FS row (fabricated-row rule, `decisions.md §14.1`).
+  - Census unchanged across all three steps: ids 137, non-prestige 63 of 63 Computed, prestige alone 74 of 74 Blocked, prestige mix 68 of 74, mix panel 185 of 185, roster 59 — 0 differing leaves at each step (`f7b-census-diff.txt`; F7c compared by roster/census scan).
+- gate_checks:
+  - class_status_table_check: OK (`verify-f7-2.log` class-census row)
+  - pcgen_residue_gate: PASS, 0 live hits including the new formula-shape class (`verify-f7-2.log`)
+  - frozen_corpus_record_count: 49,450 unmoved; unresolved references 6,252; `data/corpus/**` and `site/**` untouched
+  - real store: `~/.local/share/io.electricm0nk.codex` unchanged across every app run (merge-readiness receipt: 1 character dir, 15,380 entries, sha256 unchanged)
+- forward_scope: **FS-27 (new)** — 4 Pathfinder Unchained base classes (Barbarian, Monk, Rogue, Summoner) refused when added into a mix (`multiclass.save_shape.unknown`; their saves live in the bespoke Unchained module, which the mix gate does not read yet); shown to the player as a named Level Up blocker, never a silent refusal. **FS-28 (new)** — 33 reference-library catalog field summaries (`sheet_rule_catalog::fact_words`/`weapon_words`) still word a `Chosen` grant by its raw id, because those describers take no package to resolve a label against (unlike `level_up_option_filter::describe_gate`, fixed in F7c); not a sheet or Level Up line. FS-15 (6 of 74 prestige carrier mixes) unchanged, now shown with its blocker in Level Up. FS-25 (9 of 59 ACG roster classes, class skills Unknown) unchanged, re-confirmed by the F7c class-skill scan.
+- receipt_note: Epic F = 10 of 10 batches (F0, F1, F1b, F1c, F2, F3, F4, F5, F6, F7). Epic F is now closed in full. graphify is not re-run in this step; D5 (PR merge) is the operator's; D2-D6 proceed next against this tree.

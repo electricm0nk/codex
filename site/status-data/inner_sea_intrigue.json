@@ -5,12 +5,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 119,
-      "partial": 1,
+      "done": 184,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 120,
-      "pct": 99.2,
-      "excluded_from_percentage": 64,
+      "denominator": 184,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 64,
         "origin": 120
@@ -1026,7 +1026,7 @@
         },
         {
           "name": "Seductive Intuition",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Enchanting Courtesan Class Features.ClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Seductive Intuition"
@@ -1338,12 +1338,12 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 8,
-      "partial": 1,
+      "done": 11,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 9,
-      "pct": 88.9,
-      "excluded_from_percentage": 2,
+      "denominator": 11,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 2,
         "origin": 9
@@ -1386,7 +1386,7 @@
         },
         {
           "name": "Record Audio",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClockworkSpyRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Record Audio"
@@ -1431,12 +1431,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 31,
+      "done": 39,
       "partial": 0,
       "not_started": 0,
-      "denominator": 31,
+      "denominator": 39,
       "pct": 100.0,
-      "excluded_from_percentage": 8,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 31,
         "unclassified": 8
@@ -1813,12 +1813,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 21,
+      "done": 26,
       "partial": 0,
       "not_started": 0,
-      "denominator": 21,
+      "denominator": 26,
       "pct": 100.0,
-      "excluded_from_percentage": 5,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 21,
         "unclassified": 5

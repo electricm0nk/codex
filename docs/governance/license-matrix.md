@@ -23,9 +23,11 @@ that exists once, up front, instead of never.
 
 ## Methodology
 
-- **Book list**: every book id in `docs/work-inventory.json` except `beginner_box`
-  (excluded per the operator's own book-scope ruling — a genuinely simplified intro
-  subset, not part of this matrix's 37). Derived by command, not transcribed:
+- **Book list**: every book id recorded in `docs/work-inventory.json` except
+  `beginner_box` (excluded per the operator's own book-scope ruling — a genuinely
+  simplified intro subset, not part of this matrix's 37). `docs/work-inventory.json`
+  is FROZEN (SD-36 Epic B, operator ruling D3 — see `docs/work-inventory.FROZEN.md`)
+  and no longer regenerated; the book list below was derived once, at freeze, by
   `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); print(sorted(set(b['id'] for b in d['books'])))"`,
   37 remain after dropping `beginner_box`.
 - **Publisher**: `PUBNAMELONG:` read directly from each book's own `.pcc` file at

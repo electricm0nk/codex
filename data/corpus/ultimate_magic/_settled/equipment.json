@@ -35,7 +35,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "book_of_harms.json": {
@@ -72,7 +72,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "book_of_the_grave.json": {
@@ -109,7 +109,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "chymist_s_guidebook.json": {
@@ -146,7 +146,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_13.json": {
@@ -183,7 +183,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_17.json": {
@@ -220,7 +220,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_21.json": {
@@ -257,7 +257,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_23.json": {
@@ -294,7 +294,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_25.json": {
@@ -331,7 +331,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_31.json": {
@@ -368,7 +368,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_33.json": {
@@ -405,7 +405,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_34.json": {
@@ -442,7 +442,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "defensive_primer.json": {
@@ -479,7 +479,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "grandfather_s_legacy.json": {
@@ -516,7 +516,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "grimoire_of_glittering_eyes.json": {
@@ -553,7 +553,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "guardian_grimoire.json": {
@@ -590,7 +590,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "journal_of_the_beast_within.json": {
@@ -627,7 +627,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "manual_of_binding.json": {
@@ -664,7 +664,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mastery_of_word_and_thought.json": {
@@ -701,7 +701,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mysteries_of_shadow.json": {
@@ -738,7 +738,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "quest_eternal.json": {
@@ -775,7 +775,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "scroll_blade.json": {
@@ -818,7 +818,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "scroll_shield.json": {
@@ -861,7 +861,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "tome_of_the_transmuter.json": {
@@ -898,7 +898,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "traveler_s_tome.json": {
@@ -935,7 +935,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "unnamed_journal.json": {
@@ -972,7 +972,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     }
   }

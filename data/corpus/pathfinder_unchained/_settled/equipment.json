@@ -35,7 +35,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "0_attuned_shield.json": {
@@ -72,7 +72,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "0_attuned_weapon.json": {
@@ -109,7 +109,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "1_abp_enhancement_to_ammunition.json": {
@@ -151,7 +151,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "1_abp_enhancement_to_armor.json": {
@@ -188,7 +188,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "1_abp_enhancement_to_shield.json": {
@@ -225,7 +225,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "1_abp_enhancement_to_weapon.json": {
@@ -267,7 +267,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "1_attuned_armor.json": {
@@ -304,7 +304,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "1_attuned_shield.json": {
@@ -341,7 +341,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "1_attuned_weapon.json": {
@@ -383,7 +383,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "2_abp_enhancement_to_ammunition.json": {
@@ -425,7 +425,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "2_abp_enhancement_to_armor.json": {
@@ -462,7 +462,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "2_abp_enhancement_to_shield.json": {
@@ -499,7 +499,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "2_abp_enhancement_to_weapon.json": {
@@ -541,7 +541,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "2_attuned_armor.json": {
@@ -578,7 +578,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "2_attuned_shield.json": {
@@ -615,7 +615,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "2_attuned_weapon.json": {
@@ -657,7 +657,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "3_abp_enhancement_to_ammunition.json": {
@@ -699,7 +699,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "3_abp_enhancement_to_armor.json": {
@@ -736,7 +736,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "3_abp_enhancement_to_shield.json": {
@@ -773,7 +773,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "3_abp_enhancement_to_weapon.json": {
@@ -815,7 +815,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "3_attuned_armor.json": {
@@ -852,7 +852,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "3_attuned_shield.json": {
@@ -889,7 +889,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "3_attuned_weapon.json": {
@@ -931,7 +931,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "4_abp_enhancement_to_ammunition.json": {
@@ -973,7 +973,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "4_abp_enhancement_to_armor.json": {
@@ -1010,7 +1010,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "4_abp_enhancement_to_shield.json": {
@@ -1047,7 +1047,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "4_abp_enhancement_to_weapon.json": {
@@ -1089,7 +1089,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "4_attuned_armor.json": {
@@ -1126,7 +1126,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "4_attuned_shield.json": {
@@ -1163,7 +1163,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "4_attuned_weapon.json": {
@@ -1205,7 +1205,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "5_abp_enhancement_to_ammunition.json": {
@@ -1247,7 +1247,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "5_abp_enhancement_to_armor.json": {
@@ -1284,7 +1284,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "5_abp_enhancement_to_shield.json": {
@@ -1321,7 +1321,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "5_abp_enhancement_to_weapon.json": {
@@ -1363,7 +1363,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "5_attuned_armor.json": {
@@ -1400,7 +1400,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "5_attuned_shield.json": {
@@ -1437,7 +1437,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "5_attuned_weapon.json": {
@@ -1479,7 +1479,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/0_abp_enhancement_to_ammunition.json": {
@@ -1516,7 +1516,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/0_abp_enhancement_to_armor.json": {
@@ -1553,7 +1553,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/0_abp_enhancement_to_shield.json": {
@@ -1590,7 +1590,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/0_abp_enhancement_to_weapon.json": {
@@ -1627,7 +1627,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     }
   }

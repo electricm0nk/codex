@@ -1,0 +1,1 @@
+{"var":"v9b9e1e167522ed92","label":"Sighted Seeker Own Manifesting","declared_by":["ultimate_psionics:class:sighted_seeker"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:sighted_seeker_own","expr":{"Const":1},"when":"Always"}],"provenance":{}}

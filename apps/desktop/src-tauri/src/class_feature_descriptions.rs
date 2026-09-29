@@ -474,7 +474,7 @@ mod tests {
     #[test]
     fn the_refuse_gate_is_provably_live_over_the_converted_package() {
         let package = live_sheet_rules().expect(
-            "data/sheet_rules/ must be present (cargo run --locked --bin sheet_rule_convert)",
+            "data/sheet_rules/ must be present (cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write)",
         );
         let mut with_prose = 0usize;
         let mut without_prose = 0usize;

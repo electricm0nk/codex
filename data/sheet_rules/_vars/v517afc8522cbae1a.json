@@ -1,0 +1,1 @@
+{"var":"v517afc8522cbae1a","label":"POOL UNCHAINED STYLE STRIKE","declared_by":["pathfinder_unchained:class_feature:unchained_monk_style_strike"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:unchained_monk_style_strike","expr":{"Div":[{"Sum":[{"Var":"v4df3d6f86dee7b25"},{"Const":-1}]},{"Const":4}]},"when":"Always"}],"provenance":{}}

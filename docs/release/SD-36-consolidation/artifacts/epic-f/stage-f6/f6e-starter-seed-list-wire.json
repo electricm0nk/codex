@@ -1,0 +1,23 @@
+{
+  "characters": [
+    {
+      "characterId": "00000000-0000-0000-0000-000000000001",
+      "displayLabel": "Aldric Ironhand",
+      "gameSystem": "pf1",
+      "schemaVersion": 2,
+      "savedAt": "2026-01-01T00:00:00.000Z",
+      "raceId": "race:human",
+      "classSummary": "class:fighter:3"
+    },
+    {
+      "characterId": "00000000-0000-0000-0000-000000000002",
+      "displayLabel": "Elowen Ashgrave",
+      "gameSystem": "pf1",
+      "schemaVersion": 2,
+      "savedAt": "2026-01-01T00:00:00.000Z",
+      "raceId": "race:human",
+      "classSummary": "class:wizard:5"
+    }
+  ],
+  "unreadableCount": 0
+}

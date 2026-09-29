@@ -39,10 +39,8 @@
 //! control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
+use crate::rows::{multiclass_negative_controls, recognition_negative_controls};
 
 const SORCERER_LEVEL3_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_sorcerer_level3_sd13_deterministic_input.txt");
@@ -226,73 +224,23 @@ fn sorcerer_level_5_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the sorcerer path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_sorcerer_level4_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.sorcerer.")
-                || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "the Fighter chassis must not surface any sorcerer-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
-// ----- Negative control: multiclass Sorcerer is not promoted -----
-
-#[test]
-fn multiclass_sorcerer_level4_is_not_promoted_by_this_slice() {
-    let multiclass = SORCERER_LEVEL4_FIXTURE.replace(
-        "class_level=class:sorcerer:4",
-        "class_level=class:sorcerer:4\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.sorcerer.")
-                || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Sorcerer must stay claim-blocked in this slice"
-    );
-}
-
 // ----- Control plane: the matrix note names the level-4 widening -----
 
-#[test]
-fn matrix_sorcerer_row_names_level_4_widening() {
-    let matrix = seeded_current_truth();
-    let sorcerer = matrix
-        .row("class.sorcerer.progression_and_spell_burden")
-        .expect("sorcerer progression_and_spell_burden row must exist");
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
 
-    assert_eq!(sorcerer.support_state, SupportState::Supported);
-    assert_eq!(sorcerer.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        sorcerer.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        sorcerer
-            .grounding_ref
-            .contains("sd13_sorcerer_level4_progression"),
-        "sorcerer row must cite the live SD13-E5 level-4 proof surface: {}",
-        sorcerer.grounding_ref
-    );
-    let note = sorcerer.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 4") || note.contains("level-4"),
-        "sorcerer partial note must name the level-4 widening: {note}"
-    );
+recognition_negative_controls! {
+    fighter_does_not_gain_sorcerer_level4_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.sorcerer."],
+        exact: ["class_chassis.spell_baseline.sorcerer"],
+        message: "the Fighter chassis must not surface any sorcerer-namespaced explanation: {:?}",
+    },
 }
+
+multiclass_negative_controls! {
+    multiclass_sorcerer_level4_is_not_promoted_by_this_slice(SORCERER_LEVEL4_FIXTURE, "class_level=class:sorcerer:4" => "class_level=class:sorcerer:4\nclass_level=class:fighter:1") {
+        prefixes: ["class_chassis.sorcerer."],
+        exact: ["class_chassis.spell_baseline.sorcerer"],
+        message: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+    },
+}
+

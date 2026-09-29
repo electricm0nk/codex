@@ -1,0 +1,24 @@
+control (unmodified): exit=0 verdict=PASS
+M1 Dragon Bite loses its NaturalAttack(Bite) fact: exit=1 verdict=FAIL (F3c5 pin failures: 1)
+    F3c5 pinned NaturalAttack grant missing on core_rulebook:class_feature:dragon_disciple_dragon_bite: {"FactGrant": {"NaturalAttack": "Bite"}}
+M2 Dragon Bite's fact names another attack (Claw): exit=1 verdict=FAIL (F3c5 pin failures: 1)
+    F3c5 pinned NaturalAttack grant missing on core_rulebook:class_feature:dragon_disciple_dragon_bite: {"FactGrant": {"NaturalAttack": "Bite"}}
+M3 Dragon Bite's fact becomes a weapon proficiency: exit=1 verdict=FAIL (F3c5 pin failures: 1)
+    F3c5 pinned NaturalAttack grant missing on core_rulebook:class_feature:dragon_disciple_dragon_bite: {"FactGrant": {"NaturalAttack": "Bite"}}
+M4 Dragon Disciple's closure_complete attestation withdrawn: exit=1 verdict=FAIL (F3c5 pin failures: 1)
+    F3c5 pinned f3c5_closure_complete field delta withdrawn or moved: core_rulebook:class:dragon_disciple: closure_complete
+M5 Draconic Claws' #weapon0 damage-step sibling dropped: exit=1 verdict=FAIL (unexpected field deltas: 3; F3c5 pin failures: 1)
+    F3c5 pinned f3c5_line_sibling rule missing: core_rulebook:class_feature:draconic_bloodline_claws#weapon0
+    unexpected field deltas: 3
+M6 the damage-step sibling loses its >= 7 gate: exit=1 verdict=FAIL (unexpected field deltas: 1; F3c5 pin failures: 1)
+    F3c5 core_rulebook:class_feature:draconic_bloodline_claws#weapon0: content moved from its pinned sha256
+    unexpected field deltas: 1
+M7 the Claws principal regains the >= 7 gate (held from 7 again): exit=1 verdict=FAIL (F3c5 pin failures: 1)
+    F3c5 pinned f3c5_line_split field delta withdrawn or moved: core_rulebook:class_feature:draconic_bloodline_claws: applies
+M8 the Internal|Bite unresolved row reappears: exit=1 verdict=FAIL (F3c5 pin failures: 1)
+    F3c5 _defects/unresolved-references.json: 6253 rows, pinned 6252
+M9 the Rake Size table a Rake fact's gate reads loses its contribution: exit=1 verdict=FAIL (F3c5 pin failures: 1)
+    F3c5 pinned _vars table moved: _vars/v58ee7a23ec1c122a.json
+M10 an unpinned #weapon sibling planted on a record carrying a NaturalAttack fact: exit=1 verdict=FAIL (F3c5 pin failures: 1)
+    F3c5 unpinned f3c5_line_sibling rule core_rulebook:class_feature:dragon_disciple_dragon_bite#weapon9
+control (restored): exit=0 verdict=PASS

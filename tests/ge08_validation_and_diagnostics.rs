@@ -13,8 +13,11 @@ use codex::homebrew_authoring::SourcePackage;
 use codex::homebrew_authoring::package_manifest::PackageValidationState;
 use codex::homebrew_authoring::package_store::PackageStore;
 
+#[path = "support/paths.rs"]
+mod paths;
+
 fn fixture_root(name: &str) -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!("tests/fixtures/authoring_workbench/{}", name))
+    paths::fixture_root(&format!("authoring_workbench/{name}"))
 }
 
 #[test]

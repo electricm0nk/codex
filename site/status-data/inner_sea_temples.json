@@ -1,0 +1,506 @@
+{
+  "id": "inner_sea_temples",
+  "title": "Inner Sea Temples",
+  "kinds": [
+    {
+      "kind": "equipment",
+      "label": "Equipment",
+      "done": 43,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 43,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 43
+      },
+      "items": [
+        {
+          "name": "Altar of the Dawnflower",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Altar of the Dawnflower"
+        },
+        {
+          "name": "Censuring Placard",
+          "doneness": "done",
+          "type_facet": "Magic",
+          "standing": "origin",
+          "display_name": "Censuring Placard"
+        },
+        {
+          "name": "Clay Whippoorwill",
+          "doneness": "done",
+          "type_facet": "Goods.Tools.Instrument.Wind.Resizable",
+          "standing": "origin",
+          "display_name": "Clay Whippoorwill"
+        },
+        {
+          "name": "Dervish Sikke (Knowledge (Arcana))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Knowledge (Arcana))"
+        },
+        {
+          "name": "Dervish Sikke (Knowledge (Dungeoneering))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Knowledge (Dungeoneering))"
+        },
+        {
+          "name": "Dervish Sikke (Knowledge (Engineering))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Knowledge (Engineering))"
+        },
+        {
+          "name": "Dervish Sikke (Knowledge (Geography))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Knowledge (Geography))"
+        },
+        {
+          "name": "Dervish Sikke (Knowledge (History))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Knowledge (History))"
+        },
+        {
+          "name": "Dervish Sikke (Knowledge (Local))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Knowledge (Local))"
+        },
+        {
+          "name": "Dervish Sikke (Knowledge (Nature))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Knowledge (Nature))"
+        },
+        {
+          "name": "Dervish Sikke (Knowledge (Nobility))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Knowledge (Nobility))"
+        },
+        {
+          "name": "Dervish Sikke (Knowledge (Planes))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Knowledge (Planes))"
+        },
+        {
+          "name": "Dervish Sikke (Knowledge (Religion))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Knowledge (Religion))"
+        },
+        {
+          "name": "Dervish Sikke (Perform (Act))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Perform (Act))"
+        },
+        {
+          "name": "Dervish Sikke (Perform (Comedy))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Perform (Comedy))"
+        },
+        {
+          "name": "Dervish Sikke (Perform (Dance))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Perform (Dance))"
+        },
+        {
+          "name": "Dervish Sikke (Perform (Keyboard Instruments))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Perform (Keyboard Instruments))"
+        },
+        {
+          "name": "Dervish Sikke (Perform (Oratory))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Perform (Oratory))"
+        },
+        {
+          "name": "Dervish Sikke (Perform (Percussion Instruments))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Perform (Percussion Instruments))"
+        },
+        {
+          "name": "Dervish Sikke (Perform (Sing))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Perform (Sing))"
+        },
+        {
+          "name": "Dervish Sikke (Perform (String Instruments))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Perform (String Instruments))"
+        },
+        {
+          "name": "Dervish Sikke (Perform (Wind Instruments))",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Head.Hat",
+          "standing": "origin",
+          "display_name": "Dervish Sikke (Perform (Wind Instruments))"
+        },
+        {
+          "name": "Elixir of Emulation",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable",
+          "standing": "origin",
+          "display_name": "Elixir of Emulation"
+        },
+        {
+          "name": "Fist of the Pit",
+          "doneness": "done",
+          "type_facet": "Magic",
+          "standing": "origin",
+          "display_name": "Fist of the Pit"
+        },
+        {
+          "name": "Hateful Sting",
+          "doneness": "done",
+          "type_facet": "Magic",
+          "standing": "origin",
+          "display_name": "Hateful Sting"
+        },
+        {
+          "name": "Key Cloak",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Shoulders.Cloak",
+          "standing": "origin",
+          "display_name": "Key Cloak"
+        },
+        {
+          "name": "Mace of Keys",
+          "doneness": "done",
+          "type_facet": "Magic",
+          "standing": "origin",
+          "display_name": "Mace of Keys"
+        },
+        {
+          "name": "Meltdown Safe",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Meltdown Safe"
+        },
+        {
+          "name": "Neverspill Goblet",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Neverspill Goblet"
+        },
+        {
+          "name": "Nightpiercer",
+          "doneness": "done",
+          "type_facet": "Magic",
+          "standing": "origin",
+          "display_name": "Nightpiercer"
+        },
+        {
+          "name": "Parting Glass",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Parting Glass"
+        },
+        {
+          "name": "Raiment of Chains",
+          "doneness": "done",
+          "type_facet": "Magic",
+          "standing": "origin",
+          "display_name": "Raiment of Chains"
+        },
+        {
+          "name": "Ring of the Faithful Dead",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Ring",
+          "standing": "origin",
+          "display_name": "Ring of the Faithful Dead"
+        },
+        {
+          "name": "Saliharion",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Book",
+          "standing": "origin",
+          "display_name": "Saliharion"
+        },
+        {
+          "name": "Scabbard of the Lost Kiss",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Scabbard of the Lost Kiss"
+        },
+        {
+          "name": "Secure Paypack",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Secure Paypack"
+        },
+        {
+          "name": "Soul Candle",
+          "doneness": "done",
+          "type_facet": "Goods.General.Consumable.Light Source",
+          "standing": "origin",
+          "display_name": "Soul Candle"
+        },
+        {
+          "name": "Stone of Tomb Warding",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Stone of Tomb Warding"
+        },
+        {
+          "name": "Sunlord's Feather",
+          "doneness": "done",
+          "type_facet": "Magic",
+          "standing": "origin",
+          "display_name": "Sunlord's Feather"
+        },
+        {
+          "name": "Thundering Collar",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Neck",
+          "standing": "origin",
+          "display_name": "Thundering Collar"
+        },
+        {
+          "name": "Universal Lock",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Universal Lock"
+        },
+        {
+          "name": "Vaultbow",
+          "doneness": "done",
+          "type_facet": "Magic",
+          "standing": "origin",
+          "display_name": "Vaultbow"
+        },
+        {
+          "name": "Watchful Tankard",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Watchful Tankard"
+        }
+      ]
+    },
+    {
+      "kind": "language",
+      "label": "Languages",
+      "done": 1,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 1,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 1
+      },
+      "items": [
+        {
+          "name": "Nightsong",
+          "doneness": "done",
+          "type_facet": "Spoken",
+          "standing": "origin",
+          "display_name": "Nightsong"
+        }
+      ]
+    },
+    {
+      "kind": "spell",
+      "label": "Spells",
+      "done": 21,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 21,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 21
+      },
+      "items": [
+        {
+          "name": "Bereave",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Bereave"
+        },
+        {
+          "name": "Betraying Sting",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Betraying Sting"
+        },
+        {
+          "name": "Ferment",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine",
+          "standing": "origin",
+          "display_name": "Ferment"
+        },
+        {
+          "name": "Free Spirit",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Free Spirit"
+        },
+        {
+          "name": "Funereal Weapon",
+          "doneness": "done",
+          "type_facet": "Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Funereal Weapon"
+        },
+        {
+          "name": "Harvest Knowledge",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Harvest Knowledge"
+        },
+        {
+          "name": "Incessant Buzzing",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Incessant Buzzing"
+        },
+        {
+          "name": "Knock (Mass)",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Knock (Mass)"
+        },
+        {
+          "name": "Necrostasis",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Necrostasis"
+        },
+        {
+          "name": "Overstimulate",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Overstimulate"
+        },
+        {
+          "name": "Painful Revelation",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Painful Revelation"
+        },
+        {
+          "name": "Pillow Talk",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Pillow Talk"
+        },
+        {
+          "name": "Preserve",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Preserve"
+        },
+        {
+          "name": "Reveal Secrets",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Reveal Secrets"
+        },
+        {
+          "name": "Scarify",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Scarify"
+        },
+        {
+          "name": "Shroud of Darkness",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Shroud of Darkness"
+        },
+        {
+          "name": "Soul Vault",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Soul Vault"
+        },
+        {
+          "name": "Spiral Ascent",
+          "doneness": "done",
+          "type_facet": "Divine",
+          "standing": "origin",
+          "display_name": "Spiral Ascent"
+        },
+        {
+          "name": "Spiral Descent",
+          "doneness": "done",
+          "type_facet": "Divine",
+          "standing": "origin",
+          "display_name": "Spiral Descent"
+        },
+        {
+          "name": "Spirit Share",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "Spirit Share"
+        },
+        {
+          "name": "True Appraisal",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine.Psychic",
+          "standing": "origin",
+          "display_name": "True Appraisal"
+        }
+      ]
+    }
+  ]
+}

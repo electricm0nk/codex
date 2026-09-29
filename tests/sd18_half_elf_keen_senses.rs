@@ -24,9 +24,6 @@ use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation};
 
@@ -128,42 +125,3 @@ fn half_elf_bounded_semantics_note_moves_keen_senses_out_of_unproven_list() {
 
 // ----- Control plane: the matrix row stays Partial/Computed, widened note -----
 
-#[test]
-fn matrix_half_elf_row_stays_partial_computed_and_grounding_ref_names_this_slice() {
-    let matrix = seeded_current_truth();
-    let half_elf = matrix
-        .row("race.half_elf.bounded_semantics")
-        .expect("half_elf row must exist");
-
-    // NOTE (2026-07-16, SD-19 Full-matrix closure): this slice's own honest
-    // Partial -> Partial widening claim below is historically accurate for THIS
-    // slice, but the row was later promoted to Supported/ProductVisible by the
-    // separate SD-19 Race Trait Catalog browser UI-surfacing work, which is why
-    // the assertions after this comment now read Supported/ProductVisible.
-    // Honest promotion: Partial -> Partial widening, NOT a jump to Supported.
-    // Keen Senses is one more grounded family among several still-unproven
-    // ones (Elven Immunities, Adaptability, Multitalented), so the row does
-    // not reach Supported this cycle.
-    assert_eq!(half_elf.support_state, SupportState::Supported);
-    assert_eq!(half_elf.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        half_elf.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        half_elf.grounding_ref.contains("sd18_half_elf_keen_senses"),
-        "half_elf row grounding_ref must cite this slice's proof surface: {}",
-        half_elf.grounding_ref
-    );
-    assert!(
-        half_elf.blocker_or_lossiness_note.contains("Keen Senses"),
-        "half_elf row note must still mention Keen Senses by name: {}",
-        half_elf.blocker_or_lossiness_note
-    );
-    assert!(
-        half_elf.blocker_or_lossiness_note.contains("Elven Immunities"),
-        "half_elf row note must name the distinct, still-unproven Elven Immunities \
-         trait: {}",
-        half_elf.blocker_or_lossiness_note
-    );
-}

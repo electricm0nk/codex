@@ -1,5 +1,8 @@
+import { readFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
-  CLASS_OPTIONS,
+  CLASS_OPTIONS_FALLBACK,
   MAX_CLASS_LEVEL,
   UNKNOWN_RACE_TRAIT,
   canTakeAnotherLevelIn,
@@ -10,6 +13,9 @@ import {
   type RaceOption,
 } from './characterHubModel';
 import { assert, assertEqual } from '../testSupport/asserts';
+import { installClassRoster } from './classRoster';
+import { getClassCatalog } from './classCatalog';
+import { classRosterWire } from '../testSupport/classRosterWire';
 
 /**
  * A stand-in for the roster the backend serves, so this file can test
@@ -44,48 +50,28 @@ const ROSTER: RaceOption[] = [
  * cannot silently widen it.
  */
 
-/** The classes the engine dump reports `Computed` at every level 1-20. */
-const FULLY_COMPUTED_CLASS_IDS = [
-  // CRB
-  'class:barbarian',
-  'class:bard',
-  'class:cleric',
-  'class:druid',
-  'class:fighter',
-  'class:monk',
-  'class:paladin',
-  'class:ranger',
-  'class:rogue',
-  'class:sorcerer',
-  'class:wizard',
-  // APG
-  'class:alchemist',
-  'class:cavalier',
-  'class:inquisitor',
-  'class:oracle',
-  'class:summoner',
-  'class:witch',
-  // ACG
-  'class:arcanist',
-  'class:bloodrager',
-  'class:brawler',
-  'class:hunter',
-  'class:investigator',
-  'class:shaman',
-  'class:skald',
-  'class:slayer',
-  'class:swashbuckler',
-  'class:warpriest',
-  // Pathfinder Unchained. Four REPLACEMENTS for four of the classes above,
-  // present alongside them under distinct ids (SD-27, 2026-07-31).
-  'class:unchained_barbarian',
-  'class:unchained_monk',
-  'class:unchained_rogue',
-  'class:unchained_summoner',
-];
+/**
+ * SD-36 F4c: the classes the census reports Computed at every level and offers at creation
+ * (`in_desktop_roster`), read off the census artifact the backend roster test compares against
+ * (`census-f4a.json`, 59 of its 137 ids). The picker offers exactly these, read off the served
+ * roster — no longer the hardcoded 31 (now `CLASS_OPTIONS_FALLBACK`, used only when the command
+ * fails).
+ */
+const CENSUS_PATH = join(
+  resolve(dirname(fileURLToPath(import.meta.url)), '../../../..'),
+  'docs/release/SD-36-consolidation/artifacts/epic-f/census-f4a.json'
+);
+const FULLY_COMPUTED_CLASS_IDS: string[] = (() => {
+  const census = JSON.parse(readFileSync(CENSUS_PATH, 'utf8')) as {
+    classes: { class_id: string; in_desktop_roster: boolean }[];
+    prestige: { class_id: string; in_desktop_roster: boolean }[];
+  };
+  return [...census.classes, ...census.prestige].filter((row) => row.in_desktop_roster).map((row) => row.class_id);
+})();
 
 /**
- * Each class's PF1 hit die, from the `HD:` token on its own real `CLASS:`
+ * Each FALLBACK class's PF1 hit die (`CLASS_OPTIONS_FALLBACK`, the table the picker shows only
+ * when the roster command fails), from the `HD:` token on its own real `CLASS:`
  * record — `core_rulebook/cr_classes.lst`, `advanced_players_guide/
  * apg_classes.lst`, `advanced_class_guide/acg_classes.lst`. Cross-checked
  * against the engine's own per-class constants (`crb::class_tables`'s
@@ -190,6 +176,7 @@ function verifiesTheUnknownMarkerIsNotItselfARulesValue() {
 }
 
 async function main() {
+  installClassRoster(classRosterWire());
   verifiesKnownRacesStillReportTheirRealSizeAndVision();
   verifiesAnUnprofiledRaceIsNotGivenAFabricatedSizeOrVision();
   verifiesAMissingRaceIdIsAlsoUnknownRatherThanDefaulted();
@@ -226,7 +213,9 @@ function verifiesEveryEngineComputedClassOffersAllTwentyLevels() {
  * the same set, not merely as overlapping ones.
  */
 function verifiesEveryEngineComputedClassIsActuallyOffered() {
-  const offeredIds = CLASS_OPTIONS.map((option) => option.id);
+  assertEqual(getClassCatalog().source, 'roster', 'the picker reads the served roster');
+  const offeredIds = getClassCatalog().options.map((option) => option.id);
+  assertEqual(FULLY_COMPUTED_CLASS_IDS.length, 59, 'census in_desktop_roster');
   for (const classId of FULLY_COMPUTED_CLASS_IDS) {
     assert(
       offeredIds.includes(classId),
@@ -239,9 +228,9 @@ function verifiesEveryEngineComputedClassIsActuallyOffered() {
     'the picker must offer exactly the classes the engine dump computes'
   );
   // Ids must be unique -- a duplicated entry would render twice in the
-  // dropdown and make `CLASS_OPTIONS.find` ambiguous.
+  // dropdown and make `findClassOption` ambiguous.
   assertEqual(new Set(offeredIds).size, offeredIds.length, 'class option ids must be unique');
-  for (const option of CLASS_OPTIONS) {
+  for (const option of getClassCatalog().options) {
     assertEqual(option.supportLevel, 'full', `${option.id} support level`);
     assert(option.label.length > 0, `${option.id} must carry a label`);
   }
@@ -253,7 +242,8 @@ function verifiesEveryEngineComputedClassIsActuallyOffered() {
  * Pinned against the corpus `HD:` tokens transcribed in `HIT_DIE_BY_CLASS_ID`.
  */
 function verifiesEveryOfferedClassCarriesItsCorpusHitDie() {
-  for (const option of CLASS_OPTIONS) {
+  assertEqual(CLASS_OPTIONS_FALLBACK.length, 31, 'the fallback is the old hardcoded 31');
+  for (const option of CLASS_OPTIONS_FALLBACK) {
     const expected = HIT_DIE_BY_CLASS_ID[option.id];
     assert(expected !== undefined, `${option.id} has no recorded corpus hit die`);
     assertEqual(option.hitDie, expected, `${option.id} hit die`);
@@ -261,7 +251,7 @@ function verifiesEveryOfferedClassCarriesItsCorpusHitDie() {
 }
 
 function verifiesEngineBlockedClassesStayAtLevelOneOnly() {
-  for (const option of CLASS_OPTIONS) {
+  for (const option of getClassCatalog().options) {
     if (FULLY_COMPUTED_CLASS_IDS.includes(option.id)) {
       continue;
     }
@@ -304,7 +294,7 @@ function verifiesCanTakeAnotherLevelInStopsAtTheVerifiedCeiling() {
   assert(!canTakeAnotherLevelIn('class:monk', 20), 'Monk 20 -> 21 must not be offered');
   assert(canTakeAnotherLevelIn('class:arcanist', 5), 'Arcanist 5 -> 6 is available');
   // The ceiling is a property of every offered class, not just Fighter's.
-  for (const option of CLASS_OPTIONS) {
+  for (const option of getClassCatalog().options) {
     assert(canTakeAnotherLevelIn(option.id, 0), `a first ${option.id} level must be available`);
     assert(canTakeAnotherLevelIn(option.id, 19), `${option.id} 19 -> 20 must be available`);
     assert(!canTakeAnotherLevelIn(option.id, 20), `${option.id} 20 -> 21 must not be offered`);
@@ -349,5 +339,5 @@ function verifiesSupportLevelCopyPerLevel() {
 
 main().catch((error: unknown) => {
   console.error(error);
-  throw error;
+  process.exit(1);
 });

@@ -269,7 +269,7 @@ fn load_fixture() -> Json {
 
 fn empty_corpus() -> SourcePackageContent<'static> {
     let source_ref = SourceRef {
-        lst_file: "sd20_contract_boundary_parity".to_string(),
+        source_path: "sd20_contract_boundary_parity".to_string(),
         line: 1,
     };
     SourcePackageContent::empty("sd20_contract_boundary_parity", source_ref)

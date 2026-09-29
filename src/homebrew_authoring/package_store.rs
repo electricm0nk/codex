@@ -46,7 +46,7 @@ impl PackageStore {
             if let Some(parent) = target.parent() {
                 fs::create_dir_all(parent).map_err(|err| io_error(parent, err))?;
             }
-            fs::write(&target, content).map_err(|err| io_error(&target, err))?;
+            atomic_write(&target, content.as_bytes()).map_err(|err| io_error(&target, err))?;
         }
 
         Ok(())
@@ -753,6 +753,22 @@ fn io_error(path: &Path, err: std::io::Error) -> PackageStoreError {
     PackageStoreError {
         message: format!("{}: {err}", path.display()),
     }
+}
+
+/// SD-36 Epic E desktop-P1-02 (SD-34 R14-02): write `contents` to a `<name>.tmp` sibling of
+/// `path` then `fs::rename` it into place, so a crash mid-write (or mid-loop, across the
+/// several files one package save writes) leaves every file it has not yet reached at
+/// whatever it was before -- never truncated or half-written. This closes the single-FILE
+/// half-write window per file; it does not make the whole loop in `save()` one transaction.
+/// No `fsync` on the temp file or its parent directory either (same caveat as
+/// `saved_character::local_store`'s own `atomic_write_prepare` doc comment): a process-crash
+/// guarantee, not a power-loss one on a filesystem's default journaling mode.
+fn atomic_write(path: &Path, contents: &[u8]) -> std::io::Result<()> {
+    let mut tmp_name = path.file_name().map(|n| n.to_os_string()).unwrap_or_default();
+    tmp_name.push(".tmp");
+    let tmp_path = path.with_file_name(tmp_name);
+    fs::write(&tmp_path, contents)?;
+    fs::rename(&tmp_path, path)
 }
 
 fn parse_error(message: impl Into<String>) -> PackageStoreError {

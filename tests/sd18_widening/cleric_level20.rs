@@ -69,11 +69,7 @@
 //! character level; this only verifies the code's own range gate does not
 //! overshoot the newly raised ceiling).
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const CLERIC_LEVEL19_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_cleric_level19_sd18_widening_deterministic_input.txt"
@@ -83,16 +79,12 @@ const CLERIC_LEVEL20_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_cleric_level20_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 // ----- Base attack and good saves genuinely rise at level 20; poor Reflex stays put -----
 
 #[test]
 fn cleric_level20_base_attack_and_good_saves_rise() {
-    let input = load(CLERIC_LEVEL20_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(CLERIC_LEVEL20_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.cleric.base_attack_bonus");
     assert_eq!(
@@ -127,8 +119,7 @@ fn cleric_level20_base_attack_and_good_saves_rise() {
 
 #[test]
 fn cleric_level20_channel_energy_and_domain_slot_stay_put() {
-    let input = load(CLERIC_LEVEL20_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(CLERIC_LEVEL20_FIXTURE);
 
     let dice = explanation(&computation, "class_chassis.cleric.channel_energy_dice");
     assert_eq!(
@@ -160,8 +151,7 @@ fn cleric_level20_channel_energy_and_domain_slot_stay_put() {
 
 #[test]
 fn cleric_level20_touch_of_good_rises_and_other_facets_stay_put() {
-    let input = load(CLERIC_LEVEL20_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(CLERIC_LEVEL20_FIXTURE);
 
     let bonus = explanation(
         &computation,
@@ -194,8 +184,7 @@ fn cleric_level20_touch_of_good_rises_and_other_facets_stay_put() {
 
 #[test]
 fn cleric_level20_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_burdens() {
-    let input = load(CLERIC_LEVEL20_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(CLERIC_LEVEL20_FIXTURE);
 
     assert!(
         computation
@@ -239,8 +228,7 @@ fn cleric_level20_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_b
 
 #[test]
 fn cleric_level19_truth_is_unchanged_by_this_slice() {
-    let input = load(CLERIC_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(CLERIC_LEVEL19_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.cleric.base_attack_bonus");
     assert_eq!(base_attack.value, 14, "Cleric level 19 base attack bonus must stay 14");
@@ -261,145 +249,15 @@ fn cleric_level19_truth_is_unchanged_by_this_slice() {
 // ----- Negative control: level 21 stays unrecognized by this slice (implementation-gate -----
 // ----- check only; PF1 has no 21st character level) -----
 
-#[test]
-fn cleric_level_21_is_not_promoted_by_this_slice() {
-    let level_21 = CLERIC_LEVEL20_FIXTURE.replace("class:cleric:20", "class:cleric:21");
-    let input = load(&level_21);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| (e.id.starts_with("class_chassis.cleric.")
-                || e.id.starts_with("class_feature.cleric.")
-                || e.id == "class_chassis.spell_baseline.cleric")
-                // (v0.6 alpha swarm, risks item 8, Good domain closure)
-                // Touch of Good's not-active explanation is checked
-                // unconditionally, regardless of level bound or
-                // single-class status (mirrors every other class's
-                // gate-ordering fix)
-                && e.id != "class_feature.domain.good_touch_of_good_not_active"
-                // AT-34-E3-001 cycle 6 (`49d72f5e03`, 2026-08-28) grounded Cleric
-                // Weapon and Armor Proficiency unconditionally (real PF1 content,
-                // any Cleric level, any multiclass mix -- not gated the way this
-                // widening slice is), and the generic domain-power pass grounds
-                // Healing domain's Rebuke Death uses-per-day the same way Good
-                // domain's Touch of Good already is above (both domains are
-                // selected in this fixture and "not level-gated, still fire" per
-                // this file's own doc comment). Neither is promotion by THIS
-                // slice's widening; both are pre-existing, already-tested closures.
-                && e.id != "class_feature.cleric.weapon_and_armor_proficiency"
-                && e.id != "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes"
-                // WAVE 42 REGRESSION FIX (2026-09-04, decisions.md §wave-42-addendum): wave 42
-                // (`af674409f5`/`884c10ef5f`) grounded Cleric's Aura strength-level pass-through
-                // unconditionally at any Cleric level >= 1 (`cr_abilities_class.lst:563`'s
-                // `BONUS:VAR|AlignmentAuraLVL|ClericLVL` carries no level gate beyond the class
-                // feature's own grant gate, `PREVARGTEQ:Cleric_CFP_Level,1`, and no deity/
-                // alignment precondition on the MAGNITUDE itself -- only on which of the four
-                // aura flavors displays, which this engine does not model at all). Real PF1
-                // content, any Cleric level, any multiclass mix -- not gated the way this
-                // widening slice is, mirroring the Weapon and Armor Proficiency and Rebuke Death
-                // carve-outs immediately above (same shape, same file, `d1e0c26e06`). Not
-                // promotion by THIS slice's widening; a pre-existing, already-tested closure.
-                && e.id != "class_feature.cleric.aura.strength_level"),
-        "level-21 Cleric must not gain any bounded cleric explanation: {:?}",
-        computation.explanations
-    );
-}
+crate::sd18_boundary_neg_control_test!(cleric_level_21_is_not_promoted_by_this_slice, "cleric_level20", CLERIC_LEVEL20_FIXTURE);
 
 // ----- Negative control: the cleric path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_cleric_level20_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")
-                || e.id.starts_with("class_feature.cleric.")),
-        "the Fighter chassis must not surface any cleric-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_cleric_level20_recognition, "cleric");
 
 // ----- Negative control: multiclass Cleric is not promoted -----
 
-#[test]
-fn multiclass_cleric_level20_is_not_promoted_by_this_slice() {
-    let multiclass = CLERIC_LEVEL20_FIXTURE.replace(
-        "class_level=class:cleric:20",
-        "class_level=class:cleric:20\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| (e.id.starts_with("class_chassis.cleric.")
-                || e.id.starts_with("class_feature.cleric."))
-                // (v0.6 alpha swarm, risks item 8, Good domain closure)
-                // Touch of Good's not-active explanation is checked
-                // unconditionally, regardless of level bound or
-                // single-class status (mirrors every other class's
-                // gate-ordering fix)
-                && e.id != "class_feature.domain.good_touch_of_good_not_active"
-                // AT-34-E3-001 cycle 6 (`49d72f5e03`, 2026-08-28) grounded Cleric
-                // Weapon and Armor Proficiency unconditionally (real PF1 content,
-                // any Cleric level, any multiclass mix -- not gated the way this
-                // widening slice is), and the generic domain-power pass grounds
-                // Healing domain's Rebuke Death uses-per-day the same way Good
-                // domain's Touch of Good already is above (both domains are
-                // selected in this fixture and "not level-gated, still fire" per
-                // this file's own doc comment). Neither is promotion by THIS
-                // slice's widening; both are pre-existing, already-tested closures.
-                && e.id != "class_feature.cleric.weapon_and_armor_proficiency"
-                && e.id != "class_feature.cleric.domain.generic.healing_domain.rebuke_death.rebukedeathtimes"
-                // WAVE 42 REGRESSION FIX (2026-09-04, decisions.md §wave-42-addendum): wave 42
-                // (`af674409f5`/`884c10ef5f`) grounded Cleric's Aura strength-level pass-through
-                // unconditionally at any Cleric level >= 1 (`cr_abilities_class.lst:563`'s
-                // `BONUS:VAR|AlignmentAuraLVL|ClericLVL` carries no level gate beyond the class
-                // feature's own grant gate, `PREVARGTEQ:Cleric_CFP_Level,1`, and no deity/
-                // alignment precondition on the MAGNITUDE itself -- only on which of the four
-                // aura flavors displays, which this engine does not model at all). Real PF1
-                // content, any Cleric level, any multiclass mix -- not gated the way this
-                // widening slice is, mirroring the Weapon and Armor Proficiency and Rebuke Death
-                // carve-outs immediately above (same shape, same file, `d1e0c26e06`). Not
-                // promotion by THIS slice's widening; a pre-existing, already-tested closure.
-                && e.id != "class_feature.cleric.aura.strength_level"),
-        "multiclass Cleric must not gain any bounded cleric explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Cleric must stay claim-blocked in this slice"
-    );
-}
+crate::sd18_multiclass_neg_control_test!(multiclass_cleric_level20_is_not_promoted_by_this_slice, "cleric_level20", CLERIC_LEVEL20_FIXTURE);
 
 // ----- Control plane: the matrix note names the level-20 widening -----
 
-#[test]
-fn matrix_cleric_row_names_level_20_widening() {
-    let matrix = seeded_current_truth();
-    let cleric = matrix
-        .row("class.cleric.progression_and_spell_burden")
-        .expect("cleric progression_and_spell_burden row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
-    // Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(cleric.support_state, SupportState::Supported);
-    assert_eq!(cleric.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(cleric.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        cleric.grounding_ref.contains("sd18_cleric_level20_widening"),
-        "cleric row must cite the live SD18 level-20 widening proof surface: {}",
-        cleric.grounding_ref
-    );
-    let note = cleric.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 20") || note.contains("level-20"),
-        "cleric partial note must name the level-20 widening: {note}"
-    );
-}

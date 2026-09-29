@@ -35,7 +35,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "amulet_of_eldest_s_blessing.json": {
@@ -72,7 +72,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "amulet_of_undead_persuasion.json": {
@@ -109,7 +109,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "anvil_of_the_skyseeker.json": {
@@ -146,7 +146,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "armor_of_grim_triumph.json": {
@@ -194,7 +194,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "baldric_of_magical_stability.json": {
@@ -231,7 +231,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "belt_of_impossible_action.json": {
@@ -268,7 +268,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "binding_contract.json": {
@@ -305,7 +305,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_fiendish_escape.json": {
@@ -342,7 +342,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bracelet_of_good_luck_charms.json": {
@@ -379,7 +379,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "broken_rune_bracers.json": {
@@ -416,7 +416,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cap_of_darkest_dreams.json": {
@@ -453,7 +453,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "clever_sling_staff.json": {
@@ -503,7 +503,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cloak_of_blood_alarm.json": {
@@ -540,7 +540,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cloak_of_summer_and_winter.json": {
@@ -577,7 +577,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "coat_of_shells.json": {
@@ -624,7 +624,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_inner_sea_races_isr_equip_general_lst_17.json": {
@@ -661,7 +661,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "commander_s_helm_greater.json": {
@@ -698,7 +698,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "commander_s_helm_lesser.json": {
@@ -735,7 +735,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "commander_s_helm_superior.json": {
@@ -772,7 +772,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "diadem_of_the_interplanetary_emissary.json": {
@@ -809,7 +809,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dueling_bokken.json": {
@@ -858,7 +858,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "elven_still.json": {
@@ -895,7 +895,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "errani_kamaki.json": {
@@ -944,7 +944,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "eye_patch_of_infamy.json": {
@@ -981,7 +981,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "eyes_of_mind_reading.json": {
@@ -1018,7 +1018,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gentleman_s_foil.json": {
@@ -1067,7 +1067,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gnome_scrap_armor.json": {
@@ -1115,7 +1115,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "goblin_plate.json": {
@@ -1163,7 +1163,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "hallowed_chain.json": {
@@ -1210,7 +1210,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "hallowed_chain_greater.json": {
@@ -1258,7 +1258,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "headband_of_controlling_illusions.json": {
@@ -1295,7 +1295,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "hide_of_grim_triumph.json": {
@@ -1343,7 +1343,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "horn_of_the_war_leader.json": {
@@ -1380,7 +1380,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "horseshoes_of_desert_fury.json": {
@@ -1417,7 +1417,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "hunter_s_mambele.json": {
@@ -1467,7 +1467,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "jinx_eater_s_shirt.json": {
@@ -1504,7 +1504,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "junkblade.json": {
@@ -1554,7 +1554,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "locket_of_true_and_false_friends.json": {
@@ -1591,7 +1591,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lupine_robe.json": {
@@ -1628,7 +1628,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lycanthrope_skin_bat.json": {
@@ -1665,7 +1665,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lycanthrope_skin_boar.json": {
@@ -1702,7 +1702,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lycanthrope_skin_brown_bear.json": {
@@ -1739,7 +1739,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lycanthrope_skin_crocodile.json": {
@@ -1776,7 +1776,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lycanthrope_skin_rat.json": {
@@ -1813,7 +1813,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lycanthrope_skin_shark.json": {
@@ -1850,7 +1850,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lycanthrope_skin_tiger.json": {
@@ -1887,7 +1887,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lycanthrope_skin_wolf.json": {
@@ -1924,7 +1924,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mail_of_sly_steps.json": {
@@ -1971,7 +1971,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mask_of_stolen_identities.json": {
@@ -2008,7 +2008,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "master_s_brand.json": {
@@ -2045,7 +2045,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mount_splitting_pick.json": {
@@ -2093,7 +2093,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ointment_of_secret_seeing.json": {
@@ -2130,7 +2130,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "panoply_of_the_fierani_knight.json": {
@@ -2177,7 +2177,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "scalerazor.json": {
@@ -2225,7 +2225,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "scarf_of_glorious_histories.json": {
@@ -2265,7 +2265,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shadow_cleaver.json": {
@@ -2313,7 +2313,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shields_bane.json": {
@@ -2361,7 +2361,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shirt_of_inconspicuousness.json": {
@@ -2398,7 +2398,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "spell_winder_2nd_level.json": {
@@ -2435,7 +2435,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "spell_winder_4th_level.json": {
@@ -2472,7 +2472,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "spell_winder_6th_level.json": {
@@ -2509,7 +2509,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "spyglass_of_discovery.json": {
@@ -2546,7 +2546,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "stalker_s_fang.json": {
@@ -2595,7 +2595,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "stampede_drum.json": {
@@ -2632,7 +2632,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "standard_of_the_celestial_heir.json": {
@@ -2669,7 +2669,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "storval_s_thunder.json": {
@@ -2717,7 +2717,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "translator_s_cap.json": {
@@ -2754,7 +2754,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "treekeeper_s_staff.json": {
@@ -2802,7 +2802,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "tremor_bar.json": {
@@ -2839,7 +2839,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "true_warrior_s_blade.json": {
@@ -2887,7 +2887,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warchanter_s_torch.json": {
@@ -2924,7 +2924,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     }
   }

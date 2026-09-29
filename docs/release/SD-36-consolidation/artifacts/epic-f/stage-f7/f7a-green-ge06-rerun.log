@@ -1,0 +1,12 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.25s
+     Running tests/ge06_pilot_selected_skill_modifiers.rs (/home/ubuntu/workspace/worktrees/codex-epic-f7-target/debug/deps/ge06_pilot_selected_skill_modifiers-a33a50f910bbc0b5)
+
+running 5 tests
+test unsupported_chassis_blocks_skill_modifiers ... ok
+test absent_chain_shirt_blocks_skill_modifiers ... ok
+test missing_selected_skill_allocation_blocks_skill_modifiers ... ok
+test computes_selected_skill_modifiers_with_contributors ... ok
+test an_allocation_outside_the_slice_leaves_the_three_totals_unchanged ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.69s
+

@@ -13268,7 +13268,7 @@
    "token_type": "PROHIBITSPELL",
    "family": "prose",
    "maps_to": "Text",
-   "rule": "PROHIBITSPELL:SCHOOL.<x>|DESCRIPTOR.<x>|<PRE...> bars a school, sub-school or descriptor from a caster's list. There is no number: the sheet prints the rule's words (`Prohibited: Abjuration.`) as a Special prose segment, carrying the token's trailing PRE tail as the segment's `applies`.",
+   "rule": "PROHIBITSPELL:SCHOOL.<x>|DESCRIPTOR.<x>|<PRE...> bars a school, sub-school or descriptor from a caster's list. There is no number: the sheet prints the rule's words (`Prohibited: Abjuration.`) as a Special prose segment, carrying the token's trailing PRE tail as the segment's `applies`. SD-36 F1c-3: a class's `PROHIBITED:<school>,...` (its barred schools, e.g. `ag_classes.lst:331`) routes to this row and prints the same way.",
    "expr_shape": "n/a",
    "applies_shape": "None.",
    "prose_effect": "prints the rule's words as a Special prose segment",
@@ -13285,6 +13285,7 @@
    "provenance": "synthesis",
    "resolved_conflict": [],
    "covers_token_heads": [
+    "PROHIBITED",
     "PROHIBITSPELL"
    ]
   },

@@ -72,6 +72,7 @@ pub fn prose_has_a_slot_no_character_settles(rule: &SheetRule) -> bool {
         segment.pieces.iter().any(|piece| match piece {
             ProsePiece::Slot(e) => const_value(e).is_none(),
             ProsePiece::Dice { modifier: Some(e), .. } => const_value(e).is_none(),
+            ProsePiece::DiceCount { count, .. } => const_value(count).is_none(),
             _ => false,
         })
     })
@@ -463,6 +464,12 @@ fn effect_words(package: &SheetRulePackage, effect: &Effect) -> String {
         Effect::FactDeclare { name, value } => {
             format!("Declares {} as {value}", words_of_id(name))
         }
+        Effect::GatedFactGrant { fact, when } => {
+            format!("Grants {} when {}", fact_words(fact), describe_gate(package, when))
+        }
+        Effect::TakenOnClass(base) => {
+            format!("Taken on the {} class: every level is a {} level", words_of_id(base), words_of_id(base))
+        }
     }
 }
 
@@ -492,6 +499,7 @@ fn fact_words(fact: &Fact) -> String {
             None => format!("{} companion slot(s)", words_of_id(role)),
         },
         Fact::Chosen(choice) => format!("the option chosen for {}", words_of_id(choice)),
+        Fact::NaturalAttack(attack) => format!("the {attack} natural attack"),
     }
 }
 
@@ -571,9 +579,24 @@ fn render(
         }
     }
 
+    // SD-36 F7b: a line whose condition is decided `Never` is never a condition sentence. The
+    // population is the source's display switch: a short-form description shown only when the
+    // full text is switched off (Fireball's `(min(10,CASTERLEVEL))d6` line), which the converter
+    // decides `Never` because the full text is on. The rule text prints once: when the record
+    // states its description in another line, the short form does not print; when that short
+    // form is the record's only description (its full text lost to a glued source token, as in
+    // Sunder Breaker, or a magus spellblend that copies the spell's short form), it prints as the
+    // record's words with no condition.
+    let described = segments
+        .iter()
+        .any(|s| DESCRIPTION_FAMILIES.contains(&family_name(&s.family)) && s.applies != Some(Applies::Never));
     let mut lines: Vec<(i32, usize, String)> = Vec::new();
     for (i, s) in segments.iter().enumerate() {
         if !included[i] {
+            continue;
+        }
+        let never = s.applies == Some(Applies::Never);
+        if never && (described || !DESCRIPTION_FAMILIES.contains(&family_name(&s.family))) {
             continue;
         }
         if s.pick_last && last_pick.get(&family_key(&s.family)) != Some(&i) {
@@ -582,9 +605,19 @@ fn render(
         let mut text = String::new();
         let mut slots = 0usize;
         let mut nonzero = false;
+        // SD-36 F7b: a percentage whose number is words ("70 plus caster level% chance") reads as
+        // a hole; the words carry the sign as the word.
+        let mut after_words = false;
         for p in &s.pieces {
+            let was_words = std::mem::take(&mut after_words);
             match p {
-                ProsePiece::Text(t) => text.push_str(t),
+                ProsePiece::Text(t) => match t.strip_prefix('%') {
+                    Some(rest) if was_words => {
+                        text.push_str(" percent");
+                        text.push_str(rest);
+                    }
+                    _ => text.push_str(t),
+                },
                 ProsePiece::Slot(e) => {
                     slots += 1;
                     match const_value(e) {
@@ -596,6 +629,7 @@ fn render(
                             // Not settled without a character: the rule's words, never `0`.
                             nonzero = true;
                             text.push_str(&expr_words(package, e));
+                            after_words = true;
                         }
                     }
                 }
@@ -610,6 +644,19 @@ fn render(
                         text.push_str(&format!("{dice} plus {words}"));
                     }
                 },
+                ProsePiece::DiceCount { count, sides } => {
+                    slots += 1;
+                    match const_value(count) {
+                        Some(n) => {
+                            nonzero |= n != 0;
+                            text.push_str(&format!("{n}d{sides}"));
+                        }
+                        None => {
+                            nonzero = true;
+                            text.push_str(&dice_count_words(package, count, *sides));
+                        }
+                    }
+                }
             }
         }
         // The evaluator drops a line whose every slot came out zero. Here a slot is only known
@@ -623,6 +670,7 @@ fn render(
             continue;
         }
         let text = match &s.applies {
+            Some(Applies::Never) => text,
             Some(gate) => {
                 let condition = describe_gate(package, gate);
                 if condition.is_empty() || condition == "no prerequisite" {
@@ -644,6 +692,63 @@ fn render(
     }
     lines.sort_by(|a, b| a.0.cmp(&b.0).then(a.1.cmp(&b.1)));
     lines.into_iter().map(|(_, _, l)| l).collect::<Vec<_>>().join("\n")
+}
+
+/// SD-36 F7b: dice whose number no character-free reading settles, in the rule's words.
+///
+/// The shapes the corpus's prose writes (`(min(10,CASTERLEVEL))d6`, `(min(CASTERLEVEL/2,5))d6`,
+/// `(min(40,CASTERLEVEL*2))d6`) are "one die per so many levels, up to a cap", which is how the
+/// book words them (Core Rulebook p.284, *Fireball*: "1d6 points of fire damage per caster level
+/// (maximum 10d6)"). Read structurally, never per spell:
+///
+/// - a `Min` with one constant side is the cap: `<the rest> (maximum <cap>d<sides>)`;
+/// - `term` is `1d<sides> per <term>`; `k * term` is `<k>d<sides> per <term>`; `term / k` (and its
+///   floor) is `1d<sides> per <k> <term>s` -- where `term` is one leaf the printer names
+///   ([`expr_words`]);
+/// - anything else is `a number of d<sides> equal to <the expression's words>`.
+pub fn dice_count_words(package: &SheetRulePackage, count: &Expr, sides: u32) -> String {
+    if let Expr::Min(a, b) = count {
+        let (cap, rest) = match (const_value(a), const_value(b)) {
+            (Some(cap), None) => (Some(cap), b.as_ref()),
+            (None, Some(cap)) => (Some(cap), a.as_ref()),
+            _ => (None, count),
+        };
+        if let Some(cap) = cap {
+            return format!("{} (maximum {cap}d{sides})", dice_count_words(package, rest, sides));
+        }
+    }
+    let leaf = |e: &Expr| -> Option<String> {
+        match e {
+            Expr::Sum(_) | Expr::Mul(..) | Expr::Div(..) | Expr::Min(..) | Expr::Max(..) | Expr::Floor(_) | Expr::Ceil(_) | Expr::Const(_) => None,
+            other => Some(expr_words(package, other)),
+        }
+    };
+    let unfloored = match count {
+        Expr::Floor(inner) => inner.as_ref(),
+        other => other,
+    };
+    if let Some(term) = leaf(unfloored) {
+        return format!("1d{sides} per {term}");
+    }
+    match unfloored {
+        Expr::Mul(a, b) => {
+            let (k, term) = match (const_value(a), const_value(b)) {
+                (Some(k), None) => (Some(k), leaf(b)),
+                (None, Some(k)) => (Some(k), leaf(a)),
+                _ => (None, None),
+            };
+            if let (Some(k), Some(term)) = (k, term) {
+                return format!("{k}d{sides} per {term}");
+            }
+        }
+        Expr::Div(a, b) => {
+            if let (Some(term), Some(k)) = (leaf(a), const_value(b)) {
+                return format!("1d{sides} per {k} {term}s");
+            }
+        }
+        _ => {}
+    }
+    format!("a number of d{sides} equal to {}", expr_words(package, count))
 }
 
 /// The expression's value when **nothing about a character** is needed to know it.
@@ -703,6 +808,8 @@ mod tests {
             granted_by: Vec::new(),
             offers: None,
             grants: Vec::new(),
+            closure_complete: false,
+            always_held: false,
             provenance: Provenance::default(),
         }
     }
@@ -778,6 +885,72 @@ mod tests {
         )]);
         let package = package_with(rule.clone());
         assert_eq!(catalog_prose(&package, &rule), "DC 10 plus Charisma modifier");
+    }
+
+    /// SD-36 F7b: dice whose number is a formula print as the rule's words with no character
+    /// (Core Rulebook p.284, *Fireball*: "1d6 points of fire damage per caster level (maximum
+    /// 10d6)"), and as final dice for a character.
+    #[test]
+    fn counted_dice_print_per_level_with_their_cap() {
+        let cl = || Expr::CasterLevel(crate::rules_core::sheet_rule::ClassRef::Holder);
+        let package = SheetRulePackage::new();
+        let words = |count: Expr, sides: u32| dice_count_words(&package, &count, sides);
+        assert_eq!(words(Expr::min(Expr::Const(10), cl()), 6), "1d6 per caster level (maximum 10d6)");
+        assert_eq!(words(Expr::min(Expr::div(cl(), Expr::Const(2)), Expr::Const(5)), 6), "1d6 per 2 caster levels (maximum 5d6)");
+        assert_eq!(words(Expr::min(Expr::Const(40), Expr::mul(cl(), Expr::Const(2))), 6), "2d6 per caster level (maximum 40d6)");
+        assert_eq!(words(Expr::Floor(Box::new(Expr::div(cl(), Expr::Const(3)))), 8), "1d8 per 3 caster levels");
+        assert_eq!(
+            words(Expr::sum(vec![Expr::Const(1), cl()]), 4),
+            "a number of d4 equal to 1 plus caster level"
+        );
+
+        let rule = rule_with(vec![segment(
+            ProseFamily::Desc,
+            vec![
+                ProsePiece::Text("deals ".into()),
+                ProsePiece::DiceCount { count: Expr::min(Expr::Const(10), Expr::Level), sides: 6 },
+                ProsePiece::Text(" points of fire damage".into()),
+            ],
+        )]);
+        let package = package_with(rule.clone());
+        assert_eq!(catalog_prose(&package, &rule), "deals 1d6 per character level (maximum 10d6) points of fire damage");
+        let facts = CharacterFacts { level: 5, ..CharacterFacts::default() };
+        let line = evaluate(&rule, &HeldSet::default(), &package, &facts, EvalContext::default());
+        assert_eq!(line.prose, "deals 5d6 points of fire damage");
+    }
+
+    /// SD-36 F7b: a line decided `Never` never prints under "If not available to a character:".
+    /// The rule text prints once: the short form does not print beside the full text, and prints
+    /// as the record's words when it is the record's only description.
+    #[test]
+    fn a_line_decided_never_prints_once_and_never_as_a_condition() {
+        let never = || {
+            let mut s = segment(ProseFamily::Desc, vec![ProsePiece::Text("the short form".into())]);
+            s.applies = Some(Applies::Never);
+            s
+        };
+        let rule = rule_with(vec![never(), segment(ProseFamily::Desc, vec![ProsePiece::Text("the full text".into())])]);
+        let package = package_with(rule.clone());
+        assert_eq!(catalog_prose(&package, &rule), "the full text");
+
+        let alone = rule_with(vec![never(), segment(ProseFamily::StatBlock("Range".into()), vec![ProsePiece::Text("Touch".into())])]);
+        let package = package_with(alone.clone());
+        assert_eq!(catalog_prose(&package, &alone), "the short form\nRange: Touch");
+    }
+
+    /// SD-36 F7b: "(70+CASTERLEVEL)% chance" with no character reads "70 plus caster level
+    /// percent chance", never a bare `%` after words.
+    #[test]
+    fn a_percentage_whose_number_is_words_says_percent() {
+        let rule = rule_with(vec![segment(
+            ProseFamily::Desc,
+            vec![
+                ProsePiece::Slot(Expr::sum(vec![Expr::Const(70), Expr::Level])),
+                ProsePiece::Text("% chance".into()),
+            ],
+        )]);
+        let package = package_with(rule.clone());
+        assert_eq!(catalog_prose(&package, &rule), "70 plus character level percent chance");
     }
 
     #[test]
@@ -877,7 +1050,7 @@ mod tests {
     fn every_unsettled_slot_in_the_live_package_renders_as_words_not_as_the_characterless_zero() {
         let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("data/sheet_rules");
         if !dir.is_dir() {
-            panic!("{} is not a directory -- regenerate with `cargo run --locked --bin sheet_rule_convert`", dir.display());
+            panic!("{} is not a directory -- regenerate with `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`", dir.display());
         }
         let load = crate::rules_core::corpus_loader::load_sheet_rules(&dir);
         let package = load.package;
@@ -889,10 +1062,12 @@ mod tests {
         let mut disagreed = 0usize;
         let mut agreed: Vec<String> = Vec::new();
         for rule in package.rules.values() {
-            let unsettled = rule.prose.iter().any(|s| {
+            // A line decided `Never` reaches no screen (SD-36 F7b), so its slot is not measured.
+            let unsettled = rule.prose.iter().filter(|s| s.applies != Some(Applies::Never)).any(|s| {
                 s.pieces.iter().any(|p| match p {
                     ProsePiece::Slot(e) => const_value(e).is_none(),
                     ProsePiece::Dice { modifier: Some(e), .. } => const_value(e).is_none(),
+                    ProsePiece::DiceCount { count, .. } => const_value(count).is_none(),
                     _ => false,
                 })
             });
@@ -1096,7 +1271,7 @@ mod tests {
         let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("data/sheet_rules");
         if !dir.is_dir() {
             panic!(
-                "{} is not a directory -- regenerate with `cargo run --locked --bin sheet_rule_convert`",
+                "{} is not a directory -- regenerate with `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`",
                 dir.display()
             );
         }

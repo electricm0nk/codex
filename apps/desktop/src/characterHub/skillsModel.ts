@@ -1,5 +1,8 @@
 import type { AbilityScoresDto } from '../boundary/loadCreateCharacter';
+import type { ClassSkillFactsDto } from '../boundary/listClassFacts';
+import type { FeatSkillBonusesDto } from '../boundary/loadSavedCharacterDetail';
 import { buildLevelEntries, totalSkillPoints, type HeldClass } from './characterProgression';
+import type { ClassFactsState } from './classFactsModel';
 
 /** The full PF1 core rulebook skill list with governing ability. */
 export const SKILLS: ReadonlyArray<{ name: string; ability: keyof AbilityScoresDto }> = [
@@ -41,69 +44,6 @@ export const SKILLS: ReadonlyArray<{ name: string; ability: keyof AbilityScoresD
 ];
 
 /**
- * Class skill lists by class id — one entry per class in `characterHubModel`'s
- * `CLASS_OPTIONS`. A selectable class missing from here is not a harmless gap:
- * `isClassSkill` would report every skill as cross-class, so the Skills tab
- * would quietly show the wrong ranks-to-bonus math rather than showing nothing.
- */
-const CLASS_SKILLS: Record<string, ReadonlySet<string>> = {
-  // ACG Arcanist: Appraise, Craft, Fly, Knowledge (all), Linguistics,
-  // Profession, Spellcraft, Use Magic Device. Same list as Wizard plus Use
-  // Magic Device, which Wizard does not get.
-  'class:arcanist': new Set([
-    'Appraise', 'Craft', 'Fly', 'Knowledge (Arcana)', 'Knowledge (Dungeoneering)', 'Knowledge (Engineering)',
-    'Knowledge (Geography)', 'Knowledge (History)', 'Knowledge (Local)', 'Knowledge (Nature)', 'Knowledge (Nobility)',
-    'Knowledge (Planes)', 'Knowledge (Religion)', 'Linguistics', 'Profession', 'Spellcraft', 'Use Magic Device',
-  ]),
-  'class:barbarian': new Set([
-    'Acrobatics', 'Climb', 'Craft', 'Handle Animal', 'Intimidate', 'Knowledge (Nature)', 'Perception', 'Ride', 'Survival', 'Swim',
-  ]),
-  'class:bard': new Set([
-    'Acrobatics', 'Appraise', 'Bluff', 'Climb', 'Craft', 'Diplomacy', 'Disguise', 'Escape Artist', 'Fly', 'Handle Animal',
-    'Knowledge (Arcana)', 'Knowledge (Dungeoneering)', 'Knowledge (Engineering)', 'Knowledge (Geography)', 'Knowledge (History)',
-    'Knowledge (Local)', 'Knowledge (Nature)', 'Knowledge (Nobility)', 'Knowledge (Planes)', 'Knowledge (Religion)', 'Linguistics',
-    'Perception', 'Perform', 'Profession', 'Sense Motive', 'Sleight of Hand', 'Spellcraft', 'Stealth', 'Use Magic Device',
-  ]),
-  'class:cleric': new Set([
-    'Appraise', 'Craft', 'Diplomacy', 'Heal', 'Knowledge (Arcana)', 'Knowledge (History)', 'Knowledge (Nobility)',
-    'Knowledge (Planes)', 'Knowledge (Religion)', 'Linguistics', 'Profession', 'Sense Motive', 'Spellcraft',
-  ]),
-  'class:druid': new Set([
-    'Climb', 'Craft', 'Fly', 'Handle Animal', 'Heal', 'Knowledge (Geography)', 'Knowledge (Nature)', 'Perception', 'Profession',
-    'Ride', 'Spellcraft', 'Survival', 'Swim',
-  ]),
-  'class:fighter': new Set([
-    'Climb', 'Craft', 'Handle Animal', 'Intimidate', 'Knowledge (Dungeoneering)', 'Knowledge (Engineering)', 'Profession', 'Ride',
-    'Survival', 'Swim',
-  ]),
-  'class:monk': new Set([
-    'Acrobatics', 'Climb', 'Craft', 'Escape Artist', 'Handle Animal', 'Intimidate', 'Knowledge (History)', 'Knowledge (Religion)',
-    'Perception', 'Profession', 'Ride', 'Sense Motive', 'Stealth', 'Swim',
-  ]),
-  'class:paladin': new Set([
-    'Craft', 'Diplomacy', 'Handle Animal', 'Heal', 'Knowledge (Nobility)', 'Knowledge (Religion)', 'Profession', 'Ride',
-    'Sense Motive', 'Spellcraft',
-  ]),
-  'class:ranger': new Set([
-    'Climb', 'Craft', 'Handle Animal', 'Heal', 'Intimidate', 'Knowledge (Dungeoneering)', 'Knowledge (Geography)',
-    'Knowledge (Nature)', 'Perception', 'Profession', 'Ride', 'Spellcraft', 'Stealth', 'Survival', 'Swim',
-  ]),
-  'class:rogue': new Set([
-    'Acrobatics', 'Appraise', 'Bluff', 'Climb', 'Craft', 'Diplomacy', 'Disable Device', 'Disguise', 'Escape Artist',
-    'Handle Animal', 'Intimidate', 'Knowledge (Dungeoneering)', 'Knowledge (Local)', 'Linguistics', 'Perception', 'Perform',
-    'Profession', 'Ride', 'Sense Motive', 'Sleight of Hand', 'Stealth', 'Swim', 'Use Magic Device',
-  ]),
-  'class:sorcerer': new Set([
-    'Appraise', 'Bluff', 'Craft', 'Fly', 'Intimidate', 'Knowledge (Arcana)', 'Profession', 'Spellcraft', 'Use Magic Device',
-  ]),
-  'class:wizard': new Set([
-    'Appraise', 'Craft', 'Fly', 'Knowledge (Arcana)', 'Knowledge (Dungeoneering)', 'Knowledge (Engineering)',
-    'Knowledge (Geography)', 'Knowledge (History)', 'Knowledge (Local)', 'Knowledge (Nature)', 'Knowledge (Nobility)',
-    'Knowledge (Planes)', 'Knowledge (Religion)', 'Linguistics', 'Profession', 'Spellcraft',
-  ]),
-};
-
-/**
  * Maps a `SKILLS` display name to the `skill:<snake_case>` wire id the
  * `set_skill_allocations` Tauri command expects (`SkillAllocation.skill_id`
  * in `character_input.rs`). Only 5 ids are actually recognized by the
@@ -127,14 +67,133 @@ export function skillIdFor(skillName: string): string {
   return `skill:${normalized}`;
 }
 
-/** Whether `skillName` is a class skill for any class the character holds (multiclass union). */
-export function isClassSkill(heldClasses: HeldClass[], skillName: string): boolean {
-  return heldClasses.some((held) => CLASS_SKILLS[held.classId]?.has(skillName));
+/**
+ * Whether the served class-skill answer grants `skillName` (a `SKILLS` display name): named
+ * directly by its package id (`skillIdFor` without the `skill:` prefix), or a member of a granted
+ * family (`Knowledge (Nature)` under `Knowledge`, `Craft` itself under `Craft`) -- the engine's own
+ * `ClassSkillView::contains` rule.
+ */
+export function classSkillFactsGrant(facts: ClassSkillFactsDto, skillName: string): boolean {
+  if (facts.status !== 'known') {
+    return false;
+  }
+  const id = skillIdFor(skillName).slice('skill:'.length);
+  return (
+    facts.skills.includes(id) ||
+    facts.groups.some((group) => {
+      const family = group.toLowerCase();
+      return id === family || id.startsWith(`${family}_`);
+    })
+  );
 }
 
-/** PF1: a skill's total modifier is ability mod + ranks + (a +3 class-skill bonus once at least 1 rank is invested). */
-export function skillModifier(abilityModifier: number, ranks: number, classSkill: boolean): number {
-  return abilityModifier + ranks + (classSkill && ranks > 0 ? 3 : 0);
+/**
+ * SD-36 F6a: which skills are class skills for the classes a character holds, read from the
+ * engine's class-skill reader (`list_class_facts`). PF1's union rule: a skill is a class skill when
+ * ANY held class grants it. A held class the engine cannot answer contributes nothing and is named
+ * in `unanswered` (the Skills panel prints it) -- never silently scored all-cross-class.
+ */
+/**
+ * SD-36 F7c: the marker printed beside a class skill held only through a Path-A canonical seed --
+ * the engine's `class_seeds::DEFAULT_PICK_MARKER`, the same words the Weapons tab's seeded-pick
+ * lines end with.
+ */
+export const DEFAULT_PICK_MARKER = 'default pick';
+
+/**
+ * Whether the served answer grants `skillName` ONLY as a canonical default pick: granted, and
+ * every grant of it is a `defaultPicks` / `defaultPickGroups` entry.
+ */
+export function classSkillFactsDefaultPick(facts: ClassSkillFactsDto, skillName: string): boolean {
+  if (!classSkillFactsGrant(facts, skillName)) {
+    return false;
+  }
+  const fixed: ClassSkillFactsDto = {
+    ...facts,
+    skills: facts.skills.filter((skill) => !(facts.defaultPicks ?? []).includes(skill)),
+    groups: facts.groups.filter((group) => !(facts.defaultPickGroups ?? []).includes(group)),
+  };
+  return !classSkillFactsGrant(fixed, skillName);
+}
+
+export interface ClassSkillLookup {
+  isClassSkill: (skillName: string) => boolean;
+  /**
+   * SD-36 F7c: a class skill that holds only because the engine applied a Path-A canonical seed in
+   * every held class that grants it (no held class grants it outright) -- printed with
+   * `(default pick)`.
+   */
+  isDefaultPick: (skillName: string) => boolean;
+  /** `{ classLabel, reason }` for each held class with no served class-skill answer. */
+  unanswered: Array<{ classLabel: string; reason: string }>;
+}
+
+export function classSkillLookup(heldClasses: readonly HeldClass[], state: ClassFactsState): ClassSkillLookup {
+  const known: ClassSkillFactsDto[] = [];
+  const unanswered: ClassSkillLookup['unanswered'] = [];
+  for (const held of heldClasses) {
+    const served = state.kind === 'loaded' ? state.byClassId.get(held.classId) : undefined;
+    const facts = served && served.level === held.level ? served.classSkills : undefined;
+    if (facts && facts.status === 'known') {
+      known.push(facts);
+    } else {
+      const reason =
+        facts?.reason ?? (state.kind === 'loading' ? 'loading' : state.kind === 'failed' ? state.notice : 'not served');
+      unanswered.push({ classLabel: held.classLabel, reason });
+    }
+  }
+  return {
+    isClassSkill: (skillName) => known.some((facts) => classSkillFactsGrant(facts, skillName)),
+    isDefaultPick: (skillName) =>
+      known.some((facts) => classSkillFactsGrant(facts, skillName)) &&
+      known.every((facts) => !classSkillFactsGrant(facts, skillName) || classSkillFactsDefaultPick(facts, skillName)),
+    unanswered,
+  };
+}
+
+/** Whether `skillName` is a class skill under `lookup` (see {@link classSkillLookup}). */
+export function isClassSkill(lookup: ClassSkillLookup, skillName: string): boolean {
+  return lookup.isClassSkill(skillName);
+}
+
+/**
+ * PF1: a skill's total modifier is ability mod + ranks + (a +3 class-skill bonus once at least 1
+ * rank is invested) + the feat bonus the engine folded for it ({@link featSkillBonusFor}).
+ */
+export function skillModifier(abilityModifier: number, ranks: number, classSkill: boolean, featBonus = 0): number {
+  return abilityModifier + ranks + (classSkill && ranks > 0 ? 3 : 0) + featBonus;
+}
+
+/**
+ * SD-36 F6b: the feat bonus the engine folded for `skillName` (a `SKILLS` display name): the
+ * served per-skill total for its package id (`skillIdFor` without `skill:`), plus every served
+ * family total the skill belongs to (`knowledge` for `Knowledge (Local)`) -- the same membership
+ * rule as {@link classSkillFactsGrant}. Nothing is computed here; the engine folded by bonus type.
+ */
+export function featSkillBonusFor(bonuses: FeatSkillBonusesDto, skillName: string): number {
+  const id = skillIdFor(skillName).slice('skill:'.length);
+  let total = bonuses.skills[id] ?? 0;
+  for (const [family, value] of Object.entries(bonuses.groups)) {
+    if (id === family || id.startsWith(`${family}_`)) {
+      total += value;
+    }
+  }
+  return total;
+}
+
+/**
+ * Folded feat bonuses whose skill has no row on the panel (`craft_alchemy`, `perform_oratory`,
+ * `knowledge_psionics`, ...): printed as a note under the panel so no served bonus is dropped.
+ */
+export function featSkillBonusesWithoutARow(bonuses: FeatSkillBonusesDto): Array<{ skill: string; value: number; labels: string[] }> {
+  const rowIds = new Set(SKILLS.map((skill) => skillIdFor(skill.name).slice('skill:'.length)));
+  return Object.entries(bonuses.skills)
+    .filter(([skill]) => !rowIds.has(skill))
+    .map(([skill, value]) => ({
+      skill,
+      value,
+      labels: bonuses.contributions.filter((c) => !c.group && c.skill === skill).map((c) => c.label),
+    }));
 }
 
 /** Max ranks investable in a class skill at the given total character level. */
@@ -147,28 +206,49 @@ export function maxCrossClassSkillRanks(characterLevel: number): number {
   return Math.floor((characterLevel + 3) / 2);
 }
 
-/** Points cost per rank: 1 for a class skill, 2 for cross-class. */
-export function skillRankCost(classSkill: boolean): number {
-  return classSkill ? 1 : 2;
+/**
+ * Skill points spent: PF1 (CRB Chapter 4, Acquiring Skills) buys one rank with one point, class
+ * skill or not -- a class skill adds +3 instead of costing less (3.5's two-point cross-class rank
+ * is not a PF1 rule). Every allocation entry counts, including an id with no panel row.
+ */
+export function skillPointsSpent(allocation: Record<string, number>): number {
+  return Object.values(allocation).reduce((sum, ranks) => sum + ranks, 0);
 }
 
 /**
- * The fixed three-skill demo allocation every saved character currently
- * receives server-side (`compose_character_input` in character_hub.rs hard-
- * codes Climb/Intimidate/Swim at 1 rank each, regardless of the caller's
- * choices — there is no per-character allocation command yet). Used to seed
- * the allocation dialog with what's actually true today rather than a guess.
+ * The persisted `chosen.skill_allocations` (`LoadSavedCharacterResponse.skillAllocations`) keyed
+ * by panel row name (`skill:knowledge_arcana` -> `Knowledge (Arcana)`). An id with no panel row
+ * keeps its wire id as the key, so it is still counted and written back unchanged.
  */
-export const DEFAULT_SKILL_ALLOCATION: Record<string, number> = {
-  Climb: 1,
-  Intimidate: 1,
-  Swim: 1,
-};
+export function allocationFromPersisted(entries: ReadonlyArray<{ skillId: string; ranks: number }>): Record<string, number> {
+  const nameById = new Map(SKILLS.map((skill) => [skillIdFor(skill.name), skill.name]));
+  const allocation: Record<string, number> = {};
+  for (const entry of entries) {
+    const key = nameById.get(entry.skillId) ?? entry.skillId;
+    allocation[key] = (allocation[key] ?? 0) + entry.ranks;
+  }
+  return allocation;
+}
 
-/** Total skill points earned across every class level already taken. */
-export function totalSkillPointsAvailable(heldClasses: HeldClass[], intelligenceModifier: number, isHuman: boolean): number {
-  return buildLevelEntries(heldClasses).reduce(
-    (sum, entry) => sum + totalSkillPoints(entry.skillPointsBase, intelligenceModifier, isHuman),
-    0
-  );
+/** The inverse of {@link allocationFromPersisted}: the wire list `set_skill_allocations` takes. */
+export function persistedFromAllocation(allocation: Record<string, number>): Array<{ skillId: string; ranks: number }> {
+  return Object.entries(allocation)
+    .filter(([, ranks]) => ranks > 0)
+    .map(([key, ranks]) => ({ skillId: key.startsWith('skill:') ? key : skillIdFor(key), ranks }));
+}
+
+/**
+ * Total skill points earned across every class level already taken; `null` when any level's
+ * class states no skill ranks (the roster is loading, or the record states none).
+ */
+export function totalSkillPointsAvailable(heldClasses: HeldClass[], intelligenceModifier: number, isHuman: boolean): number | null {
+  let total = 0;
+  for (const entry of buildLevelEntries(heldClasses)) {
+    const points = totalSkillPoints(entry.skillPointsBase, intelligenceModifier, isHuman);
+    if (points === null) {
+      return null;
+    }
+    total += points;
+  }
+  return total;
 }

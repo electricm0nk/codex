@@ -1,0 +1,11 @@
+ok   driver reports its own display number (_display_num -> :61)
+ok   readiness ignores an app process on another agent's display
+ok   readiness detects an app process on our own display
+ok   stop leaves an unrelated process that merely names our display alive
+ok   _diagnose reports app-process liveness and window inventory
+ok   window-search budget is at least 120s (is 180s)
+ok   readiness budget covers a cold build (is 900s)
+ok   default launch data root is isolated (/tmp/run-desktop-driver-drivertest-806855.appdata/data)
+ok   a data root onto the real one is refused; a safe override is honoured
+
+passed: 9  failed: 0

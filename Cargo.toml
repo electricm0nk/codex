@@ -1,3 +1,10 @@
+[workspace]
+members = ["crates/*"]
+# No `default-members`: with a root package present, `cargo build`/`cargo
+# test` run at the repo root build ONLY `codex` by default (SD-36 Epic A /
+# operator ruling D1). This is the wall's cheapest proof -- `crate-wall` stage
+# in scripts/verify.sh checks it structurally too.
+
 [package]
 name = "codex"
 version = "0.1.0"

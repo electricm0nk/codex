@@ -1,0 +1,10 @@
+test each_class_keeps_its_own_feature_lines_rescoped_by_class ... FAILED
+test barbarian12_fighter1_computes_the_hand_worked_sheet ... FAILED
+test a_prestige_class_in_a_mix_prints_its_entry_requirements_without_blocking ... FAILED
+test wizard5_loremaster2_computes_the_hand_worked_sheet ... FAILED
+test an_unrecognized_save_shape_blocks_the_mix_by_name ... FAILED
+test fighter6_arcane_archer3_computes_the_hand_worked_sheet ... FAILED
+test a_mix_of_prestige_classes_only_states_the_game_rule ... FAILED
+test magus4_samurai2_computes_the_hand_worked_sheet ... FAILED
+test result: FAILED. 0 passed; 8 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.04s
+EXIT=101

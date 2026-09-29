@@ -1,0 +1,16 @@
+# f2f3:suite-desktop — desktop crate (branch sd36/epic-f2-f3 @ d5b9cafceb)
+# cmd: cargo test --locked -j 8 --no-fail-fast --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/codex_desktop-ae9b6a31c6de0782)
+test result: ok. 615 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 378.12s
+EXIT=0
+
+# frontend run 1 (fresh worktree, node_modules absent)
+sh: 1: tsc: not found
+TC_EXIT=127
+0/125 test files passed.
+TEST_EXIT=1
+
+# frontend run 2 (after npm ci from package-lock.json): npm run typecheck && npm test
+TC_EXIT=0
+125/125 test files passed.
+TEST_EXIT=0

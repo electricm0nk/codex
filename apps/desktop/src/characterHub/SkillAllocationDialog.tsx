@@ -2,38 +2,49 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { AbilityScoresDto } from '../boundary/loadCreateCharacter';
 import type { HeldClass } from './characterProgression';
+import type { FeatSkillBonusesDto } from '../boundary/loadSavedCharacterDetail';
 import {
+  DEFAULT_PICK_MARKER,
   SKILLS,
+  featSkillBonusFor,
   isClassSkill,
+  type ClassSkillLookup,
   maxClassSkillRanks,
   maxCrossClassSkillRanks,
   skillModifier,
-  skillRankCost,
+  skillPointsSpent,
 } from './skillsModel';
 
 /**
  * "Manage skill allocation" popup: adjust ranks per skill against the
- * character's earned point pool, respecting PF1's class-skill (1 point/rank)
- * vs. cross-class (2 points/rank, half the max ranks) costs.
+ * character's earned point pool. PF1 (CRB Chapter 4): one point buys one rank,
+ * class skill or not (SD-36 F7a: the 3.5 two-point cross-class rank is gone);
+ * the max-rank caps below are still the pre-F7 `maxClassSkillRanks` /
+ * `maxCrossClassSkillRanks` (named in the F7a receipt).
  *
  * `onAccept` only hands the draft allocation back to the caller — this
  * component has no I/O of its own (matching `LevelUpDialog`'s split). The
  * caller (`CharacterSheet`'s `handleSkillAllocationAccept`) persists it via
  * the real `set_skill_allocations` Tauri command. Note the compute engine's
- * `Computed` path only accepts one exact hardcoded posture today
- * (Climb/Intimidate/Swim at rank 1, chain shirt equipped — see
- * `pilot_compute.rs`), so most allocations will legitimately come back
- * `Blocked` with real diagnostics rather than silently applying.
+ * `Computed` path still holds Climb/Intimidate/Swim at the GE-06 rank-1 posture
+ * (chain shirt equipped -- `unmet_selected_skill_posture_conditions`): moving
+ * any of those three off rank 1 comes back `Blocked` with real diagnostics.
+ * Ranks in every other skill are accepted (SD-36 F7a).
  */
 
 export function SkillAllocationDialog(props: {
   open: boolean;
   onClose: () => void;
   heldClasses: HeldClass[];
+  /** SD-36 F6a: the engine's class skills for the held classes (`classSkillLookup`). */
+  classSkills: ClassSkillLookup;
   characterLevel: number;
   abilities: AbilityScoresDto;
-  totalPoints: number;
+  /** `null` when a held class states no skill ranks per level: nothing can be allocated. */
+  totalPoints: number | null;
   allocation: Record<string, number>;
+  /** SD-36 F6b: the engine's feat skill-bonus fold; each previewed total includes its bonus. */
+  featSkillBonuses: FeatSkillBonusesDto;
   onAccept: (allocation: Record<string, number>) => void;
 }) {
   const [draft, setDraft] = useState<Record<string, number>>(props.allocation);
@@ -56,11 +67,10 @@ export function SkillAllocationDialog(props: {
     return null;
   }
 
-  const spent = SKILLS.reduce((sum, skill) => {
-    const ranks = draft[skill.name] ?? 0;
-    return sum + ranks * skillRankCost(isClassSkill(props.heldClasses, skill.name));
-  }, 0);
-  const remaining = props.totalPoints - spent;
+  const spent = skillPointsSpent(draft);
+  const remaining = props.totalPoints === null ? null : props.totalPoints - spent;
+  /** Spendable budget for the +/- controls; an Unknown total allows no spend. */
+  const budget = remaining ?? 0;
 
   function adjustRank(skillName: string, classSkill: boolean, delta: 1 | -1) {
     setDraft((prev) => {
@@ -71,9 +81,7 @@ export function SkillAllocationDialog(props: {
         return prev;
       }
       if (delta === 1) {
-        const cost = skillRankCost(classSkill);
-        const currentSpent = SKILLS.reduce((sum, skill) => sum + (prev[skill.name] ?? 0) * skillRankCost(isClassSkill(props.heldClasses, skill.name)), 0);
-        if (currentSpent + cost > props.totalPoints) {
+        if (props.totalPoints === null || skillPointsSpent(prev) + 1 > props.totalPoints) {
           return prev;
         }
       }
@@ -122,16 +130,19 @@ export function SkillAllocationDialog(props: {
 
         <div style={{ flex: 1, overflowY: 'auto', padding: '0.5rem 1.5rem' }}>
           {SKILLS.map((skill) => {
-            const classSkill = isClassSkill(props.heldClasses, skill.name);
+            const classSkill = isClassSkill(props.classSkills, skill.name);
             const ranks = draft[skill.name] ?? 0;
             const abilityMod = props.abilities[skill.ability];
-            const total = skillModifier(abilityMod, ranks, classSkill);
+            const total = skillModifier(abilityMod, ranks, classSkill, featSkillBonusFor(props.featSkillBonuses, skill.name));
             const max = classSkill ? maxClassSkillRanks(props.characterLevel) : maxCrossClassSkillRanks(props.characterLevel);
             return (
               <div key={skill.name} style={{ alignItems: 'center', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.5rem', padding: '0.4rem 0' }}>
                 <span style={{ flex: 1, fontSize: '0.85rem' }}>
                   {skill.name}
                   {classSkill ? <span style={{ color: 'var(--color-accent)', fontSize: '0.68rem', fontWeight: 700 }}> · class</span> : null}
+                  {classSkill && props.classSkills.isDefaultPick(skill.name) ? (
+                    <span style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem' }}> ({DEFAULT_PICK_MARKER})</span>
+                  ) : null}
                 </span>
                 <button
                   type="button"
@@ -147,16 +158,16 @@ export function SkillAllocationDialog(props: {
                   type="button"
                   aria-label={`Increase ${skill.name}`}
                   onClick={() => adjustRank(skill.name, classSkill, 1)}
-                  disabled={ranks >= max || remaining < skillRankCost(classSkill)}
+                  disabled={ranks >= max || budget < 1}
                   style={{
                     background: 'var(--color-accent)',
                     border: '1px solid var(--color-border)',
                     borderRadius: 6,
                     color: 'var(--color-on-accent)',
-                    cursor: ranks < max && remaining >= skillRankCost(classSkill) ? 'pointer' : 'not-allowed',
+                    cursor: ranks < max && budget >= 1 ? 'pointer' : 'not-allowed',
                     fontWeight: 800,
                     height: 22,
-                    opacity: ranks < max && remaining >= skillRankCost(classSkill) ? 1 : 0.5,
+                    opacity: ranks < max && budget >= 1 ? 1 : 0.5,
                     width: 22,
                   }}
                 >
@@ -171,9 +182,15 @@ export function SkillAllocationDialog(props: {
         </div>
 
         <footer style={{ alignItems: 'center', borderTop: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', padding: '0.85rem 1.5rem' }}>
-          <span style={{ color: remaining >= 0 ? 'var(--color-accent)' : 'var(--color-error)', fontWeight: 700 }}>
-            {remaining} of {props.totalPoints} points remaining
-          </span>
+          {remaining === null ? (
+            <span style={{ color: 'var(--color-warn)', fontWeight: 700 }}>
+              Skill points Unknown: a held class states no skill ranks per level
+            </span>
+          ) : (
+            <span style={{ color: remaining >= 0 ? 'var(--color-accent)' : 'var(--color-error)', fontWeight: 700 }}>
+              {remaining} of {props.totalPoints} points remaining
+            </span>
+          )}
           <div style={{ display: 'flex', gap: '0.6rem' }}>
             <button
               type="button"

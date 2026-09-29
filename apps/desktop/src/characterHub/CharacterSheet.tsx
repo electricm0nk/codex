@@ -2,7 +2,9 @@ import { Fragment, useEffect, useState, type CSSProperties, type ReactNode } fro
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import {
   loadSavedCharacterDetail,
+  NO_FEAT_SKILL_BONUSES,
   type ExplanationDto,
+  type FeatSkillBonusesDto,
   type LoadSavedCharacterResponse,
   type SheetLineDto,
   type SpellSelectionDto,
@@ -46,6 +48,9 @@ import {
   removeFeatSelection,
   removeSpellSelection,
 } from '../boundary/removeSelection';
+import { addTraitSelection } from '../boundary/addTraitSelection';
+import { removeTraitSelection } from '../boundary/removeTraitSelection';
+import { setEquipmentActiveState } from '../boundary/setEquipmentActiveState';
 import { listEquipment } from '../boundary/listEquipment';
 import { listSpells } from '../boundary/listSpells';
 import { listFeats, listFeatsForCharacter } from '../boundary/listFeats';
@@ -93,8 +98,6 @@ import {
 import {
   buildLevelEntries,
   buildNextEntries,
-  casterLevel,
-  classWeaponProficiency,
   formatHeldClasses,
   levelGrantsFeat,
   maxHitPoints,
@@ -104,15 +107,41 @@ import {
   totalSkillPoints,
   type HeldClass,
   type LevelEntry,
-  type WeaponProficiency,
 } from './characterProgression';
+import {
+  LOADING_CLASS_FACTS,
+  classFactsNotice,
+  classFactsQueries,
+  failedClassFacts,
+  loadedClassFacts,
+  summarizeCasterLevel,
+  summarizeWeaponProficiency,
+  type ClassFactsState,
+  type WeaponProficiencySummary,
+} from './classFactsModel';
+import { listClassFacts } from '../boundary/listClassFacts';
 import { AGE_OPTIONS, ALIGNMENT_OPTIONS, deriveRaceTraits, type RaceOption } from './characterHubModel';
 import { loadRaceRosterSurface } from './raceRoster';
 import { PortraitUpload } from './PortraitUpload';
 import { LevelUpDialog } from './LevelUpDialog';
 import { SkillAllocationDialog } from './SkillAllocationDialog';
-import { DEFAULT_SKILL_ALLOCATION, SKILLS, isClassSkill, skillIdFor, skillModifier, skillRankCost, totalSkillPointsAvailable } from './skillsModel';
-import { setSkillAllocations } from '../boundary/setSkillAllocations';
+import {
+  DEFAULT_PICK_MARKER,
+  SKILLS,
+  allocationFromPersisted,
+  classSkillLookup,
+  featSkillBonusFor,
+  featSkillBonusesWithoutARow,
+  isClassSkill,
+  type ClassSkillLookup,
+  persistedFromAllocation,
+  skillModifier,
+  skillPointsSpent,
+  totalSkillPointsAvailable,
+} from './skillsModel';
+import { printedAbilityScore } from './abilityScoresModel';
+import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
+import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/setSkillAllocations';
 import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
 import { adjustCharacterMoney, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
 import { adjustCharacterHp, loadCharacterDurability, type CharacterDurabilityDto } from '../boundary/characterDurability';
@@ -226,7 +255,7 @@ const EQUIPMODS_CATEGORY = 'Equipmods';
  */
 const GEAR_CATEGORIES = ['General', 'MagicItems'] as const;
 
-/** Matches `characterHubModel.ts`'s `CLASS_OPTIONS` id for Wizard. */
+/** The class id `list_class_creation_roster` serves for Wizard (`class:wizard`). */
 const WIZARD_CLASS_ID = 'class:wizard';
 
 export interface ItemPickerConfig {
@@ -374,7 +403,7 @@ function RacialTraitCard(props: { row: RacialTraitRow }) {
   );
 }
 
-function LevelBenefitCard(props: { benefit: LevelEntry; skillPoints: number; variant: 'current' | 'next' }) {
+function LevelBenefitCard(props: { benefit: LevelEntry; skillPoints: number | null; variant: 'current' | 'next' }) {
   const { benefit, variant } = props;
   return (
     <div
@@ -389,7 +418,7 @@ function LevelBenefitCard(props: { benefit: LevelEntry; skillPoints: number; var
         Level {benefit.classLevel} {benefit.classLabel}
       </p>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.15rem 0 0.25rem' }}>
-        Skill points: {props.skillPoints}
+        Skill points: {props.skillPoints === null ? 'Unknown' : props.skillPoints}
       </p>
       <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
         {benefit.features.map((feature) => (
@@ -439,11 +468,6 @@ function StatTile(props: { label: string; value: ReactNode; emphasize?: boolean 
   );
 }
 
-/** Approximate the ability score from its modifier for display (exact for even scores). */
-function scoreFromModifier(modifier: number): number {
-  return 10 + modifier * 2;
-}
-
 function IdentityPanel(props: { name: string; campaign: string }) {
   return (
     <div style={{ ...panel, alignItems: 'center', display: 'flex', gap: '0.75rem', justifyContent: 'space-between', padding: '0.6rem 0.75rem' }}>
@@ -459,14 +483,18 @@ function IdentityPanel(props: { name: string; campaign: string }) {
   );
 }
 
-function AbilitiesPanel(props: { abilities: AbilityScoresDto }) {
+/**
+ * `scores` is the engine's effective score (`printedAbilityScore`); `abilities` its modifiers.
+ * SD-36 F7a: the score used to be reconstructed as `10 + 2 x modifier`, one low for every odd score.
+ */
+function AbilitiesPanel(props: { scores: AbilityScoresDto | null; abilities: AbilityScoresDto }) {
   return (
     <StatBox title="Abilities">
       <div style={{ display: 'grid', gap: '0.25rem', gridTemplateColumns: 'repeat(6, 1fr)', textAlign: 'center' }}>
         {ABILITY_COLUMNS.map((col) => (
           <div key={col.key}>
             <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', fontWeight: 700, margin: 0 }}>{col.label}</p>
-            <p style={{ fontSize: '1.05rem', fontWeight: 800, margin: '0.1rem 0 0' }}>{scoreFromModifier(props.abilities[col.key])}</p>
+            <p style={{ fontSize: '1.05rem', fontWeight: 800, margin: '0.1rem 0 0' }}>{printedAbilityScore(props.scores, col.key)}</p>
             <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: 0 }}>{fmt(props.abilities[col.key])}</p>
           </div>
         ))}
@@ -508,12 +536,16 @@ function SavingThrowsPanel(props: { saves: { fortitude: number; reflex: number; 
   );
 }
 
-function InitiativeHpPanel(props: { initiative: number; hp: number }) {
+/**
+ * `hp` is `null` when a held class's hit die is not known to the engine's hit-point fold (no
+ * chassis record, or the class roster is still loading): Unknown, never a guessed total.
+ */
+function InitiativeHpPanel(props: { initiative: number; hp: number | null }) {
   return (
     <StatBox>
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <StatTile label="Initiative" value={fmt(props.initiative)} />
-        <StatTile label="Hit Points" value={`${props.hp} / ${props.hp}`} />
+        <StatTile label="Hit Points" value={props.hp === null ? 'Unknown' : `${props.hp} / ${props.hp}`} />
       </div>
     </StatBox>
   );
@@ -580,9 +612,19 @@ function spokenLanguages(intelligenceModifier: number): string[] {
 function SkillsPanel(props: {
   abilities: AbilityScoresDto;
   heldClasses: HeldClass[];
+  /** SD-36 F6a: the engine's class skills for the held classes (`classSkillLookup`). */
+  classSkills: ClassSkillLookup;
   isHuman: boolean;
+  /** `list_class_facts` has not answered yet: a loading line shows instead of the Unknown note. */
+  classFactsLoading: boolean;
   allocation: Record<string, number>;
   realModifiers?: { climb: number; intimidate: number; swim: number };
+  /**
+   * SD-36 F6b: the engine's feat skill-bonus fold (`featSkillBonuses` on the sheet response). Added
+   * to every row the panel totals itself; a row the engine totals (`realModifiers`) prints the
+   * engine's own figure.
+   */
+  featSkillBonuses: FeatSkillBonusesDto;
   onOpenDialog: () => void;
 }) {
   const REAL_MODIFIER_BY_SKILL: Record<string, number | undefined> = {
@@ -591,11 +633,15 @@ function SkillsPanel(props: {
     Swim: props.realModifiers?.swim,
   };
 
-  const spent = SKILLS.reduce(
-    (sum, skill) => sum + (props.allocation[skill.name] ?? 0) * skillRankCost(isClassSkill(props.heldClasses, skill.name)),
-    0
-  );
-  const remaining = totalSkillPointsAvailable(props.heldClasses, props.abilities.intelligence, props.isHuman) - spent;
+  const spent = skillPointsSpent(props.allocation);
+  const available = totalSkillPointsAvailable(props.heldClasses, props.abilities.intelligence, props.isHuman);
+  const remaining = available === null ? null : available - spent;
+  // SD-36 F6a: a held class the engine's class-skill reader cannot answer is named with its
+  // reason, not silently scored as all-cross-class.
+  const withoutClassSkills = props.classSkills.unanswered;
+  // SD-36 F6b: a served feat bonus whose skill has no row here is printed, never dropped.
+  const featBonusesWithoutARow = featSkillBonusesWithoutARow(props.featSkillBonuses);
+  const featBonusesNotAdded = [...props.featSkillBonuses.situational, ...props.featSkillBonuses.unknown];
 
   return (
     <StatBox title="Skills">
@@ -605,8 +651,8 @@ function SkillsPanel(props: {
         title="Manage skill allocation"
         style={{
           alignItems: 'center',
-          backgroundColor: remaining > 0 ? 'var(--color-surface-2)' : 'transparent',
-          border: `1px solid ${remaining > 0 ? 'var(--color-accent)' : 'var(--color-border)'}`,
+          backgroundColor: remaining !== null && remaining > 0 ? 'var(--color-surface-2)' : 'transparent',
+          border: `1px solid ${remaining !== null && remaining > 0 ? 'var(--color-accent)' : 'var(--color-border)'}`,
           borderRadius: 6,
           cursor: 'pointer',
           display: 'flex',
@@ -618,28 +664,52 @@ function SkillsPanel(props: {
         }}
       >
         <span style={{ color: 'var(--color-text-secondary)' }}>Manage skill allocation</span>
-        {remaining > 0 ? (
+        {remaining === null ? (
+          <span style={{ color: 'var(--color-warn)' }}>skill points Unknown</span>
+        ) : remaining > 0 ? (
           <span style={{ color: 'var(--color-accent)', fontWeight: 800 }}>{remaining} unallocated</span>
         ) : (
           <span style={{ color: 'var(--color-text-muted)' }}>fully allocated</span>
         )}
       </button>
+      {props.classFactsLoading ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.4rem' }}>Loading class skills…</p>
+      ) : withoutClassSkills.length > 0 ? (
+        <p role="note" style={{ color: 'var(--color-warn)', fontSize: '0.72rem', margin: '0 0 0.4rem' }}>
+          Class skills Unknown for {withoutClassSkills.map((entry) => `${entry.classLabel} (${entry.reason})`).join('; ')}: no
+          class-skill bonus is applied for {withoutClassSkills.length === 1 ? 'it' : 'them'}.
+        </p>
+      ) : null}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
         {SKILLS.map((skill) => {
-          const classSkill = isClassSkill(props.heldClasses, skill.name);
+          const classSkill = isClassSkill(props.classSkills, skill.name);
           const ranks = props.allocation[skill.name] ?? 0;
           const abilityMod = props.abilities[skill.ability];
           const real = REAL_MODIFIER_BY_SKILL[skill.name];
-          const total = real ?? skillModifier(abilityMod, ranks, classSkill);
+          const total = real ?? skillModifier(abilityMod, ranks, classSkill, featSkillBonusFor(props.featSkillBonuses, skill.name));
           return (
             <div key={skill.name} style={{ alignItems: 'center', display: 'flex', fontSize: '0.85rem', gap: '0.4rem' }}>
               <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{fmt(total)}</span>
               <span style={{ color: classSkill ? 'var(--color-text)' : 'var(--color-text-secondary)' }}>{skill.name}</span>
               {ranks > 0 ? <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem' }}>({ranks})</span> : null}
+              {classSkill && props.classSkills.isDefaultPick(skill.name) ? (
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem' }}>({DEFAULT_PICK_MARKER})</span>
+              ) : null}
             </div>
           );
         })}
       </div>
+      {featBonusesWithoutARow.length > 0 ? (
+        <p role="note" style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.4rem 0 0' }}>
+          Feat skill bonuses:{' '}
+          {featBonusesWithoutARow.map((entry) => `${fmt(entry.value)} ${entry.labels.join(', ')}`).join('; ')}
+        </p>
+      ) : null}
+      {featBonusesNotAdded.length > 0 ? (
+        <p role="note" style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.4rem 0 0' }}>
+          Not added to a total: {featBonusesNotAdded.map((entry) => `${entry.label} (${entry.reason})`).join('; ')}
+        </p>
+      ) : null}
       <hr style={{ border: 'none', borderTop: '1px solid var(--color-border)', margin: '0.6rem 0' }} />
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.03em', margin: '0 0 0.3rem', textTransform: 'uppercase' }}>
         Languages
@@ -831,7 +901,12 @@ const WEAPON_COLUMNS = ['Weapon', 'Base Dice', 'STR', 'Enh. Dmg', 'Enh. Atk', 'C
 const WEAPON_GRID_COLUMNS = '2fr repeat(6, 1fr)';
 
 function WeaponsTab(props: {
-  proficiency: WeaponProficiency;
+  /** SD-36 F6a: the engine's weapon proficiency folded across held classes. */
+  proficiency: WeaponProficiencySummary;
+  /** `class facts unavailable: …` when `list_class_facts` failed; `null` otherwise. */
+  factsNotice: string | null;
+  /** `list_class_facts` has not answered yet: the tiers print `?` and a loading line shows. */
+  factsLoading: boolean;
   weaponDamage: readonly WeaponDamageDto[];
   corpusDerived: CorpusDerivedDto | null;
   onAddWeapon: () => void;
@@ -844,27 +919,60 @@ function WeaponsTab(props: {
    */
   onRemoveWeapon: (itemId: string) => void;
 }) {
-  const categories: ReadonlyArray<{ label: string; proficient: boolean }> = [
-    { label: 'Simple', proficient: props.proficiency.simple },
-    { label: 'Martial', proficient: props.proficiency.martial },
-    { label: 'Exotic', proficient: props.proficiency.exotic },
-  ];
+  const categories = props.proficiency.tiers;
+  const mark = (verdict: 'yes' | 'no' | 'unknown') => (verdict === 'yes' ? '✓' : verdict === 'no' ? '✗' : '?');
   const surface = buildWeaponsTabSurface(props.weaponDamage, props.corpusDerived);
   return (
     <div>
       {/* PF1 weapon proficiency categories */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'center', marginBottom: '0.5rem' }}>
         {categories.map((category) => (
-          <span key={category.label} style={{ alignItems: 'center', display: 'flex', fontSize: '0.9rem', gap: '0.4rem' }}>
-            <span aria-hidden style={{ color: category.proficient ? 'var(--color-accent)' : 'var(--color-text-faint)', fontWeight: 800 }}>
-              {category.proficient ? '✓' : '✗'}
+          // One inline run per tier ("✓ Martial Weapons"), so the mark and its tier read as one line.
+          <span key={category.label} style={{ fontSize: '0.9rem' }}>
+            <span
+              style={{
+                color:
+                  category.proficient === 'yes'
+                    ? 'var(--color-accent)'
+                    : category.proficient === 'unknown'
+                      ? 'var(--color-warn)'
+                      : 'var(--color-text-faint)',
+                fontWeight: 800,
+              }}
+            >
+              {mark(category.proficient)}
+            </span>{' '}
+            <span style={{ color: category.proficient === 'yes' ? 'var(--color-text)' : 'var(--color-text-muted)' }}>
+              {category.label} Weapons{category.proficient === 'unknown' ? ' (Unknown)' : ''}
             </span>
-            <span style={{ color: category.proficient ? 'var(--color-text)' : 'var(--color-text-muted)' }}>{category.label} Weapons</span>
           </span>
         ))}
       </div>
+      {props.proficiency.alsoProficientWith.length > 0 ? (
+        <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', margin: '0 0 0.35rem', textAlign: 'center' }}>
+          Also proficient with: {props.proficiency.alsoProficientWith.join(', ')}
+        </p>
+      ) : null}
+      {props.proficiency.printed.map((line) => (
+        <p key={line} style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0 0 0.35rem', textAlign: 'center' }}>
+          {line}
+        </p>
+      ))}
+      {props.factsLoading ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.35rem', textAlign: 'center' }}>
+          Loading class facts…
+        </p>
+      ) : props.factsNotice ? (
+        <p role="note" style={{ color: 'var(--color-warn)', fontSize: '0.72rem', margin: '0 0 0.35rem', textAlign: 'center' }}>
+          {props.factsNotice}
+        </p>
+      ) : props.proficiency.unknown.length > 0 ? (
+        <p role="note" style={{ color: 'var(--color-warn)', fontSize: '0.72rem', margin: '0 0 0.35rem', textAlign: 'center' }}>
+          Weapon proficiency Unknown for {props.proficiency.unknown.join('; ')}
+        </p>
+      ) : null}
       <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0 0 1.25rem', textAlign: 'center' }}>
-        Proficiency granted by class; exotic weapons require the Exotic Weapon Proficiency feat.
+        Proficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.
       </p>
 
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
@@ -1681,6 +1789,8 @@ function GearTab(props: {
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
   /** See `WeaponsTab.onRemoveWeapon` — the same command, no refund. */
   onRemoveItem: (itemId: string) => void;
+  /** SD-36 Epic E desktop-P2-01: stow (SelectedInactive) or re-equip (EquippedActive) a carried item. */
+  onSetActiveState: (itemId: string, activeState: 'EquippedActive' | 'SelectedInactive') => void;
   money: CharacterMoneyDto;
   moneyBusy: boolean;
   moneyError: string | null;
@@ -1744,6 +1854,22 @@ function GearTab(props: {
                   style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
                 >
                   Attach Modifier
+                </button>
+                <button
+                  type="button"
+                  aria-label={`Stow ${item.equipmentRecordName}`}
+                  onClick={() => props.onSetActiveState(item.itemId, 'SelectedInactive')}
+                  style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
+                >
+                  Stow
+                </button>
+                <button
+                  type="button"
+                  aria-label={`Re-equip ${item.equipmentRecordName}`}
+                  onClick={() => props.onSetActiveState(item.itemId, 'EquippedActive')}
+                  style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
+                >
+                  Re-equip
                 </button>
                 <button
                   type="button"
@@ -2486,6 +2612,10 @@ function FeatsTab(props: {
    * character recorded is the one that unmatches.
    */
   onRemoveFeat: (featId: string, target: string | null) => void;
+  /** SD-36 Epic E desktop-P2-01: records a new trait/drawback selection. */
+  onAddTrait: (traitId: string, skillChoice: string | null) => void;
+  /** SD-36 Epic E desktop-P2-01: removes a held trait/drawback selection. */
+  onRemoveTrait: (traitId: string) => void;
 }) {
   const [catalog, setCatalog] = useState<ItemPickerEntry[] | null>(null);
   // Derived from the same response the picker rows come from, so the caption
@@ -2599,23 +2729,27 @@ function FeatsTab(props: {
           </div>
         ))
       )}
-      <TraitsSection selectedTraits={props.selectedTraits} />
+      <TraitsSection selectedTraits={props.selectedTraits} onAddTrait={props.onAddTrait} onRemoveTrait={props.onRemoveTrait} />
     </div>
   );
 }
 
 /**
- * The character's chosen traits (v0.8 F-3). `selectedTraits` was persisted,
- * loaded and carried through every refresh with no render site at all, so
- * a trait picked at creation was invisible from then on. Names, prose and
- * bonus lines come from the same `list_available_character_traits` roster
- * the create form's picker uses; see `traitsTabModel.ts`. Traits are
- * add-at-creation only today — the add/remove commands are a backend
- * ticket (B-4), so this section offers no mutation affordance rather than
- * a dead one.
+ * The character's chosen traits (v0.8 F-3, wired to real add/remove in SD-36 Epic E
+ * desktop-P2-01). Names, prose and bonus lines come from the same
+ * `list_available_character_traits` roster the create form's picker uses; see
+ * `traitsTabModel.ts`. Adding offers every catalog trait not already held; an open-choice trait
+ * (one whose option carries `choiceSetId`) additionally offers its `skillOptions` before the
+ * Add button commits.
  */
-function TraitsSection(props: { selectedTraits: string[] }) {
+function TraitsSection(props: {
+  selectedTraits: string[];
+  onAddTrait: (traitId: string, skillChoice: string | null) => void;
+  onRemoveTrait: (traitId: string) => void;
+}) {
   const [catalog, setCatalog] = useState<CharacterTraitOptionDto[] | null>(null);
+  const [pendingTraitId, setPendingTraitId] = useState<string>('');
+  const [pendingSkillChoice, setPendingSkillChoice] = useState<string>('');
   useEffect(() => {
     let cancelled = false;
     loadCharacterTraits()
@@ -2636,6 +2770,9 @@ function TraitsSection(props: { selectedTraits: string[] }) {
   }, []);
 
   const rows = resolveSelectedTraits(props.selectedTraits, catalog ?? []);
+  const available = (catalog ?? []).filter((option) => !props.selectedTraits.includes(option.id));
+  const pendingOption = available.find((option) => option.id === pendingTraitId) ?? null;
+
   return (
     <div style={{ marginTop: '1.5rem' }}>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
@@ -2645,17 +2782,62 @@ function TraitsSection(props: { selectedTraits: string[] }) {
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>No traits selected.</p>
       ) : (
         rows.map((row) => (
-          <div key={row.id} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-            <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
-              <span style={{ fontWeight: 700 }}>{row.name}</span>
-              {row.grants ? <span style={{ fontSize: '0.78rem', fontVariantNumeric: 'tabular-nums' }}>{row.grants}</span> : null}
+          <div key={row.id} style={{ alignItems: 'baseline', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.6rem', justifyContent: 'space-between', padding: '0.5rem 0' }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
+                <span style={{ fontWeight: 700 }}>{row.name}</span>
+                {row.grants ? <span style={{ fontSize: '0.78rem', fontVariantNumeric: 'tabular-nums' }}>{row.grants}</span> : null}
+              </div>
+              {row.description ? (
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0.25rem 0 0' }}>{row.description}</p>
+              ) : null}
             </div>
-            {row.description ? (
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0.25rem 0 0' }}>{row.description}</p>
-            ) : null}
+            <button type="button" onClick={() => props.onRemoveTrait(row.id)} style={{ flexShrink: 0 }}>
+              Remove
+            </button>
           </div>
         ))
       )}
+      {available.length > 0 ? (
+        <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
+          <select
+            aria-label="Trait to add"
+            value={pendingTraitId}
+            onChange={(event) => {
+              setPendingTraitId(event.target.value);
+              setPendingSkillChoice('');
+            }}
+          >
+            <option value="">Add a trait…</option>
+            {available.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.name}
+              </option>
+            ))}
+          </select>
+          {pendingOption?.choiceSetId && pendingOption.skillOptions.length > 0 ? (
+            <select aria-label="Skill for chosen trait" value={pendingSkillChoice} onChange={(event) => setPendingSkillChoice(event.target.value)}>
+              <option value="">Choose a skill…</option>
+              {pendingOption.skillOptions.map((skill) => (
+                <option key={skill.skillId} value={skill.skillId}>
+                  {skill.name}
+                </option>
+              ))}
+            </select>
+          ) : null}
+          <button
+            type="button"
+            disabled={!pendingTraitId}
+            onClick={() => {
+              props.onAddTrait(pendingTraitId, pendingSkillChoice || null);
+              setPendingTraitId('');
+              setPendingSkillChoice('');
+            }}
+          >
+            Add
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -2767,8 +2949,35 @@ export function CharacterSheet(props: {
   /** Top-menu "Clone": called after a successful clone so the parent can refresh its saved-character list; the sheet stays open on the original (un-cloned) character. */
   onCloned: () => void;
 }) {
+  // SD-36 F4c: class labels, hit dice and skill ranks read the engine's served class roster;
+  // re-render when it (or the announced fallback) is installed.
+  useClassCatalog();
+  useEffect(() => {
+    void ensureClassRosterLoaded();
+  }, []);
   const [tab, setTab] = useState<Tab>('Weapons');
   const [menuOpen, setMenuOpen] = useState(false);
+  // SD-36 F6a: weapon proficiency, caster level and class skills per held class, from the engine
+  // (`list_class_facts`). A failure prints Unknown with the notice; nothing falls back to a table.
+  const [classFacts, setClassFacts] = useState<ClassFactsState>(LOADING_CLASS_FACTS);
+  useEffect(() => {
+    let cancelled = false;
+    setClassFacts(LOADING_CLASS_FACTS);
+    listClassFacts(classFactsQueries(parseHeldClasses(props.row.classSummary)))
+      .then((response) => {
+        if (!cancelled) {
+          setClassFacts(loadedClassFacts(response));
+        }
+      })
+      .catch((cause: unknown) => {
+        if (!cancelled) {
+          setClassFacts(failedClassFacts(cause));
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [props.row.classSummary]);
   const [leftCollapsed, setLeftCollapsed] = useState(false);
   const [levelUpOpen, setLevelUpOpen] = useState(false);
   // Covers every saved-character mutation this sheet can trigger (level-up,
@@ -2893,12 +3102,21 @@ export function CharacterSheet(props: {
     /** SD-35 AT-35-E2-002: the "Rules and features" lines, re-read with the rest. */
     sheetLines: SheetLineDto[];
     sheetRulesUnavailableReason: string | null;
+    /** SD-36 F6b: the engine's feat skill-bonus fold, re-read with the sheet lines. */
+    featSkillBonuses: FeatSkillBonusesDto;
+    /** SD-36 F7a: the engine's effective ability scores (the Abilities panel prints them). */
+    abilityScores: AbilityScoresDto | null;
+    /** SD-36 F7a: the persisted skill allocation; `null` until a read carries it. */
+    skillAllocations: SkillAllocationEntryDto[] | null;
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
     resolvedRacialTraits: props.detail?.resolvedRacialTraits ?? null,
     sheetLines: props.detail?.sheetLines ?? [],
     sheetRulesUnavailableReason: props.detail?.sheetRulesUnavailableReason ?? null,
+    featSkillBonuses: props.detail?.featSkillBonuses ?? NO_FEAT_SKILL_BONUSES,
+    abilityScores: props.detail?.abilityScores ?? null,
+    skillAllocations: props.detail?.skillAllocations ?? null,
   });
   useEffect(() => {
     let cancelled = false;
@@ -2908,6 +3126,9 @@ export function CharacterSheet(props: {
       resolvedRacialTraits: props.detail?.resolvedRacialTraits ?? null,
       sheetLines: props.detail?.sheetLines ?? [],
       sheetRulesUnavailableReason: props.detail?.sheetRulesUnavailableReason ?? null,
+    featSkillBonuses: props.detail?.featSkillBonuses ?? NO_FEAT_SKILL_BONUSES,
+    abilityScores: props.detail?.abilityScores ?? null,
+    skillAllocations: props.detail?.skillAllocations ?? null,
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
@@ -2918,6 +3139,9 @@ export function CharacterSheet(props: {
             resolvedRacialTraits: loaded.resolvedRacialTraits,
             sheetLines: loaded.sheetLines,
             sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
+      featSkillBonuses: loaded.featSkillBonuses,
+      abilityScores: loaded.abilityScores ?? null,
+      skillAllocations: loaded.skillAllocations ?? null,
           });
         }
       })
@@ -2958,7 +3182,15 @@ export function CharacterSheet(props: {
       cancelled = true;
     };
   }, [props.row.characterId]);
-  const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>({ ...DEFAULT_SKILL_ALLOCATION });
+  // SD-36 F7a: the persisted allocation, re-read with the engine records -- never a constant.
+  const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>(() =>
+    allocationFromPersisted(props.detail?.skillAllocations ?? [])
+  );
+  useEffect(() => {
+    if (engineRecords.skillAllocations) {
+      setSkillAllocation(allocationFromPersisted(engineRecords.skillAllocations));
+    }
+  }, [engineRecords.skillAllocations]);
   const [skillDialogOpen, setSkillDialogOpen] = useState(false);
   // Freshly recomputed derived stats from the "Recompute" menu action —
   // null until the operator explicitly triggers a recompute, so display
@@ -3164,6 +3396,7 @@ export function CharacterSheet(props: {
         // what the character holds; absent until re-read, never stale.
         sheetLines: [],
         sheetRulesUnavailableReason: null,
+        featSkillBonuses: NO_FEAT_SKILL_BONUSES,
       });
       setMoney(outcome.money);
       // Buying a weapon is exactly what makes a new Weapons row appear.
@@ -3226,6 +3459,7 @@ export function CharacterSheet(props: {
         // what the character holds; absent until re-read, never stale.
         sheetLines: [],
         sheetRulesUnavailableReason: null,
+        featSkillBonuses: NO_FEAT_SKILL_BONUSES,
       });
       setMoney(outcome.money);
       // Attaching a +1 enhancement changes that weapon's Enh. columns.
@@ -3471,6 +3705,9 @@ export function CharacterSheet(props: {
       resolvedRacialTraits: loaded.resolvedRacialTraits,
       sheetLines: loaded.sheetLines,
       sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
+      featSkillBonuses: loaded.featSkillBonuses,
+      abilityScores: loaded.abilityScores ?? null,
+      skillAllocations: loaded.skillAllocations ?? null,
     });
     await refreshDurability();
   }
@@ -3504,6 +3741,77 @@ export function CharacterSheet(props: {
       await refreshEngineRecords();
       // G-3 inverse: a removal can make other held-able feats ineligible.
       announceEligibilityDelta(verdictsBefore, await featVerdictsForCharacter(), featId);
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /**
+   * SD-36 Epic E desktop-P2-01: adds a character trait/drawback. `traitId` is one of
+   * `loadCharacterTraits()`'s own ids; `skillChoice` is required only for an open-choice trait
+   * (one whose picker option carries a `choiceSetId`) and ignored otherwise.
+   */
+  async function handleAddTrait(traitId: string, skillChoice: string | null) {
+    setMutationError(null);
+    try {
+      const outcome = await addTraitSelection({
+        characterId: props.row.characterId,
+        traitId,
+        skillChoice,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /** The inverse of {@link handleAddTrait} -- removes a held trait and its skill choice. */
+  async function handleRemoveTrait(traitId: string) {
+    setMutationError(null);
+    try {
+      const outcome = await removeTraitSelection({
+        characterId: props.row.characterId,
+        traitId,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /**
+   * SD-36 Epic E desktop-P2-01: stows, re-equips, or marks absent a carried item. Unlike
+   * `handleRemoveEquipment` this does not drop the item or its modifiers -- it flips
+   * `activeState` on the first carried copy, the same case-insensitive first-match rule
+   * `apply_remove_equipment_selection` uses.
+   */
+  async function handleSetEquipmentActiveState(itemId: string, activeState: 'EquippedActive' | 'Absent' | 'SelectedInactive') {
+    setMutationError(null);
+    try {
+      const outcome = await setEquipmentActiveState({
+        characterId: props.row.characterId,
+        itemId,
+        activeState,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -3707,6 +4015,9 @@ export function CharacterSheet(props: {
         resolvedRacialTraits: loaded.resolvedRacialTraits,
         sheetLines: loaded.sheetLines,
         sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
+      featSkillBonuses: loaded.featSkillBonuses,
+      abilityScores: loaded.abilityScores ?? null,
+      skillAllocations: loaded.skillAllocations ?? null,
       });
     } catch {
       // Intentionally keeps the current records.
@@ -3737,19 +4048,17 @@ export function CharacterSheet(props: {
    * (a wholesale replace, not a delta — see `setSkillAllocations`'s doc
    * comment). On `Blocked` the on-disk character (and this panel's
    * `skillAllocation` state) is left exactly as it was — the compute
-   * engine's `Computed` path only accepts one exact hardcoded posture
-   * today (Climb/Intimidate/Swim at rank 1, chain shirt equipped; see
-   * `pilot_compute.rs`), so most allocations legitimately come back
-   * blocked with real diagnostics rather than silently applying.
+   * engine still holds Climb/Intimidate/Swim at the GE-06 rank-1 posture
+   * (chain shirt equipped), so moving any of those three off rank 1 comes
+   * back blocked with real diagnostics; ranks in every other skill are
+   * accepted (SD-36 F7a).
    */
   async function handleSkillAllocationAccept(draft: Record<string, number>) {
     setMutationError(null);
     try {
       const outcome = await setSkillAllocations({
         characterId: props.row.characterId,
-        skillAllocations: Object.entries(draft)
-          .filter(([, ranks]) => ranks > 0)
-          .map(([skillName, ranks]) => ({ skillId: skillIdFor(skillName), ranks })),
+        skillAllocations: persistedFromAllocation(draft),
         savedAt: new Date().toISOString(),
       });
       const refresh = toCharacterMutationRefresh(
@@ -3803,7 +4112,8 @@ export function CharacterSheet(props: {
   const heldClasses = parseHeldClasses(props.row.classSummary);
   const classLabel = formatHeldClasses(props.row.classSummary); // e.g. "Fighter 3 / Wizard 1"
   const level = totalCharacterLevel(props.row.classSummary);
-  const casterLvl = casterLevel(props.row.classSummary);
+  const casterLevelSummary = summarizeCasterLevel(heldClasses, classFacts);
+  const classSkills = classSkillLookup(heldClasses, classFacts);
   const isHuman = props.row.raceLabel.toLowerCase() === 'human';
   const skillPointsFor = (benefit: LevelEntry) => totalSkillPoints(benefit.skillPointsBase, abilities.intelligence, isHuman);
 
@@ -3866,18 +4176,8 @@ export function CharacterSheet(props: {
     (traitKey) => !alternateTraitCards.some((row) => row.key === traitKey)
   );
 
-  // Weapon proficiency is the union across all held classes.
-  const weaponProficiency = heldClasses.reduce<WeaponProficiency>(
-    (accumulated, held) => {
-      const classProficiency = classWeaponProficiency(held.classId);
-      return {
-        simple: accumulated.simple || classProficiency.simple,
-        martial: accumulated.martial || classProficiency.martial,
-        exotic: accumulated.exotic || classProficiency.exotic,
-      };
-    },
-    { simple: false, martial: false, exotic: false }
-  );
+  // Weapon proficiency is the union across all held classes (PF1), each class answered by the engine.
+  const weaponProficiency = summarizeWeaponProficiency(heldClasses, classFacts);
 
   /** Top-menu "Export" (v0.8 F-8): same real `export_character` flow as the Load screen, from the open sheet. */
   async function handleExport() {
@@ -4112,7 +4412,9 @@ export function CharacterSheet(props: {
                 </div>
                 <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', textAlign: 'center' }}>
                   <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Caster Level</p>
-                  <p style={{ fontWeight: 800, margin: 0 }}>{casterLvl > 0 ? casterLvl : '—'}</p>
+                  <p style={{ fontWeight: 800, margin: 0 }} title={casterLevelSummary.unknown.join('; ') || undefined}>
+                    {casterLevelSummary.display}
+                  </p>
                 </div>
               </div>
 
@@ -4231,7 +4533,7 @@ export function CharacterSheet(props: {
         {/* MIDDLE: stat panels on top, weapons/defense/gear at the bottom */}
         <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
           <IdentityPanel name={props.row.displayLabel} campaign={props.row.campaign ?? '—'} />
-          <AbilitiesPanel abilities={abilities} />
+          <AbilitiesPanel scores={engineRecords.abilityScores} abilities={abilities} />
           <InitiativeHpPanel initiative={dexMod} hp={hp} />
 
           <div style={{ display: 'flex', gap: '0.6rem' }}>
@@ -4276,6 +4578,8 @@ export function CharacterSheet(props: {
               {tab === 'Weapons' ? (
                 <WeaponsTab
                   proficiency={weaponProficiency}
+                  factsNotice={classFactsNotice(classFacts)}
+                  factsLoading={classFacts.kind === 'loading'}
                   weaponDamage={engineRecords.weaponDamage}
                   corpusDerived={props.detail?.corpusDerived ?? null}
                   onAddWeapon={() => setItemPickerOpen('weapon')}
@@ -4312,6 +4616,7 @@ export function CharacterSheet(props: {
                   onAddGear={() => setItemPickerOpen('gear')}
                   onAttachModifier={handleAttachModifier}
                   onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
+                  onSetActiveState={(itemId, activeState) => void handleSetEquipmentActiveState(itemId, activeState)}
                   money={money}
                   moneyBusy={moneyBusy}
                   moneyError={moneyError}
@@ -4324,6 +4629,8 @@ export function CharacterSheet(props: {
             chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
             onAddFeat={() => setItemPickerOpen('feat')}
             onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
+            onAddTrait={(traitId, skillChoice) => void handleAddTrait(traitId, skillChoice)}
+            onRemoveTrait={(traitId) => void handleRemoveTrait(traitId)}
           />
               ) : tab === 'Pets' ? (
                 <PetsTab snapshot={snapshot} />
@@ -4349,9 +4656,12 @@ export function CharacterSheet(props: {
           <SkillsPanel
             abilities={abilities}
             heldClasses={heldClasses}
+            classSkills={classSkills}
+            classFactsLoading={classFacts.kind === 'loading'}
             isHuman={isHuman}
             allocation={skillAllocation}
             realModifiers={snapshot?.selectedSkillModifiers}
+            featSkillBonuses={engineRecords.featSkillBonuses}
             onOpenDialog={() => setSkillDialogOpen(true)}
           />
         </div>
@@ -4361,10 +4671,12 @@ export function CharacterSheet(props: {
         open={skillDialogOpen}
         onClose={() => setSkillDialogOpen(false)}
         heldClasses={heldClasses}
+        classSkills={classSkills}
         characterLevel={level}
         abilities={abilities}
         totalPoints={totalSkillPointsAvailable(heldClasses, abilities.intelligence, isHuman)}
         allocation={skillAllocation}
+        featSkillBonuses={engineRecords.featSkillBonuses}
         onAccept={(draft) => void handleSkillAllocationAccept(draft)}
       />
 

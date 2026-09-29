@@ -1,0 +1,18 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f7)
+   Compiling codex-ingest v0.1.0 (crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 38.98s
+     Running tests/class_weapon_proficiency_via_converter.rs (/home/ubuntu/workspace/worktrees/codex-epic-f7-target/debug/deps/class_weapon_proficiency_via_converter-3fb51cf7eca4c1da)
+
+running 7 tests
+test print_reader_answers_for_the_weapon_proficiency_blocked_classes ... ignored, report generator; run with --ignored --nocapture
+test an_unrecognized_proficiency_tag_makes_the_class_unknown ... ok
+test summoner_reads_simple_through_the_standard_class_pick ... ok
+test wizard_is_not_granted_the_simple_tier ... ok
+test a_pre_gated_weapon_proficiency_is_not_granted_unconditionally ... ok
+test every_static_row_equals_the_reader_answer ... ok
+test every_census_class_answer_is_rederivable_from_the_oracle has been running for over 60 seconds
+test every_census_class_answer_is_rederivable_from_the_oracle ... ok
+
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 69.09s
+
+EXIT=0

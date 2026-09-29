@@ -161,3 +161,34 @@ mechanical control or a named escalation.
 - The per-kind on-screen test could pass on a fixture that holds a record the converter never
   refuses. That is the point — it proves the section, not the mapping; the mappings are proven by the
   per-kind converter gates.
+
+## 11. Oracle parity roster — 8 tracked disagreements (SD-36 Epic E GATE-02)
+
+`decisions.md`'s cited "lines compared 156→159 ... disagree 2→2" figure is 8 individually
+tracked disagreements in `artifacts/epic-6-pcgen-exit/oracle-parity-after.json`, never hidden
+by an allow-list but also never previously named as open items here. Named so a future cycle
+does not have to re-derive them from the raw JSON:
+
+| # | Family | Character | Unit | Ours | Oracle | Cause (traced) |
+|---|--------|-----------|------|------|--------|-----------------|
+| 1 | lines | `deterministic_human_fighter_l1` | `target:WeaponAttack:{"Chosen": "core_rulebook:feat:weapon_focus"}` | 0 | 1 | Weapon Focus's own value resolves via `Expr::Var`, whose binding did not fold into the export join at the time of this run |
+| 2 | lines | `half_elf_fighter_l1` | `target:Pool:favored_class` | 1 | 2 | `core_rulebook:race_trait:half_elf_multitalented`'s Multitalented bonus (Const 1) undercounts PCGen's favored-class pool size by 1 |
+| 3-5 | chassis | `halfling_fighter_l1` | `save.{fortitude,reflex,will}.total` | 1/1/2 | 2/2/3 | every base save reads exactly 1 low for this race -- a Halfling-specific save-modifier gap, not a Fortitude/Reflex/Will-specific one |
+| 6-8 | chassis | `human_paladin_l10` | `save.{fortitude,reflex,will}.total` | 6/3/9 | 9/6/12 | every base save reads exactly 3 low at level 10 -- consistent with a missing Paladin class feature or divine-grace-shaped bonus, not re-derived further here |
+
+Re-derive from `python3 -c "import json; d=json.load(open('artifacts/epic-6-pcgen-exit/oracle-parity-after.json')); print(len(d['disagreements']))"` (run from this directory) -> 8. None of these 8 were introduced or fixed by SD-36 Epic E's converter/engine changes (the roster and its exports are unchanged); listed here per the GATE-02 finding's own instruction to track rather than leave undriven. Widening the roster to a cross-book stratified sample (the finding's primary ask) is deferred as its own follow-up -- see `docs/retro/events/sd36-epic-e.jsonl`.
+
+**Fix cycle 2 update (SD-36 Epic E, independent verifier finding 4):** the roster was genuinely
+widened, 29 -> 31 members, and re-run end to end (`scripts/oracle_harness/sheet_parity.py`'s
+`EXTRA_BOOK_CLASSES`: Alchemist L1 and Witch L1, both Advanced Player's Guide). New re-derive
+command: `python3 -c "import json; d=json.load(open('../SD-36-consolidation/artifacts/gate-02-oracle-parity-widening/sheet-parity.json')); s=d['summary']; print(s['lines']['compared'], s['chassis']['compared'], len(d['disagreements']))"`
+(run from this directory) -> `167 408 8`. The same 8 disagreements above reproduce
+byte-for-byte on the widened roster (verified by diffing the two `disagreements` arrays); the
+2 new members introduce zero new disagreements. This is a real, run START on the finding's
+primary ask, not its completion: 31 books ship a `class` or `race_trait` directory
+(`ls -d data/sheet_rules/*/{class,race_trait} 2>/dev/null | sed 's#.*/sheet_rules/##;
+s#/.*##' | sort -u | wc -l`), 2 are now covered (Core Rulebook, Advanced Player's Guide), and
+equipment/feats exercising CONV-01..04 on a cross-book member were not added -- both tracked as
+the FS-9 remainder in `docs/release/SD-36-consolidation/forward-scope-register.md`. (The 31
+count is `ls -d data/sheet_rules/*/{class,race_trait} 2>/dev/null | sed 's#.*/sheet_rules/##;
+s#/.*##' | sort -u | wc -l`, run from the repo root.)

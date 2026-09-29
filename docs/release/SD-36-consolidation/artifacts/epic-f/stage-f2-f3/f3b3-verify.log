@@ -1,0 +1,32 @@
+=== cargo test --locked -j 8 --test sd36_multiclass_any_class -- --test-threads=8
+census ids with the line or its Unknown at level 1: 63; printed 63; Unknown 0: []
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 49.83s
+=== cargo test --locked -j 8 --test sd36_class_skill_from_record -- --test-threads=8
+census ids 137; record Known at level 1: 126; (class, skill) lines checked: 156; mismatches: 0
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 52.05s
+=== cargo test --locked -j 8 --lib multiclass -- --test-threads=8
+test result: ok. 36 passed; 0 failed; 0 ignored; 0 measured; 2690 filtered out; finished in 13.35s
+=== cargo test --locked -j 8 --lib class_chassis_sheet_rules -- --test-threads=8
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 2708 filtered out; finished in 2.75s
+=== cargo test --locked -j 8 --lib save_shape -- --test-threads=8
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2723 filtered out; finished in 2.67s
+=== cargo test --locked -j 8 --lib class_skill_sheet_rules -- --test-threads=8
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 2722 filtered out; finished in 14.98s
+=== cargo test --locked -j 8 --lib raging_climber -- --test-threads=8
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 2718 filtered out; finished in 15.76s
+=== cargo test --locked -j 8 --lib census_id_set_matches_the_published_partition -- --test-threads=8
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2725 filtered out; finished in 229.24s
+=== cargo test --locked -j 8 --lib every_untabled_class_outside_the_named_reader_remainder_reaches_computed -- --test-threads=8
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2725 filtered out; finished in 22.27s
+EXIT=done
+
+=== cargo test --locked -j 8 --lib -- --test-threads=8
+test result: ok. 2719 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 170.06s
+=== cargo test --locked -j 8 --no-fail-fast -- --test-threads=8 (root, first pass: 5 lib failures = the re-pinned defect/census pins; every other target)
+288
+test result: FAILED. 2714 passed; 5 failed; 6 ignored; 0 measured; 0 filtered out; finished in 177.72s
+=== desktop
+test result: ok. 615 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 380.05s
+=== clippy
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 59.32s
+EXIT=0

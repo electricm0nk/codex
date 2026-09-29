@@ -44,11 +44,7 @@
 //! Rogue level-1..level-12 truth (unchanged), the Fighter negative control,
 //! and the multiclass negative control.
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const ROGUE_LEVEL12_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_rogue_level12_sd18_widening_deterministic_input.txt"
@@ -58,9 +54,6 @@ const ROGUE_LEVEL13_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_rogue_level13_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 const ROGUE_EVASION_ID: &str = "class_feature.rogue.evasion";
 const ROGUE_TRAP_SENSE_ID: &str = "class_feature.rogue.trap_sense";
@@ -71,8 +64,7 @@ const ROGUE_IMPROVED_UNCANNY_DODGE_ID: &str = "class_feature.rogue.improved_unca
 
 #[test]
 fn rogue_level13_base_attack_bonus_and_saves_stay_unchanged() {
-    let input = load(ROGUE_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL13_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.rogue.base_attack_bonus");
     assert_eq!(
@@ -105,8 +97,7 @@ fn rogue_level13_base_attack_bonus_and_saves_stay_unchanged() {
 
 #[test]
 fn rogue_level13_sneak_attack_genuinely_rises() {
-    let input = load(ROGUE_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL13_FIXTURE);
 
     let sneak_attack = explanation(&computation, "class_chassis.rogue.sneak_attack");
     assert_eq!(
@@ -122,8 +113,7 @@ fn rogue_level13_sneak_attack_genuinely_rises() {
 
 #[test]
 fn rogue_level13_trap_sense_and_trapfinding_stay_unchanged() {
-    let input = load(ROGUE_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL13_FIXTURE);
 
     let trap_sense = explanation(&computation, ROGUE_TRAP_SENSE_ID);
     assert_eq!(
@@ -145,8 +135,7 @@ fn rogue_level13_trap_sense_and_trapfinding_stay_unchanged() {
 
 #[test]
 fn rogue_level13_does_not_surface_a_seventh_talent_slot() {
-    let input = load(ROGUE_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL13_FIXTURE);
 
     assert!(
         !computation
@@ -167,8 +156,7 @@ fn rogue_level13_does_not_surface_a_seventh_talent_slot() {
 
 #[test]
 fn rogue_level13_still_recognizes_the_granted_feature_records() {
-    let input = load(ROGUE_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL13_FIXTURE);
 
     for id in [
         ROGUE_EVASION_ID,
@@ -187,8 +175,7 @@ fn rogue_level13_still_recognizes_the_granted_feature_records() {
 
 #[test]
 fn rogue_level12_truth_is_unchanged_by_this_slice() {
-    let input = load(ROGUE_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL12_FIXTURE);
 
     let sneak_attack = explanation(&computation, "class_chassis.rogue.sneak_attack");
     assert_eq!(sneak_attack.value, 6, "Rogue level 12 sneak attack must stay 6d6");
@@ -222,8 +209,7 @@ fn rogue_level12_truth_is_unchanged_by_this_slice() {
 #[test]
 fn rogue_level_21_stays_claim_blocked() {
     let level_21 = ROGUE_LEVEL13_FIXTURE.replace("class:rogue:13", "class:rogue:21");
-    let input = load(&level_21);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&level_21);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
@@ -241,74 +227,11 @@ fn rogue_level_21_stays_claim_blocked() {
 
 // ----- Negative control: the rogue path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_rogue_level13_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")
-                || e.id.starts_with("class_feature.rogue.")),
-        "the Fighter chassis must not surface any rogue-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_rogue_level13_recognition, "rogue");
 
 // ----- Negative control: multiclass Rogue is not promoted -----
 
-#[test]
-fn multiclass_rogue_level13_is_not_promoted_by_this_slice() {
-    let multiclass = ROGUE_LEVEL13_FIXTURE.replace(
-        "class_level=class:rogue:13",
-        "class_level=class:rogue:13\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| (e.id.starts_with("class_chassis.rogue.")
-                || e.id.starts_with("class_feature.rogue."))
-                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
-                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
-                // receipt.md`): Rogue's own Weapon and Armor Proficiency identity
-                // grant is now genuinely grounded as a level-independent, always-on
-                // +0 record (true since level 1, mirrors the same "no gate to lift"
-                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
-                // this slice's negative control is checking for.
-                && e.id != "class_feature.rogue.weapon_and_armor_proficiency"),
-        "multiclass Rogue must not gain any bounded rogue explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Rogue must stay claim-blocked in this slice"
-    );
-}
+crate::sd18_multiclass_neg_control_test!(multiclass_rogue_level13_is_not_promoted_by_this_slice, "rogue_level13", ROGUE_LEVEL13_FIXTURE);
 
 // ----- Control plane: the matrix note names the level-13 widening -----
 
-#[test]
-fn matrix_rogue_row_names_level_13_widening() {
-    let matrix = seeded_current_truth();
-    let rogue = matrix
-        .row("class.rogue.bounded_progression")
-        .expect("rogue bounded_progression row must exist");
-
-    assert_eq!(rogue.support_state, SupportState::Supported); // promoted by SD-19 Class Progression Catalog browser
-    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(rogue.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        rogue.grounding_ref.contains("sd18_rogue_level13_widening"),
-        "rogue row must cite the live SD18 level-13 widening proof surface: {}",
-        rogue.grounding_ref
-    );
-    let note = rogue.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 13") || note.contains("level-13"),
-        "rogue partial note must name the level-13 widening: {note}"
-    );
-}

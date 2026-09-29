@@ -89,7 +89,16 @@ jobs:
           echo "PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data" >> "$GITHUB_ENV"
 
       - name: Run core crate tests
-        run: cargo test --locked
+        run: cargo test --locked --workspace
+
+      # SD-36 Epic C2: the desktop crate's own tests (including
+      # corpus_bundle_parity_test) resolve corpus resources against
+      # apps/desktop/src-tauri/resources/corpus_bundle/, which is generated,
+      # gitignored, and NOT committed. Every GitHub-hosted runner image ships
+      # Node.js already, so this needs no setup-node step to run before the
+      # desktop cargo tests.
+      - name: Generate corpus bundle
+        run: node scripts/gen-corpus-bundle.mjs
 
       - name: Run desktop shell tests
         working-directory: apps/desktop/src-tauri

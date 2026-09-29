@@ -339,6 +339,26 @@ SCRIPT_PATH_RE = re.compile(
     r"\b(?:[\w.-]+/)+[\w.-]+\.(?:py|sh|rs)\b"
 )
 
+# A reviewed, deliberate exception list -- same posture as
+# `scripts/site/pi_substring_allowlist.py`'s "short, hand-reviewed,
+# never a silent hiding place" design. A script named here was
+# deliberately retired by a cited operator ruling; a receipt written
+# BEFORE that ruling correctly named a real, resolvable path at the time
+# and its figure was genuinely produced by it. Retiring the tool later
+# does not retroactively make that citation a fabrication, so it must not
+# newly fail this gate -- the alternative (hand-editing a sealed
+# `_cycle_receipt.md` from an already-closed bundle to point at a
+# different command) would rewrite what was actually run, which is worse.
+# A path here still fails this gate everywhere else a `SCRIPT_PATH_RE`
+# match would resolve to a genuinely-missing file with no retirement
+# record -- this list only ever narrows what "unresolvable" catches, it
+# does not widen what "reachable" means for anything not on it.
+RETIRED_SCRIPT_PATHS = {
+    "scripts/shape_engine_boundary.py": "SD-36 D3, 2026-09-15: retired with v06_work_inventory.rs",
+    "scripts/publish-site-dashboard.sh": "SD-36 D3, 2026-09-15: retired with v06_work_inventory.rs",
+    "apps/desktop/src-tauri/src/reach_gate.rs": "SD-36 D3, 2026-09-15: retired (reachable-consumer proof shape ruled waste)",
+}
+
 
 def _line_has_reachable_command(line, repo_root):
     """True if `line` carries a multi-token inline-code span (a candidate
@@ -347,7 +367,10 @@ def _line_has_reachable_command(line, repo_root):
     recognizable script path (e.g. a bare `git log --oneline` or `jq
     '.units | length' docs/work-inventory.json`) is accepted as reachable
     without a filesystem check -- this gate cannot resolve `cargo`/`git`/
-    `jq` subcommands to a file, only literal paths. Returns `(reachable,
+    `jq` subcommands to a file, only literal paths. A path listed in
+    `RETIRED_SCRIPT_PATHS` also counts as reachable -- see that registry's
+    own comment for why a later, reviewed retirement does not retroactively
+    fail a citation that was true when written. Returns `(reachable,
     why)`; `why` is `None` when reachable, else the unresolved path (a
     "wrong-command figure")."""
     for code in INLINE_CODE_RE.findall(line):
@@ -357,6 +380,8 @@ def _line_has_reachable_command(line, repo_root):
         if not script_paths:
             return True, None
         for sp in script_paths:
+            if sp in RETIRED_SCRIPT_PATHS:
+                continue
             candidate = sp if os.path.isabs(sp) else os.path.join(repo_root, sp)
             if not os.path.isfile(candidate):
                 return False, sp

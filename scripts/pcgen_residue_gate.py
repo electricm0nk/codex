@@ -220,6 +220,13 @@ IDENTIFIER_PATTERNS = {
     "render_pcgen_desc": r"\brender_pcgen_desc\b",
     "bonus_stack_reader": r"\bbonus_stack_reader\b",
     "pre_tokens": r"\bpre_tokens\b",
+    # SD-36 Epic A / operator ruling D6. `SourceRef.lst_file` leaked PCGen
+    # vocabulary onto the live side (`src/rules_core/source_content.rs`) the
+    # same way `raw_tokens` does: a plain identifier, no literal token, no
+    # converter import. Renamed to `source_path`; this pattern is the ratchet
+    # that keeps it from coming back. Deliberately NOT `\.lst\b` -- the 8,592
+    # table-citation strings in `rules_tables/**` are provenance, not residue.
+    "lst_file": r"\blst_file\b",
 }
 TOKEN_SYNTAX_PATTERNS = {
     "BONUS:": r"\bBONUS:",
@@ -237,6 +244,14 @@ TOKEN_SYNTAX_PATTERNS = {
 # receipt's figure means.
 RUNTIME_IMPORT_PATTERNS = {
     "pcgen_import": r"\bpcgen_import\b",
+    # SD-36 Epic A (D1/D6): the converter and oracle move into their own
+    # crate, `crates/codex-ingest`. A live-root import of it is the same B16
+    # shape one crate over -- `use codex_ingest::pcgen_import::...` reads the
+    # converter from inside `codex`'s own tree without ever spelling
+    # `pcgen_import` there. `codex_ingest::pcgen_import::x` fires both
+    # patterns, which is intended: it is both a crate-wall breach and a
+    # converter read.
+    "codex_ingest": r"\bcodex_ingest\b",
 }
 PATTERNS = {**IDENTIFIER_PATTERNS, **TOKEN_SYNTAX_PATTERNS, **RUNTIME_IMPORT_PATTERNS}
 _COMPILED = {name: re.compile(rx) for name, rx in PATTERNS.items()}
@@ -255,6 +270,182 @@ JSON_KEY_PATTERNS = {
 }
 DATA_PATTERNS = {**IDENTIFIER_PATTERNS, **TOKEN_SYNTAX_PATTERNS, **JSON_KEY_PATTERNS}
 _DATA_COMPILED = {name: re.compile(rx) for name, rx in DATA_PATTERNS.items()}
+# SD-36 Epic F7b (2026-09-28). A source FORMULA written into a converted rule's
+# printed words -- `(min(10,CASTERLEVEL))d6`, `(CASTERLEVEL) rounds` -- carries
+# none of the token heads above, so this gate read 0 while 2,300-odd printed
+# strings of `data/sheet_rules/` spelled the ingest format's arithmetic. The
+# converter now lowers every one (`sheet_rule/prose.rs::lower_prose_formulas`);
+# this class keeps it that way. It reads a shipped JSON document that is a list
+# of converted rules and counts, in each printed string (a prose `Text` piece and
+# the rule's `label`), every formula-shaped group -- the converter's own
+# structural test, restated below (`formula.rs::is_prose_formula`). An
+# instrument extension: it measured 0 on the tree it was added with.
+PROSE_FORMULA_PATTERN = "prose formula (converted rule text)"
+_PF_FUNCS = {"min", "max", "floor", "ceil"}
+_PF_LEAVES = {
+    "CASTERLEVEL", "SPELLLEVEL", "CL", "TL", "HD", "BAB", "CR", "SIZE", "SIZEMOD",
+    "STR", "DEX", "CON", "INT", "WIS", "CHA",
+}
+_PF_TOK = re.compile(r"\s*(?:(\d+(?:\.\d+)?)|([A-Za-z_%][A-Za-z0-9_%.]*)|(>=|<=|==|!=|&&|\|\||[-+*/(),<>\"]))")
+
+
+def _pf_tokens(s):
+    out, i = [], 0
+    while i < len(s):
+        if s[i] in " \t":
+            i += 1
+            continue
+        m = _PF_TOK.match(s, i)
+        if not m or m.end() == i:
+            return None
+        out.append(m.groups())
+        i = m.end()
+    return out
+
+
+def _pf_parses(toks):
+    pos = [0]
+
+    def peek():
+        return toks[pos[0]] if pos[0] < len(toks) else None
+
+    def primary():
+        t = peek()
+        if t is None:
+            raise ValueError
+        pos[0] += 1
+        if t[0]:
+            return
+        if t[2] == "(":
+            expr()
+            if peek() is None or peek()[2] != ")":
+                raise ValueError
+            pos[0] += 1
+            return
+        if t[1]:
+            if peek() is not None and peek()[2] == "(":
+                pos[0] += 1
+                if peek() is not None and peek()[2] == ")":
+                    pos[0] += 1
+                    return
+                while True:
+                    expr()
+                    if peek() is not None and peek()[2] == ",":
+                        pos[0] += 1
+                        continue
+                    break
+                if peek() is None or peek()[2] != ")":
+                    raise ValueError
+                pos[0] += 1
+            return
+        raise ValueError
+
+    def unary():
+        t = peek()
+        if t is not None and t[2] in ("-", "+"):
+            pos[0] += 1
+            return unary()
+        primary()
+
+    def term():
+        unary()
+        while peek() is not None and peek()[2] in ("*", "/"):
+            pos[0] += 1
+            unary()
+
+    def expr():
+        term()
+        while peek() is not None and peek()[2] in ("+", "-"):
+            pos[0] += 1
+            term()
+
+    try:
+        expr()
+        return pos[0] == len(toks)
+    except ValueError:
+        return False
+
+
+def is_prose_formula(span, arithmetic_context=False):
+    """A formula the source wrote into words, not an aside the book wrote."""
+    toks = _pf_tokens(span)
+    if not toks or not _pf_parses(toks):
+        return False
+    tight = not any(c.isspace() for c in span)
+    has_op = arithmetic_context or (tight and any(t[2] in ("+", "-", "*", "/") for t in toks))
+    marked = False
+    for i, t in enumerate(toks):
+        if t[1]:
+            name = t[1]
+            if i + 1 < len(toks) and toks[i + 1][2] == "(":
+                one_case = name == name.lower() or name == name.upper()
+                if not one_case or name.lower() not in _PF_FUNCS:
+                    return False
+                marked = True
+            elif name in _PF_LEAVES or (len(name) > 5 and name.endswith("SCORE") and name[:-5] in _PF_LEAVES):
+                marked |= len(name) >= 4 or has_op
+            elif (sum(c.isupper() for c in name) >= 4 and all(c.isupper() or c.isdigit() or c == "_" for c in name)) or (
+                name[:1].isalpha() and name.isalnum() and re.search(r"[a-z][A-Z]", name)
+            ):
+                marked = True
+            else:
+                return False
+        elif t[2] and t[2] not in ("+", "-", "*", "/", "(", ")", ","):
+            return False
+    return marked
+
+
+def prose_formula_count(text):
+    """How many formula-shaped groups one printed string carries."""
+    n, i = 0, 0
+    while i < len(text):
+        prev = text[i - 1] if i else " "
+        boundary = not (prev.isascii() and (prev.isalnum() or prev == "_"))
+        open_ = None
+        if text[i] == "(":
+            open_ = i
+        elif boundary and text[i].isascii() and text[i].isalpha():
+            j = i
+            while j < len(text) and text[j].isascii() and (text[j].isalnum() or text[j] == "_"):
+                j += 1
+            if j < len(text) and text[j] == "(":
+                open_ = j
+        if open_ is not None:
+            depth, close = 0, None
+            for j in range(open_, len(text)):
+                if text[j] == "(":
+                    depth += 1
+                elif text[j] == ")":
+                    depth -= 1
+                    if depth == 0:
+                        close = j
+                        break
+            if close is not None and is_prose_formula(text[i : close + 1], text[:i].rstrip().endswith(("+", "-"))):
+                n += 1
+                i = close + 1
+                continue
+        i += 1
+    return n
+
+
+def prose_formula_hits(document):
+    """Formula-shaped groups in the printed strings of a converted-rule list."""
+    if not isinstance(document, list):
+        return 0
+    hits = 0
+    for rule in document:
+        if not isinstance(rule, dict) or not isinstance(rule.get("prose"), list):
+            continue
+        hits += prose_formula_count(rule.get("label") or "")
+        for segment in rule["prose"]:
+            for piece in (segment or {}).get("pieces") or []:
+                if isinstance(piece, dict) and isinstance(piece.get("Text"), str):
+                    hits += prose_formula_count(piece["Text"])
+    return hits
+
+
+DATA_CLASS_NAMES = list(DATA_PATTERNS) + [PROSE_FORMULA_PATTERN]
+
 # A shipped asset larger than this is not a rules document; reading it whole to
 # regex it would be the gate's own performance bug.
 MAX_DATA_FILE_BYTES = 8 * 1024 * 1024
@@ -536,6 +727,16 @@ def _scan_shipped_data(root, res, source_rels):
                 res.data_files_by_pattern[name] += 1
                 res.data_hits_by_pattern[name] += n
                 file_hits += n
+        # SD-36 F7b: the prose-formula class, on a converted-rule list only.
+        if rel.endswith(".json") and '"prose"' in text:
+            try:
+                n = prose_formula_hits(json.loads(text))
+            except ValueError:
+                n = 0
+            if n:
+                res.data_files_by_pattern[PROSE_FORMULA_PATTERN] += 1
+                res.data_hits_by_pattern[PROSE_FORMULA_PATTERN] += n
+                file_hits += n
         if file_hits:
             res.shipped_data_files += 1
             res.shipped_data_hits += file_hits
@@ -549,8 +750,8 @@ def scan(root):
     res.hits_by_pattern = {n: 0 for n in PATTERNS}
     res.files_by_root = {r: 0 for r in LIVE_ROOTS}
     res.hits_by_root = {r: 0 for r in LIVE_ROOTS}
-    res.data_files_by_pattern = {n: 0 for n in DATA_PATTERNS}
-    res.data_hits_by_pattern = {n: 0 for n in DATA_PATTERNS}
+    res.data_files_by_pattern = {n: 0 for n in DATA_CLASS_NAMES}
+    res.data_hits_by_pattern = {n: 0 for n in DATA_CLASS_NAMES}
     source_rels = set()
     for live_root, rel, abs_path in _iter_live_source_files(root):
         try:
@@ -662,7 +863,7 @@ def print_breakdown(res):
     for live_root in LIVE_ROOTS:
         print(f"root {live_root} files={res.files_by_root[live_root]} hits={res.hits_by_root[live_root]}")
     print(f"identifier_files={res.identifier_files} identifier_hits={res.identifier_hits}")
-    for name in DATA_PATTERNS:
+    for name in DATA_CLASS_NAMES:
         if res.data_hits_by_pattern.get(name):
             print(
                 f"data pattern {name} files={res.data_files_by_pattern[name]} "

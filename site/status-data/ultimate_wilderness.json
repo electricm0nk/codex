@@ -27,12 +27,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 724,
+      "done": 952,
       "partial": 0,
       "not_started": 0,
-      "denominator": 724,
+      "denominator": 952,
       "pct": 100.0,
-      "excluded_from_percentage": 228,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 228,
         "origin": 724
@@ -4478,7 +4478,7 @@
         },
         {
           "name": "Scalykind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Scalykind (Internal.DomainAbility)"
@@ -6438,7 +6438,7 @@
         },
         {
           "name": "Wild Shape",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Shifter Class Feature.SpecialQuality.Supernatural.DruidWildShape",
           "standing": "unclassified",
           "display_name": "Wild Shape (Shifter Class Feature.SpecialQuality.Supernatural.DruidWildShape)"
@@ -6729,12 +6729,12 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 521,
-      "partial": 7,
+      "done": 575,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 528,
-      "pct": 98.7,
-      "excluded_from_percentage": 47,
+      "denominator": 575,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 528,
         "unclassified": 47
@@ -9122,21 +9122,21 @@
         },
         {
           "name": "Hold Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.PopotoDolphinRacialTrait",
           "standing": "unclassified",
           "display_name": "Hold Breath (SpecialQuality.Extraordinary.PopotoDolphinRacialTrait)"
         },
         {
           "name": "Hold Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DwarfCaimanRacialTrait",
           "standing": "unclassified",
           "display_name": "Hold Breath (SpecialQuality.Extraordinary.DwarfCaimanRacialTrait)"
         },
         {
           "name": "Hold Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.MarineIguanaRacialTrait",
           "standing": "unclassified",
           "display_name": "Hold Breath (SpecialQuality.Extraordinary.MarineIguanaRacialTrait)"
@@ -9276,7 +9276,7 @@
         },
         {
           "name": "Ioun Affinity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.IounWyrdRacialTrait",
           "standing": "origin",
           "display_name": "Ioun Affinity"
@@ -9318,7 +9318,7 @@
         },
         {
           "name": "Keepsake",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "GourdLeshyRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Keepsake"
@@ -9605,21 +9605,21 @@
         },
         {
           "name": "Natural Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.SlitheringSundewRacialTrait",
           "standing": "origin",
           "display_name": "Natural Attack (SpecialAttack.Extraordinary.SlitheringSundewRacialTrait)"
         },
         {
           "name": "Natural Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.SniperCactusRacialTrait",
           "standing": "origin",
           "display_name": "Natural Attack (SpecialAttack.Extraordinary.SniperCactusRacialTrait)"
         },
         {
           "name": "Natural Attacks",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.CorpseEaterFungusRacialTrait",
           "standing": "origin",
           "display_name": "Natural Attacks"
@@ -9941,7 +9941,7 @@
         },
         {
           "name": "Powerful Bite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.SpecialQuality.PandaRacialTrait",
           "standing": "unclassified",
           "display_name": "Powerful Bite"
@@ -10074,7 +10074,7 @@
         },
         {
           "name": "Rapid Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.SpinyStarfishRacialTrait",
           "standing": "origin",
           "display_name": "Rapid Healing"
@@ -10375,7 +10375,7 @@
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SeaweedLeshyRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities"
@@ -10508,7 +10508,7 @@
         },
         {
           "name": "Swallow Whole (Same Size)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Swallow Whole (Same Size)"
@@ -10770,12 +10770,12 @@
     {
       "kind": "deity",
       "label": "Deities",
-      "done": 0,
+      "done": 9,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 9,
+      "denominator": 9,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 9
       },
@@ -10848,12 +10848,12 @@
     {
       "kind": "domain",
       "label": "Domains",
-      "done": 3,
+      "done": 6,
       "partial": 0,
       "not_started": 0,
-      "denominator": 3,
+      "denominator": 6,
       "pct": 100.0,
-      "excluded_from_percentage": 3,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 3,
         "origin": 3
@@ -10906,12 +10906,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 122,
-      "partial": 1,
+      "done": 124,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 123,
-      "pct": 99.2,
-      "excluded_from_percentage": 1,
+      "denominator": 124,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 123,
         "unclassified": 1
@@ -11185,7 +11185,7 @@
         },
         {
           "name": "Coat of Mist",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Shirt",
           "standing": "origin",
           "display_name": "Coat of Mist"
@@ -11826,12 +11826,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 121,
-      "partial": 13,
+      "done": 137,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 134,
-      "pct": 90.3,
-      "excluded_from_percentage": 3,
+      "denominator": 137,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 134,
         "unclassified": 3
@@ -11972,14 +11972,14 @@
         },
         {
           "name": "Command Animals",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Command Animals"
         },
         {
           "name": "Command Plants",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Command Plants"
@@ -12028,7 +12028,7 @@
         },
         {
           "name": "Deep Diver",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Deep Diver"
@@ -12098,7 +12098,7 @@
         },
         {
           "name": "Exotic Heritage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Exotic Heritage"
@@ -12126,14 +12126,14 @@
         },
         {
           "name": "Extended Animal Focus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "unclassified",
           "display_name": "Extended Animal Focus"
         },
         {
           "name": "Extended Aspects",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Extended Aspects"
@@ -12231,7 +12231,7 @@
         },
         {
           "name": "Greater Hunter's Bond",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Greater Hunter's Bond"
@@ -12371,7 +12371,7 @@
         },
         {
           "name": "Intimidate Animals",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Intimidate Animals"
@@ -12441,7 +12441,7 @@
         },
         {
           "name": "Nature's Freedom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Nature's Freedom"
@@ -12630,7 +12630,7 @@
         },
         {
           "name": "Totemic Initiate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Totemic Initiate"
@@ -12693,7 +12693,7 @@
         },
         {
           "name": "Wild Growth Channel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Wild Growth Channel"
@@ -12707,14 +12707,14 @@
         },
         {
           "name": "Wild Vigor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Wild Vigor"
         },
         {
           "name": "Wilding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Wilding"
@@ -12763,7 +12763,7 @@
         },
         {
           "name": "Wolf Savage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Wolf Savage"
@@ -12801,12 +12801,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 0,
+      "done": 5,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 5,
+      "denominator": 5,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 5
       },
@@ -12851,12 +12851,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 1,
+      "done": 2,
       "partial": 0,
       "not_started": 0,
-      "denominator": 1,
+      "denominator": 2,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 1,
         "origin": 1
@@ -12881,12 +12881,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 80,
+      "done": 100,
       "partial": 0,
       "not_started": 0,
-      "denominator": 80,
+      "denominator": 100,
       "pct": 100.0,
-      "excluded_from_percentage": 20,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 80,
         "unclassified": 20
@@ -13626,12 +13626,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 57,
+      "done": 61,
       "partial": 0,
       "not_started": 0,
-      "denominator": 57,
+      "denominator": 61,
       "pct": 100.0,
-      "excluded_from_percentage": 4,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 57,
         "unclassified": 4

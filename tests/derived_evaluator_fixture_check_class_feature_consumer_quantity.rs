@@ -46,7 +46,6 @@ use codex::rules_core::character_input::{
 };
 use codex::rules_core::derived_evaluator_fixture_check::load_class_feature_fixtures;
 use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
-use std::path::PathBuf;
 
 /// The shared deterministic input every sibling engine-driving pin uses.
 const FIXTURE: &str =
@@ -86,9 +85,9 @@ const CONSUMERS: &[(&str, &str, &str, &[u8])] = &[
     ),
 ];
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::repo_root;
 
 fn base_input() -> CharacterInput {
     let path = repo_root().join(FIXTURE);

@@ -59,11 +59,7 @@
 //! level-1..level-11 truth (unchanged), the Fighter negative control, and
 //! the multiclass negative control.
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const PALADIN_LEVEL11_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_paladin_level11_sd18_aura_of_justice_deterministic_input.txt"
@@ -73,9 +69,6 @@ const PALADIN_LEVEL12_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_paladin_level12_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 const BASE_ATTACK_ID: &str = "class_chassis.paladin.base_attack_bonus";
 const BASE_SAVE_FORTITUDE_ID: &str = "class_chassis.paladin.base_save.fortitude";
@@ -106,8 +99,7 @@ const MERCY_4_CHOICE_ID: &str = "class_chassis.paladin.mercy_4_choice";
 
 #[test]
 fn paladin_level12_base_attack_and_all_saves_genuinely_rise() {
-    let input = load(PALADIN_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL12_FIXTURE);
 
     let base_attack = explanation(&computation, BASE_ATTACK_ID);
     assert_eq!(
@@ -143,8 +135,7 @@ fn paladin_level12_base_attack_and_all_saves_genuinely_rise() {
 
 #[test]
 fn paladin_level12_smite_evil_uses_stay_and_damage_rises_to_twelve() {
-    let input = load(PALADIN_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL12_FIXTURE);
 
     let uses_per_day = explanation(&computation, SMITE_EVIL_USES_PER_DAY_ID);
     assert_eq!(
@@ -167,8 +158,7 @@ fn paladin_level12_smite_evil_uses_stay_and_damage_rises_to_twelve() {
 
 #[test]
 fn paladin_level12_lay_on_hands_genuinely_rises() {
-    let input = load(PALADIN_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL12_FIXTURE);
 
     let uses_per_day = explanation(&computation, LAY_ON_HANDS_USES_PER_DAY_ID);
     assert_eq!(
@@ -191,8 +181,7 @@ fn paladin_level12_lay_on_hands_genuinely_rises() {
 
 #[test]
 fn paladin_level12_channel_positive_energy_dice_stay_six() {
-    let input = load(PALADIN_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL12_FIXTURE);
 
     let dice = explanation(&computation, CHANNEL_POSITIVE_ENERGY_DICE_ID);
     assert_eq!(
@@ -207,8 +196,7 @@ fn paladin_level12_channel_positive_energy_dice_stay_six() {
 
 #[test]
 fn paladin_level12_effective_caster_level_rises_and_spell_access_stays() {
-    let input = load(PALADIN_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL12_FIXTURE);
 
     let caster_level = explanation(&computation, EFFECTIVE_CASTER_LEVEL_ID);
     assert_eq!(
@@ -252,8 +240,7 @@ fn paladin_level12_effective_caster_level_rises_and_spell_access_stays() {
 
 #[test]
 fn paladin_level12_second_level_spell_rises_first_and_third_stay() {
-    let input = load(PALADIN_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL12_FIXTURE);
 
     let base_1 = explanation(&computation, BASE_SPELLS_SPELL_LEVEL_1_ID);
     assert_eq!(
@@ -292,8 +279,7 @@ fn paladin_level12_second_level_spell_rises_first_and_third_stay() {
 
 #[test]
 fn paladin_level12_aura_of_justice_carries_over() {
-    let input = load(PALADIN_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL12_FIXTURE);
 
     let aura = explanation(&computation, AURA_OF_JUSTICE_ID);
     assert_eq!(
@@ -313,8 +299,7 @@ fn paladin_level12_aura_of_justice_carries_over() {
 
 #[test]
 fn paladin_level12_fourth_mercy_slot_is_newly_recognized() {
-    let input = load(PALADIN_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL12_FIXTURE);
 
     let slot_4 = explanation(&computation, MERCY_4_CHOICE_ID);
     assert_eq!(
@@ -337,8 +322,7 @@ fn paladin_level12_fourth_mercy_slot_is_newly_recognized() {
     );
 
     // The level-11 fixture carries no slot-4 selection; the gate must stay silent below 12.
-    let level11_input = load(PALADIN_LEVEL11_FIXTURE);
-    let level11_computation = compute_pilot_base_chassis(&level11_input);
+    let level11_computation = crate::support::compute(PALADIN_LEVEL11_FIXTURE);
     assert!(
         !level11_computation
             .explanations
@@ -352,8 +336,7 @@ fn paladin_level12_fourth_mercy_slot_is_newly_recognized() {
 
 #[test]
 fn paladin_level11_truth_is_unchanged_by_this_slice() {
-    let input = load(PALADIN_LEVEL11_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL11_FIXTURE);
 
     let base_attack = explanation(&computation, BASE_ATTACK_ID);
     assert_eq!(base_attack.value, 11, "Paladin level 11 base attack bonus must stay 11");
@@ -381,86 +364,15 @@ fn paladin_level11_truth_is_unchanged_by_this_slice() {
 // tests/sd18_paladin_level16_widening.rs, and
 // tests/sd18_paladin_level17_widening.rs for their own boundaries.)
 
-#[test]
-fn paladin_level_21_is_not_promoted_by_this_slice() {
-    let level_21 = PALADIN_LEVEL12_FIXTURE.replace("class:paladin:12", "class:paladin:21");
-    let input = load(&level_21);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-21 Paladin must not gain any bounded paladin chassis explanation: {:?}",
-        computation.explanations
-    );
-}
+crate::sd18_boundary_neg_control_test!(paladin_level_21_is_not_promoted_by_this_slice, "paladin_level12", PALADIN_LEVEL12_FIXTURE);
 
 // ----- Negative control: the paladin path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_paladin_level12_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "the Fighter chassis must not surface any paladin-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_paladin_level12_recognition, "paladin");
 
 // ----- Negative control: multiclass Paladin is not promoted -----
 
-#[test]
-fn multiclass_paladin_level12_is_not_promoted_by_this_slice() {
-    let multiclass = PALADIN_LEVEL12_FIXTURE.replace(
-        "class_level=class:paladin:12",
-        "class_level=class:paladin:12\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "multiclass Paladin must not gain any bounded paladin chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Paladin must stay claim-blocked in this slice"
-    );
-}
+crate::sd18_multiclass_neg_control_test!(multiclass_paladin_level12_is_not_promoted_by_this_slice, "paladin_level12", PALADIN_LEVEL12_FIXTURE);
 
 // ----- Control plane: the matrix note names the level-12 widening -----
 
-#[test]
-fn matrix_paladin_row_names_level_12_widening() {
-    let matrix = seeded_current_truth();
-    let paladin = matrix
-        .row("class.paladin.hybrid_chassis_and_spell_burden")
-        .expect("paladin hybrid_chassis_and_spell_burden row must exist");
-
-    assert_eq!(paladin.support_state, SupportState::Supported);
-    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        paladin.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        paladin
-            .grounding_ref
-            .contains("sd18_paladin_level12_widening"),
-        "paladin row must cite the live SD18 level-12 widening proof surface: {}",
-        paladin.grounding_ref
-    );
-    let note = paladin.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 12") || note.contains("level-12"),
-        "paladin partial note must name the level-12 widening: {note}"
-    );
-}

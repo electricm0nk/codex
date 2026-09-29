@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 65,
+      "done": 123,
       "partial": 0,
       "not_started": 0,
-      "denominator": 65,
+      "denominator": 123,
       "pct": 100.0,
-      "excluded_from_percentage": 58,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 65,
         "unclassified": 58
@@ -882,12 +882,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 1372,
-      "partial": 81,
+      "done": 2334,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 1453,
-      "pct": 94.4,
-      "excluded_from_percentage": 881,
+      "denominator": 2334,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 881,
         "origin": 1453
@@ -902,7 +902,7 @@
         },
         {
           "name": "AC Bonus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "AC Bonus"
@@ -1035,7 +1035,7 @@
         },
         {
           "name": "Advanced Mutagen",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master Chymist Class Feature.SpecialQuality.Special Quality.Supernatural",
           "standing": "origin",
           "display_name": "Advanced Mutagen"
@@ -1392,14 +1392,14 @@
         },
         {
           "name": "Animate Servant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Animate Servant (SpecialQuality.Supernatural.DomainPower)"
         },
         {
           "name": "Animate Servant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Animate Servant (SpecialQuality.Supernatural.DomainPower) #2"
@@ -3058,7 +3058,7 @@
         },
         {
           "name": "Bond Senses",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality.Supernatural.Bond Senses",
           "standing": "unclassified",
           "display_name": "Bond Senses"
@@ -3548,7 +3548,7 @@
         },
         {
           "name": "Channel Negative Energy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.SpecialAttack.Supernatural.Channel Energy",
           "standing": "unclassified",
           "display_name": "Channel Negative Energy"
@@ -4059,126 +4059,126 @@
         },
         {
           "name": "Core Domain ~ Agathion Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Agathion Subdomain"
         },
         {
           "name": "Core Domain ~ Ancestors Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Ancestors Subdomain"
         },
         {
           "name": "Core Domain ~ Arcane Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Arcane Subdomain"
         },
         {
           "name": "Core Domain ~ Archon Subdomain (Good)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Archon Subdomain (Good)"
         },
         {
           "name": "Core Domain ~ Archon Subdomain (Law)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Archon Subdomain (Law)"
         },
         {
           "name": "Core Domain ~ Ash Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Ash Subdomain"
         },
         {
           "name": "Core Domain ~ Azata Subdomain (Chaos)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Azata Subdomain (Chaos)"
         },
         {
           "name": "Core Domain ~ Azata Subdomain (Good)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Azata Subdomain (Good)"
         },
         {
           "name": "Core Domain ~ Blood Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Blood Subdomain"
         },
         {
           "name": "Core Domain ~ Catastrophe Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Catastrophe Subdomain"
         },
         {
           "name": "Core Domain ~ Caves Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Caves Subdomain"
         },
         {
           "name": "Core Domain ~ Cloud Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Cloud Subdomain"
         },
         {
           "name": "Core Domain ~ Construct Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Construct Subdomain"
         },
         {
           "name": "Core Domain ~ Curse Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Curse Subdomain"
         },
         {
           "name": "Core Domain ~ Daemon Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Daemon Subdomain"
         },
         {
           "name": "Core Domain ~ Day Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Day Subdomain"
         },
         {
           "name": "Core Domain ~ Decay Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Decay Subdomain"
         },
         {
           "name": "Core Domain ~ Deception Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Deception Subdomain"
@@ -4192,35 +4192,35 @@
         },
         {
           "name": "Core Domain ~ Demon Subdomain (Chaos)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Demon Subdomain (Chaos)"
         },
         {
           "name": "Core Domain ~ Demon Subdomain (Evil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Demon Subdomain (Evil)"
         },
         {
           "name": "Core Domain ~ Devil Subdomain (Evil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Devil Subdomain (Evil)"
         },
         {
           "name": "Core Domain ~ Devil Subdomain (Law)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Devil Subdomain (Law)"
         },
         {
           "name": "Core Domain ~ Divine Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Divine Subdomain"
@@ -4234,49 +4234,49 @@
         },
         {
           "name": "Core Domain ~ Family Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Family Subdomain"
         },
         {
           "name": "Core Domain ~ Fate Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Fate Subdomain"
         },
         {
           "name": "Core Domain ~ Feather Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Feather Subdomain"
         },
         {
           "name": "Core Domain ~ Ferocity Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Ferocity Subdomain"
         },
         {
           "name": "Core Domain ~ Freedom Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Freedom Subdomain"
         },
         {
           "name": "Core Domain ~ Fur Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Fur Subdomain"
         },
         {
           "name": "Core Domain ~ Growth Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Growth Subdomain"
@@ -4290,7 +4290,7 @@
         },
         {
           "name": "Core Domain ~ Home Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Home Subdomain"
@@ -4304,119 +4304,119 @@
         },
         {
           "name": "Core Domain ~ Ice Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Ice Subdomain"
         },
         {
           "name": "Core Domain ~ Inevitable Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Inevitable Subdomain"
         },
         {
           "name": "Core Domain ~ Insanity Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Insanity Subdomain"
         },
         {
           "name": "Core Domain ~ Language Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Language Subdomain"
         },
         {
           "name": "Core Domain ~ Leadership Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Leadership Subdomain"
         },
         {
           "name": "Core Domain ~ Light Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Light Subdomain"
         },
         {
           "name": "Core Domain ~ Loss Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Loss Subdomain"
         },
         {
           "name": "Core Domain ~ Love Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Love Subdomain"
         },
         {
           "name": "Core Domain ~ Lust Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Lust Subdomain"
         },
         {
           "name": "Core Domain ~ Martyr Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Martyr Subdomain"
         },
         {
           "name": "Core Domain ~ Memory Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Memory Subdomain"
         },
         {
           "name": "Core Domain ~ Metal Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Metal Subdomain"
         },
         {
           "name": "Core Domain ~ Murder Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Murder Subdomain"
         },
         {
           "name": "Core Domain ~ Night Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Night Subdomain"
         },
         {
           "name": "Core Domain ~ Nightmare Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Nightmare Subdomain"
         },
         {
           "name": "Core Domain ~ Oceans Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Oceans Subdomain"
         },
         {
           "name": "Core Domain ~ Protean Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Protean Subdomain"
@@ -4430,91 +4430,91 @@
         },
         {
           "name": "Core Domain ~ Rage Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Rage Subdomain"
         },
         {
           "name": "Core Domain ~ Resolve Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Resolve Subdomain"
         },
         {
           "name": "Core Domain ~ Restoration Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Restoration Subdomain"
         },
         {
           "name": "Core Domain ~ Resurrection Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Resurrection Subdomain"
         },
         {
           "name": "Core Domain ~ Revolution Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Revolution Subdomain"
         },
         {
           "name": "Core Domain ~ Seasons Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Seasons Subdomain"
         },
         {
           "name": "Core Domain ~ Smoke Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Smoke Subdomain"
         },
         {
           "name": "Core Domain ~ Souls Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Souls Subdomain"
         },
         {
           "name": "Core Domain ~ Storms Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Storms Subdomain"
         },
         {
           "name": "Core Domain ~ Tactics Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Tactics Subdomain"
         },
         {
           "name": "Core Domain ~ Thievery Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Thievery Subdomain"
         },
         {
           "name": "Core Domain ~ Thought Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Thought Subdomain"
         },
         {
           "name": "Core Domain ~ Toil Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Toil Subdomain"
@@ -4528,21 +4528,21 @@
         },
         {
           "name": "Core Domain ~ Undead Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Undead Subdomain"
         },
         {
           "name": "Core Domain ~ Wards Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Wards Subdomain"
         },
         {
           "name": "Core Domain ~ Wind Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Core Domain ~ Wind Subdomain"
@@ -4689,7 +4689,7 @@
         },
         {
           "name": "Cunning Initiative",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Cunning Initiative"
@@ -4766,7 +4766,7 @@
         },
         {
           "name": "Damage Reduction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Damage Reduction"
@@ -4969,14 +4969,14 @@
         },
         {
           "name": "Death's Kiss",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Death's Kiss (SpecialQuality.Supernatural.DomainPower)"
         },
         {
           "name": "Death's Kiss",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Death's Kiss (SpecialQuality.Supernatural.DomainPower) #2"
@@ -5102,7 +5102,7 @@
         },
         {
           "name": "Defensive Powers",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Stalwart DefenderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Defensive Powers"
@@ -5935,7 +5935,7 @@
         },
         {
           "name": "Elemental Aura (Cold Only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Elemental Aura (Cold Only)"
@@ -6369,7 +6369,7 @@
         },
         {
           "name": "Expert Trainer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CavalierClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Expert Trainer"
@@ -6677,7 +6677,7 @@
         },
         {
           "name": "Favored Terrain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.ClassFeatures",
           "standing": "unclassified",
           "display_name": "Favored Terrain (Internal.ClassFeatures)"
@@ -6943,7 +6943,7 @@
         },
         {
           "name": "Fiendish Boon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.Internal.ClassFeatures",
           "standing": "origin",
           "display_name": "Fiendish Boon"
@@ -8959,7 +8959,7 @@
         },
         {
           "name": "Inspiring Command",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Inspiring Command (SpecialQuality.Extraordinary)"
@@ -9904,7 +9904,7 @@
         },
         {
           "name": "Maker's Call",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality.Supernatural.Makers Call",
           "standing": "unclassified",
           "display_name": "Maker's Call"
@@ -10177,7 +10177,7 @@
         },
         {
           "name": "Merge Forms",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality.Supernatural.Merge Forms",
           "standing": "unclassified",
           "display_name": "Merge Forms"
@@ -10219,7 +10219,7 @@
         },
         {
           "name": "Meteor Swarm (Dealing Cold Damage)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Meteor Swarm (Dealing Cold Damage)"
@@ -10352,7 +10352,7 @@
         },
         {
           "name": "Monster Lore",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "InquisitorClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Monster Lore"
@@ -13656,7 +13656,7 @@
         },
         {
           "name": "Sneak Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Sneak Attack (ClassFeatures.Master SpyClassFeatures.SpecialQuality.Extraordinary)"
@@ -14293,7 +14293,7 @@
         },
         {
           "name": "Stigmata",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Stigmata"
@@ -14538,14 +14538,14 @@
         },
         {
           "name": "Summon Monster III (Reptiles Only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Summon Monster III (Reptiles Only)"
         },
         {
           "name": "Summon Monster VII (Reptiles Only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Summon Monster VII (Reptiles Only)"
@@ -14867,7 +14867,7 @@
         },
         {
           "name": "Terrain Dominance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Terrain Dominance"
@@ -14993,7 +14993,7 @@
         },
         {
           "name": "Terrain Mastery",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Terrain Mastery"
@@ -15441,7 +15441,7 @@
         },
         {
           "name": "Touch of Corruption",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Supernatural.LayOnHands.Lay on Hands",
           "standing": "origin",
           "display_name": "Touch of Corruption"
@@ -15791,7 +15791,7 @@
         },
         {
           "name": "Twin Eidolon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality.Supernatural.Twin Eidolon",
           "standing": "unclassified",
           "display_name": "Twin Eidolon"
@@ -15917,7 +15917,7 @@
         },
         {
           "name": "Unholy Resilience",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AntipaladinClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Unholy Resilience"
@@ -17377,12 +17377,12 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 197,
-      "partial": 3,
+      "done": 220,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 200,
-      "pct": 98.5,
-      "excluded_from_percentage": 20,
+      "denominator": 220,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 200,
         "unclassified": 20
@@ -18006,7 +18006,7 @@
         },
         {
           "name": "Familiar (Crab (Giant King))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Companion.Familiar",
           "standing": "origin",
           "display_name": "Familiar (Crab (Giant King))"
@@ -18671,7 +18671,7 @@
         },
         {
           "name": "Scent",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "EvolutionChoice.Extraordinary",
           "standing": "origin",
           "display_name": "Scent (EvolutionChoice.Extraordinary)"
@@ -18706,7 +18706,7 @@
         },
         {
           "name": "Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SkillChoice",
           "standing": "origin",
           "display_name": "Skills"
@@ -18933,12 +18933,12 @@
     {
       "kind": "domain",
       "label": "Domains",
-      "done": 70,
+      "done": 71,
       "partial": 0,
       "not_started": 0,
-      "denominator": 70,
+      "denominator": 71,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 70,
         "unclassified": 1
@@ -19446,12 +19446,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 324,
+      "done": 338,
       "partial": 0,
       "not_started": 0,
-      "denominator": 324,
+      "denominator": 338,
       "pct": 100.0,
-      "excluded_from_percentage": 14,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 324,
         "unclassified": 14
@@ -21828,12 +21828,12 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 20,
-      "partial": 6,
+      "done": 37,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 26,
-      "pct": 76.9,
-      "excluded_from_percentage": 11,
+      "denominator": 37,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 26,
         "unclassified": 11
@@ -21939,14 +21939,14 @@
         },
         {
           "name": "DTRMN",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "DTRMN"
         },
         {
           "name": "DUELING",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "DUELING"
@@ -21974,7 +21974,7 @@
         },
         {
           "name": "FURIOUS",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "FURIOUS"
@@ -22058,7 +22058,7 @@
         },
         {
           "name": "RGHTS",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RGHTS"
@@ -22072,7 +22072,7 @@
         },
         {
           "name": "TRANSFORM",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "TRANSFORM"
@@ -22086,7 +22086,7 @@
         },
         {
           "name": "UNRGHTS",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "UNRGHTS"
@@ -22103,12 +22103,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 166,
-      "partial": 7,
+      "done": 174,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 173,
-      "pct": 96.0,
-      "excluded_from_percentage": 1,
+      "denominator": 174,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 173,
         "unclassified": 1
@@ -22228,7 +22228,7 @@
         },
         {
           "name": "Cockatrice Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Cockatrice Strike"
@@ -22536,7 +22536,7 @@
         },
         {
           "name": "Fast Healer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Fast Healer"
@@ -22550,14 +22550,14 @@
         },
         {
           "name": "Fight On",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Fight On"
         },
         {
           "name": "Focused Shot",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Focused Shot"
@@ -23019,7 +23019,7 @@
         },
         {
           "name": "Razortusk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Razortusk"
@@ -23075,7 +23075,7 @@
         },
         {
           "name": "Shared Insight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Shared Insight"
@@ -23145,7 +23145,7 @@
         },
         {
           "name": "Sociable",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Sociable"
@@ -23337,12 +23337,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 39,
+      "done": 93,
       "partial": 0,
       "not_started": 0,
-      "denominator": 39,
+      "denominator": 93,
       "pct": 100.0,
-      "excluded_from_percentage": 54,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 54,
         "origin": 39
@@ -24004,12 +24004,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 246,
-      "partial": 38,
+      "done": 293,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 284,
-      "pct": 86.6,
-      "excluded_from_percentage": 9,
+      "denominator": 293,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 284,
         "unclassified": 9
@@ -24045,7 +24045,7 @@
         },
         {
           "name": "Allfood",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Allfood"
@@ -24122,7 +24122,7 @@
         },
         {
           "name": "Aura of Greater Courage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Aura of Greater Courage"
@@ -24171,7 +24171,7 @@
         },
         {
           "name": "Blaze of Glory",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Blaze of Glory"
@@ -24241,7 +24241,7 @@
         },
         {
           "name": "Borrow Skill",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Borrow Skill"
@@ -24388,7 +24388,7 @@
         },
         {
           "name": "Cleanse",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleanse"
@@ -24444,7 +24444,7 @@
         },
         {
           "name": "Corruption Resistance (Evil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Corruption Resistance (Evil)"
@@ -24549,7 +24549,7 @@
         },
         {
           "name": "Detonate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Detonate"
@@ -24563,7 +24563,7 @@
         },
         {
           "name": "Discordant Blast",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Discordant Blast"
@@ -24591,7 +24591,7 @@
         },
         {
           "name": "Dragon's Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dragon's Breath"
@@ -24654,7 +24654,7 @@
         },
         {
           "name": "Enter Image",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Enter Image"
@@ -24668,21 +24668,21 @@
         },
         {
           "name": "Evolution Surge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Evolution Surge"
         },
         {
           "name": "Evolution Surge (Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Evolution Surge (Greater)"
         },
         {
           "name": "Evolution Surge (Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Evolution Surge (Lesser)"
@@ -24738,7 +24738,7 @@
         },
         {
           "name": "Fiery Body",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fiery Body"
@@ -24752,7 +24752,7 @@
         },
         {
           "name": "Fire Snake",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fire Snake"
@@ -24850,7 +24850,7 @@
         },
         {
           "name": "Frozen Note",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Frozen Note"
@@ -24892,7 +24892,7 @@
         },
         {
           "name": "Glide",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Glide"
@@ -24941,14 +24941,14 @@
         },
         {
           "name": "Heroic Fortune",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Fortune"
         },
         {
           "name": "Heroic Fortune (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Fortune (Mass)"
@@ -25102,7 +25102,7 @@
         },
         {
           "name": "Light Lance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Light Lance"
@@ -25123,7 +25123,7 @@
         },
         {
           "name": "Malediction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Malediction"
@@ -25235,7 +25235,7 @@
         },
         {
           "name": "Phantasmal Revenge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Phantasmal Revenge"
@@ -25249,7 +25249,7 @@
         },
         {
           "name": "Pied Piping",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Pied Piping"
@@ -25389,21 +25389,21 @@
         },
         {
           "name": "Rejuvenate Eidolon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rejuvenate Eidolon"
         },
         {
           "name": "Rejuvenate Eidolon (Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rejuvenate Eidolon (Greater)"
         },
         {
           "name": "Rejuvenate Eidolon (Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rejuvenate Eidolon (Lesser)"
@@ -25536,14 +25536,14 @@
         },
         {
           "name": "Seek Thoughts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Seek Thoughts"
         },
         {
           "name": "Severed Fate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Severed Fate"
@@ -25557,7 +25557,7 @@
         },
         {
           "name": "Share Language",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Share Language"
@@ -25676,7 +25676,7 @@
         },
         {
           "name": "Stormbolts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Stormbolts"
@@ -25718,28 +25718,28 @@
         },
         {
           "name": "Summon Eidolon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Summon Eidolon"
         },
         {
           "name": "Summon Monster I",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Summon Monster I"
         },
         {
           "name": "Summon Monster II",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Summon Monster II"
         },
         {
           "name": "Summon Monster III",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Summon Monster III"
@@ -25753,21 +25753,21 @@
         },
         {
           "name": "Summon Monster IV",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Summon Monster IV"
         },
         {
           "name": "Summon Monster IX",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Summon Monster IX"
         },
         {
           "name": "Summon Monster V",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Summon Monster V"
@@ -25781,14 +25781,14 @@
         },
         {
           "name": "Summon Monster VI",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Summon Monster VI"
         },
         {
           "name": "Summon Monster VII",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Summon Monster VII"
@@ -25802,7 +25802,7 @@
         },
         {
           "name": "Summon Monster VIII",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Summon Monster VIII"
@@ -25830,7 +25830,7 @@
         },
         {
           "name": "Thundering Drums",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Thundering Drums"
@@ -25844,7 +25844,7 @@
         },
         {
           "name": "Tireless Pursuers",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Tireless Pursuers"
@@ -25872,7 +25872,7 @@
         },
         {
           "name": "Transmogrify",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Transmogrify"
@@ -25921,7 +25921,7 @@
         },
         {
           "name": "Unfetter",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unfetter"
@@ -25935,7 +25935,7 @@
         },
         {
           "name": "Unravel Destiny",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unravel Destiny"
@@ -25956,7 +25956,7 @@
         },
         {
           "name": "Vanish",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Vanish"
@@ -26047,7 +26047,7 @@
         },
         {
           "name": "World Wave",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "World Wave"
@@ -26352,12 +26352,12 @@
     {
       "kind": "trait",
       "label": "Traits",
-      "done": 74,
+      "done": 90,
       "partial": 0,
       "not_started": 0,
-      "denominator": 74,
+      "denominator": 90,
       "pct": 100.0,
-      "excluded_from_percentage": 16,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 74,
         "unclassified": 16

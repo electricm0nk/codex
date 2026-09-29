@@ -1,0 +1,74 @@
+== file set ==
+  rule files:  +314 -0  (+347 -0 rule ids)
+  _vars/:      +7 -0
+  _defects/:   +7 -0
+  other:       +0 -0  []
+
+== counts (baseline -> fresh) ==
+  records: 49450 -> 49450
+  converted: 49450 -> 49450
+  refused: 0 -> 0
+  rules_written: 73016 -> 73363
+  var_tables: 6204 -> 6211
+
+== added granted_by edges by TARGET kind ==
+  ability: 447
+  class_feature: 331
+  race_trait: 75
+  feat: 1
+  TOTAL: 854
+  added grants (total): 681
+
+== expected delta classes (named, counted, explained -- never a blanket allowance) ==
+  added granted_by edges: 854  (F1's own declared purpose -- a bare AUTO reference now resolving through its parent ability category; SS3.5 permits growth)
+  added grants: 681  (F1-2 GatedFactGrant wrapping / F1-3 WeaponSet expansion of a previously-bare selector; see grant_signature/grant_covers)
+  added _vars/ tables: 7  (condition variables an added GatedFactGrant's `when` now references, and the pool variables a D8 pick's `count` references)
+  added _defects/ files: 7
+  provenance deltas on the pinned current_class-fix record list: 0 of 30 pinned records (see structural_diff_expected_provenance_deltas.json)
+  naturalattacks suffix-fix rename: 0 of 1290 pinned old ids -> 0 of 1659 pinned new ids (net +0), plus 0 field deltas on 0 of 6 pinned same-id content-shift ids (see structural_diff_naturalattacks_renames.json -- content-preserved per file, not a genuine loss)
+  bonus_var_index comma-split fix (stage5 §1a): 0 of 35 pinned (rule id, field) record deltas -- a flattened Const/Never/bare-AbilityMod now resolving to its real multi-contribution Var (see structural_diff_bonus_var_split_record_deltas.json for the per-family mechanism and reachability)
+  F1c d2_line_split: 0 field deltas on 0 records, 0 added rule ids -- D2: a record's first line carried its own condition; the record gets a Text principal with only the record's gates and the line moves, condition intact, to a new #<suffix> sibling (see structural_diff_f1c_deltas.json)
+  F1c d4_closure_complete: 0 field deltas on 0 records, 0 added rule ids -- D4: closure_complete=true attested on a class principal whose whole closure is defect-free (sheet_rule/attest.rs) (see structural_diff_f1c_deltas.json)
+  F1c d4_pi_reclosure: 0 field deltas on 0 records, 0 added rule ids -- D4 soundness: 21 product-identity class records re-keyed from the codex-named placeholder to the class's own base row, so their continuation rows, level lines and .MOD rows convert (see structural_diff_f1c_deltas.json)
+  F1c d3_unchained_class: 0 field deltas on 0 records, 0 added rule ids -- D3: a Pathfinder Unchained class principal (TakenOnClass <base>), one per class-selection ability (see structural_diff_f1c_deltas.json)
+  F1c d6_weapon_choice: 0 field deltas on 0 records, 0 added rule ids -- D6: a CHOOSE:WEAPONPROFICIENCY option list resolved to oracle weapon names, or a pick linked to its child pool's one member (see structural_diff_f1c_deltas.json)
+  F1c f1c3_preability_bracket: 0 field deltas on 0 records, 0 added rule ids -- F1c-3: a PREABILITY `[<key>]` item no longer converts to an unholdable MissingRule alternative (see structural_diff_f1c_deltas.json)
+  F1c d7_always_held: 0 field deltas on 0 records, 0 added rule ids -- D7: always_held=true attested on the principal of a record every character holds unconditionally -- the target of an unconditional ABILITY|AUTOMATIC grant on a STAT/SAVE row (sheet_rule/always_held.rs) (see structural_diff_f1c_deltas.json)
+  F1c d8_pool_pick: 0 field deltas on 0 records, 0 added rule ids -- D8: a record that raises an ability category's POOL variable offers the pick -- offers {id: <the record>, count: Var(<pool variable>), from: Rules {pool, tags}} on its principal (sheet_rule/pool_pick.rs) (see structural_diff_f1c_deltas.json)
+  F3b2 f3b2_skill_ranks: 176 of 176 pinned field deltas on 176 records -- F3b2 (1): a class line's STARTSKILLPTS is written as the principal's StatBlock "Skill ranks per level" prose row (one added row, a plain number) (see structural_diff_f3b2_deltas.json)
+  F3b2 f3b2_closure_complete: 8 of 8 pinned field deltas on 8 records -- F3b2 (2): closure_complete=true attested on a class principal whose closure is now defect-free because its references to placeholder-keyed records resolve (see structural_diff_f3b2_deltas.json)
+  F3b2 f3b2_placeholder_key_resolved: 73 of 73 pinned field deltas on 73 records -- F3b2 (2): a reference to a product-identity record by the KEY its oracle row declares resolves (the record was indexed only under its codex-named placeholder corpus key): MissingRule -> Rule, nothing else in the field moves (see structural_diff_f3b2_deltas.json)
+  F3b2b f3b2b_undeclared_note: 829 of 829 pinned field deltas on 829 records -- F3b2b (1): provenance gains undeclared_in_pinned_tree -- the variables the record reads that no row of the pinned tree declares and that are not oracle built-in terms, read as Const(0), the oracle's own value (VariableProcessor.java:394-402); nothing else in provenance moves (see structural_diff_f3b2b_deltas.json)
+  F3b2b f3b2b_closure_complete: 9 of 9 pinned field deltas on 9 records -- F3b2b (1)(2): closure_complete=true attested on a class principal whose closure is now defect-free -- its undeclared-variable reads are the oracle's 0, not closure defects, or its twin-printing reference resolves to the newest printing (see structural_diff_f3b2b_deltas.json)
+  F3c3 f3c3_subclass_choice: 2 of 2 pinned added rule ids (content sha256 held) -- F3c3: a class's SUBCLASS lines become ONE choice sibling <class id>#subclass (offers Rules{pool: subclass, tags: [<Class> Subclass]}, count 1, print false) (see structural_diff_f3c3_deltas.json)
+  F3c3 f3c3_subclass_option: 52 of 52 pinned added rule ids (content sha256 held) -- F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants (see structural_diff_f3c3_deltas.json)
+  F3c3 pinned added granted_by edges: 53; pinned _vars/ contributions: 16; pinned _defects/ row counts: {'_defects/subclass-token-unconverted.json': 117, '_defects/subclass-superseded-reprint.json': 7}
+  F3c4b f3c4b_pool_option: 290 of 290 pinned added rule ids (content sha256 held) -- F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE (see structural_diff_f3c4b_deltas.json)
+  F3c4b f3c4b_gate_term_resolves: 40 of 40 pinned field deltas on 40 records -- F3c4b: a gate term naming a pick row (or a CATEGORY-less record under its row's declared category) was MissingRule and now resolves to that Rule; nothing else in the field moves (see structural_diff_f3c4b_deltas.json)
+  F3c4b f3c4b_closure_complete: 62 of 62 pinned field deltas on 62 records -- F3c4b: closure_complete=true attested on a class principal whose closure is now defect-free (its Internal|CMB / tracker reference resolves to the .MOD-row records of that one object) (see structural_diff_f3c4b_deltas.json)
+  F3c4b replaced self-edges: 6 of 6 pinned; pinned added granted_by edges: 480; pinned _vars/ contributions: 1189; pinned _defects/ row counts: {'_defects/pool-option-id-collision.json': 1, '_defects/pool-option-unconverted.json': 2, '_defects/row-declared-category-shared.json': 1, '_defects/unresolved-references.json': 6932}
+  F3c5 f3c5_line_sibling: 3 of 3 pinned added rule ids (content sha256 held) -- F3c5: a record that now carries its Internal natural-attack helper as a NaturalAttack fact is no longer a single-line principal (CONV-02), so its one line moves, value/target/gate intact, to a #weapon<n> sibling (see structural_diff_f3c5_deltas.json)
+  F3c5 f3c5_line_split: 9 of 9 pinned field deltas on 3 records -- F3c5: that record's principal becomes a Text principal with no target, gated by a subset of the sibling's gate terms (the line's own level term moves with the line) (see structural_diff_f3c5_deltas.json)
+  F3c5 f3c5_closure_complete: 1 of 1 pinned field deltas on 1 records -- F3c5: closure_complete=true attested on a class principal whose one closure defect was an Internal natural-attack helper reference (Dragon Disciple: Internal|Bite) (see structural_diff_f3c5_deltas.json)
+  F3c5 pinned NaturalAttack grants: 681; pinned added _vars/ tables: 2; pinned _defects/ row counts: {'_defects/unresolved-references.json': 6252, '_defects/natural-attack-helper-carries-more.json': 0, '_defects/natural-attack-helper-names-no-attack.json': 0, '_defects/natural-attack-helper-pair-shared.json': 0}
+  added rule ids: 347 (0 with no named cause)
+    advanced_class_guide:pool_option:blood_arcanist_bloodline_aberrant_bloodline: F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE
+    advanced_class_guide:pool_option:blood_arcanist_bloodline_abyssal_bloodline: F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE
+    advanced_class_guide:pool_option:blood_arcanist_bloodline_accursed_bloodline: F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE
+    advanced_class_guide:pool_option:blood_arcanist_bloodline_aquatic_bloodline: F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE
+    advanced_class_guide:pool_option:blood_arcanist_bloodline_arcane_bloodline: F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE
+    advanced_class_guide:pool_option:blood_arcanist_bloodline_boreal_bloodline: F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE
+    advanced_class_guide:pool_option:blood_arcanist_bloodline_celestial_bloodline: F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE
+    advanced_class_guide:pool_option:blood_arcanist_bloodline_deep_earth_bloodline: F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE
+    advanced_class_guide:pool_option:blood_arcanist_bloodline_destined_bloodline: F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE
+    advanced_class_guide:pool_option:blood_arcanist_bloodline_djinni_bloodline: F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE
+    ... and 337 more
+
+unexpected field deltas: 0
+F3b2b pinned added granted_by edges: 11 of 11 present (see structural_diff_f3b2b_deltas.json)
+new rule ids: 347 ['advanced_class_guide:pool_option:blood_arcanist_bloodline_aberrant_bloodline', 'advanced_class_guide:pool_option:blood_arcanist_bloodline_abyssal_bloodline', 'advanced_class_guide:pool_option:blood_arcanist_bloodline_accursed_bloodline', 'advanced_class_guide:pool_option:blood_arcanist_bloodline_aquatic_bloodline', 'advanced_class_guide:pool_option:blood_arcanist_bloodline_arcane_bloodline', 'advanced_class_guide:pool_option:blood_arcanist_bloodline_boreal_bloodline', 'advanced_class_guide:pool_option:blood_arcanist_bloodline_celestial_bloodline', 'advanced_class_guide:pool_option:blood_arcanist_bloodline_deep_earth_bloodline', 'advanced_class_guide:pool_option:blood_arcanist_bloodline_destined_bloodline', 'advanced_class_guide:pool_option:blood_arcanist_bloodline_djinni_bloodline']
+
+removed granted_by edges: 0  (never allowed -- SS3.5 permits growth only)
+removed grants: 0  (a grant SIGNATURE lost with no replacement of the same target -- gating-wrapper and WeaponGroup/WeaponTag/WeaponAllOf/WeaponSet-tag-case changes are NOT counted here, only a genuine loss or a fabricated replacement)
+
+verdict=PASS

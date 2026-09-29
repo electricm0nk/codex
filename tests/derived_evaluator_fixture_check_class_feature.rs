@@ -61,23 +61,14 @@ use codex::rules_core::derived_evaluator_fixture_check::{
     load_class_feature_fixtures, parse_class_feature_level_scaling,
 };
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::{pcgen_data_root, repo_root};
 
 fn sha256_hex(bytes: &[u8]) -> String {
     let mut hasher = Sha256::new();
     hasher.update(bytes);
     hasher.finalize().iter().map(|b| format!("{b:02x}")).collect()
-}
-
-/// Same resolution rule the equipment/monster test files use.
-fn pcgen_data_root() -> Option<PathBuf> {
-    if let Ok(root) = std::env::var("PCGEN_CORPUS_ROOT") {
-        return Some(PathBuf::from(root));
-    }
-    let home = std::env::var("HOME").ok()?;
-    Some(PathBuf::from(home).join("workspace").join("repos").join("pcgen").join("data"))
 }
 
 /// Every ingested `class_feature` record of `book`, indexed by its corpus

@@ -100,17 +100,17 @@ pub fn filter_option_pool(
         match evaluate_applies(&rule.applies, held, package, facts, EvalContext::default()) {
             Gate::Include => out.eligible.push(EligibleOption {
                 id: rule.id.clone(),
-                label: rule.label.clone(),
+                label: crate::rules_core::sheet_rule::display_label(rule),
                 condition: None,
             }),
             Gate::Situational(condition) => out.eligible.push(EligibleOption {
                 id: rule.id.clone(),
-                label: rule.label.clone(),
+                label: crate::rules_core::sheet_rule::display_label(rule),
                 condition: Some(condition),
             }),
             Gate::Exclude => out.refused.push(RefusedOption {
                 id: rule.id.clone(),
-                label: rule.label.clone(),
+                label: crate::rules_core::sheet_rule::display_label(rule),
                 unmet: unmet_words(package, held, facts, &rule.applies),
             }),
         }
@@ -189,9 +189,15 @@ pub fn describe_gate(package: &SheetRulePackage, gate: &Applies) -> String {
             describe_expr(package, rhs)
         ),
         Applies::Holds { what, count } => describe_holdable(package, what, *count),
+        // SD-36 F6c (b): a choice is named by its owning record's LABEL and an option by its
+        // label (a rule id) or its words, never by a raw converted id.
         Applies::Chosen { choice, option } => match option {
-            Some(option) => format!("requires {} chosen for {}", pretty(option), pretty(choice)),
-            None => format!("requires a choice made for {}", pretty(choice)),
+            Some(option) => format!(
+                "requires {} chosen for {}",
+                capitalize_first(&label_or_words(package, option)),
+                label_or_words(package, choice)
+            ),
+            None => format!("requires a choice made for {}", label_or_words(package, choice)),
         },
         Applies::ItemHas { tags, n } => {
             format!("an item with at least {n} of: {}", join(tags.clone(), ", "))
@@ -225,7 +231,7 @@ fn describe_holdable(package: &SheetRulePackage, what: &Holdable, count: u8) -> 
         Holdable::DeityAlignment(list) => {
             format!("requires a deity of alignment {}", join(list.clone(), " or "))
         }
-        Holdable::ClassSkill(skill) => format!("requires {} as a class skill", pretty(skill)),
+        Holdable::ClassSkill(skill) => format!("requires {} as a class skill", skill_words(package, skill)),
         Holdable::Proficiency(prof) => format!("requires proficiency with {}", describe_prof(prof)),
         Holdable::Language(language) => format!("requires the {language} language"),
         Holdable::Movement { mode, min } => format!("requires a {mode} speed of {min} feet"),
@@ -248,6 +254,134 @@ pub fn describe_prof(prof: &ProfRef) -> String {
         ProfRef::ShieldGroup(tag) => format!("{} shields", pretty(tag)),
         ProfRef::DeityFavoredWeapon => "the deity's favored weapon".to_owned(),
         ProfRef::Chosen(choice) => format!("the weapon chosen for {}", pretty(choice)),
+        ProfRef::WeaponAllOf(tags) => {
+            format!("{} weapons", join(tags.iter().map(|t| pretty(t)).collect(), " "))
+        }
+        ProfRef::WeaponSet { label, members } => describe_weapon_set(label, members),
+    }
+}
+
+/// A `WeaponSet`'s label is the oracle's own `TYPE=` selector text -- dot-separated conjunctions
+/// (`Light.Martial`) and camelCase compounds (`SiegeFirearm`, `OneHandedFireArm`) alike, neither
+/// of which [`pretty`]'s underscore/hyphen replacement touches, so it printed the raw PCGen tag
+/// casing verbatim (`"KoboldTailAttachment weapons"`, `"Auto weapons"`) on the live paper sheet
+/// (F1 re-check round 1, finding 5). `Auto` is PCGen's own bookkeeping word for a fixed
+/// proficiency bundle (grapple, touch spells, ranged touch spells, splash weapons, unarmed
+/// strikes) with no natural-language reading of its own -- printed as its member list instead,
+/// per the doctrine that the sheet prints rule text a player can read; every other label is split
+/// on dots and camelCase boundaries and lowercased, same as `WeaponAllOf`'s sibling arm.
+fn describe_weapon_set(label: &str, members: &[String]) -> String {
+    if label.eq_ignore_ascii_case("Auto") && !members.is_empty() {
+        return join_with_and(members);
+    }
+    let pretty = pretty_weapon_set_label(label);
+    // SD-36 Epic F1 re-check round 2, finding 2: a label whose own last word already IS the
+    // group noun -- PCGen's `SiegeWeapon`/`SiegeEngine` tags -- must not get a second "weapons"
+    // appended after it (`"siege weapon weapons"`, the stutter the finding named); the label's
+    // own noun, pluralized, already reads as the sheet's proficiency-line noun.
+    //
+    // `SiegeEngine` never needs an " engine"/" engines" arm here: `canonical_multi_label_words`
+    // (below) folds `"siegeengine"` upstream to the SAME `"siege weapon"` text `SiegeWeapon`
+    // reaches through the generic camelCase split, so it is caught by the " weapon" arm above.
+    // Measured on dump-r4 (SD-36 Epic F1 polish backlog item 4): 30 distinct WeaponSet labels
+    // in the whole corpus, exactly one (`SiegeEngine`) would otherwise lowercase to something
+    // ending in "engine", and it is intercepted before reaching this point.
+    if let Some(prefix) = pretty.strip_suffix(" weapon").or_else(|| pretty.strip_suffix(" weapons")) {
+        return format!("{prefix} weapons");
+    }
+    format!("{pretty} weapons")
+}
+
+/// `"Light.Martial"` -> `"light martial"`; `"SiegeFirearm"` -> `"siege firearm"`;
+/// `"KoboldTailAttachment"` -> `"kobold tail attachment"`.
+///
+/// THREE families of oracle `TYPE=` tags are multi-label for the same resolved weapon set today
+/// (measured, SD-36 Epic F1 re-check round 3, finding 4: `cargo run --locked -j 8 -p
+/// codex-ingest --bin sheet_rule_convert -- --dump <scratch>`, then a Python walk of every
+/// `grants` entry's `Proficiency::WeaponSet` across the dump grouping by `frozenset(members)` --
+/// 63 `WeaponSet` grants / 27 distinct member sets, 3 of which carry more than one label):
+///
+///   - PF1's one-handed firearm selector, spelled three ways across sourcebooks
+///     (`OnehandedFirearm`, `OneHandedFirearm`, `OneHandedFireArm`; 9-member set) and its
+///     two-handed sibling (`TwohandedFirearm`/`TwoHandedFirearm`; 11-member set) -- a plain
+///     camelCase split reads their INCIDENTAL capitalization, not the selector's real word
+///     boundaries (SD-36 Epic F1 re-check round 2, finding 2: "the printed phrase is a function
+///     of which book's capitalization the selector used").
+///   - PF1's siege weapon selector (`SiegeWeapon`, `advanced_class_guide`'s and
+///     `ultimate_combat`'s Siege Engineer feat/class feature) and its `mythic_adventures`
+///     sibling `SiegeEngine` (`up_classes.lst`'s own equipment rows carry BOTH `TYPE=SiegeEngine`
+///     and `TYPE=SiegeWeapon` on every siege item -- PCGen's own data treats them as synonyms,
+///     never two categories); 18-member set, identical under both labels.
+///
+/// `canonical_multi_label_words` recognizes all three families (case-insensitively) ahead of the
+/// generic split, so every spelling reads the same way -- the paper-sheet doctrine that the same
+/// proficiency reads the same way on every sheet, regardless of which book's tag a selector used.
+/// Every other label (measured: no fourth family exists in the corpus today, by the same walk)
+/// keeps the plain camelCase split unchanged.
+/// `codex_ingest::sheet_rule_convert_gate::no_fifth_multi_label_weapon_set_family_appears_silently`
+/// (this crate cannot read the corpus -- SD-36 Epic A's wall) re-derives the measurement above
+/// from a fresh in-process conversion, so a future selector addition cannot reopen this without
+/// a test failure naming the new family.
+fn pretty_weapon_set_label(label: &str) -> String {
+    label
+        .split('.')
+        .map(|segment| {
+            let lower = segment.to_ascii_lowercase();
+            match canonical_multi_label_words(&lower) {
+                Some(words) => words.to_string(),
+                None => split_camel_words(segment).to_lowercase(),
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(" ")
+}
+
+/// The three compounds this corpus states under multiple incidental spellings for the same
+/// resolved weapon set (see [`pretty_weapon_set_label`]'s docstring for the measurement).
+/// Matched against the FULLY LOWERCASED segment, so each fires regardless of which spelling
+/// produced it. `"siegeengine"` maps to the SAME output `"SiegeWeapon"` reaches through the
+/// generic camelCase split (`"siege weapon"`) -- one canonical route, not a second phrase to
+/// keep in sync -- so [`describe_weapon_set`]'s `" weapon"`-suffix fold still applies to it.
+fn canonical_multi_label_words(lower_segment: &str) -> Option<&'static str> {
+    match lower_segment {
+        "onehandedfirearm" => Some("one handed fire arm"),
+        "twohandedfirearm" => Some("two handed fire arm"),
+        "siegeengine" => Some("siege weapon"),
+        _ => None,
+    }
+}
+
+/// Splits a camelCase or PascalCase run into space-separated words: `"OneHandedFireArm"` ->
+/// `"One Handed Fire Arm"`. A segment with no internal case change (`"Martial"`, already all one
+/// case) passes through unchanged.
+fn split_camel_words(segment: &str) -> String {
+    let mut words: Vec<String> = Vec::new();
+    let mut current = String::new();
+    let mut prev_lower = false;
+    for c in segment.chars() {
+        if c.is_uppercase() && prev_lower {
+            words.push(std::mem::take(&mut current));
+        }
+        current.push(c);
+        prev_lower = c.is_lowercase();
+    }
+    if !current.is_empty() {
+        words.push(current);
+    }
+    words.join(" ")
+}
+
+/// `["Grapple", "Ray Spells", "Touch Spells"]` -> `"Grapple, Ray Spells, and Touch Spells"`
+/// (Oxford comma, and the natural one/two-item forms with no trailing comma).
+fn join_with_and(items: &[String]) -> String {
+    match items {
+        [] => String::new(),
+        [only] => only.clone(),
+        [a, b] => format!("{a} and {b}"),
+        _ => {
+            let (last, rest) = items.split_last().expect("non-empty checked above");
+            format!("{}, and {}", rest.join(", "), last)
+        }
     }
 }
 
@@ -278,8 +412,8 @@ fn describe_expr(package: &SheetRulePackage, expr: &Expr) -> String {
         Expr::HitDice => "hit dice".to_owned(),
         Expr::BaseAttack => "base attack bonus".to_owned(),
         Expr::BaseSave(save) => format!("base {} save", save_word(*save)),
-        Expr::SkillRanks(skill) => format!("{} ranks", pretty(skill)),
-        Expr::SkillTotal(skill) => format!("{} bonus", pretty(skill)),
+        Expr::SkillRanks(skill) => format!("{} ranks", skill_words(package, skill)),
+        Expr::SkillTotal(skill) => format!("{} bonus", skill_words(package, skill)),
         Expr::HeldCount { pool, filter } => match filter {
             HeldFilter::Any => format!("{} held", pretty(pool)),
             HeldFilter::Tag(tag) => format!("{} {} held", pretty(tag), pretty(pool)),
@@ -350,10 +484,15 @@ pub fn save_word(save: Save) -> &'static str {
 }
 
 /// The referenced rule's own display label when the package carries it, else its slug in
-/// words. Never the raw id: an id is a locator, not something a player reads.
+/// words. Never the raw id: an id is a locator, not something a player reads. SD-36 Epic E
+/// engine-P1-4: a non-empty label can still be the ingest pipeline's `Codex-Named Unit (...)`
+/// placeholder, so this goes through [`crate::rules_core::sheet_rule::display_label`] rather
+/// than reading `rule.label` directly -- the same resolution `render_sheet()` applies.
 pub fn label_of(package: &SheetRulePackage, id: &str) -> String {
     match package.rule(id) {
-        Some(rule) if !rule.label.is_empty() => rule.label.clone(),
+        Some(rule) if !rule.label.is_empty() => {
+            crate::rules_core::sheet_rule::display_label(rule)
+        }
         _ => pretty(split_rule_id(id).2),
     }
 }
@@ -375,7 +514,69 @@ pub fn words_of_id(value: &str) -> String {
     pretty(value)
 }
 
+/// An id-shaped value (`book:kind:slug`) as its record's label ([`label_of`]); any other value
+/// (a weapon, skill or school word) as words ([`pretty`]).
+fn label_or_words(package: &SheetRulePackage, value: &str) -> String {
+    if value.contains(':') { label_of(package, value) } else { pretty(value) }
+}
+
+/// `"longbow"` -> `"Longbow"`: an option printed as a name.
+fn capitalize_first(value: &str) -> String {
+    let mut chars = value.chars();
+    match chars.next() {
+        Some(first) => first.to_uppercase().chain(chars).collect(),
+        None => String::new(),
+    }
+}
+
 /// A slug or an internal id as words: `"power_attack"` -> `"power attack"`.
+/// SD-36 F7c (b): a skill's printed name -- the converted skill record's LABEL. One rule for
+/// every skill: the record label carries the source's key as a trailing parenthetical
+/// (`Knowledge (Nobility) (Knowledge (Nobility))`, `Climb (Climb)`,
+/// `Craft (Tattoos) (Craft (Alchemy))`); when that parenthetical names a converted skill (its
+/// slug is a skill record's), it is the key, not the name, and the name is the text before it.
+/// Any other trailing parenthetical is the name's own qualifier (`Perception (Dim Light)`). The
+/// record's own capitalization is kept (`Lore (Dagon)` must not lowercase). `None` when `skill`
+/// names no converted skill record.
+pub fn skill_label(package: &SheetRulePackage, skill: &str) -> Option<String> {
+    let rule = package.rule(package.find("skill", skill)?)?;
+    let label = rule.label.trim();
+    let Some(inner_end) = label.strip_suffix(')') else { return Some(label.to_owned()) };
+    // The matching open parenthesis of the trailing group.
+    let mut depth = 0usize;
+    let mut open = None;
+    for (i, c) in inner_end.char_indices().rev() {
+        match c {
+            ')' => depth += 1,
+            '(' if depth == 0 => {
+                open = Some(i);
+                break;
+            }
+            '(' => depth -= 1,
+            _ => {}
+        }
+    }
+    let Some(open) = open else { return Some(label.to_owned()) };
+    let (name, key) = (label[..open].trim_end(), &inner_end[open + 1..]);
+    let key_slug: String = key
+        .to_ascii_lowercase()
+        .split(|c: char| !c.is_ascii_alphanumeric())
+        .filter(|w| !w.is_empty())
+        .collect::<Vec<_>>()
+        .join("_");
+    if !name.is_empty() && package.find("skill", &key_slug).is_some() {
+        Some(name.to_owned())
+    } else {
+        Some(label.to_owned())
+    }
+}
+
+/// [`skill_label`], or -- for an id no skill record carries -- the id's words marked as such,
+/// never a bare slug passed off as a skill name.
+fn skill_words(package: &SheetRulePackage, skill: &str) -> String {
+    skill_label(package, skill).unwrap_or_else(|| format!("{} (no skill record)", pretty(skill)))
+}
+
 fn pretty(value: &str) -> String {
     let words = value.replace(['_', '-'], " ");
     let words = words.trim();
@@ -411,6 +612,8 @@ mod tests {
             granted_by: Vec::new(),
             offers: None,
             grants: Vec::new(),
+            closure_complete: false,
+            always_held: false,
             provenance: Provenance::default(),
         }
     }
@@ -482,6 +685,30 @@ mod tests {
             labels.contains(&"Power Attack"),
             "Strength 16 meets Power Attack's Strength 13: {labels:?}"
         );
+    }
+
+    /// SD-36 F7c (b): a skill term prints the converted skill record's LABEL, never the
+    /// lowercased id slug (`knowledge nobility ranks at least 3`). The record label carries the
+    /// source's key as a trailing parenthetical (`Knowledge (Nobility) (Knowledge (Nobility))`,
+    /// `Climb (Climb)`); the printed label is the name before it.
+    #[test]
+    fn a_skill_term_prints_the_skill_label() {
+        let package = crate::rules_core::sheet_rule_package::package().as_ref().expect("package");
+        let ranks = |skill: &str, n: i32| Applies::Compare {
+            lhs: Expr::SkillRanks(skill.to_owned()),
+            op: Cmp::Gte,
+            rhs: Expr::Const(n),
+        };
+        assert_eq!(describe_gate(package, &ranks("knowledge_nobility", 3)), "Knowledge (Nobility) ranks at least 3");
+        assert_eq!(describe_gate(package, &ranks("climb", 5)), "Climb ranks at least 5");
+        assert_eq!(describe_gate(package, &ranks("use_magic_device", 1)), "Use Magic Device ranks at least 1");
+        assert_eq!(skill_label(package, "perception_dim_light"), Some("Perception (Dim Light)".to_owned()));
+        assert_eq!(skill_label(package, "craft_tattoos"), Some("Craft (Tattoos)".to_owned()));
+        assert_eq!(
+            describe_gate(package, &Applies::Holds { what: Holdable::ClassSkill("knowledge_arcana".to_owned()), count: 1 }),
+            "requires Knowledge (Arcana) as a class skill"
+        );
+        assert_eq!(skill_label(package, "samurai_mount"), None, "not a converted skill");
     }
 
     /// The same ability gate, one point short, moves the option to the refused list carrying
@@ -594,5 +821,195 @@ mod tests {
 
         assert_eq!(filtered.considered(), 1);
         assert_eq!(filtered.eligible[0].label, "Power Attack");
+    }
+
+    /// SD-36 Epic E engine-P1-4 (review-caught second path): a record whose real name was
+    /// redacted as Product Identity carries the ingest pipeline's placeholder label
+    /// (`codex_neutral_name::NAME_PREFIX`), never a player-facing word. `filter_option_pool`
+    /// must resolve it through [`crate::rules_core::sheet_rule::display_label`] the same way
+    /// `render_sheet()` does, both for an eligible option and a refused one -- the placeholder
+    /// must never reach `EligibleOption::label` / `RefusedOption::label`, which the desktop
+    /// level-up DTO copies verbatim.
+    #[test]
+    fn a_placeholder_label_is_resolved_to_the_source_derived_name_not_printed_raw() {
+        let redacted_label =
+            crate::rules_core::codex_neutral_name::neutral_name("feat", "core_rulebook", "x.lst", 1);
+        let mut package = SheetRulePackage::new();
+        package.insert_rule(SheetRule {
+            id: "core_rulebook:feat:order_of_the_rack".to_owned(),
+            label: redacted_label.clone(),
+            ..option_rule("order_of_the_rack", &redacted_label, Applies::Always)
+        });
+        package.insert_rule(SheetRule {
+            id: "core_rulebook:feat:veiled_lodge".to_owned(),
+            label: redacted_label.clone(),
+            ..option_rule(
+                "veiled_lodge",
+                &redacted_label,
+                Applies::Compare {
+                    lhs: Expr::AbilityScore(Ability::Str),
+                    op: Cmp::Gte,
+                    rhs: Expr::Const(99),
+                },
+            )
+        });
+        package.finish();
+        let facts = facts_with_strength(10);
+        let held = held_set(&package, &HeldSeed::default(), &facts);
+
+        let filtered = filter_option_pool(&package, &held, &facts, FEAT_POOL, &[]);
+
+        assert!(
+            filtered.eligible.iter().all(|o| !o.label.contains(
+                crate::rules_core::codex_neutral_name::NAME_PREFIX
+            )),
+            "eligible option must not print the raw ingest placeholder: {:?}",
+            filtered.eligible
+        );
+        assert!(
+            filtered.refused.iter().all(|o| !o.label.contains(
+                crate::rules_core::codex_neutral_name::NAME_PREFIX
+            )),
+            "refused option must not print the raw ingest placeholder: {:?}",
+            filtered.refused
+        );
+        assert!(
+            filtered.eligible.iter().any(|o| o.label == "Order Of The Rack"),
+            "eligible label must fall back to the record's source-derived name: {:?}",
+            filtered.eligible
+        );
+        assert!(
+            filtered.refused.iter().any(|o| o.label == "Veiled Lodge"),
+            "refused label must fall back to the record's source-derived name: {:?}",
+            filtered.refused
+        );
+    }
+
+    /// Same invariant for the standalone `label_of` lookup used by prose/description text.
+    #[test]
+    fn label_of_resolves_a_placeholder_label_to_the_source_derived_name() {
+        let redacted_label =
+            crate::rules_core::codex_neutral_name::neutral_name("feat", "core_rulebook", "x.lst", 1);
+        let mut package = SheetRulePackage::new();
+        let id = "core_rulebook:feat:order_of_the_rack".to_owned();
+        package.insert_rule(SheetRule {
+            id: id.clone(),
+            label: redacted_label,
+            ..option_rule("order_of_the_rack", "unused", Applies::Always)
+        });
+        package.finish();
+
+        assert_eq!(label_of(&package, &id), "Order Of The Rack");
+    }
+
+    /// F1 adversarial finding 6: `describe_prof` must print every `ProfRef` arm with the same
+    /// "<tags> weapons" shape -- `WeaponAllOf` (a `TYPE=A.B` conjunction) is a sibling of
+    /// `WeaponGroup`/`WeaponTag`/`WeaponSet`, not a bare tag list with no noun.
+    #[test]
+    fn describe_prof_prints_weapon_all_of_with_the_weapons_noun_like_its_siblings() {
+        let tags: Vec<Tag> = vec!["martial".to_owned(), "ranged".to_owned()];
+
+        let words = describe_prof(&ProfRef::WeaponAllOf(tags));
+
+        assert_eq!(words, "martial ranged weapons");
+    }
+
+    /// F1 re-check round 1, finding 5: `describe_prof`'s `WeaponSet` arm must split the oracle's
+    /// own dotted and camelCase `TYPE=` tag text into readable words, the same as `WeaponAllOf`'s
+    /// fix already does for its own tag list -- never the raw PCGen tag casing verbatim.
+    #[test]
+    fn describe_prof_prints_a_dotted_weapon_set_label_as_words() {
+        let words = describe_prof(&ProfRef::WeaponSet { label: "Light.Martial".to_owned(), members: vec!["Dagger".to_owned()] });
+
+        assert_eq!(words, "light martial weapons");
+    }
+
+    #[test]
+    fn describe_prof_prints_a_camel_case_weapon_set_label_as_words() {
+        let words = describe_prof(&ProfRef::WeaponSet {
+            label: "OneHandedFireArm".to_owned(),
+            members: vec!["Pistol".to_owned()],
+        });
+
+        assert_eq!(words, "one handed fire arm weapons");
+    }
+
+    #[test]
+    fn describe_prof_prints_a_second_camel_case_weapon_set_label_as_words() {
+        let words = describe_prof(&ProfRef::WeaponSet { label: "SiegeFirearm".to_owned(), members: vec!["Cannon".to_owned()] });
+
+        assert_eq!(words, "siege firearm weapons");
+    }
+
+    #[test]
+    fn describe_prof_prints_kobold_tail_attachment_as_words_not_raw_casing() {
+        let words = describe_prof(&ProfRef::WeaponSet {
+            label: "KoboldTailAttachment".to_owned(),
+            members: vec!["Kobold Tail Attachment".to_owned()],
+        });
+
+        assert_eq!(words, "kobold tail attachment weapons");
+    }
+
+    /// `Auto` is PCGen's own bookkeeping word with no natural-language reading of its own --
+    /// printed as its member list, per the doctrine that the sheet prints rule text.
+    #[test]
+    fn describe_prof_prints_auto_weapon_set_as_its_member_list_not_the_bookkeeping_word() {
+        let words = describe_prof(&ProfRef::WeaponSet {
+            label: "Auto".to_owned(),
+            members: vec!["Grapple".to_owned(), "Ray Spells".to_owned(), "Touch Spells".to_owned(), "Splash Weapon".to_owned(), "Unarmed Strike".to_owned()],
+        });
+
+        assert_eq!(words, "Grapple, Ray Spells, Touch Spells, Splash Weapon, and Unarmed Strike");
+        assert!(!words.contains("Auto"), "the raw bookkeeping word must never reach the printed sheet");
+    }
+
+    /// SD-36 Epic F1 re-check round 2, finding 2: `advanced_class_guide:class_feature:
+    /// picaroon_weapon_proficiency` states the same one-handed-firearm selector under all three
+    /// real book spellings (`acg_abilities_class.lst` vs. the archetype's `ultimate_combat`
+    /// reprint), all resolving to the identical 9-weapon set. Before this step, "the printed
+    /// phrase is a function of which book's capitalization the selector used" -- three
+    /// differently-worded lines for the one proficiency. All three must now read identically.
+    #[test]
+    fn describe_prof_prints_every_book_spelling_of_the_picaroon_selector_identically() {
+        let members = vec!["Pistol".to_owned()];
+        let onehandedfirearm = describe_prof(&ProfRef::WeaponSet { label: "OnehandedFirearm".to_owned(), members: members.clone() });
+        let one_handed_firearm = describe_prof(&ProfRef::WeaponSet { label: "OneHandedFirearm".to_owned(), members: members.clone() });
+        let one_handed_fire_arm = describe_prof(&ProfRef::WeaponSet { label: "OneHandedFireArm".to_owned(), members });
+
+        assert_eq!(onehandedfirearm, "one handed fire arm weapons");
+        assert_eq!(onehandedfirearm, one_handed_firearm, "all three book spellings must read the same way");
+        assert_eq!(one_handed_firearm, one_handed_fire_arm, "all three book spellings must read the same way");
+    }
+
+    /// SD-36 Epic F1 re-check round 2, finding 2: `SiegeWeapon` (`advanced_class_guide`'s and
+    /// `ultimate_combat`'s Siege Engineer feat/class feature) split-and-suffixed to "siege
+    /// weapon weapons" -- the label's own last word IS the appended noun. The label's own noun,
+    /// pluralized, is the line; it must never gain a second "weapons".
+    #[test]
+    fn describe_prof_prints_siege_weapon_without_the_weapons_stutter() {
+        let words = describe_prof(&ProfRef::WeaponSet { label: "SiegeWeapon".to_owned(), members: vec!["Ballista".to_owned()] });
+
+        assert_eq!(words, "siege weapons");
+        assert!(!words.contains("weapon weapons"), "must never repeat the noun: {words:?}");
+    }
+
+    /// SD-36 Epic F1 re-check round 3, finding 4: `SiegeEngine`
+    /// (`mythic_adventures:ability:siege_engines_weapon_group`) and `SiegeWeapon` resolve to the
+    /// BYTE-IDENTICAL 18-member set (measured: `ultimate_combat/uc_profs_weapon.lst`'s own siege
+    /// weapon rows carry both `TYPE=SiegeEngine` and `TYPE=SiegeWeapon` on every item; PCGen's
+    /// own data treats them as synonyms, never two categories). Before this fix each
+    /// label kept its own suffix fold ("siege weapons" vs. "siege engines") -- the exact
+    /// mechanism the finding named: the same resolved proficiency read two ways depending on
+    /// which book's tag the selector used. Ruling: fold to the one canonical phrase (the book's
+    /// own DESC text for the Siege Engineer feat reads "proficient with all siege weapons").
+    #[test]
+    fn describe_prof_prints_siege_engine_the_same_as_siege_weapon() {
+        let members = vec!["Ballista".to_owned()];
+        let siege_weapon = describe_prof(&ProfRef::WeaponSet { label: "SiegeWeapon".to_owned(), members: members.clone() });
+        let siege_engine = describe_prof(&ProfRef::WeaponSet { label: "SiegeEngine".to_owned(), members });
+
+        assert_eq!(siege_weapon, "siege weapons");
+        assert_eq!(siege_weapon, siege_engine, "the identical resolved 18-member set must read the same way regardless of which book's tag named it");
     }
 }

@@ -1,5 +1,6 @@
 import type { CharacterHubListSurface } from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import { NO_FEAT_SKILL_BONUSES } from '../boundary/loadSavedCharacterDetail';
 
 /**
  * Sample data for the browser preview (localhost:1420) where the Tauri backend
@@ -54,6 +55,8 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
     // hand-written sample would be rules prose no corpus produced.
     sheetLines: [],
     sheetRulesUnavailableReason: 'Rules and features are rendered by the engine from the corpus; the preview has no engine.',
+    // SD-36 F6b: no engine, no fold -- no feat skill bonus is shown rather than a sample.
+    featSkillBonuses: NO_FEAT_SKILL_BONUSES,
     summary: {
       characterId: PREVIEW_CHARACTER_ID,
       displayLabel: 'Aldric Ironhand',

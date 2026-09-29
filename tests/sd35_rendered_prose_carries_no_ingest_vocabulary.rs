@@ -35,12 +35,22 @@
 //!   instead, and `sd27_pu_class_feature_descriptions_carry_the_characters_numbers` proves the
 //!   two render byte-identical words. This file has no exemption left.
 
-const SCANNED: &[&str] = &[
-    "src/rules_core/pilot_compute/mod.rs",
-    "src/rules_core/pilot_compute/class_slayer.rs",
-    "src/rules_core/pilot_compute/class_ultimate_combat.rs",
+// SD-36 Epic C1: `mod.rs` used to hold ~88,800 lines directly. The C1 split
+// moved that content, unedited, into per-class/per-concern submodules (`mod.rs`
+// is now a ~290-line header + re-export shim), and a later re-split added more
+// submodules again (`class_occult_and_psionic.rs`,
+// `prestige_class_features_campaign.rs`, `feat_pillar_and_pool_aggregation.rs`,
+// `class_wizard_prepared_spellbook.rs`). An earlier version of this gate kept
+// every `pilot_compute/*.rs` file as its own hand-typed entry below, which went
+// stale on the second split and silently stopped scanning the new files --
+// exactly the shape this gate exists to prevent for *rendered prose*, just one
+// directory over. `pilot_compute_files` walks the directory at test-run time
+// instead, so every current and future submodule is scanned with no edit here.
+const SCANNED_FIXED: &[&str] = &[
     "src/rules_core/derived_evaluator_fixture_check.rs",
-    "src/rules_core/support_state_matrix.rs",
+    // SD-36 D3: src/rules_core/support_state_matrix.rs (formerly scanned
+    // here) is retired -- the generator it fed and the debt/audit panels
+    // that read it are gone, so there is no more shipped prose to scan.
     // Cycle 11. The shipped content tables are prose this engine writes to a
     // sheet just as much as an explanation string is: `description` is printed
     // verbatim and `description_variables` supplies the words `%1`/`%2` are
@@ -155,12 +165,40 @@ fn cfg_test_lines(lines: &[&str]) -> Vec<bool> {
     inside
 }
 
+/// Every `pilot_compute/*.rs` submodule, relative to the repo root, sorted for
+/// determinism. A directory walk rather than a hand-kept list, so a future
+/// `pilot_compute` split needs no edit here to stay scanned.
+fn pilot_compute_files(repo: &std::path::Path) -> Vec<String> {
+    let dir = repo.join("src/rules_core/pilot_compute");
+    let mut files: Vec<String> = std::fs::read_dir(&dir)
+        .unwrap_or_else(|e| panic!("cannot read dir {}: {e}", dir.display()))
+        .map(|entry| entry.unwrap_or_else(|e| panic!("cannot read dir entry: {e}")).path())
+        .filter(|p| p.extension().is_some_and(|ext| ext == "rs"))
+        .map(|p| {
+            p.strip_prefix(repo)
+                .unwrap_or(p.as_path())
+                .to_string_lossy()
+                .replace('\\', "/")
+        })
+        .collect();
+    files.sort();
+    assert!(
+        !files.is_empty(),
+        "no *.rs files found under {} -- directory walk is broken",
+        dir.display()
+    );
+    files
+}
+
 #[test]
 fn rendered_prose_carries_no_pcgen_ingest_vocabulary() {
     let repo = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
     let mut findings: Vec<String> = Vec::new();
 
-    for rel in SCANNED {
+    let mut scanned: Vec<String> = pilot_compute_files(repo);
+    scanned.extend(SCANNED_FIXED.iter().map(|s| s.to_string()));
+
+    for rel in &scanned {
         let path = repo.join(rel);
         let text = std::fs::read_to_string(&path)
             .unwrap_or_else(|e| panic!("cannot read {}: {e}", path.display()));

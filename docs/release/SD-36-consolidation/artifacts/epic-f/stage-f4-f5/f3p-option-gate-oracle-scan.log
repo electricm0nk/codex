@@ -1,0 +1,25 @@
+PREABILITY occurrences: 30227; parameterised items (non-nested): 2864
+  base not declared: 591
+    e.g. pathfinder/kobold_press/divine_favor_cleric/dfc_abilties.lst:164 Inquisitor Domain ~ Exorcism Subdomain (Good)
+    e.g. pathfinder/kobold_press/divine_favor_cleric/dfc_abilties.lst:164 Core Domain ~ Exorcism Subdomain (Good)
+    e.g. pathfinder/kobold_press/divine_favor_cleric/dfc_abilties.lst:165 Inquisitor Domain ~ Exorcism Subdomain (Protection)
+    e.g. pathfinder/kobold_press/divine_favor_cleric/dfc_abilties.lst:165 Core Domain ~ Exorcism Subdomain (Protection)
+    e.g. pathfinder/paizo/adventure_path/jade_regent/players_guide/jrpg_abilities.lst:8 Best Friend (Ameiko)
+  chooser base: 2073
+    e.g. pathfinder/alluria_publishing/remarkable_races/rr_classes.lst:9 Skill Focus (Survival)
+    e.g. pathfinder/kobold_press/divine_favor_cleric/dfc_abilties.lst:91 DisableDomainLVL1 (Alchemy)
+    e.g. pathfinder/kobold_press/divine_favor_cleric/dfc_abilties.lst:92 DisableDomainLVL1 (Apocalypse)
+    e.g. pathfinder/kobold_press/divine_favor_cleric/dfc_abilties.lst:93 DisableDomainLVL1 (Prophecy)
+    e.g. pathfinder/kobold_press/divine_favor_cleric/dfc_abilties.lst:99 DisableDomainLVL1 (Alchemy)
+  declared, no CHOOSE: 200
+    e.g. pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_classes.lst:25 Armor Proficiency (Heavy)
+    e.g. pathfinder/paizo/campaign_setting/seekers_of_secrets/sos_abilities_class.lst:10 Favored Enemy (Construct)
+    e.g. pathfinder/paizo/campaign_setting/seekers_of_secrets/sos_abilities_class.lst:10 Favored Enemy (Ooze)
+    e.g. pathfinder/paizo/campaign_setting/seekers_of_secrets/sos_abilities_class.lst:10 Favored Enemy (Undead)
+    e.g. pathfinder/paizo/campaign_setting/artifacts_and_legends/aandl_templates.lst:5 Masterpiece (Song of Extinction)
+ABILITY ...|AUTOMATIC/VIRTUAL| grants of a chooser with a fixed option (non-nested): 328
+    e.g. pathfinder/alluria_publishing/remarkable_races/rr_abilities_race.lst:348 Regeneration ~ Choose (Fire)
+    e.g. pathfinder/kobold_press/divine_favor_cleric/dfc_abilties.lst:44 Alignment Channel (Evil)
+    e.g. pathfinder/4_winds_fantasy_gaming/book_of_arcane_magic/boam_abilities.lst:77 Energy Resistance (Djinni)
+    e.g. pathfinder/4_winds_fantasy_gaming/book_of_arcane_magic/boam_abilities.lst:77 Energy Resistance (Efreeti)
+    e.g. pathfinder/4_winds_fantasy_gaming/book_of_arcane_magic/boam_abilities.lst:77 Energy Resistance (Janni)

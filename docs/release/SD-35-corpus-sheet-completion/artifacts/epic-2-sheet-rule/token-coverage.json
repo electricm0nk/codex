@@ -28,7 +28,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 2528,
+   "carrying": 2530,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -41,7 +41,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 9998,
+   "carrying": 10021,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -67,7 +67,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 133,
+   "carrying": 141,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -210,7 +210,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr) -> Choice.count of the pool's Choice (the sheet prints the picks, not the pool size)"
    },
-   "carrying": 1774,
+   "carrying": 1779,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -223,7 +223,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 201,
+   "carrying": 204,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -275,7 +275,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 46,
+   "carrying": 47,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -958,7 +958,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 823,
+   "carrying": 844,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -984,7 +984,7 @@
     "family": "formula",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 6501,
+   "carrying": 6503,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1296,7 +1296,7 @@
     "family": "prereq",
     "maps_to": "Metadata"
    },
-   "carrying": 14,
+   "carrying": 15,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1374,7 +1374,7 @@
     "family": "prereq",
     "maps_to": "Metadata"
    },
-   "carrying": 38,
+   "carrying": 40,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1387,7 +1387,7 @@
     "family": "prereq",
     "maps_to": "Metadata"
    },
-   "carrying": 41,
+   "carrying": 42,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1582,7 +1582,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 4492,
+   "carrying": 4509,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1608,7 +1608,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 176,
+   "carrying": 189,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1751,7 +1751,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 174,
+   "carrying": 175,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1881,7 +1881,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 6,
+   "carrying": 7,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1933,7 +1933,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 4024,
+   "carrying": 4026,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1972,7 +1972,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 371,
+   "carrying": 372,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2063,7 +2063,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 540,
+   "carrying": 560,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2102,7 +2102,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 10,
+   "carrying": 12,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2154,7 +2154,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 40,
+   "carrying": 44,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2206,7 +2206,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 530,
+   "carrying": 533,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2219,7 +2219,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 373,
+   "carrying": 376,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2245,7 +2245,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 353,
+   "carrying": 354,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2271,7 +2271,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 4236,
+   "carrying": 4237,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2336,7 +2336,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 28,
+   "carrying": 30,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2362,7 +2362,7 @@
     "family": "prose",
     "maps_to": "Text"
    },
-   "carrying": 1,
+   "carrying": 3,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2700,7 +2700,7 @@
     "family": "prereq",
     "maps_to": "Metadata"
    },
-   "carrying": 19,
+   "carrying": 22,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2752,7 +2752,7 @@
     "family": "prereq",
     "maps_to": "Metadata"
    },
-   "carrying": 49,
+   "carrying": 52,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2817,7 +2817,7 @@
     "family": "prereq",
     "maps_to": "Metadata"
    },
-   "carrying": 162,
+   "carrying": 183,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -3075,6 +3075,10 @@
   },
   "partition": {
    "token_types": 233,
+   "ok": true
+  },
+  "rule_files": {
+   "checked": 49450,
    "ok": true
   }
  },

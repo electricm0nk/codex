@@ -1,0 +1,30 @@
+[
+  {
+    "id": "load-seed-list-both",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/seed/load-seed-list-both.png",
+    "rendered_excerpt": "⚙\nLoad Character\n\n\nAldric Ironhand\nHuman Fighter 3\nLast modified: Dec 31, 2025\n\nElowen Ashgrave\nHuman Wizard 5\nLast modified: Dec 31, 2025\nSelect a character to preview, then press Load for the full sheet.\nLoad\nDelete\nExport\nClone\nImport\nCancel",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6e-iFOQYK/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "load-seed-wizard-fireball",
+    "status": "green",
+    "screenshot": "docs/release/SD-36-consolidation/artifacts/ui-smoke/f6/seed/load-seed-wizard-fireball.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nPROGRESSION\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nLevel 1 Wizard\nSkill points: 7\nFeat\nLevel 2 Wizard\nSkill points: 7\nLevel 3 Wizard\nSkill points: 7\nFeat\nLevel 4 Wizard\nSkill points: 7\nAbility score increase\nLevel 5 Wizard\nSkill points: 7\nFeat\nNEXT\nLevel 6 Wizard\nSkill points: 7\nCharacter Name\nElowen Ashgrave\nCampaign\n—\nABILITIES\n\nSTR\n8\n-1\nDEX\n1",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-f6e-iFOQYK/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

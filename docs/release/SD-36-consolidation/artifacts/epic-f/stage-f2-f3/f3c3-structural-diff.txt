@@ -1,0 +1,66 @@
+== file set ==
+  rule files:  +40 -0  (+54 -0 rule ids)
+  _vars/:      +1 -0
+  _defects/:   +4 -0
+  other:       +0 -0  []
+
+== counts (baseline -> fresh) ==
+  records: 49450 -> 49450
+  converted: 49450 -> 49450
+  refused: 0 -> 0
+  rules_written: 73016 -> 73070
+  var_tables: 6204 -> 6205
+
+== added granted_by edges by TARGET kind ==
+  ability: 257
+  class_feature: 106
+  race_trait: 10
+  feat: 1
+  TOTAL: 374
+  added grants (total): 0
+
+== expected delta classes (named, counted, explained -- never a blanket allowance) ==
+  added granted_by edges: 374  (F1's own declared purpose -- a bare AUTO reference now resolving through its parent ability category; SS3.5 permits growth)
+  added grants: 0  (F1-2 GatedFactGrant wrapping / F1-3 WeaponSet expansion of a previously-bare selector; see grant_signature/grant_covers)
+  added _vars/ tables: 1  (condition variables an added GatedFactGrant's `when` now references, and the pool variables a D8 pick's `count` references)
+  added _defects/ files: 4
+  provenance deltas on the pinned current_class-fix record list: 0 of 30 pinned records (see structural_diff_expected_provenance_deltas.json)
+  naturalattacks suffix-fix rename: 0 of 1290 pinned old ids -> 0 of 1659 pinned new ids (net +0), plus 0 field deltas on 0 of 6 pinned same-id content-shift ids (see structural_diff_naturalattacks_renames.json -- content-preserved per file, not a genuine loss)
+  bonus_var_index comma-split fix (stage5 §1a): 0 of 35 pinned (rule id, field) record deltas -- a flattened Const/Never/bare-AbilityMod now resolving to its real multi-contribution Var (see structural_diff_bonus_var_split_record_deltas.json for the per-family mechanism and reachability)
+  F1c d2_line_split: 0 field deltas on 0 records, 0 added rule ids -- D2: a record's first line carried its own condition; the record gets a Text principal with only the record's gates and the line moves, condition intact, to a new #<suffix> sibling (see structural_diff_f1c_deltas.json)
+  F1c d4_closure_complete: 0 field deltas on 0 records, 0 added rule ids -- D4: closure_complete=true attested on a class principal whose whole closure is defect-free (sheet_rule/attest.rs) (see structural_diff_f1c_deltas.json)
+  F1c d4_pi_reclosure: 0 field deltas on 0 records, 0 added rule ids -- D4 soundness: 21 product-identity class records re-keyed from the codex-named placeholder to the class's own base row, so their continuation rows, level lines and .MOD rows convert (see structural_diff_f1c_deltas.json)
+  F1c d3_unchained_class: 0 field deltas on 0 records, 0 added rule ids -- D3: a Pathfinder Unchained class principal (TakenOnClass <base>), one per class-selection ability (see structural_diff_f1c_deltas.json)
+  F1c d6_weapon_choice: 0 field deltas on 0 records, 0 added rule ids -- D6: a CHOOSE:WEAPONPROFICIENCY option list resolved to oracle weapon names, or a pick linked to its child pool's one member (see structural_diff_f1c_deltas.json)
+  F1c f1c3_preability_bracket: 0 field deltas on 0 records, 0 added rule ids -- F1c-3: a PREABILITY `[<key>]` item no longer converts to an unholdable MissingRule alternative (see structural_diff_f1c_deltas.json)
+  F1c d7_always_held: 0 field deltas on 0 records, 0 added rule ids -- D7: always_held=true attested on the principal of a record every character holds unconditionally -- the target of an unconditional ABILITY|AUTOMATIC grant on a STAT/SAVE row (sheet_rule/always_held.rs) (see structural_diff_f1c_deltas.json)
+  F1c d8_pool_pick: 0 field deltas on 0 records, 0 added rule ids -- D8: a record that raises an ability category's POOL variable offers the pick -- offers {id: <the record>, count: Var(<pool variable>), from: Rules {pool, tags}} on its principal (sheet_rule/pool_pick.rs) (see structural_diff_f1c_deltas.json)
+  F3b2 f3b2_skill_ranks: 176 of 176 pinned field deltas on 176 records -- F3b2 (1): a class line's STARTSKILLPTS is written as the principal's StatBlock "Skill ranks per level" prose row (one added row, a plain number) (see structural_diff_f3b2_deltas.json)
+  F3b2 f3b2_closure_complete: 8 of 8 pinned field deltas on 8 records -- F3b2 (2): closure_complete=true attested on a class principal whose closure is now defect-free because its references to placeholder-keyed records resolve (see structural_diff_f3b2_deltas.json)
+  F3b2 f3b2_placeholder_key_resolved: 73 of 73 pinned field deltas on 73 records -- F3b2 (2): a reference to a product-identity record by the KEY its oracle row declares resolves (the record was indexed only under its codex-named placeholder corpus key): MissingRule -> Rule, nothing else in the field moves (see structural_diff_f3b2_deltas.json)
+  F3b2b f3b2b_undeclared_note: 829 of 829 pinned field deltas on 829 records -- F3b2b (1): provenance gains undeclared_in_pinned_tree -- the variables the record reads that no row of the pinned tree declares and that are not oracle built-in terms, read as Const(0), the oracle's own value (VariableProcessor.java:394-402); nothing else in provenance moves (see structural_diff_f3b2b_deltas.json)
+  F3b2b f3b2b_closure_complete: 9 of 9 pinned field deltas on 9 records -- F3b2b (1)(2): closure_complete=true attested on a class principal whose closure is now defect-free -- its undeclared-variable reads are the oracle's 0, not closure defects, or its twin-printing reference resolves to the newest printing (see structural_diff_f3b2b_deltas.json)
+  F3c3 f3c3_subclass_choice: 2 of 2 pinned added rule ids (content sha256 held) -- F3c3: a class's SUBCLASS lines become ONE choice sibling <class id>#subclass (offers Rules{pool: subclass, tags: [<Class> Subclass]}, count 1, print false) (see structural_diff_f3c3_deltas.json)
+  F3c3 f3c3_subclass_option: 52 of 52 pinned added rule ids (content sha256 held) -- F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants (see structural_diff_f3c3_deltas.json)
+  F3c3 pinned added granted_by edges: 53; pinned _vars/ contributions: 16; pinned _defects/ row counts: {'_defects/subclass-token-unconverted.json': 117, '_defects/subclass-superseded-reprint.json': 7}
+  added rule ids: 54 (0 with no named cause)
+    advanced_players_guide:subclass:wizard_air: F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants
+    advanced_players_guide:subclass:wizard_air#bonus0: F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants
+    advanced_players_guide:subclass:wizard_earth: F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants
+    advanced_players_guide:subclass:wizard_earth#bonus0: F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants
+    advanced_players_guide:subclass:wizard_fire: F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants
+    advanced_players_guide:subclass:wizard_fire#bonus0: F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants
+    advanced_players_guide:subclass:wizard_water: F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants
+    advanced_players_guide:subclass:wizard_water#bonus0: F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants
+    adventurers_guide:subclass:wizard_envy: F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants
+    adventurers_guide:subclass:wizard_envy#bonus0: F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants
+    ... and 44 more
+
+unexpected field deltas: 0
+F3b2b pinned added granted_by edges: 11 of 11 present (see structural_diff_f3b2b_deltas.json)
+new rule ids: 54 ['advanced_players_guide:subclass:wizard_air', 'advanced_players_guide:subclass:wizard_air#bonus0', 'advanced_players_guide:subclass:wizard_earth', 'advanced_players_guide:subclass:wizard_earth#bonus0', 'advanced_players_guide:subclass:wizard_fire', 'advanced_players_guide:subclass:wizard_fire#bonus0', 'advanced_players_guide:subclass:wizard_water', 'advanced_players_guide:subclass:wizard_water#bonus0', 'adventurers_guide:subclass:wizard_envy', 'adventurers_guide:subclass:wizard_envy#bonus0']
+
+removed granted_by edges: 0  (never allowed -- SS3.5 permits growth only)
+removed grants: 0  (a grant SIGNATURE lost with no replacement of the same target -- gating-wrapper and WeaponGroup/WeaponTag/WeaponAllOf/WeaponSet-tag-case changes are NOT counted here, only a genuine loss or a fabricated replacement)
+
+verdict=PASS

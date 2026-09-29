@@ -50,9 +50,6 @@
 //! and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation};
 
@@ -303,32 +300,16 @@ fn multiclass_rogue_level11_is_not_promoted_by_this_slice() {
         "multiclass Rogue must not gain any bounded rogue explanation: {:?}",
         computation.explanations
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Rogue must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Rogue",
+        ROGUE_LEVEL11_FIXTURE,
+        &multiclass,
     );
 }
 
 // ----- Control plane: the matrix note names the level-11 widening -----
 
-#[test]
-fn matrix_rogue_row_names_level_11_widening() {
-    let matrix = seeded_current_truth();
-    let rogue = matrix
-        .row("class.rogue.bounded_progression")
-        .expect("rogue bounded_progression row must exist");
-
-    assert_eq!(rogue.support_state, SupportState::Supported); // promoted by SD-19 Class Progression Catalog browser
-    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(rogue.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        rogue.grounding_ref.contains("sd18_rogue_level11_sneak_attack"),
-        "rogue row must cite the live SD18 level-11 widening proof surface: {}",
-        rogue.grounding_ref
-    );
-    let note = rogue.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 11") || note.contains("level-11"),
-        "rogue partial note must name the level-11 widening: {note}"
-    );
-}

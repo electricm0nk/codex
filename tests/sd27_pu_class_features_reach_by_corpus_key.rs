@@ -43,7 +43,6 @@
 //! that *did* add grounding branches; see [`GROUNDED_PIN`].)
 
 use std::collections::{BTreeMap, BTreeSet};
-use std::path::{Path, PathBuf};
 
 use codex::rules_core::character_input::{
     load_character_input_fixture, CharacterClassLevel, CharacterInput,
@@ -98,9 +97,9 @@ const ROSTER_ROWS_AT_LEVEL_20: &[(&str, usize)] = &[
     ("unchained_summoner", 17),
 ];
 
-fn repo_root() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).to_path_buf()
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::repo_root;
 
 /// Every corpus `KEY:` on disk for one Unchained class.
 fn corpus_keys(class_dir: &str) -> BTreeSet<String> {

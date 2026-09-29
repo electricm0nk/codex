@@ -19,6 +19,16 @@ date: 2026-07-30
 
 # Book Ingestion Playbook
 
+**RETIRED as of SD-36 consolidation, Epic B (operator ruling D3, 2026-09-15):
+PF1e ingestion is closed — `docs/work-inventory.json` reached 49,450 of
+49,450 units and is now a frozen snapshot (`docs/work-inventory.FROZEN.md`).
+The two tools this playbook is built around, `v06_work_inventory`
+(`cargo run --bin v06_work_inventory`) and `apps/desktop/src-tauri/src/reach_gate.rs`
+(the `reach` verify.sh stage), are both deleted.** None of the commands
+below run any more. This file stays as the historical record of how PF1e
+was ingested; a future ingestion effort (Starfinder or otherwise) needs a
+new pipeline design, not a revival of these two retired tools.
+
 Four of the twenty-five PCGen book directories are ingested. This file is the
 procedure for the rest, written so a session with no memory of the first four
 can run a cycle correctly on the first attempt.

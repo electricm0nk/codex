@@ -1577,8 +1577,15 @@ def main() -> None:
     directory = f"src/rules_core/rules_tables/{module_dir(book)}"
     os.makedirs(directory, exist_ok=True)
     path = os.path.join(directory, "companion_data.rs")
-    with open(path, "w", encoding="utf-8") as handle:
+    # SD-36 Epic E R12-01: write to a same-directory temp file first, then `os.replace()`
+    # it onto the real path -- a single filesystem rename, so `path` either has the OLD
+    # complete content or the NEW complete content, never a partial write, on every
+    # platform this repo runs on. Mirrors `transcribe_monster_tables.py`'s own
+    # SD31-W9-INTEGRATE-001 fix for the identical shape.
+    tmp_path = f"{path}.tmp"
+    with open(tmp_path, "w", encoding="utf-8") as handle:
         handle.write(contents)
+    os.replace(tmp_path, path)
     print(f"wrote {path}")
 
 

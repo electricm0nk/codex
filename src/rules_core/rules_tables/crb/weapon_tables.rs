@@ -471,7 +471,11 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     ClassWeaponProficiency { class_id: "class:hunter", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:inquisitor", tiers: &[WeaponProficiency::Simple], named: &["Crossbow (Hand)", "Longbow", "Crossbow (Repeating Heavy)", "Crossbow (Repeating Light)", "Shortbow"], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:investigator", tiers: &[WeaponProficiency::Simple], named: &["Crossbow (Hand)", "Rapier", "Sap", "Shortbow", "Sword (Short)", "Sword Cane"], weapon_groups: &[] },
-    ClassWeaponProficiency { class_id: "class:monk", tiers: &[], named: &["Club", "Crossbow (Light)", "Crossbow (Heavy)", "Dagger", "Handaxe", "Javelin", "Kama", "Nunchaku", "Quarterstaff", "Sai", "Shortspear", "Sword (Short)", "Shuriken", "Siangham", "Sling", "Spear", "Unarmed Strike"], weapon_groups: &[] },
+    // SD-36 Epic F1c (2026-09-23, D5): corrected FROM the pinned oracle rows the converted-record
+    // reader test cites (`crates/codex-ingest/tests/class_weapon_proficiency_via_converter.rs`),
+    // never from prose. The Monk's `Weapon and Armor Proficiency ~ Monk` names Flurry of Blows
+    // (cr_abilities_class.lst:2794,2817) and apg_abilities_class.lst:41 `.MOD` adds Sword (Temple).
+    ClassWeaponProficiency { class_id: "class:monk", tiers: &[], named: &["Club", "Crossbow (Light)", "Crossbow (Heavy)", "Dagger", "Handaxe", "Javelin", "Kama", "Nunchaku", "Quarterstaff", "Sai", "Shortspear", "Sword (Short)", "Shuriken", "Siangham", "Sling", "Spear", "Unarmed Strike", "Flurry of Blows", "Sword (Temple)"], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:oracle", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:paladin", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:ranger", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
@@ -526,7 +530,14 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     //          class's own `class_feature.pu.unchained_monk.
     //          other_features_deferred` diagnostic.
     ClassWeaponProficiency { class_id: "class:unchained_barbarian", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
-    ClassWeaponProficiency { class_id: "class:unchained_monk", tiers: &[], named: &["Club", "Crossbow (Light)", "Crossbow (Heavy)", "Dagger", "Handaxe", "Javelin", "Kama", "Nunchaku", "Quarterstaff", "Sai", "Sword (Short)", "Shortspear", "Shuriken", "Siangham", "Sling", "Spear"], weapon_groups: &[] },
+    // SD-36 Epic F1c (2026-09-23, D5): the Unchained Monk is taken on the Monk's class line
+    // (F1c-3), whose `Monk` class ability grants Weapon and Armor Proficiency ~ Monk under
+    // PREVAREQ:Monk_CF_Proficiencies,0 (cr_abilities_globalvar.lst:581) -- a variable the
+    // Unchained selection does not set -- so Flurry of Blows (cr_abilities_class.lst:2817) and
+    // the apg_abilities_class.lst:41 `.MOD` Sword (Temple) are granted, as for the Monk. Its
+    // Unarmed Strike comes through that record's `Weapon Prof ~ Auto` set (TYPE=Auto), which
+    // this table does not list for any class but the CRB Monk.
+    ClassWeaponProficiency { class_id: "class:unchained_monk", tiers: &[], named: &["Club", "Crossbow (Light)", "Crossbow (Heavy)", "Dagger", "Handaxe", "Javelin", "Kama", "Nunchaku", "Quarterstaff", "Sai", "Sword (Short)", "Shortspear", "Shuriken", "Siangham", "Sling", "Spear", "Flurry of Blows", "Sword (Temple)"], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:unchained_rogue", tiers: &[WeaponProficiency::Simple], named: &["Crossbow (Hand)", "Rapier", "Sap", "Shortbow", "Sword (Short)"], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:unchained_summoner", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
     // SD-31 wave 20 (chassis-coverage lane): Ultimate Combat's Gunslinger
@@ -606,11 +617,20 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     ClassWeaponProficiency { class_id: "class:kineticist", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:medium", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:mesmerist", tiers: &[WeaponProficiency::Simple], named: &["Crossbow (Hand)", "Sap", "Sword Cane", "Whip"], weapon_groups: &[] },
-    ClassWeaponProficiency { class_id: "class:occultist", tiers: &[WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
-    ClassWeaponProficiency { class_id: "class:vigilante", tiers: &[WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    // SD-36 Epic F1c (2026-09-23, D5): Occultist and Vigilante corrected FROM the oracle. Their
+    // token `ABILITY:Internal|AUTOMATIC|TYPE=WeaponProfMartial` grants every Internal ability
+    // tagged WeaponProfMartial, and `Weapon Prof ~ Simple` carries TYPE:WeaponProfSimple.
+    // WeaponProfMartial (cr_abilities_class.lst:2800), so the token itself grants Simple -- the
+    // "transcribe the token, not the prose" boundary above read the selector as Martial only.
+    ClassWeaponProficiency { class_id: "class:occultist", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:vigilante", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:psychic", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:spiritualist", tiers: &[WeaponProficiency::Simple], named: &["Kukri", "Sap", "Scythe"], weapon_groups: &[] },
-    ClassWeaponProficiency { class_id: "class:psion", tiers: &[], named: &["Club", "Dagger", "Crossbow (Heavy)", "Crossbow (Light)", "Quarterstaff", "Shortspear"], weapon_groups: &[] },
+    // SD-36 Epic F1c (2026-09-23, D5): Psion corrected FROM the oracle: its class row grants
+    // `All Automatic Proficiencies` (up_classes.lst:258), which is AUTO:WEAPONPROF|Unarmed
+    // Strike|Spells (Ray)|Spells (Touch) (cr_abilities_class.lst:2785) plus Splash Weapon
+    // (ue_abilities.lst:21 `.MOD`).
+    ClassWeaponProficiency { class_id: "class:psion", tiers: &[], named: &["Club", "Dagger", "Crossbow (Heavy)", "Crossbow (Light)", "Quarterstaff", "Shortspear", "Unarmed Strike", "Spells (Ray)", "Spells (Touch)", "Splash Weapon"], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:shifter", tiers: &[], named: &["Club", "Dagger", "Dart", "Quarterstaff", "Scimitar", "Scythe", "Sickle", "Shortspear", "Sling", "Spear"], weapon_groups: &[] },
     // SD-34 wave 34 lane C: this cycle's own re-derive of wave 33 lane C's
     // named 19-unit remainder (`docs/release/SD-34-book-completion/
@@ -670,7 +690,14 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     //    `OUTSIDE_THE_CRB_WEAPON_TABLE` already carries for Mesmerist's
     //    Sword Cane, extended below rather than silently dropping either
     //    name.
-    ClassWeaponProficiency { class_id: "class:ninja", tiers: &[], named: &["Shortbow", "Sword (Short)", "Kama", "Kusarigama (Sickle and Chain)", "Nunchaku", "Sai", "Shuriken", "Siangham", "Wakizashi"], weapon_groups: &[] },
+    //
+    // SD-36 Epic F1c (2026-09-23, D5): Ninja corrected FROM the oracle. Its class row
+    // (uc_abilities_globalvar.lst:178) also grants `ABILITY:FEAT|AUTOMATIC|Simple Weapon
+    // Proficiency` (the Simple tier) and `All Automatic Proficiencies` (cr_abilities_class.lst:2785
+    // plus the ue_abilities.lst:21 `.MOD`), both under the same PREVAREQ:Ninja_CF_WeaponProficiencies,0
+    // gate as the named list -- so the "no Simple token on this record" reading above was a record-
+    // level view of a class-level grant.
+    ClassWeaponProficiency { class_id: "class:ninja", tiers: &[WeaponProficiency::Simple], named: &["Shortbow", "Sword (Short)", "Kama", "Kusarigama (Sickle and Chain)", "Nunchaku", "Sai", "Shuriken", "Siangham", "Wakizashi", "Unarmed Strike", "Spells (Ray)", "Spells (Touch)", "Splash Weapon"], weapon_groups: &[] },
 ];
 
 /// This class's weapon proficiency, or `None` for a class this table does
@@ -807,57 +834,7 @@ pub fn class_armor_proficiency(class_id: &str) -> Option<&'static ClassArmorProf
 #[cfg(test)]
 mod class_armor_proficiency_tests {
     use super::*;
-    use crate::pcgen_import::ingest_record;
 
-    /// Every row's own claim, re-derived from the LIVE corpus record's own
-    /// `ABILITY` tokens -- not merely asserted in the table above. RED if
-    /// the corpus record ever changes which armor/shield tiers it grants.
-    #[test]
-    fn class_armor_proficiencies_match_their_own_corpus_records() {
-        use std::path::PathBuf;
-        let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-            .join("data/corpus/core_rulebook/class_feature/weapon_and_armor_proficiency");
-        let expectations: &[(&str, &str)] = &[
-            ("class:bard", "Bard"),
-            ("class:fighter", "Fighter"),
-            ("class:paladin", "Paladin"),
-            ("class:ranger", "Ranger"),
-            ("class:rogue", "Rogue"),
-        ];
-        for (class_id, class_name) in expectations {
-            let row = class_armor_proficiency(class_id)
-                .unwrap_or_else(|| panic!("{class_id} must be a real row in CLASS_ARMOR_PROFICIENCIES"));
-            let mut found_file = false;
-            for entry in std::fs::read_dir(&dir).expect("weapon_and_armor_proficiency dir exists") {
-                let entry = entry.expect("readable dir entry");
-                let text = std::fs::read_to_string(entry.path()).expect("readable corpus json");
-                let json: serde_json::Value =
-                    serde_json::from_str(&text).expect("valid corpus json");
-                let key = json["data"]["key"].as_str().unwrap_or_default();
-                if key != format!("Weapon and Armor Proficiency ~ {class_name}") {
-                    continue;
-                }
-                found_file = true;
-                let ability_tokens: Vec<String> = ingest_record::token_values(&json, "ABILITY")
-                    .into_iter()
-                    .map(str::to_string)
-                    .collect();
-                let has = |needle: &str| ability_tokens.iter().any(|v| v.contains(needle));
-                assert_eq!(has("Armor Prof ~ Light"), row.light, "{class_name} light armor");
-                assert_eq!(has("Armor Prof ~ Medium"), row.medium, "{class_name} medium armor");
-                assert_eq!(has("Armor Prof ~ Heavy"), row.heavy, "{class_name} heavy armor");
-                assert_eq!(has("Shield Prof ~ Tower"), row.tower_shield, "{class_name} tower shield");
-                // "Shield Prof" alone (not "Shield Prof ~ Tower") is the
-                // Buckler/Light/Heavy-shield grant -- must be checked
-                // without matching the Tower variant's own substring.
-                let has_plain_shield_prof = ability_tokens
-                    .iter()
-                    .any(|v| v.split('|').any(|part| part == "Shield Prof"));
-                assert_eq!(has_plain_shield_prof, row.shield, "{class_name} shield (non-tower)");
-            }
-            assert!(found_file, "no corpus record found for {class_name}");
-        }
-    }
 
     #[test]
     fn druid_and_monk_are_deliberately_absent() {
@@ -982,7 +959,13 @@ mod class_weapon_proficiency_tests {
         // weapons -- all three are outside this CRB-only table's own scope,
         // a genuine scope mismatch, recorded here as a known limit.
         const OUTSIDE_THE_CRB_WEAPON_TABLE: &[&str] =
-            &["Bomb", "Sword Cane", "Kusarigama (Sickle and Chain)", "Wakizashi"];
+            &[
+                "Bomb", "Sword Cane", "Kusarigama (Sickle and Chain)", "Wakizashi",
+                // SD-36 Epic F1c (D5): oracle WEAPONPROF names with no CRB weapon row carrying
+                // that PROFICIENCY token -- Sword (Temple) is an APG weapon; Flurry of Blows,
+                // Spells (Ray)/(Touch) and Splash Weapon are proficiency names, not table weapons.
+                "Flurry of Blows", "Sword (Temple)", "Spells (Ray)", "Spells (Touch)", "Splash Weapon",
+            ];
         for class in CLASS_WEAPON_PROFICIENCIES {
             for named in class.named {
                 if OUTSIDE_THE_CRB_WEAPON_TABLE.contains(named) {
@@ -1024,16 +1007,15 @@ mod class_weapon_proficiency_tests {
 
     /// SD-34 wave 34 lane C: Ninja's own real corpus token (`ultimate_
     /// combat/class_feature/ninja/ninja_weapon_proficiencies.json`) --
-    /// nine named weapons, no tier, transcribed verbatim. Deliberately does
-    /// NOT assert Ninja is non-proficient with every simple weapon: real
-    /// PF1 Ninjas ARE proficient with all simple weapons per the class's
-    /// own DESC, this table just has no matching token to ground that
-    /// claim on -- a documented partial transcription, not a claim that
-    /// this row is complete.
+    /// nine named weapons, transcribed verbatim. SD-36 Epic F1c (D5) added
+    /// the Simple tier and the automatic proficiencies its class row grants
+    /// (uc_abilities_globalvar.lst:178).
     #[test]
-    fn ninja_has_its_real_named_weapon_list_and_no_blanket_simple_tier() {
+    fn ninja_has_its_real_named_weapon_list_and_the_simple_tier() {
         let ninja = prof("class:ninja");
-        assert!(ninja.tiers.is_empty(), "no Simple/Martial/Exotic facet on Ninja's own token");
+        // SD-36 Epic F1c (D5): the class row grants the Simple Weapon Proficiency feat
+        // (uc_abilities_globalvar.lst:178) -- the Simple tier, and nothing Martial.
+        assert_eq!(ninja.tiers, &[WeaponProficiency::Simple]);
         assert!(ninja.weapon_groups.is_empty());
         for granted in ["Shortbow", "Short Sword", "Kama", "Nunchaku", "Sai", "Shuriken", "Siangham"] {
             assert!(
@@ -1093,6 +1075,80 @@ mod class_weapon_proficiency_tests {
         assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 42);
     }
 
+    /// SD-36 Epic F1 (spec §3.4, F1.2/F1.5): the 42 static rows above stay; every census class
+    /// WITHOUT one is answered by the converted-record reader
+    /// (`class_proficiency_sheet_rules::class_weapon_proficiency_view`). This walks every class in
+    /// `class_census::census()` with no static row, at every level `1..=max_level`, and collects
+    /// each class the reader still answers Unknown, with its reason. The test passes only when that
+    /// set equals the enumerated remainder recorded, with a mechanism per class, in
+    /// `docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md` -- no silent
+    /// tolerance: a class that gains an answer must leave the record, and a class that loses one
+    /// fails here by name.
+    #[test]
+    fn every_census_class_has_a_known_proficiency_answer() {
+        use crate::rules_core::class_census::census;
+        use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
+            class_weapon_proficiency_view, ProficiencyAnswer,
+        };
+        use std::collections::BTreeMap;
+
+        const REMAINDER: &str = include_str!(
+            "../../../../docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md"
+        );
+        let recorded: BTreeMap<String, ()> = REMAINDER
+            .lines()
+            .filter_map(|line| line.strip_prefix("| class:"))
+            .map(|rest| (format!("class:{}", rest.split('|').next().unwrap_or("").trim()), ()))
+            .collect();
+
+        let entries = census();
+        let mut walked = 0usize;
+        let mut known = 0usize;
+        let mut unknown: BTreeMap<String, String> = BTreeMap::new();
+        for entry in entries.values() {
+            if class_weapon_proficiency(&entry.class_id).is_some() {
+                continue;
+            }
+            walked += 1;
+            let slug = crate::rules_core::sheet_rule::id_slug(&entry.class_id);
+            let first_unknown = (1..=entry.max_level).find_map(|level| {
+                match class_weapon_proficiency_view(&slug, level) {
+                    // A Known view carrying an unresolved weapon pick answers only the weapons
+                    // its counted grants cover; every other weapon is Unknown (reader batch
+                    // blocker 2), so the class is not "Known at every level".
+                    ProficiencyAnswer::Known(view) if !view.unresolved_picks.is_empty() => {
+                        Some(format!("level {level}: unresolved pick: {}", view.unresolved_picks.join("; ")))
+                    }
+                    ProficiencyAnswer::Known(_) => None,
+                    ProficiencyAnswer::Unknown { reason } => Some(format!("level {level}: {reason}")),
+                }
+            });
+            match first_unknown {
+                Some(reason) => {
+                    unknown.insert(entry.class_id.clone(), reason);
+                }
+                None => known += 1,
+            }
+        }
+        eprintln!(
+            "census classes: {}; with a static row: {}; walked by the reader: {walked}; \
+             Known at every level: {known}; Unknown: {}",
+            entries.len(),
+            entries.len() - walked,
+            unknown.len()
+        );
+        for (class_id, reason) in &unknown {
+            eprintln!("UNKNOWN {class_id} -- {reason}");
+        }
+        let unknown_ids: Vec<&String> = unknown.keys().collect();
+        let recorded_ids: Vec<&String> = recorded.keys().collect();
+        assert_eq!(
+            unknown_ids, recorded_ids,
+            "the classes the reader answers Unknown must equal the remainder recorded in \
+             reader-remainder.md (with a mechanism per class); Unknown with reasons: {unknown:#?}"
+        );
+    }
+
     /// Each Unchained class's grants against the class it replaces. Three
     /// match exactly; the Unchained Monk does not, and the difference is
     /// pinned rather than tolerated -- PU's `AUTO:WEAPONPROF` names 16
@@ -1113,8 +1169,9 @@ mod class_weapon_proficiency_tests {
 
         let pu_monk = prof("class:unchained_monk");
         let crb_monk = prof("class:monk");
-        assert_eq!(pu_monk.named.len(), 16);
-        assert_eq!(crb_monk.named.len(), 17);
+        // SD-36 Epic F1c (D5): both gained Flurry of Blows and Sword (Temple) from the oracle.
+        assert_eq!(pu_monk.named.len(), 18);
+        assert_eq!(crb_monk.named.len(), 19);
         assert!(crb_monk.named.contains(&"Unarmed Strike"));
         assert!(
             !pu_monk.named.contains(&"Unarmed Strike"),

@@ -1,0 +1,10 @@
+test a_class_principal_states_its_skill_ranks_per_level ... FAILED
+test a_unit_converted_from_its_own_row_is_indexed_under_that_rows_category ... FAILED
+test a_nested_parameterised_reference_resolves_to_its_base_record ... FAILED
+thread 'a_class_principal_states_its_skill_ranks_per_level' (786037) panicked at crates/codex-ingest/tests/sheet_rule_convert_gate.rs:713:9:
+  left: None
+ right: Some("8")
+thread 'a_unit_converted_from_its_own_row_is_indexed_under_that_rows_category' (786039) panicked at crates/codex-ingest/tests/sheet_rule_convert_gate.rs:729:5:
+thread 'a_nested_parameterised_reference_resolves_to_its_base_record' (786038) panicked at crates/codex-ingest/tests/sheet_rule_convert_gate.rs:739:5:
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 39 filtered out; finished in 237.09s
+EXIT=101

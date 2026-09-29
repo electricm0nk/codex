@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 84,
+      "done": 88,
       "partial": 0,
       "not_started": 0,
-      "denominator": 84,
+      "denominator": 88,
       "pct": 100.0,
-      "excluded_from_percentage": 4,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 4,
         "origin": 84
@@ -813,12 +813,12 @@
     {
       "kind": "trait",
       "label": "Traits",
-      "done": 139,
+      "done": 154,
       "partial": 0,
       "not_started": 0,
-      "denominator": 139,
+      "denominator": 154,
       "pct": 100.0,
-      "excluded_from_percentage": 15,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 139,
         "unclassified": 15

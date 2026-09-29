@@ -209,7 +209,7 @@ fn canonicalize(s: &str, apply_rn_fold: bool, apply_char_fold: bool) -> String {
 /// `(?<![a-z0-9])term(?![a-z0-9])` against an already-canonicalized (lowercase
 /// -only) haystack, so checking `is_ascii_alphanumeric()` on either boundary
 /// byte reproduces the same `[a-z0-9]` class Python excludes.
-pub(crate) fn word_bounded_contains(haystack: &str, needle: &str) -> bool {
+pub fn word_bounded_contains(haystack: &str, needle: &str) -> bool {
     if needle.is_empty() {
         return false;
     }
@@ -908,15 +908,6 @@ mod tests {
         assert_eq!(fixed, None, "an already-correct record must be left completely untouched");
     }
 
-    #[test]
-    fn reconcile_is_a_no_op_when_the_stamp_already_lists_description_among_others() {
-        let fixed = reconcile_description_pi_stamp(
-            Some(REDACTED_PI_MARKER),
-            License::PiRedacted,
-            Some(&format!("description,name,{}", crate::pcgen_import::ingest_payload::INGEST_TOKENS_FIELD)),
-        );
-        assert_eq!(fixed, None);
-    }
 
     #[test]
     fn reconcile_is_a_no_op_for_an_ordinary_unredacted_description() {

@@ -441,12 +441,12 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 118,
-      "partial": 1,
+      "done": 154,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 119,
-      "pct": 99.2,
-      "excluded_from_percentage": 35,
+      "denominator": 154,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 119,
         "unclassified": 35
@@ -965,7 +965,7 @@
         },
         {
           "name": "Drench",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Special Attack.Special Ability.Extraordinary",
           "standing": "origin",
           "display_name": "Drench"
@@ -1091,7 +1091,7 @@
         },
         {
           "name": "Gnaw",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Gnaw"
@@ -1119,7 +1119,7 @@
         },
         {
           "name": "Hold Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Hold Breath"
@@ -1315,7 +1315,7 @@
         },
         {
           "name": "Powerful Bite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Powerful Bite"
@@ -1535,12 +1535,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 3,
-      "partial": 2,
+      "done": 7,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 5,
-      "pct": 60.0,
-      "excluded_from_percentage": 2,
+      "denominator": 7,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 2,
         "origin": 5
@@ -1569,7 +1569,7 @@
         },
         {
           "name": "Poison (Violet Venom)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Poison.Consumable",
           "standing": "unclassified",
           "display_name": "Poison (Violet Venom)"
@@ -1583,14 +1583,14 @@
         },
         {
           "name": "Rock (Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Simple.Ranged.Standard.Bludgeoning.Thrown.Rock",
           "standing": "origin",
           "display_name": "Rock (Medium)"
         },
         {
           "name": "Rock (Small)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Simple.Ranged.Standard.Bludgeoning.Thrown.Rock",
           "standing": "origin",
           "display_name": "Rock (Small)"
@@ -1720,12 +1720,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 9,
+      "done": 14,
       "partial": 0,
       "not_started": 0,
-      "denominator": 9,
+      "denominator": 14,
       "pct": 100.0,
-      "excluded_from_percentage": 5,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 9,
         "unclassified": 5
@@ -1834,12 +1834,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 318,
-      "partial": 53,
+      "done": 733,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 371,
-      "pct": 85.7,
-      "excluded_from_percentage": 362,
+      "denominator": 733,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 371,
         "unclassified": 362
@@ -1854,7 +1854,7 @@
         },
         {
           "name": "+2 deflection to AC vs. evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ModifyAC",
           "standing": "origin",
           "display_name": "+2 deflection to AC vs. evil"
@@ -1868,7 +1868,7 @@
         },
         {
           "name": "+4 Deflection bonus to AC vs. Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ModifyAC",
           "standing": "origin",
           "display_name": "+4 Deflection bonus to AC vs. Evil"
@@ -1973,7 +1973,7 @@
         },
         {
           "name": "Acid Pool",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Acid Pool"
@@ -2029,7 +2029,7 @@
         },
         {
           "name": "Afflicted Lycanthrope",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.LycanthropeType",
           "standing": "origin",
           "display_name": "Afflicted Lycanthrope"
@@ -2050,7 +2050,7 @@
         },
         {
           "name": "Aligned",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Aligned"
@@ -2106,7 +2106,7 @@
         },
         {
           "name": "Aura of Menace",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Aura of Menace"
@@ -2162,7 +2162,7 @@
         },
         {
           "name": "Blinding Beauty",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Blinding Beauty"
@@ -2505,7 +2505,7 @@
         },
         {
           "name": "Can't be Disarmed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Can't be Disarmed"
@@ -2701,7 +2701,7 @@
         },
         {
           "name": "Cling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Cling"
@@ -2750,7 +2750,7 @@
         },
         {
           "name": "Cold Iron Cobra Attacks",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Cold Iron Cobra Attacks"
@@ -2827,7 +2827,7 @@
         },
         {
           "name": "Corrupt Water",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Corrupt Water"
@@ -2848,7 +2848,7 @@
         },
         {
           "name": "Create Spawn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Create Spawn (SpecialAttack.Supernatural)"
@@ -2862,7 +2862,7 @@
         },
         {
           "name": "Create Spawn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack,Supernatural",
           "standing": "unclassified",
           "display_name": "Create Spawn (SpecialAttack,Supernatural)"
@@ -2876,14 +2876,14 @@
         },
         {
           "name": "Create Spawn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Create Spawn (SpecialAttack.Supernatural) #5"
         },
         {
           "name": "Create Spawn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Create Spawn (SpecialAttack.Supernatural) #6"
@@ -3016,14 +3016,14 @@
         },
         {
           "name": "Desert Thirst",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Desert Thirst"
         },
         {
           "name": "Desert Wind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Desert Wind"
@@ -3128,7 +3128,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Disease (SpecialAttack.Supernatural) #8"
@@ -3177,7 +3177,7 @@
         },
         {
           "name": "Docile",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Docile"
@@ -3219,7 +3219,7 @@
         },
         {
           "name": "Drench",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Special Attack.Special Ability.Extraordinary",
           "standing": "unclassified",
           "display_name": "Drench"
@@ -3387,7 +3387,7 @@
         },
         {
           "name": "Ethereal Jaunt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Defensive",
           "standing": "origin",
           "display_name": "Ethereal Jaunt"
@@ -3422,21 +3422,21 @@
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP)"
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #2"
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #3"
@@ -3450,7 +3450,7 @@
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #5"
@@ -3464,35 +3464,35 @@
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #7"
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #8"
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #9"
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #10"
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #11"
@@ -3506,7 +3506,7 @@
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Fast Healing (SpecialQuality.Extraordinary.ModifyHP) #13"
@@ -3562,7 +3562,7 @@
         },
         {
           "name": "Fear Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "unclassified",
           "display_name": "Fear Aura (SpecialQuality.Supernatural.Aura) #2"
@@ -3590,7 +3590,7 @@
         },
         {
           "name": "Ferocity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Defensive",
           "standing": "unclassified",
           "display_name": "Ferocity"
@@ -3611,7 +3611,7 @@
         },
         {
           "name": "Fiery Death",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Fiery Death"
@@ -3751,7 +3751,7 @@
         },
         {
           "name": "Frightful Presence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Aura",
           "standing": "unclassified",
           "display_name": "Frightful Presence"
@@ -3947,7 +3947,7 @@
         },
         {
           "name": "Hold Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Hold Breath (SpecialQuality.Extraordinary) #2"
@@ -3975,14 +3975,14 @@
         },
         {
           "name": "Ice Shape",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ice Shape"
         },
         {
           "name": "Ice Tomb",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "origin",
           "display_name": "Ice Tomb"
@@ -4045,7 +4045,7 @@
         },
         {
           "name": "Immunity to Bludgeoning Damage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Bludgeoning Damage"
@@ -4318,7 +4318,7 @@
         },
         {
           "name": "Immunity to Piercing Damage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Piercing Damage"
@@ -4346,7 +4346,7 @@
         },
         {
           "name": "Immunity to Slashing Damage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Immunity",
           "standing": "origin",
           "display_name": "Immunity to Slashing Damage"
@@ -4409,7 +4409,7 @@
         },
         {
           "name": "Impale",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Impale"
@@ -4437,7 +4437,7 @@
         },
         {
           "name": "Incinerate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Incinerate"
@@ -4486,7 +4486,7 @@
         },
         {
           "name": "Inspirations",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Inspirations"
@@ -4598,7 +4598,7 @@
         },
         {
           "name": "Luck",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Aura",
           "standing": "origin",
           "display_name": "Luck"
@@ -4633,7 +4633,7 @@
         },
         {
           "name": "Madness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Madness"
@@ -4696,7 +4696,7 @@
         },
         {
           "name": "Manipulate Flames",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Manipulate Flames"
@@ -4710,7 +4710,7 @@
         },
         {
           "name": "Melt Stone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Melt Stone"
@@ -4766,7 +4766,7 @@
         },
         {
           "name": "Mimicry",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Mimicry (SpecialQuality.Extraordinary)"
@@ -4787,7 +4787,7 @@
         },
         {
           "name": "Mirage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Mirage"
@@ -4864,7 +4864,7 @@
         },
         {
           "name": "Natural Lycanthrope",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.LycanthropeType",
           "standing": "origin",
           "display_name": "Natural Lycanthrope"
@@ -5382,7 +5382,7 @@
         },
         {
           "name": "Powerful Blows",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Powerful Blows"
@@ -5396,7 +5396,7 @@
         },
         {
           "name": "Powerful Leaper",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Powerful Leaper"
@@ -5410,7 +5410,7 @@
         },
         {
           "name": "Protective Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "unclassified",
           "display_name": "Protective Aura"
@@ -5606,7 +5606,7 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #14"
@@ -5662,28 +5662,28 @@
         },
         {
           "name": "Resistance to Acid ~ Output",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Resistance",
           "standing": "origin",
           "display_name": "Resistance to Acid ~ Output"
         },
         {
           "name": "Resistance to Cold ~ Output",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Resistance",
           "standing": "origin",
           "display_name": "Resistance to Cold ~ Output"
         },
         {
           "name": "Resistance to Electricity ~ Output",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Resistance",
           "standing": "origin",
           "display_name": "Resistance to Electricity ~ Output"
         },
         {
           "name": "Resistance to Fire ~ Output",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Resistance",
           "standing": "origin",
           "display_name": "Resistance to Fire ~ Output"
@@ -5697,7 +5697,7 @@
         },
         {
           "name": "Resistance to Sonic ~ Output",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Resistance",
           "standing": "origin",
           "display_name": "Resistance to Sonic ~ Output"
@@ -5732,7 +5732,7 @@
         },
         {
           "name": "Rock Throwing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Rock Throwing"
@@ -5781,7 +5781,7 @@
         },
         {
           "name": "Savage Bite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Savage Bite"
@@ -5830,7 +5830,7 @@
         },
         {
           "name": "Shadow Shift",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Defensive",
           "standing": "origin",
           "display_name": "Shadow Shift"
@@ -5858,7 +5858,7 @@
         },
         {
           "name": "Shroud of Flame",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "unclassified",
           "display_name": "Shroud of Flame"
@@ -5879,7 +5879,7 @@
         },
         {
           "name": "Sleep Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sleep Breath"
@@ -5921,35 +5921,35 @@
         },
         {
           "name": "Smite Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Special Attack.Supernatural",
           "standing": "unclassified",
           "display_name": "Smite Evil (SpecialAttack.Special Attack.Supernatural)"
         },
         {
           "name": "Smite Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Smite Evil (SpecialAttack.Supernatural)"
         },
         {
           "name": "Smite Good",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Special Attack.Supernatural",
           "standing": "origin",
           "display_name": "Smite Good (SpecialAttack.Special Attack.Supernatural)"
         },
         {
           "name": "Smite Good",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Smite Good (SpecialAttack.Supernatural)"
         },
         {
           "name": "Smoke",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Smoke (SpecialAttack.Supernatural)"
@@ -6005,28 +6005,28 @@
         },
         {
           "name": "Special Arrows",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Special Arrows"
         },
         {
           "name": "Special Charm Arrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Special Charm Arrow"
         },
         {
           "name": "Special Memory Loss Arrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Special Memory Loss Arrow"
         },
         {
           "name": "Special Sleep Arrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Special Sleep Arrow"
@@ -6061,7 +6061,7 @@
         },
         {
           "name": "Spider Empathy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Communicate",
           "standing": "unclassified",
           "display_name": "Spider Empathy"
@@ -6180,7 +6180,7 @@
         },
         {
           "name": "Stench",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Aura",
           "standing": "origin",
           "display_name": "Stench (SpecialQuality.Extraordinary.Aura)"
@@ -6229,7 +6229,7 @@
         },
         {
           "name": "Storm Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Storm Breath"
@@ -6299,7 +6299,7 @@
         },
         {
           "name": "Summon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Summon"
@@ -6334,7 +6334,7 @@
         },
         {
           "name": "Superior Two-Weapon Fighting",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Superior Two-Weapon Fighting"
@@ -6348,28 +6348,28 @@
         },
         {
           "name": "Swallow Whole",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Swallow Whole (SpecialAttack.Extraordinary.AttackOption)"
         },
         {
           "name": "Swallow Whole",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Swallow Whole (SpecialAttack.Extraordinary.AttackOption) #2"
         },
         {
           "name": "Swallow Whole",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Swallow Whole (SpecialAttack.Extraordinary.AttackOption) #3"
         },
         {
           "name": "Swallow Whole",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Swallow Whole (SpecialAttack.Extraordinary.AttackOption) #4"
@@ -6404,35 +6404,35 @@
         },
         {
           "name": "Symbol of Fear",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Spelllike",
           "standing": "origin",
           "display_name": "Symbol of Fear"
         },
         {
           "name": "Symbol of Pain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Spelllike",
           "standing": "origin",
           "display_name": "Symbol of Pain"
         },
         {
           "name": "Symbol of Persuasion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Spelllike",
           "standing": "origin",
           "display_name": "Symbol of Persuasion"
         },
         {
           "name": "Symbol of Sleep",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Spelllike",
           "standing": "origin",
           "display_name": "Symbol of Sleep"
         },
         {
           "name": "Symbol of Stunning",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Spelllike",
           "standing": "origin",
           "display_name": "Symbol of Stunning"
@@ -6495,7 +6495,7 @@
         },
         {
           "name": "Tidal Wave",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Tidal Wave"
@@ -6600,7 +6600,7 @@
         },
         {
           "name": "Truespeech",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Communicate",
           "standing": "unclassified",
           "display_name": "Truespeech (SpecialQuality.Supernatural.Communicate)"
@@ -6663,7 +6663,7 @@
         },
         {
           "name": "Unearthly Grace",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Unearthly Grace"
@@ -6705,7 +6705,7 @@
         },
         {
           "name": "Vermin Empathy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Vermin Empathy"
@@ -6726,7 +6726,7 @@
         },
         {
           "name": "Vortex",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Vortex (SpecialAttack.Extraordinary)"
@@ -6775,7 +6775,7 @@
         },
         {
           "name": "Vulnerability to Protection from Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Weakness",
           "standing": "origin",
           "display_name": "Vulnerability to Protection from Evil"
@@ -6796,7 +6796,7 @@
         },
         {
           "name": "Vulnerability to Sunlight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Weakness",
           "standing": "unclassified",
           "display_name": "Vulnerability to Sunlight (SpecialQuality.Extraordinary.Weakness) #2"
@@ -6845,7 +6845,7 @@
         },
         {
           "name": "Water Dependency",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Water Dependency (SpecialQuality)"
@@ -6873,7 +6873,7 @@
         },
         {
           "name": "Wave Mastery",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.ModifyMovement",
           "standing": "origin",
           "display_name": "Wave Mastery"
@@ -6981,11 +6981,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 217,
-      "partial": 113,
+      "done": 330,
+      "partial": 0,
       "not_started": 0,
       "denominator": 330,
-      "pct": 65.8,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 330
@@ -7007,7 +7007,7 @@
         },
         {
           "name": "Angel (Planetar)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Angel (Planetar)"
@@ -7021,49 +7021,49 @@
         },
         {
           "name": "Animated Object (Colossal)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Animated Object (Colossal)"
         },
         {
           "name": "Animated Object (Gargantuan)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Animated Object (Gargantuan)"
         },
         {
           "name": "Animated Object (Huge)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Animated Object (Huge)"
         },
         {
           "name": "Animated Object (Large)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Animated Object (Large)"
         },
         {
           "name": "Animated Object (Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Animated Object (Medium)"
         },
         {
           "name": "Animated Object (Small)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Animated Object (Small)"
         },
         {
           "name": "Animated Object (Tiny)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Animated Object (Tiny)"
@@ -7077,7 +7077,7 @@
         },
         {
           "name": "Ant (Army/Swarm)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ant (Army/Swarm)"
@@ -7112,7 +7112,7 @@
         },
         {
           "name": "Ape (Dire)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ape (Dire)"
@@ -7126,28 +7126,28 @@
         },
         {
           "name": "Archon (Hound)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Archon (Hound)"
         },
         {
           "name": "Archon (Lantern)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Archon (Lantern)"
         },
         {
           "name": "Archon (Trumpet)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Archon (Trumpet)"
         },
         {
           "name": "Assassin Vine",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Assassin Vine"
@@ -7175,14 +7175,14 @@
         },
         {
           "name": "Barghest",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barghest"
         },
         {
           "name": "Barghest (Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barghest (Greater)"
@@ -7210,7 +7210,7 @@
         },
         {
           "name": "Bat Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bat Swarm"
@@ -7231,7 +7231,7 @@
         },
         {
           "name": "Bebilith",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bebilith"
@@ -7252,14 +7252,14 @@
         },
         {
           "name": "Behir",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Behir"
         },
         {
           "name": "Black Pudding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Black Pudding"
@@ -7280,7 +7280,7 @@
         },
         {
           "name": "Boggard",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Boggard"
@@ -7378,7 +7378,7 @@
         },
         {
           "name": "Centipede Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Centipede Swarm"
@@ -7392,14 +7392,14 @@
         },
         {
           "name": "Choker",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Choker"
         },
         {
           "name": "Chuul",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Chuul"
@@ -7427,56 +7427,56 @@
         },
         {
           "name": "Crab (Giant Coconut)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crab (Giant Coconut)"
         },
         {
           "name": "Crab (Giant King)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crab (Giant King)"
         },
         {
           "name": "Crab (Giant Reef)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crab (Giant Reef)"
         },
         {
           "name": "Crab (Giant Rock)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crab (Giant Rock)"
         },
         {
           "name": "Crab (Giant Shark-Eating)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crab (Giant Shark-Eating)"
         },
         {
           "name": "Crab (Giant Shipwrecker)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crab (Giant Shipwrecker)"
         },
         {
           "name": "Crab (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crab (Giant)"
         },
         {
           "name": "Crab Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crab Swarm"
@@ -7490,7 +7490,7 @@
         },
         {
           "name": "Crocodile (Dire)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crocodile (Dire)"
@@ -7504,28 +7504,28 @@
         },
         {
           "name": "Dark Creeper",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dark Creeper"
         },
         {
           "name": "Dark Stalker",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dark Stalker"
         },
         {
           "name": "Darkmantle",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Darkmantle"
         },
         {
           "name": "Demon (Babau)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon (Babau)"
@@ -7602,7 +7602,7 @@
         },
         {
           "name": "Derro",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Derro"
@@ -7658,7 +7658,7 @@
         },
         {
           "name": "Devil (Pit Fiend)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Pit Fiend)"
@@ -7672,14 +7672,14 @@
         },
         {
           "name": "Dinosaur (Ankylosaurus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dinosaur (Ankylosaurus)"
         },
         {
           "name": "Dinosaur (Brachiosaurus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dinosaur (Brachiosaurus)"
@@ -7693,35 +7693,35 @@
         },
         {
           "name": "Dinosaur (Elasmosaurus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dinosaur (Elasmosaurus)"
         },
         {
           "name": "Dinosaur (Pteranodon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dinosaur (Pteranodon)"
         },
         {
           "name": "Dinosaur (Stegosaurus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dinosaur (Stegosaurus)"
         },
         {
           "name": "Dinosaur (Triceratops)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dinosaur (Triceratops)"
         },
         {
           "name": "Dinosaur (Tyrannosaurus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dinosaur (Tyrannosaurus)"
@@ -7735,28 +7735,28 @@
         },
         {
           "name": "Dog (Riding)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dog (Riding)"
         },
         {
           "name": "Dolphin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dolphin"
         },
         {
           "name": "Dolphin (Orca)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dolphin (Orca)"
         },
         {
           "name": "Doppelganger",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Doppelganger"
@@ -7847,7 +7847,7 @@
         },
         {
           "name": "Dryad",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dryad"
@@ -7875,7 +7875,7 @@
         },
         {
           "name": "Eel (Giant Moray)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Eel (Giant Moray)"
@@ -7910,7 +7910,7 @@
         },
         {
           "name": "Elemental (Air/Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Air/Medium)"
@@ -7945,7 +7945,7 @@
         },
         {
           "name": "Elemental (Earth/Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Earth/Medium)"
@@ -7980,7 +7980,7 @@
         },
         {
           "name": "Elemental (Fire/Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Fire/Medium)"
@@ -8015,7 +8015,7 @@
         },
         {
           "name": "Elemental (Water/Medium)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Elemental (Water/Medium)"
@@ -8057,21 +8057,21 @@
         },
         {
           "name": "Frog (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Frog (Giant)"
         },
         {
           "name": "Frog (Poison)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Frog (Poison)"
         },
         {
           "name": "Froghemoth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Froghemoth"
@@ -8239,7 +8239,7 @@
         },
         {
           "name": "Girallon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Girallon"
@@ -8253,7 +8253,7 @@
         },
         {
           "name": "Goblin Dog",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Goblin Dog"
@@ -8309,14 +8309,14 @@
         },
         {
           "name": "Gray Ooze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gray Ooze"
         },
         {
           "name": "Gray Ooze (Crystal Ooze)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gray Ooze (Crystal Ooze)"
@@ -8365,14 +8365,14 @@
         },
         {
           "name": "Herd Animal (Aurochs)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Herd Animal (Aurochs)"
         },
         {
           "name": "Herd Animal (Bison)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Herd Animal (Bison)"
@@ -8393,7 +8393,7 @@
         },
         {
           "name": "Hydra",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hydra"
@@ -8414,14 +8414,14 @@
         },
         {
           "name": "Hyena",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hyena"
         },
         {
           "name": "Hyena (Dire)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hyena (Dire)"
@@ -8463,7 +8463,7 @@
         },
         {
           "name": "Kraken",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kraken"
@@ -8491,7 +8491,7 @@
         },
         {
           "name": "Leech Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Leech Swarm"
@@ -8540,14 +8540,14 @@
         },
         {
           "name": "Lizard (Monitor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Lizard (Monitor)"
         },
         {
           "name": "Lizardfolk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Lizardfolk"
@@ -8568,21 +8568,21 @@
         },
         {
           "name": "Medusa",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Medusa"
         },
         {
           "name": "Mimic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mimic"
         },
         {
           "name": "Minotaur",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Minotaur"
@@ -8596,7 +8596,7 @@
         },
         {
           "name": "Mohrg",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mohrg"
@@ -8610,7 +8610,7 @@
         },
         {
           "name": "Mummy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mummy"
@@ -8624,14 +8624,14 @@
         },
         {
           "name": "Naga (Guardian)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Naga (Guardian)"
         },
         {
           "name": "Naga (Spirit)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Naga (Spirit)"
@@ -8666,7 +8666,7 @@
         },
         {
           "name": "Nymph",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nymph"
@@ -8680,7 +8680,7 @@
         },
         {
           "name": "Octopus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Octopus"
@@ -8729,7 +8729,7 @@
         },
         {
           "name": "Phase Spider",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Phase Spider"
@@ -8750,7 +8750,7 @@
         },
         {
           "name": "Purple Worm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Purple Worm"
@@ -8764,14 +8764,14 @@
         },
         {
           "name": "Rat Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rat Swarm"
         },
         {
           "name": "Remorhaz",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Remorhaz"
@@ -8785,14 +8785,14 @@
         },
         {
           "name": "Rhinoceros",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rhinoceros"
         },
         {
           "name": "Rhinoceros (Woolly)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rhinoceros (Woolly)"
@@ -8806,14 +8806,14 @@
         },
         {
           "name": "Roper",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Roper"
         },
         {
           "name": "Rust Monster",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rust Monster"
@@ -8897,7 +8897,7 @@
         },
         {
           "name": "Sea Serpent",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sea Serpent"
@@ -8925,21 +8925,21 @@
         },
         {
           "name": "Shark",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shark"
         },
         {
           "name": "Shark (Dire)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shark (Dire)"
         },
         {
           "name": "Shocker Lizard",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shocker Lizard"
@@ -8974,21 +8974,21 @@
         },
         {
           "name": "Slug (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Slug (Giant)"
         },
         {
           "name": "Snake (Constrictor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Snake (Constrictor)"
         },
         {
           "name": "Snake (Venomous)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Snake (Venomous)"
@@ -9009,49 +9009,49 @@
         },
         {
           "name": "Spider (Black Widow)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spider (Black Widow)"
         },
         {
           "name": "Spider (Giant Crab)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spider (Giant Crab)"
         },
         {
           "name": "Spider (Giant Tarantula)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spider (Giant Tarantula)"
         },
         {
           "name": "Spider (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spider (Giant)"
         },
         {
           "name": "Spider (Goliath)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spider (Goliath)"
         },
         {
           "name": "Spider (Scarlet)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spider (Scarlet)"
         },
         {
           "name": "Spider Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spider Swarm"
@@ -9107,28 +9107,28 @@
         },
         {
           "name": "Troll",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Troll"
         },
         {
           "name": "Troll (Scrag)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Troll (Scrag)"
         },
         {
           "name": "Unicorn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Unicorn"
         },
         {
           "name": "Vampire Spawn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Vampire Spawn"
@@ -9163,7 +9163,7 @@
         },
         {
           "name": "Wasp Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wasp Swarm"
@@ -9198,7 +9198,7 @@
         },
         {
           "name": "Will-o'-Wisp",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Will-o'-Wisp"
@@ -9247,7 +9247,7 @@
         },
         {
           "name": "Wraith",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wraith"
@@ -9268,14 +9268,14 @@
         },
         {
           "name": "Xorn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Xorn"
         },
         {
           "name": "Yellow Musk Creeper",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Yellow Musk Creeper"
@@ -9289,7 +9289,7 @@
         },
         {
           "name": "Yeti",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Yeti"
@@ -9306,12 +9306,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 119,
+      "done": 258,
       "partial": 0,
       "not_started": 0,
-      "denominator": 119,
+      "denominator": 258,
       "pct": 100.0,
-      "excluded_from_percentage": 139,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 139,
         "origin": 119
@@ -11206,12 +11206,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 1,
-      "partial": 107,
+      "done": 109,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 108,
-      "pct": 0.9,
-      "excluded_from_percentage": 1,
+      "denominator": 109,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 108,
         "unclassified": 1
@@ -11219,742 +11219,742 @@
       "items": [
         {
           "name": "Blur (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Blur (self only)"
         },
         {
           "name": "Charm Monster (elementals only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Charm Monster (elementals only)"
         },
         {
           "name": "Commune (six questions)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Commune (six questions)"
         },
         {
           "name": "Confusion (single target only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Confusion (single target only)"
         },
         {
           "name": "Create Wine",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Create Wine"
         },
         {
           "name": "Dimension Door (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Dimension Door (self only)"
         },
         {
           "name": "Dimension Door (self plus 5 lbs.)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Dimension Door (self plus 5 lbs.)"
         },
         {
           "name": "Dimension Door (self plus objects)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Dimension Door (self plus objects)"
         },
         {
           "name": "Elemental Body III (air/water)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Elemental Body III (air/water)"
         },
         {
           "name": "Empowered Chaos Hammer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Empowered Chaos Hammer"
         },
         {
           "name": "Empowered Magic Missile",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Empowered Magic Missile"
         },
         {
           "name": "Empowered Order's Wrath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Empowered Order's Wrath"
         },
         {
           "name": "Enlarge Person (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Enlarge Person (self only)"
         },
         {
           "name": "Ethereal Jaunt (self plus objects)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Ethereal Jaunt (self plus objects)"
         },
         {
           "name": "Ethereal Jaunt ~ Cauchemar Nightmare",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Ethereal Jaunt ~ Cauchemar Nightmare"
         },
         {
           "name": "Fabricate (1 cu ft)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fabricate (1 cu ft)"
         },
         {
           "name": "Fabricate (Leng Spider)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fabricate (Leng Spider)"
         },
         {
           "name": "Fear (single target)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Fear (single target)"
         },
         {
           "name": "Fire Shield (warm)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fire Shield (warm)"
         },
         {
           "name": "Invisibility (Greater/self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Invisibility (Greater/self only)"
         },
         {
           "name": "Invisibility (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Invisibility (self only)"
         },
         {
           "name": "Magic Circle against Evil (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Magic Circle against Evil (self only)"
         },
         {
           "name": "Major Image (visual and auditory only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Major Image (visual and auditory only)"
         },
         {
           "name": "Meld into Stone (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Meld into Stone (self only)"
         },
         {
           "name": "Plane Shift (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (self only)"
         },
         {
           "name": "Plane Shift (self plus skiff)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (self plus skiff)"
         },
         {
           "name": "Plane Shift (self/shadow only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (self/shadow only)"
         },
         {
           "name": "Plane Shift (willing targets only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (willing targets only)"
         },
         {
           "name": "Plane Shift ~ Nightmare",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Plane Shift ~ Nightmare"
         },
         {
           "name": "Purify Food and Drink (liquids only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Purify Food and Drink (liquids only)"
         },
         {
           "name": "Pyroclastic Storm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Pyroclastic Storm"
         },
         {
           "name": "Quickened Cone of Cold",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Cone of Cold"
         },
         {
           "name": "Quickened Confusion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Confusion"
         },
         {
           "name": "Quickened Darkness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Darkness"
         },
         {
           "name": "Quickened Dimension Door",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Dimension Door"
         },
         {
           "name": "Quickened Dimension Door (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Dimension Door (self only)"
         },
         {
           "name": "Quickened Disintegrate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Disintegrate"
         },
         {
           "name": "Quickened Enervation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Enervation"
         },
         {
           "name": "Quickened Fireball",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Fireball"
         },
         {
           "name": "Quickened Heal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Quickened Heal"
         },
         {
           "name": "Quickened Invisibility (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Invisibility (self only)"
         },
         {
           "name": "Quickened Lightning Bolt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Quickened Lightning Bolt"
         },
         {
           "name": "Quickened Magic Missile",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Magic Missile"
         },
         {
           "name": "Quickened Suggestion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Suggestion"
         },
         {
           "name": "Quickened Summon Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Summon Swarm"
         },
         {
           "name": "Quickened Telekinesis",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Telekinesis"
         },
         {
           "name": "Quickened Unholy Blight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Quickened Unholy Blight"
         },
         {
           "name": "Quickened Wall of Fire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Wall of Fire"
         },
         {
           "name": "Reduce Person (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Reduce Person (self only)"
         },
         {
           "name": "Scorching Ray (2 rays only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Scorching Ray (2 rays only)"
         },
         {
           "name": "Shadow Walk (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Shadow Walk (self only)"
         },
         {
           "name": "Speak with Animals (fish only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Speak with Animals (fish only)"
         },
         {
           "name": "Suggestion (Nereid)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Suggestion (Nereid)"
         },
         {
           "name": "Summon (Olethrodaemon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon (Olethrodaemon)"
         },
         {
           "name": "Summon Monster I (Dretch)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster I (Dretch)"
         },
         {
           "name": "Summon Monster III (Accuser Devil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Accuser Devil)"
         },
         {
           "name": "Summon Monster III (Babau)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Babau)"
         },
         {
           "name": "Summon Monster III (Bearded Devil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Bearded Devil)"
         },
         {
           "name": "Summon Monster III (Erinyes)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Erinyes)"
         },
         {
           "name": "Summon Monster III (Hydrodaemon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Hydrodaemon)"
         },
         {
           "name": "Summon Monster III (Leukodaemon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Leukodaemon)"
         },
         {
           "name": "Summon Monster III (Shadow Demon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Shadow Demon)"
         },
         {
           "name": "Summon Monster III (Succubus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Succubus)"
         },
         {
           "name": "Summon Monster III (Vrock)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Vrock)"
         },
         {
           "name": "Summon Monster IV (Barbed Devil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Barbed Devil)"
         },
         {
           "name": "Summon Monster IV (Bone Devil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Bone Devil)"
         },
         {
           "name": "Summon Monster IV (Derghodaemon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Derghodaemon)"
         },
         {
           "name": "Summon Monster IV (Glabrezu)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Glabrezu)"
         },
         {
           "name": "Summon Monster IV (Hezrou)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Hezrou)"
         },
         {
           "name": "Summon Monster IV (Ice Devil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Ice Devil)"
         },
         {
           "name": "Summon Monster IV (Kalavakus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Kalavakus)"
         },
         {
           "name": "Summon Monster IV (Nabasu)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Nabasu)"
         },
         {
           "name": "Summon Monster IV (Omox)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Omox)"
         },
         {
           "name": "Summon Monster IV (Piscodaemon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Piscodaemon)"
         },
         {
           "name": "Summon Monster IV (Thanadaemon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Thanadaemon)"
         },
         {
           "name": "Summon Monster IV (Witchfire)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Witchfire)"
         },
         {
           "name": "Summon Monster IX (Celestials Only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Celestials Only)"
         },
         {
           "name": "Summon Monster IX (Fiends Only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Fiends Only)"
         },
         {
           "name": "Summon Monster IX (Immolation Devil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Immolation Devil)"
         },
         {
           "name": "Summon Monster IX (Nightwave)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Nightwave)"
         },
         {
           "name": "Summon Monster IX (Pit Fiend)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Pit Fiend)"
         },
         {
           "name": "Summon Monster V (Handmaiden Devil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Handmaiden Devil)"
         },
         {
           "name": "Summon Monster V (Large water elemental)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Large water elemental)"
         },
         {
           "name": "Summon Monster V (Marilith)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Marilith)"
         },
         {
           "name": "Summon Monster V (Nalfeshnee)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Nalfeshnee)"
         },
         {
           "name": "Summon Monster V (Purrodaemon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Purrodaemon)"
         },
         {
           "name": "Summon Monster V (Shemhazian)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Shemhazian)"
         },
         {
           "name": "Summon Monster V (Xacarba)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Xacarba)"
         },
         {
           "name": "Summon Monster VI (Astradaemon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Astradaemon)"
         },
         {
           "name": "Summon Monster VI (Belier Devil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Belier Devil)"
         },
         {
           "name": "Summon Monster VI (Horned Devil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Horned Devil)"
         },
         {
           "name": "Summon Monster VI (Nereid)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Nereid)"
         },
         {
           "name": "Summon Monster VI (Nightwing)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Nightwing)"
         },
         {
           "name": "Summon Monster VI (Vrolikai)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Vrolikai)"
         },
         {
           "name": "Summon Monster VII (Nightwalker)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VII (Nightwalker)"
         },
         {
           "name": "Summon Monster VIII (Balor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Balor)"
         },
         {
           "name": "Summon Monster VIII (Nightcrawler)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Nightcrawler)"
         },
         {
           "name": "Summon Monster VIII (Scylla)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Scylla)"
         },
         {
           "name": "Summon Monster VIII (water elementals)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (water elementals)"
         },
         {
           "name": "Summon Nature's Ally II (Triton)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Nature's Ally II (Triton)"
         },
         {
           "name": "Summon Nature's Ally V (earth/fire elementals)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Nature's Ally V (earth/fire elementals)"
         },
         {
           "name": "Teleport (Greater/Within its forest territory)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Teleport (Greater/Within its forest territory)"
         },
         {
           "name": "Teleport (Greater/self plus entrapped)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Teleport (Greater/self plus entrapped)"
         },
         {
           "name": "Teleport (Greater/self plus objects)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Teleport (Greater/self plus objects)"
         },
         {
           "name": "Teleport (Greater/self plus skiff)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Teleport (Greater/self plus skiff)"
         },
         {
           "name": "Tree Shape (Colossal tree)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Tree Shape (Colossal tree)"
@@ -11968,14 +11968,14 @@
         },
         {
           "name": "Wish (granted to a mortal humanoid only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Wish (granted to a mortal humanoid only)"
         },
         {
           "name": "Wood Shape (1 lb only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Wood Shape (1 lb only)"
@@ -11985,12 +11985,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 1035,
+      "done": 1050,
       "partial": 0,
       "not_started": 0,
-      "denominator": 1035,
+      "denominator": 1050,
       "pct": 100.0,
-      "excluded_from_percentage": 15,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1035,
         "unclassified": 15

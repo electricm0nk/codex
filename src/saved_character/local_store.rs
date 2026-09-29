@@ -11,7 +11,8 @@ use std::fs;
 use std::path::Path;
 
 use crate::rules_core::character_input::{
-    AcquisitionMode, ActiveState, CharacterInput, load_character_input_fixture,
+    AcquisitionMode, ActiveState, CharacterInput, RULE_CHOICE_SEPARATOR,
+    load_character_input_fixture,
 };
 
 use super::{
@@ -21,6 +22,27 @@ use super::{
 
 const ENVELOPE_FILE: &str = "envelope.txt";
 const CHARACTER_INPUT_FILE: &str = "authoritative_character_input.txt";
+
+/// SD-36 Epic E desktop-P1-02: write `contents` to a `<name>.tmp` sibling of `path`, never
+/// touching `path` itself, and hand back the temp path for the caller to `fs::rename` into
+/// place. `write` on a temp file that a crash interrupts leaves only the `.tmp` file
+/// corrupted; `path` (and whatever `load()` currently reads from it) is untouched until the
+/// rename, which on every platform this app ships to is a single filesystem metadata update
+/// -- so `path` never observes a torn write. This does NOT add an `fsync` on the temp file
+/// or its parent directory, so the guarantee is a process-crash guarantee, not a power-loss
+/// one: on ext4's default `data=ordered` (and equivalent journaling defaults elsewhere), an
+/// OS crash or power cut before the temp file's dirty pages reach disk can still leave `path`
+/// renamed onto data the filesystem never persisted. Closing that residual window is a
+/// separate, deliberate durability change (two extra `fsync` calls per save), not implied by
+/// "atomic" alone -- review-caught (SD-36 Epic E fix cycle, finding 14) and recorded rather
+/// than silently assumed.
+fn atomic_write_prepare(path: &Path, contents: &[u8]) -> std::io::Result<std::path::PathBuf> {
+    let mut tmp_name = path.file_name().map(|n| n.to_os_string()).unwrap_or_default();
+    tmp_name.push(".tmp");
+    let tmp_path = path.with_file_name(tmp_name);
+    fs::write(&tmp_path, contents)?;
+    Ok(tmp_path)
+}
 
 pub struct SavedCharacterStore;
 
@@ -65,16 +87,23 @@ impl SavedCharacterStore {
 
         validate_character_input(&envelope.character_input)?;
 
+        // SD-36 Epic E desktop-P1-02 (SD-34 R14-02): write both files to `.tmp` siblings
+        // FIRST, then rename both into place. A crash before either rename leaves the
+        // previous save (if any) completely untouched -- `load()` never sees a half-written
+        // file. The residual window this does NOT close: a crash BETWEEN the two renames
+        // still leaves a fresh envelope paired with a stale character-input file (or vice
+        // versa) if the process is killed mid-way through the second `fs::rename` -- closing
+        // that fully would need a single-file bundle format or a two-phase commit marker,
+        // out of scope for this fix. That window is now nanoseconds-wide (two renames back
+        // to back) rather than however long `render_character_input` takes to run.
         let envelope_path = root.join(ENVELOPE_FILE);
-        fs::write(&envelope_path, render_envelope(envelope))
-            .map_err(|err| io_error(&envelope_path, err))?;
-
         let character_input_path = root.join(CHARACTER_INPUT_FILE);
-        fs::write(
-            &character_input_path,
-            render_character_input(&envelope.character_input),
-        )
-        .map_err(|err| io_error(&character_input_path, err))?;
+        let envelope_tmp = atomic_write_prepare(&envelope_path, render_envelope(envelope).as_bytes())
+            .map_err(|err| io_error(&envelope_path, err))?;
+        let character_input_tmp = atomic_write_prepare(&character_input_path, render_character_input(&envelope.character_input).as_bytes())
+            .map_err(|err| io_error(&character_input_path, err))?;
+        fs::rename(&envelope_tmp, &envelope_path).map_err(|err| io_error(&envelope_path, err))?;
+        fs::rename(&character_input_tmp, &character_input_path).map_err(|err| io_error(&character_input_path, err))?;
 
         Ok(())
     }
@@ -202,12 +231,20 @@ fn summarize(envelope: &SavedCharacterEnvelope) -> SavedCharacterSummary {
 
 // --- Save-time validation ---
 
+/// `true` when a choice set id fits the `choice=` line's colon grammar (exactly two
+/// colon-segments; the loader re-splits the line after the second). Any other set id -- a
+/// converted rule's own `book:kind:slug` id -- is written on a `rule_choice=` line instead.
+fn is_colon_grammar_choice_set(choice_set_id: &str) -> bool {
+    choice_set_id.split(':').count() == 2
+}
+
 /// Rejects a `CharacterInput` whose rendered fixture lines the loader could not
 /// read back as the same record. The fixture grammar is line- and colon-based,
-/// so every persisted string must be single-line, and a selected choice must
-/// match the loader's segment shape (`choice_set_id` = exactly two
-/// colon-segments, `selection_id` = at least two) or it would reload as a
-/// different choice — or not at all.
+/// so every persisted string must be single-line, and a selected choice on a
+/// `choice=` line must match the loader's segment shape (`choice_set_id` =
+/// exactly two colon-segments, `selection_id` = at least two) or it would reload
+/// as a different choice — or not at all. A choice on a `rule_choice=` line
+/// must carry no `|` in either id.
 fn validate_character_input(input: &CharacterInput) -> Result<(), SavedCharacterStoreError> {
     let single_line = |field: &str, value: &str| -> Result<(), SavedCharacterStoreError> {
         if value.contains('\n') || value.contains('\r') {
@@ -251,14 +288,24 @@ fn validate_character_input(input: &CharacterInput) -> Result<(), SavedCharacter
     for choice in &input.chosen.selected_choices {
         single_line("selected choice choice_set_id", &choice.choice_set_id)?;
         single_line("selected choice selection_id", &choice.selection_id)?;
-        if choice.choice_set_id.split(':').count() != 2 {
-            return Err(SavedCharacterStoreError {
-                message: format!(
-                    "selected choice choice_set_id '{}' must have exactly two colon-segments \
-                     to round-trip through the fixture grammar",
-                    choice.choice_set_id
-                ),
-            });
+        if !is_colon_grammar_choice_set(&choice.choice_set_id) {
+            // A choice recorded under a converted rule's own id (`book:kind:slug`) is written
+            // on a `rule_choice=<set>|<selection>` line, which splits on `|`, not `:`.
+            for (field, value) in [
+                ("choice_set_id", &choice.choice_set_id),
+                ("selection_id", &choice.selection_id),
+            ] {
+                if value.is_empty() || value.contains(RULE_CHOICE_SEPARATOR) {
+                    return Err(SavedCharacterStoreError {
+                        message: format!(
+                            "selected choice {field} '{value}' must be non-empty and must not \
+                             contain '{RULE_CHOICE_SEPARATOR}' to round-trip through the \
+                             rule_choice= line"
+                        ),
+                    });
+                }
+            }
+            continue;
         }
         if choice.selection_id.split(':').count() < 2 {
             return Err(SavedCharacterStoreError {
@@ -378,11 +425,19 @@ fn render_character_input(input: &CharacterInput) -> String {
         );
     }
     for choice in &input.chosen.selected_choices {
-        let _ = writeln!(
-            out,
-            "choice={}:{}",
-            choice.choice_set_id, choice.selection_id
-        );
+        if is_colon_grammar_choice_set(&choice.choice_set_id) {
+            let _ = writeln!(
+                out,
+                "choice={}:{}",
+                choice.choice_set_id, choice.selection_id
+            );
+        } else {
+            let _ = writeln!(
+                out,
+                "rule_choice={}{RULE_CHOICE_SEPARATOR}{}",
+                choice.choice_set_id, choice.selection_id
+            );
+        }
     }
     for prov in &input.selection_provenance {
         let _ = writeln!(out, "provenance={}", prov.source_ref);
@@ -566,7 +621,7 @@ fn parse_error(message: impl Into<String>) -> SavedCharacterStoreError {
 mod tests {
     use super::*;
     use crate::rules_core::character_input::{
-        AbilityScores, CharacterClassLevel, ChosenCharacterState, EquipmentSelection,
+        AbilityScores, CharacterClassLevel, ChosenCharacterState, EquipmentSelection, SelectedChoice,
     };
     use crate::saved_character::CURRENT_SAVED_CHARACTER_SCHEMA_VERSION;
 
@@ -661,6 +716,59 @@ mod tests {
         fs::remove_dir_all(&root).ok();
     }
 
+    /// SD-36 Epic E desktop-P1-02 (SD-34 R14-02): a save that fails partway through
+    /// writing must leave the PREVIOUS successful save completely intact -- not a fresh
+    /// envelope paired with a stale/missing character-input file. Forces the failure
+    /// deterministically by pre-creating the second temp file's path as a DIRECTORY, so
+    /// `atomic_write_prepare`'s `fs::write` for the character-input file fails outright,
+    /// after the envelope's own temp file already wrote successfully -- the exact
+    /// "partway through" shape the old two-sequential-`fs::write` code was vulnerable to.
+    #[test]
+    fn a_save_that_fails_partway_through_leaves_the_previous_version_intact() {
+        let root = tempdir("atomic-save-partial-failure");
+        let v1 = envelope_with(vec![]);
+        SavedCharacterStore::save(&v1, &root).expect("the first save should succeed");
+        let loaded_v1 = SavedCharacterStore::load(&root).expect("v1 loads");
+
+        // Sabotage the SECOND file's temp path: a directory can't be `fs::write`n over.
+        let sabotage_path = root.join(format!("{CHARACTER_INPUT_FILE}.tmp"));
+        fs::create_dir_all(&sabotage_path).expect("sabotage directory should be creatable");
+
+        let mut v2 = envelope_with(vec![]);
+        v2.display_label = "Second Save That Must Not Land".to_owned();
+        let result = SavedCharacterStore::save(&v2, &root);
+        assert!(result.is_err(), "the sabotaged save must report failure, not silently half-succeed");
+
+        fs::remove_dir_all(&sabotage_path).ok();
+        let loaded_after_failure = SavedCharacterStore::load(&root).expect("v1 must still load after the failed v2 save");
+        assert_eq!(
+            loaded_after_failure.display_label, loaded_v1.display_label,
+            "a failed save must not touch the previously-saved envelope"
+        );
+        assert_eq!(loaded_after_failure.display_label, "Local Store Test Character", "v2's label must never have landed");
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// A successful save must leave no `.tmp` leftovers -- the atomic-write helper's temp
+    /// files are an implementation detail, never a third file `load()` (or a directory
+    /// listing) has to know to ignore.
+    #[test]
+    fn a_successful_save_leaves_no_tmp_files_behind() {
+        let root = tempdir("atomic-save-no-tmp-leftovers");
+        let envelope = envelope_with(vec![]);
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+
+        let entries: Vec<String> = fs::read_dir(&root)
+            .expect("root should be readable")
+            .filter_map(|e| e.ok())
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .collect();
+        assert!(!entries.iter().any(|n| n.ends_with(".tmp")), "no .tmp file should remain after a successful save: {entries:?}");
+
+        fs::remove_dir_all(&root).ok();
+    }
+
     /// A selection with no attached modifiers must round-trip to a real
     /// empty list, not an error or a fabricated entry -- the common case
     /// every pre-sub-task-1 saved character already exercises.
@@ -705,6 +813,56 @@ mod tests {
             reloaded.character_input.chosen.selected_traits,
             vec!["trait:trait_acrobat".to_owned(), "trait:trait_ease_of_faith".to_owned()]
         );
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-36 F1c (f1c:suite-desktop): a pick whose choice is a converted rule records it under
+    /// that rule's own id -- `book:kind:slug`, three colon-segments (the Summoner Class
+    /// Selection, `class_seeds::SUMMONER_CLASS_SELECTION_CHOICE_ID`; the Commoner's one Simple
+    /// weapon, `class_seeds::COMMONER_WEAPON_CHOICE_ID`). The `choice=` line's colon grammar
+    /// cannot carry that id, so a create call for either class failed to save at all. It must
+    /// round-trip beside a legacy two-segment choice, unchanged and in order.
+    #[test]
+    fn save_and_load_round_trips_a_choice_recorded_under_a_converted_rule_id() {
+        let root = tempdir("rule-choice-round-trip");
+        let mut envelope = envelope_with(Vec::new());
+        let choices = vec![
+            SelectedChoice {
+                choice_set_id: "choice:summoner_eidolon_evolution".to_owned(),
+                selection_id: "evolution:improved_natural_armor".to_owned(),
+            },
+            SelectedChoice {
+                choice_set_id: crate::rules_core::class_seeds::SUMMONER_CLASS_SELECTION_CHOICE_ID.to_owned(),
+                selection_id: crate::rules_core::class_seeds::SUMMONER_CANONICAL_CLASS_SELECTION.to_owned(),
+            },
+            SelectedChoice {
+                choice_set_id: crate::rules_core::class_seeds::COMMONER_WEAPON_CHOICE_ID.to_owned(),
+                selection_id: crate::rules_core::class_seeds::COMMONER_CANONICAL_WEAPON.to_owned(),
+            },
+        ];
+        envelope.character_input.chosen.selected_choices = choices.clone();
+
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+        let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+        assert_eq!(reloaded.character_input.chosen.selected_choices, choices);
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// The `rule_choice=` line separates the two ids with `|`; an id carrying `|` could not
+    /// reload as the same pick, so the save refuses it rather than writing a different one.
+    #[test]
+    fn a_rule_choice_id_containing_the_separator_is_refused() {
+        let root = tempdir("rule-choice-separator-refused");
+        let mut envelope = envelope_with(Vec::new());
+        envelope.character_input.chosen.selected_choices = vec![SelectedChoice {
+            choice_set_id: "book:class_feature:a|b".to_owned(),
+            selection_id: "book:class_feature:c".to_owned(),
+        }];
+
+        assert!(SavedCharacterStore::save(&envelope, &root).is_err());
 
         fs::remove_dir_all(&root).ok();
     }

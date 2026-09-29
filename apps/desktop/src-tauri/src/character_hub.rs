@@ -669,6 +669,11 @@ pub struct LoadSavedCharacterResponse {
     /// holds no rule": the package directory could not be resolved or read. `None` when the
     /// package loaded. Carried so the sheet can say so instead of showing an empty section.
     pub sheet_rules_unavailable_reason: Option<String>,
+    /// SD-36 F6b: the skill bonuses the character's held FEAT records grant, folded per skill by
+    /// the engine off the same rendered lines (`feat_skill_bonus_sheet_rules::feat_skill_bonuses`)
+    /// -- the Skills panel adds `skills[<id>]` (and `groups[<family>]` to every family member) to
+    /// each skill's total. Empty when the package is unavailable.
+    pub feat_skill_bonuses: codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses,
 }
 
 /// Wire form of `sheet_rule::SheetLine` -- one line of the "Rules and features" section.
@@ -727,7 +732,7 @@ fn sheet_rule_package() -> &'static Result<codex::rules_core::sheet_rule::SheetR
         let load = codex::rules_core::corpus_loader::load_sheet_rules(&dir);
         if load.package.rules.is_empty() {
             return Err(format!(
-                "no sheet rules under {} ({} file diagnostics; regenerate with `cargo run --locked --bin sheet_rule_convert`)",
+                "no sheet rules under {} ({} file diagnostics; regenerate with `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`)",
                 dir.display(),
                 load.diagnostics.len()
             ));
@@ -738,19 +743,26 @@ fn sheet_rule_package() -> &'static Result<codex::rules_core::sheet_rule::SheetR
 
 /// The "Rules and features" lines for a character: the chassis computation's held set --
 /// the character's own selections, the class-feature records the chassis grounded, and the
-/// racial traits the race resolver applied -- rendered through the live evaluator.
+/// racial traits the race resolver applied -- rendered through the live evaluator; and (SD-36
+/// F6b) the feat skill bonuses folded off those same lines.
 pub(crate) fn sheet_lines_for(
     input: &CharacterInput,
     base: &PilotBaseChassisComputation,
-) -> (Vec<SheetLineDto>, Option<String>) {
+) -> (
+    Vec<SheetLineDto>,
+    Option<String>,
+    codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses,
+) {
+    use codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::{feat_skill_bonuses, FeatSkillBonuses};
     match sheet_rule_package() {
         Ok(package) => {
             let race_traits: Vec<String> =
                 resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()).collect();
             let computed = base.clone().with_sheet_rules(input, package, &race_traits);
-            (map_sheet_lines_dto(&computed.sheet_lines), None)
+            let bonuses = feat_skill_bonuses(package, &computed.sheet_lines);
+            (map_sheet_lines_dto(&computed.sheet_lines), None, bonuses)
         }
-        Err(reason) => (Vec::new(), Some(reason.clone())),
+        Err(reason) => (Vec::new(), Some(reason.clone()), FeatSkillBonuses::default()),
     }
 }
 
@@ -779,7 +791,7 @@ pub(crate) fn feat_options_for(
     seed.race_traits.extend(
         resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()),
     );
-    let facts = CharacterFacts::from_character(input, &base);
+    let facts = CharacterFacts::from_character(input, &base).with_linked_picks(package, &seed);
     let held = held_set(package, &seed, &facts);
 
     let filtered = filter_option_pool(package, &held, &facts, FEAT_POOL, &[]);
@@ -1482,7 +1494,8 @@ fn resolve_alternate_trait_choices(
             id: "race.alternate_trait.mutually_exclusive".to_owned(),
             message: format!(
                 "{} and {} cannot both be taken: ARG's own PREMULT self-exclusion guard on {} \
-                 names {}, which {} sets (arg_abilities_race.lst)",
+                 names {}, which {} sets (per the Advanced Race Guide's own exclusion rule for \
+                 that trait)",
                 conflict.name, conflict.blocked_by_name, conflict.name, conflict.flag,
                 conflict.blocked_by_name
             ),
@@ -1700,67 +1713,229 @@ const DEFAULT_CHARACTER_SEED_MARKER: &str = ".default_character_seeded";
 const DEFAULT_CHARACTER_ID: &str = "00000000-0000-0000-0000-000000000001";
 const DEFAULT_CHARACTER_SAVED_AT: &str = "2026-01-01T00:00:00.000Z";
 
-/// Seeds a starter character ("Aldric Ironhand": Human Fighter 3) into a
-/// fresh install so there's something to open immediately instead of an
-/// empty character list.
+/// SD-36 F6e: the second starter seed's own marker. Separate from Aldric's so an install that
+/// already carries Aldric (and his marker) gains Elowen on its next launch.
+const SECOND_SEED_MARKER: &str = ".default_character_seeded_2";
+const SECOND_SEED_CHARACTER_ID: &str = "00000000-0000-0000-0000-000000000002";
+const WIZARD_CLASS_ID_FOR_SEED: &str = "class:wizard";
+
+/// Fireball as the engine and the Add Spell picker name it: the key of the CRB spell-list
+/// row (`rules_tables::crb::spell_list::SPELL_LIST`, generated from `cr_spells.lst`), which is
+/// the label of the converted record [`FIREBALL_CONVERTED_RECORD_ID`]
+/// (`data/sheet_rules/core_rulebook/spell/fireball.json`, granted by
+/// `ClassSpellList { id: "wizard", spell_level: 3 }`). Pinned against both by
+/// `the_fireball_seed_id_is_the_converted_crb_record`.
+const FIREBALL_SPELL_ID: &str = "Fireball";
+#[cfg(test)]
+const FIREBALL_CONVERTED_RECORD_ID: &str = "core_rulebook:spell:fireball";
+
+/// One starter character: its own marker, the create request, and the spells recorded AND
+/// prepared on top of the class's canonical seeds (the `record_and_prepare_spell_selection`
+/// mutation the Spells tab's picker runs).
+struct StarterSeed {
+    marker: &'static str,
+    request: CreateCharacterRequest,
+    record_and_prepare_spells: Vec<(&'static str, &'static str)>,
+    /// The seed's whole skill-rank spend, written through the same input the sheet's "Manage
+    /// skill allocation" dialog writes (`apply_set_skill_allocations`, replace-wholesale) --
+    /// SD-36 F7a (F7-8). Every point the character earns is placed; see [`starter_seeds`].
+    skill_ranks: &'static [(&'static str, u8)],
+}
+
+/// Aldric Ironhand (Human Fighter 3, Int 14 = +2): (2 fighter + 2 Int + 1 Human Skilled) x 3
+/// = 15 ranks. Climb, Intimidate and Swim at 1 are the create path's GE-06 posture (the engine
+/// computes those three totals only at rank 1); the other 12 go 3 each (max ranks = character
+/// level 3) into four more Fighter class skills.
+const ALDRIC_SEED_SKILL_RANKS: &[(&str, u8)] = &[
+    ("skill:climb", 1),
+    ("skill:intimidate", 1),
+    ("skill:swim", 1),
+    ("skill:ride", 3),
+    ("skill:survival", 3),
+    ("skill:knowledge_dungeoneering", 3),
+    ("skill:knowledge_engineering", 3),
+];
+
+/// Elowen Ashgrave (Human Wizard 5, Int 18 = +4): (2 wizard + 4 Int + 1 Human Skilled) x 5
+/// = 35 ranks. Climb, Intimidate and Swim at 1 are the create path's GE-06 posture (3 points,
+/// cross-class for a Wizard); the other 32 go into Wizard class skills, at most 5 each (max
+/// ranks = character level 5).
+const ELOWEN_SEED_SKILL_RANKS: &[(&str, u8)] = &[
+    ("skill:climb", 1),
+    ("skill:intimidate", 1),
+    ("skill:swim", 1),
+    ("skill:spellcraft", 5),
+    ("skill:knowledge_arcana", 5),
+    ("skill:knowledge_planes", 5),
+    ("skill:knowledge_dungeoneering", 5),
+    ("skill:knowledge_religion", 5),
+    ("skill:fly", 5),
+    ("skill:linguistics", 2),
+];
+
+fn starter_seed_request(
+    character_id: &str,
+    display_label: &str,
+    class_id: &str,
+    level: u8,
+    ability_scores: AbilityScoresDto,
+    ability_bonus_target: &str,
+) -> CreateCharacterRequest {
+    CreateCharacterRequest {
+        character_id: character_id.to_owned(),
+        display_label: display_label.to_owned(),
+        race_id: HUMAN_RACE_ID.to_owned(),
+        class_id: class_id.to_owned(),
+        level,
+        ability_scores,
+        ability_bonus_target: ability_bonus_target.to_owned(),
+        saved_at: DEFAULT_CHARACTER_SAVED_AT.to_owned(),
+        // No alternate racial trait, no traits, no class-choice override: a starter seed
+        // takes nothing nobody chose -- the same "no fabricated default" reasoning the
+        // class seeds in `class_seeds::canonical_seeds_for` are each argued down to.
+        selected_alternate_trait_keys: Vec::new(),
+        companion_species: None,
+        selected_traits: Vec::new(),
+        trait_skill_choices: Vec::new(),
+        additional_choices: Vec::new(),
+    }
+}
+
+/// The starter seeds, in the order they are written.
 ///
-/// Aldric is a single-class Fighter, not the Fighter 3 / Wizard 1 multiclass
-/// build shown in the browser-preview sample data (`previewData.ts`) — the
-/// real compute engine only reaches `Computed` for a single-class Fighter
-/// today (`compute_fighter_chassis` in `src/rules_core/pilot_compute.rs`
-/// gates base attack bonus / base saves on that alone; verified directly,
-/// not assumed — a single-class Wizard build was tried and still comes back
-/// `Blocked`). Ability scores are chosen to reproduce the same ability
-/// modifiers as the preview's Aldric (+3/+1/+2/+2/+1/-1).
+/// **Aldric Ironhand** (Human Fighter 3): scores chosen to reproduce the preview's Aldric
+/// modifiers (+3/+1/+2/+2/+1/-1).
 ///
-/// Gated on a marker file, not on whether the characters directory is
-/// currently empty — so deleting the starter character does not bring it
-/// back on next launch. Reuses `compose_character_input`/`create_character`'s
-/// own invariant: only saves if the build actually computes, never writes an
-/// unproven build.
+/// **Elowen Ashgrave** (Human Wizard 5, operator ruling 2026-09-27 option 3): Str 8, Dex 14,
+/// Con 13, Int 16, Wis 12, Cha 10 as stored, the Human +2 to Intelligence (Int 18, +4). Her
+/// spellbook is the canonical Wizard seed (Evocation specialist, Light recorded and prepared)
+/// plus Fireball, recorded and prepared -- Fireball is a 3rd-level Wizard spell, and a Wizard
+/// 5 has 3rd-level slots (CRB p.79 Table 3-16: one base slot at 5th; Int 18 adds one bonus
+/// 3rd-level slot, CRB p.17 Table 1-3; the Evocation specialist adds one more, CRB p.79).
+fn starter_seeds() -> Vec<StarterSeed> {
+    vec![
+        StarterSeed {
+            marker: DEFAULT_CHARACTER_SEED_MARKER,
+            request: starter_seed_request(
+                DEFAULT_CHARACTER_ID,
+                "Aldric Ironhand",
+                "class:fighter",
+                3,
+                AbilityScoresDto {
+                    strength: 17,
+                    dexterity: 13,
+                    constitution: 14,
+                    intelligence: 14,
+                    wisdom: 12,
+                    charisma: 8,
+                },
+                "strength",
+            ),
+            record_and_prepare_spells: Vec::new(),
+            skill_ranks: ALDRIC_SEED_SKILL_RANKS,
+        },
+        StarterSeed {
+            marker: SECOND_SEED_MARKER,
+            request: starter_seed_request(
+                SECOND_SEED_CHARACTER_ID,
+                "Elowen Ashgrave",
+                WIZARD_CLASS_ID_FOR_SEED,
+                5,
+                AbilityScoresDto {
+                    strength: 8,
+                    dexterity: 14,
+                    constitution: 13,
+                    intelligence: 16,
+                    wisdom: 12,
+                    charisma: 10,
+                },
+                "intelligence",
+            ),
+            record_and_prepare_spells: vec![(FIREBALL_SPELL_ID, WIZARD_CLASS_ID_FOR_SEED)],
+            skill_ranks: ELOWEN_SEED_SKILL_RANKS,
+        },
+    ]
+}
+
+/// Seeds the starter characters ("Aldric Ironhand": Human Fighter 3; "Elowen Ashgrave":
+/// Human Wizard 5 with Fireball prepared) into an install so there's something to open
+/// immediately instead of an empty character list.
+///
+/// Each seed is gated on its OWN marker file, not on whether the characters directory is
+/// currently empty -- so deleting a starter character does not bring it back on next
+/// launch, and an install that already carries Aldric's marker still gains Elowen. A seed
+/// whose character id already exists on disk is never written (a player's edits are never
+/// overwritten), marker or not. Reuses `compose_character_input`/`create_character`'s own
+/// invariant: only saves if the build actually computes, never writes an unproven build.
 pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), String> {
     let app_data_dir = app
         .path()
         .app_data_dir()
         .map_err(|err| format!("could not resolve app data directory: {err}"))?;
-    let marker_path = app_data_dir.join(DEFAULT_CHARACTER_SEED_MARKER);
+    seed_default_characters_at(&app_data_dir, &app.package_info().version.to_string())
+}
+
+/// The body of [`seed_default_character_if_needed`], split out so it is testable against a
+/// temp app-data directory. Every seed is attempted; the errors of any that failed are
+/// joined into one.
+pub(crate) fn seed_default_characters_at(
+    app_data_dir: &Path,
+    app_version: &str,
+) -> Result<(), String> {
+    let errors: Vec<String> = starter_seeds()
+        .into_iter()
+        .filter_map(|seed| seed_one_starter(app_data_dir, app_version, seed).err())
+        .collect();
+    if errors.is_empty() {
+        Ok(())
+    } else {
+        Err(errors.join("; "))
+    }
+}
+
+fn seed_one_starter(app_data_dir: &Path, app_version: &str, seed: StarterSeed) -> Result<(), String> {
+    let marker_path = app_data_dir.join(seed.marker);
     if marker_path.exists() {
         return Ok(());
     }
-
-    let request = CreateCharacterRequest {
-        character_id: DEFAULT_CHARACTER_ID.to_owned(),
-        display_label: "Aldric Ironhand".to_owned(),
-        race_id: HUMAN_RACE_ID.to_owned(),
-        class_id: "class:fighter".to_owned(),
-        level: 3,
-        ability_scores: AbilityScoresDto {
-            strength: 17,
-            dexterity: 13,
-            constitution: 14,
-            intelligence: 14,
-            wisdom: 12,
-            charisma: 8,
-        },
-        ability_bonus_target: "strength".to_owned(),
-        saved_at: DEFAULT_CHARACTER_SAVED_AT.to_owned(),
-        // The starter character takes no alternate racial trait: it is a plain
-        // Human Fighter, and seeding a swap nobody chose would be exactly the
-        // fabricated-default this file's other seeds are each argued down to.
-        selected_alternate_trait_keys: Vec::new(),
-        companion_species: None,
-        // The starter character takes no traits either: same "no
-        // fabricated default" reasoning as the alternate-trait comment
-        // immediately above.
-        selected_traits: Vec::new(),
-        trait_skill_choices: Vec::new(),
-        additional_choices: Vec::new(),
+    let write_marker = || -> Result<(), String> {
+        std::fs::create_dir_all(app_data_dir)
+            .map_err(|err| format!("{}: {err}", app_data_dir.display()))?;
+        std::fs::write(&marker_path, "seeded\n")
+            .map_err(|err| format!("{}: {err}", marker_path.display()))
     };
 
-    let character_input = compose_character_input(&request);
+    let request = seed.request;
+    let root = characters_root_from_app_data_dir(app_data_dir).join(&request.character_id);
+    if root.exists() {
+        // The id is taken (a restored backup, a player's own character): never overwrite.
+        return write_marker();
+    }
+
+    let mut character_input = compose_character_input(&request);
+    for (spell_id, source_class_id) in &seed.record_and_prepare_spells {
+        crate::pf1_adapter::apply_record_and_prepare_spell_selection(&mut character_input, spell_id, source_class_id);
+    }
+    crate::pf1_adapter::apply_set_skill_allocations(
+        &mut character_input,
+        seed.skill_ranks
+            .iter()
+            .map(|(skill_id, ranks)| SkillAllocation { skill_id: (*skill_id).to_owned(), ranks: *ranks })
+            .collect(),
+    );
     let receipt = build_pilot_headless_receipt(&character_input);
     if receipt.status != HeadlessReceiptStatus::Computed {
-        return Err("default starter character build did not compute; not seeding".to_owned());
+        let blocking: Vec<&str> = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .filter(|diagnostic| diagnostic.claim_blocking)
+            .map(|diagnostic| diagnostic.id.as_str())
+            .collect();
+        return Err(format!(
+            "starter character '{}' did not compute (blocking: {blocking:?}); not seeding",
+            request.display_label
+        ));
     }
 
     let envelope = SavedCharacterEnvelope {
@@ -1769,21 +1944,15 @@ pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), St
         revision_kind: SavedCharacterRevisionKind::Authoritative,
         saved_at: request.saved_at.clone(),
         schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
-        app_or_runtime_version: app.package_info().version.to_string(),
+        app_or_runtime_version: app_version.to_owned(),
         content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
         game_system: GAME_SYSTEM_ID.to_owned(),
         latest_authoritative_revision_ref: format!("{}.rev.1", request.character_id),
         display_label: request.display_label.clone(),
         character_input,
     };
-
-    let root = characters_root_from_app_data_dir(&app_data_dir).join(&request.character_id);
     SavedCharacterStore::save(&envelope, &root).map_err(|err| err.message)?;
-
-    std::fs::create_dir_all(&app_data_dir).map_err(|err| format!("{}: {err}", app_data_dir.display()))?;
-    std::fs::write(&marker_path, "seeded\n").map_err(|err| format!("{}: {err}", marker_path.display()))?;
-
-    Ok(())
+    write_marker()
 }
 
 #[tauri::command]
@@ -1851,7 +2020,7 @@ pub(crate) fn load_saved_character_at_root(
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
     ));
-    let (sheet_lines, sheet_rules_unavailable_reason) =
+    let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses) =
         sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
 
     Ok(LoadSavedCharacterResponse {
@@ -1872,6 +2041,7 @@ pub(crate) fn load_saved_character_at_root(
         equipment_selections: map_equipment_selections_dto(&envelope.character_input),
         sheet_lines,
         sheet_rules_unavailable_reason,
+        feat_skill_bonuses,
     })
 }
 
@@ -3591,6 +3761,36 @@ fn resolve_characters_root(app: &tauri::AppHandle) -> Result<PathBuf, String> {
     Ok(characters_root_from_app_data_dir(&app_data_dir))
 }
 
+/// SD-36 Epic E desktop-P1-01 (SD-34 R11-01). `resolve_character_root` joined
+/// a client-supplied `character_id` straight onto the characters root with no
+/// validation at all — a `character_id` of `"../../../../Documents"` (or any
+/// string containing a path separator or an absolute-path prefix) escaped the
+/// characters directory entirely, and `delete_character` routes through this
+/// same function to `std::fs::remove_dir_all`. This is the ONE choke point
+/// (`resolve_character_root` backs 40+ command call sites): reject the shape
+/// here, once, rather than at each caller.
+///
+/// Rejects: empty, any `..` path component (Windows and Unix separators
+/// both), a leading path separator, and a Windows drive prefix (`C:`) — a
+/// real character id is always the bare UUID this app itself generated.
+pub(crate) fn validate_character_id(character_id: &str) -> Result<(), String> {
+    if character_id.is_empty() {
+        return Err("character_id must not be empty".to_string());
+    }
+    if character_id.starts_with('/') || character_id.starts_with('\\') {
+        return Err(format!("character_id must not be an absolute path: {character_id:?}"));
+    }
+    if character_id.chars().nth(1) == Some(':') {
+        return Err(format!("character_id must not carry a drive prefix: {character_id:?}"));
+    }
+    for component in character_id.split(['/', '\\']) {
+        if component == ".." {
+            return Err(format!("character_id must not contain a '..' path component: {character_id:?}"));
+        }
+    }
+    Ok(())
+}
+
 /// `pub(crate)` (rather than private) so the `characterHub` submodule's
 /// commands (e.g. `appendToCharacter` — SD-24 Epic 7, Criterion 7.1) can
 /// resolve the same on-disk character root this module's own commands use,
@@ -3599,6 +3799,7 @@ pub(crate) fn resolve_character_root(
     app: &tauri::AppHandle,
     character_id: &str,
 ) -> Result<PathBuf, String> {
+    validate_character_id(character_id)?;
     Ok(resolve_characters_root(app)?.join(character_id))
 }
 
@@ -4745,11 +4946,423 @@ pub fn list_race_creation_roster() -> RaceCreationRosterResponse {
     build_race_creation_roster()
 }
 
+// ----- SD-36 Epic F4b: the class creation roster and the level-up class options -----
+//
+// Both are read off the census (`codex::rules_core::class_census`), never a hand list: the
+// creation roster is exactly the census rows whose roster reason is `offered` (Computed at
+// every level of their own sweep, a stated hit die, not prestige, not an Ex-* state), and a
+// prestige class is offered only at level-up, with its converted entry requirements printed
+// and each judged met/unmet against the character -- never blocking (ruling §9.2).
+
+/// PF1's character level cap: the sum of class levels never exceeds 20.
+pub(crate) const CHARACTER_LEVEL_CAP: u8 = 20;
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ClassCreationEntryDto {
+    /// `class:<slug>`.
+    pub class_id: String,
+    /// The converted class principal's own label.
+    pub label: String,
+    /// The census family (`ClassFamily`, snake_case), the roster's grouping key.
+    pub family: String,
+    /// The family's printed heading.
+    pub family_label: String,
+    /// The first book the census found the class in.
+    pub book: String,
+    /// The class's hit die -- SD-36 F6b: the engine's one hit-die rule
+    /// (`pilot_compute::hit_die_source`: the bespoke class module that computes the class's hit
+    /// points first, then the converted record). The roster rule's input: a class is offered iff
+    /// it has one.
+    pub hit_die: u8,
+    /// The hit die the engine's hit-point fold reads -- the same source as [`Self::hit_die`]
+    /// (SD-36 F6b), so it equals it on every offered class. The CRB Monk is d8 (the CRB table that
+    /// computes its hit points), not its converted record's FS-23 `HD:10`.
+    pub hit_points_die: Option<u8>,
+    /// Skill ranks gained per level, off the converted principal's `Skill ranks per level` row
+    /// (`skill_ranks_per_level_from_package`); `None` when no principal states it -- the sheet
+    /// then names the gap rather than assuming a figure.
+    pub skill_ranks_per_level: Option<u8>,
+    pub max_level: u8,
+}
+
+/// A census class the creation roster leaves out, and the named reason.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WithheldClassDto {
+    pub class_id: String,
+    pub label: String,
+    /// One of `prestige | ex_state | not_computed | hit_die_absent`.
+    pub reason: String,
+    /// The class's hit die, when its converted principal states one (a character may hold a
+    /// withheld prestige class through level-up; its HP line reads this, or names the gap).
+    pub hit_die: Option<u8>,
+    /// Same rule as [`ClassCreationEntryDto::hit_points_die`].
+    pub hit_points_die: Option<u8>,
+    /// Skill ranks per level, when stated (same source as [`ClassCreationEntryDto`]'s).
+    pub skill_ranks_per_level: Option<u8>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ClassCreationRosterResponse {
+    /// Every class offered at creation, grouped by family (census family order), registry order
+    /// within a family.
+    pub classes: Vec<ClassCreationEntryDto>,
+    /// Every census class not offered, each with its reason. Prestige classes (offered at
+    /// level-up) and Ex-* states (census-only) are here by rule, not as a gap.
+    pub withheld: Vec<WithheldClassDto>,
+    /// One line per class withheld for a GAP (`not_computed`, `hit_die_absent`). Empty in a
+    /// healthy checkout.
+    pub diagnostics: Vec<String>,
+}
+
+fn roster_reason_word(reason: codex::rules_core::class_census::RosterReason) -> &'static str {
+    use codex::rules_core::class_census::RosterReason;
+    match reason {
+        RosterReason::Offered => "offered",
+        RosterReason::HitDieAbsent => "hit_die_absent",
+        RosterReason::NotComputed => "not_computed",
+        RosterReason::Prestige => "prestige",
+        RosterReason::ExState => "ex_state",
+    }
+}
+
+fn class_skill_ranks(class_id: &str) -> Option<u8> {
+    let slug = class_id.strip_prefix("class:")?;
+    codex::rules_core::pilot_compute::class_chassis_sheet_rules::skill_ranks_per_level_from_package(slug)
+        .map(|(ranks, _)| ranks)
+}
+
+/// The hit die the hit-point fold reads for `class_id` -- SD-36 F6b: the engine's one hit-die rule
+/// (`pilot_compute::hit_die_source::hit_die_source`), the same one the roster reason and the
+/// sheet's printed `Hit die:` line read.
+fn class_hit_points_die(class_id: &str) -> Option<u8> {
+    codex::rules_core::pilot_compute::hit_die_source::hit_die_source(class_id).map(|source| source.die)
+}
+
+/// The hit die the hit-point fold reads for `class_id`, for the read-only `list_class_facts`
+/// command.
+pub(crate) fn class_hit_die_for(class_id: &str) -> Option<u8> {
+    class_hit_points_die(class_id)
+}
+
+fn family_word(family: codex::rules_core::class_census::ClassFamily) -> String {
+    serde_json::to_value(family)
+        .ok()
+        .and_then(|value| value.as_str().map(str::to_owned))
+        .unwrap_or_else(|| format!("{family:?}"))
+}
+
+/// Builds the class creation roster from the census. `Err` names why the census could not be
+/// swept (the sweep fixture did not load); a sweep that offers nothing is also an `Err` naming
+/// that -- never an empty picker.
+pub fn build_class_creation_roster() -> Result<ClassCreationRosterResponse, String> {
+    use codex::rules_core::class_census::{
+        class_creation_roster, class_roster_reasons, roster_display_name, roster_hit_die, RosterReason,
+    };
+    let offered = class_creation_roster().map_err(|e| format!("class creation roster unavailable: {e}"))?;
+    if offered.is_empty() {
+        return Err("class creation roster unavailable: the census offered no class at all \
+                    (every census row carried a withholding reason)"
+            .to_owned());
+    }
+    let reasons = class_roster_reasons().map_err(|e| format!("class creation roster unavailable: {e}"))?;
+    let classes = offered
+        .into_iter()
+        .map(|entry| ClassCreationEntryDto {
+            skill_ranks_per_level: class_skill_ranks(&entry.id),
+            hit_points_die: class_hit_points_die(&entry.id),
+            class_id: entry.id,
+            label: entry.display_name,
+            family: family_word(entry.family),
+            family_label: entry.family.label().to_owned(),
+            book: entry.book,
+            hit_die: entry.hit_die,
+            max_level: entry.max_level,
+        })
+        .collect();
+    let mut withheld = Vec::new();
+    let mut diagnostics = Vec::new();
+    for (entry, reason) in reasons.iter().filter(|(_, reason)| !reason.in_desktop_roster()) {
+        if matches!(reason, RosterReason::NotComputed | RosterReason::HitDieAbsent) {
+            diagnostics.push(format!(
+                "{}: withheld from character creation — {}",
+                entry.class_id,
+                roster_reason_word(*reason)
+            ));
+        }
+        withheld.push(WithheldClassDto {
+            class_id: entry.class_id.clone(),
+            label: roster_display_name(entry),
+            reason: roster_reason_word(*reason).to_owned(),
+            hit_die: roster_hit_die(entry),
+            hit_points_die: class_hit_points_die(&entry.class_id),
+            skill_ranks_per_level: class_skill_ranks(&entry.class_id),
+        });
+    }
+    Ok(ClassCreationRosterResponse { classes, withheld, diagnostics })
+}
+
+/// Serves the census-derived class roster the creation form builds its class picker from.
+///
+/// `async` so the first call -- which sweeps every census class unless the startup warm-up
+/// (`main.rs`) already has -- runs off the UI thread; later calls read the per-process cache.
+#[tauri::command(async)]
+pub fn list_class_creation_roster() -> Result<ClassCreationRosterResponse, String> {
+    build_class_creation_roster()
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListLevelUpClassOptionsRequest {
+    pub character_id: String,
+}
+
+/// A class the next character level may be taken in (advance a held class, or add a base class).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpClassOptionDto {
+    pub class_id: String,
+    pub label: String,
+    pub family: String,
+    pub family_label: String,
+    /// The class level the character holds now (`0` for a class it would add).
+    pub current_level: u8,
+    pub next_level: u8,
+    pub max_level: u8,
+    /// SD-36 F6c: the engine's named refusal of this level-up, read before it is taken
+    /// (`None` when the level can be taken). An option with a blocker is shown, not selectable.
+    pub blocker: Option<LevelUpBlockerDto>,
+}
+
+/// Why the engine refuses a level-up option: the mix gate's diagnostic id, its plain reading,
+/// and the fold's full words (`pilot_compute::level_up_mix_blocker`).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpBlockerDto {
+    pub id: String,
+    pub summary: String,
+    pub message: String,
+}
+
+/// The engine's named refusal of taking the next level in `class_id`, if any: the level-up is
+/// applied (with its seeds, as Accept would) and the mix gate is asked.
+fn level_up_blocker(input: &CharacterInput, class_id: &str) -> Option<LevelUpBlockerDto> {
+    let mut leveled = input.clone();
+    crate::pf1_adapter::apply_level_up(&mut leveled, class_id);
+    codex::rules_core::pilot_compute::level_up_mix_blocker(&leveled, class_id)
+        .map(|b| LevelUpBlockerDto { id: b.id, summary: b.summary, message: b.message })
+}
+
+/// One printed entry requirement and its met/unmet note for this character.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EntryRequirementDto {
+    /// The requirement in the rule's words.
+    pub text: String,
+    /// `met | unmet | situational`.
+    pub status: String,
+    /// The condition that prints, for a `situational` requirement.
+    pub condition: Option<String>,
+}
+
+/// A prestige class the character may add. Offered whether or not its requirements are met
+/// (ruling §9.2): the requirements print, each with its note.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PrestigeClassOptionDto {
+    pub class_id: String,
+    pub label: String,
+    pub book: String,
+    pub next_level: u8,
+    pub max_level: u8,
+    /// `None` when the converted record states no hit die (the HP line then names the gap).
+    pub hit_die: Option<u8>,
+    /// Empty when the record states no entry requirement.
+    pub entry_requirements: Vec<EntryRequirementDto>,
+    /// `true` when no printed requirement is `unmet`. A note, never a gate.
+    pub requirements_all_met: bool,
+    /// SD-36 F6c: the engine's named refusal (see [`LevelUpClassOptionDto::blocker`]).
+    pub blocker: Option<LevelUpBlockerDto>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpClassOptionsResponse {
+    pub character_level: u8,
+    pub level_cap: u8,
+    /// `true` when the character is already at the cap: every list is empty for that reason.
+    pub at_level_cap: bool,
+    /// Held classes below their own max level, in held order.
+    pub advance: Vec<LevelUpClassOptionDto>,
+    /// Creation-roster classes the character does not hold, in roster order.
+    pub add_base: Vec<LevelUpClassOptionDto>,
+    /// Every census prestige class the character does not hold, in census id order.
+    pub add_prestige: Vec<PrestigeClassOptionDto>,
+    /// Anything the options could not be read for, named (a held class at its max level, a
+    /// held class the census does not know, a prestige record that failed to load).
+    pub diagnostics: Vec<String>,
+}
+
+/// The level-up class options for `input`: advance a held class, add a base class, or add a
+/// prestige class with its entry requirements printed and judged against this character.
+pub fn build_level_up_class_options(input: &CharacterInput) -> Result<LevelUpClassOptionsResponse, String> {
+    use codex::rules_core::class_census::{census, prestige_entry_requirements, roster_display_name, roster_hit_die, EntryRequirementVerdict};
+    let level = character_level(input);
+    let mut response = LevelUpClassOptionsResponse {
+        character_level: level,
+        level_cap: CHARACTER_LEVEL_CAP,
+        at_level_cap: level >= CHARACTER_LEVEL_CAP,
+        advance: Vec::new(),
+        add_base: Vec::new(),
+        add_prestige: Vec::new(),
+        diagnostics: Vec::new(),
+    };
+    if response.at_level_cap {
+        response.diagnostics.push(format!(
+            "character level {level} is the PF1 cap of {CHARACTER_LEVEL_CAP}: no further level can be taken"
+        ));
+        return Ok(response);
+    }
+
+    let census = census();
+    let roster = build_class_creation_roster()?;
+    let held_level = |class_id: &str| {
+        input.chosen.class_levels.iter().find(|held| held.class_id == class_id).map(|held| held.level)
+    };
+
+    for held in &input.chosen.class_levels {
+        let Some(entry) = census.get(&held.class_id) else {
+            response.diagnostics.push(format!("{}: held, but not a census class; its max level is unknown", held.class_id));
+            continue;
+        };
+        if held.level >= entry.max_level {
+            response.diagnostics.push(format!("{}: at its max class level {}", held.class_id, entry.max_level));
+            continue;
+        }
+        response.advance.push(LevelUpClassOptionDto {
+            class_id: held.class_id.clone(),
+            label: roster_display_name(entry),
+            family: family_word(entry.family),
+            family_label: entry.family.label().to_owned(),
+            current_level: held.level,
+            next_level: held.level + 1,
+            max_level: entry.max_level,
+            blocker: level_up_blocker(input, &held.class_id),
+        });
+    }
+
+    response.add_base = roster
+        .classes
+        .iter()
+        .filter(|class| held_level(&class.class_id).is_none())
+        .map(|class| LevelUpClassOptionDto {
+            class_id: class.class_id.clone(),
+            label: class.label.clone(),
+            family: class.family.clone(),
+            family_label: class.family_label.clone(),
+            current_level: 0,
+            next_level: 1,
+            max_level: class.max_level,
+            blocker: level_up_blocker(input, &class.class_id),
+        })
+        .collect();
+
+    let package = sheet_rule_package().as_ref().map_err(|reason| format!("prestige entry requirements unavailable: {reason}"))?;
+    let base = compute_pilot_base_chassis(input);
+    let mut seed = HeldSeed::from_character(input, &base);
+    seed.race_traits.extend(resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()));
+    let facts = CharacterFacts::from_character(input, &base).with_linked_picks(package, &seed);
+    let held = held_set(package, &seed, &facts);
+
+    for entry in census.values().filter(|entry| entry.is_prestige && held_level(&entry.class_id).is_none()) {
+        match prestige_entry_requirements(package, entry, &held, &facts) {
+            Ok(requirements) => response.add_prestige.push(PrestigeClassOptionDto {
+                class_id: entry.class_id.clone(),
+                label: roster_display_name(entry),
+                book: entry.books.first().cloned().unwrap_or_default(),
+                next_level: 1,
+                max_level: entry.max_level,
+                hit_die: roster_hit_die(entry),
+                requirements_all_met: requirements.iter().all(|r| r.verdict != EntryRequirementVerdict::Unmet),
+                blocker: level_up_blocker(input, &entry.class_id),
+                entry_requirements: requirements
+                    .into_iter()
+                    .map(|r| EntryRequirementDto { text: r.text, status: r.verdict.as_str().to_owned(), condition: r.condition })
+                    .collect(),
+            }),
+            Err(reason) => response.diagnostics.push(format!("prestige option withheld — {reason}")),
+        }
+    }
+    Ok(response)
+}
+
+/// Serves the level-up class options for a saved character (`async`: it reads the same roster).
+#[tauri::command(async)]
+pub fn list_level_up_class_options(
+    app: tauri::AppHandle,
+    request: ListLevelUpClassOptionsRequest,
+) -> Result<LevelUpClassOptionsResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let envelope = SavedCharacterStore::load(&root).map_err(|err| err.message)?;
+    build_level_up_class_options(&envelope.character_input)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
     use std::collections::BTreeSet;
+
+    // ----- SD-36 Epic E desktop-P1-01: character_id path-traversal validation -----
+
+    #[test]
+    fn a_real_generated_character_id_validates() {
+        assert!(validate_character_id("3f2a9c7e-1b4d-4a5f-9e6c-2d8b7a1f0c3e").is_ok());
+        assert!(validate_character_id("plain-alphanumeric-id-123").is_ok());
+    }
+
+    #[test]
+    fn an_empty_character_id_is_rejected() {
+        assert!(validate_character_id("").is_err());
+    }
+
+    #[test]
+    fn a_dotdot_traversal_is_rejected_in_any_position_or_separator_style() {
+        for id in [
+            "..",
+            "../../../../Documents",
+            "..\\..\\Windows",
+            "safe/../../etc/passwd",
+            "safe\\..\\..\\secrets",
+            "foo/..",
+        ] {
+            assert!(validate_character_id(id).is_err(), "{id:?} must be rejected");
+        }
+    }
+
+    #[test]
+    fn an_absolute_path_is_rejected() {
+        for id in ["/etc/passwd", "\\\\server\\share", "/tmp/x"] {
+            assert!(validate_character_id(id).is_err(), "{id:?} must be rejected");
+        }
+    }
+
+    #[test]
+    fn a_windows_drive_prefix_is_rejected() {
+        assert!(validate_character_id("C:\\Windows\\System32").is_err());
+        assert!(validate_character_id("C:/Windows").is_err());
+    }
+
+    #[test]
+    fn resolve_character_root_rejects_a_traversal_id_before_touching_the_filesystem() {
+        // No AppHandle available in a unit test; the validator runs and returns Err
+        // BEFORE `resolve_characters_root` (which needs the handle) is ever reached --
+        // confirmed here by calling `validate_character_id` directly, the exact guard
+        // `resolve_character_root` now runs first.
+        assert!(validate_character_id("../../elsewhere").is_err());
+    }
 
     // ----- Race-creation roster (the 7 -> 18 widening) -----
 
@@ -5230,7 +5843,7 @@ mod tests {
     /// one.
     #[test]
     fn every_racial_trait_on_a_loaded_sheet_carries_rendered_prose_and_names_what_it_replaced() {
-        use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
+        use codex_ingest::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
         let root = tempdir("sheet-racial-trait-coverage");
         saved_or_panic(
@@ -5392,6 +6005,14 @@ mod tests {
                     .expect("the refusal must name the guard");
                 assert!(diagnostic.claim_blocking);
                 assert!(diagnostic.message.contains("Dwarf_Replace"), "{}", diagnostic.message);
+                // SD-36 Epic A / D6: a player-facing diagnostic must never name
+                // a PCGen source file. `arg_abilities_race.lst` leaked through
+                // here; the wording now names the rule neutrally instead.
+                assert!(
+                    !diagnostic.message.contains(".lst"),
+                    "diagnostic must not name a PCGen source file: {}",
+                    diagnostic.message
+                );
             }
         }
     }
@@ -5723,7 +6344,7 @@ mod tests {
     /// player picking it at creation -- exactly the gap this cycle's brief
     /// asked to be either closed or precisely disproven with evidence.
     #[test]
-    fn all_62_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
+    fn all_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
         let repo_root = crate::authoring_workbench::codex_repo_root().expect("repo root");
         let (records, unresolved) =
             crate::class_catalog_generic::load_generic_class_progressions(&repo_root);
@@ -5737,7 +6358,22 @@ mod tests {
         // class no dispatcher knows.
         let names: Vec<(String, String)> =
             records.into_iter().map(|record| (record.name, record.slug)).collect();
-        assert_eq!(names.len(), 62, "must cover all 62, not a partial sweep");
+        // SD-36 Epic E CONV-05: was 62. `load_generic_class_progressions` iterates
+        // `class_chassis_sheet_rules::records(&CLASS_FAMILY_BOOKS)` per (book, slug) pair,
+        // never deduplicated by slug the way `generic_class_chassis::generic_class_records()`
+        // is -- CONV-05 fixed degradation to be per-occurrence rather than record-wide
+        // (`convert.rs`), un-hiding 19 (book, slug) pairs within `CLASS_FAMILY_BOOKS` whose
+        // clean BAB/save formulas an unrelated degrading token on the same record used to wipe
+        // to words (verified by hand for `inner_sea_gods:class:evangelist`: a genuine PF1 3/4
+        // BAB + good Reflex progression). 62 + 19 = 81. Re-derive:
+        // `class_catalog_generic::load_generic_class_progressions(&repo_root).0.len()`.
+        //
+        // SD-36 Epic F2a: 81 -> 125, `core_rulebook` (+27) and
+        // `advanced_players_guide` (+17) appended to `CLASS_FAMILY_BOOKS` (see
+        // `class_catalog_generic`'s own pin). Every CRB/APG prestige class now
+        // reaches its converted chassis row here too, rather than
+        // `class_chassis.unsupported`.
+        assert_eq!(names.len(), 125, "must cover all 125, not a partial sweep");
 
         let mut checked = 0usize;
         for (name, slug) in &names {
@@ -5752,15 +6388,15 @@ mod tests {
             checked += 1;
         }
         assert_eq!(
-            checked, 62,
-            "must have exercised all 62 conventional classes, not a partial sweep"
+            checked, 125,
+            "must have exercised all 125 conventional class records, not a partial sweep"
         );
     }
 
     /// SD-32 T12 Epic 10 row 20 cycle 7: closes cycle 6's own named wiring
     /// gap ("`ground_companion_stat_block` has zero live callers anywhere
     /// in the crate") and proves it at the real character-creation
-    /// altitude, the same way `all_62_generic_classes_reach_a_real_
+    /// altitude, the same way `all_generic_classes_reach_a_real_
     /// chassis_at_character_creation_altitude` proved the class picker --
     /// through `CreateCharacterRequest` -> `compose_character_input` ->
     /// `build_pilot_headless_receipt`, never `generic_class_chassis::
@@ -6558,12 +7194,81 @@ mod tests {
             std::fs::remove_dir_all(&root).ok();
         }
 
+        // SD-36 Epic F1 (2026-09-22): the converted-record proficiency reader closed Samurai, and
+        // Epic F1c-1 (grant-by-type selectors convert) closed Magus, the last of this roster that
+        // was Blocked. The non-vacuity guard therefore no longer rests on the wealth roster: a
+        // prestige class alone is a genuinely blocked build (no base-class levels; census
+        // `prestige_alone_blocked` = 74 of 74). SD-36 Epic F2b: it is Blocked BY the game rule,
+        // `prestige_class.requires_base_class_levels` -- asserted, so this guard fails (rather
+        // than passing on some unrelated blocker) if that rule ever stops firing.
+        let prestige_alone = "class:eldritch_knight";
+        let root = tempdir("create-character-starting-wealth-blocked-prestige-alone");
+        let request = request_for_class("race:human", prestige_alone, 1);
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        match response {
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics
+                        .iter()
+                        .any(|d| d.id == "prestige_class.requires_base_class_levels"),
+                    "{prestige_alone} alone must be Blocked by the prestige-alone game rule: \
+                     {diagnostics:?}"
+                );
+                blocked_classes_seen.push(prestige_alone)
+            }
+            CreateCharacterResponse::Saved { .. } => panic!(
+                "{prestige_alone} alone must be Blocked -- a prestige class cannot be a first class"
+            ),
+        }
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            0,
+            "{prestige_alone} alone is Blocked, so it must never be granted wealth"
+        );
+        std::fs::remove_dir_all(&root).ok();
+
         assert!(
             !blocked_classes_seen.is_empty(),
-            "every wealth-recognized class now reaches Computed, so this test proves nothing \
-             about the Blocked path any more -- replace it with a genuinely blocked fixture \
-             (e.g. an unsupported multiclass build) rather than deleting the invariant"
+            "no build in this test is Blocked, so it proves nothing about the Blocked path -- \
+             replace the prestige-alone fixture with another genuinely blocked build rather than \
+             deleting the invariant"
         );
+    }
+
+    /// SD-36 F1c (f1c:suite-desktop): `compose_character_input` records the Summoner Class
+    /// Selection and the Commoner's one Simple weapon under the converted rule's own id
+    /// (`book:kind:slug`). Before the store's `rule_choice=` line, the save refused those ids
+    /// and a create call for either class errored before anything was written. The pick must
+    /// now persist and reload unchanged.
+    #[test]
+    fn create_character_at_root_persists_a_pick_recorded_under_a_converted_rule_id() {
+        use codex::rules_core::class_seeds::{
+            COMMONER_CANONICAL_WEAPON, COMMONER_WEAPON_CHOICE_ID, SUMMONER_CANONICAL_CLASS_SELECTION,
+            SUMMONER_CLASS_SELECTION_CHOICE_ID,
+        };
+        for (class_id, choice_set_id, selection_id) in [
+            ("class:summoner", SUMMONER_CLASS_SELECTION_CHOICE_ID, SUMMONER_CANONICAL_CLASS_SELECTION),
+            ("class:commoner", COMMONER_WEAPON_CHOICE_ID, COMMONER_CANONICAL_WEAPON),
+        ] {
+            let root = tempdir(&format!("create-character-rule-choice-{class_id}"));
+            let request = request_for_class("race:human", class_id, 1);
+            let response = create_character_at_root(&root, &request, "test-version".to_owned())
+                .unwrap_or_else(|e| panic!("{class_id}: create call should not error: {e}"));
+            assert!(
+                matches!(response, CreateCharacterResponse::Saved { .. }),
+                "{class_id}: Human level 1 must save, got {response:?}"
+            );
+            let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+            assert!(
+                reloaded.character_input.chosen.selected_choices.iter().any(|c| {
+                    c.choice_set_id == choice_set_id && c.selection_id == selection_id
+                }),
+                "{class_id}: the pick must reload under {choice_set_id}, got {:?}",
+                reloaded.character_input.chosen.selected_choices
+            );
+            std::fs::remove_dir_all(&root).ok();
+        }
     }
 
     /// v0.6 alpha swarm item 7 (second phase, 2026-07-24), **rewritten
@@ -9759,6 +10464,447 @@ mod tests {
         assert!(opposed.contains(&"school:transmutation"));
     }
 
+    /// SD-36 F4a: a class ADDED at level-up gets its canonical seeds through the one seed
+    /// function (`class_seeds::canonical_seeds_for`), so a Fighter 1 who dips Cavalier,
+    /// Inquisitor or Oracle reaches the same status the census mix (`fighter 1 + <class> 1`,
+    /// seeded by the same function) reaches -- before F4a the dip recorded no choice and
+    /// blocked on the added class's own choice line.
+    #[test]
+    fn apply_level_up_seeds_an_added_class_the_way_the_census_mix_does() {
+        use codex::rules_core::class_census::{load_sweep_fixture, sweep_mix_panel_row, MixPanelRow};
+        let fixture = load_sweep_fixture().expect("census fixture loads");
+        let mut report = Vec::new();
+        for dip in ["cavalier", "inquisitor", "oracle"] {
+            let census = sweep_mix_panel_row(
+                &fixture,
+                &MixPanelRow {
+                    key: format!("f4a::fighter1_{dip}1"),
+                    source_file: "apps/desktop/src-tauri/src/character_hub.rs".to_owned(),
+                    test_fn: "apply_level_up_seeds_an_added_class_the_way_the_census_mix_does".to_owned(),
+                    classes: vec![("fighter".to_owned(), 1), (dip.to_owned(), 1)],
+                },
+            );
+            let mut input = compose_character_input(&request_for("race:human", 1));
+            apply_level_up(&mut input, &format!("class:{dip}"));
+            let receipt = build_pilot_headless_receipt(&input);
+            let blocking: Vec<&str> = receipt
+                .computation
+                .diagnostics
+                .iter()
+                .filter(|d| d.claim_blocking)
+                .map(|d| d.id.as_str())
+                .collect();
+            let desktop_computed = receipt.status == HeadlessReceiptStatus::Computed;
+            report.push(format!(
+                "fighter 1 + {dip} 1: census computed={} {:?}; apply_level_up computed={desktop_computed} {blocking:?}",
+                census.computed, census.blocking_diagnostic_ids
+            ));
+            assert_eq!(desktop_computed, census.computed, "{}", report.join("\n"));
+            assert!(census.computed, "the census mix itself must be Computed: {}", report.join("\n"));
+        }
+    }
+
+    // ----- SD-36 Epic F4b: the class creation roster and the level-up class options -----
+
+    /// The census rows `census-f4a.json` marks `in_desktop_roster`, read from the committed
+    /// census artifact -- the acceptance denominator (F4.1: "roster length == census computed
+    /// base count"). A roster that drifts from the census fails here by id.
+    fn census_in_desktop_roster_ids() -> BTreeSet<String> {
+        let path = crate::authoring_workbench::codex_repo_root()
+            .expect("repo root")
+            .join("docs/release/SD-36-consolidation/artifacts/epic-f/census-f4a.json");
+        let raw = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+        let census: serde_json::Value = serde_json::from_str(&raw).expect("census JSON parses");
+        let mut ids = BTreeSet::new();
+        for section in ["classes", "prestige"] {
+            for row in census[section].as_array().expect("census section is an array") {
+                if row["in_desktop_roster"].as_bool() == Some(true) {
+                    ids.insert(row["class_id"].as_str().expect("class_id").to_owned());
+                }
+            }
+        }
+        assert_eq!(
+            ids.len() as u64,
+            census["roster_offered"].as_u64().expect("roster_offered"),
+            "the census's own roster_offered must equal its in_desktop_roster rows"
+        );
+        ids
+    }
+
+    #[test]
+    fn list_class_creation_roster_offers_exactly_the_census_roster() {
+        let started = std::time::Instant::now();
+        let roster = build_class_creation_roster().expect("the class roster must load");
+        eprintln!("build_class_creation_roster: {:?} (first call, this process)", started.elapsed());
+
+        let census_ids = census_in_desktop_roster_ids();
+        let roster_ids: BTreeSet<String> = roster.classes.iter().map(|c| c.class_id.clone()).collect();
+        assert_eq!(roster.classes.len(), roster_ids.len(), "a class is offered at most once");
+        assert_eq!(
+            roster_ids, census_ids,
+            "roster vs census in_desktop_roster: only-roster {:?}, only-census {:?}",
+            roster_ids.difference(&census_ids).collect::<Vec<_>>(),
+            census_ids.difference(&roster_ids).collect::<Vec<_>>()
+        );
+        assert!(roster.diagnostics.is_empty(), "a healthy checkout names no roster gap: {:?}", roster.diagnostics);
+        eprintln!(
+            "class creation roster: {} offered, {} withheld, {} diagnostics; census in_desktop_roster {}",
+            roster.classes.len(),
+            roster.withheld.len(),
+            roster.diagnostics.len(),
+            census_ids.len()
+        );
+
+        let census = codex::rules_core::class_census::census();
+        for class in &roster.classes {
+            let entry = census.get(&class.class_id).unwrap_or_else(|| panic!("{}: not a census id", class.class_id));
+            assert!(!entry.is_prestige, "{}: prestige is never offered at creation (§9)", class.class_id);
+            assert!(!class.class_id.starts_with("class:ex_"), "{}: Ex-* states are census-only (§9)", class.class_id);
+            assert!(class.hit_die > 0, "{}: an offered class prints a hit die", class.class_id);
+            assert!(!class.label.is_empty() && !class.family_label.is_empty(), "{class:?}");
+        }
+
+        // Grouped by family: once a family's run ends it never starts again.
+        let mut families_closed: Vec<String> = Vec::new();
+        for pair in roster.classes.windows(2) {
+            if pair[0].family != pair[1].family {
+                families_closed.push(pair[0].family.clone());
+                assert!(
+                    !families_closed.contains(&pair[1].family),
+                    "family {} appears in two runs",
+                    pair[1].family
+                );
+            }
+        }
+
+        // Every withheld census row carries its named reason; none is offered.
+        assert_eq!(roster.withheld.len() + roster.classes.len(), census.len(), "every census id is offered or withheld");
+        for withheld in &roster.withheld {
+            assert!(!roster_ids.contains(&withheld.class_id), "{withheld:?}");
+            assert!(
+                ["prestige", "ex_state", "not_computed", "hit_die_absent"].contains(&withheld.reason.as_str()),
+                "{withheld:?}"
+            );
+        }
+
+        // Every offered class is Computed through the desktop's own create path, at level 1 and
+        // at its own max level (the census swept every level; this re-proves the ends through
+        // `compose_character_input`, not the census fixture).
+        let mut blocked = Vec::new();
+        for class in &roster.classes {
+            for level in [1, class.max_level] {
+                let input = compose_character_input(&request_for_class("race:human", &class.class_id, level));
+                if build_pilot_headless_receipt(&input).status != HeadlessReceiptStatus::Computed {
+                    blocked.push(format!("{} @ {level}", class.class_id));
+                }
+            }
+        }
+        assert!(blocked.is_empty(), "offered classes Blocked through the create path: {blocked:?}");
+    }
+
+    fn fighter_at(level: u8) -> CharacterInput {
+        compose_character_input(&request_for("race:human", level))
+    }
+
+    /// SD-36 F4c: the wire rows the frontend reads, pinned as on-disk artifacts the TypeScript
+    /// tests (`classRoster.test.ts`) read -- so the frontend is tested against what the command
+    /// actually serves, not a hand-written sample. `CODEX_WRITE_F4C_WIRE=1` rewrites them; without
+    /// it, this test fails on any drift between the live commands and the committed artifacts.
+    fn f4c_wire_artifact(name: &str) -> std::path::PathBuf {
+        crate::authoring_workbench::codex_repo_root()
+            .expect("repo root")
+            .join("docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5")
+            .join(name)
+    }
+
+    fn assert_or_write_wire(name: &str, value: &serde_json::Value) {
+        let path = f4c_wire_artifact(name);
+        let live = serde_json::to_string_pretty(value).expect("serialize") + "\n";
+        if std::env::var_os("CODEX_WRITE_F4C_WIRE").is_some() {
+            std::fs::write(&path, &live).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+            eprintln!("wrote {}", path.display());
+            return;
+        }
+        let committed = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+        assert!(committed == live, "{} drifted from the live command; rerun with CODEX_WRITE_F4C_WIRE=1", path.display());
+    }
+
+    /// SD-36 F6b: the feat skill bonuses the sheet serves for the census fixture (Human Fighter 1)
+    /// with Alertness as its level-1 character feat (in place of Power Attack), pinned as the wire
+    /// the frontend's Skills-panel tests read. CRB p.117: +2 Perception and +2 Sense Motive below
+    /// 10 ranks. `CODEX_WRITE_F6B_WIRE=1` rewrites the artifact.
+    #[test]
+    fn feat_skill_bonuses_wire_for_the_census_fixture_with_alertness_matches_the_committed_artifact() {
+        let fixture = codex::rules_core::class_census::load_sweep_fixture().expect("census fixture");
+        let mut input = codex::rules_core::class_seeds::input_for(&fixture, "fighter", 1);
+        input.chosen.selected_feats.retain(|f| f != "feat:power_attack");
+        input.chosen.selected_feats.push("feat:alertness".to_owned());
+        for choice in input.chosen.selected_choices.iter_mut() {
+            if choice.choice_set_id == "choice:level_1_character_feat" {
+                choice.selection_id = "feat:alertness".to_owned();
+            }
+        }
+        let base = compute_pilot_base_chassis(&input);
+        let (lines, unavailable, bonuses) = sheet_lines_for(&input, &base);
+        assert_eq!(unavailable, None);
+        assert!(lines.iter().any(|l| l.id == "core_rulebook:feat:alertness"), "Alertness line printed");
+        assert_eq!(bonuses.skills.get("perception"), Some(&2));
+        assert_eq!(bonuses.skills.get("sense_motive"), Some(&2));
+        let path = crate::authoring_workbench::codex_repo_root()
+            .expect("repo root")
+            .join("docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/f6b-feat-skill-bonus-wire.json");
+        let live = serde_json::to_string_pretty(&serde_json::to_value(&bonuses).expect("json")).expect("serialize") + "\n";
+        if std::env::var_os("CODEX_WRITE_F6B_WIRE").is_some() {
+            std::fs::write(&path, &live).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+            return;
+        }
+        let committed = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+        assert!(committed == live, "{} drifted from the live fold; rerun with CODEX_WRITE_F6B_WIRE=1", path.display());
+    }
+
+    #[test]
+    fn list_class_roster_wire_carries_hit_die_and_skill_ranks_for_every_census_class() {
+        let roster = build_class_creation_roster().expect("roster");
+        // Every offered class states its skill ranks per level: the sheet's skill points read it
+        // off this row, never a frontend table (§6).
+        let missing: Vec<&str> = roster
+            .classes
+            .iter()
+            .filter(|c| c.skill_ranks_per_level.is_none())
+            .map(|c| c.class_id.as_str())
+            .collect();
+        assert!(missing.is_empty(), "offered classes with no skill ranks per level: {missing:?}");
+        // SD-36 F6b: the hit-point die is the engine's one hit-die rule (bespoke class module
+        // first, then the converted record): stated for every offered class, equal to the printed
+        // die. The five F4c left Unknown now state one; the CRB Monk's is the CRB table's d8, never
+        // its converted record's FS-23 d10.
+        let no_die: Vec<&str> =
+            roster.classes.iter().filter(|c| c.hit_points_die.is_none()).map(|c| c.class_id.as_str()).collect();
+        eprintln!("offered classes whose hit points are Unknown: {} of {}: {no_die:?}", no_die.len(), roster.classes.len());
+        assert!(no_die.is_empty(), "offered classes with no hit-point die: {no_die:?}");
+        assert_eq!(roster.classes.len(), 59, "roster still 59");
+        for class in &roster.classes {
+            assert_eq!(class.hit_points_die, Some(class.hit_die), "{}: HP die vs printed die", class.class_id);
+        }
+        let die = |id: &str| roster.classes.iter().find(|c| c.class_id == id).and_then(|c| c.hit_points_die);
+        for (id, expected) in [
+            ("class:monk", 8),
+            ("class:unchained_barbarian", 12),
+            ("class:unchained_monk", 10),
+            ("class:unchained_rogue", 8),
+            ("class:unchained_summoner", 8),
+        ] {
+            assert_eq!(die(id), Some(expected), "{id}");
+        }
+        // A withheld prestige class carries its own chassis figures (or an explicit `None`), so a
+        // character holding one prints its HP and skill points or names the gap.
+        let prestige_with_die = roster.withheld.iter().filter(|w| w.reason == "prestige" && w.hit_die.is_some()).count();
+        let prestige = roster.withheld.iter().filter(|w| w.reason == "prestige").count();
+        eprintln!("withheld prestige with a stated hit die: {prestige_with_die} of {prestige}");
+        assert!(prestige_with_die > 0, "no prestige class stated a hit die");
+
+        assert_or_write_wire("f4c-class-roster-wire.json", &serde_json::to_value(&roster).expect("roster json"));
+        let fighter6 = build_level_up_class_options(&fighter_at(6)).expect("options");
+        assert_or_write_wire("f4c-level-up-fighter6-wire.json", &serde_json::to_value(&fighter6).expect("options json"));
+    }
+
+    #[test]
+    fn list_level_up_class_options_offers_prestige_with_printed_requirements() {
+        let options = build_level_up_class_options(&fighter_at(6)).expect("options load");
+        assert_eq!(options.character_level, 6);
+        assert_eq!(options.level_cap, 20);
+        assert!(!options.at_level_cap);
+
+        // Advance the held class.
+        let advance: Vec<(&str, u8)> =
+            options.advance.iter().map(|o| (o.class_id.as_str(), o.next_level)).collect();
+        assert_eq!(advance, vec![(FIGHTER_CLASS_ID, 7)]);
+
+        // Add a base class: the creation roster minus the held Fighter.
+        let roster = build_class_creation_roster().expect("roster");
+        assert_eq!(options.add_base.len(), roster.classes.len() - 1, "every roster class but the held one");
+        assert!(options.add_base.iter().all(|o| o.class_id != FIGHTER_CLASS_ID && o.next_level == 1));
+
+        // Add a prestige class: every census prestige class, none blocked.
+        let census = codex::rules_core::class_census::census();
+        let prestige_total = census.values().filter(|e| e.is_prestige).count();
+        assert_eq!(options.add_prestige.len(), prestige_total, "every prestige class is offered at level-up");
+        assert!(options.diagnostics.is_empty(), "{:?}", options.diagnostics);
+
+        let archer = options
+            .add_prestige
+            .iter()
+            .find(|o| o.class_id == "class:arcane_archer")
+            .expect("arcane archer offered to a fighter 6");
+        let lines: Vec<(String, String)> =
+            archer.entry_requirements.iter().map(|r| (r.text.clone(), r.status.clone())).collect();
+        eprintln!(
+            "fighter 6 level-up options: advance {}, add_base {}, add_prestige {} (of {prestige_total} census prestige); \
+             arcane archer entry lines: {lines:#?}",
+            options.advance.len(),
+            options.add_base.len(),
+            options.add_prestige.len()
+        );
+        let status_of = |needle: &str| {
+            lines
+                .iter()
+                .find(|(text, _)| text.contains(needle))
+                .map(|(_, status)| status.as_str())
+                .unwrap_or_else(|| panic!("no entry line mentions {needle:?}: {lines:?}"))
+        };
+        // Fighter 6: BAB +6 (met); no arcane spells (unmet); the fixture's feats decide the rest.
+        assert_eq!(status_of("base attack bonus at least 6"), "met", "{lines:?}");
+        assert_eq!(status_of("highest arcane spell level at least 1"), "unmet", "{lines:?}");
+        assert!(lines.iter().any(|(text, _)| text.contains("Point-Blank Shot") || text.contains("Point Blank Shot")), "{lines:?}");
+        assert!(lines.iter().any(|(text, _)| text.contains("Weapon Focus")), "{lines:?}");
+        assert!(!archer.requirements_all_met, "an unmet line means not all met: {lines:?}");
+        // The level's own ceiling (`arcane_archer level at most 10`) is converter bookkeeping,
+        // not a PF1 entry requirement: never printed.
+        assert!(!lines.iter().any(|(text, _)| text.contains("at most 10")), "{lines:?}");
+        assert_eq!(archer.next_level, 1);
+        assert_eq!(archer.max_level, 10);
+
+        // Every line is judged: met, unmet, or situational -- never blank.
+        for option in &options.add_prestige {
+            for requirement in &option.entry_requirements {
+                assert!(!requirement.text.is_empty(), "{}: blank requirement", option.class_id);
+                assert!(["met", "unmet", "situational"].contains(&requirement.status.as_str()), "{requirement:?}");
+            }
+        }
+    }
+
+    /// SD-36 F6c (a): Level Up names the engine's refusal on the option BEFORE Accept. For a
+    /// Fighter 6, every prestige option is taken for real (the leveled build computed through
+    /// `resolve_unified_pilot_snapshot`, what Accept runs): an option carries a blocker exactly
+    /// when the build is refused by the mix gate, and the blocked options are the six FS-15 prestige
+    /// classes, named `multiclass.save_shape.unrecognized`.
+    #[test]
+    fn level_up_options_name_the_engines_mix_refusal_before_accept() {
+        let input = fighter_at(6);
+        let started = std::time::Instant::now();
+        let options = build_level_up_class_options(&input).expect("options load");
+        eprintln!("build_level_up_class_options(fighter 6), cold (census sweep included): {:?}", started.elapsed());
+        let warm = std::time::Instant::now();
+        assert_eq!(build_level_up_class_options(&input).expect("options load"), options);
+        eprintln!("build_level_up_class_options(fighter 6), warm (the dialog's cost): {:?}", warm.elapsed());
+
+        let mut blocked: Vec<(&str, &LevelUpBlockerDto)> = options
+            .add_prestige
+            .iter()
+            .filter_map(|o| o.blocker.as_ref().map(|b| (o.class_id.as_str(), b)))
+            .collect();
+        blocked.sort_by_key(|(id, _)| *id);
+        let ids: Vec<&str> = blocked.iter().map(|(id, _)| *id).collect();
+        assert_eq!(
+            ids,
+            vec![
+                "class:evangelist",
+                "class:exalted",
+                "class:mammoth_rider",
+                "class:pure_legion_enforcer",
+                "class:sentinel",
+                "class:ulfen_guard",
+            ],
+            "the prestige options carrying a blocker are the six FS-15 classes"
+        );
+        for (id, blocker) in &blocked {
+            assert_eq!(blocker.id, "multiclass.save_shape.unrecognized", "{id}");
+            assert_eq!(blocker.summary, "save progression in the source data matches no PF1 form", "{id}");
+            assert!(blocker.message.contains(*id), "{id}: {}", blocker.message);
+        }
+        assert!(options.advance.iter().all(|o| o.blocker.is_none()), "{:?}", options.advance);
+        // The four Pathfinder Unchained classes: no class table and no converted chassis record
+        // states their saves, so the mix gate refuses them by name (`a_class_with_no_table_and_no_record_is_named_unknown`).
+        let base_blocked: Vec<(&str, &str)> = options
+            .add_base
+            .iter()
+            .filter_map(|o| o.blocker.as_ref().map(|b| (o.class_id.as_str(), b.id.as_str())))
+            .collect();
+        assert_eq!(
+            base_blocked,
+            vec![
+                ("class:unchained_barbarian", "multiclass.save_shape.unknown"),
+                ("class:unchained_monk", "multiclass.save_shape.unknown"),
+                ("class:unchained_rogue", "multiclass.save_shape.unknown"),
+                ("class:unchained_summoner", "multiclass.save_shape.unknown"),
+            ],
+            "base classes a Fighter 6 cannot add"
+        );
+
+        // Accept, for real, for every option in every group.
+        let every: Vec<(&str, Option<&LevelUpBlockerDto>)> = options
+            .advance
+            .iter()
+            .chain(&options.add_base)
+            .map(|o| (o.class_id.as_str(), o.blocker.as_ref()))
+            .chain(options.add_prestige.iter().map(|o| (o.class_id.as_str(), o.blocker.as_ref())))
+            .collect();
+        let (mut computed, mut refused_named, mut refused_other) = (0usize, 0usize, Vec::new());
+        for (class_id, blocker) in &every {
+            let option = LevelUpOptionProbe { class_id, blocker: *blocker };
+            let mut leveled = input.clone();
+            apply_level_up(&mut leveled, option.class_id);
+            match resolve_unified_pilot_snapshot(&leveled, corpus_fixture_bundle()) {
+                Ok(_) => {
+                    assert!(option.blocker.is_none(), "{}: blocker shown but the engine computes it", option.class_id);
+                    computed += 1;
+                }
+                Err(diagnostics) => {
+                    let gate: Vec<&str> = diagnostics
+                        .iter()
+                        .filter(|d| d.claim_blocking && d.id.starts_with("multiclass."))
+                        .map(|d| d.id.as_str())
+                        .collect();
+                    match &option.blocker {
+                        Some(blocker) => {
+                            assert!(gate.contains(&blocker.id.as_str()), "{}: {gate:?}", option.class_id);
+                            refused_named += 1;
+                        }
+                        None => {
+                            assert!(gate.is_empty(), "{}: refused by the mix gate with no blocker shown: {gate:?}", option.class_id);
+                            let ids: Vec<&str> =
+                                diagnostics.iter().filter(|d| d.claim_blocking).map(|d| d.id.as_str()).collect();
+                            refused_other.push(format!("{}: {ids:?}", option.class_id));
+                        }
+                    }
+                }
+            }
+        }
+        eprintln!(
+            "fighter 6, each of {} level-up options (advance {}, add_base {}, add_prestige {}) taken for real: \
+             computed {computed}, refused with the blocker shown {refused_named}, \
+             refused by something other than the mix gate {}: {refused_other:#?}",
+            every.len(),
+            options.advance.len(),
+            options.add_base.len(),
+            options.add_prestige.len(),
+            refused_other.len()
+        );
+        assert_eq!(refused_named, 10, "6 FS-15 prestige + 4 Unchained base classes");
+    }
+
+    struct LevelUpOptionProbe<'a> {
+        class_id: &'a str,
+        blocker: Option<&'a LevelUpBlockerDto>,
+    }
+
+    #[test]
+    fn list_level_up_class_options_advances_a_held_prestige_class_to_its_own_max_and_keeps_the_cap() {
+        // Fighter 6 / Arcane Archer 1: advance both, never offer the held prestige again.
+        let mut input = fighter_at(6);
+        apply_level_up(&mut input, "class:arcane_archer");
+        let options = build_level_up_class_options(&input).expect("options load");
+        let advance: Vec<(&str, u8)> =
+            options.advance.iter().map(|o| (o.class_id.as_str(), o.next_level)).collect();
+        assert_eq!(advance, vec![(FIGHTER_CLASS_ID, 7), ("class:arcane_archer", 2)]);
+        assert!(options.add_prestige.iter().all(|o| o.class_id != "class:arcane_archer"));
+
+        // Character level 20: the PF1 cap -- nothing to offer, and it says why.
+        let capped = build_level_up_class_options(&fighter_at(20)).expect("options load");
+        assert!(capped.at_level_cap);
+        assert!(capped.advance.is_empty() && capped.add_base.is_empty() && capped.add_prestige.is_empty());
+    }
+
     /// A second consecutive level-up within Wizard (not a fresh dip) must
     /// not re-seed the choices -- `wizard_has_canonical_specialization_selections`
     /// requires *exactly* two opposed-school entries, so a duplicate pair
@@ -10738,3 +11884,412 @@ mod tests {
     }
 }
 
+
+/// SD-36 F6e (operator ruling 2026-09-27, option 3): the starter seeds. Aldric Ironhand
+/// (Human Fighter 3) stays; Elowen Ashgrave (Human Wizard 5, Fireball prepared) joins him.
+/// Both are built through `compose_character_input` -- the create path -- never a
+/// hand-written character file, and each carries its own marker so an install that already
+/// holds Aldric gains Elowen on its next launch.
+#[cfg(test)]
+mod starter_seed_tests {
+    use super::*;
+    use codex::rules_core::character_input::AcquisitionMode;
+    use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
+    use codex::rules_core::rules_tables::class_spell_levels::class_spell_level;
+    use codex::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
+
+    fn temp_app_data_dir(label: &str) -> PathBuf {
+        let unique = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system time should be after unix epoch")
+            .as_nanos();
+        let path = std::env::temp_dir().join(format!(
+            "codex-starter-seed-{label}-{}-{unique}",
+            std::process::id()
+        ));
+        std::fs::create_dir_all(&path).expect("temp dir should be creatable");
+        path
+    }
+
+    fn character_root(app_data_dir: &Path, character_id: &str) -> PathBuf {
+        characters_root_from_app_data_dir(app_data_dir).join(character_id)
+    }
+
+    /// The wire id the seed records is the id the engine and the Add Spell picker resolve
+    /// (`crb::spell_list::SPELL_LIST`'s key, `list_spells`' `entry.key`), and it IS the
+    /// converted CRB record `core_rulebook:spell:fireball` -- that record's label, stating
+    /// Wizard spell level 3 -- never a guessed slug.
+    #[test]
+    fn the_fireball_seed_id_is_the_converted_crb_record() {
+        let entry = SPELL_LIST
+            .iter()
+            .find(|entry| entry.key == FIREBALL_SPELL_ID)
+            .expect("the seed's spell id is a CRB spell-list key");
+        assert_eq!(entry.level, 3);
+        assert_eq!(class_spell_level(WIZARD_CLASS_ID_FOR_SEED, FIREBALL_SPELL_ID), Some(3));
+
+        let repo_root = crate::authoring_workbench::codex_repo_root().expect("repo root");
+        let text = std::fs::read_to_string(
+            repo_root.join("data/sheet_rules/core_rulebook/spell/fireball.json"),
+        )
+        .expect("the converted CRB fireball record exists");
+        let records: serde_json::Value = serde_json::from_str(&text).expect("valid JSON");
+        let record = records
+            .as_array()
+            .and_then(|records| {
+                records
+                    .iter()
+                    .find(|record| record["id"] == FIREBALL_CONVERTED_RECORD_ID)
+            })
+            .expect("the converted record carries the id the seed cites");
+        assert_eq!(record["label"], FIREBALL_SPELL_ID);
+        let wizard_level = record["granted_by"]
+            .as_array()
+            .expect("granted_by rows")
+            .iter()
+            .find_map(|row| {
+                let list = &row["by"]["ClassSpellList"];
+                (list["id"] == "wizard").then(|| list["spell_level"].as_u64())
+            })
+            .flatten();
+        assert_eq!(wizard_level, Some(3), "the converted record states Wizard 3");
+    }
+
+    #[test]
+    fn the_second_seed_is_a_level_5_wizard_with_fireball_prepared() {
+        let app_data_dir = temp_app_data_dir("elowen");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+
+        let root = character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID);
+        let envelope = SavedCharacterStore::load(&root).expect("Elowen was saved");
+        assert_eq!(envelope.display_label, "Elowen Ashgrave");
+        assert_eq!(envelope.saved_at, DEFAULT_CHARACTER_SAVED_AT);
+        let chosen = &envelope.character_input.chosen;
+        assert_eq!(chosen.race_id, HUMAN_RACE_ID);
+        assert_eq!(
+            chosen.class_levels,
+            vec![CharacterClassLevel { class_id: "class:wizard".to_owned(), level: 5 }]
+        );
+        assert_eq!(
+            (
+                chosen.ability_scores.strength,
+                chosen.ability_scores.dexterity,
+                chosen.ability_scores.constitution,
+                chosen.ability_scores.intelligence,
+                chosen.ability_scores.wisdom,
+                chosen.ability_scores.charisma,
+            ),
+            (8, 14, 13, 16, 12, 10),
+            "stored scores are pre-racial; the Human +2 goes to Intelligence (18)"
+        );
+        assert!(chosen.selected_choices.iter().any(|choice| {
+            choice.choice_set_id == "choice:human_ability_bonus"
+                && choice.selection_id == "ability:intelligence"
+        }));
+
+        let holds = |mode: AcquisitionMode| {
+            chosen.spells_selected.iter().any(|spell| {
+                spell.spell_id == FIREBALL_SPELL_ID
+                    && spell.source_class_id == "class:wizard"
+                    && spell.acquisition_mode == mode
+            })
+        };
+        assert!(holds(AcquisitionMode::Known), "the spellbook records Fireball");
+        assert!(holds(AcquisitionMode::Prepared), "Fireball is prepared today");
+        // The canonical wizard picks are still there (Light, known + prepared).
+        let (_, canonical_spells) =
+            codex::rules_core::class_seeds::canonical_seeds_for("wizard", 5);
+        for canonical in &canonical_spells {
+            assert!(chosen.spells_selected.contains(canonical), "{canonical:?} kept");
+        }
+        // The prepared Fireball occupies a 3rd-level Wizard slot.
+        let prepared_third: Vec<&str> = chosen
+            .spells_selected
+            .iter()
+            .filter(|spell| spell.acquisition_mode == AcquisitionMode::Prepared)
+            .filter(|spell| class_spell_level(&spell.source_class_id, &spell.spell_id) == Some(3))
+            .map(|spell| spell.spell_id.as_str())
+            .collect();
+        assert_eq!(prepared_third, vec![FIREBALL_SPELL_ID]);
+
+        let receipt = build_pilot_headless_receipt(&envelope.character_input);
+        let blocking: Vec<&str> = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .filter(|diagnostic| diagnostic.claim_blocking)
+            .map(|diagnostic| diagnostic.id.as_str())
+            .collect();
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Computed, "blocking: {blocking:?}");
+        assert!(blocking.is_empty(), "{blocking:?}");
+
+        // The load path the app's Load screen opens reaches a snapshot.
+        let loaded = load_saved_character_at_root(&root).expect("load succeeds");
+        assert!(loaded.snapshot.is_some(), "diagnostics: {:?}", loaded.diagnostics);
+
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// Skill points a single-class Human character earns (CRB Chapter 4: the class's ranks per
+    /// level + Int modifier, at least 1, each level; Human Skilled: +1 rank per level), with the
+    /// class's ranks per level read from the converted package (`class_skill_ranks`), and the
+    /// ranks it has spent (one point per rank, class skill or not).
+    fn earned_and_spent(loaded: &LoadSavedCharacterResponse, class_id: &str, level: u8) -> (i32, i32) {
+        let per_level = i32::from(class_skill_ranks(class_id).expect("the class states skill ranks"));
+        let int_mod = i32::from(loaded.snapshot.as_ref().expect("computed").ability_modifiers.intelligence);
+        let earned = ((per_level + int_mod).max(1) + 1) * i32::from(level);
+        let spent = loaded.skill_allocations.iter().map(|a| i32::from(a.ranks)).sum();
+        (earned, spent)
+    }
+
+    /// Every allocated skill holds at most `level` ranks (CRB Chapter 4: max ranks = character
+    /// level); Climb/Intimidate/Swim sit at the GE-06 posture rank 1, every other one is a class
+    /// skill of `class_slug` (the engine's class-skill reader).
+    fn assert_class_skills_within_max(loaded: &LoadSavedCharacterResponse, class_slug: &str, level: u8) {
+        let view = match codex::rules_core::pilot_compute::class_skill_sheet_rules::class_skill_view(class_slug, level) {
+            codex::rules_core::pilot_compute::class_skill_sheet_rules::ClassSkillAnswer::Known(view) => view,
+            other => panic!("{class_slug}: {other:?}"),
+        };
+        for allocation in &loaded.skill_allocations {
+            let id = allocation.skill_id.strip_prefix("skill:").unwrap_or(&allocation.skill_id);
+            assert!(allocation.ranks <= level, "{id}: {} ranks > max {level}", allocation.ranks);
+            if ["climb", "intimidate", "swim"].contains(&id) {
+                assert_eq!(allocation.ranks, 1, "{id}: the GE-06 posture rank");
+            } else {
+                assert!(view.contains(id), "{class_slug}: {id} is not a class skill");
+            }
+        }
+    }
+
+    /// SD-36 F7a (F7-8): Elowen Ashgrave, Human Wizard 5, Int 16 + 2 Human = 18 (+4).
+    /// Earned: (2 wizard + 4 Int + 1 Human Skilled) x 5 = 35; allocated: Climb/Intimidate/Swim 1
+    /// each (GE-06 posture) + 6 wizard class skills x 5 + Linguistics 2 = 35 -> 0 unallocated.
+    /// Spellcraft: 5 ranks + 3 class skill + 4 Int = +12.
+    #[test]
+    fn elowen_loads_with_zero_unallocated_skill_points() {
+        let app_data_dir = temp_app_data_dir("elowen-skills");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let loaded = load_saved_character_at_root(&character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID))
+            .expect("load succeeds");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+
+        assert_eq!(class_skill_ranks("class:wizard"), Some(2));
+        let (earned, spent) = earned_and_spent(&loaded, "class:wizard", 5);
+        assert_eq!(earned, 35, "(2 + 4 + 1) x 5");
+        assert_eq!(spent, 35, "{:?}", loaded.skill_allocations);
+        assert_class_skills_within_max(&loaded, "wizard", 5);
+        let spellcraft = loaded
+            .skill_allocations
+            .iter()
+            .find(|a| a.skill_id == "skill:spellcraft")
+            .map(|a| i32::from(a.ranks))
+            .expect("Spellcraft allocated");
+        let int_mod = i32::from(loaded.snapshot.as_ref().expect("computed").ability_modifiers.intelligence);
+        assert_eq!(spellcraft + 3 + int_mod, 12, "Spellcraft 5 + 3 + 4");
+    }
+
+    /// SD-36 F7a (F7-8): Aldric Ironhand, Human Fighter 3, Int 14 (+2).
+    /// Earned: (2 fighter + 2 Int + 1 Human Skilled) x 3 = 15; allocated: Climb/Intimidate/Swim 1
+    /// each (GE-06 posture) + 4 fighter class skills x 3 = 15 -> 0 unallocated.
+    #[test]
+    fn aldric_loads_with_zero_unallocated_skill_points() {
+        let app_data_dir = temp_app_data_dir("aldric-skills");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let loaded = load_saved_character_at_root(&character_root(&app_data_dir, DEFAULT_CHARACTER_ID))
+            .expect("load succeeds");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+
+        assert_eq!(class_skill_ranks("class:fighter"), Some(2));
+        let (earned, spent) = earned_and_spent(&loaded, "class:fighter", 3);
+        assert_eq!(earned, 15, "(2 + 2 + 1) x 3");
+        assert_eq!(spent, 15, "{:?}", loaded.skill_allocations);
+        assert_class_skills_within_max(&loaded, "fighter", 3);
+    }
+
+    /// SD-36 F7a (F7-1): the load response carries the ENGINE's effective scores, the ones the
+    /// Abilities panel prints. Elowen Con 13 (odd: `10 + 2 x mod` printed 12); Aldric Str 17 +
+    /// 2 Human = 19 (printed 18). A Dwarf's stored score already carries its +2 Con: a created
+    /// Dwarf with Con 15 loads Con 15, modifier +2.
+    #[test]
+    fn seeded_and_created_characters_load_the_engines_effective_scores() {
+        let app_data_dir = temp_app_data_dir("scores");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let elowen = load_saved_character_at_root(&character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID))
+            .expect("Elowen loads");
+        let aldric = load_saved_character_at_root(&character_root(&app_data_dir, DEFAULT_CHARACTER_ID))
+            .expect("Aldric loads");
+        assert_eq!((elowen.ability_scores.constitution, elowen.ability_scores.intelligence), (13, 18));
+        assert_eq!((aldric.ability_scores.strength, aldric.ability_scores.dexterity), (19, 13));
+
+        let dwarf_id = "f7a-dwarf-odd-con";
+        let dwarf_root = characters_root_from_app_data_dir(&app_data_dir).join(dwarf_id);
+        let mut request = starter_seed_request(
+            dwarf_id,
+            "Dwarf Odd Con",
+            "class:fighter",
+            1,
+            AbilityScoresDto { strength: 14, dexterity: 12, constitution: 15, intelligence: 10, wisdom: 13, charisma: 8 },
+            "strength",
+        );
+        request.race_id = "race:dwarf".to_owned();
+        create_character_at_root(&dwarf_root, &request, "0.0.0-test".to_owned()).expect("dwarf created");
+        let dwarf = load_saved_character_at_root(&dwarf_root).expect("dwarf loads");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+        assert_eq!((dwarf.ability_scores.constitution, dwarf.ability_scores.wisdom), (15, 13));
+        assert_eq!(dwarf.snapshot.as_ref().expect("computed").ability_modifiers.constitution, 2);
+    }
+
+    /// SD-36 F7a finding (not changed here): `compose_character_input` places 1 rank each in
+    /// Climb, Intimidate and Swim on EVERY created character (the GE-06 posture). Counted over
+    /// the 59-class roster at level 1: how many classes hold all three as class skills.
+    #[test]
+    fn the_create_paths_fixed_ranks_measured_over_the_roster() {
+        use codex::rules_core::pilot_compute::class_skill_sheet_rules::{class_skill_view, ClassSkillAnswer};
+        let roster = build_class_creation_roster().expect("roster");
+        assert_eq!(roster.classes.len(), 59);
+        let (mut all_three, mut some_cross_class, mut unknown) = (0usize, 0usize, 0usize);
+        for class in &roster.classes {
+            let slug = class.class_id.strip_prefix("class:").unwrap_or(&class.class_id);
+            match class_skill_view(slug, 1) {
+                ClassSkillAnswer::Known(view) => {
+                    if ["climb", "intimidate", "swim"].iter().all(|id| view.contains(id)) {
+                        all_three += 1;
+                    } else {
+                        some_cross_class += 1;
+                    }
+                }
+                ClassSkillAnswer::Unknown { .. } => unknown += 1,
+            }
+        }
+        eprintln!("F7a create-path Climb/Intimidate/Swim: {all_three} of 59 classes hold all three as class skills; {some_cross_class} hold at least one cross-class; {unknown} Unknown");
+        assert_eq!(all_three + some_cross_class + unknown, 59);
+    }
+
+    #[test]
+    fn a_fresh_install_seeds_both_characters_and_both_markers() {
+        let app_data_dir = temp_app_data_dir("fresh");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let listing =
+            SavedCharacterStore::list_all(&characters_root_from_app_data_dir(&app_data_dir))
+                .expect("listing succeeds");
+        let mut labels: Vec<&str> =
+            listing.characters.iter().map(|summary| summary.display_label.as_str()).collect();
+        labels.sort_unstable();
+        assert_eq!(labels, vec!["Aldric Ironhand", "Elowen Ashgrave"]);
+        assert!(app_data_dir.join(DEFAULT_CHARACTER_SEED_MARKER).exists());
+        assert!(app_data_dir.join(SECOND_SEED_MARKER).exists());
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    #[test]
+    fn an_existing_install_gains_the_second_seed_without_touching_the_first() {
+        let app_data_dir = temp_app_data_dir("existing");
+        // The pre-F6e install: Aldric seeded under the original marker, then edited by the
+        // player (renamed); no second-seed marker yet.
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("first launch");
+        std::fs::remove_file(app_data_dir.join(SECOND_SEED_MARKER)).expect("marker");
+        std::fs::remove_dir_all(character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID))
+            .expect("Elowen dir");
+        let aldric_root = character_root(&app_data_dir, DEFAULT_CHARACTER_ID);
+        let mut aldric = SavedCharacterStore::load(&aldric_root).expect("Aldric saved");
+        aldric.display_label = "Aldric the Edited".to_owned();
+        SavedCharacterStore::save(&aldric, &aldric_root).expect("player edit saved");
+        let before = snapshot_dir(&aldric_root);
+
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("next launch");
+
+        assert_eq!(snapshot_dir(&aldric_root), before, "Aldric is untouched byte for byte");
+        let elowen = SavedCharacterStore::load(&character_root(
+            &app_data_dir,
+            SECOND_SEED_CHARACTER_ID,
+        ))
+        .expect("Elowen seeded on the next launch");
+        assert_eq!(elowen.display_label, "Elowen Ashgrave");
+        assert!(app_data_dir.join(SECOND_SEED_MARKER).exists());
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    #[test]
+    fn a_seed_whose_id_already_exists_is_never_overwritten() {
+        let app_data_dir = temp_app_data_dir("occupied");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("first launch");
+        let elowen_root = character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID);
+        let mut elowen = SavedCharacterStore::load(&elowen_root).expect("Elowen saved");
+        elowen.display_label = "Elowen, renamed by her player".to_owned();
+        SavedCharacterStore::save(&elowen, &elowen_root).expect("player edit saved");
+        // Markers lost (a restore from backup, a hand-cleaned folder): the id check alone
+        // must still refuse to overwrite either character.
+        std::fs::remove_file(app_data_dir.join(DEFAULT_CHARACTER_SEED_MARKER)).expect("m1");
+        std::fs::remove_file(app_data_dir.join(SECOND_SEED_MARKER)).expect("m2");
+        let aldric_root = character_root(&app_data_dir, DEFAULT_CHARACTER_ID);
+        let (aldric_before, elowen_before) = (snapshot_dir(&aldric_root), snapshot_dir(&elowen_root));
+
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("next launch");
+
+        assert_eq!(snapshot_dir(&aldric_root), aldric_before);
+        assert_eq!(snapshot_dir(&elowen_root), elowen_before);
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    #[test]
+    fn a_deleted_seed_does_not_come_back() {
+        let app_data_dir = temp_app_data_dir("deleted");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("first launch");
+        let elowen_root = character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID);
+        std::fs::remove_dir_all(&elowen_root).expect("player deletes Elowen");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("next launch");
+        assert!(!elowen_root.exists(), "the marker keeps a deleted seed deleted");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// The Load list the app serves on a fresh install, pinned as the wire the frontend's
+    /// Load-list test reads (`src/testSupport/starterSeedListWire.ts`), so "the Load screen
+    /// lists both seeds" is asserted against the real `list_saved_characters` payload, never a
+    /// hand-written sample. `CODEX_WRITE_F6E_WIRE=1` rewrites the artifact.
+    #[test]
+    fn the_starter_seed_list_wire_matches_the_committed_artifact() {
+        let app_data_dir = temp_app_data_dir("wire");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let listing =
+            SavedCharacterStore::list_all(&characters_root_from_app_data_dir(&app_data_dir))
+                .expect("listing succeeds");
+        let mut characters: Vec<CharacterSummaryDto> =
+            listing.characters.iter().map(map_summary_dto).collect();
+        characters.sort_by(|a, b| a.character_id.cmp(&b.character_id));
+        let wire = ListSavedCharactersResponse {
+            characters,
+            unreadable_count: listing.unreadable_entries.len(),
+        };
+        let live = serde_json::to_string_pretty(&wire).expect("serialize") + "\n";
+        std::fs::remove_dir_all(&app_data_dir).ok();
+
+        let path = crate::authoring_workbench::codex_repo_root()
+            .expect("repo root")
+            .join("docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/f6e-starter-seed-list-wire.json");
+        if std::env::var_os("CODEX_WRITE_F6E_WIRE").is_some() {
+            std::fs::write(&path, &live).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+            return;
+        }
+        let committed =
+            std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+        assert!(
+            committed == live,
+            "{} drifted from the live listing; rerun with CODEX_WRITE_F6E_WIRE=1",
+            path.display()
+        );
+    }
+
+    fn snapshot_dir(root: &Path) -> BTreeMap<String, Vec<u8>> {
+        let mut files = BTreeMap::new();
+        for entry in std::fs::read_dir(root).expect("character dir readable") {
+            let entry = entry.expect("dir entry");
+            if entry.path().is_file() {
+                files.insert(
+                    entry.file_name().to_string_lossy().into_owned(),
+                    std::fs::read(entry.path()).expect("file readable"),
+                );
+            }
+        }
+        files
+    }
+}

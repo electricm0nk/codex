@@ -4,10 +4,6 @@ import type {
 } from '../boundary/loadReleaseTruth';
 import type { AuthoringWorkbenchRequest, AuthoringWorkbenchSnapshot } from '../boundary/loadAuthoringWorkbench';
 import type { PilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
-import type {
-  SupportStateMatrixSnapshot,
-  SupportStateRow,
-} from '../boundary/loadSupportStateMatrix';
 import type { BackendHealthSnapshot } from '../boundary/loadBackendHealth';
 import {
   buildFallbackDiagnostics,
@@ -40,15 +36,9 @@ export interface WorkbenchDependencies {
     request: ReleaseTruthRequest
   ) => Promise<ReleaseTruthSnapshot>;
   /**
-   * Read-only support-state bridge. Optional so SD-11 callers that predate
-   * this slice remain valid; when absent, the support/debt section reports an
-   * explicit unavailable notice instead of fabricating support labels.
-   */
-  loadSupportStateMatrix?: () => Promise<SupportStateMatrixSnapshot>;
-  /**
-   * Rust backend version/commit check. Optional for the same back-compat
-   * reason as `loadSupportStateMatrix`; when absent or it fails, the
-   * backend health card reports unreachable rather than fabricating a version.
+   * Rust backend version/commit check. Optional so SD-11 callers that predate
+   * this slice remain valid; when absent or it fails, the backend health card
+   * reports unreachable rather than fabricating a version.
    */
   loadBackendHealth?: () => Promise<BackendHealthSnapshot>;
 }
@@ -57,101 +47,6 @@ export interface BackendHealthPresentation {
   reachable: boolean;
   version: string | null;
   gitCommit: string | null;
-  unavailableNotice: string | null;
-}
-
-/**
- * One read-only support/debt row projected for tester presentation.
- *
- * Every field mirrors the support-state matrix truth verbatim. `hasDebtNote` is a pure
- * convenience flag derived from the presence of a blocker/lossiness note; it does
- * not alter, hide, or promote any state.
- */
-export interface SupportDebtRow {
-  rowId: string;
-  subjectType: string;
-  subjectId: string;
-  dimension: string;
-  supportState: string;
-  evidenceTier: string;
-  testerFacingStateLabel: string;
-  groundingRef: string;
-  blockerOrLossinessNote: string;
-  nextRequiredUplift: string;
-  hasDebtNote: boolean;
-}
-
-/** A per-state tally used only to orient testers; it never suppresses rows. */
-export interface SupportDebtStateCount {
-  supportState: string;
-  count: number;
-}
-
-/**
- * Bounded support/debt presentation structure derived from the matrix.
- *
- * This is intentionally separate from feedback evidence capture and from
- * update/support-tier status. It is read-only truth presentation only.
- */
-export interface SupportDebtPresentation {
-  sectionLabel: string;
-  lead: string;
-  dataSource: string | null;
-  note: string | null;
-  rows: SupportDebtRow[];
-  stateCounts: SupportDebtStateCount[];
-  unavailableNotice: string | null;
-}
-
-/**
- * One row of the bounded breadth-claim / evidence-refresh audit.
- *
- * Every field mirrors the projected support-state truth verbatim. `refreshConfirmed` and
- * `positiveBreadthClaim` are derived read-only flags over that truth; they never
- * mutate, hide, or promote a row. Grounding and evidence context are preserved so
- * the audit stays subordinate to the support/debt row truth it reads.
- */
-export interface BreadthClaimAuditRow {
-  rowId: string;
-  subjectType: string;
-  subjectId: string;
-  supportState: string;
-  evidenceTier: string;
-  evidenceFreshness: string;
-  refreshAuditLabel: string;
-  groundingRef: string;
-  blockerOrLossinessNote: string;
-  nextRequiredUplift: string;
-  /** True only when the projected freshness posture is a confirmed refresh. */
-  refreshConfirmed: boolean;
-  /** True only when the row is both `supported` and refresh-confirmed. */
-  positiveBreadthClaim: boolean;
-}
-
-/** A per-freshness tally used only to orient testers; it never suppresses rows. */
-export interface BreadthClaimFreshnessCount {
-  evidenceFreshness: string;
-  count: number;
-}
-
-/**
- * Bounded breadth-claim / evidence-refresh audit derived from the projected
- * matrix. It is intentionally separate from, and subordinate to, the support/debt
- * presentation: it reports whether the current breadth claim surface is
- * refresh-backed or refresh-required, and never promotes an unsupported or
- * unconfirmed row into a positive breadth claim.
- */
-export interface BreadthClaimAuditPresentation {
-  sectionLabel: string;
-  lead: string;
-  overallPosture: 'refresh-backed' | 'refresh-required';
-  overallLabel: string;
-  refreshRequiredCount: number;
-  positiveBreadthClaimCount: number;
-  freshnessCounts: BreadthClaimFreshnessCount[];
-  rows: BreadthClaimAuditRow[];
-  dataSource: string | null;
-  note: string | null;
   unavailableNotice: string | null;
 }
 
@@ -181,205 +76,13 @@ export interface TesterWorkbenchSurface {
   explanationRefs: WorkbenchReference[];
   provenanceRefs: WorkbenchReference[];
   /**
-   * Support/debt presentation. Optional in the type so SD-11 surface
+   * Rust backend version/commit check. Optional in the type so SD-11 surface
    * literals that predate this slice stay valid; the live loader always
    * populates it.
-   */
-  supportDebt?: SupportDebtPresentation;
-  /**
-   * Breadth-claim / evidence-refresh audit. Optional for the same
-   * back-compat reason; the live loader always populates it. It is subordinate to
-   * `supportDebt` and never promotes a row.
-   */
-  breadthClaimAudit?: BreadthClaimAuditPresentation;
-  /**
-   * Rust backend version/commit check. Optional for the same back-compat
-   * reason as `supportDebt`; the live loader always populates it.
    */
   backendHealth?: BackendHealthPresentation;
   notes: string[];
   status: WorkbenchStatus;
-}
-
-const SUPPORT_DEBT_SECTION_LABEL = 'Rule content support status';
-const SUPPORT_DEBT_LEAD =
-  'What parts of the Pathfinder 1e Core Rulebook content are fully supported, partially supported, or ' +
-  'not supported yet — pulled straight from the support-tracking data, with nothing hidden or promoted ' +
-  'just because the app otherwise looks healthy. This view is read-only: it does not capture evidence, ' +
-  'submit issues, or change update behavior.';
-
-function mapSupportDebtRow(row: SupportStateRow): SupportDebtRow {
-  return {
-    rowId: row.rowId,
-    subjectType: row.subjectType,
-    subjectId: row.subjectId,
-    dimension: row.dimension,
-    supportState: row.supportState,
-    evidenceTier: row.evidenceTier,
-    testerFacingStateLabel: row.testerFacingStateLabel,
-    groundingRef: row.groundingRef,
-    blockerOrLossinessNote: row.blockerOrLossinessNote,
-    nextRequiredUplift: row.nextRequiredUplift,
-    hasDebtNote: row.blockerOrLossinessNote.trim().length > 0,
-  };
-}
-
-function buildSupportDebtStateCounts(rows: SupportDebtRow[]): SupportDebtStateCount[] {
-  const order = ['supported', 'partial', 'lossy', 'blocked', 'unverified'];
-  const counts = new Map<string, number>();
-  for (const row of rows) {
-    counts.set(row.supportState, (counts.get(row.supportState) ?? 0) + 1);
-  }
-
-  const ordered: SupportDebtStateCount[] = [];
-  for (const state of order) {
-    const count = counts.get(state);
-    if (count) {
-      ordered.push({ supportState: state, count });
-    }
-  }
-  // Preserve any unexpected state token rather than silently dropping it.
-  for (const [state, count] of counts) {
-    if (!order.includes(state)) {
-      ordered.push({ supportState: state, count });
-    }
-  }
-  return ordered;
-}
-
-function buildSupportDebtPresentation(
-  snapshot: SupportStateMatrixSnapshot
-): SupportDebtPresentation {
-  const rows = snapshot.rows.map(mapSupportDebtRow);
-  return {
-    sectionLabel: SUPPORT_DEBT_SECTION_LABEL,
-    lead: SUPPORT_DEBT_LEAD,
-    dataSource: snapshot.dataSource,
-    note: snapshot.note,
-    rows,
-    stateCounts: buildSupportDebtStateCounts(rows),
-    unavailableNotice: null,
-  };
-}
-
-function buildUnavailableSupportDebt(reason: string): SupportDebtPresentation {
-  return {
-    sectionLabel: SUPPORT_DEBT_SECTION_LABEL,
-    lead: SUPPORT_DEBT_LEAD,
-    dataSource: null,
-    note: null,
-    rows: [],
-    stateCounts: [],
-    unavailableNotice:
-      `Support status data is unavailable: ${reason}. This section shows nothing rather than making up ` +
-      'support labels — it needs to load real data before it can be shown.',
-  };
-}
-
-const BREADTH_CLAIM_AUDIT_SECTION_LABEL = 'Support claim freshness check';
-const BREADTH_CLAIM_AUDIT_LEAD =
-  'Double-checks that the "supported" labels above are backed by evidence that has actually been re-verified ' +
-  'recently, not just marked supported once and never rechecked. This build has no confirmed refresh checkpoints ' +
-  'yet, so every row below is marked as needing a refresh — nothing is claimed as freshness-verified until it ' +
-  'genuinely is.';
-
-/**
- * Whether a projected freshness token asserts a completed refresh checkpoint.
- *
- * No token in the current seed does, so this is `false` today. It is the
- * single place that decision lives, so a later slice that introduces a genuinely
- * refresh-confirmed posture only edits here rather than scattering the rule.
- */
-function isRefreshConfirmedFreshness(_evidenceFreshness: string): boolean {
-  return false;
-}
-
-function mapBreadthClaimAuditRow(row: SupportStateRow): BreadthClaimAuditRow {
-  const refreshConfirmed = isRefreshConfirmedFreshness(row.evidenceFreshness);
-  return {
-    rowId: row.rowId,
-    subjectType: row.subjectType,
-    subjectId: row.subjectId,
-    supportState: row.supportState,
-    evidenceTier: row.evidenceTier,
-    evidenceFreshness: row.evidenceFreshness,
-    refreshAuditLabel: row.refreshAuditLabel,
-    groundingRef: row.groundingRef,
-    blockerOrLossinessNote: row.blockerOrLossinessNote,
-    nextRequiredUplift: row.nextRequiredUplift,
-    refreshConfirmed,
-    // A positive breadth claim requires BOTH support and confirmed-fresh evidence.
-    // This is what keeps partial/lossy/blocked/unverified or unconfirmed rows from
-    // ever being read as a promoted claim.
-    positiveBreadthClaim: row.supportState === 'supported' && refreshConfirmed,
-  };
-}
-
-function buildBreadthClaimFreshnessCounts(
-  rows: BreadthClaimAuditRow[]
-): BreadthClaimFreshnessCount[] {
-  const order = ['refreshable-from-live-proof', 'awaiting-initial-evidence'];
-  const counts = new Map<string, number>();
-  for (const row of rows) {
-    counts.set(row.evidenceFreshness, (counts.get(row.evidenceFreshness) ?? 0) + 1);
-  }
-
-  const ordered: BreadthClaimFreshnessCount[] = [];
-  for (const freshness of order) {
-    const count = counts.get(freshness);
-    if (count) {
-      ordered.push({ evidenceFreshness: freshness, count });
-    }
-  }
-  // Preserve any unexpected freshness token rather than silently dropping it.
-  for (const [freshness, count] of counts) {
-    if (!order.includes(freshness)) {
-      ordered.push({ evidenceFreshness: freshness, count });
-    }
-  }
-  return ordered;
-}
-
-function buildBreadthClaimAudit(
-  snapshot: SupportStateMatrixSnapshot
-): BreadthClaimAuditPresentation {
-  const rows = snapshot.rows.map(mapBreadthClaimAuditRow);
-  const refreshBacked = rows.length > 0 && rows.every((row) => row.refreshConfirmed);
-  const positiveBreadthClaimCount = rows.filter((row) => row.positiveBreadthClaim).length;
-  return {
-    sectionLabel: BREADTH_CLAIM_AUDIT_SECTION_LABEL,
-    lead: BREADTH_CLAIM_AUDIT_LEAD,
-    overallPosture: refreshBacked ? 'refresh-backed' : 'refresh-required',
-    overallLabel: refreshBacked
-      ? 'Every row below is backed by recently-verified evidence.'
-      : 'No row below has a confirmed recent-verification checkpoint yet, so none are marked freshness-verified.',
-    refreshRequiredCount: rows.filter((row) => !row.refreshConfirmed).length,
-    positiveBreadthClaimCount,
-    freshnessCounts: buildBreadthClaimFreshnessCounts(rows),
-    rows,
-    dataSource: snapshot.dataSource,
-    note: snapshot.note,
-    unavailableNotice: null,
-  };
-}
-
-function buildUnavailableBreadthClaimAudit(reason: string): BreadthClaimAuditPresentation {
-  return {
-    sectionLabel: BREADTH_CLAIM_AUDIT_SECTION_LABEL,
-    lead: BREADTH_CLAIM_AUDIT_LEAD,
-    overallPosture: 'refresh-required',
-    overallLabel:
-      'Freshness check unavailable: with no support-status data loaded, this can\'t claim anything is freshness-verified.',
-    refreshRequiredCount: 0,
-    positiveBreadthClaimCount: 0,
-    freshnessCounts: [],
-    rows: [],
-    dataSource: null,
-    note: null,
-    unavailableNotice:
-      `Freshness check unavailable: ${reason}. This section shows nothing rather than making up freshness ` +
-      'labels — it needs real support-status data to load first.',
-  };
 }
 
 /** Loads and shapes the backend-health check; never rejects — a failure becomes an unreachable presentation. */
@@ -470,7 +173,6 @@ export async function loadTesterWorkbenchSurface(
       },
     };
   });
-  const supportStatePromise = loadSupportStatePresentations(dependencies);
   const backendHealthPromise = loadBackendHealthPresentation(dependencies);
 
   try {
@@ -478,7 +180,7 @@ export async function loadTesterWorkbenchSurface(
       dependencies.loadAuthoringWorkbench(DEFAULT_REQUEST),
       releaseTruthPromise,
     ]);
-    return mapSnapshot(context, snapshot, releaseTruth, await supportStatePromise, await backendHealthPromise);
+    return mapSnapshot(context, snapshot, releaseTruth, await backendHealthPromise);
   } catch (cause: unknown) {
     const [fallbackSnapshot, releaseTruth] = await Promise.all([
       dependencies.loadPilotShellSnapshot(),
@@ -489,53 +191,8 @@ export async function loadTesterWorkbenchSurface(
       fallbackSnapshot,
       formatError(cause),
       releaseTruth,
-      await supportStatePromise,
       await backendHealthPromise
     );
-  }
-}
-
-/**
- * The two read-only presentations the workbench derives from one support-state
- * snapshot: the existing support/debt truth and the breadth-claim audit that is
- * subordinate to it.
- */
-interface SupportStateWorkbenchPresentations {
-  supportDebt: SupportDebtPresentation;
-  breadthClaimAudit: BreadthClaimAuditPresentation;
-}
-
-/**
- * Load the support/debt presentation and the subordinate breadth-claim audit
- * from a single read-only snapshot. The dependency is optional so existing SD-11
- * callers that predate this slice keep compiling; when it is absent or fails, both
- * sections render explicit unavailable notices rather than inventing local support
- * or freshness labels. The snapshot is fetched once so both derivations read the
- * exact same projected truth.
- */
-async function loadSupportStatePresentations(
-  dependencies: WorkbenchDependencies
-): Promise<SupportStateWorkbenchPresentations> {
-  if (!dependencies.loadSupportStateMatrix) {
-    const reason = 'no support-state bridge was provided to the workbench';
-    return {
-      supportDebt: buildUnavailableSupportDebt(reason),
-      breadthClaimAudit: buildUnavailableBreadthClaimAudit(reason),
-    };
-  }
-
-  try {
-    const snapshot = await dependencies.loadSupportStateMatrix();
-    return {
-      supportDebt: buildSupportDebtPresentation(snapshot),
-      breadthClaimAudit: buildBreadthClaimAudit(snapshot),
-    };
-  } catch (cause: unknown) {
-    const reason = formatError(cause);
-    return {
-      supportDebt: buildUnavailableSupportDebt(reason),
-      breadthClaimAudit: buildUnavailableBreadthClaimAudit(reason),
-    };
   }
 }
 
@@ -552,7 +209,6 @@ function mapSnapshot(
   context: WorkbenchRuntimeContext,
   snapshot: AuthoringWorkbenchSnapshot,
   releaseTruth: ReleaseTruthSnapshot,
-  supportState: SupportStateWorkbenchPresentations,
   backendHealth: BackendHealthPresentation
 ): TesterWorkbenchSurface {
   const status = createWorkbenchStatus(context, releaseTruth);
@@ -597,8 +253,6 @@ function mapSnapshot(
     blockedClaims: snapshot.preview.blockedClaims,
     explanationRefs: buildExplanationRefs(snapshot.preview.explanationRefs),
     provenanceRefs: buildProvenanceRefs(snapshot.preview.provenanceRefs),
-    supportDebt: supportState.supportDebt,
-    breadthClaimAudit: supportState.breadthClaimAudit,
     backendHealth,
     notes: [snapshot.note],
     status,
@@ -638,7 +292,6 @@ function mapPilotFallback(
   snapshot: PilotShellSnapshot,
   failure: string,
   releaseTruth: ReleaseTruthSnapshot,
-  supportState: SupportStateWorkbenchPresentations,
   backendHealth: BackendHealthPresentation
 ): TesterWorkbenchSurface {
   const status = createWorkbenchStatus(context, releaseTruth);
@@ -676,8 +329,6 @@ function mapPilotFallback(
     blockedClaims: [],
     explanationRefs: isPlaceholderData ? [] : buildFallbackExplanationRefs(snapshot.explanationRefs),
     provenanceRefs: [],
-    supportDebt: supportState.supportDebt,
-    breadthClaimAudit: supportState.breadthClaimAudit,
     backendHealth,
     notes: isPlaceholderData ? [] : [snapshot.note],
     status,

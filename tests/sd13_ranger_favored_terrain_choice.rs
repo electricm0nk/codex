@@ -37,7 +37,6 @@
 //! progression (out of scope for this bounded slice).
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -218,49 +217,3 @@ fn ranger_level_4_was_later_widened_into_the_supported_tranche() {
 
 // ----- Control plane: the matrix row's note now grounds Favored Terrain -----
 
-#[test]
-fn matrix_ranger_row_note_names_favored_terrain_as_grounded() {
-    let matrix = seeded_current_truth();
-    let ranger = matrix
-        .row("class.ranger.hybrid_chassis_and_spell_burden")
-        .expect("ranger row must exist");
-
-    assert_eq!(ranger.support_state, SupportState::Supported);
-    assert!(
-        ranger.grounding_ref.contains("sd13_ranger_favored_terrain_choice"),
-        "ranger row must cite the live favored-terrain proof surface: {}",
-        ranger.grounding_ref
-    );
-
-    let note = ranger.blocker_or_lossiness_note;
-    // Favored Terrain must still be named (by the plain phrase), but no longer
-    // described as unimplemented/named-but-unproven.
-    assert!(
-        note.contains("Favored Terrain"),
-        "ranger note must still name Favored Terrain: {note}"
-    );
-    assert!(
-        !note.contains("Favored Terrain stays named-but-unproven"),
-        "ranger note must retire the 'Favored Terrain stays named-but-unproven' framing now \
-         that it is grounded: {note}"
-    );
-    // The genuinely still-unproven burdens stay named.
-    for token in [
-        "conditional-application",
-        "spell",
-        "level 4",
-    ] {
-        assert!(
-            note.contains(token),
-            "ranger note must still name the unproven '{token}' burden: {note}"
-        );
-    }
-
-    assert!(
-        !ranger
-            .next_required_uplift
-            .contains("Favored Terrain (a new choice-slot burden)"),
-        "ranger next-required-uplift must drop the now-grounded Favored Terrain burden: {}",
-        ranger.next_required_uplift
-    );
-}

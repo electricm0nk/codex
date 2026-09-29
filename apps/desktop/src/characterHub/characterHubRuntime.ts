@@ -7,7 +7,7 @@ import {
   type CreateCharacterOutcomeContext,
   type CreateCharacterOutcomeSurface,
 } from './buildCreateCharacterOutcomeSurface';
-import { CLASS_OPTIONS } from './characterHubModel';
+import { findClassOption } from './classCatalog';
 import { hasTauriRuntime } from '../boundary/runtime';
 import { buildPreviewListSurface } from './previewData';
 import type { RuleSetId } from './LandingScreen';
@@ -64,7 +64,7 @@ export async function loadCharacterHubListSurfaceRuntime(): Promise<CharacterHub
 }
 
 function outcomeContextFromRequest(request: CreateCharacterRequest): CreateCharacterOutcomeContext {
-  const classOption = CLASS_OPTIONS.find((option) => option.id === request.classId);
+  const classOption = findClassOption(request.classId);
   return {
     raceId: request.raceId,
     classId: request.classId,

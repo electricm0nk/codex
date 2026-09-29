@@ -53,33 +53,54 @@ class Scratch:
         shutil.rmtree(self.root, ignore_errors=True)
 
 
-def item(kind="feat", book="core_rulebook", name="Ordinary Feat", doneness_raw="done", type_facet=None):
+def item(kind="feat", book="core_rulebook", name="Ordinary Feat", doneness_raw="sheet-complete", type_facet=None):
     return {"kind": kind, "book": book, "name": name, "doneness_raw": doneness_raw, "type_facet": type_facet}
 
 
 class DonenessBucketTests(unittest.TestCase):
-    """Public bucket table: done->done, held/in-progress->partial,
-    not-started/unmeasurable/deferred->not-started."""
+    """D5 (2026-09-15) bucket rule: doneness comes straight off the
+    inventory's own status word, done/not-started only, no partial."""
 
-    def test_every_internal_value_maps_to_one_of_three_public_buckets(self):
-        import pf1e_dashboard_producer as producer
-
-        expected = {
-            producer.DONENESS_DONE: "done",
-            producer.DONENESS_HELD: "partial",
-            producer.DONENESS_IN_PROGRESS: "partial",
-            producer.DONENESS_NOT_STARTED: "not-started",
-            producer.DONENESS_UNMEASURABLE: "not-started",
-            producer.DONENESS_DEFERRED: "not-started",
+    def test_done_and_not_done_status_sets_partition_the_whole_vocabulary(self):
+        # docs/work-inventory.json's status_vocabulary (12 words at freeze
+        # time, plus the pre-rename `unknown` spelling) must land in
+        # exactly one of the two sets, never both, never neither.
+        self.assertTrue(bps.DONE_STATUSES.isdisjoint(bps.NOT_DONE_STATUSES))
+        vocabulary = {
+            "grounded", "literal-verified", "fixture-verified", "ingested-magnitude",
+            "text-complete", "sheet-complete", "deferred-with-reason",
+            "engine-does-not-hold", "not-started", "unmeasurable", "oracle-agree",
+            "oracle-unverifiable", "unknown",
         }
-        self.assertEqual(bps.DONENESS_TO_PUBLIC, expected)
+        covered = bps.DONE_STATUSES | bps.NOT_DONE_STATUSES
+        self.assertEqual(vocabulary - covered, set(), "a real status word is uncovered")
 
-    def test_attach_public_doneness_replaces_the_raw_verdict(self):
-        it = item(doneness_raw="held")
+    def test_every_status_word_maps_to_one_of_two_public_buckets(self):
+        for status in bps.DONE_STATUSES:
+            self.assertEqual(bps.DONENESS_TO_PUBLIC[status], "done")
+        for status in bps.NOT_DONE_STATUSES:
+            self.assertEqual(bps.DONENESS_TO_PUBLIC[status], "not-started")
+
+    def test_attach_public_doneness_replaces_the_raw_status(self):
+        it = item(doneness_raw="engine-does-not-hold")
         standing_by = {(bps.object_id(it), it["book"]): provenance.ORIGIN}
         bps.attach_standing_and_public_doneness([it], standing_by)
-        self.assertEqual(it["doneness"], "partial")
+        self.assertEqual(it["doneness"], "not-started")
         self.assertNotIn("doneness_raw", it)
+
+    def test_a_done_status_word_attaches_the_done_bucket(self):
+        it = item(doneness_raw="oracle-agree")
+        standing_by = {(bps.object_id(it), it["book"]): provenance.ORIGIN}
+        bps.attach_standing_and_public_doneness([it], standing_by)
+        self.assertEqual(it["doneness"], "done")
+
+    def test_an_unrecognized_status_raises_loud_in_classify_all(self):
+        units_by_kind = {
+            "feat": [{"name": "Mystery Feat", "book": "core_rulebook", "status": "not-a-real-status",
+                      "wiring_class": "static", "type_facet": None}],
+        }
+        with self.assertRaises(KeyError):
+            bps.classify_all(units_by_kind)
 
 
 class StandingTests(unittest.TestCase):
@@ -115,41 +136,43 @@ class StandingTests(unittest.TestCase):
 
 
 class RollupDenominatorTests(unittest.TestCase):
-    """denominator = origin + variant only; everything else is visibly
-    excluded, not silently dropped."""
+    """D5 (2026-09-15): denominator = every unit, full stop. `standing` no
+    longer gates the percentage math; it is still counted for display in
+    `standing_breakdown`, and `excluded_from_percentage` is always 0."""
 
-    def test_unclassified_and_packaging_artifact_are_excluded_from_pct(self):
+    def test_every_standing_counts_toward_the_denominator(self):
         items = [
             {"kind": "feat", "book": "b", "name": "a", "doneness": "done", "standing": provenance.ORIGIN},
             {"kind": "feat", "book": "b", "name": "b", "doneness": "done", "standing": provenance.UNCLASSIFIED},
-            {"kind": "feat", "book": "b", "name": "c", "doneness": "not-started", "standing": provenance.PACKAGING_ARTIFACT},
+            {"kind": "feat", "book": "b", "name": "c", "doneness": "done", "standing": provenance.PACKAGING_ARTIFACT},
         ]
         roll = bps._rollup(items)
-        self.assertEqual(roll["denominator"], 1)
-        self.assertEqual(roll["done"], 1)
+        self.assertEqual(roll["denominator"], 3)
+        self.assertEqual(roll["done"], 3)
         self.assertEqual(roll["pct"], 100.0)
-        self.assertEqual(roll["excluded_from_percentage"], 2)
+        self.assertEqual(roll["excluded_from_percentage"], 0)
         self.assertEqual(
             roll["standing_breakdown"],
             {provenance.ORIGIN: 1, provenance.UNCLASSIFIED: 1, provenance.PACKAGING_ARTIFACT: 1},
         )
 
-    def test_variant_counts_toward_denominator(self):
-        items = [
-            {"kind": "feat", "book": "b", "name": "a", "doneness": "done", "standing": provenance.VARIANT},
-        ]
-        roll = bps._rollup(items)
-        self.assertEqual(roll["denominator"], 1)
-        self.assertEqual(roll["done"], 1)
-
-    def test_empty_denominator_reports_zero_pct_not_a_crash(self):
+    def test_a_not_started_item_lowers_pct_regardless_of_standing(self):
         items = [
             {"kind": "feat", "book": "b", "name": "a", "doneness": "done", "standing": provenance.UNCLASSIFIED},
+            {"kind": "feat", "book": "b", "name": "b", "doneness": "not-started", "standing": provenance.ORIGIN},
         ]
         roll = bps._rollup(items)
+        self.assertEqual(roll["denominator"], 2)
+        self.assertEqual(roll["done"], 1)
+        self.assertEqual(roll["not_started"], 1)
+        self.assertEqual(roll["partial"], 0)
+        self.assertEqual(roll["pct"], 50.0)
+
+    def test_empty_item_list_reports_zero_pct_not_a_crash(self):
+        roll = bps._rollup([])
         self.assertEqual(roll["denominator"], 0)
         self.assertEqual(roll["pct"], 0.0)
-        self.assertEqual(roll["excluded_from_percentage"], 1)
+        self.assertEqual(roll["excluded_from_percentage"], 0)
 
 
 class PiRedactionTests(unittest.TestCase):
@@ -170,7 +193,7 @@ class PiRedactionTests(unittest.TestCase):
 
     def test_declared_pi_name_is_replaced_row_survives(self):
         items = [
-            item(name="Secret Feat", book="core_rulebook", doneness_raw="done"),
+            item(name="Secret Feat", book="core_rulebook", doneness_raw="sheet-complete"),
         ]
         standing_by = bps.compute_standing(items)
         bps.attach_standing_and_public_doneness(items, standing_by)

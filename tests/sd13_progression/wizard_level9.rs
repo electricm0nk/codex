@@ -50,10 +50,8 @@
 //! control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
+use crate::rows::{recognition_negative_controls};
 
 const WIZARD_LEVEL8_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_wizard_level8_sd13_deterministic_input.txt");
@@ -230,23 +228,6 @@ fn wizard_level_10_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the wizard path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_wizard_level9_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
-                || e.id == "class_chassis.spell_baseline.wizard"),
-        "the Fighter chassis must not surface any wizard-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
 // ----- Negative control: multiclass Wizard is not promoted -----
 
 // SD-24 Epic 5 (criterion 5.1) correction: this control used to pair Wizard
@@ -294,29 +275,13 @@ fn multiclass_wizard_level9_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-9 widening -----
 
-#[test]
-fn matrix_wizard_row_names_level_9_widening() {
-    let matrix = seeded_current_truth();
-    let wizard = matrix
-        .row("class.wizard.progression_and_spell_burden")
-        .expect("wizard progression_and_spell_burden row must exist");
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
 
-    assert_eq!(wizard.support_state, SupportState::Supported); // Later promoted to Supported/ProductVisible by SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-17).
-    assert_eq!(wizard.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        wizard.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        wizard
-            .grounding_ref
-            .contains("sd13_wizard_level9_progression"),
-        "wizard row must cite the live SD13-E5 level-9 proof surface: {}",
-        wizard.grounding_ref
-    );
-    let note = wizard.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 9") || note.contains("level-9"),
-        "wizard partial note must name the level-9 widening: {note}"
-    );
+recognition_negative_controls! {
+    fighter_does_not_gain_wizard_level9_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.wizard."],
+        exact: ["class_chassis.spell_baseline.wizard"],
+        message: "the Fighter chassis must not surface any wizard-namespaced explanation: {:?}",
+    },
 }
+

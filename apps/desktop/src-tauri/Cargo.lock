@@ -476,10 +476,11 @@ dependencies = [
 
 [[package]]
 name = "codex-desktop"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "base64 0.22.1",
  "codex",
+ "codex-ingest",
  "serde",
  "serde_json",
  "sha2",
@@ -488,6 +489,16 @@ dependencies = [
  "tauri-plugin-dialog",
  "tauri-plugin-opener",
  "uuid",
+]
+
+[[package]]
+name = "codex-ingest"
+version = "0.1.0"
+dependencies = [
+ "codex",
+ "serde",
+ "serde_json",
+ "sha2",
 ]
 
 [[package]]

@@ -1,0 +1,1 @@
+{"var":"v39f9d867bf9fa880","label":"Diabolist Infernal Charisma LVL","declared_by":["book_of_the_damned_volume_1:class_feature:diabolist_infernal_charisma"],"contributions":[{"rule_id":"book_of_the_damned_volume_1:class:diabolist","expr":{"ClassLevel":"diabolist"},"when":{"Compare":{"lhs":{"ClassLevel":"diabolist"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

@@ -46,10 +46,8 @@
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
+use crate::rows::{recognition_negative_controls};
 
 const DRUID_LEVEL8_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_druid_level8_sd13_deterministic_input.txt");
@@ -487,23 +485,6 @@ fn druid_level_10_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the druid path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_druid_level9_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.druid.")
-                || e.id.starts_with("class_feature.druid.")),
-        "the Fighter chassis must not surface any druid-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
 // ----- Negative control: multiclass Druid is not promoted -----
 
 #[test]
@@ -540,37 +521,26 @@ fn multiclass_druid_level9_is_not_promoted_by_this_slice() {
         &computation, 9, 8, 9, 6, 2, 18, 4, 59,
     );
 
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Druid must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Druid",
+        DRUID_LEVEL9_FIXTURE,
+        &multiclass,
     );
 }
 
 // ----- Control plane: the matrix note names the level-9 widening -----
 
-#[test]
-fn matrix_druid_row_names_level_9_widening() {
-    let matrix = seeded_current_truth();
-    let druid = matrix
-        .row("class.druid.progression_and_spell_burden")
-        .expect("druid progression_and_spell_burden row must exist");
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
 
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(druid.support_state, SupportState::Supported);
-    assert_eq!(druid.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        druid.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        druid.grounding_ref.contains("sd13_druid_level9_progression"),
-        "druid row must cite the live SD13-E5 level-9 proof surface: {}",
-        druid.grounding_ref
-    );
-    let note = druid.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 9") || note.contains("level-9"),
-        "druid partial note must name the level-9 widening: {note}"
-    );
+recognition_negative_controls! {
+    fighter_does_not_gain_druid_level9_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.druid.", "class_feature.druid."],
+        exact: [],
+        message: "the Fighter chassis must not surface any druid-namespaced explanation: {:?}",
+    },
 }
+

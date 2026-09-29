@@ -1,0 +1,3597 @@
+{
+  "id": "inner_sea_magic",
+  "title": "Inner Sea Magic",
+  "kinds": [
+    {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 147,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 147,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 100,
+        "unclassified": 47
+      },
+      "items": [
+        {
+          "name": "All General Guild Abilities",
+          "doneness": "done",
+          "type_facet": "Internal",
+          "standing": "origin",
+          "display_name": "All General Guild Abilities"
+        },
+        {
+          "name": "Assassin Prodigy",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.CrimsonCitadelReward",
+          "standing": "origin",
+          "display_name": "Assassin Prodigy"
+        },
+        {
+          "name": "Augur",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Augur"
+        },
+        {
+          "name": "Back from the Dead",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Back from the Dead"
+        },
+        {
+          "name": "Charisma +2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityBonus",
+          "standing": "origin",
+          "display_name": "Charisma +2"
+        },
+        {
+          "name": "Charisma +4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityBonus",
+          "standing": "origin",
+          "display_name": "Charisma +4"
+        },
+        {
+          "name": "Charisma -2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Charisma -2"
+        },
+        {
+          "name": "Charisma -4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Charisma -4"
+        },
+        {
+          "name": "Commission Magic Item",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Commission Magic Item"
+        },
+        {
+          "name": "Constitution +2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityBonus",
+          "standing": "origin",
+          "display_name": "Constitution +2"
+        },
+        {
+          "name": "Constitution +4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityBonus",
+          "standing": "origin",
+          "display_name": "Constitution +4"
+        },
+        {
+          "name": "Constitution -2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Constitution -2"
+        },
+        {
+          "name": "Constitution -4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Constitution -4"
+        },
+        {
+          "name": "Crimson Agent",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Crimson Agent"
+        },
+        {
+          "name": "Crimson Scion",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Crimson Scion"
+        },
+        {
+          "name": "Dexterity +2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityBonus",
+          "standing": "origin",
+          "display_name": "Dexterity +2"
+        },
+        {
+          "name": "Dexterity +4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityBonus",
+          "standing": "origin",
+          "display_name": "Dexterity +4"
+        },
+        {
+          "name": "Dexterity -2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Dexterity -2"
+        },
+        {
+          "name": "Dexterity -4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Dexterity -4"
+        },
+        {
+          "name": "Diplomacy [+1]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Diplomacy [+1]"
+        },
+        {
+          "name": "Diplomacy [Class Skill]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Diplomacy [Class Skill]"
+        },
+        {
+          "name": "Diplomatic Student",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Diplomatic Student"
+        },
+        {
+          "name": "Discounted Poisons",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.PoisonersGuildReward",
+          "standing": "origin",
+          "display_name": "Discounted Poisons"
+        },
+        {
+          "name": "Eclectic Training",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.GuildEclecticTraining",
+          "standing": "origin",
+          "display_name": "Eclectic Training"
+        },
+        {
+          "name": "Elder",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Elder"
+        },
+        {
+          "name": "Enhancement",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.OenopionFleshforgesReward",
+          "standing": "origin",
+          "display_name": "Enhancement"
+        },
+        {
+          "name": "Esoteric Training",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Esoteric Training (SpecialQuality)"
+        },
+        {
+          "name": "Esoteric Training",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.GuildEsotericTraining",
+          "standing": "origin",
+          "display_name": "Esoteric Training (SpecialQuality.GuildEsotericTraining)"
+        },
+        {
+          "name": "Favorite Summons",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Favorite Summons"
+        },
+        {
+          "name": "Fleshwarped Skill Bonus",
+          "doneness": "done",
+          "type_facet": "FleshwarpedSkillBonus",
+          "standing": "origin",
+          "display_name": "Fleshwarped Skill Bonus"
+        },
+        {
+          "name": "Fleshwarped Special Ability",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.FleshwarpedAbility",
+          "standing": "origin",
+          "display_name": "Fleshwarped Special Ability"
+        },
+        {
+          "name": "Friar",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Friar"
+        },
+        {
+          "name": "Full Professor",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Full Professor"
+        },
+        {
+          "name": "Guildmaster",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Guildmaster"
+        },
+        {
+          "name": "Heal [+1]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Heal [+1]"
+        },
+        {
+          "name": "Heal [Class Skill]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Heal [Class Skill]"
+        },
+        {
+          "name": "Hidden Wand",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.WhiteGrottoReward",
+          "standing": "origin",
+          "display_name": "Hidden Wand"
+        },
+        {
+          "name": "Idolised",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.KintargoOperaHouseReward",
+          "standing": "origin",
+          "display_name": "Idolised"
+        },
+        {
+          "name": "Imp Minion",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Imp Minion"
+        },
+        {
+          "name": "Infirmary Access",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Infirmary Access"
+        },
+        {
+          "name": "Intelligence +2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityBonus",
+          "standing": "origin",
+          "display_name": "Intelligence +2"
+        },
+        {
+          "name": "Intelligence +4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityBonus",
+          "standing": "origin",
+          "display_name": "Intelligence +4"
+        },
+        {
+          "name": "Intelligence -2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Intelligence -2"
+        },
+        {
+          "name": "Intelligence -4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Intelligence -4"
+        },
+        {
+          "name": "Intimidate [+1]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Intimidate [+1]"
+        },
+        {
+          "name": "Intimidate [Class Skill]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Intimidate [Class Skill]"
+        },
+        {
+          "name": "Knowledge (Arcana) [+1]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Knowledge (Arcana) [+1]"
+        },
+        {
+          "name": "Knowledge (Arcana) [Class Skill]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Knowledge (Arcana) [Class Skill]"
+        },
+        {
+          "name": "Knowledge (Planes) [+1]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Knowledge (Planes) [+1]"
+        },
+        {
+          "name": "Knowledge (Planes) [Class Skill]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Knowledge (Planes) [Class Skill]"
+        },
+        {
+          "name": "Library Access",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Library Access"
+        },
+        {
+          "name": "Lingering Illusions",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.WhiteGrottoReward",
+          "standing": "origin",
+          "display_name": "Lingering Illusions"
+        },
+        {
+          "name": "Linguistics [+1]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Linguistics [+1]"
+        },
+        {
+          "name": "Linguistics [Class Skill]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Linguistics [Class Skill]"
+        },
+        {
+          "name": "Mantis Magic",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.CrimsonCitadelReward",
+          "standing": "origin",
+          "display_name": "Mantis Magic"
+        },
+        {
+          "name": "Mantis Magic (Scribe)",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.CrimsonCitadelReward",
+          "standing": "origin",
+          "display_name": "Mantis Magic (Scribe)"
+        },
+        {
+          "name": "Poison Immunity",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.PoisonersGuildReward",
+          "standing": "origin",
+          "display_name": "Poison Immunity"
+        },
+        {
+          "name": "Professor's Assistant",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Professor's Assistant"
+        },
+        {
+          "name": "Projection",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.KintargoOperaHouseReward",
+          "standing": "origin",
+          "display_name": "Projection"
+        },
+        {
+          "name": "Replacement Harrow Deck",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.TheHarrowedSocietyReward",
+          "standing": "origin",
+          "display_name": "Replacement Harrow Deck"
+        },
+        {
+          "name": "Research Aid",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Research Aid"
+        },
+        {
+          "name": "Research Grant",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Research Grant"
+        },
+        {
+          "name": "Scholar",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Scholar"
+        },
+        {
+          "name": "Scholarship Aid",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Scholarship Aid"
+        },
+        {
+          "name": "Seer",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Seer"
+        },
+        {
+          "name": "Senior Guild Member",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.GuildSeniorMember",
+          "standing": "origin",
+          "display_name": "Senior Guild Member"
+        },
+        {
+          "name": "Senior Student",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Senior Student"
+        },
+        {
+          "name": "Skill Specialization Base",
+          "doneness": "done",
+          "type_facet": "Internal",
+          "standing": "origin",
+          "display_name": "Skill Specialization Base"
+        },
+        {
+          "name": "Spell Transcription (0th/1st)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spell Transcription (0th/1st)"
+        },
+        {
+          "name": "Spell Transcription (2nd)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spell Transcription (2nd)"
+        },
+        {
+          "name": "Spell Transcription (3rd)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spell Transcription (3rd)"
+        },
+        {
+          "name": "Spell Transcription (4th)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spell Transcription (4th)"
+        },
+        {
+          "name": "Spell Transcription (5th)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spell Transcription (5th)"
+        },
+        {
+          "name": "Spell Transcription (6th)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spell Transcription (6th)"
+        },
+        {
+          "name": "Spell Transcription (7th)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spell Transcription (7th)"
+        },
+        {
+          "name": "Spell Transcription (8th)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spell Transcription (8th)"
+        },
+        {
+          "name": "Spell Transcription (9th)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spell Transcription (9th)"
+        },
+        {
+          "name": "Spellcasting (1 PP)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spellcasting (1 PP)"
+        },
+        {
+          "name": "Spellcasting (16 PP)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spellcasting (16 PP)"
+        },
+        {
+          "name": "Spellcasting (2 PP)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spellcasting (2 PP)"
+        },
+        {
+          "name": "Spellcasting (3 PP)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spellcasting (3 PP)"
+        },
+        {
+          "name": "Spellcasting (32 PP)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spellcasting (32 PP)"
+        },
+        {
+          "name": "Spellcasting (4 PP)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spellcasting (4 PP)"
+        },
+        {
+          "name": "Spellcasting (77 PP)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spellcasting (77 PP)"
+        },
+        {
+          "name": "Spellcasting (8 PP)",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Spellcasting (8 PP)"
+        },
+        {
+          "name": "Spellcraft [+1]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Spellcraft [+1]"
+        },
+        {
+          "name": "Spellcraft [Class Skill]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Spellcraft [Class Skill]"
+        },
+        {
+          "name": "Strength +2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityBonus",
+          "standing": "origin",
+          "display_name": "Strength +2"
+        },
+        {
+          "name": "Strength +4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityBonus",
+          "standing": "origin",
+          "display_name": "Strength +4"
+        },
+        {
+          "name": "Strength -2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Strength -2"
+        },
+        {
+          "name": "Strength -4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Strength -4"
+        },
+        {
+          "name": "Summoning Specialization",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "origin",
+          "display_name": "Summoning Specialization"
+        },
+        {
+          "name": "Surgeon",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.OenopionFleshforgesReward",
+          "standing": "origin",
+          "display_name": "Surgeon"
+        },
+        {
+          "name": "Trumps",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.TheHarrowedSocietyReward",
+          "standing": "origin",
+          "display_name": "Trumps"
+        },
+        {
+          "name": "Use Magic Device [+1]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Use Magic Device [+1]"
+        },
+        {
+          "name": "Use Magic Device [Class Skill]",
+          "doneness": "done",
+          "type_facet": "SkillSpecialization",
+          "standing": "origin",
+          "display_name": "Use Magic Device [Class Skill]"
+        },
+        {
+          "name": "Virtuoso",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.KintargoOperaHouseReward",
+          "standing": "origin",
+          "display_name": "Virtuoso"
+        },
+        {
+          "name": "Wisdom +2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityBonus",
+          "standing": "origin",
+          "display_name": "Wisdom +2"
+        },
+        {
+          "name": "Wisdom +4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityBonus",
+          "standing": "origin",
+          "display_name": "Wisdom +4"
+        },
+        {
+          "name": "Wisdom -2",
+          "doneness": "done",
+          "type_facet": "FleshforgeAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Wisdom -2"
+        },
+        {
+          "name": "Wisdom -4",
+          "doneness": "done",
+          "type_facet": "FleshwarpedAbilityPenalty",
+          "standing": "origin",
+          "display_name": "Wisdom -4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.MagicSchool",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.MagicSchool)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI])"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.MagicSchool",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.MagicSchool) #3"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.CitadelEnferacReward",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.CitadelEnferacReward)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.MagicSchool",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.MagicSchool) #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.MagicSchool",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.MagicSchool) #6"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #7"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #8"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #9"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #10"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #11"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #12"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #13"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #14"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #15"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #16"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #17"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #18"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #19"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #20"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #21"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #22"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #23"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #24"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #25"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #26"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #27"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #28"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #29"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #30"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.MagicSchool",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.MagicSchool) #31"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.MagicSchool",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.MagicSchool) #32"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.MagicSchool",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.MagicSchool) #33"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.MagicSchool",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.MagicSchool) #34"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.MagicSchool",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.MagicSchool) #36"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.CrimsonCitadelReward",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.CrimsonCitadelReward)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality) #38"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.MagicSchool",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.MagicSchool) #39"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.HarrowedTrump",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HarrowedTrump)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.HarrowedTrump",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HarrowedTrump) #41"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.HarrowedTrump",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HarrowedTrump) #42"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.HarrowedTrump",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HarrowedTrump) #43"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.HarrowedTrump",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HarrowedTrump) #44"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.HarrowedTrump",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.HarrowedTrump) #45"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.MagicSchool",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (SpecialQuality.MagicSchool) #46"
+        }
+      ]
+    },
+    {
+      "kind": "class_feature",
+      "label": "Class Features",
+      "done": 225,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 225,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "unclassified": 94,
+        "origin": 131
+      },
+      "items": [
+        {
+          "name": "Aberrant Bloodline ~ Bonus Spells",
+          "doneness": "done",
+          "type_facet": "Internal",
+          "standing": "unclassified",
+          "display_name": "Aberrant Bloodline ~ Bonus Spells"
+        },
+        {
+          "name": "Acid Resistance",
+          "doneness": "done",
+          "type_facet": "AlchemistClassFeatures.SpecialQuality.Extraordinary.AlchemistSwiftAlchemy",
+          "standing": "unclassified",
+          "display_name": "Acid Resistance"
+        },
+        {
+          "name": "Alkahest Bombs",
+          "doneness": "done",
+          "type_facet": "AlchemistClassFeatures.SpecialAttack.Supernatural.Checklist.Bomb",
+          "standing": "origin",
+          "display_name": "Alkahest Bombs"
+        },
+        {
+          "name": "Analyze Scroll",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Supernatural.CypherLore",
+          "standing": "unclassified",
+          "display_name": "Analyze Scroll"
+        },
+        {
+          "name": "Animate Primal Forces",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Animate Primal Forces"
+        },
+        {
+          "name": "Arcane Augmentation",
+          "doneness": "done",
+          "type_facet": "MagusClassFeatures.SpecialQuality.Supernatural.MagusSpellRecall",
+          "standing": "origin",
+          "display_name": "Arcane Augmentation"
+        },
+        {
+          "name": "Balefire",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Balefire"
+        },
+        {
+          "name": "Battle Dance",
+          "doneness": "done",
+          "type_facet": "BardClassFeatures.ArchetypeAbility.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Battle Dance"
+        },
+        {
+          "name": "Bend Bolt",
+          "doneness": "done",
+          "type_facet": "DruidClassFeatures.SpecialQuality.Supernatural.DruidVenomImmunity",
+          "standing": "unclassified",
+          "display_name": "Bend Bolt"
+        },
+        {
+          "name": "Black Blood Spray",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.Supernatural.GeneralRevelation.OracleRevelation.PerDayOracleRevelation",
+          "standing": "origin",
+          "display_name": "Black Blood Spray"
+        },
+        {
+          "name": "Black-Blooded Oracle",
+          "doneness": "done",
+          "type_facet": "Archetype.OracleArchetype.OracleOraclesCurse",
+          "standing": "origin",
+          "display_name": "Black-Blooded Oracle"
+        },
+        {
+          "name": "Bloodline Tattoo",
+          "doneness": "done",
+          "type_facet": "Sorcerer Class Feature.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Bloodline Tattoo"
+        },
+        {
+          "name": "Bonus Feats",
+          "doneness": "done",
+          "type_facet": "MagusClassFeatures.SpecialQuality.Extraordinary.MagusArmorProficiency",
+          "standing": "unclassified",
+          "display_name": "Bonus Feats"
+        },
+        {
+          "name": "Bypass Symbol",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Supernatural.CypherLore",
+          "standing": "unclassified",
+          "display_name": "Bypass Symbol"
+        },
+        {
+          "name": "Cantrips",
+          "doneness": "done",
+          "type_facet": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature",
+          "standing": "unclassified",
+          "display_name": "Cantrips"
+        },
+        {
+          "name": "Caravan Bond",
+          "doneness": "done",
+          "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.ClericArmorProficiency",
+          "standing": "origin",
+          "display_name": "Caravan Bond"
+        },
+        {
+          "name": "Chaos",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Chaos"
+        },
+        {
+          "name": "Cold Flesh",
+          "doneness": "done",
+          "type_facet": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature.SpecialQuality.Special Quality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Cold Flesh"
+        },
+        {
+          "name": "Community",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Community"
+        },
+        {
+          "name": "Costume Proficiency",
+          "doneness": "done",
+          "type_facet": "BardClassFeatures.SpecialQuality.Extraordinary.BardLoreMaster",
+          "standing": "origin",
+          "display_name": "Costume Proficiency"
+        },
+        {
+          "name": "Create Spell Tattoo",
+          "doneness": "done",
+          "type_facet": "Sorcerer Class Feature.SpecialQuality.Supernatural.SorcererBloodlineFeatLvl7",
+          "standing": "origin",
+          "display_name": "Create Spell Tattoo"
+        },
+        {
+          "name": "Crypt Breaker",
+          "doneness": "done",
+          "type_facet": "Archetype.AlchemistArchetype.AlchemistBomb.AlchemistMutagen.AlchemistBrewPotion.AlchemistPersistentMutagen",
+          "standing": "origin",
+          "display_name": "Crypt Breaker"
+        },
+        {
+          "name": "Crypt Breaker's Draught",
+          "doneness": "done",
+          "type_facet": "AlchemistClassFeatures.SpecialQuality.Supernatural.AlchemistMutagen",
+          "standing": "origin",
+          "display_name": "Crypt Breaker's Draught"
+        },
+        {
+          "name": "Curse of Black Blood",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.Supernatural.OracleOraclesCurse",
+          "standing": "origin",
+          "display_name": "Curse of Black Blood"
+        },
+        {
+          "name": "Cypher Lore",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Cypher Lore"
+        },
+        {
+          "name": "Cypherlord",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Supernatural.Cypherlord",
+          "standing": "unclassified",
+          "display_name": "Cypherlord"
+        },
+        {
+          "name": "Damage Reduction ~ Cold Iron",
+          "doneness": "done",
+          "type_facet": "EvolutionChoice.Supernatural",
+          "standing": "origin",
+          "display_name": "Damage Reduction ~ Cold Iron"
+        },
+        {
+          "name": "Dark Resilience",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.Supernatural.GeneralRevelation.OracleRevelation.PerDayOracleRevelation",
+          "standing": "origin",
+          "display_name": "Dark Resilience"
+        },
+        {
+          "name": "Darkvision",
+          "doneness": "done",
+          "type_facet": "EvolutionChoice.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Darkvision (EvolutionChoice.Extraordinary)"
+        },
+        {
+          "name": "Darkvision",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.Extraordinary.GeneralRevelation.OracleRevelation",
+          "standing": "unclassified",
+          "display_name": "Darkvision (OracleClassFeatures.SpecialQuality.Extraordinary.GeneralRevelation.OracleRevelation)"
+        },
+        {
+          "name": "Defensive Scrollcaster",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Extraordinary.CypherLore",
+          "standing": "unclassified",
+          "display_name": "Defensive Scrollcaster"
+        },
+        {
+          "name": "Deific Defense",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Deific Defense"
+        },
+        {
+          "name": "Demonhide",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Demonhide"
+        },
+        {
+          "name": "Demonic Knowledge",
+          "doneness": "done",
+          "type_facet": "ClericClassFeatures.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Demonic Knowledge"
+        },
+        {
+          "name": "Dervish Dance",
+          "doneness": "done",
+          "type_facet": "BardClassFeatures.ArchetypeAbility.SpecialQuality.BardBardicKnowledge",
+          "standing": "origin",
+          "display_name": "Dervish Dance"
+        },
+        {
+          "name": "Devastating Aria",
+          "doneness": "done",
+          "type_facet": "BardClassFeatures.SpecialQuality.Supernatural.BardInspireCompetence",
+          "standing": "origin",
+          "display_name": "Devastating Aria"
+        },
+        {
+          "name": "Diminished Spellcasting",
+          "doneness": "done",
+          "type_facet": "ClericClassFeatures.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Diminished Spellcasting"
+        },
+        {
+          "name": "Diva Heavy Armor",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Diva Heavy Armor"
+        },
+        {
+          "name": "Diva Medium Armor",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Diva Medium Armor"
+        },
+        {
+          "name": "Divine Awe",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Divine Awe"
+        },
+        {
+          "name": "Divine Wrath",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Divine Wrath"
+        },
+        {
+          "name": "Domain Specialization",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Domain Specialization"
+        },
+        {
+          "name": "Domain Specialization (Air)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Air)"
+        },
+        {
+          "name": "Domain Specialization (Animal)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Animal)"
+        },
+        {
+          "name": "Domain Specialization (Artifice)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Artifice)"
+        },
+        {
+          "name": "Domain Specialization (Chaos)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Chaos)"
+        },
+        {
+          "name": "Domain Specialization (Charm)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Charm)"
+        },
+        {
+          "name": "Domain Specialization (Community)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Community)"
+        },
+        {
+          "name": "Domain Specialization (Darkness)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Darkness)"
+        },
+        {
+          "name": "Domain Specialization (Death)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Death)"
+        },
+        {
+          "name": "Domain Specialization (Destruction)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Destruction)"
+        },
+        {
+          "name": "Domain Specialization (Earth)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Earth)"
+        },
+        {
+          "name": "Domain Specialization (Evil)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Evil)"
+        },
+        {
+          "name": "Domain Specialization (Fire)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Fire)"
+        },
+        {
+          "name": "Domain Specialization (Glory)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Glory)"
+        },
+        {
+          "name": "Domain Specialization (Good)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Good)"
+        },
+        {
+          "name": "Domain Specialization (Healing)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Healing)"
+        },
+        {
+          "name": "Domain Specialization (Knowledge)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Knowledge)"
+        },
+        {
+          "name": "Domain Specialization (Law)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Law)"
+        },
+        {
+          "name": "Domain Specialization (Liberation)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Liberation)"
+        },
+        {
+          "name": "Domain Specialization (Luck)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Luck)"
+        },
+        {
+          "name": "Domain Specialization (Madness)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Madness)"
+        },
+        {
+          "name": "Domain Specialization (Magic)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Magic)"
+        },
+        {
+          "name": "Domain Specialization (Nobility)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Nobility)"
+        },
+        {
+          "name": "Domain Specialization (Plant)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Plant)"
+        },
+        {
+          "name": "Domain Specialization (Protection)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Protection)"
+        },
+        {
+          "name": "Domain Specialization (Repose)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Repose)"
+        },
+        {
+          "name": "Domain Specialization (Rune)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Rune)"
+        },
+        {
+          "name": "Domain Specialization (Scalykind)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Scalykind)"
+        },
+        {
+          "name": "Domain Specialization (Strength)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Strength)"
+        },
+        {
+          "name": "Domain Specialization (Sun)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Sun)"
+        },
+        {
+          "name": "Domain Specialization (Travel)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Travel)"
+        },
+        {
+          "name": "Domain Specialization (Trickery)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Trickery)"
+        },
+        {
+          "name": "Domain Specialization (Void)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Void)"
+        },
+        {
+          "name": "Domain Specialization (War)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (War)"
+        },
+        {
+          "name": "Domain Specialization (Water)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Water)"
+        },
+        {
+          "name": "Domain Specialization (Weather)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Supernatural.DomainSpecialization",
+          "standing": "origin",
+          "display_name": "Domain Specialization (Weather)"
+        },
+        {
+          "name": "Dread Resilience",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Extraordinary",
+          "standing": "origin",
+          "display_name": "Dread Resilience"
+        },
+        {
+          "name": "Druid Domain",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "Druid Domain"
+        },
+        {
+          "name": "Eidolon",
+          "doneness": "done",
+          "type_facet": "SummonerClassFeatures.SpecialQuality.Extraordinary.Eidolon",
+          "standing": "unclassified",
+          "display_name": "Eidolon"
+        },
+        {
+          "name": "Eidolon Companion Progression ~ Standard",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Eidolon Companion Progression ~ Standard"
+        },
+        {
+          "name": "Eidolon ~ First Worlder",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Eidolon ~ First Worlder"
+        },
+        {
+          "name": "Eldritch Bolt",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Eldritch Bolt"
+        },
+        {
+          "name": "Eldritch Resistance",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Eldritch Resistance"
+        },
+        {
+          "name": "Eldritch Scar",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Eldritch Scar"
+        },
+        {
+          "name": "Electrical Resistance",
+          "doneness": "done",
+          "type_facet": "DruidClassFeatures.SpecialQuality.Extraordinary.DruidTracklessStep",
+          "standing": "unclassified",
+          "display_name": "Electrical Resistance"
+        },
+        {
+          "name": "Enhance Primal Magic Event",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.Supernatural.WizardBonusFeat5",
+          "standing": "origin",
+          "display_name": "Enhance Primal Magic Event"
+        },
+        {
+          "name": "Enhance Scroll",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Supernatural.CypherLore.Swift",
+          "standing": "unclassified",
+          "display_name": "Enhance Scroll"
+        },
+        {
+          "name": "Enhanced Alkahest",
+          "doneness": "done",
+          "type_facet": "AlchemistClassFeatures.SpecialQuality.Supernatural.AlchemistPersistentMutagen",
+          "standing": "origin",
+          "display_name": "Enhanced Alkahest"
+        },
+        {
+          "name": "Envy (Abjuration) School",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool",
+          "standing": "unclassified",
+          "display_name": "Envy (Abjuration) School"
+        },
+        {
+          "name": "Exotic Weapon Proficiency",
+          "doneness": "done",
+          "type_facet": "MagusClassFeatures.SpecialQuality.SpireDefenderExotic",
+          "standing": "unclassified",
+          "display_name": "Exotic Weapon Proficiency"
+        },
+        {
+          "name": "Experimental Mutagen",
+          "doneness": "done",
+          "type_facet": "AlchemistClassFeatures.SpecialQuality.Supernatural.AlchemistPoisonUse",
+          "standing": "origin",
+          "display_name": "Experimental Mutagen"
+        },
+        {
+          "name": "Exploration Subdomain",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Exploration Subdomain"
+        },
+        {
+          "name": "Extended Scroll",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Supernatural.CypherLore.Swift",
+          "standing": "unclassified",
+          "display_name": "Extended Scroll"
+        },
+        {
+          "name": "Eyes of the Storm",
+          "doneness": "done",
+          "type_facet": "DruidClassFeatures.SpecialQuality.Extraordinary.DruidResistNaturesLure",
+          "standing": "unclassified",
+          "display_name": "Eyes of the Storm"
+        },
+        {
+          "name": "False Arcanist",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "False Arcanist"
+        },
+        {
+          "name": "False Arcanist ~ Alchemist",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.HiddenPriestArcaneMagic",
+          "standing": "origin",
+          "display_name": "False Arcanist ~ Alchemist"
+        },
+        {
+          "name": "False Arcanist ~ Bard",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.HiddenPriestArcaneMagic",
+          "standing": "origin",
+          "display_name": "False Arcanist ~ Bard"
+        },
+        {
+          "name": "False Arcanist ~ Sorcerer",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.HiddenPriestArcaneMagic",
+          "standing": "origin",
+          "display_name": "False Arcanist ~ Sorcerer"
+        },
+        {
+          "name": "False Arcanist ~ Wizard",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.HiddenPriestArcaneMagic",
+          "standing": "origin",
+          "display_name": "False Arcanist ~ Wizard"
+        },
+        {
+          "name": "False Piety",
+          "doneness": "done",
+          "type_facet": "Sorcerer Class Feature.SpecialQuality.Extraordinary.SorcererEschewMaterials",
+          "standing": "origin",
+          "display_name": "False Piety"
+        },
+        {
+          "name": "Familiar",
+          "doneness": "done",
+          "type_facet": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature",
+          "standing": "unclassified",
+          "display_name": "Familiar"
+        },
+        {
+          "name": "Familiar Tattoo",
+          "doneness": "done",
+          "type_facet": "Sorcerer Class Feature.SpecialQuality.Supernatural.SorcererBloodlinePowerLvl1",
+          "standing": "origin",
+          "display_name": "Familiar Tattoo"
+        },
+        {
+          "name": "Famous",
+          "doneness": "done",
+          "type_facet": "BardClassFeatures.SpecialQuality.BardBardicKnowledge.DivaFamous",
+          "standing": "unclassified",
+          "display_name": "Famous"
+        },
+        {
+          "name": "Fate Subdomain",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Fate Subdomain"
+        },
+        {
+          "name": "Fey Summons",
+          "doneness": "done",
+          "type_facet": "SummonerClassFeatures.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Fey Summons"
+        },
+        {
+          "name": "Final Revelation",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.FinalRevelation",
+          "standing": "unclassified",
+          "display_name": "Final Revelation (OracleClassFeatures.SpecialQuality.FinalRevelation)"
+        },
+        {
+          "name": "Final Revelation",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.FinalRevelation",
+          "standing": "unclassified",
+          "display_name": "Final Revelation (OracleClassFeatures.SpecialQuality.FinalRevelation) #2"
+        },
+        {
+          "name": "First Into Battle",
+          "doneness": "done",
+          "type_facet": "PaladinClassFeatures.SpecialQuality.Supernatural.PaladinDivineGrace",
+          "standing": "origin",
+          "display_name": "First Into Battle"
+        },
+        {
+          "name": "First Worlder",
+          "doneness": "done",
+          "type_facet": "Archetype.SummonerArchetype.SummonerSummonMonster",
+          "standing": "origin",
+          "display_name": "First Worlder"
+        },
+        {
+          "name": "Focused Enemy",
+          "doneness": "done",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.RangerFavoredEnemy",
+          "standing": "origin",
+          "display_name": "Focused Enemy"
+        },
+        {
+          "name": "Focused Scroll",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Supernatural.CypherLore.Swift",
+          "standing": "unclassified",
+          "display_name": "Focused Scroll"
+        },
+        {
+          "name": "Focused Terrain",
+          "doneness": "done",
+          "type_facet": "RangerClassFeatures.SpecialQuality.RangerFavoredTerrain",
+          "standing": "origin",
+          "display_name": "Focused Terrain"
+        },
+        {
+          "name": "Forest Ghost",
+          "doneness": "done",
+          "type_facet": "RangerClassFeatures.SpecialQuality.Extraordinary.RangerWildEmpathy",
+          "standing": "origin",
+          "display_name": "Forest Ghost"
+        },
+        {
+          "name": "Fortunate Road",
+          "doneness": "done",
+          "type_facet": "Internal",
+          "standing": "origin",
+          "display_name": "Fortunate Road (Internal)"
+        },
+        {
+          "name": "Fortunate Road",
+          "doneness": "done",
+          "type_facet": "ClericClassFeatures.SpecialQuality",
+          "standing": "origin",
+          "display_name": "Fortunate Road (ClericClassFeatures.SpecialQuality)"
+        },
+        {
+          "name": "Fortunate Road",
+          "doneness": "done",
+          "type_facet": "ClericClassFeatures.SpecialQuality",
+          "standing": "origin",
+          "display_name": "Fortunate Road (ClericClassFeatures.SpecialQuality) #3"
+        },
+        {
+          "name": "Freedom Subdomain",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Freedom Subdomain"
+        },
+        {
+          "name": "Frostfoot",
+          "doneness": "done",
+          "type_facet": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature.SpecialQuality.Supernatural.WitchHex.MinorHex",
+          "standing": "origin",
+          "display_name": "Frostfoot"
+        },
+        {
+          "name": "Frozen Caress",
+          "doneness": "done",
+          "type_facet": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature.SpecialQuality.Supernatural.WitchHex.MinorHex",
+          "standing": "origin",
+          "display_name": "Frozen Caress"
+        },
+        {
+          "name": "Giant's Master",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Extraordinary.CypherLore.Swift",
+          "standing": "unclassified",
+          "display_name": "Giant's Master"
+        },
+        {
+          "name": "Gluttony (Necromancy) School",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool",
+          "standing": "unclassified",
+          "display_name": "Gluttony (Necromancy) School"
+        },
+        {
+          "name": "Glyph Finder",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Extraordinary.CypherLore",
+          "standing": "unclassified",
+          "display_name": "Glyph Finder"
+        },
+        {
+          "name": "Greed (Transmutation) School",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool",
+          "standing": "unclassified",
+          "display_name": "Greed (Transmutation) School"
+        },
+        {
+          "name": "Hexes",
+          "doneness": "done",
+          "type_facet": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature",
+          "standing": "unclassified",
+          "display_name": "Hexes"
+        },
+        {
+          "name": "Hidden Priest",
+          "doneness": "done",
+          "type_facet": "Archetype.ClericArchetype.ClericDomains",
+          "standing": "origin",
+          "display_name": "Hidden Priest"
+        },
+        {
+          "name": "Ice Magic",
+          "doneness": "done",
+          "type_facet": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature.SpecialQuality.Special Quality",
+          "standing": "origin",
+          "display_name": "Ice Magic"
+        },
+        {
+          "name": "Insightful Scroll",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Supernatural.CypherLore.Swift",
+          "standing": "unclassified",
+          "display_name": "Insightful Scroll"
+        },
+        {
+          "name": "Lay Healer",
+          "doneness": "done",
+          "type_facet": "Sorcerer Class Feature.SpecialQuality.Supernatural.SorcererBloodlineSpellLvl3.SorcererBloodlineSpellLvl5",
+          "standing": "origin",
+          "display_name": "Lay Healer"
+        },
+        {
+          "name": "Liberation",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Liberation"
+        },
+        {
+          "name": "Luck",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Luck"
+        },
+        {
+          "name": "Lust (Enchantment) School",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool",
+          "standing": "unclassified",
+          "display_name": "Lust (Enchantment) School"
+        },
+        {
+          "name": "Magic Penetration",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Extraordinary",
+          "standing": "origin",
+          "display_name": "Magic Penetration"
+        },
+        {
+          "name": "Meditative Whirl",
+          "doneness": "done",
+          "type_facet": "BardClassFeatures.ArchetypeAbility.SpecialQuality.BardDirgeOfDoom",
+          "standing": "origin",
+          "display_name": "Meditative Whirl"
+        },
+        {
+          "name": "Mystic Null",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Extraordinary.SaveBonus",
+          "standing": "origin",
+          "display_name": "Mystic Null"
+        },
+        {
+          "name": "Nature Bond",
+          "doneness": "done",
+          "type_facet": "DruidClassFeatures.SpecialQuality.Extraordinary.NatureBond.DruidDomain.CF_Domain",
+          "standing": "unclassified",
+          "display_name": "Nature Bond"
+        },
+        {
+          "name": "Never-Changing Curse of Black Blood",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.Supernatural.DualBlackBloodedCurse",
+          "standing": "origin",
+          "display_name": "Never-Changing Curse of Black Blood"
+        },
+        {
+          "name": "Normal Curse of Black Blood",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.Supernatural.DualBlackBloodedCurse",
+          "standing": "origin",
+          "display_name": "Normal Curse of Black Blood"
+        },
+        {
+          "name": "Opposition Alignment (Chaotic)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Extraordinary.OppositionAlign",
+          "standing": "origin",
+          "display_name": "Opposition Alignment (Chaotic)"
+        },
+        {
+          "name": "Opposition Alignment (Evil)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Extraordinary.OppositionAlign",
+          "standing": "origin",
+          "display_name": "Opposition Alignment (Evil)"
+        },
+        {
+          "name": "Opposition Alignment (Good)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Extraordinary.OppositionAlign",
+          "standing": "origin",
+          "display_name": "Opposition Alignment (Good)"
+        },
+        {
+          "name": "Opposition Alignment (Lawful)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.Extraordinary.OppositionAlign",
+          "standing": "origin",
+          "display_name": "Opposition Alignment (Lawful)"
+        },
+        {
+          "name": "Outer Rifts Mysteries",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.OracleMystery.OracleClassFeatures",
+          "standing": "origin",
+          "display_name": "Outer Rifts Mysteries"
+        },
+        {
+          "name": "Outer Rifts Mysteries Class Skills",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Outer Rifts Mysteries Class Skills"
+        },
+        {
+          "name": "Patron",
+          "doneness": "done",
+          "type_facet": "ClassFeatures.Witch Class Feature.Winter Witch Class Feature",
+          "standing": "unclassified",
+          "display_name": "Patron"
+        },
+        {
+          "name": "Planar Haze",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Planar Haze"
+        },
+        {
+          "name": "Planar Infusion",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Planar Infusion"
+        },
+        {
+          "name": "Prayer of the Fourth Act",
+          "doneness": "done",
+          "type_facet": "PaladinClassFeatures.SpecialQuality.Supernatural.PaladinMercy6",
+          "standing": "origin",
+          "display_name": "Prayer of the Fourth Act"
+        },
+        {
+          "name": "Pride (Illusion) School",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool",
+          "standing": "unclassified",
+          "display_name": "Pride (Illusion) School"
+        },
+        {
+          "name": "Prima Donna",
+          "doneness": "done",
+          "type_facet": "BardClassFeatures.SpecialQuality.Extraordinary.BardWellVersed",
+          "standing": "origin",
+          "display_name": "Prima Donna"
+        },
+        {
+          "name": "Primal Magic",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.Supernatural.WizardArcaneBond",
+          "standing": "origin",
+          "display_name": "Primal Magic"
+        },
+        {
+          "name": "Primal Manipulation",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Primal Manipulation"
+        },
+        {
+          "name": "Primal Mastery",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural.SaveBonus",
+          "standing": "origin",
+          "display_name": "Primal Mastery"
+        },
+        {
+          "name": "Primal Surge",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.Supernatural.WizardBonusFeat10",
+          "standing": "unclassified",
+          "display_name": "Primal Surge"
+        },
+        {
+          "name": "Primalist",
+          "doneness": "done",
+          "type_facet": "Archetype.WizardArchetype.WizardArcaneBond.WizardBonusFeat5.WizardBonusFeat10",
+          "standing": "unclassified",
+          "display_name": "Primalist"
+        },
+        {
+          "name": "Quick Disable",
+          "doneness": "done",
+          "type_facet": "AlchemistClassFeatures.SpecialQuality.Extraordinary.AlchemistDiscovery",
+          "standing": "unclassified",
+          "display_name": "Quick Disable"
+        },
+        {
+          "name": "Rift Magic",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Rift Magic"
+        },
+        {
+          "name": "Rift Weapon",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Rift Weapon"
+        },
+        {
+          "name": "Rune Trap",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Extraordinary.CypherLore.Swift",
+          "standing": "unclassified",
+          "display_name": "Rune Trap"
+        },
+        {
+          "name": "Scathing Tirade",
+          "doneness": "done",
+          "type_facet": "BardClassFeatures.SpecialQuality.Supernatural.BardDirgeOfDoom",
+          "standing": "origin",
+          "display_name": "Scathing Tirade"
+        },
+        {
+          "name": "Seasons Subdomain",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Seasons Subdomain"
+        },
+        {
+          "name": "Shadow Spells",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.Supernatural.WizardArcaneBond",
+          "standing": "origin",
+          "display_name": "Shadow Spells"
+        },
+        {
+          "name": "Shadowcaster",
+          "doneness": "done",
+          "type_facet": "Archetype.WizardArchetype.WizardArcaneBond.WizardBonusFeat5.WizardBonusFeat10",
+          "standing": "unclassified",
+          "display_name": "Shadowcaster"
+        },
+        {
+          "name": "Shadowsight",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.Extraordinary.WizardBonusFeat5",
+          "standing": "origin",
+          "display_name": "Shadowsight"
+        },
+        {
+          "name": "Shadowy Specialization",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.Extraordinary.WizardBonusFeat10",
+          "standing": "origin",
+          "display_name": "Shadowy Specialization"
+        },
+        {
+          "name": "Silversmith",
+          "doneness": "done",
+          "type_facet": "InquisitorClassFeatures.SpecialQuality.InquisitorDetectAlignment",
+          "standing": "origin",
+          "display_name": "Silversmith"
+        },
+        {
+          "name": "Sloth (Conjuration) School",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool",
+          "standing": "unclassified",
+          "display_name": "Sloth (Conjuration) School"
+        },
+        {
+          "name": "Sodden Shore Sense",
+          "doneness": "done",
+          "type_facet": "DruidClassFeatures.SpecialQuality.Extraordinary.DruidNatureSense",
+          "standing": "unclassified",
+          "display_name": "Sodden Shore Sense"
+        },
+        {
+          "name": "Spell Resistance",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Spell Resistance"
+        },
+        {
+          "name": "Spells",
+          "doneness": "done",
+          "type_facet": "RangerClassFeatures.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Spells"
+        },
+        {
+          "name": "Spellscar Mysteries",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.OracleMystery.OracleClassFeatures",
+          "standing": "origin",
+          "display_name": "Spellscar Mysteries"
+        },
+        {
+          "name": "Spellscar Mysteries Class Skills",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Spellscar Mysteries Class Skills"
+        },
+        {
+          "name": "Spinning Spellcaster",
+          "doneness": "done",
+          "type_facet": "BardClassFeatures.ArchetypeAbility.SpecialQuality.BardLoreMaster",
+          "standing": "origin",
+          "display_name": "Spinning Spellcaster"
+        },
+        {
+          "name": "Spire Defender",
+          "doneness": "done",
+          "type_facet": "Archetype.MagusArchetype.MagusWeaponProficiency.MagusArmorProficiency.MagusSpellRecall",
+          "standing": "origin",
+          "display_name": "Spire Defender"
+        },
+        {
+          "name": "Spontaneous Domain Casting",
+          "doneness": "done",
+          "type_facet": "DruidClassFeatures.SpecialQuality.DruidSpontaneousCasting",
+          "standing": "unclassified",
+          "display_name": "Spontaneous Domain Casting"
+        },
+        {
+          "name": "Summon Nature's Ally",
+          "doneness": "done",
+          "type_facet": "SummonerClassFeatures.SpecialQuality.SpellLike.SummonerSummonMonster",
+          "standing": "unclassified",
+          "display_name": "Summon Nature's Ally"
+        },
+        {
+          "name": "Sun Strike",
+          "doneness": "done",
+          "type_facet": "InquisitorClassFeatures.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Sun Strike"
+        },
+        {
+          "name": "Swift Scrivener",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Extraordinary.CypherLore",
+          "standing": "unclassified",
+          "display_name": "Swift Scrivener"
+        },
+        {
+          "name": "Swift Scroll",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Extraordinary.CypherLore",
+          "standing": "unclassified",
+          "display_name": "Swift Scroll"
+        },
+        {
+          "name": "Sword of Valor",
+          "doneness": "done",
+          "type_facet": "Archetype.PaladinArchetype.PaladinDivineGrace.PaladinMercy6.PaladinAuraOfJustice",
+          "standing": "origin",
+          "display_name": "Sword of Valor"
+        },
+        {
+          "name": "Tattooed Sorcerer",
+          "doneness": "done",
+          "type_facet": "Archetype.Sorcerer Archetype.SorcererBloodlinePowerLvl1.SorcererBloodlinePowerLvl9.SorcererBloodlineFeatLvl7.SorcererEschewMaterials",
+          "standing": "origin",
+          "display_name": "Tattooed Sorcerer"
+        },
+        {
+          "name": "Teamwork Feat",
+          "doneness": "done",
+          "type_facet": "ClericClassFeatures.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "Teamwork Feat"
+        },
+        {
+          "name": "Telepathy",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural",
+          "standing": "unclassified",
+          "display_name": "Telepathy"
+        },
+        {
+          "name": "Tempest Druid",
+          "doneness": "done",
+          "type_facet": "Archetype.DruidArchetype.DruidSpontaneousCasting.DruidNatureBond.DruidNatureSense.DruidTracklessStep.DruidResistNaturesLure.DruidVenomImmunity",
+          "standing": "unclassified",
+          "display_name": "Tempest Druid"
+        },
+        {
+          "name": "Trade Subdomain",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Trade Subdomain"
+        },
+        {
+          "name": "Trap Sense",
+          "doneness": "done",
+          "type_facet": "AlchemistClassFeatures.AlchemistDiscovery",
+          "standing": "unclassified",
+          "display_name": "Trap Sense"
+        },
+        {
+          "name": "Trap Spotter",
+          "doneness": "done",
+          "type_facet": "AlchemistClassFeatures.SpecialQuality.Extraordinary.AlchemistDiscovery",
+          "standing": "unclassified",
+          "display_name": "Trap Spotter"
+        },
+        {
+          "name": "Trapfinding",
+          "doneness": "done",
+          "type_facet": "AlchemistClassFeatures.SpecialQuality.AlchemistBrewPotion",
+          "standing": "unclassified",
+          "display_name": "Trapfinding"
+        },
+        {
+          "name": "Travel",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Travel"
+        },
+        {
+          "name": "Trident Proficiency",
+          "doneness": "done",
+          "type_facet": "DruidClassFeatures.SpecialQuality",
+          "standing": "origin",
+          "display_name": "Trident Proficiency"
+        },
+        {
+          "name": "Trigger Primal Magic Event",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.SpellscarRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Trigger Primal Magic Event"
+        },
+        {
+          "name": "True Scion (Charisma)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.TrueScion",
+          "standing": "origin",
+          "display_name": "True Scion (Charisma)"
+        },
+        {
+          "name": "True Scion (Wisdom)",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality.TrueScion",
+          "standing": "origin",
+          "display_name": "True Scion (Wisdom)"
+        },
+        {
+          "name": "Unearthly Terrain",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Unearthly Terrain"
+        },
+        {
+          "name": "Unseen Devotion",
+          "doneness": "done",
+          "type_facet": "SpecialQuality",
+          "standing": "origin",
+          "display_name": "Unseen Devotion"
+        },
+        {
+          "name": "Vampire Hunter",
+          "doneness": "done",
+          "type_facet": "Archetype.InquisitorArchetype.InquisitorDetectAlignment",
+          "standing": "origin",
+          "display_name": "Vampire Hunter"
+        },
+        {
+          "name": "Weapon Proficiency",
+          "doneness": "done",
+          "type_facet": "MagusClassFeatures.SpecialQuality.MagusWeaponProficiency",
+          "standing": "unclassified",
+          "display_name": "Weapon Proficiency"
+        },
+        {
+          "name": "Weather",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "Weather"
+        },
+        {
+          "name": "Wings of Terror",
+          "doneness": "done",
+          "type_facet": "OracleClassFeatures.SpecialQuality.OracleRevelation.OuterRiftsRevelation.Supernatural",
+          "standing": "origin",
+          "display_name": "Wings of Terror"
+        },
+        {
+          "name": "Winter Witch",
+          "doneness": "done",
+          "type_facet": "Archetype.WitchArchetype",
+          "standing": "unclassified",
+          "display_name": "Winter Witch"
+        },
+        {
+          "name": "Worthy Enemy",
+          "doneness": "done",
+          "type_facet": "PaladinClassFeatures.SpecialQuality.Supernatural.PaladinAuraOfJustice",
+          "standing": "origin",
+          "display_name": "Worthy Enemy"
+        },
+        {
+          "name": "Wrath (Evocation) School",
+          "doneness": "done",
+          "type_facet": "WizardClassFeatures.SpecialQuality.ClassSpecialization.ArcaneSchool",
+          "standing": "unclassified",
+          "display_name": "Wrath (Evocation) School"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Archetype.AlchemistArchetype.AlchemistPoisonUse.AlchemistSwiftAlchemy",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.AlchemistArchetype.AlchemistPoisonUse.AlchemistSwiftAlchemy)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Archetype.BardArchetype.BardBardicKnowledge.BardWellVersed.BardLoreMaster.BardDirgeOfDoom.BardInspireCompetence",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.BardArchetype.BardBardicKnowledge.BardWellVersed.BardLoreMaster.BardDirgeOfDoom.BardInspireCompetence)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Archetype.BardArchetype.BardWeaponProficiencies.BardBardicKnowledge.BardLoreMaster.BardDirgeOfDoom",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.BardArchetype.BardWeaponProficiencies.BardBardicKnowledge.BardLoreMaster.BardDirgeOfDoom)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Archetype.ClericArchetype.ClericArmorProficiency.ClericDomains",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.ClericArchetype.ClericArmorProficiency.ClericDomains)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Archetype.ClericArchetype.ClericArmorProficiency.ClericDomains",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.ClericArchetype.ClericArmorProficiency.ClericDomains) #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "CyphermageClassFeatures.SpecialQuality.Extraordinary.CypherLore",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (CyphermageClassFeatures.SpecialQuality.Extraordinary.CypherLore)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "BardClassFeatures.ArchetypeAbility.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (BardClassFeatures.ArchetypeAbility.SpecialQuality)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "DivineScionClassFeatures.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (DivineScionClassFeatures.SpecialQuality)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "ClericClassFeatures.SpecialQuality.ClericArmorProficiency",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (ClericClassFeatures.SpecialQuality.ClericArmorProficiency)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Archetype.RangerArchetype.RangerMediumArmorProficiency.RangerShieldProficiency.RangerFavoredEnemy.RangerWildEmpathy.RangerFavoredTerrain",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.RangerArchetype.RangerMediumArmorProficiency.RangerShieldProficiency.RangerFavoredEnemy.RangerWildEmpathy.RangerFavoredTerrain)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Sorcerer Class Feature.SpecialQuality.Supernatural.SorcererBloodlinePowerLvl9",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Sorcerer Class Feature.SpecialQuality.Supernatural.SorcererBloodlinePowerLvl9)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Archetype.Sorcerer Archetype.SorcererClassSkills.SorcererEschewMaterials.SorcererBloodlineSpellLvl3.SorcererBloodlineSpellLvl5.SorcererBloodlinePowerLvl9",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Archetype.Sorcerer Archetype.SorcererClassSkills.SorcererEschewMaterials.SorcererBloodlineSpellLvl3.SorcererBloodlineSpellLvl5.SorcererBloodlinePowerLvl9)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI])"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #15"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #16"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #17"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #18"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #19"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "[redacted PI]",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] ([redacted PI]) #20"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Sorcerer Class Feature.SpecialQuality.Supernatural.SorcererBloodlinePowerLvl9",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Sorcerer Class Feature.SpecialQuality.Supernatural.SorcererBloodlinePowerLvl9) #21"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Sorcerer Class Feature.SpecialQuality.Extraordinary.SorcererEschewMaterials",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Sorcerer Class Feature.SpecialQuality.Extraordinary.SorcererEschewMaterials)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.BlessingOfTheHarrow",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (ClericClassFeatures.SpecialQuality.Supernatural.BlessingOfTheHarrow)"
+        }
+      ]
+    },
+    {
+      "kind": "class",
+      "label": "Classes",
+      "done": 3,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 3,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 2,
+        "unclassified": 1
+      },
+      "items": [
+        {
+          "name": "Divine Scion",
+          "doneness": "done",
+          "type_facet": "PC.Prestige",
+          "standing": "origin",
+          "display_name": "Divine Scion"
+        },
+        {
+          "name": "Eidolon (Fey)",
+          "doneness": "done",
+          "type_facet": "Monster.Companion",
+          "standing": "origin",
+          "display_name": "Eidolon (Fey)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "PC.Prestige",
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        }
+      ]
+    },
+    {
+      "kind": "equipment",
+      "label": "Equipment",
+      "done": 6,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 6,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 6
+      },
+      "items": [
+        {
+          "name": "Caster's Tattoo (Greater)",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Caster's Tattoo (Greater)"
+        },
+        {
+          "name": "Caster's Tattoo (Lesser)",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Caster's Tattoo (Lesser)"
+        },
+        {
+          "name": "Caster's Tattoo (Normal)",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Caster's Tattoo (Normal)"
+        },
+        {
+          "name": "Reservoir Tattoo",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Reservoir Tattoo"
+        },
+        {
+          "name": "Riffle Scroll",
+          "doneness": "done",
+          "type_facet": "RiffleScroll.Consumable",
+          "standing": "origin",
+          "display_name": "Riffle Scroll"
+        },
+        {
+          "name": "Spell Tattoo",
+          "doneness": "done",
+          "type_facet": "SpellTattoo.Consumable",
+          "standing": "origin",
+          "display_name": "Spell Tattoo"
+        }
+      ]
+    },
+    {
+      "kind": "equipment_modifier",
+      "label": "Equipment Modifiers",
+      "done": 62,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 62,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "unclassified": 4,
+        "origin": 58
+      },
+      "items": [
+        {
+          "name": "Arcane",
+          "doneness": "done",
+          "type_facet": "RiffleScroll",
+          "standing": "unclassified",
+          "display_name": "Arcane (RiffleScroll)"
+        },
+        {
+          "name": "Arcane",
+          "doneness": "done",
+          "type_facet": "SpellTattoo",
+          "standing": "unclassified",
+          "display_name": "Arcane (SpellTattoo)"
+        },
+        {
+          "name": "Divine",
+          "doneness": "done",
+          "type_facet": "RiffleScroll",
+          "standing": "unclassified",
+          "display_name": "Divine (RiffleScroll)"
+        },
+        {
+          "name": "Divine",
+          "doneness": "done",
+          "type_facet": "SpellTattoo",
+          "standing": "unclassified",
+          "display_name": "Divine (SpellTattoo)"
+        },
+        {
+          "name": "Magical Tattoo",
+          "doneness": "done",
+          "type_facet": "Wonderous.Belt",
+          "standing": "origin",
+          "display_name": "Magical Tattoo (Wonderous.Belt)"
+        },
+        {
+          "name": "Magical Tattoo",
+          "doneness": "done",
+          "type_facet": "Wonderous.Body",
+          "standing": "origin",
+          "display_name": "Magical Tattoo (Wonderous.Body)"
+        },
+        {
+          "name": "Magical Tattoo",
+          "doneness": "done",
+          "type_facet": "Wonderous.Chest",
+          "standing": "origin",
+          "display_name": "Magical Tattoo (Wonderous.Chest)"
+        },
+        {
+          "name": "Magical Tattoo",
+          "doneness": "done",
+          "type_facet": "Wonderous.Feet",
+          "standing": "origin",
+          "display_name": "Magical Tattoo (Wonderous.Feet)"
+        },
+        {
+          "name": "Magical Tattoo",
+          "doneness": "done",
+          "type_facet": "Wonderous.Hands",
+          "standing": "origin",
+          "display_name": "Magical Tattoo (Wonderous.Hands)"
+        },
+        {
+          "name": "Magical Tattoo",
+          "doneness": "done",
+          "type_facet": "Wonderous.Head",
+          "standing": "origin",
+          "display_name": "Magical Tattoo (Wonderous.Head)"
+        },
+        {
+          "name": "Magical Tattoo",
+          "doneness": "done",
+          "type_facet": "Wonderous.Neck",
+          "standing": "origin",
+          "display_name": "Magical Tattoo (Wonderous.Neck)"
+        },
+        {
+          "name": "Magical Tattoo",
+          "doneness": "done",
+          "type_facet": "Wonderous.Ring",
+          "standing": "origin",
+          "display_name": "Magical Tattoo (Wonderous.Ring)"
+        },
+        {
+          "name": "Magical Tattoo",
+          "doneness": "done",
+          "type_facet": "Wonderous.Shoulders",
+          "standing": "origin",
+          "display_name": "Magical Tattoo (Wonderous.Shoulders)"
+        },
+        {
+          "name": "Magical Tattoo",
+          "doneness": "done",
+          "type_facet": "Wonderous.Wrist",
+          "standing": "origin",
+          "display_name": "Magical Tattoo (Wonderous.Wrist)"
+        },
+        {
+          "name": "RIFFA_1USE",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "RIFFA_1USE"
+        },
+        {
+          "name": "RIFFD_1USE",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "RIFFD_1USE"
+        },
+        {
+          "name": "Spell Effect (Single Use/Completion)",
+          "doneness": "done",
+          "type_facet": "RiffleScroll.Arcane",
+          "standing": "origin",
+          "display_name": "Spell Effect (Single Use/Completion) (RiffleScroll.Arcane)"
+        },
+        {
+          "name": "Spell Effect (Single Use/Completion)",
+          "doneness": "done",
+          "type_facet": "RiffleScroll.Divine",
+          "standing": "origin",
+          "display_name": "Spell Effect (Single Use/Completion) (RiffleScroll.Divine)"
+        },
+        {
+          "name": "Spell Effect (Single Use/Completion)",
+          "doneness": "done",
+          "type_facet": "SpellTattoo.Arcane",
+          "standing": "origin",
+          "display_name": "Spell Effect (Single Use/Completion) (SpellTattoo.Arcane)"
+        },
+        {
+          "name": "Spell Effect (Single Use/Completion)",
+          "doneness": "done",
+          "type_facet": "SpellTattoo.Divine",
+          "standing": "origin",
+          "display_name": "Spell Effect (Single Use/Completion) (SpellTattoo.Divine)"
+        },
+        {
+          "name": "TATTA_1USE",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "TATTA_1USE"
+        },
+        {
+          "name": "TATTD_1USE",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "TATTD_1USE"
+        },
+        {
+          "name": "TattooAmulet",
+          "doneness": "done",
+          "type_facet": "Amulet",
+          "standing": "origin",
+          "display_name": "TattooAmulet"
+        },
+        {
+          "name": "TattooArmwear",
+          "doneness": "done",
+          "type_facet": "Armwear",
+          "standing": "origin",
+          "display_name": "TattooArmwear"
+        },
+        {
+          "name": "TattooBelt",
+          "doneness": "done",
+          "type_facet": "Belt",
+          "standing": "origin",
+          "display_name": "TattooBelt"
+        },
+        {
+          "name": "TattooBodywear",
+          "doneness": "done",
+          "type_facet": "Bodywear",
+          "standing": "origin",
+          "display_name": "TattooBodywear"
+        },
+        {
+          "name": "TattooBoot",
+          "doneness": "done",
+          "type_facet": "Boot",
+          "standing": "origin",
+          "display_name": "TattooBoot"
+        },
+        {
+          "name": "TattooBracelet",
+          "doneness": "done",
+          "type_facet": "Bracelet",
+          "standing": "origin",
+          "display_name": "TattooBracelet"
+        },
+        {
+          "name": "TattooBracer",
+          "doneness": "done",
+          "type_facet": "Bracer",
+          "standing": "origin",
+          "display_name": "TattooBracer"
+        },
+        {
+          "name": "TattooBrooch",
+          "doneness": "done",
+          "type_facet": "Brooch",
+          "standing": "origin",
+          "display_name": "TattooBrooch"
+        },
+        {
+          "name": "TattooCape",
+          "doneness": "done",
+          "type_facet": "Cape",
+          "standing": "origin",
+          "display_name": "TattooCape"
+        },
+        {
+          "name": "TattooChest",
+          "doneness": "done",
+          "type_facet": "Chest",
+          "standing": "origin",
+          "display_name": "TattooChest"
+        },
+        {
+          "name": "TattooCirclet",
+          "doneness": "done",
+          "type_facet": "Circlet",
+          "standing": "origin",
+          "display_name": "TattooCirclet"
+        },
+        {
+          "name": "TattooCloak",
+          "doneness": "done",
+          "type_facet": "Cloak",
+          "standing": "origin",
+          "display_name": "TattooCloak"
+        },
+        {
+          "name": "TattooCrown",
+          "doneness": "done",
+          "type_facet": "Crown",
+          "standing": "origin",
+          "display_name": "TattooCrown"
+        },
+        {
+          "name": "TattooFeet",
+          "doneness": "done",
+          "type_facet": "Feet",
+          "standing": "origin",
+          "display_name": "TattooFeet"
+        },
+        {
+          "name": "TattooFootwear",
+          "doneness": "done",
+          "type_facet": "Footwear",
+          "standing": "origin",
+          "display_name": "TattooFootwear"
+        },
+        {
+          "name": "TattooGauntlet",
+          "doneness": "done",
+          "type_facet": "Gauntlet",
+          "standing": "origin",
+          "display_name": "TattooGauntlet"
+        },
+        {
+          "name": "TattooGirdle",
+          "doneness": "done",
+          "type_facet": "Girdle",
+          "standing": "origin",
+          "display_name": "TattooGirdle"
+        },
+        {
+          "name": "TattooGlove",
+          "doneness": "done",
+          "type_facet": "Glove",
+          "standing": "origin",
+          "display_name": "TattooGlove"
+        },
+        {
+          "name": "TattooHands",
+          "doneness": "done",
+          "type_facet": "Hands",
+          "standing": "origin",
+          "display_name": "TattooHands"
+        },
+        {
+          "name": "TattooHandwear",
+          "doneness": "done",
+          "type_facet": "Handwear",
+          "standing": "origin",
+          "display_name": "TattooHandwear"
+        },
+        {
+          "name": "TattooHat",
+          "doneness": "done",
+          "type_facet": "Hat",
+          "standing": "origin",
+          "display_name": "TattooHat"
+        },
+        {
+          "name": "TattooHead",
+          "doneness": "done",
+          "type_facet": "Head",
+          "standing": "origin",
+          "display_name": "TattooHead"
+        },
+        {
+          "name": "TattooHeadgear",
+          "doneness": "done",
+          "type_facet": "Headgear",
+          "standing": "origin",
+          "display_name": "TattooHeadgear"
+        },
+        {
+          "name": "TattooHelm",
+          "doneness": "done",
+          "type_facet": "Helm",
+          "standing": "origin",
+          "display_name": "TattooHelm"
+        },
+        {
+          "name": "TattooMantle",
+          "doneness": "done",
+          "type_facet": "Mantle",
+          "standing": "origin",
+          "display_name": "TattooMantle"
+        },
+        {
+          "name": "TattooMask",
+          "doneness": "done",
+          "type_facet": "Mask",
+          "standing": "origin",
+          "display_name": "TattooMask"
+        },
+        {
+          "name": "TattooMedallion",
+          "doneness": "done",
+          "type_facet": "Medallion",
+          "standing": "origin",
+          "display_name": "TattooMedallion"
+        },
+        {
+          "name": "TattooNeck",
+          "doneness": "done",
+          "type_facet": "Neck",
+          "standing": "origin",
+          "display_name": "TattooNeck"
+        },
+        {
+          "name": "TattooNecklace",
+          "doneness": "done",
+          "type_facet": "Necklace",
+          "standing": "origin",
+          "display_name": "TattooNecklace"
+        },
+        {
+          "name": "TattooNeckwear",
+          "doneness": "done",
+          "type_facet": "Neckwear",
+          "standing": "origin",
+          "display_name": "TattooNeckwear"
+        },
+        {
+          "name": "TattooPeriapt",
+          "doneness": "done",
+          "type_facet": "Periapt",
+          "standing": "origin",
+          "display_name": "TattooPeriapt"
+        },
+        {
+          "name": "TattooRing",
+          "doneness": "done",
+          "type_facet": "Ring",
+          "standing": "origin",
+          "display_name": "TattooRing"
+        },
+        {
+          "name": "TattooRobe",
+          "doneness": "done",
+          "type_facet": "Robe",
+          "standing": "origin",
+          "display_name": "TattooRobe"
+        },
+        {
+          "name": "TattooScarab",
+          "doneness": "done",
+          "type_facet": "Scarab",
+          "standing": "origin",
+          "display_name": "TattooScarab"
+        },
+        {
+          "name": "TattooShirt",
+          "doneness": "done",
+          "type_facet": "Shirt",
+          "standing": "origin",
+          "display_name": "TattooShirt"
+        },
+        {
+          "name": "TattooShoes",
+          "doneness": "done",
+          "type_facet": "Shoes",
+          "standing": "origin",
+          "display_name": "TattooShoes"
+        },
+        {
+          "name": "TattooShoulders",
+          "doneness": "done",
+          "type_facet": "Shoulders",
+          "standing": "origin",
+          "display_name": "TattooShoulders"
+        },
+        {
+          "name": "TattooSlippers",
+          "doneness": "done",
+          "type_facet": "Slippers",
+          "standing": "origin",
+          "display_name": "TattooSlippers"
+        },
+        {
+          "name": "TattooVest",
+          "doneness": "done",
+          "type_facet": "Vest",
+          "standing": "origin",
+          "display_name": "TattooVest"
+        },
+        {
+          "name": "TattooWrist",
+          "doneness": "done",
+          "type_facet": "Wrist",
+          "standing": "origin",
+          "display_name": "TattooWrist"
+        }
+      ]
+    },
+    {
+      "kind": "feat",
+      "label": "Feats",
+      "done": 7,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 7,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 7
+      },
+      "items": [
+        {
+          "name": "False Casting",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "origin",
+          "display_name": "False Casting"
+        },
+        {
+          "name": "False Focus",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "origin",
+          "display_name": "False Focus"
+        },
+        {
+          "name": "Inscribe Magical Tattoo",
+          "doneness": "done",
+          "type_facet": "ItemCreation",
+          "standing": "origin",
+          "display_name": "Inscribe Magical Tattoo"
+        },
+        {
+          "name": "Shadow Gambit",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "origin",
+          "display_name": "Shadow Gambit"
+        },
+        {
+          "name": "Shadow Grasp",
+          "doneness": "done",
+          "type_facet": "Metamagic",
+          "standing": "origin",
+          "display_name": "Shadow Grasp"
+        },
+        {
+          "name": "Tenebrous Spell",
+          "doneness": "done",
+          "type_facet": "Metamagic",
+          "standing": "origin",
+          "display_name": "Tenebrous Spell"
+        },
+        {
+          "name": "Umbral Spell",
+          "doneness": "done",
+          "type_facet": "Metamagic",
+          "standing": "origin",
+          "display_name": "Umbral Spell"
+        }
+      ]
+    },
+    {
+      "kind": "skill",
+      "label": "Skills",
+      "done": 1,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 1,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "unclassified": 1
+      },
+      "items": [
+        {
+          "name": "Craft (Tattoos)",
+          "doneness": "done",
+          "type_facet": "Intelligence.Craft.Base",
+          "standing": "unclassified",
+          "display_name": "Craft (Tattoos)"
+        }
+      ]
+    },
+    {
+      "kind": "spell",
+      "label": "Spells",
+      "done": 39,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 39,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 34,
+        "unclassified": 5
+      },
+      "items": [
+        {
+          "name": "Bladed Dash",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bladed Dash"
+        },
+        {
+          "name": "Bladed Dash (Greater)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Bladed Dash (Greater)"
+        },
+        {
+          "name": "Blast Barrier",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Blast Barrier"
+        },
+        {
+          "name": "Call Weapon",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Call Weapon"
+        },
+        {
+          "name": "Crusader's Edge",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Crusader's Edge"
+        },
+        {
+          "name": "Eaglesoul",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Eaglesoul"
+        },
+        {
+          "name": "Eldritch Conduit",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Eldritch Conduit"
+        },
+        {
+          "name": "Eldritch Conduit (Greater)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Eldritch Conduit (Greater)"
+        },
+        {
+          "name": "Fleshcurdle",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fleshcurdle"
+        },
+        {
+          "name": "Forceful Strike",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Forceful Strike"
+        },
+        {
+          "name": "Geniekind",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Geniekind"
+        },
+        {
+          "name": "Hungry Darkness",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Hungry Darkness"
+        },
+        {
+          "name": "Hunter's Lore",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Hunter's Lore"
+        },
+        {
+          "name": "Ice Spears",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ice Spears"
+        },
+        {
+          "name": "Impart Mind",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Impart Mind"
+        },
+        {
+          "name": "Kiss of the First World",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Kiss of the First World"
+        },
+        {
+          "name": "Martial Marionette",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Martial Marionette"
+        },
+        {
+          "name": "Martyr's Bargain",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Martyr's Bargain"
+        },
+        {
+          "name": "Music of the Spheres",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Music of the Spheres"
+        },
+        {
+          "name": "Orchid's Drop",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Orchid's Drop"
+        },
+        {
+          "name": "Pugwampi's Grace",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Pugwampi's Grace"
+        },
+        {
+          "name": "Shadow Barbs",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shadow Barbs"
+        },
+        {
+          "name": "Shining Cord",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Shining Cord"
+        },
+        {
+          "name": "Siphon Magic",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Siphon Magic"
+        },
+        {
+          "name": "Spell Absorption",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Spell Absorption"
+        },
+        {
+          "name": "Spell Absorption (Greater)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Spell Absorption (Greater)"
+        },
+        {
+          "name": "Spellscar",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Spellscar"
+        },
+        {
+          "name": "Suppress Primal Magic",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Suppress Primal Magic"
+        },
+        {
+          "name": "Tattoo Potion",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Tattoo Potion"
+        },
+        {
+          "name": "Transfer Tattoo",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Transfer Tattoo"
+        },
+        {
+          "name": "Vengeful Comets",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Vengeful Comets"
+        },
+        {
+          "name": "Vex Giant",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Vex Giant"
+        },
+        {
+          "name": "Weaponwand",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Weaponwand"
+        },
+        {
+          "name": "Zone of Foul Flames",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Zone of Foul Flames"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #3"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #5"
+        }
+      ]
+    },
+    {
+      "kind": "template",
+      "label": "Templates",
+      "done": 3,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 3,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 3
+      },
+      "items": [
+        {
+          "name": "First Worlder Eidolon HD",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "First Worlder Eidolon HD"
+        },
+        {
+          "name": "Fleshwarped",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Fleshwarped"
+        },
+        {
+          "name": "Magic School",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Magic School"
+        }
+      ]
+    }
+  ]
+}

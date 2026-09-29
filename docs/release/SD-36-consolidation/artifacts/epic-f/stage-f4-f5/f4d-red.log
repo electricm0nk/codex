@@ -1,0 +1,17 @@
+# f4d RED — each new test against the pre-F4d code
+## rowSelection.test.mjs (module absent), then HEAD run.mjs given a comma list:
+node:internal/modules/esm/resolve:275
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ubuntu/workspace/worktrees/codex-epic-f4/apps/desktop/scripts/ui-smoke/lib/rowSelection.mjs' imported from /home/ubuntu/workspace/worktrees/codex-epic-f4/apps/desktop/scripts/ui-smoke/lib/rowSelection.test.mjs
+      throw new Error(`--only ${args.only}: no such row id in spec.json`);
+Error: --only create-character-render,create-character-back: no such row id in spec.json
+
+## commandChannel.test.mjs (export absent), then the pre-F4d resend loop as sendUntilOk:
+SyntaxError: The requested module './commandChannel.mjs' does not provide an export named 'sendUntilOk'
+AssertionError [ERR_ASSERTION]: the late acknowledgement is the result
+
+## featsTabModel.test.ts (last-record-wins join at HEAD):
+    throw new Error(`${message}: expected ${String(expected)}, got ${String(actual)}`);
+Error: the picked key resolves to the first (CRB) record, not the later Mythic one: expected Alertness, got Alertness (Mythic)

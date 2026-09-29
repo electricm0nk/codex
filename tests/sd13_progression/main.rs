@@ -13,6 +13,9 @@
 #[path = "../common/mod.rs"]
 mod common;
 
+/// SD-36 Epic C2.1/C2.2 table-driven rows (see rows.rs's own doc comment).
+mod rows;
+
 /// The roster table: `class => [module, …]`. Each module is one file in this directory and one
 /// (class, level) row of the family. Adding a level is adding a row.
 macro_rules! roster {

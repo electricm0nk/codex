@@ -1,0 +1,1 @@
+{"var":"vc175553815bb2851","label":"HAUNTEDOCCULTISTIMPLEMENTSCHOOL","declared_by":["horror_adventures:class_feature:haunt_collector_possessed_possessions"],"contributions":[{"rule_id":"horror_adventures:class_feature:haunt_collector_possessed_possessions","expr":{"Div":[{"Sum":[{"Var":"vfc40634209ba5cad"},{"Const":2}]},{"Const":4}]},"when":"Always"}],"provenance":{}}

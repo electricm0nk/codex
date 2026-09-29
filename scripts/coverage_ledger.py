@@ -100,7 +100,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_INVENTORY = os.path.join(REPO_ROOT, "docs", "work-inventory.json")
 
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "observer"))
-import pf1e_dashboard_producer as P  # noqa: E402  (path set above)
+import doneness as P  # noqa: E402  (path set above; SD-36 D3: no longer the full producer)
 
 # Every field a `match` clause is allowed to test with a plain "any of"
 # list. Kept as an explicit tuple (not "whatever the unit dict happens to

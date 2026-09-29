@@ -150,32 +150,32 @@ pub const SOURCE_IR_VERSION: u32 = 1;
 ///
 /// Every record emitted by the source-IR projection carries a
 /// `SourceRef` so the rules engine, the UI, and the diagnostics
-/// surface can trace any derived value back to the LST file and
-/// the exact line that declared it. The fields are deliberately
+/// surface can trace any derived value back to the source document
+/// and the exact line that declared it. The fields are deliberately
 /// minimal — the parser records only what it knows; richer
 /// provenance (raw line text, container context) is reachable via
 /// the underlying parser entry carried in the
 /// [`SourceContentPayload`] variant.
 ///
-/// `lst_file` is the path the parser recorded on the source
+/// `source_path` is the path the parser recorded on the source
 /// document (string form; `PathBuf::to_string_lossy()` for
 /// path-typed parsers, verbatim for string-typed ones). `line` is
 /// the one-based line number the parser captured for the
 /// record's first directive.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub struct SourceRef {
-    /// Identity of the LST file the record originated from.
-    pub lst_file: String,
-    /// One-based line number in `lst_file` where the record's
+    /// Identity of the source document the record originated from.
+    pub source_path: String,
+    /// One-based line number in `source_path` where the record's
     /// first directive appeared.
     pub line: u32,
 }
 
 impl SourceRef {
     /// Construct a `SourceRef` from the canonical pieces.
-    pub fn new(lst_file: impl Into<String>, line: u32) -> Self {
+    pub fn new(source_path: impl Into<String>, line: u32) -> Self {
         Self {
-            lst_file: lst_file.into(),
+            source_path: source_path.into(),
             line,
         }
     }
@@ -468,6 +468,14 @@ pub enum SourceContentDiagnosticKind {
     /// the underlying entry but the canonical shape does not
     /// surface them.
     PartialTranslation,
+    /// SD-36 Epic F1 rule-gap investigation
+    /// (`docs/release/SD-36-consolidation/artifacts/epic-f/stage4/rule-gap-receipt.md`):
+    /// two rule files (or two entries in one file) minted the SAME `RuleId`. The package's
+    /// `BTreeMap<RuleId, SheetRule>` keeps only the later write; the earlier rule for that id
+    /// is entirely absent from the live package -- never a partial or lossy projection of it,
+    /// its whole content is gone. Surfaced loudly (never a silent overwrite) so a caller can
+    /// tell a genuine, still-present converter defect from an already-fixed one.
+    DuplicateRuleId,
 }
 
 /// Canonical diagnostic surfaced by source-IR projection.
@@ -603,7 +611,7 @@ impl<'a, P> SourcePackageContent<'a, P> {
 
     /// Returns the records filtered to the given kind, in
     /// deterministic order: insertion order first, then a stable
-    /// secondary sort by `(lst_file, line)` so two
+    /// secondary sort by `(source_path, line)` so two
     /// `SourcePackageContent` values built from the same corpus
     /// produce byte-identical slices.
     ///
@@ -623,13 +631,13 @@ impl<'a, P> SourcePackageContent<'a, P> {
             .collect();
         // Secondary sort by provenance. The slice already
         // preserves insertion order; we sort a parallel index
-        // vector by (lst_file, line) and permute the result to
+        // vector by (source_path, line) and permute the result to
         // keep O(n log n) overall.
         let mut indices: Vec<usize> = (0..filtered.len()).collect();
         indices.sort_by(|&a, &b| {
             let ra = &filtered[a].source_ref;
             let rb = &filtered[b].source_ref;
-            (ra.lst_file.as_str(), ra.line).cmp(&(rb.lst_file.as_str(), rb.line))
+            (ra.source_path.as_str(), ra.line).cmp(&(rb.source_path.as_str(), rb.line))
         });
         let permuted: Vec<SourceContentRecord<'a, P>> =
             indices.into_iter().map(|i| filtered[i].clone()).collect();
@@ -723,7 +731,7 @@ mod tests {
     #[test]
     fn src_ref_round_trip() {
         let sr = SourceRef::new("foo.lst", 42);
-        assert_eq!(sr.lst_file, "foo.lst");
+        assert_eq!(sr.source_path, "foo.lst");
         assert_eq!(sr.line, 42);
     }
 

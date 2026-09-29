@@ -5,12 +5,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 5,
-      "partial": 3,
+      "done": 10,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 8,
-      "pct": 62.5,
-      "excluded_from_percentage": 2,
+      "denominator": 10,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 8,
         "unclassified": 2
@@ -18,21 +18,21 @@
       "items": [
         {
           "name": "Channel Hellfire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Channel Hellfire"
         },
         {
           "name": "Damned",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Weakness",
           "standing": "unclassified",
           "display_name": "Damned"
         },
         {
           "name": "Hellfire Ray",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "origin",
           "display_name": "Hellfire Ray"
@@ -46,7 +46,7 @@
         },
         {
           "name": "Heresy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Heresy"
@@ -67,7 +67,7 @@
         },
         {
           "name": "Infernal Charisma",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Infernal Charisma"
@@ -113,12 +113,12 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 24,
-      "partial": 1,
+      "done": 31,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 25,
-      "pct": 96.0,
-      "excluded_from_percentage": 6,
+      "denominator": 31,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 6,
         "origin": 25
@@ -126,7 +126,7 @@
       "items": [
         {
           "name": "1",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "1"
@@ -168,7 +168,7 @@
         },
         {
           "name": "Companion (Imp)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Companion (Imp)"
@@ -346,12 +346,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 15,
+      "done": 36,
       "partial": 0,
       "not_started": 0,
-      "denominator": 15,
+      "denominator": 36,
       "pct": 100.0,
-      "excluded_from_percentage": 21,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 15,
         "unclassified": 21
@@ -506,7 +506,7 @@
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike)"
@@ -520,7 +520,7 @@
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality) #3"
@@ -664,12 +664,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 0,
+      "done": 1,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 1,
+      "denominator": 1,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 1
       },
@@ -686,12 +686,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 4,
+      "done": 6,
       "partial": 0,
       "not_started": 0,
-      "denominator": 4,
+      "denominator": 6,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 2,
         "origin": 4

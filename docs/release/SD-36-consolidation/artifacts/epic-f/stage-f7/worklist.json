@@ -1,0 +1,66 @@
+{
+  "stage": "F7",
+  "source": "operator 2026-09-27 'defects first, merge after'",
+  "items": [
+    {
+      "id": "F7-1",
+      "section": "stage-f6/merge-readiness-receipt.md ## Polish (not merge-blocking), item 1",
+      "problem": "**Ability scores print one low for odd scores** (`CharacterSheet.tsx:470 scoreFromModifier`). Elowen Con 13 prints 12; Aldric Str 19 prints 18. This is a wrong printed line, present on tranche/16 too (line 456 there), and is F6e remainder 1. Print the engine's effective score.",
+      "fix": "Print the engine's effective score."
+    },
+    {
+      "id": "F7-2",
+      "section": "stage-f6/merge-readiness-receipt.md ## Polish (not merge-blocking), item 2",
+      "problem": "**Weapons tab \"Also proficient with\" lists PCGen pseudo-weapons** as weapons: `Flurry of Blows` (Monk), and `Spells (Ray)` / `Spells (Touch)` / `Splash Weapon` / `Unarmed Strike` / `Grapple` (every NPC class, samurai, magus and others). Only some classes list them. Filter the non-weapon entries by one rule.",
+      "fix": "Filter the non-weapon entries by one rule."
+    },
+    {
+      "id": "F7-3",
+      "section": "stage-f6/merge-readiness-receipt.md ## Polish (not merge-blocking), item 3",
+      "problem": "**Expert class skills print the Path-A canonical picks** (the first 10 skills alphabetically) as plain class skills. CRB p.450 says \"any ten, player's choice\". This is the recorded F3c2 ruling, but the panel should name them as default picks.",
+      "fix": "the panel should name them as default picks."
+    },
+    {
+      "id": "F7-4",
+      "section": "stage-f6/merge-readiness-receipt.md ## Polish (not merge-blocking), item 4",
+      "problem": "**Magus class skills omit Knowledge (religion)**, following the oracle (`um_abilities_class.lst:68`). The Ultimate Magic text should be checked for a possible FS-23-style oracle defect.",
+      "fix": "The Ultimate Magic text should be checked for a possible FS-23-style oracle defect."
+    },
+    {
+      "id": "F7-5",
+      "section": "stage-f6/merge-readiness-receipt.md ## Polish (not merge-blocking), item 5",
+      "problem": "**Spell text prints a raw formula**: Fireball reads \"(min(10,CASTERLEVEL))d6\" and \"If requires Fireball from mythic spell (no record in the corpus)\". This is pre-existing spell-catalog prose.",
+      "fix": "(no fix sentence in the receipt; F7 owns it: print what the source states, else Unknown with a named diagnostic)"
+    },
+    {
+      "id": "F7-6",
+      "section": "stage-f6/merge-readiness-receipt.md ## Polish (not merge-blocking), item 6",
+      "problem": "**Samurai class-skill list carries `samurai_mount`**, which is not a skill. The panel ignores it.",
+      "fix": "(no fix sentence in the receipt; F7 owns it: print what the source states, else Unknown with a named diagnostic)"
+    },
+    {
+      "id": "F7-7",
+      "section": "stage-f6/merge-readiness-receipt.md ## Polish (not merge-blocking), item 7",
+      "problem": "**Prestige requirement skill terms print lowercased slugs** (\"knowledge nobility ranks at least 3\") rather than skill labels.",
+      "fix": "(no fix sentence in the receipt; F7 owns it: print what the source states, else Unknown with a named diagnostic)"
+    },
+    {
+      "id": "F7-8",
+      "section": "stage-f6/merge-readiness-receipt.md ## Polish (not merge-blocking), item 8",
+      "problem": "**Elowen loads with 29 unallocated skill points** (only the create path's fixed Climb, Intimidate and Swim ranks are placed).",
+      "fix": "(no fix sentence in the receipt; F7 owns it: print what the source states, else Unknown with a named diagnostic)"
+    },
+    {
+      "id": "F7-9",
+      "section": "stage-f6/merge-readiness-receipt.md ## Polish (not merge-blocking), item 9",
+      "problem": "F6c remainders stand: the 4 Unchained base classes are refused in a mix (disabled, named), the 6 FS-15 prestige classes are refused, and 33 catalog `Chosen` summaries still print choice ids.",
+      "fix": "(no fix sentence in the receipt; F7 owns it: print what the source states, else Unknown with a named diagnostic)"
+    },
+    {
+      "id": "F7-10",
+      "section": "release-notes.md, F6 landing remainder paragraph (lines 320-324)",
+      "problem": "Desktop remainders on the 59-class roster, after F6 (`artifacts/epic-f/stage-f6/`): HP `Unknown` 0 of 59 (was 5; FS-24 closed, FS-23 sheet side closed); class skills answered for 50 of 59 (was 12 from a hand table; the 9 ACG classes print `Class skills Unknown` — an unresolved `Class|<Class>` edge, a converter step; FS-25 desktop side closed); weapon proficiency and caster level 59 of 59 from the engine, hand-kept desktop class tables 0 (FS-26 closed).",
+      "fix": "Converter step: resolve the `Class|<Class>` edge for the 9 ACG classes, or keep printing Unknown with the reason."
+    }
+  ]
+}

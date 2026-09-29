@@ -5,12 +5,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 688,
-      "partial": 2,
+      "done": 935,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 690,
-      "pct": 99.7,
-      "excluded_from_percentage": 245,
+      "denominator": 935,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 690,
         "unclassified": 245
@@ -2552,7 +2552,7 @@
         },
         {
           "name": "Frightening Appearance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Frightening Appearance"
@@ -5660,7 +5660,7 @@
         },
         {
           "name": "Stunning Appearance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vigilante Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Stunning Appearance"
@@ -6602,11 +6602,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 90,
-      "partial": 1,
+      "done": 91,
+      "partial": 0,
       "not_started": 0,
       "denominator": 91,
-      "pct": 98.9,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 91
@@ -6978,7 +6978,7 @@
         },
         {
           "name": "Mystic Bolts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Light.Ranged.Thrown.OneHanded",
           "standing": "origin",
           "display_name": "Mystic Bolts"
@@ -7367,11 +7367,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 106,
-      "partial": 1,
+      "done": 107,
+      "partial": 0,
       "not_started": 0,
       "denominator": 107,
-      "pct": 99.1,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 107
@@ -7645,7 +7645,7 @@
         },
         {
           "name": "Fox Style",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Fox Style"
@@ -8131,12 +8131,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 0,
+      "done": 6,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 6,
+      "denominator": 6,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 6
       },
@@ -8150,7 +8150,7 @@
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.FeyLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12"
@@ -8164,7 +8164,7 @@
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.FeyLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20"
@@ -8188,12 +8188,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 0,
+      "done": 2,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 2,
+      "denominator": 2,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 2
       },

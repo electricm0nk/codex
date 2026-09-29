@@ -69,6 +69,19 @@ Sums checked (`--check` exits 1 on the first that fails)
     SHAPE_TOTALS    per shape, census records == `_refused.json` by_token_type
     PARTITION       per token type, carrying_non_done == converted_non_done
                     + refused_non_done
+    RULE_FILES      (SD-36 Epic E GATE-01) every OTHER check above is a closed
+                    loop over the converter's own bookkeeping files and never
+                    opens a real converted rule file -- this one does: every
+                    non-refused unit's `data/sheet_rules/<book>/<kind>/
+                    <key>.json` must exist, parse as JSON, be a non-empty
+                    array, and its first rule's own `id` must be the unit's
+                    id. A mutation probe (corrupt one rule file -> red;
+                    restore -> green) is `scripts/tests/test_token_coverage.
+                    py`'s `RuleFilesGate` class. This still cannot prove a
+                    VALUE is game-rules-correct -- that is
+                    `tests/sheet_rule_convert_gate.rs`'s job on real corpus
+                    units -- only that the file a unit claims exists and is
+                    not corrupted.
     STALE_ARTIFACT  (`--check` only) the committed ledger equals the fresh
                     one; when it does not, the fresh one is written so the
                     fix is one commit
@@ -134,7 +147,7 @@ def _mapping_rows(table):
 # The verdict names the most SPECIFIC failed check, not the first detected: a planted
 # duplicate also throws the coarse population sum off, and the verdict must say
 # DOUBLE_COUNT, not POPULATION. Every failure is printed regardless.
-VERDICT_PRIORITY = ("DOUBLE_COUNT", "COVERAGE", "REFUSED_SET", "SHAPE_TOTALS", "PARTITION", "POPULATION")
+VERDICT_PRIORITY = ("DOUBLE_COUNT", "RULE_FILES", "COVERAGE", "REFUSED_SET", "SHAPE_TOTALS", "PARTITION", "POPULATION")
 
 
 class Check:
@@ -155,7 +168,15 @@ class Check:
         return f"FAIL_{self.failures[0][0]}"
 
 
-def derive(inventory, census, refused, report, table):
+def _rule_file_rel(book, kind, uid):
+    """`{book}/{kind}/{key}.json` -- the same layout
+    `pcgen_import::sheet_rule::rule_file_rel` writes, keyed on the id's own 3rd `:`-segment,
+    never re-derived from the corpus name (which can differ, e.g. after a `.COPY=` fix)."""
+    key = uid.split(":", 2)[2] if uid.count(":") >= 2 else uid
+    return os.path.join(book, kind, f"{key}.json")
+
+
+def derive(inventory, census, refused, report, table, package_dir=None):
     """Build the ledger dict and the list of failed checks from the loaded inputs."""
     check = Check()
     units = inventory.get("units") or []
@@ -289,6 +310,44 @@ def derive(inventory, census, refused, report, table):
     }
     refused_non_done = refused_ids & non_done
 
+    # --- RULE_FILES ---------------------------------------------------------
+    # SD-36 Epic E GATE-01: every OTHER check above is a closed loop over the converter's own
+    # self-reported bookkeeping files (`_tokens.json`, `_refused.json`, `_report.json`) --
+    # "converted" here meant nothing more than "not in `_refused.json`", so a systematically
+    # WRONG conversion (a corrupted file, an empty array, a principal rule whose own `id` does
+    # not match the unit it was written for) passed every check above undetected. This is the
+    # one check that opens an actual `data/sheet_rules/<book>/<kind>/*.json` rule file and
+    # proves its content, not just its presence in a census, agrees with the unit it claims to
+    # be. It does not (and cannot, from here) prove a VALUE is game-rules-correct -- that is
+    # `tests/sheet_rule_convert_gate.rs`'s job on real corpus units -- but a missing file,
+    # invalid JSON, an empty rule array, or a principal `id` that does not match the unit's own
+    # id is exactly the shape a mutation (or a corrupted write) produces, and this now fails
+    # loudly on it rather than silently passing.
+    rule_files_checked = 0
+    if package_dir is not None:
+        for uid in sorted(unit_by_id):
+            if uid in refused_ids:
+                continue  # a refused unit is deliberately not expected to have a rule file.
+            unit = unit_by_id[uid]
+            rel = _rule_file_rel(unit.get("book", ""), unit.get("kind", ""), uid)
+            path = os.path.join(package_dir, rel)
+            rule_files_checked += 1
+            try:
+                with open(path, encoding="utf-8") as fh:
+                    rules = json.load(fh)
+            except FileNotFoundError:
+                check.fail("RULE_FILES", f"{uid}: no rule file at {rel} (census/report say converted)")
+                continue
+            except json.JSONDecodeError as exc:
+                check.fail("RULE_FILES", f"{uid}: {rel} is not valid JSON ({exc})")
+                continue
+            if not isinstance(rules, list) or not rules:
+                check.fail("RULE_FILES", f"{uid}: {rel} is not a non-empty JSON array of rules")
+                continue
+            principal_id = rules[0].get("id") if isinstance(rules[0], dict) else None
+            if principal_id != uid:
+                check.fail("RULE_FILES", f"{uid}: {rel}'s principal rule id is {principal_id!r}, not the unit's own id")
+
     sums = {
         "population": {"census_entries": len(entries), "inventory_units": len(units), "report_records": report.get("records"), "ok": not any(n == "POPULATION" for n, _ in check.failures)},
         "double_count": {"duplicate_records": len(dup_ids), "ok": not any(n == "DOUBLE_COUNT" for n, _ in check.failures)},
@@ -296,6 +355,7 @@ def derive(inventory, census, refused, report, table):
         "refused_set": {"census_refused": len(census_refused), "refused_json": len(refused_ids), "union_over_token_types": len(union_refused_by_token), "ok": not any(n == "REFUSED_SET" for n, _ in check.failures)},
         "shape_totals": {"shapes": len(refusal_shapes), "ok": not any(n == "SHAPE_TOTALS" for n, _ in check.failures)},
         "partition": {"token_types": len(token_types), "ok": not any(n == "PARTITION" for n, _ in check.failures)},
+        "rule_files": {"checked": rule_files_checked, "ok": not any(n == "RULE_FILES" for n, _ in check.failures)},
     }
     ledger = {
         "schema": SCHEMA,
@@ -359,7 +419,7 @@ def main(argv=None):
         print("verdict=INPUT_ERROR")
         return 2
 
-    ledger, check = derive(inventory, census, refused, report, table)
+    ledger, check = derive(inventory, census, refused, report, table, package_dir=args.package)
     fresh = _render(ledger)
 
     stale = False

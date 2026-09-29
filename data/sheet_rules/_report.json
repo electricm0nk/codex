@@ -2,8 +2,8 @@
   "records": 49450,
   "converted": 49450,
   "refused": 0,
-  "rules_written": 70317,
-  "var_tables": 5294,
+  "rules_written": 73363,
+  "var_tables": 6211,
   "by_kind": {
     "ability": {
       "records": 4337,
@@ -102,9 +102,9 @@
     }
   },
   "refused_by_token_type": {},
-  "degraded_records": 423,
+  "degraded_records": 424,
   "degraded_by_token_type": {
-    "ADD (CLASSSKILLS)": 1,
+    "ADD (CLASSSKILLS)": 2,
     "ASPECT\u003a<malformed sub-key>": 1,
     "BONUS (shape)": 3,
     "BONUS\u003aLOADMULT": 4,

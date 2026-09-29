@@ -5,12 +5,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 810,
-      "partial": 28,
+      "done": 1030,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 838,
-      "pct": 96.7,
-      "excluded_from_percentage": 192,
+      "denominator": 1030,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 192,
         "origin": 838
@@ -333,7 +333,7 @@
         },
         {
           "name": "Ask the Spirits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Ask the Spirits"
@@ -354,7 +354,7 @@
         },
         {
           "name": "Astral Journey",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Astral Journey"
@@ -480,14 +480,14 @@
         },
         {
           "name": "Bilocation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Bilocation"
         },
         {
           "name": "Binding Circles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Binding Circles"
@@ -795,7 +795,7 @@
         },
         {
           "name": "Burn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Burn"
@@ -816,7 +816,7 @@
         },
         {
           "name": "Calm Spirit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spiritualist Class Feature.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Calm Spirit"
@@ -1166,7 +1166,7 @@
         },
         {
           "name": "Consummate Liar",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Consummate Liar"
@@ -1670,7 +1670,7 @@
         },
         {
           "name": "Ectoplasmic Eruption",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Ectoplasmic Eruption"
@@ -1698,7 +1698,7 @@
         },
         {
           "name": "Ectoplasmic Snare",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Ectoplasmic Snare"
@@ -1719,7 +1719,7 @@
         },
         {
           "name": "Ego Whip I",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Ego Whip I"
@@ -1761,7 +1761,7 @@
         },
         {
           "name": "Elemental Focus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Elemental Focus"
@@ -2566,7 +2566,7 @@
         },
         {
           "name": "Ghost Whip",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Ghost Whip"
@@ -2608,7 +2608,7 @@
         },
         {
           "name": "Glib Lie",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Glib Lie"
@@ -2734,7 +2734,7 @@
         },
         {
           "name": "Haunt Channeler",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Haunt Channeler"
@@ -2853,7 +2853,7 @@
         },
         {
           "name": "Id Insinuation I",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Id Insinuation I"
@@ -3035,7 +3035,7 @@
         },
         {
           "name": "Intellect Fortress I",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Intellect Fortress I"
@@ -3476,7 +3476,7 @@
         },
         {
           "name": "Location Channel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Location Channel"
@@ -3511,7 +3511,7 @@
         },
         {
           "name": "Magic Item Skill",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Magic Item Skill"
@@ -3532,7 +3532,7 @@
         },
         {
           "name": "Major Amplifications",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Psychic Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Major Amplifications"
@@ -3567,7 +3567,7 @@
         },
         {
           "name": "Manifold Tricks",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Manifold Tricks"
@@ -3938,7 +3938,7 @@
         },
         {
           "name": "Mental Barrier V",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Mental Barrier V"
@@ -3959,7 +3959,7 @@
         },
         {
           "name": "Mental Focus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Occultist Class Feature.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Mental Focus"
@@ -3973,7 +3973,7 @@
         },
         {
           "name": "Mental Potency",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Mental Potency"
@@ -4190,7 +4190,7 @@
         },
         {
           "name": "Microcosm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Microcosm"
@@ -4267,7 +4267,7 @@
         },
         {
           "name": "Mind Thrust I",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Mind Thrust I"
@@ -4841,7 +4841,7 @@
         },
         {
           "name": "Phrenic Pool",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Psychic Class Feature.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Phrenic Pool"
@@ -5086,7 +5086,7 @@
         },
         {
           "name": "Psychic Crush I",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Psychic Crush I"
@@ -5240,7 +5240,7 @@
         },
         {
           "name": "Psychic Discipline (Ex or Sp)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Psychic Class Feature.SpecialQuality",
           "standing": "origin",
           "display_name": "Psychic Discipline (Ex or Sp)"
@@ -6220,7 +6220,7 @@
         },
         {
           "name": "Spirit Surge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MediumClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Spirit Surge"
@@ -6255,7 +6255,7 @@
         },
         {
           "name": "Spirit-Bound Blade",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Spirit-Bound Blade"
@@ -6654,14 +6654,14 @@
         },
         {
           "name": "Tower Of Iron Will III",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Tower Of Iron Will III"
         },
         {
           "name": "Towering Ego",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MesmeristClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Towering Ego"
@@ -6969,7 +6969,7 @@
         },
         {
           "name": "Wall Of Ectoplasm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Wall Of Ectoplasm"
@@ -7158,7 +7158,7 @@
         },
         {
           "name": "Wild Talents",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Kineticist Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Wild Talents"
@@ -7309,12 +7309,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 116,
-      "partial": 2,
+      "done": 119,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 118,
-      "pct": 98.3,
-      "excluded_from_percentage": 1,
+      "denominator": 119,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 118,
         "unclassified": 1
@@ -7728,7 +7728,7 @@
         },
         {
           "name": "Portable Solarium",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Goods.Tools",
           "standing": "origin",
           "display_name": "Portable Solarium"
@@ -7840,7 +7840,7 @@
         },
         {
           "name": "Shrunken Head",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.GreaterMajor",
           "standing": "origin",
           "display_name": "Shrunken Head"
@@ -8158,11 +8158,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 64,
-      "partial": 4,
+      "done": 68,
+      "partial": 0,
       "not_started": 0,
       "denominator": 68,
-      "pct": 94.1,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 68
@@ -8485,14 +8485,14 @@
         },
         {
           "name": "Psychic Adept",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Psychic Adept"
         },
         {
           "name": "Psychic Combatant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General.Combat",
           "standing": "origin",
           "display_name": "Psychic Combatant"
@@ -8506,7 +8506,7 @@
         },
         {
           "name": "Psychic Disciple",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Psychic Disciple"
@@ -8639,7 +8639,7 @@
         },
         {
           "name": "Xenoglossy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Xenoglossy"
@@ -8649,12 +8649,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 0,
+      "done": 1,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 1,
+      "denominator": 1,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 1
       },
@@ -8671,12 +8671,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 1,
+      "done": 5,
       "partial": 0,
       "not_started": 0,
-      "denominator": 1,
+      "denominator": 5,
       "pct": 100.0,
-      "excluded_from_percentage": 4,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 4,
         "origin": 1
@@ -8691,14 +8691,14 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ShikigamiRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities"
@@ -8722,12 +8722,12 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 0,
+      "done": 1,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 1,
+      "denominator": 1,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 1
       },
@@ -8744,12 +8744,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 59,
+      "done": 71,
       "partial": 0,
       "not_started": 0,
-      "denominator": 59,
+      "denominator": 71,
       "pct": 100.0,
-      "excluded_from_percentage": 12,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 12,
         "origin": 59
@@ -9300,12 +9300,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 470,
-      "partial": 1,
+      "done": 473,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 471,
-      "pct": 99.8,
-      "excluded_from_percentage": 2,
+      "denominator": 473,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 471,
         "unclassified": 2
@@ -12470,7 +12470,7 @@
         },
         {
           "name": "Talismanic Implement",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Psychic",
           "standing": "origin",
           "display_name": "Talismanic Implement"

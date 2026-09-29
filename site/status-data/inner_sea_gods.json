@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 259,
+      "done": 387,
       "partial": 0,
       "not_started": 0,
-      "denominator": 259,
+      "denominator": 387,
       "pct": 100.0,
-      "excluded_from_percentage": 128,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 259,
         "unclassified": 128
@@ -2766,12 +2766,12 @@
     {
       "kind": "deity",
       "label": "Deities",
-      "done": 0,
+      "done": 296,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 296,
+      "denominator": 296,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 296
       },
@@ -4853,12 +4853,12 @@
     {
       "kind": "domain",
       "label": "Domains",
-      "done": 10,
+      "done": 21,
       "partial": 0,
       "not_started": 0,
-      "denominator": 10,
+      "denominator": 21,
       "pct": 100.0,
-      "excluded_from_percentage": 11,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 10,
         "unclassified": 11
@@ -5016,12 +5016,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 118,
-      "partial": 1,
+      "done": 150,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 119,
-      "pct": 99.2,
-      "excluded_from_percentage": 31,
+      "denominator": 150,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 119,
         "unclassified": 31
@@ -5540,7 +5540,7 @@
         },
         {
           "name": "Obliviating Flail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Obliviating Flail"
@@ -6082,12 +6082,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 70,
-      "partial": 13,
+      "done": 86,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 83,
-      "pct": 84.3,
-      "excluded_from_percentage": 3,
+      "denominator": 86,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 83,
         "unclassified": 3
@@ -6109,7 +6109,7 @@
         },
         {
           "name": "Beacon Of Hope",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Beacon Of Hope"
@@ -6158,7 +6158,7 @@
         },
         {
           "name": "Bolster Undead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Bolster Undead"
@@ -6200,7 +6200,7 @@
         },
         {
           "name": "Channel Hate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Channel Hate"
@@ -6221,7 +6221,7 @@
         },
         {
           "name": "Clarifying Channel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Clarifying Channel"
@@ -6291,7 +6291,7 @@
         },
         {
           "name": "Divination Guide",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Divination Guide"
@@ -6326,7 +6326,7 @@
         },
         {
           "name": "Drunken Brawler",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Drunken Brawler"
@@ -6347,7 +6347,7 @@
         },
         {
           "name": "Fateful Channel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Fateful Channel"
@@ -6389,7 +6389,7 @@
         },
         {
           "name": "Hands Of Valor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Hands Of Valor"
@@ -6424,7 +6424,7 @@
         },
         {
           "name": "Liberation Channel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Liberation Channel"
@@ -6452,7 +6452,7 @@
         },
         {
           "name": "Merciless Rush",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Merciless Rush"
@@ -6529,7 +6529,7 @@
         },
         {
           "name": "Protector's Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Protector's Strike"
@@ -6557,7 +6557,7 @@
         },
         {
           "name": "Seductive Channel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Seductive Channel"
@@ -6662,7 +6662,7 @@
         },
         {
           "name": "Trailblazing Channel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Trailblazing Channel"
@@ -6683,7 +6683,7 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "unclassified",
           "display_name": "[redacted PI] (General)"
@@ -6700,12 +6700,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 75,
-      "partial": 10,
+      "done": 164,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 85,
-      "pct": 88.2,
-      "excluded_from_percentage": 79,
+      "denominator": 164,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 79,
         "origin": 85
@@ -6755,14 +6755,14 @@
         },
         {
           "name": "Animated Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Animated Shield"
         },
         {
           "name": "Armor of Valor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Defensive",
           "standing": "origin",
           "display_name": "Armor of Valor"
@@ -6783,7 +6783,7 @@
         },
         {
           "name": "Bardic Performance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Bardic Performance (SpecialQuality.Extraordinary)"
@@ -6853,7 +6853,7 @@
         },
         {
           "name": "Cascade of Spears",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Cascade of Spears"
@@ -6979,7 +6979,7 @@
         },
         {
           "name": "Channel Negative Energy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Channel Negative Energy"
@@ -7000,7 +7000,7 @@
         },
         {
           "name": "Constant Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Constant Spells (SpecialQuality.SpellLike) #2"
@@ -7035,7 +7035,7 @@
         },
         {
           "name": "Desecrate Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Aura.Supernatural",
           "standing": "origin",
           "display_name": "Desecrate Aura"
@@ -7280,7 +7280,7 @@
         },
         {
           "name": "Hexes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.AttackOption",
           "standing": "origin",
           "display_name": "Hexes"
@@ -7350,14 +7350,14 @@
         },
         {
           "name": "Ironsense",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Vision",
           "standing": "origin",
           "display_name": "Ironsense"
         },
         {
           "name": "Languages",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Communicate",
           "standing": "origin",
           "display_name": "Languages (SpecialQuality.Supernatural.Communicate)"
@@ -7371,14 +7371,14 @@
         },
         {
           "name": "Lay on Hands",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.LayOnHands.Lay on Hand",
           "standing": "origin",
           "display_name": "Lay on Hands (SpecialQuality.Supernatural.LayOnHands.Lay on Hand)"
         },
         {
           "name": "Lay on Hands",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.LayOnHands.Lay on Hand",
           "standing": "origin",
           "display_name": "Lay on Hands (SpecialQuality.Supernatural.LayOnHands.Lay on Hand) #2"
@@ -7406,7 +7406,7 @@
         },
         {
           "name": "Monk Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Monk Abilities"
@@ -7532,7 +7532,7 @@
         },
         {
           "name": "Powerful Blows (Slam)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Powerful Blows (Slam)"
@@ -7574,14 +7574,14 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP)"
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #2"
@@ -7595,7 +7595,7 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration (SpecialQuality.Extraordinary.ModifyHP) #4"
@@ -7707,7 +7707,7 @@
         },
         {
           "name": "Strength Damage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Strength Damage"
@@ -7742,14 +7742,14 @@
         },
         {
           "name": "Swallow Whole",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Swallow Whole"
         },
         {
           "name": "Swarm Form",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Swarm Form"
@@ -7784,14 +7784,14 @@
         },
         {
           "name": "Uncanny Dodge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Uncanny Dodge"
         },
         {
           "name": "Unearthly Grace",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Unearthly Grace"
@@ -7864,11 +7864,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 37,
-      "partial": 2,
+      "done": 39,
+      "partial": 0,
       "not_started": 0,
       "denominator": 39,
-      "pct": 94.9,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 39
@@ -7911,7 +7911,7 @@
         },
         {
           "name": "Basileus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basileus"
@@ -8030,7 +8030,7 @@
         },
         {
           "name": "Sarcovalt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sarcovalt"
@@ -8152,12 +8152,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 21,
+      "done": 25,
       "partial": 0,
       "not_started": 0,
-      "denominator": 21,
+      "denominator": 25,
       "pct": 100.0,
-      "excluded_from_percentage": 4,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 21,
         "unclassified": 4
@@ -8343,12 +8343,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 88,
-      "partial": 4,
+      "done": 96,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 92,
-      "pct": 95.7,
-      "excluded_from_percentage": 4,
+      "denominator": 96,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 92,
         "unclassified": 4
@@ -8363,7 +8363,7 @@
         },
         {
           "name": "Air Breathing (Personification of Fury)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Air Breathing (Personification of Fury)"
@@ -8559,7 +8559,7 @@
         },
         {
           "name": "Geas/Quest (Asmodean)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Geas/Quest (Asmodean)"
@@ -8629,7 +8629,7 @@
         },
         {
           "name": "Knock (Caydenite)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Knock (Caydenite)"
@@ -8993,7 +8993,7 @@
         },
         {
           "name": "Whispering Wind (Gozren)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Whispering Wind (Gozren)"
@@ -9031,12 +9031,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 1,
+      "done": 3,
       "partial": 0,
       "not_started": 0,
-      "denominator": 1,
+      "denominator": 3,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1,
         "unclassified": 2
@@ -9068,12 +9068,12 @@
     {
       "kind": "trait",
       "label": "Traits",
-      "done": 7,
+      "done": 115,
       "partial": 0,
       "not_started": 0,
-      "denominator": 7,
+      "denominator": 115,
       "pct": 100.0,
-      "excluded_from_percentage": 108,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 7,
         "unclassified": 108

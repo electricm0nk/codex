@@ -15,11 +15,10 @@
 //! blanket suppression).
 
 use codex::rules_core::pi_table_sweep::{parse_baseline, reconcile, screen_generated_table, sweep_dir, sweep_text};
-use std::path::PathBuf;
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::repo_root;
 
 #[test]
 fn sweep_text_reports_a_blacklist_term_with_its_line_and_context() {

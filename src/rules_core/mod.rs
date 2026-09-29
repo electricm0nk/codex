@@ -2,7 +2,9 @@
 
 pub mod archetype_resolver;
 pub mod character_input;
+pub mod class_census;
 pub mod class_feature_pool_catalog;
+pub mod class_seeds;
 pub mod codex_neutral_name;
 pub mod composed_input;
 pub mod contract;
@@ -46,8 +48,10 @@ pub mod race_resolver;
 pub mod racial_sla;
 pub mod rules_tables;
 pub mod shape_b_v1;
+pub mod sheet_line_join;
 pub mod sheet_rule;
 pub mod sheet_rule_catalog;
+pub mod sheet_rule_package;
 pub mod size;
 pub mod skill_allocation;
 pub mod skinwalker_change_shape;
@@ -56,6 +60,5 @@ pub mod settled_corpus;
 pub mod spell_record;
 pub mod spell_resolver;
 pub mod spellbook;
-pub mod support_state_matrix;
 pub mod trait_effects;
 pub mod trait_pool;

@@ -1,0 +1,68 @@
+[
+  {
+    "id": "F6-1",
+    "section": "batch brief (F6 dispatch, 2026-09-26)",
+    "problem": "apps/desktop/src/characterHub/characterProgression.ts MARTIAL_WEAPON_CLASSES / CASTER_CLASSES are hand-kept 6-to-31-id tables: the Weapons tab marks Samurai, Warrior, Magus and other newly offered martial classes '✗ Martial Weapons', and Caster Level shows '—' for casters outside the table",
+    "fix": "Read weapon tier and caster status from the engine (proficiency reader / class record); delete the hand-kept tables"
+  },
+  {
+    "id": "F6-2",
+    "section": "batch brief (F6 dispatch, 2026-09-26)",
+    "problem": "The Skills panel shows no class-skill list for 47 of 59 roster classes, and the Alertness feat's +2 is not added to Perception/Sense Motive",
+    "fix": "Class skills from class_skill_sheet_rules.rs for every roster class; Alertness bonus fed into the skill totals"
+  },
+  {
+    "id": "F6-3",
+    "section": "batch brief (F6 dispatch, 2026-09-26)",
+    "problem": "5 offered classes print HP Unknown (Monk, Unchained Barbarian/Monk/Rogue/Summoner): F4a's roster rule reads the converted record's hit-die row, None for the 4 Unchained records (they state the PF1 dice in another row shape); Monk is the FS-23 defect (corpus row says d10; PF1 monk is d8)",
+    "fix": "One mechanical hit-die read covering the Unchained row shape; Monk HP restored to d8 as tranche/16 printed it"
+  },
+  {
+    "id": "F6-4",
+    "section": "batch brief (F6 dispatch, 2026-09-26)",
+    "problem": "Level Up offers the 6 FS-15 prestige classes and refuses on Accept; entry requirements print raw choice ids ('longbow chosen for core rulebook:feat:weapon focus')",
+    "fix": "Withhold (or mark with the named diagnostic) classes whose mix is Blocked; print requirement names, not ids"
+  },
+  {
+    "id": "F6-5",
+    "section": "batch brief (F6 dispatch, 2026-09-26)",
+    "problem": "Shaman sheets print 'Shaman (domains) +1' from F4pre's domain-count offer; PF1 gives the shaman no domain",
+    "fix": "Domain-count offer only where the source grants a domain"
+  },
+  {
+    "id": "F6-6",
+    "section": "batch brief (F6 dispatch, 2026-09-26)",
+    "problem": "P3 resolve_printings says 'printings must agree' instead of the converter's newest-printing verdict",
+    "fix": "Apply the newest-printing verdict (supersession register ruling)"
+  },
+  {
+    "id": "P1",
+    "section": "docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/f5-claims-critic.md",
+    "problem": "forward-scope-register.md FS-13 row body \"808\"/FS-14 \"203 of 7,119\" predate the 6,252 figure the closure summary above the table states.",
+    "fix": "Update the row bodies to the 6,252 figures"
+  },
+  {
+    "id": "P2",
+    "section": "docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/f5-claims-critic.md",
+    "problem": "status.md:202 cites `census-merge-readiness.json` for roster 59; cite census-f5.json like the rest (values equal).",
+    "fix": "Cite census-f5.json"
+  },
+  {
+    "id": "P3-critic",
+    "section": "docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/f5-claims-critic.md",
+    "problem": "FS-26's \"the engine's proficiency reader already answers the weapon tier for all 63 non-prestige census classes\" names no command or artifact; reader-remainder.md's figure is \"3 of 95\" (an earlier denominator).",
+    "fix": "Cite the current run of `every_census_class_has_a_known_proficiency_answer` with its denominator"
+  },
+  {
+    "id": "P4",
+    "section": "docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/f5-claims-critic.md",
+    "problem": "f4c-receipt §6 \"List screens do not subscribe to the catalog\" (LoadCharacterScreen, CampaignSheet, EditCampaignScreen show an id-derived class label until the catalog first loads) is in no closure doc.",
+    "fix": "Name it in status.md Desktop gaps or FS (or fix the subscription)"
+  },
+  {
+    "id": "#28",
+    "section": "docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/f5-claims-critic.md",
+    "problem": "release-notes.md lacks `check_release_manifest.py`'s required sections",
+    "fix": "Add the required sections before publish"
+  }
+]

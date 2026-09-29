@@ -18,12 +18,11 @@
 //! actual term strings — only on set equality and counts — so a failure
 //! message here never leaks blacklist content into CI logs or a receipt.
 
-use std::path::PathBuf;
 use std::process::Command;
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::repo_root;
 
 /// Reads `scripts/pi_scrub.py::PI_BLACKLIST_TERMS` via a live `python3`
 /// import (never a hand-copied literal), returning one term per line.

@@ -1,14 +1,16 @@
 {
   "name": "codex",
   "private": true,
-  "version": "0.15.0",
+  "version": "0.16.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "test": "node scripts/run-tests.mjs",
-    "build": "vite build",
-    "tauri:check": "cargo check --manifest-path src-tauri/Cargo.toml"
+    "build": "node ../../scripts/gen-corpus-bundle.mjs && vite build",
+    "tauri:check": "cargo check --manifest-path src-tauri/Cargo.toml",
+    "ui-smoke": "node scripts/ui-smoke/run.mjs",
+    "ui-smoke:doc": "node scripts/ui-smoke/render-inventory.mjs"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.0.0",

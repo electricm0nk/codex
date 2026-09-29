@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 548,
+      "done": 551,
       "partial": 0,
       "not_started": 0,
-      "denominator": 548,
+      "denominator": 551,
       "pct": 100.0,
-      "excluded_from_percentage": 3,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 548,
         "unclassified": 3
@@ -3878,12 +3878,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 285,
+      "done": 431,
       "partial": 0,
       "not_started": 0,
-      "denominator": 285,
+      "denominator": 431,
       "pct": 100.0,
-      "excluded_from_percentage": 146,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 146,
         "origin": 285
@@ -6761,7 +6761,7 @@
         },
         {
           "name": "Void",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Void (Internal.DomainAbility)"
@@ -6962,12 +6962,12 @@
     {
       "kind": "domain",
       "label": "Domains",
-      "done": 0,
+      "done": 4,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 4,
+      "denominator": 4,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 4
       },
@@ -7005,11 +7005,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 114,
-      "partial": 1,
+      "done": 115,
+      "partial": 0,
       "not_started": 0,
       "denominator": 115,
-      "pct": 99.1,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 115
@@ -7661,7 +7661,7 @@
         },
         {
           "name": "Sacrificial Dagger",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sacrificial Dagger"
@@ -7854,11 +7854,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 76,
-      "partial": 2,
+      "done": 78,
+      "partial": 0,
       "not_started": 0,
       "denominator": 78,
-      "pct": 97.4,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 78
@@ -7873,7 +7873,7 @@
         },
         {
           "name": "Aura Flare",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Aura Flare"
@@ -7999,7 +7999,7 @@
         },
         {
           "name": "Enemy Cult",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Story",
           "standing": "origin",
           "display_name": "Enemy Cult"
@@ -8415,12 +8415,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 0,
+      "done": 2,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 2,
+      "denominator": 2,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 2
       },
@@ -8444,12 +8444,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 32,
-      "partial": 17,
+      "done": 71,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 49,
-      "pct": 65.3,
-      "excluded_from_percentage": 22,
+      "denominator": 71,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 22,
         "origin": 49
@@ -8464,7 +8464,7 @@
         },
         {
           "name": "Agonizing Prayer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.ApostleKyton",
           "standing": "origin",
           "display_name": "Agonizing Prayer"
@@ -8485,7 +8485,7 @@
         },
         {
           "name": "Assume Likeness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.UnknownTemplate",
           "standing": "origin",
           "display_name": "Assume Likeness"
@@ -8499,14 +8499,14 @@
         },
         {
           "name": "Autotelic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.TrompeLOeil",
           "standing": "origin",
           "display_name": "Autotelic"
         },
         {
           "name": "Bleeding Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.ApostleKyton",
           "standing": "origin",
           "display_name": "Bleeding Touch"
@@ -8562,14 +8562,14 @@
         },
         {
           "name": "Cursed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.AccursedCreature",
           "standing": "origin",
           "display_name": "Cursed"
         },
         {
           "name": "Death Throes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Death Throes"
@@ -8590,7 +8590,7 @@
         },
         {
           "name": "Dream Movements",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.UnknownTemplate",
           "standing": "origin",
           "display_name": "Dream Movements"
@@ -8611,21 +8611,21 @@
         },
         {
           "name": "Familial Possession",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.FamilialLich",
           "standing": "origin",
           "display_name": "Familial Possession"
         },
         {
           "name": "Fear Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.DreadLordSpecialPower.Aura",
           "standing": "unclassified",
           "display_name": "Fear Aura (SpecialAttack.Supernatural.DreadLordSpecialPower.Aura)"
         },
         {
           "name": "Fear Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.ImplacableStalker.Aura",
           "standing": "unclassified",
           "display_name": "Fear Aura (SpecialAttack.Supernatural.ImplacableStalker.Aura)"
@@ -8646,7 +8646,7 @@
         },
         {
           "name": "Hallucinatory Camouflage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.UnknownTemplate",
           "standing": "origin",
           "display_name": "Hallucinatory Camouflage"
@@ -8674,7 +8674,7 @@
         },
         {
           "name": "Hive Traits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Hive Traits"
@@ -8695,7 +8695,7 @@
         },
         {
           "name": "Landlocked",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.DreadLord",
           "standing": "origin",
           "display_name": "Landlocked"
@@ -8709,7 +8709,7 @@
         },
         {
           "name": "Magical Mastery",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DreadLordSpecialPower",
           "standing": "origin",
           "display_name": "Magical Mastery"
@@ -8758,7 +8758,7 @@
         },
         {
           "name": "Nightmare Resurrection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.ImplacableStalker",
           "standing": "origin",
           "display_name": "Nightmare Resurrection"
@@ -8786,7 +8786,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.HiveLarvaSwarm",
           "standing": "unclassified",
           "display_name": "Poison"
@@ -8800,21 +8800,21 @@
         },
         {
           "name": "Psyche Erosion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.UnknownTemplate",
           "standing": "origin",
           "display_name": "Psyche Erosion"
         },
         {
           "name": "Refuge in Pain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.ShadowboundCreature",
           "standing": "origin",
           "display_name": "Refuge in Pain"
         },
         {
           "name": "Regretful Gaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.ShadowboundCreature",
           "standing": "origin",
           "display_name": "Regretful Gaze"
@@ -8842,7 +8842,7 @@
         },
         {
           "name": "Seductive Oration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.ApostleKyton",
           "standing": "origin",
           "display_name": "Seductive Oration"
@@ -8877,7 +8877,7 @@
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.UnknownTemplate",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike.UnknownTemplate)"
@@ -8891,14 +8891,14 @@
         },
         {
           "name": "Terrifying Inevitability",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.ImplacableStalker",
           "standing": "origin",
           "display_name": "Terrifying Inevitability"
         },
         {
           "name": "Touch Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.LichCreature",
           "standing": "unclassified",
           "display_name": "Touch Attack"
@@ -8919,7 +8919,7 @@
         },
         {
           "name": "Unnatural Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Unnatural Aura"
@@ -8957,11 +8957,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 2,
-      "partial": 1,
+      "done": 3,
+      "partial": 0,
       "not_started": 0,
       "denominator": 3,
-      "pct": 66.7,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 3
@@ -8969,7 +8969,7 @@
       "items": [
         {
           "name": "Hive Larva Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Aberration",
           "standing": "origin",
           "display_name": "Hive Larva Swarm"
@@ -8993,12 +8993,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 73,
+      "done": 92,
       "partial": 0,
       "not_started": 0,
-      "denominator": 73,
+      "denominator": 92,
       "pct": 100.0,
-      "excluded_from_percentage": 19,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 73,
         "unclassified": 19
@@ -9675,12 +9675,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 70,
+      "done": 72,
       "partial": 0,
       "not_started": 0,
-      "denominator": 70,
+      "denominator": 72,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 70,
         "unclassified": 2

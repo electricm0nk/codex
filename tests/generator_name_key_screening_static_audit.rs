@@ -52,9 +52,9 @@ use std::collections::BTreeSet;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::repo_root;
 
 /// Symbols this bundle has established as the sanctioned way to screen a
 /// `name`/`key` identity field against Product Identity -- the union of
@@ -76,10 +76,13 @@ const SANCTIONED_SCREEN_SYMBOLS: &[&str] = &[
 /// own source can never contain a screen call, because the generator that
 /// populates it lives elsewhere.
 const SCHEMA_ONLY_FILES: &[(&str, &str)] = &[
-    ("src/rules_core/rules_tables/crb/json_cache.rs", "src/bin/gen_core_rulebook_cache.rs"),
+    (
+        "src/rules_core/rules_tables/crb/json_cache.rs",
+        "crates/codex-ingest/src/bin/gen_core_rulebook_cache.rs",
+    ),
     (
         "src/rules_core/rules_tables/advanced_race_guide/json_cache.rs",
-        "src/bin/gen_book_cache.rs",
+        "crates/codex-ingest/src/bin/gen_book_cache.rs",
     ),
 ];
 
@@ -118,7 +121,10 @@ fn rs_files_in(dir: &Path) -> Vec<PathBuf> {
 /// `SCHEMA_ONLY_FILES` to their real generator's text.
 fn discover_identity_bearing_generators(root: &Path) -> Vec<(String, String)> {
     let schema_map: std::collections::HashMap<&str, &str> = SCHEMA_ONLY_FILES.iter().copied().collect();
-    let dirs = [root.join("src/pcgen_import/cache_gen"), root.join("src/bin")];
+    let dirs = [
+        root.join("crates/codex-ingest/src/pcgen_import/cache_gen"),
+        root.join("crates/codex-ingest/src/bin"),
+    ];
     // `rules_tables/*/json_cache.rs` schema files -- checked via their
     // SCHEMA_ONLY_FILES-mapped generator, never their own (empty) text.
     // Deliberately narrower than the two dirs above: every OTHER file
@@ -267,7 +273,7 @@ fn the_detector_passes_the_same_synthetic_generator_once_a_screen_is_added() {
 #[test]
 fn mutating_a_real_generators_screen_call_away_makes_the_detector_fail_for_it() {
     let root = repo_root();
-    let real_path = root.join("src/pcgen_import/cache_gen/ultimate_equipment.rs");
+    let real_path = root.join("crates/codex-ingest/src/pcgen_import/cache_gen/ultimate_equipment.rs");
     let real_text = fs::read_to_string(&real_path).expect("ultimate_equipment.rs must exist and be readable");
     assert!(defines_identity_field(&real_text), "sanity: this file must own an identity field");
     assert!(

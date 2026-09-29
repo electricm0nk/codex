@@ -1,0 +1,1 @@
+{"var":"v1394d5eebe50fe38","label":"Magus CFP Level","declared_by":["ultimate_magic:ability:magus"],"contributions":[{"rule_id":"inner_sea_gods:ability:magus","expr":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1}]},"when":"Always"},{"rule_id":"ultimate_magic:ability:magus","expr":{"Var":"v9cf95ab6e026a4f9"},"when":"Always"}],"provenance":{}}

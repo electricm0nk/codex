@@ -1,0 +1,29 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f6)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 26.68s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/codex-epic-f6-target/debug/deps/codex-a13c5cad8ad2bb59)
+
+running 7 tests
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::wizard_caster_level_equals_wizard_level ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::bloodrager_casts_nothing_before_four_then_at_class_level ... FAILED
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::class_skills_are_the_class_skill_reader_verbatim ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::samurai_warrior_and_magus_are_martial ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::fighter_and_samurai_cast_nothing_and_paladin_casts_from_four ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::magus_caster_level_equals_magus_level ... ok
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::every_roster_class_answer_is_counted has been running for over 60 seconds
+test rules_core::pilot_compute::class_facts_sheet_rules::tests::every_roster_class_answer_is_counted ... ok
+
+failures:
+
+---- rules_core::pilot_compute::class_facts_sheet_rules::tests::bloodrager_casts_nothing_before_four_then_at_class_level stdout ----
+
+thread 'rules_core::pilot_compute::class_facts_sheet_rules::tests::bloodrager_casts_nothing_before_four_then_at_class_level' (866383) panicked at src/rules_core/pilot_compute/class_facts_sheet_rules.rs:244:13:
+bloodrager 1: Caster { value: 1, rule: "advanced_class_guide:class:bloodrager#bonus4" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::pilot_compute::class_facts_sheet_rules::tests::bloodrager_casts_nothing_before_four_then_at_class_level
+
+test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 2744 filtered out; finished in 210.04s
+
+error: test failed, to rerun pass `--lib`

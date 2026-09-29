@@ -66,11 +66,7 @@
 //! `tests/sd18_wizard_level13_widening.rs` to a "level 15 is not promoted"
 //! boundary in the same commit.
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const WIZARD_LEVEL13_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_wizard_level13_sd18_widening_deterministic_input.txt"
@@ -80,16 +76,12 @@ const WIZARD_LEVEL14_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_wizard_level14_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 // ----- Base attack bonus at level 14 genuinely rises -----
 
 #[test]
 fn wizard_level14_base_attack_bonus_is_grounded_and_genuinely_rises() {
-    let input = load(WIZARD_LEVEL14_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL14_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.wizard.base_attack_bonus");
     assert_eq!(
@@ -104,8 +96,7 @@ fn wizard_level14_base_attack_bonus_is_grounded_and_genuinely_rises() {
 
 #[test]
 fn wizard_level14_base_saves_are_grounded_will_rises_poor_saves_stay() {
-    let input = load(WIZARD_LEVEL14_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL14_FIXTURE);
 
     let fortitude = explanation(&computation, "class_chassis.wizard.base_save.fortitude");
     assert_eq!(
@@ -132,8 +123,7 @@ fn wizard_level14_base_saves_are_grounded_will_rises_poor_saves_stay() {
 
 #[test]
 fn wizard_level14_specialist_bonus_slot_stays_at_seven() {
-    let input = load(WIZARD_LEVEL14_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL14_FIXTURE);
 
     let slot = explanation(&computation, "class_chassis.wizard.specialist_bonus_slot");
     assert_eq!(
@@ -149,8 +139,7 @@ fn wizard_level14_specialist_bonus_slot_stays_at_seven() {
 
 #[test]
 fn wizard_level14_intense_spells_bonus_damage_genuinely_rises() {
-    let input = load(WIZARD_LEVEL14_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL14_FIXTURE);
 
     let intense = explanation(&computation, "class_chassis.wizard.intense_bonus_damage");
     assert_eq!(
@@ -165,8 +154,7 @@ fn wizard_level14_intense_spells_bonus_damage_genuinely_rises() {
 
 #[test]
 fn wizard_level14_grants_carry_over_unchanged() {
-    let input = load(WIZARD_LEVEL14_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL14_FIXTURE);
 
     let force_missile = explanation(
         &computation,
@@ -191,8 +179,7 @@ fn wizard_level14_grants_carry_over_unchanged() {
 
 #[test]
 fn wizard_level14_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_burdens() {
-    let input = load(WIZARD_LEVEL14_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL14_FIXTURE);
 
     assert!(
         computation
@@ -225,8 +212,7 @@ fn wizard_level14_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_b
 
 #[test]
 fn wizard_level13_truth_is_unchanged_by_this_slice() {
-    let input = load(WIZARD_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL13_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.wizard.base_attack_bonus");
     assert_eq!(base_attack.value, 6, "Wizard level 13 base attack bonus must stay 6");
@@ -247,51 +233,11 @@ fn wizard_level13_truth_is_unchanged_by_this_slice() {
 // negative controls. PF1 has no 21st character level; this is a pure
 // implementation-gate check only.)
 
-#[test]
-fn wizard_level_21_is_not_promoted_by_this_slice() {
-    let level_21 = WIZARD_LEVEL14_FIXTURE.replace("class:wizard:14", "class:wizard:21");
-    let input = load(&level_21);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| (e.id.starts_with("class_chassis.wizard.")
-                || e.id.starts_with("class_feature.wizard.")
-                || e.id == "class_chassis.spell_baseline.wizard")
-                // SD-34 decisions.md section 18 (`bfe90f020a`, 2026-08-29) widened the
-                // anti-fabrication gate BY CONSTRUCTION for Wizard: class_feature_grant_
-                // consumer now emits a real, citation-backed class_feature.wizard.
-                // corpus_record.* id for any grant fact with a renderable corpus record,
-                // at any Wizard level -- that commit widened the sd13_* acceptance tests
-                // it named but never reached these later sd18_* widening siblings. Same
-                // carve-out, same reasoning, applied here.
-                && !e.id.starts_with("class_feature.wizard.corpus_record.")
-                // AT-34-E3-001 cycle 6 (`49d72f5e03`, 2026-08-28) grounded Wizard Weapon
-                // and Armor Proficiency unconditionally (real PF1 content, any level) --
-                // pre-existing, already-tested, not promotion by this slice.
-                && e.id != "class_feature.wizard.weapon_and_armor_proficiency"),
-        "level-21 Wizard must not gain any bounded wizard explanation: {:?}",
-        computation.explanations
-    );
-}
+crate::sd18_boundary_neg_control_test!(wizard_level_21_is_not_promoted_by_this_slice, "wizard_level14", WIZARD_LEVEL14_FIXTURE);
 
 // ----- Negative control: the wizard path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_wizard_level14_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
-                || e.id.starts_with("class_feature.wizard.")),
-        "the Fighter chassis must not surface any wizard-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_wizard_level14_recognition, "wizard");
 
 // ----- Negative control: multiclass Wizard is not promoted -----
 
@@ -310,8 +256,7 @@ fn multiclass_wizard_level14_is_not_promoted_by_this_slice() {
         "class_level=class:wizard:14",
         "class_level=class:wizard:14\nclass_level=class:rogue:1",
     );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&multiclass);
 // (v0.6 swarm update) The v0.6 alpha swarm's multiclass BAB/save-stacking
     // generalization (task 4) widened the Wizard+Rogue multiclass mix into a
     // genuinely supported combination (Rogue now joins Fighter as a class
@@ -340,24 +285,3 @@ fn multiclass_wizard_level14_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-14 widening -----
 
-#[test]
-fn matrix_wizard_row_names_level_14_widening() {
-    let matrix = seeded_current_truth();
-    let wizard = matrix
-        .row("class.wizard.progression_and_spell_burden")
-        .expect("wizard progression_and_spell_burden row must exist");
-
-    assert_eq!(wizard.support_state, SupportState::Supported); // Later promoted to Supported/ProductVisible by SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-17).
-    assert_eq!(wizard.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(wizard.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        wizard.grounding_ref.contains("sd18_wizard_level14_widening"),
-        "wizard row must cite the live SD18 level-14 widening proof surface: {}",
-        wizard.grounding_ref
-    );
-    let note = wizard.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 14") || note.contains("level-14"),
-        "wizard partial note must name the level-14 widening: {note}"
-    );
-}

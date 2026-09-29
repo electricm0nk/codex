@@ -231,5 +231,38 @@ else
          "_launch_timeout printed '${launch_budget}'; a real launch was still at 'Building 495/496' when a 300s budget expired"
 fi
 
+# ---------------------------------------------------------------------------
+# Case 7: the app is never launched against the operator's real store.
+# SD-36 F6d: 287 of 378 character dirs in ~/.local/share/io.electricm0nk.codex
+# were ui-smoke litter written through the real app_data_dir. `_data_env` is
+# exactly what `launch` exports to `npx tauri dev`; with no override it must
+# point under /tmp, never at $HOME/.local/share.
+# ---------------------------------------------------------------------------
+data_env="$(env -u RUN_DESKTOP_DATA_ROOT -u XDG_DATA_HOME "$DRIVER" _data_env 2>&1)"
+data_home="$(sed -n 's/^XDG_DATA_HOME=//p' <<<"$data_env")"
+if [[ "$data_home" == /tmp/* && "$data_home" != "$HOME/.local/share"* ]]; then
+    ok "default launch data root is isolated ($data_home)"
+else
+    nope "default launch data root is isolated" \
+         "_data_env printed '${data_env}'; expected XDG_DATA_HOME under /tmp"
+fi
+
+# ---------------------------------------------------------------------------
+# Case 8: a data root that resolves ONTO the real one is refused (exit 3),
+# and RUN_DESKTOP_DATA_ROOT is honoured when it is safe.
+# ---------------------------------------------------------------------------
+fake_home="$TMPDIR_TEST/home"
+mkdir -p "$fake_home"
+HOME="$fake_home" XDG_DATA_HOME="$fake_home/data" RUN_DESKTOP_DATA_ROOT="$fake_home" \
+    "$DRIVER" _data_env >/dev/null 2>&1
+rc=$?
+safe="$(RUN_DESKTOP_DATA_ROOT="$TMPDIR_TEST/run" "$DRIVER" _data_env 2>/dev/null | sed -n 's/^XDG_DATA_HOME=//p')"
+if (( rc == 3 )) && [[ "$safe" == "$TMPDIR_TEST/run/data" ]]; then
+    ok "a data root onto the real one is refused; a safe override is honoured"
+else
+    nope "a data root onto the real one is refused; a safe override is honoured" \
+         "refusal exit was $rc (want 3); safe override gave XDG_DATA_HOME='$safe'"
+fi
+
 printf '\npassed: %d  failed: %d\n' "$passed" "$failed"
 (( failed == 0 ))

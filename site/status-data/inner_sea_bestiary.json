@@ -5,12 +5,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 112,
-      "partial": 12,
+      "done": 192,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 124,
-      "pct": 90.3,
-      "excluded_from_percentage": 68,
+      "denominator": 192,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 124,
         "unclassified": 68
@@ -25,7 +25,7 @@
         },
         {
           "name": "Acidic Pustules",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.MutantSpecialAbility",
           "standing": "origin",
           "display_name": "Acidic Pustules"
@@ -74,7 +74,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.MutantSpecialAbility",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Extraordinary.MutantSpecialAbility)"
@@ -284,7 +284,7 @@
         },
         {
           "name": "Delayed Suggestion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.SpellLike",
           "standing": "origin",
           "display_name": "Delayed Suggestion"
@@ -305,7 +305,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.MutantSpecialAbility",
           "standing": "unclassified",
           "display_name": "Disease (SpecialAttack.Supernatural.MutantSpecialAbility)"
@@ -438,7 +438,7 @@
         },
         {
           "name": "Force Field",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Force Field"
@@ -634,14 +634,14 @@
         },
         {
           "name": "Luckbringer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Luckbringer"
         },
         {
           "name": "Malevolence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Malevolence"
@@ -725,14 +725,14 @@
         },
         {
           "name": "Parasitic Bond",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Parasitic Bond"
         },
         {
           "name": "Petrified Body",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Petrified Body"
@@ -788,7 +788,7 @@
         },
         {
           "name": "Powerful Blows",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Powerful Blows"
@@ -872,7 +872,7 @@
         },
         {
           "name": "Resistance to Mind-Affecting ~ Output",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Resistance",
           "standing": "origin",
           "display_name": "Resistance to Mind-Affecting ~ Output"
@@ -928,7 +928,7 @@
         },
         {
           "name": "Sense Apostate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Sense Apostate"
@@ -1019,7 +1019,7 @@
         },
         {
           "name": "Spell Sunder",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Spell Sunder"
@@ -1159,7 +1159,7 @@
         },
         {
           "name": "Sporepod",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sporepod"
@@ -1222,7 +1222,7 @@
         },
         {
           "name": "Tainted Blood",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Tainted Blood"
@@ -1313,7 +1313,7 @@
         },
         {
           "name": "Vanish",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Vanish"
@@ -1660,12 +1660,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 1,
+      "done": 2,
       "partial": 0,
       "not_started": 0,
-      "denominator": 1,
+      "denominator": 2,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 1,
         "origin": 1
@@ -1733,12 +1733,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 3,
+      "done": 4,
       "partial": 0,
       "not_started": 0,
-      "denominator": 3,
+      "denominator": 4,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 3,
         "unclassified": 1

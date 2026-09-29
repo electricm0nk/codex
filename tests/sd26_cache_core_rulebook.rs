@@ -22,8 +22,11 @@ use codex::rules_core::rules_tables::crb::json_cache::{
 };
 use codex::rules_core::rules_tables::crb::spell_list;
 
+#[path = "support/paths.rs"]
+mod paths;
+
 fn cache_root() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus/core_rulebook")
+    paths::corpus_root().join("core_rulebook")
 }
 
 fn json_files_under(dir: &Path) -> Vec<PathBuf> {

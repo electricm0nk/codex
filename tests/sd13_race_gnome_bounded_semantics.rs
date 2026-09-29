@@ -22,9 +22,6 @@
 //! familiarity math.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::load;
 
@@ -98,42 +95,5 @@ fn gnome_pilot_produces_computed_outputs_through_a_non_human_race() {
             .any(|d| d.id == "race.human.bounded_semantics"),
         "Gnome pilot must not surface the Human-only bounded race note: {:?}",
         computation.diagnostics
-    );
-}
-
-// ----- Control plane: the matrix reflects the SD13-E2 Gnome recognition promotion -----
-
-#[test]
-fn matrix_gnome_row_is_partial_computed_after_sd13_e2_recognition() {
-    let matrix = seeded_current_truth();
-    let gnome = matrix
-        .row("race.gnome.bounded_semantics")
-        .expect("gnome bounded race semantics row must exist in the seeded matrix");
-
-    // The SD13-E2 Gnome recognition slice landed grounded evidence for four
-    // race-semantic families (ability modifiers, size, speed, senses),
-    // promoting the row from Unverified to Partial.
-    assert_eq!(
-        gnome.subject_type,
-        codex::rules_core::support_state_matrix::MatrixSubjectType::Race
-    );
-    assert_eq!(gnome.subject_id, "race:gnome");
-    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
-    // Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(gnome.support_state, SupportState::Supported);
-    assert_eq!(gnome.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        gnome.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-
-    // The slice upgrades the grounding reference to the live SD13-E2 recognition
-    // test surface.
-    assert!(
-        gnome
-            .grounding_ref
-            .contains("sd13_gnome_race_semantics_recognition"),
-        "gnome row grounding_ref must cite the live SD13-E2 recognition test surface: {}",
-        gnome.grounding_ref
     );
 }

@@ -1,0 +1,16 @@
+test character_hub::starter_seed_tests::a_seed_whose_id_already_exists_is_never_overwritten ... ok
+test character_hub::starter_seed_tests::the_fireball_seed_id_is_the_converted_crb_record ... ok
+test character_hub::starter_seed_tests::a_deleted_seed_does_not_come_back ... ok
+test character_hub::starter_seed_tests::the_starter_seed_list_wire_matches_the_committed_artifact ... ok
+test character_hub::starter_seed_tests::a_fresh_install_seeds_both_characters_and_both_markers ... ok
+test character_hub::starter_seed_tests::an_existing_install_gains_the_second_seed_without_touching_the_first ... ok
+test character_hub::starter_seed_tests::the_second_seed_is_a_level_5_wizard_with_fireball_prepared ... ok
+test character_hub::starter_seed_tests::aldric_loads_with_zero_unallocated_skill_points ... ok
+test character_hub::starter_seed_tests::elowen_loads_with_zero_unallocated_skill_points ... ok
+test character_hub::starter_seed_tests::seeded_and_created_characters_load_the_engines_effective_scores ... ok
+test character_hub::starter_seed_tests::the_create_paths_fixed_ranks_measured_over_the_roster has been running for over 60 seconds
+F7a create-path Climb/Intimidate/Swim: 22 of 59 classes hold all three as class skills; 28 hold at least one cross-class; 9 Unknown
+test character_hub::starter_seed_tests::the_create_paths_fixed_ranks_measured_over_the_roster ... ok
+test class_facts::tests::class_facts_wire_for_every_roster_class_matches_the_committed_artifact ... ok
+test result: ok. 637 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 475.75s
+EXIT=0

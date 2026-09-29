@@ -1,0 +1,23 @@
+#[path = "common/mod.rs"]
+mod common;
+use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
+fn ids(t: &str) -> String {
+    let r = build_pilot_headless_receipt(&common::load(t));
+    let mut v: Vec<_> = r.computation.diagnostics.iter().filter(|d| d.claim_blocking).map(|d| d.id.clone()).collect();
+    v.sort(); v.dedup();
+    format!("{:?}|{}", r.status, v.join(","))
+}
+#[test]
+fn probe() {
+    let tsv = std::fs::read_to_string("/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f2/sites.tsv").unwrap();
+    let extra = std::env::var("F3D_EXTRA").unwrap_or_default().replace("\\n", "\n");
+    for line in tsv.lines() {
+        let c: Vec<&str> = line.split('\t').collect();
+        let fx = std::fs::read_to_string(c[1]).unwrap();
+        let from = c[2].replace("\\n", "\n");
+        let to = c[3].replace("\\n", "\n");
+        let mix = if from.is_empty() { format!("{fx}{to}") } else { fx.replace(&from, &to) };
+        let mix2 = format!("{mix}\n{extra}\n");
+        println!("SITE\t{}\t{}\t{}\t{}", c[0], ids(&fx), ids(&mix), ids(&mix2));
+    }
+}

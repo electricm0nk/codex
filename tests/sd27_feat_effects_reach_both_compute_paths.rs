@@ -53,7 +53,42 @@
 //! produces divergences tomorrow, including for a producer no catalog feat
 //! reaches yet.
 
-const PILOT_COMPUTE: &str = include_str!("../src/rules_core/pilot_compute/mod.rs");
+// SD-36 Epic C1: `pilot_compute/mod.rs` used to hold `compute_combat_baseline`,
+// `compute_selected_skill_modifiers` and `feat_derived_pillar_contributions`
+// directly (~88,800 lines, unsplit). The C1 split moved them, unedited, into
+// `combat.rs` and `class_shared_core.rs` respectively, and a later re-split
+// (adding `class_occult_and_psionic.rs`, `prestige_class_features_campaign.rs`,
+// `feat_pillar_and_pool_aggregation.rs`, `class_wizard_prepared_spellbook.rs`)
+// moved a top-level `fn` this test greps for out from under an EXPLICIT file
+// list twice, going red both times on a rename this file never intended to
+// gate on (`decisions.md` next D-number, SD-36 Epic C1 audit). Rather than
+// maintain a third hand-kept list, `pilot_compute_concat` walks the directory
+// at test-run time: this test only ever greps for a named top-level `fn`'s own
+// text, so which submodule actually holds it does not matter, as long as it is
+// somewhere in the combined text, and a future submodule split needs no edit
+// here at all.
+fn pilot_compute_concat() -> String {
+    let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("src/rules_core/pilot_compute");
+    let mut files: Vec<std::path::PathBuf> = std::fs::read_dir(&dir)
+        .unwrap_or_else(|e| panic!("cannot read dir {}: {e}", dir.display()))
+        .map(|entry| entry.unwrap_or_else(|e| panic!("cannot read dir entry: {e}")).path())
+        .filter(|p| p.extension().is_some_and(|ext| ext == "rs"))
+        .collect();
+    files.sort();
+    assert!(
+        !files.is_empty(),
+        "no *.rs files found under {} -- directory walk is broken",
+        dir.display()
+    );
+    let mut out = String::new();
+    for file in files {
+        out.push_str(
+            &std::fs::read_to_string(&file)
+                .unwrap_or_else(|e| panic!("cannot read {}: {e}", file.display())),
+        );
+    }
+    out
+}
 const PILOT_COMPUTE_CORPUS: &str = include_str!("../src/rules_core/pilot_compute_corpus.rs");
 
 /// The one function allowed to read `feat_effects` on behalf of both twins.
@@ -76,13 +111,25 @@ const TWIN_PILLAR_FUNCTIONS: &[(&str, &str)] = &[
 /// or a call site mentioning the function does not masquerade as its
 /// definition. `compute_combat_baseline` is a prefix of
 /// `compute_combat_baseline_from_corpus`, so the trailing `(` is load-bearing.
+///
+/// Accepts any visibility qualifier ahead of `fn` (bare, `pub`, `pub(crate)`,
+/// `pub(super)`, ...) -- SD-36 Epic C1 moved these functions out of a single
+/// flat module into `pilot_compute` submodules, which bumped their qualifier
+/// from bare-private to `pub(super)` so sibling submodules can still see
+/// them; that is a visibility change only, not a rename, and this scanner
+/// must not care which qualifier a given function happens to carry.
 fn function_body<'a>(source: &'a str, name: &str) -> &'a str {
     let needle = format!("fn {name}(");
     let mut lines = source.lines();
     let mut start = None;
     let mut offset = 0usize;
     for line in lines.by_ref() {
-        if line.starts_with(&needle) || line.starts_with(&format!("pub {needle}")) {
+        let after_vis = line
+            .strip_prefix("pub(super) ")
+            .or_else(|| line.strip_prefix("pub(crate) "))
+            .or_else(|| line.strip_prefix("pub "))
+            .unwrap_or(line);
+        if after_vis.starts_with(&needle) {
             start = Some(offset);
             break;
         }
@@ -171,10 +218,11 @@ fn feat_effects_producers(snippet: &str) -> Vec<String> {
 #[test]
 fn the_two_compute_twins_read_feat_effects_only_through_the_shared_seam() {
     let mut offenders: Vec<String> = Vec::new();
+    let pilot_compute = pilot_compute_concat();
 
     for (file, function) in TWIN_PILLAR_FUNCTIONS {
         let source = match *file {
-            "pilot_compute.rs" => PILOT_COMPUTE,
+            "pilot_compute.rs" => pilot_compute.as_str(),
             "pilot_compute_corpus.rs" => PILOT_COMPUTE_CORPUS,
             other => panic!("unknown source file {other}"),
         };
@@ -210,7 +258,8 @@ fn the_two_compute_twins_read_feat_effects_only_through_the_shared_seam() {
 /// instead of one.
 #[test]
 fn the_shared_seam_is_where_the_pillar_feat_producers_actually_live() {
-    let seam = function_body(PILOT_COMPUTE, SHARED_SEAM);
+    let pilot_compute = pilot_compute_concat();
+    let seam = function_body(&pilot_compute, SHARED_SEAM);
     let producers = feat_effects_producers(seam);
 
     assert_eq!(

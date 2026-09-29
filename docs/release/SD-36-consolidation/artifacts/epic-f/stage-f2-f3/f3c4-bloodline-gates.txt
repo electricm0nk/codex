@@ -1,0 +1,14 @@
+DRACONIC core_rulebook:ability:perception {"Compare": {"lhs": {"Var": "v763e68437947d610"}, "op": "Gte", "rhs": {"Const": 1}}} [('v763e68437947d610', 'Sorcerer Draconic Bloodline Class Skill1', ['core_rulebook:class_feature:draconic_bloodline_standard', 'ultimate_magic:class_feature:draconic_bloodline'])]
+DRACONIC core_rulebook:class_feature:draconic_bloodline_power_of_wyrms {"Compare": {"lhs": {"Var": "v381ce89ac2a6062a"}, "op": "Gte", "rhs": {"Const": 1}}} [('v381ce89ac2a6062a', 'Sorcerer Draconic Bloodline Power20', ['core_rulebook:class_feature:draconic_bloodline_standard', 'ultimate_magic:ability:draconic_bloodline'])]
+DRACONIC core_rulebook:class_feature:draconic_bloodline_bloodline_powers {"Compare": {"lhs": {"Var": "ve16cf407c5257c8a"}, "op": "Gte", "rhs": {"Const": 1}}} [('ve16cf407c5257c8a', 'Sorcerer Draconic Bloodline Powers', [])]
+DRACONIC core_rulebook:class_feature:draconic_bloodline_claws {"Compare": {"lhs": {"Var": "vc4dde50290a3c6c1"}, "op": "Gte", "rhs": {"Const": 1}}} [('vc4dde50290a3c6c1', 'Sorcerer Draconic Bloodline Power1', ['core_rulebook:class_feature:draconic_bloodline_standard', 'ultimate_magic:ability:draconic_bloodline'])]
+DRACONIC core_rulebook:class_feature:draconic_bloodline_bonus_spells {"Compare": {"lhs": {"Var": "v1b4b45e350879a77"}, "op": "Gte", "rhs": {"Const": 1}}} [('v1b4b45e350879a77', 'Sorcerer Draconic Bloodline Spells1', ['core_rulebook:class_feature:draconic_bloodline_standard'])]
+DRACONIC core_rulebook:class_feature:draconic_bloodline_bloodline_arcana {"Compare": {"lhs": {"Var": "v85e7e19c59b85477"}, "op": "Gte", "rhs": {"Const": 1}}} [('v85e7e19c59b85477', 'Sorcerer Draconic Bloodline Arcana1', ['core_rulebook:class_feature:draconic_bloodline_standard', 'ultimate_magic:class_feature:draconic_bloodline'])]
+DRACONIC core_rulebook:class_feature:draconic_bloodline_wings {"Compare": {"lhs": {"Var": "v0e7f31de03fff930"}, "op": "Gte", "rhs": {"Const": 1}}} [('v0e7f31de03fff930', 'Sorcerer Draconic Bloodline Power15', ['core_rulebook:class_feature:draconic_bloodline_standard', 'ultimate_magic:ability:draconic_bloodline'])]
+DRACONIC core_rulebook:class_feature:draconic_bloodline_breath_weapon {"Compare": {"lhs": {"Var": "v503d70fae663ecaa"}, "op": "Gte", "rhs": {"Const": 1}}} [('v503d70fae663ecaa', 'Sorcerer Draconic Bloodline Power9', ['core_rulebook:class_feature:draconic_bloodline_standard', 'ultimate_magic:ability:draconic_bloodline'])]
+DRACONIC core_rulebook:class_feature:draconic_bloodline_dragon_resistances {"Compare": {"lhs": {"Var": "v508a0809b506f407"}, "op": "Gte", "rhs": {"Const": 1}}} [('v508a0809b506f407', 'Sorcerer Draconic Bloodline Power3', ['core_rulebook:class_feature:draconic_bloodline_standard', 'ultimate_magic:ability:draconic_bloodline'])]
+RECORDS 32 EDGES 287 VAR_GATED 287
+CONTRIB ('ultimate_magic',) 166
+CONTRIB ('none',) 112
+CONTRIB ('core_rulebook', 'ultimate_magic') 8
+CONTRIB ('core_rulebook',) 1

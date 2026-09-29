@@ -50,10 +50,8 @@
 //! the Fighter negative control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
+use crate::rows::{multiclass_negative_controls, recognition_negative_controls};
 
 const PALADIN_LEVEL8_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_paladin_level8_sd13_deterministic_input.txt");
@@ -285,71 +283,23 @@ fn paladin_level_10_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the paladin path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_paladin_level9_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "the Fighter chassis must not surface any paladin-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
-// ----- Negative control: multiclass Paladin is not promoted -----
-
-#[test]
-fn multiclass_paladin_level9_is_not_promoted_by_this_slice() {
-    let multiclass = PALADIN_LEVEL9_FIXTURE.replace(
-        "class_level=class:paladin:9",
-        "class_level=class:paladin:9\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "multiclass Paladin must not gain any bounded paladin chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Paladin must stay claim-blocked in this slice"
-    );
-}
-
 // ----- Control plane: the matrix note names the level-9 widening -----
 
-#[test]
-fn matrix_paladin_row_names_level_9_widening() {
-    let matrix = seeded_current_truth();
-    let paladin = matrix
-        .row("class.paladin.hybrid_chassis_and_spell_burden")
-        .expect("paladin hybrid_chassis_and_spell_burden row must exist");
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
 
-    assert_eq!(paladin.support_state, SupportState::Supported);
-    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        paladin.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        paladin
-            .grounding_ref
-            .contains("sd13_paladin_level9_progression"),
-        "paladin row must cite the live SD13-E5 level-9 proof surface: {}",
-        paladin.grounding_ref
-    );
-    let note = paladin.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 9") || note.contains("level-9"),
-        "paladin partial note must name the level-9 widening: {note}"
-    );
+recognition_negative_controls! {
+    fighter_does_not_gain_paladin_level9_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.paladin."],
+        exact: [],
+        message: "the Fighter chassis must not surface any paladin-namespaced explanation: {:?}",
+    },
 }
+
+multiclass_negative_controls! {
+    multiclass_paladin_level9_is_not_promoted_by_this_slice(PALADIN_LEVEL9_FIXTURE, "class_level=class:paladin:9" => "class_level=class:paladin:9\nclass_level=class:fighter:1") {
+        prefixes: ["class_chassis.paladin."],
+        exact: [],
+        message: "multiclass Paladin must not gain any bounded paladin chassis explanation: {:?}",
+    },
+}
+

@@ -21,7 +21,7 @@ use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
 fn empty_corpus() -> SourcePackageContent<'static> {
     let source_ref = SourceRef {
-        lst_file: "sd20_contract_cell_map".to_string(),
+        source_path: "sd20_contract_cell_map".to_string(),
         line: 1,
     };
     SourcePackageContent::empty("sd20_contract_cell_map", source_ref)

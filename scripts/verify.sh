@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full ingest-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump class-census)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump class-census)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -440,6 +440,47 @@ run_producer_selftest() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: doneness-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_doneness.py` -- SD-36 D3
+# extracted `scripts/observer/doneness.py`'s doneness_verdict/EXCLUDED_BOOKS
+# out of the producer so `coverage_ledger.py` no longer needs the whole
+# 5,000+-line file; this self-test proves the extraction stays
+# byte-identical to the producer's own copy across every (wiring_class,
+# status, kind) combination both modules define. Cheap (Python, no build,
+# no network) -- in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_doneness_selftest() {
+    stage_start "doneness-selftest — python3 -m unittest scripts/tests/test_doneness.py"
+    local log="$LOG_DIR/doneness-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_doneness.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail doneness-selftest "self-test script missing at scripts/tests/test_doneness.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail doneness-selftest "self-test exit $status${ran:+; ran $ran} — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail doneness-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass doneness-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: pi-redaction-selftest
 #
 # Runs `python3 -m unittest scripts/tests/test_pi_redaction.py` -- the
@@ -536,163 +577,94 @@ run_provenance_selftest() {
 }
 
 # ---------------------------------------------------------------------------
-# Stage: site-dashboard-selftest
+# Stage: site-status-frozen-check
 #
-# Runs `bash scripts/tests/test_publish_site_dashboard.sh` -- the detection
-# self-test for `scripts/publish-site-dashboard.sh`'s `--check` mode
-# (SD31-ATTRIB-003, operator request to version the public status feed).
-# Against a tiny FAKE producer (not the real one, so this is cheap and
-# deterministic), it proves `--check` reports "current" on an untouched
-# tree, is stable across repeated runs, catches a genuinely stale committed
-# copy, and never mutates the committed file on disk. Mutation-proven against
-# the real bug this cycle found and fixed: the first version of `--check`
-# rendered into a blank-slate scratch file instead of one seeded from the
-# committed copy, so it reported STALE unconditionally, even with nothing
-# changed -- sabotaging the seeding step reproduces exactly that (3 of 6
-# cases fail). Placed next to `producer-selftest`, same "self-test for a
-# check that raises on purpose deserves its own gate" reasoning.
+# SD-36 D3/D5 (docs/release/SD-36-consolidation): the PF1e public status
+# feed is now a FROZEN snapshot -- v06_work_inventory and the dashboard
+# producers that fed it are retired. Runs
+# `scripts/site/check_frozen_status.py` for real against the committed
+# site/status-data.json + site/status-data/<book>.json: asserts the
+# snapshot still reads pct=100.0, denominator=49450, not_started=0,
+# partial=0, the frozen generated_at stamp, and that every book's own
+# per-kind sums reconcile with its rollup. Cheap (Python + JSON, no build,
+# no cargo) -- in BOTH stage sets; this is the same posture the now-retired
+# `site-dashboard-check` stage held. A failure here means the snapshot moved
+# after the freeze and needs operator review, not a re-regenerate-and-commit.
 # ---------------------------------------------------------------------------
 
-run_site_dashboard_selftest() {
-    stage_start "site-dashboard-selftest — bash scripts/tests/test_publish_site_dashboard.sh"
-    local log="$LOG_DIR/site-dashboard-selftest.log"
-    local script="$REPO_ROOT/scripts/tests/test_publish_site_dashboard.sh"
+run_site_status_frozen_check() {
+    stage_start "site-status-frozen-check — python3 scripts/site/check_frozen_status.py"
+    local log="$LOG_DIR/site-status-frozen-check.log"
+    local script="$REPO_ROOT/scripts/site/check_frozen_status.py"
 
     if [[ ! -f "$script" ]]; then
-        stage_fail site-dashboard-selftest "self-test script missing at scripts/tests/test_publish_site_dashboard.sh"
+        stage_fail site-status-frozen-check "script missing at scripts/site/check_frozen_status.py"
         return
     fi
 
-    bash "$script" >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec python3 "$script" ) >"$log" 2>&1
     local status=$?
 
-    local tally
-    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
-
     if (( status != 0 )); then
-        stage_fail site-dashboard-selftest "self-test exit $status${tally:+; $tally} — $log"
+        stage_fail site-status-frozen-check "exit $status — the frozen snapshot drifted — $log"
         return
     fi
 
-    local passed
-    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
-    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
-        stage_fail site-dashboard-selftest "0 cases ran — the self-test asserts nothing — $log"
+    if ! grep -q "^OK: .* is frozen at 100%" "$log"; then
+        stage_fail site-status-frozen-check "exited 0 without confirming the freeze — $log"
         return
     fi
 
-    stage_pass site-dashboard-selftest "${tally:-$passed cases passed}"
+    stage_pass site-status-frozen-check "site/status-data.json is frozen at 100%"
 }
 
 # ---------------------------------------------------------------------------
-# Stage: site-dashboard-pin
+# Stage: site-status-frozen-check-selftest
 #
-# The fast half of the freshness gate, and the control for incident key
-# `site-dashboard-json-stale-after-inventory-move` (3 firings; 7 failing runs
-# of `site-dashboard-check`). `--check` below is correct but costs ~15 minutes
-# of real producer time (measured 904 s, 2026-09-10, HEAD 00e44eee02), which
-# is why it only ever ran at the ~90-minute epic wrap-up -- long after the
-# cycle that broke the feed had pushed. Every firing had one cause: the
-# inventory was regenerated and the feed derived from it was not.
-#
-# This stage re-hashes `docs/work-inventory.json` and compares it to the pin a
-# real publish recorded. Milliseconds, no producer, no cargo. The same command
-# is in `workflow-instruction.md` §6 step 3, so a cycle now goes red at its own
-# push gate instead of at the next wrap-up. It does NOT replace
-# `site-dashboard-check`: the pin watches one input, and a feed made stale by a
-# unit-ledger or owner-state change hashes clean here.
+# Runs `python3 -m unittest scripts/tests/test_check_frozen_status.py` --
+# the self-test for `scripts/site/check_frozen_status.py` itself (the
+# `run_site_status_frozen_check` stage above only exercises `check()`
+# against whatever is currently committed under `site/status-data*`; this
+# stage exercises the checker's OWN logic against synthetic fixtures, the
+# same "a self-test for a screen that raises on purpose deserves its own
+# gate" reasoning `producer-selftest`/`pi-redaction-selftest`/
+# `provenance-selftest`/`doneness-selftest`/`build-public-status-selftest`
+# already hold). Added SD-36 Epic B fix cycle round 6: the round-5 regression
+# tests written for ruling (h) -- `test_committed_book_denominators_sum_to_overall`
+# and `test_book_denominator_gap_is_a_violation`, which pin the exact
+# 7-missing-books defect that ruling caught -- previously had no verify.sh
+# stage running them at all, so a future regression of that same defect
+# shape would go undetected by the gate. Cheap (stdlib unittest, no build,
+# no network) -- in BOTH stage sets next to `site-status-frozen-check`.
 # ---------------------------------------------------------------------------
 
-run_site_dashboard_pin() {
-    stage_start "site-dashboard-pin — scripts/publish-site-dashboard.sh --check-pin"
-    local log="$LOG_DIR/site-dashboard-pin.log"
-    local script="$REPO_ROOT/scripts/publish-site-dashboard.sh"
+run_site_status_frozen_check_selftest() {
+    stage_start "site-status-frozen-check-selftest — python3 -m unittest scripts/tests/test_check_frozen_status.py"
+    local log="$LOG_DIR/site-status-frozen-check-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_check_frozen_status.py"
 
     if [[ ! -f "$script" ]]; then
-        stage_fail site-dashboard-pin "script missing at scripts/publish-site-dashboard.sh"
+        stage_fail site-status-frozen-check-selftest "self-test script missing at scripts/tests/test_check_frozen_status.py"
         return
     fi
 
-    ( cd "$REPO_ROOT" && exec "$script" --check-pin ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
     local status=$?
 
-    if (( status != 0 )); then
-        stage_fail site-dashboard-pin "the feed's recorded input moved — run ./scripts/publish-site-dashboard.sh and commit the refreshed feed — $log"
-        return
-    fi
-
-    if ! grep -q "input pin matches" "$log"; then
-        stage_fail site-dashboard-pin "exited 0 without confirming the pin — $log"
-        return
-    fi
-
-    stage_pass site-dashboard-pin "docs/work-inventory.json matches the pin the feed was published from"
-}
-
-# ---------------------------------------------------------------------------
-# Stage: site-dashboard-check
-#
-# Runs `scripts/publish-site-dashboard.sh --check` for real, against the
-# actually-committed `site/dashboard/PF1e-dashboard.json` and the real
-# `scripts/observer/pf1e_dashboard_producer.py` -- the freshness gate the
-# operator asked for so the public site's copy can never silently drift from
-# what `docs/work-inventory.json` currently says. Cheap (reads local repo
-# files only, no pinned oracle, no cargo build), so it sits in both stage
-# sets next to its own selftest. A failure here means: run
-# `./scripts/publish-site-dashboard.sh` and commit the refreshed feed.
-# ---------------------------------------------------------------------------
-
-run_site_dashboard_check() {
-    # Own outer timeout wrapper (AT-34-E6-001 wave-27; same `${VAR:-default}`
-    # shape `corpus-trap-audit` above already uses, and the exact gap that
-    # stage's own comment names this stage for): `publish-site-dashboard.sh
-    # --check` invokes the real producer, which bounds each of its three
-    # state-dump binaries individually (`v06_class_state_dump`,
-    # `v06_content_state_dump` at the shared `PF1E_CLASS_STATE_TIMEOUT`
-    # default 600s each; `v06_work_inventory` at its own, wider
-    # `PF1E_WORK_INVENTORY_TIMEOUT` default 950s -- see that constant's own
-    # comment in pf1e_dashboard_producer.py for the 757s measurement behind
-    # it) but neither `verify.sh` nor the script it calls ever bounded the
-    # STAGE as a whole. Sum of all three cold: ~2150s worst case; rounded up
-    # with slack for the public-status projection's own `--check` and
-    # process overhead, not tightened further since this lane does not run
-    # the real producer to remeasure the full-stage wall time (forbidden by
-    # this cycle's own brief -- "do NOT run the inventory regenerator or the
-    # dashboard producer from a lane").
-    local timeout_s="${SITE_DASHBOARD_CHECK_TIMEOUT_S:-2400}"
-    stage_start "site-dashboard-check — timeout ${timeout_s}s scripts/publish-site-dashboard.sh --check"
-    local log="$LOG_DIR/site-dashboard-check.log"
-    local script="$REPO_ROOT/scripts/publish-site-dashboard.sh"
-
-    if [[ ! -f "$script" ]]; then
-        stage_fail site-dashboard-check "script missing at scripts/publish-site-dashboard.sh"
-        return
-    fi
-
-    ( cd "$REPO_ROOT" && exec timeout "${timeout_s}s" "$script" --check ) >"$log" 2>&1
-    local status=$?
-
-    if (( status == 124 )); then
-        stage_fail site-dashboard-check "timed out after ${timeout_s}s bounding its own runtime — the producer did not finish, and neither did any stale-cache fallback silently paper over it (PF1E_DASHBOARD_STRICT_TIMEOUT=1 in --check mode) — $log"
-        return
-    fi
-
-    if (( status == 3 )); then
-        stage_fail site-dashboard-check "a state-dump binary timed out inside the producer (StateDumpTimeout, loud by design under --check) before the stage's own ${timeout_s}s outer bound was reached — $log"
-        return
-    fi
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
 
     if (( status != 0 )); then
-        stage_fail site-dashboard-check "exit $status — $log"
+        stage_fail site-status-frozen-check-selftest "self-test exit $status${ran:+; ran $ran} — $log"
         return
     fi
 
-    if ! grep -q "is current" "$log"; then
-        stage_fail site-dashboard-check "exited 0 without confirming currency — $log"
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail site-status-frozen-check-selftest "0 cases ran — the self-test asserts nothing — $log"
         return
     fi
 
-    stage_pass site-dashboard-check "site/dashboard/PF1e-dashboard.json is current"
+    stage_pass site-status-frozen-check-selftest "$ran cases passed"
 }
 
 # ---------------------------------------------------------------------------
@@ -711,7 +683,7 @@ run_site_dashboard_check() {
 # cannot catch -- `declared-pi-audit` above is this exact same shape applied
 # to `data/corpus/`; this is that shape's `site/dashboard/` counterpart.
 # Cheap (a ~2.5s Paizo-scoped oracle sweep, no build) -- placed in BOTH stage
-# sets next to `site-dashboard-check`.
+# sets (formerly alongside the now-retired `site-dashboard-check`).
 # ---------------------------------------------------------------------------
 
 run_site_dashboard_pi_gate() {
@@ -830,9 +802,9 @@ run_site_asset_stamp_check() {
 # -- the operator's explicit self-maintaining requirement ("the data set...
 # needs to be a part of our normal process just like it is for our
 # pf1e-dashboard.html"), applied as its own named, directly-invoked gate
-# (rather than only transitively through `site-dashboard-check`'s call into
-# `scripts/publish-site-dashboard.sh --check`, which also reaches this same
-# script — see that script's own trailing step). Cheap (reads local repo
+# (historically only reachable transitively through the now-retired
+# `site-dashboard-check` stage's call into the also-deleted
+# `scripts/publish-site-dashboard.sh --check`). Cheap (reads local repo
 # files plus one pinned-oracle sweep for the redaction indices, no cargo
 # build), so it sits in both stage sets next to its own selftest and PI
 # gate. A failure here means: run
@@ -1206,107 +1178,17 @@ run_cycle_scope_gate_selftest() {
 }
 
 # ---------------------------------------------------------------------------
-# Stage: shape-engine-boundary-selftest
-#
-# Runs `python3 -m unittest scripts/tests/test_shape_engine_boundary.py` --
-# the self-test behind the `shape-engine-boundary` stage below, carrying the
-# two RED->GREEN proofs SD-35 `AT-35-E1-002` names (moving the cited function
-# 50 lines keeps its content anchor green; changing one cited condition
-# fails it). Same shape as `shape-coverage-standing-gate-selftest`: a zero
-# case count is a failure, not a vacuous pass. Cheap (Python, no build) --
-# in BOTH stage sets.
-# ---------------------------------------------------------------------------
-
-run_shape_engine_boundary_selftest() {
-    stage_start "shape-engine-boundary-selftest — python3 -m unittest scripts/tests/test_shape_engine_boundary.py"
-    local log="$LOG_DIR/shape-engine-boundary-selftest.log"
-    local script="$REPO_ROOT/scripts/tests/test_shape_engine_boundary.py"
-
-    if [[ ! -f "$script" ]]; then
-        stage_fail shape-engine-boundary-selftest "self-test script missing at scripts/tests/test_shape_engine_boundary.py"
-        return
-    fi
-
-    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
-    local status=$?
-
-    local ran
-    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
-
-    if (( status != 0 )); then
-        stage_fail shape-engine-boundary-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
-        return
-    fi
-
-    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
-        stage_fail shape-engine-boundary-selftest "0 cases ran — the self-test asserts nothing — $log"
-        return
-    fi
-
-    stage_pass shape-engine-boundary-selftest "$ran cases passed"
-}
-
-# ---------------------------------------------------------------------------
-# Stage: shape-engine-boundary
-#
-# Runs `scripts/shape_engine_boundary.py --check` -- SD-34 `AT-34-E1-004`'s
-# committed fact (a shape engine turns a formula into a number and does not
-# place/attach/display the record), re-derived against the live
-# `docs/work-inventory.json` and the live `src/bin/v06_work_inventory.rs` on
-# every run. Fails when either count cannot be derived or the promotion
-# ladder's CONTENT ANCHOR no longer resolves -- the four cited lines gone,
-# changed, duplicated, or `fn classify` vanished (SD-35 `AT-35-E1-002`).
-# Wired here because SD-34 wave 51 found this instrument's citation already
-# drifted at HEAD: the gate worked, nobody had asked it -- an instrument
-# that is not a stage is not a gate (`workflow-instruction.md §12` row 31).
-# Cheap (Python + JSON, no build) -- in BOTH stage sets.
-# ---------------------------------------------------------------------------
-
-run_shape_engine_boundary() {
-    stage_start "shape-engine-boundary — python3 scripts/shape_engine_boundary.py --check"
-    local log="$LOG_DIR/shape-engine-boundary.log"
-    local script="$REPO_ROOT/scripts/shape_engine_boundary.py"
-
-    if [[ ! -f "$script" ]]; then
-        stage_fail shape-engine-boundary "script missing at scripts/shape_engine_boundary.py"
-        return
-    fi
-
-    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
-    local status=$?
-
-    local magnitude_bearing not_held citation_ok stale
-    magnitude_bearing=$(sed -n 's/^magnitude_bearing=\([0-9]*\) .*$/\1/p' "$log" | tail -1)
-    not_held=$(sed -n 's/^.* not_held_by_engine=\([0-9]*\) .*$/\1/p' "$log" | tail -1)
-    citation_ok=$(sed -n 's/^.* citation_ok=\([A-Za-z]*\)$/\1/p' "$log" | tail -1)
-    stale=$(sed -n 's/^STALE_CITATION: \(.*\)$/\1/p' "$log" | tail -1)
-    actual "SHAPE_ENGINE_MAGNITUDE_BEARING=${magnitude_bearing:-unknown}"
-    actual "SHAPE_ENGINE_NOT_HELD=${not_held:-unknown}"
-
-    if (( status != 0 )); then
-        stage_fail shape-engine-boundary "exit $status${stale:+ — stale citation: $stale} — $log"
-        return
-    fi
-
-    if [[ "$citation_ok" != True || -z "$magnitude_bearing" ]]; then
-        stage_fail shape-engine-boundary "exited 0 without printing citation_ok=True and a population — $log"
-        return
-    fi
-
-    stage_pass shape-engine-boundary "magnitude_bearing=${magnitude_bearing} not_held_by_engine=${not_held:-?} citation_ok=True"
-}
-
-# ---------------------------------------------------------------------------
 # Stage: missing-engine-tables
 #
 # Runs `scripts/missing_engine_tables.py --check` -- SD-34 `AT-34-E1-003`'s
 # per-kind enumeration of bucket A ("engine has no table for this kind"),
-# re-derived against the live inventory on every run. Fails on a bucket-A
-# kind with no engine-surface citation (`UnknownKindError`) or on a citation
-# whose CONTENT ANCHOR no longer resolves inside `fn classify` (SD-35
-# `AT-35-E1-002`). Same wave-51 lesson as `shape-engine-boundary`: both
-# pins were found stale at HEAD because neither instrument was a stage.
-# Cheap (Python + JSON, no build) -- in BOTH stage sets.
+# re-derived against the live (now frozen, SD-36 D3) inventory on every run.
+# Fails on a bucket-A kind with no engine-surface citation
+# (`UnknownKindError`). The CONTENT ANCHOR resolution this stage used to also
+# require (SD-35 `AT-35-E1-002`, against `src/bin/v06_work_inventory.rs`) is
+# retired along with that generator -- `engine_surface` in the written
+# artifact is now a historical citation only; see the script's own module
+# docstring. Cheap (Python + JSON, no build) -- in BOTH stage sets.
 # ---------------------------------------------------------------------------
 
 run_missing_engine_tables() {
@@ -1322,24 +1204,23 @@ run_missing_engine_tables() {
     ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
     local status=$?
 
-    local population kinds cite_failures unknown
+    local population kinds unknown
     population=$(sed -n 's/^population=\([0-9]*\) kinds=[0-9]*$/\1/p' "$log" | tail -1)
     kinds=$(sed -n 's/^population=[0-9]* kinds=\([0-9]*\)$/\1/p' "$log" | tail -1)
-    cite_failures=$(sed -n 's/^citation_failures=\([0-9]*\)$/\1/p' "$log" | tail -1)
     unknown=$(sed -n 's/^UNKNOWN_KIND: \(.*\)$/\1/p' "$log" | tail -1)
     actual "MISSING_ENGINE_TABLES_POPULATION=${population:-unknown}"
 
     if (( status != 0 )); then
-        stage_fail missing-engine-tables "exit $status population=${population:-?} kinds=${kinds:-?} citation_failures=${cite_failures:-?}${unknown:+ — $unknown} — $log"
+        stage_fail missing-engine-tables "exit $status population=${population:-?} kinds=${kinds:-?}${unknown:+ — $unknown} — $log"
         return
     fi
 
-    if [[ -z "$population" || "$cite_failures" != 0 ]]; then
-        stage_fail missing-engine-tables "exited 0 without printing a population and citation_failures=0 — $log"
+    if [[ -z "$population" ]]; then
+        stage_fail missing-engine-tables "exited 0 without printing a population — $log"
         return
     fi
 
-    stage_pass missing-engine-tables "population=${population} kinds=${kinds:-?} citation_failures=0"
+    stage_pass missing-engine-tables "population=${population} kinds=${kinds:-?}"
 }
 
 # ---------------------------------------------------------------------------
@@ -1448,6 +1329,207 @@ run_figure_provenance() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: corpus-bundle (SD-36 consolidation, corpus-bundle correctness follow-up / decisions.md §8)
+#
+# The Tauri bundle ships a SANITISED mirror of `data/corpus/`
+# (`apps/desktop/src-tauri/resources/corpus_bundle/`, generated by
+# `scripts/gen-corpus-bundle.mjs`) rather than the raw corpus, because the raw
+# corpus carries PCGen ingest residue the pcgen-residue-gate stage below
+# forbids on the shipped side (`decisions.md` §11, ruling B17). This stage
+# proves the generator is a real, working build step, not merely present in
+# git: it (re)runs it, requires non-empty output, and requires the residue
+# gate to read the regenerated bundle as clean -- all BEFORE the general
+# pcgen-residue-gate / crate-wall / desktop stages run, so a defect here is
+# attributed to the bundle specifically rather than surfacing later as an
+# unattributed residue-gate failure.
+# ---------------------------------------------------------------------------
+
+run_corpus_bundle() {
+    stage_start "corpus-bundle — node scripts/gen-corpus-bundle.mjs, then 0 residue hits"
+    local log="$LOG_DIR/corpus-bundle.log"
+    local bundle_dir="$TAURI_DIR/resources/corpus_bundle"
+    local script="$REPO_ROOT/scripts/gen-corpus-bundle.mjs"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail corpus-bundle "generator missing at scripts/gen-corpus-bundle.mjs"
+        return
+    fi
+    if ! command -v node >/dev/null 2>&1; then
+        stage_fail corpus-bundle "node not found on PATH -- required on every OS the release workflow builds on"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec node "$script" ) >"$log" 2>&1
+    local gen_status=$?
+    if (( gen_status != 0 )); then
+        stage_fail corpus-bundle "generator exited $gen_status — $log"
+        return
+    fi
+
+    local copied
+    copied=$(sed -n 's/^files_copied=\([0-9]*\).*/\1/p' "$log" | tail -1)
+    if [[ ! "${copied:-}" =~ ^[1-9][0-9]*$ ]]; then
+        stage_fail corpus-bundle "generator did not report a positive files_copied= count (got '${copied:-<none>}') — $log"
+        return
+    fi
+    if [[ ! -d "$bundle_dir" ]]; then
+        stage_fail corpus-bundle "generator ran but produced no directory at $bundle_dir"
+        return
+    fi
+
+    # The generator's RESIDUE_PATTERNS array is a by-hand JS re-expression of
+    # `pcgen_residue_gate.py`'s DATA_PATTERNS (there is no cross-language
+    # import). Re-derive DATA_PATTERNS' own vocabulary directly from the
+    # Python module and require every term to appear in the generator's
+    # source text, so the two cannot silently drift apart.
+    local sync_log="$LOG_DIR/corpus-bundle-pattern-sync.log"
+    ( cd "$REPO_ROOT" && exec python3 - "$script" ) >"$sync_log" 2>&1 <<'PYEOF'
+import re
+import sys
+
+sys.path.insert(0, "scripts")
+import pcgen_residue_gate as gate  # noqa: E402
+
+js_path = sys.argv[1]
+with open(js_path, encoding="utf-8") as fh:
+    js_source = fh.read()
+
+missing = []
+for name, pattern in gate.DATA_PATTERNS.items():
+    # The identifying vocabulary term itself (strip regex metacharacters the
+    # dict key already carries none of except the PRE[A-Z]+: family and the
+    # JSON-key quoting, both handled by name below).
+    if name.endswith(" (JSON key)"):
+        term = name.split(" (JSON key)")[0].strip('"')
+        needle = f'"{term}"'
+    else:
+        needle = name
+    if needle not in js_source:
+        missing.append(f"{name!r} (looked for {needle!r})")
+
+if missing:
+    print(f"missing_terms={len(missing)}")
+    for m in missing:
+        print(f"  {m}")
+    sys.exit(1)
+print(f"checked_terms={len(gate.DATA_PATTERNS)} verdict=PASS")
+PYEOF
+    local sync_status=$?
+    if (( sync_status != 0 )); then
+        stage_fail corpus-bundle "generator's RESIDUE_PATTERNS has drifted from pcgen_residue_gate.py's DATA_PATTERNS — $sync_log"
+        return
+    fi
+
+    # Scoped, fast re-expression of `pcgen_residue_gate.py`'s DATA_PATTERNS
+    # against ONLY the freshly generated bundle -- `awk`, not `grep -o`, per
+    # the standing "derive counts with awk" rule (some harnesses shim `grep`
+    # to ugrep, whose `-o` silently drops matches on large files).
+    local residue_log="$LOG_DIR/corpus-bundle-residue.log"
+    grep -rEc '\braw_tokens\b|\braw_bonus_chains\b|\bPcgenFormulaEvaluator\b|\brender_pcgen_desc\b|\bbonus_stack_reader\b|\bpre_tokens\b|\bBONUS:|\bDEFINE:|\bPRE[A-Z]+:|\bSAB:|\bDESC:|%CHOICE|%LIST|\bTYPE=' \
+        "$bundle_dir" >"$residue_log" 2>/dev/null
+    local scoped_hits
+    scoped_hits=$(awk -F: '{sum += $NF} END {print sum + 0}' "$residue_log")
+
+    # The standing, full-repo gate, re-run so this stage's own verdict agrees
+    # with the shipped-data class the general pcgen-residue-gate stage scores
+    # (`_scan_shipped_data`, driven by `tauri.conf.json`'s `bundle.resources`,
+    # which already includes `corpus_bundle/`) -- two independent
+    # measurements of the same "0 residue in what ships" claim.
+    local gate_log="$LOG_DIR/corpus-bundle-full-residue.log"
+    ( cd "$REPO_ROOT" && exec python3 scripts/pcgen_residue_gate.py --check --closure ) >"$gate_log" 2>&1
+    local gate_status=$?
+    local gate_verdict
+    gate_verdict=$(grep -E '^live_files=[0-9]+ live_hits=[0-9]+ .*verdict=' "$gate_log" | tail -1)
+
+    if (( scoped_hits != 0 )); then
+        stage_fail corpus-bundle "scoped scan found $scoped_hits residue hit(s) directly under $bundle_dir — $residue_log"
+        return
+    fi
+    if (( gate_status != 0 )) || [[ "$gate_verdict" != *verdict=PASS ]]; then
+        stage_fail corpus-bundle "full residue gate did not pass after regenerating the bundle: ${gate_verdict:-exit $gate_status} — $gate_log"
+        return
+    fi
+
+    stage_pass corpus-bundle "files_copied=$copied pattern_sync=ok scoped_residue_hits=0 full_gate=${gate_verdict}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: tauri-resources-tracked (SD-36 consolidation, corpus-bundle correctness follow-up)
+#
+# The defect this stage exists to catch: commit 3e1a8f8d39 pointed
+# `tauri.conf.json`'s `bundle.resources` at `resources/corpus_bundle/`, a
+# path with ZERO git-tracked files under it (the directory itself was
+# untracked). `tauri-build` resolves resource paths at build time, so a
+# clean clone with no locally-generated bundle would fail to build, and CI
+# would ship nothing -- and no existing stage checked that a declared
+# resource path actually resolves to something a clean checkout has. This
+# stage re-derives, for every key in `bundle.resources`, whether `git
+# ls-files` finds at least one tracked file under it (a tracked `.gitkeep`
+# counts, which is exactly the fix for the corpus-bundle case: the directory
+# is gitignored except for that one file).
+# ---------------------------------------------------------------------------
+
+run_tauri_resources_tracked() {
+    stage_start "tauri-resources-tracked — every bundle.resources path has >=1 git-tracked file"
+    local log="$LOG_DIR/tauri-resources-tracked.log"
+    local conf="$TAURI_DIR/tauri.conf.json"
+
+    if [[ ! -f "$conf" ]]; then
+        stage_fail tauri-resources-tracked "tauri.conf.json missing at $conf"
+        return
+    fi
+
+    python3 - "$TAURI_DIR" "$REPO_ROOT" "$conf" >"$log" 2>&1 <<'PYEOF'
+import json
+import os
+import subprocess
+import sys
+
+tauri_dir, repo_root, conf_path = sys.argv[1], sys.argv[2], sys.argv[3]
+with open(conf_path, encoding="utf-8") as fh:
+    conf = json.load(fh)
+
+resources = conf.get("bundle", {}).get("resources", {})
+if isinstance(resources, list):
+    resources = {r: r for r in resources}
+if not resources:
+    print("no bundle.resources entries found -- nothing to check")
+    sys.exit(1)
+
+problems = []
+for key in sorted(resources):
+    abs_src = os.path.normpath(os.path.join(tauri_dir, key))
+    rel = os.path.relpath(abs_src, repo_root)
+    out = subprocess.run(
+        ["git", "-C", repo_root, "ls-files", "--", rel],
+        capture_output=True, text=True, check=False,
+    )
+    tracked = [line for line in out.stdout.splitlines() if line.strip()]
+    print(f"{key} -> {rel}: tracked_files={len(tracked)}")
+    if not tracked:
+        problems.append(f"{key} -> {rel} (0 git-tracked files)")
+
+if problems:
+    print("UNTRACKED_RESOURCE_PATHS:")
+    for p in problems:
+        print(" ", p)
+    sys.exit(1)
+
+print(f"resources_checked={len(resources)} verdict=PASS")
+PYEOF
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail tauri-resources-tracked "one or more bundle.resources paths have 0 git-tracked files (a clean clone cannot build) — $log"
+        return
+    fi
+
+    local summary
+    summary=$(grep -E '^resources_checked=[0-9]+ verdict=PASS$' "$log" | tail -1)
+    stage_pass tauri-resources-tracked "${summary:-see $log}"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: pcgen-residue-gate
 #
 # Runs `scripts/pcgen_residue_gate.py --check` -- `AT-35-E1-005`
@@ -1515,13 +1597,97 @@ run_pcgen_residue_gate() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: crate-wall (SD-36 Epic A / operator ruling D1)
+#
+# Cheap, no build: the mechanical proof that `codex-desktop` can never link
+# the PCGen converter/oracle crate (`crates/codex-ingest`) through its normal
+# dependency graph, only through `[dev-dependencies]`. Four independent
+# checks, each catching a different way the wall could quietly develop a
+# hole (a new normal dep, a reversed dep direction, a manifest edit under
+# the wrong section header, a runtime import the residue gate's own
+# `codex_ingest` pattern exists to catch).
+# ---------------------------------------------------------------------------
+
+run_crate_wall() {
+    stage_start "crate-wall — codex-ingest reaches codex-desktop only via [dev-dependencies]"
+    local log="$LOG_DIR/crate-wall.log"
+    : >"$log"
+    local ok=0
+
+    local tree_log="$LOG_DIR/crate-wall-tree.log"
+    ( cd "$TAURI_DIR" && exec cargo tree --locked -e normal,build --prefix none ) >"$tree_log" 2>&1
+    local tree_status=$?
+    local ingest_lines codex_lines
+    ingest_lines=$(count_matching '^codex-ingest ' "$tree_log")
+    codex_lines=$(count_matching '^codex ' "$tree_log")
+    {
+        printf 'cargo tree (normal,build) in apps/desktop/src-tauri: exit=%s codex-ingest-lines=%s codex-lines=%s\n' \
+            "$tree_status" "${ingest_lines:-NaN}" "${codex_lines:-NaN}"
+    } >>"$log"
+    if (( tree_status != 0 )); then
+        printf '    cargo tree failed (exit %s) — %s\n' "$tree_status" "$tree_log"
+        ok=1
+    elif [[ "${ingest_lines:-NaN}" != "0" ]]; then
+        printf "    codex-ingest appears %s time(s) in codex-desktop's normal+build graph — %s\n" \
+            "${ingest_lines:-NaN}" "$tree_log"
+        ok=1
+    elif [[ ! "${codex_lines:-}" =~ ^[1-9][0-9]*$ ]]; then
+        printf '    codex does not appear in the tree at all (%s lines) -- the tree was not actually read — %s\n' \
+            "${codex_lines:-NaN}" "$tree_log"
+        ok=1
+    fi
+
+    local meta_log="$LOG_DIR/crate-wall-metadata.log"
+    ( cd "$REPO_ROOT" && exec cargo metadata --locked --format-version 1 --no-deps ) 2>"$meta_log" \
+        | python3 -c '
+import json, sys
+m = json.load(sys.stdin)
+p = {x["name"]: x for x in m["packages"]}
+assert "codex" in p, "codex package missing from metadata"
+assert "codex-ingest" in p, "codex-ingest package missing from metadata"
+assert not any(d["name"] == "codex-ingest" for d in p["codex"]["dependencies"]), \
+    "codex depends on codex-ingest"
+assert any(d["name"] == "codex" for d in p["codex-ingest"]["dependencies"]), \
+    "codex-ingest does not depend on codex"
+' >>"$meta_log" 2>&1
+    local meta_status=$?
+    if (( meta_status != 0 )); then
+        printf '    cargo metadata dependency-direction check failed (exit %s) — %s\n' "$meta_status" "$meta_log"
+        ok=1
+    fi
+    printf 'cargo metadata dependency-direction check: exit=%s\n' "$meta_status" >>"$log"
+
+    local manifest="$TAURI_DIR/Cargo.toml"
+    if ! awk '/^\[/{s=$0} /codex-ingest/ && s!="[dev-dependencies]"{bad=1} END{exit bad}' "$manifest"; then
+        printf '    codex-ingest is named outside [dev-dependencies] in %s\n' "$manifest"
+        ok=1
+    fi
+    printf 'manifest section check on %s: %s\n' "$manifest" "$([[ $ok == 0 ]] && echo ok || echo checked)" >>"$log"
+
+    local gate_log="$LOG_DIR/crate-wall-residue.log"
+    ( cd "$REPO_ROOT" && exec python3 scripts/pcgen_residue_gate.py --check ) >"$gate_log" 2>&1
+    local gate_status=$?
+    if (( gate_status != 0 )); then
+        printf '    pcgen_residue_gate.py --check failed (exit %s) — %s\n' "$gate_status" "$gate_log"
+        ok=1
+    fi
+    cat "$gate_log" >>"$log"
+
+    if (( ok != 0 )); then
+        stage_fail crate-wall "see $log"
+        return
+    fi
+    stage_pass crate-wall "0 codex-ingest in normal+build graph, dep direction codex-ingest->codex confirmed, manifest + residue gate clean"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: token-coverage-selftest
 #
 # Runs `python3 -m unittest scripts/tests/test_token_coverage.py` -- the
 # self-test behind the `token-coverage` stage below, carrying the RED->GREEN
 # proof SD-35 `AT-35-E2-004` names: a planted double-count (one record twice
 # in the census, or one token twice on a record) fails the check; removing it
-# passes. Same shape as `shape-engine-boundary-selftest`: a zero case count is
+# passes. Same shape as the now-retired `shape-engine-boundary-selftest`: a zero case count is
 # a failure, not a vacuous pass. Cheap (Python, synthetic fixtures, no build)
 # -- in BOTH stage sets.
 # ---------------------------------------------------------------------------
@@ -1699,7 +1865,8 @@ run_root_lib() {
 # ---------------------------------------------------------------------------
 
 expected_test_suites() {
-    find "$REPO_ROOT/tests" -maxdepth 1 -name '*.rs' -printf '%f\n' 2>/dev/null \
+    local dir="${1:-$REPO_ROOT/tests}"
+    find "$dir" -maxdepth 1 -name '*.rs' -printf '%f\n' 2>/dev/null \
         | sed 's/\.rs$//' | sort
 }
 
@@ -1751,6 +1918,54 @@ run_root_full() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: codex-ingest crate full sweep (SD-36 Epic A)
+#
+# The PCGen converter and oracle harness's own crate, walled off from `codex`
+# (operator ruling D1). Same shape as root-full and the same reason: a
+# workspace member with its own `tests/*.rs` auto-discovery needs the same
+# never-executed check root-full already has, not merely an aggregate floor.
+# `cargo test --locked --no-fail-fast -p codex-ingest` at the repo root
+# builds against the SAME workspace `Cargo.lock` as root-full/root-lib (one
+# build graph — this is why CI's `cargo test --locked` becomes `--locked
+# --workspace`, never a separate lockfile for this crate).
+# ---------------------------------------------------------------------------
+
+run_ingest_full() {
+    stage_start "ingest-full — cargo test --locked --no-fail-fast -p codex-ingest -j $JOBS  (repo root)"
+    local log="$LOG_DIR/ingest-full.log"
+    ( cd "$REPO_ROOT" && exec cargo test --locked --no-fail-fast -p codex-ingest -j "$JOBS" ) >"$log" 2>&1
+    local status=$?
+
+    local passed binaries
+    passed=$(count_passed "$log")
+    binaries=$(count_running "$log")
+
+    local missing missing_n
+    missing=$(comm -23 <(expected_test_suites "$REPO_ROOT/crates/codex-ingest/tests") <(executed_test_suites "$log"))
+    missing_n=0
+    [[ -n "$missing" ]] && missing_n=$(printf '%s\n' "$missing" | grep -c .)
+
+    if (( status != 0 )); then
+        stage_fail ingest-full "cargo exit $status; $passed passed across $binaries suites — $log"
+        return
+    fi
+
+    local ok=0
+    check_floor "ingest full tests" "$passed" "$BASELINE_INGEST_FULL_TESTS" BASELINE_INGEST_FULL_TESTS || ok=1
+    check_floor "ingest test binaries executed" "$binaries" "$BASELINE_INGEST_TEST_BINARIES" BASELINE_INGEST_TEST_BINARIES || ok=1
+    if (( missing_n > 0 )); then
+        printf '    %s codex-ingest tests/*.rs file(s) present but NEVER EXECUTED (no "Running" line in the log): %s\n' \
+            "$missing_n" "$(printf '%s' "$missing" | tr '\n' ' ')"
+        ok=1
+    fi
+    if (( ok != 0 )); then
+        stage_fail ingest-full "$passed passed across $binaries suites, $missing_n suite(s) never ran — $log"
+        return
+    fi
+    stage_pass ingest-full "$passed passed across $binaries suites, all $(expected_test_suites "$REPO_ROOT/crates/codex-ingest/tests" | grep -c .) tests/*.rs suites executed"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: desktop crate
 #
 # Separate crate, separate Cargo.lock, separate invocation. Plain `cargo test`
@@ -1774,36 +1989,6 @@ run_desktop() {
         return
     fi
     stage_pass desktop "$passed passed"
-}
-
-# ---------------------------------------------------------------------------
-# Stage: reach gate
-#
-# The desktop crate's content-reach suite, run on its own so --quick still
-# covers it. Every ingested (book, content-kind) pair must have a verified
-# consumer carrying real payload across the IPC boundary; see
-# apps/desktop/src-tauri/src/reach_gate.rs.
-# ---------------------------------------------------------------------------
-
-run_reach() {
-    stage_start "reach — cargo test --locked -j $JOBS reach_gate  (apps/desktop/src-tauri)"
-    local log="$LOG_DIR/reach.log"
-    ( cd "$TAURI_DIR" && exec cargo test --locked -j "$JOBS" reach_gate ) >"$log" 2>&1
-    local status=$?
-
-    if (( status != 0 )); then
-        stage_fail reach "cargo exit $status — $log"
-        return
-    fi
-    local passed; passed=$(count_passed "$log")
-    # A reach gate that runs zero tests asserts nothing. This repo has already
-    # shipped tests that passed while asserting nothing; a filter that matches
-    # no test name would reproduce that exactly.
-    if (( passed == 0 )); then
-        stage_fail reach "0 tests matched the reach_gate filter — the gate is not running at all — $log"
-        return
-    fi
-    stage_pass reach "$passed passed"
 }
 
 # ---------------------------------------------------------------------------
@@ -1913,7 +2098,7 @@ run_frontend_typecheck() {
 clippy_one_crate() {
     local label="$1" dir="$2"
     local log="$LOG_DIR/clippy-$label.log"
-    ( cd "$dir" && exec cargo clippy --locked --tests -j "$JOBS" ) >"$log" 2>&1
+    ( cd "$dir" && exec cargo clippy --locked --tests -j "$JOBS" -- -D warnings ) >"$log" 2>&1
     local status=$?
 
     local errors warnings
@@ -1932,18 +2117,20 @@ clippy_one_crate() {
 }
 
 run_clippy() {
-    stage_start "clippy — cargo clippy --locked --tests -j $JOBS  (BOTH crates)"
+    stage_start "clippy — cargo clippy --locked --tests -j $JOBS  (THREE crates)"
     local ok=0 summary=()
 
-    # Both crates, for the same reason the test stages are split: the root
-    # invocation does not reach apps/desktop/src-tauri at all.
-    local names=(root desktop)
-    local dirs=("$REPO_ROOT" "$TAURI_DIR")
-    local ceilings=("$BASELINE_CLIPPY_WARNINGS_ROOT" "$BASELINE_CLIPPY_WARNINGS_DESKTOP")
-    local vars=(BASELINE_CLIPPY_WARNINGS_ROOT BASELINE_CLIPPY_WARNINGS_DESKTOP)
+    # Three crates now: root `codex` never reaches apps/desktop/src-tauri
+    # (separate crate/lockfile) OR crates/codex-ingest (a workspace member,
+    # but the root package with no `default-members` means a bare
+    # `cargo clippy` here still lints `codex` alone, same as build/test).
+    local names=(root desktop ingest)
+    local dirs=("$REPO_ROOT" "$TAURI_DIR" "$REPO_ROOT/crates/codex-ingest")
+    local ceilings=("$BASELINE_CLIPPY_WARNINGS_ROOT" "$BASELINE_CLIPPY_WARNINGS_DESKTOP" "$BASELINE_CLIPPY_WARNINGS_INGEST")
+    local vars=(BASELINE_CLIPPY_WARNINGS_ROOT BASELINE_CLIPPY_WARNINGS_DESKTOP BASELINE_CLIPPY_WARNINGS_INGEST)
 
     local i label status errors warnings log
-    for i in 0 1; do
+    for i in 0 1 2; do
         label="${names[$i]}"
         read -r status errors warnings log <<<"$(clippy_one_crate "$label" "${dirs[$i]}")"
         actual "${vars[$i]}=$warnings"
@@ -2033,7 +2220,7 @@ run_pi_sweep() {
     fi
 
     # A sweep that examined nothing asserts nothing — the same 0-matched
-    # failure mode `reach` and `audit-selftest` each guard against.
+    # failure mode `audit-selftest` guards against.
     if ! grep -q '^pi-sweep: CLEAN' "$log"; then
         stage_fail pi-sweep "binary exited 0 without reporting CLEAN — $log"
         return
@@ -2059,7 +2246,7 @@ run_declared_pi_audit() {
     stage_start "declared-pi-audit — corpus NAMEISPI:/DESCISPI: declarations vs. what shipped"
     local log="$LOG_DIR/declared-pi-audit.log"
 
-    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin declared_pi_shipping_audit ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" -p codex-ingest --bin declared_pi_shipping_audit ) >"$log" 2>&1
     local status=$?
 
     if (( status != 0 )); then
@@ -2148,8 +2335,8 @@ run_audit_selftest() {
         return
     fi
 
-    # A self-test that discovers no cases proves nothing — same failure mode
-    # the `reach` stage guards with its 0-tests-matched check.
+    # A self-test that discovers no cases proves nothing -- the same
+    # 0-tests-matched failure mode other stages in this file guard against.
     local passed
     passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
     if [[ -z "$passed" || "$passed" -eq 0 ]]; then
@@ -2285,7 +2472,7 @@ run_corpus_sweep() {
     stage_start "corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)"
     local log="$LOG_DIR/corpus-sweep.log"
 
-    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin corpus_literal_sweep ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" -p codex-ingest --bin corpus_literal_sweep ) >"$log" 2>&1
     local status=$?
 
     local summary
@@ -2330,7 +2517,7 @@ run_corpus_sweep() {
 # ---------------------------------------------------------------------------
 # Stage: sheet-rules-check
 #
-# Runs `cargo run --locked --bin sheet_rule_convert -- --check` -- `AT-35-E2-001`
+# Runs `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --check` -- `AT-35-E2-001`
 # (`docs/release/SD-35-corpus-sheet-completion/epic-breakdown.md`): the generated
 # `data/sheet_rules/` package equals a fresh conversion of every
 # `docs/work-inventory.json` unit byte for byte, carries no source-format
@@ -2339,9 +2526,9 @@ run_corpus_sweep() {
 # to the population. Needs the pinned oracle checkout (`preflight-oracle`).
 # ---------------------------------------------------------------------------
 run_sheet_rule_convert_check() {
-    stage_start "sheet-rules-check — cargo run --locked --bin sheet_rule_convert -- --check  (repo root)"
+    stage_start "sheet-rules-check — cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --check  (repo root)"
     local log="$LOG_DIR/sheet-rules-check.log"
-    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin sheet_rule_convert -- --check ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" -p codex-ingest --bin sheet_rule_convert -- --check ) >"$log" 2>&1
     local status=$?
     if [[ "$status" -ne 0 ]]; then
         stage_fail sheet-rules-check "package stale, source-format literal, or a variable with no table (exit $status) — $log"
@@ -2418,7 +2605,7 @@ run_corpus_trap_audit_selftest() {
 # **Own timeout wrapper is part of this stage's deliverable**
 # (`epic-breakdown.md`'s AT-34-E1-007 evidence, citing
 # `forward-scope-register.md D1.2`: a sibling stage,
-# `site-dashboard-check`, hung for two full 600s producer timeouts with
+# the now-retired `site-dashboard-check`, hung for two full 600s producer timeouts with
 # *no* wrapper in either `verify.sh` or the script it called, across three
 # separate diffs, before anyone noticed). `CORPUS_TRAP_AUDIT_TIMEOUT_S`
 # overrides the default, the same `${VAR:-default}` shape every other
@@ -2444,7 +2631,7 @@ run_corpus_trap_audit() {
     local population
     population=$(find "$REPO_ROOT/data/corpus" -mindepth 3 -maxdepth 3 -type f -name '*.json' 2>/dev/null | wc -l | tr -d ' ')
 
-    ( cd "$REPO_ROOT" && exec timeout "${timeout_s}s" cargo run --locked --quiet -j "$JOBS" --bin v06_corpus_trap_report -- --audit --json ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec timeout "${timeout_s}s" cargo run --locked --quiet -j "$JOBS" -p codex-ingest --bin v06_corpus_trap_report -- --audit --json ) >"$log" 2>&1
     local status=$?
 
     if (( status == 124 )); then
@@ -2615,6 +2802,65 @@ PY
     esac
 }
 
+run_class_census() {
+    stage_start "class-census — cargo run --locked --bin class_census -- --json  (repo root)"
+    local log="$LOG_DIR/class-census.log"
+    local json="$LOG_DIR/class-census.json"
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin class_census -- --json "$json" ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail class-census "binary exit $status — $log"
+        return
+    fi
+
+    # Baselines can only rise (mirrors `run_class_dump`'s own posture): the
+    # stage fails if ANY of the four measured floors §2 declares drops
+    # below what was last recorded in scripts/verify-baselines.env, never
+    # on a rise. F0-check finding 6: this used to check only
+    # `BASELINE_CENSUS_IDS`/`BASELINE_CENSUS_COMPUTED` -- the other two
+    # (`BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED`/`BASELINE_CENSUS_MIX_COMPUTED`)
+    # were declared in verify-baselines.env with no consumer at all. The
+    # check itself now lives in scripts/check_class_census_baselines.py
+    # (unit-tested by scripts/tests/test_check_class_census_baselines.py,
+    # including a negative control per baseline) rather than an inline,
+    # untested heredoc.
+    local report
+    report=$(cd "$REPO_ROOT" && python3 scripts/check_class_census_baselines.py "$json" \
+        --baseline-ids "$BASELINE_CENSUS_IDS" \
+        --baseline-computed "$BASELINE_CENSUS_COMPUTED" \
+        --baseline-prestige-alone-blocked "$BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED" \
+        --baseline-mix-computed "$BASELINE_CENSUS_MIX_COMPUTED" \
+        --baseline-prestige-mix-computed "$BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED")
+    local py_status=$?
+
+    while IFS= read -r line; do
+        [[ -n "$line" ]] && actual "$line"
+    done < <(printf '%s\n' "$report" | sed -n 's/^ACTUAL //p')
+
+    if (( py_status != 0 )); then
+        local fail_lines; fail_lines=$(printf '%s\n' "$report" | grep '^FAIL ' | tr '\n' ';')
+        stage_fail class-census "${fail_lines:-baseline check exit $py_status} — $json"
+        return
+    fi
+
+    # F0e: the same stage also checks docs/architecture/status.md's
+    # generated class-coverage table for drift against THIS run's own
+    # freshly-produced census JSON (never a second `cargo run` -- `--json`
+    # reuses the file already written above), so a census that moves
+    # without a regenerated table fails this stage, not a separate one.
+    local table_log="$LOG_DIR/class-census-table.log"
+    ( cd "$REPO_ROOT" && exec python3 scripts/gen_class_status_table.py --json "$json" --check ) >"$table_log" 2>&1
+    local table_status=$?
+    if (( table_status != 0 )); then
+        stage_fail class-census "status.md class-coverage table drift (exit $table_status) — $table_log"
+        return
+    fi
+
+    local ok_line; ok_line=$(printf '%s\n' "$report" | grep '^OK ' | head -1)
+    stage_pass class-census "${ok_line#OK }; $(tail -1 "$table_log")"
+}
+
 # ---------------------------------------------------------------------------
 # Run
 # ---------------------------------------------------------------------------
@@ -2631,11 +2877,11 @@ for stage in "${SELECTED[@]}"; do
         preflight-oracle)    run_preflight_oracle ;;
         oracle-pin-selftest) run_oracle_pin_selftest ;;
         producer-selftest)   run_producer_selftest ;;
+        doneness-selftest)   run_doneness_selftest ;;
         pi-redaction-selftest) run_pi_redaction_selftest ;;
         provenance-selftest) run_provenance_selftest ;;
-        site-dashboard-selftest) run_site_dashboard_selftest ;;
-        site-dashboard-pin) run_site_dashboard_pin ;;
-        site-dashboard-check) run_site_dashboard_check ;;
+        site-status-frozen-check) run_site_status_frozen_check ;;
+        site-status-frozen-check-selftest) run_site_status_frozen_check_selftest ;;
         site-dashboard-pi-gate) run_site_dashboard_pi_gate ;;
         build-public-status-selftest) run_build_public_status_selftest ;;
         site-asset-stamp-check) run_site_asset_stamp_check ;;
@@ -2648,12 +2894,13 @@ for stage in "${SELECTED[@]}"; do
         shape-coverage-standing-gate-selftest) run_shape_coverage_standing_gate_selftest ;;
         shape-coverage-standing-gate) run_shape_coverage_standing_gate ;;
         cycle-scope-gate-selftest) run_cycle_scope_gate_selftest ;;
-        shape-engine-boundary-selftest) run_shape_engine_boundary_selftest ;;
-        shape-engine-boundary) run_shape_engine_boundary ;;
         missing-engine-tables) run_missing_engine_tables ;;
         denominator-gate)    run_denominator_gate ;;
         figure-provenance)   run_figure_provenance ;;
+        corpus-bundle)       run_corpus_bundle ;;
+        tauri-resources-tracked) run_tauri_resources_tracked ;;
         pcgen-residue-gate)  run_pcgen_residue_gate ;;
+        crate-wall)          run_crate_wall ;;
         token-coverage-selftest) run_token_coverage_selftest ;;
         token-coverage)      run_token_coverage ;;
         pi-sweep)            run_pi_sweep ;;
@@ -2669,13 +2916,14 @@ for stage in "${SELECTED[@]}"; do
         supersession-gate)   run_supersession_gate ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;
+        ingest-full)         run_ingest_full ;;
         desktop)             run_desktop ;;
-        reach)               run_reach ;;
         frontend-install)    run_frontend_install ;;
         frontend-test)       run_frontend_test ;;
         frontend-typecheck)  run_frontend_typecheck ;;
         clippy)              run_clippy ;;
         class-dump)          run_class_dump ;;
+        class-census)        run_class_census ;;
     esac
 done
 

@@ -13,6 +13,14 @@
 #[path = "../common/mod.rs"]
 mod common;
 
+/// Row tables + macros for near-universal negative-control shapes shared
+/// across modules below (SD-36 Epic C2 table-driven rewrite).
+mod rows;
+
+/// Shared setup helper (`support::compute`) used by the bespoke tests below
+/// to replace their duplicated `load` + `compute_pilot_base_chassis` pair.
+mod support;
+
 /// The roster table: `class => [module, …]`. Each module is one file in this directory and one
 /// (class, level) row of the family. Adding a level is adding a row.
 macro_rules! roster {

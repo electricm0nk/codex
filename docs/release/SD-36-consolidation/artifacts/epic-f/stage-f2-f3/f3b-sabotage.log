@@ -1,0 +1,13 @@
+test a_mix_of_prestige_classes_only_states_the_game_rule ... ok
+test an_unrecognized_save_shape_blocks_the_mix_by_name ... ok
+test magus4_samurai2_computes_the_hand_worked_sheet ... ok
+test wizard5_loremaster2_computes_the_hand_worked_numbers_and_names_its_one_blocker ... FAILED
+test barbarian12_fighter1_computes_the_hand_worked_sheet ... ok
+test each_class_keeps_its_own_feature_lines_rescoped_by_class ... ok
+test fighter6_arcane_archer3_computes_the_hand_worked_sheet ... FAILED
+test a_prestige_class_in_a_mix_prints_its_entry_requirements_without_blocking ... ok
+  left: BaseSaves { fortitude: 2, reflex: 2, will: 7 }
+ right: BaseSaves { fortitude: 2, reflex: 2, will: 6 }
+  left: BaseSaves { fortitude: 8, reflex: 5, will: 3 }
+ right: BaseSaves { fortitude: 7, reflex: 4, will: 3 }
+test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.81s

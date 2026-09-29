@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 421,
-      "partial": 9,
+      "done": 471,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 430,
-      "pct": 97.9,
-      "excluded_from_percentage": 41,
+      "denominator": 471,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 430,
         "unclassified": 41
@@ -662,7 +662,7 @@
         },
         {
           "name": "Belt of Dwarvenkind ~ Languages",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Belt of Dwarvenkind ~ Languages"
@@ -942,7 +942,7 @@
         },
         {
           "name": "Craft",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft"
@@ -970,7 +970,7 @@
         },
         {
           "name": "Craft (Blacksmithing)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Blacksmithing)"
@@ -1019,7 +1019,7 @@
         },
         {
           "name": "Craft (Gemcutting)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Craft (Gemcutting)"
@@ -1733,7 +1733,7 @@
         },
         {
           "name": "Knowledge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Knowledge"
@@ -1810,7 +1810,7 @@
         },
         {
           "name": "Knowledge (Untrained)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Knowledge (Untrained)"
@@ -2083,7 +2083,7 @@
         },
         {
           "name": "Perform",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Perform"
@@ -2230,7 +2230,7 @@
         },
         {
           "name": "Profession",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession"
@@ -2419,7 +2419,7 @@
         },
         {
           "name": "Profession (Soothsayer)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Profession (Soothsayer)"
@@ -3318,12 +3318,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 453,
-      "partial": 97,
+      "done": 1517,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 550,
-      "pct": 82.4,
-      "excluded_from_percentage": 967,
+      "denominator": 1517,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 967,
         "origin": 550
@@ -3408,7 +3408,7 @@
         },
         {
           "name": "Abjuration Wizard Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Abjuration Wizard Spells"
@@ -3555,7 +3555,7 @@
         },
         {
           "name": "Air",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Air (Internal.DomainAbility)"
@@ -3632,7 +3632,7 @@
         },
         {
           "name": "Animal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Animal (Internal.DomainAbility)"
@@ -4010,7 +4010,7 @@
         },
         {
           "name": "Artifice",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Artifice (Internal.DomainAbility)"
@@ -4164,7 +4164,7 @@
         },
         {
           "name": "Aura of Protection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower.Aura",
           "standing": "unclassified",
           "display_name": "Aura of Protection (ClericClassFeatures.SpecialQuality.Supernatural.DomainPower.Aura)"
@@ -4213,7 +4213,7 @@
         },
         {
           "name": "Barbarian Core Class Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barbarian Core Class Skills"
@@ -4262,7 +4262,7 @@
         },
         {
           "name": "Bard Core Class Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bard Core Class Skills"
@@ -4283,7 +4283,7 @@
         },
         {
           "name": "Bardic Knowledge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialQuality.Extraordinary.Bardic Knowledge",
           "standing": "unclassified",
           "display_name": "Bardic Knowledge (BardClassFeatures.SpecialQuality.Extraordinary.Bardic Knowledge)"
@@ -4409,7 +4409,7 @@
         },
         {
           "name": "Bleeding Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower",
           "standing": "unclassified",
           "display_name": "Bleeding Touch (ClericClassFeatures.SpecialAttack.SpellLike.DomainPower)"
@@ -4493,7 +4493,7 @@
         },
         {
           "name": "Bloodline Arcana",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality",
           "standing": "unclassified",
           "display_name": "Bloodline Arcana (Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality)"
@@ -4507,7 +4507,7 @@
         },
         {
           "name": "Bloodline Arcana",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality",
           "standing": "unclassified",
           "display_name": "Bloodline Arcana (Sorcerer Class Feature.Sorcerer Bloodline Arcana.SpecialQuality.Special Quality) #4"
@@ -4724,7 +4724,7 @@
         },
         {
           "name": "Bramble Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower.Defensive",
           "standing": "origin",
           "display_name": "Bramble Armor (ClericClassFeatures.SpecialQuality.Supernatural.DomainPower.Defensive)"
@@ -4738,7 +4738,7 @@
         },
         {
           "name": "Bravery",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "FighterClassFeatures.SpecialQuality.Extraordinary.Bravery",
           "standing": "unclassified",
           "display_name": "Bravery"
@@ -4787,21 +4787,21 @@
         },
         {
           "name": "Burning Hands (Acid)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Burning Hands (Acid)"
         },
         {
           "name": "Burning Hands (Cold)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Burning Hands (Cold)"
         },
         {
           "name": "Burning Hands (Electricity)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Burning Hands (Electricity)"
@@ -4948,7 +4948,7 @@
         },
         {
           "name": "Channel Energy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.Internal.ClassFeatures",
           "standing": "unclassified",
           "display_name": "Channel Energy"
@@ -4997,7 +4997,7 @@
         },
         {
           "name": "Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Chaos (Internal.DomainAbility)"
@@ -5011,7 +5011,7 @@
         },
         {
           "name": "Chaos Blade",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Chaos Blade (ClericClassFeatures.SpecialQuality.Supernatural.DomainPower)"
@@ -5032,7 +5032,7 @@
         },
         {
           "name": "Charm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Charm (Internal.DomainAbility)"
@@ -5144,161 +5144,161 @@
         },
         {
           "name": "Cleric Core Class Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Core Class Skills"
         },
         {
           "name": "Cleric Domain ~ Air",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Air"
         },
         {
           "name": "Cleric Domain ~ Animal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Animal"
         },
         {
           "name": "Cleric Domain ~ Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Chaos"
         },
         {
           "name": "Cleric Domain ~ Death",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Death"
         },
         {
           "name": "Cleric Domain ~ Destruction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Destruction"
         },
         {
           "name": "Cleric Domain ~ Earth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Earth"
         },
         {
           "name": "Cleric Domain ~ Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Evil"
         },
         {
           "name": "Cleric Domain ~ Fire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Fire"
         },
         {
           "name": "Cleric Domain ~ Good",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Good"
         },
         {
           "name": "Cleric Domain ~ Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Healing"
         },
         {
           "name": "Cleric Domain ~ Knowledge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Knowledge"
         },
         {
           "name": "Cleric Domain ~ Law",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Law"
         },
         {
           "name": "Cleric Domain ~ Luck",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Luck"
         },
         {
           "name": "Cleric Domain ~ Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Magic"
         },
         {
           "name": "Cleric Domain ~ Plant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Plant"
         },
         {
           "name": "Cleric Domain ~ Protection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Protection"
         },
         {
           "name": "Cleric Domain ~ Strength",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Strength"
         },
         {
           "name": "Cleric Domain ~ Sun",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Sun"
         },
         {
           "name": "Cleric Domain ~ Travel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Travel"
         },
         {
           "name": "Cleric Domain ~ Trickery",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Trickery"
         },
         {
           "name": "Cleric Domain ~ War",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ War"
         },
         {
           "name": "Cleric Domain ~ Water",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cleric Domain ~ Water"
@@ -5431,7 +5431,7 @@
         },
         {
           "name": "Community",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Community (Internal.DomainAbility)"
@@ -5473,7 +5473,7 @@
         },
         {
           "name": "Confusion, Lesser",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Confusion, Lesser"
@@ -5494,7 +5494,7 @@
         },
         {
           "name": "Conjuration Wizard Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Conjuration Wizard Spells"
@@ -5655,7 +5655,7 @@
         },
         {
           "name": "Dancing Weapons",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Dancing Weapons (ClericClassFeatures.SpecialQuality.Supernatural.DomainPower)"
@@ -5739,7 +5739,7 @@
         },
         {
           "name": "Deadly Performance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialAttack.Supernatural.BardicPerformance.Bardic Performance",
           "standing": "origin",
           "display_name": "Deadly Performance"
@@ -5753,7 +5753,7 @@
         },
         {
           "name": "Death",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Death (Internal.DomainAbility)"
@@ -5774,7 +5774,7 @@
         },
         {
           "name": "Death Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClassFeatures.AssassinClassFeatures",
           "standing": "unclassified",
           "display_name": "Death Attack (ClassFeatures.AssassinClassFeatures)"
@@ -5963,7 +5963,7 @@
         },
         {
           "name": "Destructive Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialAttack.Supernatural.DomainPower.Aura",
           "standing": "origin",
           "display_name": "Destructive Aura (ClericClassFeatures.SpecialAttack.Supernatural.DomainPower.Aura)"
@@ -5977,21 +5977,21 @@
         },
         {
           "name": "Destructive Smite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialAttack.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Destructive Smite (ClericClassFeatures.SpecialAttack.Supernatural.DomainPower)"
         },
         {
           "name": "Destructive Smite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialAttack.Supernatural.DomainPower.Destruction Domain",
           "standing": "unclassified",
           "display_name": "Destructive Smite (ClericClassFeatures.SpecialAttack.Supernatural.DomainPower.Destruction Domain)"
         },
         {
           "name": "Detect Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.SpecialQuality.SpellLike.Detect Evil",
           "standing": "unclassified",
           "display_name": "Detect Evil"
@@ -6005,7 +6005,7 @@
         },
         {
           "name": "Diamond Soul",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.SpecialQuality.Extraordinary.Diamond Soul",
           "standing": "unclassified",
           "display_name": "Diamond Soul"
@@ -6033,7 +6033,7 @@
         },
         {
           "name": "Dimensional Hop",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.ModifyMovement",
           "standing": "unclassified",
           "display_name": "Dimensional Hop (ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.ModifyMovement)"
@@ -6047,7 +6047,7 @@
         },
         {
           "name": "Dimensional Steps",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.SpecialQuality.SpellLike.ArcaneSchoolPower.ModifyMovement",
           "standing": "unclassified",
           "display_name": "Dimensional Steps"
@@ -6096,7 +6096,7 @@
         },
         {
           "name": "Dispel Magic, Greater",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Dispel Magic, Greater"
@@ -6117,7 +6117,7 @@
         },
         {
           "name": "Dispelling Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower",
           "standing": "unclassified",
           "display_name": "Dispelling Touch (ClericClassFeatures.SpecialAttack.SpellLike.DomainPower)"
@@ -6166,7 +6166,7 @@
         },
         {
           "name": "Divination Wizard Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Divination Wizard Spells"
@@ -6180,7 +6180,7 @@
         },
         {
           "name": "Divine Grace",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PaladinClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Divine Grace"
@@ -6369,7 +6369,7 @@
         },
         {
           "name": "Druid Core Class Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Druid Core Class Skills"
@@ -6425,7 +6425,7 @@
         },
         {
           "name": "Earth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Earth (Internal.DomainAbility)"
@@ -6656,7 +6656,7 @@
         },
         {
           "name": "Enchantment Wizard Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Enchantment Wizard Spells"
@@ -6677,7 +6677,7 @@
         },
         {
           "name": "Energy Absorption",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower",
           "standing": "unclassified",
           "display_name": "Energy Absorption"
@@ -6782,21 +6782,21 @@
         },
         {
           "name": "Evasion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Evasion",
           "standing": "unclassified",
           "display_name": "Evasion (MonkClassFeatures.Evasion)"
         },
         {
           "name": "Evasion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Evasion",
           "standing": "unclassified",
           "display_name": "Evasion (RangerClassFeatures.Evasion)"
         },
         {
           "name": "Evasion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures",
           "standing": "unclassified",
           "display_name": "Evasion (RogueClassFeatures)"
@@ -6810,7 +6810,7 @@
         },
         {
           "name": "Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Evil (Internal.DomainAbility)"
@@ -6845,7 +6845,7 @@
         },
         {
           "name": "Evocation Wizard Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Evocation Wizard Spells"
@@ -6915,7 +6915,7 @@
         },
         {
           "name": "Eyes of Darkness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower.Sense",
           "standing": "origin",
           "display_name": "Eyes of Darkness (ClericClassFeatures.SpecialQuality.Supernatural.DomainPower.Sense)"
@@ -6964,7 +6964,7 @@
         },
         {
           "name": "Fascinate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialAttack.Supernatural.BardicPerformance.Bardic Performance",
           "standing": "unclassified",
           "display_name": "Fascinate"
@@ -7244,7 +7244,7 @@
         },
         {
           "name": "Fighter Core Class Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fighter Core Class Skills"
@@ -7272,7 +7272,7 @@
         },
         {
           "name": "Fire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Fire (Internal.DomainAbility)"
@@ -7335,7 +7335,7 @@
         },
         {
           "name": "Fire Shield (warm)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Fire Shield (warm)"
@@ -7461,7 +7461,7 @@
         },
         {
           "name": "Frightening Tune",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialAttack.SpellLike.BardicPerformance.Bardic Performance",
           "standing": "origin",
           "display_name": "Frightening Tune"
@@ -7489,7 +7489,7 @@
         },
         {
           "name": "Gentle Rest",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower",
           "standing": "unclassified",
           "display_name": "Gentle Rest (ClericClassFeatures.SpecialAttack.SpellLike.DomainPower)"
@@ -7517,7 +7517,7 @@
         },
         {
           "name": "Glory",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Glory (Internal.DomainAbility)"
@@ -7545,7 +7545,7 @@
         },
         {
           "name": "Good",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Good (Internal.DomainAbility)"
@@ -7573,7 +7573,7 @@
         },
         {
           "name": "Good Fortune",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Extraordinary.DomainPower.Defensive",
           "standing": "unclassified",
           "display_name": "Good Fortune (ClericClassFeatures.SpecialQuality.Extraordinary.DomainPower.Defensive)"
@@ -7601,7 +7601,7 @@
         },
         {
           "name": "Grave Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.SpecialAttack.SpellLike.ArcaneSchoolPower.ArcaneSchoolPowerLVL1",
           "standing": "unclassified",
           "display_name": "Grave Touch (WizardClassFeatures.SpecialAttack.SpellLike.ArcaneSchoolPower.ArcaneSchoolPowerLVL1)"
@@ -7727,14 +7727,14 @@
         },
         {
           "name": "Hand of the Acolyte",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Hand of the Acolyte (ClericClassFeatures.SpecialQuality.Supernatural.DomainPower)"
         },
         {
           "name": "Hand of the Apprentice",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.SpecialAttack.Supernatural.ArcaneSchoolPower",
           "standing": "origin",
           "display_name": "Hand of the Apprentice"
@@ -7755,7 +7755,7 @@
         },
         {
           "name": "Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Healing (Internal.DomainAbility)"
@@ -7804,7 +7804,7 @@
         },
         {
           "name": "Heroism, Greater",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Heroism, Greater"
@@ -8091,7 +8091,7 @@
         },
         {
           "name": "Illusion Wizard Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Illusion Wizard Spells"
@@ -8175,14 +8175,14 @@
         },
         {
           "name": "Improved Evasion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Improved Evasion",
           "standing": "unclassified",
           "display_name": "Improved Evasion (MonkClassFeatures.Improved Evasion)"
         },
         {
           "name": "Improved Evasion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Improved Evasion",
           "standing": "unclassified",
           "display_name": "Improved Evasion (RangerClassFeatures.Improved Evasion)"
@@ -8315,7 +8315,7 @@
         },
         {
           "name": "Improved Uncanny Dodge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.Uncanny Dodge.Improved Uncanny Dodge",
           "standing": "unclassified",
           "display_name": "Improved Uncanny Dodge (BarbarianClassFeatures.Uncanny Dodge.Improved Uncanny Dodge)"
@@ -8329,7 +8329,7 @@
         },
         {
           "name": "Improved Uncanny Dodge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.Uncanny Dodge.Improved Uncanny Dodge",
           "standing": "unclassified",
           "display_name": "Improved Uncanny Dodge (RogueClassFeatures.Uncanny Dodge.Improved Uncanny Dodge)"
@@ -8427,14 +8427,14 @@
         },
         {
           "name": "Inspire Greatness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance",
           "standing": "unclassified",
           "display_name": "Inspire Greatness"
         },
         {
           "name": "Inspire Heroics",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialQuality.Supernatural.BardicPerformance.Bardic Performance",
           "standing": "unclassified",
           "display_name": "Inspire Heroics"
@@ -8546,7 +8546,7 @@
         },
         {
           "name": "Jack of All Trades ~ Class Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.Internal",
           "standing": "origin",
           "display_name": "Jack of All Trades ~ Class Skills"
@@ -8602,7 +8602,7 @@
         },
         {
           "name": "Knowledge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Knowledge (Internal.DomainAbility)"
@@ -8630,7 +8630,7 @@
         },
         {
           "name": "Law",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Law (Internal.DomainAbility)"
@@ -8693,7 +8693,7 @@
         },
         {
           "name": "Liberation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Liberation (Internal.DomainAbility)"
@@ -8728,7 +8728,7 @@
         },
         {
           "name": "Life Sight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower.Sense",
           "standing": "unclassified",
           "display_name": "Life Sight"
@@ -8791,7 +8791,7 @@
         },
         {
           "name": "Lore",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClassFeatures.LoremasterClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Lore"
@@ -8805,14 +8805,14 @@
         },
         {
           "name": "Lore Keeper",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower",
           "standing": "unclassified",
           "display_name": "Lore Keeper (ClericClassFeatures.SpecialAttack.SpellLike.DomainPower)"
         },
         {
           "name": "Lore Master",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Lore Master"
@@ -8833,7 +8833,7 @@
         },
         {
           "name": "Luck",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Luck (Internal.DomainAbility)"
@@ -8854,7 +8854,7 @@
         },
         {
           "name": "Madness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Madness (Internal.DomainAbility)"
@@ -8882,7 +8882,7 @@
         },
         {
           "name": "Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Magic (Internal.DomainAbility)"
@@ -8924,7 +8924,7 @@
         },
         {
           "name": "Magic Weapon, Greater",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Magic Weapon, Greater"
@@ -8973,7 +8973,7 @@
         },
         {
           "name": "Maneuver Training",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Maneuver Training"
@@ -9001,7 +9001,7 @@
         },
         {
           "name": "Mass Suggestion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialAttack.SpellLike.BardicPerformance.Bardic Performance",
           "standing": "origin",
           "display_name": "Mass Suggestion"
@@ -9036,7 +9036,7 @@
         },
         {
           "name": "Master's Illusion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.Defensive",
           "standing": "origin",
           "display_name": "Master's Illusion (ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.Defensive)"
@@ -9071,7 +9071,7 @@
         },
         {
           "name": "Metamagic Mastery",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.SpecialAttack.Supernatural.ArcaneSchoolPower",
           "standing": "unclassified",
           "display_name": "Metamagic Mastery"
@@ -9092,7 +9092,7 @@
         },
         {
           "name": "Might of the Gods",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Might of the Gods (ClericClassFeatures.SpecialQuality.Supernatural.DomainPower)"
@@ -9204,7 +9204,7 @@
         },
         {
           "name": "Monk Core Class Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Monk Core Class Skills"
@@ -9729,7 +9729,7 @@
         },
         {
           "name": "Necromancy Wizard Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Necromancy Wizard Spells"
@@ -9799,7 +9799,7 @@
         },
         {
           "name": "Nobility",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Nobility (Internal.DomainAbility)"
@@ -10023,7 +10023,7 @@
         },
         {
           "name": "Paladin Core Class Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Paladin Core Class Skills"
@@ -10149,14 +10149,14 @@
         },
         {
           "name": "Planar Binding (Devils and Fiendish Creatures Only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Planar Binding (Devils and Fiendish Creatures Only)"
         },
         {
           "name": "Planar Binding, Greater",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Planar Binding, Greater"
@@ -10170,7 +10170,7 @@
         },
         {
           "name": "Plant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Plant (Internal.DomainAbility)"
@@ -10282,7 +10282,7 @@
         },
         {
           "name": "Polymorph, Greater",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Polymorph, Greater"
@@ -10296,7 +10296,7 @@
         },
         {
           "name": "Power Over Undead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.ArcaneSchoolPower.ArcaneSchoolPowerLVL1",
           "standing": "unclassified",
           "display_name": "Power Over Undead"
@@ -10394,7 +10394,7 @@
         },
         {
           "name": "Protection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Protection (Internal.DomainAbility)"
@@ -10429,14 +10429,14 @@
         },
         {
           "name": "Protective Ward",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WizardClassFeatures.SpecialQuality.Supernatural.ArcaneSchoolPower.ArcaneSchoolPowerLVL1.Aura",
           "standing": "unclassified",
           "display_name": "Protective Ward"
         },
         {
           "name": "Prying Eyes, Greater",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Prying Eyes, Greater"
@@ -10450,7 +10450,7 @@
         },
         {
           "name": "Quarry",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Internal.ClassFeatures",
           "standing": "unclassified",
           "display_name": "Quarry (RangerClassFeatures.Internal.ClassFeatures)"
@@ -10506,7 +10506,7 @@
         },
         {
           "name": "Quivering Palm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.SpecialAttack.Supernatural.AttackOption.Quivering Palm",
           "standing": "unclassified",
           "display_name": "Quivering Palm"
@@ -10583,7 +10583,7 @@
         },
         {
           "name": "Ranger Core Class Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ranger Core Class Skills"
@@ -10597,7 +10597,7 @@
         },
         {
           "name": "Ranger Favored Terrain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Internal.ClassFeatures",
           "standing": "origin",
           "display_name": "Ranger Favored Terrain"
@@ -10660,7 +10660,7 @@
         },
         {
           "name": "Remote Viewing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower",
           "standing": "origin",
           "display_name": "Remote Viewing (ClericClassFeatures.SpecialQuality.SpellLike.DomainPower)"
@@ -10688,7 +10688,7 @@
         },
         {
           "name": "Repose",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Repose (Internal.DomainAbility)"
@@ -10807,7 +10807,7 @@
         },
         {
           "name": "Rogue Core Class Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rogue Core Class Skills"
@@ -10856,7 +10856,7 @@
         },
         {
           "name": "Rune",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Rune (Internal.DomainAbility)"
@@ -10912,21 +10912,21 @@
         },
         {
           "name": "Scorching Ray (Acid)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Scorching Ray (Acid)"
         },
         {
           "name": "Scorching Ray (Cold)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Scorching Ray (Cold)"
         },
         {
           "name": "Scorching Ray (Electricity)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Scorching Ray (Electricity)"
@@ -10968,7 +10968,7 @@
         },
         {
           "name": "Scythe of Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Scythe of Evil (ClericClassFeatures.SpecialQuality.Supernatural.DomainPower)"
@@ -10989,7 +10989,7 @@
         },
         {
           "name": "Secret Lore",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClassFeatures.LoremasterClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Secret Lore"
@@ -11024,7 +11024,7 @@
         },
         {
           "name": "Shadow Call",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ShadowdancerClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Shadow Call"
@@ -11045,14 +11045,14 @@
         },
         {
           "name": "Shadow Evocation, Greater",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Shadow Evocation, Greater"
         },
         {
           "name": "Shadow Illusion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ShadowdancerClassFeatures.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Shadow Illusion"
@@ -11150,7 +11150,7 @@
         },
         {
           "name": "Shout, Greater",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Shout, Greater"
@@ -11437,154 +11437,154 @@
         },
         {
           "name": "Sorcerer Domain ~ Air",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Air"
         },
         {
           "name": "Sorcerer Domain ~ Animal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Animal"
         },
         {
           "name": "Sorcerer Domain ~ Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Chaos"
         },
         {
           "name": "Sorcerer Domain ~ Death",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Death"
         },
         {
           "name": "Sorcerer Domain ~ Destruction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Destruction"
         },
         {
           "name": "Sorcerer Domain ~ Earth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Earth"
         },
         {
           "name": "Sorcerer Domain ~ Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Evil"
         },
         {
           "name": "Sorcerer Domain ~ Fire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Fire"
         },
         {
           "name": "Sorcerer Domain ~ Good",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Good"
         },
         {
           "name": "Sorcerer Domain ~ Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Healing"
         },
         {
           "name": "Sorcerer Domain ~ Knowledge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Knowledge"
         },
         {
           "name": "Sorcerer Domain ~ Law",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Law"
         },
         {
           "name": "Sorcerer Domain ~ Luck",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Luck"
         },
         {
           "name": "Sorcerer Domain ~ Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Magic"
         },
         {
           "name": "Sorcerer Domain ~ Plant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Plant"
         },
         {
           "name": "Sorcerer Domain ~ Protection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Protection"
         },
         {
           "name": "Sorcerer Domain ~ Strength",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Strength"
         },
         {
           "name": "Sorcerer Domain ~ Sun",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Sun"
         },
         {
           "name": "Sorcerer Domain ~ Travel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Travel"
         },
         {
           "name": "Sorcerer Domain ~ Trickery",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Trickery"
         },
         {
           "name": "Sorcerer Domain ~ War",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ War"
         },
         {
           "name": "Sorcerer Domain ~ Water",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sorcerer Domain ~ Water"
@@ -11668,7 +11668,7 @@
         },
         {
           "name": "Speak with Animals",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.Communicate",
           "standing": "unclassified",
           "display_name": "Speak with Animals (ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.Communicate)"
@@ -11780,7 +11780,7 @@
         },
         {
           "name": "Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Class Feature.Sorcerer Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spells (Class Feature.Sorcerer Class Feature.SpecialQuality)"
@@ -11843,7 +11843,7 @@
         },
         {
           "name": "Staff of Order",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Staff of Order (ClericClassFeatures.SpecialQuality.Supernatural.DomainPower)"
@@ -11983,7 +11983,7 @@
         },
         {
           "name": "Strength",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Strength (Internal.DomainAbility)"
@@ -12004,7 +12004,7 @@
         },
         {
           "name": "Strength Surge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.Strength Domain",
           "standing": "unclassified",
           "display_name": "Strength Surge (ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.Strength Domain)"
@@ -12018,7 +12018,7 @@
         },
         {
           "name": "Strength Surge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower",
           "standing": "unclassified",
           "display_name": "Strength Surge (ClericClassFeatures.SpecialQuality.SpellLike.DomainPower)"
@@ -12046,7 +12046,7 @@
         },
         {
           "name": "Suggestion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BardClassFeatures.SpecialAttack.SpellLike.BardicPerformance.Bardic Performance",
           "standing": "unclassified",
           "display_name": "Suggestion (BardClassFeatures.SpecialAttack.SpellLike.BardicPerformance.Bardic Performance)"
@@ -12060,7 +12060,7 @@
         },
         {
           "name": "Suggestion, Mass",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Suggestion, Mass"
@@ -12081,7 +12081,7 @@
         },
         {
           "name": "Summon Monster VIII (Elementals Only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Elementals Only)"
@@ -12102,7 +12102,7 @@
         },
         {
           "name": "Sun",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Sun (Internal.DomainAbility)"
@@ -12200,7 +12200,7 @@
         },
         {
           "name": "Teleport, Greater",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Teleport, Greater"
@@ -12228,14 +12228,14 @@
         },
         {
           "name": "Timeless Body",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.Timeless Body",
           "standing": "unclassified",
           "display_name": "Timeless Body (DruidClassFeatures.Timeless Body)"
         },
         {
           "name": "Timeless Body",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MonkClassFeatures.Timeless Body",
           "standing": "unclassified",
           "display_name": "Timeless Body (MonkClassFeatures.Timeless Body)"
@@ -12298,7 +12298,7 @@
         },
         {
           "name": "Touch of Darkness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower",
           "standing": "unclassified",
           "display_name": "Touch of Darkness (ClericClassFeatures.SpecialAttack.SpellLike.DomainPower)"
@@ -12326,7 +12326,7 @@
         },
         {
           "name": "Touch of Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower",
           "standing": "unclassified",
           "display_name": "Touch of Evil (ClericClassFeatures.SpecialAttack.SpellLike.DomainPower)"
@@ -12347,7 +12347,7 @@
         },
         {
           "name": "Touch of Good",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.SpellLike.DomainPower.Good Domain",
           "standing": "unclassified",
           "display_name": "Touch of Good"
@@ -12424,7 +12424,7 @@
         },
         {
           "name": "Transmutation Wizard Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Transmutation Wizard Spells"
@@ -12487,7 +12487,7 @@
         },
         {
           "name": "Travel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Travel (Internal.DomainAbility)"
@@ -12515,7 +12515,7 @@
         },
         {
           "name": "Trickery",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Trickery (Internal.DomainAbility)"
@@ -12704,7 +12704,7 @@
         },
         {
           "name": "Unity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialQuality.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Unity (ClericClassFeatures.SpecialQuality.Supernatural.DomainPower)"
@@ -12725,7 +12725,7 @@
         },
         {
           "name": "Universal Wizard Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Universal Wizard Spells"
@@ -12872,7 +12872,7 @@
         },
         {
           "name": "Vision of Madness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialAttack.SpellLike.DomainPower",
           "standing": "unclassified",
           "display_name": "Vision of Madness (ClericClassFeatures.SpecialAttack.SpellLike.DomainPower)"
@@ -12886,7 +12886,7 @@
         },
         {
           "name": "Wall Of Thorns",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Wall Of Thorns"
@@ -12921,7 +12921,7 @@
         },
         {
           "name": "War",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "War (Internal.DomainAbility)"
@@ -12970,7 +12970,7 @@
         },
         {
           "name": "Water",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Water (Internal.DomainAbility)"
@@ -13005,7 +13005,7 @@
         },
         {
           "name": "Waves Of Fatigue",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Waves Of Fatigue"
@@ -13068,7 +13068,7 @@
         },
         {
           "name": "Weapon Proficiencies ~ Bard",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Weapon Proficiencies ~ Bard"
@@ -13082,7 +13082,7 @@
         },
         {
           "name": "Weapon Proficiencies ~ Druid",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Weapon Proficiencies ~ Druid"
@@ -13096,7 +13096,7 @@
         },
         {
           "name": "Weapon Proficiencies ~ Rogue",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Weapon Proficiencies ~ Rogue"
@@ -13705,7 +13705,7 @@
         },
         {
           "name": "Weather",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Weather (Internal.DomainAbility)"
@@ -13915,14 +13915,14 @@
         },
         {
           "name": "Wooden Fist",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClericClassFeatures.SpecialAttack.Supernatural.DomainPower",
           "standing": "origin",
           "display_name": "Wooden Fist (ClericClassFeatures.SpecialAttack.Supernatural.DomainPower)"
         },
         {
           "name": "Woodland Stride",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DruidClassFeatures.Woodland Stride",
           "standing": "unclassified",
           "display_name": "Woodland Stride (DruidClassFeatures.Woodland Stride)"
@@ -13936,7 +13936,7 @@
         },
         {
           "name": "Woodland Stride",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RangerClassFeatures.Woodland Stride",
           "standing": "unclassified",
           "display_name": "Woodland Stride (RangerClassFeatures.Woodland Stride)"
@@ -14164,12 +14164,12 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 150,
-      "partial": 17,
+      "done": 184,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 167,
-      "pct": 89.8,
-      "excluded_from_percentage": 17,
+      "denominator": 184,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 167,
         "unclassified": 17
@@ -14184,21 +14184,21 @@
         },
         {
           "name": "+4 bonus on Will saves made to halve the damage from positive channeled energy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "+4 bonus on Will saves made to halve the damage from positive channeled energy"
         },
         {
           "name": "AC Bonus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CompanionClassFeatures.ClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "AC Bonus"
         },
         {
           "name": "Ability Score Increase",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CompanionClassFeatures.ClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Ability Score Increase"
@@ -14219,7 +14219,7 @@
         },
         {
           "name": "Agile Maneuvers",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AnimalCompanionFeat",
           "standing": "origin",
           "display_name": "Agile Maneuvers"
@@ -14352,14 +14352,14 @@
         },
         {
           "name": "Cannot be turned or commanded",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Cannot be turned or commanded"
         },
         {
           "name": "Combat Reflexes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AnimalCompanionFeat",
           "standing": "origin",
           "display_name": "Combat Reflexes"
@@ -14835,7 +14835,7 @@
         },
         {
           "name": "Companion Advancement (Hippopotamus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CompanionAdvancement",
           "standing": "origin",
           "display_name": "Companion Advancement (Hippopotamus)"
@@ -14849,14 +14849,14 @@
         },
         {
           "name": "Companion Advancement (Megafauna (Arsinoitherium))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CompanionAdvancement",
           "standing": "origin",
           "display_name": "Companion Advancement (Megafauna (Arsinoitherium))"
         },
         {
           "name": "Companion Advancement (Megafauna (Gylptodon))",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CompanionAdvancement",
           "standing": "origin",
           "display_name": "Companion Advancement (Megafauna (Gylptodon))"
@@ -14940,14 +14940,14 @@
         },
         {
           "name": "Companion Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Special",
           "standing": "origin",
           "display_name": "Companion Skills"
         },
         {
           "name": "Death Roll",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Special Attack.Special Ability.Extraordinary",
           "standing": "origin",
           "display_name": "Death Roll"
@@ -14975,14 +14975,14 @@
         },
         {
           "name": "Diehard",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AnimalCompanionFeat",
           "standing": "origin",
           "display_name": "Diehard"
         },
         {
           "name": "Disease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Disease"
@@ -15073,7 +15073,7 @@
         },
         {
           "name": "Hold Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Special Quality.Special Ability.Extraordinary",
           "standing": "unclassified",
           "display_name": "Hold Breath"
@@ -15136,7 +15136,7 @@
         },
         {
           "name": "Intimidating Prowess",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AnimalCompanionFeat",
           "standing": "origin",
           "display_name": "Intimidating Prowess"
@@ -15269,7 +15269,7 @@
         },
         {
           "name": "Power Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AnimalCompanionFeat",
           "standing": "origin",
           "display_name": "Power Attack"
@@ -15367,7 +15367,7 @@
         },
         {
           "name": "Spit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack",
           "standing": "unclassified",
           "display_name": "Spit"
@@ -15395,7 +15395,7 @@
         },
         {
           "name": "Stat Bonus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CompanionClassFeatures.ClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Stat Bonus"
@@ -15430,7 +15430,7 @@
         },
         {
           "name": "Toughness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AnimalCompanionFeat",
           "standing": "origin",
           "display_name": "Toughness"
@@ -15451,7 +15451,7 @@
         },
         {
           "name": "Weapon Focus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AnimalCompanionFeat",
           "standing": "origin",
           "display_name": "Weapon Focus"
@@ -15468,12 +15468,12 @@
     {
       "kind": "deity",
       "label": "Deities",
-      "done": 1,
+      "done": 21,
       "partial": 0,
       "not_started": 0,
-      "denominator": 1,
+      "denominator": 21,
       "pct": 100.0,
-      "excluded_from_percentage": 20,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1,
         "unclassified": 20
@@ -15631,12 +15631,12 @@
     {
       "kind": "domain",
       "label": "Domains",
-      "done": 33,
+      "done": 34,
       "partial": 0,
       "not_started": 0,
-      "denominator": 33,
+      "denominator": 34,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 33,
         "unclassified": 1
@@ -15885,12 +15885,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 2140,
-      "partial": 177,
+      "done": 2319,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 2317,
-      "pct": 92.4,
-      "excluded_from_percentage": 2,
+      "denominator": 2319,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 2317,
         "unclassified": 2
@@ -15898,7 +15898,7 @@
       "items": [
         {
           "name": "Absorbing Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Absorbing Shield"
@@ -15912,21 +15912,21 @@
         },
         {
           "name": "Adamantine Battleaxe",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Adamantine Battleaxe"
         },
         {
           "name": "Adamantine Breastplate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Adamantine Breastplate"
         },
         {
           "name": "Adamantine Dagger",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Adamantine Dagger"
@@ -16108,7 +16108,7 @@
         },
         {
           "name": "Arrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Arrow"
@@ -16122,28 +16122,28 @@
         },
         {
           "name": "Arrow, Greater Slaying",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Arrow, Greater Slaying"
         },
         {
           "name": "Arrow, Slaying",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Arrow, Slaying"
         },
         {
           "name": "Arrow, Sleep",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Arrow, Sleep"
         },
         {
           "name": "Arrows (20)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Stack",
           "standing": "origin",
           "display_name": "Arrows (20)"
@@ -16171,7 +16171,7 @@
         },
         {
           "name": "Assassin's Dagger",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Assassin's Dagger"
@@ -16185,7 +16185,7 @@
         },
         {
           "name": "Axe, Orc Double",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Axe, Orc Double"
@@ -16262,7 +16262,7 @@
         },
         {
           "name": "Banded Mail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Banded Mail"
@@ -16276,14 +16276,14 @@
         },
         {
           "name": "Banded Mail Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Banded Mail Barding"
         },
         {
           "name": "Banded Mail of Luck",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Banded Mail of Luck"
@@ -16682,7 +16682,7 @@
         },
         {
           "name": "Blowgun",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Blowgun"
@@ -16731,7 +16731,7 @@
         },
         {
           "name": "Bolas",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bolas"
@@ -16752,35 +16752,35 @@
         },
         {
           "name": "Bolt, Crossbow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bolt, Crossbow"
         },
         {
           "name": "Bolt, Repeating Crossbow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bolt, Repeating Crossbow"
         },
         {
           "name": "Bolt, Screaming",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bolt, Screaming"
         },
         {
           "name": "Bolts, Crossbow (10)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Stack",
           "standing": "origin",
           "display_name": "Bolts, Crossbow (10)"
         },
         {
           "name": "Bolts, Repeating Crossbow (5)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Stack",
           "standing": "origin",
           "display_name": "Bolts, Repeating Crossbow (5)"
@@ -16948,7 +16948,7 @@
         },
         {
           "name": "Breastplate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Breastplate"
@@ -16962,7 +16962,7 @@
         },
         {
           "name": "Breastplate Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Breastplate Barding"
@@ -17018,7 +17018,7 @@
         },
         {
           "name": "Buckler",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Buckler"
@@ -17039,14 +17039,14 @@
         },
         {
           "name": "Bullet, Sling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bullet, Sling"
         },
         {
           "name": "Bullets, Sling (10)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Stack",
           "standing": "origin",
           "display_name": "Bullets, Sling (10)"
@@ -17214,7 +17214,7 @@
         },
         {
           "name": "Caster's Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Caster's Shield"
@@ -17235,7 +17235,7 @@
         },
         {
           "name": "Chain Shirt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Chain Shirt"
@@ -17249,21 +17249,21 @@
         },
         {
           "name": "Chain Shirt Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Chain Shirt Barding"
         },
         {
           "name": "Chain, Spiked",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Chain, Spiked"
         },
         {
           "name": "Chainmail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Chainmail"
@@ -17277,7 +17277,7 @@
         },
         {
           "name": "Chainmail Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Chainmail Barding"
@@ -17522,14 +17522,14 @@
         },
         {
           "name": "Composite Longbow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.Martial.Container.Projectile.Piercing.Bow.Longbow.Composite.Weapon Group Bows",
           "standing": "origin",
           "display_name": "Composite Longbow"
         },
         {
           "name": "Composite Shortbow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.Martial.Container.Projectile.Piercing.Bow.Shortbow.Composite.Weapon Group Bows",
           "standing": "origin",
           "display_name": "Composite Shortbow"
@@ -17571,14 +17571,14 @@
         },
         {
           "name": "Crossbow, Hand",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crossbow, Hand"
         },
         {
           "name": "Crossbow, Heavy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crossbow, Heavy"
@@ -17592,14 +17592,14 @@
         },
         {
           "name": "Crossbow, Repeating Heavy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crossbow, Repeating Heavy"
         },
         {
           "name": "Crossbow, Repeating Light",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crossbow, Repeating Light"
@@ -17697,14 +17697,14 @@
         },
         {
           "name": "Curve Blade, Elven",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Curve Blade, Elven"
         },
         {
           "name": "Dagger",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dagger"
@@ -17718,14 +17718,14 @@
         },
         {
           "name": "Dagger of Venom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dagger of Venom"
         },
         {
           "name": "Dagger, Punching",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dagger, Punching"
@@ -17746,14 +17746,14 @@
         },
         {
           "name": "Darkwood Buckler",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Darkwood Buckler"
         },
         {
           "name": "Darkwood Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Darkwood Shield"
@@ -17991,7 +17991,7 @@
         },
         {
           "name": "Dragonhide Plate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dragonhide Plate"
@@ -18061,7 +18061,7 @@
         },
         {
           "name": "Dwarven Plate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dwarven Plate"
@@ -18180,7 +18180,7 @@
         },
         {
           "name": "Elven Chain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": ".CLEAR",
           "standing": "origin",
           "display_name": "Elven Chain"
@@ -18453,28 +18453,28 @@
         },
         {
           "name": "Flail, Dire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Flail, Dire"
         },
         {
           "name": "Flail, Heavy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Flail, Heavy"
         },
         {
           "name": "Flail, Light",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Flail, Light"
         },
         {
           "name": "Flame Tongue",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Flame Tongue"
@@ -18502,7 +18502,7 @@
         },
         {
           "name": "Flurry of Blows",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Special.Finesseable.Bludgeoning.Close.Unarmed.Monk.Weapon Group Close.Weapon Group Monk.Weapon Group Natural.Natural.Light",
           "standing": "origin",
           "display_name": "Flurry of Blows"
@@ -18628,14 +18628,14 @@
         },
         {
           "name": "Frost Brand",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Light Source",
           "standing": "origin",
           "display_name": "Frost Brand"
         },
         {
           "name": "Full Plate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Full Plate"
@@ -18649,7 +18649,7 @@
         },
         {
           "name": "Full Plate Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Full Plate Barding"
@@ -18670,7 +18670,7 @@
         },
         {
           "name": "Gauntlet",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gauntlet"
@@ -18698,7 +18698,7 @@
         },
         {
           "name": "Gauntlet, Spiked",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gauntlet, Spiked"
@@ -18740,7 +18740,7 @@
         },
         {
           "name": "Glaive",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Glaive"
@@ -19006,7 +19006,7 @@
         },
         {
           "name": "Greatsword",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Greatsword"
@@ -19034,7 +19034,7 @@
         },
         {
           "name": "Guisarme",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Guisarme"
@@ -19048,7 +19048,7 @@
         },
         {
           "name": "Halberd",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Halberd"
@@ -19062,7 +19062,7 @@
         },
         {
           "name": "Half-Plate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Half-Plate"
@@ -19076,14 +19076,14 @@
         },
         {
           "name": "Half-Plate Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Half-Plate Barding"
         },
         {
           "name": "Halfling Sling Staff",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.Exotic.Container.Projectile.Halfling.Bludgeoning.Sling.Weapon Group Thrown",
           "standing": "origin",
           "display_name": "Halfling Sling Staff"
@@ -19097,7 +19097,7 @@
         },
         {
           "name": "Hammer, Gnome Hooked",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hammer, Gnome Hooked"
@@ -19482,7 +19482,7 @@
         },
         {
           "name": "Hide Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Hide Armor"
@@ -19496,7 +19496,7 @@
         },
         {
           "name": "Hide Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Hide Barding"
@@ -19965,7 +19965,7 @@
         },
         {
           "name": "Javelin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Javelin"
@@ -19979,7 +19979,7 @@
         },
         {
           "name": "Javelin of Lightning",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Javelin of Lightning"
@@ -20000,7 +20000,7 @@
         },
         {
           "name": "Kama",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kama"
@@ -20021,7 +20021,7 @@
         },
         {
           "name": "Kukri",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kukri"
@@ -20063,7 +20063,7 @@
         },
         {
           "name": "Lance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Lance"
@@ -20119,7 +20119,7 @@
         },
         {
           "name": "Leather Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Leather Armor"
@@ -20133,7 +20133,7 @@
         },
         {
           "name": "Leather Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Leather Barding"
@@ -20273,7 +20273,7 @@
         },
         {
           "name": "Lion's Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Lion's Shield"
@@ -20315,28 +20315,28 @@
         },
         {
           "name": "Longbow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Longbow"
         },
         {
           "name": "Longbow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.Martial.Container.Projectile.Piercing.Bow.Longbow.Weapon Group Bows",
           "standing": "origin",
           "display_name": "Longbow (Weapon.Resizable.Ranged.Martial.Container.Projectile.Piercing.Bow.Longbow.Weapon Group Bows)"
         },
         {
           "name": "Longbow, Composite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Longbow, Composite"
         },
         {
           "name": "Longbow, Composite (+0 Str)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Longbow, Composite (+0 Str)"
@@ -20350,7 +20350,7 @@
         },
         {
           "name": "Longspear",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Longspear"
@@ -20364,7 +20364,7 @@
         },
         {
           "name": "Longsword",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Longsword"
@@ -20420,28 +20420,28 @@
         },
         {
           "name": "Mace of Smiting",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mace of Smiting"
         },
         {
           "name": "Mace of Terror",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mace of Terror"
         },
         {
           "name": "Mace, Heavy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mace, Heavy"
         },
         {
           "name": "Mace, Light",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mace, Light"
@@ -20686,14 +20686,14 @@
         },
         {
           "name": "Masterwork Cold Iron Longsword",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Masterwork Cold Iron Longsword"
         },
         {
           "name": "Masterwork Silver Dagger",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Masterwork Silver Dagger"
@@ -20812,7 +20812,7 @@
         },
         {
           "name": "Mithral Full Plate of Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mithral Full Plate of Speed"
@@ -20854,7 +20854,7 @@
         },
         {
           "name": "Morningstar",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Morningstar"
@@ -20882,112 +20882,112 @@
         },
         {
           "name": "Mule",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mule"
         },
         {
           "name": "Musical Instrument, Bells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Bells"
         },
         {
           "name": "Musical Instrument, Chimes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Chimes"
         },
         {
           "name": "Musical Instrument, Drums",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Drums"
         },
         {
           "name": "Musical Instrument, Fiddle",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Fiddle"
         },
         {
           "name": "Musical Instrument, Flute",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Flute"
         },
         {
           "name": "Musical Instrument, Gong",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Gong"
         },
         {
           "name": "Musical Instrument, Harp",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Harp"
         },
         {
           "name": "Musical Instrument, Harpsichord",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Harpsichord"
         },
         {
           "name": "Musical Instrument, Lute",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Lute"
         },
         {
           "name": "Musical Instrument, Mandolin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Mandolin"
         },
         {
           "name": "Musical Instrument, Pan Pipes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Pan Pipes"
         },
         {
           "name": "Musical Instrument, Piano",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Piano"
         },
         {
           "name": "Musical Instrument, Pipe Organ",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Pipe Organ"
         },
         {
           "name": "Musical Instrument, Recorder",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Recorder"
         },
         {
           "name": "Musical Instrument, Trumpet",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Musical Instrument, Trumpet"
@@ -21064,7 +21064,7 @@
         },
         {
           "name": "Net",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Net"
@@ -21092,7 +21092,7 @@
         },
         {
           "name": "Nunchaku",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nunchaku"
@@ -21106,7 +21106,7 @@
         },
         {
           "name": "Nunchaku, Metal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nunchaku, Metal"
@@ -21120,7 +21120,7 @@
         },
         {
           "name": "Oathbow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Oathbow"
@@ -21365,7 +21365,7 @@
         },
         {
           "name": "Padded Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Padded Armor"
@@ -21379,7 +21379,7 @@
         },
         {
           "name": "Padded Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Padded Barding"
@@ -22800,7 +22800,7 @@
         },
         {
           "name": "Quarterstaff",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Quarterstaff"
@@ -22835,7 +22835,7 @@
         },
         {
           "name": "Ranseur",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ranseur"
@@ -22849,21 +22849,21 @@
         },
         {
           "name": "Rapier",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rapier"
         },
         {
           "name": "Rapier",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Melee.Martial.OneHanded.Finesseable.Piercing.MeleePiercing.Sword.BladeLight.Weapon Group Blades Light.Weapon Group Melee OneHanded Piercing",
           "standing": "origin",
           "display_name": "Rapier (Weapon.Resizable.Melee.Martial.OneHanded.Finesseable.Piercing.MeleePiercing.Sword.BladeLight.Weapon Group Blades Light.Weapon Group Melee OneHanded Piercing)"
         },
         {
           "name": "Rapier of Puncturing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rapier of Puncturing"
@@ -23703,7 +23703,7 @@
         },
         {
           "name": "Sai",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sai"
@@ -23773,7 +23773,7 @@
         },
         {
           "name": "Scale Mail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Scale Mail"
@@ -23787,7 +23787,7 @@
         },
         {
           "name": "Scale Mail Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Scale Mail Barding"
@@ -24193,7 +24193,7 @@
         },
         {
           "name": "Scroll of Blink",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Arcane.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Blink"
@@ -24970,7 +24970,7 @@
         },
         {
           "name": "Scroll of Divine Favor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Divine.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Divine Favor"
@@ -25257,7 +25257,7 @@
         },
         {
           "name": "Scroll of Fireball",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Arcane.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Fireball"
@@ -26223,7 +26223,7 @@
         },
         {
           "name": "Scroll of Magic Missile",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Arcane.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Magic Missile"
@@ -26244,7 +26244,7 @@
         },
         {
           "name": "Scroll of Magic Vestment",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Divine.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Magic Vestment"
@@ -26314,7 +26314,7 @@
         },
         {
           "name": "Scroll of Mass Bull's Strength (Arcane)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Arcane.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Mass Bull's Strength (Arcane)"
@@ -27035,7 +27035,7 @@
         },
         {
           "name": "Scroll of Ray of Enfeeblement",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Arcane.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Ray of Enfeeblement"
@@ -27126,7 +27126,7 @@
         },
         {
           "name": "Scroll of Remove Fear",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Divine.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Remove Fear"
@@ -27315,7 +27315,7 @@
         },
         {
           "name": "Scroll of Seeming",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Arcane.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Seeming"
@@ -27469,7 +27469,7 @@
         },
         {
           "name": "Scroll of Slay Living",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Divine.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Slay Living"
@@ -27539,7 +27539,7 @@
         },
         {
           "name": "Scroll of Spell Immunity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Divine.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Spell Immunity"
@@ -27924,7 +27924,7 @@
         },
         {
           "name": "Scroll of Teleport",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Arcane.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Teleport"
@@ -28001,14 +28001,14 @@
         },
         {
           "name": "Scroll of Transmute Mud to Rock (Arcane)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Arcane.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Transmute Mud to Rock (Arcane)"
         },
         {
           "name": "Scroll of Transmute Rock to Mud (Arcane)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Arcane.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Transmute Rock to Mud (Arcane)"
@@ -28099,7 +28099,7 @@
         },
         {
           "name": "Scroll of Vampiric Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Scroll.Arcane.Consumable.Combat Gear",
           "standing": "origin",
           "display_name": "Scroll of Vampiric Touch"
@@ -28344,7 +28344,7 @@
         },
         {
           "name": "Shatterspike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shatterspike"
@@ -28358,35 +28358,35 @@
         },
         {
           "name": "Shield, Heavy Steel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shield, Heavy Steel"
         },
         {
           "name": "Shield, Heavy Wooden",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shield, Heavy Wooden"
         },
         {
           "name": "Shield, Light Steel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shield, Light Steel"
         },
         {
           "name": "Shield, Light Wooden",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shield, Light Wooden"
         },
         {
           "name": "Shield, Tower",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shield, Tower"
@@ -28407,7 +28407,7 @@
         },
         {
           "name": "Shifter's Sorrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shifter's Sorrow"
@@ -28442,35 +28442,35 @@
         },
         {
           "name": "Shortbow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shortbow"
         },
         {
           "name": "Shortbow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.Martial.Container.Projectile.Piercing.Bow.Shortbow.Weapon Group Bows",
           "standing": "origin",
           "display_name": "Shortbow (Weapon.Resizable.Ranged.Martial.Container.Projectile.Piercing.Bow.Shortbow.Weapon Group Bows)"
         },
         {
           "name": "Shortbow, Composite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shortbow, Composite"
         },
         {
           "name": "Shortbow, Composite (+0 Str)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shortbow, Composite (+0 Str)"
         },
         {
           "name": "Shortspear",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shortspear"
@@ -28498,7 +28498,7 @@
         },
         {
           "name": "Shuriken",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shuriken"
@@ -28512,7 +28512,7 @@
         },
         {
           "name": "Siangham",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Siangham"
@@ -28624,21 +28624,21 @@
         },
         {
           "name": "Sling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sling"
         },
         {
           "name": "Sling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Ranged.Simple.Container.Projectile.Bludgeoning.Sling.Weapon Group Thrown",
           "standing": "origin",
           "display_name": "Sling (Weapon.Resizable.Ranged.Simple.Container.Projectile.Bludgeoning.Sling.Weapon Group Thrown)"
         },
         {
           "name": "Sling Staff, Halfling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sling Staff, Halfling"
@@ -28687,14 +28687,14 @@
         },
         {
           "name": "Spade",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spade"
         },
         {
           "name": "Spear",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spear"
@@ -28750,7 +28750,7 @@
         },
         {
           "name": "Spiked Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spiked Armor"
@@ -28778,14 +28778,14 @@
         },
         {
           "name": "Spined Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spined Shield"
         },
         {
           "name": "Splint Mail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Splint Mail"
@@ -28799,7 +28799,7 @@
         },
         {
           "name": "Splint Mail Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Splint Mail Barding"
@@ -29002,7 +29002,7 @@
         },
         {
           "name": "Starknife",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Starknife"
@@ -29044,7 +29044,7 @@
         },
         {
           "name": "Studded Leather Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Studded Leather Armor"
@@ -29058,7 +29058,7 @@
         },
         {
           "name": "Studded Leather Barding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Barding.Mount",
           "standing": "origin",
           "display_name": "Studded Leather Barding"
@@ -29093,49 +29093,49 @@
         },
         {
           "name": "Sword of Life Stealing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sword of Life Stealing"
         },
         {
           "name": "Sword of Subtlety",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sword of Subtlety"
         },
         {
           "name": "Sword of the Planes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sword of the Planes"
         },
         {
           "name": "Sword, Bastard",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sword, Bastard"
         },
         {
           "name": "Sword, Short",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sword, Short"
         },
         {
           "name": "Sword, Two-Bladed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sword, Two-Bladed"
         },
         {
           "name": "Sylvan Scimitar",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sylvan Scimitar"
@@ -29380,7 +29380,7 @@
         },
         {
           "name": "Trident",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Trident"
@@ -29394,14 +29394,14 @@
         },
         {
           "name": "Trident of Fish Command",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Trident of Fish Command"
         },
         {
           "name": "Trident of Warning",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Trident of Warning"
@@ -29464,7 +29464,7 @@
         },
         {
           "name": "Urgrosh, Dwarven",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Urgrosh, Dwarven"
@@ -30430,7 +30430,7 @@
         },
         {
           "name": "Wand of Fireball",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wand.Combat Gear",
           "standing": "origin",
           "display_name": "Wand of Fireball"
@@ -31025,7 +31025,7 @@
         },
         {
           "name": "Wand of Magic Vestment",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wand.Combat Gear",
           "standing": "origin",
           "display_name": "Wand of Magic Vestment"
@@ -31683,7 +31683,7 @@
         },
         {
           "name": "Wand of Spell Immunity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wand.Combat Gear",
           "standing": "origin",
           "display_name": "Wand of Spell Immunity"
@@ -31886,7 +31886,7 @@
         },
         {
           "name": "Wand of Vampiric Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wand.Combat Gear",
           "standing": "origin",
           "display_name": "Wand of Vampiric Touch"
@@ -31984,7 +31984,7 @@
         },
         {
           "name": "Waraxe, Dwarven",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Waraxe, Dwarven"
@@ -32047,7 +32047,7 @@
         },
         {
           "name": "Whip",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Whip"
@@ -32134,12 +32134,12 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 624,
-      "partial": 46,
+      "done": 676,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 670,
-      "pct": 93.1,
-      "excluded_from_percentage": 6,
+      "denominator": 676,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 670,
         "unclassified": 6
@@ -32322,7 +32322,7 @@
         },
         {
           "name": "ADAMANT_AMMO",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ADAMANT_AMMO"
@@ -32357,7 +32357,7 @@
         },
         {
           "name": "ALCHM",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ALCHM"
@@ -32378,7 +32378,7 @@
         },
         {
           "name": "ANMATD",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ANMATD"
@@ -32469,7 +32469,7 @@
         },
         {
           "name": "Adamantine (Ammo)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Adamantine (Ammo)"
@@ -32504,7 +32504,7 @@
         },
         {
           "name": "Alchemical Silver",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Alchemical Silver"
@@ -32518,7 +32518,7 @@
         },
         {
           "name": "Amulet of Mighty Fists",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Amulet of Mighty Fists"
@@ -32742,7 +32742,7 @@
         },
         {
           "name": "BNS_SPELL",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BNS_SPELL"
@@ -32763,7 +32763,7 @@
         },
         {
           "name": "BOWSTR",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BOWSTR"
@@ -32791,35 +32791,35 @@
         },
         {
           "name": "BROKEA",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BROKEA"
         },
         {
           "name": "BROKEM",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BROKEM"
         },
         {
           "name": "BROKES",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BROKES"
         },
         {
           "name": "BROKET",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BROKET"
         },
         {
           "name": "BROKEW",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "BROKEW"
@@ -33071,7 +33071,7 @@
         },
         {
           "name": "C_IRON",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "C_IRON"
@@ -33211,7 +33211,7 @@
         },
         {
           "name": "Cold Iron",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Cold Iron"
@@ -33281,7 +33281,7 @@
         },
         {
           "name": "DISTNC",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "DISTNC"
@@ -33407,7 +33407,7 @@
         },
         {
           "name": "ETHERE",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ETHERE"
@@ -33652,7 +33652,7 @@
         },
         {
           "name": "GLAM",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "GLAM"
@@ -33750,7 +33750,7 @@
         },
         {
           "name": "INVULN",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "INVULN"
@@ -34569,14 +34569,14 @@
         },
         {
           "name": "IntReadLang",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IntReadLang"
         },
         {
           "name": "IntReadMagic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IntReadMagic"
@@ -34597,14 +34597,14 @@
         },
         {
           "name": "IntSpeech",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IntSpeech"
         },
         {
           "name": "IntTelepathy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IntTelepathy"
@@ -34695,7 +34695,7 @@
         },
         {
           "name": "Intelligent Item Purpose (Slay All)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Intelligent Item Purpose (Slay All)"
@@ -34709,7 +34709,7 @@
         },
         {
           "name": "Intelligent Item Purpose (Slay Creature Type)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Intelligent Item Purpose (Slay Creature Type)"
@@ -34870,7 +34870,7 @@
         },
         {
           "name": "KEEN",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "KEEN"
@@ -34919,7 +34919,7 @@
         },
         {
           "name": "LOCK_G",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "LOCK_G"
@@ -35710,35 +35710,35 @@
         },
         {
           "name": "RES_ACD_GRT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RES_ACD_GRT"
         },
         {
           "name": "RES_CLD_GRT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RES_CLD_GRT"
         },
         {
           "name": "RES_ELC_GRT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RES_ELC_GRT"
         },
         {
           "name": "RES_FIR_GRT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RES_FIR_GRT"
         },
         {
           "name": "RES_SNC_GRT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RES_SNC_GRT"
@@ -35759,70 +35759,70 @@
         },
         {
           "name": "RST_ACD",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RST_ACD"
         },
         {
           "name": "RST_ACD_IMP",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RST_ACD_IMP"
         },
         {
           "name": "RST_CLD",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RST_CLD"
         },
         {
           "name": "RST_CLD_IMP",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RST_CLD_IMP"
         },
         {
           "name": "RST_ELC",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RST_ELC"
         },
         {
           "name": "RST_ELC_IMP",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RST_ELC_IMP"
         },
         {
           "name": "RST_FIR",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RST_FIR"
         },
         {
           "name": "RST_FIR_IMP",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RST_FIR_IMP"
         },
         {
           "name": "RST_SNC",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RST_SNC"
         },
         {
           "name": "RST_SNC_IMP",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RST_SNC_IMP"
@@ -35934,7 +35934,7 @@
         },
         {
           "name": "SPEED",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "SPEED"
@@ -35976,7 +35976,7 @@
         },
         {
           "name": "SPIKE_A",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "SPIKE_A"
@@ -36312,7 +36312,7 @@
         },
         {
           "name": "THROW",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "THROW"
@@ -36389,7 +36389,7 @@
         },
         {
           "name": "UNDEAD",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "UNDEAD"
@@ -36882,12 +36882,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 165,
-      "partial": 20,
+      "done": 186,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 185,
-      "pct": 89.2,
-      "excluded_from_percentage": 1,
+      "denominator": 186,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 185,
         "unclassified": 1
@@ -36895,7 +36895,7 @@
       "items": [
         {
           "name": "Acrobatic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Acrobatic"
@@ -36916,7 +36916,7 @@
         },
         {
           "name": "Alertness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Alertness"
@@ -36930,7 +36930,7 @@
         },
         {
           "name": "Animal Affinity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Animal Affinity"
@@ -36979,7 +36979,7 @@
         },
         {
           "name": "Athletic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Athletic"
@@ -37154,7 +37154,7 @@
         },
         {
           "name": "Deceitful",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Deceitful"
@@ -37175,14 +37175,14 @@
         },
         {
           "name": "Deft Hands",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Deft Hands"
         },
         {
           "name": "Diehard",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Diehard"
@@ -37224,7 +37224,7 @@
         },
         {
           "name": "Endurance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "unclassified",
           "display_name": "Endurance"
@@ -37252,7 +37252,7 @@
         },
         {
           "name": "Exotic Weapon Proficiency",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Exotic Weapon Proficiency"
@@ -37329,7 +37329,7 @@
         },
         {
           "name": "Gorgon's Fist",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Gorgon's Fist"
@@ -37343,7 +37343,7 @@
         },
         {
           "name": "Great Fortitude",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Great Fortitude"
@@ -37581,7 +37581,7 @@
         },
         {
           "name": "Improved Initiative",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Improved Initiative"
@@ -37665,14 +37665,14 @@
         },
         {
           "name": "Intimidating Prowess",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Intimidating Prowess"
         },
         {
           "name": "Iron Will",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Iron Will"
@@ -37693,7 +37693,7 @@
         },
         {
           "name": "Lightning Reflexes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Lightning Reflexes"
@@ -37714,7 +37714,7 @@
         },
         {
           "name": "Magical Aptitude",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Magical Aptitude"
@@ -37728,7 +37728,7 @@
         },
         {
           "name": "Martial Weapon Proficiency",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat.MartialWeaponProficiency",
           "standing": "origin",
           "display_name": "Martial Weapon Proficiency"
@@ -37798,7 +37798,7 @@
         },
         {
           "name": "Persuasive",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Persuasive"
@@ -37896,7 +37896,7 @@
         },
         {
           "name": "Self-Sufficient",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Self-Sufficient"
@@ -37987,7 +37987,7 @@
         },
         {
           "name": "Spell Mastery",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General.WizardBonus",
           "standing": "origin",
           "display_name": "Spell Mastery"
@@ -38036,7 +38036,7 @@
         },
         {
           "name": "Stealthy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Stealthy"
@@ -38200,12 +38200,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 0,
-      "partial": 20,
+      "done": 22,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 20,
-      "pct": 0.0,
-      "excluded_from_percentage": 2,
+      "denominator": 22,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 20,
         "unclassified": 2
@@ -38213,154 +38213,154 @@
       "items": [
         {
           "name": "Abyssal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read.Planar",
           "standing": "origin",
           "display_name": "Abyssal"
         },
         {
           "name": "Aklo",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Aklo"
         },
         {
           "name": "Aquan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read.Elemental",
           "standing": "origin",
           "display_name": "Aquan"
         },
         {
           "name": "Auran",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read.Elemental",
           "standing": "origin",
           "display_name": "Auran"
         },
         {
           "name": "Celestial",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read.Planar",
           "standing": "origin",
           "display_name": "Celestial"
         },
         {
           "name": "Common",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read.ModernHumanLanguage.HumanRegional.Human",
           "standing": "origin",
           "display_name": "Common"
         },
         {
           "name": "Draconic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Draconic"
         },
         {
           "name": "Druidic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read.Secret",
           "standing": "origin",
           "display_name": "Druidic"
         },
         {
           "name": "Dwarven",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Dwarven"
         },
         {
           "name": "Elven",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Elven"
         },
         {
           "name": "Giant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Giant"
         },
         {
           "name": "Gnoll",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Gnoll"
         },
         {
           "name": "Gnome",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Gnome"
         },
         {
           "name": "Goblin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Goblin"
         },
         {
           "name": "Halfling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Halfling"
         },
         {
           "name": "Ignan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read.Elemental",
           "standing": "origin",
           "display_name": "Ignan"
         },
         {
           "name": "Infernal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read.Planar",
           "standing": "origin",
           "display_name": "Infernal"
         },
         {
           "name": "Orc",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Orc"
         },
         {
           "name": "Read Lips",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken",
           "standing": "origin",
           "display_name": "Read Lips"
         },
         {
           "name": "Sylvan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Sylvan"
         },
         {
           "name": "Terran",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read.Elemental",
           "standing": "origin",
           "display_name": "Terran"
         },
         {
           "name": "Undercommon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Undercommon"
@@ -38370,12 +38370,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 132,
-      "partial": 4,
+      "done": 208,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 136,
-      "pct": 97.1,
-      "excluded_from_percentage": 72,
+      "denominator": 208,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 72,
         "origin": 136
@@ -38621,7 +38621,7 @@
         },
         {
           "name": "Commune (Week)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Spell-Like Ability",
           "standing": "origin",
           "display_name": "Commune (Week)"
@@ -39335,7 +39335,7 @@
         },
         {
           "name": "No Race Trait Available",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "No Race Trait Available"
@@ -39363,7 +39363,7 @@
         },
         {
           "name": "None",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Region",
           "standing": "origin",
           "display_name": "None (Region)"
@@ -39755,7 +39755,7 @@
         },
         {
           "name": "Unknown",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Region",
           "standing": "origin",
           "display_name": "Unknown (Region)"
@@ -39842,11 +39842,11 @@
     {
       "kind": "skill",
       "label": "Skills",
-      "done": 103,
-      "partial": 7,
+      "done": 110,
+      "partial": 0,
       "not_started": 0,
       "denominator": 110,
-      "pct": 93.6,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 110
@@ -40190,7 +40190,7 @@
         },
         {
           "name": "Knowledge (Untrained)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Intelligence.Knowledge",
           "standing": "origin",
           "display_name": "Knowledge (Untrained)"
@@ -40498,7 +40498,7 @@
         },
         {
           "name": "Profession (Untrained)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Wisdom.Profession",
           "standing": "origin",
           "display_name": "Profession (Untrained)"
@@ -40575,35 +40575,35 @@
         },
         {
           "name": "Untrained Charisma",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Untrained Charisma"
         },
         {
           "name": "Untrained Dexterity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Untrained Dexterity"
         },
         {
           "name": "Untrained Intelligence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Untrained Intelligence"
         },
         {
           "name": "Untrained Strength",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Untrained Strength"
         },
         {
           "name": "Untrained Wisdom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Untrained Wisdom"
@@ -40627,12 +40627,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 569,
-      "partial": 77,
+      "done": 665,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 646,
-      "pct": 88.1,
-      "excluded_from_percentage": 19,
+      "denominator": 665,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 646,
         "unclassified": 19
@@ -40759,7 +40759,7 @@
         },
         {
           "name": "Animate Dead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Animate Dead"
@@ -40829,7 +40829,7 @@
         },
         {
           "name": "Arcane Lock",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Arcane Lock"
@@ -40857,7 +40857,7 @@
         },
         {
           "name": "Astral Projection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Astral Projection"
@@ -40871,7 +40871,7 @@
         },
         {
           "name": "Augury",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Augury"
@@ -40990,7 +40990,7 @@
         },
         {
           "name": "Blasphemy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Blasphemy"
@@ -41025,7 +41025,7 @@
         },
         {
           "name": "Blight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Blight"
@@ -41067,7 +41067,7 @@
         },
         {
           "name": "Breath of Life",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Breath of Life"
@@ -41088,7 +41088,7 @@
         },
         {
           "name": "Burning Hands",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Burning Hands"
@@ -41228,7 +41228,7 @@
         },
         {
           "name": "Chill Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Chill Touch"
@@ -41319,7 +41319,7 @@
         },
         {
           "name": "Commune with Nature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Commune with Nature"
@@ -41333,7 +41333,7 @@
         },
         {
           "name": "Cone of Cold",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Cone of Cold"
@@ -41473,7 +41473,7 @@
         },
         {
           "name": "Cure Critical Wounds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Cure Critical Wounds"
@@ -41487,7 +41487,7 @@
         },
         {
           "name": "Cure Light Wounds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Cure Light Wounds"
@@ -41501,14 +41501,14 @@
         },
         {
           "name": "Cure Moderate Wounds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Cure Moderate Wounds"
         },
         {
           "name": "Cure Moderate Wounds (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Cure Moderate Wounds (Mass)"
@@ -41522,7 +41522,7 @@
         },
         {
           "name": "Cure Serious Wounds (Mass)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Cure Serious Wounds (Mass)"
@@ -41578,7 +41578,7 @@
         },
         {
           "name": "Death Knell",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Death Knell"
@@ -41655,35 +41655,35 @@
         },
         {
           "name": "Detect Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Detect Chaos"
         },
         {
           "name": "Detect Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Detect Evil"
         },
         {
           "name": "Detect Good",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Detect Good"
         },
         {
           "name": "Detect Law",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Detect Law"
         },
         {
           "name": "Detect Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Detect Magic"
@@ -41704,35 +41704,35 @@
         },
         {
           "name": "Detect Secret Doors",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Detect Secret Doors"
         },
         {
           "name": "Detect Snares and Pits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Detect Snares and Pits"
         },
         {
           "name": "Detect Thoughts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Detect Thoughts"
         },
         {
           "name": "Detect Undead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Detect Undead"
         },
         {
           "name": "Dictum",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Dictum"
@@ -41760,7 +41760,7 @@
         },
         {
           "name": "Diminish Plants",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Diminish Plants"
@@ -41872,7 +41872,7 @@
         },
         {
           "name": "Divination",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Divination"
@@ -42229,7 +42229,7 @@
         },
         {
           "name": "Fire Trap",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fire Trap"
@@ -42488,14 +42488,14 @@
         },
         {
           "name": "Glyph of Warding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Glyph of Warding"
         },
         {
           "name": "Glyph of Warding (Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Glyph of Warding (Greater)"
@@ -42572,7 +42572,7 @@
         },
         {
           "name": "Harm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Harm"
@@ -42726,7 +42726,7 @@
         },
         {
           "name": "Holy Word",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Holy Word"
@@ -42810,7 +42810,7 @@
         },
         {
           "name": "Inflict Critical Wounds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Inflict Critical Wounds"
@@ -42824,7 +42824,7 @@
         },
         {
           "name": "Inflict Light Wounds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Inflict Light Wounds"
@@ -42838,7 +42838,7 @@
         },
         {
           "name": "Inflict Moderate Wounds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Inflict Moderate Wounds"
@@ -42852,7 +42852,7 @@
         },
         {
           "name": "Inflict Serious Wounds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Inflict Serious Wounds"
@@ -42999,7 +42999,7 @@
         },
         {
           "name": "Lightning Bolt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Lightning Bolt"
@@ -43251,7 +43251,7 @@
         },
         {
           "name": "Mending",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Mending"
@@ -43370,14 +43370,14 @@
         },
         {
           "name": "Neutralize Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Neutralize Poison"
         },
         {
           "name": "Nightmare",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Nightmare"
@@ -43398,7 +43398,7 @@
         },
         {
           "name": "Obscure Object",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Obscure Object"
@@ -43503,7 +43503,7 @@
         },
         {
           "name": "Phase Door",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Phase Door"
@@ -43552,7 +43552,7 @@
         },
         {
           "name": "Planar Binding (Lesser)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Planar Binding (Lesser)"
@@ -43580,7 +43580,7 @@
         },
         {
           "name": "Plant Growth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Plant Growth"
@@ -43783,7 +43783,7 @@
         },
         {
           "name": "Purify Food and Drink",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Purify Food and Drink"
@@ -43818,7 +43818,7 @@
         },
         {
           "name": "Raise Dead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Raise Dead"
@@ -43881,7 +43881,7 @@
         },
         {
           "name": "Regenerate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Regenerate"
@@ -44000,7 +44000,7 @@
         },
         {
           "name": "Resurrection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Resurrection"
@@ -44028,7 +44028,7 @@
         },
         {
           "name": "Rusting Grasp",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Rusting Grasp"
@@ -44119,7 +44119,7 @@
         },
         {
           "name": "Secret Chest",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Secret Chest"
@@ -44161,7 +44161,7 @@
         },
         {
           "name": "Sepia Snake Sigil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Sepia Snake Sigil"
@@ -44273,21 +44273,21 @@
         },
         {
           "name": "Shocking Grasp",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Shocking Grasp"
         },
         {
           "name": "Shout",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Shout"
         },
         {
           "name": "Shout (Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Shout (Greater)"
@@ -44322,7 +44322,7 @@
         },
         {
           "name": "Slay Living",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Slay Living"
@@ -44350,7 +44350,7 @@
         },
         {
           "name": "Snare",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Snare"
@@ -44469,7 +44469,7 @@
         },
         {
           "name": "Spell Turning",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Spell Turning"
@@ -44539,7 +44539,7 @@
         },
         {
           "name": "Stone Shape",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Stone Shape"
@@ -44812,42 +44812,42 @@
         },
         {
           "name": "Symbol of Death",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Symbol of Death"
         },
         {
           "name": "Symbol of Fear",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Symbol of Fear"
         },
         {
           "name": "Symbol of Insanity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Symbol of Insanity"
         },
         {
           "name": "Symbol of Pain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Symbol of Pain"
         },
         {
           "name": "Symbol of Persuasion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Symbol of Persuasion"
         },
         {
           "name": "Symbol of Sleep",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Symbol of Sleep"
@@ -44861,14 +44861,14 @@
         },
         {
           "name": "Symbol of Weakness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Symbol of Weakness"
         },
         {
           "name": "Sympathetic Vibration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Sympathetic Vibration"
@@ -44903,7 +44903,7 @@
         },
         {
           "name": "Teleport",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Teleport"
@@ -44917,7 +44917,7 @@
         },
         {
           "name": "Teleport Object",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Teleport Object"
@@ -45029,7 +45029,7 @@
         },
         {
           "name": "True Resurrection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "True Resurrection"
@@ -45092,7 +45092,7 @@
         },
         {
           "name": "Vampiric Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Vampiric Touch"
@@ -45120,7 +45120,7 @@
         },
         {
           "name": "Vision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Vision"
@@ -45232,7 +45232,7 @@
         },
         {
           "name": "Whispering Wind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Whispering Wind"
@@ -45253,21 +45253,21 @@
         },
         {
           "name": "Wish",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Wish"
         },
         {
           "name": "Wood Shape",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Wood Shape"
         },
         {
           "name": "Word of Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Word of Chaos"
@@ -45298,12 +45298,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 133,
-      "partial": 114,
+      "done": 262,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 247,
-      "pct": 53.8,
-      "excluded_from_percentage": 15,
+      "denominator": 262,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 247,
         "unclassified": 15
@@ -45514,147 +45514,147 @@
         },
         {
           "name": "Basic Level 1",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 1"
         },
         {
           "name": "Basic Level 10",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 10"
         },
         {
           "name": "Basic Level 11",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 11"
         },
         {
           "name": "Basic Level 12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 12"
         },
         {
           "name": "Basic Level 13",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 13"
         },
         {
           "name": "Basic Level 14",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 14"
         },
         {
           "name": "Basic Level 15",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 15"
         },
         {
           "name": "Basic Level 16",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 16"
         },
         {
           "name": "Basic Level 17",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 17"
         },
         {
           "name": "Basic Level 18",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 18"
         },
         {
           "name": "Basic Level 19",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 19"
         },
         {
           "name": "Basic Level 2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 2"
         },
         {
           "name": "Basic Level 20",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 20"
         },
         {
           "name": "Basic Level 3",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 3"
         },
         {
           "name": "Basic Level 4",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 4"
         },
         {
           "name": "Basic Level 5",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 5"
         },
         {
           "name": "Basic Level 6",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 6"
         },
         {
           "name": "Basic Level 7",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 7"
         },
         {
           "name": "Basic Level 8",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 8"
         },
         {
           "name": "Basic Level 9",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic Level 9"
         },
         {
           "name": "Basic NPC",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Basic NPC"
@@ -45668,161 +45668,161 @@
         },
         {
           "name": "Bonus Language ~ Abyssal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Abyssal"
         },
         {
           "name": "Bonus Language ~ Aklo",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Aklo"
         },
         {
           "name": "Bonus Language ~ All",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ All"
         },
         {
           "name": "Bonus Language ~ Any Human Language",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Any Human Language"
         },
         {
           "name": "Bonus Language ~ Any Spoken",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Any Spoken"
         },
         {
           "name": "Bonus Language ~ Aquan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Aquan"
         },
         {
           "name": "Bonus Language ~ Auran",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Auran"
         },
         {
           "name": "Bonus Language ~ Celestial",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Celestial"
         },
         {
           "name": "Bonus Language ~ Common",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Common"
         },
         {
           "name": "Bonus Language ~ Draconic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Draconic"
         },
         {
           "name": "Bonus Language ~ Dwarven",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Dwarven"
         },
         {
           "name": "Bonus Language ~ Elven",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Elven"
         },
         {
           "name": "Bonus Language ~ Giant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Giant"
         },
         {
           "name": "Bonus Language ~ Gnoll",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Gnoll"
         },
         {
           "name": "Bonus Language ~ Gnome",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Gnome"
         },
         {
           "name": "Bonus Language ~ Goblin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Bonus Language ~ Goblin"
         },
         {
           "name": "Bonus Language ~ Halfling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Halfling"
         },
         {
           "name": "Bonus Language ~ Ignan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Ignan"
         },
         {
           "name": "Bonus Language ~ Infernal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Infernal"
         },
         {
           "name": "Bonus Language ~ Orc",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Bonus Language ~ Orc"
         },
         {
           "name": "Bonus Language ~ Sylvan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Sylvan"
         },
         {
           "name": "Bonus Language ~ Terran",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Terran"
         },
         {
           "name": "Bonus Language ~ Undercommon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Undercommon"
@@ -45864,21 +45864,21 @@
         },
         {
           "name": "Dwarf",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "unclassified",
           "display_name": "Dwarf (Race Builder Subtype)"
         },
         {
           "name": "Dwarf",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Dwarf"
         },
         {
           "name": "Dwarf",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "unclassified",
           "display_name": "Dwarf (Racial Heritage)"
@@ -45892,14 +45892,14 @@
         },
         {
           "name": "Elf",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Elf"
         },
         {
           "name": "Elf",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "unclassified",
           "display_name": "Elf (Racial Heritage)"
@@ -45927,14 +45927,14 @@
         },
         {
           "name": "Familiar Speaks One Language",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Familiar Speaks One Language"
         },
         {
           "name": "Familiar Type",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Familiar Type"
@@ -45976,21 +45976,21 @@
         },
         {
           "name": "Gnome",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "unclassified",
           "display_name": "Gnome (Race Builder Subtype)"
         },
         {
           "name": "Gnome",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Gnome"
         },
         {
           "name": "Gnome",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "unclassified",
           "display_name": "Gnome (Racial Heritage)"
@@ -46011,189 +46011,189 @@
         },
         {
           "name": "Half-Orc",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Half-Orc"
         },
         {
           "name": "Halfling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "unclassified",
           "display_name": "Halfling (Race Builder Subtype)"
         },
         {
           "name": "Halfling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Halfling"
         },
         {
           "name": "Halfling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "unclassified",
           "display_name": "Halfling (Racial Heritage)"
         },
         {
           "name": "Heroic Level 1",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 1"
         },
         {
           "name": "Heroic Level 10",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 10"
         },
         {
           "name": "Heroic Level 11",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 11"
         },
         {
           "name": "Heroic Level 12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 12"
         },
         {
           "name": "Heroic Level 13",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 13"
         },
         {
           "name": "Heroic Level 14",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 14"
         },
         {
           "name": "Heroic Level 15",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 15"
         },
         {
           "name": "Heroic Level 16",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 16"
         },
         {
           "name": "Heroic Level 17",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 17"
         },
         {
           "name": "Heroic Level 18",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 18"
         },
         {
           "name": "Heroic Level 19",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 19"
         },
         {
           "name": "Heroic Level 2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 2"
         },
         {
           "name": "Heroic Level 20",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 20"
         },
         {
           "name": "Heroic Level 3",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 3"
         },
         {
           "name": "Heroic Level 4",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 4"
         },
         {
           "name": "Heroic Level 5",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 5"
         },
         {
           "name": "Heroic Level 6",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 6"
         },
         {
           "name": "Heroic Level 7",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 7"
         },
         {
           "name": "Heroic Level 8",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 8"
         },
         {
           "name": "Heroic Level 9",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic Level 9"
         },
         {
           "name": "Heroic NPC",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Heroic NPC"
         },
         {
           "name": "Human",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "unclassified",
           "display_name": "Human (Race Builder Subtype)"
         },
         {
           "name": "Human",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Human"
@@ -46207,42 +46207,42 @@
         },
         {
           "name": "Inherent Ability Bonus (Charisma)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Charisma)"
         },
         {
           "name": "Inherent Ability Bonus (Constitution)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Constitution)"
         },
         {
           "name": "Inherent Ability Bonus (Dexterity)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Dexterity)"
         },
         {
           "name": "Inherent Ability Bonus (Intelligence)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Intelligence)"
         },
         {
           "name": "Inherent Ability Bonus (Strength)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Strength)"
         },
         {
           "name": "Inherent Ability Bonus (Wisdom)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Inherent Ability Bonus (Wisdom)"
@@ -46459,42 +46459,42 @@
         },
         {
           "name": "IsDwarf",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsDwarf"
         },
         {
           "name": "IsElf",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsElf"
         },
         {
           "name": "IsGnome",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsGnome"
         },
         {
           "name": "IsHalfOrc",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsHalfOrc"
         },
         {
           "name": "IsHalfling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsHalfling"
         },
         {
           "name": "IsHuman",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsHuman"
@@ -46508,133 +46508,133 @@
         },
         {
           "name": "PC Level 10",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 10"
         },
         {
           "name": "PC Level 11",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 11"
         },
         {
           "name": "PC Level 12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 12"
         },
         {
           "name": "PC Level 13",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 13"
         },
         {
           "name": "PC Level 14",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 14"
         },
         {
           "name": "PC Level 15",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 15"
         },
         {
           "name": "PC Level 16",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 16"
         },
         {
           "name": "PC Level 17",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 17"
         },
         {
           "name": "PC Level 18",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 18"
         },
         {
           "name": "PC Level 19",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 19"
         },
         {
           "name": "PC Level 2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 2"
         },
         {
           "name": "PC Level 20",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 20"
         },
         {
           "name": "PC Level 3",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 3"
         },
         {
           "name": "PC Level 4",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 4"
         },
         {
           "name": "PC Level 5",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 5"
         },
         {
           "name": "PC Level 6",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 6"
         },
         {
           "name": "PC Level 7",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 7"
         },
         {
           "name": "PC Level 8",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 8"
         },
         {
           "name": "PC Level 9",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PC Level 9"
@@ -46697,7 +46697,7 @@
         },
         {
           "name": "Shadowdancer Darkvision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shadowdancer Darkvision"
@@ -46732,28 +46732,28 @@
         },
         {
           "name": "Starting Gold CRB ~ Average",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Starting Gold CRB ~ Average"
         },
         {
           "name": "Starting Gold CRB ~ Maximum",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Starting Gold CRB ~ Maximum"
         },
         {
           "name": "Starting Gold CRB ~ Random",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Starting Gold CRB ~ Random"
         },
         {
           "name": "Starting Gold ~ CRB",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Starting Gold ~ CRB"
@@ -46767,56 +46767,56 @@
         },
         {
           "name": "TestChoose",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "TestChoose"
         },
         {
           "name": "TestDiminutive",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestDiminutive"
         },
         {
           "name": "TestHuge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestHuge"
         },
         {
           "name": "TestLarge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestLarge"
         },
         {
           "name": "TestMedium",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestMedium"
         },
         {
           "name": "TestSmall",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestSmall"
         },
         {
           "name": "TestTiny",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TestChooseTemplate",
           "standing": "origin",
           "display_name": "TestTiny"
         },
         {
           "name": "Timeless Body",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Timeless Body"
@@ -46844,7 +46844,7 @@
         },
         {
           "name": "Timeless Body ~ Venerable",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Timeless Body ~ Venerable"
@@ -46865,14 +46865,14 @@
         },
         {
           "name": "Wealth by NPC Level",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wealth by NPC Level"
         },
         {
           "name": "Wealth by PC Level",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wealth by PC Level"
@@ -47138,7 +47138,7 @@
         },
         {
           "name": "Wizard Spellbook",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wizard Spellbook"

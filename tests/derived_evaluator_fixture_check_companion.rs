@@ -52,29 +52,19 @@
 //! → guarantee 4 red on the non-empty assertion.
 
 use std::collections::{BTreeMap, BTreeSet};
-use std::path::PathBuf;
 
 use sha2::{Digest, Sha256};
 
 use codex::rules_core::derived_evaluator_fixture_check::load_companion_fixtures;
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::{pcgen_data_root, repo_root};
 
 fn sha256_hex(bytes: &[u8]) -> String {
     let mut hasher = Sha256::new();
     hasher.update(bytes);
     hasher.finalize().iter().map(|b| format!("{b:02x}")).collect()
-}
-
-/// Same resolution rule every sibling guarantee file uses.
-fn pcgen_data_root() -> Option<PathBuf> {
-    if let Ok(root) = std::env::var("PCGEN_CORPUS_ROOT") {
-        return Some(PathBuf::from(root));
-    }
-    let home = std::env::var("HOME").ok()?;
-    Some(PathBuf::from(home).join("workspace").join("repos").join("pcgen").join("data"))
 }
 
 /// A REFERENCE derivation of PF1's natural-attack Strength-damage rule,

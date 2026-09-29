@@ -43,11 +43,7 @@
 //! also preserves the accepted Fighter level-1..level-12 truth (unchanged)
 //! and the multiclass negative control.
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const FIGHTER_LEVEL12_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_fighter_level12_sd18_widening_deterministic_input.txt"
@@ -61,8 +57,7 @@ const FIGHTER_LEVEL13_FIXTURE: &str = include_str!(
 
 #[test]
 fn fighter_level13_base_attack_bonus_rises_saves_stay() {
-    let input = load(FIGHTER_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(FIGHTER_LEVEL13_FIXTURE);
 
     assert!(
         !computation.diagnostics.iter().any(|d| d.claim_blocking),
@@ -101,8 +96,7 @@ fn fighter_level13_base_attack_bonus_rises_saves_stay() {
 
 #[test]
 fn fighter_level13_weapon_training_rank_rises_to_three() {
-    let input = load(FIGHTER_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(FIGHTER_LEVEL13_FIXTURE);
 
     let weapon_training = explanation(&computation, "class_feature.fighter.weapon_training");
     assert_eq!(
@@ -117,8 +111,7 @@ fn fighter_level13_weapon_training_rank_rises_to_three() {
 
 #[test]
 fn fighter_level13_grants_a_third_weapon_training_group_seam() {
-    let input = load(FIGHTER_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(FIGHTER_LEVEL13_FIXTURE);
 
     let third_group = explanation(&computation, "class_feature.fighter.weapon_training_group_3");
     assert_eq!(
@@ -146,8 +139,7 @@ fn fighter_level13_grants_a_third_weapon_training_group_seam() {
 
 #[test]
 fn fighter_level13_grants_no_new_bonus_feat_bravery_stays_unchanged() {
-    let input = load(FIGHTER_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(FIGHTER_LEVEL13_FIXTURE);
 
     assert!(
         !computation
@@ -177,8 +169,7 @@ fn fighter_level13_grants_no_new_bonus_feat_bravery_stays_unchanged() {
 
 #[test]
 fn fighter_level13_baseline_melee_attack_bonus_rises() {
-    let input = load(FIGHTER_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(FIGHTER_LEVEL13_FIXTURE);
 
     // Baseline melee attack bonus rises by the base-attack-bonus delta (+1)
     // plus the first-group Weapon Training delta (+1), from 18 at level 12
@@ -198,8 +189,7 @@ fn fighter_level13_baseline_melee_attack_bonus_rises() {
 
 #[test]
 fn fighter_level12_truth_is_unchanged_by_this_slice() {
-    let input = load(FIGHTER_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(FIGHTER_LEVEL12_FIXTURE);
 
     let bab = explanation(&computation, "class_chassis.base_attack_bonus");
     assert_eq!(bab.value, 12, "Fighter level 12 base attack bonus must stay 12");
@@ -240,8 +230,7 @@ fn fighter_level12_truth_is_unchanged_by_this_slice() {
 #[test]
 fn fighter_level_21_stays_claim_blocked() {
     let level_21 = FIGHTER_LEVEL13_FIXTURE.replace("class:fighter:13", "class:fighter:21");
-    let input = load(&level_21);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&level_21);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
@@ -265,8 +254,7 @@ fn multiclass_fighter_level13_is_not_promoted_by_this_slice() {
         "class_level=class:fighter:13",
         "class_level=class:fighter:13\nclass_level=class:rogue:1",
     );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&multiclass);
 // (v0.6 swarm update) The v0.6 alpha swarm's multiclass BAB/save-stacking
     // generalization (task 4) widened the Fighter+Rogue multiclass mix into a
     // genuinely supported combination (via the table-driven
@@ -300,26 +288,3 @@ fn multiclass_fighter_level13_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-13 widening -----
 
-#[test]
-fn matrix_fighter_row_names_level_13_widening() {
-    let matrix = seeded_current_truth();
-    let fighter = matrix
-        .row("class.fighter.levels_2_10")
-        .expect("fighter levels_2_10 row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(fighter.support_state, SupportState::Supported);
-    assert_eq!(fighter.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(fighter.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        fighter.grounding_ref.contains("sd18_fighter_level13_widening"),
-        "fighter row must cite the live SD18 level-13 widening proof surface: {}",
-        fighter.grounding_ref
-    );
-    let note = fighter.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 13") || note.contains("level-13"),
-        "fighter partial note must name the level-13 widening: {note}"
-    );
-}

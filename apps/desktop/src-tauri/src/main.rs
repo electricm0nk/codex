@@ -6,11 +6,11 @@ mod character_hub;
 #[allow(non_snake_case)]
 mod characterHub;
 mod class_catalog;
+mod class_facts;
 mod class_catalog_generic;
 mod class_feature_descriptions;
 mod class_feature_feat_bridge;
 mod class_feature_pool_picker;
-mod wizard_school_picker;
 mod dm_console_export;
 mod encounter_rating;
 mod class_spell_levels;
@@ -25,6 +25,8 @@ mod corpus_ingest_diagnostic;
 mod equipment_catalog;
 mod feat_catalog;
 mod authoring_workbench;
+#[cfg(test)]
+mod corpus_bundle_parity_test;
 mod companion_catalog;
 mod companion_pool_catalog;
 mod intelligent_item_catalog;
@@ -33,16 +35,11 @@ mod pf1_adapter;
 mod race_catalog;
 mod race_trait_picker;
 mod reference_library_catalog;
-/// Test-only: the reach gate, which fails when ingested content has no
-/// consumer carrying it to a player. Compiled out of the shipping binary
-/// because it is a verification surface, not a runtime one.
-#[cfg(test)]
-mod reach_gate;
 mod rule_system_adapter;
 mod spell_catalog;
 mod stub_adapter;
-mod support_state_matrix_bridge;
 mod trait_picker;
+mod ui_probe;
 mod update;
 
 use serde::Serialize;
@@ -58,7 +55,7 @@ use character_hub::{
     import_character, level_up_character, list_feats_for_character, list_saved_characters,
     load_character_bio,
     load_character_durability, load_character_money, load_character_portrait,
-    list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
+    list_class_creation_roster, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
     add_trait_selection, remove_trait_selection, set_equipment_active_state,
     remove_spell_selection,
@@ -68,10 +65,10 @@ use characterHub::appendToCharacter::append_to_character;
 use characterHub::recomputeCharacter::recompute_character;
 use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
+use class_facts::list_class_facts;
 use class_feature_descriptions::list_class_feature_descriptions;
 use class_feature_feat_bridge::list_class_feature_feat_bridge_descriptions;
 use class_feature_pool_picker::list_class_feature_pool_options;
-use wizard_school_picker::list_wizard_school_options;
 use dm_console_export::export_dm_console;
 use encounter_rating::rate_encounter;
 use class_spell_levels::list_class_spell_levels;
@@ -85,7 +82,6 @@ use monster_catalog::list_monster_catalog;
 use race_catalog::list_race_catalog;
 use race_trait_picker::{list_alternate_racial_traits, resolve_race_alternate_selection};
 use spell_catalog::{list_spell_catalog, list_spells};
-use support_state_matrix_bridge::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use trait_picker::list_available_character_traits;
 use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
@@ -132,13 +128,6 @@ fn load_authoring_workbench_snapshot(
     build_authoring_workbench_snapshot(request)
 }
 
-/// Read-only SD-13 support-state/debt bridge for the SD-11 tester workbench.
-/// Returns the seeded SD-13 matrix truth verbatim; no filtering or promotion.
-#[tauri::command]
-fn load_support_state_matrix() -> SupportStateMatrixSnapshot {
-    build_support_state_matrix_snapshot()
-}
-
 /// Identifies which build of the Rust backend is actually running. `version`
 /// is the crate's own Cargo.toml version (not the npm frontend version, which
 /// is tracked separately); `gitCommit` is the short commit hash embedded at
@@ -165,15 +154,34 @@ fn main() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .setup(|app| {
+            // SD-36: hand the Tauri-resolved resource directory to
+            // `codex_repo_root()` before anything else runs, so every corpus
+            // loader (race/equipment/spell catalogs, character creation,
+            // authoring workbench) can find `data/corpus` in a packaged
+            // build instead of only ever finding it in a source checkout.
+            use tauri::Manager;
+            if let Ok(resource_dir) = app.path().resource_dir() {
+                authoring_workbench::set_app_resource_dir(resource_dir);
+            }
+
             if let Err(err) = character_hub::seed_default_character_if_needed(app.handle()) {
                 eprintln!("Failed to seed default character: {err}");
             }
+
+            // SD-36 F4b: the class creation roster is swept from the census (every class at
+            // every level) once per process. Start that sweep now, off the UI thread, so the
+            // Create picker's `list_class_creation_roster` normally reads a warm cache. A failed
+            // sweep is not swallowed: the command returns the same `Err` when it is called.
+            std::thread::spawn(|| {
+                if let Err(err) = codex::rules_core::class_census::class_creation_roster() {
+                    eprintln!("Class creation roster unavailable: {err}");
+                }
+            });
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
             load_pilot_shell_snapshot,
             load_authoring_workbench_snapshot,
-            load_support_state_matrix,
             load_backend_health,
             browser_handoff::handoff_defect_report_to_browser,
             is_install_eligible,
@@ -257,7 +265,6 @@ fn main() {
             // regardless of selection, modelled on
             // `list_alternate_racial_traits`'s own precedent.
             list_class_feature_pool_options,
-            list_wizard_school_options,
             export_dm_console,
             rate_encounter,
             list_equipment,
@@ -272,10 +279,17 @@ fn main() {
             list_class_spell_levels,
             list_race_catalog,
             list_race_creation_roster,
+            list_class_creation_roster,
+            // SD-36 F6a: weapon proficiency, caster level, class skills and hit die per held
+            // class, from the engine -- the sheet keeps no class table of its own.
+            list_class_facts,
+            list_level_up_class_options,
             list_alternate_racial_traits,
             resolve_race_alternate_selection,
             list_available_character_traits,
-            corpus_ingest_diagnostic
+            corpus_ingest_diagnostic,
+            ui_probe::record_ui_probe,
+            ui_probe::poll_ui_probe_command
         ])
         .run(tauri::generate_context!())
         .expect("error while running codex");

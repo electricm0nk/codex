@@ -20,9 +20,6 @@ use codex::rules_core::pilot_compute::{
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
-use codex::rules_core::support_state_matrix::{
-    EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
 
 const LEVEL_2_FIXTURE: &str =
@@ -299,64 +296,3 @@ fn rogue_replacing_the_fighter_chassis_never_leaks_fighter_seams() {
 
 // ----- Control plane: the matrix reclassifies levels 2-10 to bounded Partial -----
 
-#[test]
-fn matrix_keeps_fighter_level_1_and_levels_2_10_as_separate_rows() {
-    let matrix = seeded_current_truth();
-    let level_1 = matrix
-        .row("class.fighter.level_1_pilot")
-        .expect("level-1 pilot row must exist");
-    let levels_2_10 = matrix
-        .row("class.fighter.levels_2_10")
-        .expect("levels-2-10 row must exist");
-
-    assert_ne!(
-        level_1.row_id, levels_2_10.row_id,
-        "Fighter level 1 and levels 2-10 must not collapse into one row"
-    );
-    assert_ne!(
-        level_1.dimension, levels_2_10.dimension,
-        "Fighter level-1 and levels-2-10 rows must keep distinct dimensions"
-    );
-}
-
-#[test]
-fn matrix_levels_2_10_is_partial_but_not_supported_and_names_what_remains() {
-    let matrix = seeded_current_truth();
-    let levels_2_10 = matrix
-        .row("class.fighter.levels_2_10")
-        .expect("levels-2-10 row must exist");
-
-    // Widened to a bounded partial posture at this slice; later promoted to
-    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
-    // UI-surfacing work (2026-07-16).
-    assert_eq!(levels_2_10.support_state, SupportState::Supported);
-    assert_eq!(levels_2_10.evidence_tier, EvidenceTier::ProductVisible);
-
-    // The note must name what remains out of proof after this slice: levels 4-10.
-    assert!(
-        !levels_2_10.blocker_or_lossiness_note.is_empty(),
-        "partial levels-2-10 row must keep a non-empty note naming what remains unproven"
-    );
-    assert!(
-        levels_2_10.blocker_or_lossiness_note.contains("4"),
-        "partial levels-2-10 row note must name the still-unproven levels 4-10: {}",
-        levels_2_10.blocker_or_lossiness_note
-    );
-}
-
-#[test]
-fn matrix_keeps_rogue_supported_after_fighter_widens() {
-    // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-17); this
-    // Fighter-widening snapshot preserves that.
-    let matrix = seeded_current_truth();
-    let rogue = matrix
-        .row("class.rogue.bounded_progression")
-        .expect("rogue row must exist");
-    assert_eq!(
-        rogue.support_state,
-        SupportState::Supported,
-        "Rogue must remain Supported after Fighter widens"
-    );
-    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
-}

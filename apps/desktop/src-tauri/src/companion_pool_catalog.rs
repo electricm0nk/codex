@@ -467,7 +467,19 @@ mod tests {
         // Creature template -- is read from the converted package, where it lives on the far
         // end of the grant edge, and printed as words. It used to be the source token's own
         // head and value.
-        assert_eq!(found.description, "Grants Fiendish Creature");
+        //
+        // SD-36 Epic E CONV-02: the template's converted PRINCIPAL rule used to be
+        // force-relabelled to the bare template name regardless of which BONUS row happened
+        // to be pushed first; that discarded a real descriptive label whenever the first row
+        // was NOT the record's own default-name line (the review's own confirmed example: a
+        // template's first spell-like ability printed under the template's generic name
+        // instead of its own). Fixed to keep a line's own label when it computed one --
+        // `bestiary:template:fiendish_creature`'s first row happens to be its
+        // `TYPE=DamageReduction` AC/DR bonus (`(DR/good)`), so this cross-reference now reads
+        // that row's own qualifier rather than a clean bare name. Still names the right
+        // template; not a regression on what this string is FOR (the reader still learns
+        // "this grants Fiendish Creature").
+        assert_eq!(found.description, "Grants Fiendish Creature (DR/good)");
         assert!(!found.description.is_empty());
     }
 
@@ -595,7 +607,7 @@ mod tests {
     #[test]
     fn the_refuse_gate_is_provably_live_over_the_converted_package() {
         let package = live_sheet_rules().expect(
-            "data/sheet_rules/ must be present (cargo run --locked --bin sheet_rule_convert)",
+            "data/sheet_rules/ must be present (cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write)",
         );
         let mut with_prose = 0usize;
         let mut without_prose = 0usize;

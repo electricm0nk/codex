@@ -101,6 +101,38 @@ sleep 1
 Coordinates above match the 1280x900 Xvfb screen / 1280x800 window this
 skill launches at; if you resize, re-derive them from a screenshot.
 
+## Isolated app data — the operator's real store is never touched
+
+**Every `driver.sh launch` runs the app against an isolated app-data root,
+never `~/.local/share/io.electricm0nk.codex`** (SD-36 F6d; operator
+2026-09-27: "a lot of test characters littering the default database. We only
+want the one Ironhands character" — 287 of the 378 character dirs there were
+ui-smoke litter written through the real `app_data_dir`).
+
+- Tauri 2's `app_data_dir()` is `dirs::data_dir()/<identifier>` (tauri 2.11.5
+  `src/path/desktop.rs`); on Linux `dirs::data_dir()` is `$XDG_DATA_HOME` when
+  absolute, else `$HOME/.local/share` (dirs 6.0.0 `src/lin.rs`). Config and
+  cache follow `$XDG_CONFIG_HOME` / `$XDG_CACHE_HOME`. The WebKit
+  localstorage/cache under the app dir moves with it.
+- `launch` exports `XDG_DATA_HOME=<root>/data`, `XDG_CONFIG_HOME=<root>/config`,
+  `XDG_CACHE_HOME=<root>/cache` to `npx tauri dev` (and so to the binary).
+  `<root>` is `$RUN_DESKTOP_DATA_ROOT`, default
+  `/tmp/run-desktop-driver-${AGENT_ID}.appdata` (kept between launches so a
+  manual session can inspect it; delete it yourself when done). A fresh root
+  starts empty and the app seeds Aldric Ironhand itself on first run.
+- **Guard:** `launch` refuses (exit 3) a relative root, or one whose data dir
+  is — or sits inside — the real one resolved from your own environment.
+  `driver.sh _data_env` prints exactly what `launch` would export.
+  Pinned by `scripts/tests/test_run_desktop_driver.sh` cases 7-8.
+- There is no opt-out. To look at the operator's real characters, run the app
+  normally, not through this driver.
+- The ui-smoke harness (`scripts/ui-smoke/run.mjs`) passes a fresh mkdtemp
+  root per run, checks the LIVE app process's `/proc/<pid>/environ` resolves to
+  it, deletes every character a row created through the app's own
+  `delete_character` command, records `app_data_root` + `cleanup` on each
+  `results.json` entry, and removes the root at the end unless `--keep-data`
+  (or `--keep`, which leaves the app running on it).
+
 ## Concurrent agents — `RUN_DESKTOP_AGENT`
 
 **Every dispatched desktop agent must export `RUN_DESKTOP_AGENT` to a value
@@ -123,9 +155,9 @@ summary, before relying on it):**
   different X displays with overwhelming probability but no absolute
   guarantee (a hash collision between two unrelated agent names is possible,
   though not observed in this program).
-- State, launch log, and Xvfb log are all namespaced by `AGENT_ID`:
-  `/tmp/run-desktop-driver-${AGENT_ID}.state`,
-  `.tauri-dev.log`, `.xvfb.log`.
+- State, launch log, Xvfb log, and the default isolated app-data root are
+  all namespaced by `AGENT_ID`: `/tmp/run-desktop-driver-${AGENT_ID}.state`,
+  `.tauri-dev.log`, `.xvfb.log`, `.appdata/`.
 - The `stop`/cleanup kill loop (`kill_our_codex_processes`) only kills a
   `target/debug/codex` process whose own `/proc/<pid>/environ` has
   `DISPLAY=:$DISPLAY_NUM` matching *this* agent's display — so a correctly

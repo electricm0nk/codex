@@ -380,15 +380,43 @@ class TemplateTest(unittest.TestCase):
 class RosterTest(unittest.TestCase):
     def test_roster_members_pair_engine_and_pcgen_forms(self):
         members = SP.roster_members()
-        self.assertEqual(len(members), len(SP.CLASSES) * len(SP.LEVELS) + len(SP.RACES) - 1)
+        extra_book_member_count = sum(len(classes) for _, _, classes in SP.EXTRA_BOOK_CLASSES)
+        self.assertEqual(
+            len(members),
+            len(SP.CLASSES) * len(SP.LEVELS) + len(SP.RACES) - 1 + extra_book_member_count,
+        )
         text = SP.engine_fixture_text("human_wizard_l10", "human", "wizard", 10)
         self.assertIn("class_level=class:wizard:10", text)
         self.assertIn("ability=intelligence:18", text)
         pcg = SP.pcg_text("human_wizard_l10", "Human", "Wizard", 10)
         self.assertIn("CLASS:Wizard|LEVEL:10", pcg)
+        self.assertIn("CAMPAIGN:Core Rulebook", pcg)
         self.assertIn("STAT:INT|SCORE:18", pcg)
         self.assertIn("+2 Strength", pcg)
         self.assertNotIn("+2 Strength", SP.pcg_text("x", "Dwarf", "Fighter", 1))
+
+    def test_extra_book_classes_are_generated_as_human_level_1_members_with_both_campaigns(self):
+        """SD-36 Epic E GATE-02 (fix cycle 2): the roster's first cross-book widening. Every
+        `EXTRA_BOOK_CLASSES` entry becomes one Human level-1 member whose `.pcg` carries BOTH
+        `CAMPAIGN:Core Rulebook` (the book's own `PRECAMPAIGN:1,INCLUDES=Core Rulebook`) and the
+        book's own CAMPAIGN name, and whose engine fixture names the real book in
+        `source_package_id` rather than the CRB-only default."""
+        members = {m[0]: m for m in SP.roster_members()}
+        for campaign, book_key, classes in SP.EXTRA_BOOK_CLASSES:
+            for cls, pcls in classes:
+                name = f"human_{cls}_l1"
+                self.assertIn(name, members, f"{name} must be a generated roster member")
+                _, race, prace, member_cls, member_pcls, level, campaigns, source_package_id = members[name]
+                self.assertEqual((race, prace, member_cls, member_pcls, level), ("human", "Human", cls, pcls, 1))
+                self.assertEqual(campaigns, ["Core Rulebook", campaign])
+                self.assertEqual(source_package_id, f"pf1.{book_key}")
+
+                pcg = SP.pcg_text(name, prace, pcls, level, campaigns)
+                self.assertIn("CAMPAIGN:Core Rulebook", pcg)
+                self.assertIn(f"CAMPAIGN:{campaign}", pcg)
+
+                text = SP.engine_fixture_text(name, race, cls, level, None, source_package_id)
+                self.assertIn(f"source_package_id=pf1.{book_key}", text)
 
     def test_racial_stat_bonuses_parse_from_the_pinned_row_shape(self):
         row = "+2 Constitution, +2 Wisdom, -2 Charisma\tKEY:Dwarf ~ Ability Scores\tCATEGORY:Special Ability\tBONUS:STAT|CON,WIS|2|TYPE=Racial\tBONUS:STAT|CHA|-2|TYPE=Racial\tDESC:x"
