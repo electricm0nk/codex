@@ -1,7 +1,13 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for §3d (SD-36 Epic F class dispatch:
+> Last verified: **2026-09-29 against `tranche/16` (`165cc205e7`)** for §3d (SD-36 Epic F class dispatch:
+> the generic gate arm, the prestige rule, the multiclass fold, the proficiency reader, converted-record class
+> skills / sub-classes / bloodlines, the pick-to-option link, the census that measures them, and the F6/F7
+> desktop-polish additions — the hit-die source rule, feat skill bonuses folded from the record, F6a class
+> facts, F7a effective ability scores and weapon-record-only proficiency names, F7c class-skill/requirement-label/
+> default-pick rules; figures from `class_census --json` and the stage-f6/stage-f7 receipts).
+> Earlier pass: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for §3d (SD-36 Epic F class dispatch:
 > the generic gate arm, the prestige rule, the multiclass fold, the proficiency reader, converted-record class
 > skills / sub-classes / bloodlines, the pick-to-option link, and the census that measures them; figures from
 > `class_census --json`, `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/census-f5.json`).
@@ -699,6 +705,63 @@ way. Measured: prestige carrier mixes 68 of 74 `Computed` (6 Blocked on `multicl
 source formulas with a precedence error), mix panel 185 of 185; 187 multiclass negative controls flipped
 to status parity with the class alone; sabotage of the carry-over reddens 14 of 187, 0 restored
 (`artifacts/epic-f/stage-f2-f3/f3d-sabotage-log.md`).
+
+**F6b hit-die source rule.** `src/rules_core/pilot_compute/hit_die_source.rs`'s `hit_die_source(class_id)`
+is the one place a class's hit die comes from: the same source that COMPUTES the class's hit points also
+prints the sheet's `Hit die:` line and decides whether the multiclass roster offers the class at all. It
+checks two tiers in order — the bespoke class module (`durability::bespoke_hit_die`: the CRB class table,
+then APG/ACG/Pathfinder Unchained) first, then the converted class record's `StatBlock "Hit die"` row
+(following a `TakenOnClass` edge for the four Unchained records, which state no die of their own).
+`None` from both tiers is Unknown, never a fabricated die. This closes FS-24 (0 of 59 roster classes HP
+Unknown, was 5) and the sheet-print half of FS-23: the Core Rulebook Monk's oracle class line still
+states `HD:10`, but the CRB class table (the source that actually computes Monk's hit points, operator
+ruling 2026-07-29) says d8, so the class line prints `Hit die: d8` and Monk 5 computes 38 HP; the
+converted package's own `Hit die d10` row is left as an open oracle-data defect (`f6b-receipt.md` §1,
+`forward-scope-register.md` FS-23).
+
+**F6b feat skill bonuses, folded from the held feat record.** `src/rules_core/pilot_compute/feat_skill_bonus_sheet_rules.rs`'s
+`feat_skill_bonuses(package, rendered lines)` adds a feat's own printed skill-bonus line into a skill's
+total when the line targets `Skill`/`SkillGroup`, resolves to a number, and carries no condition, stacking
+by bonus type the way the package's `Var` fold already does. Of the 43 feats carrying a skill-bonus rule
+(115 rules on 53 feat records across books), **40 of 43** fold into a skill total (Alertness +2
+Perception/+2 Sense Motive among them); 2 are situational-only (printed, never added); 1 has no skill line
+on the census fixture. A feat's own prerequisite is still the level-up filter's job; the fold only adds
+what the printed line already shows (`f6b-receipt.md` §2).
+
+**F6a class facts for the desktop.** `src/rules_core/pilot_compute/class_facts_sheet_rules.rs`'s
+`class_facts(class_id, level)` is what `apps/desktop/src-tauri/src/class_facts.rs`'s `list_class_facts`
+command serves the sheet, replacing three deleted hand-kept desktop tables
+(`MARTIAL_WEAPON_CLASSES`, `CASTER_CLASSES`, `CLASS_SKILLS`). It answers weapon proficiency (**59 of 59**
+roster classes at every level), caster level (**59 of 59**; gated per-rule through
+`sheet_rule::sibling_line_gate`, the same line-gate `render_sheet` applies before printing a sibling —
+closing the merge-readiness B1 bloodrager-at-level-1 defect, which the ungated read had produced) and
+class skills (**50 of 59**; the 9 ACG-class remainder is FS-25, an unresolved `Class|<Class>` converter
+edge, printed as `Class skills Unknown` with the reason) (`f6a-receipt.md` §1–§4, `merge-readiness-receipt.md` B1).
+
+**F7a: the printed ability score is the engine's effective score.** `character_hub.rs`'s
+`effective_ability_scores_dto` (served on `load_saved_character` as `abilityScores` since v0.8 B-2) has
+always applied the race's ability adjustment (a Human's +2, folded in at read time; every other race's
+adjustment is already baked into the stored score by the create form). The desktop's own
+`scoreFromModifier`, which reconstructed the score as `10 + 2 x modifier`, printed every odd score one too
+low (Elowen's Con 13 printed 12). F7a deletes that reconstruction and reads the served `abilityScores`
+field directly — no engine-side DTO change was needed, only the desktop read (`f7a-receipt.md` §F7-1). The
+Weapons tab's "Also proficient with" line was narrowed the same step to weapon records only
+(`class_facts_sheet_rules::WeaponRecordNames`): a name prints only when it is the label of a converted
+`Weapon`-tagged equipment record carrying a proficiency category; pseudo-weapon grants (Flurry of Blows,
+Unarmed Strike, Spells (Ray)/(Touch), Splash Weapon, Grapple, Mind Blade) are dropped, cutting printed
+names from 466 to 302 over the 118-row roster wire (`f7a-receipt.md` §F7-2).
+
+**F7c: class-skill lists hold only skill ids; requirement text prints labels; canonical picks carry a
+default-pick marker.** `src/rules_core/pilot_compute/class_skill_sheet_rules.rs`'s `class_skill_view_with`
+drops any `ClassSkill` grant that names no converted skill record (Samurai's Mount, `samurai_mount`, was
+the one roster case) into `ClassSkillView::not_skills` instead of the skills list.
+`src/rules_core/level_up_option_filter.rs`'s `skill_label` prints a skill term's converted-record label
+(`Knowledge (Nobility) ranks at least 3`) instead of its raw id (`knowledge nobility ranks at least 3`) —
+0 of 286 printed prestige-gate requirement lines carry a slug, was 12. A class skill (or family) that
+holds only through a Path-A canonical seed — Expert's ten skills, Summoner's Standard class selection,
+Psion's Egoist discipline (**3 of 59** roster classes) — is served as `defaultPicks`/`defaultPickGroups`
+and prints with the one `class_seeds::DEFAULT_PICK_MARKER` ("default pick") on the Skills panel and the
+allocation dialog, never a plain class skill (`f7c-receipt.md` §a–§c).
 
 ### 4. `src/rules_core/pilot_compute_corpus.rs` — the corpus-aware wrapping seam
 

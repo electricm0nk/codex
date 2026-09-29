@@ -1,7 +1,9 @@
 # Corpus Ingest
 
 > Scope: the crate wall between the PCGen converter/oracle and the live engine, and how real PCGen corpus files (`.pcc`/`.lst` data files) are parsed and projected into the canonical source-IR the rules engine consumes.
-> Last verified: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for §"The sheet-rule converter" and
+> Last verified: **2026-09-29 against `tranche/16` (`165cc205e7`)** for §"Converter mechanisms added by
+> SD-36 Epic F" (added the F7b prose-formula row from `stage-f7/f7b-receipt.md`). Earlier pass:
+> **2026-09-26 against `tranche/16` (`e70a8745ed`)** for §"The sheet-rule converter" and
 > §"Converter mechanisms added by SD-36 Epic F" (report figures re-read from `data/sheet_rules/_report.json`
 > and `_defects/*.json`). Earlier pass: **2026-09-20 against `tranche/16` (`424e93e93c`)** — SD-36 docs-truth capability pass:
 > corrected the "how to onboard a book" section's book-count framing (was a vague "~30+"; now the
@@ -212,11 +214,13 @@ B 63 -> 63, D 3,033 -> 2,646, E 3,565 -> 2,764, F 808 -> 779. The mechanisms, in
 | category pick rows (F3c4b) | an ability-category pick row no inventory unit stands for converts as a `pool_option` rule granted by the choice | `pool_option.rs` | 274 options over 12 pools |
 | Internal helper rows (F3c5) | a `CATEGORY:Internal` natural-attack helper whose object carries only that attack converts as `Fact::NaturalAttack` on the granting rule; no record added | `natural_attack.rs` | 770 helper rows, 681 fact grants on 546 rules; unresolved references 6,932 -> 6,252 |
 | pool choices (F4pre) | `BONUS:ABILITYPOOL` into a `TYPE`-filtered child category and `BONUS:DOMAIN\|NUMBER` convert as a choice on the pick | `pool_link.rs` (`link_pool_choices`) | 1,686 picks and 47 lines |
+| prose formulas (F7b) | a PCGen formula span inside a printed prose string (spell/power text, a stat-block line) converts through the same formula-to-`Expr` path every `%N` argument uses, and prints through the typed piece printers (`DiceCount`/`Dice`/`Slot`); a line whose condition names a record outside the converted inventory decides `Never` and is not printed; a spell/power text's `[`/`]` formula-delimiter brackets print as the book's `(`/`)` once the formula inside is lowered | `prose.rs` (`lower_prose_formulas`, `decide_out_of_inventory`) | measured on the tranche/16 package before conversion: 2,361 formulas in 2,317 strings on 1,997 records (`f7b-receipt.md` §2); structural-diff pins 2,317 (rule id, field) deltas on 2,308 records, 0 unexplained; residue-gate formula-shape class 2,361 hits on 1,997 shipped files -> 0 (`verdict=PASS`); 315 out-of-inventory lines suppressed (274 spells, 25 equipment, 5 feats, 5 class features, 2 equipment modifiers, 2 abilities, 1 race trait), 37 more print with their condition sentence dropped |
 
 Each row's receipt is under `docs/release/SD-36-consolidation/artifacts/epic-f/` (`stage-f1c/`,
 `stage-f2-f3/f3b2-converter-receipt.md`, `f3b2b-receipt.md`, `f3c3-receipt.md`, `f3c4b-receipt.md`,
-`f3c5-receipt.md`, `stage-f4-f5/f4pre-receipt.md`). What the converter still leaves open is named by
-mechanism in `docs/release/SD-36-consolidation/forward-scope-register.md` (FS-10..FS-23).
+`f3c5-receipt.md`, `stage-f4-f5/f4pre-receipt.md`, `stage-f7/f7b-receipt.md`). What the converter still
+leaves open is named by mechanism in
+`docs/release/SD-36-consolidation/forward-scope-register.md` (FS-10..FS-28).
 
 `scripts/token_coverage.py --check` is the companion instrument: it names the remainder **by
 token type** and checks the type counts sum to the record count, so "the rest" can never be a

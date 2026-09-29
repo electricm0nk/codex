@@ -1,10 +1,13 @@
 # Persistence
 
 > Scope: how saved characters and campaigns are typed, stored on disk, and reached from the desktop shell.
-> Last verified: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** — SD-36 docs-truth capability
-> pass: checked this document's claims against the fact sheet and found no capability/scope claim in
-> it that needed correction (it describes on-disk mechanics, not product-wide coverage or "N books"/
-> "pilot"/"proof harness" framing); no substantive change this pass beyond this header refresh. Prior
+> Last verified: **2026-09-29 against `tranche/16` (`165cc205e7`)** — added the SD-36 F6e starter-seeds
+> section (`starter_seeds()` is a list, each entry with its own marker; `character_hub.rs`,
+> `stage-f6/f6e-receipt.md`). Prior pass **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** — SD-36
+> docs-truth capability pass: checked this document's claims against the fact sheet and found no
+> capability/scope claim in it that needed correction (it describes on-disk mechanics, not
+> product-wide coverage or "N books"/"pilot"/"proof harness" framing); no substantive change this pass
+> beyond this header refresh. Prior
 > pass **2026-09-20 against `b22ea9e113`** (SD-36 consolidation, architecture-docs truth-up) re-derived
 > the on-disk bundle layout — a saved character now writes up to **six** files, not two, since
 > `character_hub.rs` grew four sidecar files (bio/money/HP, alongside the pre-existing portrait) whose
@@ -267,7 +270,21 @@ mutation keeps whatever `revision_id` was already on disk. Only
 on-disk revision); every other write path that persists a
 `SavedCharacterEnvelope` (`create_character`, `clone_character`,
 `seed_default_character_if_needed`, `import_character`) still hardcodes
-`revision_id: "{id}.rev.1"` at construction time. `campaign_drive.rs`'s own
+`revision_id: "{id}.rev.1"` at construction time.
+
+**Starter seeds are a list, not a single hardcoded character.** `seed_default_character_if_needed`
+resolves the app-data directory and calls `character_hub.rs`'s `seed_default_characters_at`, which
+walks `starter_seeds()` — as of SD-36 F6e, two `StarterSeed` entries: Aldric Ironhand (Human Fighter 3)
+and Elowen Ashgrave (Human Wizard 5, with Fireball recorded and prepared). Each seed carries its own
+marker file (`DEFAULT_CHARACTER_SEED_MARKER` = `.default_character_seeded` for Aldric,
+`SECOND_SEED_MARKER` = `.default_character_seeded_2` for Elowen), so an install that already carries
+one seed's marker gains any later seed on its next launch without re-writing the first; a marker keeps
+a deleted seed deleted, and a seed whose character directory already exists on disk is never
+overwritten (its marker is written instead, so a player's edits survive even a lost marker). Each seed
+is built through `compose_character_input`, the same composer `create_character` uses, plus
+`pf1_adapter::apply_record_and_prepare_spell_selection` for any extra spells — never a hand-written
+character file — and is written only when its headless build receipt is `Computed`
+(`stage-f6/f6e-receipt.md`). `campaign_drive.rs`'s own
 module doc comment describes itself as "the thin Tauri-command adapter over
 the headless `codex::campaign` crate ... it deserializes the frontend's
 already-JSON campaign payloads into a typed `CampaignSnapshot` and delegates
