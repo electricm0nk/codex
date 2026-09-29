@@ -472,6 +472,117 @@ propagated when caught. The standing mitigation worked where it was applied — 
 same commit as the change that moved it, with a retro correction — and failed where a brief quoted a
 figure forward (the F5a brief's "rules 71,869" was the pre-F1c figure; the Epic F start was 71,862).
 
+## Epic F closure addendum (2026-09-29) — F1c through F7, written after the last push
+
+Epic F closed in full on 2026-09-28 (`1e744ec475`, PR #393 `MERGEABLE`, `verify.sh` PASS 51/51 in
+`artifacts/epic-f/stage-f7/verify-f7-2.log`). Between the 2026-09-26 addendum above and closure, five more
+batches landed: F1c (converter defects D1–D8), F2/F3 (gate, prestige rule, multiclass fold, prestige carrier
+mixes), F4/F5 (desktop roster, closure docs), F6 (desktop hand-kept tables → engine, HP source rule, two seed
+characters, ui-smoke isolation) and F7 (sheet-visible remainders). Final figures, each with its command, are in
+`artifacts/epic-f/stage-f4-f5/f5-facts.md` and the F6/F7 receipts:
+
+| measure | Epic F start (2026-09-21) | close (2026-09-28) |
+|---|---|---|
+| non-prestige classes Computed at every level | 42 of 135 | 63 of 63 (of 137 ids) |
+| prestige classes Computed in a carrier mix | 0 of 74 | 68 of 74 (6 = FS-15 oracle save-formula defects) |
+| desktop Create picker | 31 hand-listed | 59 from the engine roster (4 Ex-* withheld by ruling) |
+| hand-kept desktop class tables | 3 | 0 |
+| unresolved references (`_defects/unresolved-references.json`) | 11,925 | 6,252 |
+| seed characters | 1 (Aldric Ironhand, Fighter 3) | 2 (+ Elowen Ashgrave, Wizard 5, Fireball prepared) |
+| ui-smoke rows | 69 | 86 (82 green, 0 red, 1 stall, 3 manual) |
+
+Cost, approximate: ten Workflow runs, about 10.7 M subagent tokens, eight wall-clock days, two VM stops.
+The plan's estimate was 100–140 agent-hours. The operator's weekly quota stood at 87 % when F7 started.
+
+### 14. Eight of ten Epic F batches needed a converter step the brief had forbidden
+
+Every "engine-only" batch found the answer it needed was missing from `data/sheet_rules`, not from the
+engine: type-selector proficiency grants (D1), line-scoped conditions (D2), Unchained class records (D3),
+closure attestation (D4), always-held globals (D7), variable-pool picks (D8), skill ranks per level
+(`STARTSKILLPTS`, never carried), undeclared oracle variables (PCGen reads them as 0), same-book reprints,
+`SUBCLASS:` lines (psion disciplines, wizard schools), ability-category pick rows (sorcerer bloodlines),
+Internal natural-attack helper rows, selection pools without pick options (cleric domains), and prose
+formulas (`(min(10,CASTERLEVEL))d6` on 2,017 records). Each time the agent stopped honestly on the batch
+invariant, and each time the script was patched to add a converter step. The structural-diff protocol
+(`artifacts/epic-f/scripts/structural_diff.py`: every delta class pinned, planted mutations must fail,
+records 49,450 unmoved, `--check` exit 0, residue gate) made those regenerations safe: 2,801 package files
+changed across the epic with zero unexplained deltas.
+
+**Next time:** the converter is a planned lane in every class/feature-completion epic, with the
+structural-diff protocol in the batch prefix from step one. "No converter change" is not a safe default
+invariant for this codebase; "converter changes only under the protocol" is.
+
+### 15. Hand-kept tables masked real defects for months, and "Computed" hid three wrong printed numbers
+
+The 42 hand-typed weapon-proficiency rows hid D1–D8. The three desktop class tables marked Samurai
+"not proficient with martial weapons". The bespoke hit-die chain printed Monk as d10 from a corpus row while
+computing d8. The Abilities panel printed odd scores one low (`10 + 2 × modifier`) on every character
+since tranche/16 was cut. Fireball printed a raw formula. All of these sat on sheets the census called
+`Computed`, because the census measures the receipt, not the rendered page.
+
+**Next time:** (a) no hand-kept per-class table anywhere in the desktop — F6a's rule: the engine is the
+single source, a fallback is allowed only behind a visible notice; (b) every merge check renders real builds
+on both trees and classifies every printed line delta, and opens the seed characters in the real app
+(`ui-smoke/f7/elowen/`); (c) a `Computed` count is a floor, never the claim.
+
+### 16. Adversarial merge checks caught one to three real blockers per batch
+
+F1c: D2's split lines silently stopped printing when a gate read an uncarried fact. F4: the Human ability
+pick was read as a Strength domain by the new pool link. F6: Bloodrager cast at levels 1–3; the corpus
+bundle wrote equipment as `{}` so the packaged Intelligent Item catalog served 0 of 246. F7: none. Every one
+of these had passed the suites. The checks cost roughly a fifth of each batch's tokens.
+
+**Next time:** keep the merge check on Opus even in quota wrap-up; narrow its scope (fewer builds, the
+batch's own claims) rather than drop it. Never move it to Haiku.
+
+### 17. The `declined` contract stopped seven refuted premises, and each stop cost a manual script patch
+
+F3b (skill ranks absent, Loremaster unattested), F3b2 (undeclared variables), F3c2 (psion subclass lines),
+F3c4 (bloodline pick rows outside the inventory), F3d (187 negative-control fixtures are Blocked class-alone,
+so a "flip to Computed" would fabricate), F1c regenerate (summoner gate), F1c-4 (D8). Each returned
+`declined` with the mechanism named, the run stopped before a commit, and the orchestrator inserted a step
+that owned the finding and re-resumed. That is the contract working. The cost was five hand edits to the
+same script that said "accept this step's declines because the next step owns them".
+
+**Next time:** the workflow script's step list carries `ownedBy`: a declined item whose text names a later
+step's key does not stop the run. Dispatch the converter step first when the finding is data-shaped.
+
+### 18. Test runs wrote 377 characters into the operator's real character store
+
+The ui-smoke harness launched the app through the real Tauri `app_data_dir()`. Every "create character"
+row left one behind: 217 "Smoke Test PC", the F4/F6 rows, and July/August one-offs. The operator found it
+on a base image meant for beta testers. Fix (F6d): the harness sets `XDG_DATA_HOME` (and config/cache) to a
+per-run scratch root, a guard refuses to start against the real root, rows delete what they create, and
+the merge check hashes the real store before and after. The litter was moved, not deleted, to
+`~/workspace/backups/codex-characters-litter-<date>/`; the permission gate correctly refused an `rm -rf`.
+
+**Next time:** any harness that launches the real app runs on an isolated data root from its first
+commit, and the receipt states the real store's count before and after.
+
+### 19. Two VM stops, one Haiku misread, and a byte-identical prefix rule
+
+2026-09-23 the guest ran out of memory during a full test pass (24 cores × default test threads).
+2026-09-26 the VM stopped again during `verify.sh` with no OOM line (a host stop or the kernel-update
+reboot). Both times the tmpfs scratchpad died with the nohup logs. Recovery worked the same way twice:
+inspect the dirty worktree, keep it, patch only the prompts of agents that had not completed, `diff` the
+script prefix against its backup to prove the cached prompts were byte-identical, and resume by run id.
+Separately, two Haiku "run verify.sh and report" agents returned `green:false, failing:[]` while the gate
+was still running; the script read that as red, spent an Opus fix round, and stopped unpushed.
+
+**Next time:** MEMORY GUARD in every prefix (`-j 8`, `--test-threads=8`, `free -g`, one cargo); cited
+logs copied into the repo under the stage's artifact dir before the step returns; long-run waits on
+Sonnet or better; a `green:false` with an empty failing list is "not finished", never red.
+
+### 20. The operator's questions were the cheapest verification we had
+
+"How do we have 19 classes not done after SD-35 moved the bar to 100%?" exposed that the 42 hand rows were
+the whole proficiency story. "We only want the one Ironhands character" exposed the harness writing into
+the real store. "Its more important to get what defects we know about resolved first — especially a monk"
+re-ranked F6/F7 around sheet-visible defects instead of doc polish. None of these came from an instrument.
+
+**Next time:** put the seed characters and the operator's named use cases (a Monk, a Fighter/Wizard) in the
+merge check's fixed roster, and report per-character sheet deltas, not census totals, in the status message.
+
 ## Changes for the next bundle
 
 | change | where it must be enforced |
@@ -484,6 +595,14 @@ figure forward (the F5a brief's "rules 71,869" was the pre-F1c figure; the Epic 
 | Tier long-running unattended verification (survive-20-minutes-unsupervised work) to Sonnet explicitly in the dispatch prompt, not left implicit in "housekeeping vs. implementation" | `workflow-instruction.md §2` |
 | Put the MEMORY GUARD (one cargo, `-j 8`, `--test-threads=8`, `free -g`) and "copy cited artifacts into the repo" in every dispatch prefix from the first step, not after a crash | `workflow-instruction.md §0`, the workflow script's shared prefix |
 | Route each named remainder mechanism to the layer that owns it (converter vs engine vs oracle data) at planning time; plan converter steps under the structural-diff protocol up front | `epic-breakdown.md`, `decisions.md §11.1` |
+| Put the converter lane and the structural-diff protocol in the batch prefix of every class/feature-completion epic from step one; "no converter change" is never the invariant (lesson 14) | `workflow-instruction.md §0`, the workflow script's shared prefix |
+| No hand-kept per-class table in the desktop; the engine is the single source; fallbacks only behind a visible notice; the merge check renders real builds on both trees and opens the seed characters in the real app (lesson 15) | `docs/architecture/desktop-app.md`, merge-check brief |
+| Merge checks stay on Opus and are narrowed, never dropped or downgraded, under quota pressure (lesson 16) | workflow script model map |
+| Workflow step lists carry `ownedBy`: a declined item that names a later step's key does not stop the run (lesson 17) | `workflow-authoring` skill, `workflow-instruction.md §2` |
+| Any harness that launches the real app runs on an isolated data root (`XDG_DATA_HOME` per run) with a guard and a before/after store count in its receipt (lesson 18) | `apps/desktop/scripts/ui-smoke/run.mjs`, `docs/testing/ui-smoke-inventory.md` |
+| Long-run waits on Sonnet or better; `green:false` with an empty failing list means "not finished"; cited logs copied into the repo before the step returns; VM-crash recovery = keep the dirty worktree, patch only unrun prompts, diff the prefix, resume by run id (lesson 19) | workflow script prefix; memory `oom-crash-during-workflow-full-test-pass`, `haiku-cannot-hold-a-long-run-return-contract` |
+| Status messages report per-character sheet deltas for the seed characters and the operator's named use cases, not census totals alone (lesson 20) | orchestrator status template |
+| Budget each batch in subagent tokens as well as agent-hours; Epic F cost about 10.7 M subagent tokens against a 100–140 agent-hour plan | `epic-breakdown.md` sizing rows |
 
 ---
 
@@ -497,7 +616,7 @@ figure forward (the F5a brief's "rules 71,869" was the pre-F1c figure; the Epic 
 | C1 — source refactor | done, 1 cycle | matches | `b22ea9e113` |
 | C2 — test rewrite | open, 0 cycles | **done** (corrected 2026-09-20, second pass after this document was first written): C2.3/C2.4/C2.5/C2.6 done in the earlier C2D gap-closure pass; C2.1/C2.2 (the table-driven rewrite) landed this pass — `tests/sd18_widening/rows.rs` (182 rows) and `tests/sd13_progression/rows.rs` (143 rows) both exist, `--list` byte-identical both families, 891/1,136 passed 0 failed, three-sabotage mutation gate identical failing-name sets before/after | `find tests -iname rows.rs` (2 hits); `receipts.md` Epic C2.1/C2.2 evidence section; `docs/retro/events/epic-c2d-gap-closure.jsonl`, `docs/retro/events/sd36-epic-c2-docs.jsonl` |
 | D — closure | open, 0 cycles | in progress: D1 (architecture docs) done; D2/D3 (this document + release-notes.md) re-written at F5a, 2026-09-26; D4 (graphify) re-runs last against the final tree; D5/D6 not started | `docs/architecture/README.md` "Last verified" header; `kanban.md` D2–D6 row |
-| F — class completion (added 2026-09-21) | (added) | F0–F4 **done**, F5a **done** 2026-09-26, F5.3 open | `kanban.md` F rows; `epic-breakdown.md` Epic F measured column; census `ids=137 computed=63 prestige_mix_computed=68 mix_panel_computed=185` |
+| F — class completion (added 2026-09-21) | (added) | **done in full**, F0–F7, closed 2026-09-28 (`1e744ec475`); named remainders FS-15/27/28, Half-Orc/Half-Elf free +2, armor check penalty on Dex skills | `kanban.md` F rows; `epic-breakdown.md` Epic F measured column; census `ids=137 computed=63 prestige_mix_computed=68 mix_panel_computed=185` |
 
 This table, and the corrected `kanban.md`/`progress.md` rows alongside it, are themselves subject
 to the same "figures rot the moment the tree moves past them" caveat as everything else in this
