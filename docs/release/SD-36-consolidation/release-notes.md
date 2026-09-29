@@ -9,19 +9,22 @@ date: 2026-09-20
 
 Measured baselines (before/after, each row re-derived with its own command) and bundle summary.
 
-**Status at time of writing (2026-09-26, `tranche/16` HEAD `e70a8745ed`):** Epics B, A, E, C1, C2
+**Status at time of writing (2026-09-28, `tranche/16` HEAD `b021509e23`):** Epics B, A, E, C1, C2
 and D1 are closed, and Epic F — class completion, scoped in by the operator's 2026-09-21 ruling — is
-closed (F0–F6; F6 desktop polish landed 2026-09-27, merge `509244a2b6`): the class census measures **137** class ids, **63 of 63**
+**closed in full (F0–F7; F7 sheet-visible remainders landed 2026-09-28, merge `0325a99ab1`, fix
+`b021509e23`)**: the class census measures **137** class ids, **63 of 63**
 non-prestige `Computed` at every level, prestige **68 of 74** `Computed` in a carrier mix, mix panel **185
-of 185**, and the desktop Create roster offers **59** classes from the engine. Still to run, in order: F5.3
-(`scripts/verify-baselines.env` re-derived, PR #393 body), graphify against the final tree, the PR merge
-(operator), the worktree sweep. The "Measured baselines at Epic F closure" table below is the current
+of 185**, and the desktop Create roster offers **59** classes from the engine. F7 fixed the sheet-visible
+prints these figures never captured: ability scores, the Weapons tab's proficiency list, spell/ability
+prose formulas, prestige/class-skill labels and Elowen's skill allocation — none of them moved a headline
+figure. Still to run, in order: graphify against the final tree, the PR merge (operator), the worktree
+sweep. The "Measured baselines at Epic F closure" table below is the current
 one; the table after it is kept as the C2-closure record it was written as.
 ---
 
 ## Summary
 
-SD-36 consolidates the tree (Epics B, A, E, C1, C2, D1) and completes class coverage (Epic F, F0–F6):
+SD-36 consolidates the tree (Epics B, A, E, C1, C2, D1) and completes class coverage (Epic F, F0–F7):
 census 137 class ids, 63 of 63 non-prestige `Computed` at every level, prestige 68 of 74 in a carrier mix,
 mix panel 185 of 185, desktop roster 59 classes served by the engine (figures and commands below).
 
@@ -29,14 +32,19 @@ mix panel 185 of 185, desktop roster 59 classes served by the engine (figures an
 
 The Create picker offers 59 classes from the engine; Level Up adds any base or prestige class and names
 each refused option's reason; the sheet's weapon proficiency, caster level, class skills and hit points
-come from the engine; a second starter character (Elowen Ashgrave, Human Wizard 5) is seeded. See
-"Desktop change set" and "Epic F" below.
+come from the engine; a second starter character (Elowen Ashgrave, Human Wizard 5) is seeded. The
+Abilities panel, Weapons tab and Skills panel print the engine's own numbers and labels, and spell/ability
+text prints the rule's words instead of a source formula (Epic F7). See "Desktop change set" and "Epic F"
+below.
 
 ## Defects Fixed
 
 22 SD-35 code-review findings (Epic E); desktop HP `Unknown` on 5 of 59 classes, wrong Martial tier and
 caster level from hand tables, missing class skills, a shaman domain line the book does not grant, and raw
-choice ids in prestige requirements (Epic F6). See the Epic E and Epic F sections.
+choice ids in prestige requirements (Epic F6). Odd ability scores printed one low, PCGen pseudo-weapons
+listed as weapons, a seeded character loading with unallocated skill points, a non-skill id in a
+class-skill list, prestige requirement lines printing lowercased slugs, and spell/ability text printing raw
+PCGen formula syntax or an unshown gated sentence (Epic F7). See the Epic E and Epic F sections.
 
 ## Operational Notes
 
@@ -45,14 +53,16 @@ public status site stays frozen (Epic B).
 
 ## Verification Evidence
 
-`scripts/verify.sh` full PASS 51/0 at `08f8cb5ace`
-(`artifacts/epic-f/stage-f6/verify-f6-2.log`); ui-smoke F6 rows in `artifacts/ui-smoke/f6/`; per-epic
+`scripts/verify.sh` full PASS 51/0 at `b021509e23`
+(`artifacts/epic-f/stage-f7/verify-f7-2.log`); ui-smoke F7 rows in `artifacts/ui-smoke/f7/`; per-epic
 receipts in `receipts.md`.
 
 ## Known Issues
 
 See "Known follow-ups" and `forward-scope-register.md` (FS-15: 6 of 74 prestige carrier mixes; FS-23
-package row; 9 of 59 roster classes with class skills Unknown; unresolved references 6,252 by mechanism).
+package row; 9 of 59 roster classes with class skills Unknown; unresolved references 6,252 by mechanism;
+FS-27 (new): 4 Unchained base classes refused in a mix; FS-28 (new): 33 catalog field summaries print a
+choice id).
 
 ## Update Eligibility
 
@@ -289,7 +299,7 @@ from the corpus-wide remainder that stays deferred).
 
 ---
 
-## Epic F — Class completion (closed through F5a, 2026-09-26)
+## Epic F — Class completion (closed 2026-09-28, F0–F7)
 
 Scoped into this bundle by the operator's 2026-09-21 ruling (`decisions.md §11`) to close the class gaps
 before PR #393 merges. Plan: `epic-f-class-completion.md`; criteria with their measured figures:
@@ -311,14 +321,20 @@ prestige class computes in its carrier mix except 6 of 74, named; every multicla
 | F4 | desktop class roster from the census; single-source seeds; prestige level-up | done 2026-09-26 | roster 31 -> 59; ui-smoke 7 of 7 |
 | F5 | closure deltas | done 2026-09-26 | this document, status/architecture docs, decisions §11–§14, forward-scope register, retrospective |
 | F6 | desktop polish: class facts from the engine; HP source rule; feat skill bonuses from the record; Level Up blockers and requirement labels; shaman domain line; newest-printing verdict; isolated ui-smoke app data; second seed character | done 2026-09-27 (merge `509244a2b6`) | hand tables 3 -> 0; HP Unknown 5 -> 0 of 59; class skills 12 -> 50 of 59; Level Up 10 of 133 options refused with the blocker shown, 0 without; raw-id requirement lines 12 -> 0 of 286; shaman domain lines 10 -> 0 of 10; `verify.sh` PASS 51/0 |
+| F7 | sheet-visible remainders (operator "defects first, merge after"): ability scores from the engine; Weapons tab lists only weapon records; spell/ability prose formulas print as words (converter step); class-skill lists hold only skills; prestige/Level-Up requirement lines print labels; Expert/Summoner/Psion canonical picks marked `(default pick)`; Elowen's skill points allocated; Magus Knowledge (religion) checked against the oracle | done 2026-09-28 (merge `0325a99ab1`, fix `b021509e23`) | Elowen Con 12 -> 13, Aldric Str 18 -> 19 (48 of 48 scores match); Weapons tab pseudo-weapons 0 of 8 characters; formula-shape residue hits 2,361 -> 0 on 1,997 files; class-skill non-skill ids 0 of 148; prestige requirement slugs 0 of 286; default-pick markers on 3 of 59 roster classes; census unchanged (137/63/74/185/59); `verify.sh` PASS 51/0 |
 
 **Named remainder** (`forward-scope-register.md`): 6 of 74 prestige carrier mixes on an oracle save
 formula (FS-15, a book-cited override path); 3 prestige classes whose proficiency answer is Unknown by
 mechanism G (diabolist and rivethun_emissary still compute in their fighter carrier mix, whose
 weapon union the fighter decides; exalted is one of the FS-15 six); unresolved references
 6,252 by mechanism (B 63, D 2,646, E 2,764, F 779; FS-10..FS-13); FS-14, FS-18, FS-19, FS-21, FS-22, FS-23.
-Desktop remainders on the 59-class roster, after F6 (`artifacts/epic-f/stage-f6/`): HP `Unknown` 0 of 59
+Desktop remainders on the 59-class roster, after F6 and F7 (`artifacts/epic-f/stage-f6/`,
+`artifacts/epic-f/stage-f7/`): HP `Unknown` 0 of 59
 (was 5; FS-24 closed, FS-23 sheet side closed); class skills answered for 50 of 59 (was 12 from a hand
 table; the 9 ACG classes print `Class skills Unknown` — an unresolved `Class|<Class>` edge, a converter
-step; FS-25 desktop side closed); weapon proficiency and caster level 59 of 59 from the engine, hand-kept
-desktop class tables 0 (FS-26 closed).
+step; FS-25 desktop side closed, re-confirmed unchanged by F7-10); weapon proficiency and caster level 59
+of 59 from the engine, hand-kept desktop class tables 0 (FS-26 closed). F7's own remainder, named by
+mechanism: 4 Pathfinder Unchained base classes cannot be added into a mix, only taken alone (`FS-27`, new
+— the mix gate has no save source for the bespoke Unchained module yet); 33 reference-library catalog
+field summaries still print a `Chosen` grant's raw id, not its label (`FS-28`, new — those describers take
+no package to resolve one).
