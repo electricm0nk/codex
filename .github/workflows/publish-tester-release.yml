@@ -548,9 +548,6 @@ jobs:
     runs-on: windows-latest
     needs: [test, stamp]
 
-    outputs:
-      msi_name: ${{ steps.stage_windows.outputs.msi_name }}
-
     steps:
       - uses: actions/checkout@v7
 
@@ -576,12 +573,14 @@ jobs:
         working-directory: apps/desktop
         run: npm ci
 
-      # The `tauri build` invocation targets Windows MSVC and emits
-      # both msi (WiX) and nsis bundles. Code-signing is intentionally
-      # deferred to a follow-up — testers can click through SmartScreen.
+      # The `tauri build` invocation targets Windows MSVC and emits the
+      # nsis bundle only. The MSI (WiX 3) is not built: `light.exe` fails
+      # on the ~107k-file data/corpus + data/sheet_rules resource bundle
+      # (run 36595679219). Code-signing is intentionally deferred to a
+      # follow-up — testers can click through SmartScreen.
       - name: Build Windows artifact set
         working-directory: apps/desktop
-        run: npx tauri build --target x86_64-pc-windows-msvc --bundles msi,nsis --ci
+        run: npx tauri build --target x86_64-pc-windows-msvc --bundles nsis --ci
 
       - name: Stage Windows release artifacts
         id: stage_windows
@@ -610,27 +609,17 @@ jobs:
           # subtree with `find` so the Stage step works regardless of
           # whether `--target` is passed.
           mkdir -p ../../release-staging
-          MSI=$(find src-tauri/target -path '*/release/bundle/msi/*.msi' -type f 2>/dev/null | head -1 || true)
           NSIS=$(find src-tauri/target -path '*/release/bundle/nsis/*.exe' -type f 2>/dev/null | head -1 || true)
           # Resolve to absolute Windows paths for the `cp` command
           # (bash on Windows is fine with mixed / and \\ but the
           # output goes back to a Linux-style GITHUB_OUTPUT write).
-          MSI=$(cygpath -wa "${MSI}" 2>/dev/null || echo "${MSI}")
           NSIS=$(cygpath -wa "${NSIS}" 2>/dev/null || echo "${NSIS}")
-          if [ -z "${MSI}" ] || [ ! -f "${MSI}" ]; then
-            echo "ERROR: No .msi artifact found under src-tauri/target/*/release/bundle/msi/"
-            find src-tauri/target -type d -name 'release' 2>/dev/null || true
-            exit 1
-          fi
           if [ -z "${NSIS}" ] || [ ! -f "${NSIS}" ]; then
             echo "ERROR: No .exe (NSIS) artifact found under src-tauri/target/*/release/bundle/nsis/"
             exit 1
           fi
-          MSI_NAME=$(basename "${MSI}")
           NSIS_NAME=$(basename "${NSIS}")
-          cp "${MSI}" "../../release-staging/${MSI_NAME}"
           cp "${NSIS}" "../../release-staging/${NSIS_NAME}"
-          echo "msi_name=${MSI_NAME}" >> "$GITHUB_OUTPUT"
           echo "nsis_name=${NSIS_NAME}" >> "$GITHUB_OUTPUT"
 
       - name: Upload windows platform artifacts
@@ -638,7 +627,6 @@ jobs:
         with:
           name: platform-windows
           path: |
-            release-staging/*.msi
             release-staging/*.exe
           if-no-files-found: error
 
