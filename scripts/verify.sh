@@ -341,6 +341,21 @@ run_preflight_oracle() {
         return
     fi
 
+    # Starfinder cone (SD-37 E0.1): the fetch script's own probe already
+    # fails --check on a missing SF cone; this is a second, independent
+    # implementation of the same check, so a regression in the probe cannot
+    # turn the stage green. Only demanded when the pin names the SF paths.
+    local sf_root
+    sf_root=$(sed -n 's/^export PCGEN_REPO_DIR=//p' "$log" | tail -1)
+    if grep -q '^PCGEN_ORACLE_SPARSE_PATHS=.*data/starfinder' "$REPO_ROOT/scripts/pcgen-oracle-pin.env"; then
+        if [[ -z "$sf_root" || ! -f "$sf_root/data/starfinder/paizo/core/_starfinder_core_rulebook.pcc" || ! -d "$sf_root/system/gameModes/Starfinder" ]]; then
+            printf '    FAIL: the pin names the Starfinder cone but %s lacks data/starfinder/paizo/core/_starfinder_core_rulebook.pcc or system/gameModes/Starfinder\n' "${sf_root:-<unresolved>}"
+            stage_fail preflight-oracle "Starfinder cone missing from the oracle checkout — $log"
+            return
+        fi
+        actual "Starfinder cone present (core .pcc + game mode)"
+    fi
+
     local sha
     sha=$(sed -n 's/^pcgen-oracle: OK \([0-9a-f]*\).*$/\1/p' "$log" | tail -1)
     actual "PCGEN_ORACLE_SHA=${sha:-unknown}"

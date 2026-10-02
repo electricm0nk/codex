@@ -104,6 +104,27 @@ corpus_ready() {
     [[ -d "$DEST/data/pathfinder/paizo/roleplaying_game" ]]
 }
 
+# Starfinder completeness probe (SD-37 E0.1). When the pin's sparse paths
+# name the Starfinder data cone, a checkout that lacks the Core Rulebook
+# campaign file or the Starfinder game mode is an INCOMPLETE oracle, not a
+# valid one: a sparse cone that silently omits data/starfinder would let every
+# SF instrument read nothing and report CLEAN. A PF-only pin does not demand
+# these, so pins without the SF paths behave exactly as before.
+# Prints each missing path (relative to the checkout) on its own line.
+sf_missing_paths() {
+    local p
+    for p in "${SPARSE_PATHS[@]}"; do
+        case "$p" in
+            data/starfinder)
+                [[ -f "$DEST/data/starfinder/paizo/core/_starfinder_core_rulebook.pcc" ]] \
+                    || printf '%s\n' "data/starfinder/paizo/core/_starfinder_core_rulebook.pcc" ;;
+            system/gameModes/Starfinder)
+                [[ -d "$DEST/system/gameModes/Starfinder" ]] \
+                    || printf '%s\n' "system/gameModes/Starfinder" ;;
+        esac
+    done
+}
+
 # Dirty tracked files WITHIN the pinned cone only — untracked files are not
 # this script's business, and a change outside the cone is not a drifted
 # oracle for anything this repo reads.
@@ -133,6 +154,14 @@ do_check() {
         printf 'fetch-pcgen-oracle.sh: %s is at the pinned SHA but data/pathfinder/paizo/roleplaying_game is missing (incomplete sparse cone?)\n' "$DEST" >&2
         return 1
     fi
+    local sfmissing
+    sfmissing=$(sf_missing_paths)
+    if [[ -n "$sfmissing" ]]; then
+        printf 'fetch-pcgen-oracle.sh: %s is at the pinned SHA but the Starfinder cone is incomplete -- missing:\n' "$DEST" >&2
+        printf '    %s\n' $sfmissing >&2
+        printf '    fix with: scripts/fetch-pcgen-oracle.sh --dest %s --force\n' "$DEST" >&2
+        return 1
+    fi
     log "pcgen-oracle: OK $head $DEST"
     print_exports
     return 0
@@ -141,6 +170,11 @@ do_check() {
 # Moves an EXISTING, CLEAN, off-pin checkout to the pin. Never called on a
 # dirty checkout — the caller re-checks immediately before this.
 do_fetch_to_pin() {
+    # Re-apply the pin's cone first, but only on a checkout that is already
+    # sparse: a full clone must never be converted to a sparse one.
+    if [[ "$(git -C "$DEST" config --get core.sparseCheckout 2>/dev/null)" == "true" ]]; then
+        ( cd "$DEST" && git sparse-checkout set "${SPARSE_PATHS[@]}" ) >/dev/null 2>&1
+    fi
     if ( cd "$DEST" && git fetch --depth 1 origin "$PCGEN_ORACLE_SHA" ) >/dev/null 2>&1; then
         ( cd "$DEST" && git checkout --detach FETCH_HEAD ) >/dev/null 2>&1
         return $?
