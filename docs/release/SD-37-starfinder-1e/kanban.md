@@ -33,7 +33,7 @@ card (`decisions.md §17`).
 | C1 | Version bump 0.17.0 (14 surfaces, one commit) + push `tranche/17` | haiku | complete | C0.2 | `artifacts/cycle_0/C1_cycle_receipt.md`; commit 9d03a76996 |
 | E0.1 | Oracle sparse paths + SF completeness probe + fresh-clone proof | sonnet | complete | C1 | `artifacts/epic_0/E0.1_cycle_receipt.md`; code commit 5df9eb36db |
 | E0.2 | Licence matrix SF rows + SF PI term set | opus | complete | C1 | `artifacts/epic_0/E0.2_cycle_receipt.md`; commit 2f0bd9d793; 11 rows (8 include, 3 exclude, all `operator_sign_off` false); `SF_PI_TERMS` 41 + `classify_field_sf`. Registry test is E3.1's |
-| E0.3 | SF work inventory (denominator), fail-closed sum | sonnet | waiting | E0.1, E0.2 | |
+| E0.3 | SF work inventory (denominator), fail-closed sum | sonnet | complete | E0.1, E0.2 | `artifacts/epic_0/E0.3_cycle_receipt.md`; 8,582 units of 12,718 in-scope F-6 rows (CRB 3,105); excluded 229 named; A (Python) == B (awk); 6 planted faults exit 1 |
 | E0.4 | Seed builds + hand values from SRD, Opus-reviewed | opus | complete | C1 | `artifacts/epic_0/E0.4_cycle_receipt.md`. Transcriber 705088c8d7: `seed-builds.md`, `seed-hand-values.md` (126 rows, every row has an SRD URL). Independent Opus review 2026-10-02: 78 of 78 URLs re-fetched (51 of 51 byte-identical), 126 of 126 rows `agree`, 0 `disagree`, 0 corrections (`E0.4_review_derive.py`) |
 | E1.1 | `GameSystem`-keyed package roots, runtime resolution | opus | waiting | C1 | Batched with E1.2, E1.3 |
 | E1.2 | Per-system book registries (19 consts) | opus | waiting | C1 | Batched |

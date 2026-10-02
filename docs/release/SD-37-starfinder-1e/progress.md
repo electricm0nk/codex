@@ -143,6 +143,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E0.4 (transcriber) | 2026-10-02 | Opus 5.5 | the `docs(sd37,e0.4)` commit | in-progress (reviewer pending) | Aldric / Elowen unchanged (not rendered); 4 SF seeds defined: Soldier HP 25 SP 24 RP 4 EAC 16 KAC 19; Mystic 34/25/6/16/16; Technomancer 29/35/6/18/19; Envoy 20/21/5/14/15 | `artifacts/epic_0/E0.4_cycle_receipt.md` |
 | E0.4 (reviewer) | 2026-10-02 | Opus 5.5 | the `docs(sd37,e0.4): independent review` commit | complete | Aldric / Elowen unchanged (not rendered); 4 SF seeds unchanged by review, confirmed: Soldier HP 25 SP 24 RP 4 EAC 16 KAC 19; Mystic 34/25/6/16/16; Technomancer 29/35/6/18/19; Envoy 20/21/5/14/15. 126/126 agree, 0 corrections | `artifacts/epic_0/E0.4_cycle_receipt.md` |
 | E0.2 | 2026-10-02 | Opus 5.5 | 2f0bd9d793 | complete | Aldric / Elowen unchanged (PF screen byte-unchanged; not rendered); 4 SF seeds not rendered before E4 (no caller of the new items) | `artifacts/epic_0/E0.2_cycle_receipt.md` |
+| E0.3 | 2026-10-02 | Sonnet 5.5 | the `docs(sd37,e0.3)` commit | complete | Aldric / Elowen unchanged (not rendered); 4 SF seeds unchanged (not rendered; no engine/data change) | `artifacts/epic_0/E0.3_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
@@ -166,6 +167,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-02 | E0.2 | SD-a: `paizo/core/_society` and LPJ stay excluded; every SF row `operator_sign_off: false` | re-admit `_society` with a licence row | `_society/_.pcc` declares no licence at all (no `COPYRIGHT:`, no `OGL.txt`); LPJ licence unverified |
 | 2026-10-02 | E0.4 | SD-g scope: gear budget for the 3rd/5th-level SF seeds = Core Rulebook Table 11-5 wealth per level (4,000 / 9,000 credits; https://www.aonsrd.com/Rules.aspx?ID=230) | 1,000 credits of 1st-level gear (https://www.aonsrd.com/Rules.aspx?ID=39) | the Core Rulebook has no separate higher-level starting-gear rule; 1st-level gear would not give the Soldier heavy armour with a binding max-Dex cap |
 | 2026-10-02 | E0.4 | Seeds take Core Rulebook class features only, not the optional *Starfinder Enhanced* ones AoN mixes into the Technomancer/Envoy pages | Enhanced technomancer/envoy options | the pinned oracle encodes the Core Rulebook; no hand-value column differs between the two |
+| 2026-10-02 | E0.3 | Unit = one declaration row per distinct (book, kind, `KEY:`-or-name) in 12 record kinds; `.MOD` of a declared base, internal plumbing, class level/continuation rows, same-key rows and engine-config files are named non-unit buckets (SD-b spirit: count records, not rows) | count every F-6 row (12,718) as a unit | rows include `.MOD` patches and per-level class rows; the inventory must sum rows = units + named buckets. Operator may narrow kinds (proficiency, equipment) later |
 
 ## Open blockers
 
