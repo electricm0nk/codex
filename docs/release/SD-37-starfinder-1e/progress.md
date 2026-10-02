@@ -16,14 +16,14 @@ it (`workflow-instruction.md §5`).
 | Workflow run id | in `~/.claude/projects/-home-ubuntu-workspace-repos-codex/memory/sd37-launch-state.md` (launch decision below); E7.4 copies it here |
 | Script path | `artifacts/cycle_0/sd37-workflow.js` (the launched script; it is also the prefix backup) |
 | Prefix backup | `artifacts/cycle_0/sd37-workflow.js` — the `CORE` constant |
-| Pinned `tranche/17` SHA for wrong-base resets | *(resolves at C1 — the bump commit; C1 writes it here)* |
+| Pinned `tranche/17` SHA for wrong-base resets | `9d03a769962c2d6fa118ef80f8cce18443a296cd` (C1 bump commit) |
 | Oracle SHA | `7f818006e371188e5717fd18d74d18a420747fc6` |
 
 ## Summary
 
 | Epic | Status | Cards complete | Notes |
 |---|---|---|---|
-| C | in progress | 2 of 4 (C0.0, C0.2) | |
+| C | in progress | 3 of 4 (C0.0, C0.2, C1) | |
 | E0 | waiting | 0 of 4 | |
 | E1 | waiting | 0 of 5 | |
 | E2 | waiting | 0 of 3 | |
@@ -34,7 +34,7 @@ it (`workflow-instruction.md §5`).
 | E7.1 | waiting | 0 of 1 | |
 | E4a | waiting | 0 of 5 | serial after E7.1 (C0.2) |
 | E7.2–E7.9 | waiting | 0 of 8 | |
-| **Total** | | **2 of 55** | command below the table |
+| **Total** | | **3 of 55** | command below the table |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -137,6 +137,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 |---|---|---|---|---|---|---|
 | C0.0 | 2026-10-02 | Sonnet 5.5 (planning) | this package's commit | complete | n/a (no code) | this section |
 | C0.2 | 2026-10-02 | Opus 5.5 | the `docs(sd37,c0.2)` commit | complete | n/a (no code) | `artifacts/cycle_0/C0.2_cycle_receipt.md` |
+| C1 | 2026-10-02 | Haiku 4.5 | 9d03a76996 | complete | n/a (no code) | `artifacts/cycle_0/C1_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 

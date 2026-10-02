@@ -30,7 +30,7 @@ card (`decisions.md §17`).
 | C0.0 | Package authored + unattended-mode receipt | (authoring session, Sonnet 5.5) | complete | — | `progress.md` Cycle 0; commit = this package's commit |
 | C0.1 | SD-36 loose ends (README status, kanban D2–D6 row, worktrees, 7 `sd36/*` remotes, dirty retro log) + pending retro corrections | haiku | ready | — | Not a gate. SD-j applies. |
 | C0.2 | Opus review of this package (planning was Sonnet) | opus | complete | — | `artifacts/cycle_0/C0.2_cycle_receipt.md`; package fixes in the C0.2 commit |
-| C1 | Version bump 0.17.0 (14 surfaces, one commit) + push `tranche/17` | haiku | ready | C0.2 | Rebase first if #395 merged |
+| C1 | Version bump 0.17.0 (14 surfaces, one commit) + push `tranche/17` | haiku | complete | C0.2 | `artifacts/cycle_0/C1_cycle_receipt.md`; commit 9d03a76996 |
 | E0.1 | Oracle sparse paths + SF completeness probe + fresh-clone proof | sonnet | waiting | C1 | `artifacts/epic_0/` |
 | E0.2 | Licence matrix SF rows + SF PI term set | opus | waiting | C1 | No registry test here (moved to E3.1); uses cargo (`pi_screening.rs`) |
 | E0.3 | SF work inventory (denominator), fail-closed sum | sonnet | waiting | E0.1, E0.2 | |
