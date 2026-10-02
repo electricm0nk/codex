@@ -426,7 +426,9 @@ fn describe_expr(package: &SheetRulePackage, expr: &Expr) -> String {
             SpellKind::Arcane => "highest arcane spell level".to_owned(),
             SpellKind::Divine => "highest divine spell level".to_owned(),
             SpellKind::Psychic => "highest psychic spell level".to_owned(),
+            SpellKind::Starfinder => "highest spell level".to_owned(),
         },
+        Expr::KeyAbilityMod => "key ability modifier".to_owned(),
         Expr::MasterLevel => "the master's level".to_owned(),
         Expr::MasterVar(_) => "a value from the master".to_owned(),
         // A corpus variable's id is a content hash, never a word. The converter writes the
@@ -590,6 +592,14 @@ fn join(parts: Vec<String>, sep: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// SD-37 E2.1: the key ability modifier and a Starfinder spell level read as words.
+    #[test]
+    fn key_ability_and_starfinder_spell_level_read_as_words() {
+        let package = SheetRulePackage::new();
+        assert_eq!(describe_expr(&package, &Expr::KeyAbilityMod), "key ability modifier");
+        assert_eq!(describe_expr(&package, &Expr::HighestSpellLevel(SpellKind::Starfinder)), "highest spell level");
+    }
     use crate::rules_core::sheet_rule::{
         held_set, Applies, Cmp, Expr, HeldSeed, Provenance, SheetRule, SheetValue, Subject,
     };

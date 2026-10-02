@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-a13c5cad8ad2bb59)
+
+running 1 test
+round-trip: 49768 rule files, 6211 var tables, 29 ledgers skipped, 1 drifted
+
+thread 'rules_core::sheet_rule::schema_variant_tests::every_pathfinder_sheet_rule_file_round_trips_byte_equal' (474822) panicked at src/rules_core/sheet_rule.rs:4007:9:
+1 files drift on a round trip, first: ["core_rulebook/equipment/whip.json"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test rules_core::sheet_rule::schema_variant_tests::every_pathfinder_sheet_rule_file_round_trips_byte_equal ... FAILED
+
+failures:
+
+failures:
+    rules_core::sheet_rule::schema_variant_tests::every_pathfinder_sheet_rule_file_round_trips_byte_equal
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2785 filtered out; finished in 18.13s
+
+error: test failed, to rerun pass `--lib`

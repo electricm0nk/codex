@@ -342,6 +342,10 @@ fn target_words(package: &SheetRulePackage, target: &BonusTarget) -> String {
         BonusTarget::BaseAttack => "the base attack bonus".to_owned(),
         BonusTarget::Damage(w) => format!("{} damage", weapon_words(w)),
         BonusTarget::Hp => "hit points".to_owned(),
+        BonusTarget::Eac => "Energy Armor Class".to_owned(),
+        BonusTarget::Kac => "Kinetic Armor Class".to_owned(),
+        BonusTarget::Stamina => "Stamina Points".to_owned(),
+        BonusTarget::Resolve => "Resolve Points".to_owned(),
         BonusTarget::Initiative => "initiative".to_owned(),
         BonusTarget::Cmb => "the combat maneuver bonus".to_owned(),
         BonusTarget::Cmd => "the combat maneuver defense".to_owned(),
@@ -784,6 +788,16 @@ fn const_value(e: &Expr) -> Option<i64> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// SD-37 E2.1: the Starfinder sheet totals print in the sheet's own words.
+    #[test]
+    fn starfinder_targets_print_in_words() {
+        let package = SheetRulePackage::new();
+        assert_eq!(target_words(&package, &BonusTarget::Eac), "Energy Armor Class");
+        assert_eq!(target_words(&package, &BonusTarget::Kac), "Kinetic Armor Class");
+        assert_eq!(target_words(&package, &BonusTarget::Stamina), "Stamina Points");
+        assert_eq!(target_words(&package, &BonusTarget::Resolve), "Resolve Points");
+    }
     use crate::rules_core::sheet_rule::{
         evaluate, Ability, Applies, CharacterFacts, ClassRef, EvalContext, HeldSet, Provenance,
         SheetValue, Subject,

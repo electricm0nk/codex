@@ -26,7 +26,7 @@ it (`workflow-instruction.md §5`).
 | C | complete | 4 of 4 (C0.0, C0.1, C0.2, C1) | |
 | E0 | complete | 4 of 4 | rows corrected from `kanban.md` by E1.MC |
 | E1 | complete | 5 of 5 (E1.1–E1.4, E1.MC) | E1.MC receipt `artifacts/epic_1/E1.MC_cycle_receipt.md` |
-| E2 | waiting | 0 of 3 | |
+| E2 | in progress | 1 of 3 (E2.1) | E2.1 receipt `artifacts/epic_2/E2.1_cycle_receipt.md` |
 | E3 | waiting | 0 of 6 | |
 | E4 | waiting | 0 of 7 | |
 | E5 | waiting | 0 of 5 | after E4.MC (C0.2) |
@@ -147,6 +147,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E1.1–E1.3 | 2026-10-02 | Opus 5.5 | 60ea507dd3 (+ 209664dce2 C1 `Cargo.lock` repair) | complete | Aldric unchanged (rendered, sha256 1d830682…a569 before = after); Elowen unchanged (rendered, sha256 8d1a711c…00f2 before = after); 4 SF seeds not reachable (no SF data) | `artifacts/epic_1/E1.{1,2,3}_cycle_receipt.md`; PF pre-change baseline for E1.4 in `artifacts/epic_1/pf_baseline/` |
 | E1.4 | 2026-10-02 | Opus 5.5 | 390917267e | complete | Aldric unchanged (rendered both trees by the E1.4 harness, sha256 1d830682…a569 before = after); Elowen unchanged (8d1a711c…00f2 before = after); 4 SF seeds not reachable (no SF data) | `artifacts/epic_1/E1.4_cycle_receipt.md` |
 | E1.MC | 2026-10-02 | Opus 5.5 | the `docs(sd37,e1.mc)` commit | complete | Aldric unchanged (rebuilt before tree 209664dce2 vs merged 520d746125, sha256 1d830682…a569 both; planted CRB drop → 165c38f3…f7bc, restored); Elowen unchanged (8d1a711c…00f2 both; planted → bffcf7dd…ae14, restored); 4 SF seeds not reachable (no SF data) | `artifacts/epic_1/E1.MC_cycle_receipt.md` |
+| E2.1 | 2026-10-02 | Opus 5.5 | the `feat(sd37,e2.1)` commit | complete | Aldric unchanged (rendered by the E1.4 harness, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not reachable (no SF data) | `artifacts/epic_2/E2.1_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
@@ -174,6 +175,10 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-02 | E1.3 | SF converter path refused by name (`closure::BOOKS_RELATIVE` registers no Starfinder subtree; `--system starfinder-1e` exits 2 naming the system) — SD-d analogue | register `starfinder/paizo` (+ `lpj_design/infinite_space`) as the SF subtree now | E3.1 owns the SF include structure and E0.2 the licence of each dir; a registered subtree would also feed SF rows through PF's inventory and `var_names.json` paths (E1.3 receipt, "Does not cover") |
 | 2026-10-02 | E1.4 | Render-hash harness at `apps/desktop/src-tauri/src/pf_seed_render_hash.rs` (a `#[cfg(test)]` child module of `character_hub`, run with `cargo test --bins pf_seed_render_hash`); before tree = 209664dce2 (parent of the E1 implementation commit) | the proposed root `tests/pf_seed_render_hash.rs`; before tree = ab7e0b8139 | the desktop crate is bin-only and its own workspace, so no integration test can reach `character_hub`; ab7e0b8139's desktop `Cargo.lock` fails `--locked` (repaired in 209664dce2) |
 | 2026-10-02 | E1.MC | Discovery (race_trait_picker bypasses the race registry) routed to E5.1's row notes + `## DISCOVERED`; stale Summary rows E0/E1/Total re-derived from `kanban.md` | a new 56th `kanban.md` card plus an edit to E7.3's `n != 55` scan | E7.3's closure scan pins exactly 55 rows; the owning work (SF races) is already E5.1's criterion |
+| 2026-10-02 | E2.1 | Edited the 3 files the new variants break by exhaustive match (`feat_prereqs/converted_gate.rs`, `level_up_option_filter.rs`, `sheet_rule_catalog.rs`: one arm + one test each) | decline with `owned_by` | no card's §3 row holds them (package-doc grep: 0 hits; none imports `rules_tables::`), so there is no owner to name; the variants cannot compile without them |
+| 2026-10-02 | E2.1 | `Expr::KeyAbilityMod` in a feat prerequisite reports "the character record carries no key ability" (unverified) | decide it like `AbilityMod` against a 0 | nothing fills `CharacterFacts::key_ability` until E4; a 0 would refuse or admit on a fabricated value |
+| 2026-10-02 | E2.1 | Two discoveries routed as `## DISCOVERED` notes to the owning epics (E3 SF load path; E4 `ClassChassis` + key-ability prerequisite), following E1.MC's exception | a new `kanban.md` card each | E7.3's closure scan pins exactly 55 rows |
+| 2026-10-02 | E2.1 | PF `STACKING_TYPES` const kept; `STARFINDER_STACKING_TYPES` added beside it, chosen by `stacking_types(GameSystem)` from the package's system | one system-keyed table replacing the const | no existing import moves; both lists are the oracle's `BONUSSTACKS` row (`gameModes/{Pathfinder,Starfinder}/miscinfo.lst:17`, identical) |
 
 ## Open blockers
 
@@ -185,3 +190,5 @@ dependents, and it is **never** a closure path.
 A discovery becomes a new `kanban.md` card in the discovering cycle's commit (exception taken below by E1.MC, logged under safe defaults).
 
 - **2026-10-02, E1.MC → E5.1:** `race_trait_picker::race_corpus()` (`apps/desktop/src-tauri/src/race_trait_picker.rs:489-490`, again at `:762-763`) loads race books from the Pathfinder `RACE_CORPUS_BOOKS` const, not from `RACE_CORPUS_BOOK_REGISTRY.books(system)`. The seed sheets' racial traits come from this loader. Evidence: dropping `core_rulebook` from the registry wrapper alone leaves Aldric/Elowen byte-identical, and dropping it from the const flips both (`artifacts/epic_1/E1.MC_logs/mut{A,C}-render.log`). Not an E1 defect: E1.2 allows "wrapped" consts, and this file is in no E1 row. Starfinder race loading (E5.1) must route this loader through the registry. Routed to E5.1's row notes rather than added as a new card, because E7.3 pins 55 rows.
+- **2026-10-02, E2.1 → E3.x (first card that loads an SF package):** `corpus_loader::load_sheet_rules` builds every package with `SheetRulePackage::new()` (= Pathfinder 1e), so `live_sheet_rules_for(Starfinder1e)` would hand the `Var` fold the PF stacking list. No value differs today (the oracle's SF and PF `BONUSSTACKS` rows are identical, `miscinfo.lst:17`), but the SF load path must build with `SheetRulePackage::for_system(GameSystem::Starfinder1e)`. `corpus_loader.rs` is in E1's §3 row (E1 complete), not E2's.
+- **2026-10-02, E2.1 → E4.x:** `technical-design.md §3` also lists `ClassChassis::{hp_per_level, stamina_per_level, key_ability}` under E2. They are not in E2.1's criterion, and `ClassChassis` (`src/rules_core/pilot_compute/class_chassis_sheet_rules.rs`) is read off converted rows that exist only after E3. When E4 fills `CharacterFacts::key_ability`, `feat_prereqs/converted_gate.rs`'s "the character record carries no key ability" arm for `Expr::KeyAbilityMod` must become decidable.

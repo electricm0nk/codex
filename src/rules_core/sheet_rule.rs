@@ -17,6 +17,8 @@
 
 use serde::{Deserialize, Serialize};
 
+use crate::rules_core::game_system::GameSystem;
+
 /// A rule id: `"<book>:<kind>:<slug>"`, the same id `docs/work-inventory.json` keys a unit by.
 pub type RuleId = String;
 /// An opaque converter-minted variable id: `"v"` + 16 hex of SHA-256 over the upper-cased
@@ -216,6 +218,9 @@ pub enum Expr {
     Ceil(Box<Expr>),
     /// A term the player settles at pick time; unresolved -> the rule prints as words.
     Choice(ChoiceId),
+    /// The modifier of the character's key ability score (Starfinder 1e: the class names it;
+    /// [`CharacterFacts::key_ability`]). No key ability recorded -> the rule prints as words.
+    KeyAbilityMod,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -257,6 +262,18 @@ pub enum SpellKind {
     Arcane,
     Divine,
     Psychic,
+    /// Starfinder 1e spells: no arcane/divine/psychic split, spell levels 0 to 6.
+    Starfinder,
+}
+
+impl SpellKind {
+    /// The highest spell level of this kind: 9 for the Pathfinder kinds, 6 for Starfinder.
+    pub fn max_spell_level(&self) -> u8 {
+        match self {
+            SpellKind::Any | SpellKind::Arcane | SpellKind::Divine | SpellKind::Psychic => 9,
+            SpellKind::Starfinder => 6,
+        }
+    }
 }
 
 /// `data/sheet_rules/_vars/<VarId>.json` -- every contribution to one variable, corpus-wide.
@@ -310,9 +327,24 @@ pub enum StackMode {
 }
 
 /// Game-rule constant (Pathfinder): typed bonuses of these types stack; every other
-/// same-type pair takes the max.
+/// same-type pair takes the max. The game mode's `BONUSSTACKS` row
+/// (`system/gameModes/Pathfinder/miscinfo.lst:17` at the pinned oracle).
 pub const STACKING_TYPES: [&str; 6] =
     ["Defense", "Dodge", "Circumstance", "Racial", "NotRanged", "NotFlatFooted"];
+
+/// Game-rule constant (Starfinder 1e): the Starfinder game mode's `BONUSSTACKS` row
+/// (`system/gameModes/Starfinder/miscinfo.lst:17` at the pinned oracle). It names the same six
+/// types as Pathfinder's today; it is a separate list so either system's can change alone.
+pub const STARFINDER_STACKING_TYPES: [&str; 6] =
+    ["Defense", "Dodge", "Circumstance", "Racial", "NotRanged", "NotFlatFooted"];
+
+/// The bonus types that stack with themselves in `system` (the `Var` contribution fold).
+pub fn stacking_types(system: GameSystem) -> &'static [&'static str] {
+    match system {
+        GameSystem::Pathfinder1e => &STACKING_TYPES,
+        GameSystem::Starfinder1e => &STARFINDER_STACKING_TYPES,
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum BonusTarget {
@@ -329,6 +361,14 @@ pub enum BonusTarget {
     BaseAttack,
     Damage(WeaponRef),
     Hp,
+    /// Starfinder 1e Energy Armor Class.
+    Eac,
+    /// Starfinder 1e Kinetic Armor Class.
+    Kac,
+    /// Starfinder 1e Stamina Points.
+    Stamina,
+    /// Starfinder 1e Resolve Points.
+    Resolve,
     Initiative,
     Cmb,
     Cmd,
@@ -979,7 +1019,7 @@ pub struct SheetLine {
 /// The whole `data/sheet_rules/` package as the live side reads it: every rule by id, every
 /// variable table by id, and the indexes the held-set fixpoint needs. Built by
 /// `corpus_loader::load_sheet_rules`.
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct SheetRulePackage {
     pub rules: BTreeMap<RuleId, SheetRule>,
     pub vars: BTreeMap<VarId, VarTable>,
@@ -1006,6 +1046,9 @@ pub struct SheetRulePackage {
     /// Record ids (`book:kind:slug`, no `#suffix`) whose principal carries
     /// [`SheetRule::always_held`].
     always_held: BTreeSet<RuleId>,
+    /// The game system this package's rules belong to; it picks the stacking types the
+    /// `Var` fold uses ([`stacking_types`]).
+    system: GameSystem,
 }
 
 /// `"Trait ~ Magical Knack"` -> `"trait_magical_knack"`; the slug the converter names a
@@ -1076,9 +1119,38 @@ fn title_case_slug(slug: &str) -> String {
         .join(" ")
 }
 
+/// An empty Pathfinder 1e package ([`SheetRulePackage::new`]).
+impl Default for SheetRulePackage {
+    fn default() -> Self {
+        Self::for_system(GameSystem::Pathfinder1e)
+    }
+}
+
 impl SheetRulePackage {
+    /// An empty Pathfinder 1e package: `data/sheet_rules/` and every package built before
+    /// Starfinder.
     pub fn new() -> Self {
         Self::default()
+    }
+
+    /// An empty package for `system`.
+    pub fn for_system(system: GameSystem) -> Self {
+        SheetRulePackage {
+            rules: BTreeMap::new(),
+            vars: BTreeMap::new(),
+            by_kind_slug: BTreeMap::new(),
+            grants_from_rule: BTreeMap::new(),
+            fact_granted: Vec::new(),
+            by_closure_row: BTreeMap::new(),
+            taken_on_class: BTreeMap::new(),
+            always_held: BTreeSet::new(),
+            system,
+        }
+    }
+
+    /// The game system this package's rules belong to.
+    pub fn system(&self) -> GameSystem {
+        self.system
     }
 
     pub fn insert_rule(&mut self, rule: SheetRule) {
@@ -1290,6 +1362,12 @@ pub struct CharacterFacts {
     /// `<member>` names an option only of the kind its namespace names. Filled by
     /// [`CharacterFacts::record_pick`].
     pub pick_namespaces: BTreeMap<ChoiceId, BTreeMap<OptionId, String>>,
+    /// Starfinder 1e: the character's theme slug (`"ace_pilot"`); `None` for a Pathfinder
+    /// character.
+    pub theme: Option<String>,
+    /// Starfinder 1e: the key ability score the character's class names ([`Expr::KeyAbilityMod`]
+    /// reads its modifier); `None` for a Pathfinder character.
+    pub key_ability: Option<Ability>,
 }
 
 /// SD-36 F3p: every feat `chosen` records together with its sub-choice, as `(base feat slug, option
@@ -1721,6 +1799,13 @@ impl<'a> Evaluator<'a> {
             Expr::ChallengeRating => Rat::int(self.facts.challenge_rating),
             Expr::Speed(mode) => Rat::int(self.facts.speeds.get(mode).copied().unwrap_or(0)),
             Expr::HighestSpellLevel(_) => Rat::int(self.facts.highest_spell_level),
+            Expr::KeyAbilityMod => match self.facts.key_ability {
+                Some(a) => Rat::int(self.facts.ability_mods[ability_index(a)]),
+                None => {
+                    self.unresolved.set(true);
+                    Rat::ZERO
+                }
+            },
             // SD-36 Epic E engine-P1-2: the companion/eidolon master's facts are not yet a
             // live link on `CharacterFacts` (`from_character` hard-codes `master_level: 0`,
             // and no `MasterVar` table exists) -- the design's own mapping table states the
@@ -1814,7 +1899,7 @@ impl<'a> Evaluator<'a> {
             let value = inner.expr(&c.expr);
             match &c.bonus_type {
                 None => summed = summed.add(value),
-                Some(t) if t.mode == StackMode::Stack || value < Rat::ZERO || STACKING_TYPES.contains(&t.name.as_str()) => {
+                Some(t) if t.mode == StackMode::Stack || value < Rat::ZERO || stacking_types(self.package.system).contains(&t.name.as_str()) => {
                     summed = summed.add(value)
                 }
                 Some(t) if t.mode == StackMode::Replace => {
@@ -3771,5 +3856,154 @@ mod tests {
             }
             other => panic!("an undecidable gate must never be approximated as granted or silently dropped: {other:?}"),
         }
+    }
+}
+
+/// SD-37 E2.1: the additive schema variants Starfinder 1e needs, and the gate that adding them
+/// moved nothing in the Pathfinder package.
+#[cfg(test)]
+mod schema_variant_tests {
+    use super::*;
+    use crate::rules_core::game_system::GameSystem;
+    use std::path::{Path, PathBuf};
+
+    fn probe(value: SheetValue) -> SheetRule {
+        SheetRule {
+            id: "core_rulebook:class_feature:probe".into(),
+            label: "Probe".into(),
+            value,
+            also: vec![],
+            prose: vec![],
+            applies: Applies::Always,
+            target: None,
+            bonus_type: None,
+            print: true,
+            pool: "special_ability".into(),
+            tags: vec![],
+            subject: Subject::Character,
+            repeatable: false,
+            granted_by: vec![],
+            offers: None,
+            grants: vec![],
+            closure_complete: false,
+            always_held: false,
+            provenance: Provenance::default(),
+        }
+    }
+
+    /// EAC, KAC, Stamina and Resolve are sheet totals of their own; each serialises as its bare
+    /// variant name, like the unit targets PF already writes (`"Ac"`, `"Hp"`).
+    #[test]
+    fn starfinder_bonus_targets_round_trip_as_bare_names() {
+        for (target, wire) in [
+            (BonusTarget::Eac, "\"Eac\""),
+            (BonusTarget::Kac, "\"Kac\""),
+            (BonusTarget::Stamina, "\"Stamina\""),
+            (BonusTarget::Resolve, "\"Resolve\""),
+        ] {
+            assert_eq!(serde_json::to_string(&target).unwrap(), wire);
+            assert_eq!(serde_json::from_str::<BonusTarget>(wire).unwrap(), target);
+        }
+    }
+
+    /// `KeyAbilityMod` reads the modifier of the ability the character's class names as key.
+    #[test]
+    fn key_ability_mod_reads_the_key_ability_modifier() {
+        let facts = CharacterFacts { ability_mods: [0, 3, 1, 0, 0, 2], key_ability: Some(Ability::Cha), ..Default::default() };
+        assert_eq!(evaluate_expr_from_facts(&Expr::KeyAbilityMod, &facts), Rat::int(2));
+        let facts = CharacterFacts { key_ability: Some(Ability::Dex), ..facts };
+        assert_eq!(evaluate_expr_from_facts(&Expr::KeyAbilityMod, &facts), Rat::int(3));
+        assert_eq!(serde_json::to_string(&Expr::KeyAbilityMod).unwrap(), "\"KeyAbilityMod\"");
+    }
+
+    /// With no key ability recorded the value is not known: the line prints as words, never a
+    /// hard 0 (the same rule `MasterLevel` follows).
+    #[test]
+    fn key_ability_mod_without_a_key_ability_prints_as_words() {
+        let package = SheetRulePackage::new();
+        let facts = CharacterFacts { ability_mods: [0, 3, 1, 0, 0, 2], ..Default::default() };
+        let line = evaluate(&probe(SheetValue::Number(Expr::KeyAbilityMod)), &HeldSet::default(), &package, &facts, EvalContext::default());
+        assert_eq!(line.value, SheetLineValue::Words);
+    }
+
+    /// The stacking types come from each system's game mode (`BONUSSTACKS`,
+    /// `system/gameModes/<mode>/miscinfo.lst:17` at the pinned oracle): the two lists are
+    /// equal today, and each system reads its own.
+    #[test]
+    fn stacking_types_are_keyed_by_system() {
+        let oracle = ["Defense", "Dodge", "Circumstance", "Racial", "NotRanged", "NotFlatFooted"];
+        assert_eq!(stacking_types(GameSystem::Pathfinder1e), &oracle[..]);
+        assert_eq!(stacking_types(GameSystem::Starfinder1e), &oracle[..]);
+        assert_eq!(stacking_types(GameSystem::Pathfinder1e), &STACKING_TYPES[..]);
+        assert_eq!(SheetRulePackage::new().system(), GameSystem::Pathfinder1e);
+        assert_eq!(SheetRulePackage::for_system(GameSystem::Starfinder1e).system(), GameSystem::Starfinder1e);
+    }
+
+    /// Starfinder spells have no arcane/divine split and run from level 0 to 6.
+    #[test]
+    fn the_starfinder_spell_kind_tops_out_at_sixth_level() {
+        assert_eq!(serde_json::to_string(&SpellKind::Starfinder).unwrap(), "\"Starfinder\"");
+        assert_eq!(SpellKind::Starfinder.max_spell_level(), 6);
+        for pf in [SpellKind::Any, SpellKind::Arcane, SpellKind::Divine, SpellKind::Psychic] {
+            assert_eq!(pf.max_spell_level(), 9);
+        }
+    }
+
+    /// `CharacterFacts` carries the theme and the key ability; a PF character has neither.
+    #[test]
+    fn character_facts_carry_theme_and_key_ability() {
+        let pf = CharacterFacts::default();
+        assert_eq!((pf.theme.as_deref(), pf.key_ability), (None, None));
+        let sf = CharacterFacts { theme: Some("ace_pilot".into()), key_ability: Some(Ability::Wis), ..Default::default() };
+        assert_eq!((sf.theme.as_deref(), sf.key_ability), (Some("ace_pilot"), Some(Ability::Wis)));
+    }
+
+    fn json_files(dir: &Path, out: &mut Vec<PathBuf>) {
+        for entry in std::fs::read_dir(dir).unwrap_or_else(|e| panic!("read {}: {e}", dir.display())) {
+            let path = entry.unwrap().path();
+            if path.is_dir() {
+                json_files(&path, out);
+            } else if path.extension().is_some_and(|x| x == "json") {
+                out.push(path);
+            }
+        }
+    }
+
+    /// The E2.1 gate: every schema file of the Pathfinder package -- each rule file
+    /// (`<book>/<kind>/<slug>.json`, a `Vec<SheetRule>`) and each variable table
+    /// (`_vars/<VarId>.json`) -- deserialises with the extended types and re-serialises to the
+    /// exact bytes on disk, in the converter's own output form (`serde_json::to_string` + `\n`,
+    /// `pcgen_import::sheet_rule::render`). The ledgers (`_refused.json`, `_report.json`,
+    /// `_tokens.json`, `_defects/`) are not `SheetRule` data and are not read.
+    #[test]
+    fn every_pathfinder_sheet_rule_file_round_trips_byte_equal() {
+        let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(GameSystem::Pathfinder1e.sheet_rules_relative());
+        let mut files = Vec::new();
+        json_files(&root, &mut files);
+        files.sort();
+        let (mut rule_files, mut var_files, mut ledgers) = (0usize, 0usize, 0usize);
+        let mut drift: Vec<String> = Vec::new();
+        for path in &files {
+            let rel = path.strip_prefix(&root).unwrap().to_string_lossy().replace('\\', "/");
+            let bytes = std::fs::read_to_string(path).unwrap();
+            let again = if rel.starts_with("_vars/") {
+                var_files += 1;
+                let table: VarTable = serde_json::from_str(&bytes).unwrap_or_else(|e| panic!("{rel}: {e}"));
+                serde_json::to_string(&table).unwrap()
+            } else if rel.starts_with('_') {
+                ledgers += 1;
+                continue;
+            } else {
+                rule_files += 1;
+                let rules: Vec<SheetRule> = serde_json::from_str(&bytes).unwrap_or_else(|e| panic!("{rel}: {e}"));
+                serde_json::to_string(&rules).unwrap()
+            };
+            if again + "\n" != bytes {
+                drift.push(rel);
+            }
+        }
+        eprintln!("round-trip: {rule_files} rule files, {var_files} var tables, {ledgers} ledgers skipped, {} drifted", drift.len());
+        assert!(rule_files > 40_000 && var_files > 6_000, "the package is generated: {rule_files} rule files, {var_files} var tables");
+        assert!(drift.is_empty(), "{} files drift on a round trip, first: {:?}", drift.len(), &drift[..drift.len().min(5)]);
     }
 }
