@@ -12308,3 +12308,10 @@ mod starter_seed_tests {
         files
     }
 }
+
+/// The PF seed render-hash harness (SD-37 E1.4): renders the PF starter seeds through
+/// `load_saved_character_at_root` and hashes the JSON. A child module so it reaches this
+/// module's private seed ids and helpers; see the file's header for how to run it.
+#[cfg(test)]
+#[path = "pf_seed_render_hash.rs"]
+mod pf_seed_render_hash;

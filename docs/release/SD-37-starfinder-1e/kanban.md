@@ -38,7 +38,7 @@ card (`decisions.md §17`).
 | E1.1 | `GameSystem`-keyed package roots, runtime resolution | opus | complete | C1 | Batched with E1.2, E1.3; `artifacts/epic_1/E1.1_cycle_receipt.md`; commit 60ea507dd3 |
 | E1.2 | Per-system book registries (19 consts) | opus | complete | C1 | Batched; `artifacts/epic_1/E1.2_cycle_receipt.md`; commit 60ea507dd3 |
 | E1.3 | Converter system parameter | opus | complete | C1 | Batched; `artifacts/epic_1/E1.3_cycle_receipt.md`; commit 60ea507dd3 |
-| E1.4 | PF byte-identical gate (Aldric, Elowen) + structural diff | opus | waiting | E1.1–E1.3 | |
+| E1.4 | PF byte-identical gate (Aldric, Elowen) + structural diff | opus | complete | E1.1–E1.3 | `artifacts/epic_1/E1.4_cycle_receipt.md`; harness `apps/desktop/src-tauri/src/pf_seed_render_hash.rs`; Aldric/Elowen sha256 before = after; structural diff PASS 49,450 unmoved; residue PASS |
 | E1.MC | E1 adversarial merge check | opus | waiting | E1.4 | |
 | E2.1 | Additive schema variants | opus | waiting | E1.MC | |
 | E2.2 | Published `schemas/rules/*.schema.json` + `rules-schema-check` stage | sonnet | waiting | E2.1 | |
