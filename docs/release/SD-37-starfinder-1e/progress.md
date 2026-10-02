@@ -138,6 +138,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | C0.0 | 2026-10-02 | Sonnet 5.5 (planning) | this package's commit | complete | n/a (no code) | this section |
 | C0.2 | 2026-10-02 | Opus 5.5 | the `docs(sd37,c0.2)` commit | complete | n/a (no code) | `artifacts/cycle_0/C0.2_cycle_receipt.md` |
 | C1 | 2026-10-02 | Haiku 4.5 | 9d03a76996 | complete | n/a (no code) | `artifacts/cycle_0/C1_cycle_receipt.md` |
+| C0.1 | 2026-10-02 | Haiku 4.5 | (see receipt) | partial | n/a (docs only) | `artifacts/cycle_0/C0.1_cycle_receipt.md` |
 | E0.1 | 2026-10-02 | Sonnet 5.5 | 5df9eb36db | complete | unchanged (no engine/data change) | `artifacts/epic_0/E0.1_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
