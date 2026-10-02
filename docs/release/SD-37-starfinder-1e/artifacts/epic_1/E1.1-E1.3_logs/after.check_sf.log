@@ -1,0 +1,3 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running `/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/sheet_rule_convert --system starfinder-1e --check`
+sheet_rule_convert: no PCGen book subtree is registered for game system starfinder-1e (closure::BOOKS_RELATIVE); its corpus cannot be converted yet

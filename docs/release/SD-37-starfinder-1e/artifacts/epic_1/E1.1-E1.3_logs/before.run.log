@@ -1,0 +1,47 @@
+== HEAD ab7e0b8139f9ce556d6ab3bddca0f0a0023c8726 phase=before
+== E1.3 check (PF default)
+exit=0
+kind spell: records=2845 converted=2845 refused=0
+kind template: records=2248 converted=2248 refused=0
+kind trait: records=487 converted=487 refused=0
+== E1.3 check --system pathfinder-1e
+exit=2
+     Running `/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/sheet_rule_convert --system pathfinder-1e --check`
+sheet_rule_convert: unrecognized argument: --system
+usage: sheet_rule_convert [--write | --check | --one <unit id> | --dump <dir>]
+== dump
+exit=0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running `/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/sheet_rule_convert --dump /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e1/before.dump`
+records=49450 converted=49450 refused=0 rules=73363 var_tables=6211 dumped=56008 -> /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e1/before.dump (447.3s)
+== structural diff
+exit=0
+  F3c5 f3c5_line_split: 0 of 9 pinned field deltas on 0 records -- F3c5: that record's principal becomes a Text principal with no target, gated by a subset of the sibling's gate terms (the line's own level term moves with the line) (see structural_diff_f3c5_deltas.json)
+  F3c5 f3c5_closure_complete: 0 of 1 pinned field deltas on 0 records -- F3c5: closure_complete=true attested on a class principal whose one closure defect was an Internal natural-attack helper reference (Dragon Disciple: Internal|Bite) (see structural_diff_f3c5_deltas.json)
+  F3p f3p_option_gate: 465 of 465 pinned field deltas and 414 of 414 pinned _vars/ tables, 1741 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)
+  F4pre f4pre_offer: 1733 of 1733 pinned offers removed before the diff ({'ability_pool': 1686, 'domain_count': 47}) -- F4pre: a selection pool the oracle fills (BONUS:ABILITYPOOL into a TYPE-filtered child category; BONUS:DOMAIN|NUMBER) offers the pick's own count over the category's members / the domains (see structural_diff_f4pre_deltas.json)
+  F6c: 6 of 6 pinned class printings and 1 of 1 pinned withheld domain counts and 10 of 10 pinned unprinted domain records undone before the diff -- F6c: class records several books state carry the converter's newest-printing reading; a class's domain count its own DOMAIN: grants fill is no pick and prints no line, nor do the domain records only that class grants (see structural_diff_f6c_deltas.json)
+  F7b: 0 of 0 pinned field deltas on 0 records (by class: {}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)
+  F3c5 pinned NaturalAttack grants: 681; pinned added _vars/ tables: 2; pinned _defects/ row counts: {'_defects/unresolved-references.json': 6252, '_defects/natural-attack-helper-carries-more.json': 0, '_defects/natural-attack-helper-names-no-attack.json': 0, '_defects/natural-attack-helper-pair-shared.json': 0}
+
+unexpected field deltas: 0
+F3b2b pinned added granted_by edges: 11 of 11 present (see structural_diff_f3b2b_deltas.json)
+
+removed granted_by edges: 0  (never allowed -- SS3.5 permits growth only)
+removed grants: 0  (a grant SIGNATURE lost with no replacement of the same target -- gating-wrapper and WeaponGroup/WeaponTag/WeaponAllOf/WeaponSet-tag-case changes are NOT counted here, only a genuine loss or a fabricated replacement)
+
+verdict=PASS
+== residue gate
+exit=0
+identifier_files=0 identifier_hits=0
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=56020
+live_files=0 live_hits=0 verdict=PASS
+== E1.1 lib test filter
+exit=0
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2764 filtered out; finished in 0.00s
+== render probe
+exit=101
+sha256sum: '/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e1/before.render/*.json': No such file or directory
+== git status after
+DONE

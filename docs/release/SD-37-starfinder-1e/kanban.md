@@ -35,9 +35,9 @@ card (`decisions.md §17`).
 | E0.2 | Licence matrix SF rows + SF PI term set | opus | complete | C1 | `artifacts/epic_0/E0.2_cycle_receipt.md`; commit 2f0bd9d793; 11 rows (8 include, 3 exclude, all `operator_sign_off` false); `SF_PI_TERMS` 41 + `classify_field_sf`. Registry test is E3.1's |
 | E0.3 | SF work inventory (denominator), fail-closed sum | sonnet | complete | E0.1, E0.2 | `artifacts/epic_0/E0.3_cycle_receipt.md`; 8,582 units of 12,718 in-scope F-6 rows (CRB 3,105); excluded 229 named; A (Python) == B (awk); 6 planted faults exit 1 |
 | E0.4 | Seed builds + hand values from SRD, Opus-reviewed | opus | complete | C1 | `artifacts/epic_0/E0.4_cycle_receipt.md`. Transcriber 705088c8d7: `seed-builds.md`, `seed-hand-values.md` (126 rows, every row has an SRD URL). Independent Opus review 2026-10-02: 78 of 78 URLs re-fetched (51 of 51 byte-identical), 126 of 126 rows `agree`, 0 `disagree`, 0 corrections (`E0.4_review_derive.py`) |
-| E1.1 | `GameSystem`-keyed package roots, runtime resolution | opus | waiting | C1 | Batched with E1.2, E1.3 |
-| E1.2 | Per-system book registries (19 consts) | opus | waiting | C1 | Batched |
-| E1.3 | Converter system parameter | opus | waiting | C1 | Batched |
+| E1.1 | `GameSystem`-keyed package roots, runtime resolution | opus | complete | C1 | Batched with E1.2, E1.3; `artifacts/epic_1/E1.1_cycle_receipt.md`; commit 60ea507dd3 |
+| E1.2 | Per-system book registries (19 consts) | opus | complete | C1 | Batched; `artifacts/epic_1/E1.2_cycle_receipt.md`; commit 60ea507dd3 |
+| E1.3 | Converter system parameter | opus | complete | C1 | Batched; `artifacts/epic_1/E1.3_cycle_receipt.md`; commit 60ea507dd3 |
 | E1.4 | PF byte-identical gate (Aldric, Elowen) + structural diff | opus | waiting | E1.1–E1.3 | |
 | E1.MC | E1 adversarial merge check | opus | waiting | E1.4 | |
 | E2.1 | Additive schema variants | opus | waiting | E1.MC | |

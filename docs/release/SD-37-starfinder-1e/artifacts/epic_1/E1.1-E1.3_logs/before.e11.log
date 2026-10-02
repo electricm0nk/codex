@@ -1,0 +1,8 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 41s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-a13c5cad8ad2bb59)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2764 filtered out; finished in 0.00s
+

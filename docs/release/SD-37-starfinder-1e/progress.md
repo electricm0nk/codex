@@ -144,6 +144,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E0.4 (reviewer) | 2026-10-02 | Opus 5.5 | the `docs(sd37,e0.4): independent review` commit | complete | Aldric / Elowen unchanged (not rendered); 4 SF seeds unchanged by review, confirmed: Soldier HP 25 SP 24 RP 4 EAC 16 KAC 19; Mystic 34/25/6/16/16; Technomancer 29/35/6/18/19; Envoy 20/21/5/14/15. 126/126 agree, 0 corrections | `artifacts/epic_0/E0.4_cycle_receipt.md` |
 | E0.2 | 2026-10-02 | Opus 5.5 | 2f0bd9d793 | complete | Aldric / Elowen unchanged (PF screen byte-unchanged; not rendered); 4 SF seeds not rendered before E4 (no caller of the new items) | `artifacts/epic_0/E0.2_cycle_receipt.md` |
 | E0.3 | 2026-10-02 | Sonnet 5.5 | the `docs(sd37,e0.3)` commit | complete | Aldric / Elowen unchanged (not rendered); 4 SF seeds unchanged (not rendered; no engine/data change) | `artifacts/epic_0/E0.3_cycle_receipt.md` |
+| E1.1–E1.3 | 2026-10-02 | Opus 5.5 | 60ea507dd3 (+ 209664dce2 C1 `Cargo.lock` repair) | complete | Aldric unchanged (rendered, sha256 1d830682…a569 before = after); Elowen unchanged (rendered, sha256 8d1a711c…00f2 before = after); 4 SF seeds not reachable (no SF data) | `artifacts/epic_1/E1.{1,2,3}_cycle_receipt.md`; PF pre-change baseline for E1.4 in `artifacts/epic_1/pf_baseline/` |
 
 ## Decisions taken on safe defaults
 
@@ -168,6 +169,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-02 | E0.4 | SD-g scope: gear budget for the 3rd/5th-level SF seeds = Core Rulebook Table 11-5 wealth per level (4,000 / 9,000 credits; https://www.aonsrd.com/Rules.aspx?ID=230) | 1,000 credits of 1st-level gear (https://www.aonsrd.com/Rules.aspx?ID=39) | the Core Rulebook has no separate higher-level starting-gear rule; 1st-level gear would not give the Soldier heavy armour with a binding max-Dex cap |
 | 2026-10-02 | E0.4 | Seeds take Core Rulebook class features only, not the optional *Starfinder Enhanced* ones AoN mixes into the Technomancer/Envoy pages | Enhanced technomancer/envoy options | the pinned oracle encodes the Core Rulebook; no hand-value column differs between the two |
 | 2026-10-02 | E0.3 | Unit = one declaration row per distinct (book, kind, `KEY:`-or-name) in 12 record kinds; `.MOD` of a declared base, internal plumbing, class level/continuation rows, same-key rows and engine-config files are named non-unit buckets (SD-b spirit: count records, not rows) | count every F-6 row (12,718) as a unit | rows include `.MOD` patches and per-level class rows; the inventory must sum rows = units + named buckets. Operator may narrow kinds (proficiency, equipment) later |
+| 2026-10-02 | E1.3 | SF converter path refused by name (`closure::BOOKS_RELATIVE` registers no Starfinder subtree; `--system starfinder-1e` exits 2 naming the system) — SD-d analogue | register `starfinder/paizo` (+ `lpj_design/infinite_space`) as the SF subtree now | E3.1 owns the SF include structure and E0.2 the licence of each dir; a registered subtree would also feed SF rows through PF's inventory and `var_names.json` paths (E1.3 receipt, "Does not cover") |
 
 ## Open blockers
 

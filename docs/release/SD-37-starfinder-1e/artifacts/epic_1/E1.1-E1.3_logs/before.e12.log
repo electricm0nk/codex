@@ -1,0 +1,19 @@
+19
+UNREGISTERED src/rules_core/race_resolver.rs
+UNREGISTERED src/rules_core/rules_tables/monster_chassis.rs
+UNREGISTERED src/rules_core/rules_tables/companion_chassis.rs
+UNREGISTERED apps/desktop/src-tauri/src/class_catalog_generic.rs
+UNREGISTERED crates/codex-ingest/src/pcgen_import/sheet_rule/closure.rs
+UNREGISTERED crates/codex-ingest/src/bin/enrich_spell_raw_tokens.rs
+UNREGISTERED apps/desktop/src-tauri/src/corpus_full.rs
+UNREGISTERED crates/codex-ingest/src/pcgen_import/sheet_rule/reprint.rs
+UNREGISTERED src/rules_core/pilot_compute/generic_class_chassis.rs
+UNREGISTERED apps/desktop/src-tauri/src/race_catalog.rs
+UNREGISTERED crates/codex-ingest/src/bin/repair_equipment_copy_citations.rs
+UNREGISTERED crates/codex-ingest/src/bin/corpus_literal_sweep.rs
+UNREGISTERED crates/codex-ingest/src/bin/v06_corpus_trap_report.rs
+UNREGISTERED crates/codex-ingest/src/pcgen_import/cache_gen/hand_authored_equipment.rs
+UNREGISTERED crates/codex-ingest/src/bin/ingest_spells.rs
+UNREGISTERED crates/codex-ingest/src/bin/sheet_rule_parity.rs
+UNREGISTERED crates/codex-ingest/src/bin/repair_spell_citations.rs
+UNREGISTERED crates/codex-ingest/src/bin/repair_lst_provenance.rs
