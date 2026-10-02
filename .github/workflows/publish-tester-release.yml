@@ -106,7 +106,7 @@ jobs:
       # #382/#383 merged, per operator directive 2026-09-07 and the same
       # one-advance-per-tranche-cut rule). The repo version files
       # (package.json, tauri.conf.json, src-tauri/Cargo.toml + Cargo.lock)
-      # moved to 0.16.0 in the same commit, keeping this stamp in lockstep.
+      # moved to 0.17.0 in the same commit, keeping this stamp in lockstep.
       #
       # Only the tranche prefix is written here. The build number is always
       # ${GITHUB_RUN_NUMBER} — never hardcode one.
