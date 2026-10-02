@@ -31,7 +31,7 @@ card (`decisions.md §17`).
 | C0.1 | SD-36 loose ends (README status, kanban D2–D6 row, worktrees, 7 `sd36/*` remotes, dirty retro log) + pending retro corrections | haiku | ready | — | Not a gate. SD-j applies. |
 | C0.2 | Opus review of this package (planning was Sonnet) | opus | complete | — | `artifacts/cycle_0/C0.2_cycle_receipt.md`; package fixes in the C0.2 commit |
 | C1 | Version bump 0.17.0 (14 surfaces, one commit) + push `tranche/17` | haiku | complete | C0.2 | `artifacts/cycle_0/C1_cycle_receipt.md`; commit 9d03a76996 |
-| E0.1 | Oracle sparse paths + SF completeness probe + fresh-clone proof | sonnet | waiting | C1 | `artifacts/epic_0/` |
+| E0.1 | Oracle sparse paths + SF completeness probe + fresh-clone proof | sonnet | complete | C1 | `artifacts/epic_0/E0.1_cycle_receipt.md`; code commit 5df9eb36db |
 | E0.2 | Licence matrix SF rows + SF PI term set | opus | waiting | C1 | No registry test here (moved to E3.1); uses cargo (`pi_screening.rs`) |
 | E0.3 | SF work inventory (denominator), fail-closed sum | sonnet | waiting | E0.1, E0.2 | |
 | E0.4 | Seed builds + hand values from SRD, Opus-reviewed | opus | waiting | C1 | Network needed (SD-c). Seed builds first (`seed-builds.md`), then hand values; independent Opus reviewer |

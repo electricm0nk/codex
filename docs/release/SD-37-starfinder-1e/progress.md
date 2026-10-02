@@ -138,12 +138,14 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | C0.0 | 2026-10-02 | Sonnet 5.5 (planning) | this package's commit | complete | n/a (no code) | this section |
 | C0.2 | 2026-10-02 | Opus 5.5 | the `docs(sd37,c0.2)` commit | complete | n/a (no code) | `artifacts/cycle_0/C0.2_cycle_receipt.md` |
 | C1 | 2026-10-02 | Haiku 4.5 | 9d03a76996 | complete | n/a (no code) | `artifacts/cycle_0/C1_cycle_receipt.md` |
+| E0.1 | 2026-10-02 | Sonnet 5.5 | 5df9eb36db | complete | unchanged (no engine/data change) | `artifacts/epic_0/E0.1_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
 | Date | Card | Default (SD-x) | Alternative not taken | Why |
 |---|---|---|---|---|
 | 2026-10-02 | C0.0 | `decisions.md §1`–`§19` (all operator-away defaults) | listed per decision under "Revisit if the operator disagrees" | operator away at authoring |
+| 2026-10-02 | E0.1 | Scope call, no SD-x covers it: edit `scripts/tests/test_fetch_pcgen_oracle.sh` (not in the §3 E0 row) | ship the probe without a test, or return declined | it is the only test of `fetch-pcgen-oracle.sh` (`oracle-pin-selftest`), no card row owns it, and TDD requires the failing test |
 | 2026-10-02 | C0.2 | Re-sequence: E4a serial after E7.1; E5 after E4.MC (`decisions.md §3`) | (1) keep E4a ∥ E2–E6 with per-file fences for all 252 importers plus `schemas/rules/`, `verify.sh`, `tauri.conf.json`; (2) land only E4a.2 at a quiet point and keep E4a.1 parallel | the overlap (`workflow-instruction.md §3` command) covers files of E1, E2, E3, E4 and E6; E4a.1 alone collides with E2.2/E3/E4 (`verify.sh`, `schemas/rules/`) and E6.1 (`tauri.conf.json`). Serial costs wall time, never correctness, and leaves SF complete before E4a starts |
 | 2026-10-02 | C0.2 | Exclude `paizo/core/_society/` (SFS guide core mods, 15 rows) with SSRGG (SD-a) | ingest it as part of the Core Rulebook | it is SFS guide content; SSRGG's PCC reads "All Rights Reserved"; E0.2 may re-admit it with a licence row |
 | 2026-10-02 | C0.2 | `.lst` burn-down target = 0 in remaining `rules_tables` and in bundled data; provenance, if kept, goes to an unbundled file (`decisions.md §19`) | keep citations inside shipped JSON | ships PCGen file names, against the 2026-09-15 "nothing of PCGen in live code" intent; the authoring criterion had no target at all |
