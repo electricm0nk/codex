@@ -4,7 +4,7 @@ bundle_id: SD-37
 card: E0.4
 artifact_type: seed-hand-values
 fetched: 2026-10-02
-review_status: pending independent Opus review (E0.4 reviewer step)
+review_status: reviewed 2026-10-02 by the independent Opus reviewer (E0.4); 0 disagree, 0 corrections
 ---
 
 # SD-37 Starfinder seed hand values (E0.4 deliverable 2)
@@ -186,6 +186,161 @@ spells-known rows.
 
 ## Independent review
 
-Pending. The E0.4 reviewer (a separate Opus agent) re-fetches every URL above and adds a table
-with one `agree` / `disagree` verdict per row. E0.4 is not complete until that table exists and
-has 0 `disagree` rows.
+Reviewer: a separate Opus agent (E0.4 reviewer step, `RETRO_ACTOR=sd37-e0-4`), 2026-10-02. Method:
+
+1. **Re-fetched every cited URL** before reading any transcribed value: the 51 distinct URLs in
+   this file and `seed-builds.md`, plus the 27 spell pages. 78 of 78 returned HTTP 200. The 51
+   shared URLs have the **same sha256** as `E0.4-srd-fetch-log.txt` (51 of 51), so both agents read
+   identical bytes. Log: `E0.4-review-fetch-log.txt`.
+2. **Re-derived every value** from the re-fetched pages (class tables, race HP, armour stats, skill
+   headings, Resolve/HP/SP/AC/save rules, bonus-spell tables, connection spells), re-checked each
+   build input against the SRD rule that constrains it (point buy = 10 points and ≤ 18 at creation;
+   the 5th-level increase +1 at ≥ 17 else +2; skill ranks = (class + Int mod + human Skilled) ×
+   level, ≤ level per skill; Con modifier ≠ 0), and only then compared with the transcribed column.
+   The derivation is a script with its own constants, `E0.4_review_derive.py`; it reads this file
+   only in its compare step. Planted mutations in the script (Con added to HP; max-Dex cap dropped;
+   +3 class-skill bonus given to a non-class skill) each produced ≥ 1 `disagree` (4, 2 and 1 rows).
+3. Also re-checked, in `seed-builds.md`: feat prerequisites and counts, class-option levels (magic
+   hacks Harmful Spells and Selective Targeting are both 2nd-level hacks; Inspiring Boost and Get 'Em
+   are 1st-level improvisations; Slick Customer needs Diplomacy skill expertise, which the Envoy
+   takes), every spell's class list and level, armour proficiency (soldier: heavy; the others:
+   light), item level/price/bulk, credits arithmetic and bulk totals, and all 67 pick names against
+   the pinned oracle (`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`): 67 of 67 exact.
+
+**Result: 126 rows reviewed, 126 `agree`, 0 `disagree`. No correction was needed in this file or in
+`seed-builds.md`.** Re-run (from the repo root):
+`python3 docs/release/SD-37-starfinder-1e/artifacts/epic_0/E0.4_review_derive.py --table` →
+exit 0, stderr `reviewed=126 transcribed=126 derived=126 disagree=0`.
+
+Count the table (rows start `| R`, so the `| SF-` acceptance counts above are unchanged):
+`awk -F'|' '/^\| *R[0-9]+ /{n++; if($7 ~ /disagree/) d++} END{print "review_rows="n+0, "disagree="d+0}' "$f"`
+→ `review_rows=126 disagree=0`.
+
+| # | Seed | Field | Transcriber | Reviewer | Verdict |
+|---|---|---|---|---|---|
+| R1 | SF-Soldier-3 | BAB | +3 | +3 | agree |
+| R2 | SF-Soldier-3 | Fort | +4 | +4 | agree |
+| R3 | SF-Soldier-3 | Ref | +3 | +3 | agree |
+| R4 | SF-Soldier-3 | Will | +3 | +3 | agree |
+| R5 | SF-Soldier-3 | HP | 25 | 25 | agree |
+| R6 | SF-Soldier-3 | Stamina | 24 | 24 | agree |
+| R7 | SF-Soldier-3 | Resolve | 4 | 4 | agree |
+| R8 | SF-Soldier-3 | EAC | 16 | 16 | agree |
+| R9 | SF-Soldier-3 | KAC | 19 | 19 | agree |
+| R10 | SF-Soldier-3 | Skill: Acrobatics | −2 | −2 | agree |
+| R11 | SF-Soldier-3 | Skill: Athletics | +6 | +6 | agree |
+| R12 | SF-Soldier-3 | Skill: Bluff | +0 | +0 | agree |
+| R13 | SF-Soldier-3 | Skill: Computers | untrained (trained only) | untrained (trained only) | agree |
+| R14 | SF-Soldier-3 | Skill: Culture | untrained (trained only) | untrained (trained only) | agree |
+| R15 | SF-Soldier-3 | Skill: Diplomacy | +0 | +0 | agree |
+| R16 | SF-Soldier-3 | Skill: Disguise | +0 | +0 | agree |
+| R17 | SF-Soldier-3 | Skill: Engineering | untrained (trained only) | untrained (trained only) | agree |
+| R18 | SF-Soldier-3 | Skill: Intimidate | +6 | +6 | agree |
+| R19 | SF-Soldier-3 | Skill: Life Science | untrained (trained only) | untrained (trained only) | agree |
+| R20 | SF-Soldier-3 | Skill: Medicine | +6 | +6 | agree |
+| R21 | SF-Soldier-3 | Skill: Mysticism | untrained (trained only) | untrained (trained only) | agree |
+| R22 | SF-Soldier-3 | Skill: Perception | +0 | +0 | agree |
+| R23 | SF-Soldier-3 | Skill: Physical Science | untrained (trained only) | untrained (trained only) | agree |
+| R24 | SF-Soldier-3 | Skill: Piloting | +8 | +8 | agree |
+| R25 | SF-Soldier-3 | Skill: Profession | untrained (trained only) | untrained (trained only) | agree |
+| R26 | SF-Soldier-3 | Skill: Sense Motive | +0 | +0 | agree |
+| R27 | SF-Soldier-3 | Skill: Sleight of Hand | untrained (trained only) | untrained (trained only) | agree |
+| R28 | SF-Soldier-3 | Skill: Stealth | −2 | −2 | agree |
+| R29 | SF-Soldier-3 | Skill: Survival | +6 | +6 | agree |
+| R30 | SF-Mystic-5 | BAB | +3 | +3 | agree |
+| R31 | SF-Mystic-5 | Fort | +0 | +0 | agree |
+| R32 | SF-Mystic-5 | Ref | +3 | +3 | agree |
+| R33 | SF-Mystic-5 | Will | +8 | +8 | agree |
+| R34 | SF-Mystic-5 | HP | 34 | 34 | agree |
+| R35 | SF-Mystic-5 | Stamina | 25 | 25 | agree |
+| R36 | SF-Mystic-5 | Resolve | 6 | 6 | agree |
+| R37 | SF-Mystic-5 | EAC | 16 | 16 | agree |
+| R38 | SF-Mystic-5 | KAC | 16 | 16 | agree |
+| R39 | SF-Mystic-5 | Skill: Acrobatics | +2 | +2 | agree |
+| R40 | SF-Mystic-5 | Skill: Athletics | +0 | +0 | agree |
+| R41 | SF-Mystic-5 | Skill: Bluff | +10 | +10 | agree |
+| R42 | SF-Mystic-5 | Skill: Computers | untrained (trained only) | untrained (trained only) | agree |
+| R43 | SF-Mystic-5 | Skill: Culture | +10 | +10 | agree |
+| R44 | SF-Mystic-5 | Skill: Diplomacy | +12 | +12 | agree |
+| R45 | SF-Mystic-5 | Skill: Disguise | +2 | +2 | agree |
+| R46 | SF-Mystic-5 | Skill: Engineering | untrained (trained only) | untrained (trained only) | agree |
+| R47 | SF-Mystic-5 | Skill: Intimidate | +2 | +2 | agree |
+| R48 | SF-Mystic-5 | Skill: Life Science | +10 | +10 | agree |
+| R49 | SF-Mystic-5 | Skill: Medicine | +12 | +12 | agree |
+| R50 | SF-Mystic-5 | Skill: Mysticism | +13 | +13 | agree |
+| R51 | SF-Mystic-5 | Skill: Perception | +14 | +14 | agree |
+| R52 | SF-Mystic-5 | Skill: Physical Science | untrained (trained only) | untrained (trained only) | agree |
+| R53 | SF-Mystic-5 | Skill: Piloting | +2 | +2 | agree |
+| R54 | SF-Mystic-5 | Skill: Profession | untrained (trained only) | untrained (trained only) | agree |
+| R55 | SF-Mystic-5 | Skill: Sense Motive | +14 | +14 | agree |
+| R56 | SF-Mystic-5 | Skill: Sleight of Hand | untrained (trained only) | untrained (trained only) | agree |
+| R57 | SF-Mystic-5 | Skill: Stealth | +2 | +2 | agree |
+| R58 | SF-Mystic-5 | Skill: Survival | +4 | +4 | agree |
+| R59 | SF-Mystic-5 | Spells per day: 1st | 5 | 5 | agree |
+| R60 | SF-Mystic-5 | Spells per day: 2nd | 3 | 3 | agree |
+| R61 | SF-Mystic-5 | Spells known: 0 | 6 | 6 | agree |
+| R62 | SF-Mystic-5 | Spells known: 1st | 5 | 5 | agree |
+| R63 | SF-Mystic-5 | Spells known: 2nd | 4 | 4 | agree |
+| R64 | SF-Technomancer-5 | BAB | +3 | +3 | agree |
+| R65 | SF-Technomancer-5 | Fort | +3 | +3 | agree |
+| R66 | SF-Technomancer-5 | Ref | +4 | +4 | agree |
+| R67 | SF-Technomancer-5 | Will | +5 | +5 | agree |
+| R68 | SF-Technomancer-5 | HP | 29 | 29 | agree |
+| R69 | SF-Technomancer-5 | Stamina | 35 | 35 | agree |
+| R70 | SF-Technomancer-5 | Resolve | 6 | 6 | agree |
+| R71 | SF-Technomancer-5 | EAC | 18 | 18 | agree |
+| R72 | SF-Technomancer-5 | KAC | 19 | 19 | agree |
+| R73 | SF-Technomancer-5 | Skill: Acrobatics | +3 | +3 | agree |
+| R74 | SF-Technomancer-5 | Skill: Athletics | +0 | +0 | agree |
+| R75 | SF-Technomancer-5 | Skill: Bluff | −1 | −1 | agree |
+| R76 | SF-Technomancer-5 | Skill: Computers | +13 | +13 | agree |
+| R77 | SF-Technomancer-5 | Skill: Culture | untrained (trained only) | untrained (trained only) | agree |
+| R78 | SF-Technomancer-5 | Skill: Diplomacy | −1 | −1 | agree |
+| R79 | SF-Technomancer-5 | Skill: Disguise | −1 | −1 | agree |
+| R80 | SF-Technomancer-5 | Skill: Engineering | +12 | +12 | agree |
+| R81 | SF-Technomancer-5 | Skill: Intimidate | −1 | −1 | agree |
+| R82 | SF-Technomancer-5 | Skill: Life Science | +12 | +12 | agree |
+| R83 | SF-Technomancer-5 | Skill: Medicine | untrained (trained only) | untrained (trained only) | agree |
+| R84 | SF-Technomancer-5 | Skill: Mysticism | +10 | +10 | agree |
+| R85 | SF-Technomancer-5 | Skill: Perception | +6 | +6 | agree |
+| R86 | SF-Technomancer-5 | Skill: Physical Science | +13 | +13 | agree |
+| R87 | SF-Technomancer-5 | Skill: Piloting | +11 | +11 | agree |
+| R88 | SF-Technomancer-5 | Skill: Profession | untrained (trained only) | untrained (trained only) | agree |
+| R89 | SF-Technomancer-5 | Skill: Sense Motive | −1 | −1 | agree |
+| R90 | SF-Technomancer-5 | Skill: Sleight of Hand | +11 | +11 | agree |
+| R91 | SF-Technomancer-5 | Skill: Stealth | +3 | +3 | agree |
+| R92 | SF-Technomancer-5 | Skill: Survival | +1 | +1 | agree |
+| R93 | SF-Technomancer-5 | Spells per day: 1st | 5 | 5 | agree |
+| R94 | SF-Technomancer-5 | Spells per day: 2nd | 3 | 3 | agree |
+| R95 | SF-Technomancer-5 | Spells known: 0 | 6 | 6 | agree |
+| R96 | SF-Technomancer-5 | Spells known: 1st | 4 | 4 | agree |
+| R97 | SF-Technomancer-5 | Spells known: 2nd | 3 | 3 | agree |
+| R98 | SF-Envoy-3 | BAB | +2 | +2 | agree |
+| R99 | SF-Envoy-3 | Fort | +2 | +2 | agree |
+| R100 | SF-Envoy-3 | Ref | +4 | +4 | agree |
+| R101 | SF-Envoy-3 | Will | +3 | +3 | agree |
+| R102 | SF-Envoy-3 | HP | 20 | 20 | agree |
+| R103 | SF-Envoy-3 | Stamina | 21 | 21 | agree |
+| R104 | SF-Envoy-3 | Resolve | 5 | 5 | agree |
+| R105 | SF-Envoy-3 | EAC | 14 | 14 | agree |
+| R106 | SF-Envoy-3 | KAC | 15 | 15 | agree |
+| R107 | SF-Envoy-3 | Skill: Acrobatics | +0 | +0 | agree |
+| R108 | SF-Envoy-3 | Skill: Athletics | −2 | −2 | agree |
+| R109 | SF-Envoy-3 | Skill: Bluff | +10 | +10 | agree |
+| R110 | SF-Envoy-3 | Skill: Computers | +7 | +7 | agree |
+| R111 | SF-Envoy-3 | Skill: Culture | +8 | +8 | agree |
+| R112 | SF-Envoy-3 | Skill: Diplomacy | +10 | +10 | agree |
+| R113 | SF-Envoy-3 | Skill: Disguise | +4 | +4 | agree |
+| R114 | SF-Envoy-3 | Skill: Engineering | +9 | +9 | agree |
+| R115 | SF-Envoy-3 | Skill: Intimidate | +10 | +10 | agree |
+| R116 | SF-Envoy-3 | Skill: Life Science | untrained (trained only) | untrained (trained only) | agree |
+| R117 | SF-Envoy-3 | Skill: Medicine | untrained (trained only) | untrained (trained only) | agree |
+| R118 | SF-Envoy-3 | Skill: Mysticism | untrained (trained only) | untrained (trained only) | agree |
+| R119 | SF-Envoy-3 | Skill: Perception | +6 | +6 | agree |
+| R120 | SF-Envoy-3 | Skill: Physical Science | untrained (trained only) | untrained (trained only) | agree |
+| R121 | SF-Envoy-3 | Skill: Piloting | +1 | +1 | agree |
+| R122 | SF-Envoy-3 | Skill: Profession | untrained (trained only) | untrained (trained only) | agree |
+| R123 | SF-Envoy-3 | Skill: Sense Motive | +6 | +6 | agree |
+| R124 | SF-Envoy-3 | Skill: Sleight of Hand | untrained (trained only) | untrained (trained only) | agree |
+| R125 | SF-Envoy-3 | Skill: Stealth | +8 | +8 | agree |
+| R126 | SF-Envoy-3 | Skill: Survival | +2 | +2 | agree |

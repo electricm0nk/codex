@@ -141,6 +141,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | C0.1 | 2026-10-02 | Haiku 4.5 | (see receipt) | complete | n/a (docs only) | `artifacts/cycle_0/C0.1_cycle_receipt.md` |
 | E0.1 | 2026-10-02 | Sonnet 5.5 | 5df9eb36db | complete | unchanged (no engine/data change) | `artifacts/epic_0/E0.1_cycle_receipt.md` |
 | E0.4 (transcriber) | 2026-10-02 | Opus 5.5 | the `docs(sd37,e0.4)` commit | in-progress (reviewer pending) | Aldric / Elowen unchanged (not rendered); 4 SF seeds defined: Soldier HP 25 SP 24 RP 4 EAC 16 KAC 19; Mystic 34/25/6/16/16; Technomancer 29/35/6/18/19; Envoy 20/21/5/14/15 | `artifacts/epic_0/E0.4_cycle_receipt.md` |
+| E0.4 (reviewer) | 2026-10-02 | Opus 5.5 | the `docs(sd37,e0.4): independent review` commit | complete | Aldric / Elowen unchanged (not rendered); 4 SF seeds unchanged by review, confirmed: Soldier HP 25 SP 24 RP 4 EAC 16 KAC 19; Mystic 34/25/6/16/16; Technomancer 29/35/6/18/19; Envoy 20/21/5/14/15. 126/126 agree, 0 corrections | `artifacts/epic_0/E0.4_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 

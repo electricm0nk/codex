@@ -4,7 +4,7 @@ bundle_id: SD-37
 card: E0.4
 artifact_type: seed-builds
 fetched: 2026-10-02
-review_status: pending independent Opus review (E0.4 reviewer step)
+review_status: reviewed 2026-10-02 by the independent Opus reviewer (E0.4); 0 disagree, 0 corrections
 ---
 
 # SD-37 Starfinder seed builds (E0.4 deliverable 1)
@@ -334,3 +334,14 @@ Results on 2026-10-02: every name returned ≥ 1, with these oracle spellings: `
 `Serum of Healing Mk 1`, `Battery` (the standard battery), `CLASS:Soldier` / `CLASS:Mystic` /
 `CLASS:Technomancer` / `CLASS:Envoy`, and the lashunta subrace as `Lashunta` + template `Damaya`.
 No pick needed an SD-g substitution.
+
+## 7. Independent review (E0.4 reviewer, 2026-10-02)
+
+Every URL above was re-fetched (78 of 78 HTTP 200; the 51 distinct non-spell pages are
+byte-identical to the transcriber's fetch, `E0.4-review-fetch-log.txt`). Re-checked against those
+pages: the point-buy arithmetic and the ≤ 18 cap, the 5th-level increases, skill-rank totals and
+per-skill caps, class-skill membership of every ranked skill, feat counts and prerequisites,
+class-option levels, spell class lists and levels, armour proficiency, item stats, credits and
+bulk, and the four constraints in §5. The 67 pick names were re-run against the pinned oracle:
+67 of 67 exact. **Verdict: agree on every field; no correction made.** The per-value table is in
+`seed-hand-values.md` (§ Independent review); the derivation is `E0.4_review_derive.py`.
