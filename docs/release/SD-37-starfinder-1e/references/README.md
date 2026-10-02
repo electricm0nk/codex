@@ -37,8 +37,8 @@ artifact_type: reference-index
 - `../../../retro/sd36-retrospective.md`: lessons 1–20, especially 14–20 (→ rules R1–R7), and
   "Changes for the next bundle".
 - `../../../retro/sd31-retrospective.md`: the shape E7.4 follows.
-- **SD-37's own retrospective:** `../../../retro/sd37-retrospective.md`, written and cited here by
-  E7.4. It does not exist yet.
+- **SD-37's own retrospective:** E7.4 writes it under `docs/retro/` and adds its link here. (C0.2
+  removed the pre-written link: it made E7.4's citation check pass before E7.4 ran.)
 
 ## Sibling bundles
 

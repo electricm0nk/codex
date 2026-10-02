@@ -65,9 +65,12 @@ $PCGEN_REPO_DIR/data/starfinder (12 .pcc, 131 .lst; CUI F-1, F-2) + system/gameM
   └─ gates: --check, token_coverage (SF), pcgen_residue_gate --closure, PI screening (SF term set), structural_diff.py
 ```
 
-**The overloaded-field hazard** (`decisions.md §8`): `HP|ALTHP` = HP; `HP|CURRENTMAX` (+ `HD:1`
-per level, hypothesis) = Stamina; `COMBAT|AC` split by `TYPE=EAC_Armor`/`KAC_Armor`; and
-`FACT:KeyAbilityScore`. The SF mapping table holds one oracle row per field. A field without a row
+**The overloaded-field hazard** (`decisions.md §8`, corrected by C0.2 from the oracle's own
+routing): `HP|CURRENTMAX` + `HD:1` per level + `RaceHP` = Hit Points; `HP|ALTHP` + `CON*TL`
+(`scr__stats.lst`) + Toughness = Stamina — a hypothesis E3.3 confirms against the SRD (E0.4) and a
+PCGen run. Class coefficients alone cannot tell the pools apart (ALTHP = CURRENTMAX + 1 for every
+class); Con and race HP are what discriminate. Also `COMBAT|AC` split by
+`TYPE=EAC_Armor`/`KAC_Armor`; and `FACT:KeyAbilityScore` (including `Str or Dex`, `INT or WIS`). The SF mapping table holds one oracle row per field. A field without a row
 is a named refusal.
 
 **Include structure:** SF's PCCs load game-mode-level files from the campaign. PF keeps those under
@@ -75,7 +78,8 @@ is a named refusal.
 
 **Not covered by the oracle** (E7.1 must list these): starship rules (absent); the Resolve formula
 (no direct row); books after COM/Near Space (not in the pinned tree, **estimate**, inferred from
-the 12-`.pcc` list); and anything in a `STATUS:BETA` PCC that PCGen itself computes wrongly. A
+the 12-`.pcc` list); the Society add-on `paizo/core/_society/` (excluded); and anything in a
+`STATUS:BETA` PCC that PCGen itself computes wrongly. A
 parity PASS covers only what PCGen's SF game mode computes.
 
 ## 5. SF chassis compute (E4) — generic, no per-class modules
@@ -86,8 +90,8 @@ A generic SF chassis reader over converted data *(proposed `src/rules_core/pilot
 |---|---|---|
 | BAB | full = level; ¾ = floor(¾ × level) | `BONUS:COMBAT\|BASEAB` |
 | Fort/Ref/Will base | good = floor(level/2)+2; poor = floor(level/3) | `BONUS:SAVE\|BASE.*` |
-| HP | race HP + class HP × level | race row + `HP\|ALTHP` |
-| Stamina | (class SP + Con mod) × level | `HD` + `HP\|CURRENTMAX` (E3.3 settles) |
+| HP | race HP + class HP × level | `RaceHP` (racial abilities, `scr_abilities.lst`) + (`HP\|CURRENTMAX` + `HD`) × level (E3.3 settles) |
+| Stamina | (class SP + Con mod) × level | `HP\|ALTHP` + `CON*TL` (`scr__stats.lst`) (E3.3 settles) |
 | Resolve | max(1, floor(level/2)) + key ability mod | hand-transcribed (SRD) |
 | EAC / KAC | 10 + armour EAC/KAC bonus + Dex mod (capped by the armour's max Dex) | armour rows `TYPE=EAC_Armor/KAC_Armor` |
 | Skills | ranks + ability mod + class-skill bonus (when ranks ≥ 1) + armour check penalty where it applies | `scr_skills.lst`, class/theme class skills |
@@ -111,8 +115,9 @@ it chose, and Pf1Adapter's output stays byte-identical.
 - Loader: a new file *(proposed `src/rules_core/rules_data_package.rs`)*. It is **never**
   `corpus_loader.rs` (fence).
 - Bundle path: added to `tauri.conf.json` resources; the `tauri-resources-tracked` stage covers it.
-- 252 importers re-pointed in one dispatch (CUI F-12). Afterwards the Rust tables are removed, or
-  each kept file is named with its reason.
+- 252 importers re-pointed in one dispatch (CUI F-12). Afterwards the Rust tables are removed; a
+  file that must stay is a `blocked-escalated` card, not a pass (C0.2).
+- Runs serially after E7.1 (C0.2 re-sequencing), so it may edit any importer.
 - Proof: PF byte-identical renders + catalogs; the Bestiary 1 monster count equal before and after.
 
 ## 7. Desktop (E6)

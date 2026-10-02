@@ -37,12 +37,16 @@ date: 2026-10-02
 > >    stopped correctly.
 > > 5. **Closure is a goal, not a stop signal.** Chain waves without waiting. Dispatch first,
 > >    report second.
-> > 6. **Quota stop rule** (`decisions.md §12.3`). Stop dispatching new lanes when weekly usage is
-> >    at or above 85%, or when subagent tokens reach 10 M (estimate). Write a resume receipt. **Never
-> >    downgrade a model** to keep going.
+> > 6. **Quota stop rule** (`decisions.md §12.3`). Stop dispatching new lanes when an `agent()`
+> >    result carries a usage-limit error (`/usage limit|rate limit|quota|limit reached/i` — the
+> >    binding, script-evaluable trigger), when reported subagent tokens reach 10 M (estimate; only
+> >    if the runtime reports usage), or when the harness shows a weekly reading ≥ 85%. No script
+> >    on this box can read the weekly quota itself. Write a resume receipt. **Never downgrade a
+> >    model** to keep going. Resumption is not automatic (§12.3).
 > > 7. **Crash resume** (`decisions.md §12.4`). Keep the dirty worktrees. Patch only the unrun
 > >    prompts. The prefix must be byte-identical to `artifacts/cycle_0/workflow-prefix.backup.js`.
-> >    Resume with `resumeFromRunId`.
+> >    Resume with `resumeFromRunId`. A VM stop needs a new session to run this; nothing restarts
+> >    it automatically.
 
 ## 0. Bundle at a glance
 
@@ -54,7 +58,8 @@ date: 2026-10-02
   planned deferral and not a card) / **55 cards**, each with one criterion (`kanban.md` row check).
 - **First concrete build value:** develop is at `0.16.0` (pasted in §1 item 7). This bundle's
   repo value is `0.17.0`, stamped by C1. The published triple `0.17.<run>` resolves at the first
-  tester publish after C1 (`decisions.md §2`).
+  tester publish after C1, which happens only after the operator merges to `develop`
+  (`publish-tester-release.yml` triggers on `develop`/`main` pushes only; `decisions.md §2`).
 - **Oracle:** `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`. Every receipt that quotes
   a corpus-derived figure quotes this SHA.
 
@@ -88,7 +93,11 @@ its output is pasted below it. Items still open name the card that closes them.
 4. **PAT.** Not applicable. There is no kanban CLI, and `gh` auth is used for the PR only
    (`gh pr view` above succeeded).
 5. **Working tree clean.** `git status --porcelain` printed nothing before authoring began. This
-   package's own commit restores that state. C0.2 re-runs the check and pastes the output.
+   package's own commit restores that state. C0.2 re-ran it on 2026-10-02 at `8b048211ca`:
+   ```
+   $ git status --porcelain
+   (no output)
+   ```
 6. **Doctrine gates.**
    ```
    $ test -f docs/governance/no-stub-mvp-doctrine.md && test -f docs/doctrine-external/identifier-discipline.md && echo DOCTRINE_PRESENT
@@ -129,10 +138,18 @@ Every `agent()` prompt starts with this prefix, **byte-identical** across all ag
 ```text
 ENVIRONMENT (SD-37, binding):
 - export PATH="$HOME/.cargo/bin:$PATH"
-- export RETRO_ACTOR=<card-id>            # e.g. RETRO_ACTOR=sd37-e3.2
-- export CARGO_TARGET_DIR=<repo-parent>/cargo-target/sd37-<card-id>-<tree-name>
-    # one per agent PER SOURCE TREE; never under /tmp; never shared across trees
+- export RETRO_ACTOR=sd37-<card-id>       # the ONLY value you bind, e.g. RETRO_ACTOR=sd37-e3.2
+- export CARGO_TARGET_DIR="/home/ubuntu/workspace/worktrees/cargo-target/${RETRO_ACTOR}-$(basename "$(git rev-parse --show-toplevel)")"
+    # one per agent PER SOURCE TREE; never under /tmp; never shared across trees; delete it when done
 - mkdir -p "$CARGO_TARGET_DIR" && echo $$ > "$CARGO_TARGET_DIR/.reclaim-claim"
+- GLOSSARY (read the cited row before you start; the package is docs/release/SD-37-starfinder-1e/):
+    "CUI F-n" = content-unit-inventory.md §1 row F-n (figure + its command);
+    "SD-x" = decisions.md §12.1 safe default x; "§n" with no file = decisions.md §n;
+    "R1".."R7", "R-x" = workflow-instruction.md §12; "G-n" = acceptance-and-verification.md;
+    "FSR …"/"DEF-1" = forward-scope-register.md; "M1".."M4" = decisions.md §8 mutations;
+    "memory <name>" = ~/.claude/projects/-home-ubuntu-workspace-repos-codex/memory/<name>.md;
+    seeds = content-unit-inventory.md §4 + artifacts/epic_0/seed-builds.md (E0.4).
+    In a table cell, `\|` is Markdown for `|`: unescape before running (epic-breakdown.md §0 note).
 - MEMORY GUARD: one cargo process at a time in this lane; cargo build/test with -j 8;
   every `cargo test ... -- --test-threads=8`; run `free -g` before any run expected > 10 min.
 - Before a full sweep: `df -h /` — a full sweep needs ~24 G free; if less, stop and report.
@@ -189,14 +206,18 @@ has this shape:
 
 1. `export const meta = { name: 'sd37-starfinder-1e', description, phases }`, with one phase per
    §3 row title.
-2. `phase()` calls run in §3's gated order. E4a runs as a concurrent branch that starts after E1.MC
-   (`Promise.all([mainChain(), e4aChain()])`). Each chain runs `pipeline()` internally.
+2. `phase()` calls run in §3's gated order. There is one chain. The only concurrency is E0 ∥ E1
+   (and C0.1 ∥ C1). E4 and E5 are serial, and E4a runs as a serial block after E7.1 (C0.2
+   re-sequencing, `decisions.md §3`).
 3. `pipeline()` by default. `parallel()` only where §3 says `yes`, and then every mutating agent
    gets `isolation: 'worktree'`.
 4. **Every `agent()` sets `model`** from `epic-breakdown.md §0`'s Tier column. Check:
    `awk '/agent\(/ && !/model:/' <script>` must print nothing.
 5. Every prompt = the §2.1 prefix + §6 verbatim + the card's criterion row from
-   `epic-breakdown.md` + its "Does not cover" cell.
+   `epic-breakdown.md` + its "Does not cover" cell + the `kanban.md` row (for "Depends on").
+6a. **Quota gate between steps** (`decisions.md §12.3`): before each dispatch, the script checks the
+   previous results for a usage-limit error and, if the runtime exposes token usage, the running
+   sum. On a hit it dispatches nothing new and returns the resume data.
 6. **Step lists carry `ownedBy`** (R4). A `declined` item that names a later step's key does not
    stop the run. That later step owns the item.
 7. **Refuted premise stops the step.** If an implementer returns `ok:false` or `declined`, no commit
@@ -209,35 +230,38 @@ export const meta = {
   description: 'SD-37 Starfinder 1e — partition, converter, SF chassis, desktop; rules_tables data package in parallel',
   phases: [
     { title: 'C — cycle 0/1' }, { title: 'E0 — oracle + licence' }, { title: 'E1 — partition' },
-    { title: 'E2 — schema' }, { title: 'E3 — SF converter' }, { title: 'E4a — rules_tables package' },
-    { title: 'E4 — SF chassis' }, { title: 'E5 — SF print path' }, { title: 'E6 — desktop' },
-    { title: 'E7 — verify + closure' },
+    { title: 'E2 — schema' }, { title: 'E3 — SF converter' }, { title: 'E4 — SF chassis' },
+    { title: 'E5 — SF print path' }, { title: 'E6 — desktop' }, { title: 'E7.1 — SF parity' },
+    { title: 'E4a — rules_tables package' }, { title: 'E7 — verify + closure' },
   ],
 }
-// TIER is read from epic-breakdown.md §0 — never omit model.
+// TIER is read from epic-breakdown.md §0 — never omit model. Write `model: <x>` on the same line
+// as `agent(` so the §2.4 item-4 awk check can see it (shorthand `{ model }` fails that check).
 const run = (card, model, opts = {}) =>
-  agent(PREFIX + PROCEDURE + criterion(card), { model, phase: card.phase, ...opts })
+  agent(PREFIX + PROCEDURE + criterion(card), { model: model, phase: card.phase, ...opts })
 
+// C0.2 ran before launch (complete); it is NOT dispatched here.
 phase('C — cycle 0/1')
-await parallel([() => run(C01, 'haiku'), () => run(C02, 'opus')])   // C0.1 has no cargo
-await run(C1, 'haiku')
+await parallel([
+  () => run(C01, 'haiku', { isolation: 'worktree' }),  // docs/git only; own tree (one writer per tree)
+  () => run(C1,  'haiku'),                             // the bump; pushes tranche/17
+])
 
-phase('E0 — oracle + licence')        // E0 ∥ E1 (disjoint files; E0 has no cargo)
+phase('E0 — oracle + licence')        // E0 ∥ E1: disjoint files (§3). Cargo lanes: E0.2 + E1 = 2
 const e0 = parallel([
   () => run(E01, 'sonnet', { isolation: 'worktree' }),
   () => run(E02, 'opus',   { isolation: 'worktree' }),
-  () => run(E04, 'opus',   { isolation: 'worktree' }),
+  () => run(E04, 'opus',   { isolation: 'worktree' }).then(() => run(E04_REVIEW, 'opus', { isolation: 'worktree' })),
 ])
 phase('E1 — partition')
 await run(E1_batch, 'opus')           // E1.1–E1.3 in one dispatch (batch big)
 await run(E14, 'opus'); await run(E1MC, 'opus')
 await e0; await run(E03, 'sonnet')
 
-const e4a = (async () => {            // own worktree + own CARGO_TARGET_DIR; file fences in §3
-  phase('E4a — rules_tables package')
-  for (const c of [E4a1, E4a2, E4a3, E4a4, E4aMC]) await run(c, c.tier, { isolation: 'worktree' })
-})()
-// main chain: E2 → E3 → (E4 ∥ E5) → E6 → E7.1; then await e4a before E7.2
+// One serial chain from here (C0.2 re-sequencing): E2 → E3 → E4 → E5 → E6 → E7.1 → E4a → E7.2 … E7.9
+// for each epic: for (const c of cards) { quotaGate(); await run(c, c.tier) }
+phase('E4a — rules_tables package')   // after E7.1; no other code lane in flight
+for (const c of [E4a1, E4a2, E4a3, E4a4, E4aMC]) { quotaGate(); await run(c, c.tier) }
 ```
 
 ### 2.5 A dispatched agent is never resumed — never end a turn waiting
@@ -256,28 +280,40 @@ its receipt.
 
 | Epic | Criteria | Parallel? | File-touch set (verified) | Gated on |
 |---|---|---|---|---|
-| C | C0.1, C0.2, C1 | C0.1 ∥ C0.2; C1 after | C0.1: SD-36 docs + git refs only. C1: the 14 surfaces in `decisions.md §2` | none |
+| C | C0.1, C0.2, C1 | C0.2 complete before launch; C0.1 ∥ C1 (C0.1 in its own worktree) | C0.1: SD-36 docs + git refs only. C1: the 14 surfaces in `decisions.md §2` | C1 after C0.2 |
 | E0 | E0.1–E0.4 | yes ∥ E1; E0.3 after E0.1/E0.2 | `scripts/pcgen-oracle-pin.env`, `scripts/fetch-pcgen-oracle.sh`, `scripts/verify.sh` (preflight-oracle stage only), `docs/governance/license-matrix.md`, `docs/governance/ogl-pi-blacklist.md`, `src/rules_core/pi_screening.rs` (SF term set; **E0.2 only**), `artifacts/epic_0/**`, `docs/work-inventory.starfinder-1e.json` *(new, proposed)* | C1 |
-| E1 | E1.1–E1.4, E1.MC | no (one batch) | `src/rules_core/corpus_loader.rs`, `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/authoring_workbench.rs`, the 19 BOOKS-const files (CUI F-13), `crates/codex-ingest/src/pcgen_import/sheet_rule/closure.rs`, `…/sheet_rule/reprint*`, `crates/codex-ingest/src/bin/sheet_rule_convert.rs`, `src/rules_core/game_system.rs` *(new, proposed)* | C1 |
-| E2 | E2.1, E2.2, E2.MC | no | `src/rules_core/sheet_rule.rs` (**exclusive while E2 runs**), `schemas/rules/*.schema.json` *(new)*, `scripts/verify.sh` (new stage) | E1.MC |
-| E3 | E3.1–E3.5, E3.MC | no | `crates/codex-ingest/src/pcgen_import/{pcc.rs,include_resolver.rs,lst_parser/**,sheet_rule/**}`, `crates/codex-ingest/src/bin/sheet_rule_convert.rs`, `scripts/token_coverage.py`, `scripts/pcgen_residue_gate.py`, `data/starfinder-1e/**` *(new)*, `artifacts/epic_3/**` | E2.MC, E0.1, E0.4 (E3.3), E0.2/E0.3 (E3.4) |
-| E4a | E4a.1–E4a.4, E4a.MC | **yes** — concurrent with E2–E6, own worktree + `CARGO_TARGET_DIR` | `src/rules_core/rules_tables/**`, `src/rules_core/rules_data_package.rs` *(new, proposed)*, `schemas/rules/rules_tables.schema.json` *(new)*, the 252 importers (CUI F-12), `data/rules_tables/**` *(new, proposed)*, `apps/desktop/src-tauri/tauri.conf.json` (resources line only) | E1.MC |
-| E4 | E4.1–E4.6, E4.MC | yes ∥ E5 | `src/rules_core/pilot_compute/sf_*.rs` *(new)*, `src/rules_core/pilot_compute/mod.rs` (module registration lines only), `src/rules_core/{money.rs,encumbrance.rs}`, `apps/desktop/src-tauri/src/{rule_system_adapter.rs,stub_adapter.rs}`, `apps/desktop/src-tauri/src/sf_adapter.rs` *(new)*, `docs/governance/wired-integration-stubs-registry.md` | E3.MC |
-| E5 | E5.1–E5.4, E5.MC | yes ∥ E4 | `data/starfinder-1e/**` (regenerated by converter), `crates/codex-ingest/src/pcgen_import/sheet_rule/prose.rs`, SF print-path files *(new)*. **Never** `pilot_compute/**` | E3.MC |
-| E6 | E6.1–E6.6, E6.MC | no | `apps/desktop/src/characterHub/**`, `apps/desktop/src/**/CharacterSheet*.tsx`, `apps/desktop/src/characterHub/abilityScoreMethods.ts`, `apps/desktop/src-tauri/src/*catalog*.rs` (SF catalogs as **new files**), `apps/desktop/src-tauri/tauri.conf.json`, `apps/desktop/scripts/ui-smoke/spec.json` | E4.MC, E5.MC; plus E4a.2 merged for any of the 16 shared desktop importers |
-| E7 | E7.1–E7.9 | no | `scripts/oracle_harness/**`, `scripts/pcgen-run-character.sh`, `scripts/verify-baselines.env`, `docs/retro/sd37-retrospective.md`, `docs/architecture/**`, this folder | E6.MC, E4a.MC |
+| E1 | E1.1–E1.4, E1.MC | no (one batch) | `src/rules_core/corpus_loader.rs`, `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/authoring_workbench.rs`, the 18 files holding the 19 BOOKS consts (CUI F-13), `crates/codex-ingest/src/pcgen_import/sheet_rule/closure.rs`, `…/sheet_rule/reprint*`, `crates/codex-ingest/src/bin/sheet_rule_convert.rs`, `src/rules_core/game_system.rs` *(new, proposed)*, the PF render-hash harness *(new, E1.4)* | C1 |
+| E2 | E2.1, E2.2, E2.MC | no | `src/rules_core/sheet_rule.rs`, `schemas/rules/*.schema.json` *(new)*, `scripts/verify.sh` (new stage) | E1.MC |
+| E3 | E3.1–E3.5, E3.MC | no | `crates/codex-ingest/**` (converter), `scripts/token_coverage.py`, `scripts/pcgen_residue_gate.py`, `scripts/verify.sh` (SF stages), `data/starfinder-1e/**` *(new)*, `tests/sf_license_registry.rs` *(new, E3.1)*, `artifacts/epic_3/**` | E2.MC, E0.1, E0.2 (E3.1), E0.4 (E3.3), E0.3 (E3.4) |
+| E4 | E4.1–E4.6, E4.MC | no | `src/rules_core/pilot_compute/sf_*.rs` *(new)*, `src/rules_core/pilot_compute/mod.rs`, `src/rules_core/{money.rs,encumbrance.rs}`, `apps/desktop/src-tauri/src/{rule_system_adapter.rs,stub_adapter.rs}`, `apps/desktop/src-tauri/src/sf_adapter.rs` *(new)*, `docs/governance/wired-integration-stubs-registry.md`, the converter (CONVERTER LANE) | E3.MC |
+| E5 | E5.1–E5.4, E5.MC | no (after E4.MC — C0.2) | `data/starfinder-1e/**` (regenerated by converter), `crates/codex-ingest/**` (prose), SF print-path files *(new)*. **Never** `pilot_compute/**` | E4.MC |
+| E6 | E6.1–E6.6, E6.MC | no | `apps/desktop/src/characterHub/**`, `apps/desktop/src/**/CharacterSheet*.tsx`, `apps/desktop/src/characterHub/abilityScoreMethods.ts`, `apps/desktop/src-tauri/src/*catalog*.rs` (SF catalogs as **new files**), `apps/desktop/src-tauri/tauri.conf.json`, `apps/desktop/scripts/ui-smoke/spec.json` | E4.MC, E5.MC |
+| E7.1 | E7.1 | no | `scripts/oracle_harness/**`, `scripts/pcgen-run-character.sh`, and any SF engine file a parity fix needs | E6.MC |
+| E4a | E4a.1–E4a.4, E4a.MC | **no — serial, after E7.1, nothing else in flight** (C0.2) | `src/rules_core/rules_tables/**`, `src/rules_core/rules_data_package.rs` *(new, proposed)*, `schemas/rules/rules_tables.schema.json` *(new)*, the 252 importers (CUI F-12), `data/rules_tables/**` *(new, proposed)*, `apps/desktop/src-tauri/tauri.conf.json` (resources), `scripts/verify.sh` if a stage needs the new path | E7.1 |
+| E7.2–E7.9 | E7.2–E7.9 | no | `scripts/verify-baselines.env`, `docs/retro/sd37-retrospective.md`, `docs/architecture/**`, graph outputs, this folder | E4a.MC |
 
-**File-level fences (R-F).** A file named in two rows belongs to the **earlier** row until that
-row's merge check is `complete`:
-- `corpus_loader.rs`: E1 owns it; E4a never edits it.
-- `sheet_rule.rs`: E2 owns it; E4 and E4a read it only.
-- `tauri.conf.json`: E4a may change its resources line only before E6.1 starts; after that, E6 owns
-  the file.
-- `pilot_compute/mod.rs`: E4 owns its module-registration lines; E4a.2 re-points
-  `rules_tables::` imports in this file only after E4.MC is complete, or before E4.1 starts.
-- The 16 desktop `src-tauri` importers belong to E4a until E4a.2 merges.
+**File-level fences (R-F) — C0.2 rewrite.** The authoring fences let E4a run beside E2–E6 and
+E4 beside E5. C0.2 measured the overlap (`decisions.md §3`: E4a.2's 252 importers include
+`sheet_rule.rs`, `corpus_loader.rs`, `character_hub.rs`, `encumbrance.rs`, `pilot_compute/mod.rs`,
+23 `pcgen_import/` files, 6 BOOKS-const files and 9 desktop `*catalog*.rs` files; E4 ∥ E5 shared the converter
+and `data/starfinder-1e/**`) and removed the concurrency instead of adding fences. The only
+concurrent windows left are:
+- **E0 ∥ E1.** E0 touches only the E0 row's files; E1 touches only the E1 row's. Disjoint — verified
+  by C0.2: no E0 path appears in the E1 row and vice versa. E0 lanes never touch
+  `crates/codex-ingest/**` (the CONVERTER LANE does not apply to E0).
+- **C0.1 ∥ C1.** C0.1 touches SD-36 docs and git refs in its own worktree; C1 touches the 14
+  version surfaces.
 
-A lane that needs a fenced file returns `declined` with `ownedBy:<card>`; it does not edit the file.
+A lane that needs a file outside its row returns `declined` with `ownedBy:<card>` naming the card
+whose row holds the file.
+
+The command C0.2 used for the importer overlap (re-run it if the epic order changes again):
+
+```bash
+# list the 252 importers, then intersect with each epic's file set by hand or script
+for r in src crates apps/desktop/src-tauri tests; do grep -rlE 'rules_tables::' $r --include='*.rs' | awk '!/src\/rules_core\/rules_tables\//'; done | sort > "$SCRATCH/importers.txt"   # SCRATCH = any scratch dir outside the repo
+awk '/corpus_loader|sheet_rule\.rs|character_hub|encumbrance|money\.rs|pilot_compute\/mod\.rs|pcgen_import\/|catalog/' "$SCRATCH/importers.txt"
+```
 
 ## 4. File-touch verification
 
@@ -296,32 +332,43 @@ git fetch origin tranche/17 && git rebase origin/tranche/17 && git push origin H
 
 On a non-fast-forward rejection, retry up to 5 times. If it still fails, report `CLAIM-EXISTS` and
 mark the card `blocked-escalated`. Never force-push. `progress.md` and `kanban.md` are re-fetched
-and re-read immediately before every edit. Worktree lanes (E0 parallel, E4a, E4/E5) merge into
-`tranche/17` through their merge-check card, never directly from the lane.
+and re-read immediately before every edit. A rebase **conflict** (not a rejection) follows SD-o:
+conflicts confined to `kanban.md`/`progress.md` rows are resolved by keeping both sides; any other
+conflict aborts the rebase and the card is `blocked-escalated` with the paths.
+
+**Every card, including worktree lanes, lands by pushing its own commits to `tranche/17` with this
+protocol** (C0.2 correction: the authoring text also said worktree lanes merge "through their
+merge-check card, never directly from the lane", which contradicted the prefix's "commit and push
+before ending the turn" and named no mechanism). Merge-check cards re-verify on
+`origin/tranche/17`; they do not merge anything.
 
 ## 6. Per-cycle procedure (runs inside the dispatched agent)
 
 1. **Base check** (a control, not a warning): run the wrong-base test from the prefix. On failure,
    `git reset --hard <pinned tranche/17 SHA from progress.md>` and re-check. Then run the §5
-   fetch+rebase.
-2. **Baseline the audit.** `BASE_BRANCH=$(git merge-base HEAD origin/develop)`. Record the card's
-   acceptance command output on the **pre-change** tree (expected RED). That output goes in the
-   receipt.
+   fetch+rebase, and record `CARD_BASE=$(git rev-parse HEAD)` (the receipt's "Base SHA").
+2. **Baseline.** Record the card's acceptance command output on the **pre-change** tree (expected
+   RED). That output goes in the receipt.
 3. **TDD.** Write the failing test and confirm it fails **for the intended reason**. Make the
    smallest change, then run the targeted suites.
-4. **Dual audit on the final diff** (both must print `OK_*`):
+4. **Dual audit on the final diff** (every check must print its `OK_*`). Run it **after** the local
+   commit of step 9 and **before** the push: `...HEAD` sees committed changes only, so an audit run
+   on uncommitted work audits nothing (C0.2 correction). Only **added** lines are audited: the
+   `awk` filter keeps `+` lines, so removing a stub (E4.6 deletes `"Would render …"` strings from
+   `stub_adapter.rs`) does not trip the audit it satisfies (C0.2 correction). A violation is fixed
+   with a new commit and the audit re-run; push only when all print `OK_*`.
    ```bash
-   git diff --unified=0 "${BASE_BRANCH}...HEAD" -- <scoped paths> ':!**/__tests__/**' ':!**/*.test.*' \
-     | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})' || echo 'OK_NO_BUNDLE_TAGS'
+   git diff --unified=0 "${CARD_BASE}...HEAD" -- <scoped paths> ':!**/__tests__/**' ':!**/*.test.*' \
+     | awk '/^\+/ && !/^\+\+\+/' | grep -nE '\b(sd[0-9]+_|SD[0-9]+_|Sd[0-9]+|t_[0-9a-f]{8,})' || echo 'OK_NO_BUNDLE_TAGS'
    # Four-check wired-integration audit — docs/governance/no-stub-mvp-doctrine.md §"Per-cycle audit"
-   git diff --unified=0 "${BASE_BRANCH}...HEAD" -- 'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' 'src/**/*.rs' 'crates/**/*.rs' ':!**/__tests__/**' ':!**/*.test.ts' ':!**/*.test.rs' \
-     | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
-   git diff --unified=0 "${BASE_BRANCH}...HEAD" -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' \
-     | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS
-   git diff --unified=0 "${BASE_BRANCH}...HEAD" -- 'apps/desktop/**/*.ts' 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' 'apps/desktop/**/*.rs' ':!**/__tests__/**' ':!**/*.test.*' \
-     | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
-   git diff --unified=0 "${BASE_BRANCH}...HEAD" -- 'apps/desktop/**/*.ts' 'apps/desktop/**/*.tsx' 'src/**/*.rs' \
-     | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
+   git diff --unified=0 "${CARD_BASE}...HEAD" -- 'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' 'src/**/*.rs' 'crates/**/*.rs' ':!**/__tests__/**' ':!**/*.test.ts' ':!**/*.test.rs' \
+     | awk '/^\+/ && !/^\+\+\+/' | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS
+   git diff --unified=0 "${CARD_BASE}...HEAD" -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' \
+     | awk '/^\+/ && !/^\+\+\+/' | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS
+   git diff --unified=0 "${CARD_BASE}...HEAD" -- 'apps/desktop/**/*.ts' 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' 'apps/desktop/**/*.rs' ':!**/__tests__/**' ':!**/*.test.*' \
+     | awk '/^\+/ && !/^\+\+\+/' | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__' || echo OK_NO_MOCK_LEAKS
+   git diff --unified=0 "${CARD_BASE}...HEAD" -- 'apps/desktop/**/*.ts' 'apps/desktop/**/*.tsx' 'src/**/*.rs' \
+     | awk '/^\+/ && !/^\+\+\+/' | grep -nE '"Would [^"]*"' || echo OK_NO_WOULD_STRINGS
    ```
    (`crates/**` is added to check 1 relative to the doctrine's list, because E3/E4a ship code
    there.)
@@ -401,10 +448,11 @@ Every match must be one of three things:
 - (a) a schema placeholder inside a fenced receipt/prefix template in this file (§2.1, §7) or in
   `progress.md`'s row template; or a command argument that the running card binds at run time
   (`<fresh>`, `<sha>`, `<bump-sha>`, `<render>`, `<script>`, `<file>`, `<pcc>`, `<tree>`,
-  `<checkout>`, `<branch>`, `<p>`, `<role>`, `<n>`, `<cycle>`, `<Class>`), or a naming pattern
-  (`SD-NN-<slug>`, `stc-<##>-<description>`);
+  `<checkout>`, `<branch>`, `<p>`, `<role>`, `<n>`, `<cycle>`, `<Class>`, `<card>`, `<card-id>`,
+  `<type>`, `<epic-start>`, `<cmd>`, `<log>`, `<pidfile>`, `<seed>`, `<field>`, `<value>`,
+  `<name>`, `<scratch>`, `<x>`), or a naming pattern (`SD-NN-<slug>`, `stc-<##>-<description>`);
 - (b) a deferred value with a named resolution point:
-  - `0.17.<run>` → first tester publish after C1;
+  - `0.17.<run>` → first tester publish after the operator merges to `develop` (not a card);
   - the SF denominator → E0.3;
   - hand values → E0.4;
   - the data-package path → E4a.1;
@@ -412,7 +460,9 @@ Every match must be one of three things:
   - the Workflow run id → launch;
 - (c) a bug to fix before launch.
 
-C0.2 runs the command and pastes the classified output.
+C0.2 ran the command on 2026-10-02 and classified every match in
+`artifacts/cycle_0/C0.2_cycle_receipt.md` (§"Placeholder gate"). `<repo-parent>` and `<tree-name>`
+were class (c) — undefined in the prefix — and were replaced by a computed path (§2.1).
 
 ## 10. Epic wrap-up (after every epic)
 
@@ -428,10 +478,17 @@ C0.2 runs the command and pastes the classified output.
 This order **differs from the template's §11**. The template puts release notes after graphify,
 and that is a known defect (FSR-C9).
 
-1. **E7.3 final-acceptance scan.** Every card in `kanban.md` is `complete` (E7.3's awk command).
-   Every FSR revisit condition is checked, including DEF-1. **If anything is short, stop here:**
-   no retrospective, no sweep, **no PR**. Report what is short with the command that shows it.
-   This is a correct outcome.
+1. **E7.3 final-acceptance scan.** Every card except the closure chain E7.3–E7.9 is `complete`:
+   ```bash
+   cd docs/release/SD-37-starfinder-1e
+   test -s kanban.md || { echo NO_KANBAN; exit 2; }
+   awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 55) print "ROW_COUNT " n }' kanban.md
+   awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E7\.[3-9] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
+   ```
+   Pass = no output. Every FSR revisit condition is checked, including DEF-1 (`decisions.md §17`'s
+   fenced command; exit 2 = could not check = short). **If anything is short, stop here:** no
+   retrospective, no sweep, **no PR**. Report what is short with the command that shows it. This is
+   a correct outcome.
 2. **E7.4 retrospective.** Run `scripts/retro.py summary --since 2026-10-02 --json`, then write
    `docs/retro/sd37-retrospective.md` in the shape of `docs/retro/sd31-retrospective.md`, and
    **cite it from `references/README.md`** in the same commit.
@@ -447,9 +504,13 @@ and that is a known defect (FSR-C9).
    Record the indexed SHA. If the node-count guard exits 1, file the receipt and stop. **Never**
    pass a force flag (memory `graphify-force-update-replaces-semantic-graph`). After graphify,
    commit **only** the graph outputs and `receipts.md`, push, and confirm the tree is clean again.
-7. **E7.9 PR** `tranche/17 → develop`. This is the final action. Before opening it, read any named,
-   pre-scoped merge-conflict deferral (expected: `publish-tester-release.yml` vs PR #395). The
-   operator merges.
+7. **E7.9 PR** `tranche/17 → develop`. This is the final action. Before opening it: re-run the
+   step-1 scan with the exemption narrowed to `E7\.9`; commit E7.9's own `complete` row and
+   progress row (docs only) and push; read any named, pre-scoped merge-conflict deferral
+   (expected: `publish-tester-release.yml` vs PR #395). Then `gh pr create`, and wait inside the
+   turn for the PR's `pr-tests` run (`gh pr checks <n> --watch`) — the only CI that runs for this
+   branch (SD-n). Red or unopenable → one follow-up docs commit setting E7.9 `blocked-escalated`
+   with the failing job named. The operator merges.
 8. Stop.
 
 ## 12. Standing rules
@@ -460,10 +521,10 @@ and that is a known defect (FSR-C9).
 |---|---|---|
 | **R1 Converter lane in every prefix** | Every prefix carries the CONVERTER LANE paragraph (§2.1). Any converter change runs the structural-diff protocol (§6 step 5). | `grep -c 'CONVERTER LANE' artifacts/cycle_0/workflow-prefix.backup.js` = 1; converter receipts carry `verdict=PASS` + planted-mutation FAIL counts |
 | **R2 No hand-kept desktop tables** | The engine is the single source. A fallback appears only behind a visible notice. Merge checks render real builds on both trees and open the seeds in the real app. `Computed` is a floor, never the claim. | E6.3's test (every SF sheet number traces to an engine explanation row); E6.MC receipt |
-| **R3 Merge checks stay on Opus** | Every `*.MC` card is `opus`. Under quota pressure narrow the scope, never the model. | `awk -F'\|' '$2 ~ /MC/ && $4 !~ /opus/' kanban.md` prints nothing |
-| **R4 `ownedBy` declines** | A declined item that names a later step's key goes to that step and does not stop the run. | Script review at C0.2 and at launch: every step list item has `ownedBy` |
+| **R3 Merge checks stay on Opus** | Every `*.MC` card is `opus`. Under quota pressure narrow the scope, never the model. | `awk -F'\|' '$2 ~ /MC/ && $4 !~ /opus/' kanban.md` prints nothing (unescape `\|` first; C0.2 ran it: no output) |
+| **R4 `ownedBy` declines** | A declined item that names a later step's key goes to that step and does not stop the run. | Script review at launch (the script does not exist at C0.2): every step list item has `ownedBy` |
 | **R5 Isolated app-data root** | Any harness that launches the app uses a per-run `XDG_DATA_HOME`, refuses the real root, and records the real store's entry count + sha256 before and after. | E6.6/E6.MC receipts |
-| **R6 Long waits on Sonnet+; `green:false` + empty failing = not finished** | No Haiku on runs that may exceed 20 min. Cited logs copied into the repo before return. Crash recovery per `decisions.md §12.4`. | `kanban.md` Tier column for E6.6/E7.2/E7.8 ≠ haiku; receipts cite repo paths |
+| **R6 Long waits on Sonnet+; `green:false` + empty failing = not finished** | No Haiku on runs that may exceed 20 min. Cited logs copied into the repo before return. Crash recovery per `decisions.md §12.4`. | `kanban.md` Tier column for E6.6/E7.2/E7.8/E7.9 ≠ haiku (E7.9 waits for `pr-tests`); receipts cite repo paths |
 | **R7 Per-character status** | Every status message and every receipt reports deltas for the 6 seeds, not census totals alone. | Receipt field "Seed deltas" present: `grep -L 'Seed deltas' artifacts/epic_*/*_cycle_receipt.md` prints nothing |
 
 ### 12.2 Per-cycle and measurement rules

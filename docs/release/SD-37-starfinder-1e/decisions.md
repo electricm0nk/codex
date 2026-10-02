@@ -65,7 +65,10 @@ repo. No cycle should do this without a ruling.
   moves (`0.17.${GITHUB_RUN_NUMBER}`, stamped at publish). Closure must not bump the tranche digit.
 - **First concrete build value:** `0.17.0` in the repo files. The published triple is
   `0.17.<GitHub run number of the first tester publish after C1>`, and it **resolves at that
-  publish**. C1's receipt records the run number once it exists.
+  publish**. `publish-tester-release.yml` triggers only on pushes to `develop`/`main`
+  (`awk '/^on:/,/^jobs:/' .github/workflows/publish-tester-release.yml`), so that publish happens
+  only after the operator merges the closure PR. No SD-37 card can record it; it is not a card
+  obligation (C0.2 correction).
 - **PR #395** (`fix/finalize-no-msi-glob`, open, mergeable) does **not** gate the cut. If it merges
   before C1, C1 rebases `tranche/17` onto the new `origin/develop` before the bump commit. If it
   merges after, the closure PR resolves the expected small conflict in
@@ -95,10 +98,28 @@ done). If the operator wants a different version, change C1 only.
 properties the brief requires:
 
 ```
-C0 → C1 → { E0 ∥ E1 } → E2 → E3 → { E4 ∥ E5 } → E6 → E7
-                    E1 → E4a  (own worktree, own CARGO_TARGET_DIR, runs alongside E3–E6)
+C0 → C1 → { E0 ∥ E1 } → E2 → E3 → E4 → E5 → E6 → E7.1 → E4a → E7.2 … E7.9
 E8 (starship) = planned capability deferral, not a card (§17)
 ```
+
+**C0.2 re-sequencing (2026-10-02, safe default; alternative logged in `progress.md`).** The
+authoring spine ran E4a in parallel with E2–E6 and E4 in parallel with E5. Both were unsafe:
+
+- E4a.2 re-points 252 importers (CUI F-12). They include `src/rules_core/sheet_rule.rs` (E2's
+  exclusive file), `corpus_loader.rs` and `character_hub.rs` (E1), `encumbrance.rs` and
+  `pilot_compute/mod.rs` (E4), 23 files under `crates/codex-ingest/src/pcgen_import/` (E3), 6 of
+  the 18 BOOKS-const files (E1.2) and 9 desktop `*catalog*.rs` files (E6.4). The fences covered a
+  subset and contradicted themselves ("E4a never edits `corpus_loader.rs`" while it is one of the
+  252). E4a.1 also collided with E2.2 (`schemas/rules/` + the `rules-schema-check` generator),
+  `scripts/verify.sh` (E2/E3/E4 stages) and `tauri.conf.json` (E6.1).
+- E4 ∥ E5 shared `crates/codex-ingest/**` (every prefix carries the CONVERTER LANE) and the
+  generated `data/starfinder-1e/**` tree, and E5.3/E5.1 needed E4's totals and render path.
+
+The smallest change that removes every overlap without new fence rules: **E4a runs as one serial
+block after E7.1 and before E7.2, with no other code lane in flight; E5 runs after E4.MC.** E4a stays
+off SF's critical path in the sense that matters: every SF card is complete and parity-checked
+before E4a starts, so a quota stop or a blocker inside E4a leaves a finished SF bundle short only
+of E4a.
 
 - **E0** — oracle and licence admission. Extend `PCGEN_ORACLE_SPARSE_PATHS` with `data/starfinder`
   and `system/gameModes/Starfinder`, add an SF completeness probe to `scripts/fetch-pcgen-oracle.sh`,
@@ -113,7 +134,7 @@ E8 (starship) = planned capability deferral, not a card (§17)
 - **E5** — SF print-path content.
 - **E6** — desktop SF surfaces (§15).
 - **E7** — verification and closure (§13).
-- **E4a** — `rules_tables` → data package (§19). In scope, off the critical path, in parallel.
+- **E4a** — `rules_tables` → data package (§19). In scope; serial, after E7.1 (see above).
 
 **Enforced by:** `epic-breakdown.md §0` (parallel/serial map) and `workflow-instruction.md §3`
 (file-touch fences). The Workflow script's `phases` must match these titles.
@@ -130,7 +151,7 @@ it (`§19`).
 `two-book-scope-is-a-deliberate-proof`): prove the method on one book, then run every remaining
 book in one batch.
 
-- **Proof book:** Core Rulebook (`paizo/core`, 5,974 rows; CUI §2). E3.4 tunes the converter, the
+- **Proof book:** Core Rulebook (`paizo/core` minus its `_society/` add-on, 5,959 rows; CUI §2). E3.4 tunes the converter, the
   mapping table and the gates on this book alone.
 - **Go wide (one batch, E3.5):** Armory, Character Operations Manual, Pact Worlds, Near Space, and
   Alien Archive 1–3. Alien Archive content enters as the `.lst` carries it (playable races,
@@ -172,18 +193,25 @@ for a print-only rule. The test question: does this value land in a sheet total?
   "All Rights Reserved" and carries a Paizo trademark line (source-inventory report §1).
 - **LPJ Design Infinite Space (`lpj_design/infinite_space`)** — excluded. It is third-party, it
   holds themes only, and its licence is not verified.
+- **The Society add-on nested inside the Core Rulebook directory (`paizo/core/_society/_.pcc`,
+  "Starfinder Society Roleplaying Guild Guide - Core Rulebook Mods", 1 `.lst`, 15 rows)** —
+  excluded with SSRGG (found by C0.2; the authoring roster counted it inside `paizo/core`). It is
+  the same SFS guide content whose PCC reads "All Rights Reserved". E0.2 gives it its own licence
+  row and E0.3 reports its 15 rows by name. Command:
+  `awk '/^[^#[:space:]]/ && !/^(SOURCELONG|SOURCESHORT|SOURCEWEB|SOURCEDATE)/{r++} END{print r}' $S/paizo/core/_society/_abilities.lst` → 15.
 - The SF rows of `docs/governance/license-matrix.md` are an **E0.2 deliverable**, not an
   assumption. `grep -ni starfinder docs/governance/license-matrix.md` returned nothing on
   2026-10-02. E0.2 records, per book: licence, PI posture, `operator_sign_off` (false until the
   operator signs), and the SF PI term set (Pact Worlds proper nouns and so on). The exclusions above
-  are measured exclusions: E0.3 reports their row counts (214 rows, CUI F-6) as a named number.
+  are measured exclusions: E0.3 reports their row counts (229 rows, CUI F-6) as a named number.
   They are not silent.
 - **Safe default for a book whose licence or PI status E0.2 cannot settle:** exclude it, log it, do
   not ingest it (the SD-28 precedent).
 
 **Enforced by:** E0.2's receipt; the converter's book registry, which lists only signed-off-or-OGL
-books, so an excluded book cannot be read. A test asserts that the two excluded directories are
-absent from the SF book registry and are named in the exclusion record.
+books, so an excluded book cannot be read. A test (written by **E3.1**, because the SF registry
+only exists after E1.2) asserts that the three excluded PCCs are absent from the SF book registry
+and are named in the exclusion record.
 
 **Revisit if the operator disagrees:** if the operator verifies the LPJ licence, add a go-wide
 cycle for its 37 rows. SSRGG stays out unless Paizo's terms change.
@@ -212,23 +240,54 @@ the same byte-identical gate.
 
 **Operator-away default (2026-10-02). Known hazard.** PCGen's SF data reuses PF field names with
 different meanings. If you read it through the PF mapping (`mapping-table.v1.json`, 273 rows, CUI
-F-14), it prints numbers that **look valid and are wrong**. Observed in the pinned oracle
-(`grep -E '^CLASS:(Soldier|Envoy|Mystic|Technomancer)\b' $S/paizo/core/scr_classes.lst | tr '\t' '\n' | grep -E 'HP\||HD:'`):
+F-14), it prints numbers that **look valid and are wrong**.
 
-| Class | `HD:` | `BONUS:HP\|CURRENTMAX` | `BONUS:HP\|ALTHP` |
-|---|---|---|---|
-| Soldier | 1 | `6*SoldierLVL` | `7*SoldierLVL` |
-| Envoy | 1 | `5*EnvoyLVL` | `6*EnvoyLVL` |
-| Mystic | 1 | `5*MysticLVL` | `6*MysticLVL` |
-| Technomancer | 1 | `4*TechnomancerLVL` | `5*TechnomancerLVL` |
+**What the pinned oracle actually says** (re-read by C0.2 on 2026-10-02, oracle
+`7f818006e371188e5717fd18d74d18a420747fc6`; `$S` = `$PCGEN_REPO_DIR/data/starfinder`):
 
-- `HP|ALTHP` is **Hit Points**. `HP|CURRENTMAX` is **Stamina**, and `CURRENTMAX` is one less than
-  the per-level Stamina that the planner recalls from the Core Rulebook for each class. The
-  planner's hypothesis: PCGen adds the `HD:1` "die" (one point per level) on top, so Stamina per
-  level = `HD` + `CURRENTMAX` coefficient + Con modifier. **This is unverified.** A reader that
-  takes `CURRENTMAX` alone would print a Stamina total short by one per level. That is exactly the
-  confidently-wrong shape AGENTS.md rule 7 describes. E3.3 must settle it against the SRD's class
-  tables and a PCGen SF oracle run before any Stamina number ships.
+```bash
+# per-class tokens (all 10 player classes carry the same shape; Drone differs)
+awk -F'\t' '/^CLASS:(Soldier|Envoy|Mystic|Technomancer)\t/{for(i=2;i<=NF;i++) if($i ~ /HP\||^HD:/) print $1" :: "$i}' $S/paizo/core/scr_classes.lst
+# every other HP| token in the Core Rulebook files, with the record that carries it
+awk -F'\t' '!/^#/{for(i=1;i<=NF;i++) if($i ~ /HP\|(CURRENTMAX|ALTHP)\|/ && FILENAME !~ /scr_classes/) print FILENAME": "$1" :: "$i}' $S/paizo/core/*.lst
+```
+
+| Class | `HD:` | `BONUS:HP\|CURRENTMAX` | `BONUS:HP\|ALTHP` | `FACT:KeyAbilityScore` |
+|---|---|---|---|---|
+| Soldier | 1 | `6*SoldierLVL` | `7*SoldierLVL` | `Str or Dex` |
+| Envoy | 1 | `5*EnvoyLVL` | `6*EnvoyLVL` | `CHA` |
+| Mystic | 1 | `5*MysticLVL` | `6*MysticLVL` | `WIS` |
+| Technomancer | 1 | `4*TechnomancerLVL` | `5*TechnomancerLVL` | `INT` |
+
+Non-class routing of the two pools (the second command):
+
+| Record (file) | Token | Pool it feeds |
+|---|---|---|
+| `Constitution` (`scr__stats.lst`) | `BONUS:HP\|ALTHP\|CON*TL` (Con modifier × total level) | ALTHP |
+| `Toughness` (`scr_feats.lst`) | `BONUS:HP\|ALTHP\|TL` | ALTHP |
+| `Energy Shield` (`scr_abilities.lst`, drone) | `BONUS:HP\|ALTHP\|DroneMasterLVL` | ALTHP |
+| `Default` (`scr_abilities.lst`) | `BONUS:HP\|CURRENTMAX\|RaceHP` (racial abilities set `BONUS:VAR\|RaceHP\|2/4/6`) | CURRENTMAX |
+| `+1 Hit Point` (`scr_abilities.lst`) | `BONUS:HP\|CURRENTMAX\|1` | CURRENTMAX |
+| `CLASS:Drone` (`scr_classes.lst`) | `BONUS:HP\|CURRENTMAX\|-1` and `(10*DroneLVL)+…` | CURRENTMAX |
+
+**Reading (C0.2 correction — the authoring text had the two pools inverted).** The data routes
+the Constitution modifier, Toughness and the drone's energy shield into **ALTHP**, and the racial
+hit points and the "+1 Hit Point" ability into **CURRENTMAX**. Read against the Starfinder rule
+shape (the Constitution modifier adds to Stamina each level; racial hit points add to Hit Points —
+**both to be sourced from the SRD by E0.4, not asserted here**), the consistent reading is:
+
+- `HP|CURRENTMAX` (+ the `HD:1` die, one point per level) = **Hit Points**:
+  `RaceHP + (CURRENTMAX coefficient + HD) × level`.
+- `HP|ALTHP` = **Stamina**: `ALTHP coefficient × level + Con modifier × level` (+ Toughness etc.).
+- For every class, `ALTHP coefficient = CURRENTMAX coefficient + 1`, so **class terms alone
+  cannot tell the two pools apart**: with `HD:1` added, both pools grow by the same amount per
+  level. The terms that discriminate are Con, race HP and Toughness. A reader that swaps the two
+  pools prints per-level numbers that look right and puts Con and race HP into the wrong total.
+  A reader that drops `HD` prints Hit Points short by one per level.
+
+This reading is still **a hypothesis until E3.3 confirms it** with an SRD citation (E0.4) and a
+PCGen SF oracle run for a named build. Nothing above states a Core Rulebook value as fact.
+
 - `COMBAT|AC` is split by `TYPE=EAC_Armor` / `TYPE=KAC_Armor`, with `SPROP:EAC` in prose.
 - `FACT:KeyAbilityScore` holds strings such as `Str or Dex`, `CHA`, `WIS`, `INT` (choice vs fixed).
 - **Resolve** has no direct row. E4.1 hand-transcribes the formula from the SRD (§18).
@@ -238,7 +297,11 @@ F-14), it prints numbers that **look valid and are wrong**. Observed in the pinn
 field whose SF meaning differs from its PF meaning gets one row, and each row cites two things:
 the SRD rule (URL + section), and an oracle observation (a PCGen SF run's output for a named build).
 A field with no oracle row is a **named refusal**, never a guess. Planted mutations prove the
-mapping is load-bearing: swap `ALTHP`↔`CURRENTMAX` and the seed Stamina/HP fixtures must go red.
+mapping is load-bearing. The set is exactly four, and each must turn at least one seed fixture red:
+(M1) swap `ALTHP`↔`CURRENTMAX`; (M2) drop the `HD` term from Hit Points; (M3) route
+`CON*TL` into Hit Points instead of Stamina; (M4) drop `RaceHP` from Hit Points. M1 and M3 are
+detectable only by a seed whose Con modifier is not 0, so every SF seed has a non-zero Con
+modifier (`content-unit-inventory.md §4`, E0.4).
 
 **Enforced by:** E3.3's acceptance; the structural-diff protocol on the SF package (`§14`).
 
@@ -253,7 +316,15 @@ mapping is load-bearing: swap `ALTHP`↔`CURRENTMAX` and the seed Stamina/HP fix
 - **PF:** Aldric (Fighter 3), Elowen (Wizard 5).
 - **SF:** a Soldier 3, a Mystic 5 (spells), a Technomancer 5 (spells), an Envoy 3 (skill-heavy).
 
-Builds are in `content-unit-inventory.md §4`. Every seed must open in the **real desktop app**
+The class/level/race/key-ability skeleton is in `content-unit-inventory.md §4`. **The full build
+(theme, ability scores via SF point buy, skill ranks, feats, gear and armour, spells known) is
+E0.4's first deliverable**, `artifacts/epic_0/seed-builds.md`, written before any hand value and
+before any card that renders a seed (E3.3 is the first; it depends on E0.4). Constraints E0.4 must
+meet: every SF seed has a non-zero Con modifier (§8's mutations M1/M3 need it); the Soldier wears
+armour with a max-Dex cap that binds; the Envoy has ranks in at least 6 skills; the Mystic and
+Technomancer know spells at every spell level they can cast. A pick the oracle cannot express is
+replaced by another Core Rulebook option and logged (SD-g). Every SF seed must open in the
+**real desktop app**
 under an isolated `XDG_DATA_HOME`. The harness refuses to start on the real root, and its receipt
 states the real store's entry count and sha256 before and after (SD-36 lesson 18). Every status
 message reports **per-seed sheet deltas** (SD-36 lesson 20).
@@ -315,7 +386,10 @@ supersedes the Sonnet-first guidance in SD-36's `workflow-instruction.md` and in
   planning on Fable 5.1 or Opus, but switching the planning model was not available in the
   authoring session. **The operator may want a Fable/Opus review pass of this package before
   launch.** Card C0.2 (Opus) is that review, and the launch waits for it unless the operator waives
-  it.
+  it. C0.2 ran on 2026-10-02 (receipt `artifacts/cycle_0/C0.2_cycle_receipt.md`); it is not
+  re-dispatched by the Workflow script.
+- **Tier changes made by C0.2:** E7.9 haiku → **sonnet** (it now waits for the PR's `pr-tests`
+  run, a long wait; R6 forbids Haiku there).
 
 **Enforced by:** the Workflow script's model map (`workflow-instruction.md §2.4`). A reviewer greps
 the script: `awk '/agent\(/ && !/model:/' <script>` must print nothing.
@@ -367,8 +441,10 @@ say "an open blocker pauses the work". **Both hold, at different granularity:**
 | SD-i | A PF render byte-diff after E1/E4a | A defect. Fix it. **Never re-baseline PF** to make a diff pass. |
 | SD-j | A worktree, branch or file that another session may own | Do not touch it. Log it. |
 | SD-k | PR #395 merges before C1 | Rebase, then bump (§2). |
-| SD-l | Weekly quota at or above the stop threshold | Stop dispatching and write a resume receipt (§12.3). Do not degrade the model. |
+| SD-l | Any §12.3 stop condition fires (usage-limit error, token proxy, or a shown reading ≥ 85%) | Stop dispatching and write a resume receipt (§12.3). Do not degrade the model. |
 | SD-m | SF archetypes (COM) | Print their class-feature replacements at the stated levels. Compute only what feeds a total. |
+| SD-n | CI evidence for `tranche/17` (no workflow triggers on a `tranche/17` push: `awk '/^on:/,/^jobs:/' .github/workflows/*.yml`) | Local widest-scope verify at E7.2; CI evidence = the closure PR's `pr-tests` run, awaited by E7.9. A red `pr-tests` makes E7.9 `blocked-escalated` (a post-PR fix moves HEAD after graphify, which only the operator may accept). Do not add a CI trigger (outside every card's scope). |
+| SD-o | `git rebase` conflict during §5's push protocol | If the conflict is only in `kanban.md` / `progress.md` rows: keep both sides (rows are row-local or append-only), `git add` those two files, `git rebase --continue`. A conflict in any other file: `git rebase --abort`, card `blocked-escalated` with the conflicting paths. |
 
 ### §12.2 Watchdog: one long Workflow run, not a cron
 
@@ -383,15 +459,30 @@ timeouts act as the stall detector.
 
 ### §12.3 Quota stop rule
 
-Stop dispatching **new** lanes when either condition holds:
+**What can actually be measured (C0.2 correction).** No script or agent on this box can read the
+weekly quota: there is no quota API, and the only stored usage figure (the dashboard below) is
+frozen. The authoring rule's "(a) a reading ≥ 85%" is therefore **not evaluable by the run**; it
+applies only if the orchestrating session is itself shown a usage reading by the harness. The
+run uses these evaluable conditions instead. Stop dispatching **new** lanes when any one holds:
 
-- (a) a quota reading less than 6 hours old shows weekly all-models usage **≥ 85%**; or
-- (b) cumulative subagent tokens since the last weekly reset reach **10 M**. This threshold is an
-  **estimate** scaled from SD-36 Epic F (≈10.7 M tokens at 87% weekly usage, quoted).
+- (a) **Usage-limit error (the binding, script-evaluable trigger).** Any `agent()` call returns or
+  throws an error whose text matches `/usage limit|rate limit|quota|limit reached/i`. The script
+  checks every agent result for this before dispatching the next step.
+- (b) **Token proxy.** If the Workflow runtime reports per-agent token usage in agent results or
+  in `journal.jsonl`, the script sums it, and stops when the sum since the last weekly reset reaches
+  **10 M** — an **estimate** scaled from SD-36 Epic F (≈10.7 M subagent tokens at 87% weekly usage,
+  quoted, not re-derived). If the runtime reports no usage, (b) is not evaluable and the receipt
+  says so; (a) still binds.
+- (c) **A harness-shown reading** of weekly usage ≥ 85% (only if the orchestrator is shown one).
 
 Lanes already in flight finish. Then write a **resume receipt** in `progress.md`: run id, the last
-completed step, the unrun steps, and the reset time. Resume after the reset. **Never** downgrade a
-merge check to stay under the threshold.
+completed step, the unrun steps, which condition fired (with the error text), and the reset time if
+known. **Never** downgrade a merge check to stay under the threshold.
+
+**Resumption is not automatic.** Nothing on this box restarts a stopped Workflow run (there is no
+cron by decision §12.2). A quota stop therefore ends unattended progress until a session runs
+`Workflow({scriptPath, resumeFromRunId})`. That is an accepted, stated risk of unattended mode,
+not a blocker on any card.
 
 `site/dashboard/PF1e-dashboard.json`'s `usage` block is **frozen**: `captured_at` is
 `2026-09-14T17:45:07Z`, and its producer was retired by SD-36 Epic B. It is **not** a quota
@@ -406,6 +497,10 @@ source.
    byte-identical.
 4. Resume with `resumeFromRunId`.
 5. Log a `retro.py incident`.
+
+These steps need a live session. A VM stop kills the orchestrating session too, so after a crash
+nothing resumes until a session is started; the recipe is what that session runs, with no operator
+judgment needed.
 
 ### §12.5 Environment guards (in every dispatch prefix)
 
@@ -501,10 +596,23 @@ fix proven in a fresh clone.
   line: the deferral is legitimate only because the scope was never in the DoD. If the operator
   says starships were meant, then it becomes a blocker and the bundle is not done without it.
 - **Revisit condition (checked, not remembered):** at the E7.3 closure scan, and at every tranche
-  cut, run
-  `test -d "$PCGEN_REPO_DIR/data/starfinder/paizo/core/starship" || grep -lE '^ABILITY:starship|^EQUIPMENT:starship' "$PCGEN_REPO_DIR"/data/starfinder/paizo/core/*.pcc`.
-  Any output means oracle data now exists, and the deferral is re-opened for an operator ruling.
-  The row is FSR DEF-1.
+  cut, run this from the repo root:
+
+  ```bash
+  eval "$(scripts/fetch-pcgen-oracle.sh --check --quiet)" || { echo ORACLE_UNAVAILABLE; exit 2; }
+  test -f "$PCGEN_REPO_DIR/data/starfinder/paizo/core/_starfinder_core_rulebook.pcc" || { echo ORACLE_SF_MISSING; exit 2; }
+  test -d "$PCGEN_REPO_DIR/data/starfinder/paizo/core/starship" && echo "STARSHIP_DIR present"
+  awk '/^(ABILITY|EQUIPMENT|RACE|KIT):[^\t]*starship/{print FILENAME": "FNR": "$0}' "$PCGEN_REPO_DIR"/data/starfinder/*/*/*.pcc
+  ```
+
+  Exit 2 means the check could not run (that is a failed check, not a pass). Any stdout line
+  means oracle data now exists, and the deferral is re-opened for an operator ruling. On
+  2026-10-02 it printed nothing and exited 0 (C0.2 ran it). The row is FSR DEF-1.
+  *C0.2 correction:* the authoring command
+  (`test -d …/starship || grep -lE … *.pcc`) printed nothing when the starship directory **did**
+  exist (a true `test -d` prints nothing and skips the grep), and printed nothing on stdout when
+  `$PCGEN_REPO_DIR` was unset (the grep's error went to stderr), so it read "no data" in both
+  failure cases.
 
 ---
 
@@ -540,12 +648,23 @@ SD-36 ruling 7 ("no `rules_tables` move before Starfinder"; this is the Starfind
   `lst_file` identifier half of D6 is present in the residue gate
   (`grep -n 'lst_file' scripts/pcgen_residue_gate.py` → lines 223, 229). The burn-down half is
   open. E4a.3's first step re-derives both halves and records them.
-- **Runs in its own worktree** with its own `CARGO_TARGET_DIR`, after E1 lands, in parallel with
-  E3–E6. It is **not** on SF's critical path: SF sheet output does not need it.
-- **File-level fences:** E4a never edits `src/rules_core/corpus_loader.rs` (owned by E1, then
-  read-only), `src/rules_core/sheet_rule.rs` (E2), or anything under `pilot_compute/` that E4
-  owns. The 16 desktop `src-tauri` importers belong to E4a until E4a.2 merges, and E6 edits them
-  only after that. The fence table is in `workflow-instruction.md §3`.
+- **Burn-down target (C0.2 safe default; the authoring criterion had no target, so any "after"
+  count passed).** After E4a.3, the F-11 predicate (`.lst` literal) counts **0** in whatever
+  remains of `src/rules_core/rules_tables/` and **0** in the shipped data package (every path the
+  `tauri.conf.json` resources bundle). The 1,098 `.lst` lines elsewhere in `src/rules_core`
+  (`grep -rcF '.lst' src/rules_core --exclude-dir=rules_tables | awk -F: '{s+=$2} END{print s+0}'`
+  → 1098, Python agrees) are not D6 table citations; E4a.3 reports them and does not burn them down. SD-36 D6 calls these strings provenance; if E4a.3 keeps provenance, it moves it
+  to a file that is neither compiled nor bundled, and the receipt names that file. Alternative not
+  taken: keep the citations inside shipped JSON (it would ship PCGen file names, against the
+  2026-09-15 "nothing of PCGen in live code" intent).
+- **Runs serially after E7.1 and before E7.2** (C0.2 re-sequencing, §3), with its own
+  `CARGO_TARGET_DIR` and **no other code-writing lane in flight**. SF sheet output does not need
+  it, and every SF card is complete before it starts.
+- **File ownership:** because nothing else runs, E4a.1–E4a.4 may edit any of the 252 importers,
+  including `corpus_loader.rs`, `sheet_rule.rs`, `pilot_compute/**`, the desktop catalogs and the
+  two BOOKS consts inside `rules_tables/` (`companion_chassis.rs`, `monster_chassis.rs`, which E1.2
+  will already have routed through the system registry). Every edit is held to PF byte-identity
+  (G-1) and to E1.2's registry.
 - **Gate:** PF byte-identical renders of Aldric and Elowen, plus byte-identical catalog output, at
   E4a.4. **Bestiary 1's monsters exist only in `rules_tables`** (memory; not re-derived), so they
   must survive the move. E4a.4 counts them before and after.

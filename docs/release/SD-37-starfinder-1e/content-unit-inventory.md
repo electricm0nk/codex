@@ -34,8 +34,8 @@ moves a baseline was derived twice, with independent implementations (shell pipe
 | F-3 | SF `.lst` lines | **16,594** newline-terminated; **16,603** records | A counts `\n` bytes; B counts records, including the final unterminated line of 9 files | `find $S -name '*.lst' -print0 \| xargs -0 cat \| wc -l` → 16594; Python `b.count(b'\n')` → 16594 | per-book awk `{l++}` summed → 16603; Python line iteration → 16603 |
 | F-4 | SF `.lst`+`.pcc` lines | **17,400** | newline count over both kinds | `find $S \( -name '*.lst' -o -name '*.pcc' \) -print0 \| xargs -0 cat \| wc -l` → 17400 | Python `b'\n'` count → 17400 (lst 16594 + pcc 806) |
 | F-5 | PF `.lst` lines (scale only) | **228,220** | newline count, `*.lst` under `$P` (2,939 files) | `find $P -name '*.lst' -print0 \| xargs -0 cat \| wc -l` → 228220 | Python → 228220 |
-| F-6 | SF LST data rows | **12,947** total; **12,733** in scope (8 Paizo books); **214** excluded | a line whose first byte is not `#`, space, tab, CR or LF, and which does not start `SOURCELONG/SOURCESHORT/SOURCEWEB/SOURCEDATE`. Rows are **not** unique records: `.MOD` rows and multi-row class level blocks are included | per-book `awk '/^[^#[:space:]]/ && !/^(SOURCELONG\|SOURCESHORT\|SOURCEWEB\|SOURCEDATE)/{r++}'` (§2 table) | Python, same predicate (§2 table); both agree per book |
-| F-7 | SF distinct `CLASS:` names | **11** | distinct first fields starting `CLASS:` in every `*classes*.lst` | `find $S -name '*classes*.lst' -print0 \| xargs -0 awk -F'\t' '/^CLASS:/{print $1}' \| sort -u \| wc -l` → 11 | Python set over the same files → 11 |
+| F-6 | SF LST data rows | **12,947** total; **12,718** in scope (8 Paizo books, minus `paizo/core/_society/`); **229** excluded (SSRGG 177 + LPJ 37 + core `_society/` 15; C0.2 correction — authoring said 12,733 / 214 because it counted `_society/` inside the core book) | a line whose first byte is not `#`, space, tab, CR or LF, and which does not start `SOURCELONG/SOURCESHORT/SOURCEWEB/SOURCEDATE`. Rows are **not** unique records: `.MOD` rows and multi-row class level blocks are included | per-book `awk '/^[^#[:space:]]/ && !/^(SOURCELONG\|SOURCESHORT\|SOURCEWEB\|SOURCEDATE)/{r++}'` (§2 table) | Python, same predicate (§2 table); both agree per book |
+| F-7 | SF distinct `CLASS:` names | **11** = **10 player classes + `Drone`** (`CLASS:Drone` carries `TYPE:Monster`; it is the Mechanic's companion, not a selectable class — C0.2 note) | distinct first fields starting `CLASS:` in every `*classes*.lst` | `find $S -name '*classes*.lst' -print0 \| xargs -0 awk -F'\t' '/^CLASS:/{print $1}' \| sort -u \| wc -l` → 11 | Python set over the same files → 11 |
 | F-8 | CRB Theme rows | **67** | non-comment rows of `paizo/core/scr_abilities.lst` that carry a tab field exactly `CATEGORY:Theme` | `awk -F'\t' '/^[^#]/ && /CATEGORY:Theme(\t\|$)/' …/scr_abilities.lst \| awk 'END{print NR}'` → 67 | Python, exact tab-field match → 67 |
 | F-9 | formula-system tokens `MODIFY:`/`MODIFYOTHER:` | **SF 1,954 / PF 35** | tab fields that **start** with `MODIFY:` or `MODIFYOTHER:` on non-comment lines of `*.lst` | `find <tree> -name '*.lst' -print0 \| xargs -0 awk -F'\t' '!/^#/{for(i=1;i<=NF;i++) if($i ~ /^MODIFY(OTHER)?:/) c++} END{print c+0}'` (PF output is split over 3 xargs batches: 35+0+0) | Python regex `(?:^\|\t)MODIFY(?:OTHER)?:` → 1954 / 35 |
 | F-10 | `src/rules_core/rules_tables` size | **180,883** lines in **250** `.rs` files | newline count over every `*.rs` | `find src/rules_core/rules_tables -name '*.rs' -print0 \| xargs -0 cat \| wc -l`; `… \| wc -l` for files | Python `os.walk` → 250 files, 180883 lines |
@@ -79,7 +79,8 @@ E0.2.
 
 | Book dir | Code | `.lst` files | Lines | Rows | SD-37 scope | Licence posture (quoted; E0.2 verifies) |
 |---|---|---|---|---|---|---|
-| `paizo/core` | SCR | 30 | 7,375 | 5,974 | **in — proof book** | Paizo Community Use Policy INFOTEXT + OGL 1.0a COPYRIGHT; `OGL.txt` present |
+| `paizo/core` (excluding `_society/`) | SCR | 29 | 7,356 | 5,959 | **in — proof book** | Paizo Community Use Policy INFOTEXT + OGL 1.0a COPYRIGHT; `OGL.txt` present |
+| `paizo/core/_society` (`_.pcc`, SFS guide core mods) | — | 1 | 19 | 15 | **excluded** (`decisions.md §6`, found by C0.2) | SFS guide content (SSRGG's PCC reads "All Rights Reserved"); E0.2 verifies |
 | `paizo/armory` | SA | 11 | 3,542 | 2,977 | in — go-wide | same |
 | `paizo/character_operations_manual` | SCOM | 21 | 2,047 | 1,507 | in — go-wide | same |
 | `paizo/pact_worlds` | SPW | 15 | 814 | 527 | in — go-wide | same + Tome of Horrors OGL line |
@@ -89,10 +90,13 @@ E0.2.
 | `paizo/alien_archive_3` | SAA3 | 5 | 453 | 345 | in — go-wide | same |
 | `paizo/starfinder_society_rules` | SSRGG | 5 | 238 | 177 | **excluded** (`decisions.md §6`) | "All Rights Reserved" + Paizo trademark line |
 | `lpj_design/infinite_space` | LPJ9304 | 2 | 60 | 37 | **excluded** (`decisions.md §6`) | third-party; licence not verified |
-| **Total** | | **131** | **16,603** | **12,947** | in-scope rows **12,733** | |
+| **Total** | | **131** | **16,603** | **12,947** | in-scope rows **12,718** | |
 
-Sum check: in-scope rows 5,974 + 2,977 + 1,507 + 527 + 396 + 488 + 519 + 345 = 12,733; plus
-excluded 177 + 37 = 214; 12,733 + 214 = 12,947 = F-6 total.
+Sum check: in-scope rows 5,959 + 2,977 + 1,507 + 527 + 396 + 488 + 519 + 345 = 12,718; plus
+excluded 177 + 37 + 15 = 229; 12,718 + 229 = 12,947 = F-6 total. (C0.2 re-derived every row of
+this table with Python `os.walk` + the F-6 predicate, and the `_society/` row with
+`awk '/^[^#[:space:]]/ && !/^(SOURCELONG|SOURCESHORT|SOURCEWEB|SOURCEDATE)/{r++} END{print r}' $S/paizo/core/_society/_abilities.lst` → 15,
+`awk 'END{print NR}'` on the same file → 19 lines.)
 
 **The SF unit denominator is not this table.** Rows include `.MOD` rows and class level blocks.
 The real denominator — the Starfinder work inventory, one unit per sheet-reachable record — is an
@@ -112,10 +116,10 @@ card names the real file in its receipt.
 | Content family | Oracle source (CRB file) | Compute or print | Engine module | Test fixture | Owning card | Desktop surface |
 |---|---|---|---|---|---|---|
 | Classes (11 names, F-7) | `scr_classes.lst` (+ SCOM classes) | compute BAB, saves, HP, Stamina, Resolve, skill ranks/level, key ability; print class features | generic SF chassis reader *(proposed `src/rules_core/pilot_compute/sf_chassis.rs`)* | SRD-transcribed seed values (`artifacts/epic_0/seed-hand-values.md`, E0.4) | E4.1 | creation + sheet header |
-| Races | `scr_races.lst` | compute race HP, ability adjustments, size; print racial traits | SF chassis reader | same | E4.1, E5.1 | race picker |
+| Races | `scr_races.lst` (ability adjustments, size); race HP is **not** on the race row: racial abilities in `scr_abilities.lst` set `BONUS:VAR\|RaceHP\|n`, and the `Default` ability adds `BONUS:HP\|CURRENTMAX\|RaceHP` | compute race HP, ability adjustments, size; print racial traits | SF chassis reader | same | E4.1, E5.1 | race picker |
 | Themes (67 CRB rows, F-8) | `scr_abilities.lst` `CATEGORY:Theme` | compute +1 ability, theme class-skill; print theme knowledge and 6/12/18 benefits | SF chassis reader + print path | same | E4.3, E5.1 | theme picker |
 | EAC / KAC | `scr_equip.lst` armour rows (`TYPE=EAC_Armor`/`KAC_Armor`), `scr__variables.lst` `AC_EAC`/`AC_KAC` | compute | SF defence *(proposed `sf_defense.rs`)* | seed values | E4.2 | sheet defence block |
-| Stamina / HP / Resolve | `scr_classes.lst` `BONUS:HP\|CURRENTMAX` + `HD:1`, `BONUS:HP\|ALTHP`; Resolve has no direct row | compute | SF chassis reader | seed values; E3.3 oracle row per overloaded field | E3.3, E4.1 | sheet header |
+| Stamina / HP / Resolve | HP (hypothesis, `decisions.md §8`): `scr_classes.lst` `BONUS:HP\|CURRENTMAX` + `HD:1` + `RaceHP`. Stamina: `BONUS:HP\|ALTHP` + `scr__stats.lst` `BONUS:HP\|ALTHP\|CON*TL` (+ Toughness). Resolve has no direct row | compute | SF chassis reader | seed values; E3.3 oracle row per overloaded field; mutations M1–M4 | E3.3, E4.1 | sheet header |
 | Saves, BAB | `scr_classes.lst` `BONUS:SAVE`/`BONUS:COMBAT\|BASEAB` | compute | reuse `Expr::BaseSave/BaseAttack` | seed values | E4.1 | sheet |
 | Skills | `scr_skills.lst` | compute totals (ranks + ability + class-skill bonus + armour check penalty where it applies) | SF chassis reader | seed values (Envoy 3 is the skill-heavy seed) | E4.2 | skills panel |
 | Point buy, ability increases | game mode `pointbuymethods_system.lst` | compute | desktop `abilityScoreMethods.ts` SF table + engine | seed values | E4.3, E6.2 | creation flow |
@@ -143,5 +147,12 @@ transcribed from the Starfinder Reference Document, never from the `.lst` the co
 | SF-Technomancer-5 | SF1e | Android Technomancer 5 (Int key ability) | spells 0–2, poor Fort/Ref |
 | SF-Envoy-3 | SF1e | Ysoki Envoy 3 (Cha key ability) | 8 + Int skill ranks per level, skill totals |
 
-Display names for the SF seeds are codex-neutral labels; race and theme picks are E0.4's to fix and
-log (a pick the oracle cannot express is replaced by another CRB option and logged).
+Display names for the SF seeds are codex-neutral labels. **This table is a skeleton, not a full
+build.** E0.4 writes the full builds to `artifacts/epic_0/seed-builds.md` before any card renders a
+seed, with one block per SF seed and every one of these fields filled: race, theme, class, level,
+key ability, the six ability scores with the point-buy arithmetic shown, skill ranks per skill,
+feats, armour and weapons worn/carried, other gear with bulk, credits remaining, and (Mystic,
+Technomancer) spells known per spell level by name. Constraints (`decisions.md §9`): Con modifier
+≠ 0 for every SF seed; the Soldier's armour max-Dex cap binds; the Envoy has ranks in ≥ 6 skills.
+Names are checked against the oracle `.lst` (names only; values come from the SRD, never the
+`.lst`). A pick the oracle cannot express is replaced by another CRB option and logged (SD-g).

@@ -51,10 +51,12 @@ are for cross-reference only):
 - **Command.** `cargo test --locked -j 8 --lib sf_seed -- --test-threads=8` (the test file is
   E4.1's to create). Each fixture row carries `source: <SRD URL>`, and a guard test fails if any
   row lacks one.
-- **Planted mutation.** Dropping Con from Stamina, or swapping ALTHP↔CURRENTMAX, must turn at least
-  one seed red (E3.3, E4.MC).
+- **Planted mutations.** M1–M4 (`decisions.md §8`: swap ALTHP↔CURRENTMAX; drop `HD`; route
+  `CON*TL` into HP; drop `RaceHP`) and dropping Con from Stamina must each turn at least one seed
+  red (E3.3, E4.MC). Every SF seed has a non-zero Con modifier so M1/M3 are detectable.
 - **Does not cover:**
-  - 7 of the 11 classes (Mechanic, Operative, Solarian, Biohacker, Vanguard, Witchwarper, Drone);
+  - 6 of the 10 player classes (Mechanic, Operative, Solarian, Biohacker, Vanguard, Witchwarper)
+    and the Drone (CUI F-7: the 11th `CLASS:` row is `Drone`, `TYPE:Monster`);
   - levels other than 3 and 5;
   - races and themes other than the four picked;
   - archetypes;
@@ -63,7 +65,8 @@ are for cross-reference only):
   - any armour other than the seed loadouts;
   - starships.
 
-  E7.1's parity roster widens class coverage to all 11 at level 1 (oracle-only, no hand values).
+  E7.1's parity roster widens class coverage to the 10 player classes at level 1 plus the Drone via
+  a Mechanic 1 build (oracle-only, no hand values).
 
 ## G-3 Widest-scope `cargo test`, both workspaces (E7.2)
 
@@ -72,6 +75,8 @@ are for cross-reference only):
 - **Desktop workspace:** `cd apps/desktop/src-tauri && cargo test --locked -j 8 --no-fail-fast -- --test-threads=8`.
   This is a separate workspace that the root sweep never touches.
 - **Frontend:** `npm test`, `npm run typecheck` in `apps/desktop`.
+- **CI:** no workflow runs on `tranche/17` pushes; the closure PR's `pr-tests` run is awaited by
+  E7.9 (SD-n). A red run makes E7.9 `blocked-escalated`.
 - **Full gate:** `bash scripts/verify.sh -j 8`, one run. Every stage must PASS, and the stage count
   equals 51 (CUI F-16) plus the stages added by E0.1/E2.2/E3/E4 (each named in its receipt). Every
   `test result: FAILED` line is attributed to its `Running` line, and there must be none.
@@ -84,8 +89,8 @@ are for cross-reference only):
   `test -f <fresh>/data/starfinder/paizo/core/_starfinder_core_rulebook.pcc` and
   `test -d <fresh>/system/gameModes/Starfinder`. Then delete `<fresh>/data/starfinder` and re-run
   the completeness probe; it must exit non-zero.
-- **Parity** (E7.1): PCGen SF game-mode runs for the 4 SF seeds and for each of the 11 classes at
-  level 1. 0 unexplained mismatches. Every explained mismatch cites the SRD (where PCGen is wrong)
+- **Parity** (E7.1): PCGen SF game-mode runs for the 4 SF seeds and for each of the 10 player
+  classes at level 1, plus the Drone via a Mechanic 1 build. 0 unexplained mismatches. Every explained mismatch cites the SRD (where PCGen is wrong)
   or a fix commit (where Codex was wrong).
 - **"What the oracle does not contain"** list in the E7.1 receipt, at minimum: starship rules;
   the Resolve formula; post-COM/Near Space books (**estimate**); behaviour of `STATUS:BETA` data
@@ -94,18 +99,22 @@ are for cross-reference only):
 
 ## G-5 Licence and PI (E0.2, E3.MC)
 
-- `grep -c 'starfinder' docs/governance/license-matrix.md` ≥ 10 (one row per SF book dir).
-- SF registry test: exactly the 8 in-scope books; SSRGG and LPJ absent.
+- E0.2's loop over the 11 SF PCC directories (10 book dirs + `paizo/core/_society`) prints no
+  `MISSING` line (C0.2: the authoring `grep -c 'starfinder' … ≥ 10` could pass on prose lines and
+  fail on rows that say "Starfinder").
+- SF registry test (E3.1): exactly the 8 in-scope books; SSRGG, LPJ and `paizo/core/_society` absent.
 - PI sweep over `data/starfinder-1e/**` with the SF term set: 0 unredacted hits.
 - `operator_sign_off` stays `false` until the operator signs. That is **not** a closure blocker
   for SD-37's code, but README §6 lists it.
 
 ## G-6 Closure (E7.3–E7.9)
 
-- E7.3: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 !~ /complete/' kanban.md` prints only the E7.3–E7.9
-  closure-chain rows still in flight. Any other row means **stop**.
-- DEF-1 revisit check run (`decisions.md §17`) and its output pasted.
-- Retrospective cited: `grep -c 'sd37-retrospective' references/README.md` ≥ 1.
+- E7.3: the fenced scan in `epic-breakdown.md` (E7.3) / `workflow-instruction.md §11` step 1 prints
+  nothing; it exempts E7.3–E7.9 by ID and checks the row count is 55. Any output means **stop**.
+- DEF-1 revisit check run (`decisions.md §17`'s fenced command) and its output and exit code pasted.
+- Retrospective written and cited: `test -s docs/retro/sd37-retrospective.md` and
+  `grep -c 'retro/sd37-retrospective.md' docs/release/SD-37-starfinder-1e/references/README.md` ≥ 1.
+- `pr-tests` on the PR green (E7.9).
 - Graphify receipt: clean tree, HEAD = `origin/tranche/17`, indexed SHA recorded.
 - PR open. The operator merges.
 

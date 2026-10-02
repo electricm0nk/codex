@@ -24,7 +24,7 @@ status: draft — authored under operator-away defaults; operator sign-off pendi
 Campaign Codex generates **Starfinder 1e character sheets** alongside PF1e. Sheet totals are
 computed from converted data with a **generic** chassis; every other rule is printed
 (`decisions.md §5`). PF1e must be **byte-identical** before and after. SD-37 also moves
-`rules_tables` out of Rust into a data package, on a parallel track.
+`rules_tables` out of Rust into a data package, as a serial block after SF parity (C0.2).
 
 ## Definition of Done
 
@@ -62,16 +62,17 @@ the excluded books SSRGG and LPJ (`decisions.md §6`); and the PF correctness ca
 - **Proof book:** `paizo/core`.
 - **Go wide:** `armory`, `character_operations_manual`, `pact_worlds`, `near_space`,
   `alien_archive{,_2,_3}`.
-- **Excluded:** `starfinder_society_rules`, `lpj_design/infinite_space`.
+- **Excluded:** `starfinder_society_rules`, `lpj_design/infinite_space`, and the Society add-on
+  inside the core directory, `paizo/core/_society/` (C0.2).
 
-Row counts are in `content-unit-inventory.md §2`: 12,733 in-scope LST rows, which are **not**
+Row counts are in `content-unit-inventory.md §2`: 12,718 in-scope LST rows, which are **not**
 units. Units come from E0.3.
 
 ## Epic order
 
 ```
-C0 → C1 → { E0 ∥ E1 } → E2 → E3 → { E4 ∥ E5 } → E6 → E7
-                    E1 → E4a (parallel track, joins before E7.2)
+C0 → C1 → { E0 ∥ E1 } → E2 → E3 → E4 → E5 → E6 → E7.1 → E4a → E7.2 … E7.9
+(C0.2 re-sequencing: E4a and E5 de-parallelised; decisions.md §3)
 ```
 
 ## Cycle dispatch model
@@ -84,4 +85,5 @@ are big (all of a homogeneous remainder per dispatch), and each wave gets one ve
 
 See `acceptance-and-verification.md`. In short: PF hash set equal; SF seeds equal to the SRD hand
 values; `cargo test` at the widest scope in both workspaces; SF oracle parity with a stated "not
-covered" list; the sparse-path fix proven in a fresh clone; CI green on `tranche/17`.
+covered" list; the sparse-path fix proven in a fresh clone; the closure PR's `pr-tests` run green
+(no CI triggers on `tranche/17` pushes; `decisions.md §12.1` SD-n).

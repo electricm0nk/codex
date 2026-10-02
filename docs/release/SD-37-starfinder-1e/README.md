@@ -1,6 +1,6 @@
 ---
 title: SD-37 — Starfinder 1e — Release Package
-status: planning — authored 2026-10-02 under operator-away defaults; C0.2 (Opus review) pending before launch
+status: planning-ready — authored 2026-10-02 under operator-away defaults; C0.2 (Opus review) complete 2026-10-02, findings fixed (artifacts/cycle_0/C0.2_cycle_receipt.md)
 bundle_id: SD-37
 slug: starfinder-1e
 scope: docs/release/SD-37-starfinder-1e
@@ -31,8 +31,9 @@ doc tree.
 SD-37 makes Campaign Codex generate **Starfinder 1e character sheets**. Sheet totals (EAC, KAC,
 Stamina, HP, Resolve, saves, BAB, skills, spells, bulk, credits) are computed from converted
 PCGen data by a **generic** chassis, and every other rule is printed. PF1e stays
-**byte-identical**. On a parallel, fenced track, SD-37 also moves `src/rules_core/rules_tables`
-(180,883 lines; `content-unit-inventory.md` F-10) into a runtime data package.
+**byte-identical**. After the SF work is complete and parity-checked, SD-37 also moves
+`src/rules_core/rules_tables` (180,883 lines; `content-unit-inventory.md` F-10) into a runtime
+data package, as a serial block (C0.2 re-sequencing, `decisions.md §3`).
 
 ## 1. Bundle snapshot
 
@@ -43,7 +44,7 @@ PCGen data by a **generic** chassis, and every other rule is printed. PF1e stays
 | Canonical branch | `tranche/17`, cut from `origin/develop` `20bf84a3b2` (PR #394's merge, 2026-09-30); `decisions.md §2`. Local only until card C1 pushes it |
 | Kanban board | local file `./kanban.md` |
 | Epics / criteria | C, E0–E7, E4a (+ E8 planned deferral, not a card) / **55 cards**, one criterion each (`kanban.md` row check) |
-| Target version | `0.17.0`, stamped by **card C1's single commit** across 14 surfaces (CUI F-17). Published triple `0.17.<GitHub run number>`, which **resolves at the first tester publish after C1** |
+| Target version | `0.17.0`, stamped by **card C1's single commit** across 14 surfaces (CUI F-17). Published triple `0.17.<GitHub run number>`, which **resolves at the first tester publish after C1** — only after the operator merges to `develop` (the publish workflow triggers on `develop`/`main` only) |
 | Dispatch mechanism | `Workflow` tool, one long run with a resume handle (`decisions.md §12.2`) |
 | Cadence | N/A |
 | Closure gate | all 55 cards `complete` → retrospective + cite → sweep → release notes → architecture truth-up → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
@@ -95,7 +96,8 @@ PCGen data by a **generic** chassis, and every other rule is printed. PF1e stays
   the cut and never at closure); `build` = the GitHub run number, stamped at publish by
   `publish-tester-release.yml` (`VERSION="0.17.${GITHUB_RUN_NUMBER}"` after C1).
 - Repo files read `0.17.0` after C1. The first concrete published value is
-  `0.17.<run number>`, recorded in C1's receipt when the first tester publish runs.
+  `0.17.<run number>`, known only after the operator merges the closure PR to `develop` (no card
+  records it; C0.2 correction).
 
 ## 6. Open rulings (operator-away defaults — review on return)
 
@@ -105,19 +107,20 @@ Each default can be revisited. Its decision says how.
 |---|---|---|---|
 | D1 | Package location | `docs/release/SD-37-starfinder-1e/`; **flagged deviation** from the overlay's `docs/stc/stc-NN` | `decisions.md §1` |
 | D2 | Branch / board / version / #395 / SD-36 loose ends | `tranche/17` from `origin/develop`; local `kanban.md`; `0.17.0` via C1's one commit; #395 not a gate; C0.1 housekeeping | `§2` |
-| D3 | Epic spine incl. E4a and E8 | E0∥E1→E2→E3→(E4∥E5)→E6→E7; E4a parallel; E8 planned deferral | `§3`, `§17`, `§19` |
-| D4 | Book scope | CRB proof, then 7 books; SSRGG and LPJ excluded; licence matrix is E0.2's deliverable | `§4`, `§6` |
+| D3 | Epic spine incl. E4a and E8 | E0∥E1→E2→E3→E4→E5→E6→E7.1→E4a→E7.2…E7.9 (C0.2: E4a and E5 de-parallelised, file overlap measured); E8 planned deferral | `§3`, `§17`, `§19` |
+| D4 | Book scope | CRB proof, then 7 books; SSRGG, LPJ and the core `_society/` add-on excluded; licence matrix is E0.2's deliverable | `§4`, `§6` |
 | D5 | Paper-sheet rule | Standing; compute totals only | `§5` |
-| D6 | Seeds | Soldier 3, Mystic 5, Technomancer 5, Envoy 3 (+ Aldric, Elowen) | `§9` |
+| D6 | Seeds | Soldier 3, Mystic 5, Technomancer 5, Envoy 3 (+ Aldric, Elowen); full builds are E0.4's first deliverable | `§9` |
 | D7 | Predecessor adoptions | C2.1 adopted (E3); FS-2/15/27/28 are candidates | `§10` |
-| D8 | Model tiering | Opus default, Sonnet mechanical, Haiku housekeeping; merge checks always Opus; planning was Sonnet → C0.2 Opus review | `§11` |
-| D9 | Blockers, unattended protocol, watchdog, quota, crash-resume | Reconciled protocol; one long Workflow run; 85% / 10 M (estimate) stop | `§12` |
+| D8 | Model tiering | Opus default, Sonnet mechanical, Haiku housekeeping; merge checks always Opus; planning was Sonnet → C0.2 Opus review (done); E7.9 → Sonnet | `§11` |
+| D9 | Blockers, unattended protocol, watchdog, quota, crash-resume | Reconciled protocol; one long Workflow run; quota stop on a usage-limit error (the weekly % is not machine-readable here) or a 10 M token proxy; resumption after a stop or crash is not automatic | `§12` |
 | D10 | Closure order | Release notes → arch truth-up → graphify LAST → PR last; template defect flagged (FSR-C9) | `§13` |
 | D11 | Per-cycle discipline | TDD, dual audit, four-check audit, receipts, three statuses | `§14` |
 | D12 | SD-36 lessons 1–7 | Rules R1–R7 in `workflow-instruction.md §12.1` | `§15` |
 | D13 | Falsifiable acceptance | Gates G-1…G-6 | `§16` |
 | — | PF data layout | PF unchanged; SF under `data/starfinder-1e/` | `§7` |
-| — | Overloaded-field mapping | SF-only mapping table, oracle row per field | `§8` |
+| — | Overloaded-field mapping | SF-only mapping table, oracle row per field; C0.2 corrected the pool reading (ALTHP = Stamina, CURRENTMAX + HD = HP, hypothesis) | `§8` |
+| — | CI evidence | No CI on `tranche/17` pushes; the PR's `pr-tests` (E7.9) | `§12.1` SD-n |
 | — | Hand-value source | Starfinder Reference Document (no book on the machine) | `§18` |
 | — | SF licence sign-off | `operator_sign_off: false` until the operator signs | `§6`, G-5 |
 
