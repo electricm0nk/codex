@@ -34,7 +34,7 @@ card (`decisions.md §17`).
 | E0.1 | Oracle sparse paths + SF completeness probe + fresh-clone proof | sonnet | complete | C1 | `artifacts/epic_0/E0.1_cycle_receipt.md`; code commit 5df9eb36db |
 | E0.2 | Licence matrix SF rows + SF PI term set | opus | waiting | C1 | No registry test here (moved to E3.1); uses cargo (`pi_screening.rs`) |
 | E0.3 | SF work inventory (denominator), fail-closed sum | sonnet | waiting | E0.1, E0.2 | |
-| E0.4 | Seed builds + hand values from SRD, Opus-reviewed | opus | waiting | C1 | Network needed (SD-c). Seed builds first (`seed-builds.md`), then hand values; independent Opus reviewer |
+| E0.4 | Seed builds + hand values from SRD, Opus-reviewed | opus | in-progress | C1 | Transcriber step done 2026-10-02: `artifacts/epic_0/seed-builds.md`, `seed-hand-values.md` (126 rows, every row has an SRD URL), `E0.4_cycle_receipt.md`. Waiting on the independent Opus reviewer (part 3) |
 | E1.1 | `GameSystem`-keyed package roots, runtime resolution | opus | waiting | C1 | Batched with E1.2, E1.3 |
 | E1.2 | Per-system book registries (19 consts) | opus | waiting | C1 | Batched |
 | E1.3 | Converter system parameter | opus | waiting | C1 | Batched |

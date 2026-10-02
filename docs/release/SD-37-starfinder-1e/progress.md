@@ -140,6 +140,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | C1 | 2026-10-02 | Haiku 4.5 | 9d03a76996 | complete | n/a (no code) | `artifacts/cycle_0/C1_cycle_receipt.md` |
 | C0.1 | 2026-10-02 | Haiku 4.5 | (see receipt) | complete | n/a (docs only) | `artifacts/cycle_0/C0.1_cycle_receipt.md` |
 | E0.1 | 2026-10-02 | Sonnet 5.5 | 5df9eb36db | complete | unchanged (no engine/data change) | `artifacts/epic_0/E0.1_cycle_receipt.md` |
+| E0.4 (transcriber) | 2026-10-02 | Opus 5.5 | the `docs(sd37,e0.4)` commit | in-progress (reviewer pending) | Aldric / Elowen unchanged (not rendered); 4 SF seeds defined: Soldier HP 25 SP 24 RP 4 EAC 16 KAC 19; Mystic 34/25/6/16/16; Technomancer 29/35/6/18/19; Envoy 20/21/5/14/15 | `artifacts/epic_0/E0.4_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
@@ -158,6 +159,8 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-02 | launch (orchestrator) | C1 runs first, alone; C0.1 then runs beside E0/E1 in its own tree | C0.1 ∥ C1 | C0.1's tree needs `origin/tranche/17`, which exists only after C1 pushes |
 | 2026-10-02 | launch (orchestrator) | Each prompt tells the agent to read `workflow-instruction.md §2.1`, §5–§8, §12 and its card rows from the files; the script carries a short binding core | paste §2.1 and §6 verbatim into every prompt (`§2.4` item 5) | a Workflow script cannot read files, and a pasted copy drifts from the file the agents read; the file is the one source |
 | 2026-10-02 | launch (orchestrator) | The run id is recorded in `~/.claude/projects/-home-ubuntu-workspace-repos-codex/memory/sd37-launch-state.md`; E7.4 folds it into the Run handle table | write it here at launch (`§2.4` item 8) | after launch the main tree has one writer (the running card); an orchestrator write breaks the clean-tree rule |
+| 2026-10-02 | E0.4 | SD-g scope: gear budget for the 3rd/5th-level SF seeds = Core Rulebook Table 11-5 wealth per level (4,000 / 9,000 credits; https://www.aonsrd.com/Rules.aspx?ID=230) | 1,000 credits of 1st-level gear (https://www.aonsrd.com/Rules.aspx?ID=39) | the Core Rulebook has no separate higher-level starting-gear rule; 1st-level gear would not give the Soldier heavy armour with a binding max-Dex cap |
+| 2026-10-02 | E0.4 | Seeds take Core Rulebook class features only, not the optional *Starfinder Enhanced* ones AoN mixes into the Technomancer/Envoy pages | Enhanced technomancer/envoy options | the pinned oracle encodes the Core Rulebook; no hand-value column differs between the two |
 
 ## Open blockers
 
