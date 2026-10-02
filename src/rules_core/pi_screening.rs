@@ -134,6 +134,59 @@ pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>
     (License::Ogl, None, None, value.to_string())
 }
 
+/// Starfinder 1e Product Identity terms (SD-37 E0.2,
+/// `docs/governance/ogl-pi-blacklist.md` §7). Kept OUT of
+/// [`PI_BLACKLIST_TERMS`] so the Pathfinder screen, its Python twin
+/// (`scripts/pi_scrub.py`) and the Pipeline B sweep baseline do not move.
+///
+/// Source of the categories: Paizo's own SF Product Identity declaration,
+/// carried in the pinned oracle at
+/// `data/starfinder/paizo/starfinder_society_rules/OGL.txt` lines 112-117
+/// ("proper nouns (characters, deities, locations, etc., as well as all
+/// adjectives, names, titles, and descriptive terms derived from proper
+/// nouns) ... the historical period called the Gap, the terms kishalee,
+/// sivv, and skyfire, and the Drift (the official Open Game Content term
+/// for which is hyperspace)"). The proper nouns below are the ones the 8
+/// in-scope books actually carry; species names (ysoki, vesk, kasatha, ...)
+/// are deliberately absent because the playable-race records are the
+/// game mechanic. Matching is the same case-sensitive substring rule as
+/// [`classify_field`], so a derived adjective (`Eoxian`, `Diasporan`) is
+/// caught by its root.
+pub const SF_PI_TERMS: &[&str] = &[
+    // Named in Paizo's SF Product Identity declaration (both casings the
+    // data and the declaration use).
+    "Gap", "kishalee", "Kishalee", "sivv", "Sivv", "skyfire", "Skyfire", "Drift",
+    // Pact Worlds and near-space places.
+    "Aballon", "Akiton", "Apostae", "Bretheda", "Castrovel", "Eox", "Idari", "Liavara", "Triaxus", "Verces",
+    "Diaspora", "Pact Worlds", "Near Space", "Veskarium",
+    // Starfinder deities not already on the Pathfinder list.
+    "Damoritosh", "Eloritu", "Hylax", "Ibra", "Lao Shu Po", "Oras", "Talavet", "Triune", "Casandalee", "Weydan",
+    "Yaraesa", "Devourer",
+    // Organizations.
+    "Stewards", "Xenowarden", "Hellknight", "Corpse Fleet", "Free Captain", "Azlanti", "Starfinder Society",
+];
+
+/// [`classify_field`] for Starfinder records: the same redaction contract,
+/// screened against the union of [`PI_BLACKLIST_TERMS`] (Golarion deities
+/// and places recur in Starfinder, e.g. Absalom Station) and
+/// [`SF_PI_TERMS`]. Apply it to free-text and name fields, never to
+/// source-attribution fields (`SOURCELONG` names the book itself).
+pub fn classify_field_sf(field_name: &str, value: &str) -> (License, Option<String>, Option<String>, String) {
+    let pf = classify_field(field_name, value);
+    if pf.0 == License::PiRedacted {
+        return pf;
+    }
+    if SF_PI_TERMS.iter().any(|term| value.contains(term)) {
+        return (
+            License::PiRedacted,
+            Some(field_name.to_string()),
+            Some(PI_MARKER_REDACTED.to_string()),
+            REDACTED_PI_MARKER.to_string(),
+        );
+    }
+    pf
+}
+
 // ---------------------------------------------------------------------------
 // `decisions.md §12b`/T9-round-4 receipt: Rust-side port of
 // `scripts/pi_scrub.py`'s `canonicalize`/`normalized_term_hit`/
@@ -919,5 +972,65 @@ mod tests {
     fn reconcile_is_a_no_op_for_an_absent_description() {
         let fixed = reconcile_description_pi_stamp(None, License::Ogl, None);
         assert_eq!(fixed, None);
+    }
+
+    // --- Starfinder 1e PI term set (SD-37 E0.2) ---
+
+    /// A Pact Worlds proper noun from the new SF set, in the derived-
+    /// adjective form the oracle actually carries (`Eoxian Wrackstaff`).
+    /// The Pathfinder screen must NOT catch it, so a pass here proves the
+    /// hit comes from the new set and not from `PI_BLACKLIST_TERMS`.
+    #[test]
+    fn an_sf_pi_term_from_the_new_set_classifies_as_pi() {
+        let text = "KEY:Eoxian Wrackstaff";
+        assert_eq!(classify_field("name", text).0, License::Ogl, "the PF list must not already hold this term");
+        let (license, pi_field, pi_marker, stored) = classify_field_sf("name", text);
+        assert_eq!(license, License::PiRedacted);
+        assert_eq!(pi_field.as_deref(), Some("name"));
+        assert_eq!(pi_marker.as_deref(), Some(PI_MARKER_REDACTED));
+        assert_eq!(stored, REDACTED_PI_MARKER);
+    }
+
+    /// A term named in Paizo's own SF Product Identity declaration
+    /// (`paizo/starfinder_society_rules/OGL.txt` lines 112-117 at the pinned
+    /// oracle: "the terms kishalee, sivv, and skyfire, and the Drift").
+    #[test]
+    fn a_paizo_declared_sf_term_classifies_as_pi() {
+        assert_eq!(classify_field_sf("name", "Skyfire sword (tactical)").0, License::PiRedacted);
+        assert_eq!(classify_field_sf("description", "via Drift travel").0, License::PiRedacted);
+    }
+
+    /// The same declaration names `hyperspace` as the Open Game Content term
+    /// for the Drift; mechanic text without a proper noun stays plain OGL.
+    #[test]
+    fn hyperspace_and_ordinary_sf_mechanics_stay_ogl() {
+        let (license, pi_field, ..) =
+            classify_field_sf("description", "You travel through hyperspace. EAC +1, KAC +2.");
+        assert_eq!(license, License::Ogl);
+        assert_eq!(pi_field, None);
+    }
+
+    /// Golarion deities and places recur in Starfinder (Absalom Station,
+    /// Abadar, ...): the SF screen is the union of both sets.
+    #[test]
+    fn the_sf_screen_also_applies_the_shared_pathfinder_terms() {
+        assert_eq!(classify_field_sf("description", "docked at Absalom Station").0, License::PiRedacted);
+    }
+
+    #[test]
+    fn the_sf_term_set_is_41_terms_disjoint_from_the_pathfinder_list() {
+        assert_eq!(SF_PI_TERMS.len(), 41);
+        for term in SF_PI_TERMS {
+            assert!(!PI_BLACKLIST_TERMS.contains(term), "{term} duplicates the PF list");
+        }
+        // Adding the SF set must not move the shared PF list.
+        assert_eq!(PI_BLACKLIST_TERMS.len(), 61);
+    }
+
+    #[test]
+    fn the_sf_screen_returns_marker_metadata_for_an_already_redacted_value() {
+        let (license, pi_field, ..) = classify_field_sf("description", REDACTED_PI_MARKER);
+        assert_eq!(license, License::PiRedacted);
+        assert_eq!(pi_field.as_deref(), Some("description"));
     }
 }

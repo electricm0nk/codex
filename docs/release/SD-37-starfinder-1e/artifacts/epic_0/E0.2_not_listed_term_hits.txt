@@ -1,0 +1,7 @@
+files 123 rows 12718 rows_with_any_hit 216
+    34  Ysoki
+    41  Kalo
+    17  Nuar
+   124  Starfinder
+     0  Nex
+     0  Geb

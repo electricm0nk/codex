@@ -338,3 +338,71 @@ first retro-fit cycle, E2.0.6, is what actually writes
   — the initial blacklist's origin.
 - `tests/sd27_license_stripping_shape_v1.rs` — the dual-audit gate proving
   the schema (not yet the per-book data) is sound.
+
+## 7. Starfinder 1e PI term set (SD-37 E0.2, 2026-10-02) — NOT operator-signed
+
+**Status: draft, `operator_sign_off: false`.** The sign-off at the top of this file covers the
+Pathfinder list only. This section is in force for SD-37's converter as the safe default
+(`docs/release/SD-37-starfinder-1e/decisions.md §6`, §12.1 SD-a), pending operator review.
+
+**Code.** `src/rules_core/pi_screening.rs::SF_PI_TERMS` (41 terms) and `classify_field_sf`, which
+screens a value against `PI_BLACKLIST_TERMS` (61, unchanged) **∪** `SF_PI_TERMS` with the same
+case-sensitive substring rule and redaction contract as `classify_field`. The SF set is a separate
+array so the Pathfinder list, its Python twin (`scripts/pi_scrub.py`,
+`tests/pi_blacklist_terms_rust_python_agree.rs`) and the Pipeline B sweep baseline
+(`docs/governance/pi-sweep-baseline.tsv`) do not move. Re-derive the counts:
+`cargo test --locked -j 8 --lib rules_core::pi_screening -- --test-threads=8`
+(`the_sf_term_set_is_41_terms_disjoint_from_the_pathfinder_list`).
+
+**Source of the categories.** Paizo's own Starfinder Product Identity declaration, carried in the
+pinned oracle at `$PCGEN_CORPUS_ROOT/starfinder/paizo/starfinder_society_rules/OGL.txt` lines 112-117:
+
+> Product Identity: The following items are hereby identified as Product Identity, as defined in
+> the Open Game License version 1.0a, Section 1(e), and are not Open Game Content: All trademarks,
+> registered trademarks, proper nouns (characters, deities, locations, etc., as well as all
+> adjectives, names, titles, and descriptive terms derived from proper nouns), artworks,
+> characters, dialogue, locations, plots, storylines, trade dress, the historical period called the
+> Gap, the terms kishalee, sivv, and skyfire, and the Drift (the official Open Game Content term
+> for which is hyperspace).
+
+**The 41 terms**, with hits in the 8 in-scope books (F-6 rows, 12,718; a hit = the row contains
+the term, case-sensitive). Command:
+`python3 docs/release/SD-37-starfinder-1e/artifacts/epic_0/sf_pi_term_hits.py "<comma-joined terms>"`
+→ `artifacts/epic_0/E0.2_sf_pi_term_hits.txt`.
+
+| group | terms (row hits) |
+|---|---|
+| named in the declaration | `Gap` (19), `kishalee`/`Kishalee` (0/0), `sivv`/`Sivv` (0/0), `skyfire`/`Skyfire` (0/25), `Drift` (15) |
+| places | `Aballon` (4), `Akiton` (7), `Apostae` (7), `Bretheda` (6), `Castrovel` (10), `Eox` (9), `Idari` (4), `Liavara` (4), `Triaxus` (16), `Verces` (12), `Diaspora` (19), `Pact Worlds` (59), `Near Space` (10), `Veskarium` (16) |
+| SF deities not already on the PF list | `Damoritosh` (15), `Eloritu` (4), `Hylax` (4), `Ibra` (4), `Lao Shu Po` (3), `Oras` (4), `Talavet` (5), `Triune` (6), `Casandalee` (2), `Weydan` (5), `Yaraesa` (5), `Devourer` (4) |
+| organisations | `Stewards` (9), `Xenowarden` (2), `Hellknight` (17), `Corpse Fleet` (1), `Free Captain` (2), `Azlanti` (2), `Starfinder Society` (8) |
+
+**Rows hit.** SF set alone: **259** of 12,718 in-scope rows; SF set ∪ PF list: **309** of 12,718.
+Two implementations agree: the Python script above (`files 123 rows 12718 rows_with_any_hit 259`
+/ `309`) and an `awk index()` pass over the same files with the F-6 predicate
+(`artifacts/epic_0/E0.2_awk_hits.txt`: `rows 12718 any_hit 259` / `309`). The PF list's own hits in
+the SF books are all real Golarion names (12 terms, 68 rows: Absalom 29, Abadar 12, Iomedae 7,
+Sarenrae 7, Desna 6, Golarion 5, Pharasma 4, Urgathoa 4, Zon-Kuthon 4, Asmodeus 1, Calistria 1,
+Lamashtu 1); the known PF false-positive shapes (`Nex`→"Next", `Geb`→"Gebr") hit 0 rows here.
+
+**Choices a reviewer should challenge.**
+
+- **Species names are not on the list** (same script: `Ysoki` 34 rows, `Kalo` 41, `Nuar` 17; also vesk, kasatha,
+  lashunta, shirren, …). The playable-race records are the game mechanic a sheet needs; Paizo's SRD practice
+  publishes them. If the operator rules them PI, every race record of the 8 books redacts.
+- **`Starfinder` alone is not on the list** (124 rows). It is the product-line name and appears in
+  book titles and source attribution; screening it would redact every record that names its book.
+  `Starfinder Society` (the organisation) is listed.
+- **Derived terms are caught by their root**, as the declaration requires: `Eoxian Wrackstaff`,
+  `Diasporan rifle`, `Driftborn`, `Pre-Gap`, and the Elf racial trait `Memory Gap` all redact. The
+  last two are whole-value redactions of a mechanical record's name or prose; E3 decides whether a
+  redacted name is renamed (the `decisions.md §24` precedent) or the record is dropped.
+- **Declared lowercase terms hit 0 rows** (`kishalee`, `sivv`, `skyfire`). They stay on the list
+  because the declaration names them and later books may carry them.
+- **Apply to free-text and name fields only**, never to `SOURCELONG`/`SOURCESHORT` (5 `SOURCELONG`
+  tokens contain `Pact Worlds` because they name the book).
+
+**Does not cover.** Proper nouns the 8 books carry that are not on the list (the list was built
+from the declaration's categories and a targeted read, not an exhaustive proper-noun extraction);
+the legal correctness of Paizo's terms; any OCR/casing variant (the PF list needed three such
+additions after the fact, §4); books outside the 8 included rows.

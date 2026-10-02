@@ -1,0 +1,54 @@
+    Blocking waiting for file lock on build directory
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37-e0-2)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 59s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37-e0-2/debug/deps/codex-a13c5cad8ad2bb59)
+
+running 45 tests
+test rules_core::pi_screening::tests::a_deity_name_redacts_the_whole_value ... ok
+test rules_core::pi_screening::tests::a_paizo_declared_sf_term_classifies_as_pi ... ok
+test rules_core::pi_screening::tests::a_declared_description_is_redacted_even_though_no_blacklist_term_appears_in_it ... ok
+test rules_core::pi_screening::tests::a_declared_but_absent_field_has_nothing_to_redact ... ok
+test rules_core::pi_screening::tests::a_place_name_redacts_too ... ok
+test rules_core::pi_screening::tests::a_row_with_no_pi_tokens_declares_nothing ... ok
+test rules_core::pi_screening::tests::a_value_already_equal_to_the_marker_stamps_redacted_not_plain_ogl ... ok
+test rules_core::pi_screening::tests::aldori_is_redacted ... ok
+test rules_core::pi_screening::tests::an_explicit_no_is_not_a_declaration ... ok
+test rules_core::pi_screening::tests::an_sf_pi_term_from_the_new_set_classifies_as_pi ... ok
+test rules_core::pi_screening::tests::an_undeclared_description_still_goes_through_the_term_scan ... ok
+test rules_core::pi_screening::tests::blanket_ogl_for_no_free_text_field_records ... ok
+test rules_core::pi_screening::tests::cayden_cailean_s_oracle_typo_variant_is_redacted ... ok
+test rules_core::pi_screening::tests::concatenated_scan_catches_the_ocr_lrori_variant ... ok
+test rules_core::pi_screening::tests::concatenated_scan_catches_an_ordinary_separated_occurrence ... ok
+test rules_core::pi_screening::tests::concatenated_scan_does_not_manufacture_andoran_across_real_word_boundaries ... ok
+test rules_core::pi_screening::tests::concatenated_scan_does_not_over_redact_a_short_term_by_coincidence ... ok
+test rules_core::pi_screening::tests::concatenated_scan_empty_value_is_never_a_hit ... ok
+test rules_core::pi_screening::tests::concatenated_scan_catches_a_pascalcase_concatenated_identifier ... ok
+test rules_core::pi_screening::tests::concatenated_scan_finds_nothing_in_ordinary_text ... ok
+test rules_core::pi_screening::tests::concatenated_scan_galt_still_catches_a_literal_plain_spelling ... ok
+test rules_core::pi_screening::tests::concatenated_scan_galt_char_fold_does_not_catch_an_ordinary_gait ... ok
+test rules_core::pi_screening::tests::concatenated_scan_jarn_rn_fold_does_not_catch_an_ordinary_jam ... ok
+test rules_core::pi_screening::tests::concatenated_scan_jarn_still_catches_a_literal_plain_spelling ... ok
+test rules_core::pi_screening::tests::hyperspace_and_ordinary_sf_mechanics_stay_ogl ... ok
+test rules_core::pi_screening::tests::concatenated_scan_word_boundary_still_refuses_next_for_nex ... ok
+test rules_core::pi_screening::tests::irori_s_oracle_ocr_typo_variant_is_redacted ... ok
+test rules_core::pi_screening::tests::jarn_is_redacted ... ok
+test rules_core::pi_screening::tests::magaambya_is_redacted ... ok
+test rules_core::pi_screening::tests::concatenated_scan_still_catches_a_genuinely_no_separator_andoran_identifier ... ok
+test rules_core::pi_screening::tests::nameispi_and_descispi_are_read_independently ... ok
+test rules_core::pi_screening::tests::no_blacklist_term_is_plain_ogl ... ok
+test rules_core::pi_screening::tests::optional_field_absent_is_blanket_ogl_never_scanned ... ok
+test rules_core::pi_screening::tests::reconcile_fixes_a_marker_description_shipped_as_plain_ogl ... ok
+test rules_core::pi_screening::tests::reconcile_is_a_no_op_for_an_absent_description ... ok
+test rules_core::pi_screening::tests::reconcile_is_a_no_op_for_an_ordinary_unredacted_description ... ok
+test rules_core::pi_screening::tests::reconcile_is_a_no_op_when_the_stamp_is_already_correct ... ok
+test rules_core::pi_screening::tests::reconcile_unions_description_into_an_existing_pi_field_list_without_dropping_it ... ok
+test rules_core::pi_screening::tests::term_list_matches_the_reference_copy_plus_the_documented_acg_addition ... ok
+test rules_core::pi_screening::tests::the_oracle_s_lowercase_possessive_typo_of_the_index_9_deity_is_redacted ... ok
+test rules_core::pi_screening::tests::the_sf_screen_also_applies_the_shared_pathfinder_terms ... ok
+test rules_core::pi_screening::tests::the_sf_screen_returns_marker_metadata_for_an_already_redacted_value ... ok
+test rules_core::pi_screening::tests::the_sf_term_set_is_41_terms_disjoint_from_the_pathfinder_list ... ok
+test rules_core::pi_screening::tests::word_boundary_alone_does_not_prevent_the_galt_gait_collision ... ok
+test rules_core::pi_screening::tests::the_token_is_matched_case_insensitively_and_trimmed ... ok
+
+test result: ok. 45 passed; 0 failed; 0 ignored; 0 measured; 2725 filtered out; finished in 0.01s
+
