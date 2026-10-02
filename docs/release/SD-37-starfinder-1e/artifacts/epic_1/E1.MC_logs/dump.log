@@ -1,0 +1,3 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running `/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/sheet_rule_convert --dump /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e1mc/after.dump`
+records=49450 converted=49450 refused=0 rules=73363 var_tables=6211 dumped=56008 -> /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e1mc/after.dump (416.8s)

@@ -39,7 +39,7 @@ card (`decisions.md §17`).
 | E1.2 | Per-system book registries (19 consts) | opus | complete | C1 | Batched; `artifacts/epic_1/E1.2_cycle_receipt.md`; commit 60ea507dd3 |
 | E1.3 | Converter system parameter | opus | complete | C1 | Batched; `artifacts/epic_1/E1.3_cycle_receipt.md`; commit 60ea507dd3 |
 | E1.4 | PF byte-identical gate (Aldric, Elowen) + structural diff | opus | complete | E1.1–E1.3 | `artifacts/epic_1/E1.4_cycle_receipt.md`; harness `apps/desktop/src-tauri/src/pf_seed_render_hash.rs`; Aldric/Elowen sha256 before = after; structural diff PASS 49,450 unmoved; residue PASS |
-| E1.MC | E1 adversarial merge check | opus | waiting | E1.4 | |
+| E1.MC | E1 adversarial merge check | opus | complete | E1.4 | `artifacts/epic_1/E1.MC_cycle_receipt.md`; on 520d746125: Aldric/Elowen sha256 before (209664dce2, rebuilt) = after; planted `core_rulebook` drop from the registry's PF entry flips both hashes (restored = baseline); wrapper-only drops (race corpus, class family) do not flip (finding → E5.1); structural diff PASS 49,450 unmoved, planted 2/2 FAIL; residue PASS; root 461 suites 8,211 passed 0 failed; desktop 640/0 |
 | E2.1 | Additive schema variants | opus | waiting | E1.MC | |
 | E2.2 | Published `schemas/rules/*.schema.json` + `rules-schema-check` stage | sonnet | waiting | E2.1 | |
 | E2.MC | E2 adversarial merge check | opus | waiting | E2.2 | |
@@ -56,7 +56,7 @@ card (`decisions.md §17`).
 | E4.5 | Credits, bulk, encumbrance | opus | waiting | E4.1 | |
 | E4.6 | `StarfinderAdapter`; retire stub 0002 for SF | opus | waiting | E4.1–E4.5 | |
 | E4.MC | E4 adversarial merge check | opus | waiting | E4.6 | |
-| E5.1 | Races, themes, class features print | opus | waiting | E4.MC | C0.2: was ∥ E4 (shared converter + `data/starfinder-1e/**`) |
+| E5.1 | Races, themes, class features print | opus | waiting | E4.MC | C0.2: was ∥ E4 (shared converter + `data/starfinder-1e/**`). E1.MC discovery: `race_trait_picker::race_corpus` reads the PF `RACE_CORPUS_BOOKS` const, not `RACE_CORPUS_BOOK_REGISTRY` (`progress.md ## DISCOVERED`) |
 | E5.2 | Feats, spells print | opus | waiting | E5.1 | |
 | E5.3 | Equipment, augmentations, upgrades, fusions print | opus | waiting | E5.1 | |
 | E5.4 | Drone print | opus | waiting | E5.1 | |
