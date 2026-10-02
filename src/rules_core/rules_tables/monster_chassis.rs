@@ -54,6 +54,7 @@
 //! 4,233 remaining units are orphan ability rows, and 703 of those sit in ten
 //! books that carry no monster row at all.
 
+use crate::rules_core::game_system::{BookRegistry, GameSystem};
 // `StatAdjustment` is `companion_chassis`'s type, reused rather than duplicated
 // here (SD31-E6-F1-002): both chassis kinds parse the identical
 // `BONUS:STAT|<abbrev-list>|<amount>` PCGen token into the identical shape, and
@@ -680,9 +681,13 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
     },
 ];
 
-/// The registered book with this corpus directory id.
+/// [`MONSTER_BOOKS`] keyed by game system (SD-37 E1.2): the list above is the
+/// [`GameSystem::Pathfinder1e`] entry; no other system registers a monster book yet.
+pub const MONSTER_BOOK_REGISTRY: BookRegistry<MonsterBook> = BookRegistry::pathfinder_only(MONSTER_BOOKS);
+
+/// The registered Pathfinder 1e book with this corpus directory id.
 pub fn monster_book(corpus_book: &str) -> Option<&'static MonsterBook> {
-    MONSTER_BOOKS.iter().find(|b| b.corpus_book == corpus_book)
+    MONSTER_BOOK_REGISTRY.books(GameSystem::Pathfinder1e).iter().find(|b| b.corpus_book == corpus_book)
 }
 
 #[cfg(test)]

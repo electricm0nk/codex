@@ -105,6 +105,7 @@
 //! separate them.
 
 pub use super::monster_chassis::{NaturalAttack, Speed};
+use crate::rules_core::game_system::{BookRegistry, GameSystem};
 /// Re-exported, not re-declared: a companion guard and a feat guard are the
 /// same thing, and SD-35 `AT-35-E6-003-SWEEP` cycle 9 reused cycle 7's schema
 /// rather than growing a second vocabulary for one grammar.
@@ -782,9 +783,13 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
     },
 ];
 
-/// The registered book with this corpus directory id.
+/// [`COMPANION_BOOKS`] keyed by game system (SD-37 E1.2): the list above is the
+/// [`GameSystem::Pathfinder1e`] entry; no other system registers a companion book yet.
+pub const COMPANION_BOOK_REGISTRY: BookRegistry<CompanionBook> = BookRegistry::pathfinder_only(COMPANION_BOOKS);
+
+/// The registered Pathfinder 1e book with this corpus directory id.
 pub fn companion_book(corpus_book: &str) -> Option<&'static CompanionBook> {
-    COMPANION_BOOKS.iter().find(|b| b.corpus_book == corpus_book)
+    COMPANION_BOOK_REGISTRY.books(GameSystem::Pathfinder1e).iter().find(|b| b.corpus_book == corpus_book)
 }
 
 /// `AT-34-E3-001` (`companion_absent_from_core_rulebook_companion_tables`

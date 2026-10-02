@@ -2099,7 +2099,9 @@ mod tests {
         let dirs: Vec<(String, PathBuf)> = books
             .into_iter()
             .map(|book| {
-                let dir = PathBuf::from("data/corpus").join(&book);
+                // `RACE_CORPUS_BOOKS` is the desktop's Pathfinder 1e race registry entry
+                // (SD-37 E1.2), so its books live under that system's corpus root.
+                let dir = PathBuf::from(crate::rules_core::game_system::GameSystem::Pathfinder1e.corpus_relative()).join(&book);
                 (book, dir)
             })
             .collect();

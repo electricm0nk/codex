@@ -51,6 +51,7 @@ use std::collections::BTreeMap;
 use std::sync::OnceLock;
 
 use super::class_chassis_sheet_rules::{self, ClassChassis};
+use crate::rules_core::game_system::{BookRegistry, GameSystem};
 
 /// See `class_catalog_generic.rs`'s own doc comment, "Reachability, honestly
 /// scoped" — same books, same order, same population.
@@ -82,6 +83,10 @@ const CLASS_FAMILY_BOOKS: [&str; 16] = [
     "core_rulebook",
     "advanced_players_guide",
 ];
+
+/// [`CLASS_FAMILY_BOOKS`] keyed by game system (SD-37 E1.2): the list above is the
+/// [`GameSystem::Pathfinder1e`] entry; no other system registers a class-family book yet.
+const CLASS_FAMILY_BOOK_REGISTRY: BookRegistry<&str> = BookRegistry::pathfinder_only(&CLASS_FAMILY_BOOKS);
 
 pub(crate) struct GenericChassisRow {
     pub(crate) display_name: String,
@@ -136,7 +141,7 @@ fn generic_class_records() -> &'static BTreeMap<String, ClassChassis> {
         // One book at a time, in `CLASS_FAMILY_BOOKS` order: `records` keys its
         // map by `(book, slug)`, so reading every book in one call would visit
         // books alphabetically.
-        for book in CLASS_FAMILY_BOOKS {
+        for &book in CLASS_FAMILY_BOOK_REGISTRY.books(GameSystem::Pathfinder1e) {
             for ((_, slug), chassis) in class_chassis_sheet_rules::records(&[book]) {
                 if !chassis.is_conventional() {
                     continue;

@@ -28,6 +28,7 @@ use codex::rules_core::character_input::{
 use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
 use codex::rules_core::durability::{classify_durability, compute_max_hp, DurabilityStatus};
 use codex::rules_core::feat_effects;
+use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
 use codex::rules_core::level_up_option_filter::{filter_option_pool, FEAT_POOL};
 use codex::rules_core::money;
@@ -725,10 +726,24 @@ pub(crate) fn map_sheet_lines_dto(lines: &[codex::rules_core::sheet_rule::SheetL
 /// The `data/sheet_rules/` package, loaded once per process -- the same shape
 /// `race_trait_picker::race_corpus` uses for `data/corpus/`. `Err` names why it is
 /// unavailable (no repo root, an unreadable directory, an empty package).
+///
+/// This is the Pathfinder 1e package: [`sheet_rule_package_for`] with
+/// [`GameSystem::Pathfinder1e`].
 fn sheet_rule_package() -> &'static Result<codex::rules_core::sheet_rule::SheetRulePackage, String> {
-    static PACKAGE: OnceLock<Result<codex::rules_core::sheet_rule::SheetRulePackage, String>> = OnceLock::new();
-    PACKAGE.get_or_init(|| {
-        let dir = crate::authoring_workbench::codex_repo_root()?.join("data/sheet_rules");
+    sheet_rule_package_for(GameSystem::Pathfinder1e)
+}
+
+/// One game system's sheet-rule package, loaded once per process per system (SD-37 E1.1).
+/// The repo root is resolved at run time by [`crate::authoring_workbench::codex_repo_root`]
+/// (`CODEX_REPO_ROOT`, the packaged resource roots, then the dev checkout) and the system's
+/// own directory is taken from [`GameSystem::package_roots`].
+fn sheet_rule_package_for(
+    system: GameSystem,
+) -> &'static Result<codex::rules_core::sheet_rule::SheetRulePackage, String> {
+    type Slot = OnceLock<Result<codex::rules_core::sheet_rule::SheetRulePackage, String>>;
+    static PACKAGES: [Slot; GameSystem::ALL.len()] = [const { Slot::new() }; GameSystem::ALL.len()];
+    PACKAGES[system.index()].get_or_init(|| {
+        let dir = system.package_roots(&crate::authoring_workbench::codex_repo_root()?).sheet_rules;
         let load = codex::rules_core::corpus_loader::load_sheet_rules(&dir);
         if load.package.rules.is_empty() {
             return Err(format!(
@@ -4933,7 +4948,7 @@ pub fn build_race_creation_roster() -> RaceCreationRosterResponse {
     // in the order it offered them), then Bestiary 1's, alphabetically within
     // each book. A book this list does not name sorts last rather than being
     // dropped.
-    let book_rank = |book: &str| crate::race_catalog::RACE_CATALOG_BOOKS.iter().position(|b| *b == book).unwrap_or(usize::MAX);
+    let book_rank = |book: &str| crate::race_catalog::RACE_CATALOG_BOOK_REGISTRY.books(GameSystem::Pathfinder1e).iter().position(|b| *b == book).unwrap_or(usize::MAX);
     races.sort_by(|a, b| book_rank(&a.book).cmp(&book_rank(&b.book)).then_with(|| a.label.cmp(&b.label)));
 
     RaceCreationRosterResponse { races, diagnostics }

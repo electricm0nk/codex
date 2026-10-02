@@ -2159,6 +2159,7 @@ mod ability_type_selector_tests {
 
     fn empty_tree() -> PinnedTree {
         PinnedTree {
+            system: codex::rules_core::game_system::GameSystem::Pathfinder1e,
             root: PathBuf::new(),
             book_paths: BTreeMap::new(),
             source_dates: BTreeMap::new(),

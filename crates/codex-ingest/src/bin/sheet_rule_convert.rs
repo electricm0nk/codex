@@ -28,12 +28,17 @@
 //! silent fall-through.
 
 
+use codex::rules_core::game_system::GameSystem;
 use codex_ingest::pcgen_import::sheet_rule;
 
 /// Explicit argument parse -- no unrecognized argument and no operand-less flag may fall through
 /// to any other branch, least of all the corpus-wide `--write` rewrite of `data/sheet_rules`
 /// (SD-36 Epic F1 re-check round 1, finding 3).
 struct Args {
+    /// SD-37 E1.3: the game system converted -- its pinned book subtree, corpus root and output
+    /// package. `--system <id>`; absent means `pathfinder-1e`, so existing invocations keep
+    /// their meaning.
+    system: GameSystem,
     check: bool,
     write: bool,
     one: Option<String>,
@@ -45,6 +50,7 @@ fn parse_args(raw: &[String]) -> Result<Args, String> {
     let mut write = false;
     let mut one = None;
     let mut dump_dir = None;
+    let mut system = GameSystem::Pathfinder1e;
     let mut i = 0;
     while i < raw.len() {
         match raw[i].as_str() {
@@ -53,6 +59,11 @@ fn parse_args(raw: &[String]) -> Result<Args, String> {
             "--one" => {
                 let id = raw.get(i + 1).ok_or_else(|| "--one requires an operand (a unit id)".to_string())?;
                 one = Some(id.clone());
+                i += 1;
+            }
+            "--system" => {
+                let id = raw.get(i + 1).ok_or_else(|| "--system requires an operand (a game system id)".to_string())?;
+                system = GameSystem::from_id(id).map_err(|e| e.to_string())?;
                 i += 1;
             }
             "--dump" => {
@@ -64,7 +75,7 @@ fn parse_args(raw: &[String]) -> Result<Args, String> {
         }
         i += 1;
     }
-    Ok(Args { check, write, one, dump_dir })
+    Ok(Args { system, check, write, one, dump_dir })
 }
 
 fn main() {
@@ -73,14 +84,14 @@ fn main() {
         Ok(a) => a,
         Err(e) => {
             eprintln!("sheet_rule_convert: {e}");
-            eprintln!("usage: sheet_rule_convert [--write | --check | --one <unit id> | --dump <dir>]");
+            eprintln!("usage: sheet_rule_convert [--system <game system id>] [--write | --check | --one <unit id> | --dump <dir>]");
             std::process::exit(2);
         }
     };
     let repo = codex_ingest::repo_root();
-    let out_dir = repo.join("data/sheet_rules");
+    let out_dir = args.system.package_roots(&repo).sheet_rules;
     if let Some(id) = &args.one {
-        match sheet_rule::convert_one(&repo, id) {
+        match sheet_rule::convert_one_for(&repo, args.system, id) {
             Ok((c, rows)) => {
                 for r in rows {
                     println!("row {r}");
@@ -117,7 +128,7 @@ fn main() {
         std::process::exit(2);
     }
     let started = std::time::Instant::now();
-    let (run, _index) = match sheet_rule::convert_repo(&repo) {
+    let (run, _index) = match sheet_rule::convert_repo(&repo, args.system) {
         Ok(x) => x,
         Err(e) => {
             eprintln!("sheet_rule_convert: {e}");
@@ -173,5 +184,38 @@ fn main() {
     }
     for (k, v) in &run.report.by_kind {
         println!("kind {k}: records={} converted={} refused={}", v.records, v.converted, v.refused);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use codex::rules_core::game_system::GameSystem;
+
+    fn args(raw: &[&str]) -> Result<Args, String> {
+        parse_args(&raw.iter().map(|s| s.to_string()).collect::<Vec<_>>())
+    }
+
+    /// SD-37 E1.3: no `--system` means Pathfinder 1e, so every existing invocation keeps its
+    /// meaning; `--system pathfinder-1e` is the same run spelled out.
+    #[test]
+    fn system_defaults_to_pathfinder_and_accepts_the_explicit_spelling() {
+        let default = args(&["--check"]).expect("parses");
+        assert_eq!(default.system, GameSystem::Pathfinder1e);
+        let explicit = args(&["--system", "pathfinder-1e", "--check"]).expect("parses");
+        assert_eq!(explicit.system, GameSystem::Pathfinder1e);
+        assert!(explicit.check);
+        let sf = args(&["--check", "--system", "starfinder-1e"]).expect("parses");
+        assert_eq!(sf.system, GameSystem::Starfinder1e);
+    }
+
+    /// An unknown system id, or `--system` with no operand, is a usage error -- never a
+    /// fall-through to Pathfinder.
+    #[test]
+    fn an_unknown_or_missing_system_is_a_usage_error() {
+        let err = args(&["--system", "pathfinder-2e", "--check"]).err().expect("rejected");
+        assert!(err.contains("pathfinder-2e") && err.contains("pathfinder-1e"), "{err}");
+        let err = args(&["--check", "--system"]).err().expect("rejected");
+        assert!(err.contains("--system requires an operand"), "{err}");
     }
 }

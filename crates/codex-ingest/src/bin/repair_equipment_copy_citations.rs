@@ -13,6 +13,7 @@
 //! binary deliberately removes rather than recomputes them, so that field
 //! is always produced by its one established mechanism.
 
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 use std::path::PathBuf;
 
 use codex_ingest::pcgen_import::cache_gen::equipment_copy_citation_repair::repair_book;
@@ -27,11 +28,11 @@ use codex_ingest::pcgen_import::cache_gen::equipment_copy_citation_repair::repai
 /// against every book with equipment records would still refuse everywhere
 /// else rather than mis-fire, but scoping the list keeps this run's report
 /// legible and matches what was actually re-derived.
-const BOOKS: &[(&str, &str)] = &[
+const BOOKS: BookRegistry<(&str, &str)> = BookRegistry::pathfinder_only(&[
     ("advanced_class_guide", "pathfinder/paizo/roleplaying_game/advanced_class_guide"),
     ("core_rulebook", "pathfinder/paizo/roleplaying_game/core_rulebook"),
     ("mythic_adventures", "pathfinder/paizo/roleplaying_game/mythic_adventures"),
-];
+]);
 
 fn main() {
     let corpus_root = match std::env::var("PCGEN_CORPUS_ROOT") {
@@ -52,7 +53,7 @@ fn main() {
 
     let mut total_repaired = 0usize;
     let mut total_refused = 0usize;
-    for (book_id, book_rel_dir) in BOOKS {
+    for (book_id, book_rel_dir) in BOOKS.books(GameSystem::Pathfinder1e) {
         let records_dir = corpus_out.join(book_id).join("equipment");
         if !records_dir.is_dir() {
             eprintln!("NOTE: {book_id}: no equipment records directory at {records_dir:?}; skipped");

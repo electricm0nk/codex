@@ -75,6 +75,7 @@
 use std::collections::BTreeSet;
 use std::path::Path;
 
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 use codex::rules_core::pilot_compute::class_chassis_sheet_rules;
 use codex::rules_core::rules_tables::crb::class_tables::class_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
@@ -108,6 +109,10 @@ const CLASS_FAMILY_BOOKS: [&str; 16] = [
     "core_rulebook",
     "advanced_players_guide",
 ];
+
+/// [`CLASS_FAMILY_BOOKS`] keyed by game system (SD-37 E1.2): the list above is the
+/// [`GameSystem::Pathfinder1e`] entry; no other system registers a class-family book yet.
+const CLASS_FAMILY_BOOK_REGISTRY: BookRegistry<&str> = BookRegistry::pathfinder_only(&CLASS_FAMILY_BOOKS);
 
 /// One conventional class's evaluated progression, still in the raw record
 /// form the module test suite checks before it is mapped into
@@ -146,7 +151,10 @@ pub fn load_generic_class_progressions(
     let mut unresolved = Vec::new();
     // One book at a time, in `CLASS_FAMILY_BOOKS` order (`records` keys by
     // `(book, slug)` and would otherwise walk books alphabetically).
-    let per_book = CLASS_FAMILY_BOOKS.iter().flat_map(|book| class_chassis_sheet_rules::records(&[book]));
+    let per_book = CLASS_FAMILY_BOOK_REGISTRY
+        .books(GameSystem::Pathfinder1e)
+        .iter()
+        .flat_map(|book| class_chassis_sheet_rules::records(&[book]));
     for ((book, slug), chassis) in per_book {
         if !chassis.is_conventional() {
             continue;

@@ -68,6 +68,7 @@
 //! the `BookInput::id` values below). `PCGEN_CORPUS_ROOT` overrides the
 //! default `$HOME/workspace/repos/pcgen/data`.
 
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::env;
 use std::fs;
@@ -119,7 +120,7 @@ fn already_ingested_uc() -> BTreeSet<&'static str> {
     s
 }
 
-const BOOKS: &[BookInput] = &[
+const BOOKS: BookRegistry<BookInput> = BookRegistry::pathfinder_only(&[
     BookInput {
         id: "adventurers_guide",
         display_name: "Adventurer's Guide (AG)",
@@ -342,7 +343,7 @@ const BOOKS: &[BookInput] = &[
         already_ingested: None,
         dedup_within_book: false,
     },
-];
+]);
 
 /// Referenced so `cargo build`/`clippy` see these modules as used -- their
 /// only live consumer is `already_ingested_uc`'s `occult_adventures` link
@@ -393,7 +394,7 @@ const EXTRA_BASE_DECLARATION_FILES: &[&str] =
 /// already uses elsewhere in this file.
 fn build_global_base_index(data_root: &Path) -> HashMap<String, (Option<u8>, Option<String>)> {
     let mut index: HashMap<String, (Option<u8>, Option<String>)> = HashMap::new();
-    let mut lst_rels: Vec<&str> = BOOKS.iter().map(|b| b.lst_rel).collect();
+    let mut lst_rels: Vec<&str> = BOOKS.books(GameSystem::Pathfinder1e).iter().map(|b| b.lst_rel).collect();
     lst_rels.extend_from_slice(EXTRA_BASE_DECLARATION_FILES);
     for lst_rel in lst_rels {
         let path = data_root.join(lst_rel);
@@ -845,13 +846,14 @@ fn main() {
     match arg {
         Some(id) => {
             let book = BOOKS
+                .books(GameSystem::Pathfinder1e)
                 .iter()
                 .find(|b| b.id == id)
-                .unwrap_or_else(|| panic!("unknown book id {id:?}; known ids: {:?}", BOOKS.iter().map(|b| b.id).collect::<Vec<_>>()));
+                .unwrap_or_else(|| panic!("unknown book id {id:?}; known ids: {:?}", BOOKS.books(GameSystem::Pathfinder1e).iter().map(|b| b.id).collect::<Vec<_>>()));
             ingest_one_book(&data_root, book, &base_index);
         }
         None => {
-            for book in BOOKS {
+            for book in BOOKS.books(GameSystem::Pathfinder1e) {
                 ingest_one_book(&data_root, book, &base_index);
             }
         }
@@ -1098,7 +1100,7 @@ mod tests {
         // dedicated `.lst`" claim for these two books' `no_record` spell
         // population was checked and found wrong; both carry a real,
         // dedicated `.lst` file of custom spell-variant declarations.
-        let ids: Vec<&str> = BOOKS.iter().map(|b| b.id).collect();
+        let ids: Vec<&str> = BOOKS.books(GameSystem::Pathfinder1e).iter().map(|b| b.id).collect();
         assert_eq!(
             ids,
             vec![
@@ -1139,7 +1141,7 @@ mod tests {
     /// screen the way the seven collapsed binaries had.
     #[test]
     fn book_input_carries_no_per_book_pi_screen_override_field() {
-        let b = &BOOKS[0];
+        let b = &BOOKS.books(GameSystem::Pathfinder1e)[0];
         let _: &str = b.id;
         let _: &str = b.display_name;
         let _: &str = b.lst_rel;

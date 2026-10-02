@@ -50,6 +50,7 @@ use std::path::{Path, PathBuf};
 use serde::{Deserialize, Serialize};
 
 use crate::pcgen_import::ingest_record;
+use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::sheet_rule::*;
 use closure::{Closure, PinnedTree, RowRef};
 use ctx::{slug, CorpusIndex, OwnContribution, RecordRef};
@@ -112,8 +113,8 @@ struct CorpusEntry {
     line: Option<usize>,
 }
 
-fn walk_corpus(repo: &Path) -> Vec<CorpusEntry> {
-    let root = repo.join("data/corpus");
+fn walk_corpus(repo: &Path, system: GameSystem) -> Vec<CorpusEntry> {
+    let root = system.package_roots(repo).corpus;
     let mut out = Vec::new();
     let Ok(books) = std::fs::read_dir(&root) else { return out };
     let mut book_dirs: Vec<PathBuf> = books.flatten().map(|e| e.path()).filter(|p| p.is_dir()).collect();
@@ -305,7 +306,7 @@ fn source_row_in_tree(tree: &PinnedTree, unit: &InventoryUnit) -> Option<(String
 pub fn load_population(repo: &Path, tree: &PinnedTree) -> Result<Vec<RecordRef>, String> {
     let inv_text = std::fs::read_to_string(repo.join("docs/work-inventory.json")).map_err(|e| format!("docs/work-inventory.json: {e}"))?;
     let inv: InventoryFile = serde_json::from_str(&inv_text).map_err(|e| format!("docs/work-inventory.json: {e}"))?;
-    let entries = walk_corpus(repo);
+    let entries = walk_corpus(repo, tree.system);
     let mut by_line: BTreeMap<(String, String, usize), usize> = BTreeMap::new();
     let mut by_key: BTreeMap<(String, String, String), usize> = BTreeMap::new();
     // (basename, line, kind) -> every corpus record at that source row of that kind, in ANY
@@ -1503,19 +1504,25 @@ mod check_tests {
     }
 }
 
-/// Load everything and run once: the tree, the population, the index, the conversion.
-pub fn convert_repo(repo: &Path) -> Result<(Run, CorpusIndex), String> {
-    let tree = PinnedTree::load(&closure::corpus_root())?;
+/// Load everything and run once for one game system: the tree, the population, the index, the
+/// conversion (SD-37 E1.3: the system keys the pinned book subtree and the corpus root).
+pub fn convert_repo(repo: &Path, system: GameSystem) -> Result<(Run, CorpusIndex), String> {
+    let tree = PinnedTree::load_for(system, &closure::corpus_root())?;
     let records = load_population(repo, &tree)?;
     let (index, closures) = build_index(&tree, records);
     let run = run(&tree, &index, &closures);
     Ok((run, index))
 }
 
+/// Convert one Pathfinder 1e unit by id: [`convert_one_for`] with [`GameSystem::Pathfinder1e`].
+pub fn convert_one(repo: &Path, unit_id: &str) -> Result<(convert::Converted, Vec<String>), String> {
+    convert_one_for(repo, GameSystem::Pathfinder1e, unit_id)
+}
+
 /// Convert one unit by id (for tests and spot checks): the whole index is built, one record
 /// is converted, and its `Converted` is returned with the closure rows it read.
-pub fn convert_one(repo: &Path, unit_id: &str) -> Result<(convert::Converted, Vec<String>), String> {
-    let tree = PinnedTree::load(&closure::corpus_root())?;
+pub fn convert_one_for(repo: &Path, system: GameSystem, unit_id: &str) -> Result<(convert::Converted, Vec<String>), String> {
+    let tree = PinnedTree::load_for(system, &closure::corpus_root())?;
     let records = load_population(repo, &tree)?;
     let (index, closures) = build_index(&tree, records);
     let pos = index.records.iter().position(|r| r.id == unit_id).ok_or_else(|| format!("no unit {unit_id}"))?;
@@ -1790,7 +1797,7 @@ mod term_level_refusal_gate {
     #[test]
     fn a_copy_rows_own_visible_no_reaches_the_converted_rule() {
         let pinned = closure::corpus_root();
-        if !pinned.join(closure::BOOKS_RELATIVE).is_dir() {
+        if !pinned.join(closure::BOOKS_RELATIVE.books(GameSystem::Pathfinder1e)[0]).is_dir() {
             eprintln!("skipping: no pinned PCGen corpus checkout at {pinned:?}");
             return;
         }

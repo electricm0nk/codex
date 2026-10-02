@@ -94,7 +94,9 @@ fn race_corpus_books(repo: &Path) -> Vec<String> {
 
 fn load_races(repo: &Path) -> RaceCorpus {
     let books = race_corpus_books(repo);
-    let dirs: Vec<PathBuf> = books.iter().map(|b| repo.join("data/corpus").join(b)).collect();
+    // `RACE_CORPUS_BOOKS` is the desktop's Pathfinder 1e race registry entry (SD-37 E1.2).
+    let corpus = codex::rules_core::game_system::GameSystem::Pathfinder1e.package_roots(repo).corpus;
+    let dirs: Vec<PathBuf> = books.iter().map(|b| corpus.join(b)).collect();
     let roots: Vec<BookCorpusRoot<'_>> =
         books.iter().zip(dirs.iter()).map(|(book_id, dir)| BookCorpusRoot { book_id, dir: dir.as_path() }).collect();
     load_race_corpus(&roots)

@@ -352,12 +352,28 @@ pub fn load_sheet_rules_filtered(dir: &Path, keep: &dyn Fn(&str, &str) -> bool) 
 ///
 /// `None` when the directory is absent or carries no rules. A missing package is never a
 /// verdict: every caller reports "not verified" for it rather than refusing a character.
+///
+/// This is the Pathfinder 1e package: [`live_sheet_rules_for`] with
+/// [`GameSystem::Pathfinder1e`](crate::rules_core::game_system::GameSystem::Pathfinder1e).
 pub fn live_sheet_rules() -> Option<&'static crate::rules_core::sheet_rule::SheetRulePackage> {
-    static PACKAGE: std::sync::OnceLock<Option<crate::rules_core::sheet_rule::SheetRulePackage>> =
-        std::sync::OnceLock::new();
-    PACKAGE
+    live_sheet_rules_for(crate::rules_core::game_system::GameSystem::Pathfinder1e)
+}
+
+/// One game system's sheet-rule package, loaded once per process per system.
+///
+/// SD-37 E1.1: the root is resolved at run time
+/// ([`runtime_repo_root`](crate::rules_core::game_system::runtime_repo_root): `CODEX_REPO_ROOT`,
+/// else the compile-time checkout) and keyed by the system
+/// ([`GameSystem::package_roots`](crate::rules_core::game_system::GameSystem::package_roots)).
+pub fn live_sheet_rules_for(
+    system: crate::rules_core::game_system::GameSystem,
+) -> Option<&'static crate::rules_core::sheet_rule::SheetRulePackage> {
+    use crate::rules_core::game_system::{runtime_repo_root, GameSystem};
+    type Slot = std::sync::OnceLock<Option<crate::rules_core::sheet_rule::SheetRulePackage>>;
+    static PACKAGES: [Slot; GameSystem::ALL.len()] = [const { Slot::new() }; GameSystem::ALL.len()];
+    PACKAGES[system.index()]
         .get_or_init(|| {
-            let dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/sheet_rules");
+            let dir = system.package_roots(&runtime_repo_root()).sheet_rules;
             let load = load_sheet_rules(&dir);
             if load.package.rules.is_empty() {
                 None

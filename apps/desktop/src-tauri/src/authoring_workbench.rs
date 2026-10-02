@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
+use codex::rules_core::game_system::GameSystem;
 use codex::homebrew_authoring::package_manifest::PackageValidationState;
 use codex::homebrew_authoring::package_store::PackageStore;
 use codex::homebrew_authoring::preview_bridge::{ArmorClassPreview, PreviewBridge, PreviewStatus};
@@ -223,8 +224,12 @@ pub fn codex_repo_root() -> Result<PathBuf, String> {
 /// concurrently-running fixture test resolve `codex_repo_root()` into this
 /// test's own tempdir. Testing this pure function instead needs no such
 /// mutation.
+///
+/// The corpus checked is the Pathfinder 1e root ([`GameSystem::Pathfinder1e`]): every catalog
+/// loader that calls [`codex_repo_root`] today reads that system's corpus.
 fn first_candidate_root_carrying_corpus(candidates: &[PathBuf]) -> Option<PathBuf> {
-    candidates.iter().find(|root| root.join("data/corpus").is_dir()).cloned()
+    let corpus = GameSystem::Pathfinder1e.corpus_relative();
+    candidates.iter().find(|root| root.join(corpus).is_dir()).cloned()
 }
 
 /// Resolve a requested package root: absolute paths pass through, repo-relative

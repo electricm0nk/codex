@@ -30,28 +30,32 @@ use std::path::PathBuf;
 use std::sync::OnceLock;
 
 use codex::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 use codex::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
 use crate::corpus_fixtures::corpus_fixture_bundle;
 use crate::authoring_workbench::codex_repo_root;
 
-const BOOKS: &[&str] = &[
+/// The books whose equipment this bundle loads, keyed by game system (SD-37 E1.2). Only
+/// Pathfinder 1e registers books; this bundle is the Pathfinder bundle.
+const BOOKS: BookRegistry<&str> = BookRegistry::pathfinder_only(&[
     "core_rulebook",
     "advanced_players_guide",
     "advanced_class_guide",
     "beastiary",
     "advanced_race_guide",
     "pathfinder_unchained",
-];
+]);
 
 fn corpus_root_dir() -> Result<PathBuf, String> {
-    codex_repo_root().map(|root| root.join("data/corpus"))
+    codex_repo_root().map(|root| GameSystem::Pathfinder1e.package_roots(&root).corpus)
 }
 
 fn build_full_corpus_bundle() -> SourcePackageContent<'static> {
     let corpus_root = corpus_root_dir().expect("data/corpus root must resolve");
-    let book_dirs: Vec<PathBuf> = BOOKS.iter().map(|book| corpus_root.join(book)).collect();
-    let roots: Vec<BookCorpusRoot<'_>> = BOOKS
+    let books = BOOKS.books(GameSystem::Pathfinder1e);
+    let book_dirs: Vec<PathBuf> = books.iter().map(|book| corpus_root.join(book)).collect();
+    let roots: Vec<BookCorpusRoot<'_>> = books
         .iter()
         .zip(book_dirs.iter())
         .map(|(book_id, dir)| BookCorpusRoot { book_id, dir: dir.as_path() })
@@ -88,7 +92,7 @@ mod tests {
     #[test]
     fn every_corpus_full_book_resolves_under_the_corpus_root() {
         let corpus_root = corpus_root_dir().expect("corpus root must resolve in a source checkout");
-        for book in BOOKS {
+        for book in BOOKS.books(GameSystem::Pathfinder1e) {
             let book_dir = corpus_root.join(book);
             assert!(
                 book_dir.is_dir(),

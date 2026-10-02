@@ -832,6 +832,7 @@ mod tests {
     /// else `resolve_holdable_rule` never reads through `RecordCtx::resolve_rule_checked`.
     fn tree_with_parent(pairs: &[(&str, &str)]) -> PinnedTree {
         PinnedTree {
+            system: codex::rules_core::game_system::GameSystem::Pathfinder1e,
             root: PathBuf::new(),
             book_paths: BTreeMap::new(),
             source_dates: BTreeMap::new(),

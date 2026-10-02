@@ -80,6 +80,7 @@
 //! blacklist UNION via `pi_screening::classify_optional_field_declared`,
 //! same as every sibling `cache_gen` module.
 
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 use std::collections::{BTreeSet, HashMap};
 use std::path::Path;
 
@@ -196,12 +197,12 @@ struct BookInput {
     entries: fn() -> Vec<SourceEntry>,
 }
 
-const BOOKS: &[BookInput] = &[
+const BOOKS: BookRegistry<BookInput> = BookRegistry::pathfinder_only(&[
     BookInput { short_code: "UPSI", entries: ultimate_psionics_entries },
     BookInput { short_code: "UC", entries: ultimate_combat_entries },
     BookInput { short_code: "UI", entries: ultimate_intrigue_entries },
     BookInput { short_code: "UM", entries: ultimate_magic_entries },
-];
+]);
 
 #[derive(Debug, Default)]
 pub struct GenerationReport {
@@ -248,7 +249,7 @@ pub fn generate(
 ) -> Result<GenerationReport, GenerationError> {
     let mut report = GenerationReport::default();
 
-    for book in BOOKS {
+    for book in BOOKS.books(GameSystem::Pathfinder1e) {
         let (book_id, book_rel_dir) = equipment_gap::book_routing(book.short_code)
             .expect("every BOOKS short_code must have a book_routing entry");
         let book_dir = corpus_root.join(book_rel_dir);
@@ -381,7 +382,7 @@ mod tests {
 
     #[test]
     fn every_book_short_code_routes() {
-        for book in BOOKS {
+        for book in BOOKS.books(GameSystem::Pathfinder1e) {
             assert!(
                 equipment_gap::book_routing(book.short_code).is_some(),
                 "missing book_routing for {}",

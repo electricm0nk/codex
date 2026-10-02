@@ -644,6 +644,7 @@ mod tests {
     /// `ability_category_parent` map under test (everything else `resolve_rule_in` never reads).
     fn tree_with_parent(pairs: &[(&str, &str)]) -> PinnedTree {
         PinnedTree {
+            system: codex::rules_core::game_system::GameSystem::Pathfinder1e,
             root: std::path::PathBuf::new(),
             book_paths: BTreeMap::new(),
             source_dates: BTreeMap::new(),

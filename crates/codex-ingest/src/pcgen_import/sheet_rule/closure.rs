@@ -18,11 +18,18 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
-/// The corpus subtree every core PF1 book lives under, relative to `PCGEN_CORPUS_ROOT`.
-pub const BOOKS_RELATIVE: &str = "pathfinder/paizo/roleplaying_game";
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 
-/// Books outside `roleplaying_game/` the corpus ships (mirrors `v06_work_inventory`).
-pub const EXTRA_BOOK_DIRS: &[&str] = &[
+/// The corpus subtree whose child directories are a system's books, relative to
+/// `PCGEN_CORPUS_ROOT`, per game system (SD-37 E1.3). Pathfinder 1e: every core PF1 book lives
+/// under `pathfinder/paizo/roleplaying_game`. A system registers exactly one subtree; one with
+/// none registered is refused by [`PinnedTree::load_for`] (Starfinder's include structure is
+/// registered by the card that converts it).
+pub const BOOKS_RELATIVE: BookRegistry<&str> = BookRegistry::pathfinder_only(&["pathfinder/paizo/roleplaying_game"]);
+
+/// Books outside a system's [`BOOKS_RELATIVE`] subtree that the corpus ships, per game system.
+/// Pathfinder 1e: the books outside `roleplaying_game/` (mirrors `v06_work_inventory`).
+pub const EXTRA_BOOK_DIRS: BookRegistry<&str> = BookRegistry::pathfinder_only(&[
     "pathfinder/dreamscarred_press/ultimate_psionics",
     "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
     "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2",
@@ -36,7 +43,7 @@ pub const EXTRA_BOOK_DIRS: &[&str] = &[
     "pathfinder/paizo/campaign_setting/inner_sea_taverns",
     "pathfinder/paizo/campaign_setting/inner_sea_bestiary",
     "pathfinder/paizo/campaign_setting/inner_sea_intrigue",
-];
+]);
 
 /// Resolve the pinned corpus root: `$PCGEN_CORPUS_ROOT`, else `$HOME/workspace/repos/pcgen/data`.
 pub fn corpus_root() -> PathBuf {
@@ -129,6 +136,9 @@ pub struct LevelLine {
 
 /// The pinned tree with its indexes.
 pub struct PinnedTree {
+    /// The game system this tree's books belong to (SD-37 E1.3); keys the per-system book
+    /// registries the converter consults (e.g. `reprint::VARIANT_LINE_BOOKS`).
+    pub system: GameSystem,
     pub root: PathBuf,
     pub book_paths: BTreeMap<String, PathBuf>,
     /// SD-36 F3b2b: book id -> its publication date, the `SOURCEDATE:` header of the book
@@ -363,9 +373,22 @@ fn book_source_dates(book_paths: &BTreeMap<String, PathBuf>) -> BTreeMap<String,
 }
 
 impl PinnedTree {
-    /// Read every `.lst` file under every known book directory and build the indexes.
+    /// The Pathfinder 1e tree: [`PinnedTree::load_for`] with [`GameSystem::Pathfinder1e`].
     pub fn load(root: &Path) -> Result<PinnedTree, String> {
-        let books_dir = root.join(BOOKS_RELATIVE);
+        PinnedTree::load_for(GameSystem::Pathfinder1e, root)
+    }
+
+    /// Read every `.lst` file under every book directory `system` registers and build the
+    /// indexes. A system with no [`BOOKS_RELATIVE`] subtree registered is an error naming the
+    /// system, never a fallback to another system's books.
+    pub fn load_for(system: GameSystem, root: &Path) -> Result<PinnedTree, String> {
+        let [books_relative] = BOOKS_RELATIVE.books(system) else {
+            return Err(format!(
+                "no PCGen book subtree is registered for game system {system} (closure::BOOKS_RELATIVE); \
+                 its corpus cannot be converted yet"
+            ));
+        };
+        let books_dir = root.join(books_relative);
         if !books_dir.is_dir() {
             return Err(format!(
                 "pinned corpus not found at {} -- set PCGEN_CORPUS_ROOT to a PCGen data/ checkout",
@@ -378,7 +401,7 @@ impl PinnedTree {
             .filter(|e| e.path().is_dir())
             .map(|e| (e.file_name().to_string_lossy().into_owned(), e.path()))
             .collect();
-        for extra in EXTRA_BOOK_DIRS {
+        for extra in EXTRA_BOOK_DIRS.books(system) {
             let path = root.join(extra);
             if !path.is_dir() {
                 return Err(format!("extra book directory not found at {}", path.display()));
@@ -405,6 +428,7 @@ impl PinnedTree {
             }
         }
         let mut tree = PinnedTree {
+            system,
             root: root.to_path_buf(),
             book_paths,
             source_dates,
@@ -867,6 +891,21 @@ impl PinnedTree {
 mod tests {
     use super::*;
 
+    /// SD-37 E1.3: the Pathfinder 1e registry entries are the paths the converter has always
+    /// read (one book subtree, thirteen extra book dirs); a system with no subtree registered
+    /// is refused by name before any file is read -- never converted from Pathfinder's books.
+    #[test]
+    fn the_book_subtree_is_keyed_by_game_system() {
+        assert_eq!(BOOKS_RELATIVE.books(GameSystem::Pathfinder1e), &["pathfinder/paizo/roleplaying_game"]);
+        assert_eq!(EXTRA_BOOK_DIRS.books(GameSystem::Pathfinder1e).len(), 13);
+        assert!(EXTRA_BOOK_DIRS.books(GameSystem::Pathfinder1e).iter().all(|d| d.starts_with("pathfinder/")));
+        let err = match PinnedTree::load_for(GameSystem::Starfinder1e, Path::new("/nonexistent")) {
+            Ok(_) => panic!("a system with no registered subtree must not load"),
+            Err(e) => e,
+        };
+        assert!(err.contains("starfinder-1e") && err.contains("BOOKS_RELATIVE"), "{err}");
+    }
+
     #[test]
     fn row_identity_reads_category_key_and_shape() {
         let id = row_identity("CATEGORY=Special Ability|Foo.MOD\tDESC:x");
@@ -902,6 +941,7 @@ mod tests {
     /// oracle checkout carries.
     fn tree_from_lines(files: Vec<(&str, Vec<&str>)>) -> PinnedTree {
         let mut tree = PinnedTree {
+            system: GameSystem::Pathfinder1e,
             root: PathBuf::new(),
             book_paths: BTreeMap::new(),
             source_dates: BTreeMap::new(),
