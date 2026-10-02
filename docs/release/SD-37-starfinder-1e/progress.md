@@ -145,7 +145,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E0.2 | 2026-10-02 | Opus 5.5 | 2f0bd9d793 | complete | Aldric / Elowen unchanged (PF screen byte-unchanged; not rendered); 4 SF seeds not rendered before E4 (no caller of the new items) | `artifacts/epic_0/E0.2_cycle_receipt.md` |
 | E0.3 | 2026-10-02 | Sonnet 5.5 | the `docs(sd37,e0.3)` commit | complete | Aldric / Elowen unchanged (not rendered); 4 SF seeds unchanged (not rendered; no engine/data change) | `artifacts/epic_0/E0.3_cycle_receipt.md` |
 | E1.1–E1.3 | 2026-10-02 | Opus 5.5 | 60ea507dd3 (+ 209664dce2 C1 `Cargo.lock` repair) | complete | Aldric unchanged (rendered, sha256 1d830682…a569 before = after); Elowen unchanged (rendered, sha256 8d1a711c…00f2 before = after); 4 SF seeds not reachable (no SF data) | `artifacts/epic_1/E1.{1,2,3}_cycle_receipt.md`; PF pre-change baseline for E1.4 in `artifacts/epic_1/pf_baseline/` |
-| E1.4 | 2026-10-02 | Opus 5.5 | the `feat(sd37,e1.4)` commit | complete | Aldric unchanged (rendered both trees by the E1.4 harness, sha256 1d830682…a569 before = after); Elowen unchanged (8d1a711c…00f2 before = after); 4 SF seeds not reachable (no SF data) | `artifacts/epic_1/E1.4_cycle_receipt.md` |
+| E1.4 | 2026-10-02 | Opus 5.5 | 390917267e | complete | Aldric unchanged (rendered both trees by the E1.4 harness, sha256 1d830682…a569 before = after); Elowen unchanged (8d1a711c…00f2 before = after); 4 SF seeds not reachable (no SF data) | `artifacts/epic_1/E1.4_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 

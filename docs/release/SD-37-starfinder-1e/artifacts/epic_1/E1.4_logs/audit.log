@@ -1,0 +1,26 @@
+== audit 630bdb4b1191414cd768190130548d83db38d272...HEAD (390917267ec9f0bd76b939a1b1ce2ae0661054ef)
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+apps/desktop/src-tauri/src/character_hub.rs
+apps/desktop/src-tauri/src/pf_seed_render_hash.rs
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_cycle_receipt.md
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/after.render.log
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/after.sha256.txt
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/before.render.log
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/before.sha256.txt
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/desktop.sweep.log
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/dump.log
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/mut1.log
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/mut2.edit.log
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/mut2.log
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/neg.empty_repo_root.log
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/red.unregistered.log
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/residue.log
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/results.txt
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/run.sh
+docs/release/SD-37-starfinder-1e/artifacts/epic_1/E1.4_logs/structural_diff.log
+docs/release/SD-37-starfinder-1e/kanban.md
+docs/release/SD-37-starfinder-1e/progress.md
