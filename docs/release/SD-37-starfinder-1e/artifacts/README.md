@@ -14,7 +14,7 @@ never left in tmpfs scratch.
 
 | Directory | Holds | Expected key artifacts |
 |---|---|---|
-| `cycle_0/` | C0.0–C1 | `workflow-prefix.backup.js` (written at launch); C0.1 sweep receipt; `C0.2_cycle_receipt.md` (review findings); C1 bump receipt (14-file list) |
+| `cycle_0/` | C0.0–C1 | `sd37-workflow.js` (written at launch); C0.1 sweep receipt; `C0.2_cycle_receipt.md` (review findings); C1 bump receipt (14-file list) |
 | `epic_0/` | E0.1–E0.4 | fresh-clone proof log; licence matrix diff; SF denominator + sum-check output; `seed-builds.md` (full SF seed builds, written first); `seed-hand-values.md` (every row has an SRD URL); the independent reviewer's per-row verdicts |
 | `epic_1/` | E1.1–E1.MC | `pf-render-hashes.txt` (Aldric, Elowen × before/after); structural-diff output |
 | `epic_2/` | E2.1–E2.MC | PF round-trip log; schema regeneration diff |

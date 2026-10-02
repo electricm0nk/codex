@@ -13,9 +13,9 @@ it (`workflow-instruction.md §5`).
 
 | Field | Value |
 |---|---|
-| Workflow run id | *(resolves at launch — the orchestrator writes it here the moment the run starts)* |
-| Script path | *(resolves at launch)* |
-| Prefix backup | `artifacts/cycle_0/workflow-prefix.backup.js` *(written at launch)* |
+| Workflow run id | in `~/.claude/projects/-home-ubuntu-workspace-repos-codex/memory/sd37-launch-state.md` (launch decision below); E7.4 copies it here |
+| Script path | `artifacts/cycle_0/sd37-workflow.js` (the launched script; it is also the prefix backup) |
+| Prefix backup | `artifacts/cycle_0/sd37-workflow.js` — the `CORE` constant |
 | Pinned `tranche/17` SHA for wrong-base resets | *(resolves at C1 — the bump commit; C1 writes it here)* |
 | Oracle SHA | `7f818006e371188e5717fd18d74d18a420747fc6` |
 
@@ -149,6 +149,11 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-02 | C0.2 | SD-n: CI evidence from the PR's `pr-tests`; E7.9 → Sonnet and waits for it | add a `tranche/17` trigger to a workflow | outside every card's write scope; template-level change |
 | 2026-10-02 | C0.2 | SF-registry licence test moved E0.2 → E3.1 | keep it in E0.2 and make E0.2 wait for E1.MC | E0.2's other work is independent of E1; only the test needs the registry |
 | 2026-10-02 | C0.2 | E0.4 owns the full seed builds (`seed-builds.md`), with constraints (Con mod ≠ 0, etc.) | C0.2 writes the builds itself | build picks need the SRD (E0.4 fetches it); C0.2 must not assert Core Rulebook values from recall |
+| 2026-10-02 | launch (orchestrator) | One `CARGO_TARGET_DIR` per source tree, shared by the serial cards on the main tree (`workflow-instruction.md §2.1`) | a fresh dir per card, deleted after each card | serial cards never build at the same time; a fresh dir forces a full workspace rebuild per card. The cross-tree hazard stays out: each lane tree has its own dir |
+| 2026-10-02 | launch (orchestrator) | Parallel lanes make an explicit worktree from `origin/tranche/17`; the script does not use `isolation: 'worktree'` | the harness's worktree isolation (`workflow-instruction.md §2.4` item 3) | the harness cuts its tree from the session checkout (`/home/ubuntu/workspace/repos/codex`, on `tranche/16`), the `wrong-base-worktree` incident class; the base check now tests for `kanban.md`, which only `tranche/17` has |
+| 2026-10-02 | launch (orchestrator) | C1 runs first, alone; C0.1 then runs beside E0/E1 in its own tree | C0.1 ∥ C1 | C0.1's tree needs `origin/tranche/17`, which exists only after C1 pushes |
+| 2026-10-02 | launch (orchestrator) | Each prompt tells the agent to read `workflow-instruction.md §2.1`, §5–§8, §12 and its card rows from the files; the script carries a short binding core | paste §2.1 and §6 verbatim into every prompt (`§2.4` item 5) | a Workflow script cannot read files, and a pasted copy drifts from the file the agents read; the file is the one source |
+| 2026-10-02 | launch (orchestrator) | The run id is recorded in `~/.claude/projects/-home-ubuntu-workspace-repos-codex/memory/sd37-launch-state.md`; E7.4 folds it into the Run handle table | write it here at launch (`§2.4` item 8) | after launch the main tree has one writer (the running card); an orchestrator write breaks the clean-tree rule |
 
 ## Open blockers
 

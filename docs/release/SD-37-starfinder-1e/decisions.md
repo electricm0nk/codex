@@ -493,7 +493,7 @@ source.
 1. Keep every dirty worktree. Do not reset, stash or clean.
 2. Find the run id in `progress.md` and inspect `journal.jsonl` for the last completed step.
 3. Patch **only the unrun prompts**. `diff` the script's shared prefix against its backup copy
-   (`artifacts/cycle_0/workflow-prefix.backup.js`, written at launch); the prefix must be
+   (`artifacts/cycle_0/sd37-workflow.js`, written at launch); the prefix must be
    byte-identical.
 4. Resume with `resumeFromRunId`.
 5. Log a `retro.py incident`.

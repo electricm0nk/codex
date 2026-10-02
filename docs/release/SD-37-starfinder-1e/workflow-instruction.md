@@ -44,7 +44,7 @@ date: 2026-10-02
 > >    on this box can read the weekly quota itself. Write a resume receipt. **Never downgrade a
 > >    model** to keep going. Resumption is not automatic (§12.3).
 > > 7. **Crash resume** (`decisions.md §12.4`). Keep the dirty worktrees. Patch only the unrun
-> >    prompts. The prefix must be byte-identical to `artifacts/cycle_0/workflow-prefix.backup.js`.
+> >    prompts. The prefix must be byte-identical to `artifacts/cycle_0/sd37-workflow.js`.
 > >    Resume with `resumeFromRunId`. A VM stop needs a new session to run this; nothing restarts
 > >    it automatically.
 
@@ -133,14 +133,25 @@ its output is pasted below it. Items still open name the card that closes them.
 ### 2.1 Agent environment setup — the shared dispatch prefix
 
 Every `agent()` prompt starts with this prefix, **byte-identical** across all agents. Write it to
-`artifacts/cycle_0/workflow-prefix.backup.js` at launch, so a crash resume can `diff` against it.
+`artifacts/cycle_0/sd37-workflow.js` at launch, so a crash resume can `diff` against it.
 
 ```text
 ENVIRONMENT (SD-37, binding):
 - export PATH="$HOME/.cargo/bin:$PATH"
 - export RETRO_ACTOR=sd37-<card-id>       # the ONLY value you bind, e.g. RETRO_ACTOR=sd37-e3.2
-- export CARGO_TARGET_DIR="/home/ubuntu/workspace/worktrees/cargo-target/${RETRO_ACTOR}-$(basename "$(git rev-parse --show-toplevel)")"
-    # one per agent PER SOURCE TREE; never under /tmp; never shared across trees; delete it when done
+- TREE: the main chain works in /home/ubuntu/workspace/worktrees/codex-sd37 (branch tranche/17).
+    A parallel lane (E0.x, C0.1) makes its OWN tree first, from the pushed branch, never with the
+    harness's worktree isolation (its base is the session checkout, which is NOT tranche/17):
+      git -C /home/ubuntu/workspace/worktrees/codex-sd37 fetch origin tranche/17
+      git -C /home/ubuntu/workspace/worktrees/codex-sd37 worktree add -b sd37/<card-id> \
+          /home/ubuntu/workspace/worktrees/codex-sd37-<card-id> origin/tranche/17
+    The shell's working directory resets between commands: start EVERY command with `cd <your tree> &&`.
+    Never write in /home/ubuntu/workspace/repos/codex (another session's checkout).
+- export CARGO_TARGET_DIR="/home/ubuntu/workspace/worktrees/cargo-target/sd37-$(basename "$(git rev-parse --show-toplevel)")"
+    # one per SOURCE TREE. Serial cards on the main tree share it (one writer at a time; a fresh
+    # dir per card would rebuild the whole workspace 45 times). A lane's own tree gets its own dir
+    # by basename. Never under /tmp; never shared across trees. A lane deletes its dir with its
+    # tree; the main tree's dir is deleted at E7.5. (Launch change, progress.md 2026-10-02.)
 - mkdir -p "$CARGO_TARGET_DIR" && echo $$ > "$CARGO_TARGET_DIR/.reclaim-claim"
 - GLOSSARY (read the cited row before you start; the package is docs/release/SD-37-starfinder-1e/):
     "CUI F-n" = content-unit-inventory.md §1 row F-n (figure + its command);
@@ -163,7 +174,9 @@ ENVIRONMENT (SD-37, binding):
 - git: `git status --porcelain` before EVERY write; stage by explicit path; never `git add -A`;
   never `git stash`; never force-push.
 - First command of the cycle (wrong-base control):
-  test -d docs && test -d data && test -d scripts || { echo 'WRONG BASE'; exit 1; }
+  test -d docs && test -d data && test -d scripts && test -f docs/release/SD-37-starfinder-1e/kanban.md \
+    && [ "$(git rev-parse --show-toplevel)" != /home/ubuntu/workspace/repos/codex ] || { echo 'WRONG BASE'; exit 1; }
+  # kanban.md exists only on tranche/17, so this fails on a tree cut from any other branch.
 - Oracle: resolve via $PCGEN_REPO_DIR / $PCGEN_CORPUS_ROOT (scripts/fetch-pcgen-oracle.sh); never
   write a literal ~/workspace/repos/pcgen path into code or docs. Quote PCGEN_ORACLE_SHA in any
   receipt that quotes a corpus figure.
@@ -519,7 +532,7 @@ and that is a known defect (FSR-C9).
 
 | Rule | Statement | Checked by |
 |---|---|---|
-| **R1 Converter lane in every prefix** | Every prefix carries the CONVERTER LANE paragraph (§2.1). Any converter change runs the structural-diff protocol (§6 step 5). | `grep -c 'CONVERTER LANE' artifacts/cycle_0/workflow-prefix.backup.js` = 1; converter receipts carry `verdict=PASS` + planted-mutation FAIL counts |
+| **R1 Converter lane in every prefix** | Every prefix carries the CONVERTER LANE paragraph (§2.1). Any converter change runs the structural-diff protocol (§6 step 5). | `grep -c 'CONVERTER LANE' artifacts/cycle_0/sd37-workflow.js` = 1; converter receipts carry `verdict=PASS` + planted-mutation FAIL counts |
 | **R2 No hand-kept desktop tables** | The engine is the single source. A fallback appears only behind a visible notice. Merge checks render real builds on both trees and open the seeds in the real app. `Computed` is a floor, never the claim. | E6.3's test (every SF sheet number traces to an engine explanation row); E6.MC receipt |
 | **R3 Merge checks stay on Opus** | Every `*.MC` card is `opus`. Under quota pressure narrow the scope, never the model. | `awk -F'\|' '$2 ~ /MC/ && $4 !~ /opus/' kanban.md` prints nothing (unescape `\|` first; C0.2 ran it: no output) |
 | **R4 `ownedBy` declines** | A declined item that names a later step's key goes to that step and does not stop the run. | Script review at launch (the script does not exist at C0.2): every step list item has `ownedBy` |
