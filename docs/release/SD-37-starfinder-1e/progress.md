@@ -23,7 +23,7 @@ it (`workflow-instruction.md §5`).
 
 | Epic | Status | Cards complete | Notes |
 |---|---|---|---|
-| C | in progress | 3 of 4 (C0.0, C0.2, C1) | |
+| C | complete | 4 of 4 (C0.0, C0.1, C0.2, C1) | |
 | E0 | waiting | 0 of 4 | |
 | E1 | waiting | 0 of 5 | |
 | E2 | waiting | 0 of 3 | |
@@ -34,7 +34,7 @@ it (`workflow-instruction.md §5`).
 | E7.1 | waiting | 0 of 1 | |
 | E4a | waiting | 0 of 5 | serial after E7.1 (C0.2) |
 | E7.2–E7.9 | waiting | 0 of 8 | |
-| **Total** | | **3 of 55** | command below the table |
+| **Total** | | **4 of 55** | command below the table |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -138,7 +138,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | C0.0 | 2026-10-02 | Sonnet 5.5 (planning) | this package's commit | complete | n/a (no code) | this section |
 | C0.2 | 2026-10-02 | Opus 5.5 | the `docs(sd37,c0.2)` commit | complete | n/a (no code) | `artifacts/cycle_0/C0.2_cycle_receipt.md` |
 | C1 | 2026-10-02 | Haiku 4.5 | 9d03a76996 | complete | n/a (no code) | `artifacts/cycle_0/C1_cycle_receipt.md` |
-| C0.1 | 2026-10-02 | Haiku 4.5 | (see receipt) | partial | n/a (docs only) | `artifacts/cycle_0/C0.1_cycle_receipt.md` |
+| C0.1 | 2026-10-02 | Haiku 4.5 | (see receipt) | complete | n/a (docs only) | `artifacts/cycle_0/C0.1_cycle_receipt.md` |
 | E0.1 | 2026-10-02 | Sonnet 5.5 | 5df9eb36db | complete | unchanged (no engine/data change) | `artifacts/epic_0/E0.1_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
