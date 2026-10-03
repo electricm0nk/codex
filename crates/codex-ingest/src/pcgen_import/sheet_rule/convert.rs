@@ -327,7 +327,7 @@ fn sf_bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str, value: &str, b
             let table = super::sf_mapping::converter_table().map_err(|e| format!("BONUS:HP (the Starfinder mapping table does not load: {e})"))?;
             // The carrier is named by its own row's declaration in the pinned tree (`KEY:` else
             // the name field), never by the corpus record's key, which a product-identity record
-            // replaces with a codex-named placeholder.
+            // replaces with its coordinate's Codex-neutral name.
             let own_key = ctx
                 .tree
                 .file_index(&ctx.record.rel_path)
