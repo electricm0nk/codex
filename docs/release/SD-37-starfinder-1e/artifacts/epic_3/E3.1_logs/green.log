@@ -1,0 +1,15 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.82s
+     Running tests/sf_license_registry.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_license_registry-80bc95590e9822cb)
+
+running 7 tests
+test sf_pathfinder_has_no_pcc_registry_and_is_refused_by_name ... ok
+test sf_excluded_pccs_are_absent_from_the_registry_and_named_in_the_exclusion_record ... ok
+test sf_registry_agrees_with_the_licence_matrix ... ok
+test sf_registry_lists_exactly_the_eight_in_scope_books ... ok
+test sf_game_mode_loads_ten_lst ... ok
+test sf_all_twelve_pccs_parse_and_every_include_resolves ... ok
+test sf_registry_books_resolve_to_123_in_scope_lst ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.28s
+

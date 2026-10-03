@@ -1,0 +1,21 @@
+== M-a_add_SSRGG_to_registry exit=101
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 674 filtered out; finished in 0.00s
+test sf_excluded_pccs_are_absent_from_the_registry_and_named_in_the_exclusion_record ... FAILED
+test sf_registry_agrees_with_the_licence_matrix ... FAILED
+test sf_registry_lists_exactly_the_eight_in_scope_books ... FAILED
+test sf_registry_books_resolve_to_123_in_scope_lst ... FAILED
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+== M-b_drop_alien_archive_3 exit=101
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 674 filtered out; finished in 0.00s
+test sf_registry_lists_exactly_the_eight_in_scope_books ... FAILED
+test sf_registry_agrees_with_the_licence_matrix ... FAILED
+test sf_registry_books_resolve_to_123_in_scope_lst ... FAILED
+test result: FAILED. 4 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+== M-c_drop_society_exclusion exit=101
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 674 filtered out; finished in 0.00s
+test sf_excluded_pccs_are_absent_from_the_registry_and_named_in_the_exclusion_record ... FAILED
+test sf_registry_agrees_with_the_licence_matrix ... FAILED
+test result: FAILED. 5 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+== M-d_guard_noop exit=101
+test pcgen_import::system_books::tests::an_include_into_an_excluded_book_is_refused ... FAILED
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 674 filtered out; finished in 0.00s
