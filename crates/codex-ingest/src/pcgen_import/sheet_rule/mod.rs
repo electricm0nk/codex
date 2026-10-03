@@ -32,6 +32,7 @@ pub mod closure;
 pub mod convert;
 pub mod ctx;
 pub mod formula;
+pub mod formula_system;
 pub mod natural_attack;
 pub mod oracle_terms;
 pub mod pool_link;

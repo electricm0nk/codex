@@ -1,0 +1,126 @@
+.....................usage: python3 -m unittest [-h] [--check] [--inventory INVENTORY]
+                           [--package PACKAGE] [--table TABLE] [--out OUT]
+python3 -m unittest: error: unrecognized arguments: --sf-formula --sf-census /tmp/tmp4h34abt9/census.json --sf-root /tmp/tmp4h34abt9/data
+Eusage: python3 -m unittest [-h] [--check] [--inventory INVENTORY]
+                           [--package PACKAGE] [--table TABLE] [--out OUT]
+python3 -m unittest: error: unrecognized arguments: --sf-formula --sf-census /tmp/tmpvy5oas1s/census.json --sf-root /tmp/tmpvy5oas1s/data
+Eusage: python3 -m unittest [-h] [--check] [--inventory INVENTORY]
+                           [--package PACKAGE] [--table TABLE] [--out OUT]
+python3 -m unittest: error: unrecognized arguments: --sf-formula --sf-census /tmp/tmpx6cbzrhc/census.json --sf-root /tmp/tmpx6cbzrhc/data
+Eusage: python3 -m unittest [-h] [--check] [--inventory INVENTORY]
+                           [--package PACKAGE] [--table TABLE] [--out OUT]
+python3 -m unittest: error: unrecognized arguments: --sf-formula --sf-census /tmp/tmpnhq0tmkc/census.json --sf-root /tmp/tmpnhq0tmkc/data
+Eusage: python3 -m unittest [-h] [--check] [--inventory INVENTORY]
+                           [--package PACKAGE] [--table TABLE] [--out OUT]
+python3 -m unittest: error: unrecognized arguments: --sf-formula --sf-census /tmp/tmp_y6zlkdz/census.json --sf-root /tmp/tmp_y6zlkdz/data
+E
+======================================================================
+ERROR: test_a_missing_census_is_an_input_error (scripts.tests.test_token_coverage.SfFormulaMode.test_a_missing_census_is_an_input_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/tests/test_token_coverage.py", line 433, in test_a_missing_census_is_an_input_error
+    code, _out, last = self._run()
+                       ^^^^^^^^^^^
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/tests/test_token_coverage.py", line 396, in _run
+    code = tc.main(["--sf-formula", "--sf-census", self.census, "--sf-root", self.root])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/token_coverage.py", line 409, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/argparse.py", line 1911, in parse_args
+    self.error(msg % ' '.join(argv))
+  File "/usr/lib/python3.12/argparse.py", line 2677, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/usr/lib/python3.12/argparse.py", line 2664, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_a_token_the_census_missed_fails_identity (scripts.tests.test_token_coverage.SfFormulaMode.test_a_token_the_census_missed_fails_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/tests/test_token_coverage.py", line 410, in test_a_token_the_census_missed_fails_identity
+    code, _out, last = self._run()
+                       ^^^^^^^^^^^
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/tests/test_token_coverage.py", line 396, in _run
+    code = tc.main(["--sf-formula", "--sf-census", self.census, "--sf-root", self.root])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/token_coverage.py", line 409, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/argparse.py", line 1911, in parse_args
+    self.error(msg % ' '.join(argv))
+  File "/usr/lib/python3.12/argparse.py", line 2677, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/usr/lib/python3.12/argparse.py", line 2664, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_an_unnamed_refusal_fails (scripts.tests.test_token_coverage.SfFormulaMode.test_an_unnamed_refusal_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/tests/test_token_coverage.py", line 417, in test_an_unnamed_refusal_fails
+    code, _out, last = self._run()
+                       ^^^^^^^^^^^
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/tests/test_token_coverage.py", line 396, in _run
+    code = tc.main(["--sf-formula", "--sf-census", self.census, "--sf-root", self.root])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/token_coverage.py", line 409, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/argparse.py", line 1911, in parse_args
+    self.error(msg % ' '.join(argv))
+  File "/usr/lib/python3.12/argparse.py", line 2677, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/usr/lib/python3.12/argparse.py", line 2664, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_partition_sums_and_refusals_are_named (scripts.tests.test_token_coverage.SfFormulaMode.test_partition_sums_and_refusals_are_named)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/tests/test_token_coverage.py", line 401, in test_partition_sums_and_refusals_are_named
+    code, out, last = self._run()
+                      ^^^^^^^^^^^
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/tests/test_token_coverage.py", line 396, in _run
+    code = tc.main(["--sf-formula", "--sf-census", self.census, "--sf-root", self.root])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/token_coverage.py", line 409, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/argparse.py", line 1911, in parse_args
+    self.error(msg % ' '.join(argv))
+  File "/usr/lib/python3.12/argparse.py", line 2677, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/usr/lib/python3.12/argparse.py", line 2664, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+======================================================================
+ERROR: test_totals_that_do_not_sum_fail_partition (scripts.tests.test_token_coverage.SfFormulaMode.test_totals_that_do_not_sum_fail_partition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/tests/test_token_coverage.py", line 427, in test_totals_that_do_not_sum_fail_partition
+    code, _out, last = self._run()
+                       ^^^^^^^^^^^
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/tests/test_token_coverage.py", line 396, in _run
+    code = tc.main(["--sf-formula", "--sf-census", self.census, "--sf-root", self.root])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/workspace/worktrees/codex-sd37/scripts/token_coverage.py", line 409, in main
+    args = parser.parse_args(argv)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/argparse.py", line 1911, in parse_args
+    self.error(msg % ' '.join(argv))
+  File "/usr/lib/python3.12/argparse.py", line 2677, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+  File "/usr/lib/python3.12/argparse.py", line 2664, in exit
+    _sys.exit(status)
+SystemExit: 2
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.172s
+
+FAILED (errors=5)
+exit=1

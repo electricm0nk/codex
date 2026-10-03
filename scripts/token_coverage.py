@@ -95,6 +95,22 @@ Modes
                             verdict=PASS|FAIL_<check>
                 exit 0 on PASS, 1 on any FAIL, 2 on a missing/invalid input.
     --inventory / --package / --table / --out   override the four paths (tests)
+    --sf-formula  (SD-37 E3.2) the Starfinder formula-system ledger instead of the PF one:
+                every `MODIFY:`/`MODIFYOTHER:` tab field (CUI F-9's predicate: a tab field
+                that starts with the token on a line that does not start with `#`) of every
+                `.lst` under `<root>/starfinder` is mapped or refused by name. It reads the
+                converter's census (`bin/sf_formula_census.rs`; `--sf-census`) and walks the
+                `.lst` itself (`--sf-root`, default `$PCGEN_CORPUS_ROOT`, else
+                `$PCGEN_REPO_DIR/data`), so the token count comes from two implementations.
+                A token in a file the census did not read (a book outside the registry --
+                the licence exclusions) is refused by name here. Checks: IDENTITY (the walk's
+                (file, line, field) set over the census's `files_read` == the census's token
+                set), NAMED (every refusal carries a reason), PARTITION (mapped + refused ==
+                tokens, and the census totals agree). Prints every refusal by name, then
+                last line:  sf_tokens_all_trees=<n> in_scope=<n> outside_registered_books=<n>
+                            mapped=<n> refused=<n> refused_in_scope=<n>
+                            refused_outside_registered_books=<n> verdict=PASS|FAIL_<check>
+                exit 0 on PASS, 1 on any FAIL, 2 on a missing/invalid input.
 """
 
 import argparse
@@ -395,6 +411,104 @@ def derive(inventory, census, refused, report, table, package_dir=None):
     return ledger, check
 
 
+SF_CENSUS_PATH = os.path.join(REPO_ROOT, "docs", "release", "SD-37-starfinder-1e", "artifacts", "epic_3",
+                              "formula-system", "sf-formula-census.json")
+SF_TOKEN_HEADS = ("MODIFY:", "MODIFYOTHER:")
+SF_OUTSIDE_REASON = ("not in a registered book: its file is outside every .pcc in "
+                     "system_books::BOOK_PCCS (the licence exclusions, EXCLUDED_BOOK_PCCS)")
+
+
+def _sf_scan(root, rel_dir):
+    """Every (file, line, field) whose tab field starts with a formula-system token head, on
+    lines not starting with `#`, for every `.lst` under `root/rel_dir`. Files are named
+    relative to `root`, forward slashes."""
+    found = []
+    for dirpath, dirnames, filenames in os.walk(os.path.join(root, rel_dir)):
+        dirnames.sort()
+        for name in sorted(filenames):
+            if os.path.splitext(name)[1] != ".lst":
+                continue
+            path = os.path.join(dirpath, name)
+            rel = os.path.relpath(path, root).replace(os.sep, "/")
+            with open(path, "rb") as fh:
+                text = fh.read().decode("utf-8", errors="replace")
+            for i, line in enumerate(text.splitlines(), 1):
+                if line.startswith("#"):
+                    continue
+                for j, field in enumerate(line.split("\t"), 1):
+                    if field.startswith(SF_TOKEN_HEADS):
+                        found.append((rel, i, j))
+    return found
+
+
+def sf_formula_main(census_path, root):
+    """`--sf-formula`: see the module doc. Returns the exit code."""
+    if root is None:
+        root = os.environ.get("PCGEN_CORPUS_ROOT") or (
+            os.path.join(os.environ["PCGEN_REPO_DIR"], "data") if os.environ.get("PCGEN_REPO_DIR") else None)
+    try:
+        if root is None or not os.path.isdir(os.path.join(root, "starfinder")):
+            raise InputError(f"no starfinder/ under the corpus root {root!r}: set PCGEN_CORPUS_ROOT "
+                             "(scripts/fetch-pcgen-oracle.sh)")
+        census = _load_json(census_path, "SF formula census")
+        files_read = census["files_read"]
+        tokens = census["tokens"]
+        totals = census["totals"]
+    except (InputError, KeyError, TypeError) as exc:
+        print(f"INPUT_ERROR: {exc}")
+        print("verdict=INPUT_ERROR")
+        return 2
+
+    check = Check()
+    walked = _sf_scan(root, "starfinder")
+    read_set = set(files_read)
+    in_scope = {t for t in walked if t[0] in read_set}
+    # A file the census read outside starfinder/ (the shared `_universal/races.lst`) is walked too.
+    for rel in sorted(f for f in read_set if not f.startswith("starfinder/")):
+        if os.path.isfile(os.path.join(root, rel)):
+            in_scope |= {t for t in _sf_scan(root, os.path.dirname(rel)) if t[0] == rel}
+    outside = sorted(t for t in walked if t[0] not in read_set)
+
+    census_ids = [(t.get("file"), t.get("line"), t.get("field")) for t in tokens]
+    if len(census_ids) != len(set(census_ids)) or set(census_ids) != in_scope:
+        only_walk = sorted(in_scope - set(census_ids))[:5]
+        only_census = sorted(set(census_ids) - in_scope)[:5]
+        check.fail("IDENTITY", f"walk {len(in_scope)} vs census {len(census_ids)} tokens "
+                               f"(walk-only e.g. {only_walk}; census-only e.g. {only_census})")
+
+    mapped = [t for t in tokens if t.get("disposition") == "mapped"]
+    refused = [t for t in tokens if t.get("disposition") == "refused"]
+    for t in refused:
+        if not str(t.get("reason") or "").strip():
+            check.fail("NAMED", f"{t.get('file')}:{t.get('line')} field {t.get('field')} refused without a reason")
+    if len(mapped) + len(refused) != len(tokens) or (totals.get("tokens"), totals.get("mapped"), totals.get("refused")) != (
+            len(tokens), len(mapped), len(refused)):
+        check.fail("PARTITION", f"mapped {len(mapped)} + refused {len(refused)} vs tokens {len(tokens)}; "
+                                f"census totals {totals.get('tokens')}/{totals.get('mapped')}/{totals.get('refused')}")
+
+    for t in refused:
+        print(f"refused {t.get('file')}:{t.get('line')} field {t.get('field')}: {t.get('reason')}")
+    for rel, i, j in outside:
+        print(f"refused {rel}:{i} field {j}: {SF_OUTSIDE_REASON}")
+    for name, detail in check.failures:
+        print(f"FAIL {name}: {detail}")
+    n_refused = len(refused) + len(outside)
+    print(f"sf_tokens_all_trees={len(walked)} in_scope={len(in_scope)} outside_registered_books={len(outside)} "
+          f"mapped={len(mapped)} refused={n_refused} refused_in_scope={len(refused)} "
+          f"refused_outside_registered_books={len(outside)} verdict={_sf_verdict(check)}")
+    return 0 if not check.failures else 1
+
+
+def _sf_verdict(check):
+    if not check.failures:
+        return "PASS"
+    names = {n for n, _ in check.failures}
+    for name in ("IDENTITY", "NAMED", "PARTITION"):
+        if name in names:
+            return f"FAIL_{name}"
+    return f"FAIL_{check.failures[0][0]}"
+
+
 def _render(ledger):
     return (json.dumps(ledger, indent=1, ensure_ascii=False, sort_keys=False) + "\n").encode("utf-8")
 
@@ -406,7 +520,13 @@ def main(argv=None):
     parser.add_argument("--package", default=PACKAGE_DIR)
     parser.add_argument("--table", default=TABLE_PATH)
     parser.add_argument("--out", default=OUT_PATH)
+    parser.add_argument("--sf-formula", action="store_true", help="the Starfinder formula-system ledger (SD-37 E3.2)")
+    parser.add_argument("--sf-census", default=SF_CENSUS_PATH)
+    parser.add_argument("--sf-root", default=None, help="PCGen data/ root (default $PCGEN_CORPUS_ROOT, else $PCGEN_REPO_DIR/data)")
     args = parser.parse_args(argv)
+
+    if args.sf_formula:
+        return sf_formula_main(args.sf_census, args.sf_root)
 
     try:
         inventory = _load_json(args.inventory, "inventory")

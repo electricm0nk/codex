@@ -27,14 +27,14 @@ it (`workflow-instruction.md §5`).
 | E0 | complete | 4 of 4 | rows corrected from `kanban.md` by E1.MC |
 | E1 | complete | 5 of 5 (E1.1–E1.4, E1.MC) | E1.MC receipt `artifacts/epic_1/E1.MC_cycle_receipt.md` |
 | E2 | complete | 3 of 3 (E2.1, E2.2, E2.MC) | E2.MC receipt `artifacts/epic_2/E2.MC_cycle_receipt.md` |
-| E3 | in progress | 1 of 6 (E3.1) | E3.1 receipt `artifacts/epic_3/E3.1_cycle_receipt.md` |
+| E3 | in progress | 2 of 6 (E3.1, E3.2) | E3.2 receipt `artifacts/epic_3/E3.2_cycle_receipt.md` |
 | E4 | waiting | 0 of 7 | |
 | E5 | waiting | 0 of 5 | after E4.MC (C0.2) |
 | E6 | waiting | 0 of 7 | |
 | E7.1 | waiting | 0 of 1 | |
 | E4a | waiting | 0 of 5 | serial after E7.1 (C0.2) |
 | E7.2–E7.9 | waiting | 0 of 8 | |
-| **Total** | | **17 of 55** | command below the table |
+| **Total** | | **18 of 55** | command below the table |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -151,6 +151,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E2.2 | 2026-10-02 | Sonnet 5.5 | the `feat(sd37,e2.2)` commit | complete | unchanged: the only non-test source change is 36 `#[cfg_attr(test, derive(schemars::JsonSchema))]` lines (not rendered; see receipt "Seed deltas"); 4 SF seeds not reachable | `artifacts/epic_2/E2.2_cycle_receipt.md` |
 | E2.MC | 2026-10-02 | Opus 5.5 | the `docs(sd37,e2.mc)` commit | complete | Aldric unchanged (rendered on 3fb7c4a7a1, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not reachable (no SF data) | `artifacts/epic_2/E2.MC_cycle_receipt.md` |
 | E3.1 | 2026-10-03 | Opus 5.5 | the `feat(sd37,e3.1)` commit | complete | Aldric unchanged (rendered by the E1.4 harness, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not reachable (no SF data before E3.4) | `artifacts/epic_3/E3.1_cycle_receipt.md` |
+| E3.2 | 2026-10-03 | Opus 5.5 | the `feat(sd37,e3.2)` commit | complete | Aldric unchanged (rendered by the E1.4 harness, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not reachable (no SF data before E3.4) | `artifacts/epic_3/E3.2_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
@@ -188,6 +189,9 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-02 | E2.2 | `jsonschema` validator dev-dependency dropped; package-file agreement is checked by a top-level key test over every 97th rule file | validate every file with `jsonschema` | `jsonschema 0.57` adds 644 lock lines and needs a crate (`zerocopy-derive 0.8.58`) missing from the offline cache |
 | 2026-10-03 | E3.1 | Registry test at `crates/codex-ingest/tests/sf_license_registry.rs` (the real path of the proposed root `tests/sf_license_registry.rs`) | root `tests/` | the registry is converter-side (`decisions.md §6`) and the root crate cannot depend on `codex-ingest`; registering it in `src/rules_core/game_system.rs` would write in E1's row |
 | 2026-10-03 | E3.1 | SF books registered by `.pcc` in a new `pcgen_import::system_books::BOOK_PCCS` (+ `EXCLUDED_BOOK_PCCS`); `closure::BOOKS_RELATIVE` keeps no SF subtree, so `PinnedTree::load_for(Starfinder1e)` stays refused by name | register `starfinder/paizo` in `BOOKS_RELATIVE` | `load_for` reads every `.lst` under each child dir of the subtree, which would read SSRGG and the nested `core/_society` (both excluded, SD-a); E3.4 wires `load_for` to the resolved `BOOK_PCCS` list |
+| 2026-10-03 | E3.2 | SF formula-system census written by a new `bin/sf_formula_census` to `artifacts/epic_3/formula-system/sf-formula-census.json` | emit it from `sheet_rule_convert --system starfinder-1e` | the SF converter path stays refused by name until E3.4 wires the SF package (E1.3/E3.1 rows); the census is tool-side and carries no record name |
+| 2026-10-03 | E3.2 | `--sf-formula` self-test added as class `SfFormulaMode` in `scripts/tests/test_token_coverage.py` (not named in the E3 row) | a separate test file | the `token-coverage-selftest` stage of `verify.sh` runs only that file; a separate file would be a test no stage runs |
+| 2026-10-03 | E3.2 | A `MODIFY*` token in a file outside the registered books is refused by name by the ledger ("not in a registered book …"); 0 such today | let the Rust reader open the excluded books to classify them | E3.1's control: the converter never reads an excluded book (SD-a) |
 
 ## Open blockers
 

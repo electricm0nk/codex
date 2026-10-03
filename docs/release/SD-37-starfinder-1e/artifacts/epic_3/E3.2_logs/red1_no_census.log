@@ -1,0 +1,38 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 31.13s
+     Running tests/sf_formula_system.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_formula_system-77109df584310c0d)
+
+running 8 tests
+test every_in_scope_modify_token_is_mapped_or_refused_by_name ... ok
+test declarations_channel_function_dynamic_scopes_and_datatables_are_read ... ok
+test the_stat_chain_maps_to_ability_compute_targets ... ok
+test modifyother_tokens_are_speed_on_a_declared_movement ... ok
+test print_roles_cover_equipment_and_race_facts ... ok
+test variable_names_resolve_case_insensitively_like_pcgen ... ok
+test the_committed_census_is_fresh ... FAILED
+test an_independent_walk_agrees_on_the_token_counts ... FAILED
+
+failures:
+
+---- the_committed_census_is_fresh stdout ----
+
+thread 'the_committed_census_is_fresh' (1620764) panicked at crates/codex-ingest/tests/sf_formula_system.rs:224:5:
+/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest/../../docs/release/SD-37-starfinder-1e/artifacts/epic_3/formula-system/sf-formula-census.json is stale or absent: run `cargo run --locked -p codex-ingest --bin sf_formula_census`
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- an_independent_walk_agrees_on_the_token_counts stdout ----
+
+thread 'an_independent_walk_agrees_on_the_token_counts' (1620759) panicked at crates/codex-ingest/tests/sf_formula_system.rs:104:5:
+assertion `left == right` failed: E3.1's in-scope .lst set
+  left: 124
+ right: 123
+
+
+failures:
+    an_independent_walk_agrees_on_the_token_counts
+    the_committed_census_is_fresh
+
+test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.36s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_formula_system`
+exit=101
