@@ -26,7 +26,7 @@ it (`workflow-instruction.md §5`).
 | C | complete | 4 of 4 (C0.0, C0.1, C0.2, C1) | |
 | E0 | complete | 4 of 4 | rows corrected from `kanban.md` by E1.MC |
 | E1 | complete | 5 of 5 (E1.1–E1.4, E1.MC) | E1.MC receipt `artifacts/epic_1/E1.MC_cycle_receipt.md` |
-| E2 | in progress | 1 of 3 (E2.1) | E2.1 receipt `artifacts/epic_2/E2.1_cycle_receipt.md` |
+| E2 | in progress | 2 of 3 (E2.1, E2.2) | E2.2 receipt `artifacts/epic_2/E2.2_cycle_receipt.md` |
 | E3 | waiting | 0 of 6 | |
 | E4 | waiting | 0 of 7 | |
 | E5 | waiting | 0 of 5 | after E4.MC (C0.2) |
@@ -148,6 +148,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E1.4 | 2026-10-02 | Opus 5.5 | 390917267e | complete | Aldric unchanged (rendered both trees by the E1.4 harness, sha256 1d830682…a569 before = after); Elowen unchanged (8d1a711c…00f2 before = after); 4 SF seeds not reachable (no SF data) | `artifacts/epic_1/E1.4_cycle_receipt.md` |
 | E1.MC | 2026-10-02 | Opus 5.5 | the `docs(sd37,e1.mc)` commit | complete | Aldric unchanged (rebuilt before tree 209664dce2 vs merged 520d746125, sha256 1d830682…a569 both; planted CRB drop → 165c38f3…f7bc, restored); Elowen unchanged (8d1a711c…00f2 both; planted → bffcf7dd…ae14, restored); 4 SF seeds not reachable (no SF data) | `artifacts/epic_1/E1.MC_cycle_receipt.md` |
 | E2.1 | 2026-10-02 | Opus 5.5 | the `feat(sd37,e2.1)` commit | complete | Aldric unchanged (rendered by the E1.4 harness, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not reachable (no SF data) | `artifacts/epic_2/E2.1_cycle_receipt.md` |
+| E2.2 | 2026-10-02 | Sonnet 5.5 | the `feat(sd37,e2.2)` commit | complete | unchanged: the only non-test source change is 36 `#[cfg_attr(test, derive(schemars::JsonSchema))]` lines (not rendered; see receipt "Seed deltas"); 4 SF seeds not reachable | `artifacts/epic_2/E2.2_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
@@ -179,6 +180,10 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-02 | E2.1 | `Expr::KeyAbilityMod` in a feat prerequisite reports "the character record carries no key ability" (unverified) | decide it like `AbilityMod` against a 0 | nothing fills `CharacterFacts::key_ability` until E4; a 0 would refuse or admit on a fabricated value |
 | 2026-10-02 | E2.1 | Two discoveries routed as `## DISCOVERED` notes to the owning epics (E3 SF load path; E4 `ClassChassis` + key-ability prerequisite), following E1.MC's exception | a new `kanban.md` card each | E7.3's closure scan pins exactly 55 rows |
 | 2026-10-02 | E2.1 | PF `STACKING_TYPES` const kept; `STARFINDER_STACKING_TYPES` added beside it, chosen by `stacking_types(GameSystem)` from the package's system | one system-keyed table replacing the const | no existing import moves; both lists are the oracle's `BONUSSTACKS` row (`gameModes/{Pathfinder,Starfinder}/miscinfo.lst:17`, identical) |
+| 2026-10-02 | E2.2 | Edited root `Cargo.toml` + `Cargo.lock` (one `[dev-dependencies]` entry, `schemars = "0.8"`, +42 lock lines, all from the local registry cache, resolved `--offline`) | decline with `owned_by` | no card's §3 row holds the root `Cargo.toml`/`Cargo.lock` (package-doc grep for both names: only C1's "root Cargo.toml stays 0.1.0" and its 14-surface list), so there is no owner to name; a serde-generated schema cannot exist without a generator crate |
+| 2026-10-02 | E2.2 | Generator is a test-only derive (`#[cfg_attr(test, derive(schemars::JsonSchema))]`, dev-dependency) with the generator inside `sheet_rule.rs` `schema_publish_tests`, `RULES_SCHEMA_OUT=<dir>` to write | a shipped `schemars` dependency, or a new bin | a normal dependency would link into the desktop build; a new bin/test file is in no card's row. E4a.1 extends the same module for `rules_tables.schema.json` |
+| 2026-10-02 | E2.2 | Two schemas published (`sheet_rule.schema.json` for `SheetRule`, `var_table.schema.json` for `VarTable`) | one file for `SheetRule` only | the package files are of two root types; the criterion names only `sheet_rule.schema.json` and says `*.schema.json` in the card title |
+| 2026-10-02 | E2.2 | `jsonschema` validator dev-dependency dropped; package-file agreement is checked by a top-level key test over every 97th rule file | validate every file with `jsonschema` | `jsonschema 0.57` adds 644 lock lines and needs a crate (`zerocopy-derive 0.8.58`) missing from the offline cache |
 
 ## Open blockers
 

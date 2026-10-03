@@ -53,6 +53,7 @@ pub type Tag = String;
 pub type RaceId = String;
 
 /// Our rule record. No source token, formula string, or variable name in it.
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct SheetRule {
     pub id: RuleId,
@@ -113,6 +114,7 @@ pub struct SheetRule {
     pub provenance: Provenance,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum ValueRole {
     Uses { period: String },
@@ -120,6 +122,7 @@ pub enum ValueRole {
     SaveDc,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum SheetValue {
     /// Exact evaluation; ONE truncation toward zero at this boundary.
@@ -133,6 +136,7 @@ pub enum SheetValue {
 }
 
 /// Words with typed holes. Text pieces are plain English; no marker, no token.
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ProseSegment {
     pub family: ProseFamily,
@@ -148,6 +152,7 @@ pub struct ProseSegment {
     pub suppress_when_all_zero: bool,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum ProseFamily {
     Desc,
@@ -158,6 +163,7 @@ pub enum ProseFamily {
     StatBlock(String),
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum ProsePiece {
     Text(String),
@@ -176,6 +182,7 @@ pub enum ProsePiece {
 
 /// Our expression form. Closed vocabulary; every variant names a fact the live character has.
 /// Evaluation is exact (rational); nothing here truncates -- the `SheetValue` boundary does, once.
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum Expr {
     Const(i32),
@@ -223,12 +230,14 @@ pub enum Expr {
     KeyAbilityMod,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum ClassRef {
     Class(ClassId),
     Holder,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Ability {
     Str,
@@ -239,6 +248,7 @@ pub enum Ability {
     Cha,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Save {
     Fortitude,
@@ -246,6 +256,7 @@ pub enum Save {
     Will,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum HeldFilter {
     Any,
@@ -256,6 +267,7 @@ pub enum HeldFilter {
 /// A movement mode, as a game-rule word (`"Walk"`, `"Fly"`, `"Swim"`).
 pub type MoveMode = String;
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum SpellKind {
     Any,
@@ -277,6 +289,7 @@ impl SpellKind {
 }
 
 /// `data/sheet_rules/_vars/<VarId>.json` -- every contribution to one variable, corpus-wide.
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct VarTable {
     pub var: VarId,
@@ -295,6 +308,7 @@ pub struct VarTable {
     pub provenance: VarProvenance,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct VarContribution {
     pub rule_id: RuleId,
@@ -304,6 +318,7 @@ pub struct VarContribution {
     pub when: Applies,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 pub struct VarProvenance {
     /// Source rows (`path:line`) that declare or contribute to this name but belong to no
@@ -313,12 +328,14 @@ pub struct VarProvenance {
 }
 
 /// A stacking type. `name` is a game-rule word (`"Racial"`, `"Base"`), never a token.
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct BonusType {
     pub name: String,
     pub mode: StackMode,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum StackMode {
     Plain,
@@ -346,6 +363,7 @@ pub fn stacking_types(system: GameSystem) -> &'static [&'static str] {
     }
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum BonusTarget {
     Ability(Ability),
@@ -392,6 +410,7 @@ pub enum BonusTarget {
     Other(String),
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum WeaponRef {
     Any,
@@ -402,6 +421,7 @@ pub enum WeaponRef {
     Chosen(ChoiceId),
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum Scope {
     All,
@@ -415,6 +435,7 @@ pub enum Scope {
 
 /// The gate. Two-valued (Include / Exclude) plus `Situational`, which includes and prints
 /// its condition on the line.
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum Applies {
     Always,
@@ -431,6 +452,7 @@ pub enum Applies {
     Situational { text: String },
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Cmp {
     Eq,
@@ -441,6 +463,7 @@ pub enum Cmp {
     Gte,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum Holdable {
     Rule(RuleId),
@@ -471,12 +494,14 @@ pub enum Holdable {
     Fact { name: String, value: String },
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum DeityRef {
     Any,
     Named(RuleId),
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum ProfRef {
     Weapon(String),
@@ -505,12 +530,14 @@ pub enum ProfRef {
     WeaponSet { label: Tag, members: Vec<String> },
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Grant {
     pub by: Granter,
     pub when: Applies,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum Granter {
     Rule(RuleId),
@@ -522,6 +549,7 @@ pub enum Granter {
     Choice(ChoiceId),
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Choice {
     pub id: ChoiceId,
@@ -529,6 +557,7 @@ pub struct Choice {
     pub from: OptionSet,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum OptionSet {
     Rules { pool: PoolId, tags: Vec<Tag>, requires: Applies },
@@ -547,6 +576,7 @@ pub enum OptionSet {
     Number { min: Expr, max: Expr },
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum Effect {
     FactGrant(Fact),
@@ -576,6 +606,7 @@ pub enum Effect {
     TakenOnClass(ClassId),
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum Fact {
     ClassSkill(SkillId),
@@ -601,6 +632,7 @@ pub enum Fact {
     NaturalAttack(String),
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum CountsAs {
     Rule(RuleId),
@@ -608,6 +640,7 @@ pub enum CountsAs {
     Race(RaceId),
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Subject {
     Character,
@@ -615,6 +648,7 @@ pub enum Subject {
 }
 
 /// Where the rule came from. The only place a source path or row citation may appear.
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 pub struct Provenance {
     pub book: String,
@@ -643,6 +677,7 @@ pub struct Provenance {
 }
 
 /// SD-36 F6c: one printing of an object several books state, as the converter reads it.
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Eq, Default, Serialize, Deserialize)]
 pub struct Printing {
     /// This record's book's `.pcc` `SOURCEDATE:` (`YYYY-MM`); `None` when the book states none (or
@@ -658,6 +693,7 @@ pub struct Printing {
     pub newest: Option<RuleId>,
 }
 
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 pub struct PiStamp {
     /// Fields omitted because the corpus record declares them product identity.
@@ -4005,5 +4041,101 @@ mod schema_variant_tests {
         eprintln!("round-trip: {rule_files} rule files, {var_files} var tables, {ledgers} ledgers skipped, {} drifted", drift.len());
         assert!(rule_files > 40_000 && var_files > 6_000, "the package is generated: {rule_files} rule files, {var_files} var tables");
         assert!(drift.is_empty(), "{} files drift on a round trip, first: {:?}", drift.len(), &drift[..drift.len().min(5)]);
+    }
+}
+
+/// SD-37 E2.2: the published JSON Schemas under `schemas/rules/`, generated from the serde types
+/// above. `RULES_SCHEMA_OUT=<dir>` writes them there (the `rules-schema-check` stage regenerates
+/// into a scratch directory and diffs it against the published files); without it the test fails
+/// when a published file differs from what the types generate now.
+#[cfg(test)]
+mod schema_publish_tests {
+    use super::*;
+    use schemars::{JsonSchema, schema_for};
+    use std::path::PathBuf;
+
+    fn render<T: JsonSchema>() -> String {
+        let mut text = serde_json::to_string_pretty(&schema_for!(T)).expect("a schema serialises");
+        text.push('\n');
+        text
+    }
+
+    /// Published file name -> generated text. Every root type a package file deserialises into.
+    fn generated() -> Vec<(&'static str, String)> {
+        vec![
+            ("sheet_rule.schema.json", render::<SheetRule>()),
+            ("var_table.schema.json", render::<VarTable>()),
+        ]
+    }
+
+    fn published_dir() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("schemas").join("rules")
+    }
+
+    #[test]
+    fn published_schemas_match_the_serde_types() {
+        if let Ok(out) = std::env::var("RULES_SCHEMA_OUT") {
+            let out = PathBuf::from(out);
+            std::fs::create_dir_all(&out).expect("create the output directory");
+            for (name, text) in generated() {
+                std::fs::write(out.join(name), text).expect("write a schema");
+            }
+            return;
+        }
+        for (name, text) in generated() {
+            let on_disk = std::fs::read_to_string(published_dir().join(name))
+                .unwrap_or_else(|e| panic!("schemas/rules/{name} is not published: {e}"));
+            assert!(on_disk == text, "schemas/rules/{name} drifts from the serde types; regenerate with RULES_SCHEMA_OUT");
+        }
+    }
+
+    #[test]
+    fn the_schema_names_the_starfinder_variants_and_every_shape_the_package_uses() {
+        let rule = render::<SheetRule>();
+        for variant in ["Eac", "Kac", "Stamina", "Resolve", "KeyAbilityMod", "Starfinder"] {
+            assert!(rule.contains(&format!("\"{variant}\"")), "SheetRule schema lacks the {variant} variant");
+        }
+        let table = render::<VarTable>();
+        assert!(table.contains("\"declared_by\"") && table.contains("\"contributions\""));
+    }
+
+    /// Every top-level key of every sampled real rule file is a property the schema declares, and
+    /// every property the schema requires is present: the schema describes the package on disk,
+    /// not only the types.
+    #[test]
+    fn sampled_package_files_agree_with_the_schema_at_the_top_level() {
+        let schema: serde_json::Value = serde_json::from_str(&render::<SheetRule>()).unwrap();
+        let props = schema["properties"].as_object().expect("properties");
+        let required: Vec<&str> = schema["required"].as_array().expect("required").iter().filter_map(|v| v.as_str()).collect();
+        let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data").join("sheet_rules");
+        let mut seen = 0usize;
+        let mut stack = vec![root];
+        while let Some(dir) = stack.pop() {
+            for entry in std::fs::read_dir(&dir).expect("read dir").flatten() {
+                let path = entry.path();
+                let name = entry.file_name().to_string_lossy().into_owned();
+                if path.is_dir() {
+                    if !name.starts_with('_') {
+                        stack.push(path);
+                    }
+                } else if name.ends_with(".json") && !name.starts_with('_') {
+                    seen += 1;
+                    if seen % 97 != 0 {
+                        continue;
+                    }
+                    let rules: Vec<serde_json::Value> = serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
+                    for rule in rules {
+                        let obj = rule.as_object().expect("a rule is an object");
+                        for key in obj.keys() {
+                            assert!(props.contains_key(key), "{}: key {key} is not in the schema", path.display());
+                        }
+                        for key in &required {
+                            assert!(obj.contains_key(*key), "{}: required key {key} is absent", path.display());
+                        }
+                    }
+                }
+            }
+        }
+        assert!(seen > 40_000, "walked {seen} rule files");
     }
 }

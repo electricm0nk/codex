@@ -107,7 +107,7 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full ingest-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump class-census)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full ingest-full desktop corpus-sweep sheet-rules-check rules-schema-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump class-census)
 QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump class-census)
 
 usage() {
@@ -2530,6 +2530,40 @@ run_corpus_sweep() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: rules-schema-check
+#
+# SD-37 E2.2. `schemas/rules/*.schema.json` is the published contract of the sheet-rule package
+# (`SheetRule`, `VarTable`), generated from the serde types in `src/rules_core/sheet_rule.rs` by
+# the `sheet_rule::schema_publish_tests` test (a test-only `schemars` derive). The stage
+# regenerates every schema into a scratch directory and diffs it against the published files, so a
+# type change with no regeneration, and a hand edit of a published file, both turn it red. It also
+# runs the test in compare mode, which fails on drift on its own.
+# ---------------------------------------------------------------------------
+run_rules_schema_check() {
+    stage_start "rules-schema-check — regenerate schemas/rules/*.schema.json from the serde types and diff"
+    local log="$LOG_DIR/rules-schema-check.log"
+    local scratch="$LOG_DIR/rules-schema-regen"
+    rm -rf "$scratch"
+    mkdir -p "$scratch"
+    {
+        ( cd "$REPO_ROOT" && RULES_SCHEMA_OUT="$scratch" cargo test --locked -j "$JOBS" --lib sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types -- --test-threads=8 ) 2>&1
+        echo "--- regenerated vs published (diff -r) ---"
+        diff -r "$scratch" "$REPO_ROOT/schemas/rules"
+        echo "diff exit $?"
+        ( cd "$REPO_ROOT" && cargo test --locked -j "$JOBS" --lib sheet_rule::schema_publish_tests -- --test-threads=8 ) 2>&1
+    } >"$log" 2>&1
+    local regen_ok diff_ok test_ok
+    regen_ok=$(awk '/^test result: ok\. 1 passed/ {n++} END {print n+0}' "$log")
+    diff_ok=$(awk '/^diff exit 0$/ {n++} END {print n+0}' "$log")
+    test_ok=$(awk '/^test result: ok\. 3 passed/ {n++} END {print n+0}' "$log")
+    if [[ "$regen_ok" -ne 1 || "$diff_ok" -ne 1 || "$test_ok" -ne 1 ]]; then
+        stage_fail rules-schema-check "a published schema drifts from the serde types, or a schema test did not run (regen=$regen_ok diff=$diff_ok tests=$test_ok) — $log"
+        return
+    fi
+    stage_pass rules-schema-check "$(ls "$REPO_ROOT/schemas/rules"/*.schema.json | wc -l) schemas regenerate byte-equal; 3 schema tests pass"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: sheet-rules-check
 #
 # Runs `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --check` -- `AT-35-E2-001`
@@ -2927,6 +2961,7 @@ for stage in "${SELECTED[@]}"; do
         corpus-trap-audit-selftest) run_corpus_trap_audit_selftest ;;
         corpus-sweep)        run_corpus_sweep ;;
         sheet-rules-check) run_sheet_rule_convert_check ;;
+        rules-schema-check) run_rules_schema_check ;;
         corpus-trap-audit)   run_corpus_trap_audit ;;
         supersession-gate)   run_supersession_gate ;;
         root-lib)            run_root_lib ;;
