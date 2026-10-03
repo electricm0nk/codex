@@ -27,14 +27,14 @@ it (`workflow-instruction.md §5`).
 | E0 | complete | 4 of 4 | rows corrected from `kanban.md` by E1.MC |
 | E1 | complete | 5 of 5 (E1.1–E1.4, E1.MC) | E1.MC receipt `artifacts/epic_1/E1.MC_cycle_receipt.md` |
 | E2 | complete | 3 of 3 (E2.1, E2.2, E2.MC) | E2.MC receipt `artifacts/epic_2/E2.MC_cycle_receipt.md` |
-| E3 | in progress | 3 of 6 (E3.1, E3.2, E3.3) | E3.3 receipt `artifacts/epic_3/E3.3_cycle_receipt.md` |
+| E3 | complete | 6 of 6 (E3.1–E3.5, E3.MC) | E3.MC receipt `artifacts/epic_3/E3.MC_cycle_receipt.md` (E3.MC corrected this row from 3 of 6; retro correction) |
 | E4 | waiting | 0 of 7 | |
 | E5 | waiting | 0 of 5 | after E4.MC (C0.2) |
 | E6 | waiting | 0 of 7 | |
 | E7.1 | waiting | 0 of 1 | |
 | E4a | waiting | 0 of 5 | serial after E7.1 (C0.2) |
 | E7.2–E7.9 | waiting | 0 of 8 | |
-| **Total** | | **18 of 55** | command below the table |
+| **Total** | | **22 of 55** | command below the table |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -155,6 +155,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E3.3 | 2026-10-03 | Opus 5.5 | the `feat(sd37,e3.3)` commit | complete | Aldric unchanged (E1.4 harness, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not rendered (no SF package before E3.4); mapping-evaluated = SRD = PCGen: Soldier HP 25 SP 24 RP 4 EAC 16 KAC 19 / Mystic 34 25 6 16 16 / Technomancer 29 35 6 18 19 / Envoy 20 21 5 14 15 | `artifacts/epic_3/E3.3_cycle_receipt.md` |
 | E3.4 | 2026-10-03 | Opus 5.5 | the `feat(sd37,e3.4)` commit | complete | Aldric unchanged (E1.4 harness, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not rendered (no SF adapter before E4.6); first SF package lines (`E3.4_seed_terms.py`, + HD/RaceHP/Con/base/Dex terms = E3.3 for 4 of 4): Soldier Hp 6×3 Stamina 7×3, Defiance Series EAC +5 KAC +8 → 25/24/16/19; Mystic Hp 5×5 Stamina 6×5, tempweave +4/+4 → 34/25/16/16; Technomancer Hp 4×5 Stamina 5×5, D-suit I +5/+6 → 29/35/18/19; Envoy Hp 5×3 Stamina 6×3, carbon skin +3/+4 → 20/21/14/15 | `artifacts/epic_3/E3.4_cycle_receipt.md` |
 | E3.5 | 2026-10-03 | Opus 5.5 | d08635eed8 | complete | Aldric unchanged (E1.4 harness, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not rendered (no SF adapter before E4.6); `E3.4_seed_terms.py` over the 8-book package identical to E3.4 (HP/SP/EAC/KAC Soldier 25/24/16/19, Mystic 34/25/16/16, Technomancer 29/35/18/19, Envoy 20/21/14/15): unchanged | `artifacts/epic_3/E3.5_cycle_receipt.md` |
+| E3.MC | 2026-10-03 | Opus 5.5 | the `docs(sd37,e3.mc)` commit | complete | Aldric unchanged (sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not rendered (no SF adapter before E4.6); `E3.4_seed_terms.py` over the committed package unchanged (Soldier 25/24/16/19, Mystic 34/25/16/16, Technomancer 29/35/18/19, Envoy 20/21/14/15) | `artifacts/epic_3/E3.MC_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
@@ -223,3 +224,4 @@ A discovery becomes a new `kanban.md` card in the discovering cycle's commit (ex
 - **2026-10-03, E3.4 → E3.5/E3.MC:** E3.2's formula-system census predicate (a tab field starting `MODIFY:`/`MODIFYOTHER:`) misses `PART:<n>|MODIFY:…` fields: 1,081 across all SF trees, 273 in core (all `MODIFY:Damage|SET|` + a dice literal such as `1d6`). E3.4 lowers the core's; E3.5 meets the rest through `convert_sf_formula_token`. Retro correction emitted (`docs/retro/events/sd37-e3-4.jsonl`).
 - **2026-10-03, E3.5 → E5.1:** Every Starfinder race (77, core included) prints `Walk 0 ft.` from `MOVE:Walk,0`, and its real speed (`BONUS:VAR|Walk|30`, and in the wide books `MODIFYOTHER:PC.MOVEMENT|Walk|Speed|SET|30`) converts to no sheet line. Evidence: `data/starfinder-1e/sheet_rules/core/race/lashunta.json` prose `Walk 0 ft.`; `E3.5_logs/figures.log` 9 `movement_speed SET` degradations. Race speed print/total belongs to E5.1 (races print). Routed to E5.1's row notes, not a new card, because E7.3 pins 55 rows (the E1.MC precedent). Retro deferral emitted (`docs/retro/events/sd37-e3-5.jsonl`).
 - **2026-10-03, E3.5 → E3.MC:** E3.4's PART gap is closed for the 8 books: the wide `_report.json` has no `PART`/`unmapped:PART` degradation key. Loading the 7 books moves 87 core rule files (all cross-book: `granted_by`/option-list/`closure_rows` growth, and 10 `!PREFACT` gates resolved to their COM declaring rules); E3.MC pins these as the SF package's first delta classes (`E3.5_logs/core_delta_classes.log`, `fact_gate_check.log`).
+- **2026-10-03, E3.MC → E4.1:** Three of the five SF Hit Point / Stamina terms are in no converted record: `HD:1` per level (a class token, no package line), `RaceHP` (value `BONUS:VAR|RaceHP|<n>` on `CATEGORY:Internal` `<Race> Race Selection ~ Default`, sum `BONUS:HP|CURRENTMAX|RaceHP` on Internal `Default`; neither is an E0.3 unit; `grep -rln RaceHP data/starfinder-1e/sheet_rules` → none) and `CON*TL` (the `Constitution` stat definition). The package holds only the class coefficients (`core/class/soldier.json` Hp 6×L, Stamina 7×L) and Toughness. Planting M2/M3/M4 on the table the converter reads leaves `sheet_rule_convert --system starfinder-1e --check` green (M1 alone goes red; `artifacts/epic_3/E3.MC_logs/converter_mutations.log`), so M2–M4 are load-bearing only on E3.3's seed-fixture model. E4.1 must name its source for each term (E4 holds the converter lane, so it may lower the race-selection `RaceHP` into the package) and re-plant M2–M4 against its `sf_seed` test. Routed to E4.1's row notes (E7.3 pins 55 rows).

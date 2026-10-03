@@ -1,0 +1,4 @@
+terms pf 61 sf 41
+package (exact-case substring, = classify_field_sf): files=8760 strings=140004 hits=0
+corpus all fields except source: files=8582 strings=46786 hits=0
+exit=0
