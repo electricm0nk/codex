@@ -26,7 +26,7 @@ it (`workflow-instruction.md §5`).
 | C | complete | 4 of 4 (C0.0, C0.1, C0.2, C1) | |
 | E0 | complete | 4 of 4 | rows corrected from `kanban.md` by E1.MC |
 | E1 | complete | 5 of 5 (E1.1–E1.4, E1.MC) | E1.MC receipt `artifacts/epic_1/E1.MC_cycle_receipt.md` |
-| E2 | in progress | 2 of 3 (E2.1, E2.2) | E2.2 receipt `artifacts/epic_2/E2.2_cycle_receipt.md` |
+| E2 | complete | 3 of 3 (E2.1, E2.2, E2.MC) | E2.MC receipt `artifacts/epic_2/E2.MC_cycle_receipt.md` |
 | E3 | waiting | 0 of 6 | |
 | E4 | waiting | 0 of 7 | |
 | E5 | waiting | 0 of 5 | after E4.MC (C0.2) |
@@ -149,6 +149,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E1.MC | 2026-10-02 | Opus 5.5 | the `docs(sd37,e1.mc)` commit | complete | Aldric unchanged (rebuilt before tree 209664dce2 vs merged 520d746125, sha256 1d830682…a569 both; planted CRB drop → 165c38f3…f7bc, restored); Elowen unchanged (8d1a711c…00f2 both; planted → bffcf7dd…ae14, restored); 4 SF seeds not reachable (no SF data) | `artifacts/epic_1/E1.MC_cycle_receipt.md` |
 | E2.1 | 2026-10-02 | Opus 5.5 | the `feat(sd37,e2.1)` commit | complete | Aldric unchanged (rendered by the E1.4 harness, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not reachable (no SF data) | `artifacts/epic_2/E2.1_cycle_receipt.md` |
 | E2.2 | 2026-10-02 | Sonnet 5.5 | the `feat(sd37,e2.2)` commit | complete | unchanged: the only non-test source change is 36 `#[cfg_attr(test, derive(schemars::JsonSchema))]` lines (not rendered; see receipt "Seed deltas"); 4 SF seeds not reachable | `artifacts/epic_2/E2.2_cycle_receipt.md` |
+| E2.MC | 2026-10-02 | Opus 5.5 | the `docs(sd37,e2.mc)` commit | complete | Aldric unchanged (rendered on 3fb7c4a7a1, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not reachable (no SF data) | `artifacts/epic_2/E2.MC_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 

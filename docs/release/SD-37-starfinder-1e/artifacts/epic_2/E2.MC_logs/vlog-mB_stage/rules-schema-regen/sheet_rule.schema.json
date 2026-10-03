@@ -1,0 +1,2839 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SheetRule",
+  "description": "Our rule record. No source token, formula string, or variable name in it.",
+  "type": "object",
+  "required": [
+    "applies",
+    "id",
+    "label",
+    "pool",
+    "print",
+    "provenance",
+    "repeatable",
+    "subject",
+    "value"
+  ],
+  "properties": {
+    "also": {
+      "description": "Second/third numbers on one line: uses + caster level + save DC.",
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": [
+          {
+            "$ref": "#/definitions/ValueRole"
+          },
+          {
+            "$ref": "#/definitions/SheetValue"
+          }
+        ],
+        "maxItems": 2,
+        "minItems": 2
+      }
+    },
+    "always_held": {
+      "description": "On a record principal only (SD-36 F1c-4, defect D7): the converter attests that EVERY character holds this record unconditionally -- a global ability the oracle grants from an object every character holds (PCGen gives every character every `STAT:` and `SAVE:` row, `PlayerCharacter.java:572-573`; the Pathfinder Strength row carries `ABILITY:Internal|AUTOMATIC|Default`, `cr__stats.lst:4`). What it changes is the BASE STATE every evaluation starts from, and nothing else: the record's variable declarations, and its contributions whose own gate is `Always`, count as held for every character ([`SheetRulePackage::is_always_held`], read by the variable fold). The record itself is not seeded into the held set -- it prints no line and folds no bonus of its own.",
+      "type": "boolean"
+    },
+    "applies": {
+      "description": "May THIS character hold it.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Applies"
+        }
+      ]
+    },
+    "bonus_type": {
+      "description": "Stacking type for the cross-rule fold.",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/BonusType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "closure_complete": {
+      "description": "On a CLASS principal only (SD-36 F1c-3, defect D4; `epic-f-class-completion.md` §3.4): the converter attests the class's grant closure complete -- every rule the class line reaches through `Granter::Class` / `Granter::Rule` edges (a class-selection class's base class line included) converted with ZERO closure defects (unresolved reference, ambiguous target, grant-by-type, undefined variable, unrecognized proficiency tag, or a grant edge onto an unconverted target). Absent (false) is \"not attested\", never \"incomplete proven\": a reader may answer a known EMPTY set only when this is true.",
+      "type": "boolean"
+    },
+    "granted_by": {
+      "description": "Who hands it out.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Grant"
+      }
+    },
+    "grants": {
+      "description": "What holding it does to the fact set.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Effect"
+      }
+    },
+    "id": {
+      "type": "string"
+    },
+    "label": {
+      "description": "Display name; codex-neutral when the name is product identity.",
+      "type": "string"
+    },
+    "offers": {
+      "description": "Choice-bearing records.",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Choice"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pool": {
+      "type": "string"
+    },
+    "print": {
+      "description": "Printed on the sheet (`false`: held silently -- a selector or helper record).",
+      "type": "boolean"
+    },
+    "prose": {
+      "description": "The rule's words with typed slots, filled at evaluate time.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ProseSegment"
+      }
+    },
+    "provenance": {
+      "$ref": "#/definitions/Provenance"
+    },
+    "repeatable": {
+      "type": "boolean"
+    },
+    "subject": {
+      "$ref": "#/definitions/Subject"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "target": {
+      "description": "What sheet total this value feeds, if any.",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/BonusTarget"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "value": {
+      "description": "The line's principal value.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SheetValue"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "Ability": {
+      "type": "string",
+      "enum": [
+        "Str",
+        "Dex",
+        "Con",
+        "Int",
+        "Wis",
+        "Cha"
+      ]
+    },
+    "Applies": {
+      "description": "The gate. Two-valued (Include / Exclude) plus `Situational`, which includes and prints its condition on the line.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Always",
+            "Never"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "All"
+          ],
+          "properties": {
+            "All": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Applies"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "AtLeast"
+          ],
+          "properties": {
+            "AtLeast": {
+              "type": "object",
+              "required": [
+                "n",
+                "of"
+              ],
+              "properties": {
+                "n": {
+                  "type": "integer",
+                  "format": "uint8",
+                  "minimum": 0.0
+                },
+                "of": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Applies"
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Not"
+          ],
+          "properties": {
+            "Not": {
+              "$ref": "#/definitions/Applies"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Compare"
+          ],
+          "properties": {
+            "Compare": {
+              "type": "object",
+              "required": [
+                "lhs",
+                "op",
+                "rhs"
+              ],
+              "properties": {
+                "lhs": {
+                  "$ref": "#/definitions/Expr"
+                },
+                "op": {
+                  "$ref": "#/definitions/Cmp"
+                },
+                "rhs": {
+                  "$ref": "#/definitions/Expr"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Holds"
+          ],
+          "properties": {
+            "Holds": {
+              "type": "object",
+              "required": [
+                "count",
+                "what"
+              ],
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "format": "uint8",
+                  "minimum": 0.0
+                },
+                "what": {
+                  "$ref": "#/definitions/Holdable"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Chosen"
+          ],
+          "properties": {
+            "Chosen": {
+              "type": "object",
+              "required": [
+                "choice"
+              ],
+              "properties": {
+                "choice": {
+                  "type": "string"
+                },
+                "option": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "`subject = Item`: the item carries at least `n` of the tags.",
+          "type": "object",
+          "required": [
+            "ItemHas"
+          ],
+          "properties": {
+            "ItemHas": {
+              "type": "object",
+              "required": [
+                "n",
+                "tags"
+              ],
+              "properties": {
+                "n": {
+                  "type": "integer",
+                  "format": "uint8",
+                  "minimum": 0.0
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Include; the condition prints on the line.",
+          "type": "object",
+          "required": [
+            "Situational"
+          ],
+          "properties": {
+            "Situational": {
+              "type": "object",
+              "required": [
+                "text"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "BonusTarget": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Ac",
+            "Attack",
+            "Hp",
+            "Initiative",
+            "Cmb",
+            "Cmd",
+            "Dr"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Ability"
+          ],
+          "properties": {
+            "Ability": {
+              "$ref": "#/definitions/Ability"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Skill"
+          ],
+          "properties": {
+            "Skill": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "A skill in a named situation; the situation prints on the line.",
+          "type": "object",
+          "required": [
+            "SkillSituation"
+          ],
+          "properties": {
+            "SkillSituation": {
+              "type": "object",
+              "required": [
+                "situation",
+                "skill"
+              ],
+              "properties": {
+                "situation": {
+                  "type": "string"
+                },
+                "skill": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Save"
+          ],
+          "properties": {
+            "Save": {
+              "$ref": "#/definitions/Save"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "The class save progression itself.",
+          "type": "object",
+          "required": [
+            "BaseSave"
+          ],
+          "properties": {
+            "BaseSave": {
+              "$ref": "#/definitions/Save"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "The class attack progression itself.",
+          "type": "string",
+          "enum": [
+            "BaseAttack"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Damage"
+          ],
+          "properties": {
+            "Damage": {
+              "$ref": "#/definitions/WeaponRef"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Starfinder 1e Energy Armor Class.",
+          "type": "string",
+          "enum": [
+            "Eac"
+          ]
+        },
+        {
+          "description": "Starfinder 1e Kinetic Armor Class.",
+          "type": "string",
+          "enum": [
+            "Kac"
+          ]
+        },
+        {
+          "description": "Starfinder 1e Stamina Points.",
+          "type": "string",
+          "enum": [
+            "Stamina"
+          ]
+        },
+        {
+          "description": "Starfinder 1e Resolve Points.",
+          "type": "string",
+          "enum": [
+            "Resolve"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Speed"
+          ],
+          "properties": {
+            "Speed": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Vision"
+          ],
+          "properties": {
+            "Vision": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "SpellDc"
+          ],
+          "properties": {
+            "SpellDc": {
+              "$ref": "#/definitions/Scope"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "CasterLevel"
+          ],
+          "properties": {
+            "CasterLevel": {
+              "$ref": "#/definitions/Scope"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Levels of spellcasting in a class (a monster that casts as a 9th-level sorcerer).",
+          "type": "object",
+          "required": [
+            "SpellcastingLevels"
+          ],
+          "properties": {
+            "SpellcastingLevels": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "SpellCell"
+          ],
+          "properties": {
+            "SpellCell": {
+              "type": "object",
+              "required": [
+                "class",
+                "level"
+              ],
+              "properties": {
+                "class": {
+                  "type": "string"
+                },
+                "level": {
+                  "type": "integer",
+                  "format": "uint8",
+                  "minimum": 0.0
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "SpellsKnown"
+          ],
+          "properties": {
+            "SpellsKnown": {
+              "type": "object",
+              "required": [
+                "class",
+                "level"
+              ],
+              "properties": {
+                "class": {
+                  "type": "string"
+                },
+                "level": {
+                  "type": "integer",
+                  "format": "uint8",
+                  "minimum": 0.0
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Pool"
+          ],
+          "properties": {
+            "Pool": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Die-size steps on a weapon's damage.",
+          "type": "object",
+          "required": [
+            "DamageSize"
+          ],
+          "properties": {
+            "DamageSize": {
+              "$ref": "#/definitions/WeaponRef"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "WeaponAttack"
+          ],
+          "properties": {
+            "WeaponAttack": {
+              "$ref": "#/definitions/WeaponRef"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Every skill carrying the tag.",
+          "type": "object",
+          "required": [
+            "SkillGroup"
+          ],
+          "properties": {
+            "SkillGroup": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "The thing the player chose on this rule (an ability score, a skill, a spell).",
+          "type": "object",
+          "required": [
+            "Chosen"
+          ],
+          "properties": {
+            "Chosen": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Other"
+          ],
+          "properties": {
+            "Other": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "BonusType": {
+      "description": "A stacking type. `name` is a game-rule word (`\"Racial\"`, `\"Base\"`), never a token.",
+      "type": "object",
+      "required": [
+        "mode",
+        "name"
+      ],
+      "properties": {
+        "mode": {
+          "$ref": "#/definitions/StackMode"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Choice": {
+      "type": "object",
+      "required": [
+        "count",
+        "from",
+        "id"
+      ],
+      "properties": {
+        "count": {
+          "$ref": "#/definitions/Expr"
+        },
+        "from": {
+          "$ref": "#/definitions/OptionSet"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "ClassRef": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Holder"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Class"
+          ],
+          "properties": {
+            "Class": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Cmp": {
+      "type": "string",
+      "enum": [
+        "Eq",
+        "Ne",
+        "Lt",
+        "Lte",
+        "Gt",
+        "Gte"
+      ]
+    },
+    "CountsAs": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "Rule"
+          ],
+          "properties": {
+            "Rule": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Class"
+          ],
+          "properties": {
+            "Class": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Race"
+          ],
+          "properties": {
+            "Race": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "DeityRef": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Any"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Named"
+          ],
+          "properties": {
+            "Named": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Effect": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "FactGrant"
+          ],
+          "properties": {
+            "FactGrant": {
+              "$ref": "#/definitions/Fact"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "FactRevoke"
+          ],
+          "properties": {
+            "FactRevoke": {
+              "$ref": "#/definitions/Fact"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "CountsAs"
+          ],
+          "properties": {
+            "CountsAs": {
+              "$ref": "#/definitions/CountsAs"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Waives"
+          ],
+          "properties": {
+            "Waives": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Revokes"
+          ],
+          "properties": {
+            "Revokes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "FactDeclare"
+          ],
+          "properties": {
+            "FactDeclare": {
+              "type": "object",
+              "required": [
+                "name",
+                "value"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "A fact grant that is conditional on `when` -- the PRE-gate a PCGen `AUTO:WEAPONPROF` (etc.) row carries on the individual fact, distinct from `Grant.when` (which gates whether the character may hold the whole RULE, not one fact inside it; SD-36 Epic F1-2, review finding 1). Added as a new variant, never a field on `FactGrant`, so every existing converted `{\"FactGrant\": ...}` row (ungated: the common case) still deserializes byte-for-byte unchanged -- the future population diff this enables stays small (`ungated_fact_grants_deserialize_unchanged`). `resolve_gated_fact_grant` is the paper-sheet-doctrine reader: the fact counts only when `when` is decidable and true from the character's own facts; otherwise its condition prints and the fact is withheld, never approximated as granted.",
+          "type": "object",
+          "required": [
+            "GatedFactGrant"
+          ],
+          "properties": {
+            "GatedFactGrant": {
+              "type": "object",
+              "required": [
+                "fact",
+                "when"
+              ],
+              "properties": {
+                "fact": {
+                  "$ref": "#/definitions/Fact"
+                },
+                "when": {
+                  "$ref": "#/definitions/Applies"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "On a CLASS principal only: this class is a selection taken on the named base class, so every level in it IS a level in the base class (SD-36 F1c-3, defect D3). PCGen declares no `CLASS:` object for such a class -- Pathfinder Unchained's four are `CATEGORY:CLASS` abilities in the base class's `<Base> Class Selection` pool (`pu_abilities_class.lst`) -- so the character's class line is the base class's, with the selection held on it. The held-set fixpoint and `Expr::ClassLevel` read it through [`SheetRulePackage::base_class_of`]; the character's total level is unchanged.",
+          "type": "object",
+          "required": [
+            "TakenOnClass"
+          ],
+          "properties": {
+            "TakenOnClass": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Expr": {
+      "description": "Our expression form. Closed vocabulary; every variant names a fact the live character has. Evaluation is exact (rational); nothing here truncates -- the `SheetValue` boundary does, once.",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "SpellLevel",
+            "BaseAttack",
+            "ChallengeRating"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Const"
+          ],
+          "properties": {
+            "Const": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Total character level.",
+          "type": "string",
+          "enum": [
+            "Level"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "ClassLevel"
+          ],
+          "properties": {
+            "ClassLevel": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "`ClassLevel(X)` + held bonus caster levels to X; `Holder` = the class the rule is held through.",
+          "type": "object",
+          "required": [
+            "CasterLevel"
+          ],
+          "properties": {
+            "CasterLevel": {
+              "$ref": "#/definitions/ClassRef"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "AbilityMod"
+          ],
+          "properties": {
+            "AbilityMod": {
+              "$ref": "#/definitions/Ability"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "AbilityScore"
+          ],
+          "properties": {
+            "AbilityScore": {
+              "$ref": "#/definitions/Ability"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Race-table size ordinal + held size-step contributions.",
+          "type": "string",
+          "enum": [
+            "Size"
+          ]
+        },
+        {
+          "description": "Race-table size ordinal before templates/evolutions.",
+          "type": "string",
+          "enum": [
+            "BaseSize"
+          ]
+        },
+        {
+          "description": "The size modifier to AC/attack for the current `Size`.",
+          "type": "string",
+          "enum": [
+            "SizeMod"
+          ]
+        },
+        {
+          "description": "Racial / monster-class hit dice; 0 for every PC race.",
+          "type": "string",
+          "enum": [
+            "HitDice"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "BaseSave"
+          ],
+          "properties": {
+            "BaseSave": {
+              "$ref": "#/definitions/Save"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "SkillRanks"
+          ],
+          "properties": {
+            "SkillRanks": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "SkillTotal"
+          ],
+          "properties": {
+            "SkillTotal": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "HeldCount"
+          ],
+          "properties": {
+            "HeldCount": {
+              "type": "object",
+              "required": [
+                "filter",
+                "pool"
+              ],
+              "properties": {
+                "filter": {
+                  "$ref": "#/definitions/HeldFilter"
+                },
+                "pool": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Speed"
+          ],
+          "properties": {
+            "Speed": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "HighestSpellLevel"
+          ],
+          "properties": {
+            "HighestSpellLevel": {
+              "$ref": "#/definitions/SpellKind"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Companion records: the master's level.",
+          "type": "string",
+          "enum": [
+            "MasterLevel"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "MasterVar"
+          ],
+          "properties": {
+            "MasterVar": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "A corpus variable: folded over the HELD contributions in `_vars/<VarId>.json`.",
+          "type": "object",
+          "required": [
+            "Var"
+          ],
+          "properties": {
+            "Var": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Sum"
+          ],
+          "properties": {
+            "Sum": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Expr"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Mul"
+          ],
+          "properties": {
+            "Mul": {
+              "type": "array",
+              "items": [
+                {
+                  "$ref": "#/definitions/Expr"
+                },
+                {
+                  "$ref": "#/definitions/Expr"
+                }
+              ],
+              "maxItems": 2,
+              "minItems": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Exact division.",
+          "type": "object",
+          "required": [
+            "Div"
+          ],
+          "properties": {
+            "Div": {
+              "type": "array",
+              "items": [
+                {
+                  "$ref": "#/definitions/Expr"
+                },
+                {
+                  "$ref": "#/definitions/Expr"
+                }
+              ],
+              "maxItems": 2,
+              "minItems": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Min"
+          ],
+          "properties": {
+            "Min": {
+              "type": "array",
+              "items": [
+                {
+                  "$ref": "#/definitions/Expr"
+                },
+                {
+                  "$ref": "#/definitions/Expr"
+                }
+              ],
+              "maxItems": 2,
+              "minItems": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Max"
+          ],
+          "properties": {
+            "Max": {
+              "type": "array",
+              "items": [
+                {
+                  "$ref": "#/definitions/Expr"
+                },
+                {
+                  "$ref": "#/definitions/Expr"
+                }
+              ],
+              "maxItems": 2,
+              "minItems": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Floor"
+          ],
+          "properties": {
+            "Floor": {
+              "$ref": "#/definitions/Expr"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Ceil"
+          ],
+          "properties": {
+            "Ceil": {
+              "$ref": "#/definitions/Expr"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "A term the player settles at pick time; unresolved -> the rule prints as words.",
+          "type": "object",
+          "required": [
+            "Choice"
+          ],
+          "properties": {
+            "Choice": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "The modifier of the character's key ability score (Starfinder 1e: the class names it; [`CharacterFacts::key_ability`]). No key ability recorded -> the rule prints as words.",
+          "type": "string",
+          "enum": [
+            "KeyAbilityMod"
+          ]
+        }
+      ]
+    },
+    "Fact": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "ClassSkill"
+          ],
+          "properties": {
+            "ClassSkill": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "ClassSkillGroup"
+          ],
+          "properties": {
+            "ClassSkillGroup": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "The skill the player chose on this rule becomes a class skill.",
+          "type": "object",
+          "required": [
+            "ClassSkillChosen"
+          ],
+          "properties": {
+            "ClassSkillChosen": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "CrossClassSkill"
+          ],
+          "properties": {
+            "CrossClassSkill": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Language"
+          ],
+          "properties": {
+            "Language": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Proficiency"
+          ],
+          "properties": {
+            "Proficiency": {
+              "$ref": "#/definitions/ProfRef"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Equipment"
+          ],
+          "properties": {
+            "Equipment": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "A companion of this role is available.",
+          "type": "object",
+          "required": [
+            "CompanionSlots"
+          ],
+          "properties": {
+            "CompanionSlots": {
+              "type": "object",
+              "required": [
+                "count",
+                "role"
+              ],
+              "properties": {
+                "count": {
+                  "$ref": "#/definitions/Expr"
+                },
+                "role": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "The fact the player chose on this rule (a language, a proficiency) is granted.",
+          "type": "object",
+          "required": [
+            "Chosen"
+          ],
+          "properties": {
+            "Chosen": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "The character has this natural attack (SD-36 F3c5). A PCGen `CATEGORY:Internal` helper row (`Bite`, `ce_abilities_race.lst:249`) whose whole object -- its own row, its `.MOD` rows, the size helpers it grants and their templates -- carries nothing but one natural attack's bookkeeping (`DEFINE`, `BONUS:VAR`, `BONUS:WEAPONPROF=<the attack>`, `PRE*`, `TEMPLATE`, `NATURALATTACKS`) converts as this fact on the rule that grants the helper, named by the attack its `NATURALATTACKS` entries name. A fact, never a proficiency: a natural attack grants no weapon proficiency. The printed rule's own text states the attack's damage; nothing is computed from this fact.",
+          "type": "object",
+          "required": [
+            "NaturalAttack"
+          ],
+          "properties": {
+            "NaturalAttack": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Grant": {
+      "type": "object",
+      "required": [
+        "by",
+        "when"
+      ],
+      "properties": {
+        "by": {
+          "$ref": "#/definitions/Granter"
+        },
+        "when": {
+          "$ref": "#/definitions/Applies"
+        }
+      }
+    },
+    "Granter": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "Rule"
+          ],
+          "properties": {
+            "Rule": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Class"
+          ],
+          "properties": {
+            "Class": {
+              "type": "object",
+              "required": [
+                "at_level",
+                "id"
+              ],
+              "properties": {
+                "at_level": {
+                  "type": "integer",
+                  "format": "uint8",
+                  "minimum": 0.0
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "A class spell list holds the rule at this spell level.",
+          "type": "object",
+          "required": [
+            "ClassSpellList"
+          ],
+          "properties": {
+            "ClassSpellList": {
+              "type": "object",
+              "required": [
+                "id",
+                "spell_level"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "spell_level": {
+                  "type": "integer",
+                  "format": "uint8",
+                  "minimum": 0.0
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Race"
+          ],
+          "properties": {
+            "Race": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Deity"
+          ],
+          "properties": {
+            "Deity": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Choice"
+          ],
+          "properties": {
+            "Choice": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "HeldFilter": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Any"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Tag"
+          ],
+          "properties": {
+            "Tag": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Rule"
+          ],
+          "properties": {
+            "Rule": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Holdable": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "AlignmentMatchesDeity"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Rule"
+          ],
+          "properties": {
+            "Rule": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "RuleTag"
+          ],
+          "properties": {
+            "RuleTag": {
+              "type": "object",
+              "required": [
+                "pool",
+                "tag"
+              ],
+              "properties": {
+                "pool": {
+                  "type": "string"
+                },
+                "tag": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "A rule named by the source that resolves to no corpus record (listed in `_defects/`); evaluates Exclude.",
+          "type": "object",
+          "required": [
+            "MissingRule"
+          ],
+          "properties": {
+            "MissingRule": {
+              "type": "object",
+              "required": [
+                "name",
+                "pool"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "pool": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Template"
+          ],
+          "properties": {
+            "Template": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Spell"
+          ],
+          "properties": {
+            "Spell": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Race"
+          ],
+          "properties": {
+            "Race": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "RaceType"
+          ],
+          "properties": {
+            "RaceType": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "RaceSubtype"
+          ],
+          "properties": {
+            "RaceSubtype": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Alignment"
+          ],
+          "properties": {
+            "Alignment": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Deity"
+          ],
+          "properties": {
+            "Deity": {
+              "$ref": "#/definitions/DeityRef"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "DeityInPantheon"
+          ],
+          "properties": {
+            "DeityInPantheon": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "DeityGrantsDomain"
+          ],
+          "properties": {
+            "DeityGrantsDomain": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "DeityAlignment"
+          ],
+          "properties": {
+            "DeityAlignment": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "ClassSkill"
+          ],
+          "properties": {
+            "ClassSkill": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Proficiency"
+          ],
+          "properties": {
+            "Proficiency": {
+              "$ref": "#/definitions/ProfRef"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Language"
+          ],
+          "properties": {
+            "Language": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Movement"
+          ],
+          "properties": {
+            "Movement": {
+              "type": "object",
+              "required": [
+                "min",
+                "mode"
+              ],
+              "properties": {
+                "min": {
+                  "type": "integer",
+                  "format": "uint16",
+                  "minimum": 0.0
+                },
+                "mode": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Vision"
+          ],
+          "properties": {
+            "Vision": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "ClassTag"
+          ],
+          "properties": {
+            "ClassTag": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Gender"
+          ],
+          "properties": {
+            "Gender": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "AgeCategory"
+          ],
+          "properties": {
+            "AgeCategory": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "A named fact declared by a `FactDeclare` effect on some held rule.",
+          "type": "object",
+          "required": [
+            "Fact"
+          ],
+          "properties": {
+            "Fact": {
+              "type": "object",
+              "required": [
+                "name",
+                "value"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "OptionSet": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Schools",
+            "Deities",
+            "Domains",
+            "Equipment",
+            "FreeText"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Rules"
+          ],
+          "properties": {
+            "Rules": {
+              "type": "object",
+              "required": [
+                "pool",
+                "requires",
+                "tags"
+              ],
+              "properties": {
+                "pool": {
+                  "type": "string"
+                },
+                "requires": {
+                  "$ref": "#/definitions/Applies"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Skills"
+          ],
+          "properties": {
+            "Skills": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Weapons"
+          ],
+          "properties": {
+            "Weapons": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Spells"
+          ],
+          "properties": {
+            "Spells": {
+              "type": "object",
+              "required": [
+                "class",
+                "levels"
+              ],
+              "properties": {
+                "class": {
+                  "type": "string"
+                },
+                "levels": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "integer",
+                      "format": "uint8",
+                      "minimum": 0.0
+                    },
+                    {
+                      "type": "integer",
+                      "format": "uint8",
+                      "minimum": 0.0
+                    }
+                  ],
+                  "maxItems": 2,
+                  "minItems": 2
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Languages"
+          ],
+          "properties": {
+            "Languages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Templates"
+          ],
+          "properties": {
+            "Templates": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Classes"
+          ],
+          "properties": {
+            "Classes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Races"
+          ],
+          "properties": {
+            "Races": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Number"
+          ],
+          "properties": {
+            "Number": {
+              "type": "object",
+              "required": [
+                "max",
+                "min"
+              ],
+              "properties": {
+                "max": {
+                  "$ref": "#/definitions/Expr"
+                },
+                "min": {
+                  "$ref": "#/definitions/Expr"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "PiStamp": {
+      "type": "object",
+      "properties": {
+        "declared": {
+          "description": "Fields omitted because the corpus record declares them product identity.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "term_hits": {
+          "description": "Fields omitted because a blacklist term appeared in the text.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Printing": {
+      "description": "SD-36 F6c: one printing of an object several books state, as the converter reads it.",
+      "type": "object",
+      "required": [
+        "printings"
+      ],
+      "properties": {
+        "newest": {
+          "description": "The reprint resolver's verdict: the newest printing when it proved the printings one object (`reprint::newest_printing`); `None` when it did not (a variant, or rows it cannot prove identical).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "printings": {
+          "description": "Every record of this kind and slug across books, this one included, sorted.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_date": {
+          "description": "This record's book's `.pcc` `SOURCEDATE:` (`YYYY-MM`); `None` when the book states none (or two), so its printings are never ordered by it.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "ProfRef": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "DeityFavoredWeapon"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Weapon"
+          ],
+          "properties": {
+            "Weapon": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "WeaponGroup"
+          ],
+          "properties": {
+            "WeaponGroup": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "WeaponTag"
+          ],
+          "properties": {
+            "WeaponTag": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "ArmorGroup"
+          ],
+          "properties": {
+            "ArmorGroup": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "ShieldGroup"
+          ],
+          "properties": {
+            "ShieldGroup": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "The weapon the player chose on this rule.",
+          "type": "object",
+          "required": [
+            "Chosen"
+          ],
+          "properties": {
+            "Chosen": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "A conjunctive weapon selector (PCGen's `TYPE=Martial.Ranged`) whose every tag the live `WeaponTableEntry` can answer directly -- a tier (`proficiency`) AND/OR a reach (`is_melee`/`is_ranged`). SD-36 Epic F1-3 (`epic-f-class-completion.md` §3.2/§3.3): today's converter joined a conjunction into one lossy word (`\"Light.Martial\"`); this is the list instead. A conjunct carrying a tag the table cannot answer (e.g. `Light`, `Thrown`) is never put here -- it becomes a [`ProfRef::WeaponSet`] instead, expanded at ingest.",
+          "type": "object",
+          "required": [
+            "WeaponAllOf"
+          ],
+          "properties": {
+            "WeaponAllOf": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "A named membership selector the live weapon table cannot answer generically: a weapon culture/group tag such as `Samurai` (`uc_profs_weapon.lst:100`'s `Katana.MOD TYPE:Samurai.HeavyBlade` -- membership exists only as an ADDED tag on the weapons that carry it, never its own record), or a conjunction containing an unanswerable tag (`Light.Martial`). `members` is the literal weapon name list, resolved AT INGEST from the oracle's own weapon-proficiency rows (its base row plus every `.MOD` row naming it) -- never hand-typed (SD-36 Epic F1-3, review finding 15). `label` is the selector's own tag text, kept for display; matching at read time is against `members`, never `label`.",
+          "type": "object",
+          "required": [
+            "WeaponSet"
+          ],
+          "properties": {
+            "WeaponSet": {
+              "type": "object",
+              "required": [
+                "label",
+                "members"
+              ],
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "members": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ProseFamily": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Desc",
+            "Benefit",
+            "Special",
+            "WhenActive"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Aspect"
+          ],
+          "properties": {
+            "Aspect": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "StatBlock"
+          ],
+          "properties": {
+            "StatBlock": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ProsePiece": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "Text"
+          ],
+          "properties": {
+            "Text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "`\"DC \"` + `Slot(...)` -> `\"DC 15\"`; truncated toward zero once per slot.",
+          "type": "object",
+          "required": [
+            "Slot"
+          ],
+          "properties": {
+            "Slot": {
+              "$ref": "#/definitions/Expr"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "The chosen option's name(s); unmade -> the choice lane's unmade words.",
+          "type": "object",
+          "required": [
+            "ChoiceName"
+          ],
+          "properties": {
+            "ChoiceName": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "`\"1d6+\"` with a modifier stays dice.",
+          "type": "object",
+          "required": [
+            "Dice"
+          ],
+          "properties": {
+            "Dice": {
+              "type": "object",
+              "required": [
+                "dice"
+              ],
+              "properties": {
+                "dice": {
+                  "type": "string"
+                },
+                "modifier": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/Expr"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "SD-36 F7b: dice whose NUMBER is a formula the source wrote into the words (`(min(10,CASTERLEVEL))d6`, the Fireball damage): `count` dice of `sides` sides. The sheet prints `5d6` for a caster level 5 character; with no character the catalog prints the rule's words (\"1d6 per caster level (maximum 10d6)\").",
+          "type": "object",
+          "required": [
+            "DiceCount"
+          ],
+          "properties": {
+            "DiceCount": {
+              "type": "object",
+              "required": [
+                "count",
+                "sides"
+              ],
+              "properties": {
+                "count": {
+                  "$ref": "#/definitions/Expr"
+                },
+                "sides": {
+                  "type": "integer",
+                  "format": "uint32",
+                  "minimum": 0.0
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ProseSegment": {
+      "description": "Words with typed holes. Text pieces are plain English; no marker, no token.",
+      "type": "object",
+      "required": [
+        "family",
+        "pieces"
+      ],
+      "properties": {
+        "applies": {
+          "description": "A segment's own gate.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Applies"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "family": {
+          "$ref": "#/definitions/ProseFamily"
+        },
+        "pick_last": {
+          "description": "Print only the LAST segment of this family whose gate passes.",
+          "default": false,
+          "type": "boolean"
+        },
+        "pieces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProsePiece"
+          }
+        },
+        "suppress_when_all_zero": {
+          "description": "Omit the line when every slot evaluates to 0.",
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "Provenance": {
+      "description": "Where the rule came from. The only place a source path or row citation may appear.",
+      "type": "object",
+      "required": [
+        "book",
+        "closure_rows",
+        "converter_version",
+        "kind",
+        "oracle_pin"
+      ],
+      "properties": {
+        "book": {
+          "type": "string"
+        },
+        "closure_rows": {
+          "description": "`path:line` of every closure row read, in application order.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "converter_version": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "oracle_pin": {
+          "type": "string"
+        },
+        "overlay": {
+          "description": "`\"pfs\"` when the record's own base row sits in an organized-play overlay file.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pi": {
+          "description": "Product-identity handling on this rule: field families omitted and why.",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PiStamp"
+            }
+          ]
+        },
+        "printing": {
+          "description": "SD-36 F6c: on a class record whose slug another book's class record also states, the converter's supersession reading (`decisions.md` §12) -- the one place publication order and the one-object proof exist (`codex-ingest` `sheet_rule::reprint`); the runtime package carries neither otherwise. Absent on every other record.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Printing"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "undeclared_in_pinned_tree": {
+          "description": "SD-36 F3b2b: variable names this record's formulas read that no row of the pinned oracle tree declares and that are not oracle built-in terms. The oracle evaluates each as 0, so the converter wrote `Const(0)` for it; the names are kept here so the reading is visible.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Save": {
+      "type": "string",
+      "enum": [
+        "Fortitude",
+        "Reflex",
+        "Will"
+      ]
+    },
+    "Scope": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "All"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Class"
+          ],
+          "properties": {
+            "Class": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "School"
+          ],
+          "properties": {
+            "School": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Subschool"
+          ],
+          "properties": {
+            "Subschool": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Descriptor"
+          ],
+          "properties": {
+            "Descriptor": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Spell"
+          ],
+          "properties": {
+            "Spell": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Chosen"
+          ],
+          "properties": {
+            "Chosen": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "SheetValue": {
+      "oneOf": [
+        {
+          "description": "Exact evaluation; ONE truncation toward zero at this boundary.",
+          "type": "object",
+          "required": [
+            "Number"
+          ],
+          "properties": {
+            "Number": {
+              "$ref": "#/definitions/Expr"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "`\"1d8\"` + `Const(2)` -> `\"1d8+2\"`; `size_steps` = held die-size steps.",
+          "type": "object",
+          "required": [
+            "Dice"
+          ],
+          "properties": {
+            "Dice": {
+              "type": "object",
+              "required": [
+                "dice"
+              ],
+              "properties": {
+                "dice": {
+                  "type": "string"
+                },
+                "modifier": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/Expr"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "size_steps": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/Expr"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "The list form indexed by `Size` ordinal, Fine..Colossal.",
+          "type": "object",
+          "required": [
+            "DiceBySize"
+          ],
+          "properties": {
+            "DiceBySize": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 9,
+              "minItems": 9
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Nothing to compute; the prose IS the value.",
+          "type": "string",
+          "enum": [
+            "Text"
+          ]
+        }
+      ]
+    },
+    "SpellKind": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Any",
+            "Arcane",
+            "Divine",
+            "Psychic"
+          ]
+        },
+        {
+          "description": "Starfinder 1e spells: no arcane/divine/psychic split, spell levels 0 to 6.",
+          "type": "string",
+          "enum": [
+            "Starfinder"
+          ]
+        }
+      ]
+    },
+    "StackMode": {
+      "type": "string",
+      "enum": [
+        "Plain",
+        "Stack",
+        "Replace"
+      ]
+    },
+    "Subject": {
+      "type": "string",
+      "enum": [
+        "Character",
+        "Item"
+      ]
+    },
+    "ValueRole": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "CasterLevel",
+            "SaveDc"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Uses"
+          ],
+          "properties": {
+            "Uses": {
+              "type": "object",
+              "required": [
+                "period"
+              ],
+              "properties": {
+                "period": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "WeaponRef": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Any",
+            "Melee",
+            "Ranged"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "Named"
+          ],
+          "properties": {
+            "Named": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Group"
+          ],
+          "properties": {
+            "Group": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Chosen"
+          ],
+          "properties": {
+            "Chosen": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

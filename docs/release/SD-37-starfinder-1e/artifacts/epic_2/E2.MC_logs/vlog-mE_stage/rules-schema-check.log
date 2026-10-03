@@ -1,0 +1,38 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 1 test
+test rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2788 filtered out; finished in 0.02s
+
+--- regenerated vs published (diff -r) ---
+diff -r /home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/artifacts/epic_2/E2.MC_logs/vlog-mE_stage/rules-schema-regen/var_table.schema.json /home/ubuntu/workspace/worktrees/codex-sd37/schemas/rules/var_table.schema.json
+8c8
+<     "declared_by",
+---
+>     "declared_byX",
+diff exit 1
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 3 tests
+test rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types ... FAILED
+test rules_core::sheet_rule::schema_publish_tests::the_schema_names_the_starfinder_variants_and_every_shape_the_package_uses ... ok
+test rules_core::sheet_rule::schema_publish_tests::sampled_package_files_agree_with_the_schema_at_the_top_level ... ok
+
+failures:
+
+---- rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types stdout ----
+
+thread 'rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types' (1006262) panicked at src/rules_core/sheet_rule.rs:4088:13:
+schemas/rules/var_table.schema.json drifts from the serde types; regenerate with RULES_SCHEMA_OUT
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 2786 filtered out; finished in 0.56s
+
+error: test failed, to rerun pass `--lib`
