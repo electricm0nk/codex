@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "AG Trooper Battle Dress",
+    "name": "AG Trooper Battle Dress",
+    "type": "ARMOR.Heavy_Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 97,
+    "path": "starfinder/paizo/alien_archive/saa_equip.lst",
+    "record_key": "AG Trooper Battle Dress",
+    "sha256": "6b5557e98616ac13e1f2750fe5d46cad3da77a33218836fd1fc9d2fc361e7bb3"
+  },
+  "unit_id": "alien_archive:equipment:ag_trooper_battle_dress"
+}

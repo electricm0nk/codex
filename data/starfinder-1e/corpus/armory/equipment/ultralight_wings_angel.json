@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Ultralight wings (angel)",
+    "name": "Ultralight wings, angel",
+    "type": "Bio-Tech.All arms"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 906,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Ultralight wings (angel)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:ultralight_wings_angel"
+}

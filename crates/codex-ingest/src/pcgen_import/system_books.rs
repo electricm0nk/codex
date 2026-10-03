@@ -66,14 +66,11 @@ pub const BOOK_PCCS: BookRegistry<SystemBook> = PerSystem {
 };
 
 /// The books the sheet-rule converter and the corpus generator convert, per system: a subset of
-/// [`BOOK_PCCS`]. Starfinder is tuned on the Core Rulebook alone before it goes wide
-/// (`docs/release/SD-37-starfinder-1e/decisions.md §4`: E3.4 is the one-book proof, E3.5 adds
-/// the other seven in one batch by widening this list). Pathfinder is read by directory and
-/// registers none here.
-pub const CONVERTED_BOOKS: BookRegistry<SystemBook> = PerSystem {
-    pathfinder_1e: &[],
-    starfinder_1e: &[SystemBook { dir: "starfinder/paizo/core", pcc: "starfinder/paizo/core/_starfinder_core_rulebook.pcc" }],
-};
+/// [`BOOK_PCCS`]. Starfinder was tuned on the Core Rulebook alone, then went wide in one batch
+/// (`docs/release/SD-37-starfinder-1e/decisions.md §4`), so it converts every registered book.
+/// Pathfinder is read by directory and registers none here.
+pub const CONVERTED_BOOKS: BookRegistry<SystemBook> =
+    PerSystem { pathfinder_1e: &[], starfinder_1e: BOOK_PCCS.starfinder_1e };
 
 /// The PCGen game-mode directory each system's books load against (`system/gameModes/<mode>`).
 pub const GAME_MODES: PerSystem<&str> = PerSystem { pathfinder_1e: "Pathfinder", starfinder_1e: "Starfinder" };

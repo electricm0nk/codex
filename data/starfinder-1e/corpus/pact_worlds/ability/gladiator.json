@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Theme",
+    "key": "Gladiator",
+    "name": "Gladiator",
+    "type": "Theme.Theme Selection"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 94,
+    "path": "starfinder/paizo/pact_worlds/spw_abilities.lst",
+    "record_key": "Gladiator",
+    "sha256": "00d61896ff6203e4fcc2cf8ccd79362a17739e63386a2b188fa2e9f5ccac9e2d"
+  },
+  "unit_id": "pact_worlds:ability:gladiator"
+}

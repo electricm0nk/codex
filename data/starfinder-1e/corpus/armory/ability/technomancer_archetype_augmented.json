@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Archetype",
+    "key": "Technomancer Archetype ~ Augmented",
+    "name": "Augmented",
+    "type": "Archetype.Technomancer Archetype"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 48,
+    "path": "starfinder/paizo/armory/sa_abilities.lst",
+    "record_key": "Technomancer Archetype ~ Augmented",
+    "sha256": "85bf67c2e2d4c7b4659de4d7f872b334d0f9e4332154d7229c1d10afec1f2c8a"
+  },
+  "unit_id": "armory:ability:technomancer_archetype_augmented"
+}

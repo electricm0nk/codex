@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Displace Memory",
+    "name": "Displace Memory",
+    "type": "Spell"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "starfinder/paizo/character_operations_manual/scom_spells.lst",
+    "record_key": "Displace Memory",
+    "sha256": "eb969b6cfbd38caf362ac173dfeca866c392c7a6bc9246a11eaa9f298107d108"
+  },
+  "unit_id": "character_operations_manual:spell:displace_memory"
+}

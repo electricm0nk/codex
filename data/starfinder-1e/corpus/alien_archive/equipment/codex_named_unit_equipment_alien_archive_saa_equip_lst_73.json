@@ -1,0 +1,24 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "key": "Codex-Named Unit (equipment_alien_archive_saa_equip_lst_73)",
+    "name": "Codex-Named Unit (equipment_alien_archive_saa_equip_lst_73)",
+    "type": "RESIZABLE.Weapon.Ranged.ToHit_UseDex.Prof Group Sniper"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "alien_archive:saa_equip.lst:73",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 73,
+    "path": "starfinder/paizo/alien_archive/saa_equip.lst",
+    "record_key": "Codex-Named Unit (equipment_alien_archive_saa_equip_lst_73)",
+    "sha256": "6b5557e98616ac13e1f2750fe5d46cad3da77a33218836fd1fc9d2fc361e7bb3"
+  },
+  "unit_id": "alien_archive:equipment:diasporan_rifle_advanced"
+}

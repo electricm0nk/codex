@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Plasma claw (synthecite)",
+    "name": "Plasma claw (synthecite)",
+    "type": "SMALL ARMS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 367,
+    "path": "starfinder/paizo/armory/sa_profs_weapon.lst",
+    "record_key": "Plasma claw (synthecite)",
+    "sha256": "6ba2601d94f6148c7b2a9869726ee868116de1ac2f7dcc21ea8d58922604c426"
+  },
+  "unit_id": "armory:proficiency:plasma_claw_synthecite"
+}

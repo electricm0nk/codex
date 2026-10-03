@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "Sharprock Krikik",
+    "name": "Sharprock Krikik"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "starfinder/paizo/alien_archive_3/saa3_templates.lst",
+    "record_key": "Sharprock Krikik",
+    "sha256": "fa0849a00d9b8d25f319339953941355511da1f437c757e7592c3c8a91cb7837"
+  },
+  "unit_id": "alien_archive_3:template:sharprock_krikik"
+}

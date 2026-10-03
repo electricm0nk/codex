@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Theme",
+    "key": "Cultist Theme Benefit ~ MEMORIES OF DEVOTION",
+    "name": "MEMORIES OF DEVOTION",
+    "type": "Theme.Theme Benefit.Cultist Theme Benefit.Cultist Theme Benefit Lvl 18"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 189,
+    "path": "starfinder/paizo/pact_worlds/spw_abilities.lst",
+    "record_key": "Cultist Theme Benefit ~ MEMORIES OF DEVOTION",
+    "sha256": "00d61896ff6203e4fcc2cf8ccd79362a17739e63386a2b188fa2e9f5ccac9e2d"
+  },
+  "unit_id": "pact_worlds:ability:cultist_theme_benefit_memories_of_devotion"
+}

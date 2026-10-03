@@ -1,0 +1,24 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "key": "Codex-Named Unit (equipment_pact_worlds_spw_equip_magic_lst_16)",
+    "name": "Codex-Named Unit (equipment_pact_worlds_spw_equip_magic_lst_16)",
+    "type": "Magic.Serum.Consumable"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "pact_worlds:spw_equip_magic.lst:16",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "starfinder/paizo/pact_worlds/spw_equip_magic.lst",
+    "record_key": "Codex-Named Unit (equipment_pact_worlds_spw_equip_magic_lst_16)",
+    "sha256": "a1f618478c086a089476572d50395a28cb4ae539a006bfcfdabce6fa27bb99b0"
+  },
+  "unit_id": "pact_worlds:equipment:pact_worlds_serum_eox_deliquesce"
+}

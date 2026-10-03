@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Daegoxian Spore Cloud",
+    "name": "Daegoxian Spore Cloud",
+    "type": "Spell"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "starfinder/paizo/near_space/sns_spells.lst",
+    "record_key": "Daegoxian Spore Cloud",
+    "sha256": "7f0b36cdb7ec66e5fe36ec77bd471ebdf999625c72731e5cc00b07ba0365b501"
+  },
+  "unit_id": "near_space:spell:daegoxian_spore_cloud"
+}

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Magitech ~ Restless pineal gland",
+    "name": "Restless pineal gland",
+    "type": "Magitech.ItemLevel_.7.Endocrine"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 953,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Magitech ~ Restless pineal gland",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:magitech_restless_pineal_gland"
+}

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Starfinder Data Jockey ~ Tactical Analysis",
+    "name": "Tactical Analysis",
+    "type": "Class Feature.Archetype Class Feature"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 350,
+    "path": "starfinder/paizo/pact_worlds/spw_abilities.lst",
+    "record_key": "Starfinder Data Jockey ~ Tactical Analysis",
+    "sha256": "00d61896ff6203e4fcc2cf8ccd79362a17739e63386a2b188fa2e9f5ccac9e2d"
+  },
+  "unit_id": "pact_worlds:ability:starfinder_data_jockey_tactical_analysis"
+}

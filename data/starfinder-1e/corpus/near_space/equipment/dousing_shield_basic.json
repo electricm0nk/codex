@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Dousing shield (basic)",
+    "name": "Dousing shield, basic",
+    "type": "ARMOR.Shields"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 81,
+    "path": "starfinder/paizo/near_space/sns_equip.lst",
+    "record_key": "Dousing shield (basic)",
+    "sha256": "597c20e87a811ffff6ea542d4aa1c33f55106c844cdd978829fd0f3e002dedfd"
+  },
+  "unit_id": "near_space:equipment:dousing_shield_basic"
+}

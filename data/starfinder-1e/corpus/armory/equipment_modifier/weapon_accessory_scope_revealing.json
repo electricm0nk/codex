@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Weapon Accessory ~ Scope (revealing)",
+    "name": "Scope, revealing",
+    "type": "Weapon.Railed weapon.small arm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 166,
+    "path": "starfinder/paizo/armory/sa_equipmods.lst",
+    "record_key": "Weapon Accessory ~ Scope (revealing)",
+    "sha256": "45d1786127bbd4c729444e697f4e3f3cce3eae08c444afe9040bb53c28b02235"
+  },
+  "unit_id": "armory:equipment_modifier:weapon_accessory_scope_revealing"
+}

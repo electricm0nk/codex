@@ -216,6 +216,41 @@ fn sf_formula_head(system: GameSystem, key: &str) -> bool {
     system != GameSystem::Pathfinder1e && matches!(key, "MODIFY" | "MODIFYOTHER" | "PART")
 }
 
+/// SD-37 E3.5: a Starfinder row whose token was glued onto the previous one with a space instead
+/// of a tab (`saa_abilities.lst:102`, `BONUS:VAR|DarkvisionRange|60|TYPE=Base BONUS:VAR|...`;
+/// `scom_spells.lst:13`, `SOURCEPAGE: pg. 134 DESC:...`) is read as the two tokens it is. Only the
+/// heads measured glued in the eight converted books are split (`BONUS`, `DESC`; 2 rows), and
+/// never inside a prose token, whose words may contain anything. Pathfinder rows are unchanged.
+fn sf_unglued(system: GameSystem, tokens: &[(String, String)]) -> std::borrow::Cow<'_, [(String, String)]> {
+    const GLUED_HEADS: [&str; 2] = [" BONUS:", " DESC:"];
+    const PROSE_HEADS: [&str; 6] = ["DESC", "BENEFIT", "TEMPDESC", "ASPECT", "SPROP", "INFOTEXT"];
+    let glued = |k: &str, v: &str| !PROSE_HEADS.contains(&k.trim()) && GLUED_HEADS.iter().any(|h| v.contains(h));
+    if system == GameSystem::Pathfinder1e || !tokens.iter().any(|(k, v)| glued(k, v)) {
+        return std::borrow::Cow::Borrowed(tokens);
+    }
+    let mut out = Vec::with_capacity(tokens.len() + 1);
+    for (k, v) in tokens {
+        let (mut key, mut rest) = (k.clone(), v.as_str());
+        while !PROSE_HEADS.contains(&key.trim())
+            && let Some((at, head)) = GLUED_HEADS.iter().filter_map(|h| rest.find(h).map(|i| (i, *h))).min_by_key(|(i, _)| *i)
+        {
+            out.push((key, rest[..at].trim_end().to_string()));
+            key = head.trim().trim_end_matches(':').to_string();
+            rest = &rest[at + head.len()..];
+        }
+        out.push((key, rest.to_string()));
+    }
+    std::borrow::Cow::Owned(out)
+}
+
+/// SD-37 E3.5: the prerequisite heads the seven wide books carry that the transcribed Pathfinder
+/// table (`table.rs`, SD-35's JSON) has no row for. They convert through
+/// [`super::prereq::convert_pre_token`] for Starfinder only; Pathfinder's 16 `PREATT` rows keep
+/// their `unmapped:PREATT` reading, so its package is unmoved.
+fn sf_prereq_head(system: GameSystem, key: &str) -> bool {
+    system != GameSystem::Pathfinder1e && matches!(key, "PREATT" | "PREHANDS" | "PREREACH")
+}
+
 /// SD-37 E3.4: one Starfinder formula-system token, by its variable's sheet role
 /// ([`super::formula_system::VARIABLE_ROLES`], E3.2) -- the paper-sheet rule (`decisions.md §5`):
 ///
@@ -245,6 +280,21 @@ fn convert_sf_formula_token(ctx: &mut RecordCtx, acc: &mut Acc, key: &str, value
     match sheet {
         SheetUse::Print => {
             let label = sf_print_role_label(role).ok_or_else(|| format!("{key} (print role {role} has no sheet label)"))?;
+            // Two literal shapes the races carry: the body-plan flag (`RaceType_Humanoid|SET|True`)
+            // and the space a race occupies as a `width,depth` pair in feet (`Face|SET|10,10`).
+            let shaped = match (*role, op) {
+                ("humanoid_body_plan", "SET") if val.eq_ignore_ascii_case("true") => Some("humanoid".to_string()),
+                ("space", "SET") => val.split_once(',').and_then(|(w, d)| {
+                    let (w, d) = (w.trim(), d.trim());
+                    let feet = |s: &str| s.parse::<f64>().is_ok_and(|x| x.is_finite() && x >= 0.0);
+                    (feet(w) && feet(d)).then(|| if w == d { format!("{w} ft.") } else { format!("{w} ft. by {d} ft.") })
+                }),
+                _ => None,
+            };
+            if let Some(text) = shaped {
+                push_stat(acc, label, vec![ProsePiece::Text(text)]);
+                return Ok(());
+            }
             let literal = val.parse::<i64>().is_ok() || is_dice_literal(val);
             if !literal {
                 return Err(format!("{key} ({role} value is a formula; a printed value is a literal)"));
@@ -293,6 +343,7 @@ fn sf_print_role_label(role: &str) -> Option<&'static str> {
         "reach" => "Reach",
         "hands" => "Hands",
         "legs" => "Legs",
+        "humanoid_body_plan" => "Body plan",
         _ => return None,
     })
 }
@@ -907,7 +958,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     let mut failed_seqs: BTreeSet<usize> = BTreeSet::new();
     for row in &closure.rows {
         let level_gate = row.level_gate;
-        for (key, value) in &row.tokens {
+        for (key, value) in sf_unglued(ctx.tree.system, &row.tokens).iter() {
             let key = key.trim();
             let value = value.as_str();
             if row.kind == ClosureRowKind::LevelLine && !matches!(key, "ABILITY" | "BONUS" | "ADD" | "DOMAIN" | "TEMPLATE" | "SPELLS" | "UDAM" | "UMULT" | "DEFINE" | "AUTO" | "CSKILL") {
@@ -958,14 +1009,18 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
                 ctx.pi_declared.push("token".into());
                 continue;
             }
-            let Some(trow) = row_for_head(key, value) else {
-                // No row: the census key IS the refusal shape (`BONUS:<SUB>` / `unmapped:<HEAD>`).
-                ctx.refuse_under(&under, under.clone());
-                continue;
-            };
-            if trow.maps_to == MapsTo::Refuse {
-                ctx.refuse_under(&under, trow.token_type);
-                continue;
+            match row_for_head(key, value) {
+                // No row: the census key IS the refusal shape (`BONUS:<SUB>` / `unmapped:<HEAD>`),
+                // except a Starfinder prerequisite head the PF table has no row for.
+                None if !sf_prereq_head(ctx.tree.system, key) => {
+                    ctx.refuse_under(&under, under.clone());
+                    continue;
+                }
+                Some(trow) if trow.maps_to == MapsTo::Refuse => {
+                    ctx.refuse_under(&under, trow.token_type);
+                    continue;
+                }
+                _ => {}
             }
             seq += 1;
             ctx.current_under = Some(under.clone());
@@ -1406,10 +1461,18 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         "FACT" => {
             if let Some((name, val)) = v.split_once('|') {
                 // SD-37 E3.4: a Starfinder fact's value prints (a deity's title), so it is
-                // screened; a product-identity value is withheld, never printed.
-                if ctx.tree.system != GameSystem::Pathfinder1e && pi_hit(ctx.tree.system, val).is_some() {
-                    ctx.pi_term_hits.push(format!("fact {}", name.trim()));
-                    return Ok(());
+                // screened; a product-identity value is withheld, never printed. E3.5: so is a
+                // fact whose name is product identity (`FACT:SkyfireCenturion|True`), which is
+                // recorded without the name.
+                if ctx.tree.system != GameSystem::Pathfinder1e {
+                    if pi_hit(ctx.tree.system, name).is_some() {
+                        ctx.pi_term_hits.push("fact name".to_string());
+                        return Ok(());
+                    }
+                    if pi_hit(ctx.tree.system, val).is_some() {
+                        ctx.pi_term_hits.push(format!("fact {}", name.trim()));
+                        return Ok(());
+                    }
                 }
                 acc.grants.push(Effect::FactDeclare { name: name.trim().to_string(), value: val.trim().to_string() });
             }

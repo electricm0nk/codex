@@ -1,7 +1,8 @@
-//! Starfinder 1e Core Rulebook proof generation (SD-37 E3.4, `decisions.md §4`).
+//! Starfinder 1e proof generation (SD-37 E3.4 Core Rulebook, E3.5 all 8 in-scope books;
+//! `decisions.md §4`).
 //!
-//! The converter is tuned on one book before it goes wide (E3.5). These tests pin the SF path
-//! end to end on the pinned oracle:
+//! The converter was tuned on one book (E3.4), then went wide in one batch (E3.5). These tests
+//! pin the SF path end to end on the pinned oracle:
 //!
 //! 1. the pinned tree reads exactly the `.lst` files the converted books' `.pcc` include, so an
 //!    excluded book (`core/_society`, SSRGG, LPJ) cannot be read (`decisions.md §6`);
@@ -24,7 +25,7 @@ use codex::rules_core::pi_screening::classify_field_sf;
 use codex::rules_core::shape_b_v1::License;
 use codex_ingest::pcgen_import::sheet_rule::closure::{self, PinnedTree};
 use codex_ingest::pcgen_import::sheet_rule::{convert_one_for, load_population};
-use codex_ingest::pcgen_import::system_books::{CONVERTED_BOOKS, EXCLUDED_BOOK_PCCS, resolve_converted_book_includes};
+use codex_ingest::pcgen_import::system_books::{BOOK_PCCS, CONVERTED_BOOKS, EXCLUDED_BOOK_PCCS, resolve_converted_book_includes};
 
 const SF_INVENTORY: &str = "docs/work-inventory.starfinder-1e.json";
 
@@ -91,11 +92,26 @@ fn converted(id: &str) -> (serde_json::Value, BTreeMap<String, Vec<String>>) {
     (serde_json::to_value(&c.rules).unwrap(), c.defects.clone())
 }
 
-/// E3.4 proves the method on the Core Rulebook alone (`decisions.md §4`); E3.5 widens this.
+/// E3.4 proved the method on the Core Rulebook alone; E3.5 goes wide in one batch
+/// (`decisions.md §4`): the converted books are every registered (licence: include) book.
 #[test]
-fn the_converted_books_are_the_core_rulebook_and_never_an_excluded_book() {
+fn the_converted_books_are_every_registered_book_and_never_an_excluded_book() {
     let dirs: Vec<&str> = CONVERTED_BOOKS.books(GameSystem::Starfinder1e).iter().map(|b| b.dir).collect();
-    assert_eq!(dirs, ["starfinder/paizo/core"]);
+    let registered: Vec<&str> = BOOK_PCCS.books(GameSystem::Starfinder1e).iter().map(|b| b.dir).collect();
+    assert_eq!(dirs, registered, "every licence-include book is converted");
+    assert_eq!(
+        dirs,
+        [
+            "starfinder/paizo/core",
+            "starfinder/paizo/armory",
+            "starfinder/paizo/character_operations_manual",
+            "starfinder/paizo/pact_worlds",
+            "starfinder/paizo/near_space",
+            "starfinder/paizo/alien_archive",
+            "starfinder/paizo/alien_archive_2",
+            "starfinder/paizo/alien_archive_3",
+        ]
+    );
     for ex in EXCLUDED_BOOK_PCCS.books(GameSystem::Starfinder1e) {
         assert!(!dirs.contains(&ex.book.dir), "{} is excluded", ex.book.dir);
     }
@@ -131,8 +147,26 @@ fn the_starfinder_population_is_the_inventory_units_of_the_converted_books() {
     let tree = sf_tree();
     let records = load_population(&repo_root(), &tree).expect("population loads");
     let want = inventory_units_of_converted_books();
-    // E0.3's Core Rulebook unit count (artifacts/epic_0/E0.3_cycle_receipt.md).
-    assert_eq!(want.len(), 3105, "E0.3 counted 3,105 Core Rulebook units");
+    // E0.3's in-scope total over the 8 books (artifacts/epic_0/E0.3_cycle_receipt.md), and its
+    // per-book split (Python over docs/work-inventory.starfinder-1e.json `units[].book`).
+    assert_eq!(want.len(), 8582, "E0.3 counted 8,582 units in the 8 in-scope books");
+    let mut per_book: BTreeMap<&str, usize> = BTreeMap::new();
+    for (_, book) in &want {
+        *per_book.entry(book.as_str()).or_default() += 1;
+    }
+    let expected: BTreeMap<&str, usize> = [
+        ("paizo/core", 3105),
+        ("paizo/armory", 2922),
+        ("paizo/character_operations_manual", 1000),
+        ("paizo/pact_worlds", 428),
+        ("paizo/near_space", 351),
+        ("paizo/alien_archive", 300),
+        ("paizo/alien_archive_2", 298),
+        ("paizo/alien_archive_3", 178),
+    ]
+    .into_iter()
+    .collect();
+    assert_eq!(per_book, expected, "E0.3's per-book unit counts");
     assert_eq!(records.len(), want.len());
     let ids: BTreeSet<&str> = records.iter().map(|r| r.id.as_str()).collect();
     for (id, _) in &want {
@@ -324,4 +358,92 @@ fn the_corpus_holds_one_screened_record_per_unit() {
             serde_json::from_str(&std::fs::read_to_string(corpus_dir().join(book).join("LICENSE.json")).expect("LICENSE.json")).unwrap();
         assert_eq!(lic["records_processed"].as_u64(), Some(*n as u64), "{book}: LICENSE.json counts the files");
     }
+}
+
+/// The stat-block rows (`prose` family `StatBlock`) a converted record prints: `(label, text)`.
+fn stat_rows(rules: &serde_json::Value) -> Vec<(String, String)> {
+    let mut out = Vec::new();
+    for r in rules.as_array().unwrap() {
+        for p in r.get("prose").and_then(|p| p.as_array()).into_iter().flatten() {
+            if let Some(label) = p["family"]["StatBlock"].as_str() {
+                let text: String = p["pieces"].as_array().unwrap().iter().filter_map(|x| x["Text"].as_str()).collect();
+                out.push((label.to_string(), text));
+            }
+        }
+    }
+    out
+}
+
+/// E3.5: shapes the seven other books carry that the Core Rulebook does not. In core the race
+/// formula-system tokens are commented out (`scr_races.lst:25`, `#GRANT:MOVEMENT|Walk ...`); in
+/// Alien Archive and Pact Worlds they are live, and COM/Near Space feats gate on `PREATT`,
+/// `PREHANDS` and `PREREACH` (PCGen `PreAttackTester`: base attack bonus >= n; `PreHandsTester`,
+/// `PreReachTester`: the character's hands / reach >= n).
+#[test]
+fn the_wide_books_prerequisites_and_race_body_rows_convert_without_degrading() {
+    if !oracle_present() {
+        return;
+    }
+    let degradations = |id: &str| -> BTreeSet<String> {
+        let (c, _) = convert_one_for(&repo_root(), GameSystem::Starfinder1e, id).unwrap_or_else(|e| panic!("{id}: {e}"));
+        c.degradations.clone()
+    };
+    // PREATT:10 is a base-attack-bonus comparison, a gate the sheet can evaluate.
+    let (rules, _) = converted("character_operations_manual:feat:dispelling_strike");
+    assert!(degradations("character_operations_manual:feat:dispelling_strike").is_empty());
+    let text = rules.to_string();
+    assert!(text.contains(r#"{"Compare":{"lhs":"BaseAttack","op":"Gte","rhs":{"Const":10}}}"#), "PREATT:10 -> BAB >= 10: {text}");
+    // PREHANDS:4 / PREREACH:10 print as words (the sheet holds no hands or reach total).
+    let (rules, _) = converted("character_operations_manual:feat:double_draw");
+    assert!(degradations("character_operations_manual:feat:double_draw").is_empty());
+    assert!(rules.to_string().contains("at least 4 hands"), "{rules}");
+    let (rules, _) = converted("character_operations_manual:feat:shelter_ally");
+    assert!(degradations("character_operations_manual:feat:shelter_ally").is_empty());
+    assert!(rules.to_string().contains("reach of at least 10 ft."), "{rules}");
+    // `MODIFY:RaceType_Humanoid|SET|True` prints the body plan; `MODIFY:Face|SET|10,10` prints
+    // the space the race occupies.
+    let (rules, _) = converted("alien_archive:race:haan");
+    assert!(degradations("alien_archive:race:haan").is_empty(), "{:?}", degradations("alien_archive:race:haan"));
+    let rows = stat_rows(&rules);
+    assert!(rows.contains(&("Body plan".to_string(), "humanoid".to_string())), "{rows:?}");
+    assert!(rows.contains(&("Space".to_string(), "10 ft.".to_string())), "{rows:?}");
+    assert!(rows.contains(&("Reach".to_string(), "10".to_string())), "{rows:?}");
+}
+
+/// E3.5: three defects the seven other books exposed that the Core Rulebook does not carry.
+///
+/// 1. Two oracle rows glue a token onto the previous one with a space instead of a tab
+///    (`saa_abilities.lst:102`, `...|TYPE=Base BONUS:VAR|BlindsenseRange|30|...`;
+///    `scom_spells.lst:13`, `SOURCEPAGE: pg. 134 DESC:...`). Each glued token is its own token:
+///    no bonus type carries source syntax, and the spell prints its description.
+/// 2. A fact whose NAME is product identity (`FACT:SkyfireCenturion|True`) is withheld, as a
+///    product-identity fact value already is.
+/// 3. A prerequisite naming a record the PI screen renamed (`Driftborn`, renamed in the corpus)
+///    resolves through the row's own name to that record, so neither the name nor a dangling
+///    reference prints.
+#[test]
+fn glued_tokens_split_and_product_identity_names_never_print() {
+    if !oracle_present() {
+        return;
+    }
+    // The whole conversion (rules and var-table contributions), not only the rule file.
+    let (c, _) = convert_one_for(&repo_root(), GameSystem::Starfinder1e, "alien_archive:ability:formian_default_formian_senses").unwrap();
+    let text = format!("{:?} {:?}", c.rules, c.var_contribs);
+    assert!(!text.contains("BONUS:"), "source syntax in the conversion: {text}");
+    assert_eq!(c.var_contribs.len(), 2, "darkvision 60 and blindsense 30: {:?}", c.var_contribs);
+    let (rules, _) = converted("character_operations_manual:spell:delay_countermeasures");
+    let desc: String = rules[0]["prose"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|p| p["family"] == "Desc")
+        .flat_map(|p| p["pieces"].as_array().unwrap().iter().filter_map(|x| x["Text"].as_str()).map(str::to_string).collect::<Vec<_>>())
+        .collect();
+    assert!(desc.contains("Countermeasures on the target computer are suppressed"), "{rules}");
+    let (rules, _) = converted("pact_worlds:ability:envoy_archetype_skyfire_centurion");
+    assert!(!rules.to_string().contains("SkyfireCenturion"), "{rules}");
+    let (rules, _) = converted("character_operations_manual:feat:multifaceted_nature");
+    let text = rules.to_string();
+    assert!(text.contains(r#""Rule":"character_operations_manual:ability:gnome_driftborn""#), "{text}");
+    assert!(!text.contains("Driftborn") && !text.contains("MissingRule"), "{text}");
 }

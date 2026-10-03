@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Weapon (ACCURATE)",
+    "name": "ACCURATE",
+    "type": "Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "starfinder/paizo/armory/sa_equipmods.lst",
+    "record_key": "Weapon (ACCURATE)",
+    "sha256": "45d1786127bbd4c729444e697f4e3f3cce3eae08c444afe9040bb53c28b02235"
+  },
+  "unit_id": "armory:equipment_modifier:weapon_accurate"
+}

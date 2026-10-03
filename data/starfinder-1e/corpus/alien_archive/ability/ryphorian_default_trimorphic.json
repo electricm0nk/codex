@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Ryphorian Default ~ TRIMORPHIC",
+    "name": "TRIMORPHIC",
+    "type": "Racial Trait.Ryphorian Racial Trait"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 168,
+    "path": "starfinder/paizo/alien_archive/saa_abilities.lst",
+    "record_key": "Ryphorian Default ~ TRIMORPHIC",
+    "sha256": "9fcad77cbc25821e0b51ec260af76336482daea4014e670afbc49ae132a54c3c"
+  },
+  "unit_id": "alien_archive:ability:ryphorian_default_trimorphic"
+}

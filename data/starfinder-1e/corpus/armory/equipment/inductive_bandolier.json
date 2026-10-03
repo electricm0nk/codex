@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Inductive bandolier",
+    "name": "Inductive bandolier",
+    "type": "Goods.TechItem.General"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 140,
+    "path": "starfinder/paizo/armory/sa_equip_gear.lst",
+    "record_key": "Inductive bandolier",
+    "sha256": "b537ab06ac60450457a52fda1590de79271efcd20e66706cc095e3daf7f122b7"
+  },
+  "unit_id": "armory:equipment:inductive_bandolier"
+}

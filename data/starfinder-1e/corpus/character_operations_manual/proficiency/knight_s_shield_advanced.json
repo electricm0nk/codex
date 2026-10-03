@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "Knight's shield (advanced)",
+    "name": "Knight's shield (advanced)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 11,
+    "path": "starfinder/paizo/character_operations_manual/scom_profs_armor.lst",
+    "record_key": "Knight's shield (advanced)",
+    "sha256": "d8231115a82cfcbe710154770ed117895e878128a120ba1b539ade7ecd17e6f7"
+  },
+  "unit_id": "character_operations_manual:proficiency:knight_s_shield_advanced"
+}

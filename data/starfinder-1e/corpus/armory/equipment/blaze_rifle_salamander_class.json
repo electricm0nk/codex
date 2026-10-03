@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Blaze rifle (salamander-class)",
+    "name": "Blaze rifle, salamander-class",
+    "type": "RESIZABLE.Weapon.Ranged.ToHit_UseDex.Prof Group Longarms.Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 471,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Blaze rifle (salamander-class)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:blaze_rifle_salamander_class"
+}

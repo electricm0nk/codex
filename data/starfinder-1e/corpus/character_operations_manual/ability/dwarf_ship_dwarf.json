@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Dwarf ~ Ship Dwarf",
+    "name": "Ship Dwarf",
+    "type": "Racial Trait.Dwarf Racial Trait"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 82,
+    "path": "starfinder/paizo/character_operations_manual/scom_abilities_race.lst",
+    "record_key": "Dwarf ~ Ship Dwarf",
+    "sha256": "5588ba8c160a61a39435129e567d203bdb6ddb9799c66096192888dee5dac741"
+  },
+  "unit_id": "character_operations_manual:ability:dwarf_ship_dwarf"
+}

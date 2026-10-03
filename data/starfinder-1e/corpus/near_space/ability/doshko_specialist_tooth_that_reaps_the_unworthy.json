@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Doshko Specialist ~ Tooth That Reaps the Unworthy",
+    "name": "Tooth That Reaps the Unworthy",
+    "type": "Class Feature.Archetype Class Feature"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 101,
+    "path": "starfinder/paizo/near_space/sns_abilities_class.lst",
+    "record_key": "Doshko Specialist ~ Tooth That Reaps the Unworthy",
+    "sha256": "2f32621f4dc9d20fca4ca38995e6fd3816fa054a0c440949a71ac11e92124b9b"
+  },
+  "unit_id": "near_space:ability:doshko_specialist_tooth_that_reaps_the_unworthy"
+}

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Directed Denial Of Strength Attack",
+    "name": "Directed Denial Of Strength Attack",
+    "type": "Spell"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "starfinder/paizo/pact_worlds/spw_spells.lst",
+    "record_key": "Directed Denial Of Strength Attack",
+    "sha256": "531d8922d0207ebdae6d0bce534a2d20b605c2032418308cdea64df89e52cbd5"
+  },
+  "unit_id": "pact_worlds:spell:directed_denial_of_strength_attack"
+}

@@ -343,16 +343,19 @@ pub fn inventory_source_rows(repo: &Path, tree: &PinnedTree) -> Result<Vec<Inven
 /// words exist prints those words, so resolving the row here is what turns a refusal with a
 /// blank sheet line into a printed rule. Never invents a row: the file must sit in the unit's
 /// own book directory, outside `_pfs/`, and the line must exist in it.
+///
+/// `source_file` is a basename in the Pathfinder inventory and a book-relative path in the
+/// Starfinder one (Character Operations Manual's `support/scom_feats_spw.lst`), so the file
+/// matches when its path ends in `/<source_file>`. For a bare basename that is the same test as
+/// the basename comparison it replaces.
 fn source_row_in_tree(tree: &PinnedTree, unit: &InventoryUnit) -> Option<(String, usize)> {
-    let basename = unit.source_file.as_deref()?;
+    let source_file = unit.source_file.as_deref()?;
     let line = unit.source_line?;
-    if line == 0 {
+    if line == 0 || source_file.is_empty() {
         return None;
     }
-    let file = tree
-        .files
-        .iter()
-        .find(|f| f.book == unit.book && !f.is_pfs && f.rel_path.rsplit('/').next() == Some(basename))?;
+    let suffix = format!("/{source_file}");
+    let file = tree.files.iter().find(|f| f.book == unit.book && !f.is_pfs && f.rel_path.ends_with(&suffix))?;
     if line > file.lines.len() {
         return None;
     }
@@ -506,6 +509,22 @@ fn declared_row_key(tree: &PinnedTree, r: &RecordRef) -> Option<String> {
     (matches!(id.shape, closure::RowShape::Plain | closure::RowShape::Copy(_)) && !id.key.is_empty()).then_some(id.key)
 }
 
+/// The name field (upper-cased, before any `.COPY=`) the record's own base row declares in the
+/// pinned tree, or `None` when it has no plain or `.COPY=` declaration row there.
+fn declared_row_name(tree: &PinnedTree, r: &RecordRef) -> Option<String> {
+    let file = tree.file_index(&r.rel_path)?;
+    if r.line == 0 || r.line > tree.files[file].lines.len() {
+        return None;
+    }
+    let row = tree.row_text(RowRef { file, line: r.line });
+    if !matches!(closure::row_identity(row).shape, closure::RowShape::Plain | closure::RowShape::Copy(_)) {
+        return None;
+    }
+    let head = closure::tokenize_row(row).0;
+    let name = head.split(".COPY=").next().unwrap_or(&head).trim().to_ascii_uppercase();
+    (!name.is_empty()).then_some(name)
+}
+
 /// Record both ids of a newly seen ambiguous pair (the first-indexed one once).
 fn push_candidates(map: &mut BTreeMap<(String, String), Vec<RuleId>>, pair: &(String, String), existing: &RuleId, id: &RuleId) {
     let list = map.entry(pair.clone()).or_default();
@@ -521,6 +540,7 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
     let mut index = CorpusIndex::default();
     let mut closures: Vec<Closure> = Vec::with_capacity(records.len());
     let mut placeholder_declared: Vec<((String, String), RuleId)> = Vec::new();
+    let mut placeholder_declared_name: Vec<((String, String), RuleId)> = Vec::new();
     let mut row_declared_category: Vec<((String, String), RuleId, bool)> = Vec::new();
     for r in &records {
         let closure = if r.rel_path.is_empty() {
@@ -569,6 +589,16 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             && declared != key_u
         {
             placeholder_declared.push(((cat_u.clone(), declared), r.id.clone()));
+        }
+        // SD-37 E3.5: the name twin of F3b2, Starfinder only. A record the PI screen renamed
+        // (`Driftborn`, `KEY:Gnome ~ Driftborn`) is named by other records' prerequisites by its
+        // row's name field, which its codex-named corpus name hides. Pathfinder is unchanged.
+        if tree.system != GameSystem::Pathfinder1e
+            && is_codex_placeholder_key(&r.name)
+            && let Some(declared) = declared_row_name(tree, r)
+            && declared != name_u
+        {
+            placeholder_declared_name.push(((cat_u.clone(), declared), r.id.clone()));
         }
         // SD-36 F3c4b: a record whose shipped tokens state no `CATEGORY:` (the corpus record
         // sits at a `.MOD` row, `CATEGORY=Internal|Bloodline Tracker.MOD`,
@@ -674,6 +704,23 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
                 let existing = existing.clone();
                 push_candidates(&mut index.cat_key_candidates, &pair, &existing, &id);
                 index.ambiguous_cat_key.insert(pair);
+            }
+            Some(_) => {}
+        }
+    }
+    // SD-37 E3.5: the declared row names of codex-named records, under the F3b2 rule
+    // (only where no corpus name answers the pair; two claimants are ambiguous to each other).
+    let mut claimed_names: BTreeSet<(String, String)> = BTreeSet::new();
+    for (pair, id) in placeholder_declared_name {
+        match index.by_cat_name.get(&pair) {
+            None => {
+                claimed_names.insert(pair.clone());
+                index.by_cat_name.insert(pair, id);
+            }
+            Some(existing) if *existing != id && claimed_names.contains(&pair) => {
+                let existing = existing.clone();
+                push_candidates(&mut index.cat_name_candidates, &pair, &existing, &id);
+                index.ambiguous_cat_name.insert(pair);
             }
             Some(_) => {}
         }

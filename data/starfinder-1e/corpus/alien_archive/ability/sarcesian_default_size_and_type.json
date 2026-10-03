@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Sarcesian Default ~ SIZE AND TYPE",
+    "name": "SIZE AND TYPE",
+    "type": "Racial Trait.Sarcesian Racial Trait"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 171,
+    "path": "starfinder/paizo/alien_archive/saa_abilities.lst",
+    "record_key": "Sarcesian Default ~ SIZE AND TYPE",
+    "sha256": "9fcad77cbc25821e0b51ec260af76336482daea4014e670afbc49ae132a54c3c"
+  },
+  "unit_id": "alien_archive:ability:sarcesian_default_size_and_type"
+}

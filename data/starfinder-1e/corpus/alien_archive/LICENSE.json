@@ -1,0 +1,23 @@
+{
+  "book": "alien_archive",
+  "book_pcc": "starfinder/paizo/alien_archive/_starfinder_alien_archive.pcc",
+  "generated_by": "cargo run --locked -p codex-ingest --bin sf_corpus -- --write",
+  "license_declaration": {
+    "open_game_content": "OGL 1.0a; the book's own OGL Section 15 notice (docs/governance/license-matrix.md, Starfinder rows)",
+    "product_identity_source": "Paizo's Starfinder Product Identity declaration (docs/governance/ogl-pi-blacklist.md §7)"
+  },
+  "operator_sign_off": {
+    "note": "Set true only after an operator has reviewed this book's classification (license-matrix.md: operator_sign_off false).",
+    "signed_off": false
+  },
+  "records_processed": 300,
+  "records_redacted": 18,
+  "records_renamed": 18,
+  "redaction_policy": {
+    "description_pi": "pi_field description; the sheet-rule converter prints none of it",
+    "name_pi": "renamed to codex_neutral_name::neutral_name of the row coordinate (a name cannot be redacted and still identify the record)",
+    "schema_preserving": true,
+    "screen": "codex::rules_core::pi_screening::classify_field_sf on name, KEY and every DESC field, plus the row's NAMEISPI/DESCISPI declarations"
+  },
+  "screening_method_note": "A bounded, case-sensitive substring scan against the Pathfinder blacklist and the Starfinder term set (E0.2), plus the corpus's own declared-PI tokens. It is not an exhaustive human legal review and does not prove the absence of PI beyond what that scan can see."
+}

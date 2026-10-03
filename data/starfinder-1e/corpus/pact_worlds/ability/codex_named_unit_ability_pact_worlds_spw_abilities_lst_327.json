@@ -1,0 +1,25 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "category": "Class Feature",
+    "key": "Codex-Named Unit (ability_pact_worlds_spw_abilities_lst_327)",
+    "name": "Codex-Named Unit (ability_pact_worlds_spw_abilities_lst_327)",
+    "type": "Class Feature.Archetype Class Feature"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "pact_worlds:spw_abilities.lst:327",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 327,
+    "path": "starfinder/paizo/pact_worlds/spw_abilities.lst",
+    "record_key": "Codex-Named Unit (ability_pact_worlds_spw_abilities_lst_327)",
+    "sha256": "00d61896ff6203e4fcc2cf8ccd79362a17739e63386a2b188fa2e9f5ccac9e2d"
+  },
+  "unit_id": "pact_worlds:ability:skyfire_centurion_lend_expertise"
+}

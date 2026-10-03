@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Figurine of wondrous power (bone crest-eater)",
+    "name": "Figurine of wondrous power (bone crest-eater)",
+    "type": "Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 43,
+    "path": "starfinder/paizo/armory/sa_equip_magic.lst",
+    "record_key": "Figurine of wondrous power (bone crest-eater)",
+    "sha256": "57b21ce2b1389190406761c6638b224968f0e1ffb0c1f63a3278dedcd1f35694"
+  },
+  "unit_id": "armory:equipment:figurine_of_wondrous_power_bone_crest_eater"
+}

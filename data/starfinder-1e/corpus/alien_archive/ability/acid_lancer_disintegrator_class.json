@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Weapon",
+    "key": "Acid lancer (disintegrator-class)",
+    "name": "Acid lancer (disintegrator-class)",
+    "type": "Weapon Proficiency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 287,
+    "path": "starfinder/paizo/alien_archive/saa_abilities.lst",
+    "record_key": "Acid lancer (disintegrator-class)",
+    "sha256": "9fcad77cbc25821e0b51ec260af76336482daea4014e670afbc49ae132a54c3c"
+  },
+  "unit_id": "alien_archive:ability:acid_lancer_disintegrator_class"
+}

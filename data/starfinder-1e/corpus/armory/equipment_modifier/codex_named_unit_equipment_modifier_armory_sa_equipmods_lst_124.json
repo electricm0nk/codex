@@ -1,0 +1,24 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "key": "Codex-Named Unit (equipment_modifier_armory_sa_equipmods_lst_124)",
+    "name": "Codex-Named Unit (equipment_modifier_armory_sa_equipmods_lst_124)",
+    "type": "Weapon"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "armory:sa_equipmods.lst:124",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 124,
+    "path": "starfinder/paizo/armory/sa_equipmods.lst",
+    "record_key": "Codex-Named Unit (equipment_modifier_armory_sa_equipmods_lst_124)",
+    "sha256": "45d1786127bbd4c729444e697f4e3f3cce3eae08c444afe9040bb53c28b02235"
+  },
+  "unit_id": "armory:equipment_modifier:manufacturer_abadarcorp"
+}

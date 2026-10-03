@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Solarion Weapon Crystal ~ Tauon crystal (least)",
+    "name": "Tauon crystal, least",
+    "type": "Weapon Crystal.Solarian Weapon Crystal"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 75,
+    "path": "starfinder/paizo/pact_worlds/spw_equip.lst",
+    "record_key": "Solarion Weapon Crystal ~ Tauon crystal (least)",
+    "sha256": "94b4c32719bdc26a95e56d1ddc01d6ff7faa40f07200137eb45048d0471eae95"
+  },
+  "unit_id": "pact_worlds:equipment:solarion_weapon_crystal_tauon_crystal_least"
+}

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Elf ~ Darkvision",
+    "name": "Darkvision",
+    "type": "Racial Trait.Elf Racial Trait"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 88,
+    "path": "starfinder/paizo/character_operations_manual/scom_abilities_race.lst",
+    "record_key": "Elf ~ Darkvision",
+    "sha256": "5588ba8c160a61a39435129e567d203bdb6ddb9799c66096192888dee5dac741"
+  },
+  "unit_id": "character_operations_manual:ability:elf_darkvision"
+}

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Mediator ~ Speaker of Many Worlds",
+    "name": "Speaker of Many Worlds",
+    "type": "Class Feature.Archetype Class Feature"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 107,
+    "path": "starfinder/paizo/near_space/sns_abilities_class.lst",
+    "record_key": "Mediator ~ Speaker of Many Worlds",
+    "sha256": "2f32621f4dc9d20fca4ca38995e6fd3816fa054a0c440949a71ac11e92124b9b"
+  },
+  "unit_id": "near_space:ability:mediator_speaker_of_many_worlds"
+}

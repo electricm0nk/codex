@@ -1,0 +1,22 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.58s
+     Running tests/sf_core_proof.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_core_proof-4e9dcbaa34dab5f7)
+
+running 1 test
+test the_wide_books_prerequisites_and_race_body_rows_convert_without_degrading ... FAILED
+
+failures:
+
+---- the_wide_books_prerequisites_and_race_body_rows_convert_without_degrading stdout ----
+
+thread 'the_wide_books_prerequisites_and_race_body_rows_convert_without_degrading' (2574970) panicked at crates/codex-ingest/tests/sf_core_proof.rs:393:5:
+assertion failed: degradations("character_operations_manual:feat:dispelling_strike").is_empty()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    the_wide_books_prerequisites_and_race_body_rows_convert_without_degrading
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 9 filtered out; finished in 6.60s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_core_proof`

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Magic resistor (mk 2)",
+    "name": "Magic resistor, mk 2",
+    "type": "Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 110,
+    "path": "starfinder/paizo/armory/sa_equipmods.lst",
+    "record_key": "Magic resistor (mk 2)",
+    "sha256": "45d1786127bbd4c729444e697f4e3f3cce3eae08c444afe9040bb53c28b02235"
+  },
+  "unit_id": "armory:equipment_modifier:magic_resistor_mk_2"
+}

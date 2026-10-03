@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "Irising shield (field)",
+    "name": "Irising shield (field)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "starfinder/paizo/near_space/sns_profs_armor.lst",
+    "record_key": "Irising shield (field)",
+    "sha256": "ea6ee855e13f89d98cc1130469dda686fed2f76d26c2c49788795902a0a6c240"
+  },
+  "unit_id": "near_space:proficiency:irising_shield_field"
+}

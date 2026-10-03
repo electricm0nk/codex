@@ -1,0 +1,11 @@
+OK /core/ability/technomancer_class_feature_resolve_attunement.json Technomancer_CF_ResolveAttunement -> 1 declaring rules
+OK /core/ability/envoy_class_feature_true_expertise.json Envoy_CF_TrueExpertise -> 1 declaring rules
+OK /core/ability/mechanic_class_feature_artificial_intelligence.json Mechanic_CF_ArtificialIntelligence -> 2 declaring rules
+OK /core/ability/operative_class_feature_debilitating_trick.json Operative_CF_DebilitatingTrick -> 1 declaring rules
+OK /core/ability/operative_class_feature_trick_attack.json Operative_CF_TrickAttack -> 1 declaring rules
+OK /core/ability/operative_class_feature_specialization_skill_mastery.json Operative_CF_SpecializationSkillMastery -> 1 declaring rules
+OK /core/ability/envoy_class_feature_expertise.json Envoy_CF_Expertise -> 4 declaring rules
+OK /core/ability/technomancer_class_feature_cache_capacitor.json Technomancer_CF_CacheCapacitor -> 2 declaring rules
+OK /core/ability/technomancer_class_feature_spell_cache.json Technomancer_CF_SpellCache -> 1 declaring rules
+OK /core/ability/envoy_class_feature_skill_expertise.json Envoy_CF_SkillExpertise -> 3 declaring rules
+fact_gates_resolved=10 unresolved=0

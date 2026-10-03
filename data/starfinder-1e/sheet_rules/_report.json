@@ -1,18 +1,18 @@
 {
-  "records": 3105,
-  "converted": 3105,
+  "records": 8582,
+  "converted": 8582,
   "refused": 0,
-  "rules_written": 3758,
-  "var_tables": 139,
+  "rules_written": 10611,
+  "var_tables": 168,
   "by_kind": {
     "ability": {
-      "records": 983,
-      "converted": 983,
+      "records": 3296,
+      "converted": 3296,
       "refused": 0
     },
     "class": {
-      "records": 8,
-      "converted": 8,
+      "records": 11,
+      "converted": 11,
       "refused": 0
     },
     "deity": {
@@ -21,60 +21,67 @@
       "refused": 0
     },
     "equipment": {
-      "records": 998,
-      "converted": 998,
+      "records": 2634,
+      "converted": 2634,
       "refused": 0
     },
     "equipment_modifier": {
-      "records": 158,
-      "converted": 158,
+      "records": 336,
+      "converted": 336,
       "refused": 0
     },
     "feat": {
-      "records": 97,
-      "converted": 97,
+      "records": 224,
+      "converted": 224,
       "refused": 0
     },
     "language": {
-      "records": 66,
-      "converted": 66,
+      "records": 68,
+      "converted": 68,
       "refused": 0
     },
     "proficiency": {
-      "records": 341,
-      "converted": 341,
+      "records": 1324,
+      "converted": 1324,
       "refused": 0
     },
     "race": {
-      "records": 14,
-      "converted": 14,
+      "records": 77,
+      "converted": 77,
       "refused": 0
     },
     "skill": {
-      "records": 114,
-      "converted": 114,
+      "records": 116,
+      "converted": 116,
       "refused": 0
     },
     "spell": {
-      "records": 228,
-      "converted": 228,
+      "records": 370,
+      "converted": 370,
       "refused": 0
     },
     "template": {
-      "records": 59,
-      "converted": 59,
+      "records": 87,
+      "converted": 87,
       "refused": 0
     }
   },
   "refused_by_token_type": {},
-  "degraded_records": 11,
+  "degraded_records": 34,
   "degraded_by_token_type": {
-    "BONUS\u003aHP|ALTHP (no Starfinder mapping-table term)": 1,
-    "BONUS\u003aHP|CURRENTMAX (no Starfinder mapping-table term)": 2,
+    "AUTO (FEAT)": 1,
+    "BONUS\u003aHP|ALTHP (no Starfinder mapping-table term)": 2,
+    "BONUS\u003aHP|CURRENTMAX (no Starfinder mapping-table term)": 3,
     "BONUS\u003aSITUATION (target shape)": 1,
+    "BONUS\u003aSkill": 1,
     "FORMULA\u003aCL-no-owner": 3,
+    "FORMULA\u003aidentifier DEFINEd nowhere (FighterLVL inside a function or under * /)": 1,
     "FORMULA\u003aidentifier DEFINEd nowhere (TechnomacerLVL inside a function or under * /)": 1,
+    "FORMULA\u003amalformed (parser refusals)": 8,
     "FORMULA\u003avar(<export token>) (ENCUMBERANCE\u003a equipment/encumbrance state)": 2,
+    "FORMULA\u003avar(SKILL.<name>.MISC)": 1,
+    "MODIFYOTHER (compute role movement_speed SET is not a term this record adds)": 9,
+    "unmapped\u003aGRANT": 6,
     "unmapped\u003aXTRASKILLPTSPERLVL": 1
   },
   "oracle_pin": "7f818006e371188e5717fd18d74d18a420747fc6",

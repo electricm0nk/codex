@@ -1,4 +1,5 @@
 [
+  "alien_archive\u003aability\u003abarathu_default_floaters\u003a Maneuverability",
   "core\u003aability\u003aoperative_class_feature_operative_exploit\u003a OperativeImprovisationCount",
   "core\u003askill\u003adisplay_computers\u003a UseSkillUntrained",
   "core\u003askill\u003adisplay_culture\u003a UseSkillUntrained",
@@ -45,5 +46,6 @@
   "core\u003askill\u003adisplay_profession_video_personality\u003a UseSkillUntrained",
   "core\u003askill\u003adisplay_profession_vidgamer\u003a UseSkillUntrained",
   "core\u003askill\u003adisplay_profession_writer\u003a UseSkillUntrained",
-  "core\u003askill\u003adisplay_sleight_of_hand\u003a UseSkillUntrained"
+  "core\u003askill\u003adisplay_sleight_of_hand\u003a UseSkillUntrained",
+  "near_space\u003askill\u003adisplay_profession_quartermaster\u003a UseSkillUntrained"
 ]

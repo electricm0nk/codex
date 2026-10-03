@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Plasma diverter",
+    "name": "Plasma diverter",
+    "type": "Goods.TechItem.General"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "starfinder/paizo/alien_archive_2/saa2_equip_gear.lst",
+    "record_key": "Plasma diverter",
+    "sha256": "d2892f6e6bfbdcf07e05b7f23a4ea3b11e0512458c761ff8353c33b3dab79c16"
+  },
+  "unit_id": "alien_archive_2:equipment:plasma_diverter"
+}

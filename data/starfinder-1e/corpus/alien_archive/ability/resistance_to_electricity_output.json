@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Special Ability",
+    "key": "Resistance to Electricity ~ Output",
+    "name": "Resistance to Electricity ~ Output",
+    "type": "SpecialQuality.Extraordinary.Resistance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 243,
+    "path": "starfinder/paizo/alien_archive/saa_abilities.lst",
+    "record_key": "Resistance to Electricity ~ Output",
+    "sha256": "9fcad77cbc25821e0b51ec260af76336482daea4014e670afbc49ae132a54c3c"
+  },
+  "unit_id": "alien_archive:ability:resistance_to_electricity_output"
+}

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Witchwarper",
+    "name": "Witchwarper",
+    "type": "Base.PC"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 59,
+    "path": "starfinder/paizo/character_operations_manual/scom_classes.lst",
+    "record_key": "Witchwarper",
+    "sha256": "7072b518f22476b75f527c7f8462322dadad3ccfd92c543500baac92b81c0932"
+  },
+  "unit_id": "character_operations_manual:class:witchwarper"
+}
