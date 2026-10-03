@@ -285,15 +285,27 @@ shape (the Constitution modifier adds to Stamina each level; racial hit points a
   pools prints per-level numbers that look right and puts Con and race HP into the wrong total.
   A reader that drops `HD` prints Hit Points short by one per level.
 
-This reading is still **a hypothesis until E3.3 confirms it** with an SRD citation (E0.4) and a
-PCGen SF oracle run for a named build. Nothing above states a Core Rulebook value as fact.
+~~This reading is still a hypothesis until E3.3 confirms it.~~ **Confirmed by E3.3 (2026-10-03)**
+(`artifacts/epic_3/E3.3_cycle_receipt.md`). The reading matches the SRD hand values (E0.4) and
+real PCGen runs on all six named builds: the four seeds (HP 25/34/29/20, Stamina 24/25/35/21 —
+SRD = PCGen = the mapping) and PCGen's own `sf_soldier.pcg` (HP 74, Stamina 90) and
+`sf_mechanic.pcg` (HP 122, Stamina 220, with Toughness). Runs:
+`artifacts/epic_3/token-mapping/oracle-builds/*.oracle.txt`.
 
 - `COMBAT|AC` is split by `TYPE=EAC_Armor` / `TYPE=KAC_Armor`, with `SPROP:EAC` in prose.
+  The game mode's `ACTYPE:EAC`/`ACTYPE:KAC` rows (`miscinfo.lst`) are `TOTAL` minus the other
+  type, so PCGen's `AC.Total` (the PF reading) sums both armour bonuses. The six runs print
+  `AC.Total` 24/20/24/18/49/28, and EAC is 16/16/18/14/30/21.
 - `FACT:KeyAbilityScore` holds strings such as `Str or Dex`, `CHA`, `WIS`, `INT` (choice vs fixed).
-- **Resolve** has no direct row. E4.1 hand-transcribes the formula from the SRD (§18).
+- **Resolve** — *E3.3 correction:* the oracle **does** carry it:
+  `BONUS:VAR|Resolve|max(1,Resolve_PCLvl+KeyAbilityBonus)` and
+  `BONUS:VAR|Resolve_PCLvl|max(1,EffectiveLVL/2)` on `Default` (`scr_abilities.lst`), and PCGen
+  prints `VAR.Resolve` (4/6/6/5 for the seeds = the SRD values). The SRD formula (§18) has no
+  outer `max(1, …)`. The two differ only when a negative key modifier pulls the sum below 1.
+  E3.3's table has a `resolve` row.
 
-**Decision.** SF gets a **separate** mapping table (proposed path
-`artifacts/epic_3/token-mapping/sf-mapping-table.v1.json`; E3.3 fixes the real path). Every PCGen
+**Decision.** SF gets a **separate** mapping table, at
+`artifacts/epic_3/token-mapping/sf-mapping-table.v1.json` (path fixed by E3.3). Every PCGen
 field whose SF meaning differs from its PF meaning gets one row, and each row cites two things:
 the SRD rule (URL + section), and an oracle observation (a PCGen SF run's output for a named build).
 A field with no oracle row is a **named refusal**, never a guess. Planted mutations prove the
@@ -301,7 +313,10 @@ mapping is load-bearing. The set is exactly four, and each must turn at least on
 (M1) swap `ALTHP`↔`CURRENTMAX`; (M2) drop the `HD` term from Hit Points; (M3) route
 `CON*TL` into Hit Points instead of Stamina; (M4) drop `RaceHP` from Hit Points. M1 and M3 are
 detectable only by a seed whose Con modifier is not 0, so every SF seed has a non-zero Con
-modifier (`content-unit-inventory.md §4`, E0.4).
+modifier (`content-unit-inventory.md §4`, E0.4). *E3.3 precision:* this holds for M3. M1, as the
+table models it (every `CURRENTMAX` term, `RaceHP` included, trades places with every `ALTHP` term,
+`CON*TL` included), also moves race HP, so with Con 0 it still shifts HP by `level − RaceHP`.
+That shift is 0 for a level-4 race-HP-4 build.
 
 **Enforced by:** E3.3's acceptance; the structural-diff protocol on the SF package (`§14`).
 

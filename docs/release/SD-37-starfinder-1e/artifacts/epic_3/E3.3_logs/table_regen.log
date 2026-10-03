@@ -1,0 +1,7 @@
+$ build_sf_mapping_table.py + sf_reused_pf_fields.py --write, then cmp with the committed table
+docs/release/SD-37-starfinder-1e/artifacts/epic_3/token-mapping/sf-mapping-table.v1.json
+pf_rows_distinct=269 not_a_tag=37 absent_from_sf=99 remapped=4 reused=129 verdict=WRITTEN
+REGENERATED_IDENTICAL
+$ sf_reused_pf_fields.py --check
+pf_rows_distinct=269 not_a_tag=37 absent_from_sf=99 remapped=4 reused=129 verdict=PASS
+exit=0

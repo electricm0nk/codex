@@ -41,6 +41,7 @@ pub mod pool_pick;
 pub mod prereq;
 pub mod prose;
 pub mod reprint;
+pub mod sf_mapping;
 pub mod subclass;
 pub mod table;
 pub mod weapon_membership;

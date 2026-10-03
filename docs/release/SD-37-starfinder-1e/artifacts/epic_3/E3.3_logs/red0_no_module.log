@@ -1,0 +1,10 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+error[E0432]: unresolved import `codex_ingest::pcgen_import::sheet_rule::sf_mapping`
+  --> crates/codex-ingest/tests/sf_mapping_table.rs:22:45
+   |
+22 | use codex_ingest::pcgen_import::sheet_rule::sf_mapping::{
+   |                                             ^^^^^^^^^^ could not find `sf_mapping` in `sheet_rule`
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `codex-ingest` (test "sf_mapping_table") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

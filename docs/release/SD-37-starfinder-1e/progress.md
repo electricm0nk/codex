@@ -27,7 +27,7 @@ it (`workflow-instruction.md §5`).
 | E0 | complete | 4 of 4 | rows corrected from `kanban.md` by E1.MC |
 | E1 | complete | 5 of 5 (E1.1–E1.4, E1.MC) | E1.MC receipt `artifacts/epic_1/E1.MC_cycle_receipt.md` |
 | E2 | complete | 3 of 3 (E2.1, E2.2, E2.MC) | E2.MC receipt `artifacts/epic_2/E2.MC_cycle_receipt.md` |
-| E3 | in progress | 2 of 6 (E3.1, E3.2) | E3.2 receipt `artifacts/epic_3/E3.2_cycle_receipt.md` |
+| E3 | in progress | 3 of 6 (E3.1, E3.2, E3.3) | E3.3 receipt `artifacts/epic_3/E3.3_cycle_receipt.md` |
 | E4 | waiting | 0 of 7 | |
 | E5 | waiting | 0 of 5 | after E4.MC (C0.2) |
 | E6 | waiting | 0 of 7 | |
@@ -152,6 +152,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E2.MC | 2026-10-02 | Opus 5.5 | the `docs(sd37,e2.mc)` commit | complete | Aldric unchanged (rendered on 3fb7c4a7a1, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not reachable (no SF data) | `artifacts/epic_2/E2.MC_cycle_receipt.md` |
 | E3.1 | 2026-10-03 | Opus 5.5 | the `feat(sd37,e3.1)` commit | complete | Aldric unchanged (rendered by the E1.4 harness, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not reachable (no SF data before E3.4) | `artifacts/epic_3/E3.1_cycle_receipt.md` |
 | E3.2 | 2026-10-03 | Opus 5.5 | the `feat(sd37,e3.2)` commit | complete | Aldric unchanged (rendered by the E1.4 harness, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not reachable (no SF data before E3.4) | `artifacts/epic_3/E3.2_cycle_receipt.md` |
+| E3.3 | 2026-10-03 | Opus 5.5 | the `feat(sd37,e3.3)` commit | complete | Aldric unchanged (E1.4 harness, sha256 1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); 4 SF seeds not rendered (no SF package before E3.4); mapping-evaluated = SRD = PCGen: Soldier HP 25 SP 24 RP 4 EAC 16 KAC 19 / Mystic 34 25 6 16 16 / Technomancer 29 35 6 18 19 / Envoy 20 21 5 14 15 | `artifacts/epic_3/E3.3_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
@@ -192,6 +193,9 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-03 | E3.2 | SF formula-system census written by a new `bin/sf_formula_census` to `artifacts/epic_3/formula-system/sf-formula-census.json` | emit it from `sheet_rule_convert --system starfinder-1e` | the SF converter path stays refused by name until E3.4 wires the SF package (E1.3/E3.1 rows); the census is tool-side and carries no record name |
 | 2026-10-03 | E3.2 | `--sf-formula` self-test added as class `SfFormulaMode` in `scripts/tests/test_token_coverage.py` (not named in the E3 row) | a separate test file | the `token-coverage-selftest` stage of `verify.sh` runs only that file; a separate file would be a test no stage runs |
 | 2026-10-03 | E3.2 | A `MODIFY*` token in a file outside the registered books is refused by name by the ledger ("not in a registered book …"); 0 such today | let the Rust reader open the excluded books to classify them | E3.1's control: the converter never reads an excluded book (SD-a) |
+| 2026-10-03 | E3.3 | SF mapping table kept at the §8 proposed path `artifacts/epic_3/token-mapping/sf-mapping-table.v1.json` | `data/starfinder-1e/` | the PF table lives in its package artifacts too; the E5 row says the converter regenerates `data/starfinder-1e/**` |
+| 2026-10-03 | E3.3 | Oracle observations from 4 new minimal seed `.pcg` files (`oracle-builds/make_seed_pcg.py`) + PCGen's own `sf_soldier.pcg`/`sf_mechanic.pcg` referenced in place | only PCGen's two test characters | they match no seed; §8 asks for a run of a named build, and the seeds are the builds the fixtures name |
+| 2026-10-03 | E3.3 | Theme and level-5 stat picks folded into the `.pcg` base scores (the run prints the fixture scores; the test checks) | model every theme/boost pick in `.pcg` | no mapped field reads the pick, only the final score |
 
 ## Open blockers
 

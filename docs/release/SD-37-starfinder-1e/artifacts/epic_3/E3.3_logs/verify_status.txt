@@ -1,0 +1,6 @@
+root=exit 0
+desktop=exit 0
+convert_check=exit 0
+residue=exit 0
+seed_render=exit 0 (re-run from apps/desktop/src-tauri; the chain ran it from the root, 0 tests — not counted)
+ALLDONE
