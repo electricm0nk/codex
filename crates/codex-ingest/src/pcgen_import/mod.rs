@@ -113,6 +113,9 @@ pub mod spell_formula_settle;
 /// Per-system book registry by `.pcc`, the licence exclusion record, the registered books'
 /// resolved include structure and the game-mode loader (Starfinder 1e; `decisions.md §6`).
 pub mod system_books;
+/// SD-37 E3.4: the Starfinder corpus -- one licence-screened identity record per inventory unit
+/// of the converted books, generated whole from the inventory and the pinned oracle.
+pub mod sf_corpus;
 /// SD-35 `AT-35-E6-003-RULED` cycle 18: settles the class-feature pool's three
 /// ingest-token gates at authoring time, so the shipping catalog walk reads a
 /// verdict instead of the corpus row's token array.

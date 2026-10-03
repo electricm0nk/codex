@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "D-suit II",
+    "name": "D-suit II"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 25,
+    "path": "starfinder/paizo/core/scr_profs_armor.lst",
+    "record_key": "D-suit II",
+    "sha256": "4193bb041d9670b31528c111671efc20dc7d860e6da3c1dcbae7ae86e27665ed"
+  },
+  "unit_id": "core:proficiency:d_suit_ii"
+}

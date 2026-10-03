@@ -1,0 +1,1 @@
+{"var":"v1ee7cc768344b502","label":"AC Drone EAC","declared_by":[],"contributions":[{"rule_id":"core:ability:drone","expr":{"Var":"v94905793aaee0bfc"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:194","starfinder/paizo/core/scr_abilities.lst:1394"]}}

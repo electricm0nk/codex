@@ -1,0 +1,25 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "category": "Weapon",
+    "key": "Codex-Named Unit (ability_core_scr_abilities_lst_991)",
+    "name": "Codex-Named Unit (ability_core_scr_abilities_lst_991)",
+    "type": "Weapon Proficiency"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "core:scr_abilities.lst:991",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 991,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Codex-Named Unit (ability_core_scr_abilities_lst_991)",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:skyfire_sword_tactical"
+}

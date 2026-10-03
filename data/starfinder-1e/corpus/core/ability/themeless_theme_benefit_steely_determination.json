@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Theme",
+    "key": "Themeless Theme Benefit ~ Steely Determination",
+    "name": "Steely Determination",
+    "type": "Theme.Theme Benefit.Themeless Theme Benefit.Themeless Theme Benefit Lvl 18"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 620,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Themeless Theme Benefit ~ Steely Determination",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:themeless_theme_benefit_steely_determination"
+}

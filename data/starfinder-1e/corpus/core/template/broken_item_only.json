@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "Broken (item only)",
+    "name": "Broken (item only)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 55,
+    "path": "starfinder/paizo/core/scr_templates.lst",
+    "record_key": "Broken (item only)",
+    "sha256": "49b3ecaeb57b9df001ce7283de7accbba50de6188b8f8c1fbdcc40c76aa7bf88"
+  },
+  "unit_id": "core:template:broken_item_only"
+}

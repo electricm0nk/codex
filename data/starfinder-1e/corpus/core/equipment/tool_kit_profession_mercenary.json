@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Tool Kit (Profession (Mercenary))",
+    "name": "Tool Kit (Profession (Mercenary))",
+    "type": "Goods.TechItem.Tools"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 84,
+    "path": "starfinder/paizo/core/scr_equip_gear.lst",
+    "record_key": "Tool Kit (Profession (Mercenary))",
+    "sha256": "e3822016e465ce67c4e3c8d8323ee6e282159a400c5899e5cb2b58c5379ad59b"
+  },
+  "unit_id": "core:equipment:tool_kit_profession_mercenary"
+}

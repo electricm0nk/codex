@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Carbonedge shuriken",
+    "name": "Carbonedge shuriken (10)",
+    "type": "RESIZABLE.Weapon.Ranged.Thrown.ToHit_UseStr.Special Weapon.Prof Group Special.UNCATEGORIZED.Piercing"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 341,
+    "path": "starfinder/paizo/core/scr_equip.lst",
+    "record_key": "Carbonedge shuriken",
+    "sha256": "e96b7877d21eb6c13cb09a4baa48cd7fd89910d9e73a84c562528dc2c76c352e"
+  },
+  "unit_id": "core:equipment:carbonedge_shuriken"
+}

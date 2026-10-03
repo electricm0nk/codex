@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Weapon",
+    "key": "Reaction cannon (heavy)",
+    "name": "Reaction cannon (heavy)",
+    "type": "Weapon Proficiency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1185,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Reaction cannon (heavy)",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:reaction_cannon_heavy"
+}

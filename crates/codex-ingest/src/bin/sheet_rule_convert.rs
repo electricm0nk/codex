@@ -171,7 +171,7 @@ fn main() {
             eprintln!("sheet_rule_convert: writing {}: {e}", out_dir.display());
             std::process::exit(2);
         }
-        if let Err(e) = sheet_rule::write_var_names(&repo, &run) {
+        if let Err(e) = sheet_rule::write_var_names(&repo, args.system, &run) {
             eprintln!("sheet_rule_convert: writing var_names.json: {e}");
             std::process::exit(2);
         }

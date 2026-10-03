@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Guard FIGHTING STYLE ~ Guard's Protection",
+    "name": "Guard's Protection",
+    "type": "Class Feature.Guard FIGHTING STYLE.Guard FIGHTING STYLE LVL 5.Extraordinary"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2010,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Guard FIGHTING STYLE ~ Guard's Protection",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:guard_fighting_style_guard_s_protection"
+}

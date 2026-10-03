@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Archetype",
+    "key": "Solarian Archetype ~ Phrenic Adept",
+    "name": "Phrenic Adept",
+    "type": "Archetype.Solarian Archetype"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2100,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Solarian Archetype ~ Phrenic Adept",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:solarian_archetype_phrenic_adept"
+}

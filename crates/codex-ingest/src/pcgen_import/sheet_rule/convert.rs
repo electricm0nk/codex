@@ -15,6 +15,7 @@ use super::prereq::{convert_pre_token, resolve_holdable_rule};
 use super::prose::{convert_desc_like, convert_labelled, convert_positional, decode_entities, expand_output_name, pi_hit, strip_editorial_not_implemented_markers};
 use super::table::{row_for_head, MapsTo};
 use super::weapon_membership::{self, WeaponMembershipIndex};
+use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::sheet_rule::*;
 
 pub const CONVERTER_VERSION: &str = "sheet_rule_convert/0.15.0";
@@ -174,6 +175,200 @@ fn weapon_ref(ctx: &RecordCtx, name: &str) -> WeaponRef {
         WeaponRef::Group(g.to_string())
     } else {
         WeaponRef::Named(n.to_string())
+    }
+}
+
+/// SD-37 E3.4: a record a Starfinder record names (a language it grants, a weapon it bonuses or
+/// is proficient with) prints on the sheet, so the name is screened. A product-identity name
+/// (`Castrovelian`, `Skyfire sword (tactical)`) becomes the named record's own name -- matched by
+/// the row's name field or its `KEY:` -- which the corpus already renamed
+/// (`pcgen_import::sf_corpus`), so the reference still meets its record; a name no record of
+/// `kind` declares is withheld. Pathfinder names are unchanged.
+fn sf_screened_record_name(ctx: &mut RecordCtx, kind: &str, name: &str) -> Option<String> {
+    if ctx.tree.system == GameSystem::Pathfinder1e || pi_hit(ctx.tree.system, name).is_none() {
+        return Some(name.to_string());
+    }
+    let declared = ctx.index.records.iter().find(|r| {
+        r.kind == kind
+            && ctx.tree.file_index(&r.rel_path).is_some_and(|file| {
+                r.line > 0 && r.line <= ctx.tree.files[file].lines.len() && {
+                    // The row's own name field (before any `.COPY=`) or its `KEY:`.
+                    let row = ctx.tree.row_text(super::closure::RowRef { file, line: r.line });
+                    let head = super::closure::tokenize_row(row).0;
+                    head.split(".COPY=").next().unwrap_or(&head).trim().eq_ignore_ascii_case(name.trim())
+                        || super::closure::row_identity(row).key.eq_ignore_ascii_case(name.trim())
+                }
+            })
+    });
+    match declared {
+        Some(r) => Some(r.name.clone()),
+        None => {
+            ctx.pi_term_hits.push(format!("{kind} name"));
+            None
+        }
+    }
+}
+
+/// SD-37 E3.4: the formula-system heads a Starfinder record carries (`MODIFY:`, `MODIFYOTHER:`,
+/// and `PART:<n>|MODIFY:...` on a weapon), lowered by [`convert_sf_formula_token`]. Pathfinder's
+/// 35 `MODIFY*` tokens keep their table reading (`unmapped:<HEAD>`), so its package is unmoved.
+fn sf_formula_head(system: GameSystem, key: &str) -> bool {
+    system != GameSystem::Pathfinder1e && matches!(key, "MODIFY" | "MODIFYOTHER" | "PART")
+}
+
+/// SD-37 E3.4: one Starfinder formula-system token, by its variable's sheet role
+/// ([`super::formula_system::VARIABLE_ROLES`], E3.2) -- the paper-sheet rule (`decisions.md §5`):
+///
+/// - a **print** role prints one stat-block row with the literal the token states (`Item level
+///   3`, `Upgrade slots 1`, a weapon's `Damage 1d6`; `ADD` prints signed, `+1`). Dice stay
+///   literal. A value that is a formula, or an operator other than `SET`/`ADD`, degrades by name;
+/// - a **compute** role is lowered only where it is a term of a sheet total the record itself
+///   adds to: `MODIFYOTHER:PC.MOVEMENT|<mode>|Speed|ADD|<n>` (armour's speed adjustment) is a
+///   [`BonusTarget::Speed`] line. Every other compute role (ability scores and modifiers, set by
+///   the stat definitions, which are not records) degrades by name.
+fn convert_sf_formula_token(ctx: &mut RecordCtx, acc: &mut Acc, key: &str, value: &str) -> Result<(), String> {
+    use super::formula_system::{SheetUse, VARIABLE_ROLES};
+    let fields: Vec<&str> = value.split('|').map(str::trim).collect();
+    // (variable, operator, value, the MODIFYOTHER grouping)
+    let (var, op, val, grouping) = match key {
+        "MODIFY" if fields.len() >= 3 => (fields[0], fields[1], fields[2], None),
+        "MODIFYOTHER" if fields.len() >= 5 => (fields[2], fields[3], fields[4], Some((fields[0], fields[1]))),
+        "PART" => match fields.get(1).and_then(|f| f.strip_prefix("MODIFY:")) {
+            Some(v) if fields.len() >= 4 => (v, fields[2], fields[3], None),
+            _ => return Err("PART (only a MODIFY: part is read)".into()),
+        },
+        _ => return Err(format!("{key} (shape)")),
+    };
+    let Some((_, role, sheet)) = VARIABLE_ROLES.iter().find(|(name, _, _)| name.eq_ignore_ascii_case(var)) else {
+        return Err(format!("{key} (variable {var} has no sheet role)"));
+    };
+    match sheet {
+        SheetUse::Print => {
+            let label = sf_print_role_label(role).ok_or_else(|| format!("{key} (print role {role} has no sheet label)"))?;
+            let literal = val.parse::<i64>().is_ok() || is_dice_literal(val);
+            if !literal {
+                return Err(format!("{key} ({role} value is a formula; a printed value is a literal)"));
+            }
+            let text = match op {
+                "SET" => val.to_string(),
+                "ADD" if val.starts_with('-') => val.to_string(),
+                "ADD" => format!("+{val}"),
+                other => return Err(format!("{key} ({role} operator {other})")),
+            };
+            push_stat(acc, label, vec![ProsePiece::Text(text)]);
+            Ok(())
+        }
+        SheetUse::Compute => match (*role, op, grouping) {
+            ("movement_speed", "ADD", Some((scope, mode))) if scope.eq_ignore_ascii_case("PC.MOVEMENT") => {
+                let n = super::formula::integer_literal(val).ok_or_else(|| format!("{key} (movement_speed value {val} is not an integer)"))?;
+                acc.lines.push(Line {
+                    seq: ctx.current_seq,
+                    suffix: Some(format!("speed{}", acc.lines.len())),
+                    label: format!("{} ({} speed)", ctx.record.name, mode.to_ascii_lowercase()),
+                    value: SheetValue::Number(Expr::Const(n)),
+                    also: Vec::new(),
+                    target: Some(BonusTarget::Speed(mode.to_string())),
+                    bonus_type: None,
+                    applies: Applies::Always,
+                    prose: Vec::new(),
+                });
+                Ok(())
+            }
+            (role, op, _) => Err(format!("{key} (compute role {role} {op} is not a term this record adds)")),
+        },
+    }
+}
+
+/// The stat-block label a printed formula-system role carries.
+fn sf_print_role_label(role: &str) -> Option<&'static str> {
+    Some(match role {
+        "item_level" => "Item level",
+        "armor_upgrade_slots" => "Upgrade slots",
+        "armor_weapon_slots" => "Weapon slots",
+        "upgrade_slots_used" => "Upgrade slots used",
+        "android_upgrade_slots_used" => "Android upgrade slots used",
+        "aeon_upgrade_slots" => "Aeon upgrade slots",
+        "weapon_damage" => "Damage",
+        "space" => "Space",
+        "reach" => "Reach",
+        "hands" => "Hands",
+        "legs" => "Legs",
+        _ => return None,
+    })
+}
+
+/// `1d6`, `2d10`, `1d4+1`: a dice literal (`DICE` format).
+fn is_dice_literal(s: &str) -> bool {
+    let (dice, plus) = match s.split_once('+') {
+        Some((d, p)) => (d, Some(p)),
+        None => (s, None),
+    };
+    let ok_dice = dice.split_once('d').is_some_and(|(n, d)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()) && !d.is_empty() && d.bytes().all(|b| b.is_ascii_digit()));
+    ok_dice && plus.is_none_or(|p| !p.is_empty() && p.bytes().all(|b| b.is_ascii_digit()))
+}
+
+/// SD-37 E3.4: the Starfinder reading of the two overloaded bonus heads (`decisions.md §8`).
+/// `None` for every other head and for every Pathfinder record, which keep [`bonus_targets`].
+///
+/// - `BONUS:HP|<pool>|<value>` feeds the pool the SF mapping table's row names
+///   ([`super::sf_mapping::hp_pool_row`]): `hit_points` -> [`BonusTarget::Hp`], `stamina` ->
+///   [`BonusTarget::Stamina`]. A token no table term claims degrades by name -- never the
+///   Pathfinder reading, which put both pools into hit points.
+/// - `BONUS:COMBAT|AC|...|TYPE=<t>` feeds each armour-class split ([`BonusTarget::Eac`],
+///   [`BonusTarget::Kac`]) whose game-mode `ACTYPE` row does not remove type `<t>`
+///   ([`PinnedTree::armor_class_split`]); an untyped bonus feeds both. Other `COMBAT` targets on
+///   the same token keep their Pathfinder reading.
+fn sf_bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str, value: &str, bonus_type: Option<&BonusType>) -> Result<Option<Vec<(BonusTarget, String)>>, String> {
+    if ctx.tree.system == GameSystem::Pathfinder1e {
+        return Ok(None);
+    }
+    match sub {
+        "HP" => {
+            let table = super::sf_mapping::converter_table().map_err(|e| format!("BONUS:HP (the Starfinder mapping table does not load: {e})"))?;
+            // The carrier is named by its own row's declaration in the pinned tree (`KEY:` else
+            // the name field), never by the corpus record's key, which a product-identity record
+            // replaces with a codex-named placeholder.
+            let own_key = ctx
+                .tree
+                .file_index(&ctx.record.rel_path)
+                .filter(|f| ctx.record.line > 0 && ctx.record.line <= ctx.tree.files[*f].lines.len())
+                .map(|file| super::closure::row_identity(ctx.tree.row_text(super::closure::RowRef { file, line: ctx.record.line })).key)
+                .filter(|k| !k.is_empty())
+                .unwrap_or_else(|| ctx.record.key.to_ascii_uppercase());
+            let carrier = if ctx.record.kind == "class" { format!("CLASS:{own_key}") } else { own_key };
+            let pool = target.trim();
+            match super::sf_mapping::hp_pool_row(table, &carrier, pool, value) {
+                Some("hit_points") => Ok(Some(vec![(BonusTarget::Hp, "hit points".into())])),
+                Some("stamina") => Ok(Some(vec![(BonusTarget::Stamina, "Stamina Points".into())])),
+                _ => Err(format!("BONUS:HP|{pool} (no Starfinder mapping-table term)")),
+            }
+        }
+        "COMBAT" if target.split(',').any(|c| c.trim().eq_ignore_ascii_case("AC")) => {
+            let split = &ctx.tree.armor_class_split;
+            if split.is_empty() {
+                return Err("BONUS:COMBAT|AC (the game mode declares no armour-class split)".into());
+            }
+            let ty = bonus_type.map(|t| t.name.as_str()).unwrap_or("");
+            let mut out = Vec::new();
+            for c in target.split(',') {
+                if !c.trim().eq_ignore_ascii_case("AC") {
+                    out.extend(bonus_targets(ctx, sub, c)?);
+                    continue;
+                }
+                for (name, removes) in split {
+                    if removes.contains(ty) {
+                        continue;
+                    }
+                    match name.as_str() {
+                        "EAC" => out.push((BonusTarget::Eac, "EAC".to_string())),
+                        "KAC" => out.push((BonusTarget::Kac, "KAC".to_string())),
+                        other => return Err(format!("BONUS:COMBAT|AC (armour-class split {other} has no sheet total)")),
+                    }
+                }
+            }
+            Ok(Some(out))
+        }
+        _ => Ok(None),
     }
 }
 
@@ -428,6 +623,9 @@ fn weapon_type_selector(ctx: &mut RecordCtx, membership: &WeaponMembershipIndex,
         ctx.defect("unrecognized-proficiency-tag", format!("{}: {w}", ctx.record.id));
         return None;
     }
+    // SD-37 E3.4: each member is a weapon proficiency's name; a product-identity one becomes its
+    // proficiency record's renamed name ([`sf_screened_record_name`]; Pathfinder unchanged).
+    let members: Vec<String> = members.into_iter().filter_map(|m| sf_screened_record_name(ctx, "proficiency", &m)).collect();
     Some(ProfRef::WeaponSet { label: segments.join("."), members })
 }
 
@@ -718,8 +916,24 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             }
             // The census key: the row this token resolves to, recorded before any branch
             // below decides what to do with it (AT-35-E2-004).
-            let under = token_key(key, value);
+            let sf_formula = sf_formula_head(ctx.tree.system, key);
+            let under = if sf_formula { format!("formula-system:{key}") } else { token_key(key, value) };
             ctx.carry(under.clone());
+            if sf_formula && !value.contains("[redacted PI]") {
+                seq += 1;
+                ctx.current_under = Some(under.clone());
+                ctx.current_seq = Some(seq);
+                ctx.current_seq_degraded = false;
+                if let Err(tt) = convert_sf_formula_token(&mut ctx, &mut acc, key, value) {
+                    ctx.refuse_under(&under, tt);
+                }
+                if ctx.current_seq_degraded {
+                    failed_seqs.insert(seq);
+                }
+                ctx.current_under = None;
+                ctx.current_seq = None;
+                continue;
+            }
             if value.contains("[redacted PI]") {
                 match key {
                     // `decisions.md` §15 R2 (RULED): omit the redacted field, stamp
@@ -785,7 +999,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         match &acc.output_name {
             Some(on) if !record.pi_fields.iter().any(|f| f == "name") => {
                 let expanded = expand_output_name(on, &base);
-                if pi_hit(&expanded).is_some() {
+                if pi_hit(ctx.tree.system, &expanded).is_some() {
                     ctx.pi_term_hits.push("output_name".into());
                     base
                 } else {
@@ -1054,7 +1268,7 @@ fn text_stat(ctx: &mut RecordCtx, acc: &mut Acc, label: &str, value: &str, field
     if text.is_empty() {
         return;
     }
-    if pi_hit(&text).is_some() {
+    if pi_hit(ctx.tree.system, &text).is_some() {
         ctx.pi_term_hits.push(field.to_string());
         return;
     }
@@ -1191,6 +1405,12 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         "OUTPUTNAME" => acc.output_name = Some(decode_entities(v)),
         "FACT" => {
             if let Some((name, val)) = v.split_once('|') {
+                // SD-37 E3.4: a Starfinder fact's value prints (a deity's title), so it is
+                // screened; a product-identity value is withheld, never printed.
+                if ctx.tree.system != GameSystem::Pathfinder1e && pi_hit(ctx.tree.system, val).is_some() {
+                    ctx.pi_term_hits.push(format!("fact {}", name.trim()));
+                    return Ok(());
+                }
                 acc.grants.push(Effect::FactDeclare { name: name.trim().to_string(), value: val.trim().to_string() });
             }
         }
@@ -1378,7 +1598,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     return Err("NATURALATTACKS (shape)".into());
                 }
                 let name = parts[0].to_string();
-                if pi_hit(&name).is_some() {
+                if pi_hit(ctx.tree.system, &name).is_some() {
                     ctx.pi_term_hits.push("natural attack".into());
                     continue;
                 }
@@ -1403,7 +1623,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                 let mut prose = Vec::new();
                 for extra in parts.iter().skip(4) {
                     if let Some(sp) = extra.strip_prefix("SPROP=") {
-                        if pi_hit(sp).is_some() {
+                        if pi_hit(ctx.tree.system, sp).is_some() {
                             ctx.pi_term_hits.push("natural attack".into());
                         } else {
                             prose.push(ProseSegment { family: ProseFamily::Special, pieces: vec![ProsePiece::Text(sp.to_string())], applies: None, pick_last: false, suppress_when_all_zero: false });
@@ -1506,7 +1726,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     Some(i) => (e[..i].trim().to_string(), Some(e[i + 1..].trim_end_matches(')').trim().to_string())),
                     None => (e.to_string(), None),
                 };
-                if pi_hit(&name).is_some() {
+                if pi_hit(ctx.tree.system, &name).is_some() {
                     ctx.pi_term_hits.push("vision".into());
                     continue;
                 }
@@ -1654,6 +1874,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                 "WEAPONPROF" => {
                     // Row BONUS:WEAPONPROF=<name>: the property named by the second field.
                     let weapon = weapon_ref(ctx, sub_arg.as_deref().unwrap_or(""));
+                    let weapon = match weapon {
+                        WeaponRef::Named(n) => match sf_screened_record_name(ctx, "equipment", &n) {
+                            Some(n) => WeaponRef::Named(n),
+                            None => return Err("BONUS:WEAPONPROF (weapon name withheld: product identity)".into()),
+                        },
+                        other => other,
+                    };
                     let expr = convert_formula(ctx, &formula)?;
                     let prop = target.to_ascii_uppercase();
                     let (bt, words) = match prop.as_str() {
@@ -1667,11 +1894,24 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         WeaponRef::Group(g) => format!("{g} weapons"),
                         _ => "chosen weapon".into(),
                     };
+                    // SD-37 E3.4: the weapon's name prints on the line, so it is screened like
+                    // every other printed string; a product-identity name prints as the
+                    // record's own (already screened) name instead.
+                    let wname = if pi_hit(ctx.tree.system, &wname).is_some() {
+                        ctx.pi_term_hits.push("weapon name".into());
+                        ctx.record.name.clone()
+                    } else {
+                        wname
+                    };
                     acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("weapon{}", acc.lines.len())), label: format!("{wname} {words}"), value: SheetValue::Number(expr), also: Vec::new(), target: Some(bt), bonus_type: bonus_type.clone(), applies: when, prose: Vec::new() });
                 }
                 other => {
+                    let sf_targets = sf_bonus_targets(ctx, other, &target, &formula, bonus_type.as_ref())?;
                     let expr = convert_formula(ctx, &formula)?;
-                    let targets = bonus_targets(ctx, other, &target)?;
+                    let targets = match sf_targets {
+                        Some(t) => t,
+                        None => bonus_targets(ctx, other, &target)?,
+                    };
                     for (bt, words) in targets {
                         acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("bonus{}", acc.lines.len())), label: format!("{} ({words})", ctx.record.name), value: SheetValue::Number(expr.clone()), also: Vec::new(), target: Some(bt), bonus_type: bonus_type.clone(), applies: when.clone(), prose: Vec::new() });
                     }
@@ -1725,7 +1965,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     Some((s, d)) => (s.trim().to_string(), Some(d.trim().to_string())),
                     None => (entry.trim().to_string(), None),
                 };
-                if pi_hit(&spell).is_some() {
+                if pi_hit(ctx.tree.system, &spell).is_some() {
                     ctx.pi_term_hits.push("spell-like ability".into());
                     continue;
                 }
@@ -1821,7 +2061,10 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             let items: Vec<String> = fields.iter().skip(1).map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect();
             let choice = ctx.choice_id.clone().unwrap_or_else(|| ctx.record.id.clone());
             let facts: Vec<Fact> = match head.as_str() {
-                "LANG" => items.into_iter().map(|l| if l.contains("%LIST") { Fact::Chosen(choice.clone()) } else { Fact::Language(tag_word(&l)) }).collect(),
+                "LANG" => items
+                    .into_iter()
+                    .filter_map(|l| if l.contains("%LIST") { Some(Fact::Chosen(choice.clone())) } else { sf_screened_record_name(ctx, "language", &l).map(|l| Fact::Language(tag_word(&l))) })
+                    .collect(),
                 "WEAPONPROF" => {
                     let membership = weapon_membership::index(ctx.tree);
                     let mut out = Vec::with_capacity(items.len());
@@ -1834,7 +2077,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                             }
                         } else if w.eq_ignore_ascii_case("DEITYWEAPONS") {
                             out.push(Fact::Proficiency(ProfRef::DeityFavoredWeapon));
-                        } else {
+                        } else if let Some(w) = sf_screened_record_name(ctx, "proficiency", &w) {
                             out.push(Fact::Proficiency(ProfRef::Weapon(tag_word(&w))));
                         }
                     }
@@ -2029,7 +2272,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             match head.as_str() {
                 "SPELLCASTER" => {
                     let who = fields.get(1).cloned().unwrap_or_default();
-                    if pi_hit(&who).is_none() {
+                    if pi_hit(ctx.tree.system, &who).is_none() {
                         acc.special.push(ProseSegment { family: ProseFamily::Special, pieces: vec![ProsePiece::Text(format!("Casts spells as a {who}."))], applies: None, pick_last: false, suppress_when_all_zero: false });
                     }
                 }
@@ -2176,6 +2419,7 @@ mod ability_type_selector_tests {
             ability_category_parent: BTreeMap::new(),
             ability_category_type: BTreeMap::new(),
             ability_category_pool: BTreeMap::new(),
+            armor_class_split: BTreeMap::new(),
         }
     }
 

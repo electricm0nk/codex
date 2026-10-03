@@ -849,6 +849,7 @@ mod tests {
             ability_category_parent: pairs.iter().map(|(c, p)| (c.to_string(), p.to_string())).collect(),
             ability_category_type: BTreeMap::new(),
             ability_category_pool: BTreeMap::new(),
+            armor_class_split: BTreeMap::new(),
         }
     }
 

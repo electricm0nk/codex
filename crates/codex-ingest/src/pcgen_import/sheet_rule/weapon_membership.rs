@@ -154,6 +154,7 @@ mod tests {
             ability_category_parent: BTreeMap::new(),
             ability_category_type: BTreeMap::new(),
             ability_category_pool: BTreeMap::new(),
+            armor_class_split: BTreeMap::new(),
         }
     }
 

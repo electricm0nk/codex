@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Theme",
+    "key": "Icon Theme Benefit ~ CELEBRITY",
+    "name": "CELEBRITY",
+    "type": "Theme.Theme Benefit.Icon Theme Benefit.Icon Theme Benefit Lvl 6"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 636,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Icon Theme Benefit ~ CELEBRITY",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:icon_theme_benefit_celebrity"
+}

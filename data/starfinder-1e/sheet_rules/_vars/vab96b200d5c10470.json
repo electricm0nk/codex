@@ -1,0 +1,1 @@
+{"var":"vab96b200d5c10470","label":"Damage Basic Melee Weapon","declared_by":[],"contributions":[{"rule_id":"core:ability:weapon_specialization_basic_melee_weapons","expr":{"Var":"v58a9536e3da2b476"},"bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:86"]}}

@@ -221,6 +221,10 @@ pub const VARIABLE_ROLES: &[(&str, &str, SheetUse)] = &[
     ("Race_Hands", "hands", SheetUse::Print),
     ("Race_Legs", "legs", SheetUse::Print),
     ("RaceType_Humanoid", "humanoid_body_plan", SheetUse::Print),
+    // SD-37 E3.4: a weapon's `PART:1|MODIFY:Damage|SET|1d6` (scope `PC.EQUIPMENT.PART`, format
+    // DICE). Its tab field starts `PART:`, not `MODIFY:`, so E3.2's census predicate never
+    // reached it and this table had no row; the converter prints the dice literally.
+    ("Damage", "weapon_damage", SheetUse::Print),
 ];
 
 /// PCGen-Formula built-ins (`pcgen/base/formula/function/*Function.java`) and the PCGen plugin

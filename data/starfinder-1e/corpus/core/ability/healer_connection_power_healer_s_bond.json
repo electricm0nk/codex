@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Healer Connection Power ~ Healer's Bond",
+    "name": "Healer's Bond",
+    "type": "Class Feature.Healer Connection Power.Healer Connection Power LVL 6.SpellLike"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1618,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Healer Connection Power ~ Healer's Bond",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:healer_connection_power_healer_s_bond"
+}

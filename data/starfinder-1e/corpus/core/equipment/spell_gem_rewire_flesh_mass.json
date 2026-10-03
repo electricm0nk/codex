@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Spell Gem (Rewire Flesh (Mass))",
+    "name": "Spell Gem (Rewire Flesh (Mass))",
+    "type": "Magic.SpellGem.Consumable"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 283,
+    "path": "starfinder/paizo/core/scr_equip_magic.lst",
+    "record_key": "Spell Gem (Rewire Flesh (Mass))",
+    "sha256": "5ce18c4f0c33fcaa19153e691d69a715051aad2b554d71e05ebf023e34dcb487"
+  },
+  "unit_id": "core:equipment:spell_gem_rewire_flesh_mass"
+}

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Envoy Improvisation ~ Clever Attack",
+    "name": "Clever Attack",
+    "type": "Class Feature.Envoy Improvisation.Envoy Improvisation Level 4.Extraordinary"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1304,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Envoy Improvisation ~ Clever Attack",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:envoy_improvisation_clever_attack"
+}

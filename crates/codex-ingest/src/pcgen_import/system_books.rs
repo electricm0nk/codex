@@ -65,6 +65,38 @@ pub const BOOK_PCCS: BookRegistry<SystemBook> = PerSystem {
     ],
 };
 
+/// The books the sheet-rule converter and the corpus generator convert, per system: a subset of
+/// [`BOOK_PCCS`]. Starfinder is tuned on the Core Rulebook alone before it goes wide
+/// (`docs/release/SD-37-starfinder-1e/decisions.md §4`: E3.4 is the one-book proof, E3.5 adds
+/// the other seven in one batch by widening this list). Pathfinder is read by directory and
+/// registers none here.
+pub const CONVERTED_BOOKS: BookRegistry<SystemBook> = PerSystem {
+    pathfinder_1e: &[],
+    starfinder_1e: &[SystemBook { dir: "starfinder/paizo/core", pcc: "starfinder/paizo/core/_starfinder_core_rulebook.pcc" }],
+};
+
+/// The PCGen game-mode directory each system's books load against (`system/gameModes/<mode>`).
+pub const GAME_MODES: PerSystem<&str> = PerSystem { pathfinder_1e: "Pathfinder", starfinder_1e: "Starfinder" };
+
+/// The id a converted book carries in the population, the corpus and the package: the last
+/// segment of its directory (`starfinder/paizo/core` -> `core`), which is also the prefix of
+/// every SF inventory unit id (`core:feat:toughness`).
+pub fn book_id(book: &SystemBook) -> &'static str {
+    book.dir.rsplit('/').next().unwrap_or(book.dir)
+}
+
+/// [`resolve_book_includes`] for the [`CONVERTED_BOOKS`] only, with the same exclusion guard.
+pub fn resolve_converted_book_includes(system: GameSystem, corpus_root: &Path) -> Result<BookIncludes, String> {
+    let converted = CONVERTED_BOOKS.books(system);
+    if converted.is_empty() {
+        return Err(format!("no converted book is registered for game system {system} (system_books::CONVERTED_BOOKS)"));
+    }
+    if let Some(b) = converted.iter().find(|b| !BOOK_PCCS.books(system).contains(b)) {
+        return Err(format!("converted book {} is not a registered book (system_books::BOOK_PCCS)", b.dir));
+    }
+    resolve_registered(system, corpus_root, converted, EXCLUDED_BOOK_PCCS.books(system))
+}
+
 /// The books a system's corpus ships that its converter must not read: every licence row that
 /// says **exclude**.
 pub const EXCLUDED_BOOK_PCCS: BookRegistry<ExcludedBook> = PerSystem {

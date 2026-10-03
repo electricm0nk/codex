@@ -1,0 +1,24 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "key": "Codex-Named Unit (proficiency_core_scr_profs_weapon_lst_41)",
+    "name": "Codex-Named Unit (proficiency_core_scr_profs_weapon_lst_41)",
+    "type": "ADVANCED MELEE.ADVANCED MELEE WEAPONS"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "core:scr_profs_weapon.lst:41",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 41,
+    "path": "starfinder/paizo/core/scr_profs_weapon.lst",
+    "record_key": "Codex-Named Unit (proficiency_core_scr_profs_weapon_lst_41)",
+    "sha256": "82f827be51f88e0b47cced07677ec1715678b3805ceec139fdeeebbc3c088690"
+  },
+  "unit_id": "core:proficiency:skyfire_sword_inferno"
+}

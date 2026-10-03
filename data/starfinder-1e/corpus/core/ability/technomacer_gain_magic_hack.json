@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Technomacer ~ Gain Magic Hack",
+    "name": "Gain Magic Hack",
+    "type": "Class Feature.Technomancer LV 8 Archetype Choice"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2052,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Technomacer ~ Gain Magic Hack",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:technomacer_gain_magic_hack"
+}

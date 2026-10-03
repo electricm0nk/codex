@@ -51,8 +51,8 @@ use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
-use crate::pcgen_import::ingest_record;
-use codex::rules_core::game_system::GameSystem;
+use crate::pcgen_import::{ingest_record, system_books};
+use codex::rules_core::game_system::{GameSystem, PerSystem};
 use codex::rules_core::sheet_rule::*;
 use closure::{Closure, PinnedTree, RowRef};
 use ctx::{slug, CorpusIndex, OwnContribution, RecordRef};
@@ -80,6 +80,37 @@ pub fn repo_root() -> PathBuf {
 #[derive(Deserialize)]
 struct InventoryFile {
     units: Vec<InventoryUnit>,
+}
+
+/// The work inventory each system's population comes from (repo-relative). Pathfinder's is the
+/// SD-35 inventory; Starfinder's is E0.3's (`docs/work-inventory.starfinder-1e.json`).
+pub const WORK_INVENTORY: PerSystem<&str> =
+    PerSystem { pathfinder_1e: "docs/work-inventory.json", starfinder_1e: "docs/work-inventory.starfinder-1e.json" };
+
+/// Where `--write` puts the source-name -> `VarId` map (repo-relative directory). Pathfinder's
+/// is the oracle harness's; Starfinder's sits beside its package so a Starfinder run can never
+/// overwrite Pathfinder's map (E1.3 "Does not cover").
+pub const VAR_NAMES_DIR: PerSystem<&str> = PerSystem { pathfinder_1e: "scripts/oracle_harness", starfinder_1e: "data/starfinder-1e" };
+
+/// The population's inventory for `system`. For a system whose books are registered by `.pcc`
+/// ([`system_books::CONVERTED_BOOKS`]) only the converted books' units are kept, and each unit's
+/// `book` (the inventory's directory form, `paizo/core`) becomes the book id the tree, the
+/// corpus and the package use (`core`, [`system_books::book_id`]).
+fn read_inventory(repo: &Path, system: GameSystem) -> Result<InventoryFile, String> {
+    let rel = WORK_INVENTORY.get(system);
+    let text = std::fs::read_to_string(repo.join(rel)).map_err(|e| format!("{rel}: {e}"))?;
+    let mut inv: InventoryFile = serde_json::from_str(&text).map_err(|e| format!("{rel}: {e}"))?;
+    let converted = system_books::CONVERTED_BOOKS.books(system);
+    if !converted.is_empty() {
+        let book_of = |dir: &str| -> Option<&'static str> {
+            converted.iter().find(|b| b.dir.ends_with(&format!("/{dir}"))).map(system_books::book_id)
+        };
+        inv.units.retain(|u| book_of(&u.book).is_some());
+        for u in &mut inv.units {
+            u.book = book_of(&u.book).unwrap_or_default().to_string();
+        }
+    }
+    Ok(inv)
 }
 
 #[derive(Deserialize, Clone)]
@@ -216,9 +247,17 @@ fn record_from_json(tree: &PinnedTree, unit: &InventoryUnit, path: &Path) -> Opt
         .and_then(|v| v.as_array())
         .map(|a| a.iter().filter_map(|x| x.as_str().map(|s| s.to_string())).collect())
         .unwrap_or_default();
+    // SD-37 E3.4: a Starfinder corpus record ships no token array; it states its row's own
+    // `CATEGORY:` and `TYPE:` as `data.category` / `data.type` (the corpus generator,
+    // `pcgen_import::sf_corpus`). Pathfinder records keep reading the shipped tokens only:
+    // their `data.category` is the corpus ingest's display category ("General"), not the row's.
+    let row_facet = |field: &str| -> Option<String> {
+        (tree.system != GameSystem::Pathfinder1e).then(|| data.get(field).and_then(|v| v.as_str()).map(|s| s.to_string())).flatten()
+    };
     let category = shipped_tokens
         .as_ref()
         .and_then(|t| t.iter().find(|(k, _)| k == "CATEGORY").map(|(_, v)| v.clone()))
+        .or_else(|| row_facet("category"))
         .unwrap_or_else(|| match unit.kind.as_str() {
             "feat" => "FEAT".to_string(),
             _ => String::new(),
@@ -226,6 +265,7 @@ fn record_from_json(tree: &PinnedTree, unit: &InventoryUnit, path: &Path) -> Opt
     let type_facet = shipped_tokens
         .as_ref()
         .and_then(|t| t.iter().find(|(k, _)| k == "TYPE").map(|(_, v)| v.clone()))
+        .or_else(|| row_facet("type"))
         .or_else(|| unit.type_facet.clone())
         .unwrap_or_default();
     let pi_fields: Vec<String> = rec.pi_field.as_deref().unwrap_or("").split(',').map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect();
@@ -250,6 +290,46 @@ fn record_from_json(tree: &PinnedTree, unit: &InventoryUnit, path: &Path) -> Opt
         class_selection_of: None,
         joined: true,
     })
+}
+
+/// One inventory unit and its own source row in the pinned tree, read from the inventory alone
+/// -- never from a corpus already on disk -- so a corpus generator can rebuild the corpus from
+/// the inventory and the oracle without reading its own previous output (SD-37 E3.4,
+/// `pcgen_import::sf_corpus`).
+#[derive(Debug, Clone)]
+pub struct InventorySourceRow {
+    pub id: String,
+    /// The book id the tree and the package use ([`system_books::book_id`] for a `.pcc` system).
+    pub book: String,
+    pub kind: String,
+    pub name: String,
+    pub source_file: String,
+    /// Repo-of-the-oracle relative path of the row's `.lst` (empty when the row is not found).
+    pub rel_path: String,
+    /// One-based line (0 when the row is not found).
+    pub line: usize,
+}
+
+/// Every inventory unit of `tree.system`'s population with its own source row
+/// ([`source_row_in_tree`]), in inventory order.
+pub fn inventory_source_rows(repo: &Path, tree: &PinnedTree) -> Result<Vec<InventorySourceRow>, String> {
+    let inv = read_inventory(repo, tree.system)?;
+    Ok(inv
+        .units
+        .iter()
+        .map(|u| {
+            let (rel_path, line) = source_row_in_tree(tree, u).unwrap_or_default();
+            InventorySourceRow {
+                id: u.id.clone(),
+                book: u.book.clone(),
+                kind: u.kind.clone(),
+                name: u.name.clone(),
+                source_file: u.source_file.clone().unwrap_or_default(),
+                rel_path,
+                line,
+            }
+        })
+        .collect())
 }
 
 /// Locate an inventory unit's own source row in the pinned tree by the coordinates the
@@ -306,8 +386,7 @@ fn source_row_in_tree(tree: &PinnedTree, unit: &InventoryUnit) -> Option<(String
 /// [`source_row_in_tree`] exactly as before. It therefore cannot silently re-join a unit that
 /// was already converting.
 pub fn load_population(repo: &Path, tree: &PinnedTree) -> Result<Vec<RecordRef>, String> {
-    let inv_text = std::fs::read_to_string(repo.join("docs/work-inventory.json")).map_err(|e| format!("docs/work-inventory.json: {e}"))?;
-    let inv: InventoryFile = serde_json::from_str(&inv_text).map_err(|e| format!("docs/work-inventory.json: {e}"))?;
+    let inv = read_inventory(repo, tree.system)?;
     let entries = walk_corpus(repo, tree.system);
     let mut by_line: BTreeMap<(String, String, usize), usize> = BTreeMap::new();
     let mut by_key: BTreeMap<(String, String, String), usize> = BTreeMap::new();
@@ -829,9 +908,9 @@ pub fn class_selection_principal(index: &CorpusIndex, record: &RecordRef, select
 /// (`license_pi`) or by declared field (`pi_fields`); it would put a source-format literal in
 /// the package (`FORBIDDEN_LITERALS`); it carries a glued `PRE<KIND>:` head; or it carries a
 /// `%1` slot with no argument row to fill it.
-fn printable_description(r: &RecordRef) -> Option<String> {
+fn printable_description(system: GameSystem, r: &RecordRef) -> Option<String> {
     let text = prose::decode_entities(r.description.as_deref()?.trim());
-    if text.is_empty() || prose::pi_hit(&text).is_some() || r.license_pi || r.pi_fields.iter().any(|f| f == "description") {
+    if text.is_empty() || prose::pi_hit(system, &text).is_some() || r.license_pi || r.pi_fields.iter().any(|f| f == "description") {
         return None;
     }
     if FORBIDDEN_LITERALS.iter().any(|lit| text.contains(lit)) || has_pre_head(&text) || text.contains("%1") {
@@ -863,8 +942,8 @@ fn printable_description(r: &RecordRef) -> Option<String> {
     Some(text)
 }
 
-fn description_only_rules(r: &RecordRef) -> Option<Vec<SheetRule>> {
-    let text = printable_description(r)?;
+fn description_only_rules(system: GameSystem, r: &RecordRef) -> Option<Vec<SheetRule>> {
+    let text = printable_description(system, r)?;
     Some(vec![SheetRule {
         id: r.id.clone(),
         label: r.name.clone(),
@@ -952,7 +1031,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         let kc = report.by_kind.entry(r.kind.clone()).or_default();
         kc.records += 1;
         if !r.joined || r.rel_path.is_empty() {
-            if let Some(rules) = description_only_rules(r) {
+            if let Some(rules) = description_only_rules(tree.system, r) {
                 census.entries.push(TokenCensusRecord {
                     id: r.id.clone(),
                     book: r.book.clone(),
@@ -974,7 +1053,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             continue;
         }
         if tree.file_index(&r.rel_path).is_none() && r.prerequisites.is_empty() && r.shipped_tokens.as_ref().is_none_or(|t| t.is_empty()) {
-            if let Some(rules) = description_only_rules(r) {
+            if let Some(rules) = description_only_rules(tree.system, r) {
                 census.entries.push(TokenCensusRecord {
                     id: r.id.clone(),
                     book: r.book.clone(),
@@ -1062,7 +1141,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         // through this door with words the other door would have refused.
         if !rules.iter().any(|rule| !rule.prose.is_empty())
             && !prose_decided_never
-            && let Some(text) = printable_description(r)
+            && let Some(text) = printable_description(tree.system, r)
             && let Some(first) = rules.first_mut()
         {
             first.prose.push(ProseSegment {
@@ -1358,8 +1437,8 @@ pub fn write_output(out_dir: &Path, rendered: &BTreeMap<String, Vec<u8>>) -> std
     Ok(())
 }
 
-pub fn write_var_names(repo: &Path, run: &Run) -> std::io::Result<()> {
-    write_var_names_to(&repo.join("scripts/oracle_harness"), run)
+pub fn write_var_names(repo: &Path, system: GameSystem, run: &Run) -> std::io::Result<()> {
+    write_var_names_to(&repo.join(VAR_NAMES_DIR.get(system)), run)
 }
 
 /// Write `var_names.json` to an arbitrary directory (e.g. a `--dump` scratch dir), the same

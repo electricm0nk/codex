@@ -281,7 +281,7 @@ fn convert_class(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef, dec
         let d = &decls[i];
         let file = &tree.files[d.row.file];
         let id = option_id(&file.book, &class_slug, &d.name);
-        if pi_hit(&d.name).is_some() {
+        if pi_hit(tree.system, &d.name).is_some() {
             run.defects.entry("subclass-token-unconverted".into()).or_default().push(format!("{id}: name withheld (product identity) ({})", tree.cite(d.row)));
             continue;
         }

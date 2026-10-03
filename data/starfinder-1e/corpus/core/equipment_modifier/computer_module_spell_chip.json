@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Computer Module ~ Spell chip",
+    "name": "Spell chip",
+    "type": "Computer"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 198,
+    "path": "starfinder/paizo/core/scr_equipmods.lst",
+    "record_key": "Computer Module ~ Spell chip",
+    "sha256": "f3f834dcfe0b160855fbe9bdeac4ff6e6ea8a71ca1ea9afbfb556c0dc89d9930"
+  },
+  "unit_id": "core:equipment_modifier:computer_module_spell_chip"
+}

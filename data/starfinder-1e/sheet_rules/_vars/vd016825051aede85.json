@@ -1,0 +1,1 @@
+{"var":"vd016825051aede85","label":"Damage Operative Weapon","declared_by":[],"contributions":[{"rule_id":"core:ability:weapon_specialization_basic_melee_weapons","expr":{"Div":[{"Var":"v58a9536e3da2b476"},{"Const":2}]},"bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:5"]}}

@@ -391,7 +391,7 @@ pub fn convert_options(tree: &PinnedTree, index: &CorpusIndex, offered: &dyn Fn(
     let mut bad_choosers: BTreeSet<RuleId> = BTreeSet::new();
     for d in &index.pool_options {
         let cite = tree.cite(d.row);
-        if pi_hit(&d.name).is_some() {
+        if pi_hit(tree.system, &d.name).is_some() {
             defects.entry("pool-option-unconverted".into()).or_default().push(format!("{}: name withheld (product identity) ({cite})", d.id));
             continue;
         }

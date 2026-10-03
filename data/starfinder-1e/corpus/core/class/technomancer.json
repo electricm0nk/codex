@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Technomancer",
+    "name": "Technomancer",
+    "type": "Base.PC"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 159,
+    "path": "starfinder/paizo/core/scr_classes.lst",
+    "record_key": "Technomancer",
+    "sha256": "3693c8f0ebf97bc3cacfc7d155da257b86ab7f2af73ae95b74096d1faf69841e"
+  },
+  "unit_id": "core:class:technomancer"
+}

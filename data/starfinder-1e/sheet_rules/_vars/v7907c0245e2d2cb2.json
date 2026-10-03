@@ -1,0 +1,1 @@
+{"var":"v7907c0245e2d2cb2","label":"Damage Longarms","declared_by":[],"contributions":[{"rule_id":"core:ability:weapon_specialization_longarms","expr":{"Var":"v58a9536e3da2b476"},"bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:86"]}}

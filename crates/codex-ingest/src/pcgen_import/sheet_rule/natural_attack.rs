@@ -334,7 +334,7 @@ pub fn scan(tree: &PinnedTree, owned: &dyn Fn(RowRef) -> bool, answered: &dyn Fn
             s.defects.entry("natural-attack-helper-names-no-attack".into()).or_default().push(format!("Internal|{name} ({cite})"));
             continue;
         }
-        if reach.attacks.iter().any(|a| pi_hit(a).is_some()) {
+        if reach.attacks.iter().any(|a| pi_hit(tree.system, a).is_some()) {
             s.defects.entry("natural-attack-helper-carries-more".into()).or_default().push(format!("Internal|{name} ({cite}): attack name withheld (product identity)"));
             continue;
         }

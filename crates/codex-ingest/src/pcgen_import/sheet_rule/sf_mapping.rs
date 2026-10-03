@@ -187,6 +187,60 @@ pub fn load_table(path: &Path) -> Result<SfMappingTable, String> {
     Ok(table)
 }
 
+/// The table the sheet-rule converter routes Starfinder `BONUS:HP` tokens by (SD-37 E3.4):
+/// [`SF_MAPPING_TABLE`] under the repo root, read once per process. The converter reads the
+/// table itself rather than a transcription, so an edit to a row (a planted mutation M1–M4)
+/// moves the converted package too.
+pub fn converter_table() -> Result<&'static SfMappingTable, String> {
+    static TABLE: std::sync::OnceLock<Result<SfMappingTable, String>> = std::sync::OnceLock::new();
+    TABLE.get_or_init(|| load_table(&crate::repo_root().join(SF_MAPPING_TABLE))).as_ref().map_err(|e| e.clone())
+}
+
+/// The table row a Starfinder `BONUS:HP|<pool>|<value>` token on `carrier` feeds, or `None` when
+/// no term claims it (`decisions.md §8`: a field with no oracle row is a named refusal, never a
+/// guess).
+///
+/// `carrier` is the record the token sits on as the table's terms name it: `CLASS:<name>` for a
+/// class, else the record's KEY (`Toughness`, `Default`, `Constitution`), compared without case
+/// (the converter passes the row's own upper-cased declaration). A term claims the token
+/// when its token's pool is `<pool>`, its record is the carrier (`CLASS:{class}` = any class),
+/// and the value has the term's shape: the literal value the term's token states, or for a
+/// [`TermShape::ClassLevelCoefficient`] `<k>*<Class>LVL` naming the carrier's own class. So the
+/// drone's `BONUS:HP|CURRENTMAX|-1` and `+1 Hit Point`'s `BONUS:HP|CURRENTMAX|1` are unclaimed
+/// (the table's named refusals), while Soldier's `BONUS:HP|ALTHP|7*SoldierLVL` is `stamina`.
+pub fn hp_pool_row<'t>(table: &'t SfMappingTable, carrier: &str, pool: &str, value: &str) -> Option<&'t str> {
+    let value = value.trim();
+    for row in &table.rows {
+        for term in &row.terms {
+            let mut parts = term.token.split('|');
+            if parts.next() != Some("BONUS:HP") || parts.next() != Some(pool) {
+                continue;
+            }
+            let stated = parts.next();
+            let claims = match (term.record.as_str(), stated) {
+                ("CLASS:{class}", None) if term.shape == TermShape::ClassLevelCoefficient => carrier
+                    .strip_prefix("CLASS:")
+                    .is_some_and(|class| class_level_coefficient(value, class).is_some()),
+                (record, Some(v)) => record.eq_ignore_ascii_case(carrier) && v == value,
+                _ => false,
+            };
+            if claims {
+                return Some(row.id.as_str());
+            }
+        }
+    }
+    None
+}
+
+/// `<k>*<Class>LVL` (spaces allowed around `*`, class name compared without spaces and
+/// case-insensitively) -> k.
+fn class_level_coefficient(value: &str, class: &str) -> Option<i64> {
+    let (k, rest) = value.split_once('*')?;
+    let want = format!("{}LVL", class.replace(' ', "")).to_ascii_uppercase();
+    (rest.trim().replace(' ', "").to_ascii_uppercase() == want).then_some(())?;
+    k.trim().parse().ok()
+}
+
 /// `FACT:KeyAbilityScore` value → the abilities it allows: `CHA` → [Cha]; `Str or Dex` →
 /// [Str, Dex]. Anything else is refused by name.
 pub fn parse_key_ability_fact(value: &str) -> Result<Vec<Stat>, String> {
@@ -485,6 +539,26 @@ mod tests {
         );
         b.scores[0] = 1;
         assert_eq!(b.modifier(Stat::Str), -5);
+    }
+
+    /// SD-37 E3.4: the converter's pool routing reads the committed table. Every claim below is
+    /// a token the pinned Core Rulebook carries (`decisions.md §8`'s two tables).
+    #[test]
+    fn hp_pool_row_routes_claimed_tokens_and_refuses_the_rest() {
+        let table = converter_table().expect("the committed SF mapping table loads");
+        assert_eq!(hp_pool_row(table, "CLASS:Soldier", "CURRENTMAX", "6*SoldierLVL"), Some("hit_points"));
+        assert_eq!(hp_pool_row(table, "CLASS:Soldier", "ALTHP", "7*SoldierLVL"), Some("stamina"));
+        assert_eq!(hp_pool_row(table, "Default", "CURRENTMAX", "RaceHP"), Some("hit_points"));
+        assert_eq!(hp_pool_row(table, "Constitution", "ALTHP", "CON*TL"), Some("stamina"));
+        assert_eq!(hp_pool_row(table, "Toughness", "ALTHP", "TL"), Some("stamina"));
+        // The table's named refusals.
+        assert_eq!(hp_pool_row(table, "CLASS:Drone", "CURRENTMAX", "-1"), None);
+        assert_eq!(hp_pool_row(table, "CLASS:Drone", "CURRENTMAX", "(10*DroneLVL)+((DroneLVL+1)/2)"), None);
+        assert_eq!(hp_pool_row(table, "+1 Hit Point", "CURRENTMAX", "1"), None);
+        assert_eq!(hp_pool_row(table, "Energy Shield", "ALTHP", "DroneMasterLVL"), None);
+        // A coefficient naming another class, or a carrier that is not the term's record.
+        assert_eq!(hp_pool_row(table, "CLASS:Soldier", "CURRENTMAX", "6*EnvoyLVL"), None);
+        assert_eq!(hp_pool_row(table, "Weapon Focus", "ALTHP", "TL"), None);
     }
 
     #[test]

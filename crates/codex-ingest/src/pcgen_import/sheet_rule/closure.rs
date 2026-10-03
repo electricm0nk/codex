@@ -20,6 +20,8 @@ use std::path::{Path, PathBuf};
 
 use codex::rules_core::game_system::{BookRegistry, GameSystem};
 
+use crate::pcgen_import::system_books;
+
 /// The corpus subtree whose child directories are a system's books, relative to
 /// `PCGEN_CORPUS_ROOT`, per game system (SD-37 E1.3). Pathfinder 1e: every core PF1 book lives
 /// under `pathfinder/paizo/roleplaying_game`. A system registers exactly one subtree; one with
@@ -189,6 +191,12 @@ pub struct PinnedTree {
     /// `POOL:Pool_Summoner_Class_Selection`). A name declared with two different `POOL:` values is
     /// left out (never guessed).
     pub ability_category_pool: BTreeMap<String, (String, RowRef)>,
+    /// SD-37 E3.4: a system whose game mode splits armour class (Starfinder's EAC and KAC) --
+    /// split name (`EAC`, `KAC`) -> the bonus types its `ACTYPE:<split>` row removes from the
+    /// total (`miscinfo.lst`: `ACTYPE:EAC ADD:TOTAL REMOVE:KAC|KAC_Armor|...`). An `AC` bonus
+    /// feeds every split whose removal list does not name its type. Empty for Pathfinder, whose
+    /// `AC` is one total.
+    pub armor_class_split: BTreeMap<String, BTreeSet<String>>,
 }
 
 /// Split a raw row into its name field and `(KEY, VALUE)` tokens, tab-separated. A field with
@@ -332,6 +340,51 @@ fn copy_own_tokens_last(
     inherited
 }
 
+impl LstFile {
+    fn read(root: &Path, path: &Path, book: &str, text: &str) -> LstFile {
+        let rel = path.strip_prefix(root).unwrap_or(path).to_string_lossy().replace('\\', "/");
+        let is_pfs = rel.split('/').any(|seg| seg == "_pfs");
+        LstFile {
+            family: file_family(&rel),
+            rel_path: rel,
+            book: book.to_string(),
+            is_pfs,
+            lines: text.split('\n').map(|s| s.trim_end_matches('\r').to_string()).collect(),
+        }
+    }
+}
+
+/// The armour-class splits a game mode declares: every `ACTYPE:<name>` row of the mode whose
+/// `<name>` is `EAC` or `KAC`, with the bonus types its `REMOVE:` list takes off the total
+/// ([`PinnedTree::armor_class_split`]). A mode with neither row has no split (Pathfinder); a mode
+/// with one but not the other is refused by name, never half-split.
+pub fn armor_class_split(mode: &[system_books::GameModeFile]) -> Result<BTreeMap<String, BTreeSet<String>>, String> {
+    let mut out: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+    for file in mode {
+        for row in &file.rows {
+            let Some(name) = row.tokens.first().and_then(|t| t.strip_prefix("ACTYPE:")) else { continue };
+            if name != "EAC" && name != "KAC" {
+                continue;
+            }
+            let removes: BTreeSet<String> = row
+                .tokens
+                .iter()
+                .filter_map(|t| t.strip_prefix("REMOVE:"))
+                .flat_map(|v| v.split('|'))
+                .map(|t| t.trim().to_string())
+                .filter(|t| !t.is_empty())
+                .collect();
+            if out.insert(name.to_string(), removes).is_some() {
+                return Err(format!("{}:{}: ACTYPE:{name} is declared twice", file.name, row.line_number));
+            }
+        }
+    }
+    match out.len() {
+        0 | 2 => Ok(out),
+        _ => Err(format!("the game mode splits armour class into {:?} only; EAC and KAC are declared together", out.keys().collect::<Vec<_>>())),
+    }
+}
+
 fn walk_lst(dir: &Path, out: &mut Vec<PathBuf>) {
     let mut stack = vec![dir.to_path_buf()];
     while let Some(d) = stack.pop() {
@@ -382,6 +435,9 @@ impl PinnedTree {
     /// indexes. A system with no [`BOOKS_RELATIVE`] subtree registered is an error naming the
     /// system, never a fallback to another system's books.
     pub fn load_for(system: GameSystem, root: &Path) -> Result<PinnedTree, String> {
+        if !system_books::CONVERTED_BOOKS.books(system).is_empty() {
+            return PinnedTree::load_converted_books(system, root);
+        }
         let [books_relative] = BOOKS_RELATIVE.books(system) else {
             return Err(format!(
                 "no PCGen book subtree is registered for game system {system} (closure::BOOKS_RELATIVE); \
@@ -416,17 +472,50 @@ impl PinnedTree {
             walk_lst(dir, &mut paths);
             for p in paths {
                 let Ok(text) = std::fs::read_to_string(&p) else { continue };
-                let rel = p.strip_prefix(root).unwrap_or(&p).to_string_lossy().replace('\\', "/");
-                let is_pfs = rel.split('/').any(|seg| seg == "_pfs");
-                files.push(LstFile {
-                    family: file_family(&rel),
-                    rel_path: rel,
-                    book: book.clone(),
-                    is_pfs,
-                    lines: text.split('\n').map(|s| s.trim_end_matches('\r').to_string()).collect(),
-                });
+                files.push(LstFile::read(root, &p, book, &text));
             }
         }
+        Ok(PinnedTree::indexed(system, root, book_paths, source_dates, files, BTreeMap::new()))
+    }
+
+    /// SD-37 E3.4: a system whose books are registered by `.pcc`
+    /// ([`system_books::CONVERTED_BOOKS`]) reads exactly the `.lst` files those `.pcc` include --
+    /// never a directory walk, which would read an excluded book nested beside or inside a
+    /// registered one (`core/_society`, `decisions.md §6`). Each file belongs to the book whose
+    /// `.pcc` first includes it; the book id is the last segment of its directory
+    /// ([`system_books::book_id`]). The game mode's armour-class split is read here too.
+    fn load_converted_books(system: GameSystem, root: &Path) -> Result<PinnedTree, String> {
+        let includes = system_books::resolve_converted_book_includes(system, root)?;
+        let mut book_paths: BTreeMap<String, PathBuf> = BTreeMap::new();
+        let mut files: Vec<LstFile> = Vec::new();
+        let mut seen: BTreeSet<PathBuf> = BTreeSet::new();
+        for (book, resolution) in &includes.books {
+            let id = system_books::book_id(book).to_string();
+            book_paths.insert(id.clone(), root.join(book.dir));
+            for lst in &resolution.lst_files {
+                if !seen.insert(lst.path.clone()) {
+                    continue;
+                }
+                let text = std::fs::read_to_string(&lst.path).map_err(|e| format!("{}: {e}", lst.path.display()))?;
+                files.push(LstFile::read(root, &lst.path, &id, &text));
+            }
+        }
+        files.sort_by(|a, b| a.rel_path.cmp(&b.rel_path));
+        let source_dates = book_source_dates(&book_paths);
+        let mode = system_books::GAME_MODES.get(system);
+        let repo_dir = root.parent().ok_or_else(|| format!("{} has no parent (the PCGen checkout)", root.display()))?;
+        let armor_class_split = armor_class_split(&system_books::load_game_mode(repo_dir, mode)?)?;
+        Ok(PinnedTree::indexed(system, root, book_paths, source_dates, files, armor_class_split))
+    }
+
+    fn indexed(
+        system: GameSystem,
+        root: &Path,
+        book_paths: BTreeMap<String, PathBuf>,
+        source_dates: BTreeMap<String, String>,
+        files: Vec<LstFile>,
+        armor_class_split: BTreeMap<String, BTreeSet<String>>,
+    ) -> PinnedTree {
         let mut tree = PinnedTree {
             system,
             root: root.to_path_buf(),
@@ -445,9 +534,10 @@ impl PinnedTree {
             ability_category_parent: BTreeMap::new(),
             ability_category_type: BTreeMap::new(),
             ability_category_pool: BTreeMap::new(),
+            armor_class_split,
         };
         tree.build_indexes();
-        Ok(tree)
+        tree
     }
 
     fn build_indexes(&mut self) {
@@ -892,18 +982,47 @@ mod tests {
     use super::*;
 
     /// SD-37 E1.3: the Pathfinder 1e registry entries are the paths the converter has always
-    /// read (one book subtree, thirteen extra book dirs); a system with no subtree registered
-    /// is refused by name before any file is read -- never converted from Pathfinder's books.
+    /// read (one book subtree, thirteen extra book dirs). E3.4: Starfinder registers no subtree;
+    /// it is read through its converted books' `.pcc` (`system_books::CONVERTED_BOOKS`), so a
+    /// missing checkout is refused naming the `.pcc` -- never converted from Pathfinder's books.
     #[test]
     fn the_book_subtree_is_keyed_by_game_system() {
         assert_eq!(BOOKS_RELATIVE.books(GameSystem::Pathfinder1e), &["pathfinder/paizo/roleplaying_game"]);
         assert_eq!(EXTRA_BOOK_DIRS.books(GameSystem::Pathfinder1e).len(), 13);
         assert!(EXTRA_BOOK_DIRS.books(GameSystem::Pathfinder1e).iter().all(|d| d.starts_with("pathfinder/")));
+        assert!(BOOKS_RELATIVE.books(GameSystem::Starfinder1e).is_empty());
         let err = match PinnedTree::load_for(GameSystem::Starfinder1e, Path::new("/nonexistent")) {
-            Ok(_) => panic!("a system with no registered subtree must not load"),
+            Ok(_) => panic!("a missing Starfinder checkout must not load"),
             Err(e) => e,
         };
-        assert!(err.contains("starfinder-1e") && err.contains("BOOKS_RELATIVE"), "{err}");
+        assert!(err.contains("starfinder/paizo/core/_starfinder_core_rulebook.pcc"), "{err}");
+    }
+
+    /// SD-37 E3.4: the Starfinder game mode's `ACTYPE:EAC` / `ACTYPE:KAC` rows are read as the
+    /// armour-class split; a mode with neither row (Pathfinder) has none; a half split is refused.
+    #[test]
+    fn the_armor_class_split_is_read_from_the_game_mode_rows() {
+        let file = |rows: &[&[&str]]| system_books::GameModeFile {
+            name: "miscinfo.lst".into(),
+            path: PathBuf::from("miscinfo.lst"),
+            rows: rows
+                .iter()
+                .enumerate()
+                .map(|(i, r)| system_books::GameModeRow { line_number: i + 1, tokens: r.iter().map(|t| t.to_string()).collect() })
+                .collect(),
+        };
+        let sf = file(&[
+            &["ACTYPE:Total", "ADD:TOTAL"],
+            &["ACTYPE:EAC", "ADD:TOTAL", "REMOVE:KAC|KAC_Armor|KACArmorEnhancement|KACArmorInsight"],
+            &["ACTYPE:KAC", "ADD:TOTAL", "REMOVE:EAC|EAC_Armor|EACArmorEnhancement"],
+        ]);
+        let split = armor_class_split(&[sf]).unwrap();
+        assert_eq!(split.keys().collect::<Vec<_>>(), ["EAC", "KAC"]);
+        assert!(split["EAC"].contains("KAC_Armor") && !split["EAC"].contains("EAC_Armor"));
+        assert!(split["KAC"].contains("EAC_Armor") && !split["KAC"].contains("KAC_Armor"));
+        assert!(armor_class_split(&[file(&[&["ACTYPE:Total", "ADD:TOTAL"]])]).unwrap().is_empty());
+        let half = armor_class_split(&[file(&[&["ACTYPE:EAC", "REMOVE:KAC"]])]).unwrap_err();
+        assert!(half.contains("EAC and KAC"), "{half}");
     }
 
     #[test]
@@ -967,6 +1086,7 @@ mod tests {
             ability_category_parent: BTreeMap::new(),
             ability_category_type: BTreeMap::new(),
             ability_category_pool: BTreeMap::new(),
+            armor_class_split: BTreeMap::new(),
         };
         tree.build_indexes();
         tree
