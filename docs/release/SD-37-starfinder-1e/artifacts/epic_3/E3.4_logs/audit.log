@@ -1,0 +1,7 @@
+# first run (on a12dec77d3): OK_NO_BUNDLE_TAGS; OK_NO_TOKENS violated by 1 added comment line ('codex-named placeholder', convert.rs:330); fixed in f54b3f3e88 and re-run below
+$ dual audit on f54b3f3e88, CARD_BASE=38d8d75704; identifier audit scoped to crates/codex-ingest scripts/verify.sh docs/release/SD-37-starfinder-1e/artifacts/epic_3/E3.4_plants.sh docs/release/SD-37-starfinder-1e/artifacts/epic_3/E3.4_seed_terms.py data/starfinder-1e
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
