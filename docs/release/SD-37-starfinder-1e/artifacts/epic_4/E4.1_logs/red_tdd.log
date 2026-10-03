@@ -1,0 +1,53 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 00s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 5 tests
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_term_names_its_source ... FAILED
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_core_player_class_has_a_chassis_at_level_1 ... FAILED
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_key_ability_is_read_from_the_class ... FAILED
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_a_choice_key_ability_without_a_legal_choice_is_refused ... FAILED
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values ... FAILED
+
+failures:
+
+---- rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_term_names_its_source stdout ----
+
+thread 'rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_term_names_its_source' (3212071) panicked at src/rules_core/pilot_compute/sf_chassis.rs:442:48:
+called `Result::unwrap()` on an `Err` value: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+
+---- rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_core_player_class_has_a_chassis_at_level_1 stdout ----
+
+thread 'rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_core_player_class_has_a_chassis_at_level_1' (3212070) panicked at src/rules_core/pilot_compute/sf_chassis.rs:463:67:
+envoy: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+
+---- rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_key_ability_is_read_from_the_class stdout ----
+
+thread 'rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_key_ability_is_read_from_the_class' (3212072) panicked at src/rules_core/pilot_compute/sf_chassis.rs:423:51:
+called `Result::unwrap()` on an `Err` value: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+
+---- rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_a_choice_key_ability_without_a_legal_choice_is_refused stdout ----
+
+thread 'rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_a_choice_key_ability_without_a_legal_choice_is_refused' (3212068) panicked at src/rules_core/pilot_compute/sf_chassis.rs:431:9:
+assertion `left == right` failed
+  left: "sf_chassis.row_missing"
+ right: "sf_chassis.key_ability"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values stdout ----
+
+thread 'rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values' (3212069) panicked at src/rules_core/pilot_compute/sf_chassis.rs:398:71:
+SF-Soldier-3: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+
+
+failures:
+    rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_a_choice_key_ability_without_a_legal_choice_is_refused
+    rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values
+    rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_core_player_class_has_a_chassis_at_level_1
+    rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_term_names_its_source
+    rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_key_ability_is_read_from_the_class
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 0.53s
+
+error: test failed, to rerun pass `--lib`
+exit=101

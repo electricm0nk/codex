@@ -423,6 +423,80 @@ fn sf_bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str, value: &str, b
     }
 }
 
+/// SD-37 E4.1: a Starfinder race's racial Hit Points, lowered onto the race record.
+///
+/// PCGen states the value two hops from the race (`decisions.md §8`; E3.MC discovery): the race
+/// row grants its `CATEGORY:Race` ability (`ABILITY:Race|AUTOMATIC|Android`), that ability grants
+/// the `CATEGORY:Internal` selection row (`ABILITY:Internal|AUTOMATIC|Playable Race
+/// Selected|Android Race Selection ~ Default`), and the selection row sets the variable
+/// (`BONUS:VAR|RaceHP|4`), which the always-held `Default` row adds to the pool
+/// (`BONUS:HP|CURRENTMAX|RaceHP`). Neither helper row is an inventory unit, so no converted record
+/// carried the number. This walks the grant chain from the race's own rows and returns the one
+/// value it reaches, with the sheet total the SF mapping table's `race_hp_var` term routes it to
+/// (`hit_points` -> [`BonusTarget::Hp`]); the table is read, not transcribed, so a planted edit
+/// to that term (M4) moves the package.
+///
+/// `Ok(None)`: the table names no racial-HP term (nothing to lower). `Err`: the walk reached no
+/// value, or two different ones -- a named defect, never a guessed number.
+fn sf_race_hit_points(tree: &PinnedTree, closure: &Closure) -> Result<Option<(BonusTarget, i64)>, String> {
+    use super::closure::{tokenize_row, FileFamily};
+    use super::sf_mapping::TermShape;
+    let table = super::sf_mapping::converter_table().map_err(|e| format!("the Starfinder mapping table does not load: {e}"))?;
+    let Some(row) = table.rows.iter().find(|r| r.terms.iter().any(|t| t.shape == TermShape::RaceHpVar)) else {
+        return Ok(None);
+    };
+    let target = match row.id.as_str() {
+        "hit_points" => BonusTarget::Hp,
+        "stamina" => BonusTarget::Stamina,
+        other => return Err(format!("the racial-HP term sits on mapping row {other:?}, which feeds no sheet total")),
+    };
+    // `<category>|<nature>|<target>|...|<PRE...>` -> the targets (PRE gates and choice selectors dropped).
+    let targets = |value: &str, category: &str| -> Vec<String> {
+        let mut parts = value.split('|');
+        if !parts.next().is_some_and(|c| c.trim().eq_ignore_ascii_case(category)) {
+            return Vec::new();
+        }
+        parts
+            .skip(1)
+            .map(str::trim)
+            .filter(|t| !t.is_empty() && !t.starts_with("PRE") && !t.starts_with("!PRE") && !t.contains('%') && !t.starts_with("TYPE="))
+            .map(str::to_ascii_uppercase)
+            .collect()
+    };
+    let tokens_of = |category: &str, key: &str| -> Vec<(String, String)> {
+        let mut rows: Vec<_> = tree.keyed_index.get(&(FileFamily::Ability, category.to_string(), key.to_string())).copied().into_iter().collect();
+        rows.extend(tree.mods_for(FileFamily::Ability, category, key).iter().copied());
+        rows.into_iter().flat_map(|r| tokenize_row(tree.row_text(r)).1).collect()
+    };
+    let mut values: BTreeSet<i64> = BTreeSet::new();
+    for (key, value) in closure.rows.iter().flat_map(|r| r.tokens.iter()) {
+        if key.trim() != "ABILITY" {
+            continue;
+        }
+        for race_ability in targets(value, "Race") {
+            for (k, v) in tokens_of("RACE", &race_ability) {
+                if k.trim() != "ABILITY" {
+                    continue;
+                }
+                for selection in targets(&v, "Internal") {
+                    for (k2, v2) in tokens_of("INTERNAL", &selection) {
+                        if k2.trim() == "BONUS"
+                            && let Some(n) = v2.trim().strip_prefix("VAR|RaceHP|")
+                        {
+                            values.insert(n.trim().parse::<i64>().map_err(|_| format!("BONUS:VAR|RaceHP|{n} on {selection:?} is not an integer"))?);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    match values.len() {
+        1 => Ok(values.first().map(|n| (target, *n))),
+        0 => Err("no BONUS:VAR|RaceHP reached through the race's Race and Internal ability grants".into()),
+        _ => Err(format!("two racial Hit Point values reached: {values:?}")),
+    }
+}
+
 /// The sheet total(s) a `BONUS:<sub>|<target>` feeds, with the label words for the line.
 fn bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str) -> Result<Vec<(BonusTarget, String)>, String> {
     let t = target.trim();
@@ -1157,6 +1231,25 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     // record built this way. The real, precise line is "does a LATER line exist that this
     // line's assembled label could be discarding" -- exactly `lines.len() > 1`.
     let is_multi_line = lines.len() > 1;
+    // SD-37 E4.1: a Starfinder race's racial Hit Points, a sibling of its own (`#race_hp`) pushed
+    // after the principal and label rules above, so no existing line's id, label or value moves.
+    if ctx.tree.system == GameSystem::Starfinder1e && record.kind == "race" {
+        match sf_race_hit_points(ctx.tree, closure) {
+            Ok(Some((target, n))) => lines.push(Line {
+                seq: None,
+                suffix: Some("race_hp".into()),
+                label: format!("{label} (racial Hit Points)"),
+                value: SheetValue::Number(Expr::Const(n as i32)),
+                also: Vec::new(),
+                target: Some(target),
+                bonus_type: None,
+                applies: Applies::Always,
+                prose: Vec::new(),
+            }),
+            Ok(None) => {}
+            Err(why) => ctx.defect("sf-race-hit-points-unresolved", format!("{}: {why}", record.id)),
+        }
+    }
     let mut principal_also = std::mem::take(&mut acc.also);
     for (i, line) in lines.into_iter().enumerate() {
         let id = match (&line.suffix, i) {

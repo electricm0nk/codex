@@ -199,6 +199,10 @@ pub(crate) mod companion_base_stat_table;
 /// reference-library browser rather than mirroring the derivation a second
 /// time.
 pub mod class_chassis_sheet_rules;
+/// SD-37 E4.1: the Starfinder 1e chassis (BAB, saves, Hit Points, Stamina, Resolve, key
+/// ability) read from the converted Starfinder package, for every class and race -- no
+/// per-class module.
+pub mod sf_chassis;
 /// SD-36 Epic F §3.4: a class's weapon proficiency read from the converted package -- the
 /// source for every class without a `CLASS_WEAPON_PROFICIENCIES` row. `pub` so the
 /// codex-ingest oracle pin (`class_weapon_proficiency_via_converter.rs`) can call it.
