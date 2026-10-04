@@ -1344,7 +1344,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
     // D7: the global abilities every character holds unconditionally (`always_held.rs`).
     let (_, unresolved_globals) = always_held::mark_always_held(tree, &mut files, index, &always_held::global_grants(tree));
     if !unresolved_globals.is_empty() {
-        defects.entry("unresolved-references".into()).or_default().extend(unresolved_globals);
+        defects.entry("unresolved-references".into()).or_default().extend(unresolved_globals.iter().map(always_held::unresolved_global_line));
     }
     // D8: an oracle member of a filled variable pool no converted record stands for.
     let unconverted_members = pool_pick::unconverted_member_defects(&index.filled_pools);
@@ -1373,8 +1373,14 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         let name = var_names.get(id).cloned().or_else(|| contribs.get(id).map(|(n, _)| n.clone())).or_else(|| declares.get(id).map(|(n, _)| n.clone()));
         let Some(name) = name else { continue };
         var_names.entry(id.clone()).or_insert(name.clone());
-        let declared_by: Vec<RuleId> = declares.get(id).map(|(_, s)| s.iter().cloned().collect()).unwrap_or_default();
+        let mut declared_by: Vec<RuleId> = declares.get(id).map(|(_, s)| s.iter().cloned().collect()).unwrap_or_default();
         let contributions: Vec<VarContribution> = contribs.get(id).map(|(_, v)| v.clone()).unwrap_or_default();
+        // SD-37 E4.2: a variable only an unconverted always-held global DEFINEs at 0 (Starfinder's
+        // `Default`) is declared for every character; its contributors stand as its declarers,
+        // which folds identically (`always_held::defined_at_zero_only_on`).
+        if declared_by.is_empty() && always_held::defined_at_zero_only_on(tree, &name, &unresolved_globals) {
+            declared_by = contributions.iter().map(|c| c.rule_id.clone()).collect::<BTreeSet<_>>().into_iter().collect();
+        }
         let outside: Vec<String> = tree.variable_rows(&name).into_iter().filter(|r| !owned_rows.contains(r)).map(|r| tree.cite(r)).collect();
         let label = display_label(var_labels.get(id).unwrap_or(&name));
         vars.insert(id.clone(), VarTable { var: id.clone(), label, declared_by, contributions, provenance: VarProvenance { outside_corpus_rows: outside } });

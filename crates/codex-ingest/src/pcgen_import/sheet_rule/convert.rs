@@ -497,6 +497,38 @@ fn sf_race_hit_points(tree: &PinnedTree, closure: &Closure) -> Result<Option<(Bo
     }
 }
 
+/// SD-37 E4.2: the automatic `ABILITY:` grants of a `CATEGORY:Internal` helper row no inventory
+/// unit stands for, when every `ABILITY:` grant it makes is a plain automatic one -- a SELECTION
+/// HOP.
+///
+/// The oracle's Starfinder races reach their racial traits two rows from the race (the chain
+/// `sf_race_hit_points` documents): the race grants its `CATEGORY:Race` ability, which grants
+/// the internal selection row (`ABILITY:Internal|AUTOMATIC|Playable Race Selected|Ysoki Race
+/// Selection ~ Default`, `scr_abilities.lst:802`), and only that row grants the traits
+/// (`ABILITY:Ysoki Racial Trait|AUTOMATIC|Ysoki Default ~ SCROUNGER|!PREFACT:1,ABILITIES,
+/// Ysoki_Scrounger=true`, :814). The selection row is not an inventory unit, so the grant
+/// stopped at it (`unresolved-references`) and no character held its race's traits. PCGen
+/// applies every token of an ability the character holds; for the hop's `ABILITY:` tokens that
+/// means: the record that grants the hop grants the hop's targets, under both grants' gates.
+/// Only `ABILITY:` tokens are carried -- the racial Hit Points on the same row are E4.1's
+/// (`sf_race_hit_points`). `None`: the row grants no ability, or grants one by choice
+/// (`NORMAL`, `%LIST`) -- not a hop; the reference stays unresolved and named.
+fn internal_hop_grants(tree: &PinnedTree, key: &str) -> Option<Vec<String>> {
+    use super::closure::{tokenize_row, FileFamily};
+    let key = key.trim().to_ascii_uppercase();
+    let mut rows: Vec<_> = tree.keyed_index.get(&(FileFamily::Ability, "INTERNAL".to_string(), key.clone())).copied().into_iter().collect();
+    rows.extend(tree.mods_for(FileFamily::Ability, "INTERNAL", &key).iter().copied());
+    let grants: Vec<String> =
+        rows.into_iter().flat_map(|r| tokenize_row(tree.row_text(r)).1).filter(|(k, _)| k.trim() == "ABILITY").map(|(_, v)| v).collect();
+    let plain = |v: &String| {
+        let (fields, _) = split_gates(v);
+        fields.len() >= 3
+            && fields[1].trim().eq_ignore_ascii_case("AUTOMATIC")
+            && fields.iter().skip(2).all(|t| !t.contains("%LIST") && !t.contains("%CHOICE") && !t.trim().starts_with("TYPE"))
+    };
+    (!grants.is_empty() && grants.iter().all(plain)).then_some(grants)
+}
+
 /// The sheet total(s) a `BONUS:<sub>|<target>` feeds, with the label words for the line.
 fn bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str) -> Result<Vec<(BonusTarget, String)>, String> {
     let t = target.trim();
@@ -2188,6 +2220,26 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                 {
                     for id in ids {
                         out.grants_out.push((id.clone(), Grant { by: by.clone(), when: when.clone() }));
+                    }
+                    continue;
+                }
+                // SD-37 E4.2: a Starfinder `CATEGORY:Internal` selection row no unit stands for is
+                // a hop -- its own automatic `ABILITY:` grants are this record's
+                // ([`internal_hop_grants`]).
+                if ctx.tree.system == GameSystem::Starfinder1e
+                    && category.eq_ignore_ascii_case("Internal")
+                    && ctx.resolve_rule_checked(&category, t) == super::ctx::RuleLookup::Missing
+                    && let Some(inner) = internal_hop_grants(ctx.tree, t)
+                {
+                    for value in inner {
+                        let (inner_fields, inner_gates) = split_gates(&value);
+                        let inner_category = inner_fields[0].trim().to_string();
+                        let inner_when = Applies::all(vec![when.clone(), gates_of(ctx, &inner_gates, None)?]);
+                        for inner_target in inner_fields.iter().skip(2).map(|x| x.trim()).filter(|x| !x.is_empty() && *x != ".CLEAR") {
+                            if let Holdable::Rule(id) = resolve_holdable_rule(ctx, &inner_category, inner_target) {
+                                out.grants_out.push((id, Grant { by: by.clone(), when: inner_when.clone() }));
+                            }
+                        }
                     }
                     continue;
                 }

@@ -203,6 +203,12 @@ pub mod class_chassis_sheet_rules;
 /// ability) read from the converted Starfinder package, for every class and race -- no
 /// per-class module.
 pub mod sf_chassis;
+/// SD-37 E4.2: the Starfinder 1e EAC, KAC and initiative, and the held set every Starfinder
+/// sheet total reads, from the converted Starfinder package.
+pub mod sf_defense;
+/// SD-37 E4.2: the Starfinder 1e skill totals (ranks, ability, class skill, armour check
+/// penalty, every held bonus row), from the converted Starfinder package.
+pub mod sf_skills;
 /// SD-36 Epic F §3.4: a class's weapon proficiency read from the converted package -- the
 /// source for every class without a `CLASS_WEAPON_PROFICIENCIES` row. `pub` so the
 /// codex-ingest oracle pin (`class_weapon_proficiency_via_converter.rs`) can call it.

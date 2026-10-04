@@ -131,7 +131,7 @@ pub fn mark_always_held(
     files: &mut BTreeMap<String, Vec<SheetRule>>,
     index: &CorpusIndex,
     grants: &[GlobalGrant],
-) -> (BTreeSet<String>, Vec<String>) {
+) -> (BTreeSet<String>, Vec<GlobalGrant>) {
     let mut marked = BTreeSet::new();
     let mut unresolved = Vec::new();
     for g in grants {
@@ -153,10 +153,45 @@ pub fn mark_always_held(
             }
         }
         if !hit {
-            unresolved.push(format!("{}|{} ({}): an always-held global grant names no converted record", g.category, g.key, g.cite));
+            unresolved.push(g.clone());
         }
     }
     (marked, unresolved)
+}
+
+/// The `unresolved-references` defect line for a global grant no converted record answers.
+pub fn unresolved_global_line(g: &GlobalGrant) -> String {
+    format!("{}|{} ({}): an always-held global grant names no converted record", g.category, g.key, g.cite)
+}
+
+/// SD-37 E4.2: whether variable `name` is DEFINEd only on always-held global objects that NO
+/// converted record stands for (`unconverted`, the grants [`mark_always_held`] could not mark),
+/// and only at `0`.
+///
+/// Starfinder's global `Default` ability (`scr__stats.lst:4`, `ABILITY:Internal|AUTOMATIC|Default`)
+/// is a `CATEGORY:Internal` helper no inventory unit stands for, so it has no record to mark
+/// `always_held`, and every bookkeeping variable it DEFINEs (`CATEGORY=Internal|Default.MOD
+/// DEFINE:CS_First_Culture|0`, `scr_abilities.lst:104`; `DEFINE:MysticChannelSkillBonus|0`, :73)
+/// came out with no declarer -- which the variable fold reads as 0 whatever the character holds.
+/// A variable every character holds at 0 folds exactly like one declared by each of its
+/// contributors: 0 until a held contributor adds to it, then the fold of the held contributions.
+/// The caller writes `declared_by` that way; a non-zero DEFINE, or a DEFINE anywhere else, keeps
+/// the variable undeclared.
+pub fn defined_at_zero_only_on(tree: &PinnedTree, name: &str, unconverted: &[GlobalGrant]) -> bool {
+    let Some(rows) = tree.define_index.get(&name.trim().to_ascii_uppercase()) else { return false };
+    !rows.is_empty()
+        && rows.iter().all(|row| {
+            if tree.files[row.file].is_pfs {
+                return false;
+            }
+            let text = tree.row_text(*row);
+            let id = row_identity(text);
+            let on_global = unconverted.iter().any(|g| g.category == id.category && g.key == id.key);
+            let zero = tokenize_row(text).1.iter().filter(|(k, _)| k == "DEFINE").any(|(_, v)| {
+                v.split_once('|').is_some_and(|(n, value)| n.trim().eq_ignore_ascii_case(name.trim()) && value.trim() == "0")
+            });
+            on_global && zero
+        })
 }
 
 #[cfg(test)]

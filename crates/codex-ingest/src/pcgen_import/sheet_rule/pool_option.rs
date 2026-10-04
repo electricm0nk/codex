@@ -118,6 +118,10 @@ pub struct PoolOptionDecl {
     pub type_facet: String,
     pub pool: String,
     pub choosers: Vec<RuleId>,
+    /// SD-37 E4.2: a member of a `BONUS:ABILITYPOOL` category whose parent is `CATEGORY:Internal`
+    /// (no `CHOOSE` chooser): held through the pick's own `offers`
+    /// (`pool_link::link_pool_choices`), so it carries no `Granter::Choice` edge.
+    pub via_pool: bool,
 }
 
 /// Everything the declaration pass found.
@@ -342,10 +346,112 @@ pub fn scan(tree: &PinnedTree, records: &[RecordRef], closures: &[Closure], owne
                 type_facet,
                 pool,
                 choosers,
+                via_pool: false,
             });
         }
     }
+    if tree.system == codex::rules_core::game_system::GameSystem::Starfinder1e {
+        scan_internal_pool_members(tree, records, closures, owned, answered, &mut s, &mut seen_ids);
+    }
     s
+}
+
+/// SD-37 E4.2: the member rows of every `BONUS:ABILITYPOOL|<C>|n` pick whose category `<C>` is a
+/// `CATEGORY:Internal` view (`ABILITYCATEGORY:<C> ... CATEGORY:Internal TYPE:<t>`), that no
+/// inventory unit stands for, declared as pool options (Starfinder only).
+///
+/// The oracle hands a Starfinder character many picks this way: the Scholar theme's chosen
+/// skill (`scr_abilities.lst:659` `BONUS:ABILITYPOOL|Scholar Theme Chosen Skill|1`; the members
+/// are the `CATEGORY:Internal TYPE:Scholar Theme Chosen Skill` rows `Life Science` and `Physical
+/// Science`, :701-702, each `CSKILL:` + `BONUS:SKILL|Display ~ <Skill>|1|PREVARGTEQ:CS_First_<Skill>,2`
+/// + `BONUS:VAR|CS_First_<Skill>|1`). The members are `CATEGORY:Internal` helper rows, never
+/// inventory units, so `link_pool_choices` found no member and the pick offered nothing: the
+/// chosen skill's class-skill grant and bonus reached no sheet. Each member converts like any pick
+/// row ([`convert_options`]); once written, `link_pool_choices` gives the pick its `offers`
+/// (`Rules { pool: internal, tags: <t> }`) and the engine holds the member the build chose.
+/// The option id's pool is the category's (`<book>:pool_option:<C slug>_<name slug>`). A category
+/// no record picks from (`BONUS:ABILITYPOOL` names it nowhere) declares no option.
+fn scan_internal_pool_members(
+    tree: &PinnedTree,
+    records: &[RecordRef],
+    closures: &[Closure],
+    owned: &dyn Fn(RowRef) -> bool,
+    answered: &dyn Fn(&str, &str) -> bool,
+    s: &mut PoolOptionScan,
+    seen_ids: &mut BTreeMap<RuleId, String>,
+) {
+    let views = super::pool_link::category_views(tree);
+    let mut picked: BTreeSet<String> = BTreeSet::new();
+    for (r, closure) in records.iter().zip(closures.iter()) {
+        if !r.joined || r.rel_path.is_empty() {
+            continue;
+        }
+        for row in &closure.rows {
+            for (k, v) in &row.tokens {
+                if k == "BONUS"
+                    && let Some(rest) = v.strip_prefix("ABILITYPOOL|")
+                    && let Some(name) = rest.split('|').next()
+                {
+                    picked.insert(slug(name));
+                }
+            }
+        }
+    }
+    // `(pool slug, upper-cased TYPE tags)` of every Internal-parented category a record picks from.
+    let pools: Vec<(String, Vec<String>)> = views
+        .iter()
+        .filter(|(pool, (parent, tags))| parent == "internal" && !tags.is_empty() && picked.contains(*pool))
+        .map(|(pool, (_, tags))| (pool.clone(), tags.iter().map(|t| t.trim().to_ascii_uppercase()).collect()))
+        .collect();
+    if pools.is_empty() {
+        return;
+    }
+    for (fi, file) in tree.files.iter().enumerate() {
+        if file.family != FileFamily::Ability || file.is_pfs {
+            continue;
+        }
+        for (li, raw) in file.lines.iter().enumerate() {
+            let row = RowRef { file: fi, line: li + 1 };
+            let ident = row_identity(raw);
+            if !matches!(ident.shape, RowShape::Plain | RowShape::Copy(_)) || ident.category != "INTERNAL" {
+                continue;
+            }
+            let (head, tokens) = tokenize_row(raw);
+            // The category declaration itself (`ABILITYCATEGORY:<C> ... CATEGORY:Internal TYPE:<t>`)
+            // is not a member row.
+            if head.trim_start().to_ascii_uppercase().starts_with("ABILITYCATEGORY:") {
+                continue;
+            }
+            let name = head.split(".COPY=").next().unwrap_or(&head).trim().to_string();
+            let name_u = name.to_ascii_uppercase();
+            if owned(row) || answered(&ident.category, &ident.key) || answered(&ident.category, &name_u) {
+                continue;
+            }
+            let type_facet = tokens.iter().filter(|(k, _)| k == "TYPE").map(|(_, v)| v.clone()).next_back().unwrap_or_default();
+            let types: BTreeSet<String> = type_facet.split('.').map(|t| t.trim().to_ascii_uppercase()).filter(|t| !t.is_empty()).collect();
+            for (pool, _) in pools.iter().filter(|(_, tags)| tags.iter().all(|t| types.contains(t))) {
+                let id = option_id(&file.book, pool, &name);
+                if let Some(first) = seen_ids.get(&id) {
+                    s.defects.entry("pool-option-id-collision".into()).or_default().push(format!("{id}: {} (first {first})", tree.cite(row)));
+                    continue;
+                }
+                seen_ids.insert(id.clone(), tree.cite(row));
+                s.options.push(PoolOptionDecl {
+                    id,
+                    row,
+                    book: file.book.clone(),
+                    rel_path: file.rel_path.clone(),
+                    category: ident.category.clone(),
+                    key: ident.key.clone(),
+                    name: name.clone(),
+                    type_facet: type_facet.clone(),
+                    pool: pool.clone(),
+                    choosers: Vec::new(),
+                    via_pool: true,
+                });
+            }
+        }
+    }
 }
 
 /// The record a pick row converts as.
@@ -421,7 +527,7 @@ pub fn convert_options(tree: &PinnedTree, index: &CorpusIndex, offered: &dyn Fn(
                 bad_choosers.insert(ch.clone());
             }
         }
-        if principal.granted_by.is_empty() {
+        if principal.granted_by.is_empty() && !d.via_pool {
             defects.entry("pool-option-unconverted".into()).or_default().push(format!("{}: no converted chooser offers it ({cite})", d.id));
             continue;
         }

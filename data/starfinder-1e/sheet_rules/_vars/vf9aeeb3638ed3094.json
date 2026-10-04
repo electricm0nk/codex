@@ -1,1 +1,1 @@
-{"var":"vf9aeeb3638ed3094","label":"Drone Extra Ammo Taken","declared_by":[],"contributions":[{"rule_id":"core:ability:drone_mod_extra_ammo","expr":{"Const":1},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:196"]}}
+{"var":"vf9aeeb3638ed3094","label":"Drone Extra Ammo Taken","declared_by":["core:ability:drone_mod_extra_ammo"],"contributions":[{"rule_id":"core:ability:drone_mod_extra_ammo","expr":{"Const":1},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:196"]}}
