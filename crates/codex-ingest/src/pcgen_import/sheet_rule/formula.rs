@@ -501,6 +501,12 @@ fn lower_ident(ctx: &mut RecordCtx, name: &str, strict: bool) -> Result<Expr, St
 fn owning_class_level(ctx: &mut RecordCtx) -> Result<Expr, String> {
     match &ctx.owning_class {
         Some(c) => Ok(Expr::ClassLevel(c.clone())),
+        // SD-37 E4.4: a Starfinder record no class owns (a feat) states its level steps in
+        // character levels -- Spell Focus "At 11th level ... at 17th level" (SRD
+        // https://www.aonsrd.com/FeatDisplay.aspx?ItemName=Spell%20Focus), Weapon Specialization
+        // "half your character level" -- and the oracle writes them as `CL`. With no owning class,
+        // `CL` there is the character level, not a refusal.
+        None if ctx.tree.system == codex::rules_core::game_system::GameSystem::Starfinder1e => Ok(Expr::Level),
         None => Err("FORMULA:CL-no-owner".into()),
     }
 }

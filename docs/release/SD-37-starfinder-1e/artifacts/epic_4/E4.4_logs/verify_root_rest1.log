@@ -1,0 +1,111 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.73s
+     Running tests/sheet_rule_weapon_selectors.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sheet_rule_weapon_selectors-94e9ee78132acb64)
+
+running 6 tests
+test marksman_conjunction_is_a_list_not_a_joined_word has been running for over 60 seconds
+test musketeer_keeps_both_its_genuinely_different_firearm_sets has been running for over 60 seconds
+test picaroon_weapon_proficiency_carries_one_grant_not_three_identical_ones has been running for over 60 seconds
+test samurai_set_members_come_from_the_oracle_rows has been running for over 60 seconds
+test single_simple_weapon_choice_stays_a_choice has been running for over 60 seconds
+test type_auto_resolves_through_membership_to_its_five_real_members_not_a_defect has been running for over 60 seconds
+test single_simple_weapon_choice_stays_a_choice ... ok
+test type_auto_resolves_through_membership_to_its_five_real_members_not_a_defect ... ok
+test samurai_set_members_come_from_the_oracle_rows ... ok
+test marksman_conjunction_is_a_list_not_a_joined_word ... ok
+test musketeer_keeps_both_its_genuinely_different_firearm_sets ... ok
+test picaroon_weapon_proficiency_carries_one_grant_not_three_identical_ones ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 250.18s
+
+     Running tests/spell_cross_book_identity.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/spell_cross_book_identity-1c12609392d2d5d8)
+
+running 7 tests
+test an_archetype_qualified_record_resolves_by_its_corpus_display_name ... ok
+test no_archetype_display_name_shadows_another_record_in_its_own_book ... ok
+test the_acg_naturalist_summon_natures_ally_records_keep_their_corpus_key_token ... ok
+test the_apg_summoner_summon_monster_records_keep_their_corpus_key_token ... ok
+test the_three_ingested_books_carry_their_full_corpus_record_counts ... ok
+test no_spell_key_is_shared_by_two_ingested_books ... ok
+test the_acg_naturalist_json_cache_stores_the_archetype_qualified_key_not_the_display_name ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/v06_apg_acg_feat_catalog.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/v06_apg_acg_feat_catalog-a87e19ae3a00667c)
+
+running 9 tests
+test acg_feat_catalog_has_the_real_per_category_corpus_counts ... ok
+test apg_feat_catalog_has_the_real_per_category_corpus_counts ... ok
+test crb_records_gained_their_real_prerequisite_tokens ... ok
+test apg_and_acg_catalogs_match_the_live_corpus ... ok
+test pinned_acg_feats_carry_their_real_corpus_fields ... ok
+test every_apg_and_acg_record_has_a_real_key_name_and_description ... ok
+test pinned_apg_feats_carry_their_real_corpus_fields ... ok
+test the_aggregate_catalog_spans_every_ingested_book ... ok
+test cross_book_feat_key_repeats_are_exactly_the_known_set ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/v06_corpus_trap_report.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/v06_corpus_trap_report-54279ffdb45ba3c7)
+
+running 26 tests
+test copy_lines_declare_a_new_record ... ok
+test archetype_scoped_records_are_flagged ... ok
+test define_zero_with_no_bonus_in_scope_says_the_source_is_out_of_scope ... ok
+test disabled_twin_with_diverging_content_is_called_out ... ok
+test define_zero_whose_value_arrives_elsewhere_is_reported ... ok
+test governing_tokens_outside_the_common_filter_are_reported ... ok
+test hash_prefixed_records_are_disabled_not_declarations ... ok
+test mod_lines_are_modifications_not_declarations ... ok
+test mod_inside_a_token_value_is_not_a_mod_record ... ok
+test key_differing_from_display_name_is_reported ... ok
+test mod_without_a_local_base_declaration_says_so ... ok
+test namespaced_keys_are_reported_with_their_namespace ... ok
+test prose_comments_are_not_disabled_records ... ok
+test record_shapes_cover_every_line_kind ... ok
+test same_display_name_with_distinct_keys_is_reported ... ok
+test same_display_name_with_the_same_key_is_not_a_collision ... ok
+test scanner_runs_cold_against_an_uningested_book ... ok
+test the_trap_baseline_reconciler_actually_fires_on_a_planted_regression_and_a_stale_row ... ok
+test token_dense_records_report_tokens_and_records_separately ... ok
+test ingested_book_scans_match_pinned_counts ... ok
+test concept_census_reports_per_book_never_a_bare_total ... ok
+test every_ingested_citation_resolves_to_a_real_line ... ok
+test every_mod_sourced_ingest_has_a_live_base_declaration ... ok
+test ingested_record_keys_match_their_cited_line ... ok
+test no_ingested_record_is_sourced_from_a_disabled_line ... ok
+test no_two_ingested_records_share_a_record_key ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 52.00s
+
+     Running tests/v06_encumbrance.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/v06_encumbrance-38aee98b481cf7fc)
+
+running 15 tests
+test carrying_capacity_thresholds_extrapolate_two_tiers_beyond_strength_29 ... ok
+test carrying_capacity_thresholds_match_every_row_of_the_real_pcgen_load_lst_table ... ok
+test carrying_capacity_thresholds_clamps_a_below_minimum_strength_score ... ok
+test a_small_race_is_more_encumbered_than_a_medium_race_carrying_the_identical_loadout ... ok
+test carrying_capacity_thresholds_match_the_real_pcgen_load_lst_table ... ok
+test compute_encumbrance_reaches_medium_between_light_and_heavy_thresholds ... ok
+test compute_encumbrance_returns_a_true_zero_for_an_entirely_absent_loadout ... ok
+test compute_encumbrance_reports_the_load_penalties_for_a_real_medium_load ... ok
+test compute_encumbrance_sums_a_different_real_item_set_than_the_inline_fixture ... ok
+test encumbrance_level_carries_the_real_pcgen_load_penalties ... ok
+test compute_encumbrance_totals_the_real_corpus_cost_of_the_carried_loadout ... ok
+test every_playable_race_size_matches_its_corpus_base_size_token ... ok
+test size_load_capacity_ratios_match_every_sizemult_row_of_the_real_pcgen_load_lst ... ok
+test small_race_carrying_capacity_matches_pf1s_published_small_column ... ok
+test small_size_carrying_capacity_is_three_quarters_of_medium_not_equal_to_it ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/v06_wizard_pilot_case_verification.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/v06_wizard_pilot_case_verification-13b37510f2d22ec2)
+
+running 3 tests
+test wizard_pilot_case_input_reaches_computed ... ok
+test wizard_in_a_chain_shirt_gets_the_real_spell_failure_and_check_penalty_on_the_receipt ... ok
+test full_pipeline_runs_end_to_end_for_the_wizard_pilot_case ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 36.91s
+
+exit=0

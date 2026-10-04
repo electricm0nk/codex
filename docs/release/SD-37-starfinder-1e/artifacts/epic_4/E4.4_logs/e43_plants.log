@@ -1,0 +1,59 @@
+src/rules_core/pilot_compute/sf_abilities.rs sha256 a8341f4d110942d1f72f3550cf4f470bb239eab85786eef7810ce7df94ce1a46
+src/rules_core/pilot_compute/sf_defense.rs sha256 125940f9538423697d4fc902f84f3a0f72c853f9e50d30044ce9608a06683b23
+test: cargo test --locked -j 8 --lib sf_seed -- --test-threads=8
+A1 on src/rules_core/pilot_compute/sf_abilities.rs ('if current[i] >= 17 {' -> 'if false && current[i] >= 17 {') -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_the_5th_level_increase_raises_four_scores' (100472) panicked at src/rules_core/pilot_compute/sf_abilities.rs:274:13:
+    left: [10, 14, 8, 14, 20, 15]
+    right: [10, 14, 8, 14, 19, 15]
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_increases_at_10_15_20_follow_the_17_rule' (100469) panicked at src/rules_core/pilot_compute/sf_abilities.rs:404:9:
+    left: [24, 22, 20, 19]
+    right: [21, 20, 19, 18]
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_ability_scores_match_the_seed_builds' (100468) panicked at src/rules_core/pilot_compute/sf_abilities.rs:259:9:
+    SF-Mystic-5: engine [10, 14, 8, 14, 20, 15], seed-builds.md [10, 14, 8, 14, 19, 15]
+A2 on src/rules_core/pilot_compute/sf_abilities.rs ('for (at, chosen) in &abilities.increases {' -> 'for (at, chosen) in abilities.increases.iter().filter(|_| false) {') -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_the_5th_level_increase_raises_four_scores' (101900) panicked at src/rules_core/pilot_compute/sf_abilities.rs:274:13:
+    left: [10, 12, 8, 12, 18, 13]
+    right: [10, 14, 8, 14, 19, 15]
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_increases_at_10_15_20_follow_the_17_rule' (101897) panicked at src/rules_core/pilot_compute/sf_abilities.rs:404:9:
+    left: [16, 14, 12, 11]
+    right: [21, 20, 19, 18]
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_ability_scores_match_the_seed_builds' (101896) panicked at src/rules_core/pilot_compute/sf_abilities.rs:259:9:
+    SF-Mystic-5: engine [10, 12, 8, 12, 18, 13], seed-builds.md [10, 14, 8, 14, 19, 15]
+A3 on src/rules_core/pilot_compute/sf_abilities.rs ('terms[i].extend(fold(held_rows(package, &sf, &|t| *t == BonusTarget::Ability(a), &mut not_folded)));' -> 'let _ = fold(held_rows(package, &sf, &|t| *t == BonusTarget::Ability(a), &mut not_folded));') -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_race_and_theme_terms_name_their_records' (103244) panicked at src/rules_core/pilot_compute/sf_abilities.rs:339:17:
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_the_5th_level_increase_raises_four_scores' (103245) panicked at src/rules_core/pilot_compute/sf_abilities.rs:273:13:
+    left: [10, 12, 10, 10, 17, 11]
+    right: [10, 12, 8, 12, 18, 13]
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_point_buy_limits_are_refused_by_name' (103243) panicked at src/rules_core/pilot_compute/sf_abilities.rs:385:56:
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_increases_at_10_15_20_follow_the_17_rule' (103242) panicked at src/rules_core/pilot_compute/sf_abilities.rs:404:9:
+    left: [19, 20, 19, 18]
+    right: [21, 20, 19, 18]
+A4 on src/rules_core/pilot_compute/sf_defense.rs ('Some(a) => BonusTarget::Ability(a),' -> 'Some(_) => BonusTarget::Skill(option.clone()),') -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_race_and_theme_terms_name_their_records' (104228) panicked at src/rules_core/pilot_compute/sf_abilities.rs:339:17:
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_increases_at_10_15_20_follow_the_17_rule' (104226) panicked at src/rules_core/pilot_compute/sf_abilities.rs:404:9:
+    left: [20, 20, 19, 18]
+    right: [21, 20, 19, 18]
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_point_buy_limits_are_refused_by_name' (104227) panicked at src/rules_core/pilot_compute/sf_abilities.rs:385:56:
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_ability_scores_match_the_seed_builds' (104225) panicked at src/rules_core/pilot_compute/sf_abilities.rs:259:9:
+    SF-Soldier-3: engine [14, 14, 12, 11, 10, 10], seed-builds.md [16, 14, 12, 11, 10, 10]
+    test result: FAILED. 19 passed; 4 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 2.63s
+A5 on src/rules_core/pilot_compute/sf_abilities.rs ('pub const POINT_BUY_BUDGET: i64 = 10;' -> 'pub const POINT_BUY_BUDGET: i64 = 11;') -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_point_buy_limits_are_refused_by_name' (105138) panicked at src/rules_core/pilot_compute/sf_abilities.rs:375:9:
+    left: 1
+    right: 0
+    test result: FAILED. 22 passed; 1 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 2.57s
+A6 on src/rules_core/pilot_compute/sf_abilities.rs ('pub const MAX_SCORE_AT_CREATION: i64 = 18;' -> 'pub const MAX_SCORE_AT_CREATION: i64 = 19;') -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_point_buy_limits_are_refused_by_name' (106000) panicked at src/rules_core/pilot_compute/sf_abilities.rs:385:56:
+    test result: FAILED. 22 passed; 1 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 2.62s
+A7 on src/rules_core/pilot_compute/sf_abilities.rs ('if abilities.point_buy[i] != 0 {' -> 'if false && abilities.point_buy[i] != 0 {') -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_the_5th_level_increase_raises_four_scores' (107146) panicked at src/rules_core/pilot_compute/sf_abilities.rs:273:13:
+    left: [10, 10, 8, 12, 11, 12]
+    right: [10, 12, 8, 12, 18, 13]
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_increases_at_10_15_20_follow_the_17_rule' (107143) panicked at src/rules_core/pilot_compute/sf_abilities.rs:404:9:
+    left: [19, 18, 18, 18]
+    right: [21, 20, 19, 18]
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_point_buy_limits_are_refused_by_name' (107144) panicked at src/rules_core/pilot_compute/sf_abilities.rs:385:56:
+    thread 'rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_ability_scores_match_the_seed_builds' (107142) panicked at src/rules_core/pilot_compute/sf_abilities.rs:259:9:
+restored (sha256 identical) -> sf_seed PASS (exit 0)
+verdict=PASS A1=FAIL A2=FAIL A3=FAIL A4=FAIL A5=FAIL A6=FAIL A7=FAIL
+exit=0

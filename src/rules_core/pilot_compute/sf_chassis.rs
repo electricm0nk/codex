@@ -198,7 +198,7 @@ fn hit_die(principal: &SheetRule) -> Result<i64, SfChassisRefusal> {
 
 /// The abilities the class principal's `KeyAbilityScore` fact allows: `CHA` -> [Cha],
 /// `Str or Dex` -> [Str, Dex].
-fn key_ability_options(principal: &SheetRule) -> Result<Vec<Ability>, SfChassisRefusal> {
+pub(crate) fn key_ability_options(principal: &SheetRule) -> Result<Vec<Ability>, SfChassisRefusal> {
     let value = principal
         .grants
         .iter()

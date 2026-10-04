@@ -109,6 +109,9 @@ struct Acc {
     /// SD-36 F1c-5 (D8): the variable pools (variable name, original case) this record's own
     /// `BONUS:VAR` rows raise, in row order.
     pool_picks: Vec<String>,
+    /// SD-37 E4.4: spell-hop lines (`internal_spell_known_grants`), kept apart from `lines` so a
+    /// line numbered by `lines.len()` (`#bonus<n>`) keeps its id; appended after every other line.
+    sf_spell_hop_lines: Vec<Line>,
 }
 
 /// A die literal with an optional flat modifier: `"1d8"` -> `("1d8", None)`, `"1d8+2"` ->
@@ -497,6 +500,71 @@ fn sf_race_hit_points(tree: &PinnedTree, closure: &Closure) -> Result<Option<(Bo
     }
 }
 
+/// SD-37 E4.4: one row of a Starfinder class's spell progression -- the class's spells per day
+/// (`CAST:`) or spells known (`KNOWN:`) at one spell level, over every class level.
+#[derive(Debug, Clone, PartialEq)]
+struct SfSpellProgressionRow {
+    known: bool,
+    spell_level: u8,
+    /// The first class level whose level line has this column.
+    first: u8,
+    /// `ClassLevel(class) >= first`: the table's value at each class level, as one expression --
+    /// the first level's value plus each later change, stepped in at the level it happens
+    /// (`min(1, max(0, ClassLevel - k + 1))` is 1 from class level k on, the encoding the formula
+    /// reader already writes for `(X>=k)`).
+    value: Expr,
+}
+
+/// SD-37 E4.4: a Starfinder class's spell progression, read from its own level lines
+/// (`scr_classes.lst` `1	CAST:0,2	KNOWN:4,2` ... `20	CAST:0,5,5,5,5,5,5	KNOWN:6,6,6,6,6,5,5`).
+/// The PF engine holds its class tables in Rust; the Starfinder engine reads only the package
+/// (`decisions.md §15` R2), so the converter lowers them: one `SpellCell` row per spell level the
+/// class casts per day (a column that is 0 at every level -- the 0-level column, "no limit" in the
+/// SRD -- is no per-day number and gets no row) and one `SpellsKnown` row per spell level. `Ok(vec![])`:
+/// the class casts no spells. A column with a gap, or a level line stated twice, is an `Err`.
+fn sf_spell_progression(closure: &Closure, class: &str) -> Result<Vec<SfSpellProgressionRow>, String> {
+    // (known?, spell level) -> class level -> value
+    let mut columns: BTreeMap<(bool, u8), BTreeMap<u8, i64>> = BTreeMap::new();
+    for row in closure.rows.iter().filter(|r| r.kind == ClosureRowKind::LevelLine) {
+        let Some(class_level) = row.level_gate else { continue };
+        for (key, value) in &row.tokens {
+            let known = match key.trim() {
+                "CAST" => false,
+                "KNOWN" => true,
+                _ => continue,
+            };
+            for (i, cell) in value.split(',').enumerate() {
+                let spell_level = u8::try_from(i).map_err(|_| format!("{key}:{value} at level {class_level}: too many columns"))?;
+                let n: i64 = cell.trim().parse().map_err(|_| format!("{key}:{value} at level {class_level}: {cell:?} is not an integer"))?;
+                if columns.entry((known, spell_level)).or_default().insert(class_level, n).is_some() {
+                    return Err(format!("{key} stated twice at class level {class_level}"));
+                }
+            }
+        }
+    }
+    let mut out = Vec::new();
+    for ((known, spell_level), by_level) in columns {
+        if !known && by_level.values().all(|n| *n == 0) {
+            continue;
+        }
+        let (&first, &first_value) = by_level.first_key_value().expect("a column has a first level");
+        let mut terms = vec![Expr::Const(first_value as i32)];
+        let mut previous = (first, first_value);
+        for (&level, &n) in by_level.iter().skip(1) {
+            if level != previous.0 + 1 {
+                return Err(format!("{} column {spell_level} jumps from class level {} to {level}", if known { "KNOWN" } else { "CAST" }, previous.0));
+            }
+            if n != previous.1 {
+                let step = Expr::min(Expr::Const(1), Expr::max(Expr::Const(0), Expr::sum(vec![Expr::ClassLevel(class.to_string()), Expr::Const(1 - i32::from(level))])));
+                terms.push(Expr::mul(Expr::Const((n - previous.1) as i32), step));
+            }
+            previous = (level, n);
+        }
+        out.push(SfSpellProgressionRow { known, spell_level, first, value: Expr::sum(terms) });
+    }
+    Ok(out)
+}
+
 /// SD-37 E4.2: the automatic `ABILITY:` grants of a `CATEGORY:Internal` helper row no inventory
 /// unit stands for, when every `ABILITY:` grant it makes is a plain automatic one -- a SELECTION
 /// HOP.
@@ -527,6 +595,44 @@ fn internal_hop_grants(tree: &PinnedTree, key: &str) -> Option<Vec<String>> {
             && fields.iter().skip(2).all(|t| !t.contains("%LIST") && !t.contains("%CHOICE") && !t.trim().starts_with("TYPE"))
     };
     (!grants.is_empty() && grants.iter().all(plain)).then_some(grants)
+}
+
+/// SD-37 E4.4: the spells a `CATEGORY:Internal` helper row adds to a class's spells known
+/// (`SPELLKNOWN:CLASS|Mystic=1|detect thoughts|Mystic=2|zone of truth`), when the row grants no
+/// ability -- a SPELL HOP. The oracle's mystic connections reach their connection spells this
+/// way: `Empath` grants `ABILITY:Internal|AUTOMATIC|Empath Connection Spell - 2|PREVAREQ:
+/// MysticHighestCastableConnectionLVL,2` (`scr_abilities.lst:1588`), and only that row names the
+/// spells (:1671). The spells are printed; the count is a sheet total ("one for each level of
+/// mystic spell you can cast", SRD Mystic Connection Spell). `(class, spell level, spell)` per
+/// spell named; `None`: the row is not a spell hop.
+fn internal_spell_known_grants(tree: &PinnedTree, key: &str) -> Option<Vec<(String, u8, String)>> {
+    use super::closure::{tokenize_row, FileFamily};
+    let key = key.trim().to_ascii_uppercase();
+    let mut rows: Vec<_> = tree.keyed_index.get(&(FileFamily::Ability, "INTERNAL".to_string(), key.clone())).copied().into_iter().collect();
+    rows.extend(tree.mods_for(FileFamily::Ability, "INTERNAL", &key).iter().copied());
+    let tokens: Vec<(String, String)> = rows.into_iter().flat_map(|r| tokenize_row(tree.row_text(r)).1).collect();
+    if tokens.iter().any(|(k, _)| k.trim() == "ABILITY") {
+        return None;
+    }
+    let mut out = Vec::new();
+    for (_, value) in tokens.iter().filter(|(k, _)| k.trim() == "SPELLKNOWN") {
+        let (fields, gates) = split_gates(value);
+        if !gates.is_empty() || !fields.first().is_some_and(|f| f.trim().eq_ignore_ascii_case("CLASS")) {
+            return None;
+        }
+        let mut current: Option<(String, u8)> = None;
+        for f in fields.iter().skip(1).map(|f| f.trim()) {
+            if let Some((class, level)) = f.split_once('=') {
+                current = Some((class.trim().to_string(), level.trim().parse().ok()?));
+            } else {
+                let (class, level) = current.clone()?;
+                for spell in f.split(',').map(str::trim).filter(|x| !x.is_empty()) {
+                    out.push((class.clone(), level, spell.to_string()));
+                }
+            }
+        }
+    }
+    (!out.is_empty()).then_some(out)
 }
 
 /// The sheet total(s) a `BONUS:<sub>|<target>` feeds, with the label words for the line.
@@ -1037,6 +1143,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         desc_redacted: pi_desc,
         tempdesc_seen: false,
         pool_picks: Vec::new(),
+        sf_spell_hop_lines: Vec::new(),
     };
     // The choice id is the record's own id when it carries a CHOOSE (pre-scan so %CHOICE
     // markers before the CHOOSE token still bind).
@@ -1152,6 +1259,9 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     // to (its member list), never by which book's capitalization produced the label, so once
     // two grants resolve to the same member set only the first survives.
     acc.grants = dedup_weapon_set_grants(acc.grants);
+    // SD-37 E4.4: the spell-hop lines go after every other line, so no existing line's id moves.
+    let hop_lines = std::mem::take(&mut acc.sf_spell_hop_lines);
+    acc.lines.extend(hop_lines);
     // SD-36 F1c-5 (D8): a record that raises a variable pool offers the pick (`pool_pick.rs`).
     offer_pool_pick(&mut ctx, &mut acc, &mut out);
     // ---- assemble -------------------------------------------------------------------------
@@ -1280,6 +1390,34 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             }),
             Ok(None) => {}
             Err(why) => ctx.defect("sf-race-hit-points-unresolved", format!("{}: {why}", record.id)),
+        }
+    }
+    // SD-37 E4.4: a Starfinder class's spell progression (`sf_spell_progression`), siblings of
+    // their own pushed after every existing line, so no existing line's id, label or value moves.
+    if ctx.tree.system == GameSystem::Starfinder1e && record.kind == "class" {
+        let class = super::ctx::own_class_id(record);
+        match sf_spell_progression(closure, &class) {
+            Ok(rows) => {
+                for r in rows {
+                    let (target, words, suffix) = if r.known {
+                        (BonusTarget::SpellsKnown { class: class.clone(), level: r.spell_level }, "spells known", "spells_known")
+                    } else {
+                        (BonusTarget::SpellCell { class: class.clone(), level: r.spell_level }, "spells per day", "spells_per_day")
+                    };
+                    lines.push(Line {
+                        seq: None,
+                        suffix: Some(format!("{suffix}_{}", r.spell_level)),
+                        label: format!("{label} (level {} {words})", r.spell_level),
+                        value: SheetValue::Number(r.value),
+                        also: Vec::new(),
+                        target: Some(target),
+                        bonus_type: None,
+                        applies: Applies::Compare { lhs: Expr::ClassLevel(class.clone()), op: Cmp::Gte, rhs: Expr::Const(i32::from(r.first)) },
+                        prose: Vec::new(),
+                    });
+                }
+            }
+            Err(why) => ctx.defect("sf-spell-progression-unresolved", format!("{}: {why}", record.id)),
         }
     }
     let mut principal_also = std::mem::take(&mut acc.also);
@@ -2240,6 +2378,36 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                                 out.grants_out.push((id, Grant { by: by.clone(), when: inner_when.clone() }));
                             }
                         }
+                    }
+                    continue;
+                }
+                // SD-37 E4.4: a Starfinder `CATEGORY:Internal` row no unit stands for that names
+                // spells known is a spell hop -- each spell is one spell known on this record,
+                // under the grant's gate ([`internal_spell_known_grants`]).
+                if ctx.tree.system == GameSystem::Starfinder1e
+                    && category.eq_ignore_ascii_case("Internal")
+                    && ctx.resolve_rule_checked(&category, t) == super::ctx::RuleLookup::Missing
+                    && let Some(spells) = internal_spell_known_grants(ctx.tree, t)
+                {
+                    for (class, level, spell) in spells {
+                        let class_id = ctx.class_id(&class);
+                        let shown = if pi_hit(ctx.tree.system, &spell).is_some() {
+                            ctx.pi_term_hits.push("spell known".into());
+                            "a spell".to_string()
+                        } else {
+                            spell.clone()
+                        };
+                        acc.sf_spell_hop_lines.push(Line {
+                            seq: ctx.current_seq,
+                            suffix: Some(format!("spell_known_{}_{level}_{}", slug(t), slug(&spell))),
+                            label: format!("{t}: {shown} (level {level} {class} spell known)"),
+                            value: SheetValue::Number(Expr::Const(1)),
+                            also: Vec::new(),
+                            target: Some(BonusTarget::SpellsKnown { class: class_id, level }),
+                            bonus_type: None,
+                            applies: when.clone(),
+                            prose: Vec::new(),
+                        });
                     }
                     continue;
                 }

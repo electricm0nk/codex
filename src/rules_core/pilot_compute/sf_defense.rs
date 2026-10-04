@@ -418,6 +418,7 @@ pub(crate) mod seed_support {
 
     pub const HAND_VALUES: &str = "docs/release/SD-37-starfinder-1e/artifacts/epic_0/seed-hand-values.md";
     pub const INITIATIVE_HAND_VALUES: &str = "docs/release/SD-37-starfinder-1e/artifacts/epic_4/E4.2-initiative-hand-values.md";
+    pub const SPELL_DC_HAND_VALUES: &str = "docs/release/SD-37-starfinder-1e/artifacts/epic_4/E4.4-spell-dc-hand-values.md";
 
     pub fn package() -> &'static SheetRulePackage {
         live_sheet_rules_for(GameSystem::Starfinder1e).expect("the Starfinder package loads (data/starfinder-1e/sheet_rules)")
@@ -434,7 +435,7 @@ pub(crate) mod seed_support {
     /// `files`. A row without an `https://` source fails.
     pub fn hand_values() -> BTreeMap<(String, String), Hand> {
         let mut out = BTreeMap::new();
-        for rel in [HAND_VALUES, INITIATIVE_HAND_VALUES] {
+        for rel in [HAND_VALUES, INITIATIVE_HAND_VALUES, SPELL_DC_HAND_VALUES] {
             let path = crate::support::paths::repo_root().join(rel);
             let text = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
             for line in text.lines() {
@@ -499,6 +500,9 @@ pub(crate) mod seed_support {
                         s("core:ability:empath"),
                         s("core:ability:2_racial_bonus_to_skill"),
                         s("core:ability:lashunta_subrace_damaya"),
+                        // Spell Focus, the 3rd-level feat (seed-builds.md §2 feats); it raises
+                        // every spell DC (E4.4).
+                        s("core:feat:spell_focus"),
                     ],
                     skill_ranks: ranks(&[
                         ("bluff", 5),
@@ -519,7 +523,11 @@ pub(crate) mod seed_support {
                     chassis: chassis("technomancer", 5, "android", [10, 16, 14, 19, 13, 8], None),
                     theme: Some(s("core:ability:scholar")),
                     armor: Some(s("core:equipment:d_suit_i")),
-                    picks: vec![],
+                    // Spell Focus, the technomancer's 3rd-level bonus feat (seed-builds.md §3
+                    // feats). The oracle's class feature `Technomancer Class Feature ~ SPELL
+                    // FOCUS` grants nothing (`scr_abilities.lst:2039`, DESC only), so the build
+                    // holds the feat itself (E4.4).
+                    picks: vec![s("core:feat:spell_focus")],
                     skill_ranks: ranks(&[
                         ("computers", 5),
                         ("engineering", 5),
