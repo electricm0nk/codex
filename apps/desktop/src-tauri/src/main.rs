@@ -36,6 +36,7 @@ mod race_catalog;
 mod race_trait_picker;
 mod reference_library_catalog;
 mod rule_system_adapter;
+mod sf_adapter;
 mod spell_catalog;
 mod stub_adapter;
 mod trait_picker;

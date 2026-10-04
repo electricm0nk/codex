@@ -1,0 +1,17 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 30.50s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 9 tests
+test sf_adapter::tests::build_from_input_reads_theme_armour_loadout_and_choices ... ok
+test sf_adapter::tests::a_refused_build_is_a_named_blocking_diagnostic ... ok
+test rule_system_adapter::tests::starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed ... ok
+test sf_adapter::tests::bulk_condition_caps_dex_and_takes_the_worse_penalty_on_str_and_dex_skills ... ok
+test sf_adapter::tests::the_command_paths_route_starfinder_1e_to_the_starfinder_adapter ... ok
+test sf_adapter::tests::persistence_methods_work_on_a_saved_starfinder_character ... ok
+test sf_adapter::tests::sf_seed_every_hand_value_equals_the_adapters_explanation_row ... ok
+test rule_system_adapter::tests::dyn_rule_system_adapter_constructs_and_dispatches_every_method ... ok
+test pf1_adapter::tests::pf1_adapter_implements_rule_system_adapter_end_to_end ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 638 filtered out; finished in 21.33s
+

@@ -1,0 +1,22 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.00s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+test rule_system_adapter::tests::starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed ... FAILED
+
+failures:
+
+---- rule_system_adapter::tests::starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed stdout ----
+
+thread 'rule_system_adapter::tests::starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed' (942453) panicked at src/rule_system_adapter.rs:665:13:
+the Starfinder chassis must not report a Would-message: ComputationDiagnostic { id: "stub_adapter.not_yet_implemented", message: "Would render for system starfinder-1e; not yet implemented", claim_blocking: true }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rule_system_adapter::tests::starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 640 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--bin codex-desktop`
