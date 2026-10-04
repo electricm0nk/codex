@@ -33,7 +33,11 @@
 //! 2026-07-24: the operator provided the full table directly, cited to
 //! d20pfsrd.com's "Character Creation" page (Pathfinder SRD/OGL content) --
 //! see `starting_wealth_gp`'s own doc comment.
+//!
+//! Starfinder 1e (SD-37 E4.5): one currency, credits, and starting money by character level
+//! (Table 11-5) -- see [`starting_wealth`], the per-system entry point.
 
+use crate::rules_core::game_system::GameSystem;
 
 /// A copper-piece total broken into the four PF1 denominations, largest
 /// first. `total_copper` on `Denominations` is *not* stored — callers hold
@@ -204,6 +208,75 @@ pub fn starting_wealth_gp(class_id: &str) -> Option<u32> {
         UNCHAINED_BARBARIAN_CLASS_ID => Some(105),
         UNCHAINED_ROGUE_CLASS_ID => Some(140),
         _ => None,
+    }
+}
+
+/// Starfinder 1e Table 11-5 Character Wealth per Level, in credits, row `i` = character level
+/// `i + 1` (<https://www.aonsrd.com/Rules.aspx?ID=230>, Wealth By Level: the table "can also be
+/// used to budget gear for characters starting above 1st level"). Its 1st-level row is the Core
+/// Rulebook's starting money: "At 1st level, your character has 1,000 credits to spend"
+/// (<https://www.aonsrd.com/Rules.aspx?ID=39>, Step 8: Buy Equipment). Starfinder has one
+/// currency (the oracle game mode's `CURRENCYUNITABBREV:cr`), so there is no denomination split.
+const SF_WEALTH_BY_LEVEL_CREDITS: [i64; 20] = [
+    1_000, 2_000, 4_000, 6_000, 9_000, 15_000, 23_000, 33_000, 45_000, 66_000, 100_000, 150_000, 225_000, 333_000,
+    500_000, 750_000, 1_125_000, 1_700_000, 2_550_000, 3_775_000,
+];
+
+/// A new character's starting money in its system's own unit, by system: Pathfinder 1e gold
+/// pieces by class at 1st level ([`starting_wealth_gp`]; this crate holds no Pathfinder
+/// wealth-by-level table, so a Pathfinder level above 1 is `None`), Starfinder 1e credits by
+/// character level (Table 11-5, any class). `None` is "no rule this crate holds", never a 0.
+pub fn starting_wealth(system: GameSystem, class_id: &str, level: i64) -> Option<i64> {
+    match system {
+        GameSystem::Pathfinder1e => (level == 1).then(|| starting_wealth_gp(class_id)).flatten().map(i64::from),
+        GameSystem::Starfinder1e => {
+            usize::try_from(level).ok().filter(|l| *l >= 1).and_then(|l| SF_WEALTH_BY_LEVEL_CREDITS.get(l - 1)).copied()
+        }
+    }
+}
+
+#[cfg(test)]
+mod system_wealth_tests {
+    use super::*;
+
+    /// Every row of Table 11-5 as the SRD prints it (`E4.5-srd-fetch-log.txt`), level 1 to 20.
+    #[test]
+    fn starfinder_wealth_by_level_matches_table_11_5() {
+        let srd = [
+            (1, 1_000),
+            (2, 2_000),
+            (3, 4_000),
+            (4, 6_000),
+            (5, 9_000),
+            (6, 15_000),
+            (7, 23_000),
+            (8, 33_000),
+            (9, 45_000),
+            (10, 66_000),
+            (11, 100_000),
+            (12, 150_000),
+            (13, 225_000),
+            (14, 333_000),
+            (15, 500_000),
+            (16, 750_000),
+            (17, 1_125_000),
+            (18, 1_700_000),
+            (19, 2_550_000),
+            (20, 3_775_000),
+        ];
+        for (level, credits) in srd {
+            assert_eq!(starting_wealth(GameSystem::Starfinder1e, "core:class:soldier", level), Some(credits), "level {level}");
+        }
+        assert_eq!(starting_wealth(GameSystem::Starfinder1e, "core:class:soldier", 0), None);
+        assert_eq!(starting_wealth(GameSystem::Starfinder1e, "core:class:soldier", 21), None);
+    }
+
+    /// The Pathfinder branch is the existing class table, unchanged, and only at 1st level.
+    #[test]
+    fn pathfinder_starting_wealth_is_the_class_table_at_level_1() {
+        assert_eq!(starting_wealth(GameSystem::Pathfinder1e, "class:fighter", 1), Some(175));
+        assert_eq!(starting_wealth(GameSystem::Pathfinder1e, "class:fighter", 3), None);
+        assert_eq!(starting_wealth(GameSystem::Pathfinder1e, "not-a-class", 1), None);
     }
 }
 

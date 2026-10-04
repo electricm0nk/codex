@@ -1,0 +1,73 @@
+crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs sha256 39ba8e82cd32d27fde177cb666de832cc3c3cb6a7dbe2b0972ea0113718cad57
+data/starfinder-1e/sheet_rules/core/equipment/defiance_series_squad.json sha256 223318e128eafa3d10beb647c64a7cec38e8c20875cff3d9ee002e40fe237e30
+data/starfinder-1e/sheet_rules/core/equipment/medkit_basic.json sha256 509bef272681f9a8341a5a3810b3cb14b67cd3add1c42e63dbf24f85bc925773
+src/rules_core/encumbrance.rs sha256 8a273309ce2d6730b9d76a31a42d370a8afc2dcdf815cdf9524cad930edd132a
+src/rules_core/money.rs sha256 abab88ff38a264f52258720e4634b6dd0ea69d73248e203b0c8e7fdc681bbf86
+src/rules_core/pilot_compute/sf_loadout.rs sha256 02455a68e8e69a06d25086d05beedb369f527e5e01bc0cbe2b46ed3ba7fa8930
+test: cargo test --locked -j 8 --lib sf_seed -- --test-threads=8
+check: cargo run --locked -j 8 -q -p codex-ingest --bin sheet_rule_convert -- --system starfinder-1e --check
+L1 on src/rules_core/pilot_compute/sf_loadout.rs -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_bulk_over_the_limits_gives_the_condition' (631445) panicked at src/rules_core/pilot_compute/sf_loadout.rs:282:9:
+    left: (5, Encumbered)
+    right: (6, Encumbered)
+    thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_credits_bulk_and_bulk_limits_match_the_srd_hand_values' (631446) panicked at src/rules_core/pilot_compute/sf_loadout.rs:230:9:
+    10 of 24 mismatch:
+    SF-Soldier-3 Credits spent: engine 735, SRD Value(1955) -- SfCarried { starting_credits: SfTotal { total: 4000, terms: [SfTerm { label: "wealth at character level 3", value: 4000, source: "SRD Table 11-5 Character Wealth
+    SF-Soldier-3 Credits remaining: engine 3265, SRD Value(2045) -- SfCarried { starting_credits: SfTotal { total: 4000, terms: [SfTerm { label: "wealth at character level 3", value: 4000, source: "SRD Table 11-5 Character W
+    SF-Soldier-3 Bulk: engine 1, SRD Value(4) -- SfCarried { starting_credits: SfTotal { total: 4000, terms: [SfTerm { label: "wealth at character level 3", value: 4000, source: "SRD Table 11-5 Character Wealth per Level (ht
+L2 on src/rules_core/pilot_compute/sf_loadout.rs -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_credits_bulk_and_bulk_limits_match_the_srd_hand_values' (632456) panicked at src/rules_core/pilot_compute/sf_loadout.rs:230:9:
+    4 of 24 mismatch:
+    SF-Soldier-3 Bulk: engine 7, SRD Value(4) -- SfCarried { starting_credits: SfTotal { total: 4000, terms: [SfTerm { label: "wealth at character level 3", value: 4000, source: "SRD Table 11-5 Character Wealth per Level (ht
+    SF-Mystic-5 Bulk: engine 6, SRD Value(1) -- SfCarried { starting_credits: SfTotal { total: 9000, terms: [SfTerm { label: "wealth at character level 5", value: 9000, source: "SRD Table 11-5 Character Wealth per Level (htt
+    SF-Technomancer-5 Bulk: engine 5, SRD Value(1) -- SfCarried { starting_credits: SfTotal { total: 9000, terms: [SfTerm { label: "wealth at character level 5", value: 9000, source: "SRD Table 11-5 Character Wealth per Leve
+    SF-Envoy-3 Bulk: engine 5, SRD Value(1) -- SfCarried { starting_credits: SfTotal { total: 4000, terms: [SfTerm { label: "wealth at character level 3", value: 4000, source: "SRD Table 11-5 Character Wealth per Level (http
+    thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_no_seed_is_encumbered' (632458) panicked at src/rules_core/pilot_compute/sf_loadout.rs:238:13:
+    left: Encumbered
+L3 on src/rules_core/pilot_compute/sf_loadout.rs -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_credits_bulk_and_bulk_limits_match_the_srd_hand_values' (633391) panicked at src/rules_core/pilot_compute/sf_loadout.rs:230:9:
+    8 of 24 mismatch:
+    SF-Soldier-3 Credits spent: engine 1845, SRD Value(1955) -- SfCarried { starting_credits: SfTotal { total: 4000, terms: [SfTerm { label: "wealth at character level 3", value: 4000, source: "SRD Table 11-5 Character Wealt
+    SF-Soldier-3 Credits remaining: engine 2155, SRD Value(2045) -- SfCarried { starting_credits: SfTotal { total: 4000, terms: [SfTerm { label: "wealth at character level 3", value: 4000, source: "SRD Table 11-5 Character W
+    SF-Mystic-5 Credits spent: engine 2600, SRD Value(2650) -- SfCarried { starting_credits: SfTotal { total: 9000, terms: [SfTerm { label: "wealth at character level 5", value: 9000, source: "SRD Table 11-5 Character Wealth
+    SF-Mystic-5 Credits remaining: engine 6400, SRD Value(6350) -- SfCarried { starting_credits: SfTotal { total: 9000, terms: [SfTerm { label: "wealth at character level 5", value: 9000, source: "SRD Table 11-5 Character We
+    SF-Technomancer-5 Credits spent: engine 3540, SRD Value(3650) -- SfCarried { starting_credits: SfTotal { total: 9000, terms: [SfTerm { label: "wealth at character level 5", value: 9000, source: "SRD Table 11-5 Character 
+    SF-Technomancer-5 Credits remaining: engine 5460, SRD Value(5350) -- SfCarried { starting_credits: SfTotal { total: 9000, terms: [SfTerm { label: "wealth at character level 5", value: 9000, source: "SRD Table 11-5 Charac
+L4 on src/rules_core/money.rs -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_credits_bulk_and_bulk_limits_match_the_srd_hand_values' (634443) panicked at src/rules_core/pilot_compute/sf_loadout.rs:230:9:
+    8 of 24 mismatch:
+    SF-Soldier-3 Starting credits: engine 6000, SRD Value(4000) -- SfCarried { starting_credits: SfTotal { total: 6000, terms: [SfTerm { label: "wealth at character level 3", value: 6000, source: "SRD Table 11-5 Character We
+    SF-Soldier-3 Credits remaining: engine 4045, SRD Value(2045) -- SfCarried { starting_credits: SfTotal { total: 6000, terms: [SfTerm { label: "wealth at character level 3", value: 6000, source: "SRD Table 11-5 Character W
+    SF-Mystic-5 Starting credits: engine 15000, SRD Value(9000) -- SfCarried { starting_credits: SfTotal { total: 15000, terms: [SfTerm { label: "wealth at character level 5", value: 15000, source: "SRD Table 11-5 Character 
+    SF-Mystic-5 Credits remaining: engine 12350, SRD Value(6350) -- SfCarried { starting_credits: SfTotal { total: 15000, terms: [SfTerm { label: "wealth at character level 5", value: 15000, source: "SRD Table 11-5 Character
+    SF-Technomancer-5 Starting credits: engine 15000, SRD Value(9000) -- SfCarried { starting_credits: SfTotal { total: 15000, terms: [SfTerm { label: "wealth at character level 5", value: 15000, source: "SRD Table 11-5 Char
+    SF-Technomancer-5 Credits remaining: engine 11350, SRD Value(5350) -- SfCarried { starting_credits: SfTotal { total: 15000, terms: [SfTerm { label: "wealth at character level 5", value: 15000, source: "SRD Table 11-5 Cha
+L5 on src/rules_core/encumbrance.rs -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_bulk_over_the_limits_gives_the_condition' (635359) panicked at src/rules_core/pilot_compute/sf_loadout.rs:282:9:
+    left: (6, Unencumbered)
+    right: (6, Encumbered)
+    thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_credits_bulk_and_bulk_limits_match_the_srd_hand_values' (635360) panicked at src/rules_core/pilot_compute/sf_loadout.rs:230:9:
+    4 of 24 mismatch:
+    SF-Soldier-3 Bulk limit unencumbered: engine 16, SRD Value(8) -- SfCarried { starting_credits: SfTotal { total: 4000, terms: [SfTerm { label: "wealth at character level 3", value: 4000, source: "SRD Table 11-5 Character 
+    SF-Mystic-5 Bulk limit unencumbered: engine 10, SRD Value(5) -- SfCarried { starting_credits: SfTotal { total: 9000, terms: [SfTerm { label: "wealth at character level 5", value: 9000, source: "SRD Table 11-5 Character W
+    SF-Technomancer-5 Bulk limit unencumbered: engine 10, SRD Value(5) -- SfCarried { starting_credits: SfTotal { total: 9000, terms: [SfTerm { label: "wealth at character level 5", value: 9000, source: "SRD Table 11-5 Chara
+P1 on data/starfinder-1e/sheet_rules/core/equipment/defiance_series_squad.json -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_credits_bulk_and_bulk_limits_match_the_srd_hand_values' (636272) panicked at src/rules_core/pilot_compute/sf_loadout.rs:230:9:
+    2 of 24 mismatch:
+    SF-Soldier-3 Credits spent: engine 1935, SRD Value(1955) -- SfCarried { starting_credits: SfTotal { total: 4000, terms: [SfTerm { label: "wealth at character level 3", value: 4000, source: "SRD Table 11-5 Character Wealt
+    SF-Soldier-3 Credits remaining: engine 2065, SRD Value(2045) -- SfCarried { starting_credits: SfTotal { total: 4000, terms: [SfTerm { label: "wealth at character level 3", value: 4000, source: "SRD Table 11-5 Character W
+    test result: FAILED. 28 passed; 1 failed; 0 ignored; 0 measured; 2794 filtered out; finished in 2.66s
+P2 on data/starfinder-1e/sheet_rules/core/equipment/medkit_basic.json -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_bulk_over_the_limits_gives_the_condition' (636387) panicked at src/rules_core/pilot_compute/sf_loadout.rs:282:9:
+    left: (1, Unencumbered)
+    right: (6, Encumbered)
+    thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_credits_bulk_and_bulk_limits_match_the_srd_hand_values' (636388) panicked at src/rules_core/pilot_compute/sf_loadout.rs:230:9:
+    2 of 24 mismatch:
+    SF-Mystic-5 Bulk: engine 0, SRD Value(1) -- SfCarried { starting_credits: SfTotal { total: 9000, terms: [SfTerm { label: "wealth at character level 5", value: 9000, source: "SRD Table 11-5 Character Wealth per Level (htt
+    SF-Technomancer-5 Bulk: engine 0, SRD Value(1) -- SfCarried { starting_credits: SfTotal { total: 9000, terms: [SfTerm { label: "wealth at character level 5", value: 9000, source: "SRD Table 11-5 Character Wealth per Leve
+    test result: FAILED. 27 passed; 2 failed; 0 ignored; 0 measured; 2794 filtered out; finished in 2.68s
+C1 on crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs -> convert --check FAIL (exit 1)
+    records=8582 converted=8582 refused=0 rules=11266 var_tables=228 verdict=FAIL problems=2586
+restored (sha256 identical) -> sf_seed PASS (exit 0); convert --check PASS (exit 0)
+verdict=PASS L1=FAIL L2=FAIL L3=FAIL L4=FAIL L5=FAIL P1=FAIL P2=FAIL C1=FAIL
+exit=0

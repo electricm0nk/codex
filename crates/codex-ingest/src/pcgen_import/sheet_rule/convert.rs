@@ -1522,6 +1522,9 @@ fn gates_of(ctx: &mut RecordCtx, gates: &[String], level_gate: Option<u8>) -> Re
 /// The class principal's skill-ranks row label; `class_chassis_sheet_rules` reads it by name.
 const SKILL_RANKS_LABEL: &str = "Skill ranks per level";
 
+/// A Starfinder item's price row label (credits); `pilot_compute::sf_loadout` reads it by name.
+const SF_PRICE_LABEL: &str = "Price";
+
 /// A `STARTSKILLPTS` value as one number: a literal (`STARTSKILLPTS:4`), or a bare variable the
 /// record's own closure `DEFINE`s with a literal and raises only by unconditional literal
 /// `BONUS:VAR` rows outside any level line (`STARTSKILLPTS:FighterSkillPoints` +
@@ -1609,6 +1612,20 @@ fn number_piece(ctx: &mut RecordCtx, field: &str) -> Result<ProsePiece, String> 
 fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &str, value: &str, level_gate: Option<u8>, row_kind: ClosureRowKind) -> Result<(), String> {
     let v = value.trim();
     match key {
+        // SD-37 E4.5: a Starfinder item's `COST:` is its price in credits, a term of the
+        // credits-spent sheet total (`decisions.md §5`), so it prints as the item's
+        // `StatBlock "Price"` row -- the stat-block shape the engine already reads for an
+        // armour's max Dex. A later row restates it (`.MOD`), so the last statement wins. A
+        // price that is not one whole number prints no row and is named in
+        // `_defects/sf-price-unresolved.json`, never guessed. Pathfinder's `COST:` stays
+        // metadata (its prices are read from the corpus, `CorpusEquipmentRecord`).
+        "COST" if ctx.tree.system == GameSystem::Starfinder1e && ctx.record.kind == "equipment" => match integer_literal(v) {
+            Some(n) if n >= 0 && level_gate.is_none() => {
+                acc.stat_block.retain(|seg| !matches!(&seg.family, ProseFamily::StatBlock(l) if l == SF_PRICE_LABEL));
+                push_stat(acc, SF_PRICE_LABEL, vec![ProsePiece::Text(n.to_string())]);
+            }
+            _ => ctx.defect("sf-price-unresolved", format!("{}: {v}", ctx.record.id)),
+        },
         // ---- identity / metadata rows ------------------------------------------------------
         "KEY" | "SORTKEY" | "SOURCEPAGE" | "SOURCELONG" | "SOURCESHORT" | "SOURCEWEB" | "SOURCEDATE" | "SOURCELINK" | "KIT" | "STARTFEATS" | "LEVELSPERFEAT" | "RACETYPE"
         | "RACESUBTYPE" | "SUBRACE" | "DEITYWEAP" | "ALIGN" | "USEUNTRAINED" | "ROLE" | "NAMEOPT" | "ITYPE" | "REPLACES" | "FORMATCAT" | "ASSIGNTOALL" | "REGION" | "REMOVABLE" | "VARIANTS"

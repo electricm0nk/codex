@@ -1,0 +1,8 @@
+oracle COST shapes: {'int': 3221, 'other': 1}
+  non-integer: ('starfinder/paizo/armory/sa_equipmods.lst', 'Mobility enhancer, mk', '8 9500')
+equipment principals=2634 with_bulk_row=2171 without=463
+bulk shapes: {'int': 979, '-': 54, 'L': 1126, 'other': 4, '—': 8}
+  other: ('armory:equipment:musical_instrument_basic', 'Varies')
+  other: ('armory:equipment:musical_instrument_euphonic', 'Varies')
+  other: ('armory:equipment:scrambler_gloves_mk_1', '4,500')
+  other: ('armory:equipment:strategy_game_basic', 'Varies')
