@@ -164,9 +164,9 @@ pub(crate) mod tests {
     pub(crate) const STUB_NOT_YET_IMPLEMENTED: &str = "stub_adapter.not_yet_implemented";
 
     /// True when a diagnostic message is a stub's Would-message (its first word is
-    /// `Would`). Written as a word test, not a quoted literal, so the wired-integration
-    /// audit (`tests/sd24_wired_integration_audit.rs`, check 4) never reads this test
-    /// assertion as a stub-return string.
+    /// `Would`). Written as a word test, not a quoted literal, so the root suite's
+    /// wired-integration audit (check 4: no quoted Would-literal in shipping source)
+    /// never reads this test assertion as a stub-return string.
     pub(crate) fn is_would_message(message: &str) -> bool {
         message.split_whitespace().next() == Some("Would")
     }
