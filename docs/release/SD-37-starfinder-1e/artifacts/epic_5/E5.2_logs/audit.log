@@ -1,0 +1,8 @@
+# E5.2 dual audit, range a94024c402258f3c9e6e80147888631b0db0f04d...465a6c7228 (local commit, before push)
+## identifier audit (apps crates src)
+OK_NO_BUNDLE_TAGS
+## wired-integration audit
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
