@@ -82,6 +82,7 @@ pub const REFUSED_KEY_ABILITY_CHOICE: &str = "sf_adapter.key_ability_choice";
 pub const REFUSED_NOT_STARFINDER: &str = "sf_adapter.not_a_starfinder_character";
 
 const SRD_BULK: &str = "SRD Bulk Limits (https://www.aonsrd.com/Equipment.aspx)";
+const SRD_CONDITIONS: &str = "SRD Conditions: Encumbered, Overburdened (https://www.aonsrd.com/Rules.aspx?ID=165)";
 
 /// The id of the diagnostic every computed Starfinder chassis carries: the
 /// Pathfinder fixed-posture fields of the shared result types are 0 here.
@@ -253,7 +254,8 @@ fn resum(total: &mut SfTotal) {
 /// the Dexterity term of EAC and KAC is capped at the condition's max Dex
 /// (the lower of armour and bulk), and every Strength- or Dexterity-based
 /// skill takes the condition's −5 -- or the armour check penalty, whichever
-/// is worse; the two do not stack. Unencumbered changes nothing.
+/// is worse; the two do not stack. Initiative (a Dexterity-based check) takes
+/// the −5 too. Unencumbered changes nothing.
 pub fn apply_bulk_condition(defense: &mut SfDefense, skills: &mut SfSkills, condition: BulkCondition) {
     if let Some(cap) = condition.max_dex_cap() {
         for ac in [&mut defense.eac, &mut defense.kac] {
@@ -271,6 +273,14 @@ pub fn apply_bulk_condition(defense: &mut SfDefense, skills: &mut SfSkills, cond
     if penalty == 0 {
         return;
     }
+    // Initiative is a Dexterity-based check (d20 + Dex modifier, SRD Rules ID=96); armour
+    // has no check penalty on it, so the condition's -5 applies alone.
+    defense.initiative.terms.push(SfTerm {
+        label: format!("{condition:?} penalty"),
+        value: penalty,
+        source: SRD_CONDITIONS.to_owned(),
+    });
+    resum(&mut defense.initiative);
     for skill in skills.skills.iter_mut().filter(|s| matches!(s.ability, Ability::Str | Ability::Dex)) {
         let Some(total) = skill.total.as_mut() else { continue };
         match total.terms.iter_mut().find(|t| t.label == "armor check penalty") {
@@ -997,7 +1007,8 @@ mod tests {
         for (seed, class, input) in seeds() {
             let chassis = adapter.chassis_resolve(&input);
             assert!(blocking(&chassis).is_none(), "{seed}: {:?}", chassis.diagnostics);
-            assert!(chassis.diagnostics.iter().all(|d| !d.message.starts_with("Would ")));
+            assert!(chassis.diagnostics.iter().all(|d| !crate::rule_system_adapter::tests::is_would_message(&d.message)
+                && d.id != crate::rule_system_adapter::tests::STUB_NOT_YET_IMPLEMENTED));
             let sheet = compute_sheet(package, &input).expect("the seed computes");
             let rows: BTreeMap<&str, i16> = chassis.explanations.iter().map(|e| (e.id.as_str(), e.value)).collect();
             for (s, field, value) in hand.iter().filter(|(s, _, _)| s == seed) {
@@ -1113,6 +1124,11 @@ mod tests {
             assert_eq!(skill(&skills, "athletics"), Some(5), "{condition:?}");
             assert_eq!(skill(&skills, "piloting"), Some(3), "{condition:?}");
             assert_eq!(skill(&skills, "intimidate"), Some(6), "{condition:?}");
+            // An initiative check is a Dexterity-based check (SRD Rules ID=96: d20 + Dex
+            // modifier), and both conditions give "a -5 penalty to Strength- and
+            // Dexterity-based checks" (SRD Conditions, Rules ID=165). Soldier +2 -> -3.
+            assert_eq!(sheet.defense.initiative.total, 2);
+            assert_eq!(defense.initiative.total, -3, "{condition:?}");
         }
         let (mut defense, mut skills) = (sheet.defense.clone(), sheet.skills.clone());
         apply_bulk_condition(&mut defense, &mut skills, BulkCondition::Unencumbered);

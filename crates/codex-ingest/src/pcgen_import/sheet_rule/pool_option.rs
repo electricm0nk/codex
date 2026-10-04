@@ -363,8 +363,8 @@ pub fn scan(tree: &PinnedTree, records: &[RecordRef], closures: &[Closure], owne
 /// The oracle hands a Starfinder character many picks this way: the Scholar theme's chosen
 /// skill (`scr_abilities.lst:659` `BONUS:ABILITYPOOL|Scholar Theme Chosen Skill|1`; the members
 /// are the `CATEGORY:Internal TYPE:Scholar Theme Chosen Skill` rows `Life Science` and `Physical
-/// Science`, :701-702, each `CSKILL:` + `BONUS:SKILL|Display ~ <Skill>|1|PREVARGTEQ:CS_First_<Skill>,2`
-/// + `BONUS:VAR|CS_First_<Skill>|1`). The members are `CATEGORY:Internal` helper rows, never
+/// Science`, :701-702, each `CSKILL:` + `BONUS:SKILL|Display ~ <Skill>|1|PREVARGTEQ:CS_First_<Skill>,2` +
+/// `BONUS:VAR|CS_First_<Skill>|1`). The members are `CATEGORY:Internal` helper rows, never
 /// inventory units, so `link_pool_choices` found no member and the pick offered nothing: the
 /// chosen skill's class-skill grant and bonus reached no sheet. Each member converts like any pick
 /// row ([`convert_options`]); once written, `link_pool_choices` gives the pick its `offers`

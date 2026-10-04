@@ -1,0 +1,12 @@
+    Checking codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+error: manual implementation of `.is_multiple_of()`
+    --> src/rules_core/sheet_rule.rs:4123:24
+     |
+4123 |                     if seen % 97 != 0 {
+     |                        ^^^^^^^^^^^^^^ help: replace with: `!seen.is_multiple_of(97)`
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#manual_is_multiple_of
+     = note: `-D clippy::manual-is-multiple-of` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::manual_is_multiple_of)]`
+
+error: could not compile `codex` (lib test) due to 1 previous error

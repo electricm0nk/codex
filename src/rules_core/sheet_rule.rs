@@ -4120,7 +4120,7 @@ mod schema_publish_tests {
                     }
                 } else if name.ends_with(".json") && !name.starts_with('_') {
                     seen += 1;
-                    if seen % 97 != 0 {
+                    if !seen.is_multiple_of(97) {
                         continue;
                     }
                     let rules: Vec<serde_json::Value> = serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();

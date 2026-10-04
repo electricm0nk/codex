@@ -516,7 +516,7 @@ struct SfSpellProgressionRow {
 }
 
 /// SD-37 E4.4: a Starfinder class's spell progression, read from its own level lines
-/// (`scr_classes.lst` `1	CAST:0,2	KNOWN:4,2` ... `20	CAST:0,5,5,5,5,5,5	KNOWN:6,6,6,6,6,5,5`).
+/// (`scr_classes.lst` `1<TAB>CAST:0,2<TAB>KNOWN:4,2` ... `20<TAB>CAST:0,5,5,5,5,5,5<TAB>KNOWN:6,6,6,6,6,5,5`).
 /// The PF engine holds its class tables in Rust; the Starfinder engine reads only the package
 /// (`decisions.md §15` R2), so the converter lowers them: one `SpellCell` row per spell level the
 /// class casts per day (a column that is 0 at every level -- the 0-level column, "no limit" in the
