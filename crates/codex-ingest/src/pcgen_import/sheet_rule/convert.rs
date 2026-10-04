@@ -426,6 +426,66 @@ fn sf_bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str, value: &str, b
     }
 }
 
+/// SD-37 E5.1: the words a Starfinder skill bonus prints for its skill. A Starfinder skill bonus
+/// names the oracle's display record (`BONUS:SKILL|Display ~ Perception|2`); its target is
+/// already the base skill (E4.2), and its words print the skill's name, never the record key.
+/// A Pathfinder record keeps its words unchanged.
+fn sf_skill_words(ctx: &RecordCtx, skill: &str) -> String {
+    let skill = skill.trim();
+    if ctx.tree.system == GameSystem::Starfinder1e
+        && let Some(base) = skill.strip_prefix("Display ~ ")
+    {
+        return base.trim().to_string();
+    }
+    skill.to_string()
+}
+
+/// SD-37 E5.1: a Starfinder race's speeds, by movement mode, as its own row states them. The
+/// race row names its modes with a zero (`MOVE:Walk,0`) and states each speed as a variable bonus
+/// on the same row (`BONUS:VAR|Walk|30`, `scr_races.lst`; a mode the `MOVE` token does not name
+/// too, `BONUS:VAR|Fly|30` on `saa_races.lst` Barathu). A variable counts as a mode when the game
+/// mode's own data declares that movement (`MOVEMENT:<mode>` in a `*_dynamic.lst` file, read from
+/// the pinned tree). The wide books repeat the speed as `MODIFYOTHER:PC.MOVEMENT|Walk|Speed|SET|30`,
+/// which degrades by name. Empty for a Pathfinder record and for every kind but `race`; a mode
+/// with two different values is a named defect and is left out, never picked.
+fn sf_race_speeds(ctx: &mut RecordCtx) -> BTreeMap<String, i64> {
+    if ctx.tree.system != GameSystem::Starfinder1e || ctx.record.kind != "race" {
+        return BTreeMap::new();
+    }
+    let modes: BTreeSet<String> = ctx
+        .tree
+        .files
+        .iter()
+        .filter(|f| f.rel_path.to_ascii_lowercase().ends_with("_dynamic.lst"))
+        .flat_map(|f| f.lines.iter())
+        .filter_map(|l| l.split('\t').next().and_then(|first| first.trim().strip_prefix("MOVEMENT:")))
+        .map(|m| m.trim().to_ascii_lowercase())
+        .collect();
+    let mut values: BTreeMap<String, BTreeSet<i64>> = BTreeMap::new();
+    for (k, v) in ctx.closure.rows.iter().flat_map(|r| r.tokens.iter()) {
+        if k.trim() != "BONUS" {
+            continue;
+        }
+        let fields: Vec<&str> = v.trim().split('|').map(str::trim).collect();
+        if let ["VAR", var, n] = fields.as_slice()
+            && modes.contains(&var.to_ascii_lowercase())
+            && let Some(n) = integer_literal(n)
+        {
+            values.entry((*var).to_string()).or_default().insert(i64::from(n));
+        }
+    }
+    let mut out = BTreeMap::new();
+    for (mode, ns) in values {
+        if ns.len() == 1 {
+            out.insert(mode, *ns.first().expect("one value"));
+        } else {
+            let id = ctx.record.id.clone();
+            ctx.defect("sf-race-speed-ambiguous", format!("{id}: BONUS:VAR|{mode} values {ns:?}"));
+        }
+    }
+    out
+}
+
 /// SD-37 E4.1: a Starfinder race's racial Hit Points, lowered onto the race record.
 ///
 /// PCGen states the value two hops from the race (`decisions.md §8`; E3.MC discovery): the race
@@ -665,7 +725,7 @@ fn bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str) -> Result<Vec<(Bo
                 } else if s.eq_ignore_ascii_case("ALL") {
                     out.push((BonusTarget::SkillGroup("All".into()), "all skills".into()));
                 } else {
-                    out.push((BonusTarget::Skill(ctx.skill_id(s)), s.to_string()));
+                    out.push((BonusTarget::Skill(ctx.skill_id(s)), sf_skill_words(ctx, s)));
                 }
             }
             out
@@ -776,7 +836,7 @@ fn bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str) -> Result<Vec<(Bo
                     return Err("BONUS:SITUATION (target shape)".into());
                 }
                 let sit = situation.trim().to_ascii_lowercase();
-                out.push((BonusTarget::SkillSituation { skill: ctx.skill_id(skill), situation: sit.clone() }, format!("{} ({sit})", skill.trim())));
+                out.push((BonusTarget::SkillSituation { skill: ctx.skill_id(skill), situation: sit.clone() }, format!("{} ({sit})", sf_skill_words(ctx, skill))));
             }
             out
         }
@@ -2021,6 +2081,9 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         }
         "MOVE" => {
             let parts: Vec<&str> = v.split(',').map(|s| s.trim()).collect();
+            // SD-37 E5.1: a Starfinder race's `MOVE:<mode>,0` prints the speed its row states
+            // (`sf_race_speeds`), and a mode only that row states prints after the `MOVE` modes.
+            let mut sf_speeds = sf_race_speeds(ctx);
             let mut pieces = Vec::new();
             for pair in parts.chunks(2) {
                 if pair.len() < 2 {
@@ -2030,8 +2093,19 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     pieces.push(ProsePiece::Text(", ".into()));
                 }
                 pieces.push(ProsePiece::Text(format!("{} ", pair[0])));
-                pieces.push(number_piece(ctx, pair[1])?);
+                let stated = sf_speeds.keys().find(|m| m.eq_ignore_ascii_case(pair[0])).cloned().and_then(|m| sf_speeds.remove(&m));
+                let speed = match stated {
+                    Some(n) if pair[1] == "0" => ProsePiece::Text(n.to_string()),
+                    _ => number_piece(ctx, pair[1])?,
+                };
+                pieces.push(speed);
                 pieces.push(ProsePiece::Text(" ft.".into()));
+            }
+            for (mode, n) in sf_speeds.into_iter().filter(|(_, n)| *n > 0) {
+                if !pieces.is_empty() {
+                    pieces.push(ProsePiece::Text(", ".into()));
+                }
+                pieces.push(ProsePiece::Text(format!("{mode} {n} ft.")));
             }
             push_stat(acc, "Speed", pieces);
         }

@@ -1,0 +1,16 @@
+planted: core_rulebook dropped from RACE_CORPUS_BOOK_REGISTRY only
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 28.73s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+pf-seed-render manifest_dir=/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri
+pf-seed-render aldric sha256=165c38f3e7f978e8f6b3eae149eb96f098a6e0bddce4a2b5cbab8cfe5deef7bc bytes=35703
+pf-seed-render elowen sha256=bffcf7dd332d64e666143b8ea3e0a676e8dd0aab2b4392c5e7634c30beb6ae14 bytes=61802
+test character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 649 filtered out; finished in 24.25s
+
+render_exit=0
+RESTORED
+exit=0

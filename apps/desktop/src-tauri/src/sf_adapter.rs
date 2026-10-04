@@ -231,6 +231,9 @@ pub struct SfSheet {
     pub skills: SfSkills,
     pub spells: Vec<SfSpellcasting>,
     pub carried: SfCarried,
+    /// The printed lines: race, theme, class features and every other held record
+    /// (`sf_sheet_print`, E5.1).
+    pub lines: Vec<codex::rules_core::sheet_rule::SheetLine>,
 }
 
 /// The sheet totals of `input`, read from `package` (the Starfinder package).
@@ -243,7 +246,8 @@ pub fn compute_sheet(package: &SheetRulePackage, input: &CharacterInput) -> Resu
     let spells = sf_spells::compute_with(package, &build, &held)?;
     let carried = sf_loadout::compute(package, &build, &loadout)?;
     apply_bulk_condition(&mut defense, &mut skills, carried.condition);
-    Ok(SfSheet { ability_scores: build.chassis.ability_scores, chassis, defense, skills, spells, carried })
+    let lines = crate::sf_sheet_print::sheet_lines(package, &build, &held);
+    Ok(SfSheet { ability_scores: build.chassis.ability_scores, chassis, defense, skills, spells, carried, lines })
 }
 
 fn resum(total: &mut SfTotal) {
@@ -420,7 +424,7 @@ impl SfSheet {
                 message: PATHFINDER_FIELDS_MESSAGE.to_owned(),
                 claim_blocking: false,
             }],
-            sheet_lines: Vec::new(),
+            sheet_lines: self.lines.clone(),
         }
     }
 }
@@ -698,8 +702,7 @@ impl RuleSystemAdapter for StarfinderAdapter {
     /// The saved character at `root`, recomputed fresh: the chassis snapshot,
     /// the `sf.*` explanation rows, the diagnostics and the saved selections.
     /// The Pathfinder-only blocks (weapon damage, racial-trait picker, feat
-    /// targets, sheet-rule lines) are empty: the Starfinder sheet lines are
-    /// printed by E5.
+    /// targets) are empty; the Starfinder sheet lines are `sf_sheet_print`'s.
     fn load_saved_character(&self, root: &Path) -> Result<LoadSavedCharacterResponse, String> {
         let envelope = load_starfinder(root)?;
         let input = &envelope.character_input;
@@ -789,7 +792,7 @@ impl RuleSystemAdapter for StarfinderAdapter {
             },
             skill_allocations: crate::character_hub::map_skill_allocations_dto(input),
             equipment_selections: crate::character_hub::map_equipment_selections_dto(input),
-            sheet_lines: Vec::new(),
+            sheet_lines: crate::character_hub::map_sheet_lines_dto(&chassis.sheet_lines),
             sheet_rules_unavailable_reason: None,
             feat_skill_bonuses: Default::default(),
         })
@@ -797,7 +800,7 @@ impl RuleSystemAdapter for StarfinderAdapter {
 }
 
 #[cfg(test)]
-mod tests {
+pub(crate) mod tests {
     use super::*;
 
     use std::collections::BTreeMap;
@@ -895,7 +898,7 @@ mod tests {
     }
 
     /// The four SD-37 Starfinder seeds, keyed by seed id, with each seed's class slug.
-    fn seeds() -> Vec<(&'static str, &'static str, CharacterInput)> {
+    pub(crate) fn seeds() -> Vec<(&'static str, &'static str, CharacterInput)> {
         vec![
             (
                 "SF-Soldier-3",
@@ -1230,6 +1233,11 @@ mod tests {
         assert_eq!((row("sf.hit_points"), row("sf.stamina"), row("sf.eac")), (Some(25), Some(24), Some(16)));
         assert_eq!(loaded.snapshot.as_ref().map(|s| s.base_attack_bonus), Some(3));
         assert_eq!(loaded.corpus_derived.encumbrance.level, "unencumbered");
+        // E5.1: the loaded sheet prints the race, theme and class-feature lines.
+        let printed = |id: &str| loaded.sheet_lines.iter().find(|l| l.id == id).map(|l| (l.label.as_str(), l.prose.as_str()));
+        assert_eq!(printed("core:race:human").map(|(_, prose)| prose), Some("Speed: Walk 30 ft."));
+        assert_eq!(printed("core:ability:mercenary").map(|(label, _)| label), Some("Mercenary"));
+        assert_eq!(printed("core:ability:soldier_class_feature_gear_boost").map(|(label, _)| label), Some("Gear Boost"));
 
         let recomputed = adapter.recompute(&root, "sf-soldier");
         assert!(recomputed.success, "{:?}", recomputed.error);

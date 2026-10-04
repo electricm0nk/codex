@@ -1,0 +1,42 @@
+ability | core:ability:2_racial_stat_bonus | +2 Racial Stat Bonus | +2 | 
+ability | core:ability:armor_prof_heavy_armor | Armor Prof ~ Heavy Armor |  | 
+ability | core:ability:armor_prof_light_armor | Armor Prof ~ Light Armor |  | 
+ability | core:ability:human_default_bonus_feat | BONUS FEAT | +1 | Humans select one extra feat at 1st level.
+ability | core:ability:soldier_class_feature_combat_feat | Combat Feat | +1 | At 2nd level and every 2 levels thereafter, you gain a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. Whenever you gain a new bonus feat, you can also choose to replace one of the bonus feats you have already learned with a different bonus feat. The feat you replace can't be one that was used as a prerequisite for another feat or other ability. You can change only one feat at any given level, and you must choose whether or not to swap the feat at the time you gain the new bonus feat.
+ability | core:ability:soldier_class_feature_gear_boost | Gear Boost | +1 | At 3rd level and every 4 levels thereafter, you learn a trick called a gear boost that make you better with a particular type of weapon or armor. Choose from the gear boosts listed below. Some gear boosts require you to reach a certain soldier level to select them; this level is indicated in parentheses after the boost's name.
+ability | core:ability:human | Human | +1 | 
+ability | core:ability:mercenary | Mercenary |  | Whether you take jobs that match your ethical beliefs or you fight for anyone who can afford your services, you are a hired gun. You might take pride in your past accomplishments, proudly displaying trophies of your kills, or you might be laden with guilt over being the sole survivor of a mission gone terribly wrong. You most likely work with other mercenaries and are familiar with the methodologies of military actions all across the galaxy. / TITLE: Mercenary
+ability | core:ability:soldier_class_feature_primary_fighting_style | Primary Fighting Style | +1 | You have a preferred fighting style that represents the type of soldier you are. Each fighting style is composed of various style techniques that you learn as you gain experience. You must pick one fighting style upon taking your first soldier level, and once made, this choice cannot be changed. Descriptions of the fighting styles you can choose from appear on pages 112-115.
+ability | core:ability:soldier_class_feature_primary_style_technique | Primary Style Technique |  | At 1st level and every 4 levels thereafter, you gain a style technique unique to your primary fighting style.
+ability | core:ability:human_default_size_and_type | SIZE AND TYPE |  | Humans are Medium humanoids and have the human subtype.
+ability | core:ability:human_default_skilled | SKILLED |  | Humans gain an additional skill rank at 1st level and each level thereafter.
+ability | character_operations_manual:ability:shield_prof_shields | Shield Prof ~ Shields |  | 
+ability | core:ability:soldier | Soldier | +1 | 
+ability | core:ability:mercenary_theme_benefit_theme_knowledge | THEME KNOWLEDGE (Athletics) |  | You are knowledgeable about the military, from rival mercenary groups to standard military procedures to planetary armed forces, and you can draw upon this fount of information to aid your adventurous pursuits. Reduce the DC of Culture checks and Profession (mercenary) checks to recall knowledge about hierarchies, practices, personnel, and so on in the military by 5. Athletics is a class skill for you, though if it is a class skill from the class you take at 1st level, you instead gain a +1 bonus to Athletics checks. In addition, you gain an ability adjustment of +1 to Strength at character creation.
+ability | core:ability:mercenary_theme_benefit_theme_knowledge#bonus0 | THEME KNOWLEDGE (Athletics) | +1 | 
+ability | core:ability:mercenary_theme_benefit_theme_knowledge#bonus1 | THEME KNOWLEDGE (Str) | +1 | 
+ability | core:ability:weapon_prof_advanced_melee_weapons | Weapon Prof ~ Advanced Melee Weapons |  | 
+ability | core:ability:weapon_prof_basic_melee_weapons | Weapon Prof ~ Basic Melee Weapons |  | 
+ability | core:ability:weapon_prof_grenades | Weapon Prof ~ Grenades |  | 
+ability | core:ability:weapon_prof_heavy_weapons | Weapon Prof ~ Heavy Weapons |  | 
+ability | core:ability:weapon_prof_longarms | Weapon Prof ~ Longarms |  | 
+ability | core:ability:weapon_prof_small_arms | Weapon Prof ~ Small Arms |  | 
+ability | core:ability:weapon_prof_sniper_weapons | Weapon Prof ~ Sniper Weapons |  | 
+ability | core:ability:soldier_class_feature_weapon_specialization | Weapon Specialization |  | You gain Weapon Specialization as a bonus feat for each weapon type this class grants you proficiency with.
+ability | core:ability:weapon_specialization_advanced_melee_weapons | Weapon Specialization ~ Advanced Melee Weapons |  | 
+ability | core:ability:weapon_specialization_basic_melee_weapons | Weapon Specialization ~ Basic Melee Weapons |  | 
+ability | core:ability:weapon_specialization_heavy_weapons | Weapon Specialization ~ Heavy Weapons |  | 
+ability | core:ability:weapon_specialization_longarms | Weapon Specialization ~ Longarms |  | 
+ability | core:ability:weapon_specialization_small_arms | Weapon Specialization ~ Small Arms |  | 
+ability | core:ability:weapon_specialization_sniper_weapons | Weapon Specialization ~ Sniper Weapons |  | 
+class | core:class:soldier | Soldier | +3 | Skill ranks per level: 4
+class | core:class:soldier#bonus2 | Soldier (Stamina Points) | +21 | 
+class | core:class:soldier#bonus3 | Soldier (base Fortitude save) | +3 | 
+class | core:class:soldier#bonus4 | Soldier (base Reflex save) | +1 | 
+class | core:class:soldier#bonus5 | Soldier (base Will save) | +3 | 
+class | core:class:soldier#bonus1 | Soldier (hit points) | +18 | 
+equipment | core:equipment:defiance_series_squad | Defiance Series, Squad | +5 | EAC = 5 / KAC = 8 / Price: 1220 / Armor check penalty: -4 / Max Dex bonus: 1 / Quality: Level: 3 / Quality: BULK: 3 / Upgrade slots: 1
+equipment | core:equipment:defiance_series_squad#bonus1 | Defiance Series, Squad (KAC) | +8 | 
+equipment | core:equipment:defiance_series_squad#speed2 | Defiance Series, Squad (walk speed) | -10 | 
+race | core:race:human | Human |  | Speed: Walk 30 ft.
+race | core:race:human#race_hp | Human (racial Hit Points) | +4 | 

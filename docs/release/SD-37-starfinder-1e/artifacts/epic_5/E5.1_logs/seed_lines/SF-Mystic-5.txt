@@ -1,0 +1,50 @@
+ability | core:ability:2_racial_bonus_to_skill | +2 Racial Bonus to Skill | +2 | 
+ability | core:ability:armor_prof_light_armor | Armor Prof ~ Light Armor |  | 
+ability | core:ability:mystic_class_feature_channel_skill | Channel Skill |  | You draw strange feelings, instincts, knowledge, and urges from your connection, augmenting your prowess in certain tasks. Each connection has two skills associated with it. You gain a +1 insight bonus to skill checks with your connection's associated skills. This bonus increases by 1 at 5th level and every 3 levels thereafter.
+ability | core:ability:mystic_class_feature_connection | Connection | +1 | 
+ability | core:ability:mystic_class_feature_connection_power | Connection Power |  | At 1st level, 3rd level, and every 3 levels thereafter, you gain a connection power unique to your connection. If a connection power allows a saving throw to resist its effects, the DC is equal to 10 + half your mystic level + your Wisdom modifier. If the power requires an enemy to attempt a skill check, the DC is equal to 10 + 1-1/2 x your mystic level + your Wisdom modifier.
+ability | core:ability:mystic_class_feature_connection_spell | Connection Spell |  | Your connection grants you additional spells known, one for each level of mystic spell you can cast, starting at 1st level and at any level when you normally gain access to a new spell level. These spells are in addition to the spells known listed on Table 4-6: Mystic Spells Known. These spells can't be exchanged for different spells at higher levels (except in specific cases; see below). The spell level of each spell is listed in your connection's entry. If your connection lists a single variable-level spell (see page 330) for all spell levels at the start of its spells entry, you gain that variable-level spell when you first get your connection spell for each level. The next time you gain a connection spell, add the next higher level of the variable-level spell to your list of spells known. You immediately lose the lower-level version of that variable-level spell and replace it with the listed connection spell for that lower level.
+ability | core:ability:lashunta_default_dimorphic | DIMORPHIC | +1 | All lashuntas gain +2 Charisma at character creation. Korasha lashuntas are muscular (+2 Strength at character creation) but often brash and unobservant (-2 Wisdom at character creation). Damaya lashuntas are typically clever and well-spoken (+2 Intelligence at character creation) but somewhat delicate (-2 Constitution at character creation).
+ability | core:ability:lashunta_subrace_damaya#bonus1 | Damaya (Con) | -2 | 
+ability | core:ability:lashunta_subrace_damaya | Damaya (Int) | +2 | 
+ability | core:ability:empath | Empath (Perception) | +2 | 
+ability | core:ability:empath#bonus1 | Empath (Sense Motive) | +2 | 
+ability | core:ability:empath#spell_known_empath_connection_spell_2_1_detect_thoughts | Empath Connection Spell - 2: detect thoughts (level 1 Mystic spell known) | +1 | 
+ability | core:ability:empath#spell_known_empath_connection_spell_2_2_zone_of_truth | Empath Connection Spell - 2: zone of truth (level 2 Mystic spell known) | +1 | 
+ability | core:ability:empath_connection_power_empathy | Empathy |  | As a full action, you can attempt a Sense Motive check to read the emotions of a particular creature (DC = 20 or 10 + its Bluff modifier, whichever is higher). If you succeed, you learn its general disposition and attitude toward creatures within 30 feet of it, and you gain a +2 circumstance bonus to Bluff, Diplomacy, Intimidate, and Sense Motive checks against that creature for 1 hour. Whether you succeed or fail, after opening your mind to read emotions, you take a -2 penalty to saving throws against mind-affecting effects for 1 minute.
+ability | core:ability:empath_connection_power_greater_mindlink | Greater Mindlink |  | You can use your mindlink ability on the same creature as many times per day as you wish, and the communication can be both ways, though the maximum of 10 minutes of communication per round still applies.
+ability | core:ability:mystic_class_feature_healing_touch | Healing Touch |  | Once per day, you can spend 10 minutes to magically heal an ally up to 5 Hit Points per mystic level.
+ability | core:ability:lashunta_default_lashunta_magic | LASHUNTA MAGIC |  | Lashuntas gain the following spell-like abilities: At will: daze, psychokinetic hand 1/day: detect thoughts See Spell-like Abilities on page 262. The caster level for these effects is equal to the lashunta's level.
+ability | core:ability:lashunta_default_limited_telepathy | LIMITED TELEPATHY |  | Lashuntas can mentally communicate with any creatures within 30 feet with whom they share a language. Conversing telepathically with multiple creatures simultaneously is just as difficult as listening to multiple people speaking.
+ability | core:ability:lashunta | Lashunta | +1 | 
+ability | core:ability:mystic_class_feature_mindlink | Mindlink |  | You can form a mental link with creatures you touch, communicating information rapidly through it. You can use mindlink at will as a spell-like ability, though only once per day on any given individual.
+ability | core:ability:mystic | Mystic (mystic archetype picks) | +1 | 
+ability | core:ability:priest | Priest |  | You are a member of an organized religion or similar association. Your belief, whether it has been a part of you since childhood or it came to you later in life, is an integral part of your character. You might travel the stars proselytizing your deity, or your church might have sent you out on a specific holy (or unholy) mission. No matter what obstacles life puts in your way, you always have the conviction of your beliefs to fall back on. / TITLE: Priest
+ability | core:ability:lashunta_default_size_and_type | SIZE AND TYPE |  | Lashuntas are Medium humanoids with the lashunta subtype.
+ability | core:ability:lashunta_default_student | STUDENT | +2 | Lashuntas love to learn, and they receive a +2 racial bonus to any two skills of their choice.
+ability | core:ability:priest_theme_benefit_theme_knowledge | THEME KNOWLEDGE (Mysticism) |  | Choose a deity or a philosophy whose alignment is within one step (on either the good-evil axis or the law-chaos axis) of your own. Reduce the DC of Culture and Mysticism checks to recall knowledge about religious traditions, religious symbols, and famous religious leaders by 5. Mysticism becomes a class skill for you, though if it's a class skill from the class you take at 1st level, you instead gain a +1 bonus to Mysticism checks. In addition, you gain an ability adjustment of +1 to Wisdom at character creation.
+ability | core:ability:priest_theme_benefit_theme_knowledge#bonus0 | THEME KNOWLEDGE (Mysticism) | +1 | 
+ability | core:ability:priest_theme_benefit_theme_knowledge#bonus1 | THEME KNOWLEDGE (Wis) | +1 | 
+ability | core:ability:weapon_prof_basic_melee_weapons | Weapon Prof ~ Basic Melee Weapons |  | 
+ability | core:ability:weapon_prof_small_arms | Weapon Prof ~ Small Arms |  | 
+ability | core:ability:mystic_class_feature_weapon_specialization | Weapon Specialization |  | You gain Weapon Specialization as a bonus feat for each weapon type this class grants you proficiency with.
+ability | core:ability:weapon_specialization_basic_melee_weapons | Weapon Specialization ~ Basic Melee Weapons |  | 
+ability | core:ability:weapon_specialization_small_arms | Weapon Specialization ~ Small Arms |  | 
+class | core:class:mystic | Mystic | +3 | Skill ranks per level: 6
+class | core:class:mystic#bonus2 | Mystic (Stamina Points) | +30 | 
+class | core:class:mystic#bonus3 | Mystic (base Fortitude save) | +1 | 
+class | core:class:mystic#bonus4 | Mystic (base Reflex save) | +1 | 
+class | core:class:mystic#bonus5 | Mystic (base Will save) | +4 | 
+class | core:class:mystic#bonus6 | Mystic (caster level) | +5 | 
+class | core:class:mystic#bonus1 | Mystic (hit points) | +25 | 
+class | core:class:mystic#spells_known_0 | Mystic (level 0 spells known) | +6 | 
+class | core:class:mystic#spells_known_1 | Mystic (level 1 spells known) | +4 | 
+class | core:class:mystic#spells_per_day_1 | Mystic (level 1 spells per day) | +4 | 
+class | core:class:mystic#spells_known_2 | Mystic (level 2 spells known) | +3 | 
+class | core:class:mystic#spells_per_day_2 | Mystic (level 2 spells per day) | +2 | 
+equipment | core:equipment:lashunta_tempweave_basic | Lashunta tempweave, basic | +4 | EAC = 4 / KAC = 4 / Price: 1950 / Armor check penalty: 0 / Max Dex bonus: 5 / Quality: Level: 4 / Quality: BULK: L / Upgrade slots: 1
+equipment | core:equipment:lashunta_tempweave_basic#bonus1 | Lashunta tempweave, basic (KAC) | +4 | 
+equipment | core:equipment:lashunta_tempweave_basic#speed2 | Lashunta tempweave, basic (walk speed) | +0 | 
+feat | core:feat:spell_focus | Spell Focus | +1 | Through careful study, you have developed methods to make your spells harder to resist. / The DC of spells you cast increases by 1. At 11th level, the DC of your spells instead increases by 2, and at 17th level, the DC of spells you cast instead increases by 3. This bonus does not apply to spell-like abilities.
+race | core:race:lashunta | Lashunta | +2 | Speed: Walk 30 ft.
+race | core:race:lashunta#race_hp | Lashunta (racial Hit Points) | +4 | 

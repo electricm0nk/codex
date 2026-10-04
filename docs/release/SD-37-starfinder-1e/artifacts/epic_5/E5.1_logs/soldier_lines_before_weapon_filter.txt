@@ -1,0 +1,2012 @@
+ability | core:ability:2_racial_stat_bonus | +2 Racial Stat Bonus | +2 | [] | 
+ability | alien_archive:ability:ag_accelerator_rifle | AG Accelerator Rifle attack | +0 | [] | 
+ability | alien_archive:ability:ag_accelerator_rifle#weapon1 | AG Accelerator Rifle damage | +0 | [] | 
+ability | alien_archive:ability:ag_assault_rifle | AG Assault Rifle attack | +0 | [] | 
+ability | alien_archive:ability:ag_assault_rifle#weapon1 | AG Assault Rifle damage | +0 | [] | 
+ability | alien_archive:ability:ag_rppr | AG RPPR attack | +0 | [] | 
+ability | alien_archive:ability:ag_rppr#weapon1 | AG RPPR damage | +0 | [] | 
+ability | core:ability:acid_dart_rifle_complex | Acid dart rifle (complex) attack | +0 | [] | 
+ability | core:ability:acid_dart_rifle_complex#weapon1 | Acid dart rifle (complex) damage | +0 | [] | 
+ability | core:ability:acid_dart_rifle_dual | Acid dart rifle (dual) attack | +0 | [] | 
+ability | core:ability:acid_dart_rifle_dual#weapon1 | Acid dart rifle (dual) damage | +0 | [] | 
+ability | core:ability:acid_dart_rifle_tactical | Acid dart rifle (tactical) attack | +0 | [] | 
+ability | core:ability:acid_dart_rifle_tactical#weapon1 | Acid dart rifle (tactical) damage | +0 | [] | 
+ability | alien_archive:ability:acid_lancer_corroder_class#weapon1 | Acid lancer (corroder) damage | +0 | [] | 
+ability | alien_archive:ability:acid_lancer_corroder_class | Acid lancer (corroder-class) attack | +0 | [] | 
+ability | alien_archive:ability:acid_lancer_disintegrator_class#weapon1 | Acid lancer (disintegrator) damage | +0 | [] | 
+ability | alien_archive:ability:acid_lancer_disintegrator_class | Acid lancer (disintegrator-class) attack | +0 | [] | 
+ability | alien_archive:ability:acid_lancer_liquefier_class#weapon1 | Acid lancer (liquefier) damage | +0 | [] | 
+ability | alien_archive:ability:acid_lancer_liquefier_class | Acid lancer (liquefier-class) attack | +0 | [] | 
+ability | alien_archive:ability:acid_lancer_melter_class#weapon1 | Acid lancer (melter) damage | +0 | [] | 
+ability | alien_archive:ability:acid_lancer_melter_class | Acid lancer (melter-class) attack | +0 | [] | 
+ability | armory:ability:agitator_blaze | Agitator (blaze) attack | +0 | [] | 
+ability | armory:ability:agitator_blaze#weapon1 | Agitator (blaze) damage | +0 | [] | 
+ability | armory:ability:agitator_ember | Agitator (ember) attack | +0 | [] | 
+ability | armory:ability:agitator_ember#weapon1 | Agitator (ember) damage | +0 | [] | 
+ability | armory:ability:agitator_inferno | Agitator (inferno) attack | +0 | [] | 
+ability | armory:ability:agitator_inferno#weapon1 | Agitator (inferno) damage | +0 | [] | 
+ability | armory:ability:agitator_solar_flare | Agitator (solar flare) attack | +0 | [] | 
+ability | armory:ability:agitator_solar_flare#weapon1 | Agitator (solar flare) damage | +0 | [] | 
+ability | pact_worlds:ability:anacite_ion_cannon_aurora | Anacite ion cannon (aurora) attack | +0 | [] | 
+ability | pact_worlds:ability:anacite_ion_cannon_aurora#weapon1 | Anacite ion cannon (aurora) damage | +0 | [] | 
+ability | pact_worlds:ability:anacite_ion_cannon_static | Anacite ion cannon (static) attack | +0 | [] | 
+ability | pact_worlds:ability:anacite_ion_cannon_static#weapon1 | Anacite ion cannon (static) damage | +0 | [] | 
+ability | pact_worlds:ability:anacite_ion_cannon_storm | Anacite ion cannon (storm) attack | +0 | [] | 
+ability | pact_worlds:ability:anacite_ion_cannon_storm#weapon1 | Anacite ion cannon (storm) damage | +0 | [] | 
+ability | pact_worlds:ability:anacite_ion_cannon_tempest | Anacite ion cannon (tempest) attack | +0 | [] | 
+ability | pact_worlds:ability:anacite_ion_cannon_tempest#weapon1 | Anacite ion cannon (tempest) damage | +0 | [] | 
+ability | armory:ability:anchor_pistol_emergent | Anchor pistol (emergent) attack | +0 | [] | 
+ability | armory:ability:anchor_pistol_emergent#weapon1 | Anchor pistol (emergent) damage | +0 | [] | 
+ability | armory:ability:anchor_pistol_flux | Anchor pistol (flux) attack | +0 | [] | 
+ability | armory:ability:anchor_pistol_flux#weapon1 | Anchor pistol (flux) damage | +0 | [] | 
+ability | armory:ability:anchor_pistol_inductive | Anchor pistol (inductive) attack | +0 | [] | 
+ability | armory:ability:anchor_pistol_inductive#weapon1 | Anchor pistol (inductive) damage | +0 | [] | 
+ability | armory:ability:anchor_pistol_voltaic | Anchor pistol (voltaic) attack | +0 | [] | 
+ability | armory:ability:anchor_pistol_voltaic#weapon1 | Anchor pistol (voltaic) damage | +0 | [] | 
+ability | armory:ability:angel_wing_astral | Angel wing (astral) attack | +0 | [] | 
+ability | armory:ability:angel_wing_astral#weapon1 | Angel wing (astral) damage | +0 | [] | 
+ability | armory:ability:angel_wing_monadic | Angel wing (monadic) attack | +0 | [] | 
+ability | armory:ability:angel_wing_monadic#weapon1 | Angel wing (monadic) damage | +0 | [] | 
+ability | armory:ability:angel_wing_movanic | Angel wing (movanic) attack | +0 | [] | 
+ability | armory:ability:angel_wing_movanic#weapon1 | Angel wing (movanic) damage | +0 | [] | 
+ability | armory:ability:arc_caster_aurora | Arc caster (aurora) attack | +0 | [] | 
+ability | armory:ability:arc_caster_aurora#weapon1 | Arc caster (aurora) damage | +0 | [] | 
+ability | armory:ability:arc_caster_static | Arc caster (static) attack | +0 | [] | 
+ability | armory:ability:arc_caster_static#weapon1 | Arc caster (static) damage | +0 | [] | 
+ability | armory:ability:arc_caster_storm | Arc caster (storm) attack | +0 | [] | 
+ability | armory:ability:arc_caster_storm#weapon1 | Arc caster (storm) damage | +0 | [] | 
+ability | armory:ability:arc_caster_tempest | Arc caster (tempest) attack | +0 | [] | 
+ability | armory:ability:arc_caster_tempest#weapon1 | Arc caster (tempest) damage | +0 | [] | 
+ability | core:ability:arc_emitter_advanced | Arc emitter (advanced) attack | +0 | [] | 
+ability | core:ability:arc_emitter_advanced#weapon1 | Arc emitter (advanced) damage | +0 | [] | 
+ability | core:ability:arc_emitter_tactical | Arc emitter (tactical) attack | +0 | [] | 
+ability | core:ability:arc_emitter_tactical#weapon1 | Arc emitter (tactical) damage | +0 | [] | 
+ability | core:ability:arc_pistol_aurora | Arc pistol (aurora) attack | +0 | [] | 
+ability | core:ability:arc_pistol_aurora#weapon1 | Arc pistol (aurora) damage | +0 | [] | 
+ability | core:ability:arc_pistol_static | Arc pistol (static) attack | +0 | [] | 
+ability | core:ability:arc_pistol_static#weapon1 | Arc pistol (static) damage | +0 | [] | 
+ability | core:ability:arc_pistol_storm | Arc pistol (storm) attack | +0 | [] | 
+ability | core:ability:arc_pistol_storm#weapon1 | Arc pistol (storm) damage | +0 | [] | 
+ability | core:ability:arc_rifle_aurora | Arc rifle (aurora) attack | +0 | [] | 
+ability | core:ability:arc_rifle_aurora#weapon1 | Arc rifle (aurora) damage | +0 | [] | 
+ability | core:ability:arc_rifle_static | Arc rifle (static) attack | +0 | [] | 
+ability | core:ability:arc_rifle_static#weapon1 | Arc rifle (static) damage | +0 | [] | 
+ability | core:ability:arc_rifle_storm | Arc rifle (storm) attack | +0 | [] | 
+ability | core:ability:arc_rifle_storm#weapon1 | Arc rifle (storm) damage | +0 | [] | 
+ability | core:ability:arc_rifle_tempest | Arc rifle (tempest) attack | +0 | [] | 
+ability | core:ability:arc_rifle_tempest#weapon1 | Arc rifle (tempest) damage | +0 | [] | 
+ability | core:ability:armor_prof_heavy_armor | Armor Prof ~ Heavy Armor |  | [] | 
+ability | core:ability:armor_prof_light_armor | Armor Prof ~ Light Armor |  | [] | 
+ability | core:ability:artillery_laser_aphelion | Artillery laser (aphelion) attack | +0 | [] | 
+ability | core:ability:artillery_laser_aphelion#weapon1 | Artillery laser (aphelion) damage | +0 | [] | 
+ability | core:ability:artillery_laser_azimuth | Artillery laser (azimuth) attack | +0 | [] | 
+ability | core:ability:artillery_laser_azimuth#weapon1 | Artillery laser (azimuth) damage | +0 | [] | 
+ability | core:ability:artillery_laser_corona | Artillery laser (corona) attack | +0 | [] | 
+ability | core:ability:artillery_laser_corona#weapon1 | Artillery laser (corona) damage | +0 | [] | 
+ability | core:ability:artillery_laser_parallax | Artillery laser (parallax) attack | +0 | [] | 
+ability | core:ability:artillery_laser_parallax#weapon1 | Artillery laser (parallax) damage | +0 | [] | 
+ability | core:ability:artillery_laser_perihelion | Artillery laser (perihelion) attack | +0 | [] | 
+ability | core:ability:artillery_laser_perihelion#weapon1 | Artillery laser (perihelion) damage | +0 | [] | 
+ability | core:ability:artillery_laser_zenith | Artillery laser (zenith) attack | +0 | [] | 
+ability | core:ability:artillery_laser_zenith#weapon1 | Artillery laser (zenith) damage | +0 | [] | 
+ability | armory:ability:assassin_rifle_phantom | Assassin rifle (phantom) attack | +0 | [] | 
+ability | armory:ability:assassin_rifle_phantom#weapon1 | Assassin rifle (phantom) damage | +0 | [] | 
+ability | armory:ability:assassin_rifle_shadow | Assassin rifle (shadow) attack | +0 | [] | 
+ability | armory:ability:assassin_rifle_shadow#weapon1 | Assassin rifle (shadow) damage | +0 | [] | 
+ability | armory:ability:assassin_rifle_spectre | Assassin rifle (spectre) attack | +0 | [] | 
+ability | armory:ability:assassin_rifle_spectre#weapon1 | Assassin rifle (spectre) damage | +0 | [] | 
+ability | armory:ability:assassin_rifle_stalker | Assassin rifle (stalker) attack | +0 | [] | 
+ability | armory:ability:assassin_rifle_stalker#weapon1 | Assassin rifle (stalker) damage | +0 | [] | 
+ability | armory:ability:assassin_rifle_wraith | Assassin rifle (wraith) attack | +0 | [] | 
+ability | armory:ability:assassin_rifle_wraith#weapon1 | Assassin rifle (wraith) damage | +0 | [] | 
+ability | armory:ability:aurora_cannon_electron | Aurora cannon (electron) attack | +0 | [] | 
+ability | armory:ability:aurora_cannon_electron#weapon1 | Aurora cannon (electron) damage | +0 | [] | 
+ability | armory:ability:aurora_cannon_hydrogen | Aurora cannon (hydrogen) attack | +0 | [] | 
+ability | armory:ability:aurora_cannon_hydrogen#weapon1 | Aurora cannon (hydrogen) damage | +0 | [] | 
+ability | armory:ability:aurora_cannon_proton | Aurora cannon (proton) attack | +0 | [] | 
+ability | armory:ability:aurora_cannon_proton#weapon1 | Aurora cannon (proton) damage | +0 | [] | 
+ability | core:ability:autobeam_artillery_advanced | Autobeam artillery (advanced) attack | +0 | [] | 
+ability | core:ability:autobeam_artillery_advanced#weapon1 | Autobeam artillery (advanced) damage | +0 | [] | 
+ability | core:ability:autobeam_artillery_elite | Autobeam artillery (elite) attack | +0 | [] | 
+ability | core:ability:autobeam_artillery_elite#weapon1 | Autobeam artillery (elite) damage | +0 | [] | 
+ability | core:ability:autobeam_artillery_tactical | Autobeam artillery (tactical) attack | +0 | [] | 
+ability | core:ability:autobeam_artillery_tactical#weapon1 | Autobeam artillery (tactical) damage | +0 | [] | 
+ability | core:ability:autobeam_rifle_advanced | Autobeam rifle (advanced) attack | +0 | [] | 
+ability | core:ability:autobeam_rifle_advanced#weapon1 | Autobeam rifle (advanced) damage | +0 | [] | 
+ability | core:ability:autobeam_rifle_elite | Autobeam rifle (elite) attack | +0 | [] | 
+ability | core:ability:autobeam_rifle_elite#weapon1 | Autobeam rifle (elite) damage | +0 | [] | 
+ability | core:ability:autobeam_rifle_tactical | Autobeam rifle (tactical) attack | +0 | [] | 
+ability | core:ability:autobeam_rifle_tactical#weapon1 | Autobeam rifle (tactical) damage | +0 | [] | 
+ability | core:ability:autotarget_rifle | Autotarget rifle attack | +0 | [] | 
+ability | core:ability:autotarget_rifle#weapon1 | Autotarget rifle damage | +0 | [] | 
+ability | core:ability:human_default_bonus_feat | BONUS FEAT | +1 | [] | Humans select one extra feat at 1st level.
+ability | core:ability:baton_advanced | Baton (advanced) attack | +0 | [] | 
+ability | core:ability:baton_advanced#weapon1 | Baton (advanced) damage | +0 | [] | 
+ability | core:ability:baton_tactical | Baton (tactical) attack | +0 | [] | 
+ability | core:ability:baton_tactical#weapon1 | Baton (tactical) damage | +0 | [] | 
+ability | armory:ability:battle_ribbon_micro_edge | Battle ribbon (micro-edge) attack | +0 | [] | 
+ability | armory:ability:battle_ribbon_micro_edge#weapon1 | Battle ribbon (micro-edge) damage | +0 | [] | 
+ability | armory:ability:battle_ribbon_traditional | Battle ribbon (traditional) attack | +0 | [] | 
+ability | armory:ability:battle_ribbon_traditional#weapon1 | Battle ribbon (traditional) damage | +0 | [] | 
+ability | armory:ability:battle_ribbon_zero_edge | Battle ribbon (zero-edge) attack | +0 | [] | 
+ability | armory:ability:battle_ribbon_zero_edge#weapon1 | Battle ribbon (zero-edge) damage | +0 | [] | 
+ability | core:ability:battleglove_cestus | Battleglove (cestus) attack | +0 | [] | 
+ability | core:ability:battleglove_cestus#weapon1 | Battleglove (cestus) damage | +0 | [] | 
+ability | core:ability:battleglove_gravity | Battleglove (gravity) attack | +0 | [] | 
+ability | core:ability:battleglove_gravity#weapon1 | Battleglove (gravity) damage | +0 | [] | 
+ability | core:ability:battleglove_nova | Battleglove (nova) attack | +0 | [] | 
+ability | core:ability:battleglove_nova#weapon1 | Battleglove (nova) damage | +0 | [] | 
+ability | core:ability:battleglove_power | Battleglove (power) attack | +0 | [] | 
+ability | core:ability:battleglove_power#weapon1 | Battleglove (power) damage | +0 | [] | 
+ability | armory:ability:blaze_rifle_firedrake_class | Blaze rifle (firedrake-class) attack | +0 | [] | 
+ability | armory:ability:blaze_rifle_firedrake_class#weapon1 | Blaze rifle (firedrake-class) damage | +0 | [] | 
+ability | armory:ability:blaze_rifle_hellhound_class | Blaze rifle (hellhound-class) attack | +0 | [] | 
+ability | armory:ability:blaze_rifle_hellhound_class#weapon1 | Blaze rifle (hellhound-class) damage | +0 | [] | 
+ability | armory:ability:blaze_rifle_ifrit_class | Blaze rifle (ifrit-class) attack | +0 | [] | 
+ability | armory:ability:blaze_rifle_ifrit_class#weapon1 | Blaze rifle (ifrit-class) damage | +0 | [] | 
+ability | armory:ability:blaze_rifle_phoenix_class | Blaze rifle (phoenix-class) attack | +0 | [] | 
+ability | armory:ability:blaze_rifle_phoenix_class#weapon1 | Blaze rifle (phoenix-class) damage | +0 | [] | 
+ability | armory:ability:blaze_rifle_salamander_class | Blaze rifle (salamander-class) attack | +0 | [] | 
+ability | armory:ability:blaze_rifle_salamander_class#weapon1 | Blaze rifle (salamander-class) damage | +0 | [] | 
+ability | armory:ability:blindmark_rifle_hfd | Blindmark rifle (HFD) attack | +0 | [] | 
+ability | armory:ability:blindmark_rifle_hfd#weapon1 | Blindmark rifle (HFD) damage | +0 | [] | 
+ability | armory:ability:blindmark_rifle_lfd | Blindmark rifle (LFD) attack | +0 | [] | 
+ability | armory:ability:blindmark_rifle_lfd#weapon1 | Blindmark rifle (LFD) damage | +0 | [] | 
+ability | armory:ability:blindmark_rifle_banshee | Blindmark rifle (banshee) attack | +0 | [] | 
+ability | armory:ability:blindmark_rifle_banshee#weapon1 | Blindmark rifle (banshee) damage | +0 | [] | 
+ability | armory:ability:blindmark_rifle_thunderstrike | Blindmark rifle (thunderstrike) attack | +0 | [] | 
+ability | armory:ability:blindmark_rifle_thunderstrike#weapon1 | Blindmark rifle (thunderstrike) damage | +0 | [] | 
+ability | alien_archive:ability:bone_cestus_austere | Bone Cestus (austere) attack | +0 | [] | 
+ability | alien_archive:ability:bone_cestus_austere#weapon1 | Bone Cestus (austere) damage | +0 | [] | 
+ability | alien_archive:ability:bone_cestus_imposing | Bone Cestus (imposing) attack | +0 | [] | 
+ability | alien_archive:ability:bone_cestus_imposing#weapon1 | Bone Cestus (imposing) damage | +0 | [] | 
+ability | alien_archive:ability:bone_cestus_measured | Bone Cestus (measured) attack | +0 | [] | 
+ability | alien_archive:ability:bone_cestus_measured#weapon1 | Bone Cestus (measured) damage | +0 | [] | 
+ability | alien_archive:ability:bone_cestus_severe | Bone Cestus (severe) attack | +0 | [] | 
+ability | alien_archive:ability:bone_cestus_severe#weapon1 | Bone Cestus (severe) damage | +0 | [] | 
+ability | armory:ability:bone_pistol_crypt_class | Bone pistol (crypt-class) attack | +0 | [] | 
+ability | armory:ability:bone_pistol_crypt_class#weapon1 | Bone pistol (crypt-class) damage | +0 | [] | 
+ability | armory:ability:bone_pistol_grave_class | Bone pistol (grave-class) attack | +0 | [] | 
+ability | armory:ability:bone_pistol_grave_class#weapon1 | Bone pistol (grave-class) damage | +0 | [] | 
+ability | armory:ability:bone_pistol_sepulcher_class | Bone pistol (sepulcher-class) attack | +0 | [] | 
+ability | armory:ability:bone_pistol_sepulcher_class#weapon1 | Bone pistol (sepulcher-class) damage | +0 | [] | 
+ability | armory:ability:bone_pistol_vault_class | Bone pistol (vault-class) attack | +0 | [] | 
+ability | armory:ability:bone_pistol_vault_class#weapon1 | Bone pistol (vault-class) damage | +0 | [] | 
+ability | armory:ability:bone_scepter_cadaver | Bone scepter (cadaver) attack | +0 | [] | 
+ability | armory:ability:bone_scepter_cadaver#weapon1 | Bone scepter (cadaver) damage | +0 | [] | 
+ability | armory:ability:bone_scepter_chill | Bone scepter (chill) attack | +0 | [] | 
+ability | armory:ability:bone_scepter_chill#weapon1 | Bone scepter (chill) damage | +0 | [] | 
+ability | armory:ability:bone_scepter_rigor | Bone scepter (rigor) attack | +0 | [] | 
+ability | armory:ability:bone_scepter_rigor#weapon1 | Bone scepter (rigor) damage | +0 | [] | 
+ability | armory:ability:bone_scepter_void | Bone scepter (void) attack | +0 | [] | 
+ability | armory:ability:bone_scepter_void#weapon1 | Bone scepter (void) damage | +0 | [] | 
+ability | armory:ability:boomer_rifle_concussive | Boomer rifle (concussive) attack | +0 | [] | 
+ability | armory:ability:boomer_rifle_concussive#weapon1 | Boomer rifle (concussive) damage | +0 | [] | 
+ability | armory:ability:boomer_rifle_rumbler | Boomer rifle (rumbler) attack | +0 | [] | 
+ability | armory:ability:boomer_rifle_rumbler#weapon1 | Boomer rifle (rumbler) damage | +0 | [] | 
+ability | armory:ability:boomer_rifle_shockwave | Boomer rifle (shockwave) attack | +0 | [] | 
+ability | armory:ability:boomer_rifle_shockwave#weapon1 | Boomer rifle (shockwave) damage | +0 | [] | 
+ability | armory:ability:boomer_rifle_tremor | Boomer rifle (tremor) attack | +0 | [] | 
+ability | armory:ability:boomer_rifle_tremor#weapon1 | Boomer rifle (tremor) damage | +0 | [] | 
+ability | armory:ability:breaching_gun_grapeshot | Breaching gun (grapeshot) attack | +0 | [] | 
+ability | armory:ability:breaching_gun_grapeshot#weapon1 | Breaching gun (grapeshot) damage | +0 | [] | 
+ability | armory:ability:breaching_gun_impact | Breaching gun (impact) attack | +0 | [] | 
+ability | armory:ability:breaching_gun_impact#weapon1 | Breaching gun (impact) damage | +0 | [] | 
+ability | armory:ability:breaching_gun_snub | Breaching gun (snub) attack | +0 | [] | 
+ability | armory:ability:breaching_gun_snub#weapon1 | Breaching gun (snub) damage | +0 | [] | 
+ability | armory:ability:breaching_gun_utility | Breaching gun (utility) attack | +0 | [] | 
+ability | armory:ability:breaching_gun_utility#weapon1 | Breaching gun (utility) damage | +0 | [] | 
+ability | armory:ability:breaching_gun_vortex | Breaching gun (vortex) attack | +0 | [] | 
+ability | armory:ability:breaching_gun_vortex#weapon1 | Breaching gun (vortex) damage | +0 | [] | 
+ability | armory:ability:burner_firedrake_class | Burner (firedrake-class) attack | +0 | [] | 
+ability | armory:ability:burner_firedrake_class#weapon1 | Burner (firedrake-class) damage | +0 | [] | 
+ability | armory:ability:burner_hellhound_class | Burner (hellhound-class) attack | +0 | [] | 
+ability | armory:ability:burner_hellhound_class#weapon1 | Burner (hellhound-class) damage | +0 | [] | 
+ability | armory:ability:burner_ifrit_class | Burner (ifrit-class) attack | +0 | [] | 
+ability | armory:ability:burner_ifrit_class#weapon1 | Burner (ifrit-class) damage | +0 | [] | 
+ability | armory:ability:burner_phoenix_class | Burner (phoenix-class) attack | +0 | [] | 
+ability | armory:ability:burner_phoenix_class#weapon1 | Burner (phoenix-class) damage | +0 | [] | 
+ability | armory:ability:burner_salamander_class | Burner (salamander-class) attack | +0 | [] | 
+ability | armory:ability:burner_salamander_class#weapon1 | Burner (salamander-class) damage | +0 | [] | 
+ability | armory:ability:burning_chains_archdevil_class | Burning chains (archdevil-class) attack | +0 | [] | 
+ability | armory:ability:burning_chains_archdevil_class#weapon1 | Burning chains (archdevil-class) damage | +0 | [] | 
+ability | armory:ability:burning_chains_fiend_class | Burning chains (fiend-class) attack | +0 | [] | 
+ability | armory:ability:burning_chains_fiend_class#weapon1 | Burning chains (fiend-class) damage | +0 | [] | 
+ability | armory:ability:burning_chains_malebranche_class | Burning chains (malebranche-class) attack | +0 | [] | 
+ability | armory:ability:burning_chains_malebranche_class#weapon1 | Burning chains (malebranche-class) damage | +0 | [] | 
+ability | armory:ability:cathode_cannon_advanced | Cathode cannon (advanced) attack | +0 | [] | 
+ability | armory:ability:cathode_cannon_advanced#weapon1 | Cathode cannon (advanced) damage | +0 | [] | 
+ability | armory:ability:cathode_cannon_elite | Cathode cannon (elite) attack | +0 | [] | 
+ability | armory:ability:cathode_cannon_elite#weapon1 | Cathode cannon (elite) damage | +0 | [] | 
+ability | armory:ability:cathode_cannon_paragon | Cathode cannon (paragon) attack | +0 | [] | 
+ability | armory:ability:cathode_cannon_paragon#weapon1 | Cathode cannon (paragon) damage | +0 | [] | 
+ability | armory:ability:cathode_cannon_shockstorm | Cathode cannon (shockstorm) attack | +0 | [] | 
+ability | armory:ability:cathode_cannon_shockstorm#weapon1 | Cathode cannon (shockstorm) damage | +0 | [] | 
+ability | armory:ability:cathode_cannon_tactical | Cathode cannon (tactical) attack | +0 | [] | 
+ability | armory:ability:cathode_cannon_tactical#weapon1 | Cathode cannon (tactical) damage | +0 | [] | 
+ability | armory:ability:cavitation_pistol_hydrodynamic | Cavitation pistol (hydrodynamic) attack | +0 | [] | 
+ability | armory:ability:cavitation_pistol_hydrodynamic#weapon1 | Cavitation pistol (hydrodynamic) damage | +0 | [] | 
+ability | armory:ability:cavitation_pistol_inertial | Cavitation pistol (inertial) attack | +0 | [] | 
+ability | armory:ability:cavitation_pistol_inertial#weapon1 | Cavitation pistol (inertial) damage | +0 | [] | 
+ability | armory:ability:cavitation_pistol_thermodynamic | Cavitation pistol (thermodynamic) attack | +0 | [] | 
+ability | armory:ability:cavitation_pistol_thermodynamic#weapon1 | Cavitation pistol (thermodynamic) damage | +0 | [] | 
+ability | armory:ability:cavitation_pistol_vapor | Cavitation pistol (vapor) attack | +0 | [] | 
+ability | armory:ability:cavitation_pistol_vapor#weapon1 | Cavitation pistol (vapor) damage | +0 | [] | 
+ability | armory:ability:charge_emitter_impulse | Charge emitter (impulse) attack | +0 | [] | 
+ability | armory:ability:charge_emitter_impulse#weapon1 | Charge emitter (impulse) damage | +0 | [] | 
+ability | armory:ability:charge_emitter_jolt | Charge emitter (jolt) attack | +0 | [] | 
+ability | armory:ability:charge_emitter_jolt#weapon1 | Charge emitter (jolt) damage | +0 | [] | 
+ability | armory:ability:charge_emitter_surge | Charge emitter (surge) attack | +0 | [] | 
+ability | armory:ability:charge_emitter_surge#weapon1 | Charge emitter (surge) damage | +0 | [] | 
+ability | armory:ability:chitinblade_microserrated | Chitinblade (microserrated) attack | +0 | [] | 
+ability | armory:ability:chitinblade_microserrated#weapon1 | Chitinblade (microserrated) damage | +0 | [] | 
+ability | armory:ability:chitinblade_nanoserrated | Chitinblade (nanoserrated) attack | +0 | [] | 
+ability | armory:ability:chitinblade_nanoserrated#weapon1 | Chitinblade (nanoserrated) damage | +0 | [] | 
+ability | armory:ability:chitinblade_tactical | Chitinblade (tactical) attack | +0 | [] | 
+ability | armory:ability:chitinblade_tactical#weapon1 | Chitinblade (tactical) damage | +0 | [] | 
+ability | armory:ability:chitinblade_ultraserrated | Chitinblade (ultraserrated) attack | +0 | [] | 
+ability | armory:ability:chitinblade_ultraserrated#weapon1 | Chitinblade (ultraserrated) damage | +0 | [] | 
+ability | core:ability:club | Club attack | +0 | [] | 
+ability | core:ability:club#weapon1 | Club damage | +0 | [] | 
+ability | armory:ability:cluster_launcher_advanced | Cluster launcher (advanced) attack | +0 | [] | 
+ability | armory:ability:cluster_launcher_advanced#weapon1 | Cluster launcher (advanced) damage | +0 | [] | 
+ability | armory:ability:cluster_launcher_elite | Cluster launcher (elite) attack | +0 | [] | 
+ability | armory:ability:cluster_launcher_elite#weapon1 | Cluster launcher (elite) damage | +0 | [] | 
+ability | armory:ability:cluster_launcher_paragon | Cluster launcher (paragon) attack | +0 | [] | 
+ability | armory:ability:cluster_launcher_paragon#weapon1 | Cluster launcher (paragon) damage | +0 | [] | 
+ability | armory:ability:cluster_launcher_tactical | Cluster launcher (tactical) attack | +0 | [] | 
+ability | armory:ability:cluster_launcher_tactical#weapon1 | Cluster launcher (tactical) damage | +0 | [] | 
+ability | armory:ability:coil_rifle_assassin | Coil rifle (assassin) attack | +0 | [] | 
+ability | armory:ability:coil_rifle_assassin#weapon1 | Coil rifle (assassin) damage | +0 | [] | 
+ability | armory:ability:coil_rifle_precision | Coil rifle (precision) attack | +0 | [] | 
+ability | armory:ability:coil_rifle_precision#weapon1 | Coil rifle (precision) damage | +0 | [] | 
+ability | armory:ability:coil_rifle_rangefinder | Coil rifle (rangefinder) attack | +0 | [] | 
+ability | armory:ability:coil_rifle_rangefinder#weapon1 | Coil rifle (rangefinder) damage | +0 | [] | 
+ability | armory:ability:coil_rifle_saboteur | Coil rifle (saboteur) attack | +0 | [] | 
+ability | armory:ability:coil_rifle_saboteur#weapon1 | Coil rifle (saboteur) damage | +0 | [] | 
+ability | armory:ability:coil_rifle_specialist | Coil rifle (specialist) attack | +0 | [] | 
+ability | armory:ability:coil_rifle_specialist#weapon1 | Coil rifle (specialist) damage | +0 | [] | 
+ability | armory:ability:colossus_coil_brush | Colossus coil (brush) attack | +0 | [] | 
+ability | armory:ability:colossus_coil_brush#weapon1 | Colossus coil (brush) damage | +0 | [] | 
+ability | armory:ability:colossus_coil_corona | Colossus coil (corona) attack | +0 | [] | 
+ability | armory:ability:colossus_coil_corona#weapon1 | Colossus coil (corona) damage | +0 | [] | 
+ability | armory:ability:colossus_coil_multistream | Colossus coil (multistream) attack | +0 | [] | 
+ability | armory:ability:colossus_coil_multistream#weapon1 | Colossus coil (multistream) damage | +0 | [] | 
+ability | armory:ability:colossus_coil_streamer_arc | Colossus coil (streamer arc) attack | +0 | [] | 
+ability | armory:ability:colossus_coil_streamer_arc#weapon1 | Colossus coil (streamer arc) damage | +0 | [] | 
+ability | core:ability:soldier_class_feature_combat_feat | Combat Feat | +1 | [] | At 2nd level and every 2 levels thereafter, you gain a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. Whenever you gain a new bonus feat, you can also choose to replace one of the bonus feats you have already learned with a different bonus feat. The feat you replace can't be one that was used as a prerequisite for another feat or other ability. You can change only one feat at any given level, and you must choose whether or not to swap the feat at the time you gain the new bonus feat.
+ability | core:ability:combat_rifle | Combat rifle attack | +0 | [] | 
+ability | core:ability:combat_rifle#weapon1 | Combat rifle damage | +0 | [] | 
+ability | armory:ability:compliance_ray_flare | Compliance ray (flare) attack | +0 | [] | 
+ability | armory:ability:compliance_ray_flare#weapon1 | Compliance ray (flare) damage | +0 | [] | 
+ability | armory:ability:compliance_ray_flash | Compliance ray (flash) attack | +0 | [] | 
+ability | armory:ability:compliance_ray_flash#weapon1 | Compliance ray (flash) damage | +0 | [] | 
+ability | armory:ability:compliance_ray_starburst | Compliance ray (starburst) attack | +0 | [] | 
+ability | armory:ability:compliance_ray_starburst#weapon1 | Compliance ray (starburst) damage | +0 | [] | 
+ability | armory:ability:compliance_ray_strobe | Compliance ray (strobe) attack | +0 | [] | 
+ability | armory:ability:compliance_ray_strobe#weapon1 | Compliance ray (strobe) damage | +0 | [] | 
+ability | armory:ability:compliance_ray_sunspot | Compliance ray (sunspot) attack | +0 | [] | 
+ability | armory:ability:compliance_ray_sunspot#weapon1 | Compliance ray (sunspot) damage | +0 | [] | 
+ability | armory:ability:conqueror_blue_star | Conqueror (blue star) attack | +0 | [] | 
+ability | armory:ability:conqueror_blue_star#weapon1 | Conqueror (blue star) damage | +0 | [] | 
+ability | armory:ability:conqueror_red_star | Conqueror (red star) attack | +0 | [] | 
+ability | armory:ability:conqueror_red_star#weapon1 | Conqueror (red star) damage | +0 | [] | 
+ability | armory:ability:conqueror_violet_star | Conqueror (violet star) attack | +0 | [] | 
+ability | armory:ability:conqueror_violet_star#weapon1 | Conqueror (violet star) damage | +0 | [] | 
+ability | armory:ability:conqueror_white_star | Conqueror (white star) attack | +0 | [] | 
+ability | armory:ability:conqueror_white_star#weapon1 | Conqueror (white star) damage | +0 | [] | 
+ability | armory:ability:conqueror_yellow_star | Conqueror (yellow star) attack | +0 | [] | 
+ability | armory:ability:conqueror_yellow_star#weapon1 | Conqueror (yellow star) damage | +0 | [] | 
+ability | armory:ability:convergent_laser_multiwave | Convergent laser (multiwave) attack | +0 | [] | 
+ability | armory:ability:convergent_laser_multiwave#weapon1 | Convergent laser (multiwave) damage | +0 | [] | 
+ability | armory:ability:convergent_laser_single_wave | Convergent laser (single-wave) attack | +0 | [] | 
+ability | armory:ability:convergent_laser_single_wave#weapon1 | Convergent laser (single-wave) damage | +0 | [] | 
+ability | armory:ability:convergent_laser_wide_spectrum | Convergent laser (wide-spectrum) attack | +0 | [] | 
+ability | armory:ability:convergent_laser_wide_spectrum#weapon1 | Convergent laser (wide-spectrum) damage | +0 | [] | 
+ability | armory:ability:coolant_sprayer_algid | Coolant sprayer (algid) attack | +0 | [] | 
+ability | armory:ability:coolant_sprayer_algid#weapon1 | Coolant sprayer (algid) damage | +0 | [] | 
+ability | armory:ability:coolant_sprayer_aufeis | Coolant sprayer (aufeis) attack | +0 | [] | 
+ability | armory:ability:coolant_sprayer_aufeis#weapon1 | Coolant sprayer (aufeis) damage | +0 | [] | 
+ability | armory:ability:coolant_sprayer_glacial | Coolant sprayer (glacial) attack | +0 | [] | 
+ability | armory:ability:coolant_sprayer_glacial#weapon1 | Coolant sprayer (glacial) damage | +0 | [] | 
+ability | armory:ability:coolant_sprayer_isothermal | Coolant sprayer (isothermal) attack | +0 | [] | 
+ability | armory:ability:coolant_sprayer_isothermal#weapon1 | Coolant sprayer (isothermal) damage | +0 | [] | 
+ability | armory:ability:core_hammer_advanced | Core hammer (advanced) attack | +0 | [] | 
+ability | armory:ability:core_hammer_advanced#weapon1 | Core hammer (advanced) damage | +0 | [] | 
+ability | armory:ability:core_hammer_fusion | Core hammer (fusion) attack | +0 | [] | 
+ability | armory:ability:core_hammer_fusion#weapon1 | Core hammer (fusion) damage | +0 | [] | 
+ability | armory:ability:core_hammer_reactor | Core hammer (reactor) attack | +0 | [] | 
+ability | armory:ability:core_hammer_reactor#weapon1 | Core hammer (reactor) damage | +0 | [] | 
+ability | armory:ability:core_hammer_tactical | Core hammer (tactical) attack | +0 | [] | 
+ability | armory:ability:core_hammer_tactical#weapon1 | Core hammer (tactical) damage | +0 | [] | 
+ability | core:ability:crossbolter_advanced | Crossbolter (advanced) attack | +0 | [] | 
+ability | core:ability:crossbolter_advanced#weapon1 | Crossbolter (advanced) damage | +0 | [] | 
+ability | core:ability:crossbolter_dual | Crossbolter (dual) attack | +0 | [] | 
+ability | core:ability:crossbolter_dual#weapon1 | Crossbolter (dual) damage | +0 | [] | 
+ability | core:ability:crossbolter_elite | Crossbolter (elite) attack | +0 | [] | 
+ability | core:ability:crossbolter_elite#weapon1 | Crossbolter (elite) damage | +0 | [] | 
+ability | core:ability:crossbolter_paragon | Crossbolter (paragon) attack | +0 | [] | 
+ability | core:ability:crossbolter_paragon#weapon1 | Crossbolter (paragon) damage | +0 | [] | 
+ability | core:ability:crossbolter_tactical | Crossbolter (tactical) attack | +0 | [] | 
+ability | core:ability:crossbolter_tactical#weapon1 | Crossbolter (tactical) damage | +0 | [] | 
+ability | core:ability:cryopike_advanced | Cryopike (advanced) attack | +0 | [] | 
+ability | core:ability:cryopike_advanced#weapon1 | Cryopike (advanced) damage | +0 | [] | 
+ability | core:ability:cryopike_tactical | Cryopike (tactical) attack | +0 | [] | 
+ability | core:ability:cryopike_tactical#weapon1 | Cryopike (tactical) damage | +0 | [] | 
+ability | armory:ability:cryospike_industrial | Cryospike (industrial) attack | +0 | [] | 
+ability | armory:ability:cryospike_industrial#weapon1 | Cryospike (industrial) damage | +0 | [] | 
+ability | armory:ability:cryospike_personal | Cryospike (personal) attack | +0 | [] | 
+ability | armory:ability:cryospike_personal#weapon1 | Cryospike (personal) damage | +0 | [] | 
+ability | armory:ability:cryospike_residential | Cryospike (residential) attack | +0 | [] | 
+ability | armory:ability:cryospike_residential#weapon1 | Cryospike (residential) damage | +0 | [] | 
+ability | core:ability:curve_blade_buzzblade | Curve blade (buzzblade) attack | +0 | [] | 
+ability | core:ability:curve_blade_buzzblade#weapon1 | Curve blade (buzzblade) damage | +0 | [] | 
+ability | core:ability:curve_blade_carbon_steel | Curve blade (carbon steel) attack | +0 | [] | 
+ability | core:ability:curve_blade_carbon_steel#weapon1 | Curve blade (carbon steel) damage | +0 | [] | 
+ability | core:ability:curve_blade_dimensional_slice | Curve blade (dimensional slice) attack | +0 | [] | 
+ability | core:ability:curve_blade_dimensional_slice#weapon1 | Curve blade (dimensional slice) damage | +0 | [] | 
+ability | core:ability:curve_blade_ultrathin | Curve blade (ultrathin) attack | +0 | [] | 
+ability | core:ability:curve_blade_ultrathin#weapon1 | Curve blade (ultrathin) damage | +0 | [] | 
+ability | core:ability:dagger_molecular_rift | Dagger (molecular rift) attack | +0 | [] | 
+ability | core:ability:dagger_molecular_rift#weapon1 | Dagger (molecular rift) damage | +0 | [] | 
+ability | core:ability:dagger_ultrathin | Dagger (ultrathin) attack | +0 | [] | 
+ability | core:ability:dagger_ultrathin#weapon1 | Dagger (ultrathin) damage | +0 | [] | 
+ability | core:ability:dagger_zero_edge | Dagger (zero-edge) attack | +0 | [] | 
+ability | core:ability:dagger_zero_edge#weapon1 | Dagger (zero-edge) damage | +0 | [] | 
+ability | armory:ability:dart_cannon_advanced | Dart cannon (advanced) attack | +0 | [] | 
+ability | armory:ability:dart_cannon_advanced#weapon1 | Dart cannon (advanced) damage | +0 | [] | 
+ability | armory:ability:dart_cannon_elite | Dart cannon (elite) attack | +0 | [] | 
+ability | armory:ability:dart_cannon_elite#weapon1 | Dart cannon (elite) damage | +0 | [] | 
+ability | armory:ability:dart_cannon_heavy | Dart cannon (heavy) attack | +0 | [] | 
+ability | armory:ability:dart_cannon_heavy#weapon1 | Dart cannon (heavy) damage | +0 | [] | 
+ability | armory:ability:dart_cannon_light | Dart cannon (light) attack | +0 | [] | 
+ability | armory:ability:dart_cannon_light#weapon1 | Dart cannon (light) damage | +0 | [] | 
+ability | armory:ability:dart_cannon_paragon | Dart cannon (paragon) attack | +0 | [] | 
+ability | armory:ability:dart_cannon_paragon#weapon1 | Dart cannon (paragon) damage | +0 | [] | 
+ability | armory:ability:dart_cannon_tactical | Dart cannon (tactical) attack | +0 | [] | 
+ability | armory:ability:dart_cannon_tactical#weapon1 | Dart cannon (tactical) damage | +0 | [] | 
+ability | armory:ability:dazzler_flash | Dazzler (flash) attack | +0 | [] | 
+ability | armory:ability:dazzler_flash#weapon1 | Dazzler (flash) damage | +0 | [] | 
+ability | armory:ability:dazzler_strobe | Dazzler (strobe) attack | +0 | [] | 
+ability | armory:ability:dazzler_strobe#weapon1 | Dazzler (strobe) damage | +0 | [] | 
+ability | armory:ability:dazzler_sunspot | Dazzler (sunspot) attack | +0 | [] | 
+ability | armory:ability:dazzler_sunspot#weapon1 | Dazzler (sunspot) damage | +0 | [] | 
+ability | armory:ability:decoupler_bruiser | Decoupler (bruiser) attack | +0 | [] | 
+ability | armory:ability:decoupler_bruiser#weapon1 | Decoupler (bruiser) damage | +0 | [] | 
+ability | armory:ability:decoupler_pusher | Decoupler (pusher) attack | +0 | [] | 
+ability | armory:ability:decoupler_pusher#weapon1 | Decoupler (pusher) damage | +0 | [] | 
+ability | armory:ability:decoupler_screamer | Decoupler (screamer) attack | +0 | [] | 
+ability | armory:ability:decoupler_screamer#weapon1 | Decoupler (screamer) damage | +0 | [] | 
+ability | core:ability:devastation_blade_apocalypse | Devastation blade (apocalypse) attack | +0 | [] | 
+ability | core:ability:devastation_blade_apocalypse#weapon1 | Devastation blade (apocalypse) damage | +0 | [] | 
+ability | core:ability:devastation_blade_ruin | Devastation blade (ruin) attack | +0 | [] | 
+ability | core:ability:devastation_blade_ruin#weapon1 | Devastation blade (ruin) damage | +0 | [] | 
+ability | core:ability:devastation_blade_wrack | Devastation blade (wrack) attack | +0 | [] | 
+ability | core:ability:devastation_blade_wrack#weapon1 | Devastation blade (wrack) damage | +0 | [] | 
+ability | alien_archive:ability:diasporan_rifle_advanced | Diasporan Rifle Advanced | +0 | [] | 
+ability | alien_archive:ability:diasporan_rifle_elite | Diasporan Rifle Elite | +0 | [] | 
+ability | alien_archive:ability:diasporan_rifle_imperial | Diasporan Rifle Imperial | +0 | [] | 
+ability | alien_archive:ability:diasporan_rifle_tactical | Diasporan Rifle Tactical | +0 | [] | 
+ability | alien_archive:ability:diasporan_rifle_ultra | Diasporan Rifle Ultra | +0 | [] | 
+ability | armory:ability:dirge_cannon_anharmonic | Dirge cannon (anharmonic) attack | +0 | [] | 
+ability | armory:ability:dirge_cannon_anharmonic#weapon1 | Dirge cannon (anharmonic) damage | +0 | [] | 
+ability | armory:ability:dirge_cannon_harmonic | Dirge cannon (harmonic) attack | +0 | [] | 
+ability | armory:ability:dirge_cannon_harmonic#weapon1 | Dirge cannon (harmonic) damage | +0 | [] | 
+ability | armory:ability:dirge_cannon_parametric | Dirge cannon (parametric) attack | +0 | [] | 
+ability | armory:ability:dirge_cannon_parametric#weapon1 | Dirge cannon (parametric) damage | +0 | [] | 
+ability | armory:ability:dirge_cannon_resonant | Dirge cannon (resonant) attack | +0 | [] | 
+ability | armory:ability:dirge_cannon_resonant#weapon1 | Dirge cannon (resonant) damage | +0 | [] | 
+ability | armory:ability:dirge_pistol_anharmonic | Dirge pistol (anharmonic) attack | +0 | [] | 
+ability | armory:ability:dirge_pistol_anharmonic#weapon1 | Dirge pistol (anharmonic) damage | +0 | [] | 
+ability | armory:ability:dirge_pistol_harmonic | Dirge pistol (harmonic) attack | +0 | [] | 
+ability | armory:ability:dirge_pistol_harmonic#weapon1 | Dirge pistol (harmonic) damage | +0 | [] | 
+ability | armory:ability:dirge_pistol_parametric | Dirge pistol (parametric) attack | +0 | [] | 
+ability | armory:ability:dirge_pistol_parametric#weapon1 | Dirge pistol (parametric) damage | +0 | [] | 
+ability | armory:ability:dirge_pistol_radial | Dirge pistol (radial) attack | +0 | [] | 
+ability | armory:ability:dirge_pistol_radial#weapon1 | Dirge pistol (radial) damage | +0 | [] | 
+ability | armory:ability:dirge_pistol_resonant | Dirge pistol (resonant) attack | +0 | [] | 
+ability | armory:ability:dirge_pistol_resonant#weapon1 | Dirge pistol (resonant) damage | +0 | [] | 
+ability | armory:ability:disintegrator_cannon_decimator | Disintegrator cannon (decimator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_cannon_decimator#weapon1 | Disintegrator cannon (decimator) damage | +0 | [] | 
+ability | armory:ability:disintegrator_cannon_eradicator | Disintegrator cannon (eradicator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_cannon_eradicator#weapon1 | Disintegrator cannon (eradicator) damage | +0 | [] | 
+ability | armory:ability:disintegrator_cannon_executioner | Disintegrator cannon (executioner) attack | +0 | [] | 
+ability | armory:ability:disintegrator_cannon_executioner#weapon1 | Disintegrator cannon (executioner) damage | +0 | [] | 
+ability | armory:ability:disintegrator_cannon_liquidator | Disintegrator cannon (liquidator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_cannon_liquidator#weapon1 | Disintegrator cannon (liquidator) damage | +0 | [] | 
+ability | armory:ability:disintegrator_lash_decimator | Disintegrator lash (decimator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_lash_decimator#weapon1 | Disintegrator lash (decimator) damage | +0 | [] | 
+ability | armory:ability:disintegrator_lash_eradicator | Disintegrator lash (eradicator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_lash_eradicator#weapon1 | Disintegrator lash (eradicator) damage | +0 | [] | 
+ability | armory:ability:disintegrator_lash_executioner | Disintegrator lash (executioner) attack | +0 | [] | 
+ability | armory:ability:disintegrator_lash_executioner#weapon1 | Disintegrator lash (executioner) damage | +0 | [] | 
+ability | armory:ability:disintegrator_lash_liquidator | Disintegrator lash (liquidator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_lash_liquidator#weapon1 | Disintegrator lash (liquidator) damage | +0 | [] | 
+ability | armory:ability:disintegrator_pistol_decimator | Disintegrator pistol (decimator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_pistol_decimator#weapon1 | Disintegrator pistol (decimator) damage | +0 | [] | 
+ability | armory:ability:disintegrator_pistol_eradicator | Disintegrator pistol (eradicator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_pistol_eradicator#weapon1 | Disintegrator pistol (eradicator) damage | +0 | [] | 
+ability | armory:ability:disintegrator_pistol_executioner | Disintegrator pistol (executioner) attack | +0 | [] | 
+ability | armory:ability:disintegrator_pistol_executioner#weapon1 | Disintegrator pistol (executioner) damage | +0 | [] | 
+ability | armory:ability:disintegrator_pistol_liquidator | Disintegrator pistol (liquidator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_pistol_liquidator#weapon1 | Disintegrator pistol (liquidator) damage | +0 | [] | 
+ability | armory:ability:disintegrator_rifle_decimator | Disintegrator rifle (decimator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_rifle_decimator#weapon1 | Disintegrator rifle (decimator) damage | +0 | [] | 
+ability | armory:ability:disintegrator_rifle_eradicator | Disintegrator rifle (eradicator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_rifle_eradicator#weapon1 | Disintegrator rifle (eradicator) damage | +0 | [] | 
+ability | armory:ability:disintegrator_rifle_executioner | Disintegrator rifle (executioner) attack | +0 | [] | 
+ability | armory:ability:disintegrator_rifle_executioner#weapon1 | Disintegrator rifle (executioner) damage | +0 | [] | 
+ability | armory:ability:disintegrator_rifle_liquidator | Disintegrator rifle (liquidator) attack | +0 | [] | 
+ability | armory:ability:disintegrator_rifle_liquidator#weapon1 | Disintegrator rifle (liquidator) damage | +0 | [] | 
+ability | armory:ability:divergent_laser_multiwave | Divergent laser (multiwave) attack | +0 | [] | 
+ability | armory:ability:divergent_laser_multiwave#weapon1 | Divergent laser (multiwave) damage | +0 | [] | 
+ability | armory:ability:divergent_laser_single_wave | Divergent laser (single-wave) attack | +0 | [] | 
+ability | armory:ability:divergent_laser_single_wave#weapon1 | Divergent laser (single-wave) damage | +0 | [] | 
+ability | armory:ability:divergent_laser_wide_spectrum | Divergent laser (wide-spectrum) attack | +0 | [] | 
+ability | armory:ability:divergent_laser_wide_spectrum#weapon1 | Divergent laser (wide-spectrum) damage | +0 | [] | 
+ability | core:ability:doshko_advanced | Doshko (advanced) attack | +0 | [] | 
+ability | core:ability:doshko_advanced#weapon1 | Doshko (advanced) damage | +0 | [] | 
+ability | core:ability:doshko_dimensional_blade | Doshko (dimensional blade) attack | +0 | [] | 
+ability | core:ability:doshko_dimensional_blade#weapon1 | Doshko (dimensional blade) damage | +0 | [] | 
+ability | core:ability:doshko_molecular_rift | Doshko (molecular rift) attack | +0 | [] | 
+ability | core:ability:doshko_molecular_rift#weapon1 | Doshko (molecular rift) damage | +0 | [] | 
+ability | core:ability:doshko_tactical | Doshko (tactical) attack | +0 | [] | 
+ability | core:ability:doshko_tactical#weapon1 | Doshko (tactical) damage | +0 | [] | 
+ability | core:ability:doshko_ultrathin | Doshko (ultrathin) attack | +0 | [] | 
+ability | core:ability:doshko_ultrathin#weapon1 | Doshko (ultrathin) damage | +0 | [] | 
+ability | core:ability:doshko_zero_edge | Doshko (zero-edge) attack | +0 | [] | 
+ability | core:ability:doshko_zero_edge#weapon1 | Doshko (zero-edge) damage | +0 | [] | 
+ability | armory:ability:dragon_pistol_drake | Dragon pistol (drake) attack | +0 | [] | 
+ability | armory:ability:dragon_pistol_drake#weapon1 | Dragon pistol (drake) damage | +0 | [] | 
+ability | armory:ability:dragon_pistol_true | Dragon pistol (true) attack | +0 | [] | 
+ability | armory:ability:dragon_pistol_true#weapon1 | Dragon pistol (true) damage | +0 | [] | 
+ability | armory:ability:dragon_pistol_wyrmling | Dragon pistol (wyrmling) attack | +0 | [] | 
+ability | armory:ability:dragon_pistol_wyrmling#weapon1 | Dragon pistol (wyrmling) damage | +0 | [] | 
+ability | armory:ability:dragon_pistol_wyvern | Dragon pistol (wyvern) attack | +0 | [] | 
+ability | armory:ability:dragon_pistol_wyvern#weapon1 | Dragon pistol (wyvern) damage | +0 | [] | 
+ability | armory:ability:dragon_rifle_drake | Dragon rifle (drake) attack | +0 | [] | 
+ability | armory:ability:dragon_rifle_drake#weapon1 | Dragon rifle (drake) damage | +0 | [] | 
+ability | armory:ability:dragon_rifle_true | Dragon rifle (true) attack | +0 | [] | 
+ability | armory:ability:dragon_rifle_true#weapon1 | Dragon rifle (true) damage | +0 | [] | 
+ability | armory:ability:dragon_rifle_wyrmling | Dragon rifle (wyrmling) attack | +0 | [] | 
+ability | armory:ability:dragon_rifle_wyrmling#weapon1 | Dragon rifle (wyrmling) damage | +0 | [] | 
+ability | armory:ability:dragon_rifle_wyvern | Dragon rifle (wyvern) attack | +0 | [] | 
+ability | armory:ability:dragon_rifle_wyvern#weapon1 | Dragon rifle (wyvern) damage | +0 | [] | 
+ability | alien_archive:ability:dragonglaive_basic | Dragonglaive (basic) attack | +0 | [] | 
+ability | alien_archive:ability:dragonglaive_basic#weapon1 | Dragonglaive (basic) damage | +0 | [] | 
+ability | alien_archive:ability:dragonglaive_skyshatter | Dragonglaive (skyshatter) attack | +0 | [] | 
+ability | alien_archive:ability:dragonglaive_skyshatter#weapon1 | Dragonglaive (skyshatter) damage | +0 | [] | 
+ability | alien_archive:ability:dragonglaive_stormstrike | Dragonglaive (stormstrike) attack | +0 | [] | 
+ability | alien_archive:ability:dragonglaive_stormstrike#weapon1 | Dragonglaive (stormstrike) damage | +0 | [] | 
+ability | alien_archive:ability:dragonglaive_thunderhead | Dragonglaive (thunderhead) attack | +0 | [] | 
+ability | alien_archive:ability:dragonglaive_thunderhead#weapon1 | Dragonglaive (thunderhead) damage | +0 | [] | 
+ability | alien_archive:ability:dragonglaive_wyrmlord | Dragonglaive (wyrmlord) attack | +0 | [] | 
+ability | alien_archive:ability:dragonglaive_wyrmlord#weapon1 | Dragonglaive (wyrmlord) damage | +0 | [] | 
+ability | armory:ability:dross_gun_flux | Dross gun (flux) attack | +0 | [] | 
+ability | armory:ability:dross_gun_flux#weapon1 | Dross gun (flux) damage | +0 | [] | 
+ability | armory:ability:dross_gun_scoring | Dross gun (scoring) attack | +0 | [] | 
+ability | armory:ability:dross_gun_scoring#weapon1 | Dross gun (scoring) damage | +0 | [] | 
+ability | armory:ability:dross_gun_scrapper | Dross gun (scrapper) attack | +0 | [] | 
+ability | armory:ability:dross_gun_scrapper#weapon1 | Dross gun (scrapper) damage | +0 | [] | 
+ability | alien_archive_2:ability:dueling_sword_admiral | Dueling sword (admiral) attack | +0 | [] | 
+ability | alien_archive_2:ability:dueling_sword_admiral#weapon1 | Dueling sword (admiral) damage | +0 | [] | 
+ability | core:ability:dueling_sword_buzzblade | Dueling sword (buzzblade) attack | +0 | [] | 
+ability | core:ability:dueling_sword_buzzblade#weapon1 | Dueling sword (buzzblade) damage | +0 | [] | 
+ability | alien_archive_2:ability:dueling_sword_converted | Dueling sword (converted) attack | +0 | [] | 
+ability | alien_archive_2:ability:dueling_sword_converted#weapon1 | Dueling sword (converted) damage | +0 | [] | 
+ability | core:ability:dueling_sword_molecular_rift | Dueling sword (molecular rift) attack | +0 | [] | 
+ability | core:ability:dueling_sword_molecular_rift#weapon1 | Dueling sword (molecular rift) damage | +0 | [] | 
+ability | alien_archive_2:ability:dueling_sword_officer | Dueling sword (officer) attack | +0 | [] | 
+ability | alien_archive_2:ability:dueling_sword_officer#weapon1 | Dueling sword (officer) damage | +0 | [] | 
+ability | core:ability:dueling_sword_ripper | Dueling sword (ripper) attack | +0 | [] | 
+ability | core:ability:dueling_sword_ripper#weapon1 | Dueling sword (ripper) damage | +0 | [] | 
+ability | core:ability:dueling_sword_tactical | Dueling sword (tactical) attack | +0 | [] | 
+ability | core:ability:dueling_sword_tactical#weapon1 | Dueling sword (tactical) damage | +0 | [] | 
+ability | core:ability:dueling_sword_ultrathin | Dueling sword (ultrathin) attack | +0 | [] | 
+ability | core:ability:dueling_sword_ultrathin#weapon1 | Dueling sword (ultrathin) damage | +0 | [] | 
+ability | armory:ability:electroflail_advanced | Electroflail (advanced) attack | +0 | [] | 
+ability | armory:ability:electroflail_advanced#weapon1 | Electroflail (advanced) damage | +0 | [] | 
+ability | armory:ability:electroflail_elite | Electroflail (elite) attack | +0 | [] | 
+ability | armory:ability:electroflail_elite#weapon1 | Electroflail (elite) damage | +0 | [] | 
+ability | armory:ability:electroflail_paragon | Electroflail (paragon) attack | +0 | [] | 
+ability | armory:ability:electroflail_paragon#weapon1 | Electroflail (paragon) damage | +0 | [] | 
+ability | armory:ability:electroflail_tactical | Electroflail (tactical) attack | +0 | [] | 
+ability | armory:ability:electroflail_tactical#weapon1 | Electroflail (tactical) damage | +0 | [] | 
+ability | alien_archive:ability:electrovore_glove_aurora | Electrovore glove (aurora) attack | +0 | [] | 
+ability | alien_archive:ability:electrovore_glove_aurora#weapon1 | Electrovore glove (aurora) damage | +0 | [] | 
+ability | alien_archive:ability:electrovore_glove_static | Electrovore glove (static) attack | +0 | [] | 
+ability | alien_archive:ability:electrovore_glove_static#weapon1 | Electrovore glove (static) damage | +0 | [] | 
+ability | alien_archive:ability:electrovore_glove_storm | Electrovore glove (storm) attack | +0 | [] | 
+ability | alien_archive:ability:electrovore_glove_storm#weapon1 | Electrovore glove (storm) damage | +0 | [] | 
+ability | alien_archive:ability:electrovore_glove_tempest | Electrovore glove (tempest) attack | +0 | [] | 
+ability | alien_archive:ability:electrovore_glove_tempest#weapon1 | Electrovore glove (tempest) damage | +0 | [] | 
+ability | armory:ability:energy_converter_advanced | Energy converter (advanced) attack | +0 | [] | 
+ability | armory:ability:energy_converter_advanced#weapon1 | Energy converter (advanced) damage | +0 | [] | 
+ability | armory:ability:energy_converter_elite | Energy converter (elite) attack | +0 | [] | 
+ability | armory:ability:energy_converter_elite#weapon1 | Energy converter (elite) damage | +0 | [] | 
+ability | armory:ability:energy_converter_tactical | Energy converter (tactical) attack | +0 | [] | 
+ability | armory:ability:energy_converter_tactical#weapon1 | Energy converter (tactical) damage | +0 | [] | 
+ability | character_operations_manual:ability:entropic_strike | Entropic Strike attack | +0 | [] | 
+ability | character_operations_manual:ability:entropic_strike#weapon1 | Entropic Strike damage | +0 | [] | 
+ability | alien_archive:ability:eoxian_wrackstaff | Eoxian Wrackstaff | +0 | [] | 
+ability | armory:ability:excavation_laser_heavy | Excavation laser (heavy) attack | +0 | [] | 
+ability | armory:ability:excavation_laser_heavy#weapon1 | Excavation laser (heavy) damage | +0 | [] | 
+ability | armory:ability:excavation_laser_light | Excavation laser (light) attack | +0 | [] | 
+ability | armory:ability:excavation_laser_light#weapon1 | Excavation laser (light) damage | +0 | [] | 
+ability | armory:ability:excavation_laser_medium | Excavation laser (medium) attack | +0 | [] | 
+ability | armory:ability:excavation_laser_medium#weapon1 | Excavation laser (medium) damage | +0 | [] | 
+ability | core:ability:fangblade | Fangblade attack | +0 | [] | 
+ability | core:ability:fangblade#weapon1 | Fangblade damage | +0 | [] | 
+ability | core:ability:flame_doshko_blaze | Flame doshko (blaze) attack | +0 | [] | 
+ability | core:ability:flame_doshko_blaze#weapon1 | Flame doshko (blaze) damage | +0 | [] | 
+ability | core:ability:flame_doshko_ember | Flame doshko (ember) attack | +0 | [] | 
+ability | core:ability:flame_doshko_ember#weapon1 | Flame doshko (ember) damage | +0 | [] | 
+ability | core:ability:flame_doshko_inferno | Flame doshko (inferno) attack | +0 | [] | 
+ability | core:ability:flame_doshko_inferno#weapon1 | Flame doshko (inferno) damage | +0 | [] | 
+ability | core:ability:flame_doshko_solar_flare | Flame doshko (solar flare) attack | +0 | [] | 
+ability | core:ability:flame_doshko_solar_flare#weapon1 | Flame doshko (solar flare) damage | +0 | [] | 
+ability | armory:ability:flame_launcher_fireball | Flame launcher (fireball) attack | +0 | [] | 
+ability | armory:ability:flame_launcher_fireball#weapon1 | Flame launcher (fireball) damage | +0 | [] | 
+ability | armory:ability:flame_launcher_immolation | Flame launcher (immolation) attack | +0 | [] | 
+ability | armory:ability:flame_launcher_immolation#weapon1 | Flame launcher (immolation) damage | +0 | [] | 
+ability | armory:ability:flame_launcher_supernova | Flame launcher (supernova) attack | +0 | [] | 
+ability | armory:ability:flame_launcher_supernova#weapon1 | Flame launcher (supernova) damage | +0 | [] | 
+ability | armory:ability:flame_pistol_blaze | Flame pistol (blaze) attack | +0 | [] | 
+ability | armory:ability:flame_pistol_blaze#weapon1 | Flame pistol (blaze) damage | +0 | [] | 
+ability | armory:ability:flame_pistol_inferno | Flame pistol (inferno) attack | +0 | [] | 
+ability | armory:ability:flame_pistol_inferno#weapon1 | Flame pistol (inferno) damage | +0 | [] | 
+ability | armory:ability:flame_pistol_solar_flare | Flame pistol (solar flare) attack | +0 | [] | 
+ability | armory:ability:flame_pistol_solar_flare#weapon1 | Flame pistol (solar flare) damage | +0 | [] | 
+ability | core:ability:flame_pistol | Flame pistol attack | +0 | [] | 
+ability | core:ability:flame_pistol#weapon1 | Flame pistol damage | +0 | [] | 
+ability | core:ability:flame_rifle | Flame rifle attack | +0 | [] | 
+ability | core:ability:flame_rifle#weapon1 | Flame rifle damage | +0 | [] | 
+ability | armory:ability:flame_spinner_fireball | Flame spinner (fireball) attack | +0 | [] | 
+ability | armory:ability:flame_spinner_fireball#weapon1 | Flame spinner (fireball) damage | +0 | [] | 
+ability | armory:ability:flame_spinner_fission | Flame spinner (fission) attack | +0 | [] | 
+ability | armory:ability:flame_spinner_fission#weapon1 | Flame spinner (fission) damage | +0 | [] | 
+ability | armory:ability:flame_spinner_immolation | Flame spinner (immolation) attack | +0 | [] | 
+ability | armory:ability:flame_spinner_immolation#weapon1 | Flame spinner (immolation) damage | +0 | [] | 
+ability | armory:ability:flame_spinner_supernova | Flame spinner (supernova) attack | +0 | [] | 
+ability | armory:ability:flame_spinner_supernova#weapon1 | Flame spinner (supernova) damage | +0 | [] | 
+ability | core:ability:flamethrower_firedrake_class | Flamethrower (firedrake-class) attack | +0 | [] | 
+ability | core:ability:flamethrower_firedrake_class#weapon1 | Flamethrower (firedrake-class) damage | +0 | [] | 
+ability | core:ability:flamethrower_hellhound_class | Flamethrower (hellhound-class) attack | +0 | [] | 
+ability | core:ability:flamethrower_hellhound_class#weapon1 | Flamethrower (hellhound-class) damage | +0 | [] | 
+ability | core:ability:flamethrower_ifrit_class | Flamethrower (ifrit-class) attack | +0 | [] | 
+ability | core:ability:flamethrower_ifrit_class#weapon1 | Flamethrower (ifrit-class) damage | +0 | [] | 
+ability | core:ability:flamethrower_phoenix_class | Flamethrower (phoenix-class) attack | +0 | [] | 
+ability | core:ability:flamethrower_phoenix_class#weapon1 | Flamethrower (phoenix-class) damage | +0 | [] | 
+ability | core:ability:flamethrower_salamander_class | Flamethrower (salamander-class) attack | +0 | [] | 
+ability | core:ability:flamethrower_salamander_class#weapon1 | Flamethrower (salamander-class) damage | +0 | [] | 
+ability | armory:ability:flare_axe_blue_star | Flare axe (blue star) attack | +0 | [] | 
+ability | armory:ability:flare_axe_blue_star#weapon1 | Flare axe (blue star) damage | +0 | [] | 
+ability | armory:ability:flare_axe_red_star | Flare axe (red star) attack | +0 | [] | 
+ability | armory:ability:flare_axe_red_star#weapon1 | Flare axe (red star) damage | +0 | [] | 
+ability | armory:ability:flare_axe_white_star | Flare axe (white star) attack | +0 | [] | 
+ability | armory:ability:flare_axe_white_star#weapon1 | Flare axe (white star) damage | +0 | [] | 
+ability | armory:ability:flare_axe_yellow_star | Flare axe (yellow star) attack | +0 | [] | 
+ability | armory:ability:flare_axe_yellow_star#weapon1 | Flare axe (yellow star) damage | +0 | [] | 
+ability | core:ability:flare_gun_survival | Flare gun (survival) attack | +0 | [] | 
+ability | core:ability:flare_gun_survival#weapon1 | Flare gun (survival) damage | +0 | [] | 
+ability | armory:ability:flare_rifle_coruscator | Flare rifle (coruscator) attack | +0 | [] | 
+ability | armory:ability:flare_rifle_coruscator#weapon1 | Flare rifle (coruscator) damage | +0 | [] | 
+ability | armory:ability:flare_rifle_dazzler | Flare rifle (dazzler) attack | +0 | [] | 
+ability | armory:ability:flare_rifle_dazzler#weapon1 | Flare rifle (dazzler) damage | +0 | [] | 
+ability | armory:ability:flare_rifle_nova | Flare rifle (nova) attack | +0 | [] | 
+ability | armory:ability:flare_rifle_nova#weapon1 | Flare rifle (nova) damage | +0 | [] | 
+ability | armory:ability:flare_rifle_scorcher | Flare rifle (scorcher) attack | +0 | [] | 
+ability | armory:ability:flare_rifle_scorcher#weapon1 | Flare rifle (scorcher) damage | +0 | [] | 
+ability | armory:ability:flare_rifle_vivifier | Flare rifle (vivifier) attack | +0 | [] | 
+ability | armory:ability:flare_rifle_vivifier#weapon1 | Flare rifle (vivifier) damage | +0 | [] | 
+ability | armory:ability:focus_rifle_compound | Focus rifle (compound) attack | +0 | [] | 
+ability | armory:ability:focus_rifle_compound#weapon1 | Focus rifle (compound) damage | +0 | [] | 
+ability | armory:ability:focus_rifle_dual | Focus rifle (dual) attack | +0 | [] | 
+ability | armory:ability:focus_rifle_dual#weapon1 | Focus rifle (dual) damage | +0 | [] | 
+ability | armory:ability:focus_rifle_quad | Focus rifle (quad) attack | +0 | [] | 
+ability | armory:ability:focus_rifle_quad#weapon1 | Focus rifle (quad) damage | +0 | [] | 
+ability | armory:ability:focus_rifle_triple | Focus rifle (triple) attack | +0 | [] | 
+ability | armory:ability:focus_rifle_triple#weapon1 | Focus rifle (triple) damage | +0 | [] | 
+ability | armory:ability:forked_pistol_10_notch | Forked pistol (10-notch) attack | +0 | [] | 
+ability | armory:ability:forked_pistol_10_notch#weapon1 | Forked pistol (10-notch) damage | +0 | [] | 
+ability | armory:ability:forked_pistol_6_notch | Forked pistol (6-notch) attack | +0 | [] | 
+ability | armory:ability:forked_pistol_6_notch#weapon1 | Forked pistol (6-notch) damage | +0 | [] | 
+ability | armory:ability:forked_pistol_8_notch | Forked pistol (8-notch) attack | +0 | [] | 
+ability | armory:ability:forked_pistol_8_notch#weapon1 | Forked pistol (8-notch) damage | +0 | [] | 
+ability | armory:ability:forked_pistol_9_notch | Forked pistol (9-notch) attack | +0 | [] | 
+ability | armory:ability:forked_pistol_9_notch#weapon1 | Forked pistol (9-notch) damage | +0 | [] | 
+ability | armory:ability:freeze_ray_algid | Freeze ray (algid) attack | +0 | [] | 
+ability | armory:ability:freeze_ray_algid#weapon1 | Freeze ray (algid) damage | +0 | [] | 
+ability | armory:ability:freeze_ray_glacial | Freeze ray (glacial) attack | +0 | [] | 
+ability | armory:ability:freeze_ray_glacial#weapon1 | Freeze ray (glacial) damage | +0 | [] | 
+ability | armory:ability:freeze_ray_hiemal | Freeze ray (hiemal) attack | +0 | [] | 
+ability | armory:ability:freeze_ray_hiemal#weapon1 | Freeze ray (hiemal) damage | +0 | [] | 
+ability | armory:ability:freeze_ray_hypothermic | Freeze ray (hypothermic) attack | +0 | [] | 
+ability | armory:ability:freeze_ray_hypothermic#weapon1 | Freeze ray (hypothermic) damage | +0 | [] | 
+ability | armory:ability:freeze_ray_isothermal | Freeze ray (isothermal) attack | +0 | [] | 
+ability | armory:ability:freeze_ray_isothermal#weapon1 | Freeze ray (isothermal) damage | +0 | [] | 
+ability | armory:ability:frost_maul_aufeis | Frost maul (aufeis) attack | +0 | [] | 
+ability | armory:ability:frost_maul_aufeis#weapon1 | Frost maul (aufeis) damage | +0 | [] | 
+ability | armory:ability:frost_maul_floe | Frost maul (floe) attack | +0 | [] | 
+ability | armory:ability:frost_maul_floe#weapon1 | Frost maul (floe) damage | +0 | [] | 
+ability | armory:ability:frost_maul_glacier | Frost maul (glacier) attack | +0 | [] | 
+ability | armory:ability:frost_maul_glacier#weapon1 | Frost maul (glacier) damage | +0 | [] | 
+ability | armory:ability:frost_maul_iceberg | Frost maul (iceberg) attack | +0 | [] | 
+ability | armory:ability:frost_maul_iceberg#weapon1 | Frost maul (iceberg) damage | +0 | [] | 
+ability | armory:ability:frost_projector_blizzard_class | Frost projector (blizzard-class) attack | +0 | [] | 
+ability | armory:ability:frost_projector_blizzard_class#weapon1 | Frost projector (blizzard-class) damage | +0 | [] | 
+ability | armory:ability:frost_projector_frostbite_class | Frost projector (frostbite-class) attack | +0 | [] | 
+ability | armory:ability:frost_projector_frostbite_class#weapon1 | Frost projector (frostbite-class) damage | +0 | [] | 
+ability | armory:ability:frost_projector_hailstorm_class | Frost projector (hailstorm-class) attack | +0 | [] | 
+ability | armory:ability:frost_projector_hailstorm_class#weapon1 | Frost projector (hailstorm-class) damage | +0 | [] | 
+ability | armory:ability:gale_baton_cyclone | Gale baton (cyclone) attack | +0 | [] | 
+ability | armory:ability:gale_baton_cyclone#weapon1 | Gale baton (cyclone) damage | +0 | [] | 
+ability | armory:ability:gale_baton_hurricane | Gale baton (hurricane) attack | +0 | [] | 
+ability | armory:ability:gale_baton_hurricane#weapon1 | Gale baton (hurricane) damage | +0 | [] | 
+ability | armory:ability:gale_baton_tempest | Gale baton (tempest) attack | +0 | [] | 
+ability | armory:ability:gale_baton_tempest#weapon1 | Gale baton (tempest) damage | +0 | [] | 
+ability | armory:ability:gamma_rifle_fusion | Gamma rifle (fusion) attack | +0 | [] | 
+ability | armory:ability:gamma_rifle_fusion#weapon1 | Gamma rifle (fusion) damage | +0 | [] | 
+ability | armory:ability:gamma_rifle_ionizing | Gamma rifle (ionizing) attack | +0 | [] | 
+ability | armory:ability:gamma_rifle_ionizing#weapon1 | Gamma rifle (ionizing) damage | +0 | [] | 
+ability | armory:ability:gamma_rifle_synchrotron | Gamma rifle (synchrotron) attack | +0 | [] | 
+ability | armory:ability:gamma_rifle_synchrotron#weapon1 | Gamma rifle (synchrotron) damage | +0 | [] | 
+ability | armory:ability:gamma_rifle_terrestrial | Gamma rifle (terrestrial) attack | +0 | [] | 
+ability | armory:ability:gamma_rifle_terrestrial#weapon1 | Gamma rifle (terrestrial) damage | +0 | [] | 
+ability | armory:ability:garrote_microfilament | Garrote (microfilament) attack | +0 | [] | 
+ability | armory:ability:garrote_microfilament#weapon1 | Garrote (microfilament) damage | +0 | [] | 
+ability | armory:ability:garrote_monowire | Garrote (monowire) attack | +0 | [] | 
+ability | armory:ability:garrote_monowire#weapon1 | Garrote (monowire) damage | +0 | [] | 
+ability | armory:ability:garrote_nanofiber | Garrote (nanofiber) attack | +0 | [] | 
+ability | armory:ability:garrote_nanofiber#weapon1 | Garrote (nanofiber) damage | +0 | [] | 
+ability | armory:ability:garrote_wire | Garrote (wire) attack | +0 | [] | 
+ability | armory:ability:garrote_wire#weapon1 | Garrote (wire) damage | +0 | [] | 
+ability | core:ability:soldier_class_feature_gear_boost | Gear Boost | +1 | [] | At 3rd level and every 4 levels thereafter, you learn a trick called a gear boost that make you better with a particular type of weapon or armor. Choose from the gear boosts listed below. Some gear boosts require you to reach a certain soldier level to select them; this level is indicated in parentheses after the boost's name.
+ability | armory:ability:glass_blade_impulse | Glass blade (impulse) attack | +0 | [] | 
+ability | armory:ability:glass_blade_impulse#weapon1 | Glass blade (impulse) damage | +0 | [] | 
+ability | armory:ability:glass_blade_jolt | Glass blade (jolt) attack | +0 | [] | 
+ability | armory:ability:glass_blade_jolt#weapon1 | Glass blade (jolt) damage | +0 | [] | 
+ability | armory:ability:glass_blade_live | Glass blade (live) attack | +0 | [] | 
+ability | armory:ability:glass_blade_live#weapon1 | Glass blade (live) damage | +0 | [] | 
+ability | armory:ability:glass_blade_surge | Glass blade (surge) attack | +0 | [] | 
+ability | armory:ability:glass_blade_surge#weapon1 | Glass blade (surge) damage | +0 | [] | 
+ability | armory:ability:graviton_pistol_chiral | Graviton pistol (chiral) attack | +0 | [] | 
+ability | armory:ability:graviton_pistol_chiral#weapon1 | Graviton pistol (chiral) damage | +0 | [] | 
+ability | armory:ability:graviton_pistol_linear | Graviton pistol (linear) attack | +0 | [] | 
+ability | armory:ability:graviton_pistol_linear#weapon1 | Graviton pistol (linear) damage | +0 | [] | 
+ability | armory:ability:graviton_pistol_tensor | Graviton pistol (tensor) attack | +0 | [] | 
+ability | armory:ability:graviton_pistol_tensor#weapon1 | Graviton pistol (tensor) damage | +0 | [] | 
+ability | armory:ability:graviton_pistol_vector | Graviton pistol (vector) attack | +0 | [] | 
+ability | armory:ability:graviton_pistol_vector#weapon1 | Graviton pistol (vector) damage | +0 | [] | 
+ability | armory:ability:greataxe_molecular_rift | Greataxe (molecular-rift) attack | +0 | [] | 
+ability | armory:ability:greataxe_molecular_rift#weapon1 | Greataxe (molecular-rift) damage | +0 | [] | 
+ability | armory:ability:greataxe_sintered | Greataxe (sintered) attack | +0 | [] | 
+ability | armory:ability:greataxe_sintered#weapon1 | Greataxe (sintered) damage | +0 | [] | 
+ability | armory:ability:greataxe_tactical | Greataxe (tactical) attack | +0 | [] | 
+ability | armory:ability:greataxe_tactical#weapon1 | Greataxe (tactical) damage | +0 | [] | 
+ability | armory:ability:greataxe_ultrathin | Greataxe (ultrathin) attack | +0 | [] | 
+ability | armory:ability:greataxe_ultrathin#weapon1 | Greataxe (ultrathin) damage | +0 | [] | 
+ability | core:ability:grenades | Grenades attack | +0 | [] | 
+ability | core:ability:grenades#weapon1 | Grenades damage | +0 | [] | 
+ability | core:ability:grindblade | Grindblade attack | +0 | [] | 
+ability | core:ability:grindblade#weapon1 | Grindblade damage | +0 | [] | 
+ability | armory:ability:gulchgun | Gulchgun attack | +0 | [] | 
+ability | armory:ability:gulchgun#weapon1 | Gulchgun damage | +0 | [] | 
+ability | core:ability:gyrojet_pistol_advanced | Gyrojet pistol (advanced) attack | +0 | [] | 
+ability | core:ability:gyrojet_pistol_advanced#weapon1 | Gyrojet pistol (advanced) damage | +0 | [] | 
+ability | core:ability:gyrojet_pistol_elite | Gyrojet pistol (elite) attack | +0 | [] | 
+ability | core:ability:gyrojet_pistol_elite#weapon1 | Gyrojet pistol (elite) damage | +0 | [] | 
+ability | core:ability:gyrojet_pistol_tactical | Gyrojet pistol (tactical) attack | +0 | [] | 
+ability | core:ability:gyrojet_pistol_tactical#weapon1 | Gyrojet pistol (tactical) damage | +0 | [] | 
+ability | core:ability:gyrojet_rifle_advanced | Gyrojet rifle (advanced) attack | +0 | [] | 
+ability | core:ability:gyrojet_rifle_advanced#weapon1 | Gyrojet rifle (advanced) damage | +0 | [] | 
+ability | core:ability:gyrojet_rifle_elite | Gyrojet rifle (elite) attack | +0 | [] | 
+ability | core:ability:gyrojet_rifle_elite#weapon1 | Gyrojet rifle (elite) damage | +0 | [] | 
+ability | core:ability:gyrojet_rifle_paragon | Gyrojet rifle (paragon) attack | +0 | [] | 
+ability | core:ability:gyrojet_rifle_paragon#weapon1 | Gyrojet rifle (paragon) damage | +0 | [] | 
+ability | core:ability:gyrojet_rifle_tactical | Gyrojet rifle (tactical) attack | +0 | [] | 
+ability | core:ability:gyrojet_rifle_tactical#weapon1 | Gyrojet rifle (tactical) damage | +0 | [] | 
+ability | armory:ability:hail_pistol_absolute_zero | Hail pistol (absolute-zero) attack | +0 | [] | 
+ability | armory:ability:hail_pistol_absolute_zero#weapon1 | Hail pistol (absolute-zero) damage | +0 | [] | 
+ability | armory:ability:hail_pistol_gelid | Hail pistol (gelid) attack | +0 | [] | 
+ability | armory:ability:hail_pistol_gelid#weapon1 | Hail pistol (gelid) damage | +0 | [] | 
+ability | armory:ability:hail_pistol_subzero | Hail pistol (subzero) attack | +0 | [] | 
+ability | armory:ability:hail_pistol_subzero#weapon1 | Hail pistol (subzero) damage | +0 | [] | 
+ability | armory:ability:hail_pistol_ultracold | Hail pistol (ultracold) attack | +0 | [] | 
+ability | armory:ability:hail_pistol_ultracold#weapon1 | Hail pistol (ultracold) damage | +0 | [] | 
+ability | armory:ability:hailcannon_absolute_zero | Hailcannon (absolute-zero) attack | +0 | [] | 
+ability | armory:ability:hailcannon_absolute_zero#weapon1 | Hailcannon (absolute-zero) damage | +0 | [] | 
+ability | armory:ability:hailcannon_clathrate | Hailcannon (clathrate) attack | +0 | [] | 
+ability | armory:ability:hailcannon_clathrate#weapon1 | Hailcannon (clathrate) damage | +0 | [] | 
+ability | armory:ability:hailcannon_gelid | Hailcannon (gelid) attack | +0 | [] | 
+ability | armory:ability:hailcannon_gelid#weapon1 | Hailcannon (gelid) damage | +0 | [] | 
+ability | armory:ability:hailcannon_subzero | Hailcannon (subzero) attack | +0 | [] | 
+ability | armory:ability:hailcannon_subzero#weapon1 | Hailcannon (subzero) damage | +0 | [] | 
+ability | armory:ability:hailcannon_ultracold | Hailcannon (ultracold) attack | +0 | [] | 
+ability | armory:ability:hailcannon_ultracold#weapon1 | Hailcannon (ultracold) damage | +0 | [] | 
+ability | core:ability:hammer_assault | Hammer (assault) attack | +0 | [] | 
+ability | core:ability:hammer_assault#weapon1 | Hammer (assault) damage | +0 | [] | 
+ability | core:ability:hammer_comet | Hammer (comet) attack | +0 | [] | 
+ability | core:ability:hammer_comet#weapon1 | Hammer (comet) damage | +0 | [] | 
+ability | core:ability:hammer_gravity_well | Hammer (gravity well) attack | +0 | [] | 
+ability | core:ability:hammer_gravity_well#weapon1 | Hammer (gravity well) damage | +0 | [] | 
+ability | core:ability:hammer_meteoric | Hammer (meteoric) attack | +0 | [] | 
+ability | core:ability:hammer_meteoric#weapon1 | Hammer (meteoric) damage | +0 | [] | 
+ability | armory:ability:handaxe_basic | Handaxe (basic) attack | +0 | [] | 
+ability | armory:ability:handaxe_basic#weapon1 | Handaxe (basic) damage | +0 | [] | 
+ability | armory:ability:handaxe_molecular_rift | Handaxe (molecular-rift) attack | +0 | [] | 
+ability | armory:ability:handaxe_molecular_rift#weapon1 | Handaxe (molecular-rift) damage | +0 | [] | 
+ability | armory:ability:handaxe_sintered | Handaxe (sintered) attack | +0 | [] | 
+ability | armory:ability:handaxe_sintered#weapon1 | Handaxe (sintered) damage | +0 | [] | 
+ability | armory:ability:handaxe_tactical | Handaxe (tactical) attack | +0 | [] | 
+ability | armory:ability:handaxe_tactical#weapon1 | Handaxe (tactical) damage | +0 | [] | 
+ability | armory:ability:handaxe_ultrathin | Handaxe (ultrathin) attack | +0 | [] | 
+ability | armory:ability:handaxe_ultrathin#weapon1 | Handaxe (ultrathin) damage | +0 | [] | 
+ability | armory:ability:handcannon_bombast | Handcannon (bombast) attack | +0 | [] | 
+ability | armory:ability:handcannon_bombast#weapon1 | Handcannon (bombast) damage | +0 | [] | 
+ability | armory:ability:handcannon_braggadocio | Handcannon (braggadocio) attack | +0 | [] | 
+ability | armory:ability:handcannon_braggadocio#weapon1 | Handcannon (braggadocio) damage | +0 | [] | 
+ability | armory:ability:handcannon_bravado | Handcannon (bravado) attack | +0 | [] | 
+ability | armory:ability:handcannon_bravado#weapon1 | Handcannon (bravado) damage | +0 | [] | 
+ability | armory:ability:handcannon_gasconade | Handcannon (gasconade) attack | +0 | [] | 
+ability | armory:ability:handcannon_gasconade#weapon1 | Handcannon (gasconade) damage | +0 | [] | 
+ability | armory:ability:handcannon_swagger | Handcannon (swagger) attack | +0 | [] | 
+ability | armory:ability:handcannon_swagger#weapon1 | Handcannon (swagger) damage | +0 | [] | 
+ability | armory:ability:handcoil_capital | Handcoil (capital) attack | +0 | [] | 
+ability | armory:ability:handcoil_capital#weapon1 | Handcoil (capital) damage | +0 | [] | 
+ability | armory:ability:handcoil_explorer | Handcoil (explorer) attack | +0 | [] | 
+ability | armory:ability:handcoil_explorer#weapon1 | Handcoil (explorer) damage | +0 | [] | 
+ability | armory:ability:handcoil_fighter | Handcoil (fighter) attack | +0 | [] | 
+ability | armory:ability:handcoil_fighter#weapon1 | Handcoil (fighter) damage | +0 | [] | 
+ability | armory:ability:handcoil_pilot | Handcoil (pilot) attack | +0 | [] | 
+ability | armory:ability:handcoil_pilot#weapon1 | Handcoil (pilot) damage | +0 | [] | 
+ability | alien_archive_2:ability:heat_amp_gauntlet_mk1 | Heat-amp gauntlet (mk1) attack | +0 | [] | 
+ability | alien_archive_2:ability:heat_amp_gauntlet_mk1#weapon1 | Heat-amp gauntlet (mk1) damage | +0 | [] | 
+ability | alien_archive_2:ability:heat_amp_gauntlet_mk2 | Heat-amp gauntlet (mk2) attack | +0 | [] | 
+ability | alien_archive_2:ability:heat_amp_gauntlet_mk2#weapon1 | Heat-amp gauntlet (mk2) damage | +0 | [] | 
+ability | alien_archive_2:ability:heat_amp_gauntlet_mk3 | Heat-amp gauntlet (mk3) attack | +0 | [] | 
+ability | alien_archive_2:ability:heat_amp_gauntlet_mk3#weapon1 | Heat-amp gauntlet (mk3) damage | +0 | [] | 
+ability | alien_archive_2:ability:heat_amp_gauntlet_mk4 | Heat-amp gauntlet (mk4) attack | +0 | [] | 
+ability | alien_archive_2:ability:heat_amp_gauntlet_mk4#weapon1 | Heat-amp gauntlet (mk4) damage | +0 | [] | 
+ability | armory:ability:hook_knife | Hook knife attack | +0 | [] | 
+ability | armory:ability:hook_knife#weapon1 | Hook knife damage | +0 | [] | 
+ability | armory:ability:hook_sword | Hook sword attack | +0 | [] | 
+ability | armory:ability:hook_sword#weapon1 | Hook sword damage | +0 | [] | 
+ability | core:ability:human | Human | +1 | [] | 
+ability | core:ability:hunting_rifle | Hunting rifle attack | +0 | [] | 
+ability | core:ability:hunting_rifle#weapon1 | Hunting rifle damage | +0 | [] | 
+ability | armory:ability:hydra_cannon_asp_series | Hydra cannon (asp-series) attack | +0 | [] | 
+ability | armory:ability:hydra_cannon_asp_series#weapon1 | Hydra cannon (asp-series) damage | +0 | [] | 
+ability | armory:ability:hydra_cannon_cobra_series | Hydra cannon (cobra-series) attack | +0 | [] | 
+ability | armory:ability:hydra_cannon_cobra_series#weapon1 | Hydra cannon (cobra-series) damage | +0 | [] | 
+ability | armory:ability:hydra_cannon_python_series | Hydra cannon (python-series) attack | +0 | [] | 
+ability | armory:ability:hydra_cannon_python_series#weapon1 | Hydra cannon (python-series) damage | +0 | [] | 
+ability | armory:ability:hydra_cannon_viper_series | Hydra cannon (viper-series) attack | +0 | [] | 
+ability | armory:ability:hydra_cannon_viper_series#weapon1 | Hydra cannon (viper-series) damage | +0 | [] | 
+ability | core:ability:imds_missile_launcher | IMDS missile launcher attack | +0 | [] | 
+ability | core:ability:imds_missile_launcher#weapon1 | IMDS missile launcher damage | +0 | [] | 
+ability | armory:ability:ice_carbine_absolute_zero | Ice carbine (absolute-zero) attack | +0 | [] | 
+ability | armory:ability:ice_carbine_absolute_zero#weapon1 | Ice carbine (absolute-zero) damage | +0 | [] | 
+ability | armory:ability:ice_carbine_gelid | Ice carbine (gelid) attack | +0 | [] | 
+ability | armory:ability:ice_carbine_gelid#weapon1 | Ice carbine (gelid) damage | +0 | [] | 
+ability | armory:ability:ice_carbine_subzero | Ice carbine (subzero) attack | +0 | [] | 
+ability | armory:ability:ice_carbine_subzero#weapon1 | Ice carbine (subzero) damage | +0 | [] | 
+ability | armory:ability:ice_carbine_ultracold | Ice carbine (ultracold) attack | +0 | [] | 
+ability | armory:ability:ice_carbine_ultracold#weapon1 | Ice carbine (ultracold) damage | +0 | [] | 
+ability | armory:ability:ice_launcher_aufeis | Ice launcher (aufeis) attack | +0 | [] | 
+ability | armory:ability:ice_launcher_aufeis#weapon1 | Ice launcher (aufeis) damage | +0 | [] | 
+ability | armory:ability:ice_launcher_floe | Ice launcher (floe) attack | +0 | [] | 
+ability | armory:ability:ice_launcher_floe#weapon1 | Ice launcher (floe) damage | +0 | [] | 
+ability | armory:ability:ice_launcher_glacier | Ice launcher (glacier) attack | +0 | [] | 
+ability | armory:ability:ice_launcher_glacier#weapon1 | Ice launcher (glacier) damage | +0 | [] | 
+ability | armory:ability:ice_launcher_iceberg | Ice launcher (iceberg) attack | +0 | [] | 
+ability | armory:ability:ice_launcher_iceberg#weapon1 | Ice launcher (iceberg) damage | +0 | [] | 
+ability | armory:ability:ice_launcher_icecap | Ice launcher (icecap) attack | +0 | [] | 
+ability | armory:ability:ice_launcher_icecap#weapon1 | Ice launcher (icecap) damage | +0 | [] | 
+ability | armory:ability:ice_needle_artifice | Ice needle (artifice) attack | +0 | [] | 
+ability | armory:ability:ice_needle_artifice#weapon1 | Ice needle (artifice) damage | +0 | [] | 
+ability | armory:ability:ice_needle_espionage | Ice needle (espionage) attack | +0 | [] | 
+ability | armory:ability:ice_needle_espionage#weapon1 | Ice needle (espionage) damage | +0 | [] | 
+ability | armory:ability:ice_needle_furtive | Ice needle (furtive) attack | +0 | [] | 
+ability | armory:ability:ice_needle_furtive#weapon1 | Ice needle (furtive) damage | +0 | [] | 
+ability | armory:ability:ice_needle_subterfuge | Ice needle (subterfuge) attack | +0 | [] | 
+ability | armory:ability:ice_needle_subterfuge#weapon1 | Ice needle (subterfuge) damage | +0 | [] | 
+ability | armory:ability:ice_needle_undercover | Ice needle (undercover) attack | +0 | [] | 
+ability | armory:ability:ice_needle_undercover#weapon1 | Ice needle (undercover) damage | +0 | [] | 
+ability | armory:ability:icestar_staff_defender | Icestar staff (defender) attack | +0 | [] | 
+ability | armory:ability:icestar_staff_defender#weapon1 | Icestar staff (defender) damage | +0 | [] | 
+ability | armory:ability:icestar_staff_drifter | Icestar staff (drifter) attack | +0 | [] | 
+ability | armory:ability:icestar_staff_drifter#weapon1 | Icestar staff (drifter) damage | +0 | [] | 
+ability | armory:ability:icestar_staff_leader | Icestar staff (leader) attack | +0 | [] | 
+ability | armory:ability:icestar_staff_leader#weapon1 | Icestar staff (leader) damage | +0 | [] | 
+ability | armory:ability:icestar_staff_seeker | Icestar staff (seeker) attack | +0 | [] | 
+ability | armory:ability:icestar_staff_seeker#weapon1 | Icestar staff (seeker) damage | +0 | [] | 
+ability | armory:ability:icestar_staff_warrior | Icestar staff (warrior) attack | +0 | [] | 
+ability | armory:ability:icestar_staff_warrior#weapon1 | Icestar staff (warrior) damage | +0 | [] | 
+ability | armory:ability:igniter_blaze | Igniter (blaze) attack | +0 | [] | 
+ability | armory:ability:igniter_blaze#weapon1 | Igniter (blaze) damage | +0 | [] | 
+ability | armory:ability:igniter_ember | Igniter (ember) attack | +0 | [] | 
+ability | armory:ability:igniter_ember#weapon1 | Igniter (ember) damage | +0 | [] | 
+ability | armory:ability:igniter_inferno | Igniter (inferno) attack | +0 | [] | 
+ability | armory:ability:igniter_inferno#weapon1 | Igniter (inferno) damage | +0 | [] | 
+ability | armory:ability:igniter_solar_flare | Igniter (solar flare) attack | +0 | [] | 
+ability | armory:ability:igniter_solar_flare#weapon1 | Igniter (solar flare) damage | +0 | [] | 
+ability | core:ability:incapacitator | Incapacitator attack | +0 | [] | 
+ability | core:ability:incapacitator#weapon1 | Incapacitator damage | +0 | [] | 
+ability | armory:ability:infinity_rifle_advanced | Infinity rifle (advanced) attack | +0 | [] | 
+ability | armory:ability:infinity_rifle_advanced#weapon1 | Infinity rifle (advanced) damage | +0 | [] | 
+ability | armory:ability:infinity_rifle_elite | Infinity rifle (elite) attack | +0 | [] | 
+ability | armory:ability:infinity_rifle_elite#weapon1 | Infinity rifle (elite) damage | +0 | [] | 
+ability | armory:ability:infinity_rifle_paragon | Infinity rifle (paragon) attack | +0 | [] | 
+ability | armory:ability:infinity_rifle_paragon#weapon1 | Infinity rifle (paragon) damage | +0 | [] | 
+ability | armory:ability:infinity_rifle_tactical | Infinity rifle (tactical) attack | +0 | [] | 
+ability | armory:ability:infinity_rifle_tactical#weapon1 | Infinity rifle (tactical) damage | +0 | [] | 
+ability | core:ability:injection_glove | Injection (glove) attack | +0 | [] | 
+ability | core:ability:injection_glove#weapon1 | Injection (glove) damage | +0 | [] | 
+ability | armory:ability:injector_pistol_elite | Injector pistol (elite) attack | +0 | [] | 
+ability | armory:ability:injector_pistol_elite#weapon1 | Injector pistol (elite) damage | +0 | [] | 
+ability | armory:ability:injector_pistol_medic | Injector pistol (medic) attack | +0 | [] | 
+ability | armory:ability:injector_pistol_medic#weapon1 | Injector pistol (medic) damage | +0 | [] | 
+ability | armory:ability:injector_pistol_poacher | Injector pistol (poacher) attack | +0 | [] | 
+ability | armory:ability:injector_pistol_poacher#weapon1 | Injector pistol (poacher) damage | +0 | [] | 
+ability | armory:ability:injector_pistol_subjugation | Injector pistol (subjugation) attack | +0 | [] | 
+ability | armory:ability:injector_pistol_subjugation#weapon1 | Injector pistol (subjugation) damage | +0 | [] | 
+ability | armory:ability:injector_pistol_zoologist | Injector pistol (zoologist) attack | +0 | [] | 
+ability | armory:ability:injector_pistol_zoologist#weapon1 | Injector pistol (zoologist) damage | +0 | [] | 
+ability | armory:ability:interference_blade_harmonic | Interference blade (harmonic) attack | +0 | [] | 
+ability | armory:ability:interference_blade_harmonic#weapon1 | Interference blade (harmonic) damage | +0 | [] | 
+ability | armory:ability:interference_blade_monophonic | Interference blade (monophonic) attack | +0 | [] | 
+ability | armory:ability:interference_blade_monophonic#weapon1 | Interference blade (monophonic) damage | +0 | [] | 
+ability | armory:ability:interference_blade_multiphonic | Interference blade (multiphonic) attack | +0 | [] | 
+ability | armory:ability:interference_blade_multiphonic#weapon1 | Interference blade (multiphonic) damage | +0 | [] | 
+ability | armory:ability:interference_blade_polyphonic | Interference blade (polyphonic) attack | +0 | [] | 
+ability | armory:ability:interference_blade_polyphonic#weapon1 | Interference blade (polyphonic) damage | +0 | [] | 
+ability | armory:ability:ionizer_chromic | Ionizer (chromic) attack | +0 | [] | 
+ability | armory:ability:ionizer_chromic#weapon1 | Ionizer (chromic) damage | +0 | [] | 
+ability | armory:ability:ionizer_cupric | Ionizer (cupric) attack | +0 | [] | 
+ability | armory:ability:ionizer_cupric#weapon1 | Ionizer (cupric) damage | +0 | [] | 
+ability | armory:ability:ionizer_ferric | Ionizer (ferric) attack | +0 | [] | 
+ability | armory:ability:ionizer_ferric#weapon1 | Ionizer (ferric) damage | +0 | [] | 
+ability | armory:ability:ionizer_stannic | Ionizer (stannic) attack | +0 | [] | 
+ability | armory:ability:ionizer_stannic#weapon1 | Ionizer (stannic) damage | +0 | [] | 
+ability | armory:ability:junk_censer | Junk censer attack | +0 | [] | 
+ability | armory:ability:junk_censer#weapon1 | Junk censer damage | +0 | [] | 
+ability | pact_worlds:ability:kalo_shredder_cascade_class | Kalo shredder (cascade-class) attack | +0 | [] | 
+ability | pact_worlds:ability:kalo_shredder_cascade_class#weapon1 | Kalo shredder (cascade-class) damage | +0 | [] | 
+ability | pact_worlds:ability:kalo_shredder_deluge_class | Kalo shredder (deluge-class) attack | +0 | [] | 
+ability | pact_worlds:ability:kalo_shredder_deluge_class#weapon1 | Kalo shredder (deluge-class) damage | +0 | [] | 
+ability | pact_worlds:ability:kalo_shredder_monsoon_class | Kalo shredder (monsoon-class) attack | +0 | [] | 
+ability | pact_worlds:ability:kalo_shredder_monsoon_class#weapon1 | Kalo shredder (monsoon-class) damage | +0 | [] | 
+ability | pact_worlds:ability:kalo_shredder_slipstream_class | Kalo shredder (slipstream-class) attack | +0 | [] | 
+ability | pact_worlds:ability:kalo_shredder_slipstream_class#weapon1 | Kalo shredder (slipstream-class) damage | +0 | [] | 
+ability | pact_worlds:ability:kalo_shredder_torrent_class | Kalo shredder (torrent-class) attack | +0 | [] | 
+ability | pact_worlds:ability:kalo_shredder_torrent_class#weapon1 | Kalo shredder (torrent-class) damage | +0 | [] | 
+ability | core:ability:knife_survival | Knife (survival) attack | +0 | [] | 
+ability | core:ability:knife_survival#weapon1 | Knife (survival) damage | +0 | [] | 
+ability | core:ability:knife_tactical | Knife (tactical) attack | +0 | [] | 
+ability | core:ability:knife_tactical#weapon1 | Knife (tactical) damage | +0 | [] | 
+ability | armory:ability:lance_advanced | Lance (advanced) attack | +0 | [] | 
+ability | armory:ability:lance_advanced#weapon1 | Lance (advanced) damage | +0 | [] | 
+ability | armory:ability:lance_elite | Lance (elite) attack | +0 | [] | 
+ability | armory:ability:lance_elite#weapon1 | Lance (elite) damage | +0 | [] | 
+ability | armory:ability:lance_paragon | Lance (paragon) attack | +0 | [] | 
+ability | armory:ability:lance_paragon#weapon1 | Lance (paragon) damage | +0 | [] | 
+ability | armory:ability:lance_tactical | Lance (tactical) attack | +0 | [] | 
+ability | armory:ability:lance_tactical#weapon1 | Lance (tactical) damage | +0 | [] | 
+ability | core:ability:laser_pistol_aphelion | Laser pistol (aphelion) attack | +0 | [] | 
+ability | core:ability:laser_pistol_aphelion#weapon1 | Laser pistol (aphelion) damage | +0 | [] | 
+ability | core:ability:laser_pistol_azimuth | Laser pistol (azimuth) attack | +0 | [] | 
+ability | core:ability:laser_pistol_azimuth#weapon1 | Laser pistol (azimuth) damage | +0 | [] | 
+ability | core:ability:laser_pistol_corona | Laser pistol (corona) attack | +0 | [] | 
+ability | core:ability:laser_pistol_corona#weapon1 | Laser pistol (corona) damage | +0 | [] | 
+ability | core:ability:laser_pistol_parallax | Laser pistol (parallax) attack | +0 | [] | 
+ability | core:ability:laser_pistol_parallax#weapon1 | Laser pistol (parallax) damage | +0 | [] | 
+ability | core:ability:laser_pistol_perihelion | Laser pistol (perihelion) attack | +0 | [] | 
+ability | core:ability:laser_pistol_perihelion#weapon1 | Laser pistol (perihelion) damage | +0 | [] | 
+ability | core:ability:laser_pistol_zenith | Laser pistol (zenith) attack | +0 | [] | 
+ability | core:ability:laser_pistol_zenith#weapon1 | Laser pistol (zenith) damage | +0 | [] | 
+ability | core:ability:laser_rifle_aphelion | Laser rifle (aphelion) attack | +0 | [] | 
+ability | core:ability:laser_rifle_aphelion#weapon1 | Laser rifle (aphelion) damage | +0 | [] | 
+ability | core:ability:laser_rifle_azimuth | Laser rifle (azimuth) attack | +0 | [] | 
+ability | core:ability:laser_rifle_azimuth#weapon1 | Laser rifle (azimuth) damage | +0 | [] | 
+ability | core:ability:laser_rifle_corona | Laser rifle (corona) attack | +0 | [] | 
+ability | core:ability:laser_rifle_corona#weapon1 | Laser rifle (corona) damage | +0 | [] | 
+ability | core:ability:laser_rifle_parallax | Laser rifle (parallax) attack | +0 | [] | 
+ability | core:ability:laser_rifle_parallax#weapon1 | Laser rifle (parallax) damage | +0 | [] | 
+ability | core:ability:laser_rifle_perihelion | Laser rifle (perihelion) attack | +0 | [] | 
+ability | core:ability:laser_rifle_perihelion#weapon1 | Laser rifle (perihelion) damage | +0 | [] | 
+ability | core:ability:laser_rifle_zenith | Laser rifle (zenith) attack | +0 | [] | 
+ability | core:ability:laser_rifle_zenith#weapon1 | Laser rifle (zenith) damage | +0 | [] | 
+ability | armory:ability:lens_pistol_cylindrical | Lens pistol (cylindrical) attack | +0 | [] | 
+ability | armory:ability:lens_pistol_cylindrical#weapon1 | Lens pistol (cylindrical) damage | +0 | [] | 
+ability | armory:ability:lens_pistol_electron | Lens pistol (electron) attack | +0 | [] | 
+ability | armory:ability:lens_pistol_electron#weapon1 | Lens pistol (electron) damage | +0 | [] | 
+ability | armory:ability:lens_pistol_lenticular | Lens pistol (lenticular) attack | +0 | [] | 
+ability | armory:ability:lens_pistol_lenticular#weapon1 | Lens pistol (lenticular) damage | +0 | [] | 
+ability | armory:ability:lens_pistol_sunglass | Lens pistol (sunglass) attack | +0 | [] | 
+ability | armory:ability:lens_pistol_sunglass#weapon1 | Lens pistol (sunglass) damage | +0 | [] | 
+ability | armory:ability:lightning_pistol_ribbon | Lightning pistol (ribbon) attack | +0 | [] | 
+ability | armory:ability:lightning_pistol_ribbon#weapon1 | Lightning pistol (ribbon) damage | +0 | [] | 
+ability | armory:ability:lightning_pistol_rocket | Lightning pistol (rocket) attack | +0 | [] | 
+ability | armory:ability:lightning_pistol_rocket#weapon1 | Lightning pistol (rocket) damage | +0 | [] | 
+ability | armory:ability:lightning_pistol_sheet | Lightning pistol (sheet) attack | +0 | [] | 
+ability | armory:ability:lightning_pistol_sheet#weapon1 | Lightning pistol (sheet) damage | +0 | [] | 
+ability | armory:ability:lightning_pistol_smooth_channel | Lightning pistol (smooth-channel) attack | +0 | [] | 
+ability | armory:ability:lightning_pistol_smooth_channel#weapon1 | Lightning pistol (smooth-channel) damage | +0 | [] | 
+ability | armory:ability:living_lash | Living lash attack | +0 | [] | 
+ability | armory:ability:living_lash#weapon1 | Living lash damage | +0 | [] | 
+ability | armory:ability:living_staff_advanced | Living staff (advanced) attack | +0 | [] | 
+ability | armory:ability:living_staff_advanced#weapon1 | Living staff (advanced) damage | +0 | [] | 
+ability | armory:ability:living_staff_elite | Living staff (elite) attack | +0 | [] | 
+ability | armory:ability:living_staff_elite#weapon1 | Living staff (elite) damage | +0 | [] | 
+ability | armory:ability:living_staff_paragon | Living staff (paragon) attack | +0 | [] | 
+ability | armory:ability:living_staff_paragon#weapon1 | Living staff (paragon) damage | +0 | [] | 
+ability | armory:ability:living_staff_tactical | Living staff (tactical) attack | +0 | [] | 
+ability | armory:ability:living_staff_tactical#weapon1 | Living staff (tactical) damage | +0 | [] | 
+ability | core:ability:longsword_dimensional_slice | Longsword (dimensional slice) attack | +0 | [] | 
+ability | core:ability:longsword_dimensional_slice#weapon1 | Longsword (dimensional slice) damage | +0 | [] | 
+ability | core:ability:longsword_microserrated | Longsword (microserrated) attack | +0 | [] | 
+ability | core:ability:longsword_microserrated#weapon1 | Longsword (microserrated) damage | +0 | [] | 
+ability | core:ability:longsword_molecular_rift | Longsword (molecular rift) attack | +0 | [] | 
+ability | core:ability:longsword_molecular_rift#weapon1 | Longsword (molecular rift) damage | +0 | [] | 
+ability | core:ability:longsword_sintered | Longsword (sintered) attack | +0 | [] | 
+ability | core:ability:longsword_sintered#weapon1 | Longsword (sintered) damage | +0 | [] | 
+ability | core:ability:longsword_ultraserrated | Longsword (ultraserrated) attack | +0 | [] | 
+ability | core:ability:longsword_ultraserrated#weapon1 | Longsword (ultraserrated) damage | +0 | [] | 
+ability | core:ability:longsword_ultrathin | Longsword (ultrathin) attack | +0 | [] | 
+ability | core:ability:longsword_ultrathin#weapon1 | Longsword (ultrathin) damage | +0 | [] | 
+ability | core:ability:longsword_zero_edge | Longsword (zero-edge) attack | +0 | [] | 
+ability | core:ability:longsword_zero_edge#weapon1 | Longsword (zero-edge) damage | +0 | [] | 
+ability | core:ability:longsword | Longsword attack | +0 | [] | 
+ability | core:ability:longsword#weapon1 | Longsword damage | +0 | [] | 
+ability | core:ability:machine_gun_heavy | Machine gun (heavy) attack | +0 | [] | 
+ability | core:ability:machine_gun_heavy#weapon1 | Machine gun (heavy) damage | +0 | [] | 
+ability | core:ability:machine_gun_light | Machine gun (light) attack | +0 | [] | 
+ability | core:ability:machine_gun_light#weapon1 | Machine gun (light) damage | +0 | [] | 
+ability | core:ability:machine_gun_medium | Machine gun (medium) attack | +0 | [] | 
+ability | core:ability:machine_gun_medium#weapon1 | Machine gun (medium) damage | +0 | [] | 
+ability | core:ability:machine_gun_squad | Machine gun (squad) attack | +0 | [] | 
+ability | core:ability:machine_gun_squad#weapon1 | Machine gun (squad) damage | +0 | [] | 
+ability | armory:ability:magma_blade_andesite | Magma blade (andesite) attack | +0 | [] | 
+ability | armory:ability:magma_blade_andesite#weapon1 | Magma blade (andesite) damage | +0 | [] | 
+ability | armory:ability:magma_blade_basalt | Magma blade (basalt) attack | +0 | [] | 
+ability | armory:ability:magma_blade_basalt#weapon1 | Magma blade (basalt) damage | +0 | [] | 
+ability | armory:ability:magma_blade_plagioclase | Magma blade (plagioclase) attack | +0 | [] | 
+ability | armory:ability:magma_blade_plagioclase#weapon1 | Magma blade (plagioclase) damage | +0 | [] | 
+ability | armory:ability:magma_blade_rhyolite | Magma blade (rhyolite) attack | +0 | [] | 
+ability | armory:ability:magma_blade_rhyolite#weapon1 | Magma blade (rhyolite) damage | +0 | [] | 
+ability | core:ability:magnetar_rifle_advanced | Magnetar rifle (advanced) attack | +0 | [] | 
+ability | core:ability:magnetar_rifle_advanced#weapon1 | Magnetar rifle (advanced) damage | +0 | [] | 
+ability | core:ability:magnetar_rifle_elite | Magnetar rifle (elite) attack | +0 | [] | 
+ability | core:ability:magnetar_rifle_elite#weapon1 | Magnetar rifle (elite) damage | +0 | [] | 
+ability | core:ability:magnetar_rifle_paragon | Magnetar rifle (paragon) attack | +0 | [] | 
+ability | core:ability:magnetar_rifle_paragon#weapon1 | Magnetar rifle (paragon) damage | +0 | [] | 
+ability | core:ability:magnetar_rifle_tactical | Magnetar rifle (tactical) attack | +0 | [] | 
+ability | core:ability:magnetar_rifle_tactical#weapon1 | Magnetar rifle (tactical) damage | +0 | [] | 
+ability | armory:ability:maul_advanced | Maul (advanced) attack | +0 | [] | 
+ability | armory:ability:maul_advanced#weapon1 | Maul (advanced) damage | +0 | [] | 
+ability | armory:ability:maul_elite | Maul (elite) attack | +0 | [] | 
+ability | armory:ability:maul_elite#weapon1 | Maul (elite) damage | +0 | [] | 
+ability | armory:ability:maul_paragon | Maul (paragon) attack | +0 | [] | 
+ability | armory:ability:maul_paragon#weapon1 | Maul (paragon) damage | +0 | [] | 
+ability | armory:ability:maul_tactical | Maul (tactical) attack | +0 | [] | 
+ability | armory:ability:maul_tactical#weapon1 | Maul (tactical) damage | +0 | [] | 
+ability | core:ability:mercenary | Mercenary |  | [] | Whether you take jobs that match your ethical beliefs or you fight for anyone who can afford your services, you are a hired gun. You might take pride in your past accomplishments, proudly displaying trophies of your kills, or you might be laden with guilt over being the sole survivor of a mission gone terribly wrong. You most likely work with other mercenaries and are familiar with the methodologies of military actions all across the galaxy.
+ability | armory:ability:meteor_glaive_advanced | Meteor glaive (advanced) attack | +0 | [] | 
+ability | armory:ability:meteor_glaive_advanced#weapon1 | Meteor glaive (advanced) damage | +0 | [] | 
+ability | armory:ability:meteor_glaive_elite | Meteor glaive (elite) attack | +0 | [] | 
+ability | armory:ability:meteor_glaive_elite#weapon1 | Meteor glaive (elite) damage | +0 | [] | 
+ability | armory:ability:meteor_glaive_paragon | Meteor glaive (paragon) attack | +0 | [] | 
+ability | armory:ability:meteor_glaive_paragon#weapon1 | Meteor glaive (paragon) damage | +0 | [] | 
+ability | armory:ability:meteor_glaive_tactical | Meteor glaive (tactical) attack | +0 | [] | 
+ability | armory:ability:meteor_glaive_tactical#weapon1 | Meteor glaive (tactical) damage | +0 | [] | 
+ability | armory:ability:microfusion_rifle_heavy | Microfusion rifle (heavy) attack | +0 | [] | 
+ability | armory:ability:microfusion_rifle_heavy#weapon1 | Microfusion rifle (heavy) damage | +0 | [] | 
+ability | armory:ability:microfusion_rifle_light | Microfusion rifle (light) attack | +0 | [] | 
+ability | armory:ability:microfusion_rifle_light#weapon1 | Microfusion rifle (light) damage | +0 | [] | 
+ability | armory:ability:microfusion_rifle_medium | Microfusion rifle (medium) attack | +0 | [] | 
+ability | armory:ability:microfusion_rifle_medium#weapon1 | Microfusion rifle (medium) damage | +0 | [] | 
+ability | armory:ability:minelayer_command | Minelayer (command) attack | +0 | [] | 
+ability | armory:ability:minelayer_command#weapon1 | Minelayer (command) damage | +0 | [] | 
+ability | armory:ability:minelayer_merc | Minelayer (merc) attack | +0 | [] | 
+ability | armory:ability:minelayer_merc#weapon1 | Minelayer (merc) damage | +0 | [] | 
+ability | armory:ability:minelayer_platoon | Minelayer (platoon) attack | +0 | [] | 
+ability | armory:ability:minelayer_platoon#weapon1 | Minelayer (platoon) damage | +0 | [] | 
+ability | armory:ability:minelayer_squad | Minelayer (squad) attack | +0 | [] | 
+ability | armory:ability:minelayer_squad#weapon1 | Minelayer (squad) damage | +0 | [] | 
+ability | armory:ability:mirage_dagger_distortion | Mirage dagger (distortion) attack | +0 | [] | 
+ability | armory:ability:mirage_dagger_distortion#weapon1 | Mirage dagger (distortion) damage | +0 | [] | 
+ability | armory:ability:mirage_dagger_hallucination | Mirage dagger (hallucination) attack | +0 | [] | 
+ability | armory:ability:mirage_dagger_hallucination#weapon1 | Mirage dagger (hallucination) damage | +0 | [] | 
+ability | armory:ability:mirage_dagger_illusion | Mirage dagger (illusion) attack | +0 | [] | 
+ability | armory:ability:mirage_dagger_illusion#weapon1 | Mirage dagger (illusion) damage | +0 | [] | 
+ability | core:ability:monowhip | Monowhip attack | +0 | [] | 
+ability | core:ability:monowhip#weapon1 | Monowhip damage | +0 | [] | 
+ability | armory:ability:multistage_rifle_dual | Multistage rifle (dual) attack | +0 | [] | 
+ability | armory:ability:multistage_rifle_dual#weapon1 | Multistage rifle (dual) damage | +0 | [] | 
+ability | armory:ability:multistage_rifle_dual_plus | Multistage rifle (dual-plus) attack | +0 | [] | 
+ability | armory:ability:multistage_rifle_dual_plus#weapon1 | Multistage rifle (dual-plus) damage | +0 | [] | 
+ability | armory:ability:multistage_rifle_quad | Multistage rifle (quad) attack | +0 | [] | 
+ability | armory:ability:multistage_rifle_quad#weapon1 | Multistage rifle (quad) damage | +0 | [] | 
+ability | armory:ability:multistage_rifle_triple | Multistage rifle (triple) attack | +0 | [] | 
+ability | armory:ability:multistage_rifle_triple#weapon1 | Multistage rifle (triple) damage | +0 | [] | 
+ability | armory:ability:multistage_rifle_triple_plus | Multistage rifle (triple-plus) attack | +0 | [] | 
+ability | armory:ability:multistage_rifle_triple_plus#weapon1 | Multistage rifle (triple-plus) damage | +0 | [] | 
+ability | core:ability:nil_grenade_launcher_merc | NIL grenade launcher (merc) attack | +0 | [] | 
+ability | core:ability:nil_grenade_launcher_merc#weapon1 | NIL grenade launcher (merc) damage | +0 | [] | 
+ability | core:ability:nil_grenade_launcher_squad | NIL grenade launcher (squad) attack | +0 | [] | 
+ability | core:ability:nil_grenade_launcher_squad#weapon1 | NIL grenade launcher (squad) damage | +0 | [] | 
+ability | armory:ability:nanite_decoupler_caustic | Nanite decoupler (caustic) attack | +0 | [] | 
+ability | armory:ability:nanite_decoupler_caustic#weapon1 | Nanite decoupler (caustic) damage | +0 | [] | 
+ability | armory:ability:nanite_decoupler_vitriolic | Nanite decoupler (vitriolic) attack | +0 | [] | 
+ability | armory:ability:nanite_decoupler_vitriolic#weapon1 | Nanite decoupler (vitriolic) damage | +0 | [] | 
+ability | armory:ability:nanite_rifle_advanced | Nanite rifle (advanced) attack | +0 | [] | 
+ability | armory:ability:nanite_rifle_advanced#weapon1 | Nanite rifle (advanced) damage | +0 | [] | 
+ability | armory:ability:nanite_rifle_elite | Nanite rifle (elite) attack | +0 | [] | 
+ability | armory:ability:nanite_rifle_elite#weapon1 | Nanite rifle (elite) damage | +0 | [] | 
+ability | armory:ability:nanite_rifle_tactical | Nanite rifle (tactical) attack | +0 | [] | 
+ability | armory:ability:nanite_rifle_tactical#weapon1 | Nanite rifle (tactical) damage | +0 | [] | 
+ability | armory:ability:nanite_thrower_advanced | Nanite thrower (advanced) attack | +0 | [] | 
+ability | armory:ability:nanite_thrower_advanced#weapon1 | Nanite thrower (advanced) damage | +0 | [] | 
+ability | armory:ability:nanite_thrower_elite | Nanite thrower (elite) attack | +0 | [] | 
+ability | armory:ability:nanite_thrower_elite#weapon1 | Nanite thrower (elite) damage | +0 | [] | 
+ability | armory:ability:nanite_thrower_paragon | Nanite thrower (paragon) attack | +0 | [] | 
+ability | armory:ability:nanite_thrower_paragon#weapon1 | Nanite thrower (paragon) damage | +0 | [] | 
+ability | armory:ability:nanite_thrower_tactical | Nanite thrower (tactical) attack | +0 | [] | 
+ability | armory:ability:nanite_thrower_tactical#weapon1 | Nanite thrower (tactical) damage | +0 | [] | 
+ability | core:ability:needler_pistol | Needler pistol attack | +0 | [] | 
+ability | core:ability:needler_pistol#weapon1 | Needler pistol damage | +0 | [] | 
+ability | core:ability:needler_rifle | Needler rifle attack | +0 | [] | 
+ability | core:ability:needler_rifle#weapon1 | Needler rifle damage | +0 | [] | 
+ability | armory:ability:neural_lash_amperometric | Neural lash (amperometric) attack | +0 | [] | 
+ability | armory:ability:neural_lash_amperometric#weapon1 | Neural lash (amperometric) damage | +0 | [] | 
+ability | armory:ability:neural_lash_electroplax | Neural lash (electroplax) attack | +0 | [] | 
+ability | armory:ability:neural_lash_electroplax#weapon1 | Neural lash (electroplax) damage | +0 | [] | 
+ability | armory:ability:neural_lash_galvanic | Neural lash (galvanic) attack | +0 | [] | 
+ability | armory:ability:neural_lash_galvanic#weapon1 | Neural lash (galvanic) damage | +0 | [] | 
+ability | armory:ability:neural_lash_voltaic | Neural lash (voltaic) attack | +0 | [] | 
+ability | armory:ability:neural_lash_voltaic#weapon1 | Neural lash (voltaic) damage | +0 | [] | 
+ability | pact_worlds:ability:nightarch_needler_advanced | Nightarch needler (advanced ) attack | +0 | [] | 
+ability | pact_worlds:ability:nightarch_needler_advanced#weapon1 | Nightarch needler (advanced ) damage | +0 | [] | 
+ability | pact_worlds:ability:nightarch_needler_elite | Nightarch needler (elite) attack | +0 | [] | 
+ability | pact_worlds:ability:nightarch_needler_elite#weapon1 | Nightarch needler (elite) damage | +0 | [] | 
+ability | pact_worlds:ability:nightarch_needler_paragon | Nightarch needler (paragon) attack | +0 | [] | 
+ability | pact_worlds:ability:nightarch_needler_paragon#weapon1 | Nightarch needler (paragon) damage | +0 | [] | 
+ability | pact_worlds:ability:nightarch_needler_tactical | Nightarch needler (tactical) attack | +0 | [] | 
+ability | pact_worlds:ability:nightarch_needler_tactical#weapon1 | Nightarch needler (tactical) damage | +0 | [] | 
+ability | armory:ability:nova_lance_blue_star | Nova lance (blue star) attack | +0 | [] | 
+ability | armory:ability:nova_lance_blue_star#weapon1 | Nova lance (blue star) damage | +0 | [] | 
+ability | armory:ability:nova_lance_red_star | Nova lance (red star) attack | +0 | [] | 
+ability | armory:ability:nova_lance_red_star#weapon1 | Nova lance (red star) damage | +0 | [] | 
+ability | armory:ability:nova_lance_white_star | Nova lance (white star) attack | +0 | [] | 
+ability | armory:ability:nova_lance_white_star#weapon1 | Nova lance (white star) damage | +0 | [] | 
+ability | armory:ability:nova_lance_yellow_star | Nova lance (yellow star) attack | +0 | [] | 
+ability | armory:ability:nova_lance_yellow_star#weapon1 | Nova lance (yellow star) damage | +0 | [] | 
+ability | armory:ability:nova_rifle_red_star | Nova rifle (red star) attack | +0 | [] | 
+ability | armory:ability:nova_rifle_red_star#weapon1 | Nova rifle (red star) damage | +0 | [] | 
+ability | armory:ability:nova_rifle_white_star | Nova rifle (white star) attack | +0 | [] | 
+ability | armory:ability:nova_rifle_white_star#weapon1 | Nova rifle (white star) damage | +0 | [] | 
+ability | armory:ability:nova_rifle_yellow_star | Nova rifle (yellow star) attack | +0 | [] | 
+ability | armory:ability:nova_rifle_yellow_star#weapon1 | Nova rifle (yellow star) damage | +0 | [] | 
+ability | armory:ability:numbing_beam_advanced | Numbing beam (advanced) attack | +0 | [] | 
+ability | armory:ability:numbing_beam_advanced#weapon1 | Numbing beam (advanced) damage | +0 | [] | 
+ability | armory:ability:numbing_beam_elite | Numbing beam (elite) attack | +0 | [] | 
+ability | armory:ability:numbing_beam_elite#weapon1 | Numbing beam (elite) damage | +0 | [] | 
+ability | armory:ability:numbing_beam_paragon | Numbing beam (paragon) attack | +0 | [] | 
+ability | armory:ability:numbing_beam_paragon#weapon1 | Numbing beam (paragon) damage | +0 | [] | 
+ability | armory:ability:numbing_beam_tactical | Numbing beam (tactical) attack | +0 | [] | 
+ability | armory:ability:numbing_beam_tactical#weapon1 | Numbing beam (tactical) damage | +0 | [] | 
+ability | core:ability:peacemaker | Peacemaker attack | +0 | [] | 
+ability | core:ability:peacemaker#weapon1 | Peacemaker damage | +0 | [] | 
+ability | armory:ability:perforator_pistol_diffraction | Perforator pistol (diffraction) attack | +0 | [] | 
+ability | armory:ability:perforator_pistol_diffraction#weapon1 | Perforator pistol (diffraction) damage | +0 | [] | 
+ability | armory:ability:perforator_pistol_linear | Perforator pistol (linear) attack | +0 | [] | 
+ability | armory:ability:perforator_pistol_linear#weapon1 | Perforator pistol (linear) damage | +0 | [] | 
+ability | armory:ability:perforator_pistol_phased | Perforator pistol (phased) attack | +0 | [] | 
+ability | armory:ability:perforator_pistol_phased#weapon1 | Perforator pistol (phased) damage | +0 | [] | 
+ability | armory:ability:perforator_pistol_refraction | Perforator pistol (refraction) attack | +0 | [] | 
+ability | armory:ability:perforator_pistol_refraction#weapon1 | Perforator pistol (refraction) damage | +0 | [] | 
+ability | armory:ability:persuader | Persuader attack | +0 | [] | 
+ability | armory:ability:persuader#weapon1 | Persuader damage | +0 | [] | 
+ability | armory:ability:petrol_converter_advanced | Petrol converter (advanced) attack | +0 | [] | 
+ability | armory:ability:petrol_converter_advanced#weapon1 | Petrol converter (advanced) damage | +0 | [] | 
+ability | armory:ability:petrol_converter_elite | Petrol converter (elite) attack | +0 | [] | 
+ability | armory:ability:petrol_converter_elite#weapon1 | Petrol converter (elite) damage | +0 | [] | 
+ability | armory:ability:petrol_converter_light | Petrol converter (light) attack | +0 | [] | 
+ability | armory:ability:petrol_converter_light#weapon1 | Petrol converter (light) damage | +0 | [] | 
+ability | armory:ability:petrol_converter_paragon | Petrol converter (paragon) attack | +0 | [] | 
+ability | armory:ability:petrol_converter_paragon#weapon1 | Petrol converter (paragon) damage | +0 | [] | 
+ability | armory:ability:petrol_converter_tactical | Petrol converter (tactical) attack | +0 | [] | 
+ability | armory:ability:petrol_converter_tactical#weapon1 | Petrol converter (tactical) damage | +0 | [] | 
+ability | alien_archive_2:ability:phasic_scythe_harmonic | Phasic scythe (harmonic) attack | +0 | [] | 
+ability | alien_archive_2:ability:phasic_scythe_harmonic#weapon1 | Phasic scythe (harmonic) damage | +0 | [] | 
+ability | alien_archive_2:ability:phasic_scythe_monophonic | Phasic scythe (monophonic) attack | +0 | [] | 
+ability | alien_archive_2:ability:phasic_scythe_monophonic#weapon1 | Phasic scythe (monophonic) damage | +0 | [] | 
+ability | alien_archive_2:ability:phasic_scythe_multiphonic | Phasic scythe (multiphonic) attack | +0 | [] | 
+ability | alien_archive_2:ability:phasic_scythe_multiphonic#weapon1 | Phasic scythe (multiphonic) damage | +0 | [] | 
+ability | alien_archive_2:ability:phasic_scythe_polyphonic | Phasic scythe (polyphonic) attack | +0 | [] | 
+ability | alien_archive_2:ability:phasic_scythe_polyphonic#weapon1 | Phasic scythe (polyphonic) damage | +0 | [] | 
+ability | core:ability:pike_advanced | Pike (advanced) attack | +0 | [] | 
+ability | core:ability:pike_advanced#weapon1 | Pike (advanced) damage | +0 | [] | 
+ability | core:ability:pike_elite | Pike (elite) attack | +0 | [] | 
+ability | core:ability:pike_elite#weapon1 | Pike (elite) damage | +0 | [] | 
+ability | core:ability:pike_tactical | Pike (tactical) attack | +0 | [] | 
+ability | core:ability:pike_tactical#weapon1 | Pike (tactical) damage | +0 | [] | 
+ability | armory:ability:plasma_array_blue_star | Plasma array (blue star) attack | +0 | [] | 
+ability | armory:ability:plasma_array_blue_star#weapon1 | Plasma array (blue star) damage | +0 | [] | 
+ability | armory:ability:plasma_array_red_star | Plasma array (red star) attack | +0 | [] | 
+ability | armory:ability:plasma_array_red_star#weapon1 | Plasma array (red star) damage | +0 | [] | 
+ability | armory:ability:plasma_array_white_star | Plasma array (white star) attack | +0 | [] | 
+ability | armory:ability:plasma_array_white_star#weapon1 | Plasma array (white star) damage | +0 | [] | 
+ability | armory:ability:plasma_array_yellow_star | Plasma array (yellow star) attack | +0 | [] | 
+ability | armory:ability:plasma_array_yellow_star#weapon1 | Plasma array (yellow star) damage | +0 | [] | 
+ability | armory:ability:plasma_bolter_advanced | Plasma bolter (advanced) attack | +0 | [] | 
+ability | armory:ability:plasma_bolter_advanced#weapon1 | Plasma bolter (advanced) damage | +0 | [] | 
+ability | armory:ability:plasma_bolter_elite | Plasma bolter (elite) attack | +0 | [] | 
+ability | armory:ability:plasma_bolter_elite#weapon1 | Plasma bolter (elite) damage | +0 | [] | 
+ability | armory:ability:plasma_bolter_paragon | Plasma bolter (paragon) attack | +0 | [] | 
+ability | armory:ability:plasma_bolter_paragon#weapon1 | Plasma bolter (paragon) damage | +0 | [] | 
+ability | armory:ability:plasma_bolter_tactical | Plasma bolter (tactical) attack | +0 | [] | 
+ability | armory:ability:plasma_bolter_tactical#weapon1 | Plasma bolter (tactical) damage | +0 | [] | 
+ability | core:ability:plasma_cannon_blue_star | Plasma cannon (blue star) attack | +0 | [] | 
+ability | core:ability:plasma_cannon_blue_star#weapon1 | Plasma cannon (blue star) damage | +0 | [] | 
+ability | core:ability:plasma_cannon_red_star | Plasma cannon (red star) attack | +0 | [] | 
+ability | core:ability:plasma_cannon_red_star#weapon1 | Plasma cannon (red star) damage | +0 | [] | 
+ability | core:ability:plasma_cannon_white_star | Plasma cannon (white star) attack | +0 | [] | 
+ability | core:ability:plasma_cannon_white_star#weapon1 | Plasma cannon (white star) damage | +0 | [] | 
+ability | core:ability:plasma_cannon_yellow_star | Plasma cannon (yellow star) attack | +0 | [] | 
+ability | core:ability:plasma_cannon_yellow_star#weapon1 | Plasma cannon (yellow star) damage | +0 | [] | 
+ability | core:ability:plasma_caster_blue_star | Plasma caster (blue star) attack | +0 | [] | 
+ability | core:ability:plasma_caster_blue_star#weapon1 | Plasma caster (blue star) damage | +0 | [] | 
+ability | core:ability:plasma_caster_white_star | Plasma caster (white star) attack | +0 | [] | 
+ability | core:ability:plasma_caster_white_star#weapon1 | Plasma caster (white star) damage | +0 | [] | 
+ability | armory:ability:plasma_claw_biodynamic | Plasma claw (biodynamic) attack | +0 | [] | 
+ability | armory:ability:plasma_claw_biodynamic#weapon1 | Plasma claw (biodynamic) damage | +0 | [] | 
+ability | armory:ability:plasma_claw_electrocellular | Plasma claw (electrocellular) attack | +0 | [] | 
+ability | armory:ability:plasma_claw_electrocellular#weapon1 | Plasma claw (electrocellular) damage | +0 | [] | 
+ability | armory:ability:plasma_claw_organic | Plasma claw (organic) attack | +0 | [] | 
+ability | armory:ability:plasma_claw_organic#weapon1 | Plasma claw (organic) damage | +0 | [] | 
+ability | armory:ability:plasma_claw_synthecite | Plasma claw (synthecite) attack | +0 | [] | 
+ability | armory:ability:plasma_claw_synthecite#weapon1 | Plasma claw (synthecite) damage | +0 | [] | 
+ability | core:ability:plasma_doshko_blue_star | Plasma doshko (blue star) attack | +0 | [] | 
+ability | core:ability:plasma_doshko_blue_star#weapon1 | Plasma doshko (blue star) damage | +0 | [] | 
+ability | core:ability:plasma_doshko_red_star | Plasma doshko (red star) attack | +0 | [] | 
+ability | core:ability:plasma_doshko_red_star#weapon1 | Plasma doshko (red star) damage | +0 | [] | 
+ability | core:ability:plasma_doshko_white_star | Plasma doshko (white star) attack | +0 | [] | 
+ability | core:ability:plasma_doshko_white_star#weapon1 | Plasma doshko (white star) damage | +0 | [] | 
+ability | core:ability:plasma_doshko_yellow_star | Plasma doshko (yellow star) attack | +0 | [] | 
+ability | core:ability:plasma_doshko_yellow_star#weapon1 | Plasma doshko (yellow star) damage | +0 | [] | 
+ability | armory:ability:plasma_fork_12_notch | Plasma fork (12-notch) attack | +0 | [] | 
+ability | armory:ability:plasma_fork_12_notch#weapon1 | Plasma fork (12-notch) damage | +0 | [] | 
+ability | armory:ability:plasma_fork_15_notch | Plasma fork (15-notch) attack | +0 | [] | 
+ability | armory:ability:plasma_fork_15_notch#weapon1 | Plasma fork (15-notch) damage | +0 | [] | 
+ability | armory:ability:plasma_fork_19_notch | Plasma fork (19-notch) attack | +0 | [] | 
+ability | armory:ability:plasma_fork_19_notch#weapon1 | Plasma fork (19-notch) damage | +0 | [] | 
+ability | armory:ability:plasma_fork_22_notch | Plasma fork (22-notch) attack | +0 | [] | 
+ability | armory:ability:plasma_fork_22_notch#weapon1 | Plasma fork (22-notch) damage | +0 | [] | 
+ability | armory:ability:plasma_guide_series_21 | Plasma guide (series-21) attack | +0 | [] | 
+ability | armory:ability:plasma_guide_series_21#weapon1 | Plasma guide (series-21) damage | +0 | [] | 
+ability | armory:ability:plasma_guide_series_28 | Plasma guide (series-28) attack | +0 | [] | 
+ability | armory:ability:plasma_guide_series_28#weapon1 | Plasma guide (series-28) damage | +0 | [] | 
+ability | armory:ability:plasma_guide_series_37 | Plasma guide (series-37) attack | +0 | [] | 
+ability | armory:ability:plasma_guide_series_37#weapon1 | Plasma guide (series-37) damage | +0 | [] | 
+ability | armory:ability:plasma_guide_series_42 | Plasma guide (series-42) attack | +0 | [] | 
+ability | armory:ability:plasma_guide_series_42#weapon1 | Plasma guide (series-42) damage | +0 | [] | 
+ability | armory:ability:plasma_guide_series_62 | Plasma guide (series-62) attack | +0 | [] | 
+ability | armory:ability:plasma_guide_series_62#weapon1 | Plasma guide (series-62) damage | +0 | [] | 
+ability | armory:ability:plasma_guide_series_73 | Plasma guide (series-73) attack | +0 | [] | 
+ability | armory:ability:plasma_guide_series_73#weapon1 | Plasma guide (series-73) damage | +0 | [] | 
+ability | armory:ability:plasma_lash_blue_star | Plasma lash (blue star) attack | +0 | [] | 
+ability | armory:ability:plasma_lash_blue_star#weapon1 | Plasma lash (blue star) damage | +0 | [] | 
+ability | armory:ability:plasma_lash_red_star | Plasma lash (red star) attack | +0 | [] | 
+ability | armory:ability:plasma_lash_red_star#weapon1 | Plasma lash (red star) damage | +0 | [] | 
+ability | armory:ability:plasma_lash_white_star | Plasma lash (white star) attack | +0 | [] | 
+ability | armory:ability:plasma_lash_white_star#weapon1 | Plasma lash (white star) damage | +0 | [] | 
+ability | armory:ability:plasma_lash_yellow_star | Plasma lash (yellow star) attack | +0 | [] | 
+ability | armory:ability:plasma_lash_yellow_star#weapon1 | Plasma lash (yellow star) damage | +0 | [] | 
+ability | core:ability:plasma_pistol_blue_star | Plasma pistol (blue star) attack | +0 | [] | 
+ability | core:ability:plasma_pistol_blue_star#weapon1 | Plasma pistol (blue star) damage | +0 | [] | 
+ability | core:ability:plasma_pistol_red_star | Plasma pistol (red star) attack | +0 | [] | 
+ability | core:ability:plasma_pistol_red_star#weapon1 | Plasma pistol (red star) damage | +0 | [] | 
+ability | core:ability:plasma_pistol_white_star | Plasma pistol (white star) attack | +0 | [] | 
+ability | core:ability:plasma_pistol_white_star#weapon1 | Plasma pistol (white star) damage | +0 | [] | 
+ability | core:ability:plasma_pistol_yellow_star | Plasma pistol (yellow star) attack | +0 | [] | 
+ability | core:ability:plasma_pistol_yellow_star#weapon1 | Plasma pistol (yellow star) damage | +0 | [] | 
+ability | armory:ability:plasma_ribbon_champion | Plasma ribbon (champion) attack | +0 | [] | 
+ability | armory:ability:plasma_ribbon_champion#weapon1 | Plasma ribbon (champion) damage | +0 | [] | 
+ability | armory:ability:plasma_ribbon_competitor | Plasma ribbon (competitor) attack | +0 | [] | 
+ability | armory:ability:plasma_ribbon_competitor#weapon1 | Plasma ribbon (competitor) damage | +0 | [] | 
+ability | armory:ability:plasma_ribbon_professional | Plasma ribbon (professional) attack | +0 | [] | 
+ability | armory:ability:plasma_ribbon_professional#weapon1 | Plasma ribbon (professional) damage | +0 | [] | 
+ability | armory:ability:plasma_ribbon_student | Plasma ribbon (student) attack | +0 | [] | 
+ability | armory:ability:plasma_ribbon_student#weapon1 | Plasma ribbon (student) damage | +0 | [] | 
+ability | core:ability:plasma_rifle_blue_star | Plasma rifle (blue star) attack | +0 | [] | 
+ability | core:ability:plasma_rifle_blue_star#weapon1 | Plasma rifle (blue star) damage | +0 | [] | 
+ability | core:ability:plasma_rifle_red_star | Plasma rifle (red star) attack | +0 | [] | 
+ability | core:ability:plasma_rifle_red_star#weapon1 | Plasma rifle (red star) damage | +0 | [] | 
+ability | core:ability:plasma_rifle_white_star | Plasma rifle (white star) attack | +0 | [] | 
+ability | core:ability:plasma_rifle_white_star#weapon1 | Plasma rifle (white star) damage | +0 | [] | 
+ability | core:ability:plasma_rifle_yellow_star | Plasma rifle (yellow star) attack | +0 | [] | 
+ability | core:ability:plasma_rifle_yellow_star#weapon1 | Plasma rifle (yellow star) damage | +0 | [] | 
+ability | armory:ability:plasma_ring_dual_valve | Plasma ring (dual-valve) attack | +0 | [] | 
+ability | armory:ability:plasma_ring_dual_valve#weapon1 | Plasma ring (dual-valve) damage | +0 | [] | 
+ability | armory:ability:plasma_ring_multichannel | Plasma ring (multichannel) attack | +0 | [] | 
+ability | armory:ability:plasma_ring_multichannel#weapon1 | Plasma ring (multichannel) damage | +0 | [] | 
+ability | armory:ability:plasma_ring_single_valve | Plasma ring (single-valve) attack | +0 | [] | 
+ability | armory:ability:plasma_ring_single_valve#weapon1 | Plasma ring (single-valve) damage | +0 | [] | 
+ability | core:ability:plasma_sword_blue_star | Plasma sword (blue star) attack | +0 | [] | 
+ability | core:ability:plasma_sword_blue_star#weapon1 | Plasma sword (blue star) damage | +0 | [] | 
+ability | core:ability:plasma_sword_red_star | Plasma sword (red star) attack | +0 | [] | 
+ability | core:ability:plasma_sword_red_star#weapon1 | Plasma sword (red star) damage | +0 | [] | 
+ability | core:ability:plasma_sword_tactical | Plasma sword (tactical) attack | +0 | [] | 
+ability | core:ability:plasma_sword_tactical#weapon1 | Plasma sword (tactical) damage | +0 | [] | 
+ability | core:ability:plasma_sword_white_star | Plasma sword (white star) attack | +0 | [] | 
+ability | core:ability:plasma_sword_white_star#weapon1 | Plasma sword (white star) damage | +0 | [] | 
+ability | core:ability:plasma_sword_yellow_star | Plasma sword (yellow star) attack | +0 | [] | 
+ability | core:ability:plasma_sword_yellow_star#weapon1 | Plasma sword (yellow star) damage | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_aurora | Polarity gauntlets (aurora) attack | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_aurora#weapon1 | Polarity gauntlets (aurora) damage | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_current | Polarity gauntlets (current) attack | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_current#weapon1 | Polarity gauntlets (current) damage | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_spark | Polarity gauntlets (spark) attack | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_spark#weapon1 | Polarity gauntlets (spark) damage | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_static | Polarity gauntlets (static) attack | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_static#weapon1 | Polarity gauntlets (static) damage | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_storm | Polarity gauntlets (storm) attack | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_storm#weapon1 | Polarity gauntlets (storm) damage | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_tempest | Polarity gauntlets (tempest) attack | +0 | [] | 
+ability | armory:ability:polarity_gauntlets_tempest#weapon1 | Polarity gauntlets (tempest) damage | +0 | [] | 
+ability | armory:ability:polarity_rifle_aurora | Polarity rifle (aurora) attack | +0 | [] | 
+ability | armory:ability:polarity_rifle_aurora#weapon1 | Polarity rifle (aurora) damage | +0 | [] | 
+ability | armory:ability:polarity_rifle_static | Polarity rifle (static) attack | +0 | [] | 
+ability | armory:ability:polarity_rifle_static#weapon1 | Polarity rifle (static) damage | +0 | [] | 
+ability | armory:ability:polarity_rifle_storm | Polarity rifle (storm) attack | +0 | [] | 
+ability | armory:ability:polarity_rifle_storm#weapon1 | Polarity rifle (storm) damage | +0 | [] | 
+ability | armory:ability:polarity_rifle_tempest | Polarity rifle (tempest) attack | +0 | [] | 
+ability | armory:ability:polarity_rifle_tempest#weapon1 | Polarity rifle (tempest) damage | +0 | [] | 
+ability | core:ability:soldier_class_feature_primary_fighting_style | Primary Fighting Style | +1 | [] | You have a preferred fighting style that represents the type of soldier you are. Each fighting style is composed of various style techniques that you learn as you gain experience. You must pick one fighting style upon taking your first soldier level, and once made, this choice cannot be changed. Descriptions of the fighting styles you can choose from appear on pages 112-115.
+ability | core:ability:soldier_class_feature_primary_style_technique | Primary Style Technique |  | [] | At 1st level and every 4 levels thereafter, you gain a style technique unique to your primary fighting style.
+ability | armory:ability:psychic_wave_cannon_i | Psychic-wave cannon I attack | +0 | [] | 
+ability | armory:ability:psychic_wave_cannon_i#weapon1 | Psychic-wave cannon I damage | +0 | [] | 
+ability | armory:ability:psychic_wave_cannon_ii | Psychic-wave cannon II attack | +0 | [] | 
+ability | armory:ability:psychic_wave_cannon_ii#weapon1 | Psychic-wave cannon II damage | +0 | [] | 
+ability | armory:ability:psychic_wave_cannon_iii | Psychic-wave cannon III attack | +0 | [] | 
+ability | armory:ability:psychic_wave_cannon_iii#weapon1 | Psychic-wave cannon III damage | +0 | [] | 
+ability | armory:ability:psychic_wave_cannon_iv | Psychic-wave cannon IV attack | +0 | [] | 
+ability | armory:ability:psychic_wave_cannon_iv#weapon1 | Psychic-wave cannon IV damage | +0 | [] | 
+ability | armory:ability:psychic_wave_cannon_v | Psychic-wave cannon V attack | +0 | [] | 
+ability | armory:ability:psychic_wave_cannon_v#weapon1 | Psychic-wave cannon V damage | +0 | [] | 
+ability | core:ability:pulse_gauntlet_hfd | Pulse gauntlet (HFD) attack | +0 | [] | 
+ability | core:ability:pulse_gauntlet_hfd#weapon1 | Pulse gauntlet (HFD) damage | +0 | [] | 
+ability | core:ability:pulse_gauntlet_lfd | Pulse gauntlet (LFD) attack | +0 | [] | 
+ability | core:ability:pulse_gauntlet_lfd#weapon1 | Pulse gauntlet (LFD) damage | +0 | [] | 
+ability | core:ability:pulse_gauntlet_banshee | Pulse gauntlet (banshee) attack | +0 | [] | 
+ability | core:ability:pulse_gauntlet_banshee#weapon1 | Pulse gauntlet (banshee) damage | +0 | [] | 
+ability | core:ability:pulse_gauntlet_thunderstrike | Pulse gauntlet (thunderstrike) attack | +0 | [] | 
+ability | core:ability:pulse_gauntlet_thunderstrike#weapon1 | Pulse gauntlet (thunderstrike) damage | +0 | [] | 
+ability | core:ability:pulsecaster_pistol | Pulsecaster (pistol) attack | +0 | [] | 
+ability | core:ability:pulsecaster_pistol#weapon1 | Pulsecaster (pistol) damage | +0 | [] | 
+ability | core:ability:pulsecaster_rifle | Pulsecaster rifle attack | +0 | [] | 
+ability | core:ability:pulsecaster_rifle#weapon1 | Pulsecaster rifle damage | +0 | [] | 
+ability | armory:ability:puzzleblade_conviction | Puzzleblade (conviction) attack | +0 | [] | 
+ability | armory:ability:puzzleblade_conviction#weapon1 | Puzzleblade (conviction) damage | +0 | [] | 
+ability | armory:ability:puzzleblade_dedication | Puzzleblade (dedication) attack | +0 | [] | 
+ability | armory:ability:puzzleblade_dedication#weapon1 | Puzzleblade (dedication) damage | +0 | [] | 
+ability | armory:ability:puzzleblade_moderation | Puzzleblade (moderation) attack | +0 | [] | 
+ability | armory:ability:puzzleblade_moderation#weapon1 | Puzzleblade (moderation) damage | +0 | [] | 
+ability | armory:ability:puzzleblade_tradition | Puzzleblade (tradition) attack | +0 | [] | 
+ability | armory:ability:puzzleblade_tradition#weapon1 | Puzzleblade (tradition) damage | +0 | [] | 
+ability | armory:ability:pyrod_beacon | Pyrod (beacon) attack | +0 | [] | 
+ability | armory:ability:pyrod_beacon#weapon1 | Pyrod (beacon) damage | +0 | [] | 
+ability | armory:ability:pyrod_luminous | Pyrod (luminous) attack | +0 | [] | 
+ability | armory:ability:pyrod_luminous#weapon1 | Pyrod (luminous) damage | +0 | [] | 
+ability | armory:ability:pyrod_torch | Pyrod (torch) attack | +0 | [] | 
+ability | armory:ability:pyrod_torch#weapon1 | Pyrod (torch) damage | +0 | [] | 
+ability | armory:ability:radcannon_electromagnetic | Radcannon (electromagnetic) attack | +0 | [] | 
+ability | armory:ability:radcannon_electromagnetic#weapon1 | Radcannon (electromagnetic) damage | +0 | [] | 
+ability | armory:ability:radcannon_neutron | Radcannon (neutron) attack | +0 | [] | 
+ability | armory:ability:radcannon_neutron#weapon1 | Radcannon (neutron) damage | +0 | [] | 
+ability | armory:ability:radcannon_rapid_decay | Radcannon (rapid-decay) attack | +0 | [] | 
+ability | armory:ability:radcannon_rapid_decay#weapon1 | Radcannon (rapid-decay) damage | +0 | [] | 
+ability | armory:ability:radshot_electromagnetic | Radshot (electromagnetic) attack | +0 | [] | 
+ability | armory:ability:radshot_electromagnetic#weapon1 | Radshot (electromagnetic) damage | +0 | [] | 
+ability | armory:ability:radshot_neutron | Radshot (neutron) attack | +0 | [] | 
+ability | armory:ability:radshot_neutron#weapon1 | Radshot (neutron) damage | +0 | [] | 
+ability | armory:ability:radshot_rapid_decay | Radshot (rapid-decay) attack | +0 | [] | 
+ability | armory:ability:radshot_rapid_decay#weapon1 | Radshot (rapid-decay) damage | +0 | [] | 
+ability | armory:ability:rail_cannon_advanced | Rail cannon (advanced) attack | +0 | [] | 
+ability | armory:ability:rail_cannon_advanced#weapon1 | Rail cannon (advanced) damage | +0 | [] | 
+ability | armory:ability:rail_cannon_elite | Rail cannon (elite) attack | +0 | [] | 
+ability | armory:ability:rail_cannon_elite#weapon1 | Rail cannon (elite) damage | +0 | [] | 
+ability | armory:ability:rail_cannon_paragon | Rail cannon (paragon) attack | +0 | [] | 
+ability | armory:ability:rail_cannon_paragon#weapon1 | Rail cannon (paragon) damage | +0 | [] | 
+ability | armory:ability:rail_cannon_tactical | Rail cannon (tactical) attack | +0 | [] | 
+ability | armory:ability:rail_cannon_tactical#weapon1 | Rail cannon (tactical) damage | +0 | [] | 
+ability | armory:ability:rail_gun_advanced | Rail gun (advanced) attack | +0 | [] | 
+ability | armory:ability:rail_gun_advanced#weapon1 | Rail gun (advanced) damage | +0 | [] | 
+ability | armory:ability:rail_gun_tactical | Rail gun (tactical) attack | +0 | [] | 
+ability | armory:ability:rail_gun_tactical#weapon1 | Rail gun (tactical) damage | +0 | [] | 
+ability | core:ability:reaction_cannon_advanced | Reaction cannon (advanced) attack | +0 | [] | 
+ability | core:ability:reaction_cannon_advanced#weapon1 | Reaction cannon (advanced) damage | +0 | [] | 
+ability | core:ability:reaction_cannon_elite | Reaction cannon (elite) attack | +0 | [] | 
+ability | core:ability:reaction_cannon_elite#weapon1 | Reaction cannon (elite) damage | +0 | [] | 
+ability | core:ability:reaction_cannon_heavy | Reaction cannon (heavy) attack | +0 | [] | 
+ability | core:ability:reaction_cannon_heavy#weapon1 | Reaction cannon (heavy) damage | +0 | [] | 
+ability | core:ability:reaction_cannon_light | Reaction cannon (light) attack | +0 | [] | 
+ability | core:ability:reaction_cannon_light#weapon1 | Reaction cannon (light) damage | +0 | [] | 
+ability | core:ability:reaction_cannon_paragon | Reaction cannon (paragon) attack | +0 | [] | 
+ability | core:ability:reaction_cannon_paragon#weapon1 | Reaction cannon (paragon) damage | +0 | [] | 
+ability | core:ability:reaction_cannon_tactical | Reaction cannon (tactical) attack | +0 | [] | 
+ability | core:ability:reaction_cannon_tactical#weapon1 | Reaction cannon (tactical) damage | +0 | [] | 
+ability | armory:ability:resistance_rod_induction | Resistance rod (induction) attack | +0 | [] | 
+ability | armory:ability:resistance_rod_induction#weapon1 | Resistance rod (induction) damage | +0 | [] | 
+ability | armory:ability:resistance_rod_piezoresistor | Resistance rod (piezoresistor) attack | +0 | [] | 
+ability | armory:ability:resistance_rod_piezoresistor#weapon1 | Resistance rod (piezoresistor) damage | +0 | [] | 
+ability | armory:ability:resistance_rod_strain_gauge | Resistance rod (strain-gauge) attack | +0 | [] | 
+ability | armory:ability:resistance_rod_strain_gauge#weapon1 | Resistance rod (strain-gauge) damage | +0 | [] | 
+ability | armory:ability:resistance_rod_thermistor | Resistance rod (thermistor) attack | +0 | [] | 
+ability | armory:ability:resistance_rod_thermistor#weapon1 | Resistance rod (thermistor) damage | +0 | [] | 
+ability | armory:ability:resonant_gauntlet_atomic | Resonant gauntlet (atomic) attack | +0 | [] | 
+ability | armory:ability:resonant_gauntlet_atomic#weapon1 | Resonant gauntlet (atomic) damage | +0 | [] | 
+ability | armory:ability:resonant_gauntlet_cellular | Resonant gauntlet (cellular) attack | +0 | [] | 
+ability | armory:ability:resonant_gauntlet_cellular#weapon1 | Resonant gauntlet (cellular) damage | +0 | [] | 
+ability | armory:ability:resonant_gauntlet_molecular | Resonant gauntlet (molecular) attack | +0 | [] | 
+ability | armory:ability:resonant_gauntlet_molecular#weapon1 | Resonant gauntlet (molecular) damage | +0 | [] | 
+ability | armory:ability:resonant_gauntlet_quantum | Resonant gauntlet (quantum) attack | +0 | [] | 
+ability | armory:ability:resonant_gauntlet_quantum#weapon1 | Resonant gauntlet (quantum) damage | +0 | [] | 
+ability | armory:ability:resonant_pistol_lattice | Resonant pistol (lattice) attack | +0 | [] | 
+ability | armory:ability:resonant_pistol_lattice#weapon1 | Resonant pistol (lattice) damage | +0 | [] | 
+ability | armory:ability:resonant_pistol_matrix | Resonant pistol (matrix) attack | +0 | [] | 
+ability | armory:ability:resonant_pistol_matrix#weapon1 | Resonant pistol (matrix) damage | +0 | [] | 
+ability | armory:ability:resonant_staff_reverberant | Resonant staff (reverberant) attack | +0 | [] | 
+ability | armory:ability:resonant_staff_reverberant#weapon1 | Resonant staff (reverberant) damage | +0 | [] | 
+ability | armory:ability:resonant_staff_sonorous | Resonant staff (sonorous) attack | +0 | [] | 
+ability | armory:ability:resonant_staff_sonorous#weapon1 | Resonant staff (sonorous) damage | +0 | [] | 
+ability | armory:ability:resonant_staff_stentorian | Resonant staff (stentorian) attack | +0 | [] | 
+ability | armory:ability:resonant_staff_stentorian#weapon1 | Resonant staff (stentorian) damage | +0 | [] | 
+ability | armory:ability:resonator_diffraction | Resonator (diffraction) attack | +0 | [] | 
+ability | armory:ability:resonator_diffraction#weapon1 | Resonator (diffraction) damage | +0 | [] | 
+ability | armory:ability:resonator_linear | Resonator (linear) attack | +0 | [] | 
+ability | armory:ability:resonator_linear#weapon1 | Resonator (linear) damage | +0 | [] | 
+ability | armory:ability:resonator_phased | Resonator (phased) attack | +0 | [] | 
+ability | armory:ability:resonator_phased#weapon1 | Resonator (phased) damage | +0 | [] | 
+ability | armory:ability:resonator_refraction | Resonator (refraction) attack | +0 | [] | 
+ability | armory:ability:resonator_refraction#weapon1 | Resonator (refraction) damage | +0 | [] | 
+ability | armory:ability:retractable_spike_advanced | Retractable spike (advanced) attack | +0 | [] | 
+ability | armory:ability:retractable_spike_advanced#weapon1 | Retractable spike (advanced) damage | +0 | [] | 
+ability | armory:ability:retractable_spike_elite | Retractable spike (elite) attack | +0 | [] | 
+ability | armory:ability:retractable_spike_elite#weapon1 | Retractable spike (elite) damage | +0 | [] | 
+ability | armory:ability:retractable_spike_paragon | Retractable spike (paragon) attack | +0 | [] | 
+ability | armory:ability:retractable_spike_paragon#weapon1 | Retractable spike (paragon) damage | +0 | [] | 
+ability | armory:ability:retractable_spike_tactical | Retractable spike (tactical) attack | +0 | [] | 
+ability | armory:ability:retractable_spike_tactical#weapon1 | Retractable spike (tactical) damage | +0 | [] | 
+ability | armory:ability:rocket_rifle | Rocket rifle attack | +0 | [] | 
+ability | armory:ability:rocket_rifle#weapon1 | Rocket rifle damage | +0 | [] | 
+ability | armory:ability:rotating_pistol_advanced | Rotating pistol (advanced) attack | +0 | [] | 
+ability | armory:ability:rotating_pistol_advanced#weapon1 | Rotating pistol (advanced) damage | +0 | [] | 
+ability | armory:ability:rotating_pistol_elite | Rotating pistol (elite) attack | +0 | [] | 
+ability | armory:ability:rotating_pistol_elite#weapon1 | Rotating pistol (elite) damage | +0 | [] | 
+ability | armory:ability:rotating_pistol_tactical | Rotating pistol (tactical) attack | +0 | [] | 
+ability | armory:ability:rotating_pistol_tactical#weapon1 | Rotating pistol (tactical) damage | +0 | [] | 
+ability | armory:ability:rotolaser_advanced | Rotolaser (advanced) attack | +0 | [] | 
+ability | armory:ability:rotolaser_advanced#weapon1 | Rotolaser (advanced) damage | +0 | [] | 
+ability | armory:ability:rotolaser_tactical | Rotolaser (tactical) attack | +0 | [] | 
+ability | armory:ability:rotolaser_tactical#weapon1 | Rotolaser (tactical) damage | +0 | [] | 
+ability | core:ability:human_default_size_and_type | SIZE AND TYPE |  | [] | Humans are Medium humanoids and have the human subtype.
+ability | core:ability:human_default_skilled | SKILLED |  | [] | Humans gain an additional skill rank at 1st level and each level thereafter.
+ability | armory:ability:sap_heavy | Sap (heavy) attack | +0 | [] | 
+ability | armory:ability:sap_heavy#weapon1 | Sap (heavy) damage | +0 | [] | 
+ability | armory:ability:sap_light | Sap (light) attack | +0 | [] | 
+ability | armory:ability:sap_light#weapon1 | Sap (light) damage | +0 | [] | 
+ability | armory:ability:sap_medium | Sap (medium) attack | +0 | [] | 
+ability | armory:ability:sap_medium#weapon1 | Sap (medium) damage | +0 | [] | 
+ability | core:ability:scattergun_grapeshot | Scattergun (grapeshot) attack | +0 | [] | 
+ability | core:ability:scattergun_grapeshot#weapon1 | Scattergun (grapeshot) damage | +0 | [] | 
+ability | core:ability:scattergun_impact | Scattergun (impact) attack | +0 | [] | 
+ability | core:ability:scattergun_impact#weapon1 | Scattergun (impact) damage | +0 | [] | 
+ability | core:ability:scattergun_snub | Scattergun (snub) attack | +0 | [] | 
+ability | core:ability:scattergun_snub#weapon1 | Scattergun (snub) damage | +0 | [] | 
+ability | core:ability:scattergun_utility | Scattergun (utility) attack | +0 | [] | 
+ability | core:ability:scattergun_utility#weapon1 | Scattergun (utility) damage | +0 | [] | 
+ability | core:ability:scattergun_vortex | Scattergun (vortex) attack | +0 | [] | 
+ability | core:ability:scattergun_vortex#weapon1 | Scattergun (vortex) damage | +0 | [] | 
+ability | armory:ability:scorchgun_c_band | Scorchgun (C-band) attack | +0 | [] | 
+ability | armory:ability:scorchgun_c_band#weapon1 | Scorchgun (C-band) damage | +0 | [] | 
+ability | armory:ability:scorchgun_k_band | Scorchgun (K-band) attack | +0 | [] | 
+ability | armory:ability:scorchgun_k_band#weapon1 | Scorchgun (K-band) damage | +0 | [] | 
+ability | armory:ability:scorchgun_s_band | Scorchgun (S-band) attack | +0 | [] | 
+ability | armory:ability:scorchgun_s_band#weapon1 | Scorchgun (S-band) damage | +0 | [] | 
+ability | armory:ability:scorchgun_x_band | Scorchgun (X-band) attack | +0 | [] | 
+ability | armory:ability:scorchgun_x_band#weapon1 | Scorchgun (X-band) damage | +0 | [] | 
+ability | armory:ability:scorchgun_microwave | Scorchgun (microwave) attack | +0 | [] | 
+ability | armory:ability:scorchgun_microwave#weapon1 | Scorchgun (microwave) damage | +0 | [] | 
+ability | core:ability:screamer_hfd | Screamer (HFD) attack | +0 | [] | 
+ability | core:ability:screamer_hfd#weapon1 | Screamer (HFD) damage | +0 | [] | 
+ability | core:ability:screamer_lfd | Screamer (LFD) attack | +0 | [] | 
+ability | core:ability:screamer_lfd#weapon1 | Screamer (LFD) damage | +0 | [] | 
+ability | core:ability:screamer_thunderstrike | Screamer (thunderstrike) attack | +0 | [] | 
+ability | core:ability:screamer_thunderstrike#weapon1 | Screamer (thunderstrike) damage | +0 | [] | 
+ability | armory:ability:scythe_sintered | Scythe (sintered) attack | +0 | [] | 
+ability | armory:ability:scythe_sintered#weapon1 | Scythe (sintered) damage | +0 | [] | 
+ability | armory:ability:scythe_tactical | Scythe (tactical) attack | +0 | [] | 
+ability | armory:ability:scythe_tactical#weapon1 | Scythe (tactical) damage | +0 | [] | 
+ability | armory:ability:scythe_ultrathin | Scythe (ultrathin) attack | +0 | [] | 
+ability | armory:ability:scythe_ultrathin#weapon1 | Scythe (ultrathin) damage | +0 | [] | 
+ability | armory:ability:searing_grip_high_heat | Searing grip (high-heat) attack | +0 | [] | 
+ability | armory:ability:searing_grip_high_heat#weapon1 | Searing grip (high-heat) damage | +0 | [] | 
+ability | armory:ability:searing_grip_low_heat | Searing grip (low-heat) attack | +0 | [] | 
+ability | armory:ability:searing_grip_low_heat#weapon1 | Searing grip (low-heat) damage | +0 | [] | 
+ability | armory:ability:searing_grip_weaponized | Searing grip (weaponized) attack | +0 | [] | 
+ability | armory:ability:searing_grip_weaponized#weapon1 | Searing grip (weaponized) damage | +0 | [] | 
+ability | core:ability:seeker_rifle_advanced | Seeker rifle (advanced) attack | +0 | [] | 
+ability | core:ability:seeker_rifle_advanced#weapon1 | Seeker rifle (advanced) damage | +0 | [] | 
+ability | core:ability:seeker_rifle_elite | Seeker rifle (elite) attack | +0 | [] | 
+ability | core:ability:seeker_rifle_elite#weapon1 | Seeker rifle (elite) damage | +0 | [] | 
+ability | core:ability:seeker_rifle_paragon | Seeker rifle (paragon) attack | +0 | [] | 
+ability | core:ability:seeker_rifle_paragon#weapon1 | Seeker rifle (paragon) damage | +0 | [] | 
+ability | core:ability:seeker_rifle_tactical | Seeker rifle (tactical) attack | +0 | [] | 
+ability | core:ability:seeker_rifle_tactical#weapon1 | Seeker rifle (tactical) damage | +0 | [] | 
+ability | armory:ability:seismic_pick_demolition | Seismic pick (demolition) attack | +0 | [] | 
+ability | armory:ability:seismic_pick_demolition#weapon1 | Seismic pick (demolition) damage | +0 | [] | 
+ability | armory:ability:seismic_pick_driver | Seismic pick (driver) attack | +0 | [] | 
+ability | armory:ability:seismic_pick_driver#weapon1 | Seismic pick (driver) damage | +0 | [] | 
+ability | armory:ability:seismic_pick_heavy | Seismic pick (heavy) attack | +0 | [] | 
+ability | armory:ability:seismic_pick_heavy#weapon1 | Seismic pick (heavy) damage | +0 | [] | 
+ability | armory:ability:seismic_pick_light | Seismic pick (light) attack | +0 | [] | 
+ability | armory:ability:seismic_pick_light#weapon1 | Seismic pick (light) damage | +0 | [] | 
+ability | core:ability:semi_auto_pistol_advanced | Semi-auto pistol (advanced) attack | +0 | [] | 
+ability | core:ability:semi_auto_pistol_advanced#weapon1 | Semi-auto pistol (advanced) damage | +0 | [] | 
+ability | core:ability:semi_auto_pistol_elite | Semi-auto pistol (elite) attack | +0 | [] | 
+ability | core:ability:semi_auto_pistol_elite#weapon1 | Semi-auto pistol (elite) damage | +0 | [] | 
+ability | core:ability:semi_auto_pistol_paragon | Semi-auto pistol (paragon) attack | +0 | [] | 
+ability | core:ability:semi_auto_pistol_paragon#weapon1 | Semi-auto pistol (paragon) damage | +0 | [] | 
+ability | core:ability:semi_auto_pistol_tactical | Semi-auto pistol (tactical) attack | +0 | [] | 
+ability | core:ability:semi_auto_pistol_tactical#weapon1 | Semi-auto pistol (tactical) damage | +0 | [] | 
+ability | armory:ability:serpent_laser_aphelion | Serpent laser (aphelion) attack | +0 | [] | 
+ability | armory:ability:serpent_laser_aphelion#weapon1 | Serpent laser (aphelion) damage | +0 | [] | 
+ability | armory:ability:serpent_laser_azimuth | Serpent laser (azimuth) attack | +0 | [] | 
+ability | armory:ability:serpent_laser_azimuth#weapon1 | Serpent laser (azimuth) damage | +0 | [] | 
+ability | armory:ability:serpent_laser_corona | Serpent laser (corona) attack | +0 | [] | 
+ability | armory:ability:serpent_laser_corona#weapon1 | Serpent laser (corona) damage | +0 | [] | 
+ability | armory:ability:serpent_laser_perihelion | Serpent laser (perihelion) attack | +0 | [] | 
+ability | armory:ability:serpent_laser_perihelion#weapon1 | Serpent laser (perihelion) damage | +0 | [] | 
+ability | armory:ability:shadow_chains_acolyte | Shadow chains (acolyte) attack | +0 | [] | 
+ability | armory:ability:shadow_chains_acolyte#weapon1 | Shadow chains (acolyte) damage | +0 | [] | 
+ability | armory:ability:shadow_chains_devotional | Shadow chains (devotional) attack | +0 | [] | 
+ability | armory:ability:shadow_chains_devotional#weapon1 | Shadow chains (devotional) damage | +0 | [] | 
+ability | armory:ability:shadow_chains_ecclesiastic | Shadow chains (ecclesiastic) attack | +0 | [] | 
+ability | armory:ability:shadow_chains_ecclesiastic#weapon1 | Shadow chains (ecclesiastic) damage | +0 | [] | 
+ability | armory:ability:shadow_chains_follower | Shadow chains (follower) attack | +0 | [] | 
+ability | armory:ability:shadow_chains_follower#weapon1 | Shadow chains (follower) damage | +0 | [] | 
+ability | armory:ability:shadow_chains_penitent | Shadow chains (penitent) attack | +0 | [] | 
+ability | armory:ability:shadow_chains_penitent#weapon1 | Shadow chains (penitent) damage | +0 | [] | 
+ability | armory:ability:shadow_pistol_caliginous | Shadow pistol (caliginous) attack | +0 | [] | 
+ability | armory:ability:shadow_pistol_caliginous#weapon1 | Shadow pistol (caliginous) damage | +0 | [] | 
+ability | armory:ability:shadow_pistol_sable | Shadow pistol (sable) attack | +0 | [] | 
+ability | armory:ability:shadow_pistol_sable#weapon1 | Shadow pistol (sable) damage | +0 | [] | 
+ability | armory:ability:shadow_pistol_tenebrous | Shadow pistol (tenebrous) attack | +0 | [] | 
+ability | armory:ability:shadow_pistol_tenebrous#weapon1 | Shadow pistol (tenebrous) damage | +0 | [] | 
+ability | armory:ability:shadow_pistol_umbral | Shadow pistol (umbral) attack | +0 | [] | 
+ability | armory:ability:shadow_pistol_umbral#weapon1 | Shadow pistol (umbral) damage | +0 | [] | 
+ability | alien_archive:ability:shadowstaff_lesser | Shadowstaff (lesser) attack | +0 | [] | 
+ability | alien_archive:ability:shadowstaff_lesser#weapon1 | Shadowstaff (lesser) damage | +0 | [] | 
+ability | alien_archive:ability:shadowstaff | Shadowstaff attack | +0 | [] | 
+ability | alien_archive:ability:shadowstaff#weapon1 | Shadowstaff damage | +0 | [] | 
+ability | armory:ability:shell_knuckles_advanced | Shell knuckles (advanced) attack | +0 | [] | 
+ability | armory:ability:shell_knuckles_advanced#weapon1 | Shell knuckles (advanced) damage | +0 | [] | 
+ability | armory:ability:shell_knuckles_elite | Shell knuckles (elite) attack | +0 | [] | 
+ability | armory:ability:shell_knuckles_elite#weapon1 | Shell knuckles (elite) damage | +0 | [] | 
+ability | armory:ability:shell_knuckles_paragon | Shell knuckles (paragon) attack | +0 | [] | 
+ability | armory:ability:shell_knuckles_paragon#weapon1 | Shell knuckles (paragon) damage | +0 | [] | 
+ability | armory:ability:shell_knuckles_tactical | Shell knuckles (tactical) attack | +0 | [] | 
+ability | armory:ability:shell_knuckles_tactical#weapon1 | Shell knuckles (tactical) damage | +0 | [] | 
+ability | armory:ability:shellgun_blaze | Shellgun (blaze) attack | +0 | [] | 
+ability | armory:ability:shellgun_blaze#weapon1 | Shellgun (blaze) damage | +0 | [] | 
+ability | armory:ability:shellgun_bombard | Shellgun (bombard) attack | +0 | [] | 
+ability | armory:ability:shellgun_bombard#weapon1 | Shellgun (bombard) damage | +0 | [] | 
+ability | armory:ability:shellgun_fury | Shellgun (fury) attack | +0 | [] | 
+ability | armory:ability:shellgun_fury#weapon1 | Shellgun (fury) damage | +0 | [] | 
+ability | character_operations_manual:ability:shield_prof_shields | Shield Prof ~ Shields |  | [] | 
+ability | armory:ability:shield_projector_defender | Shield projector (defender) attack | +0 | [] | 
+ability | armory:ability:shield_projector_defender#weapon1 | Shield projector (defender) damage | +0 | [] | 
+ability | armory:ability:shield_projector_guardian | Shield projector (guardian) attack | +0 | [] | 
+ability | armory:ability:shield_projector_guardian#weapon1 | Shield projector (guardian) damage | +0 | [] | 
+ability | armory:ability:shield_projector_sentry | Shield projector (sentry) attack | +0 | [] | 
+ability | armory:ability:shield_projector_sentry#weapon1 | Shield projector (sentry) damage | +0 | [] | 
+ability | armory:ability:shield_projector_warden | Shield projector (warden) attack | +0 | [] | 
+ability | armory:ability:shield_projector_warden#weapon1 | Shield projector (warden) damage | +0 | [] | 
+ability | core:ability:shirren_eye_rifle_advanced | Shirren-eye rifle (advanced) attack | +0 | [] | 
+ability | core:ability:shirren_eye_rifle_advanced#weapon1 | Shirren-eye rifle (advanced) damage | +0 | [] | 
+ability | core:ability:shirren_eye_rifle_elite | Shirren-eye rifle (elite) attack | +0 | [] | 
+ability | core:ability:shirren_eye_rifle_elite#weapon1 | Shirren-eye rifle (elite) damage | +0 | [] | 
+ability | core:ability:shirren_eye_rifle_paragon | Shirren-eye rifle (paragon) attack | +0 | [] | 
+ability | core:ability:shirren_eye_rifle_paragon#weapon1 | Shirren-eye rifle (paragon) damage | +0 | [] | 
+ability | core:ability:shirren_eye_rifle_tactical | Shirren-eye rifle (tactical) attack | +0 | [] | 
+ability | core:ability:shirren_eye_rifle_tactical#weapon1 | Shirren-eye rifle (tactical) damage | +0 | [] | 
+ability | core:ability:shirren_eye_rifle_warpshot | Shirren-eye rifle (warpshot) attack | +0 | [] | 
+ability | core:ability:shirren_eye_rifle_warpshot#weapon1 | Shirren-eye rifle (warpshot) damage | +0 | [] | 
+ability | pact_worlds:ability:shobhad_horizon_striker_advanced | Shobhad horizon striker (advanced) attack | +0 | [] | 
+ability | pact_worlds:ability:shobhad_horizon_striker_advanced#weapon1 | Shobhad horizon striker (advanced) damage | +0 | [] | 
+ability | pact_worlds:ability:shobhad_horizon_striker_elite | Shobhad horizon striker (elite) attack | +0 | [] | 
+ability | pact_worlds:ability:shobhad_horizon_striker_elite#weapon1 | Shobhad horizon striker (elite) damage | +0 | [] | 
+ability | pact_worlds:ability:shobhad_horizon_striker_paragon | Shobhad horizon striker (paragon) attack | +0 | [] | 
+ability | pact_worlds:ability:shobhad_horizon_striker_paragon#weapon1 | Shobhad horizon striker (paragon) damage | +0 | [] | 
+ability | pact_worlds:ability:shobhad_horizon_striker_tactical | Shobhad horizon striker (tactical) attack | +0 | [] | 
+ability | pact_worlds:ability:shobhad_horizon_striker_tactical#weapon1 | Shobhad horizon striker (tactical) damage | +0 | [] | 
+ability | core:ability:shock_caster_aurora | Shock caster (aurora) attack | +0 | [] | 
+ability | core:ability:shock_caster_aurora#weapon1 | Shock caster (aurora) damage | +0 | [] | 
+ability | core:ability:shock_caster_static | Shock caster (static) attack | +0 | [] | 
+ability | core:ability:shock_caster_static#weapon1 | Shock caster (static) damage | +0 | [] | 
+ability | core:ability:shock_caster_storm | Shock caster (storm) attack | +0 | [] | 
+ability | core:ability:shock_caster_storm#weapon1 | Shock caster (storm) damage | +0 | [] | 
+ability | core:ability:shock_caster_tempest | Shock caster (tempest) attack | +0 | [] | 
+ability | core:ability:shock_caster_tempest#weapon1 | Shock caster (tempest) damage | +0 | [] | 
+ability | armory:ability:shock_pad_aurora | Shock pad (aurora) attack | +0 | [] | 
+ability | armory:ability:shock_pad_aurora#weapon1 | Shock pad (aurora) damage | +0 | [] | 
+ability | armory:ability:shock_pad_static | Shock pad (static) attack | +0 | [] | 
+ability | armory:ability:shock_pad_static#weapon1 | Shock pad (static) damage | +0 | [] | 
+ability | armory:ability:shock_pad_storm | Shock pad (storm) attack | +0 | [] | 
+ability | armory:ability:shock_pad_storm#weapon1 | Shock pad (storm) damage | +0 | [] | 
+ability | armory:ability:shock_pad_tempest | Shock pad (tempest) attack | +0 | [] | 
+ability | armory:ability:shock_pad_tempest#weapon1 | Shock pad (tempest) damage | +0 | [] | 
+ability | core:ability:shock_truncheon_aurora | Shock truncheon (aurora) attack | +0 | [] | 
+ability | core:ability:shock_truncheon_aurora#weapon1 | Shock truncheon (aurora) damage | +0 | [] | 
+ability | core:ability:shock_truncheon_static | Shock truncheon (static) attack | +0 | [] | 
+ability | core:ability:shock_truncheon_static#weapon1 | Shock truncheon (static) damage | +0 | [] | 
+ability | core:ability:shock_truncheon_storm | Shock truncheon (storm) attack | +0 | [] | 
+ability | core:ability:shock_truncheon_storm#weapon1 | Shock truncheon (storm) damage | +0 | [] | 
+ability | core:ability:shock_truncheon_tempest | Shock truncheon (tempest) attack | +0 | [] | 
+ability | core:ability:shock_truncheon_tempest#weapon1 | Shock truncheon (tempest) damage | +0 | [] | 
+ability | armory:ability:shoulder_laser_aphelion | Shoulder laser (aphelion) attack | +0 | [] | 
+ability | armory:ability:shoulder_laser_aphelion#weapon1 | Shoulder laser (aphelion) damage | +0 | [] | 
+ability | armory:ability:shoulder_laser_azimuth | Shoulder laser (azimuth) attack | +0 | [] | 
+ability | armory:ability:shoulder_laser_azimuth#weapon1 | Shoulder laser (azimuth) damage | +0 | [] | 
+ability | armory:ability:shoulder_laser_corona | Shoulder laser (corona) attack | +0 | [] | 
+ability | armory:ability:shoulder_laser_corona#weapon1 | Shoulder laser (corona) damage | +0 | [] | 
+ability | armory:ability:shoulder_laser_perihelion | Shoulder laser (perihelion) attack | +0 | [] | 
+ability | armory:ability:shoulder_laser_perihelion#weapon1 | Shoulder laser (perihelion) damage | +0 | [] | 
+ability | armory:ability:shout_projector_crackdown | Shout projector (crackdown) attack | +0 | [] | 
+ability | armory:ability:shout_projector_crackdown#weapon1 | Shout projector (crackdown) damage | +0 | [] | 
+ability | armory:ability:shout_projector_damper | Shout projector (damper) attack | +0 | [] | 
+ability | armory:ability:shout_projector_damper#weapon1 | Shout projector (damper) damage | +0 | [] | 
+ability | armory:ability:shout_projector_exhorter | Shout projector (exhorter) attack | +0 | [] | 
+ability | armory:ability:shout_projector_exhorter#weapon1 | Shout projector (exhorter) damage | +0 | [] | 
+ability | armory:ability:shout_projector_pacifier | Shout projector (pacifier) attack | +0 | [] | 
+ability | armory:ability:shout_projector_pacifier#weapon1 | Shout projector (pacifier) damage | +0 | [] | 
+ability | armory:ability:shout_projector_riot | Shout projector (riot) attack | +0 | [] | 
+ability | armory:ability:shout_projector_riot#weapon1 | Shout projector (riot) damage | +0 | [] | 
+ability | armory:ability:shout_rifle | Shout rifle attack | +0 | [] | 
+ability | armory:ability:shout_rifle#weapon1 | Shout rifle damage | +0 | [] | 
+ability | armory:ability:shrieking_knife_harmonic | Shrieking knife (harmonic) attack | +0 | [] | 
+ability | armory:ability:shrieking_knife_harmonic#weapon1 | Shrieking knife (harmonic) damage | +0 | [] | 
+ability | armory:ability:shrieking_knife_infrasonic | Shrieking knife (infrasonic) attack | +0 | [] | 
+ability | armory:ability:shrieking_knife_infrasonic#weapon1 | Shrieking knife (infrasonic) damage | +0 | [] | 
+ability | armory:ability:shrieking_knife_interference | Shrieking knife (interference) attack | +0 | [] | 
+ability | armory:ability:shrieking_knife_interference#weapon1 | Shrieking knife (interference) damage | +0 | [] | 
+ability | armory:ability:shrieking_knife_ultrasonic | Shrieking knife (ultrasonic) attack | +0 | [] | 
+ability | armory:ability:shrieking_knife_ultrasonic#weapon1 | Shrieking knife (ultrasonic) damage | +0 | [] | 
+ability | armory:ability:shrieking_larva | Shrieking larva attack | +0 | [] | 
+ability | armory:ability:shrieking_larva#weapon1 | Shrieking larva damage | +0 | [] | 
+ability | armory:ability:singing_disk_alto | Singing disk (alto) attack | +0 | [] | 
+ability | armory:ability:singing_disk_alto#weapon1 | Singing disk (alto) damage | +0 | [] | 
+ability | armory:ability:singing_disk_bass | Singing disk (bass) attack | +0 | [] | 
+ability | armory:ability:singing_disk_bass#weapon1 | Singing disk (bass) damage | +0 | [] | 
+ability | armory:ability:singing_disk_sopranino | Singing disk (sopranino) attack | +0 | [] | 
+ability | armory:ability:singing_disk_sopranino#weapon1 | Singing disk (sopranino) damage | +0 | [] | 
+ability | armory:ability:singing_disk_soprano | Singing disk (soprano) attack | +0 | [] | 
+ability | armory:ability:singing_disk_soprano#weapon1 | Singing disk (soprano) damage | +0 | [] | 
+ability | armory:ability:singing_disk_tenor | Singing disk (tenor) attack | +0 | [] | 
+ability | armory:ability:singing_disk_tenor#weapon1 | Singing disk (tenor) damage | +0 | [] | 
+ability | armory:ability:singing_spear_alto | Singing spear (alto) attack | +0 | [] | 
+ability | armory:ability:singing_spear_alto#weapon1 | Singing spear (alto) damage | +0 | [] | 
+ability | armory:ability:singing_spear_sopranino | Singing spear (sopranino) attack | +0 | [] | 
+ability | armory:ability:singing_spear_sopranino#weapon1 | Singing spear (sopranino) damage | +0 | [] | 
+ability | armory:ability:singing_spear_soprano | Singing spear (soprano) attack | +0 | [] | 
+ability | armory:ability:singing_spear_soprano#weapon1 | Singing spear (soprano) damage | +0 | [] | 
+ability | armory:ability:singing_spear_tenor | Singing spear (tenor) attack | +0 | [] | 
+ability | armory:ability:singing_spear_tenor#weapon1 | Singing spear (tenor) damage | +0 | [] | 
+ability | core:ability:skyfire_sword_inferno | Skyfire Sword Inferno | +0 | [] | 
+ability | core:ability:skyfire_sword_tactical | Skyfire Sword Tactical | +0 | [] | 
+ability | armory:ability:sledge | Sledge attack | +0 | [] | 
+ability | armory:ability:sledge#weapon1 | Sledge damage | +0 | [] | 
+ability | armory:ability:solar_brand_blue_star | Solar brand (blue star) attack | +0 | [] | 
+ability | armory:ability:solar_brand_blue_star#weapon1 | Solar brand (blue star) damage | +0 | [] | 
+ability | armory:ability:solar_brand_red_star | Solar brand (red star) attack | +0 | [] | 
+ability | armory:ability:solar_brand_red_star#weapon1 | Solar brand (red star) damage | +0 | [] | 
+ability | armory:ability:solar_brand_white_star | Solar brand (white star) attack | +0 | [] | 
+ability | armory:ability:solar_brand_white_star#weapon1 | Solar brand (white star) damage | +0 | [] | 
+ability | armory:ability:solar_brand_yellow_star | Solar brand (yellow star) attack | +0 | [] | 
+ability | armory:ability:solar_brand_yellow_star#weapon1 | Solar brand (yellow star) damage | +0 | [] | 
+ability | character_operations_manual:ability:solarian_flare | Solarian Flare attack | +0 | [] | 
+ability | character_operations_manual:ability:solarian_flare#weapon1 | Solarian Flare damage | +0 | [] | 
+ability | core:ability:solarian_weapon | Solarian Weapon attack | +0 | [] | 
+ability | core:ability:solarian_weapon#weapon1 | Solarian Weapon damage | +0 | [] | 
+ability | core:ability:soldier | Soldier | +1 | [] | 
+ability | armory:ability:sonic_bolter_assault | Sonic bolter (assault) attack | +0 | [] | 
+ability | armory:ability:sonic_bolter_assault#weapon1 | Sonic bolter (assault) damage | +0 | [] | 
+ability | armory:ability:sonic_bolter_devastator | Sonic bolter (devastator) attack | +0 | [] | 
+ability | armory:ability:sonic_bolter_devastator#weapon1 | Sonic bolter (devastator) damage | +0 | [] | 
+ability | armory:ability:sonic_bolter_heavy | Sonic bolter (heavy) attack | +0 | [] | 
+ability | armory:ability:sonic_bolter_heavy#weapon1 | Sonic bolter (heavy) damage | +0 | [] | 
+ability | armory:ability:sonic_bolter_light | Sonic bolter (light) attack | +0 | [] | 
+ability | armory:ability:sonic_bolter_light#weapon1 | Sonic bolter (light) damage | +0 | [] | 
+ability | core:ability:sonic_pistol_hfd | Sonic pistol (HFD) attack | +0 | [] | 
+ability | core:ability:sonic_pistol_hfd#weapon1 | Sonic pistol (HFD) damage | +0 | [] | 
+ability | core:ability:sonic_pistol_lfd | Sonic pistol (LFD) attack | +0 | [] | 
+ability | core:ability:sonic_pistol_lfd#weapon1 | Sonic pistol (LFD) damage | +0 | [] | 
+ability | core:ability:sonic_pistol_banshee | Sonic pistol (banshee) attack | +0 | [] | 
+ability | core:ability:sonic_pistol_banshee#weapon1 | Sonic pistol (banshee) damage | +0 | [] | 
+ability | core:ability:sonic_pistol_thunderstrike | Sonic pistol (thunderstrike) attack | +0 | [] | 
+ability | core:ability:sonic_pistol_thunderstrike#weapon1 | Sonic pistol (thunderstrike) damage | +0 | [] | 
+ability | core:ability:sonic_rifle_hfd | Sonic rifle (HFD) attack | +0 | [] | 
+ability | core:ability:sonic_rifle_hfd#weapon1 | Sonic rifle (HFD) damage | +0 | [] | 
+ability | core:ability:sonic_rifle_lfd | Sonic rifle (LFD) attack | +0 | [] | 
+ability | core:ability:sonic_rifle_lfd#weapon1 | Sonic rifle (LFD) damage | +0 | [] | 
+ability | core:ability:sonic_rifle_banshee | Sonic rifle (banshee) attack | +0 | [] | 
+ability | core:ability:sonic_rifle_banshee#weapon1 | Sonic rifle (banshee) damage | +0 | [] | 
+ability | core:ability:sonic_rifle_thunderstrike | Sonic rifle (thunderstrike) attack | +0 | [] | 
+ability | core:ability:sonic_rifle_thunderstrike#weapon1 | Sonic rifle (thunderstrike) damage | +0 | [] | 
+ability | armory:ability:sonic_suppressor_hush | Sonic suppressor (hush) attack | +0 | [] | 
+ability | armory:ability:sonic_suppressor_hush#weapon1 | Sonic suppressor (hush) damage | +0 | [] | 
+ability | armory:ability:sonic_suppressor_murmur | Sonic suppressor (murmur) attack | +0 | [] | 
+ability | armory:ability:sonic_suppressor_murmur#weapon1 | Sonic suppressor (murmur) damage | +0 | [] | 
+ability | armory:ability:sonic_suppressor_repose | Sonic suppressor (repose) attack | +0 | [] | 
+ability | armory:ability:sonic_suppressor_repose#weapon1 | Sonic suppressor (repose) damage | +0 | [] | 
+ability | armory:ability:sonic_suppressor_whisper | Sonic suppressor (whisper) attack | +0 | [] | 
+ability | armory:ability:sonic_suppressor_whisper#weapon1 | Sonic suppressor (whisper) damage | +0 | [] | 
+ability | armory:ability:spark_knife_boss | Spark knife (boss) attack | +0 | [] | 
+ability | armory:ability:spark_knife_boss#weapon1 | Spark knife (boss) damage | +0 | [] | 
+ability | armory:ability:spark_knife_crew | Spark knife (crew) attack | +0 | [] | 
+ability | armory:ability:spark_knife_crew#weapon1 | Spark knife (crew) damage | +0 | [] | 
+ability | armory:ability:spark_knife_recruit | Spark knife (recruit) attack | +0 | [] | 
+ability | armory:ability:spark_knife_recruit#weapon1 | Spark knife (recruit) damage | +0 | [] | 
+ability | armory:ability:spark_knife_runner | Spark knife (runner) attack | +0 | [] | 
+ability | armory:ability:spark_knife_runner#weapon1 | Spark knife (runner) damage | +0 | [] | 
+ability | core:ability:spear_buzzblade | Spear (buzzblade) attack | +0 | [] | 
+ability | core:ability:spear_buzzblade#weapon1 | Spear (buzzblade) damage | +0 | [] | 
+ability | core:ability:spear_gravity | Spear (gravity) attack | +0 | [] | 
+ability | core:ability:spear_gravity#weapon1 | Spear (gravity) damage | +0 | [] | 
+ability | core:ability:spear_sentinel | Spear (sentinel) attack | +0 | [] | 
+ability | core:ability:spear_sentinel#weapon1 | Spear (sentinel) damage | +0 | [] | 
+ability | core:ability:spear_tactical | Spear (tactical) attack | +0 | [] | 
+ability | core:ability:spear_tactical#weapon1 | Spear (tactical) damage | +0 | [] | 
+ability | core:ability:spear_zero_edge | Spear (zero-edge) attack | +0 | [] | 
+ability | core:ability:spear_zero_edge#weapon1 | Spear (zero-edge) damage | +0 | [] | 
+ability | armory:ability:spined_blade_basic | Spined blade (basic) attack | +0 | [] | 
+ability | armory:ability:spined_blade_basic#weapon1 | Spined blade (basic) damage | +0 | [] | 
+ability | armory:ability:spined_blade_buzzblade | Spined blade (buzzblade) attack | +0 | [] | 
+ability | armory:ability:spined_blade_buzzblade#weapon1 | Spined blade (buzzblade) damage | +0 | [] | 
+ability | armory:ability:spined_blade_gravity | Spined blade (gravity) attack | +0 | [] | 
+ability | armory:ability:spined_blade_gravity#weapon1 | Spined blade (gravity) damage | +0 | [] | 
+ability | armory:ability:spined_blade_ripper | Spined blade (ripper) attack | +0 | [] | 
+ability | armory:ability:spined_blade_ripper#weapon1 | Spined blade (ripper) damage | +0 | [] | 
+ability | armory:ability:spined_blade_rivener | Spined blade (rivener) attack | +0 | [] | 
+ability | armory:ability:spined_blade_rivener#weapon1 | Spined blade (rivener) damage | +0 | [] | 
+ability | armory:ability:spined_iceblade_avalanche_class | Spined iceblade (avalanche-class) attack | +0 | [] | 
+ability | armory:ability:spined_iceblade_avalanche_class#weapon1 | Spined iceblade (avalanche-class) damage | +0 | [] | 
+ability | armory:ability:spined_iceblade_blizzard_class | Spined iceblade (blizzard-class) attack | +0 | [] | 
+ability | armory:ability:spined_iceblade_blizzard_class#weapon1 | Spined iceblade (blizzard-class) damage | +0 | [] | 
+ability | armory:ability:spined_iceblade_frostbite_class | Spined iceblade (frostbite-class) attack | +0 | [] | 
+ability | armory:ability:spined_iceblade_frostbite_class#weapon1 | Spined iceblade (frostbite-class) damage | +0 | [] | 
+ability | armory:ability:spined_iceblade_hailstorm_class | Spined iceblade (hailstorm-class) attack | +0 | [] | 
+ability | armory:ability:spined_iceblade_hailstorm_class#weapon1 | Spined iceblade (hailstorm-class) damage | +0 | [] | 
+ability | armory:ability:staccato_rifle_drum | Staccato rifle (drum) attack | +0 | [] | 
+ability | armory:ability:staccato_rifle_drum#weapon1 | Staccato rifle (drum) damage | +0 | [] | 
+ability | armory:ability:staccato_rifle_hammer | Staccato rifle (hammer) attack | +0 | [] | 
+ability | armory:ability:staccato_rifle_hammer#weapon1 | Staccato rifle (hammer) damage | +0 | [] | 
+ability | armory:ability:staccato_rifle_pulse | Staccato rifle (pulse) attack | +0 | [] | 
+ability | armory:ability:staccato_rifle_pulse#weapon1 | Staccato rifle (pulse) damage | +0 | [] | 
+ability | armory:ability:staccato_rifle_surge | Staccato rifle (surge) attack | +0 | [] | 
+ability | armory:ability:staccato_rifle_surge#weapon1 | Staccato rifle (surge) damage | +0 | [] | 
+ability | core:ability:staff_battle | Staff (battle) attack | +0 | [] | 
+ability | core:ability:staff_battle#weapon1 | Staff (battle) damage | +0 | [] | 
+ability | core:ability:staff_carbon | Staff (carbon) attack | +0 | [] | 
+ability | core:ability:staff_carbon#weapon1 | Staff (carbon) damage | +0 | [] | 
+ability | core:ability:staff_hardlight | Staff (hardlight) attack | +0 | [] | 
+ability | core:ability:staff_hardlight#weapon1 | Staff (hardlight) damage | +0 | [] | 
+ability | core:ability:staff_repeller | Staff (repeller) attack | +0 | [] | 
+ability | core:ability:staff_repeller#weapon1 | Staff (repeller) damage | +0 | [] | 
+ability | core:ability:staff_sentinel | Staff (sentinel) attack | +0 | [] | 
+ability | core:ability:staff_sentinel#weapon1 | Staff (sentinel) damage | +0 | [] | 
+ability | pact_worlds:ability:starheart_cannon_blue_star | Starheart cannon (blue star) attack | +0 | [] | 
+ability | pact_worlds:ability:starheart_cannon_blue_star#weapon1 | Starheart cannon (blue star) damage | +0 | [] | 
+ability | pact_worlds:ability:starheart_cannon_red_star | Starheart cannon (red star) attack | +0 | [] | 
+ability | pact_worlds:ability:starheart_cannon_red_star#weapon1 | Starheart cannon (red star) damage | +0 | [] | 
+ability | pact_worlds:ability:starheart_cannon_white_star | Starheart cannon (white star) attack | +0 | [] | 
+ability | pact_worlds:ability:starheart_cannon_white_star#weapon1 | Starheart cannon (white star) damage | +0 | [] | 
+ability | pact_worlds:ability:starheart_cannon_yellow_star | Starheart cannon (yellow star) attack | +0 | [] | 
+ability | pact_worlds:ability:starheart_cannon_yellow_star#weapon1 | Starheart cannon (yellow star) damage | +0 | [] | 
+ability | core:ability:starknife_accelerated | Starknife (accelerated) attack | +0 | [] | 
+ability | core:ability:starknife_accelerated#weapon1 | Starknife (accelerated) damage | +0 | [] | 
+ability | core:ability:starknife_dimensional_slice | Starknife (dimensional slice) attack | +0 | [] | 
+ability | core:ability:starknife_dimensional_slice#weapon1 | Starknife (dimensional slice) damage | +0 | [] | 
+ability | core:ability:starknife_lightspeed | Starknife (lightspeed) attack | +0 | [] | 
+ability | core:ability:starknife_lightspeed#weapon1 | Starknife (lightspeed) damage | +0 | [] | 
+ability | core:ability:starknife_sintered | Starknife (sintered) attack | +0 | [] | 
+ability | core:ability:starknife_sintered#weapon1 | Starknife (sintered) damage | +0 | [] | 
+ability | core:ability:starknife_tactical | Starknife (tactical) attack | +0 | [] | 
+ability | core:ability:starknife_tactical#weapon1 | Starknife (tactical) damage | +0 | [] | 
+ability | core:ability:stellar_cannon_heavy | Stellar cannon (heavy) attack | +0 | [] | 
+ability | core:ability:stellar_cannon_heavy#weapon1 | Stellar cannon (heavy) damage | +0 | [] | 
+ability | core:ability:stellar_cannon_light | Stellar cannon (light) attack | +0 | [] | 
+ability | core:ability:stellar_cannon_light#weapon1 | Stellar cannon (light) damage | +0 | [] | 
+ability | armory:ability:sting_pistol_ant | Sting pistol (ant) attack | +0 | [] | 
+ability | armory:ability:sting_pistol_ant#weapon1 | Sting pistol (ant) damage | +0 | [] | 
+ability | armory:ability:sting_pistol_hornet | Sting pistol (hornet) attack | +0 | [] | 
+ability | armory:ability:sting_pistol_hornet#weapon1 | Sting pistol (hornet) damage | +0 | [] | 
+ability | armory:ability:sting_pistol_wasp | Sting pistol (wasp) attack | +0 | [] | 
+ability | armory:ability:sting_pistol_wasp#weapon1 | Sting pistol (wasp) damage | +0 | [] | 
+ability | armory:ability:sting_pistol_yellow_jacket | Sting pistol (yellow jacket) attack | +0 | [] | 
+ability | armory:ability:sting_pistol_yellow_jacket#weapon1 | Sting pistol (yellow jacket) damage | +0 | [] | 
+ability | armory:ability:storm_coil_impulse | Storm coil (impulse) attack | +0 | [] | 
+ability | armory:ability:storm_coil_impulse#weapon1 | Storm coil (impulse) damage | +0 | [] | 
+ability | armory:ability:storm_coil_jolt | Storm coil (jolt) attack | +0 | [] | 
+ability | armory:ability:storm_coil_jolt#weapon1 | Storm coil (jolt) damage | +0 | [] | 
+ability | armory:ability:storm_coil_live | Storm coil (live) attack | +0 | [] | 
+ability | armory:ability:storm_coil_live#weapon1 | Storm coil (live) damage | +0 | [] | 
+ability | armory:ability:storm_coil_surge | Storm coil (surge) attack | +0 | [] | 
+ability | armory:ability:storm_coil_surge#weapon1 | Storm coil (surge) damage | +0 | [] | 
+ability | armory:ability:storm_hammer_antiferromagnetic | Storm hammer (antiferromagnetic) attack | +0 | [] | 
+ability | armory:ability:storm_hammer_antiferromagnetic#weapon1 | Storm hammer (antiferromagnetic) damage | +0 | [] | 
+ability | armory:ability:storm_hammer_diamagnetic | Storm hammer (diamagnetic) attack | +0 | [] | 
+ability | armory:ability:storm_hammer_diamagnetic#weapon1 | Storm hammer (diamagnetic) damage | +0 | [] | 
+ability | armory:ability:storm_hammer_ferromagnetic | Storm hammer (ferromagnetic) attack | +0 | [] | 
+ability | armory:ability:storm_hammer_ferromagnetic#weapon1 | Storm hammer (ferromagnetic) damage | +0 | [] | 
+ability | armory:ability:storm_hammer_metamagnetic | Storm hammer (metamagnetic) attack | +0 | [] | 
+ability | armory:ability:storm_hammer_metamagnetic#weapon1 | Storm hammer (metamagnetic) damage | +0 | [] | 
+ability | armory:ability:storm_hammer_paramagnetic | Storm hammer (paramagnetic) attack | +0 | [] | 
+ability | armory:ability:storm_hammer_paramagnetic#weapon1 | Storm hammer (paramagnetic) damage | +0 | [] | 
+ability | armory:ability:stormcaller_mooth_channel | Stormcaller (mooth-channel) attack | +0 | [] | 
+ability | armory:ability:stormcaller_mooth_channel#weapon1 | Stormcaller (mooth-channel) damage | +0 | [] | 
+ability | armory:ability:stormcaller_ribbon | Stormcaller (ribbon) attack | +0 | [] | 
+ability | armory:ability:stormcaller_ribbon#weapon1 | Stormcaller (ribbon) damage | +0 | [] | 
+ability | armory:ability:stormcaller_rocket | Stormcaller (rocket) attack | +0 | [] | 
+ability | armory:ability:stormcaller_rocket#weapon1 | Stormcaller (rocket) damage | +0 | [] | 
+ability | armory:ability:stormcaller_sheet | Stormcaller (sheet) attack | +0 | [] | 
+ability | armory:ability:stormcaller_sheet#weapon1 | Stormcaller (sheet) damage | +0 | [] | 
+ability | core:ability:streetsweeper_hfd | Streetsweeper (HFD) attack | +0 | [] | 
+ability | core:ability:streetsweeper_hfd#weapon1 | Streetsweeper (HFD) damage | +0 | [] | 
+ability | core:ability:streetsweeper_lfd | Streetsweeper (LFD) attack | +0 | [] | 
+ability | core:ability:streetsweeper_lfd#weapon1 | Streetsweeper (LFD) damage | +0 | [] | 
+ability | core:ability:streetsweeper_thunderstrike | Streetsweeper (thunderstrike) attack | +0 | [] | 
+ability | core:ability:streetsweeper_thunderstrike#weapon1 | Streetsweeper (thunderstrike) damage | +0 | [] | 
+ability | armory:ability:stun_staff_aurora | Stun staff (aurora) attack | +0 | [] | 
+ability | armory:ability:stun_staff_aurora#weapon1 | Stun staff (aurora) damage | +0 | [] | 
+ability | armory:ability:stun_staff_static | Stun staff (static) attack | +0 | [] | 
+ability | armory:ability:stun_staff_static#weapon1 | Stun staff (static) damage | +0 | [] | 
+ability | armory:ability:stun_staff_storm | Stun staff (storm) attack | +0 | [] | 
+ability | armory:ability:stun_staff_storm#weapon1 | Stun staff (storm) damage | +0 | [] | 
+ability | armory:ability:stun_staff_tactical | Stun staff (tactical) attack | +0 | [] | 
+ability | armory:ability:stun_staff_tactical#weapon1 | Stun staff (tactical) damage | +0 | [] | 
+ability | armory:ability:stun_staff_tempest | Stun staff (tempest) attack | +0 | [] | 
+ability | armory:ability:stun_staff_tempest#weapon1 | Stun staff (tempest) damage | +0 | [] | 
+ability | armory:ability:subduer_frost | Subduer (frost) attack | +0 | [] | 
+ability | armory:ability:subduer_frost#weapon1 | Subduer (frost) damage | +0 | [] | 
+ability | armory:ability:subduer_glacier | Subduer (glacier) attack | +0 | [] | 
+ability | armory:ability:subduer_glacier#weapon1 | Subduer (glacier) damage | +0 | [] | 
+ability | armory:ability:subduer_rime | Subduer (rime) attack | +0 | [] | 
+ability | armory:ability:subduer_rime#weapon1 | Subduer (rime) damage | +0 | [] | 
+ability | armory:ability:subduer_sleet | Subduer (sleet) attack | +0 | [] | 
+ability | armory:ability:subduer_sleet#weapon1 | Subduer (sleet) damage | +0 | [] | 
+ability | armory:ability:surgecaster_advanced | Surgecaster (advanced) attack | +0 | [] | 
+ability | armory:ability:surgecaster_advanced#weapon1 | Surgecaster (advanced) damage | +0 | [] | 
+ability | armory:ability:surgecaster_standard | Surgecaster (standard) attack | +0 | [] | 
+ability | armory:ability:surgecaster_standard#weapon1 | Surgecaster (standard) damage | +0 | [] | 
+ability | armory:ability:switchblade_molecular_rift | Switchblade (molecular-rift) attack | +0 | [] | 
+ability | armory:ability:switchblade_molecular_rift#weapon1 | Switchblade (molecular-rift) damage | +0 | [] | 
+ability | armory:ability:switchblade_tactical | Switchblade (tactical) attack | +0 | [] | 
+ability | armory:ability:switchblade_tactical#weapon1 | Switchblade (tactical) damage | +0 | [] | 
+ability | armory:ability:switchblade_ultrathin | Switchblade (ultrathin) attack | +0 | [] | 
+ability | armory:ability:switchblade_ultrathin#weapon1 | Switchblade (ultrathin) damage | +0 | [] | 
+ability | armory:ability:switchblade_zero_edge | Switchblade (zero-edge) attack | +0 | [] | 
+ability | armory:ability:switchblade_zero_edge#weapon1 | Switchblade (zero-edge) damage | +0 | [] | 
+ability | core:ability:swoop_hammer_advanced | Swoop hammer (advanced) attack | +0 | [] | 
+ability | core:ability:swoop_hammer_advanced#weapon1 | Swoop hammer (advanced) damage | +0 | [] | 
+ability | core:ability:swoop_hammer_mach_i | Swoop hammer (mach I) attack | +0 | [] | 
+ability | core:ability:swoop_hammer_mach_i#weapon1 | Swoop hammer (mach I) damage | +0 | [] | 
+ability | core:ability:swoop_hammer_mach_ii | Swoop hammer (mach II) attack | +0 | [] | 
+ability | core:ability:swoop_hammer_mach_ii#weapon1 | Swoop hammer (mach II) damage | +0 | [] | 
+ability | core:ability:swoop_hammer_mach_iii | Swoop hammer (mach III) attack | +0 | [] | 
+ability | core:ability:swoop_hammer_mach_iii#weapon1 | Swoop hammer (mach III) damage | +0 | [] | 
+ability | core:ability:swoop_hammer_tactical | Swoop hammer (tactical) attack | +0 | [] | 
+ability | core:ability:swoop_hammer_tactical#weapon1 | Swoop hammer (tactical) damage | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_advanced | Sword Cane (advanced) attack | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_advanced#weapon1 | Sword Cane (advanced) damage | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_dimensional_slice | Sword Cane (dimensional slice) attack | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_dimensional_slice#weapon1 | Sword Cane (dimensional slice) damage | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_molecular_rift | Sword Cane (molecular rift) attack | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_molecular_rift#weapon1 | Sword Cane (molecular rift) damage | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_tactical | Sword Cane (tactical ) attack | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_tactical#weapon1 | Sword Cane (tactical ) damage | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_ultrathin | Sword Cane (ultrathin) attack | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_ultrathin#weapon1 | Sword Cane (ultrathin) damage | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_zero_edge | Sword Cane (zero-edge) attack | +0 | [] | 
+ability | pact_worlds:ability:sword_cane_zero_edge#weapon1 | Sword Cane (zero-edge) damage | +0 | [] | 
+ability | core:ability:mercenary_theme_benefit_theme_knowledge | THEME KNOWLEDGE (Display ~ Athletics) |  | [] | You are knowledgeable about the military, from rival mercenary groups to standard military procedures to planetary armed forces, and you can draw upon this fount of information to aid your adventurous pursuits. Reduce the DC of Culture checks and Profession (mercenary) checks to recall knowledge about hierarchies, practices, personnel, and so on in the military by 5. Athletics is a class skill for you, though if it is a class skill from the class you take at 1st level, you instead gain a +1 bonus to Athletics checks. In addition, you gain an ability adjustment of +1 to Strength at character creation.
+ability | core:ability:mercenary_theme_benefit_theme_knowledge#bonus0 | THEME KNOWLEDGE (Display ~ Athletics) | +1 | [] | 
+ability | core:ability:mercenary_theme_benefit_theme_knowledge#bonus1 | THEME KNOWLEDGE (Str) | +1 | [] | 
+ability | core:ability:taclash_numbing | Taclash (numbing) attack | +0 | [] | 
+ability | core:ability:taclash_numbing#weapon1 | Taclash (numbing) damage | +0 | [] | 
+ability | core:ability:taclash_standard | Taclash (standard) attack | +0 | [] | 
+ability | core:ability:taclash_standard#weapon1 | Taclash (standard) damage | +0 | [] | 
+ability | armory:ability:tailblade | Tailblade attack | +0 | [] | 
+ability | armory:ability:tailblade#weapon1 | Tailblade damage | +0 | [] | 
+ability | armory:ability:talon_drone | Talon (drone) attack | +0 | [] | 
+ability | armory:ability:talon_drone#weapon1 | Talon (drone) damage | +0 | [] | 
+ability | armory:ability:talon_god | Talon (god) attack | +0 | [] | 
+ability | armory:ability:talon_god#weapon1 | Talon (god) damage | +0 | [] | 
+ability | armory:ability:talon_knight | Talon (knight) attack | +0 | [] | 
+ability | armory:ability:talon_knight#weapon1 | Talon (knight) damage | +0 | [] | 
+ability | armory:ability:talon_queen | Talon (queen) attack | +0 | [] | 
+ability | armory:ability:talon_queen#weapon1 | Talon (queen) damage | +0 | [] | 
+ability | armory:ability:talon_warrior | Talon (warrior) attack | +0 | [] | 
+ability | armory:ability:talon_warrior#weapon1 | Talon (warrior) damage | +0 | [] | 
+ability | armory:ability:tetrad_rings_advanced | Tetrad rings (advanced) attack | +0 | [] | 
+ability | armory:ability:tetrad_rings_advanced#weapon1 | Tetrad rings (advanced) damage | +0 | [] | 
+ability | armory:ability:tetrad_rings_elite | Tetrad rings (elite) attack | +0 | [] | 
+ability | armory:ability:tetrad_rings_elite#weapon1 | Tetrad rings (elite) damage | +0 | [] | 
+ability | armory:ability:tetrad_rings_tactical | Tetrad rings (tactical) attack | +0 | [] | 
+ability | armory:ability:tetrad_rings_tactical#weapon1 | Tetrad rings (tactical) damage | +0 | [] | 
+ability | alien_archive_2:ability:trident_dimensional_slice | Trident (dimensional slice) attack | +0 | [] | 
+ability | alien_archive_2:ability:trident_dimensional_slice#weapon1 | Trident (dimensional slice) damage | +0 | [] | 
+ability | alien_archive_2:ability:trident_molecular_rift | Trident (molecular rift) attack | +0 | [] | 
+ability | alien_archive_2:ability:trident_molecular_rift#weapon1 | Trident (molecular rift) damage | +0 | [] | 
+ability | alien_archive_2:ability:trident_sintered | Trident (sintered) attack | +0 | [] | 
+ability | alien_archive_2:ability:trident_sintered#weapon1 | Trident (sintered) damage | +0 | [] | 
+ability | alien_archive_2:ability:trident_tactical | Trident (tactical) attack | +0 | [] | 
+ability | alien_archive_2:ability:trident_tactical#weapon1 | Trident (tactical) damage | +0 | [] | 
+ability | alien_archive_2:ability:trident_ultrathin | Trident (ultrathin) attack | +0 | [] | 
+ability | alien_archive_2:ability:trident_ultrathin#weapon1 | Trident (ultrathin) damage | +0 | [] | 
+ability | core:ability:unarmed_strike | Unarmed strike attack | +0 | [] | 
+ability | core:ability:unarmed_strike#weapon1 | Unarmed strike damage | +0 | [] | 
+ability | alien_archive_2:ability:velstrac_flenser_ascetic | Velstrac flenser (ascetic) attack | +0 | [] | 
+ability | alien_archive_2:ability:velstrac_flenser_ascetic#weapon1 | Velstrac flenser (ascetic) damage | +0 | [] | 
+ability | alien_archive_2:ability:velstrac_flenser_debater | Velstrac flenser (debater) attack | +0 | [] | 
+ability | alien_archive_2:ability:velstrac_flenser_debater#weapon1 | Velstrac flenser (debater) damage | +0 | [] | 
+ability | alien_archive_2:ability:velstrac_flenser_recluse | Velstrac flenser (recluse) attack | +0 | [] | 
+ability | alien_archive_2:ability:velstrac_flenser_recluse#weapon1 | Velstrac flenser (recluse) damage | +0 | [] | 
+ability | alien_archive_2:ability:velstrac_flenser_singer | Velstrac flenser (singer) attack | +0 | [] | 
+ability | alien_archive_2:ability:velstrac_flenser_singer#weapon1 | Velstrac flenser (singer) damage | +0 | [] | 
+ability | armory:ability:vibrogarrote_basic | Vibrogarrote (basic) attack | +0 | [] | 
+ability | armory:ability:vibrogarrote_basic#weapon1 | Vibrogarrote (basic) damage | +0 | [] | 
+ability | armory:ability:vibrogarrote_harmonic | Vibrogarrote (harmonic) attack | +0 | [] | 
+ability | armory:ability:vibrogarrote_harmonic#weapon1 | Vibrogarrote (harmonic) damage | +0 | [] | 
+ability | armory:ability:vibrogarrote_infrasonic | Vibrogarrote (infrasonic) attack | +0 | [] | 
+ability | armory:ability:vibrogarrote_infrasonic#weapon1 | Vibrogarrote (infrasonic) damage | +0 | [] | 
+ability | armory:ability:vibrogarrote_interference | Vibrogarrote (interference) attack | +0 | [] | 
+ability | armory:ability:vibrogarrote_interference#weapon1 | Vibrogarrote (interference) damage | +0 | [] | 
+ability | armory:ability:vibrogarrote_ultrasonic | Vibrogarrote (ultrasonic) attack | +0 | [] | 
+ability | armory:ability:vibrogarrote_ultrasonic#weapon1 | Vibrogarrote (ultrasonic) damage | +0 | [] | 
+ability | armory:ability:void_rifle_barrow_class | Void rifle (barrow-class) attack | +0 | [] | 
+ability | armory:ability:void_rifle_barrow_class#weapon1 | Void rifle (barrow-class) damage | +0 | [] | 
+ability | armory:ability:void_rifle_crypt_class | Void rifle (crypt-class) attack | +0 | [] | 
+ability | armory:ability:void_rifle_crypt_class#weapon1 | Void rifle (crypt-class) damage | +0 | [] | 
+ability | armory:ability:void_rifle_grave_class | Void rifle (grave-class) attack | +0 | [] | 
+ability | armory:ability:void_rifle_grave_class#weapon1 | Void rifle (grave-class) damage | +0 | [] | 
+ability | armory:ability:void_rifle_ossuary_class | Void rifle (ossuary-class) attack | +0 | [] | 
+ability | armory:ability:void_rifle_ossuary_class#weapon1 | Void rifle (ossuary-class) damage | +0 | [] | 
+ability | armory:ability:void_rifle_tomb_class | Void rifle (tomb-class) attack | +0 | [] | 
+ability | armory:ability:void_rifle_tomb_class#weapon1 | Void rifle (tomb-class) damage | +0 | [] | 
+ability | armory:ability:void_staff_barrow_class | Void staff (barrow-class) attack | +0 | [] | 
+ability | armory:ability:void_staff_barrow_class#weapon1 | Void staff (barrow-class) damage | +0 | [] | 
+ability | armory:ability:void_staff_crypt_class | Void staff (crypt-class) attack | +0 | [] | 
+ability | armory:ability:void_staff_crypt_class#weapon1 | Void staff (crypt-class) damage | +0 | [] | 
+ability | armory:ability:void_staff_grave_class | Void staff (grave-class) attack | +0 | [] | 
+ability | armory:ability:void_staff_grave_class#weapon1 | Void staff (grave-class) damage | +0 | [] | 
+ability | armory:ability:void_staff_ossuary_class | Void staff (ossuary-class) attack | +0 | [] | 
+ability | armory:ability:void_staff_ossuary_class#weapon1 | Void staff (ossuary-class) damage | +0 | [] | 
+ability | armory:ability:void_staff_tomb_class | Void staff (tomb-class) attack | +0 | [] | 
+ability | armory:ability:void_staff_tomb_class#weapon1 | Void staff (tomb-class) damage | +0 | [] | 
+ability | armory:ability:wailing_blade_euphonic | Wailing blade (euphonic) attack | +0 | [] | 
+ability | armory:ability:wailing_blade_euphonic#weapon1 | Wailing blade (euphonic) damage | +0 | [] | 
+ability | armory:ability:wailing_blade_strident | Wailing blade (strident) attack | +0 | [] | 
+ability | armory:ability:wailing_blade_strident#weapon1 | Wailing blade (strident) damage | +0 | [] | 
+ability | armory:ability:wailing_blade_tymbal | Wailing blade (tymbal) attack | +0 | [] | 
+ability | armory:ability:wailing_blade_tymbal#weapon1 | Wailing blade (tymbal) damage | +0 | [] | 
+ability | armory:ability:wailing_blade_warbler | Wailing blade (warbler) attack | +0 | [] | 
+ability | armory:ability:wailing_blade_warbler#weapon1 | Wailing blade (warbler) damage | +0 | [] | 
+ability | armory:ability:warclub | Warclub attack | +0 | [] | 
+ability | armory:ability:warclub#weapon1 | Warclub damage | +0 | [] | 
+ability | armory:ability:warfan | Warfan attack | +0 | [] | 
+ability | armory:ability:warfan#weapon1 | Warfan damage | +0 | [] | 
+ability | armory:ability:wave_modulator_i | Wave modulator I attack | +0 | [] | 
+ability | armory:ability:wave_modulator_i#weapon1 | Wave modulator I damage | +0 | [] | 
+ability | armory:ability:wave_modulator_ii | Wave modulator II attack | +0 | [] | 
+ability | armory:ability:wave_modulator_ii#weapon1 | Wave modulator II damage | +0 | [] | 
+ability | armory:ability:wave_modulator_iii | Wave modulator III attack | +0 | [] | 
+ability | armory:ability:wave_modulator_iii#weapon1 | Wave modulator III damage | +0 | [] | 
+ability | armory:ability:wave_modulator_iv | Wave modulator IV attack | +0 | [] | 
+ability | armory:ability:wave_modulator_iv#weapon1 | Wave modulator IV damage | +0 | [] | 
+ability | armory:ability:wave_modulator_v | Wave modulator V attack | +0 | [] | 
+ability | armory:ability:wave_modulator_v#weapon1 | Wave modulator V damage | +0 | [] | 
+ability | armory:ability:wave_modulator_vi | Wave modulator VI attack | +0 | [] | 
+ability | armory:ability:wave_modulator_vi#weapon1 | Wave modulator VI damage | +0 | [] | 
+ability | armory:ability:wave_modulator_vii | Wave modulator VII attack | +0 | [] | 
+ability | armory:ability:wave_modulator_vii#weapon1 | Wave modulator VII damage | +0 | [] | 
+ability | core:ability:weapon_prof_advanced_melee_weapons | Weapon Prof ~ Advanced Melee Weapons |  | [] | 
+ability | core:ability:weapon_prof_basic_melee_weapons | Weapon Prof ~ Basic Melee Weapons |  | [] | 
+ability | core:ability:weapon_prof_grenades | Weapon Prof ~ Grenades |  | [] | 
+ability | core:ability:weapon_prof_heavy_weapons | Weapon Prof ~ Heavy Weapons |  | [] | 
+ability | core:ability:weapon_prof_longarms | Weapon Prof ~ Longarms |  | [] | 
+ability | core:ability:weapon_prof_small_arms | Weapon Prof ~ Small Arms |  | [] | 
+ability | core:ability:weapon_prof_sniper_weapons | Weapon Prof ~ Sniper Weapons |  | [] | 
+ability | core:ability:soldier_class_feature_weapon_specialization | Weapon Specialization |  | [] | You gain Weapon Specialization as a bonus feat for each weapon type this class grants you proficiency with.
+ability | core:ability:weapon_specialization_advanced_melee_weapons | Weapon Specialization ~ Advanced Melee Weapons |  | [] | 
+ability | core:ability:weapon_specialization_basic_melee_weapons | Weapon Specialization ~ Basic Melee Weapons |  | [] | 
+ability | core:ability:weapon_specialization_heavy_weapons | Weapon Specialization ~ Heavy Weapons |  | [] | 
+ability | core:ability:weapon_specialization_longarms | Weapon Specialization ~ Longarms |  | [] | 
+ability | core:ability:weapon_specialization_small_arms | Weapon Specialization ~ Small Arms |  | [] | 
+ability | core:ability:weapon_specialization_sniper_weapons | Weapon Specialization ~ Sniper Weapons |  | [] | 
+ability | armory:ability:welder_industrial | Welder (industrial) attack | +0 | [] | 
+ability | armory:ability:welder_industrial#weapon1 | Welder (industrial) damage | +0 | [] | 
+ability | armory:ability:welder_offensive | Welder (offensive) attack | +0 | [] | 
+ability | armory:ability:welder_offensive#weapon1 | Welder (offensive) damage | +0 | [] | 
+ability | armory:ability:welder_starship | Welder (starship) attack | +0 | [] | 
+ability | armory:ability:welder_starship#weapon1 | Welder (starship) damage | +0 | [] | 
+ability | armory:ability:welder_utility | Welder (utility) attack | +0 | [] | 
+ability | armory:ability:welder_utility#weapon1 | Welder (utility) damage | +0 | [] | 
+ability | armory:ability:wraith_sting_rifle_hornet | Wraith-sting rifle (hornet) attack | +0 | [] | 
+ability | armory:ability:wraith_sting_rifle_hornet#weapon1 | Wraith-sting rifle (hornet) damage | +0 | [] | 
+ability | armory:ability:wraith_sting_rifle_wasp | Wraith-sting rifle (wasp) attack | +0 | [] | 
+ability | armory:ability:wraith_sting_rifle_wasp#weapon1 | Wraith-sting rifle (wasp) damage | +0 | [] | 
+ability | armory:ability:wraith_sting_rifle_yellow_jacket | Wraith-sting rifle (yellow jacket) attack | +0 | [] | 
+ability | armory:ability:wraith_sting_rifle_yellow_jacket#weapon1 | Wraith-sting rifle (yellow jacket) damage | +0 | [] | 
+ability | core:ability:x_gen_gun_advanced | X-gen gun (advanced) attack | +0 | [] | 
+ability | core:ability:x_gen_gun_advanced#weapon1 | X-gen gun (advanced) damage | +0 | [] | 
+ability | core:ability:x_gen_gun_elite | X-gen gun (elite) attack | +0 | [] | 
+ability | core:ability:x_gen_gun_elite#weapon1 | X-gen gun (elite) damage | +0 | [] | 
+ability | core:ability:x_gen_gun_paragon | X-gen gun (paragon) attack | +0 | [] | 
+ability | core:ability:x_gen_gun_paragon#weapon1 | X-gen gun (paragon) damage | +0 | [] | 
+ability | core:ability:x_gen_gun_tactical | X-gen gun (tactical) attack | +0 | [] | 
+ability | core:ability:x_gen_gun_tactical#weapon1 | X-gen gun (tactical) damage | +0 | [] | 
+ability | pact_worlds:ability:xenolash_blooming | Xenolash (blooming) attack | +0 | [] | 
+ability | pact_worlds:ability:xenolash_blooming#weapon1 | Xenolash (blooming) damage | +0 | [] | 
+ability | pact_worlds:ability:xenolash_immature | Xenolash (immature) attack | +0 | [] | 
+ability | pact_worlds:ability:xenolash_immature#weapon1 | Xenolash (immature) damage | +0 | [] | 
+ability | pact_worlds:ability:xenolash_mature | Xenolash (mature) attack | +0 | [] | 
+ability | pact_worlds:ability:xenolash_mature#weapon1 | Xenolash (mature) damage | +0 | [] | 
+ability | pact_worlds:ability:xenolash_seeded | Xenolash (seeded) attack | +0 | [] | 
+ability | pact_worlds:ability:xenolash_seeded#weapon1 | Xenolash (seeded) damage | +0 | [] | 
+ability | core:ability:zero_cannon_advanced | Zero cannon (advanced) attack | +0 | [] | 
+ability | core:ability:zero_cannon_advanced#weapon1 | Zero cannon (advanced) damage | +0 | [] | 
+ability | core:ability:zero_cannon_elite | Zero cannon (elite) attack | +0 | [] | 
+ability | core:ability:zero_cannon_elite#weapon1 | Zero cannon (elite) damage | +0 | [] | 
+ability | core:ability:zero_cannon_tactical | Zero cannon (tactical) attack | +0 | [] | 
+ability | core:ability:zero_cannon_tactical#weapon1 | Zero cannon (tactical) damage | +0 | [] | 
+ability | armory:ability:zero_knife_avalanche_class | Zero knife (avalanche-class) attack | +0 | [] | 
+ability | armory:ability:zero_knife_avalanche_class#weapon1 | Zero knife (avalanche-class) damage | +0 | [] | 
+ability | armory:ability:zero_knife_blizzard_class | Zero knife (blizzard-class) attack | +0 | [] | 
+ability | armory:ability:zero_knife_blizzard_class#weapon1 | Zero knife (blizzard-class) damage | +0 | [] | 
+ability | armory:ability:zero_knife_frostbite_class | Zero knife (frostbite-class) attack | +0 | [] | 
+ability | armory:ability:zero_knife_frostbite_class#weapon1 | Zero knife (frostbite-class) damage | +0 | [] | 
+ability | armory:ability:zero_knife_hailstorm_class | Zero knife (hailstorm-class) attack | +0 | [] | 
+ability | armory:ability:zero_knife_hailstorm_class#weapon1 | Zero knife (hailstorm-class) damage | +0 | [] | 
+ability | armory:ability:zero_knife_icequake_class | Zero knife (icequake-class) attack | +0 | [] | 
+ability | armory:ability:zero_knife_icequake_class#weapon1 | Zero knife (icequake-class) damage | +0 | [] | 
+ability | core:ability:zero_pistol_avalanche_class | Zero pistol (avalanche-class) attack | +0 | [] | 
+ability | core:ability:zero_pistol_avalanche_class#weapon1 | Zero pistol (avalanche-class) damage | +0 | [] | 
+ability | core:ability:zero_pistol_blizzard_class | Zero pistol (blizzard-class) attack | +0 | [] | 
+ability | core:ability:zero_pistol_blizzard_class#weapon1 | Zero pistol (blizzard-class) damage | +0 | [] | 
+ability | core:ability:zero_pistol_frostbite_class | Zero pistol (frostbite-class) attack | +0 | [] | 
+ability | core:ability:zero_pistol_frostbite_class#weapon1 | Zero pistol (frostbite-class) damage | +0 | [] | 
+ability | core:ability:zero_pistol_hailstorm_class | Zero pistol (hailstorm-class) attack | +0 | [] | 
+ability | core:ability:zero_pistol_hailstorm_class#weapon1 | Zero pistol (hailstorm-class) damage | +0 | [] | 
+ability | core:ability:zero_rifle_avalanche_class | Zero rifle (avalanche-class) attack | +0 | [] | 
+ability | core:ability:zero_rifle_avalanche_class#weapon1 | Zero rifle (avalanche-class) damage | +0 | [] | 
+ability | core:ability:zero_rifle_blizzard_class | Zero rifle (blizzard-class) attack | +0 | [] | 
+ability | core:ability:zero_rifle_blizzard_class#weapon1 | Zero rifle (blizzard-class) damage | +0 | [] | 
+ability | core:ability:zero_rifle_frostbite_class | Zero rifle (frostbite-class) attack | +0 | [] | 
+ability | core:ability:zero_rifle_frostbite_class#weapon1 | Zero rifle (frostbite-class) damage | +0 | [] | 
+ability | core:ability:zero_rifle_hailstorm_class | Zero rifle (hailstorm-class) attack | +0 | [] | 
+ability | core:ability:zero_rifle_hailstorm_class#weapon1 | Zero rifle (hailstorm-class) damage | +0 | [] | 
+class | core:class:soldier | Soldier | +3 | [] | Hit die: d1
+class | core:class:soldier#bonus2 | Soldier (Stamina Points) | +21 | [] | 
+class | core:class:soldier#bonus3 | Soldier (base Fortitude save) | +3 | [] | 
+class | core:class:soldier#bonus4 | Soldier (base Reflex save) | +1 | [] | 
+class | core:class:soldier#bonus5 | Soldier (base Will save) | +3 | [] | 
+class | core:class:soldier#bonus1 | Soldier (hit points) | +18 | [] | 
+equipment | core:equipment:defiance_series_squad | Defiance Series, Squad | +5 | [] | EAC = 5
+equipment | core:equipment:defiance_series_squad#bonus1 | Defiance Series, Squad (KAC) | +8 | [] | 
+equipment | core:equipment:defiance_series_squad#speed2 | Defiance Series, Squad (walk speed) | -10 | [] | 
+race | core:race:human | Human |  | [] | Speed: Walk 0 ft.
+race | core:race:human#race_hp | Human (racial Hit Points) | +4 | [] | 

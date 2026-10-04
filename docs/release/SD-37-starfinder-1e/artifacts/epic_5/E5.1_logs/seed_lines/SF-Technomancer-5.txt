@@ -1,0 +1,43 @@
+ability | core:ability:android | Android | +1 | 
+ability | core:ability:armor_prof_light_armor | Armor Prof ~ Light Armor |  | 
+ability | core:ability:android_default_constructed | CONSTRUCTED |  | For effects targeting creatures by type, androids count as both humanoids and constructs (whichever effect is worse). They receive a +2 racial bonus to saving throws against disease, mind-affecting effects, poison, and sleep, unless those effects specifically target constructs. In addition, androids do not breathe or suffer the normal environmental effects of being in a vacuum. / SaveBonus: +2 racial bonus to saving throws against disease, mind-affecting effects, poison, and sleep, unless those effects specifically target constructs
+ability | core:ability:android_default_exceptional_vision | EXCEPTIONAL VISION |  | Androids have low-light vision and darkvision. As a result, they can see in dim light as if it were normal light, and they can see with no light source at all to a range of 60 feet in black and white only. See low-light vision and darkvision on pages 264 and 263.
+ability | core:ability:android_default_flat_affect | FLAT AFFECT | -2 | Androids find emotions confusing and keep them bottled up. They take a -2 penalty to Sense Motive checks, but the DCs of Sense Motive checks attempted against them increase by 2.
+ability | core:ability:technomancer_class_feature_magic_hack | Magic Hack (magic hack picks) | +2 | You have carefully studied the forces that define magic and can manipulate them. You learn your first magic hack at 2nd level, and you learn an additional magic hack every 3 levels thereafter. When casting a spell, you can apply no more than one magic hack that affects the attributes of a spell (such as distant spell or extended spell). If a magic hack allows a saving throw to resist its effects, the DC is equal to 10 + half your technomancer level + your Intelligence modifier. The list of magic hacks appears starting on page 120.
+ability | core:ability:android_default_size_and_type | SIZE AND TYPE |  | Androids are Medium humanoids with the android subtype.
+ability | core:ability:scholar | Scholar |  | You are an erudite intellectual, pitting your brain against problems and puzzles that others would find daunting. You might be an instructor of a specific topic at a large university or a dabbler in a number of fields of study. You could be exploring the galaxy in search of ancient artifacts or new scientific phenomena. Whatever your motivation, you are sure that the answers you seek are out there. / TITLE: Scholar
+ability | core:ability:technomancer_class_feature_spell_cache | Spell Cache |  | As the culmination of your early study of the fundamental forces of the galaxy, you have created a spell cache that allows you to store and access spells. Your spell cache could be a device such as a handheld computer or technological implant; an item such as a ring or staff; or a symbol such as a brand, tattoo, or other permanent modification to your body. While you don't need your spell cache to cast your spells, once per day, you can activate your spell cache to cast any one spell you know and are capable of casting, even if you've expended all your spell slots for that spell's level. If your spell cache is damaged, it is restored to full Hit Points the next time you prepare spells. If the spell cache is lost or destroyed, you can replace it after 1 week with a special ritual that takes 8 hours to complete.
+ability | core:ability:technomancer_class_feature_spell_focus | Spell Focus |  | You gain Spell Focus as a bonus feat.
+ability | core:ability:scholar_theme_benefit_theme_knowledge#bonus1 | THEME KNOWLEDGE (Int) | +1 | 
+ability | core:ability:scholar_theme_benefit_theme_knowledge | THEME KNOWLEDGE (scholar theme chosen skill picks) | +1 | You are an expert in one particular field of study, and your passion for the subject shows. Choose either Life Science or Physical Science and then choose a field of specialization. If you pick Life Science, you can specialize in bioengineering, biology, botany, ecology, genetics, xenobiology, zoology, or another field of biological science. If you pick Physical Science, you can specialize in astronomy, chemistry, climatology, geography, geology, meteorology, oceanography, physics, or another field of physical science. The DC of skill checks to recall knowledge about your specialty is reduced by 5. Your chosen skill is a class skill for you, though if it is a class skill from the class you take at 1st level, you instead gain a +1 bonus to checks with your chosen skill. In addition, you gain an ability adjustment of +1 to Intelligence at character creation.
+ability | core:ability:technomancer_class_feature_techlore | Techlore (Computers) | +1 | You rewire your mind to give you greater insight into the nature of magic and technology. You gain a +1 insight bonus to Computers and Mysticism checks. This bonus increases by 1 at 6th level and every 3 levels thereafter.
+ability | core:ability:technomancer_class_feature_techlore#bonus1 | Techlore (Mysticism) | +1 | 
+ability | core:ability:technomancer | Technomancer | +1 | 
+ability | core:ability:android_default_upgrade_slot | UPGRADE SLOT | +1 | Androids have a single armor upgrade slot in their bodies. Regardless of whether androids are wearing physical armor, they can use this slot to install any one armor upgrade that could be installed into light armor.
+ability | core:ability:weapon_prof_basic_melee_weapons | Weapon Prof ~ Basic Melee Weapons |  | 
+ability | core:ability:weapon_prof_small_arms | Weapon Prof ~ Small Arms |  | 
+ability | core:ability:technomancer_class_feature_weapon_specialization | Weapon Specialization |  | You gain the Weapon Specialization feat as a bonus feat for each weapon type this class grants you proficiency with.
+ability | core:ability:weapon_specialization_basic_melee_weapons | Weapon Specialization ~ Basic Melee Weapons |  | 
+ability | core:ability:weapon_specialization_small_arms | Weapon Specialization ~ Small Arms |  | 
+class | core:class:technomancer | Technomancer | +3 | Skill ranks per level: 4
+class | core:class:technomancer#bonus2 | Technomancer (Stamina Points) | +25 | 
+class | core:class:technomancer#bonus3 | Technomancer (base Fortitude save) | +1 | 
+class | core:class:technomancer#bonus4 | Technomancer (base Reflex save) | +1 | 
+class | core:class:technomancer#bonus5 | Technomancer (base Will save) | +4 | 
+class | core:class:technomancer#bonus6 | Technomancer (caster level) | +5 | 
+class | core:class:technomancer#bonus1 | Technomancer (hit points) | +20 | 
+class | core:class:technomancer#spells_known_0 | Technomancer (level 0 spells known) | +6 | 
+class | core:class:technomancer#spells_known_1 | Technomancer (level 1 spells known) | +4 | 
+class | core:class:technomancer#spells_per_day_1 | Technomancer (level 1 spells per day) | +4 | 
+class | core:class:technomancer#spells_known_2 | Technomancer (level 2 spells known) | +3 | 
+class | core:class:technomancer#spells_per_day_2 | Technomancer (level 2 spells per day) | +2 | 
+equipment | core:equipment:d_suit_i | D-suit I | +5 | EAC = 5 / KAC = 6 / Price: 2980 / Armor check penalty: 0 / Max Dex bonus: 5 / Quality: Level: 5 / Quality: BULK: L / Upgrade slots: 1
+equipment | core:equipment:d_suit_i#bonus1 | D-suit I (KAC) | +6 | 
+equipment | core:equipment:d_suit_i#speed2 | D-suit I (walk speed) | +0 | 
+feat | core:feat:spell_focus | Spell Focus | +1 | Through careful study, you have developed methods to make your spells harder to resist. / The DC of spells you cast increases by 1. At 11th level, the DC of your spells instead increases by 2, and at 17th level, the DC of spells you cast instead increases by 3. This bonus does not apply to spell-like abilities.
+pool_option | core:pool_option:scholar_theme_chosen_skill_physical_science#bonus1 | Physical Science (Physical Science) | +1 | 
+pool_option | core:pool_option:scholar_theme_chosen_skill_physical_science | Physical Science (physical science specialty picks) | +1 | 
+race | core:race:android#bonus2 | Android (Cha) | -2 | 
+race | core:race:android | Android (Dex) | +2 | Speed: Walk 30 ft.
+race | core:race:android#bonus1 | Android (Int) | +2 | 
+race | core:race:android#race_hp | Android (racial Hit Points) | +4 | 
