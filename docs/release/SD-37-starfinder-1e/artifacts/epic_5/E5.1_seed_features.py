@@ -29,15 +29,21 @@ import sys
 SEEDS = {
     # seed id: (class slug, level, race id, selected_feats, rule-id choice selections)
     # Read from apps/desktop/src-tauri/src/{rule_system_adapter.rs (sf_soldier_3_input), sf_adapter.rs (seeds)}.
+    # E5.2: every seed's feats from seed-builds.md (E0.4) added to its selected_feats.
     "SF-Soldier-3": ("soldier", 3, "core:race:human",
-                     ["core:ability:mercenary", "core:ability:2_racial_stat_bonus"], []),
+                     ["core:ability:mercenary", "core:ability:2_racial_stat_bonus",
+                      "core:feat:weapon_focus", "core:feat:quick_draw", "core:feat:deadly_aim",
+                      "core:feat:coordinated_shot"], []),
     "SF-Mystic-5": ("mystic", 5, "core:race:lashunta",
                     ["core:ability:priest", "core:ability:empath", "core:ability:2_racial_bonus_to_skill",
-                     "core:ability:lashunta_subrace_damaya", "core:feat:spell_focus"], []),
+                     "core:ability:lashunta_subrace_damaya", "core:feat:spell_penetration",
+                     "core:feat:spell_focus", "core:feat:quick_draw"], []),
     "SF-Technomancer-5": ("technomancer", 5, "core:race:android",
-                          ["core:ability:scholar", "core:feat:spell_focus"],
+                          ["core:ability:scholar", "core:feat:spell_penetration", "core:feat:spell_focus",
+                           "core:feat:mobility", "core:feat:quick_draw"],
                           ["core:pool_option:scholar_theme_chosen_skill_physical_science"]),
-    "SF-Envoy-3": ("envoy", 3, "core:race:ysoki", ["core:ability:icon"], []),
+    "SF-Envoy-3": ("envoy", 3, "core:race:ysoki",
+                   ["core:ability:icon", "core:feat:mobility", "core:feat:quick_draw"], []),
 }
 
 FEATURE_KINDS = {"race", "class", "ability", "feat", "pool_option", "template"}

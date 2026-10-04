@@ -495,7 +495,17 @@ fn apply_spell_selection(value: &str, parsed: &mut ParsedFixture) {
         parsed.diagnostics.push(malformed());
         return;
     };
-    let Some((spell_id, source_class_id)) = rest.split_once(':') else {
+    // A spell named by a converted rule id (`core:spell:magic_missile`, the Starfinder
+    // adapter's `spells_selected`, SD-37 E5.2) is its first three segments; any other spell id
+    // is the first segment.
+    let rule_id_end = match rest.splitn(4, ':').collect::<Vec<_>>().as_slice() {
+        [_, "spell", _, source_class_id] => Some(rest.len() - source_class_id.len() - 1),
+        _ => None,
+    };
+    let Some((spell_id, source_class_id)) = (match rule_id_end {
+        Some(at) => Some((&rest[..at], &rest[at + 1..])),
+        None => rest.split_once(':'),
+    }) else {
         parsed.diagnostics.push(malformed());
         return;
     };
@@ -991,6 +1001,49 @@ activation=bardic_performance:active:1\n"
                 .any(|d| d.subject_ref == "class_ability_activations"),
             "expected a diagnostic for the non-numeric rounds_consumed_today: {:?}",
             result.diagnostics
+        );
+    }
+}
+
+#[cfg(test)]
+mod spell_selection_rule_id_tests {
+    use super::*;
+
+    const FIXTURE: &str = "\
+case_id=case:test
+source_package_id=starfinder-1e
+race_id=core:race:android
+class_level=core:class:technomancer:5
+ability=strength:10
+ability=dexterity:16
+ability=constitution:14
+ability=intelligence:19
+ability=wisdom:13
+ability=charisma:8
+spell=core:spell:magic_missile:core:class:technomancer:known
+spell=core:spell:detect_thoughts:core:class:mystic:granted
+spell=fireball:class:wizard:known
+";
+
+    /// SD-37 E5.2: a spell named by a converted rule id round-trips through the `spell=` line
+    /// (the saved-character format writes `spell=<spell_id>:<source_class_id>:<mode>`); a
+    /// Pathfinder spell name keeps its first-segment reading.
+    #[test]
+    fn a_rule_id_spell_selection_keeps_its_whole_id() {
+        let input = load_character_input_fixture(FIXTURE).character_input.expect("parses");
+        let got: Vec<(&str, &str, AcquisitionMode)> = input
+            .chosen
+            .spells_selected
+            .iter()
+            .map(|s| (s.spell_id.as_str(), s.source_class_id.as_str(), s.acquisition_mode))
+            .collect();
+        assert_eq!(
+            got,
+            [
+                ("core:spell:magic_missile", "core:class:technomancer", AcquisitionMode::Known),
+                ("core:spell:detect_thoughts", "core:class:mystic", AcquisitionMode::Granted),
+                ("fireball", "class:wizard", AcquisitionMode::Known),
+            ]
         );
     }
 }

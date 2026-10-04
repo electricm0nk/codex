@@ -231,8 +231,8 @@ pub struct SfSheet {
     pub skills: SfSkills,
     pub spells: Vec<SfSpellcasting>,
     pub carried: SfCarried,
-    /// The printed lines: race, theme, class features and every other held record
-    /// (`sf_sheet_print`, E5.1).
+    /// The printed lines: race, theme, class features, feats and every other held record
+    /// (`sf_sheet_print`, E5.1), and the spells known (E5.2).
     pub lines: Vec<codex::rules_core::sheet_rule::SheetLine>,
 }
 
@@ -246,7 +246,7 @@ pub fn compute_sheet(package: &SheetRulePackage, input: &CharacterInput) -> Resu
     let spells = sf_spells::compute_with(package, &build, &held)?;
     let carried = sf_loadout::compute(package, &build, &loadout)?;
     apply_bulk_condition(&mut defense, &mut skills, carried.condition);
-    let lines = crate::sf_sheet_print::sheet_lines(package, &build, &held);
+    let lines = crate::sf_sheet_print::sheet_lines(package, &build, &held, &input.chosen.spells_selected)?;
     Ok(SfSheet { ability_scores: build.chassis.ability_scores, chassis, defense, skills, spells, carried, lines })
 }
 
@@ -807,7 +807,8 @@ pub(crate) mod tests {
     use std::path::PathBuf;
 
     use codex::rules_core::character_input::{
-        AbilityScores, CharacterClassLevel, ChosenCharacterState, SelectedChoice, SkillAllocation,
+        AbilityScores, AcquisitionMode, CharacterClassLevel, ChosenCharacterState, SelectedChoice,
+        SkillAllocation, SpellSelection,
     };
     use codex::saved_character::{SavedCharacterRevisionKind, CURRENT_SAVED_CHARACTER_SCHEMA_VERSION};
 
@@ -897,6 +898,22 @@ pub(crate) mod tests {
         }
     }
 
+    /// The seed's spells known (`seed-builds.md` §2, §3 "Spells known") as the save records
+    /// them: every spell from the class table `Known`, a mystic's connection spells `Granted`.
+    fn with_spells(mut input: CharacterInput, class: &str, known: &[&str], granted: &[&str]) -> CharacterInput {
+        let selection = |spell: &str, acquisition_mode| SpellSelection {
+            spell_id: format!("core:spell:{spell}"),
+            source_class_id: format!("core:class:{class}"),
+            acquisition_mode,
+        };
+        input.chosen.spells_selected = known
+            .iter()
+            .map(|s| selection(s, AcquisitionMode::Known))
+            .chain(granted.iter().map(|s| selection(s, AcquisitionMode::Granted)))
+            .collect();
+        input
+    }
+
     /// The four SD-37 Starfinder seeds, keyed by seed id, with each seed's class slug.
     pub(crate) fn seeds() -> Vec<(&'static str, &'static str, CharacterInput)> {
         vec![
@@ -908,7 +925,7 @@ pub(crate) mod tests {
             (
                 "SF-Mystic-5",
                 "mystic",
-                seed_input(
+                with_spells(seed_input(
                     ("mystic", 5, "lashunta"),
                     [10, 14, 8, 14, 19, 15],
                     &[
@@ -916,7 +933,9 @@ pub(crate) mod tests {
                         "core:ability:empath",
                         "core:ability:2_racial_bonus_to_skill",
                         "core:ability:lashunta_subrace_damaya",
+                        "core:feat:spell_penetration",
                         "core:feat:spell_focus",
+                        "core:feat:quick_draw",
                     ],
                     &[
                         ("bluff", 5),
@@ -935,14 +954,37 @@ pub(crate) mod tests {
                         choice("core:ability:2_racial_bonus_to_skill", "medicine"),
                     ],
                 ),
+                "mystic",
+                &[
+                    "detect_affliction",
+                    "detect_magic",
+                    "ghost_sound",
+                    "grave_words",
+                    "stabilize",
+                    "telepathic_message",
+                    "charm_person",
+                    "command",
+                    "mystic_cure_level_1",
+                    "share_language",
+                    "hold_person",
+                    "remove_condition",
+                    "status",
+                ],
+                &["detect_thoughts", "zone_of_truth"]),
             ),
             (
                 "SF-Technomancer-5",
                 "technomancer",
-                seed_input(
+                with_spells(seed_input(
                     ("technomancer", 5, "android"),
                     [10, 16, 14, 19, 13, 8],
-                    &["core:ability:scholar", "core:feat:spell_focus"],
+                    &[
+                        "core:ability:scholar",
+                        "core:feat:spell_penetration",
+                        "core:feat:spell_focus",
+                        "core:feat:mobility",
+                        "core:feat:quick_draw",
+                    ],
                     &[
                         ("computers", 5),
                         ("engineering", 5),
@@ -960,6 +1002,23 @@ pub(crate) mod tests {
                         "core:pool_option:scholar_theme_chosen_skill_physical_science",
                     )],
                 ),
+                "technomancer",
+                &[
+                    "dancing_lights",
+                    "detect_magic",
+                    "energy_ray",
+                    "mending",
+                    "token_spell",
+                    "transfer_charge",
+                    "detect_tech",
+                    "magic_missile",
+                    "overheat",
+                    "supercharge_weapon",
+                    "invisibility",
+                    "knock",
+                    "mirror_image",
+                ],
+                &[]),
             ),
             (
                 "SF-Envoy-3",
@@ -967,7 +1026,7 @@ pub(crate) mod tests {
                 seed_input(
                     ("envoy", 3, "ysoki"),
                     [8, 13, 12, 12, 10, 18],
-                    &["core:ability:icon"],
+                    &["core:ability:icon", "core:feat:mobility", "core:feat:quick_draw"],
                     &[
                         ("bluff", 3),
                         ("computers", 3),
@@ -1090,7 +1149,16 @@ pub(crate) mod tests {
         let (build, loadout) =
             build_from_input(package, &crate::rule_system_adapter::tests::sf_soldier_3_input()).expect("maps");
         assert_eq!(build.theme.as_deref(), Some("core:ability:mercenary"));
-        assert_eq!(build.picks, ["core:ability:2_racial_stat_bonus"]);
+        assert_eq!(
+            build.picks,
+            [
+                "core:ability:2_racial_stat_bonus",
+                "core:feat:weapon_focus",
+                "core:feat:quick_draw",
+                "core:feat:deadly_aim",
+                "core:feat:coordinated_shot",
+            ]
+        );
         assert_eq!(build.armor.as_deref(), Some("core:equipment:defiance_series_squad"));
         assert_eq!(build.chassis.key_ability_choice, Some(Ability::Str));
         assert_eq!(build.choices, BTreeMap::from([("core:ability:2_racial_stat_bonus".to_owned(), vec!["STR".to_owned()])]));
@@ -1181,6 +1249,27 @@ pub(crate) mod tests {
             display_label: format!("{character_id} label"),
             character_input,
         }
+    }
+
+    /// E5.2: a saved Starfinder caster keeps its spells known. Each seed saves and loads with
+    /// the same `spells_selected` (rule ids `core:spell:<slug>`, classes `core:class:<slug>`),
+    /// and the loaded sheet prints the same spell lines the in-memory build prints.
+    #[test]
+    fn a_saved_starfinder_caster_loads_with_its_spells_known() {
+        let adapter = StarfinderAdapter;
+        let characters = tempdir("spells");
+        for (seed, _, input) in seeds() {
+            let root = characters.join(seed);
+            SavedCharacterStore::save(&envelope(seed, STARFINDER_RULE_SYSTEM_ID, input.clone()), &root).expect("saves");
+            let loaded = adapter.load_saved_character(&root).expect("loads");
+            assert!(loaded.diagnostics.iter().all(|d| !d.claim_blocking), "{seed}: {:?}", loaded.diagnostics);
+            let spells = |lines: Vec<(String, String)>| lines.into_iter().filter(|(kind, _)| kind == "spell").map(|(_, id)| id).collect::<Vec<_>>();
+            let want = spells(adapter.chassis_resolve(&input).sheet_lines.into_iter().map(|l| (l.kind, l.id)).collect());
+            let got = spells(loaded.sheet_lines.iter().map(|l| (l.kind.clone(), l.id.clone())).collect());
+            assert_eq!(got, want, "{seed}");
+            assert_eq!(want.len(), input.chosen.spells_selected.len(), "{seed}");
+        }
+        std::fs::remove_dir_all(&characters).ok();
     }
 
     /// The persistence methods over a real `SavedCharacterStore`: a saved SF-Soldier-3

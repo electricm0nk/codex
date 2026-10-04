@@ -601,7 +601,7 @@ pub(crate) mod tests {
     /// §1) as a saved `CharacterInput`: race, class and the FINAL ability scores; the theme
     /// and the human's `+2 Racial Stat Bonus` pick as held records; the worn Defiance Series
     /// armour and the carried gear as equipment; skill ranks; the stat-bonus choice and the
-    /// soldier's key-ability choice (Str) as rule choices.
+    /// soldier's key-ability choice (Str) as rule choices; the seed's four feats (E5.2).
     pub(crate) fn sf_soldier_3_input() -> CharacterInput {
         use codex::rules_core::character_input::{
             AbilityScores, ActiveState, CharacterClassLevel, ChosenCharacterState,
@@ -634,6 +634,10 @@ pub(crate) mod tests {
                 selected_feats: vec![
                     "core:ability:mercenary".to_owned(),
                     "core:ability:2_racial_stat_bonus".to_owned(),
+                    "core:feat:weapon_focus".to_owned(),
+                    "core:feat:quick_draw".to_owned(),
+                    "core:feat:deadly_aim".to_owned(),
+                    "core:feat:coordinated_shot".to_owned(),
                 ],
                 skill_allocations: ["athletics", "intimidate", "medicine", "piloting", "survival"]
                     .iter()

@@ -1,0 +1,55 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 36.31s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 12 tests
+test sf_adapter::tests::build_from_input_reads_theme_armour_loadout_and_choices ... ok
+test sf_adapter::tests::a_refused_build_is_a_named_blocking_diagnostic ... ok
+test sf_sheet_print::tests::every_sf_spell_prints_its_formulas_as_words_with_no_character ... FAILED
+test sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant ... FAILED
+test sf_adapter::tests::bulk_condition_caps_dex_and_takes_the_worse_penalty_on_str_and_dex_skills ... ok
+test sf_sheet_print::tests::sf_seed_spell_prose_resolves_the_casters_terms ... FAILED
+test sf_sheet_print::tests::sf_seed_spell_lists_equal_the_seed_builds_spells_known ... FAILED
+test sf_sheet_print::tests::sf_seed_feats_print_the_seed_builds_feats ... ok
+test sf_adapter::tests::the_command_paths_route_starfinder_1e_to_the_starfinder_adapter ... ok
+test sf_sheet_print::tests::sf_seed_lines_print_every_resolved_term_and_no_pcgen_residue ... ok
+test sf_adapter::tests::persistence_methods_work_on_a_saved_starfinder_character ... ok
+test sf_adapter::tests::sf_seed_every_hand_value_equals_the_adapters_explanation_row ... ok
+
+failures:
+
+---- sf_sheet_print::tests::every_sf_spell_prints_its_formulas_as_words_with_no_character stdout ----
+
+thread 'sf_sheet_print::tests::every_sf_spell_prints_its_formulas_as_words_with_no_character' (1709064) panicked at src/sf_sheet_print.rs:324:13:
+assertion `left == right` failed: core:spell:animate_dead prints "This spell turns corpses into undead creatures that obey your spoken commands. The undead can be made to follow you, or they can be made to remain in place and attack any creature (or a specific kind of creature) entering the area. They remain animated until they are destroyed. A destroyed undead can't be animated again. You can create one or more undead creatures with a total CR of no more than caster level divided by 2. You can only create one type of undead with each casting of this spell. Creating undead requires special materials worth 1,000 credits Ã- the total CR of the undead created; these materials are consumed as part of casting the spell. The undead you create remain under your control indefinitely. No matter how many times you use this spell, however, you can control only a number of undead whose total CR is no greater than caster level. If you exceed this number, all the newly created creatures fall under your control and any excess undead from previous castings become uncontrolled. You choose which creatures are released. Once released, such undead have no particular feelings of loyalty to you, and in time they may grow in power beyond the undead you can create. The corpses you use must be as intact as the typical undead of the type you choose to create. For example, a skeleton can be created only from a mostly intact corpse (that has bones) or skeleton. A zombie can be created only from a creature with a physical anatomy.\nSchool: Necromancy\nComponents: Cr\nCasting time: 1 standard action\nRange: Touch\nTarget or area: One or more corpses\nDuration: Instantaneous\nSaving throw: None\nSpell resistance: No"
+  left: Some("Ã")
+ right: None
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant stdout ----
+
+thread 'sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant' (1709101) panicked at src/sf_sheet_print.rs:148:13:
+SF-Soldier-3: printed 35 feature records, granted 31; not printed []; printed but not granted (first 20) ["core:feat:coordinated_shot", "core:feat:deadly_aim", "core:feat:quick_draw", "core:feat:weapon_focus"]
+
+---- sf_sheet_print::tests::sf_seed_spell_prose_resolves_the_casters_terms stdout ----
+
+thread 'sf_sheet_print::tests::sf_seed_spell_prose_resolves_the_casters_terms' (1709103) panicked at src/sf_sheet_print.rs:307:95:
+magic missile prints
+
+---- sf_sheet_print::tests::sf_seed_spell_lists_equal_the_seed_builds_spells_known stdout ----
+
+thread 'sf_sheet_print::tests::sf_seed_spell_lists_equal_the_seed_builds_spells_known' (1709102) panicked at src/sf_sheet_print.rs:285:13:
+assertion `left == right` failed: SF-Mystic-5: printed spells vs seed-builds.md
+  left: {}
+ right: {(0, "detect affliction"), (0, "detect magic"), (0, "ghost sound"), (0, "grave words"), (0, "stabilize"), (0, "telepathic message"), (1, "charm person"), (1, "command"), (1, "detect thoughts"), (1, "mystic cure"), (1, "share language"), (2, "hold person"), (2, "remove condition"), (2, "status"), (2, "zone of truth")}
+
+
+failures:
+    sf_sheet_print::tests::every_sf_spell_prints_its_formulas_as_words_with_no_character
+    sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant
+    sf_sheet_print::tests::sf_seed_spell_lists_equal_the_seed_builds_spells_known
+    sf_sheet_print::tests::sf_seed_spell_prose_resolves_the_casters_terms
+
+test result: FAILED. 8 passed; 4 failed; 0 ignored; 0 measured; 642 filtered out; finished in 1.75s
+
+error: test failed, to rerun pass `--bin codex-desktop`

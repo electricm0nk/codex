@@ -246,6 +246,89 @@ fn sf_unglued(system: GameSystem, tokens: &[(String, String)]) -> std::borrow::C
     std::borrow::Cow::Owned(out)
 }
 
+/// The Windows-1252 byte a character stands for when UTF-8 was read as 1252: `0x80..=0xFF`, or
+/// `None` (ASCII, or not a 1252 character). The five bytes 1252 leaves undefined decode to the C1
+/// control of the same number (`scr_spells.lst:56`'s closing quote ends in U+009D).
+fn cp1252_byte(c: char) -> Option<u8> {
+    const HIGH: [(char, u8); 27] = [
+        ('\u{20ac}', 0x80), ('\u{201a}', 0x82), ('\u{192}', 0x83), ('\u{201e}', 0x84), ('\u{2026}', 0x85),
+        ('\u{2020}', 0x86), ('\u{2021}', 0x87), ('\u{2c6}', 0x88), ('\u{2030}', 0x89), ('\u{160}', 0x8a),
+        ('\u{2039}', 0x8b), ('\u{152}', 0x8c), ('\u{17d}', 0x8e), ('\u{2018}', 0x91), ('\u{2019}', 0x92),
+        ('\u{201c}', 0x93), ('\u{201d}', 0x94), ('\u{2022}', 0x95), ('\u{2013}', 0x96), ('\u{2014}', 0x97),
+        ('\u{2dc}', 0x98), ('\u{2122}', 0x99), ('\u{161}', 0x9a), ('\u{203a}', 0x9b), ('\u{153}', 0x9c),
+        ('\u{17e}', 0x9e), ('\u{178}', 0x9f),
+    ];
+    match u32::from(c) {
+        n @ (0x81 | 0x8d | 0x8f | 0x90 | 0x9d | 0xa0..=0xff) => u8::try_from(n).ok(),
+        _ => HIGH.iter().find(|(h, _)| *h == c).map(|(_, b)| *b),
+    }
+}
+
+/// SD-37 E5.2: Starfinder text the pinned oracle stores as UTF-8 that was once read as
+/// Windows-1252 and written back (`scr_spells.lst:56`, *Detect Thoughts*: `â€œListenâ€` + U+009D;
+/// 87 records over the eight books, 81 of them spells) is read as the characters it encodes:
+///
+/// - every run of 1252 characters that spells one valid UTF-8 sequence is that sequence's
+///   character (`â€™` -> `’`, `Â°` -> `°`);
+/// - three shapes lost a byte to a later clean-up and are mapped by what is left: `â€"` (an en or
+///   em dash whose 1252 curly quote was straightened) is `–` before a digit (`â€"4 penalty`) and
+///   `—` otherwise (`DR 5/â€"`); `Â` before a space is a no-break space written as a space; `Ã-`
+///   is `×` (its 1252 em dash written `-`; `animate_dead`'s "1,000 credits Ã- the total CR").
+///
+/// Text with none of the three lead characters (`â`, `Â`, `Ã`) is returned as it is; real
+/// non-ASCII text (`–2`, `—`, `×`, `°`) never forms a valid sequence and is unchanged.
+fn sf_unmisdecoded(text: &str) -> std::borrow::Cow<'_, str> {
+    if !text.contains(['\u{e2}', '\u{c2}', '\u{c3}']) {
+        return std::borrow::Cow::Borrowed(text);
+    }
+    let chars: Vec<char> = text.chars().collect();
+    let mut out = String::with_capacity(text.len());
+    let mut i = 0;
+    while i < chars.len() {
+        if chars[i..].starts_with(&['\u{e2}', '\u{20ac}', '"']) {
+            let digit = chars.get(i + 3).is_some_and(char::is_ascii_digit);
+            out.push(if digit { '\u{2013}' } else { '\u{2014}' });
+            i += 3;
+            continue;
+        }
+        if let Some(lead @ 0xc2..=0xf4) = cp1252_byte(chars[i]) {
+            let n = match lead {
+                0xc2..=0xdf => 2,
+                0xe0..=0xef => 3,
+                _ => 4,
+            };
+            let bytes: Option<Vec<u8>> = chars.get(i..i + n).map(|run| run.iter().filter_map(|c| cp1252_byte(*c)).collect());
+            if let Some(decoded) = bytes.filter(|b| b.len() == n).and_then(|b| String::from_utf8(b).ok()) {
+                out.push_str(&decoded);
+                i += n;
+                continue;
+            }
+        }
+        match (chars[i], chars.get(i + 1)) {
+            ('\u{c2}', Some(' ')) => {}
+            ('\u{c3}', Some('-')) => {
+                out.push('\u{d7}');
+                i += 1;
+            }
+            (c, _) => out.push(c),
+        }
+        i += 1;
+    }
+    if out == text {
+        std::borrow::Cow::Borrowed(text)
+    } else {
+        std::borrow::Cow::Owned(out)
+    }
+}
+
+/// [`sf_unmisdecoded`] over every token value of a Starfinder row. Pathfinder rows are unchanged.
+fn sf_text_repaired(system: GameSystem, tokens: &[(String, String)]) -> std::borrow::Cow<'_, [(String, String)]> {
+    if system == GameSystem::Pathfinder1e || !tokens.iter().any(|(_, v)| matches!(sf_unmisdecoded(v), std::borrow::Cow::Owned(_))) {
+        return std::borrow::Cow::Borrowed(tokens);
+    }
+    std::borrow::Cow::Owned(tokens.iter().map(|(k, v)| (k.clone(), sf_unmisdecoded(v).into_owned())).collect())
+}
+
 /// SD-37 E3.5: the prerequisite heads the seven wide books carry that the transcribed Pathfinder
 /// table (`table.rs`, SD-35's JSON) has no row for. They convert through
 /// [`super::prereq::convert_pre_token`] for Starfinder only; Pathfinder's 16 `PREATT` rows keep
@@ -1231,7 +1314,8 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     let mut failed_seqs: BTreeSet<usize> = BTreeSet::new();
     for row in &closure.rows {
         let level_gate = row.level_gate;
-        for (key, value) in sf_unglued(ctx.tree.system, &row.tokens).iter() {
+        let unglued = sf_unglued(ctx.tree.system, &row.tokens);
+        for (key, value) in sf_text_repaired(ctx.tree.system, &unglued).iter() {
             let key = key.trim();
             let value = value.as_str();
             if row.kind == ClosureRowKind::LevelLine && !matches!(key, "ABILITY" | "BONUS" | "ADD" | "DOMAIN" | "TEMPLATE" | "SPELLS" | "UDAM" | "UMULT" | "DEFINE" | "AUTO" | "CSKILL") {
@@ -2996,5 +3080,41 @@ mod ability_type_selector_tests {
             let expected = format!("book:class_feature:granter: {category}|{rest}");
             assert_eq!(c.defects.get("grant-by-type"), Some(&vec![expected]), "{token}: {:?}", c.defects);
         }
+    }
+}
+
+#[cfg(test)]
+mod sf_text_repair_tests {
+    use super::*;
+    use codex::rules_core::game_system::GameSystem;
+
+    /// SD-37 E5.2: the oracle's Starfinder text stored as UTF-8 once read as Windows-1252
+    /// prints as the characters it encodes (shapes measured over the eight converted books).
+    #[test]
+    fn starfinder_mis_decoded_text_prints_as_the_characters_it_encodes() {
+        let cases = [
+            // scr_spells.lst:56, Detect Thoughts: curly quotes, the closing one's byte 0x9D undefined in 1252.
+            ("\u{e2}\u{20ac}\u{153}Listen\u{e2}\u{20ac}\u{9d} to surface thoughts.", "\u{201c}Listen\u{201d} to surface thoughts."),
+            ("death\u{e2}\u{20ac}\u{2122}s head", "death\u{2019}s head"),
+            ("50\u{c2}\u{b0} and 140\u{c2}\u{b0} F", "50\u{b0} and 140\u{b0} F"),
+            // a no-break space the source then wrote as a plain space
+            ("prone for 1\u{c2} round.", "prone for 1 round."),
+            // en/em dash whose third byte (0x93/0x94, a curly quote in 1252) was straightened to `"`
+            ("takes a \u{e2}\u{20ac}\"4 penalty", "takes a \u{2013}4 penalty"),
+            ("DR 5/\u{e2}\u{20ac}\" or energy resistance", "DR 5/\u{2014} or energy resistance"),
+            // a multiplication sign whose second byte (0x97, an em dash in 1252) was written `-`
+            ("1,000 credits \u{c3}- the total CR", "1,000 credits \u{d7} the total CR"),
+        ];
+        for (raw, want) in cases {
+            assert_eq!(sf_unmisdecoded(raw), want, "{raw:?}");
+        }
+        // Real non-ASCII text is left alone.
+        for text in ["a \u{2013}2 penalty", "powered armor\u{2014}they", "15 + 1-1/2 \u{d7} your", "-50\u{b0} and 170\u{b0} F", "plain"] {
+            assert!(matches!(sf_unmisdecoded(text), std::borrow::Cow::Borrowed(_)), "{text:?}");
+        }
+        // Pathfinder rows are read as they are.
+        let tokens = vec![("DESC".to_string(), "1\u{c2} round".to_string())];
+        assert_eq!(sf_text_repaired(GameSystem::Pathfinder1e, &tokens)[0].1, "1\u{c2} round");
+        assert_eq!(sf_text_repaired(GameSystem::Starfinder1e, &tokens)[0].1, "1 round");
     }
 }
