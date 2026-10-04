@@ -209,6 +209,9 @@ pub mod sf_defense;
 /// SD-37 E4.2: the Starfinder 1e skill totals (ranks, ability, class skill, armour check
 /// penalty, every held bonus row), from the converted Starfinder package.
 pub mod sf_skills;
+/// SD-37 E4.3: the Starfinder 1e ability scores (race, theme, point buy, the increases at
+/// 5th/10th/15th/20th level) from the converted Starfinder package.
+pub mod sf_abilities;
 /// SD-36 Epic F §3.4: a class's weapon proficiency read from the converted package -- the
 /// source for every class without a `CLASS_WEAPON_PROFICIENCIES` row. `pub` so the
 /// codex-ingest oracle pin (`class_weapon_proficiency_via_converter.rs`) can call it.

@@ -225,6 +225,20 @@ pub(crate) fn ctx_for(held: &HeldSet, id: &str) -> EvalContext {
     EvalContext { holder_class: entry.holder_class, spell_level: entry.spell_level.unwrap_or(0), item_tags: Vec::new() }
 }
 
+/// The ability a chosen option names, for a `CHOOSE:PCSTAT` pick (`+2 Racial Stat Bonus`):
+/// the oracle's stat keys (`STR`) or the ability's name. Any other option is a skill id.
+fn chosen_ability(option: &str) -> Option<Ability> {
+    match option.to_ascii_lowercase().as_str() {
+        "str" | "strength" => Some(Ability::Str),
+        "dex" | "dexterity" => Some(Ability::Dex),
+        "con" | "constitution" => Some(Ability::Con),
+        "int" | "intelligence" => Some(Ability::Int),
+        "wis" | "wisdom" => Some(Ability::Wis),
+        "cha" | "charisma" => Some(Ability::Cha),
+        _ => None,
+    }
+}
+
 /// One held row's contribution to a total, before the bonus-type fold.
 #[derive(Debug, Clone)]
 pub(crate) struct Contribution {
@@ -234,7 +248,8 @@ pub(crate) struct Contribution {
 
 /// Every held, open row whose target `wants` accepts, evaluated by the one evaluator: a number
 /// is a contribution; words, dice or a situational gate are not added ([`SfNotFolded`]).
-/// A `Chosen` target is offered to `wants` once per option the character chose.
+/// A `Chosen` target is offered to `wants` once per option the character chose: as an
+/// `Ability` target when the option names an ability (`CHOOSE:PCSTAT`), else as a `Skill`.
 pub(crate) fn held_rows(
     package: &SheetRulePackage,
     sf: &SfHeld,
@@ -252,7 +267,10 @@ pub(crate) fn held_rows(
                 .get(c)
                 .into_iter()
                 .flatten()
-                .map(|(option, _)| BonusTarget::Skill(option.clone()))
+                .map(|(option, _)| match chosen_ability(option) {
+                    Some(a) => BonusTarget::Ability(a),
+                    None => BonusTarget::Skill(option.clone()),
+                })
                 .collect(),
             t => vec![t.clone()],
         };
@@ -463,9 +481,10 @@ pub(crate) mod seed_support {
                     chassis: chassis("soldier", 3, "human", [16, 14, 12, 11, 10, 10], Some(Ability::Str)),
                     theme: Some(s("core:ability:mercenary")),
                     armor: Some(s("core:equipment:defiance_series_squad")),
-                    picks: vec![],
+                    // Human: "+2 to any one ability" (`+2 Racial Stat Bonus`, CHOOSE:PCSTAT) -> Str.
+                    picks: vec![s("core:ability:2_racial_stat_bonus")],
                     skill_ranks: ranks(&[("athletics", 3), ("intimidate", 3), ("medicine", 3), ("piloting", 3), ("survival", 3)]),
-                    choices: BTreeMap::new(),
+                    choices: BTreeMap::from([(s("core:ability:2_racial_stat_bonus"), vec![s("STR")])]),
                 },
             ),
             (
@@ -475,8 +494,12 @@ pub(crate) mod seed_support {
                     theme: Some(s("core:ability:priest")),
                     armor: Some(s("core:equipment:lashunta_tempweave_basic")),
                     // Empath connection; Lashunta Student's two picks of "+2 Racial Bonus to Skill"
-                    // (Diplomacy, Medicine).
-                    picks: vec![s("core:ability:empath"), s("core:ability:2_racial_bonus_to_skill")],
+                    // (Diplomacy, Medicine); the damaya subrace (Dimorphic).
+                    picks: vec![
+                        s("core:ability:empath"),
+                        s("core:ability:2_racial_bonus_to_skill"),
+                        s("core:ability:lashunta_subrace_damaya"),
+                    ],
                     skill_ranks: ranks(&[
                         ("bluff", 5),
                         ("culture", 5),
@@ -536,6 +559,25 @@ pub(crate) mod seed_support {
                 },
             ),
         ]
+    }
+
+    /// Each seed's point buy and ability increases (`seed-builds.md` §1–§4 `Points spent` and
+    /// `5th-level increase` rows), keyed by seed.
+    pub fn ability_builds() -> BTreeMap<&'static str, super::super::sf_abilities::SfAbilityBuild> {
+        use super::super::sf_abilities::SfAbilityBuild;
+        let inc = |abilities: [Ability; 4]| BTreeMap::from([(5u8, abilities.to_vec())]);
+        BTreeMap::from([
+            ("SF-Soldier-3", SfAbilityBuild { point_buy: [3, 4, 2, 1, 0, 0], increases: BTreeMap::new() }),
+            (
+                "SF-Mystic-5",
+                SfAbilityBuild { point_buy: [0, 2, 0, 0, 7, 1], increases: inc([Ability::Dex, Ability::Int, Ability::Wis, Ability::Cha]) },
+            ),
+            (
+                "SF-Technomancer-5",
+                SfAbilityBuild { point_buy: [0, 2, 2, 5, 1, 0], increases: inc([Ability::Dex, Ability::Con, Ability::Int, Ability::Wis]) },
+            ),
+            ("SF-Envoy-3", SfAbilityBuild { point_buy: [0, 1, 2, 0, 0, 7], increases: BTreeMap::new() }),
+        ])
     }
 }
 
