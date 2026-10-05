@@ -30,11 +30,11 @@ it (`workflow-instruction.md §5`).
 | E3 | complete | 6 of 6 (E3.1–E3.5, E3.MC) | E3.MC receipt `artifacts/epic_3/E3.MC_cycle_receipt.md` (E3.MC corrected this row from 3 of 6; retro correction) |
 | E4 | complete | 7 of 7 (E4.1–E4.6, E4.MC) | E4.MC receipt `artifacts/epic_4/E4.MC_cycle_receipt.md` |
 | E5 | complete | 5 of 5 (E5.1–E5.4, E5.MC) | E5.MC receipt `artifacts/epic_5/E5.MC_cycle_receipt.md` (E5.MC corrected this row from 0 of 5) |
-| E6 | in progress | 1 of 7 (E6.1) | |
+| E6 | in progress | 2 of 7 (E6.1, E6.2) | |
 | E7.1 | waiting | 0 of 1 | |
 | E4a | waiting | 0 of 5 | serial after E7.1 (C0.2) |
 | E7.2–E7.9 | waiting | 0 of 8 | |
-| **Total** | | **35 of 55** | command below the table (E6.1 re-ran it after its own row: 35) |
+| **Total** | | **36 of 55** | command below the table (E6.2 re-ran it after its own row: 36) |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -172,6 +172,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E5.MC | 2026-10-05 | Opus 5.5 | the `docs(sd37,e5.mc)` commit | complete | Aldric unchanged (1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); Soldier / Mystic / Technomancer / Envoy unchanged (printed lines byte-identical to E5.4: 50 / 72 / 63 / 42), 160 of 160 hand values green; criterion plant 4 of 4 red (intended reason) | `artifacts/epic_5/E5.MC_cycle_receipt.md` |
 | E0.2 (re-dispatch) | 2026-10-04 | Opus 5.5 | the `docs(sd37,e0.2): re-dispatch` commit | complete (no change; already landed at 2f0bd9d793) | unchanged (no code change; not rendered) | `artifacts/epic_0/E0.2_cycle_receipt.md`; re-verified on e471c20f5f: matrix loop prints nothing (0 of 11 MISSING), `cargo test --locked -j 8 --lib pi_screening -- --test-threads=8` 45 passed / 0 failed (`artifacts/epic_0/E0.2_redispatch_pi_screening.log`); retro incident `redispatch-of-complete-card` |
 | E6.1 | 2026-10-05 | Opus 5.5 | `cc38b39ce0` (`feat(sd37,e6.1)`) | complete | Aldric unchanged (1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); Soldier / Mystic / Technomancer / Envoy unchanged (160 of 160 hand values green through the adapter); a saved SF-Soldier-3 opened through the `load_saved_character` command now gets `StarfinderAdapter`'s sheet (was the Pathfinder path, `snapshot: null`) | `artifacts/epic_6/E6.1_cycle_receipt.md` |
+| E6.2 | 2026-10-05 | Opus 5.5 | `23b340535a` (`feat(sd37,e6.2)`) | complete | Aldric unchanged (1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); Soldier: +1 printed line `Human (+2 racial stat bonus picks) +1`, no total moved; Mystic / Technomancer / Envoy unchanged (rendered); all 4 SF seeds' creation scores through the new flow = `seed-builds.md` (24 of 24) | `artifacts/epic_6/E6.2_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
@@ -283,6 +284,11 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-05 | E6.1 | "New Character" disabled with its reason for Starfinder until E6.2 | open the Pathfinder creation form | it would build a Pathfinder character under a Starfinder selection |
 | 2026-10-05 | E6.1 | Load routes by the save's envelope `game_system`; the list by the landing selection | a `ruleSystemId` on `load_saved_character` | a save opened under the other selection would be mis-routed |
 | 2026-10-05 | E6.1 | §8 self-heal (build-counter drift): `publish-tester-release.yml` stamp line 0.16 → 0.17 | leave `buildVersionTriple.test.ts` red and file it | §8 lists build-counter drift as self-healable; C1's own scope named that line |
+| 2026-10-05 | E6.2 | The Starfinder flow creates 1st-level characters | a level field with ability increases | the SRD creation procedure is 1st level; level-up (with the 5th-level increase) is E6.5 |
+| 2026-10-05 | E6.2 | Only ability-score picks block creation; every other open pick is listed "Not chosen yet (optional)" | require every pick the held set asks | PCGen lets an ability pool stay unspent; requiring archetype / upgrade slot / fighting style would diverge from the E0.4 seeds |
+| 2026-10-05 | E6.2 | The package's `Class ~ <class>` key-ability pick is answered from the key-ability field (option label = ability name) | ask it as a second select | one choice, asked once; the chassis reads the class-id choice |
+| 2026-10-05 | E6.2 | Races offered = race records with a racial Hit Points row (76 of 77; the drone frame is not) | every race record | `sf_chassis` refuses a race without the row |
+| 2026-10-05 | E6.2 | Human +2 fixed in the converter (selection hop carries `BONUS:ABILITYPOOL`), CONVERTER LANE | a per-race rule on the desktop | R2: no hand-kept desktop tables; the oracle states the pool |
 
 ## Open blockers
 
@@ -334,3 +340,5 @@ A discovery becomes a new `kanban.md` card in the discovering cycle's commit (ex
 - **2026-10-05, E6.1 → E6.2/E6.3/E6.6:** with no id or `pf1`, `list_saved_characters` lists through `Pf1Adapter`, which lists **every** save, Starfinder ones included (unchanged behaviour; `StarfinderAdapter` filters to its own). Opening one loads through `StarfinderAdapter` (envelope routing), but the open sheet's recompute/append/re-save use the landing selection (`resolveRuleSystemId(ruleSet)`), so an SF save opened under the Pathfinder selection would recompute through `Pf1Adapter`. E6.3/E6.6 should key the sheet's rule system off the row's `gameSystem`, or `Pf1Adapter` should list `pf1` saves only.
 - **2026-10-05, E6.1 → E6.MC/E7.9:** the bundle now carries 9,123 more files (`git ls-files data/starfinder-1e/sheet_rules | awk 'END{print NR}'`); PR #394 dropped WiX for a 107k-file bundle and NSIS was not measured with the SF root. The first tester publish (after the operator merges) is the first Windows bundle with it.
 - **2026-10-05, E6.1 (finding, fixed):** `buildVersionTriple.test.ts` red on `tranche/17` at `78f4f650ea`: C1 bumped the tranche/15 comment in `publish-tester-release.yml`, not the `VERSION="0.16.${GITHUB_RUN_NUMBER}"` stamp line. Fixed (§8 self-heal); retro correction in `docs/retro/events/sd37-e6-1.jsonl`. No E-card receipt before E6.1 ran the frontend suite (no frontend file changed in E0–E5).
+- **2026-10-05, E6.2 (finding, fixed):** E4.2's selection hop carried only `ABILITY:` grants; `Human Race Selection ~ Default`'s `BONUS:ABILITYPOOL|+2 Racial Stat Bonus|1` (`scr_abilities.lst:809`, the only one of 76 SF race selection rows with a pool) was dropped, so no converted record said a human picks the +2 (the seed fixtures held the pick explicitly, so no E4 total moved). Converted now (`#pool_2_racial_stat_bonus`); retro correction in `docs/retro/events/sd37-e6-2.jsonl`.
+- **2026-10-05, E6.2 → E6.3/E6.6:** a character created through the Starfinder flow opens in the Pathfinder sheet layout (E6.3), at 1st level with no skill ranks, feats, gear, credits or spells; E6.5/E6.6 add those. The flow lists feat pools (the human bonus feat, a technomancer's class bonus feat — the E4.4 safe-default note) under "Chosen on the sheet" and does not take them.
