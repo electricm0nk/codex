@@ -1,0 +1,27 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+error[E0609]: no field `applied` on type `sf_loadout::SfLoadout`
+   --> src/rules_core/pilot_compute/sf_loadout.rs:316:15
+    |
+316 |             l.applied = ids.iter().map(|id| format!("core:equipment_modifier:{id}")).collect();
+    |               ^^^^^^^ unknown field
+    |
+    = note: available fields are: `starting_credits`, `carried`
+
+error[E0609]: no field `applied` on type `sf_loadout::SfLoadout`
+   --> src/rules_core/pilot_compute/sf_loadout.rs:330:19
+    |
+330 |         malformed.applied = vec!["armory:equipment_modifier:mobility_enhancer_mk".into()];
+    |                   ^^^^^^^ unknown field
+    |
+    = note: available fields are: `starting_credits`, `carried`
+
+error[E0609]: no field `applied` on type `sf_loadout::SfLoadout`
+   --> src/rules_core/pilot_compute/sf_loadout.rs:333:22
+    |
+333 |         not_modifier.applied = vec!["core:class:soldier".into()];
+    |                      ^^^^^^^ unknown field
+    |
+    = note: available fields are: `starting_credits`, `carried`
+
+For more information about this error, try `rustc --explain E0609`.
+error: could not compile `codex` (lib test) due to 3 previous errors
