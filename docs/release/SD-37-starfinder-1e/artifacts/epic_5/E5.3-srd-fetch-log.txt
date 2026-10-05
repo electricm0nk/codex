@@ -1,0 +1,14 @@
+E5.3 SRD fetches (2026-10-04, WebFetch, Archives of Nethys Starfinder SRD)
+
+1. https://www.aonsrd.com/Augmentations.aspx?ItemName=All&Family=None
+   Quoted: "You can't have more than one augmentation on the same part of your body."
+   Systems listed: "arm (or all arms), brain, ears, eyes, foot (or all feet), hand (or all hands),
+   heart, leg (or all legs), lungs, spinal column, skin, and throat."
+   Bulk: the fetched text states nothing about an augmentation's bulk, and no Bulk column was
+   reported for the augmentation tables.
+2. https://www.aonsrd.com/Equipment.aspx?Category=Augmentations
+   General equipment page (currency, carrying capacity); no augmentation bulk rule.
+3. https://www.aonsrd.com/Rules.aspx?ID=210 -- wrong page (science officer actions); no content used.
+
+Oracle: every augmentation row's QUALITY is `QUALITY:ItemLevel|<n>` only (e.g. scr_equip.lst:499
+Vocal modulator, :506 Dermal plating mk 1, :526 Gill sheath) -- no bulk is stated.

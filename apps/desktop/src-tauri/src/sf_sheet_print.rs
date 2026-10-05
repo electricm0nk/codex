@@ -25,17 +25,22 @@
 //! spell the package does not hold, whose class the character does not have, or whose class's
 //! list does not carry it is refused by name, never dropped.
 
-use codex::rules_core::character_input::SpellSelection;
+use codex::rules_core::character_input::{ActiveState, EquipmentSelection, SpellSelection};
+use codex::rules_core::pilot_compute::sf_loadout::REFUSED_NOT_HELD;
 use codex::rules_core::pilot_compute::sf_chassis::SfChassisRefusal;
 use codex::rules_core::pilot_compute::sf_defense::{SfBuild, SfHeld};
 use codex::rules_core::sheet_rule::{
-    evaluate, render_sheet, split_rule_id, Applies, Cmp, EvalContext, Expr, Granter, HeldSeed, RuleId, SheetLine,
-    SheetLineValue, SheetRule, SheetRulePackage,
+    evaluate, render_sheet, split_rule_id, Applies, Cmp, EvalContext, Expr, Granter, HeldSeed, ProseFamily, ProsePiece, RuleId,
+    SheetLine, SheetLineValue, SheetRule, SheetRulePackage,
 };
 
 pub const REFUSED_UNKNOWN_SPELL: &str = "sf_sheet_print.unknown_spell";
 pub const REFUSED_SPELL_CLASS_NOT_HELD: &str = "sf_sheet_print.spell_class_not_held";
 pub const REFUSED_SPELL_NOT_ON_CLASS_LIST: &str = "sf_sheet_print.spell_not_on_class_list";
+pub const REFUSED_UNKNOWN_MODIFIER: &str = "sf_sheet_print.unknown_modifier";
+pub const REFUSED_MODIFIER_DOES_NOT_FIT: &str = "sf_sheet_print.modifier_does_not_fit";
+pub const REFUSED_UPGRADE_SLOTS: &str = "sf_sheet_print.upgrade_slots_exceeded";
+pub const REFUSED_AUGMENTATION_SYSTEM: &str = "sf_sheet_print.augmentation_system_taken";
 
 /// The package `pool` of a `CATEGORY:Weapon` ability (a per-weapon attack/damage row).
 const WEAPON_POOL: &str = "weapon";
@@ -102,13 +107,191 @@ fn spell_lines(
     Ok(lines.into_iter().map(|(_, line)| line).collect())
 }
 
-/// Every printed sheet line of `build`, over `held` (`sf_defense::held(package, build)`), and
-/// one line per spell in `spells` (the character's spells known).
+/// The tags that make an equipment record an augmentation (the oracle's `TYPE:` heads).
+const AUGMENTATION_KINDS: [&str; 5] = ["Cybernetic", "Bio-Tech", "Magitech", "Necrograft", "Personal Upgrade"];
+
+/// An armour record's tag (`TYPE:Armor` items), an armour upgrade's and a weapon fusion's
+/// (`equipment_modifier` records, oracle `TYPE:Armor` / `TYPE:Weapon` in `*_equipmods.lst`).
+const ARMOR_TAG: &str = "ARMOR";
+const UPGRADE_TAG: &str = "Armor";
+const FUSION_TAG: &str = "Weapon";
+
+/// Stat-block rows: an armour's upgrade slots, the slots an upgrade uses (oracle
+/// `MODIFY:UpgradeSlotTaken|ADD|<n>`), a weapon's damage dice.
+const UPGRADE_SLOTS_ROW: &str = "Upgrade slots";
+const SLOTS_USED_ROW: &str = "Upgrade slots used";
+const DAMAGE_ROW: &str = "Damage";
+
+fn refuse(id: &'static str, message: String) -> SfChassisRefusal {
+    SfChassisRefusal { id, message }
+}
+
+/// The text of `rule`'s first `StatBlock "<label>"` row.
+fn stat_row(rule: &SheetRule, label: &str) -> Option<String> {
+    rule.prose.iter().find_map(|seg| match &seg.family {
+        ProseFamily::StatBlock(l) if l == label => Some(
+            seg.pieces.iter().filter_map(|p| if let ProsePiece::Text(t) = p { Some(t.as_str()) } else { None }).collect::<String>(),
+        ),
+        _ => None,
+    })
+}
+
+fn has_tag(rule: &SheetRule, tag: &str) -> bool {
+    rule.tags.iter().any(|t| t == tag)
+}
+
+/// The augmentation kind of an equipment record and its body systems: every tag that is not
+/// the kind, an `ItemLevel_<n>` / `Cybernetic_<system>` index tag, a bare number or a
+/// `Personal Upgrade LVL <n>` tag.
+fn augmentation(rule: &SheetRule) -> Option<(&'static str, Vec<&str>)> {
+    let kind = AUGMENTATION_KINDS.iter().find(|k| has_tag(rule, k))?;
+    let systems = rule
+        .tags
+        .iter()
+        .map(String::as_str)
+        .filter(|t| {
+            !AUGMENTATION_KINDS.contains(t)
+                && !t.starts_with("ItemLevel_")
+                && !t.starts_with("Cybernetic_")
+                && !t.starts_with("Personal Upgrade")
+                && !t.chars().all(|c| c.is_ascii_digit())
+        })
+        .collect();
+    Some((kind, systems))
+}
+
+/// One carried item: its record, how many are carried, whether one is worn or installed, and
+/// the modifiers applied to each of its selections.
+struct Carried<'a> {
+    id: &'a str,
+    quantity: u32,
+    installed: bool,
+    modifiers: Vec<&'a [String]>,
+}
+
+/// Every carried item's line (`equipment` lines; the worn armour's and an equipped item's
+/// already print as held records and gain their quantity here), and every applied upgrade's
+/// and fusion's line. A weapon's line prints its damage dice; its per-weapon attack and damage
+/// rows stay off the sheet (E5.1): their numbers are attack totals (E7.1), and they read +0
+/// until the weapon focus/specialization ability that sets them is held.
+fn equipment_lines(
+    package: &SheetRulePackage,
+    held: &SfHeld,
+    equipment: &[EquipmentSelection],
+    lines: &mut Vec<SheetLine>,
+) -> Result<(), SfChassisRefusal> {
+    let mut carried: Vec<Carried> = Vec::new();
+    for selection in equipment.iter().filter(|s| s.active_state != ActiveState::Absent) {
+        let installed = selection.active_state == ActiveState::EquippedActive;
+        match carried.iter_mut().find(|c| c.id == selection.item_id) {
+            Some(c) => {
+                c.quantity += 1;
+                c.installed |= installed;
+                c.modifiers.push(&selection.applied_modifiers);
+            }
+            None => carried.push(Carried {
+                id: &selection.item_id,
+                quantity: 1,
+                installed,
+                modifiers: vec![&selection.applied_modifiers],
+            }),
+        }
+    }
+    let mut systems_taken: Vec<(String, String)> = Vec::new();
+    let mut modifier_lines = Vec::new();
+    for item in &carried {
+        let rule = package
+            .rule(item.id)
+            .filter(|r| split_rule_id(&r.id).1 == "equipment" && !r.id.contains('#'))
+            .ok_or_else(|| refuse(REFUSED_NOT_HELD, format!("{}: no such equipment record in the Starfinder package", item.id)))?;
+        let at = match lines.iter().position(|l| l.id == rule.id) {
+            Some(at) => at,
+            None => {
+                let ctx = EvalContext { holder_class: None, spell_level: 0, item_tags: rule.tags.clone() };
+                lines.push(evaluate(rule, &held.held, package, &held.facts, ctx));
+                lines.len() - 1
+            }
+        };
+        let mut also = vec![(format!("quantity {}", item.quantity), SheetLineValue::Resolved(item.quantity as i32))];
+        if let Some((kind, systems)) = augmentation(rule) {
+            also.push((format!("{kind} augmentation, system: {}", systems.join(", ")), SheetLineValue::Words));
+            if item.installed {
+                for system in systems {
+                    if let Some((other, _)) = systems_taken.iter().find(|(_, s)| s.eq_ignore_ascii_case(system)) {
+                        return Err(refuse(
+                            REFUSED_AUGMENTATION_SYSTEM,
+                            format!("{} and {other} are both installed in the {system} system (one augmentation per system)", rule.id),
+                        ));
+                    }
+                    systems_taken.push((rule.id.clone(), system.to_owned()));
+                }
+            }
+        }
+        let slots = stat_row(rule, UPGRADE_SLOTS_ROW);
+        let mut slots_used = 0i64;
+        for modifiers in &item.modifiers {
+            let mut used_here = 0i64;
+            for id in modifiers.iter() {
+                let modifier = package
+                    .rule(id)
+                    .filter(|r| split_rule_id(&r.id).1 == "equipment_modifier" && !r.id.contains('#'))
+                    .ok_or_else(|| refuse(REFUSED_UNKNOWN_MODIFIER, format!("{id}: no such equipment modifier in the Starfinder package")))?;
+                let place = if has_tag(modifier, UPGRADE_TAG) {
+                    if !has_tag(rule, ARMOR_TAG) {
+                        return Err(refuse(REFUSED_MODIFIER_DOES_NOT_FIT, format!("{id}: an armour modifier applied to {}, which is not armour", rule.id)));
+                    }
+                    match stat_row(modifier, SLOTS_USED_ROW) {
+                        Some(used) => {
+                            used_here += used.trim().trim_start_matches('+').parse::<i64>().map_err(|_| {
+                                refuse(REFUSED_UPGRADE_SLOTS, format!("{id}: upgrade slots used {used:?} is not a number"))
+                            })?;
+                            "upgrade installed in"
+                        }
+                        // A special material (adamantine, noqual, ...) is armour-tagged and uses no slot.
+                        None => "applied to",
+                    }
+                } else if has_tag(modifier, FUSION_TAG) {
+                    if stat_row(rule, DAMAGE_ROW).is_none() {
+                        return Err(refuse(REFUSED_MODIFIER_DOES_NOT_FIT, format!("{id}: a weapon fusion applied to {}, which is not a weapon", rule.id)));
+                    }
+                    "fusion on"
+                } else {
+                    "applied to"
+                };
+                let ctx = EvalContext { holder_class: None, spell_level: 0, item_tags: rule.tags.clone() };
+                let mut line = evaluate(modifier, &held.held, package, &held.facts, ctx);
+                line.also.push((format!("{place} {}", rule.label), SheetLineValue::Words));
+                modifier_lines.push(line);
+            }
+            if used_here > 0 {
+                let available = slots.as_deref().and_then(|s| s.trim().parse::<i64>().ok()).unwrap_or(0);
+                if used_here > available {
+                    return Err(refuse(
+                        REFUSED_UPGRADE_SLOTS,
+                        format!("{}: its upgrades use {used_here} upgrade slots; it has {available}", rule.id),
+                    ));
+                }
+            }
+            slots_used = slots_used.max(used_here);
+        }
+        if let Some(slots) = slots {
+            also.push((format!("upgrade slots used {slots_used} of {}", slots.trim()), SheetLineValue::Resolved(slots_used as i32)));
+        }
+        lines[at].also.extend(also);
+    }
+    lines.extend(modifier_lines);
+    Ok(())
+}
+
+/// Every printed sheet line of `build`, over `held` (`sf_defense::held(package, build)`), one
+/// line per spell in `spells` (the character's spells known), and one line per carried item and
+/// per upgrade or fusion applied to one (`equipment`, the save's selections; E5.3).
 pub fn sheet_lines(
     package: &SheetRulePackage,
     build: &SfBuild,
     held: &SfHeld,
     spells: &[SpellSelection],
+    equipment: &[EquipmentSelection],
 ) -> Result<Vec<SheetLine>, SfChassisRefusal> {
     let chassis = &build.chassis;
     let classes: Vec<(String, i64)> =
@@ -125,6 +308,7 @@ pub fn sheet_lines(
         line.prose = line.prose.split('\n').filter(|row| !row.starts_with(HIT_DIE_ROW)).collect::<Vec<_>>().join("\n");
     }
     lines.extend(spell_lines(package, build, held, spells)?);
+    equipment_lines(package, held, equipment, &mut lines)?;
     Ok(lines)
 }
 
@@ -227,7 +411,10 @@ mod tests {
                 let text: String = chassis
                     .sheet_lines
                     .iter()
-                    .map(|l| format!("{} | {} | {} | {} | {}\n", l.kind, l.id, l.label, l.printed, l.prose.replace('\n', " / ")))
+                    .map(|l| {
+                        let also: Vec<&str> = l.also.iter().map(|(t, _)| t.as_str()).collect();
+                        format!("{} | {} | {} | {} | {} | {}\n", l.kind, l.id, l.label, l.printed, l.prose.replace('\n', " / "), also.join("; "))
+                    })
                     .collect();
                 std::fs::write(PathBuf::from(dir).join(format!("{seed}.txt")), text).expect("writes the seed's lines");
             }
@@ -394,6 +581,246 @@ mod tests {
         let missile = spells.iter().find(|r| r.id == "core:spell:magic_missile").expect("magic missile");
         let prose = catalog_prose(package, missile);
         assert!(prose.contains("caster level"), "{prose:?}");
+    }
+
+    /// The seed builds' gear (E0.4): per seed, `(item name, quantity)` for every row of the
+    /// `**Armour and weapons**` table (quantity 1) and the `**Other gear**` table (its `Qty`
+    /// cell). The name is the first cell, its parenthetical dropped, lowercased.
+    fn seed_gear() -> BTreeMap<String, Vec<(String, u32)>> {
+        let text = std::fs::read_to_string(repo_root().join(SEED_BUILDS)).expect("seed-builds.md reads");
+        let bare = |name: &str| name.split(" (").next().unwrap_or(name).trim().to_lowercase();
+        let mut out: BTreeMap<String, Vec<(String, u32)>> = BTreeMap::new();
+        let (mut seed, mut table) = (None::<String>, "");
+        for line in text.lines() {
+            if let Some(rest) = line.strip_prefix("## ") {
+                seed = rest.split_whitespace().nth(1).filter(|s| s.starts_with("SF-")).map(str::to_owned);
+                table = "";
+            } else if line.starts_with("**") {
+                table = if line.starts_with("**Armour and weapons") {
+                    "worn"
+                } else if line.starts_with("**Other gear") {
+                    "gear"
+                } else {
+                    ""
+                };
+            } else if let (Some(seed), true) = (&seed, line.starts_with("| ") && !line.starts_with("|---")) {
+                let cells: Vec<&str> = line.trim_matches('|').split(" | ").map(str::trim).collect();
+                match table {
+                    "worn" if cells[0] != "Item" => out.entry(seed.clone()).or_default().push((bare(cells[0]), 1)),
+                    "gear" if cells[0] != "Item" => {
+                        let qty = cells[1].parse().unwrap_or_else(|_| panic!("gear row {line:?}"));
+                        out.entry(seed.clone()).or_default().push((bare(cells[0]), qty));
+                    }
+                    _ => {}
+                }
+            }
+        }
+        out
+    }
+
+    /// The quantity a printed item line states (`also`: "quantity <n>").
+    fn printed_quantity(line: &codex::rules_core::sheet_rule::SheetLine) -> u32 {
+        line.also
+            .iter()
+            .find_map(|(text, _)| text.strip_prefix("quantity ").and_then(|n| n.parse().ok()))
+            .unwrap_or_else(|| panic!("{}: no quantity printed ({:?})", line.id, line.also))
+    }
+
+    /// The same item name in the seed builds and the package: equal ignoring case and
+    /// punctuation, or the package names the standard model by its family alone ("Battery,
+    /// Standard" is the package's "Battery").
+    fn same_item(seed_name: &str, label: &str) -> bool {
+        let norm = |s: &str| s.to_lowercase().chars().filter(|c| c.is_alphanumeric() || *c == ' ').collect::<String>();
+        let (seed_name, label) = (norm(seed_name), norm(label));
+        seed_name.split_whitespace().eq(label.split_whitespace()) || seed_name == format!("{label} standard")
+    }
+
+    /// E5.3's criterion, "seed loadouts render": each seed's sheet prints one equipment line per
+    /// item the seed carries -- the worn armour and every weapon and piece of gear in
+    /// `seed-builds.md`'s tables -- each with its quantity, and no other equipment line.
+    #[test]
+    fn sf_seed_loadouts_print_every_carried_item_with_its_quantity() {
+        let gear = seed_gear();
+        let seeds = crate::sf_adapter::tests::seeds();
+        assert_eq!(gear.len(), seeds.len(), "one gear block per seed: {:?}", gear.keys().collect::<Vec<_>>());
+        let mut compared = 0;
+        for (seed, _, input) in seeds {
+            let want = &gear[seed];
+            let chassis = StarfinderAdapter.chassis_resolve(&input);
+            let items: Vec<_> = chassis.sheet_lines.iter().filter(|l| l.kind == "equipment" && !l.id.contains('#')).collect();
+            assert_eq!(items.len(), want.len(), "{seed}: printed {:?}", items.iter().map(|l| &l.label).collect::<Vec<_>>());
+            for (name, qty) in want {
+                let line = items
+                    .iter()
+                    .find(|l| same_item(name, &l.label))
+                    .unwrap_or_else(|| panic!("{seed}: {name:?} not printed ({:?})", items.iter().map(|l| &l.label).collect::<Vec<_>>()));
+                assert_eq!(printed_quantity(line), *qty, "{seed}: {name} quantity");
+                assert!(line.prose.contains("Price: "), "{seed}: {name} prints no price: {:?}", line.prose);
+                compared += 1;
+            }
+            // The worn armour's line states its upgrade slots and how many are used.
+            let armor = items.iter().find(|l| l.also.iter().any(|(t, _)| t.starts_with("upgrade slots used"))).expect("armour line");
+            assert!(armor.also.iter().any(|(t, _)| t == "upgrade slots used 0 of 1"), "{seed}: {:?}", armor.also);
+        }
+        assert_eq!(compared, 5 + 6 + 5 + 4, "seed-builds.md item rows: Soldier 5, Mystic 6, Technomancer 5, Envoy 4");
+    }
+
+    /// A carried weapon's line prints its damage dice (its `Damage` stat row) as its value, and
+    /// none of the weapon's per-weapon attack/damage rows (attack totals, E7.1).
+    #[test]
+    fn sf_seed_weapon_lines_print_their_damage_dice() {
+        let mut weapons = 0;
+        for (seed, _, input) in crate::sf_adapter::tests::seeds() {
+            let chassis = StarfinderAdapter.chassis_resolve(&input);
+            for line in chassis.sheet_lines.iter().filter(|l| l.kind == "equipment" && !l.id.contains('#')) {
+                let Some(dice) = line.prose.split(" / ").chain(line.prose.split('\n')).find_map(|row| row.strip_prefix("Damage: ")) else {
+                    continue;
+                };
+                assert_eq!(line.printed, dice.trim(), "{seed}: {}", line.id);
+                assert!(!line.also.iter().any(|(t, _)| t.contains(" attack ") || t.contains(" damage ")), "{seed}: {:?}", line.also);
+                weapons += 1;
+            }
+        }
+        assert_eq!(weapons, 2 + 2 + 1 + 2, "seed weapons: Soldier rifle + baton, Mystic pistol + baton, Technomancer pistol, Envoy pistol + baton");
+    }
+
+    fn technomancer() -> codex::rules_core::character_input::CharacterInput {
+        crate::sf_adapter::tests::seeds()
+            .into_iter()
+            .find(|(seed, _, _)| *seed == "SF-Technomancer-5")
+            .expect("the technomancer seed")
+            .2
+    }
+
+    fn selection(input: &mut codex::rules_core::character_input::CharacterInput, item: &str) -> usize {
+        input
+            .chosen
+            .equipment_selections
+            .iter()
+            .position(|s| s.item_id == format!("core:equipment:{item}"))
+            .unwrap_or_else(|| panic!("{item} selected"))
+    }
+
+    /// An armour upgrade (an `equipment_modifier` tagged `Armor`) applied to the worn armour
+    /// prints on its own line, installed in that armour, and the armour line counts the slots
+    /// it uses; a fusion (tagged `Weapon`) applied to a weapon prints fused to it. Neither
+    /// moves EAC or KAC.
+    #[test]
+    fn installed_upgrades_and_fusions_print_on_their_item() {
+        let base = StarfinderAdapter.chassis_resolve(&technomancer());
+        let mut input = technomancer();
+        let armor = selection(&mut input, "d_suit_i");
+        input.chosen.equipment_selections[armor].applied_modifiers.push("core:equipment_modifier:armor_infrared_sensors".into());
+        let pistol = selection(&mut input, "laser_pistol_azimuth");
+        input.chosen.equipment_selections[pistol].applied_modifiers.push("core:equipment_modifier:weapon_flaming".into());
+        let chassis = StarfinderAdapter.chassis_resolve(&input);
+        assert!(chassis.diagnostics.iter().all(|d| !d.claim_blocking), "{:?}", chassis.diagnostics);
+        let line = |id: &str| chassis.sheet_lines.iter().find(|l| l.id == id).unwrap_or_else(|| panic!("{id} prints"));
+        let upgrade = line("core:equipment_modifier:armor_infrared_sensors");
+        assert!(upgrade.also.iter().any(|(t, _)| t == "upgrade installed in D-suit I"), "{:?}", upgrade.also);
+        assert!(upgrade.prose.contains("darkvision"), "{:?}", upgrade.prose);
+        // Its price, item level and bulk print as stat rows (oracle `COST:200`,
+        // `SPROP:ItemLevel=1`, `SPROP:Bulk=L`), never as `ItemLevel=1` debris.
+        for row in ["Price: 200", "Item level: 1", "Quality: Bulk: L"] {
+            assert!(upgrade.prose.split('\n').any(|r| r == row), "{row}: {:?}", upgrade.prose);
+        }
+        assert!(!upgrade.prose.contains("ItemLevel=") && !upgrade.prose.contains("Bulk="), "{:?}", upgrade.prose);
+        let suit = line("core:equipment:d_suit_i");
+        assert!(suit.also.iter().any(|(t, _)| t == "upgrade slots used 1 of 1"), "{:?}", suit.also);
+        let fusion = line("core:equipment_modifier:weapon_flaming");
+        assert!(fusion.also.iter().any(|(t, _)| t == "fusion on Laser pistol, azimuth"), "{:?}", fusion.also);
+        for id in ["sf.eac", "sf.kac"] {
+            let value = |c: &codex::rules_core::pilot_compute::PilotBaseChassisComputation| {
+                c.explanations.iter().find(|e| e.id == id).map(|e| e.value)
+            };
+            assert_eq!(value(&chassis), value(&base), "{id} moved");
+        }
+    }
+
+    /// An upgrade or fusion the sheet cannot place is refused by name: more upgrade slots used
+    /// than the armour has, an armour upgrade on a weapon, a fusion on armour, a record that is
+    /// not an equipment modifier.
+    #[test]
+    fn an_unplaceable_upgrade_or_fusion_is_a_named_refusal() {
+        use super::{REFUSED_MODIFIER_DOES_NOT_FIT, REFUSED_UNKNOWN_MODIFIER, REFUSED_UPGRADE_SLOTS};
+        for (item, modifiers, refusal) in [
+            ("d_suit_i", vec!["armor_infrared_sensors", "armor_jump_jets"], REFUSED_UPGRADE_SLOTS),
+            ("laser_pistol_azimuth", vec!["armor_infrared_sensors"], REFUSED_MODIFIER_DOES_NOT_FIT),
+            ("d_suit_i", vec!["weapon_flaming"], REFUSED_MODIFIER_DOES_NOT_FIT),
+            ("d_suit_i", vec!["no_such_upgrade"], REFUSED_UNKNOWN_MODIFIER),
+        ] {
+            let mut input = technomancer();
+            let at = selection(&mut input, item);
+            input.chosen.equipment_selections[at].applied_modifiers =
+                modifiers.iter().map(|m| format!("core:equipment_modifier:{m}")).collect();
+            let chassis = StarfinderAdapter.chassis_resolve(&input);
+            assert_eq!(chassis.diagnostics.len(), 1, "{item} {modifiers:?}: {:?}", chassis.diagnostics);
+            assert_eq!(chassis.diagnostics[0].id, refusal, "{item} {modifiers:?}");
+            assert!(chassis.diagnostics[0].claim_blocking);
+        }
+    }
+
+    /// An equipped item's bonus to a sheet total reaches that total (E4's reader totals it): an
+    /// equipped *Aeon Stone (Dark Blue Rhomboid)* adds its +2 insight bonus to Perception and
+    /// Sense Motive; the same stone carried but not equipped adds nothing, and its line prints
+    /// either way.
+    #[test]
+    fn an_equipped_items_bonus_reaches_the_skill_totals() {
+        use codex::rules_core::character_input::{ActiveState, EquipmentSelection};
+        // A soldier of 10th level can afford the stone (18,000 credits; Table 11-5).
+        let mut input = crate::rule_system_adapter::tests::sf_soldier_3_input();
+        input.chosen.class_levels[0].level = 10;
+        let stone = |active_state| EquipmentSelection {
+            item_id: "core:equipment:aeon_stone_dark_blue_rhomboid".into(),
+            equipped_or_active: active_state == ActiveState::EquippedActive,
+            active_state,
+            applied_modifiers: Vec::new(),
+        };
+        let total = |input: &codex::rules_core::character_input::CharacterInput, id: &str| {
+            let chassis = StarfinderAdapter.chassis_resolve(input);
+            assert!(chassis.diagnostics.iter().all(|d| !d.claim_blocking), "{:?}", chassis.diagnostics);
+            assert!(chassis.sheet_lines.iter().any(|l| l.id == "core:equipment:aeon_stone_dark_blue_rhomboid"), "the stone prints");
+            chassis.explanations.iter().find(|e| e.id == id).map(|e| e.value).unwrap_or_else(|| panic!("no {id}"))
+        };
+        let mut carried = input.clone();
+        carried.chosen.equipment_selections.push(stone(ActiveState::SelectedInactive));
+        input.chosen.equipment_selections.push(stone(ActiveState::EquippedActive));
+        for skill in ["perception", "sense_motive"] {
+            let id = format!("sf.skill.{skill}");
+            assert_eq!(total(&input, &id), total(&carried, &id) + 2, "{id}");
+        }
+    }
+
+    /// An installed augmentation (an equipment record tagged `Cybernetic`, `Bio-Tech`,
+    /// `Magitech`, `Necrograft` or `Personal Upgrade`) prints its kind and body system; two
+    /// installed in one system are refused by name (SRD: one augmentation per system).
+    #[test]
+    fn an_installed_augmentation_prints_its_system_and_one_per_system() {
+        use super::REFUSED_AUGMENTATION_SYSTEM;
+        use codex::rules_core::character_input::{ActiveState, EquipmentSelection};
+        use codex::rules_core::pilot_compute::sf_defense::held;
+        use codex::rules_core::corpus_loader::live_sheet_rules_for;
+        use codex::rules_core::game_system::GameSystem;
+        let package = live_sheet_rules_for(GameSystem::Starfinder1e).expect("the Starfinder package loads");
+        let installed = |id: &str| EquipmentSelection {
+            item_id: format!("core:equipment:{id}"),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        };
+        let input = technomancer();
+        let (build, _) = crate::sf_adapter::build_from_input(package, &input).expect("builds");
+        let held_set = held(package, &build).expect("holds");
+        let mut equipment = input.chosen.equipment_selections.clone();
+        equipment.push(installed("cybernetic_vocal_modulator"));
+        let lines = super::sheet_lines(package, &build, &held_set, &input.chosen.spells_selected, &equipment).expect("prints");
+        let line = lines.iter().find(|l| l.id == "core:equipment:cybernetic_vocal_modulator").expect("the augmentation prints");
+        assert!(line.also.iter().any(|(t, _)| t == "Cybernetic augmentation, system: Throat"), "{:?}", line.also);
+        assert!(line.prose.contains("vocal modulator"), "{:?}", line.prose);
+        equipment.push(installed("dragon_gland_wyrmling"));
+        let refused = super::sheet_lines(package, &build, &held_set, &input.chosen.spells_selected, &equipment).expect_err("two in the throat");
+        assert_eq!(refused.id, REFUSED_AUGMENTATION_SYSTEM);
+        assert!(refused.message.contains("Throat"), "{}", refused.message);
     }
 
     /// A spell selection the sheet cannot print is refused by name -- a claim-blocking

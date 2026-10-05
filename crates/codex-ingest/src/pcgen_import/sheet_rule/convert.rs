@@ -1714,6 +1714,26 @@ fn start_skill_points(ctx: &RecordCtx, value: &str) -> Option<u32> {
     u32::try_from(initial? + raised).ok()
 }
 
+/// SD-37 E5.3: a Starfinder equipment modifier states its item level and bulk as special
+/// properties (`SPROP:ItemLevel=1`, `SPROP:Bulk=L`, `scr_equipmods.lst`); they are its stat
+/// rows -- `"Item level"` and the `"Quality"` row `Bulk: <bulk>`, the shapes an equipment record
+/// carries (`QUALITY:Bulk|L`) and `pilot_compute::sf_loadout` reads -- not prose. `None` for
+/// every other value, kind and system.
+fn sf_modifier_stat(system: GameSystem, kind: &str, value: &str) -> Option<(&'static str, String)> {
+    if system != GameSystem::Starfinder1e || kind != "equipment_modifier" {
+        return None;
+    }
+    let (head, rest) = value.split_once('=')?;
+    let rest = rest.trim();
+    match head.trim() {
+        "ItemLevel" if !rest.is_empty() && rest.chars().all(|c| c.is_ascii_digit()) => Some(("Item level", rest.to_string())),
+        "Bulk" | "BULK" if rest == "L" || rest == "-" || (!rest.is_empty() && rest.chars().all(|c| c.is_ascii_digit())) => {
+            Some(("Quality", format!("Bulk: {rest}")))
+        }
+        _ => None,
+    }
+}
+
 fn push_stat(acc: &mut Acc, label: &str, pieces: Vec<ProsePiece>) {
     if pieces.is_empty() {
         return;
@@ -1763,7 +1783,9 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         // price that is not one whole number prints no row and is named in
         // `_defects/sf-price-unresolved.json`, never guessed. Pathfinder's `COST:` stays
         // metadata (its prices are read from the corpus, `CorpusEquipmentRecord`).
-        "COST" if ctx.tree.system == GameSystem::Starfinder1e && ctx.record.kind == "equipment" => match integer_literal(v) {
+        // SD-37 E5.3: an equipment modifier's `COST:` (an armour upgrade's, `scr_equipmods.lst`)
+        // is its price the same way; installed, it is a term of the credits spent.
+        "COST" if ctx.tree.system == GameSystem::Starfinder1e && matches!(ctx.record.kind.as_str(), "equipment" | "equipment_modifier") => match integer_literal(v) {
             Some(n) if n >= 0 && level_gate.is_none() => {
                 acc.stat_block.retain(|seg| !matches!(&seg.family, ProseFamily::StatBlock(l) if l == SF_PRICE_LABEL));
                 push_stat(acc, SF_PRICE_LABEL, vec![ProsePiece::Text(n.to_string())]);
@@ -1944,7 +1966,11 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             // `inner_sea_intrigue:equipment_modifier:special_ability_transformative_greater_melee`
             // is the one live corpus record this fires on today.
             let v = v.strip_prefix(&format!("{key}:")).unwrap_or(v);
-            if v == ".CLEAR" {
+            if key == "SPROP"
+                && let Some((label, text)) = sf_modifier_stat(ctx.tree.system, &ctx.record.kind, v)
+            {
+                push_stat(acc, label, vec![ProsePiece::Text(text)]);
+            } else if v == ".CLEAR" {
                 acc.special.clear();
             } else if let Some(seg) = convert_positional(ctx, ProseFamily::Special, v, key.to_ascii_lowercase().as_str())? {
                 acc.special.push(seg);
@@ -3116,5 +3142,28 @@ mod sf_text_repair_tests {
         let tokens = vec![("DESC".to_string(), "1\u{c2} round".to_string())];
         assert_eq!(sf_text_repaired(GameSystem::Pathfinder1e, &tokens)[0].1, "1\u{c2} round");
         assert_eq!(sf_text_repaired(GameSystem::Starfinder1e, &tokens)[0].1, "1 round");
+    }
+}
+
+#[cfg(test)]
+mod sf_modifier_stat_tests {
+    use super::*;
+    use codex::rules_core::game_system::GameSystem;
+
+    /// SD-37 E5.3: a Starfinder equipment modifier's `SPROP:ItemLevel=<n>` and
+    /// `SPROP:Bulk=<n|L|->` (`scr_equipmods.lst`: `Infrared sensors ... SPROP:ItemLevel=1
+    /// SPROP:Bulk=L`) are its stat rows -- the item level and the `Bulk:` quality an equipment
+    /// record carries -- not prose; every other `SPROP`, and Pathfinder's, stays prose.
+    #[test]
+    fn starfinder_modifier_level_and_bulk_sprops_are_stat_rows() {
+        let sf = GameSystem::Starfinder1e;
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "ItemLevel=1"), Some(("Item level", "1".to_string())));
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "Bulk=L"), Some(("Quality", "Bulk: L".to_string())));
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "BULK=-"), Some(("Quality", "Bulk: -".to_string())));
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "Bulk=2"), Some(("Quality", "Bulk: 2".to_string())));
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "You gain darkvision with a range of 60 feet."), None);
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "ItemLevel=varies"), None);
+        assert_eq!(sf_modifier_stat(sf, "equipment", "ItemLevel=1"), None);
+        assert_eq!(sf_modifier_stat(GameSystem::Pathfinder1e, "equipment_modifier", "Bulk=L"), None);
     }
 }

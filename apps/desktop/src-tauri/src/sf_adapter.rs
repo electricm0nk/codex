@@ -19,7 +19,7 @@
 //! | `race_id`, `class_levels` | the race and class records (`core:race:human`, `core:class:soldier`) |
 //! | `ability_scores` | the FINAL scores (race, theme, point buy and increases applied) |
 //! | `selected_feats` | held records: the one whose package `pool` is `theme` is the theme; every other is a pick (feat, connection, racial pick) |
-//! | `equipment_selections` | the one equipped record tagged `ARMOR` is the worn armour; every other selection not `Absent` is carried, one per selection |
+//! | `equipment_selections` | the one equipped record tagged `ARMOR` is the worn armour; every other selection not `Absent` is carried, one per selection; an equipped one is also held (its bonuses reach the totals); `applied_modifiers` are the upgrades and fusions on that selection (printed, E5.3) |
 //! | `skill_allocations` | package skill id -> ranks |
 //! | `selected_choices` | a choice whose set is one of the character's class ids is that class's key-ability choice (`STR`); every other is a rule choice (set = the choosing rule's id) |
 //!
@@ -196,6 +196,12 @@ pub fn build_from_input(
             }
             continue;
         }
+        // An equipped (worn, installed) item is held: its bonus to a sheet total reaches the
+        // total E4's readers add (an aeon stone's insight bonus to Perception). Carried but
+        // not equipped, it only prints and costs credits and bulk.
+        if selection.active_state == ActiveState::EquippedActive && !picks.contains(&selection.item_id) {
+            picks.push(selection.item_id.clone());
+        }
         match carried.iter_mut().find(|(id, _)| *id == selection.item_id) {
             Some((_, quantity)) => *quantity += 1,
             None => carried.push((selection.item_id.clone(), 1)),
@@ -246,7 +252,7 @@ pub fn compute_sheet(package: &SheetRulePackage, input: &CharacterInput) -> Resu
     let spells = sf_spells::compute_with(package, &build, &held)?;
     let carried = sf_loadout::compute(package, &build, &loadout)?;
     apply_bulk_condition(&mut defense, &mut skills, carried.condition);
-    let lines = crate::sf_sheet_print::sheet_lines(package, &build, &held, &input.chosen.spells_selected)?;
+    let lines = crate::sf_sheet_print::sheet_lines(package, &build, &held, &input.chosen.spells_selected, &input.chosen.equipment_selections)?;
     Ok(SfSheet { ability_scores: build.chassis.ability_scores, chassis, defense, skills, spells, carried, lines })
 }
 
@@ -1157,6 +1163,8 @@ pub(crate) mod tests {
                 "core:feat:quick_draw",
                 "core:feat:deadly_aim",
                 "core:feat:coordinated_shot",
+                // The rifle is equipped (the soldier's primary weapon), so it is held (E5.3).
+                "core:equipment:laser_rifle_azimuth",
             ]
         );
         assert_eq!(build.armor.as_deref(), Some("core:equipment:defiance_series_squad"));

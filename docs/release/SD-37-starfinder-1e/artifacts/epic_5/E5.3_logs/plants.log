@@ -1,0 +1,54 @@
+P1_quantity_printed_as_one: check=desktop exit=101 -> FAIL
+    test sf_sheet_print::tests::sf_seed_loadouts_print_every_carried_item_with_its_quantity ... FAILED
+    thread 'sf_sheet_print::tests::sf_seed_loadouts_print_every_carried_item_with_its_quantity' (2141517) panicked at src/sf_sheet_print.rs:657:17:
+    test result: FAILED. 19 passed; 1 failed; 0 ignored; 0 measured; 642 filtered out; finished in 2.24s
+    error: test failed, to rerun pass `--bin codex-desktop`
+P2_carried_gear_not_printed: check=desktop exit=101 -> FAIL
+    test sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal ... FAILED
+    test sf_sheet_print::tests::installed_upgrades_and_fusions_print_on_their_item ... FAILED
+    test sf_sheet_print::tests::an_equipped_items_bonus_reaches_the_skill_totals ... FAILED
+    test sf_sheet_print::tests::sf_seed_loadouts_print_every_carried_item_with_its_quantity ... FAILED
+    test sf_sheet_print::tests::sf_seed_weapon_lines_print_their_damage_dice ... FAILED
+P3_upgrade_slots_not_enforced: check=desktop exit=101 -> FAIL
+    test sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal ... FAILED
+    thread 'sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal' (2143816) panicked at src/sf_sheet_print.rs:758:13:
+    test result: FAILED. 19 passed; 1 failed; 0 ignored; 0 measured; 642 filtered out; finished in 2.24s
+    error: test failed, to rerun pass `--bin codex-desktop`
+P4_fusion_fit_not_checked: check=desktop exit=101 -> FAIL
+    test sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal ... FAILED
+    thread 'sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal' (2144935) panicked at src/sf_sheet_print.rs:758:13:
+    test result: FAILED. 19 passed; 1 failed; 0 ignored; 0 measured; 642 filtered out; finished in 2.29s
+    error: test failed, to rerun pass `--bin codex-desktop`
+P5_one_augmentation_per_system_off: check=desktop exit=101 -> FAIL
+    test sf_sheet_print::tests::an_installed_augmentation_prints_its_system_and_one_per_system ... FAILED
+    thread 'sf_sheet_print::tests::an_installed_augmentation_prints_its_system_and_one_per_system' (2146105) panicked at src/sf_sheet_print.rs:821:113:
+    two in the throat: [SheetLine { id: "core:ability:android", kind: "ability", label: "Android", value: Resolved(1), printed: "+1", also: [], prose: "", condition: None }, SheetLine { id: "core:ability:armor_prof_light_armor", kind: "ability", label: "Armor Prof ~ Light Armor", value: Words, printed: 
+    test result: FAILED. 19 passed; 1 failed; 0 ignored; 0 measured; 642 filtered out; finished in 2.26s
+    error: test failed, to rerun pass `--bin codex-desktop`
+P6_equipped_item_not_held: check=desktop exit=101 -> FAIL
+    test sf_adapter::tests::build_from_input_reads_theme_armour_loadout_and_choices ... FAILED
+    test sf_sheet_print::tests::an_equipped_items_bonus_reaches_the_skill_totals ... FAILED
+    thread 'sf_adapter::tests::build_from_input_reads_theme_armour_loadout_and_choices' (2147222) panicked at src/sf_adapter.rs:1158:9:
+    thread 'sf_sheet_print::tests::an_equipped_items_bonus_reaches_the_skill_totals' (2147227) panicked at src/sf_sheet_print.rs:790:13:
+    test result: FAILED. 18 passed; 2 failed; 0 ignored; 0 measured; 642 filtered out; finished in 2.24s
+P7_converter_modifier_cost_off: check=sf_check exit=1 -> FAIL
+    records=8582 converted=8582 refused=0 rules=11266 var_tables=228 verdict=FAIL problems=223
+    stale on disk: alien_archive_2/equipment_modifier/adaptive_defense_module_mk_1.json
+    stale on disk: alien_archive_2/equipment_modifier/adaptive_defense_module_mk_2.json
+    stale on disk: alien_archive_2/equipment_modifier/adaptive_defense_module_mk_3.json
+    stale on disk: alien_archive_2/equipment_modifier/lightwarp_inlay.json
+P8_converter_modifier_stat_rows_off: check=sf_check exit=1 -> FAIL
+    records=8582 converted=8582 refused=0 rules=11266 var_tables=228 verdict=FAIL problems=135
+    stale on disk: alien_archive_2/equipment_modifier/adaptive_defense_module_mk_1.json
+    stale on disk: alien_archive_2/equipment_modifier/adaptive_defense_module_mk_2.json
+    stale on disk: alien_archive_2/equipment_modifier/adaptive_defense_module_mk_3.json
+    stale on disk: alien_archive_2/equipment_modifier/lightwarp_inlay.json
+P9_upgrade_price_off_the_oracle: check=delta exit=1 -> FAIL
+    differing_files=223 bulk_row=108 item_level_row=135 price_row_added=222 price_unresolved_defect_rows=1 records_moved=223 other_moves=0
+    verdict=FAIL
+P10_unclassified_package_move: check=delta exit=1 -> FAIL
+    differing_files=223 bulk_row=107 item_level_row=134 price_row_added=221 price_unresolved_defect_rows=1 records_moved=222 other_moves=1
+    verdict=FAIL
+restored: desktop exit=0 delta exit=0 sf_check exit=0
+plants_red=10/10 verdict=PASS
+exit=0
