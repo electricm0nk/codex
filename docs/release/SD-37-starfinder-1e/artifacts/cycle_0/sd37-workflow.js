@@ -160,7 +160,7 @@ const MAIN = [
   card('E4.MC', 'opus', P.E4, 'E4 adversarial merge check', MC),
   card('E5.1', 'opus', P.E5, 'Races, themes, class features print', 'Print path only. Never edit pilot_compute/**.'),
   card('E5.2', 'opus', P.E5, 'Feats, spells print'),
-  card('E5.3', 'opus', P.E5, 'Equipment, augmentations, upgrades, fusions print + total feeds'),
+  card('E5.3', 'opus', P.E5, 'Equipment, augmentations, upgrades, fusions print + total feeds', 'A first attempt landed most of this card and returned blocked-escalated (artifacts/epic_5/E5.3_cycle_receipt.md; progress.md "Open blockers"). Both rulings are now given in decisions.md §20: (a) you MAY edit src/rules_core/pilot_compute/sf_loadout.rs, and only that pilot_compute file, to apply artifacts/epic_5/E5.3-proposed-sf_loadout.patch test-first (update every struct-literal site; re-run E4.5\'s loadout fixtures and the PF hash pair); (b) an installed augmentation adds no bulk: sf_loadout::bulk treats it as 0 and prints its price instead of refusing the character. Read §20, then finish the criterion, update the receipt, and set the E5.3 kanban row to complete.'),
   card('E5.4', 'opus', P.E5, 'Drone print'),
   card('E5.MC', 'opus', P.E5, 'E5 adversarial merge check', MC),
   card('E6.1', 'opus', P.E6, 'System picker routes starfinder-1e to the real adapter; SF data bundled'),
