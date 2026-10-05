@@ -232,28 +232,14 @@ async function chain(cards) {
 
 const report = (stopped) => ({ stopped: stopped, results: results, handoffs: handoffs })
 
-// C1 first, alone: it puts tranche/17 on origin, which every lane tree is cut from.
-const c1 = await chain([C1])
-if (!c1.ok) return report(c1)
+// RESUME POINT (2026-10-04, orchestrator). Every card before START is `complete` in kanban.md
+// (verified from origin/tranche/17 a9a3146c18). A Workflow resume replays only an unchanged call
+// prefix; the E0/E1 lanes interleaved differently on resume, so the cache missed and complete
+// cards were re-dispatched (E0.4, E1.4, E0.2 declined them). Trim instead of resume: C, E0 and
+// E1 are skipped here. To restart later, move START to the first non-complete kanban row.
+const START = 'E5.3'
+const REMAINING = MAIN.slice(MAIN.findIndex((c) => c.id === START))
+log('starting at ' + START + ': ' + REMAINING.length + ' cards remain of ' + MAIN.length)
 
-// E0 lanes (own trees) beside E1 (main tree). C0.1 is docs/git only and is not a gate.
-const c01 = chain([C01])
-const e0 = (async () => {
-  const lanes = await parallel([() => chain([E01]), () => chain([E02]), () => chain([E04, E04R])])
-  const bad = lanes.find((x) => !x || !x.ok)
-  if (lanes[0] && lanes[0].ok && lanes[1] && lanes[1].ok) {
-    const e03 = await chain([E03])
-    if (!e03.ok) return e03
-  }
-  return bad === undefined ? { ok: true } : (bad || { ok: false, card: 'E0', status: 'dead', detail: 'an E0 lane threw' })
-})()
-const e1 = await chain([E1B, E14, E1MC])
-const e0r = await e0
-const c01r = await c01
-if (!c01r.ok) log('C0.1 did not complete (' + c01r.status + '). It is not a gate; the E7.3 scan will hold closure until its row is complete.')
-if (!e1.ok) return report(e1)
-if (!e0r.ok) return report(e0r)
-
-// One serial chain: E2 → E3 → E4 → E5 → E6 → E7.1 → E4a → E7.2 … E7.9.
-const main = await chain(MAIN)
+const main = await chain(REMAINING)
 return report(main.ok ? null : main)
