@@ -156,6 +156,31 @@ pub fn resolve_rule_system_adapter(rule_system_id: &str) -> Box<dyn RuleSystemAd
     }
 }
 
+/// The `list_saved_characters` command's body: the listing comes from the adapter of the
+/// rule system the landing screen has selected (`characterHubRuntime.ts`
+/// `buildListSavedCharactersArgs`). No id (every caller outside the character hub) is
+/// Pathfinder's listing, as before.
+pub fn list_saved_characters_via_rule_system(
+    rule_system_id: Option<&str>,
+    characters_root: &Path,
+) -> Result<ListSavedCharactersResponse, String> {
+    resolve_rule_system_adapter(rule_system_id.unwrap_or("pf1")).list_saved_characters(characters_root)
+}
+
+/// The `load_saved_character` command's body: a saved character is loaded by the adapter of
+/// the system its own envelope names (`game_system`). A Starfinder envelope goes to
+/// `StarfinderAdapter`; every other envelope (Pathfinder's `"pf1"`, and the legacy values
+/// `local_store::derive_legacy_game_system` gives envelopes saved before the field existed)
+/// loads through `Pf1Adapter` exactly as before.
+pub fn load_saved_character_via_envelope(root: &Path) -> Result<LoadSavedCharacterResponse, String> {
+    let envelope = codex::saved_character::local_store::SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    if envelope.game_system == crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID {
+        crate::sf_adapter::StarfinderAdapter.load_saved_character(root)
+    } else {
+        crate::pf1_adapter::Pf1Adapter.load_saved_character(root)
+    }
+}
+
 #[cfg(test)]
 pub(crate) mod tests {
     use super::*;

@@ -4,8 +4,9 @@ import type { CampaignManagerAccessGate } from '../campaign/campaignManagerAcces
 /**
  * Rule-set landing screen (Pathbuilder-style): a rule-set selector followed by
  * "New character" / "Load character" banners whose artwork changes per rule
- * set. Only Pathfinder 1e is currently selectable; the other rule sets are
- * present as unselectable stubs until their rules land.
+ * set. Pathfinder 1e and Starfinder 1e are selectable (each has a rule-system
+ * adapter: `rule_system_adapter.rs`); the other rule sets are present as
+ * unselectable stubs until their rules land.
  */
 
 export type RuleSetId = 'pathfinder-1e' | 'solarus-arcanum' | 'traveller' | 'cyberpunk' | 'starfinder-1e' | 'world-of-darkness';
@@ -69,7 +70,7 @@ export const RULE_SETS: readonly RuleSet[] = [
     id: 'starfinder-1e',
     name: 'Starfinder 1e',
     tagline: 'Sci-fi fantasy',
-    available: false,
+    available: true,
     art: {
       create: 'linear-gradient(115deg, #062a1a 0%, #0e5c3a 55%, #2ad68a 130%)',
       load: 'linear-gradient(115deg, #041a10 0%, #0a4228 55%, #1ea868 135%)',
@@ -244,6 +245,8 @@ export function LandingScreen(props: {
   selectedRuleSet: RuleSetId;
   onSelectRuleSet: (id: RuleSetId) => void;
   onCreate: () => void;
+  /** Whether "New Character" opens a creation flow for the selected rule set (`characterCreationGate`). */
+  createGate: { enabled: boolean; disabledHint?: string };
   onLoad: () => void;
   onBrowseEquipment: () => void;
   onBrowseSpells: () => void;
@@ -272,7 +275,13 @@ export function LandingScreen(props: {
         ))}
       </div>
 
-      <ActionBanner title={'New\nCharacter'} art={active.art.create} onClick={props.onCreate} />
+      <ActionBanner
+        title={'New\nCharacter'}
+        art={active.art.create}
+        onClick={props.onCreate}
+        disabled={!props.createGate.enabled}
+        disabledHint={props.createGate.disabledHint}
+      />
       <ActionBanner title={'Load\nCharacter'} art={active.art.load} onClick={props.onLoad} />
       <ActionBanner
         title={'Campaign\nManager'}

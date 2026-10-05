@@ -1,4 +1,4 @@
-import { loadListSavedCharacters } from '../boundary/loadListSavedCharacters';
+import { loadListSavedCharacters, type ListSavedCharactersArgs } from '../boundary/loadListSavedCharacters';
 import { loadCreateCharacter, type CreateCharacterRequest } from '../boundary/loadCreateCharacter';
 import type { RecomputeCharacterRequest } from '../boundary/recomputeCharacter';
 import { buildCharacterHubListSurface, type CharacterHubListSurface } from './buildCharacterHubListSurface';
@@ -10,18 +10,19 @@ import {
 import { findClassOption } from './classCatalog';
 import { hasTauriRuntime } from '../boundary/runtime';
 import { buildPreviewListSurface } from './previewData';
-import type { RuleSetId } from './LandingScreen';
+import { RULE_SETS, type RuleSetId } from './LandingScreen';
 
 /**
  * Maps the panel's active `RuleSetId` (the landing screen's rule-set
  * picker — `LandingScreen.tsx`) to the wire-level `ruleSystemId` the Rust
- * `resolve_rule_system_adapter` dispatch seam understands (SD-25 Criterion
- * 3.4: `"pf1"` resolves to the real `Pf1Adapter`; any other id resolves to
- * the governed `StubAdapter` seam — see
+ * `resolve_rule_system_adapter` dispatch seam understands
+ * (`apps/desktop/src-tauri/src/rule_system_adapter.rs`): `"pf1"` resolves to
+ * `Pf1Adapter`, `"starfinder-1e"` to `StarfinderAdapter` (SD-37 E4.6), and
+ * any other id to the governed `StubAdapter` seam — see
  * `docs/governance/wired-integration-stubs-registry.md` entry 0002 — which
- * honestly errors rather than silently falling through to PF1 logic).
- * Pathfinder 1e is the only rule set with a real adapter today, so every
- * other `RuleSetId` intentionally passes through unchanged rather than
+ * honestly errors rather than silently falling through to PF1 logic.
+ * Pathfinder 1e's landing id differs from its wire id, so it is the one id
+ * rewritten; every other `RuleSetId` passes through unchanged rather than
  * being rewritten to `"pf1"` — this is
  * the seam SD-25 Criterion 3.5's RED targets: before this function existed,
  * the panel had no concept of "the active adapter" at all, and every call
@@ -52,14 +53,46 @@ export function buildRecomputeCharacterRequest(
   };
 }
 
-/** Thin wrapper composing the real boundary loaders with the pure mappers. */
-export async function loadCharacterHubListSurfaceRuntime(): Promise<CharacterHubListSurface> {
+/**
+ * The `list_saved_characters` arguments for the active rule set: the Load
+ * list asks the active system's adapter for its characters
+ * (`StarfinderAdapter` lists Starfinder saves only).
+ */
+export function buildListSavedCharactersArgs(ruleSet: RuleSetId): ListSavedCharactersArgs {
+  return { ruleSystemId: resolveRuleSystemId(ruleSet) };
+}
+
+/** Whether "New Character" opens a creation flow for the active rule set. */
+export interface CharacterCreationGate {
+  enabled: boolean;
+  disabledHint?: string;
+}
+
+/**
+ * The creation form on this screen builds Pathfinder 1e characters only, so it
+ * is open for Pathfinder and closed, with its reason, for every other rule set
+ * — a Starfinder selection never opens the Pathfinder form.
+ */
+export function characterCreationGate(ruleSet: RuleSetId): CharacterCreationGate {
+  if (ruleSet === 'pathfinder-1e') {
+    return { enabled: true };
+  }
+  const name = RULE_SETS.find((candidate) => candidate.id === ruleSet)?.name ?? ruleSet;
+  return { enabled: false, disabledHint: `${name} character creation is not available on this screen yet` };
+}
+
+/**
+ * Thin wrapper composing the real boundary loaders with the pure mappers.
+ * With no rule set the listing is Pathfinder's (every caller outside the
+ * character hub: campaigns, the encounter builder, the trait picker).
+ */
+export async function loadCharacterHubListSurfaceRuntime(ruleSet?: RuleSetId): Promise<CharacterHubListSurface> {
   // Browser preview (no desktop backend): surface a sample character so the
   // Load → sheet flow stays walkable without the Tauri runtime.
   if (!hasTauriRuntime()) {
     return buildPreviewListSurface();
   }
-  const snapshot = await loadListSavedCharacters();
+  const snapshot = await loadListSavedCharacters(ruleSet === undefined ? undefined : buildListSavedCharactersArgs(ruleSet));
   return buildCharacterHubListSurface(snapshot);
 }
 

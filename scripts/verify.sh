@@ -1482,6 +1482,12 @@ PYEOF
 # ls-files` finds at least one tracked file under it (a tracked `.gitkeep`
 # counts, which is exactly the fix for the corpus-bundle case: the directory
 # is gitignored except for that one file).
+#
+# SD-37 E6.1 (`decisions.md §7`): every game system's sheet-rule package root
+# (`GameSystem::sheet_rules_relative` in `src/rules_core/game_system.rs`, read
+# here, never restated) must be a `bundle.resources` source that ships at the
+# same relative path, so a packaged app's resource root carries each system's
+# package. A system root missing from the bundle fails the stage.
 # ---------------------------------------------------------------------------
 
 run_tauri_resources_tracked() {
@@ -1524,12 +1530,37 @@ for key in sorted(resources):
     if not tracked:
         problems.append(f"{key} -> {rel} (0 git-tracked files)")
 
+import re
+
+game_system_rs = os.path.join(repo_root, "src/rules_core/game_system.rs")
+with open(game_system_rs, encoding="utf-8") as fh:
+    source = fh.read()
+fn = re.search(r"fn sheet_rules_relative\(self\)[^{]*\{(.*?)\n    \}", source, re.S)
+system_roots = re.findall(r'=>\s*"([^"]+)"', fn.group(1)) if fn else []
+if not system_roots:
+    print(f"no sheet_rules_relative arms read from {game_system_rs} -- cannot check")
+    sys.exit(1)
+
+bundled = {}
+for key, target in resources.items():
+    rel = os.path.relpath(os.path.normpath(os.path.join(tauri_dir, key)), repo_root)
+    bundled[rel] = target.rstrip("/")
+missing = []
+for root in system_roots:
+    target = bundled.get(root)
+    print(f"system root {root}: bundled_as={target}")
+    if target != root:
+        missing.append(f"{root} (bundled as {target})")
+if missing:
+    problems.append("game-system sheet-rule roots not bundled at their own path: " + ", ".join(missing))
+
 if problems:
     print("UNTRACKED_RESOURCE_PATHS:")
     for p in problems:
         print(" ", p)
     sys.exit(1)
 
+print(f"system_roots_bundled={len(system_roots)}")
 print(f"resources_checked={len(resources)} verdict=PASS")
 PYEOF
     local status=$?

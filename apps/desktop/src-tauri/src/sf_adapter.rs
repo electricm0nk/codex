@@ -26,7 +26,7 @@
 //! # The totals
 //!
 //! Every total comes from the E4.1–E4.5 readers over the converted package
-//! (`live_sheet_rules_for(GameSystem::Starfinder1e)`): `sf_chassis`,
+//! (`data/starfinder-1e/sheet_rules`, read by [`package`]): `sf_chassis`,
 //! `sf_defense`, `sf_skills`, `sf_spells`, `sf_loadout`. The adapter adds one
 //! join those readers leave to the caller: the bulk condition's max-Dex cap
 //! and −5 Strength/Dexterity check penalty ([`apply_bulk_condition`]; SRD
@@ -39,7 +39,6 @@
 use std::path::Path;
 
 use codex::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
-use codex::rules_core::corpus_loader::live_sheet_rules_for;
 use codex::rules_core::encumbrance::BulkCondition;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::level_up::LevelUpPlan;
@@ -92,19 +91,23 @@ const PATHFINDER_FIELDS_MESSAGE: &str = "baseline_melee_attack_bonus, baseline_a
      the Starfinder sheet totals are the sf.* explanation rows (sf.eac, sf.kac, sf.skill.<skill>, ...)";
 
 /// The Starfinder 1e adapter. Stateless: the package is the process-wide
-/// `live_sheet_rules_for(GameSystem::Starfinder1e)`.
+/// Starfinder package [`package`] reads.
 pub struct StarfinderAdapter;
 
 fn refuse(id: &'static str, message: String) -> SfChassisRefusal {
     SfChassisRefusal { id, message }
 }
 
+/// The Starfinder package, read from the desktop's resolved root
+/// ([`crate::authoring_workbench::codex_repo_root`]: `CODEX_REPO_ROOT`, then the packaged
+/// app's bundled resources, then the dev checkout), so a packaged app reads the
+/// `data/starfinder-1e/sheet_rules/` it ships (`tauri.conf.json` `bundle.resources`).
 fn package() -> Result<&'static SheetRulePackage, SfChassisRefusal> {
-    live_sheet_rules_for(GameSystem::Starfinder1e).ok_or_else(|| {
+    crate::character_hub::sheet_rule_package_for(GameSystem::Starfinder1e).as_ref().map_err(|reason| {
         refuse(
             REFUSED_PACKAGE_MISSING,
             format!(
-                "the Starfinder package ({}) did not load",
+                "the Starfinder package ({}) did not load: {reason}",
                 GameSystem::Starfinder1e.sheet_rules_relative()
             ),
         )
@@ -1459,4 +1462,119 @@ pub(crate) mod tests {
         assert!(saved.success, "{:?}", saved.error);
         std::fs::remove_dir_all(&characters).ok();
     }
+
+    /// SD-37 E6.1: the `load_saved_character` command loads a saved character through the
+    /// adapter its envelope names. A Starfinder save is served by `StarfinderAdapter` (its
+    /// `sf.*` rows, its SRD Stamina); a Pathfinder save beside it is served exactly as
+    /// `character_hub::load_saved_character_at_root` serves it.
+    #[test]
+    fn the_load_command_path_routes_a_starfinder_save_to_the_starfinder_adapter() {
+        let characters = tempdir("load-route");
+        let sf_root = characters.join("sf-soldier");
+        SavedCharacterStore::save(
+            &envelope("sf-soldier", STARFINDER_RULE_SYSTEM_ID, crate::rule_system_adapter::tests::sf_soldier_3_input()),
+            &sf_root,
+        )
+        .expect("an SF envelope saves");
+        let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&sf_root).expect("loads");
+        let direct = StarfinderAdapter.load_saved_character(&sf_root).expect("the adapter loads it");
+        assert_eq!(
+            serde_json::to_string(&loaded).expect("serialises"),
+            serde_json::to_string(&direct).expect("serialises"),
+            "the command path is StarfinderAdapter's load"
+        );
+        let stamina = loaded.explanations.iter().find(|e| e.id == "sf.stamina").map(|e| e.value);
+        assert_eq!(stamina, Some(24), "SF-Soldier-3's SRD Stamina comes through the command path");
+
+        let pf_root = characters.join("pf-fighter");
+        let mut pf_input = crate::rule_system_adapter::tests::sf_soldier_3_input();
+        pf_input.chosen.race_id = "race:human".to_owned();
+        pf_input.chosen.class_levels = vec![CharacterClassLevel { class_id: "class:fighter".to_owned(), level: 1 }];
+        SavedCharacterStore::save(&envelope("pf-fighter", "pf1", pf_input), &pf_root).expect("a PF envelope saves");
+        assert_eq!(
+            serde_json::to_string(&crate::rule_system_adapter::load_saved_character_via_envelope(&pf_root)).expect("serialises"),
+            serde_json::to_string(&crate::character_hub::load_saved_character_at_root(&pf_root)).expect("serialises"),
+            "a Pathfinder save loads exactly as before"
+        );
+        std::fs::remove_dir_all(&characters).ok();
+    }
+
+    /// SD-37 E6.1: the `list_saved_characters` command lists through the selected system's
+    /// adapter: Starfinder selected lists the Starfinder save only; Pathfinder (or no id, every
+    /// caller outside the character hub) lists exactly what `Pf1Adapter` lists.
+    #[test]
+    fn the_list_command_path_routes_through_the_selected_rule_system() {
+        let characters = tempdir("list-route");
+        SavedCharacterStore::save(
+            &envelope("sf-soldier", STARFINDER_RULE_SYSTEM_ID, crate::rule_system_adapter::tests::sf_soldier_3_input()),
+            &characters.join("sf-soldier"),
+        )
+        .expect("an SF envelope saves");
+        SavedCharacterStore::save(
+            &envelope("pf-fighter", "pf1", crate::rule_system_adapter::tests::sf_soldier_3_input()),
+            &characters.join("pf-fighter"),
+        )
+        .expect("a PF envelope saves");
+        let ids = |listing: ListSavedCharactersResponse| {
+            let mut ids: Vec<String> = listing.characters.into_iter().map(|c| c.character_id).collect();
+            ids.sort();
+            ids
+        };
+        let starfinder = crate::rule_system_adapter::list_saved_characters_via_rule_system(Some(STARFINDER_RULE_SYSTEM_ID), &characters)
+            .expect("lists");
+        assert_eq!(ids(starfinder), vec!["sf-soldier".to_owned()], "Starfinder lists its own saves only");
+        let pathfinder_before = ids(crate::pf1_adapter::Pf1Adapter.list_saved_characters(&characters).expect("lists"));
+        for id in [Some("pf1"), None] {
+            let listed = crate::rule_system_adapter::list_saved_characters_via_rule_system(id, &characters).expect("lists");
+            assert_eq!(ids(listed), pathfinder_before, "{id:?} lists as Pf1Adapter does");
+        }
+        std::fs::remove_dir_all(&characters).ok();
+    }
+
+    /// The variable that turns [`starfinder_package_from_a_packaged_resource_root_probe`] on: the
+    /// staged resource root its parent test built.
+    const PACKAGED_ROOT_PROBE: &str = "CODEX_SF_PACKAGED_ROOT_PROBE";
+
+    /// SD-37 E6.1: a packaged app reads the Starfinder package from its bundled resources, not
+    /// from the build machine's checkout. A resource root is staged the way `tauri.conf.json`
+    /// bundles it (`data/corpus/`, `data/starfinder-1e/sheet_rules/` holding one converted
+    /// class file) and a child process of this test binary, with `CODEX_REPO_ROOT` unset and
+    /// `CODEX_DESKTOP_RESOURCE_DIR` naming the staged root, loads this adapter's package: it
+    /// must hold exactly the staged file's rules (the checkout's package holds thousands).
+    #[test]
+    fn a_packaged_app_reads_the_starfinder_package_from_its_resource_root() {
+        let staged = tempdir("packaged-root");
+        std::fs::create_dir_all(staged.join(GameSystem::Pathfinder1e.corpus_relative())).expect("corpus dir");
+        let class_dir = staged.join(GameSystem::Starfinder1e.sheet_rules_relative()).join("core/class");
+        std::fs::create_dir_all(&class_dir).expect("sheet rules dir");
+        std::fs::copy(
+            repo_root().join(GameSystem::Starfinder1e.sheet_rules_relative()).join("core/class/soldier.json"),
+            class_dir.join("soldier.json"),
+        )
+        .expect("a converted class file copies");
+        let output = std::process::Command::new(std::env::current_exe().expect("test binary"))
+            .args(["sf_adapter::tests::starfinder_package_from_a_packaged_resource_root_probe", "--exact", "--ignored", "--nocapture"])
+            .env_remove("CODEX_REPO_ROOT")
+            .env("CODEX_DESKTOP_RESOURCE_DIR", &staged)
+            .env(PACKAGED_ROOT_PROBE, &staged)
+            .output()
+            .expect("the probe runs");
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        std::fs::remove_dir_all(&staged).ok();
+        assert!(stdout.contains("1 passed"), "the probe must run and pass:\n{stdout}\n{stderr}");
+    }
+
+    /// Runs only as the child of [`a_packaged_app_reads_the_starfinder_package_from_its_resource_root`].
+    #[test]
+    #[ignore = "child process of a_packaged_app_reads_the_starfinder_package_from_its_resource_root"]
+    fn starfinder_package_from_a_packaged_resource_root_probe() {
+        let Some(staged) = std::env::var_os(PACKAGED_ROOT_PROBE) else { return };
+        let staged_dir = PathBuf::from(staged).join(GameSystem::Starfinder1e.sheet_rules_relative());
+        let expected = codex::rules_core::corpus_loader::load_sheet_rules(&staged_dir).package.rules.len();
+        assert!(expected > 0, "the staged file carries rules");
+        let loaded = package().expect("the Starfinder package loads").rules.len();
+        assert_eq!(loaded, expected, "the package is the staged resource root's, not the checkout's");
+    }
+
 }

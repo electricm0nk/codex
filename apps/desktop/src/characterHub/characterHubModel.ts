@@ -570,6 +570,7 @@ export const DEFAULT_ABILITY_SCORES = {
 
 export const GAME_SYSTEM_LABELS: Record<string, string> = {
   pf1: 'Pathfinder 1st Edition',
+  'starfinder-1e': 'Starfinder 1st Edition',
 };
 
 /** The nine standard PF1 alignments. */

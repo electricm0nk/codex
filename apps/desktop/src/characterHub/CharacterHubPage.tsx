@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { loadCharacterHubListSurfaceRuntime } from './characterHubRuntime';
+import { characterCreationGate, loadCharacterHubListSurfaceRuntime } from './characterHubRuntime';
 import {
   replaceRowInSurface,
   toRowSurface,
@@ -58,16 +58,17 @@ export function CharacterHubPage() {
   const [error, setError] = useState<string | null>(null);
 
   function reload() {
-    loadCharacterHubListSurfaceRuntime()
+    loadCharacterHubListSurfaceRuntime(ruleSet)
       .then(setSurface)
       .catch((cause: unknown) => {
         setError(cause instanceof Error ? cause.message : 'Unknown character hub failure');
       });
   }
 
+  // The Load list is the selected rule set's: re-list when the landing's selection changes.
   useEffect(() => {
     reload();
-  }, []);
+  }, [ruleSet]);
 
   if (mode === 'landing') {
     return (
@@ -75,6 +76,7 @@ export function CharacterHubPage() {
         selectedRuleSet={ruleSet}
         onSelectRuleSet={setRuleSet}
         onCreate={() => setMode('create')}
+        createGate={characterCreationGate(ruleSet)}
         onLoad={() => setMode('load')}
         onBrowseEquipment={() => setMode('equipmentCatalog')}
         onBrowseSpells={() => setMode('spellCatalog')}

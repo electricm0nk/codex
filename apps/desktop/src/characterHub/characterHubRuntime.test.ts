@@ -1,5 +1,12 @@
-import { buildRecomputeCharacterRequest, resolveRuleSystemId } from './characterHubRuntime';
-import { assertEqual } from '../testSupport/asserts';
+import {
+  buildListSavedCharactersArgs,
+  buildRecomputeCharacterRequest,
+  characterCreationGate,
+  resolveRuleSystemId,
+} from './characterHubRuntime';
+import { RULE_SETS } from './LandingScreen';
+import { toRowSurface } from './buildCharacterHubListSurface';
+import { assert, assertEqual } from '../testSupport/asserts';
 
 /**
  * SD-25 Criterion 3.5 RED (`cycles/3_5.md`): before `resolveRuleSystemId` /
@@ -27,13 +34,7 @@ function testResolveRuleSystemIdPassesThroughUnimplementedRuleSetsHonestly() {
   // Every other RuleSetId must NOT be silently rewritten to "pf1" — that
   // would make an unimplemented rule set masquerade as PF1 behavior server
   // side. Passing the id through unchanged means it honestly routes to
-  // `StubAdapter` (per `resolve_rule_system_adapter`'s `other => StubAdapter`
-  // arm in every SD-25 3.4 command module).
-  assertEqual(
-    resolveRuleSystemId('starfinder-1e'),
-    'starfinder-1e',
-    'an unimplemented rule set must pass through unchanged, not borrow pf1 silently'
-  );
+  // `StubAdapter` (the shared `resolve_rule_system_adapter`'s `other` arm).
   assertEqual(
     resolveRuleSystemId('traveller'),
     'traveller',
@@ -57,7 +58,73 @@ function testBuildRecomputeCharacterRequestRoutesOtherRuleSetsToStubAdapterHones
   );
 }
 
+/**
+ * SD-37 E6.1: the landing's Starfinder 1e chip is selectable, and selecting it
+ * routes to the Rust `StarfinderAdapter`. `resolve_rule_system_adapter`
+ * (`apps/desktop/src-tauri/src/rule_system_adapter.rs`) maps exactly the wire id
+ * `"starfinder-1e"` (`sf_adapter::STARFINDER_RULE_SYSTEM_ID`) to that adapter.
+ */
+function testStarfinderIsSelectableOnTheLandingAndRoutesToTheStarfinderAdapter() {
+  const starfinder = RULE_SETS.find((ruleSet) => ruleSet.id === 'starfinder-1e');
+  assert(starfinder !== undefined, 'the landing lists Starfinder 1e');
+  assertEqual(starfinder?.available, true, 'the Starfinder 1e chip is selectable');
+  assertEqual(
+    resolveRuleSystemId('starfinder-1e'),
+    'starfinder-1e',
+    'starfinder-1e resolves to the wire id the Rust resolver maps to StarfinderAdapter'
+  );
+  const request = buildRecomputeCharacterRequest('sf-char', 'starfinder-1e');
+  assertEqual(request.ruleSystemId, 'starfinder-1e', 'a Starfinder sheet recompute routes to StarfinderAdapter');
+  // Only Pathfinder and Starfinder have adapters; the other chips stay unselectable.
+  const selectable = RULE_SETS.filter((ruleSet) => ruleSet.available).map((ruleSet) => ruleSet.id);
+  assertEqual(selectable.join(','), 'pathfinder-1e,starfinder-1e', 'exactly the two systems with an adapter are selectable');
+}
+
+/** The Load list asks the active system's adapter for its characters. */
+function testTheLoadListRoutesThroughTheActiveRuleSystem() {
+  assertEqual(
+    buildListSavedCharactersArgs('starfinder-1e').ruleSystemId,
+    'starfinder-1e',
+    'with Starfinder selected the list comes from StarfinderAdapter'
+  );
+  assertEqual(
+    buildListSavedCharactersArgs('pathfinder-1e').ruleSystemId,
+    'pf1',
+    'with Pathfinder selected the list comes from Pf1Adapter'
+  );
+}
+
+/** A saved Starfinder character's row names its system. */
+function testAStarfinderRowNamesItsSystem() {
+  const row = toRowSurface({
+    characterId: 'sf-char',
+    displayLabel: 'SF',
+    gameSystem: 'starfinder-1e',
+    schemaVersion: 2,
+    savedAt: '2026-10-05T00:00:00Z',
+    raceId: 'core:race:human',
+    classSummary: 'core:class:soldier:3',
+  });
+  assertEqual(row.gameSystemLabel, 'Starfinder 1st Edition', 'the row label names Starfinder');
+}
+
+/**
+ * Pathfinder creation stays open. Starfinder has no creation flow on this
+ * screen yet, so "New Character" is disabled with its reason rather than
+ * opening the Pathfinder form for a Starfinder selection.
+ */
+function testCreationGateNeverOpensThePathfinderFormForStarfinder() {
+  assertEqual(characterCreationGate('pathfinder-1e').enabled, true, 'Pathfinder creation is open');
+  const gate = characterCreationGate('starfinder-1e');
+  assertEqual(gate.enabled, false, 'the Pathfinder creation form never opens for Starfinder');
+  assert((gate.disabledHint ?? '').includes('Starfinder'), 'the disabled banner names why');
+}
+
 async function main() {
+  testStarfinderIsSelectableOnTheLandingAndRoutesToTheStarfinderAdapter();
+  testTheLoadListRoutesThroughTheActiveRuleSystem();
+  testAStarfinderRowNamesItsSystem();
+  testCreationGateNeverOpensThePathfinderFormForStarfinder();
   testResolveRuleSystemIdMapsPathfinderToTheRealAdapterId();
   testResolveRuleSystemIdPassesThroughUnimplementedRuleSetsHonestly();
   testBuildRecomputeCharacterRequestRoutesPf1ThroughTheRealAdapter();

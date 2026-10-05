@@ -737,7 +737,7 @@ fn sheet_rule_package() -> &'static Result<codex::rules_core::sheet_rule::SheetR
 /// The repo root is resolved at run time by [`crate::authoring_workbench::codex_repo_root`]
 /// (`CODEX_REPO_ROOT`, the packaged resource roots, then the dev checkout) and the system's
 /// own directory is taken from [`GameSystem::package_roots`].
-fn sheet_rule_package_for(
+pub(crate) fn sheet_rule_package_for(
     system: GameSystem,
 ) -> &'static Result<codex::rules_core::sheet_rule::SheetRulePackage, String> {
     type Slot = OnceLock<Result<codex::rules_core::sheet_rule::SheetRulePackage, String>>;
@@ -1970,24 +1970,26 @@ fn seed_one_starter(app_data_dir: &Path, app_version: &str, seed: StarterSeed) -
     write_marker()
 }
 
+/// Lists through the adapter of the rule system the landing screen selected
+/// (`rule_system_adapter::list_saved_characters_via_rule_system`); no id is Pathfinder's listing.
 #[tauri::command]
-pub fn list_saved_characters(app: tauri::AppHandle) -> Result<ListSavedCharactersResponse, String> {
+pub fn list_saved_characters(
+    app: tauri::AppHandle,
+    rule_system_id: Option<String>,
+) -> Result<ListSavedCharactersResponse, String> {
     let characters_root = resolve_characters_root(&app)?;
-    let listing = SavedCharacterStore::list_all(&characters_root).map_err(|err| err.message)?;
-
-    Ok(ListSavedCharactersResponse {
-        characters: listing.characters.iter().map(map_summary_dto).collect(),
-        unreadable_count: listing.unreadable_entries.len(),
-    })
+    crate::rule_system_adapter::list_saved_characters_via_rule_system(rule_system_id.as_deref(), &characters_root)
 }
 
+/// Loads through the adapter the character's own envelope names
+/// (`rule_system_adapter::load_saved_character_via_envelope`).
 #[tauri::command]
 pub fn load_saved_character(
     app: tauri::AppHandle,
     request: LoadSavedCharacterRequest,
 ) -> Result<LoadSavedCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    load_saved_character_at_root(&root)
+    crate::rule_system_adapter::load_saved_character_via_envelope(&root)
 }
 
 /// PF1 character level: the SUM of the character's class levels (a
