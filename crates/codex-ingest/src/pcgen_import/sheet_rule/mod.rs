@@ -1094,6 +1094,8 @@ pub fn display_label(source_name: &str) -> String {
 pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run {
     let mut files: BTreeMap<String, Vec<SheetRule>> = BTreeMap::new();
     let mut grants_out: BTreeMap<RuleId, Vec<Grant>> = BTreeMap::new();
+    // SD-37 E5.4: target -> the Starfinder automatic grants that hold it (`Converted::automatic_grants`).
+    let mut automatic_grants: BTreeMap<RuleId, Vec<Grant>> = BTreeMap::new();
     let mut contribs: BTreeMap<VarId, (String, Vec<VarContribution>)> = BTreeMap::new();
     let mut declares: BTreeMap<VarId, (String, BTreeSet<RuleId>)> = BTreeMap::new();
     let mut var_names: BTreeMap<VarId, String> = BTreeMap::new();
@@ -1197,6 +1199,9 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         for (target, grant) in c.grants_out {
             grants_out.entry(target).or_default().push(grant);
         }
+        for (target, grant) in c.automatic_grants {
+            automatic_grants.entry(target).or_default().push(grant);
+        }
         kc.converted += 1;
         converted_ids.push((r.book.clone(), r.kind.clone(), r.id.clone()));
         let mut rules = c.rules;
@@ -1276,6 +1281,9 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         for (target, grant) in opt.grants_out {
             grants_out.entry(target).or_default().push(grant);
         }
+        for (target, grant) in c.automatic_grants {
+            automatic_grants.entry(target).or_default().push(grant);
+        }
         let rel = rule_file_rel(&opt.rule.provenance.book, subclass::SUBCLASS_KIND, &opt.rule.id);
         let mut rules = vec![opt.rule];
         rules.extend(opt.siblings);
@@ -1319,6 +1327,9 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             }
             for (target, grant) in opt.grants_out {
                 grants_out.entry(target).or_default().push(grant);
+            }
+            for (target, grant) in c.automatic_grants {
+                automatic_grants.entry(target).or_default().push(grant);
             }
             option_rows.extend(opt.own_rows.iter().copied());
             let rel = rule_file_rel(&opt.rule.provenance.book, pool_option::POOL_OPTION_KIND, &opt.rule.id);
@@ -1373,6 +1384,10 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
                 let grant = Grant { by: grant.by, when: Applies::all(vec![d.gate(), grant.when]) };
                 grants_out.entry(target).or_default().push(grant);
             }
+            for (target, grant) in std::mem::take(&mut c.automatic_grants) {
+                let grant = Grant { by: grant.by, when: Applies::all(vec![d.gate(), grant.when]) };
+                automatic_grants.entry(target).or_default().push(grant);
+            }
             option_rows.extend(d.closure.own_rows.iter().copied());
             files.insert(rule_file_rel(&d.book, companion_mod::COMPANION_MOD_KIND, &d.id), rules);
         }
@@ -1408,6 +1423,15 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             && let Some(g) = grants_out.remove(&first.id)
         {
             first.granted_by.extend(g);
+        }
+    }
+    // SD-37 E5.4 (`decisions.md §21(c)`): a Starfinder automatic grant holds its target whatever
+    // the target's own prerequisites say, so the target's gate also admits each such grant.
+    for rules in files.values_mut() {
+        if let Some(first) = rules.first_mut()
+            && let Some(g) = automatic_grants.remove(&first.id)
+        {
+            first.applies = waive_automatic_grant_prerequisites(&first.applies, &g);
         }
     }
     for (target, g) in &grants_out {
@@ -1684,6 +1708,32 @@ pub fn check(out_dir: &Path, run: &Run) -> Result<(), Vec<String>> {
         problems.push("converted + refused != records".into());
     }
     if problems.is_empty() { Ok(()) } else { Err(problems) }
+}
+
+
+/// SD-37 E5.4: `applies` widened to admit each automatic grant of the rule: "one of the granters
+/// is held under its grant gate, or the rule's own prerequisites hold". PCGen holds an
+/// `ABILITY:<cat>|AUTOMATIC|<key>` target without testing the target's own `PRE` tokens (pinned
+/// oracle: a hover drone at character level 1 counts `DroneModFlightSystemTaken` = 2 although
+/// Flight System requires level 11; `decisions.md §21(c)`). An ungated rule is unchanged, and a
+/// pick of the same rule through a pool still meets its own prerequisites when no granter holds.
+fn waive_automatic_grant_prerequisites(applies: &Applies, grants: &[Grant]) -> Applies {
+    if *applies == Applies::Always {
+        return Applies::Always;
+    }
+    let mut of: Vec<Applies> = Vec::new();
+    for g in grants {
+        let Granter::Rule(granter) = &g.by else { continue };
+        let term = Applies::all(vec![Applies::Holds { what: Holdable::Rule(granter.clone()), count: 1 }, g.when.clone()]);
+        if !of.contains(&term) {
+            of.push(term);
+        }
+    }
+    if of.is_empty() {
+        return applies.clone();
+    }
+    of.push(applies.clone());
+    Applies::AtLeast { n: 1, of }
 }
 
 #[cfg(test)]

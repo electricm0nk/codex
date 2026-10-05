@@ -204,13 +204,20 @@ fn class_hit_point_pools_route_by_the_sf_mapping_table() {
 }
 
 /// A `BONUS:HP` token no table term claims is never guessed into a pool (`SD-d`): the table
-/// names `+1 Hit Point` and the drone's pools as refusals.
+/// names `+1 Hit Point` as a refusal. (SD-37 E5.4 sourced the drone's hit points -- SRD drone
+/// table + the PCGen party run `sf_mechanic_drone` -- so the drone class now feeds Hit Points
+/// only, and never Stamina: "Drones do not have Stamina Points".)
 #[test]
 fn a_hit_point_token_no_table_term_claims_is_a_named_degradation() {
     if !oracle_present() {
         return;
     }
-    for id in ["core:ability:1_hit_point", "core:class:drone"] {
+    let (rules, _) = converted("core:class:drone");
+    let t = targets(&rules);
+    assert_eq!(t.iter().filter(|x| *x == "Hp").count(), 1, "the drone's one hit-point line: {t:?}");
+    assert!(!t.iter().any(|x| x == "Stamina"), "a drone has no Stamina: {t:?}");
+    let id = "core:ability:1_hit_point";
+    {
         let (rules, _) = converted(id);
         let t = targets(&rules);
         assert!(!t.iter().any(|x| x == "Hp" || x == "Stamina"), "{id} must not feed a pool: {t:?}");

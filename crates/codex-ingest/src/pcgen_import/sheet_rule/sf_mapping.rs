@@ -93,6 +93,10 @@ pub enum TermShape {
     /// `BONUS:VAR|Resolve|max(1,Resolve_PCLvl+KeyAbilityBonus)` with
     /// `BONUS:VAR|Resolve_PCLvl|max(1,EffectiveLVL/2)` on `Default`.
     ResolveLevelAndKey,
+    /// SD-37 E5.4: `<token>` literally on a companion's class record (`CLASS:Drone`). No player
+    /// build holds that class, so a player build reads 0; a companion's value is the engine's,
+    /// on the companion's own held set (`sf_drone_print.rs`), never this evaluator's.
+    CompanionClassToken,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -329,6 +333,17 @@ impl Ctx<'_> {
         let b = self.build;
         let missing = |rec: &str| format!("term {}: token {:?} not found on {rec} ({})", term.id, term.token, term.file);
         match term.shape {
+            TermShape::CompanionClassToken => {
+                let class = term.record.strip_prefix("CLASS:").ok_or_else(|| format!("term {}: a companion class term's record must be `CLASS:<name>`", term.id))?;
+                let fields = self.fields(&term.file, &term.record)?;
+                if !fields.contains(&term.token) {
+                    return Err(missing(&term.record));
+                }
+                if b.class.eq_ignore_ascii_case(class) {
+                    return Err(format!("term {}: {} is a companion class, read on the companion's held set, not as a player build", term.id, term.record));
+                }
+                Ok(0)
+            }
             TermShape::ClassLevelCoefficient => {
                 let rec = bind(&term.record, b);
                 let fields = self.fields(&term.file, &rec)?;
@@ -551,9 +566,17 @@ mod tests {
         assert_eq!(hp_pool_row(table, "Default", "CURRENTMAX", "RaceHP"), Some("hit_points"));
         assert_eq!(hp_pool_row(table, "Constitution", "ALTHP", "CON*TL"), Some("stamina"));
         assert_eq!(hp_pool_row(table, "Toughness", "ALTHP", "TL"), Some("stamina"));
+        // SD-37 E5.4: the drone's Hit Points (SRD drone table, 10 per level, 190/210/230 at
+        // 18-20; PCGen party run `sf_mechanic_drone`: DroneLVL 10 -> hp 100). Its `-1` cancels
+        // the one `HD:1` drone class level, so it feeds no printed line.
+        assert_eq!(
+            hp_pool_row(table, "CLASS:Drone", "CURRENTMAX", "(10*DroneLVL)+if(DroneLVL>=18,10,0)+if(DroneLVL>=19,10,0)+if(DroneLVL>=20,10,0)"),
+            Some("hit_points")
+        );
+        assert_eq!(hp_pool_row(table, "CLASS:Drone", "CURRENTMAX", "-1"), Some("hit_die_offset"));
         // The table's named refusals.
-        assert_eq!(hp_pool_row(table, "CLASS:Drone", "CURRENTMAX", "-1"), None);
         assert_eq!(hp_pool_row(table, "CLASS:Drone", "CURRENTMAX", "(10*DroneLVL)+((DroneLVL+1)/2)"), None);
+        assert_eq!(hp_pool_row(table, "CLASS:Soldier", "CURRENTMAX", "-1"), None);
         assert_eq!(hp_pool_row(table, "+1 Hit Point", "CURRENTMAX", "1"), None);
         assert_eq!(hp_pool_row(table, "Energy Shield", "ALTHP", "DroneMasterLVL"), None);
         // A coefficient naming another class, or a carrier that is not the term's record.

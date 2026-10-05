@@ -26,6 +26,11 @@ pub struct Converted {
     pub rules: Vec<SheetRule>,
     /// Grant edges this record hands to OTHER rules: `(target rule id, grant)`.
     pub grants_out: Vec<(RuleId, Grant)>,
+    /// SD-37 E5.4: the Starfinder `ABILITY:<cat>|AUTOMATIC|<key>` grants among `grants_out`,
+    /// `(target rule id, grant)`. PCGen holds an automatic grant's target whatever the target's
+    /// own prerequisites say (`decisions.md §21(c)`), so the target's gate also admits "this
+    /// grant holds" (`super::waive_automatic_grant_prerequisites`).
+    pub automatic_grants: Vec<(RuleId, Grant)>,
     /// Contributions to cross-record variable tables: `(VarId, name upper, contribution)`.
     pub var_contribs: Vec<(VarId, String, VarContribution)>,
     /// Names this record's own rows declare.
@@ -477,6 +482,10 @@ fn sf_bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str, value: &str, b
             match super::sf_mapping::hp_pool_row(table, &carrier, pool, value) {
                 Some("hit_points") => Ok(Some(vec![(BonusTarget::Hp, "hit points".into())])),
                 Some("stamina") => Ok(Some(vec![(BonusTarget::Stamina, "Stamina Points".into())])),
+                // SD-37 E5.4: the drone class's `-1` cancels its one `HD:1` level (the table's
+                // `hit_die_offset` row); neither prints, so the drone's hit points are its
+                // `hit_points` term alone (the SRD drone table).
+                Some("hit_die_offset") => Ok(Some(Vec::new())),
                 _ => Err(format!("BONUS:HP|{pool} (no Starfinder mapping-table term)")),
             }
         }
@@ -2748,6 +2757,9 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     continue;
                 }
                 if let Holdable::Rule(id) = resolve_holdable_rule(ctx, &category, t) {
+                    if ctx.tree.system == GameSystem::Starfinder1e && nature == "AUTOMATIC" && matches!(by, Granter::Rule(_)) {
+                        out.automatic_grants.push((id.clone(), Grant { by: by.clone(), when: when.clone() }));
+                    }
                     out.grants_out.push((id, Grant { by, when: when.clone() }));
                 }
             }

@@ -1372,6 +1372,10 @@ pub struct CharacterFacts {
     pub challenge_rating: i64,
     pub highest_spell_level: i64,
     pub master_level: i64,
+    /// SD-37 E5.4: a companion's master's variables, `VarId -> value` (each the master's own
+    /// folded `Expr::Var`), which [`Expr::MasterVar`] reads. Empty for a character with no master
+    /// link -- every Pathfinder character today -- where `MasterVar` stays words, as before.
+    pub master_vars: BTreeMap<VarId, i64>,
     /// Choice id -> chosen `(option id, option name)`s.
     pub choices: BTreeMap<ChoiceId, Vec<(OptionId, String)>>,
     /// Race slug (`"half_orc"`).
@@ -1852,6 +1856,9 @@ impl<'a> Evaluator<'a> {
             // exclude a `MasterVar >= 1` gate, permanently include a `MasterVar == 0` gate, and
             // print a fixed "+0" for a direct value (e.g. the Clockwork Spy's Tinkering) --
             // wrong in all three shapes, never merely absent.
+            // SD-37 E5.4: the master link, where the caller supplies one (a Starfinder drone's
+            // master, `CharacterFacts::master_vars`).
+            Expr::MasterVar(v) if self.facts.master_vars.contains_key(v) => Rat::int(self.facts.master_vars[v]),
             Expr::MasterLevel | Expr::MasterVar(_) => {
                 self.unresolved.set(true);
                 Rat::ZERO
@@ -3084,6 +3091,30 @@ mod evaluate_tests {
         eq_gated.applies = Applies::Compare { lhs: Expr::MasterVar(var_id("Something")), op: Cmp::Eq, rhs: Expr::Const(0) };
         let eq_line = evaluate(&eq_gated, &held, package, &facts, EvalContext::default());
         assert_eq!(eq_line.condition.as_deref(), Some("this character has no master"), "a `MasterVar == 0` gate must not permanently include");
+    }
+
+    /// SD-37 E5.4: a companion whose master is known reads the master's variables. With the
+    /// master's `DroneCompanionLVL` in `CharacterFacts::master_vars`, a direct `MasterVar` value
+    /// prints that number and a `MasterVar >= 1` gate decides; a variable the master link does
+    /// not carry stays words, as for a character with no master.
+    #[test]
+    fn a_master_var_reads_the_masters_value_when_the_facts_carry_it() {
+        let package = package();
+        let mut facts = fighter_facts();
+        facts.master_vars.insert(var_id("DroneCompanionLVL"), 3);
+        let held = HeldSet::default();
+
+        let direct = rule_with_value(SheetValue::Number(Expr::MasterVar(var_id("DroneCompanionLVL"))));
+        assert_eq!(evaluate(&direct, &held, package, &facts, EvalContext::default()).value, SheetLineValue::Resolved(3));
+
+        let mut gated = rule_with_value(SheetValue::Text);
+        gated.applies = Applies::Compare { lhs: Expr::MasterVar(var_id("DroneCompanionLVL")), op: Cmp::Gte, rhs: Expr::Const(1) };
+        assert_eq!(evaluate(&gated, &held, package, &facts, EvalContext::default()).condition, None, "the gate decides: included");
+        gated.applies = Applies::Compare { lhs: Expr::MasterVar(var_id("DroneCompanionLVL")), op: Cmp::Gte, rhs: Expr::Const(4) };
+        assert!(!evaluate_applies(&gated.applies, &held, package, &facts, EvalContext::default()).includes(), "the gate decides: excluded");
+
+        let other = rule_with_value(SheetValue::Number(Expr::MasterVar(var_id("Tinkering"))));
+        assert_eq!(evaluate(&other, &held, package, &facts, EvalContext::default()).value, SheetLineValue::Words, "a variable the link does not carry stays words");
     }
 
     /// SD-36 Epic E engine-P1-4: a record with no recoverable corpus name (most commonly a

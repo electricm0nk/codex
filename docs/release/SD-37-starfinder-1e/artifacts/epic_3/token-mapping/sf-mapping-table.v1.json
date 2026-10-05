@@ -10,7 +10,8 @@
     "sf_seed_technomancer_5": "oracle-builds/sf_seed_technomancer_5.pcg (SF-Technomancer-5, §3)",
     "sf_seed_envoy_3": "oracle-builds/sf_seed_envoy_3.pcg (SF-Envoy-3, §4)",
     "sf_soldier": "$PCGEN_REPO_DIR/code/testsuite/PCGfiles/sf_soldier.pcg (PCGen's own test character: android soldier 10)",
-    "sf_mechanic": "$PCGEN_REPO_DIR/code/testsuite/PCGfiles/sf_mechanic.pcg (PCGen's own test character: ysoki mechanic 20, Toughness)"
+    "sf_mechanic": "$PCGEN_REPO_DIR/code/testsuite/PCGfiles/sf_mechanic.pcg (PCGen's own test character: ysoki mechanic 20, Toughness)",
+    "sf_mechanic_drone": "$PCGEN_REPO_DIR/code/testsuite/PCGfiles/sf_mechanic_drone.pcg (PCGen's own test drone R2-D2, stealth chassis, master sf_mechanic.pcg), run in PCGen's party batch-export mode with its master loaded: oracle-builds/run_drone_party.sh (SD-37 E5.4; a single-character run prints DroneLVL 0, hp 0, because MASTERVAR needs the master)"
   },
   "rows": [
     {
@@ -41,6 +42,14 @@
           "record": "Default",
           "shape": "race_hp_var",
           "note": "RaceHP is set by BONUS:VAR|RaceHP|<n> on '<race> Race Selection ~ Default' (Human/Lashunta/Android 4, Ysoki 2)"
+        },
+        {
+          "id": "drone_hp_progression",
+          "token": "BONUS:HP|CURRENTMAX|(10*DroneLVL)+if(DroneLVL>=18,10,0)+if(DroneLVL>=19,10,0)+if(DroneLVL>=20,10,0)",
+          "file": "paizo/core/scr_classes.lst",
+          "record": "CLASS:Drone",
+          "shape": "companion_class_token",
+          "note": "the drone's Hit Points (a companion, never a player build: 0 for every player class). DroneLVL is the master's DroneCompanionLVL through the companion modifier (scr_companionmods.lst:13); the engine evaluates it on the drone's own held set (sf_drone_print.rs). With the class's -1 (row hit_die_offset) cancelling its one HD:1 level, HP = 10 x DroneLVL (+10 at 18, 19, 20) = the SRD table"
         }
       ],
       "srd": [
@@ -55,6 +64,10 @@
         {
           "url": "https://www.aonsrd.com/Races.aspx?ItemName=Human",
           "section": "Hit Points 4"
+        },
+        {
+          "url": "https://www.aonsrd.com/Classes.aspx?ItemName=Drone",
+          "section": "Drone base statistics table, Hit Points column: 10 per class level 1-17 (1st 10, 10th 100, 17th 170), 18th 190, 19th 210, 20th 230 (Core Rulebook p. 72; fetched 2026-10-05, E5.4)"
         }
       ],
       "oracle": [
@@ -117,6 +130,44 @@
           "build": "sf_mechanic",
           "key": "var.race_hp",
           "value": "2"
+        },
+        {
+          "build": "sf_mechanic_drone",
+          "key": "hp",
+          "value": "100"
+        }
+      ]
+    },
+    {
+      "id": "hit_die_offset",
+      "sheet_field": "(no printed line) the drone class's -1 against its one HD:1 class level",
+      "pf_reading": "PF has no drone; read as a PF bonus, BONUS:HP|CURRENTMAX|-1 would print a -1 hit-point line that, without the d1 die it cancels, leaves the drone one short of the SRD table",
+      "terms": [
+        {
+          "id": "drone_hit_die_offset",
+          "token": "BONUS:HP|CURRENTMAX|-1",
+          "file": "paizo/core/scr_classes.lst",
+          "record": "CLASS:Drone",
+          "shape": "companion_class_token",
+          "note": "the drone race holds one Drone class level (MONSTERCLASS:Drone:1, scr_races.lst:20); its HD:1 adds 1 (the .pcg stores HITPOINTS:1) and this -1 removes it. The converter prints neither: the drone's hit points are the drone_hp_progression term alone"
+        }
+      ],
+      "srd": [
+        {
+          "url": "https://www.aonsrd.com/Classes.aspx?ItemName=Drone",
+          "section": "Drone base statistics table, Hit Points column: 10 per class level 1-17 (1st 10, 10th 100, 17th 170), 18th 190, 19th 210, 20th 230 (Core Rulebook p. 72; fetched 2026-10-05, E5.4)"
+        }
+      ],
+      "oracle": [
+        {
+          "build": "sf_mechanic_drone",
+          "key": "hp",
+          "value": "100"
+        },
+        {
+          "build": "sf_mechanic_drone",
+          "key": "var.drone_lvl",
+          "value": "10"
         }
       ]
     },
@@ -552,11 +603,7 @@
   "refusals": [
     {
       "field": "BONUS:HP|ALTHP|DroneMasterLVL (Energy Shield, drone)",
-      "why": "drone/companion sheets are not built (no seed reaches a drone); refused by name until a drone build has an oracle row"
-    },
-    {
-      "field": "BONUS:HP|CURRENTMAX on CLASS:Drone",
-      "why": "as above"
+      "why": "a drone has no Stamina Points (SRD drone base statistics: 'Drones do not have Stamina Points'); Energy Shield is a level-11 mod whose shield points no drone build observed by the oracle holds, so it is named here, not mapped (SD-37 E5.4)"
     },
     {
       "field": "BONUS:HP|CURRENTMAX|1 (+1 Hit Point ability)",

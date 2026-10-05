@@ -141,3 +141,45 @@ fn each_chassis_prints_its_kits_base_ability_scores() {
         assert!(rules.contains("Base ability scores") && rules.contains(scores), "{chassis}: {rules}");
     }
 }
+
+/// A Starfinder `ABILITY:<cat>|AUTOMATIC|<key>` grant holds its target whatever the target's own
+/// prerequisites say (`decisions.md §21(c)`). The SRD hover chassis lists "flight system (x2,
+/// included in its speed)" among its initial mods, "a part of the chassis itself"
+/// (https://www.aonsrd.com/DroneChassis.aspx?ItemName=All, Hover Drone, Core Rulebook p. 75); the
+/// pinned oracle agrees: a hover drone whose master is not loaded (DroneMasterTotalLVL 0, character
+/// level 1, so `PREMULT:1,[PREPCLEVEL:MIN=11],[PREVARGTEQ:DroneMasterTotalLVL,11]` fails) still
+/// counts `DroneModFlightSystemTaken` = 2 (`artifacts/epic_5/E5.4-oracle/hover_drone_alone.oracle.txt`).
+/// So Flight System's gate is "the hover chassis is held, or its own prerequisite": a pick into the
+/// Drone Mod pool still needs level 11.
+#[test]
+fn the_hover_chassis_grant_satisfies_flight_systems_own_prerequisite() {
+    let rule = principal("core:ability:drone_mod_flight_system");
+    let applies = &rule["applies"];
+    assert_eq!(applies["AtLeast"]["n"], 1, "{applies:#}");
+    let of = applies["AtLeast"]["of"].as_array().unwrap_or_else(|| panic!("{applies:#}"));
+    assert!(
+        of.iter().any(|a| a["Holds"]["what"]["Rule"] == "core:pool_option:drone_chassis_selection_hover"),
+        "the chassis' automatic grant waives the prerequisite: {applies:#}"
+    );
+    let own = serde_json::to_string(of).unwrap();
+    assert!(own.contains("\"Level\"") && own.contains("{\"Const\":11}"), "the mod's own level-11 prerequisite is kept for a pick: {own}");
+}
+
+/// The drone's Hit Points (`decisions.md §21(b)`): the drone class's
+/// `BONUS:HP|CURRENTMAX|(10*DroneLVL)+if(DroneLVL>=18,10,0)+...` feeds hit points (SRD drone base
+/// statistics: 10 per level, 190 / 210 / 230 at 18-20, https://www.aonsrd.com/Classes.aspx?ItemName=Drone;
+/// PCGen party run `oracle-builds/sf_mechanic_drone.oracle.txt`: DroneLVL 10, hp 100), and its
+/// `BONUS:HP|CURRENTMAX|-1` cancels the one `HD:1` drone class level, so it prints no line.
+#[test]
+fn the_drone_class_prints_its_hit_points_and_no_hit_die_offset() {
+    let rules = rules_of("core:class:drone");
+    let hp: Vec<&Value> = rules.iter().filter(|r| r["target"] == "Hp").collect();
+    assert_eq!(hp.len(), 1, "one hit-point line: {:#}", serde_json::to_value(&hp).unwrap());
+    let value = hp[0]["value"].to_string();
+    // `10*DroneLVL` plus one step of 10 at each of 18, 19 and 20 (`if(DroneLVL>=n,10,0)` lowers
+    // to `min(1, max(0, DroneLVL - n + 1)) * 10`).
+    for part in ["{\"Mul\":[{\"Const\":10},{\"Var\":", "{\"Const\":-18}", "{\"Const\":-19}", "{\"Const\":-20}"] {
+        assert!(value.contains(part), "{part} in {value}");
+    }
+    assert!(!serde_json::to_string(&rules).unwrap().contains("{\"Const\":-1}"), "the -1 offset prints no line");
+}

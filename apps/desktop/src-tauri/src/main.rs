@@ -37,6 +37,7 @@ mod race_trait_picker;
 mod reference_library_catalog;
 mod rule_system_adapter;
 mod sf_adapter;
+mod sf_drone_print;
 mod sf_sheet_print;
 mod spell_catalog;
 mod stub_adapter;

@@ -2,7 +2,7 @@
   "records": 8582,
   "converted": 8582,
   "refused": 0,
-  "rules_written": 11317,
+  "rules_written": 11318,
   "var_tables": 236,
   "by_kind": {
     "ability": {
@@ -67,11 +67,11 @@
     }
   },
   "refused_by_token_type": {},
-  "degraded_records": 31,
+  "degraded_records": 30,
   "degraded_by_token_type": {
     "AUTO (FEAT)": 1,
     "BONUS\u003aHP|ALTHP (no Starfinder mapping-table term)": 2,
-    "BONUS\u003aHP|CURRENTMAX (no Starfinder mapping-table term)": 3,
+    "BONUS\u003aHP|CURRENTMAX (no Starfinder mapping-table term)": 2,
     "BONUS\u003aSITUATION (target shape)": 1,
     "BONUS\u003aSkill": 1,
     "FORMULA\u003aidentifier DEFINEd nowhere (FighterLVL inside a function or under * /)": 1,

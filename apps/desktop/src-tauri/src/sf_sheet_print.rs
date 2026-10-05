@@ -309,6 +309,8 @@ pub fn sheet_lines(
     }
     lines.extend(spell_lines(package, build, held, spells)?);
     equipment_lines(package, held, equipment, &mut lines)?;
+    // E5.4: a mechanic's drone (every follower the held rules hand out), as its own block.
+    lines.extend(crate::sf_drone_print::companion_lines(package, build, held)?);
     Ok(lines)
 }
 

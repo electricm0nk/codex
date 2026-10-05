@@ -1,0 +1,26 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 38.56s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 1 test
+test rules_core::sheet_rule::evaluate_tests::a_master_var_reads_the_masters_value_when_the_facts_carry_it ... FAILED
+
+failures:
+
+---- rules_core::sheet_rule::evaluate_tests::a_master_var_reads_the_masters_value_when_the_facts_carry_it stdout ----
+sheet_rules package: 49768 rule files, 6211 var files, 73363 rules, loaded in 3.70428091s
+
+thread 'rules_core::sheet_rule::evaluate_tests::a_master_var_reads_the_masters_value_when_the_facts_carry_it' (3479435) panicked at src/rules_core/sheet_rule.rs:3107:9:
+assertion `left == right` failed
+  left: Words
+ right: Resolved(3)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::sheet_rule::evaluate_tests::a_master_var_reads_the_masters_value_when_the_facts_carry_it
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2826 filtered out; finished in 16.52s
+
+error: test failed, to rerun pass `--lib`
+exit=101

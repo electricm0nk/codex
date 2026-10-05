@@ -40,6 +40,7 @@ def holds(a):
     if a == 'Always': return True
     if 'All' in a: return all(holds(x) for x in a['All'])
     if 'AtLeast' in a: return sum(holds(x) for x in a['AtLeast']['of']) >= a['AtLeast']['n']
+    if 'Holds' in a and 'Rule' in a['Holds']['what']: return a['Holds']['what']['Rule'] in held  # E5.4 r2: an automatic grant's waiver
     if 'Compare' in a:
         c = a['Compare']; l, r = num(c['lhs']), num(c['rhs'])
         return {'Gte': l >= r, 'Gt': l > r, 'Lt': l < r, 'Lte': l <= r, 'Eq': l == r, 'Ne': l != r}[c['op']]
