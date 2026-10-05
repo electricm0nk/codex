@@ -686,3 +686,29 @@ SD-36 ruling 7 ("no `rules_tables` move before Starfinder"; this is the Starfind
 
 **Revisit if the operator disagrees:** E4a can split into its own SD-N without changing E0–E7.
 That is the one scope cut this bundle names in advance. Only the operator can make it.
+
+## §20 — E5.3 rulings (orchestrator, operator-away defaults, 2026-10-04)
+
+Card E5.3 returned `blocked-escalated` with two requests (`progress.md ## Open blockers`,
+`artifacts/epic_5/E5.3_cycle_receipt.md`). Both are inside this bundle's own planning surface, so
+the orchestrator rules on them under the unattended protocol (§12, rule 1: default and flag).
+
+1. **Write scope.** E5.3 may edit `src/rules_core/pilot_compute/sf_loadout.rs`. The §3 fence
+   "E5 never `pilot_compute/**`" existed to keep E4 and E5 from writing one file at the same
+   time. E4 is `complete` (E4.MC receipt), and no other card is in flight, so the fence protects
+   nothing now. The change stays bound to E5.3's criterion ("numeric feeds reach E4's totals"):
+   `SfLoadout::applied` plus `equipment_modifier` acceptance, as prepared in
+   `artifacts/epic_5/E5.3-proposed-sf_loadout.patch`. E5.3 applies it test-first, updates every
+   struct-literal site, and re-runs E4.5's loadout fixtures and the PF hash pair. No other
+   `pilot_compute` file. `workflow-instruction.md §3` E5 row is amended to say so.
+   *Alternative not taken:* an E4 follow-up card (E7.3 pins 55 rows, and the owner would be the
+   same tree, the same agent tier and the same test set).
+2. **Augmentation bulk.** An installed augmentation adds no bulk. Evidence: 144 of 144
+   augmentation principals carry no bulk (receipt Figures, Python + awk agree), and the SRD page
+   fetched by E5.3 states none (`artifacts/epic_5/E5.3-srd-fetch-log.txt`). `sf_loadout::bulk`
+   treats an augmentation as bulk 0 and prints its price; it no longer refuses the character.
+   *Alternative not taken:* keep the refusal, which denies a sheet to every character with an
+   augmentation and contradicts both sources.
+
+**Revisit if the operator disagrees:** both are one-file changes in `sf_loadout.rs`; reverting
+either is a single commit and E5.MC re-runs.
