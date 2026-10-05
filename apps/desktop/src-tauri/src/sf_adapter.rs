@@ -183,10 +183,14 @@ pub fn build_from_input(
     };
     let mut armor = None;
     let mut carried: Vec<(String, u32)> = Vec::new();
+    let mut applied: Vec<String> = Vec::new();
     for selection in &chosen.equipment_selections {
         if selection.active_state == ActiveState::Absent {
             continue;
         }
+        // Upgrades, fusions and special materials on a carried item were bought with it:
+        // their price and bulk reach the carried totals (`sf_loadout`, SD-37 decisions.md §20).
+        applied.extend(selection.applied_modifiers.iter().cloned());
         if selection.active_state == ActiveState::EquippedActive && is_armor(selection) {
             if let Some(first) = armor.replace(selection.item_id.clone()) {
                 return Err(refuse(
@@ -225,7 +229,7 @@ pub fn build_from_input(
             .collect(),
         choices,
     };
-    Ok((build, SfLoadout { starting_credits: None, carried }))
+    Ok((build, SfLoadout { starting_credits: None, carried, applied }))
 }
 
 /// Every Starfinder sheet total of one character.
@@ -250,9 +254,11 @@ pub fn compute_sheet(package: &SheetRulePackage, input: &CharacterInput) -> Resu
     let mut defense = sf_defense::compute_with(package, &build, &held)?;
     let mut skills = sf_skills::compute_with(package, &build, &held)?;
     let spells = sf_spells::compute_with(package, &build, &held)?;
+    // The print path first: it refuses an applied modifier it cannot place (unknown record,
+    // wrong item, slots exceeded) by its own name before the loadout totals its price.
+    let lines = crate::sf_sheet_print::sheet_lines(package, &build, &held, &input.chosen.spells_selected, &input.chosen.equipment_selections)?;
     let carried = sf_loadout::compute(package, &build, &loadout)?;
     apply_bulk_condition(&mut defense, &mut skills, carried.condition);
-    let lines = crate::sf_sheet_print::sheet_lines(package, &build, &held, &input.chosen.spells_selected, &input.chosen.equipment_selections)?;
     Ok(SfSheet { ability_scores: build.chassis.ability_scores, chassis, defense, skills, spells, carried, lines })
 }
 
@@ -1212,6 +1218,43 @@ pub(crate) mod tests {
         let (mut defense, mut skills) = (sheet.defense.clone(), sheet.skills.clone());
         apply_bulk_condition(&mut defense, &mut skills, BulkCondition::Unencumbered);
         assert_eq!((defense, skills), (sheet.defense.clone(), sheet.skills.clone()));
+    }
+
+    /// E5.3 (`decisions.md §20`): an upgrade installed in the worn armour and a fusion on the
+    /// rifle (each selection's `applied_modifiers`) reach `SfLoadout::applied`, and an
+    /// installed augmentation no longer refuses the sheet. The upgrade's price and bulk and the
+    /// augmentation's price move the carried totals; the fusion and the augmentation add no bulk.
+    #[test]
+    fn applied_modifiers_and_an_augmentation_reach_the_credits_and_bulk_totals() {
+        let package = package().expect("the Starfinder package loads");
+        let base = crate::rule_system_adapter::tests::sf_soldier_3_input();
+        let before = compute_sheet(package, &base).expect("computes").carried;
+        let mut input = base.clone();
+        for selection in &mut input.chosen.equipment_selections {
+            match selection.item_id.as_str() {
+                "core:equipment:defiance_series_squad" => {
+                    selection.applied_modifiers = vec!["core:equipment_modifier:armor_automated_loader".to_owned()]
+                }
+                "core:equipment:laser_rifle_azimuth" => {
+                    selection.applied_modifiers = vec!["core:equipment_modifier:weapon_ominous".to_owned()]
+                }
+                _ => {}
+            }
+        }
+        input.chosen.equipment_selections.push(item("cybernetic_vocal_modulator", ActiveState::EquippedActive));
+        let mut absent = item("baton_tactical", ActiveState::Absent);
+        absent.applied_modifiers = vec!["core:equipment_modifier:weapon_adamantine_alloy".to_owned()];
+        input.chosen.equipment_selections.push(absent);
+        let (_, loadout) = build_from_input(package, &input).expect("maps");
+        assert_eq!(
+            loadout.applied,
+            ["core:equipment_modifier:armor_automated_loader", "core:equipment_modifier:weapon_ominous"],
+            "an absent item's modifiers are not carried"
+        );
+        let after = compute_sheet(package, &input).unwrap_or_else(|r| panic!("the augmented soldier computes: {r:?}")).carried;
+        assert_eq!(after.credits_spent.total, before.credits_spent.total + 750 + 125, "{:?}", after.credits_spent);
+        assert_eq!(after.credits_remaining.total, before.credits_remaining.total - 875);
+        assert_eq!(after.bulk.total, before.bulk.total + 1, "{:?}", after.bulk);
     }
 
     /// A build the readers refuse is one claim-blocking diagnostic carrying the

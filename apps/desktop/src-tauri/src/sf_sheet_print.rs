@@ -107,8 +107,8 @@ fn spell_lines(
     Ok(lines.into_iter().map(|(_, line)| line).collect())
 }
 
-/// The tags that make an equipment record an augmentation (the oracle's `TYPE:` heads).
-const AUGMENTATION_KINDS: [&str; 5] = ["Cybernetic", "Bio-Tech", "Magitech", "Necrograft", "Personal Upgrade"];
+// The tags that make an equipment record an augmentation (one list, shared with the loadout).
+use codex::rules_core::pilot_compute::sf_loadout::AUGMENTATION_KINDS;
 
 /// An armour record's tag (`TYPE:Armor` items), an armour upgrade's and a weapon fusion's
 /// (`equipment_modifier` records, oracle `TYPE:Armor` / `TYPE:Weapon` in `*_equipmods.lst`).
