@@ -109,15 +109,21 @@ function testAStarfinderRowNamesItsSystem() {
 }
 
 /**
- * Pathfinder creation stays open. Starfinder has no creation flow on this
- * screen yet, so "New Character" is disabled with its reason rather than
- * opening the Pathfinder form for a Starfinder selection.
+ * Pathfinder creation stays open on its own form. Starfinder opens the
+ * Starfinder flow (SD-37 E6.2), never the Pathfinder form; a rule set with no
+ * creation flow keeps "New Character" disabled with its reason.
  */
 function testCreationGateNeverOpensThePathfinderFormForStarfinder() {
   assertEqual(characterCreationGate('pathfinder-1e').enabled, true, 'Pathfinder creation is open');
+  assertEqual(characterCreationGate('pathfinder-1e').form, 'pathfinder', 'Pathfinder opens its own form');
+  // SD-37 E6.2: Starfinder creation is open, and opens the Starfinder flow -- never the
+  // Pathfinder form (E6.1 kept it closed until this flow existed).
   const gate = characterCreationGate('starfinder-1e');
-  assertEqual(gate.enabled, false, 'the Pathfinder creation form never opens for Starfinder');
-  assert((gate.disabledHint ?? '').includes('Starfinder'), 'the disabled banner names why');
+  assertEqual(gate.enabled, true, 'Starfinder creation is open');
+  assertEqual(gate.form, 'starfinder', 'the Pathfinder creation form never opens for Starfinder');
+  const closed = characterCreationGate('cyberpunk');
+  assertEqual(closed.enabled, false, 'a rule set with no creation flow stays closed');
+  assert((closed.disabledHint ?? '').includes('Cyberpunk'), 'the disabled banner names why');
 }
 
 async function main() {

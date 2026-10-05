@@ -37,6 +37,7 @@ mod race_trait_picker;
 mod reference_library_catalog;
 mod rule_system_adapter;
 mod sf_adapter;
+mod sf_creation;
 mod sf_drone_print;
 mod sf_sheet_print;
 mod spell_catalog;
@@ -192,6 +193,8 @@ fn main() {
             perform_restore_previous,
             verify_relaunch_artifact,
             create_character,
+            sf_creation::preview_starfinder_character,
+            sf_creation::create_starfinder_character,
             clone_character,
             level_up_character,
             recompute_character,

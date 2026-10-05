@@ -62,20 +62,26 @@ export function buildListSavedCharactersArgs(ruleSet: RuleSetId): ListSavedChara
   return { ruleSystemId: resolveRuleSystemId(ruleSet) };
 }
 
-/** Whether "New Character" opens a creation flow for the active rule set. */
+/** Whether "New Character" opens a creation flow for the active rule set, and which one. */
 export interface CharacterCreationGate {
   enabled: boolean;
+  /** The creation form that opens: each system builds its own characters. */
+  form?: 'pathfinder' | 'starfinder';
   disabledHint?: string;
 }
 
 /**
- * The creation form on this screen builds Pathfinder 1e characters only, so it
- * is open for Pathfinder and closed, with its reason, for every other rule set
- * — a Starfinder selection never opens the Pathfinder form.
+ * Pathfinder 1e opens the Pathfinder form; Starfinder 1e opens the Starfinder
+ * flow (race -> theme -> class -> point buy, SD-37 E6.2) -- a Starfinder
+ * selection never opens the Pathfinder form. Every other rule set has no
+ * creation flow and stays closed with its reason.
  */
 export function characterCreationGate(ruleSet: RuleSetId): CharacterCreationGate {
   if (ruleSet === 'pathfinder-1e') {
-    return { enabled: true };
+    return { enabled: true, form: 'pathfinder' };
+  }
+  if (ruleSet === 'starfinder-1e') {
+    return { enabled: true, form: 'starfinder' };
   }
   const name = RULE_SETS.find((candidate) => candidate.id === ruleSet)?.name ?? ruleSet;
   return { enabled: false, disabledHint: `${name} character creation is not available on this screen yet` };

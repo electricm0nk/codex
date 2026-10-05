@@ -102,7 +102,7 @@ fn refuse(id: &'static str, message: String) -> SfChassisRefusal {
 /// ([`crate::authoring_workbench::codex_repo_root`]: `CODEX_REPO_ROOT`, then the packaged
 /// app's bundled resources, then the dev checkout), so a packaged app reads the
 /// `data/starfinder-1e/sheet_rules/` it ships (`tauri.conf.json` `bundle.resources`).
-fn package() -> Result<&'static SheetRulePackage, SfChassisRefusal> {
+pub(crate) fn package() -> Result<&'static SheetRulePackage, SfChassisRefusal> {
     crate::character_hub::sheet_rule_package_for(GameSystem::Starfinder1e).as_ref().map_err(|reason| {
         refuse(
             REFUSED_PACKAGE_MISSING,
@@ -495,7 +495,7 @@ fn load_starfinder(root: &Path) -> Result<SavedCharacterEnvelope, String> {
     Ok(envelope)
 }
 
-fn summary_dto(envelope: &SavedCharacterEnvelope) -> CharacterSummaryDto {
+pub(crate) fn summary_dto(envelope: &SavedCharacterEnvelope) -> CharacterSummaryDto {
     CharacterSummaryDto {
         character_id: envelope.character_id.clone(),
         display_label: envelope.display_label.clone(),

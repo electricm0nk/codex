@@ -1286,6 +1286,160 @@
       "marker": "Wizard level 3",
       "expect": ["Elowen Ashgrave", "Wizard 5", "HIT POINTS\n27", "Skill points: 7", "Fireball", "Wizard level 3"],
       "notes": "SD-36 F6e: opens the second starter seed, Elowen Ashgrave (Human Wizard 5), on her Spells tab: Fireball, recorded and prepared, labelled with its Wizard spell level (3) from list_class_spell_levels -- the spell the operator named. Clicks the row by its displayLabel prefix (same mechanism as load-character-select-and-open). The seed is a real saved character built through the create path (compose_character_input + the record-and-prepare spell mutation), never a hand-written file. LAST row of the spec on purpose: it ends scrolled down so the screenshot shows the Fireball rows, and a row scrolled down is the one resetToLanding cannot recover from (see the $comment's scroll note) -- nothing runs after it."
+    },
+    {
+      "id": "create-starfinder-soldier",
+      "screen": "create",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Starfinder 1e"
+        },
+        {
+          "op": "click",
+          "target": "New\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "sf-character-name"
+        },
+        {
+          "op": "type",
+          "text": "SF Smoke Soldier"
+        },
+        {
+          "op": "select",
+          "target": "— choose a race —",
+          "text": "core:race:human"
+        },
+        {
+          "op": "select",
+          "target": "— choose a theme —",
+          "text": "core:ability:mercenary"
+        },
+        {
+          "op": "select",
+          "target": "— choose a class —",
+          "text": "core:class:soldier"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "— choose the key ability —",
+          "text": "STR"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "— choose: +2 Racial Stat Bonus —",
+          "text": "STR"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Int"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Create character"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "scroll",
+          "ticks": 40,
+          "direction": "up"
+        },
+        {
+          "op": "key",
+          "key": "Shift"
+        }
+      ],
+      "marker": "SF Smoke Soldier is ready",
+      "expect": [
+        "Your character was computed and saved.",
+        "HIT POINTS",
+        "STAMINA POINTS",
+        "RESOLVE POINTS",
+        "ENERGY AC",
+        "KINETIC AC",
+        "Strength 16",
+        "Dexterity 14",
+        "Constitution 12",
+        "Intelligence 11",
+        "Wisdom 10",
+        "Charisma 10"
+      ],
+      "forbid": [
+        "Character not created",
+        "CMB",
+        "CMD",
+        "Flat-Footed"
+      ],
+      "notes": "SD-37 E6.2 (epic-breakdown.md E6.2: 'Creation flow: race -> theme -> class -> point buy, with the SF cost table'). Selects Starfinder 1e on the landing, opens New Character (the Starfinder flow, StarfinderCreateForm.tsx), and builds seed-builds.md §1's SF-Soldier-3 at 1st level: Human (its '+2 Racial Stat Bonus' pick -> STR, asked because the converted human now carries the oracle's BONUS:ABILITYPOOL), Mercenary theme, Soldier with key ability Str, and the point buy 3/4/2/1/0/0 spent through the '+1 <abbr>' buttons (the budget, the 18 cap and every score are the engine's preview, preview_starfinder_character). The variant-ability and archetype picks start on the package's 'No ...' options. 'Create character' saves through create_starfinder_character. Expects the outcome tiles from the saved character's sf.* rows (uppercase per the tile CSS) and the engine's creation scores, which equal seed-builds.md §1's ability row (16/14/12/11/10/10). Selects use the option VALUE (record id / ability code) via the select op; each select's own first option ('— choose a race —', ...) makes its target unique. The trailing scroll-up + key are the same probe refresh create-character-fill-and-submit documents. This row leaves Starfinder selected on the landing: it runs after every Pathfinder row, and landing-select-pathfinder (next) restores the Pathfinder selection."
+    },
+    {
+      "id": "landing-select-pathfinder",
+      "screen": "landing",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Pathfinder 1e"
+        }
+      ],
+      "marker": "Pathfinder 1e",
+      "expect": [
+        "Pathfinder 1e",
+        "Starfinder 1e"
+      ],
+      "notes": "SD-37 E6.2: returns the landing's rule-set selection to Pathfinder 1e after create-starfinder-soldier (the selection is CharacterHubPage state and survives resetToLanding), so a run that continues, or a --resume, starts its Pathfinder rows on the Pathfinder form."
     }
   ]
 }

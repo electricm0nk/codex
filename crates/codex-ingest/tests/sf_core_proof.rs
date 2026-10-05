@@ -244,6 +244,38 @@ fn armor_class_bonuses_split_into_eac_and_kac() {
     assert!(!t.contains(&"Ac".to_string()), "no Pathfinder AC line: {t:?}");
 }
 
+/// SD-37 E6.2: the human's `+2 Racial Stat Bonus` pick. The oracle states it one hop from the
+/// race's `CATEGORY:Race` ability, on the `CATEGORY:Internal` selection row
+/// (`Human Race Selection ~ Default`, `scr_abilities.lst:809`: `BONUS:ABILITYPOOL|+2 Racial Stat
+/// Bonus|1`), the row E4.2's selection hop reads only the `ABILITY:` grants of. Without the pool
+/// row no converted record says a human picks the +2 (half-elf and half-orc state it on their own
+/// `CATEGORY:Race` row, :2138-2139, and always had it). The hop now carries the row's ability
+/// pools onto the hopping record, under the hop's gate.
+#[test]
+fn a_selection_hop_carries_its_ability_pool_onto_the_race_ability() {
+    if !oracle_present() {
+        return;
+    }
+    let pools = |id: &str| -> Vec<String> {
+        let (rules, _) = converted(id);
+        rules
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|r| r["target"].get("Pool").is_some())
+            .map(|r| format!("{}={}", r["target"]["Pool"].as_str().unwrap(), r["value"]))
+            .collect()
+    };
+    let human = pools("core:ability:human");
+    assert!(human.contains(&r#"2_racial_stat_bonus={"Number":{"Const":1}}"#.to_string()), "{human:?}");
+    // The race abilities whose selection row states no pool gain none.
+    for id in ["core:ability:android", "core:ability:ysoki", "core:ability:lashunta"] {
+        assert!(!pools(id).iter().any(|p| p.starts_with("2_racial_stat_bonus=")), "{id}: {:?}", pools(id));
+    }
+    let half_elf = pools("core:ability:half_elf");
+    assert_eq!(half_elf.iter().filter(|p| p.starts_with("2_racial_stat_bonus=")).count(), 1, "{half_elf:?}");
+}
+
 fn package_dir() -> PathBuf {
     repo_root().join("data/starfinder-1e/sheet_rules")
 }

@@ -117,6 +117,10 @@ struct Acc {
     /// SD-37 E4.4: spell-hop lines (`internal_spell_known_grants`), kept apart from `lines` so a
     /// line numbered by `lines.len()` (`#bonus<n>`) keeps its id; appended after every other line.
     sf_spell_hop_lines: Vec<Line>,
+    /// SD-37 E6.2: a selection hop's ability-pool lines (`internal_hop_ability_pools`), siblings
+    /// pushed after the principal and label rules (like E4.1's `#race_hp`), so no existing
+    /// line's id, label or value moves.
+    sf_hop_pool_lines: Vec<Line>,
 }
 
 /// A die literal with an optional flat modifier: `"1d8"` -> `("1d8", None)`, `"1d8+2"` ->
@@ -758,6 +762,32 @@ fn sf_spell_progression(closure: &Closure, class: &str) -> Result<Vec<SfSpellPro
 /// (`ability_type_selector_targets`). The drone's special abilities reach it this way
 /// (`Drone Special Abilities`, `scr_abilities.lst:1398`: `ABILITY:Class Feature|AUTOMATIC|
 /// TYPE=Drone Special Ability LVL 1|PREVARGTEQ:DroneMasterLVL,1`).
+/// SD-37 E6.2: the `BONUS:ABILITYPOOL|<pool>|<n>` tokens of a selection hop's rows (the hop
+/// [`internal_hop_grants`] reads), as `(pool name, count, gates)`. PCGen applies every token of
+/// an ability the character holds; the hop's `ABILITY:` grants already land on the record that
+/// grants the hop, and its ability pools are the same kind of edge: the human's `+2 Racial Stat
+/// Bonus` pick is stated only here (`Human Race Selection ~ Default`, `scr_abilities.lst:809`).
+/// `Err`: a count that is not a whole number -- a named defect, never a guessed count.
+fn internal_hop_ability_pools(tree: &PinnedTree, key: &str) -> Result<Vec<(String, i32, Vec<String>)>, String> {
+    use super::closure::{tokenize_row, FileFamily};
+    let key = key.trim().to_ascii_uppercase();
+    let mut rows: Vec<_> = tree.keyed_index.get(&(FileFamily::Ability, "INTERNAL".to_string(), key.clone())).copied().into_iter().collect();
+    rows.extend(tree.mods_for(FileFamily::Ability, "INTERNAL", &key).iter().copied());
+    let mut out = Vec::new();
+    for (k, v) in rows.into_iter().flat_map(|r| tokenize_row(tree.row_text(r)).1) {
+        if k.trim() != "BONUS" {
+            continue;
+        }
+        let (fields, gates) = split_gates(&v);
+        if fields.len() < 3 || !fields[0].trim().eq_ignore_ascii_case("ABILITYPOOL") {
+            continue;
+        }
+        let n: i32 = fields[2].trim().parse().map_err(|_| format!("{key}: BONUS:ABILITYPOOL count {:?} is not a whole number", fields[2]))?;
+        out.push((fields[1].trim().to_string(), n, gates));
+    }
+    Ok(out)
+}
+
 fn internal_hop_grants(tree: &PinnedTree, key: &str) -> Option<Vec<String>> {
     use super::closure::{tokenize_row, FileFamily};
     let key = key.trim().to_ascii_uppercase();
@@ -1321,6 +1351,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         tempdesc_seen: false,
         pool_picks: Vec::new(),
         sf_spell_hop_lines: Vec::new(),
+        sf_hop_pool_lines: Vec::new(),
     };
     // The choice id is the record's own id when it carries a CHOOSE (pre-scan so %CHOICE
     // markers before the CHOOSE token still bind).
@@ -1570,6 +1601,8 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             Err(why) => ctx.defect("sf-race-hit-points-unresolved", format!("{}: {why}", record.id)),
         }
     }
+    // SD-37 E6.2: a selection hop's ability pools, siblings pushed after the label rule above.
+    lines.extend(std::mem::take(&mut acc.sf_hop_pool_lines));
     // SD-37 E4.4: a Starfinder class's spell progression (`sf_spell_progression`), siblings of
     // their own pushed after every existing line, so no existing line's id, label or value moves.
     if ctx.tree.system == GameSystem::Starfinder1e && record.kind == "class" {
@@ -2709,6 +2742,27 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                                 out.grants_out.push((id, Grant { by: by.clone(), when: inner_when.clone() }));
                             }
                         }
+                    }
+                    // SD-37 E6.2: the hop's ability pools are this record's too
+                    // ([`internal_hop_ability_pools`]), under the hop's gate.
+                    match internal_hop_ability_pools(ctx.tree, t) {
+                        Ok(pools) => {
+                            for (pool, n, pool_gates) in pools {
+                                let pool_when = Applies::all(vec![when.clone(), gates_of(ctx, &pool_gates, None)?]);
+                                acc.sf_hop_pool_lines.push(Line {
+                                    seq: ctx.current_seq,
+                                    suffix: Some(format!("pool_{}", slug(&pool))),
+                                    label: format!("{} ({} picks)", ctx.record.name, pool.to_ascii_lowercase()),
+                                    value: SheetValue::Number(Expr::Const(n)),
+                                    also: Vec::new(),
+                                    target: Some(BonusTarget::Pool(slug(&pool))),
+                                    bonus_type: None,
+                                    applies: pool_when,
+                                    prose: Vec::new(),
+                                });
+                            }
+                        }
+                        Err(why) => ctx.defect("sf-hop-ability-pool-count", why),
                     }
                     continue;
                 }

@@ -8,6 +8,7 @@ import {
 } from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { CreateCharacterForm } from './CreateCharacterForm';
+import { StarfinderCreateForm } from './StarfinderCreateForm';
 import { LandingScreen, type RuleSetId } from './LandingScreen';
 import { LoadCharacterScreen } from './LoadCharacterScreen';
 import { CharacterSheet } from './CharacterSheet';
@@ -248,7 +249,11 @@ export function CharacterHubPage() {
       {/* Refresh the list data in the background so it's current whenever the
           user chooses to go back — but stay on the form so they can see the
           computed character sheet (or blocked diagnostics) the submit produced. */}
-      <CreateCharacterForm onCreated={reload} />
+      {characterCreationGate(ruleSet).form === 'starfinder' ? (
+        <StarfinderCreateForm onCreated={reload} />
+      ) : (
+        <CreateCharacterForm onCreated={reload} />
+      )}
     </section>
   );
 }
