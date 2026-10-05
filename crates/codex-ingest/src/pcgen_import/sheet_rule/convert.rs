@@ -531,6 +531,25 @@ fn sf_skill_words(ctx: &RecordCtx, skill: &str) -> String {
 /// the pinned tree). The wide books repeat the speed as `MODIFYOTHER:PC.MOVEMENT|Walk|Speed|SET|30`,
 /// which degrades by name. Empty for a Pathfinder record and for every kind but `race`; a mode
 /// with two different values is a named defect and is left out, never picked.
+/// SD-37 E5.4: the game mode's movement modes (`MOVEMENT:<mode>` rows of the `_dynamic.lst`
+/// files), in file order.
+fn sf_movement_modes(tree: &PinnedTree) -> Vec<String> {
+    let mut out: Vec<String> = Vec::new();
+    for mode in tree
+        .files
+        .iter()
+        .filter(|f| f.rel_path.to_ascii_lowercase().ends_with("_dynamic.lst"))
+        .flat_map(|f| f.lines.iter())
+        .filter_map(|l| l.split('\t').next().and_then(|first| first.trim().strip_prefix("MOVEMENT:")))
+        .map(|m| m.trim().to_string())
+    {
+        if !mode.is_empty() && !out.iter().any(|m| m.eq_ignore_ascii_case(&mode)) {
+            out.push(mode);
+        }
+    }
+    out
+}
+
 fn sf_race_speeds(ctx: &mut RecordCtx) -> BTreeMap<String, i64> {
     if ctx.tree.system != GameSystem::Starfinder1e || ctx.record.kind != "race" {
         return BTreeMap::new();
@@ -724,6 +743,12 @@ fn sf_spell_progression(closure: &Closure, class: &str) -> Result<Vec<SfSpellPro
 /// Only `ABILITY:` tokens are carried -- the racial Hit Points on the same row are E4.1's
 /// (`sf_race_hit_points`). `None`: the row grants no ability, or grants one by choice
 /// (`NORMAL`, `%LIST`) -- not a hop; the reference stays unresolved and named.
+///
+/// SD-37 E5.4: an automatic `TYPE=<tags>` target is a hop target too -- "every ability of this
+/// category carrying these tags", the same edge a record's own `TYPE=` grant makes
+/// (`ability_type_selector_targets`). The drone's special abilities reach it this way
+/// (`Drone Special Abilities`, `scr_abilities.lst:1398`: `ABILITY:Class Feature|AUTOMATIC|
+/// TYPE=Drone Special Ability LVL 1|PREVARGTEQ:DroneMasterLVL,1`).
 fn internal_hop_grants(tree: &PinnedTree, key: &str) -> Option<Vec<String>> {
     use super::closure::{tokenize_row, FileFamily};
     let key = key.trim().to_ascii_uppercase();
@@ -735,7 +760,7 @@ fn internal_hop_grants(tree: &PinnedTree, key: &str) -> Option<Vec<String>> {
         let (fields, _) = split_gates(v);
         fields.len() >= 3
             && fields[1].trim().eq_ignore_ascii_case("AUTOMATIC")
-            && fields.iter().skip(2).all(|t| !t.contains("%LIST") && !t.contains("%CHOICE") && !t.trim().starts_with("TYPE"))
+            && fields.iter().skip(2).all(|t| !t.contains("%LIST") && !t.contains("%CHOICE"))
     };
     (!grants.is_empty() && grants.iter().all(plain)).then_some(grants)
 }
@@ -1734,6 +1759,47 @@ fn sf_modifier_stat(system: GameSystem, kind: &str, value: &str) -> Option<(&'st
     }
 }
 
+/// The stat-block label of a Starfinder ability-score kit ([`sf_kit_base_scores`]).
+const SF_KIT_SCORES_LABEL: &str = "Base ability scores";
+
+/// SD-37 E5.4: `KIT:<n>|<name>` names a `STARTPACK:<name>` row of a kit file; when every line of
+/// that kit is a `STAT:` line, the scores it sets, as printed words (`Str 6, Dex 16, Int 6, Wis 8,
+/// Cha 6`, in the order the kit states them). `None` for a kit that does anything else (gear,
+/// funds, feats), or that the tree does not hold.
+fn sf_kit_base_scores(tree: &PinnedTree, value: &str) -> Option<String> {
+    use super::closure::FileFamily;
+    let name = value.split_once('|').map(|(_, n)| n).unwrap_or(value).trim();
+    for file in tree.files.iter().filter(|f| f.family == FileFamily::Kit && !f.is_pfs) {
+        let Some(start) = file.lines.iter().position(|l| {
+            l.split('\t').next().and_then(|h| h.trim().strip_prefix("STARTPACK:")).is_some_and(|n| n.trim().eq_ignore_ascii_case(name))
+        }) else {
+            continue;
+        };
+        let body: Vec<&str> = file.lines[start + 1..]
+            .iter()
+            .map(|l| l.trim_end_matches('\r'))
+            .take_while(|l| !l.trim().is_empty() && !l.trim_start().starts_with("STARTPACK:"))
+            .filter(|l| !l.trim_start().starts_with('#'))
+            .collect();
+        if body.is_empty() || !body.iter().all(|l| l.trim().starts_with("STAT:")) {
+            return None;
+        }
+        let mut words = Vec::new();
+        for line in body {
+            for pair in line.trim().trim_start_matches("STAT:").split('|') {
+                let (stat, n) = pair.split_once('=')?;
+                let n: i64 = n.trim().parse().ok()?;
+                let stat = stat.trim().to_ascii_lowercase();
+                let mut chars = stat.chars();
+                let word: String = chars.next().map(|c| c.to_ascii_uppercase()).into_iter().chain(chars).collect();
+                words.push(format!("{word} {n}"));
+            }
+        }
+        return (!words.is_empty()).then(|| words.join(", "));
+    }
+    None
+}
+
 fn push_stat(acc: &mut Acc, label: &str, pieces: Vec<ProsePiece>) {
     if pieces.is_empty() {
         return;
@@ -1776,6 +1842,28 @@ fn number_piece(ctx: &mut RecordCtx, field: &str) -> Result<ProsePiece, String> 
 fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &str, value: &str, level_gate: Option<u8>, row_kind: ClosureRowKind) -> Result<(), String> {
     let v = value.trim();
     match key {
+        // SD-37 E5.4: a Starfinder starting kit that only sets ability scores (the drone
+        // chassis' `KIT:1|Drone ~ Hover` -> `STARTPACK:Drone ~ Hover` / `STAT:STR=6|DEX=16|INT=6|
+        // WIS=8|CHA=6`, `scr_kits.lst:9-10`) prints those scores as the record's
+        // `StatBlock "Base ability scores"` row ([`sf_kit_base_scores`]). Any other kit stays
+        // metadata, as before.
+        "KIT" if ctx.tree.system == GameSystem::Starfinder1e && level_gate.is_none() => {
+            if let Some(text) = sf_kit_base_scores(ctx.tree, v) {
+                acc.stat_block.retain(|seg| !matches!(&seg.family, ProseFamily::StatBlock(l) if l == SF_KIT_SCORES_LABEL));
+                push_stat(acc, SF_KIT_SCORES_LABEL, vec![ProsePiece::Text(text)]);
+            }
+        }
+        // SD-37 E5.4: a Starfinder race's `MONSTERCLASS:<class>:<n>` -- the class a creature of
+        // the race holds (`scr_races.lst:20`, the drone: `MONSTERCLASS:Drone:1`) -- is a grant of
+        // that class's record by the race, so the class's base attack and save rows print for a
+        // follower of the race. A class no record stands for is named, never guessed.
+        "MONSTERCLASS" if ctx.tree.system == GameSystem::Starfinder1e && ctx.record.kind == "race" => {
+            let class = v.split(':').next().unwrap_or_default().trim().to_ascii_uppercase();
+            match ctx.index.classes.get(&class) {
+                Some((rule_id, _)) => out.grants_out.push((rule_id.clone(), Grant { by: Granter::Rule(ctx.record.id.clone()), when: Applies::Always })),
+                None => ctx.defect("unresolved-references", format!("{}: MONSTERCLASS|{v}", ctx.record.id)),
+            }
+        }
         // SD-37 E4.5: a Starfinder item's `COST:` is its price in credits, a term of the
         // credits-spent sheet total (`decisions.md §5`), so it prints as the item's
         // `StatBlock "Price"` row -- the stat-block shape the engine already reads for an
@@ -2194,10 +2282,20 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             // SD-37 E5.1: a Starfinder race's `MOVE:<mode>,0` prints the speed its row states
             // (`sf_race_speeds`), and a mode only that row states prints after the `MOVE` modes.
             let mut sf_speeds = sf_race_speeds(ctx);
+            let sf_race = ctx.tree.system == GameSystem::Starfinder1e && ctx.record.kind == "race";
+            let mut unstated = false;
             let mut pieces = Vec::new();
             for pair in parts.chunks(2) {
                 if pair.len() < 2 {
                     break;
+                }
+                // SD-37 E5.4: a Starfinder race whose row states no speed for a `MOVE:<mode>,0`
+                // mode (the drone, `scr_races.lst:20`: its speed is its chassis',
+                // `scr_abilities.lst:1393-1395` `BONUS:VAR|Walk|<n>`) prints no `<mode> 0 ft.`;
+                // its speeds are its movement variables (below).
+                if sf_race && pair[1] == "0" && !sf_speeds.keys().any(|m| m.eq_ignore_ascii_case(pair[0])) {
+                    unstated = true;
+                    continue;
                 }
                 if !pieces.is_empty() {
                     pieces.push(ProsePiece::Text(", ".into()));
@@ -2216,6 +2314,23 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     pieces.push(ProsePiece::Text(", ".into()));
                 }
                 pieces.push(ProsePiece::Text(format!("{mode} {n} ft.")));
+            }
+            // SD-37 E5.4: a race that states no speed at all prints each movement mode of the game
+            // mode (`MOVEMENT:` rows, `scr__dynamic.lst:3-7`) as the value of its variable
+            // (`DEFINE:Walk|0` ... on the always-held `Default`, `scr_abilities.lst:87`; raised by
+            // what the creature holds, `BONUS:VAR|Walk|30`), and a mode whose variable is 0 prints
+            // nothing (`suppress_when_all_zero`).
+            if unstated && pieces.is_empty() {
+                for mode in sf_movement_modes(ctx.tree) {
+                    let speed = convert_formula(ctx, &mode)?;
+                    acc.stat_block.push(ProseSegment {
+                        family: ProseFamily::StatBlock("Speed".to_string()),
+                        pieces: vec![ProsePiece::Text(format!("{mode} ")), ProsePiece::Slot(speed), ProsePiece::Text(" ft.".into())],
+                        applies: None,
+                        pick_last: false,
+                        suppress_when_all_zero: true,
+                    });
+                }
             }
             push_stat(acc, "Speed", pieces);
         }
@@ -2575,6 +2690,12 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         let inner_category = inner_fields[0].trim().to_string();
                         let inner_when = Applies::all(vec![when.clone(), gates_of(ctx, &inner_gates, None)?]);
                         for inner_target in inner_fields.iter().skip(2).map(|x| x.trim()).filter(|x| !x.is_empty() && *x != ".CLEAR") {
+                            if inner_target.starts_with("TYPE=") || inner_target.starts_with("TYPE.") {
+                                for id in ability_type_selector_targets(ctx, &inner_category, inner_target) {
+                                    out.grants_out.push((id, Grant { by: by.clone(), when: inner_when.clone() }));
+                                }
+                                continue;
+                            }
                             if let Holdable::Rule(id) = resolve_holdable_rule(ctx, &inner_category, inner_target) {
                                 out.grants_out.push((id, Grant { by: by.clone(), when: inner_when.clone() }));
                             }

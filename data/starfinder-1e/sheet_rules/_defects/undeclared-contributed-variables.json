@@ -1,6 +1,7 @@
 [
   "alien_archive\u003aability\u003abarathu_default_floaters\u003a Maneuverability",
   "core\u003aability\u003aoperative_class_feature_operative_exploit\u003a OperativeImprovisationCount",
+  "core\u003arace\u003adrone\u003a Swim",
   "core\u003askill\u003adisplay_computers\u003a UseSkillUntrained",
   "core\u003askill\u003adisplay_culture\u003a UseSkillUntrained",
   "core\u003askill\u003adisplay_engineering\u003a UseSkillUntrained",

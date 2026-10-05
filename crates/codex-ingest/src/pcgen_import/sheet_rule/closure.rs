@@ -561,6 +561,9 @@ impl PinnedTree {
         // its parent and every reference under it missed.
         let mut ability_category_type_ambiguous: BTreeSet<String> = BTreeSet::new();
         let mut ability_category_listed: BTreeSet<String> = BTreeSet::new();
+        // SD-37 E5.4: every `ABILITYLIST:` category's listed keys (upper), for
+        // `listed_category_type_views`.
+        let mut ability_category_list: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
         let mut ability_category_pool: BTreeMap<String, (String, RowRef)> = BTreeMap::new();
         let mut ability_category_pool_ambiguous: BTreeSet<String> = BTreeSet::new();
         // `CATEGORY:Aligned Class` `BONUS:VAR` contributions (name upper, row, the row's own
@@ -662,6 +665,9 @@ impl PinnedTree {
                     if !own.is_empty() {
                         if tokens.iter().any(|(k, _)| k.eq_ignore_ascii_case("ABILITYLIST")) {
                             ability_category_listed.insert(own.clone());
+                            for (_, v) in tokens.iter().filter(|(k, _)| k.eq_ignore_ascii_case("ABILITYLIST")) {
+                                ability_category_list.entry(own.clone()).or_default().extend(v.split('|').map(|k| k.trim().to_ascii_uppercase()).filter(|k| !k.is_empty()));
+                            }
                         }
                         if let Some((_, v)) = tokens.iter().find(|(k, _)| k.eq_ignore_ascii_case("TYPE")) {
                             let tags: Vec<String> = v.split('.').map(str::trim).filter(|t| !t.is_empty()).map(str::to_string).collect();
@@ -759,6 +765,13 @@ impl PinnedTree {
         for name in ability_category_ambiguous.iter().chain(&ability_category_type_ambiguous).chain(&ability_category_listed) {
             ability_category_type.remove(name);
         }
+        if self.system == GameSystem::Starfinder1e {
+            let listed: BTreeMap<String, BTreeSet<String>> = ability_category_list
+                .into_iter()
+                .filter(|(name, _)| !ability_category_ambiguous.contains(name) && !ability_category_type_ambiguous.contains(name))
+                .collect();
+            ability_category_type.extend(listed_category_type_views(&self.files, &ability_category_parent, &listed));
+        }
         ability_category_type.retain(|name, tags| !tags.is_empty() && ability_category_parent.contains_key(name));
         for name in &ability_category_ambiguous {
             ability_category_parent.remove(name);
@@ -832,6 +845,68 @@ impl PinnedTree {
 
 fn define_or_push(index: &mut BTreeMap<String, Vec<RowRef>>, name: &str, row: RowRef) {
     index.entry(name.trim().to_ascii_uppercase()).or_default().push(row);
+}
+
+/// SD-37 E5.4 (Starfinder only): an `ABILITYLIST:` category whose parent is `CATEGORY:Internal`
+/// (a helper category, never a feat or racial-trait list a seed already picks from) and whose
+/// listed members are EXACTLY the rows of the parent carrying some one set of `TYPE:` tags gets
+/// that tag set as its
+/// member view -- the two definitions select the same rows, so the category's picks can offer
+/// its members (`pool_link::category_views`) without a new option-set shape. The tag set is the
+/// listed rows' shared tags; a category whose listed rows share none, or whose shared tags also
+/// select an unlisted row (or miss a listed key), gets no view and stays unlinked, as before.
+///
+/// The oracle's drone skill unit (`scr_abilitycategories.lst:132`, `ABILITYCATEGORY:DRONE Skill
+/// Unit ... CATEGORY:Internal ABILITYLIST:DRONE Skill Unit ~ Acrobatics|...|DRONE Skill Unit ~
+/// Stealth`): its six listed rows are the six `CATEGORY:Internal TYPE:Drone Skill Unit` rows
+/// (`scr_abilities.lst:1415-1420`).
+fn listed_category_type_views(
+    files: &[LstFile],
+    parents: &BTreeMap<String, String>,
+    listed: &BTreeMap<String, BTreeSet<String>>,
+) -> BTreeMap<String, Vec<String>> {
+    // (parent category upper) -> every plain row's (KEY-or-name upper, TYPE tags as written).
+    let listed: BTreeMap<&String, &BTreeSet<String>> = listed.iter().filter(|(name, _)| parents.get(*name).is_some_and(|p| p == "INTERNAL")).collect();
+    let wanted: BTreeSet<&String> = listed.keys().filter_map(|name| parents.get(*name)).collect();
+    let mut rows: BTreeMap<String, Vec<(String, Vec<String>)>> = BTreeMap::new();
+    for file in files.iter().filter(|f| f.family == FileFamily::Ability && !f.is_pfs) {
+        for raw in &file.lines {
+            let id = row_identity(raw);
+            if !matches!(id.shape, RowShape::Plain) || !wanted.contains(&id.category) {
+                continue;
+            }
+            let (head, tokens) = tokenize_row(raw);
+            if head.trim_start().to_ascii_uppercase().starts_with("ABILITYCATEGORY:") {
+                continue;
+            }
+            let tags: Vec<String> = tokens
+                .iter()
+                .rfind(|(k, _)| k == "TYPE")
+                .map(|(_, v)| v.split('.').map(str::trim).filter(|t| !t.is_empty()).map(str::to_string).collect())
+                .unwrap_or_default();
+            rows.entry(id.category.clone()).or_default().push((id.key.clone(), tags));
+        }
+    }
+    let upper = |tags: &[String]| tags.iter().map(|t| t.to_ascii_uppercase()).collect::<BTreeSet<String>>();
+    let mut out = BTreeMap::new();
+    for (name, keys) in listed {
+        let Some(parent_rows) = parents.get(name).and_then(|p| rows.get(p)) else { continue };
+        let members: Vec<&(String, Vec<String>)> = parent_rows.iter().filter(|(k, _)| keys.contains(k)).collect();
+        if members.len() != keys.len() {
+            continue;
+        }
+        let Some(((_, first_tags), rest)) = members.split_first() else { continue };
+        let shared: Vec<String> = first_tags.iter().filter(|t| rest.iter().all(|(_, o)| upper(o).contains(&t.to_ascii_uppercase()))).cloned().collect();
+        if shared.is_empty() {
+            continue;
+        }
+        let shared_u = upper(&shared);
+        let selected = parent_rows.iter().filter(|(_, tags)| shared_u.is_subset(&upper(tags))).count();
+        if selected == keys.len() {
+            out.insert(name.clone(), shared);
+        }
+    }
+    out
 }
 
 /// One record's closure: its rows in PCGen application order.

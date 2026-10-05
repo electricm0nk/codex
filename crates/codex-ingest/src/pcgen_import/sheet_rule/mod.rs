@@ -29,6 +29,7 @@
 pub mod always_held;
 pub mod attest;
 pub mod closure;
+pub mod companion_mod;
 pub mod convert;
 pub mod ctx;
 pub mod formula;
@@ -753,6 +754,12 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
     let by_id: BTreeMap<&str, &RecordRef> = records.iter().map(|r| (r.id.as_str(), r)).collect();
     index.reprint_newest_key = reprint::newest_printings(tree, &by_id, &index.cat_key_candidates);
     index.reprint_newest_name = reprint::newest_printings(tree, &by_id, &index.cat_name_candidates);
+    // SD-37 E5.4: the converted Starfinder books' companion modifiers (`companion_mod.rs`).
+    let (companion_mods, companion_defects) = companion_mod::scan(tree);
+    for (k, v) in companion_defects {
+        index.index_defects.entry(k).or_default().extend(v);
+    }
+    index.companion_mods = companion_mods;
     // SD-36 F3c4b: ability-category pick rows no unit stands for become options of the choice
     // that picks them (`pool_option.rs`); their pairs are registered BEFORE any record converts,
     // so a record naming one resolves to it. Only pairs no unit answers are registered.
@@ -762,9 +769,32 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             index.by_cat_key.contains_key(&pair) || index.by_cat_name.contains_key(&pair)
         };
         let owned = |row: RowRef| index.row_owner.contains_key(&row);
-        pool_option::scan(tree, &records, &closures, &owned, &answered)
+        // SD-37 E5.4: a companion modifier's picks are scanned with the records' (`companion_mod.rs`).
+        if index.companion_mods.is_empty() {
+            pool_option::scan(tree, &records, &closures, &owned, &answered)
+        } else {
+            let mut scan_records = records.clone();
+            let mut scan_closures = closures.clone();
+            for d in &index.companion_mods {
+                scan_records.push(d.record());
+                scan_closures.push(d.closure.clone());
+            }
+            pool_option::scan(tree, &scan_records, &scan_closures, &owned, &answered)
+        }
     };
-    for d in &scan.options {
+    // SD-37 E5.4: the members of a companion modifier's picks register their pairs LAST, so a
+    // pair an earlier option already answered (`(INTERNAL, COMPUTERS)`: the Skill Synergy
+    // option) keeps resolving where it did before the companion's picks were scanned.
+    let companion_pools: BTreeSet<String> = index
+        .companion_mods
+        .iter()
+        .flat_map(|d| d.closure.rows.iter().flat_map(|r| r.tokens.iter()))
+        .filter(|(k, _)| k == "BONUS")
+        .filter_map(|(_, v)| v.strip_prefix("ABILITYPOOL|").and_then(|rest| rest.split('|').next()).map(slug))
+        .collect();
+    let from_companion = |d: &pool_option::PoolOptionDecl| d.via_pool && companion_pools.contains(&d.pool);
+    let registration_order = scan.options.iter().filter(|d| !from_companion(d)).chain(scan.options.iter().filter(|d| from_companion(d)));
+    for d in registration_order {
         for pair in [(d.category.clone(), d.key.clone()), (d.category.clone(), d.name.to_ascii_uppercase())] {
             let taken = index.by_cat_key.get(&pair).or_else(|| index.by_cat_name.get(&pair)).cloned();
             match taken {
@@ -1295,6 +1325,56 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             let mut rules = vec![opt.rule];
             rules.extend(opt.siblings);
             files.insert(rel, rules);
+        }
+    }
+    // SD-37 E5.4: each Starfinder companion modifier converts as one rule its follower's race
+    // holds, every line under the row's own gate (`companion_mod.rs`). No inventory unit is
+    // added: the record count does not move.
+    if !index.companion_mods.is_empty() {
+        let role_races = companion_mod::role_races(&files);
+        for d in &index.companion_mods {
+            let cite = tree.cite(d.row);
+            let Some(races) = role_races.get(&d.role.to_ascii_uppercase()).filter(|r| !r.is_empty()) else {
+                defects.entry("companion-mod-race-unresolved".into()).or_default().push(format!("{}: role {} ({cite})", d.id, d.role));
+                continue;
+            };
+            let mut c = convert::convert_record(tree, index, &d.record(), &d.closure);
+            if !c.refusals.is_empty() {
+                let r: Vec<String> = c.refusals.iter().cloned().collect();
+                defects.entry("companion-mod-unconverted".into()).or_default().push(format!("{}: refused {} ({cite})", d.id, r.join(", ")));
+                continue;
+            }
+            let mut rules = std::mem::take(&mut c.rules);
+            if rules.is_empty() {
+                defects.entry("companion-mod-unconverted".into()).or_default().push(format!("{}: no rule ({cite})", d.id));
+                continue;
+            }
+            for rule in rules.iter_mut() {
+                rule.applies = Applies::all(vec![d.gate(), rule.applies.clone()]);
+            }
+            rules[0].granted_by.extend(races.iter().map(|race| Grant { by: Granter::Rule(race.clone()), when: Applies::Always }));
+            for (k, v) in c.defects {
+                defects.entry(k).or_default().extend(v);
+            }
+            for (id, name) in c.var_names {
+                var_names.insert(id, name);
+            }
+            for (id, label) in c.var_labels {
+                var_labels.entry(id).or_insert(label);
+            }
+            for (id, name) in c.var_declares {
+                declares.entry(id).or_insert_with(|| (name, BTreeSet::new())).1.insert(d.id.clone());
+            }
+            for (id, name, mut contrib) in c.var_contribs {
+                contrib.when = Applies::all(vec![d.gate(), contrib.when]);
+                contribs.entry(id).or_insert_with(|| (name, Vec::new())).1.push(contrib);
+            }
+            for (target, grant) in std::mem::take(&mut c.grants_out) {
+                let grant = Grant { by: grant.by, when: Applies::all(vec![d.gate(), grant.when]) };
+                grants_out.entry(target).or_default().push(grant);
+            }
+            option_rows.extend(d.closure.own_rows.iter().copied());
+            files.insert(rule_file_rel(&d.book, companion_mod::COMPANION_MOD_KIND, &d.id), rules);
         }
     }
     // D3: every class-selection record gets the class principal it stands for.

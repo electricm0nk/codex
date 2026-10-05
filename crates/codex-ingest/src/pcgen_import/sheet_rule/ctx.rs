@@ -140,6 +140,9 @@ pub struct CorpusIndex {
     /// row of that one object (one record per book, no shipped `CATEGORY:`). A grant of the
     /// object holds each fragment.
     pub mod_fragments: BTreeMap<(String, String), Vec<RuleId>>,
+    /// SD-37 E5.4: every Starfinder `FOLLOWER:` companion modifier whose role a record offers
+    /// (`companion_mod.rs`), converted after the records.
+    pub companion_mods: Vec<super::companion_mod::CompanionModDecl>,
     /// The pick choosers (`pool_option.rs`).
     pub pool_option_choosers: Vec<super::pool_option::PickChooser>,
     /// SD-36 F3c5: `(INTERNAL, KEY-or-name upper)` -> the natural-attack helper that answers it
