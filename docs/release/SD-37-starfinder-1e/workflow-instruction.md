@@ -318,7 +318,8 @@ concurrent windows left are:
   version surfaces.
 
 A lane that needs a file outside its row returns `declined` with `ownedBy:<card>` naming the card
-whose row holds the file.
+whose row holds the file — **unless that file's epic is already `complete`** (`decisions.md §21`,
+2026-10-05): then the card edits it under its own criterion and re-runs the owning epic's gate.
 
 The command C0.2 used for the importer overlap (re-run it if the epic order changes again):
 

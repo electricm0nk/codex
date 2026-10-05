@@ -712,3 +712,39 @@ the orchestrator rules on them under the unattended protocol (§12, rule 1: defa
 
 **Revisit if the operator disagrees:** both are one-file changes in `sf_loadout.rs`; reverting
 either is a single commit and E5.MC re-runs.
+
+## §21 — Standing scope rule for the serial chain (orchestrator, operator-away default, 2026-10-05)
+
+E5.3 (§20) and E5.4 both stopped to ask for a file that a **completed** epic's §3 row owns. The
+§3 fences exist to keep two live lanes off one file. From E2 onward the chain is serial, so a
+fence on a completed epic's file guards nothing and turns ordinary work into an escalation.
+A warning is not a control, and neither is a fence that only produces escalations (AGENTS.md
+rule 8). So, as a standing rule:
+
+1. **A card may edit a file owned by a completed epic** (its `*.MC` row is `complete` in
+   `kanban.md`) when its own criterion needs it. No escalation. The edit is bound to the card's
+   criterion, is test-first, and the receipt names the file, the owning epic and the gate below.
+2. **The owning epic's gate is re-run in the same card:** the PF hash pair (Aldric, Elowen) for
+   any `src/`, `crates/` or desktop engine file; that epic's acceptance command for the file's own
+   behaviour (E3 → structural diff + `--check` + residue gate for a converter or mapping change;
+   E4 → the seed hand-value fixtures). Both results go in the receipt.
+3. **Files of an epic that is not complete stay fenced.** A card still returns `declined` with
+   `owned_by` for those.
+4. **Nothing changes about what is computed.** The paper-sheet rule and the "no number from
+   recall" rule (§18) bind as before: a value the card cannot source stays a named refusal.
+
+Applied to E5.4's three requests:
+- (a) `sheet_rule.rs` `CharacterFacts::master_vars` (E2 complete): **granted** under rule 1,
+  bounded to the prepared patch; the PF hash pair and E2.1's round-trip test are re-run.
+- (b) Drone Hit Points: the mapping table and `sf_mapping.rs` (E3 complete) are **open** under
+  rule 1. E5.4 adds the drone HP row **only** with a source (SRD page + an oracle observation from
+  a PCGen drone run through `scripts/pcgen-run-character.sh`). If the oracle run cannot be built
+  inside E5.4, the HP line stays E3.3's named refusal (SD-d) and E7.1 owns the drone HP row; the
+  E7.1 dispatch says so.
+- (c) Hover-chassis Flight System: E5.4 fetches the SRD hover-chassis entry. If it states the
+  flight system is part of the chassis from level 1, the chassis grant satisfies the mod's own
+  prerequisite and the receipt cites the page. If the page does not say so, the mod stays
+  ungranted with a named refusal and E7.1 checks it in parity.
+
+**Revisit if the operator disagrees:** delete this section; the fences in `workflow-instruction.md
+§3` return to their literal reading. Every edit made under it is named in a receipt.
