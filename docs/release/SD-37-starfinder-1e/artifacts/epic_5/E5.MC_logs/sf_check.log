@@ -1,0 +1,14 @@
+records=8582 converted=8582 refused=0 rules=11318 var_tables=236 verdict=PASS (30.3s)
+kind ability: records=3296 converted=3296 refused=0
+kind class: records=11 converted=11 refused=0
+kind deity: records=39 converted=39 refused=0
+kind equipment: records=2634 converted=2634 refused=0
+kind equipment_modifier: records=336 converted=336 refused=0
+kind feat: records=224 converted=224 refused=0
+kind language: records=68 converted=68 refused=0
+kind proficiency: records=1324 converted=1324 refused=0
+kind race: records=77 converted=77 refused=0
+kind skill: records=116 converted=116 refused=0
+kind spell: records=370 converted=370 refused=0
+kind template: records=87 converted=87 refused=0
+exit=0
