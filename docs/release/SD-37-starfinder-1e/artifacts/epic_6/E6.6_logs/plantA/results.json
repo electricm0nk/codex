@@ -1,0 +1,34 @@
+[
+  {
+    "id": "open-starfinder-envoy",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/plantA/open-starfinder-envoy.FAILED.png",
+    "rendered_excerpt": "⚙\nSF Seed Envoy\nStarfinder · Ysoki (Str)\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nEnvoy\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t8\t-1\nDexterity\t13\t+1\nConstitution\t12\t+1\nIntelligence\t12\t+1\nWisdom\t10\t+0\nCharisma\t18\t+4\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t21\nHit Points\t20\nResolve Points\t5\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t14\nKinetic Armor Class (KAC)\t15\nInitiative\t+1\nSAVING T",
+    "reason": "expected string missing: 'Credits remaining\t2331'",
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-6-plantA-Joy6i7/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "0ca84f94-19ec-4847-9534-49ea82c3ca2a"
+      ],
+      "deleted": [
+        "0ca84f94-19ec-4847-9534-49ea82c3ca2a"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-select-pathfinder",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/plantA/landing-select-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-6-plantA-Joy6i7/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

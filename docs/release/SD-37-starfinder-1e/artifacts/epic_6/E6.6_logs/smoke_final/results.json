@@ -1,0 +1,116 @@
+[
+  {
+    "id": "open-starfinder-soldier",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/final/open-starfinder-soldier.png",
+    "rendered_excerpt": "⚙\nSF Seed Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t24\nHit Points\t25\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t16\nKinetic Armor Class (KAC)\t19\nInitiative\t+2\nSAVING TH",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-6-final-I1ZnVD/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "5278e92a-8ced-4156-8942-9e70557ca6a1"
+      ],
+      "deleted": [
+        "5278e92a-8ced-4156-8942-9e70557ca6a1"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-starfinder-mystic",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/final/open-starfinder-mystic.png",
+    "rendered_excerpt": "⚙\nSF Seed Mystic\nStarfinder · Lashunta\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nMystic\t5\nABILITY SCORES\n\nScore\tModifier\nStrength\t10\t+0\nDexterity\t14\t+2\nConstitution\t8\t-1\nIntelligence\t14\t+2\nWisdom\t19\t+4\nCharisma\t15\t+2\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t25\nHit Points\t34\nResolve Points\t6\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t16\nKinetic Armor Class (KAC)\t16\nInitiative\t+2\nSAVING TH",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-6-final-I1ZnVD/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "c3a6348e-be73-4356-b48b-a923380a4969"
+      ],
+      "deleted": [
+        "c3a6348e-be73-4356-b48b-a923380a4969"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-starfinder-technomancer",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/final/open-starfinder-technomancer.png",
+    "rendered_excerpt": "⚙\nSF Seed Technomancer\nStarfinder · Android (Dex)\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nTechnomancer\t5\nABILITY SCORES\n\nScore\tModifier\nStrength\t10\t+0\nDexterity\t16\t+3\nConstitution\t14\t+2\nIntelligence\t19\t+4\nWisdom\t13\t+1\nCharisma\t8\t-1\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t35\nHit Points\t29\nResolve Points\t6\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t18\nKinetic Armor Class (KAC)\t19\nInitia",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-6-final-I1ZnVD/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "3e910fb4-2490-4752-b974-0213f595c7d2"
+      ],
+      "deleted": [
+        "3e910fb4-2490-4752-b974-0213f595c7d2"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-starfinder-envoy",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/final/open-starfinder-envoy.png",
+    "rendered_excerpt": "⚙\nSF Seed Envoy\nStarfinder · Ysoki (Str)\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nEnvoy\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t8\t-1\nDexterity\t13\t+1\nConstitution\t12\t+1\nIntelligence\t12\t+1\nWisdom\t10\t+0\nCharisma\t18\t+4\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t21\nHit Points\t20\nResolve Points\t5\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t14\nKinetic Armor Class (KAC)\t15\nInitiative\t+1\nSAVING T",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-6-final-I1ZnVD/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "71591389-8725-483f-8f39-58d29373088d"
+      ],
+      "deleted": [
+        "71591389-8725-483f-8f39-58d29373088d"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-select-pathfinder",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/final/landing-select-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-6-final-I1ZnVD/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-seed-aldric",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/final/open-seed-aldric.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nPROGRESSION\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nLevel 1 Fighter\nSkill points: 5\nFeat\nLevel 2 Fighter\nSkill points: 5\nLevel 3 Fighter\nSkill points: 5\nFeat\nNEXT\nLevel 4 Fighter\nSkill points: 5\nAbility score increase\nCharacter Name\nAldric Ironhand\nCampaign\n—\nABILITIES\n\nSTR\n19\n+4\nDEX\n13\n+1\nCON\n14\n+2\nINT\n14\n+2\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+1\nHI",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-6-final-I1ZnVD/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-seed-elowen",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/final/open-seed-elowen.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nPROGRESSION\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nLevel 1 Wizard\nSkill points: 7\nFeat\nLevel 2 Wizard\nSkill points: 7\nLevel 3 Wizard\nSkill points: 7\nFeat\nLevel 4 Wizard\nSkill points: 7\nAbility score increase\nLevel 5 Wizard\nSkill points: 7\nFeat\nNEXT\nLevel 6 Wizard\nSkill points: 7\nCharacter Name\nElowen Ashgrave\nCampaign\n—\nABILITIES\n\nSTR\n8\n-1\nDEX\n1",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-6-final-I1ZnVD/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

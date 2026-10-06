@@ -30,11 +30,11 @@ it (`workflow-instruction.md §5`).
 | E3 | complete | 6 of 6 (E3.1–E3.5, E3.MC) | E3.MC receipt `artifacts/epic_3/E3.MC_cycle_receipt.md` (E3.MC corrected this row from 3 of 6; retro correction) |
 | E4 | complete | 7 of 7 (E4.1–E4.6, E4.MC) | E4.MC receipt `artifacts/epic_4/E4.MC_cycle_receipt.md` |
 | E5 | complete | 5 of 5 (E5.1–E5.4, E5.MC) | E5.MC receipt `artifacts/epic_5/E5.MC_cycle_receipt.md` (E5.MC corrected this row from 0 of 5) |
-| E6 | in progress | 3 of 7 (E6.1, E6.2, E6.3) | |
+| E6 | in progress | 7 of 8 (E6.1–E6.6 incl. E6.5a; E6.MC left) | E6.6 receipt `artifacts/epic_6/E6.6_cycle_receipt.md`; count from `kanban.md` rows (`awk -F'|' '$2 ~ /^ E6/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | E7.1 | waiting | 0 of 1 | |
 | E4a | waiting | 0 of 5 | serial after E7.1 (C0.2) |
 | E7.2–E7.9 | waiting | 0 of 8 | |
-| **Total** | | **37 of 55** | command below the table (E6.3 re-ran it after its own row: 37) |
+| **Total** | | **41 of 56** | command below the table (E6.6 re-ran it after its own row: 41; 56 cards since E6.5a) |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -177,6 +177,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E6.4 | 2026-10-05 | Opus 5.5 | `eee7a3894a` (`feat(sd37,e6.4)`) | complete | Aldric unchanged (1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); Soldier / Mystic / Technomancer / Envoy unchanged (160 of 160 hand values and the E6.3 sheet fixtures green); the catalogs are character-independent | `artifacts/epic_6/E6.4_cycle_receipt.md` |
 | E6.5 | 2026-10-06 | Opus 5.5 | `0e6d0f3d2c` (`feat(sd37,e6.5)`) | complete | Aldric unchanged (1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); Soldier / Mystic / Technomancer / Envoy unchanged (no saved seed input changes; 160 of 160 and the E6.3 sheet fixtures green); new path: each built at 1st level and leveled through the level-up reaches its 13 level rows (52 of 52); SF-Soldier-3 → Soldier 2 in the real app: Hit Points 11 → 18, BAB +1 → +2 | `artifacts/epic_6/E6.5_cycle_receipt.md`; ui-smoke 3/3 green (RED 1/3 on base); root sweep red since E6.3 (audit hit on a test fixture) self-healed; discovery E6.5a |
 | E6.5a | 2026-10-06 | Opus 5.5 | `fbbafda2bf` (`feat(sd37,e6.5a)`) | complete | Aldric unchanged (1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); Soldier / Mystic / Technomancer / Envoy unchanged (no saved seed input changes; 160 of 160 and the E6.3 sheet fixtures green); new path: each built at 1st level, leveled and given its feats, spells and gear through the app's commands reaches 190 of 190 sheet totals and 24 of 24 loadout hand values; SF-Soldier-3 in the real app: EAC 16, KAC 19, credits remaining 2045, bulk 4 | `artifacts/epic_6/E6.5a_cycle_receipt.md`; ui-smoke 7/7 green (RED 1/2 on base); 11 of 11 plants red |
+| E6.6 | 2026-10-06 | Sonnet 5.5 | `c3bc1e11b4` (`feat(sd37,e6.6)`) | complete | Aldric unchanged (opened, `Fighter 3`; hash pair not re-run, no engine file touched); Elowen unchanged (opened, `Wizard 5`); Soldier / Mystic / Technomancer / Envoy unchanged in code; each now built through the real app and reopened from the saved store with 27 / 34 / 36 / 29 hand values equal (126 of 150; 22 untrained + 2 `Spells known: 0` not asserted); real store 15379 entries, sha256 ddfc4461…b8bf before = after | `artifacts/epic_6/E6.6_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
@@ -308,6 +309,8 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-06 | E6.5a | The feat picker evaluates each prerequisite (`applies`) over the held set with the chassis BAB added to the facts (`sf_defense::held` leaves `facts.base_attack` at 0) | set the fact in `sf_defense::held` (E4 engine) | the held set does not gate picks by `applies`, so no total depends on it; changing E4's reader is outside this criterion |
 | 2026-10-06 | E6.5a | Connection spells are chosen from the class list and saved `Known`; the engine's known total and its terms ("Empath Connection Spell - 1: detect thoughts") are printed beside the list | derive the granted spells from the connection rows' ids and save them `Granted` | nothing reads the mode (print path and totals ignore it); parsing a spell id out of a row id is not a package fact |
 | 2026-10-06 | E6.5a | On the sheet, an item is added at once through the adapter's `append_to_character` (StarfinderAdapter, E4.6); every other edit is saved by "Save choices" | add items only through the dialog's save | the adapter's own append is the one item-append path; it refuses an over-budget item by name |
+| 2026-10-06 | E6.6 | Scope call, no SD-x covers it: edit the ui-smoke harness (`run.mjs`, `lib/appDataIsolation.mjs`) for R5's before/after fingerprint, a `select` step index and a named failing step | a wrapper script outside the harness that fingerprints around `run.mjs` | R5 binds *any harness that launches the app*; a wrapper cannot fail the run itself or be run by E6.MC with one command; no card row owns the harness (SD-36 F6d's), and the change is test-first |
+| 2026-10-06 | E6.6 | The six acceptance rows are the four `open-starfinder-*` rows and `open-seed-aldric/elowen`; the `build-starfinder-*` rows are their setups and are not run alone | run each build row and each open row separately (doubles ~35 min of clicking) | an open row re-runs its build as `setup`, so the build is in the evidence |
 
 ## Open blockers
 

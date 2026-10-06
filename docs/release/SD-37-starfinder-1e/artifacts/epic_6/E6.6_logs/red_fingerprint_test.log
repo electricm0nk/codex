@@ -1,0 +1,4 @@
+file:///home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/scripts/ui-smoke/lib/appDataIsolation.test.mjs:27
+  fingerprintStore,
+  ^^^^^^^^^^^^^^^^
+SyntaxError: The requested module './appDataIsolation.mjs' does not provide an export named 'fingerprintStore'
