@@ -65,7 +65,8 @@ This table leads the file because the Workflow script reads it (`workflow-instru
 | E6.3 SF sheet layout (SP/HP/RP, EAC/KAC; no CMB/CMD/touch) | after E6.1 | opus | Engine-single-source. No hand-kept tables. |
 | E6.4 SF catalogs read `data/starfinder-1e/sheet_rules` | after E6.1 | opus | E4a now runs after E7.1, so E6 owns the desktop catalog files outright. |
 | E6.5 SF level-up | after E6.2 | opus | |
-| E6.6 seeds open in the real app (isolated `XDG_DATA_HOME`) | after E6.3–E6.5 | sonnet | Long run. Sonnet+ wait. Creates the 4 SF seeds through the real creation flow from `artifacts/epic_0/seed-builds.md`. |
+| E6.5a SF feats, spells known and gear chosen through the real app (DISCOVERED by E6.5, added 2026-10-06) | after E6.5 | opus | Every affordance writes through the engine; no hand-kept lists (R2). |
+| E6.6 seeds open in the real app (isolated `XDG_DATA_HOME`) | after E6.3–E6.5a | sonnet | Long run. Sonnet+ wait. Creates the 4 SF seeds through the real creation flow from `artifacts/epic_0/seed-builds.md`. |
 | E6.MC | after E6.6 | opus | Renders real builds on both trees and opens the seeds; PF hash pair re-run. |
 | E7.1 SF oracle parity roster + "not covered" list | after E6.MC | opus | PCGen SF game-mode runs. |
 | E4a.1 data-package format, loader, schema, bundle path, licence/PI stamping | after E7.1 (C0.2 re-sequencing; was ∥ E2–E6) | opus | Serial: no other code lane in flight. New loader file. |
@@ -85,7 +86,7 @@ This table leads the file because the Workflow script reads it (`workflow-instru
 **E8 (starship)** is **not a card**. It is a planned capability deferral (`decisions.md §17`, FSR
 DEF-1).
 
-**Card count:** there are 55 cards (`kanban.md` row check). This map has 53 rows, because
+**Card count:** there are 56 cards (`kanban.md` row check; 55 at authoring, E6.5a added 2026-10-06 by discovery). This map has 54 rows, because
 E1.1–E1.3 are one dispatch. The criterion tables below carry all 55 IDs. `kanban.md` holds the
 `diff … && echo SAME_IDS` command that proves the two sets are identical. Re-run it after any
 edit.
@@ -209,6 +210,7 @@ the criterion unmet).
 | E6.3 | SF sheet layout: SP/HP/RP, EAC/KAC; no CMB/CMD/Touch/Flat-Footed on SF sheets. **No hand-kept tables**: the engine is the single source. | A test greps the SF sheet component's render for `CMB\|CMD\|Touch\|Flat-Footed` → 0; a test that every SF number on the sheet comes from an engine explanation row | — |
 | E6.4 | SF catalogs read `data/starfinder-1e/sheet_rules`. | Catalog test lists SF records; no SF catalog imports `rules_tables` | — |
 | E6.5 | SF level-up | ui-smoke level-up row green on a seed | — |
+| E6.5a | Feats, spells known and gear (armour, weapons, carried items, applied upgrades) can be chosen for a Starfinder character in the real app, at creation and on the sheet, from the engine's pools and catalogs. The level-up dialog's owed picks can be made. | Frontend tests on the three affordances; a ui-smoke row that builds one SF seed's full loadout from `artifacts/epic_0/seed-builds.md` and shows its EAC/KAC/credits equal to E0.4; `grep -rln 'appendToCharacter\|addFeatSelection\|addSpellSelection' apps/desktop/src --include=*.tsx` now lists a Starfinder surface | Seeds other than the one in the smoke row (E6.6 covers all 4) |
 | E6.6 | The 4 SF seeds are created through the real creation flow from `artifacts/epic_0/seed-builds.md` (ui-smoke rows added to `spec.json`), then all 4 SF seeds and both PF seeds open in the real app under an isolated `XDG_DATA_HOME`. The real store is untouched. | ui-smoke receipt: 6 of 6 open; each SF seed's sheet totals equal E0.4's hand values; real store entry count and sha256 equal before/after | — |
 | E6.MC | Adversarial merge check | Opus renders real builds on both trees and opens the seeds; PF hash pair (E1.4 harness) equal; E6.3's no-hand-kept-table test green | — |
 
@@ -232,10 +234,10 @@ the criterion unmet).
 ```bash
 cd docs/release/SD-37-starfinder-1e
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 55) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 56) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E7\.[3-9] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 ```
 
 Pass = no output. C0.2 measured the authoring form (`(C\|E)` inside the regex) printing 0 rows
 over 54 open cards on 2026-10-02 — it could never fail. The E7.3–E7.9 exemption is by ID, not by
-"the card running", and the 55-row check guards against a dropped row.
+"the card running", and the 56-row check (55 + E6.5a) guards against a dropped row.

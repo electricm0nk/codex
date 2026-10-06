@@ -55,7 +55,7 @@ date: 2026-10-02
 - **Board:** local file `./kanban.md`, paired with `./progress.md`.
 - **Cadence:** none. Dispatch is one live `Workflow` run, not a timer loop.
 - **Epics / criteria:** 11 epic groups (C, E0, E1, E2, E3, E4, E4a, E5, E6, E7, plus E8 as a
-  planned deferral and not a card) / **55 cards**, each with one criterion (`kanban.md` row check).
+  planned deferral and not a card) / **56 cards** (55 at authoring + E6.5a, discovered by E6.5 on 2026-10-06), each with one criterion (`kanban.md` row check).
 - **First concrete build value:** develop is at `0.16.0` (pasted in §1 item 7). This bundle's
   repo value is `0.17.0`, stamped by C1. The published triple `0.17.<run>` resolves at the first
   tester publish after C1, which happens only after the operator merges to `develop`
@@ -496,7 +496,7 @@ and that is a known defect (FSR-C9).
    ```bash
    cd docs/release/SD-37-starfinder-1e
    test -s kanban.md || { echo NO_KANBAN; exit 2; }
-   awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 55) print "ROW_COUNT " n }' kanban.md
+   awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 56) print "ROW_COUNT " n }' kanban.md
    awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E7\.[3-9] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
    ```
    Pass = no output. Every FSR revisit condition is checked, including DEF-1 (`decisions.md §17`'s
