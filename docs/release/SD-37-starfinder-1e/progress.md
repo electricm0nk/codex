@@ -30,11 +30,11 @@ it (`workflow-instruction.md §5`).
 | E3 | complete | 6 of 6 (E3.1–E3.5, E3.MC) | E3.MC receipt `artifacts/epic_3/E3.MC_cycle_receipt.md` (E3.MC corrected this row from 3 of 6; retro correction) |
 | E4 | complete | 7 of 7 (E4.1–E4.6, E4.MC) | E4.MC receipt `artifacts/epic_4/E4.MC_cycle_receipt.md` |
 | E5 | complete | 5 of 5 (E5.1–E5.4, E5.MC) | E5.MC receipt `artifacts/epic_5/E5.MC_cycle_receipt.md` (E5.MC corrected this row from 0 of 5) |
-| E6 | in progress | 2 of 7 (E6.1, E6.2) | |
+| E6 | in progress | 3 of 7 (E6.1, E6.2, E6.3) | |
 | E7.1 | waiting | 0 of 1 | |
 | E4a | waiting | 0 of 5 | serial after E7.1 (C0.2) |
 | E7.2–E7.9 | waiting | 0 of 8 | |
-| **Total** | | **36 of 55** | command below the table (E6.2 re-ran it after its own row: 36) |
+| **Total** | | **37 of 55** | command below the table (E6.3 re-ran it after its own row: 37) |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -173,6 +173,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E0.2 (re-dispatch) | 2026-10-04 | Opus 5.5 | the `docs(sd37,e0.2): re-dispatch` commit | complete (no change; already landed at 2f0bd9d793) | unchanged (no code change; not rendered) | `artifacts/epic_0/E0.2_cycle_receipt.md`; re-verified on e471c20f5f: matrix loop prints nothing (0 of 11 MISSING), `cargo test --locked -j 8 --lib pi_screening -- --test-threads=8` 45 passed / 0 failed (`artifacts/epic_0/E0.2_redispatch_pi_screening.log`); retro incident `redispatch-of-complete-card` |
 | E6.1 | 2026-10-05 | Opus 5.5 | `cc38b39ce0` (`feat(sd37,e6.1)`) | complete | Aldric unchanged (1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); Soldier / Mystic / Technomancer / Envoy unchanged (160 of 160 hand values green through the adapter); a saved SF-Soldier-3 opened through the `load_saved_character` command now gets `StarfinderAdapter`'s sheet (was the Pathfinder path, `snapshot: null`) | `artifacts/epic_6/E6.1_cycle_receipt.md` |
 | E6.2 | 2026-10-05 | Opus 5.5 | `23b340535a` (`feat(sd37,e6.2)`) | complete | Aldric unchanged (1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); Soldier: +1 printed line `Human (+2 racial stat bonus picks) +1`, no total moved; Mystic / Technomancer / Envoy unchanged (rendered); all 4 SF seeds' creation scores through the new flow = `seed-builds.md` (24 of 24) | `artifacts/epic_6/E6.2_cycle_receipt.md` |
+| E6.3 | 2026-10-05 | Opus 5.5 | `9cf7cf76fc` (`feat(sd37,e6.3)`) | complete | Aldric unchanged (1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); Soldier / Mystic / Technomancer / Envoy: +7 explanation rows each (`sf.ability_score.*` = saved scores, `sf.class_level.<class>` = 3/5/5/3), no total or printed line moved (160 of 160); each now opens the Starfinder sheet (before: the Pathfinder sheet, 4 Pathfinder-only tiles) | `artifacts/epic_6/E6.3_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
@@ -289,6 +290,10 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-05 | E6.2 | The package's `Class ~ <class>` key-ability pick is answered from the key-ability field (option label = ability name) | ask it as a second select | one choice, asked once; the chassis reads the class-id choice |
 | 2026-10-05 | E6.2 | Races offered = race records with a racial Hit Points row (76 of 77; the drone frame is not) | every race record | `sf_chassis` refuses a race without the row |
 | 2026-10-05 | E6.2 | Human +2 fixed in the converter (selection hop carries `BONUS:ABILITYPOOL`), CONVERTER LANE | a per-race rule on the desktop | R2: no hand-kept desktop tables; the oracle states the pool |
+| 2026-10-05 | E6.3 | The `CMB\|CMD\|Touch\|Flat-Footed` grep runs on the sheet layout (printed engine lines removed → 0); the full render's matches must equal the engine's printed text (the spell lines' `Range: Touch`, Mystic 6, Technomancer 3) | a literal whole-render grep → 0 | that would need the SRD's own spell range word removed from the printed lines; the criterion targets Pathfinder tiles |
+| 2026-10-05 | E6.3 | Ability scores and class levels became engine rows (`sf.ability_score.*`, `sf.class_level.*`, in `sf_adapter.rs` under §21) | print `abilityScores` / `classSummary` from the response | the criterion: every SF number on the sheet is an explanation row |
+| 2026-10-05 | E6.3 | The non-blocking `sf_adapter.pathfinder_fields_zero` note is not shown on the Starfinder sheet; a row the layout does not name is shown under "Other totals" | show the note; drop unnamed rows | the note is about Pathfinder fields this sheet does not show; an engine total must never vanish |
+| 2026-10-05 | E6.3 | The Starfinder sheet carries Open and Close only | reuse the Pathfinder sheet with Starfinder branches | the Pathfinder sheet's actions were never proven on a Starfinder save; level-up is E6.5, catalogs E6.4 |
 
 ## Open blockers
 

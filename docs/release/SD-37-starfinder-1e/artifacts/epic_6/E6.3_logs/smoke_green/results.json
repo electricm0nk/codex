@@ -1,0 +1,52 @@
+[
+  {
+    "id": "create-starfinder-soldier",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e63/smoke_green/create-starfinder-soldier.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nStarfinder 1st Edition — a 1st-level character: race, theme, class, then the point buy.\n\nCharacter name\n\nRace\n\nTheme\n\nClass\n\nKey ability\n\nChoices for this race, theme and class\n+2 Racial Stat Bonus — adjusts ability scores\n\nHuman — adjusts ability scores\n\nSoldier\n\nPrimary Fighting Style\n\nAbility scores (point buy)\nPoints spent: 10 of 10. Each point raises a score by 1; no",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-3-green-UUFE7d/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "d2d8b874-1ce5-49a2-9f1e-195367e492a8"
+      ],
+      "deleted": [
+        "d2d8b874-1ce5-49a2-9f1e-195367e492a8"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-starfinder-sheet",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e63/smoke_green/open-starfinder-sheet.png",
+    "rendered_excerpt": "⚙\nSF Smoke Soldier\nStarfinder · Human\nOpen\nClose\nCLASS\n\nSoldier\t1\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t8\nHit Points\t11\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t12\nKinetic Armor Class (KAC)\t12\nInitiative\t+2\nSAVING THROWS\n\nFortitude\t+3\nReflex\t+2\nWil",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-3-green-UUFE7d/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "bea2cf97-8847-40a1-9524-3fa450e84bb8"
+      ],
+      "deleted": [
+        "bea2cf97-8847-40a1-9524-3fa450e84bb8"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-select-pathfinder",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e63/smoke_green/landing-select-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-3-green-UUFE7d/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

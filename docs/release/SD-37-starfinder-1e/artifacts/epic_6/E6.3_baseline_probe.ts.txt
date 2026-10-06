@@ -1,0 +1,12 @@
+import { readFileSync } from 'node:fs';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { CharacterSheet } from './CharacterSheet';
+import { toRowSurface } from './buildCharacterHubListSurface';
+for (const seed of ['SF-Soldier-3', 'SF-Mystic-5', 'SF-Technomancer-5', 'SF-Envoy-3']) {
+  const detail = JSON.parse(readFileSync(new URL(`./starfinderSheetFixtures/${seed}.json`, import.meta.url), 'utf8'));
+  const noop = () => undefined;
+  const html = renderToStaticMarkup(createElement(CharacterSheet as any, { row: toRowSurface(detail.summary), detail: { ...detail, sheetLines: [] }, onClose: noop, onDetailRefreshed: noop, ruleSet: 'starfinder-1e', onOpen: noop, onCloned: noop }));
+  const hits = [...html.matchAll(/CMB|CMD|Touch|Flat-Footed/g)].map((m) => m[0]);
+  console.log(`${seed}: Pathfinder CharacterSheet (the pre-E6.3 route for every saved character), printed lines removed: CMB|CMD|Touch|Flat-Footed hits=${hits.length} ${JSON.stringify([...new Set(hits)])}`);
+}
