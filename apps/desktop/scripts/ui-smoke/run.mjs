@@ -33,6 +33,7 @@ import {
   characterIds,
   cleanupCreatedCharacters,
   createIsolatedDataRoot,
+  fingerprintStore,
   isolatedXdg,
   launchEnv,
   readProcessEnv,
@@ -364,10 +365,10 @@ function typeText(text) {
  * `--xdotool` fallback: this op did not exist before, so there is no prior
  * xdotool-based behavior to preserve parity with.
  */
-function selectByName(target, text) {
+function selectByName(target, text, index) {
   // Re-sends only on a 'not there yet' answer; a late acknowledgement is waited for, never
   // answered with a second send (lib/commandChannel.mjs's sendUntilOk).
-  const result = sendUntilOk(cmdPath, probePath, { op: 'select', target, text }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
+  const result = sendUntilOk(cmdPath, probePath, { op: 'select', target, text, ...(index === undefined ? {} : { index }) }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
   if (!result.ok) {
     throw new TargetNotFoundError(`${target}${result.error ? ` (${result.error})` : ''}`);
   }
@@ -419,7 +420,7 @@ function runStep(step) {
       typeText(step.text);
       break;
     case 'select':
-      selectByName(step.target, step.text);
+      selectByName(step.target, step.text, step.index);
       break;
     case 'key':
       pressKey(step.key);
@@ -438,10 +439,15 @@ function runStep(step) {
   sleepMs(220);
 }
 
-function runSteps(steps) {
-  for (const step of steps) {
+// The step a TargetNotFoundError came from, for the red row's reason (SD-37 E6.6: a 200-step row that
+// says only "target not found: 'X'" cannot be diagnosed; the step number and screen can).
+let currentStepInfo = '';
+
+function runSteps(steps, label = 'row') {
+  steps.forEach((step, index) => {
+    currentStepInfo = `${label} step ${index + 1}/${steps.length} (${step.op} ${JSON.stringify(step.target ?? step.text ?? step.key ?? '')})`;
     runStep(step);
-  }
+  });
 }
 
 // -------------------------------------------------------- reset-to-landing
@@ -699,12 +705,21 @@ function runRow(row, spec, outDir) {
           reason: `setup row not found: '${setupId}'`,
         };
       }
-      runSteps(setupRow.steps ?? []);
+      runSteps(setupRow.steps ?? [], `setup ${setupId}`);
     }
     runSteps(row.steps ?? []);
   } catch (cause) {
     if (cause instanceof TargetNotFoundError) {
-      return { id: row.id, status: 'red', screenshot: null, rendered_excerpt: null, reason: cause.message };
+      const stalled = latestSnapshot();
+      const failedPath = join(outDir, `${slug}.FAILED.png`);
+      driver.screenshot(failedPath);
+      return {
+        id: row.id,
+        status: 'red',
+        screenshot: existsSync(failedPath) ? failedPath : null,
+        rendered_excerpt: (stalled?.bodyText ?? '').slice(0, 400),
+        reason: `${cause.message} at ${currentStepInfo}`,
+      };
     }
     throw cause;
   }
@@ -806,6 +821,10 @@ function main() {
     return;
   }
   console.log(`App data root: ${isolatedAppDataDir} (isolated; the real store ${realAppDataDir} is never opened)`);
+  // R5 (SD-37): the real store's entry count + sha256 before the app launches, compared after the
+  // last row. Written to <out>/real_store.json; a difference fails the run.
+  const realStoreBefore = fingerprintStore(realAppDataDir);
+  console.log(`Real store before: ${realStoreBefore.entries} entries, sha256 ${realStoreBefore.sha256}`);
   process.on('exit', () => {
     if (!dataRoot) {
       return;
@@ -1044,6 +1063,14 @@ function main() {
     }
   }
 
+  const realStoreAfter = fingerprintStore(realAppDataDir);
+  const realStoreUntouched = realStoreAfter.entries === realStoreBefore.entries && realStoreAfter.sha256 === realStoreBefore.sha256;
+  writeFileSync(
+    join(outDir, 'real_store.json'),
+    `${JSON.stringify({ real_app_data_dir: realAppDataDir, before: realStoreBefore, after: realStoreAfter, untouched: realStoreUntouched }, null, 2)}\n`,
+  );
+  console.log(`Real store after:  ${realStoreAfter.entries} entries, sha256 ${realStoreAfter.sha256} -- ${realStoreUntouched ? 'UNTOUCHED (count and sha256 equal)' : 'CHANGED'}`);
+
   console.log('');
   console.log(summaryLine(results));
   {
@@ -1065,7 +1092,7 @@ function main() {
   const anyNotRun = hasNotRun(results);
   const anyRed = results.some((r) => r.status === 'red');
   const anyBlocked = results.some((r) => r.status === 'blocked');
-  process.exitCode = anyRed || anyBlocked || anyNotRun ? 1 : 0;
+  process.exitCode = anyRed || anyBlocked || anyNotRun || !realStoreUntouched ? 1 : 0;
 }
 
 main();

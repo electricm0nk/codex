@@ -2173,6 +2173,3037 @@
       "notes": "SD-37 E6.5a: SF-Soldier-3's full loadout (artifacts/epic_0/seed-builds.md §1) chosen through the real app. The 1st-level soldier seed build (the E6.5 rows' creation steps, under its own name 'SF Smoke Loadout') is created, loaded and leveled to Soldier 3 through 'Level up' twice (E6.5); then the sheet's 'Feats, spells and gear' dialog (StarfinderChoicesDialog.tsx) takes the seed's four feats from the engine's feat list (Weapon Focus, Quick Draw, Deadly Aim, Coordinated Shot; each prerequisite the engine's verdict) and its seven items from the package's equipment list, each added through append_to_character (StarfinderAdapter: the Defiance Series Squad and the azimuth laser rifle equipped, baton, two batteries and two serums carried), and 'Save choices' saves through save_starfinder_choices. The sheet re-reads the character and prints the engine's totals: EAC 16, KAC 19, credits remaining 2045, bulk 4 = E0.4 (seed-hand-values.md R8/R9; E4.5-loadout-hand-values.md). landing-select-pathfinder restores the Pathfinder selection."
     },
     {
+      "id": "build-starfinder-soldier",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Starfinder 1e"
+        },
+        {
+          "op": "click",
+          "target": "New\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "sf-character-name"
+        },
+        {
+          "op": "type",
+          "text": "SF Seed Soldier"
+        },
+        {
+          "op": "select",
+          "target": "— choose a race —",
+          "text": "core:race:human"
+        },
+        {
+          "op": "select",
+          "target": "— choose a theme —",
+          "text": "core:ability:mercenary"
+        },
+        {
+          "op": "select",
+          "target": "— choose a class —",
+          "text": "core:class:soldier"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "— choose the key ability —",
+          "text": "STR"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "— choose: +2 Racial Stat Bonus —",
+          "text": "STR"
+        },
+        {
+          "op": "wait",
+          "ms": 700
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Int"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Create character"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "scroll",
+          "ticks": 40,
+          "direction": "up"
+        },
+        {
+          "op": "key",
+          "key": "Shift"
+        },
+        {
+          "op": "click",
+          "target": "Back"
+        },
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "SF Seed Soldier"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Athletics"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Athletics"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Intimidate"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Intimidate"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Medicine"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Medicine"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Piloting"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Piloting"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Survival"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Survival"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Athletics"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Intimidate"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Medicine"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Piloting"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Survival"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Feats, spells and gear"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:weapon_focus"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:quick_draw"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:deadly_aim"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:coordinated_shot"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:defiance_series_squad"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add equipped"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:laser_rifle_azimuth"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add equipped"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:baton_tactical"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:battery"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:battery"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:serum_of_healing_mk_1"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:serum_of_healing_mk_1"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Save choices"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        }
+      ],
+      "marker": "Saved feats, spells and gear:",
+      "expect": [
+        "Energy Armor Class (EAC) 16 · Kinetic Armor Class (KAC) 19 · Credits remaining 2045 · Bulk carried 4"
+      ],
+      "forbid": [
+        "This character did not compute",
+        "Failed to",
+        "over_budget",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.6: SF-Soldier-3 built end to end through the real app, every step a click or a select: the creation flow (race, theme, class, point buy 3 Str, 4 Dex, 2 Con, 1 Int), load, Level up to level 3 with the skill ranks of seed-builds.md and the 5th-level increase where the seed has one, then 'Feats, spells and gear' (feats, spells known, gear) and 'Save choices'. The sheet prints the engine's totals; EAC, KAC, credits remaining and bulk are the hand values of seed-hand-values.md / E4.5-loadout-hand-values.md. Used as the setup of open-starfinder-soldier; landing-select-pathfinder restores the Pathfinder selection."
+    },
+    {
+      "id": "open-starfinder-soldier",
+      "screen": "sheet",
+      "setup": [
+        "build-starfinder-soldier"
+      ],
+      "steps": [
+        {
+          "op": "click",
+          "target": "Open"
+        },
+        {
+          "op": "click",
+          "target": "SF Seed Soldier"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        }
+      ],
+      "marker": "Kinetic Armor Class (KAC)",
+      "expect": [
+        "SF Seed Soldier",
+        "Base Attack Bonus\t+3",
+        "Fortitude\t+4",
+        "Reflex\t+3",
+        "Will\t+3",
+        "Hit Points\t25",
+        "Stamina Points\t24",
+        "Resolve Points\t4",
+        "Energy Armor Class (EAC)\t16",
+        "Kinetic Armor Class (KAC)\t19",
+        "Starting credits\t4000",
+        "Credits spent\t1955",
+        "Credits remaining\t2045",
+        "Bulk carried\t4",
+        "Unencumbered up to (bulk)\t8",
+        "Overburdened above (bulk)\t16",
+        "Acrobatics\t-2",
+        "Athletics\t+6",
+        "Bluff\t+0",
+        "Diplomacy\t+0",
+        "Disguise\t+0",
+        "Intimidate\t+6",
+        "Medicine\t+6",
+        "Perception\t+0",
+        "Piloting\t+8",
+        "Sense Motive\t+0",
+        "Stealth\t-2",
+        "Survival\t+6"
+      ],
+      "forbid": [
+        "This character did not compute",
+        "CMB",
+        "CMD",
+        "Flat-Footed",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.6: SF-Soldier-3 opened from the saved store. The setup builds it through the real app (build-starfinder-soldier); this row clicks the sheet's Open (back to the Load Character list), selects 'SF Seed Soldier' and loads it, so every figure is read back from the saved character, not from the build's own screen. `expect` is every sheet total that E0.4/E4.5 hand-values for the seed, in the sheet's own label and sign format (a trained-only skill with no ranks has no hand value and no expectation), parsed from the hand-value tables by artifacts/epic_6/E6.6_rows.py. landing-select-pathfinder restores the Pathfinder selection."
+    },
+    {
+      "id": "build-starfinder-mystic",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Starfinder 1e"
+        },
+        {
+          "op": "click",
+          "target": "New\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "sf-character-name"
+        },
+        {
+          "op": "type",
+          "text": "SF Seed Mystic"
+        },
+        {
+          "op": "select",
+          "target": "— choose a race —",
+          "text": "core:race:lashunta"
+        },
+        {
+          "op": "select",
+          "target": "— choose a theme —",
+          "text": "core:ability:priest"
+        },
+        {
+          "op": "select",
+          "target": "— choose a class —",
+          "text": "core:class:mystic"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "DIMORPHIC —",
+          "text": "core:ability:lashunta_subrace_damaya"
+        },
+        {
+          "op": "wait",
+          "ms": 700
+        },
+        {
+          "op": "select",
+          "target": "Connection —",
+          "text": "core:ability:empath"
+        },
+        {
+          "op": "wait",
+          "ms": 700
+        },
+        {
+          "op": "select",
+          "target": "Racial Bonus to Skill —",
+          "text": "diplomacy",
+          "index": 0
+        },
+        {
+          "op": "wait",
+          "ms": 700
+        },
+        {
+          "op": "select",
+          "target": "Racial Bonus to Skill —",
+          "text": "medicine",
+          "index": 1
+        },
+        {
+          "op": "wait",
+          "ms": 700
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Wis"
+        },
+        {
+          "op": "click",
+          "target": "+1 Wis"
+        },
+        {
+          "op": "click",
+          "target": "+1 Wis"
+        },
+        {
+          "op": "click",
+          "target": "+1 Wis"
+        },
+        {
+          "op": "click",
+          "target": "+1 Wis"
+        },
+        {
+          "op": "click",
+          "target": "+1 Wis"
+        },
+        {
+          "op": "click",
+          "target": "+1 Wis"
+        },
+        {
+          "op": "click",
+          "target": "+1 Cha"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Create character"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "scroll",
+          "ticks": 40,
+          "direction": "up"
+        },
+        {
+          "op": "key",
+          "key": "Shift"
+        },
+        {
+          "op": "click",
+          "target": "Back"
+        },
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "SF Seed Mystic"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Bluff"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Bluff"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Culture"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Culture"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Diplomacy"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Diplomacy"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Life Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Life Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Medicine"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Medicine"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Mysticism"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Mysticism"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sense Motive"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sense Motive"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Bluff"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Culture"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Diplomacy"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Life Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Medicine"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Mysticism"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sense Motive"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Bluff"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Culture"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Diplomacy"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Life Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Medicine"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Mysticism"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sense Motive"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "Increase Dexterity"
+        },
+        {
+          "op": "wait",
+          "ms": 400
+        },
+        {
+          "op": "click",
+          "target": "Increase Intelligence"
+        },
+        {
+          "op": "wait",
+          "ms": 400
+        },
+        {
+          "op": "click",
+          "target": "Increase Wisdom"
+        },
+        {
+          "op": "wait",
+          "ms": 400
+        },
+        {
+          "op": "click",
+          "target": "Increase Charisma"
+        },
+        {
+          "op": "wait",
+          "ms": 400
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Bluff"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Culture"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Diplomacy"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Life Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Medicine"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Mysticism"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sense Motive"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Feats, spells and gear"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:spell_penetration"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:spell_focus"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:quick_draw"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 0 spell —",
+          "text": "core:spell:detect_affliction"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 0 spell —",
+          "text": "core:spell:detect_magic"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 0 spell —",
+          "text": "core:spell:ghost_sound"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 0 spell —",
+          "text": "core:spell:grave_words"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 0 spell —",
+          "text": "core:spell:stabilize"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 0 spell —",
+          "text": "core:spell:telepathic_message"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 1 spell —",
+          "text": "core:spell:charm_person"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 1 spell —",
+          "text": "core:spell:command"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 1 spell —",
+          "text": "core:spell:mystic_cure_level_1"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 1 spell —",
+          "text": "core:spell:share_language"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 1 spell —",
+          "text": "core:spell:detect_thoughts"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 2 spell —",
+          "text": "core:spell:hold_person"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 2 spell —",
+          "text": "core:spell:remove_condition"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 2 spell —",
+          "text": "core:spell:status"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Mystic level 2 spell —",
+          "text": "core:spell:zone_of_truth"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:lashunta_tempweave_basic"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add equipped"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:laser_pistol_azimuth"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add equipped"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:baton_tactical"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:battery"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:medkit_basic"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:serum_of_healing_mk_1"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:serum_of_healing_mk_1"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Save choices"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        }
+      ],
+      "marker": "Saved feats, spells and gear:",
+      "expect": [
+        "Energy Armor Class (EAC) 16 · Kinetic Armor Class (KAC) 16 · Credits remaining 6350 · Bulk carried 1"
+      ],
+      "forbid": [
+        "This character did not compute",
+        "Failed to",
+        "over_budget",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.6: SF-Mystic-5 built end to end through the real app, every step a click or a select: the creation flow (race, theme, class, point buy 2 Dex, 7 Wis, 1 Cha), load, Level up to level 5 with the skill ranks of seed-builds.md and the 5th-level increase where the seed has one, then 'Feats, spells and gear' (feats, spells known, gear) and 'Save choices'. The sheet prints the engine's totals; EAC, KAC, credits remaining and bulk are the hand values of seed-hand-values.md / E4.5-loadout-hand-values.md. Used as the setup of open-starfinder-mystic; landing-select-pathfinder restores the Pathfinder selection."
+    },
+    {
+      "id": "open-starfinder-mystic",
+      "screen": "sheet",
+      "setup": [
+        "build-starfinder-mystic"
+      ],
+      "steps": [
+        {
+          "op": "click",
+          "target": "Open"
+        },
+        {
+          "op": "click",
+          "target": "SF Seed Mystic"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        }
+      ],
+      "marker": "Kinetic Armor Class (KAC)",
+      "expect": [
+        "SF Seed Mystic",
+        "Base Attack Bonus\t+3",
+        "Fortitude\t+0",
+        "Reflex\t+3",
+        "Will\t+8",
+        "Hit Points\t34",
+        "Stamina Points\t25",
+        "Resolve Points\t6",
+        "Energy Armor Class (EAC)\t16",
+        "Kinetic Armor Class (KAC)\t16",
+        "Starting credits\t9000",
+        "Credits spent\t2650",
+        "Credits remaining\t6350",
+        "Bulk carried\t1",
+        "Unencumbered up to (bulk)\t5",
+        "Overburdened above (bulk)\t10",
+        "Acrobatics\t+2",
+        "Athletics\t+0",
+        "Bluff\t+10",
+        "Culture\t+10",
+        "Diplomacy\t+12",
+        "Disguise\t+2",
+        "Intimidate\t+2",
+        "Life Science\t+10",
+        "Medicine\t+12",
+        "Mysticism\t+13",
+        "Perception\t+14",
+        "Piloting\t+2",
+        "Sense Motive\t+14",
+        "Stealth\t+2",
+        "Survival\t+4",
+        "Level 1\t5\t5\t",
+        "Level 2\t3\t4\t"
+      ],
+      "forbid": [
+        "This character did not compute",
+        "CMB",
+        "CMD",
+        "Flat-Footed",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.6: SF-Mystic-5 opened from the saved store. The setup builds it through the real app (build-starfinder-mystic); this row clicks the sheet's Open (back to the Load Character list), selects 'SF Seed Mystic' and loads it, so every figure is read back from the saved character, not from the build's own screen. `expect` is every sheet total that E0.4/E4.5 hand-values for the seed, in the sheet's own label and sign format (a trained-only skill with no ranks has no hand value and no expectation), parsed from the hand-value tables by artifacts/epic_6/E6.6_rows.py. landing-select-pathfinder restores the Pathfinder selection."
+    },
+    {
+      "id": "build-starfinder-technomancer",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Starfinder 1e"
+        },
+        {
+          "op": "click",
+          "target": "New\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "sf-character-name"
+        },
+        {
+          "op": "type",
+          "text": "SF Seed Technomancer"
+        },
+        {
+          "op": "select",
+          "target": "— choose a race —",
+          "text": "core:race:android"
+        },
+        {
+          "op": "select",
+          "target": "— choose a theme —",
+          "text": "core:ability:scholar"
+        },
+        {
+          "op": "select",
+          "target": "— choose a class —",
+          "text": "core:class:technomancer"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "THEME KNOWLEDGE (scholar theme chosen skill picks) —",
+          "text": "core:pool_option:scholar_theme_chosen_skill_physical_science"
+        },
+        {
+          "op": "wait",
+          "ms": 700
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Int"
+        },
+        {
+          "op": "click",
+          "target": "+1 Int"
+        },
+        {
+          "op": "click",
+          "target": "+1 Int"
+        },
+        {
+          "op": "click",
+          "target": "+1 Int"
+        },
+        {
+          "op": "click",
+          "target": "+1 Int"
+        },
+        {
+          "op": "click",
+          "target": "+1 Wis"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Create character"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "scroll",
+          "ticks": 40,
+          "direction": "up"
+        },
+        {
+          "op": "key",
+          "key": "Shift"
+        },
+        {
+          "op": "click",
+          "target": "Back"
+        },
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "SF Seed Technomancer"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Computers"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Computers"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Engineering"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Engineering"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Life Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Life Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Mysticism"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Mysticism"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Physical Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Physical Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Piloting"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Piloting"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sleight of Hand"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sleight of Hand"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Computers"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Engineering"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Life Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Mysticism"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Physical Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Piloting"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sleight of Hand"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Computers"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Engineering"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Life Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Mysticism"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Physical Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Piloting"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sleight of Hand"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "Increase Dexterity"
+        },
+        {
+          "op": "wait",
+          "ms": 400
+        },
+        {
+          "op": "click",
+          "target": "Increase Constitution"
+        },
+        {
+          "op": "wait",
+          "ms": 400
+        },
+        {
+          "op": "click",
+          "target": "Increase Intelligence"
+        },
+        {
+          "op": "wait",
+          "ms": 400
+        },
+        {
+          "op": "click",
+          "target": "Increase Wisdom"
+        },
+        {
+          "op": "wait",
+          "ms": 400
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Computers"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Engineering"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Life Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Mysticism"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Physical Science"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Piloting"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sleight of Hand"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Feats, spells and gear"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:spell_penetration"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:spell_focus"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:mobility"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:quick_draw"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 0 spell —",
+          "text": "core:spell:dancing_lights"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 0 spell —",
+          "text": "core:spell:detect_magic"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 0 spell —",
+          "text": "core:spell:energy_ray"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 0 spell —",
+          "text": "core:spell:mending"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 0 spell —",
+          "text": "core:spell:token_spell"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 0 spell —",
+          "text": "core:spell:transfer_charge"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 1 spell —",
+          "text": "core:spell:detect_tech"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 1 spell —",
+          "text": "core:spell:magic_missile"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 1 spell —",
+          "text": "core:spell:overheat"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 1 spell —",
+          "text": "core:spell:supercharge_weapon"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 2 spell —",
+          "text": "core:spell:invisibility"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 2 spell —",
+          "text": "core:spell:knock"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— add a Technomancer level 2 spell —",
+          "text": "core:spell:mirror_image"
+        },
+        {
+          "op": "wait",
+          "ms": 1200
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:d_suit_i"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add equipped"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:laser_pistol_azimuth"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add equipped"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:battery"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:battery"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:medkit_basic"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:serum_of_healing_mk_1"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:serum_of_healing_mk_1"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Save choices"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        }
+      ],
+      "marker": "Saved feats, spells and gear:",
+      "expect": [
+        "Energy Armor Class (EAC) 18 · Kinetic Armor Class (KAC) 19 · Credits remaining 5350 · Bulk carried 1"
+      ],
+      "forbid": [
+        "This character did not compute",
+        "Failed to",
+        "over_budget",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.6: SF-Technomancer-5 built end to end through the real app, every step a click or a select: the creation flow (race, theme, class, point buy 2 Dex, 2 Con, 5 Int, 1 Wis), load, Level up to level 5 with the skill ranks of seed-builds.md and the 5th-level increase where the seed has one, then 'Feats, spells and gear' (feats, spells known, gear) and 'Save choices'. The sheet prints the engine's totals; EAC, KAC, credits remaining and bulk are the hand values of seed-hand-values.md / E4.5-loadout-hand-values.md. Used as the setup of open-starfinder-technomancer; landing-select-pathfinder restores the Pathfinder selection."
+    },
+    {
+      "id": "open-starfinder-technomancer",
+      "screen": "sheet",
+      "setup": [
+        "build-starfinder-technomancer"
+      ],
+      "steps": [
+        {
+          "op": "click",
+          "target": "Open"
+        },
+        {
+          "op": "click",
+          "target": "SF Seed Technomancer"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        }
+      ],
+      "marker": "Kinetic Armor Class (KAC)",
+      "expect": [
+        "SF Seed Technomancer",
+        "Base Attack Bonus\t+3",
+        "Fortitude\t+3",
+        "Reflex\t+4",
+        "Will\t+5",
+        "Hit Points\t29",
+        "Stamina Points\t35",
+        "Resolve Points\t6",
+        "Energy Armor Class (EAC)\t18",
+        "Kinetic Armor Class (KAC)\t19",
+        "Starting credits\t9000",
+        "Credits spent\t3650",
+        "Credits remaining\t5350",
+        "Bulk carried\t1",
+        "Unencumbered up to (bulk)\t5",
+        "Overburdened above (bulk)\t10",
+        "Acrobatics\t+3",
+        "Athletics\t+0",
+        "Bluff\t-1",
+        "Computers\t+13",
+        "Diplomacy\t-1",
+        "Disguise\t-1",
+        "Engineering\t+12",
+        "Intimidate\t-1",
+        "Life Science\t+12",
+        "Mysticism\t+10",
+        "Perception\t+6",
+        "Physical Science\t+13",
+        "Piloting\t+11",
+        "Sense Motive\t-1",
+        "Sleight Of Hand\t+11",
+        "Stealth\t+3",
+        "Survival\t+1",
+        "Level 1\t5\t4\t",
+        "Level 2\t3\t3\t"
+      ],
+      "forbid": [
+        "This character did not compute",
+        "CMB",
+        "CMD",
+        "Flat-Footed",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.6: SF-Technomancer-5 opened from the saved store. The setup builds it through the real app (build-starfinder-technomancer); this row clicks the sheet's Open (back to the Load Character list), selects 'SF Seed Technomancer' and loads it, so every figure is read back from the saved character, not from the build's own screen. `expect` is every sheet total that E0.4/E4.5 hand-values for the seed, in the sheet's own label and sign format (a trained-only skill with no ranks has no hand value and no expectation), parsed from the hand-value tables by artifacts/epic_6/E6.6_rows.py. landing-select-pathfinder restores the Pathfinder selection."
+    },
+    {
+      "id": "build-starfinder-envoy",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Starfinder 1e"
+        },
+        {
+          "op": "click",
+          "target": "New\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "sf-character-name"
+        },
+        {
+          "op": "type",
+          "text": "SF Seed Envoy"
+        },
+        {
+          "op": "select",
+          "target": "— choose a race —",
+          "text": "core:race:ysoki"
+        },
+        {
+          "op": "select",
+          "target": "— choose a theme —",
+          "text": "core:ability:icon"
+        },
+        {
+          "op": "select",
+          "target": "— choose a class —",
+          "text": "core:class:envoy"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "Envoy Improvisation —",
+          "text": "core:ability:envoy_improvisation_inspiring_boost"
+        },
+        {
+          "op": "wait",
+          "ms": 700
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Cha"
+        },
+        {
+          "op": "click",
+          "target": "+1 Cha"
+        },
+        {
+          "op": "click",
+          "target": "+1 Cha"
+        },
+        {
+          "op": "click",
+          "target": "+1 Cha"
+        },
+        {
+          "op": "click",
+          "target": "+1 Cha"
+        },
+        {
+          "op": "click",
+          "target": "+1 Cha"
+        },
+        {
+          "op": "click",
+          "target": "+1 Cha"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Create character"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "scroll",
+          "ticks": 40,
+          "direction": "up"
+        },
+        {
+          "op": "key",
+          "key": "Shift"
+        },
+        {
+          "op": "click",
+          "target": "Back"
+        },
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "SF Seed Envoy"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Bluff"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Bluff"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Computers"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Computers"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Culture"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Culture"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Diplomacy"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Diplomacy"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Engineering"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Engineering"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Intimidate"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Intimidate"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sense Motive"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sense Motive"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Stealth"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Stealth"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Bluff"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Computers"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Culture"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Diplomacy"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Engineering"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Intimidate"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Perception"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Sense Motive"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Stealth"
+        },
+        {
+          "op": "wait",
+          "ms": 250
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        },
+        {
+          "op": "click",
+          "target": "Feats, spells and gear"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:mobility"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:quick_draw"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:carbon_skin_graphite"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add equipped"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:semi_auto_pistol_tactical"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add equipped"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:baton_tactical"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:serum_of_healing_mk_1"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:serum_of_healing_mk_1"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Save choices"
+        },
+        {
+          "op": "wait",
+          "ms": 3500
+        }
+      ],
+      "marker": "Saved feats, spells and gear:",
+      "expect": [
+        "Energy Armor Class (EAC) 14 · Kinetic Armor Class (KAC) 15 · Credits remaining 2330 · Bulk carried 1"
+      ],
+      "forbid": [
+        "This character did not compute",
+        "Failed to",
+        "over_budget",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.6: SF-Envoy-3 built end to end through the real app, every step a click or a select: the creation flow (race, theme, class, point buy 1 Dex, 2 Con, 7 Cha), load, Level up to level 3 with the skill ranks of seed-builds.md and the 5th-level increase where the seed has one, then 'Feats, spells and gear' (feats, spells known, gear) and 'Save choices'. The sheet prints the engine's totals; EAC, KAC, credits remaining and bulk are the hand values of seed-hand-values.md / E4.5-loadout-hand-values.md. Used as the setup of open-starfinder-envoy; landing-select-pathfinder restores the Pathfinder selection."
+    },
+    {
+      "id": "open-starfinder-envoy",
+      "screen": "sheet",
+      "setup": [
+        "build-starfinder-envoy"
+      ],
+      "steps": [
+        {
+          "op": "click",
+          "target": "Open"
+        },
+        {
+          "op": "click",
+          "target": "SF Seed Envoy"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        }
+      ],
+      "marker": "Kinetic Armor Class (KAC)",
+      "expect": [
+        "SF Seed Envoy",
+        "Base Attack Bonus\t+2",
+        "Fortitude\t+2",
+        "Reflex\t+4",
+        "Will\t+3",
+        "Hit Points\t20",
+        "Stamina Points\t21",
+        "Resolve Points\t5",
+        "Energy Armor Class (EAC)\t14",
+        "Kinetic Armor Class (KAC)\t15",
+        "Starting credits\t4000",
+        "Credits spent\t1670",
+        "Credits remaining\t2330",
+        "Bulk carried\t1",
+        "Unencumbered up to (bulk)\t4",
+        "Overburdened above (bulk)\t8",
+        "Acrobatics\t+0",
+        "Athletics\t-2",
+        "Bluff\t+10",
+        "Computers\t+7",
+        "Culture\t+8",
+        "Diplomacy\t+10",
+        "Disguise\t+4",
+        "Engineering\t+9",
+        "Intimidate\t+10",
+        "Perception\t+6",
+        "Piloting\t+1",
+        "Sense Motive\t+6",
+        "Stealth\t+8",
+        "Survival\t+2"
+      ],
+      "forbid": [
+        "This character did not compute",
+        "CMB",
+        "CMD",
+        "Flat-Footed",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.6: SF-Envoy-3 opened from the saved store. The setup builds it through the real app (build-starfinder-envoy); this row clicks the sheet's Open (back to the Load Character list), selects 'SF Seed Envoy' and loads it, so every figure is read back from the saved character, not from the build's own screen. `expect` is every sheet total that E0.4/E4.5 hand-values for the seed, in the sheet's own label and sign format (a trained-only skill with no ranks has no hand value and no expectation), parsed from the hand-value tables by artifacts/epic_6/E6.6_rows.py. landing-select-pathfinder restores the Pathfinder selection."
+    },
+    {
       "id": "browse-starfinder-catalog",
       "screen": "landing",
       "steps": [
@@ -2217,6 +5248,64 @@
         "Starfinder 1e"
       ],
       "notes": "SD-37 E6.2: returns the landing's rule-set selection to Pathfinder 1e after create-starfinder-soldier (the selection is CharacterHubPage state and survives resetToLanding), so a run that continues, or a --resume, starts its Pathfinder rows on the Pathfinder form."
+    },
+    {
+      "id": "open-seed-aldric",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Aldric Ironhand"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        }
+      ],
+      "marker": "☰ Menu",
+      "expect": [
+        "Aldric Ironhand",
+        "Fighter 3",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.6: the first Pathfinder starter seed, Aldric Ironhand (Human Fighter 3), opened from the isolated store (the app seeds it on first launch; load-seed-list-both lists it). With open-seed-elowen and the four open-starfinder-* rows this is the six seeds of E6.6."
+    },
+    {
+      "id": "open-seed-elowen",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Elowen Ashgrave"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        }
+      ],
+      "marker": "☰ Menu",
+      "expect": [
+        "Elowen Ashgrave",
+        "Wizard 5",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.6: the second Pathfinder starter seed, Elowen Ashgrave (Human Wizard 5), opened from the isolated store. load-seed-wizard-fireball (the last row of the spec) additionally opens her Spells tab."
     }
   ]
 }
