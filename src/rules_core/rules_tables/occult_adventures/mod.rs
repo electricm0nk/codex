@@ -17,7 +17,7 @@
 
 pub mod spell_list;
 
-mod monster_data;
+pub(crate) mod monster_data;
 
 // SD-32 card 11 (T12), cycle 4: real per-feature compute functions for the
 // six classes sharing `oa_abilities_class.lst`.

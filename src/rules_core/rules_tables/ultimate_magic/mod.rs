@@ -61,7 +61,7 @@
 //! the arithmetic.
 //! ---------------------------------------------------------------------------
 
-mod companion_data;
+pub(crate) mod companion_data;
 
 pub use super::companion_chassis::{CompanionAbilityRecord, CompanionClassRecord, CompanionRecord};
 
@@ -91,7 +91,7 @@ pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
     companion_abilities_static()
 }
 
-mod monster_data;
+pub(crate) mod monster_data;
 
 // `decisions.md §20` no_record-to-zero, round 3: this book's own
 // `monster_ability` orphans (`monster_data.rs`'s own header derives the

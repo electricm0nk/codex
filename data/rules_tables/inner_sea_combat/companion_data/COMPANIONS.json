@@ -1,0 +1,272 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "inner_sea_combat/companion_data/COMPANIONS",
+  "licence": {
+    "license": "OGL",
+    "book": "inner_sea_combat",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion (Griffon)",
+      "name": "Companion (Griffon)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": null,
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": null,
+      "ability_keys": [
+        "Unable to carry a rider while flying",
+        "Companion Advancement ~ Griffon"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "isc_races_companion.lst",
+      "source_line": 5
+    },
+    {
+      "key": "Companion (Hippocampus)",
+      "name": "Companion (Hippocampus)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 5
+        },
+        {
+          "mode": "Swim",
+          "feet": 40
+        }
+      ],
+      "reach_feet": null,
+      "race_type": "Magical Beast",
+      "race_subtype": "Aquatic",
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Tail Slap",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Hippocampus"
+      ],
+      "external_ability_refs": [
+        "Hippocampus ~ Water Dependency",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "isc_races_companion.lst",
+      "source_line": 6
+    },
+    {
+      "key": "Companion (Hippogriff)",
+      "name": "Companion (Hippogriff)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "reach_feet": null,
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Magical Beast"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Hippogriff",
+        "Unable to carry a rider while flying"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "isc_races_companion.lst",
+      "source_line": 7
+    },
+    {
+      "key": "Companion (Worg)",
+      "name": "Companion (Worg)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": null,
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Worg",
+        "Worg ~ Mastery"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "isc_races_companion.lst",
+      "source_line": 8
+    }
+  ]
+}

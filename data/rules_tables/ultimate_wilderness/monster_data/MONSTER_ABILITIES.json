@@ -1,0 +1,45 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_wilderness/monster_data/MONSTER_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_wilderness",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Plant Traits Output (PC)",
+      "name": "Plant Traits",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Plants breathe and eat, but do not sleep.",
+      "description_variables": [],
+      "source_page": "p.309",
+      "owners": [],
+      "source_file": "uw_abilities_race.lst",
+      "source_line": 25,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Traits Output ~ Leshy (PC)",
+      "name": "Leshy Traits",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A leshy is a nature spirit that inhabits the body of a specially grown plant.",
+      "description_variables": [],
+      "source_page": "p.307",
+      "owners": [],
+      "source_file": "uw_abilities_race.lst",
+      "source_line": 27,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    }
+  ]
+}

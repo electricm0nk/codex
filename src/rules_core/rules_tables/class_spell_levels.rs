@@ -55,7 +55,7 @@ use super::{acg, advanced_race_guide, apg, crb};
 /// the reason it reads Wizard's static table.
 type ClassSpellListDispatch = (&'static str, &'static [(&'static str, u8)], &'static str);
 
-const STATIC_CLASS_SPELL_LISTS: &[ClassSpellListDispatch] = &[
+pub(crate) const STATIC_CLASS_SPELL_LISTS: &[ClassSpellListDispatch] = &[
     // Classes that name themselves in the corpus's own `CLASSES:` tags.
     ("class:alchemist", apg::alchemist_spell_list::ALCHEMIST_SPELL_LIST, "class:alchemist"),
     ("class:bard", crb::bard_spell_list::BARD_SPELL_LIST, "class:bard"),

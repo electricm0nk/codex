@@ -63,7 +63,9 @@
 /// and 5 in ACG) resolve to `Combat`, exactly as CRB already resolves
 /// `TYPE:Combat.AttackOption.ModifyAC` to `Combat` and drops the
 /// subtypes.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "crb__feats__FeatCategory"))]
 pub enum FeatCategory {
     General,
     Combat,
@@ -106,7 +108,9 @@ impl FeatCategory {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "crb__feats__FeatTableEntry"))]
 pub struct FeatTableEntry {
     /// The corpus `KEY:` token, falling back to the record's `name` when
     /// no `KEY:` token is present -- the same fallback
@@ -145,6 +149,7 @@ pub struct FeatTableEntry {
     /// constant; resolving these formulas against real character state
     /// is a future cycle's job (SD-20 Epic 6's `feat_effect` damage-class
     /// criterion), not this table's.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_opt_slice")]
     pub effect: Option<&'static [FeatEffectBonus]>,
     // The `prerequisites: Option<&'static [&'static str]>` field that stood
     // here held every top-level `PRE`-family token of the corpus row,
@@ -164,7 +169,9 @@ pub struct FeatTableEntry {
 /// `FeatTableEntry` field, so this type stores the already-split
 /// qualifier list directly rather than a `raw_bonus` string to re-split
 /// at runtime.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "crb__feats__FeatEffectBonus"))]
 pub struct FeatEffectBonus {
     /// Pipe-delimited segments of the raw `BONUS:` token, verbatim, in
     /// source order. A token `BONUS:SAVE|Fortitude|2` yields
@@ -186,6 +193,7 @@ pub struct FeatEffectBonus {
     /// verbatim tails are kept converter-side in
     /// `pcgen_import::feat_effect_conditions`, whose round-trip test rebuilds
     /// each one from the fields below and proves nothing was lost.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub qualifiers: &'static [&'static str],
     /// The stacking-type label this bonus carries, if any -- `"Dodge"`,
     /// `"Resistance"`, `"Base.STACK"`. Two bonuses of the same named type do
@@ -196,6 +204,7 @@ pub struct FeatEffectBonus {
     /// unconditionally -- which is the distinction the shipped
     /// situational/wired split is derived from, so this is a load-bearing
     /// field, not decoration.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub conditions: &'static [EffectCondition],
     /// What the character's own choice supplies to this bonus, when it
     /// supplies anything. `None` -- the overwhelming majority -- when every
@@ -228,7 +237,8 @@ pub struct FeatEffectBonus {
 /// Which slot of the original chain carried the stand-in is a fact about
 /// the ingest format, so it lives converter-side, in
 /// `pcgen_import::feat_effect_selections`, not here.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum EffectSelection {
     /// The bonus applies to the weapon the character chose when taking the
     /// feat (Weapon Focus, Weapon Specialization, Improved Critical, their
@@ -285,7 +295,8 @@ impl EffectSelection {
 /// nothing reads would be a fabrication. What the round-trip oracle in
 /// `pcgen_import::feat_effect_conditions` guarantees is only that the
 /// conversion is lossless.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct EffectCondition {
     /// `true` when the record wrote the guard negated -- the bonus applies
     /// when the condition does **not** hold.
@@ -295,14 +306,17 @@ pub struct EffectCondition {
     pub family: &'static str,
     /// The guard's argument, comma-split as written. Empty for a family whose
     /// whole argument is nested alternatives.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub items: &'static [ConditionItem],
     /// Sub-conditions, for the `MULT` family which nests them. Empty for every
     /// other family.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub alternatives: &'static [EffectCondition],
 }
 
 /// One element of an [`EffectCondition`]'s argument.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct ConditionItem {
     /// The facet the element selects by, when it selects by one: `"TYPE"`,
     /// `"CATEGORY"`, `"EQMOD"`. `None` for a plain name or number.

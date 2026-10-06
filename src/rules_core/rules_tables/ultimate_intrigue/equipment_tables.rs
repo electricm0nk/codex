@@ -21,7 +21,9 @@
 //! ammunition bundles) this table does not evaluate -- never a fabricated
 //! flat number for a formula cost.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_intrigue__equipment_tables__EquipmentCategory"))]
 pub enum EquipmentCategory {
     General,
     ArmsArmor,
@@ -38,7 +40,9 @@ impl EquipmentCategory {
     ];
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_intrigue__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
     pub key: &'static str,
     pub category: EquipmentCategory,

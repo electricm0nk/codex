@@ -13,7 +13,7 @@
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
 /// Every monster_codex companion creature (8 rows).
-pub(super) static COMPANIONS: &[CompanionRecord] = &[
+pub(crate) static COMPANIONS: &[CompanionRecord] = &[
     CompanionRecord {
         key: "Companion (Cave Salamander)",
         name: "Companion (Cave Salamander)",
@@ -193,7 +193,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
 ];
 
 /// Every monster_codex companion ability record (7 rows).
-pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
+pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
     CompanionAbilityRecord {
         key: "Companion Advancement ~ Cave Salamander",
         name: "Companion Advancement (Cave Salamander)",

@@ -1,0 +1,81 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "horror_adventures/companion_data/COMPANIONS",
+  "licence": {
+    "license": "OGL",
+    "book": "horror_adventures",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion (Devolved Humanoid)",
+      "name": "Companion (Devolved Humanoid)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.50",
+      "ability_keys": [
+        "Companion Advancement ~ Devolved Humanoid"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "ha_races_companion.lst",
+      "source_line": 3
+    }
+  ]
+}

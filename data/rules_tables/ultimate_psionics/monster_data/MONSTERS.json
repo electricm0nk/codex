@@ -1,0 +1,977 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_psionics/monster_data/MONSTERS",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_psionics",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Blue",
+      "name": "Blue",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": null,
+      "source_page": "p.9",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "STR",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Blue ~ Pariah",
+        "Blue ~ Repletion",
+        "Blue ~ Keen Senses",
+        "Blue ~ Stealthy",
+        "Blue ~ Weapon Familiarity",
+        "Blue ~ Goblinoid Camouflage",
+        "Blue ~ Kinslayer",
+        "Blue ~ Leadership",
+        "Blue ~ Mindbender",
+        "Blue ~ Psionic Prodigy",
+        "Blue ~ Self Reliant",
+        "Psionic Aptitude",
+        "Naturally Psionic"
+      ],
+      "external_ability_refs": [
+        "Psionic"
+      ],
+      "source_file": "up_races.lst",
+      "source_line": 14
+    },
+    {
+      "key": "Dromite",
+      "name": "Dromite",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": null,
+      "source_page": "p.10",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "CHA",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "STR",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Dromite ~ Chitin",
+        "Dromite ~ Compound Eyes",
+        "Dromite ~ Scent",
+        "Dromite ~ Atavistic Link",
+        "Dromite ~ Crafter",
+        "Dromite ~ Excavator",
+        "Dromite ~ Gendered",
+        "Dromite ~ Hive Mind",
+        "Dromite ~ Hive Soldier",
+        "Psionic Aptitude",
+        "Naturally Psionic"
+      ],
+      "external_ability_refs": [
+        "Psionic"
+      ],
+      "source_file": "up_races.lst",
+      "source_line": 15
+    },
+    {
+      "key": "Duergar ~ Psionic",
+      "name": "Duergar ~ Psionic",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": null,
+      "source_page": "p.12",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Psionic Aptitude",
+        "Naturally Psionic"
+      ],
+      "external_ability_refs": [
+        "Light Sensitivity",
+        "Psionic"
+      ],
+      "source_file": "up_races.lst",
+      "source_line": 16
+    },
+    {
+      "key": "Elan",
+      "name": "Elan",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": null,
+      "source_page": "p.13",
+      "natural_attacks": [],
+      "stat_adjustments": [],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Elan ~ Aberrant Nature",
+        "Elan ~ Resistance",
+        "Elan ~ Resilience",
+        "Elan ~ Repletion",
+        "Elan ~ Failed Transformation Blue",
+        "Elan ~ Failed Transformation Dromite",
+        "Elan ~ Failed Transformation Duergar",
+        "Elan ~ Failed Transformation Dwarf",
+        "Elan ~ Failed Transformation Elf",
+        "Elan ~ Failed Transformation Gnome",
+        "Elan ~ Failed Transformation Half-Elf",
+        "Elan ~ Failed Transformation Half-Giant",
+        "Elan ~ Failed Transformation Half-Orc",
+        "Elan ~ Failed Transformation Halfling",
+        "Elan ~ Failed Transformation Human",
+        "Elan ~ Failed Transformation Maenad",
+        "Elan ~ Failed Transformation Ophiduan",
+        "Elan ~ Failed Transformation Xeph",
+        "Elan ~ Haughty",
+        "Elan ~ Reconstruction",
+        "Elan ~ Smooth Talker",
+        "Elan ~ Strong Blooded Blue",
+        "Elan ~ Strong Blooded Dromite",
+        "Elan ~ Strong Blooded Duergar",
+        "Elan ~ Strong Blooded Dwarf",
+        "Elan ~ Strong Blooded Elf",
+        "Elan ~ Strong Blooded Gnome",
+        "Elan ~ Strong Blooded Half-Elf",
+        "Elan ~ Strong Blooded Half-Giant",
+        "Elan ~ Strong Blooded Half-Orc",
+        "Elan ~ Strong Blooded Halfling",
+        "Elan ~ Strong Blooded Human",
+        "Elan ~ Strong Blooded Maenad",
+        "Elan ~ Strong Blooded Ophiduan",
+        "Elan ~ Strong Blooded Xeph",
+        "Psionic Aptitude",
+        "Naturally Psionic"
+      ],
+      "external_ability_refs": [
+        "Psionic"
+      ],
+      "source_file": "up_races.lst",
+      "source_line": 17
+    },
+    {
+      "key": "Forgeborn",
+      "name": "Forgeborn",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": null,
+      "source_page": "p.15",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Forgeborn ~ Slow and Steady",
+        "Forgeborn ~ Fearless",
+        "Forgeborn ~ Natural Armor",
+        "Forgeborn ~ Source Crystal",
+        "Forgeborn ~ Crystal Skin",
+        "Forgeborn ~ Memory Matrix",
+        "Forgeborn ~ Oreheart",
+        "Forgeborn ~ Quickened Steps",
+        "Forgeborn ~ Second Skin",
+        "Forgeborn ~ Strange Mind",
+        "Psionic Aptitude",
+        "Naturally Psionic"
+      ],
+      "external_ability_refs": [
+        "Psionic"
+      ],
+      "source_file": "up_races.lst",
+      "source_line": 18
+    },
+    {
+      "key": "Half-Giant",
+      "name": "Half-Giant",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": null,
+      "source_page": "p.16",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Half-Giant ~ Giant Blood",
+        "Half-Giant ~ Fire Acclimated",
+        "Half-Giant ~ Powerful Build",
+        "Half-Giant ~ Survivor",
+        "Half-Giant ~ Cold Acclimated",
+        "Half-Giant ~ Flame of Freedom",
+        "Half-Giant ~ Juggernaut",
+        "Half-Giant ~ Liberty or Death",
+        "Half-Giant ~ Psionic Resonance",
+        "Psionic Aptitude",
+        "Naturally Psionic"
+      ],
+      "external_ability_refs": [
+        "Psionic"
+      ],
+      "source_file": "up_races.lst",
+      "source_line": 19
+    },
+    {
+      "key": "Maenad",
+      "name": "Maenad",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": null,
+      "source_page": "p.18",
+      "natural_attacks": [],
+      "stat_adjustments": [],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Maenad ~ Sonic Affinity",
+        "Maenad ~ Outburst",
+        "Maenad ~ Inner Rage",
+        "Maenad ~ Ordered Rage",
+        "Maenad ~ Natural Sailor",
+        "Maenad ~ Weapon Familiarity",
+        "Maenad ~ Born to Lead",
+        "Maenad ~ Crystal Resonance",
+        "Maenad ~ Crystallized Skin",
+        "Maenad ~ Shore-Bound",
+        "Maenad ~ Tempestuous Temper",
+        "Psionic Aptitude",
+        "Naturally Psionic"
+      ],
+      "external_ability_refs": [
+        "Psionic"
+      ],
+      "source_file": "up_races.lst",
+      "source_line": 20
+    },
+    {
+      "key": "Noral",
+      "name": "Noral",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": null,
+      "source_page": "p.19",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Noral ~ Symbiotic Resistance",
+        "Noral ~ Symbiotic Surge",
+        "Noral ~ Gift of Tongues",
+        "Noral ~ Empathic Persuasion",
+        "Noral ~ Feral Erliss",
+        "Noral ~ Master of Deception",
+        "Noral ~ Resilient Symbiote",
+        "Noral ~ Symbiote Sensitivity",
+        "Noral ~ Symbiotic Sentry",
+        "Noral ~ Unbonded",
+        "Psionic Aptitude",
+        "Naturally Psionic"
+      ],
+      "external_ability_refs": [
+        "Psionic"
+      ],
+      "source_file": "up_races.lst",
+      "source_line": 21
+    },
+    {
+      "key": "Ophiduan",
+      "name": "Ophiduan",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": null,
+      "source_page": "p.21",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Ophiduan ~ Scaled Hide",
+        "Ophiduan ~ Poison Resistant",
+        "Ophiduan ~ Weapon Familiarity",
+        "Ophiduan ~ Serpent's Bite",
+        "Ophiduan ~ Deformed",
+        "Ophiduan ~ Metabolist",
+        "Ophiduan ~ Poisonous Flesh",
+        "Ophiduan ~ Scholar",
+        "Ophiduan ~ Slippery Hide",
+        "Psionic Aptitude",
+        "Naturally Psionic"
+      ],
+      "external_ability_refs": [
+        "Psionic"
+      ],
+      "source_file": "up_races.lst",
+      "source_line": 22
+    },
+    {
+      "key": "Xeph",
+      "name": "Xeph",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": null,
+      "source_page": "p.23",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        },
+        {
+          "ability": "STR",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Xeph ~ Innate Resistance",
+        "Xeph ~ Burst",
+        "Xeph ~ Bladeborn",
+        "Xeph ~ Call Blade",
+        "Xeph ~ Explorer",
+        "Xeph ~ Quick Craftsman",
+        "Xeph ~ Troubadour",
+        "Xeph ~ Windweaver",
+        "Psionic Aptitude",
+        "Naturally Psionic"
+      ],
+      "external_ability_refs": [
+        "Psionic"
+      ],
+      "source_file": "up_races.lst",
+      "source_line": 23
+    },
+    {
+      "key": "Astral Construct (1st Level)",
+      "name": "Astral Construct (1st Level)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "1/2",
+      "monster_class": "Construct:1",
+      "source_page": "p.444",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d4"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "source_file": "up_races.lst",
+      "source_line": 33
+    },
+    {
+      "key": "Astral Construct (2nd Level)",
+      "name": "Astral Construct (2nd Level)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "1",
+      "monster_class": "Construct:2",
+      "source_page": "p.445",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "source_file": "up_races.lst",
+      "source_line": 34
+    },
+    {
+      "key": "Astral Construct (3rd Level)",
+      "name": "Astral Construct (3rd Level)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "2",
+      "monster_class": "Construct:3",
+      "source_page": "p.445",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 10
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "source_file": "up_races.lst",
+      "source_line": 35
+    },
+    {
+      "key": "Astral Construct (4th Level)",
+      "name": "Astral Construct (4th Level)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "3",
+      "monster_class": "Construct:5",
+      "source_page": "p.445",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "source_file": "up_races.lst",
+      "source_line": 36
+    },
+    {
+      "key": "Astral Construct (5th Level)",
+      "name": "Astral Construct (5th Level)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "5",
+      "monster_class": "Construct:7",
+      "source_page": "p.446",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 18
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "source_file": "up_races.lst",
+      "source_line": 37
+    },
+    {
+      "key": "Astral Construct (6th Level)",
+      "name": "Astral Construct (6th Level)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "7",
+      "monster_class": "Construct:10",
+      "source_page": "p.446",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 22
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "source_file": "up_races.lst",
+      "source_line": 38
+    },
+    {
+      "key": "Astral Construct (7th Level)",
+      "name": "Astral Construct (7th Level)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "8",
+      "monster_class": "Construct:13",
+      "source_page": "p.446",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 24
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "source_file": "up_races.lst",
+      "source_line": 39
+    },
+    {
+      "key": "Astral Construct (8th Level)",
+      "name": "Astral Construct (8th Level)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "9",
+      "monster_class": "Construct:16",
+      "source_page": "p.447",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 28
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "source_file": "up_races.lst",
+      "source_line": 40
+    },
+    {
+      "key": "Astral Construct (9th Level)",
+      "name": "Astral Construct (9th Level)",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "10",
+      "monster_class": "Construct:19",
+      "source_page": "p.447",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "2d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 32
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "source_file": "up_races.lst",
+      "source_line": 41
+    },
+    {
+      "key": "Astral Swarm",
+      "name": "Astral Swarm",
+      "size": "D",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "7",
+      "monster_class": "Construct:14",
+      "source_page": "p.447",
+      "natural_attacks": [
+        {
+          "name": "Swarm",
+          "damage_dice": "4d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -9
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Astral Swarm ~ Ectoplasmic Poison"
+      ],
+      "external_ability_refs": [
+        "Distraction ~ Swarm",
+        "No Combat Maneuvers",
+        "Swarm Traits"
+      ],
+      "source_file": "up_races.lst",
+      "source_line": 44
+    },
+    {
+      "key": "Psicrystal",
+      "name": "Psicrystal",
+      "size": "D",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "0",
+      "monster_class": "Construct:1",
+      "source_page": "p.48,448",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -9
+        },
+        {
+          "ability": "DEX",
+          "amount": 5
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Psicrystal ~ Traits",
+        "Psicrystal ~ Hardness",
+        "Psicrystal ~ Skills",
+        "Psicrystal ~ Self Propulsion",
+        "Psicrystal ~ Telepathic Link",
+        "Psicrystal ~ Share Powers",
+        "Psicrystal ~ Deliver Touch Powers",
+        "Psicrystal ~ Telepathic Speech",
+        "Psicrystal ~ Power Resistance",
+        "Psicrystal ~ Sight Link",
+        "Psicrystal ~ Channel Power",
+        "Psicrystal ~ Sighted"
+      ],
+      "external_ability_refs": [],
+      "source_file": "up_races.lst",
+      "source_line": 47
+    }
+  ]
+}

@@ -111,7 +111,7 @@
 //! `campaign_setting/` book about deities. The records ship `License::Ogl` like
 //! every other book in this registry.
 
-mod monster_data;
+pub(crate) mod monster_data;
 pub mod spell_list;
 
 pub use super::monster_chassis::{

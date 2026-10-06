@@ -121,8 +121,8 @@
 //! commented out at `b3_races.lst:293`, so it has no owner and is dropped by the
 //! pass that actually applies to it.
 
-mod companion_data;
-mod monster_data;
+pub(crate) mod companion_data;
+pub(crate) mod monster_data;
 
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,

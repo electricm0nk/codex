@@ -15,7 +15,7 @@
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, Speed, StatAdjustment};
 
 /// Every bestiary_3 companion creature (31 rows).
-pub(super) static COMPANIONS: &[CompanionRecord] = &[
+pub(crate) static COMPANIONS: &[CompanionRecord] = &[
     CompanionRecord {
         key: "Familiar (Flying Squirrel)",
         name: "Flying Squirrel",
@@ -701,7 +701,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
 ];
 
 /// Every bestiary_3 companion ability record (54 rows).
-pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
+pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
     CompanionAbilityRecord {
         key: "Companion Advancement ~ Antelope",
         name: "4th-Level Advancement ~ Companion (Antelope)",

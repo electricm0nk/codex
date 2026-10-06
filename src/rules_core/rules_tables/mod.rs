@@ -101,7 +101,8 @@ pub mod ultimate_wilderness;
 
 /// Identifies which Paizo rule book a table cell or resolved corpus
 /// record belongs to.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum RuleSetId {
     Crb,
     Apg,

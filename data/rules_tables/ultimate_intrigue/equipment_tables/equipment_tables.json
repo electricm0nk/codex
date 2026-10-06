@@ -1,0 +1,741 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_intrigue/equipment_tables/equipment_tables",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_intrigue",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Code Rod",
+      "category": "General",
+      "name": "Code Rod",
+      "cost_gp": 0.1,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Concealment Coin",
+      "category": "General",
+      "name": "Concealment Coin",
+      "cost_gp": 12.0,
+      "weight_lbs": 0.1,
+      "description": null
+    },
+    {
+      "key": "Esquire Attache Case",
+      "category": "General",
+      "name": "Esquire Attache Case",
+      "cost_gp": 100.0,
+      "weight_lbs": 8.0,
+      "description": null
+    },
+    {
+      "key": "Hollow Book",
+      "category": "General",
+      "name": "Hollow Book",
+      "cost_gp": 15.0,
+      "weight_lbs": 3.0,
+      "description": null
+    },
+    {
+      "key": "Perfume Kit",
+      "category": "General",
+      "name": "Perfume Kit",
+      "cost_gp": 40.0,
+      "weight_lbs": 10.0,
+      "description": null
+    },
+    {
+      "key": "Poison Lip Paint",
+      "category": "General",
+      "name": "Poison Lip Paint",
+      "cost_gp": 5.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Puzzle Heel (3 steps)",
+      "category": "General",
+      "name": "Puzzle Heel (3 steps)",
+      "cost_gp": 20.0,
+      "weight_lbs": null,
+      "description": "+4 on Sleight of Hand checks to conceal items, DC 20 Disable Device to open."
+    },
+    {
+      "key": "Puzzle Heel (4 steps)",
+      "category": "General",
+      "name": "Puzzle Heel (4 steps)",
+      "cost_gp": 40.0,
+      "weight_lbs": null,
+      "description": "+6 on Sleight of Hand checks to conceal items, DC 25 Disable Device to open."
+    },
+    {
+      "key": "Puzzle Heel (5 steps)",
+      "category": "General",
+      "name": "Puzzle Heel (5 steps)",
+      "cost_gp": 80.0,
+      "weight_lbs": null,
+      "description": "+8 on Sleight of Hand checks to conceal items, DC 30 Disable Device to open."
+    },
+    {
+      "key": "Quick-Change Outfit",
+      "category": "General",
+      "name": "Quick-Change Outfit",
+      "cost_gp": 0.0,
+      "weight_lbs": 5.0,
+      "description": "Actual price is double the cost of the more expensive of the two outfits mimicked."
+    },
+    {
+      "key": "Scroll Belt",
+      "category": "General",
+      "name": "Scroll Belt",
+      "cost_gp": 0.3,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Sentry Seeds",
+      "category": "General",
+      "name": "Sentry Seeds",
+      "cost_gp": 7.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Subversive Vest",
+      "category": "General",
+      "name": "Subversive Vest",
+      "cost_gp": 45.0,
+      "weight_lbs": 1.0,
+      "description": "+2 on Sleight of Hand checks to conceal thieves' tools."
+    },
+    {
+      "key": "Subversive Vestment",
+      "category": "General",
+      "name": "Subversive Vestment",
+      "cost_gp": 90.0,
+      "weight_lbs": 2.0,
+      "description": "+2 on Sleight of Hand checks to conceal thieves' tools and two 1-pint flasks."
+    },
+    {
+      "key": "Vigilante's Kit",
+      "category": "General",
+      "name": "Vigilante's Kit",
+      "cost_gp": 8.0,
+      "weight_lbs": 22.0,
+      "description": "This kit includes a backpack, a belt pouch, a blanket, torches (10), trail rations (5 days), and a waterskin."
+    },
+    {
+      "key": "Accuracy Lozenge",
+      "category": "General",
+      "name": "Accuracy Lozenge",
+      "cost_gp": 330.0,
+      "weight_lbs": null,
+      "description": "Accept alchemical burn to make second attack in a round at full attack bonus."
+    },
+    {
+      "key": "Age Ointment",
+      "category": "General",
+      "name": "Age Ointment",
+      "cost_gp": 80.0,
+      "weight_lbs": null,
+      "description": "Reduces penalty to Disguise checks for looking younger or older by 2."
+    },
+    {
+      "key": "Alchemical Dye Kit",
+      "category": "General",
+      "name": "Alchemical Dye Kit",
+      "cost_gp": 160.0,
+      "weight_lbs": 6.0,
+      "description": "Reduces time to create a disguise, may reduce penalty to appear as different race."
+    },
+    {
+      "key": "Boar's Bellow",
+      "category": "General",
+      "name": "Boar's Bellow",
+      "cost_gp": 190.0,
+      "weight_lbs": null,
+      "description": "Allows alchemical inspiration on 1d4 Intimidate checks, makes Diplomacy checks more difficult."
+    },
+    {
+      "key": "Efreeti Cord",
+      "category": "General",
+      "name": "Efreeti Cord",
+      "cost_gp": 50.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Efreeti Switch",
+      "category": "General",
+      "name": "Efreeti Switch",
+      "cost_gp": 25.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Falsehood Fizz",
+      "category": "General",
+      "name": "Falsehood Fizz",
+      "cost_gp": 190.0,
+      "weight_lbs": null,
+      "description": "Allows alchemical inspiration on 1d4 Bluff checks, makes Sense Motive checks more difficult."
+    },
+    {
+      "key": "Fellowship Film",
+      "category": "General",
+      "name": "Fellowship Film",
+      "cost_gp": 190.0,
+      "weight_lbs": null,
+      "description": "Allows alchemical inspiration on 1d4 Diplomacy checks, makes Intimidate checks more difficult."
+    },
+    {
+      "key": "Flash Seeds",
+      "category": "General",
+      "name": "Flash Seeds",
+      "cost_gp": 35.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Intuition Serum",
+      "category": "General",
+      "name": "Intuition Serum",
+      "cost_gp": 190.0,
+      "weight_lbs": null,
+      "description": "Allows alchemical inspiration on 1d4 Sense Motive checks, makes Bluff checks more difficult."
+    },
+    {
+      "key": "Night Stalker's Tonic",
+      "category": "General",
+      "name": "Night Stalker's Tonic",
+      "cost_gp": 200.0,
+      "weight_lbs": null,
+      "description": "Accept alchemical burn to deal more sneak attack or hidden strike damage for one round."
+    },
+    {
+      "key": "Rake's Friend",
+      "category": "General",
+      "name": "Rake's Friend",
+      "cost_gp": 120.0,
+      "weight_lbs": null,
+      "description": "Accept alchemical burn to gain 1 grit or panache point for up to an hour."
+    },
+    {
+      "key": "Singer's Solution",
+      "category": "General",
+      "name": "Singer's Solution",
+      "cost_gp": 120.0,
+      "weight_lbs": null,
+      "description": "Accept alchemical burn to gain an additional 4 rounds of bardic performance or raging song for up to an hour."
+    },
+    {
+      "key": "Speech Resin",
+      "category": "General",
+      "name": "Speech Resin",
+      "cost_gp": 410.0,
+      "weight_lbs": null,
+      "description": "Allows alchemical inspiration on 1d4 Charisma-based skill checks, makes Wisdom-based skill checks more difficult."
+    },
+    {
+      "key": "Swift Hands Tonic",
+      "category": "General",
+      "name": "Swift Hands Tonic",
+      "cost_gp": 250.0,
+      "weight_lbs": null,
+      "description": "Allows alchemical inspiration on 1d4 Disable Device and Slight of Hand checks, makes Acrobatics and Escape Artist checks more difficult."
+    },
+    {
+      "key": "Brilliant Plan Encumberance",
+      "category": "General",
+      "name": "Brilliant Plan Encumberance",
+      "cost_gp": 0.0,
+      "weight_lbs": 20.0,
+      "description": null
+    },
+    {
+      "key": "Darts (Featherweight/10)",
+      "category": "ArmsArmor",
+      "name": "Darts, Featherweight (10)",
+      "cost_gp": 1.0,
+      "weight_lbs": null,
+      "description": "Used in blowguns and wrist launchers to deliver poison. Any DR, hardness, etc., negates poison delivery."
+    },
+    {
+      "key": "Spring Blade",
+      "category": "ArmsArmor",
+      "name": "Spring Blade",
+      "cost_gp": 70.0,
+      "weight_lbs": 1.0,
+      "description": "Free action to release the blade, move action to reset. DC 20 Perception check to spot when closed, +4 Sleight of Hand to conceal."
+    },
+    {
+      "key": "Wrist Launcher",
+      "category": "ArmsArmor",
+      "name": "Wrist Launcher",
+      "cost_gp": 200.0,
+      "weight_lbs": 1.0,
+      "description": "Full-round action to reloaded, Sleight of Hand check to keep concealed after firing."
+    },
+    {
+      "key": "Wrist Launcher (Heavy)",
+      "category": "ArmsArmor",
+      "name": "Wrist Launcher, Heavy",
+      "cost_gp": 250.0,
+      "weight_lbs": 2.0,
+      "description": "Full-round action to reloaded, Sleight of Hand check to keep concealed after firing."
+    },
+    {
+      "key": "Diviner's Blight",
+      "category": "ArmsArmor",
+      "name": "Diviner's Blight",
+      "cost_gp": 10.0,
+      "weight_lbs": 15.0,
+      "description": null
+    },
+    {
+      "key": "Lockpick Shield",
+      "category": "ArmsArmor",
+      "name": "Lockpick Shield",
+      "cost_gp": 9.0,
+      "weight_lbs": 6.0,
+      "description": "Shield can attempt Disable Device check with +10 total bonus."
+    },
+    {
+      "key": "Courtesan's Ire",
+      "category": "ArmsArmor",
+      "name": "Courtesan's Ire",
+      "cost_gp": 5.0,
+      "weight_lbs": 0.1,
+      "description": "Can fire blades in a 15-ft. cone 3/day, deals 3d4 damage, Reflex DC 14 for half."
+    },
+    {
+      "key": "Dart of Recovery",
+      "category": "ArmsArmor",
+      "name": "Dart of Recovery",
+      "cost_gp": 206.0,
+      "weight_lbs": null,
+      "description": "Featherweight dart that user can recall as a swift action after use."
+    },
+    {
+      "key": "Launcher of Distraction",
+      "category": "ArmsArmor",
+      "name": "Launcher of Distraction",
+      "cost_gp": 250.0,
+      "weight_lbs": 2.0,
+      "description": "Twice a day, the sound of this heavy wrist launcher can be made to appear to come from elsewhere."
+    },
+    {
+      "key": "Mind's Eye Blade",
+      "category": "ArmsArmor",
+      "name": "Mind's Eye Blade",
+      "cost_gp": 2.0,
+      "weight_lbs": 1.0,
+      "description": "Wielder gains concealment from damaged targets for 1 round, 3/day may attempt to steal information during sneak attack or coup de grace."
+    },
+    {
+      "key": "Prying Star",
+      "category": "ArmsArmor",
+      "name": "Prying Star",
+      "cost_gp": 646.0,
+      "weight_lbs": 0.1,
+      "description": "Plants a magical sensor on the target that is active for 9 minutes."
+    },
+    {
+      "key": "Serpent's Fang",
+      "category": "ArmsArmor",
+      "name": "Serpent's Fang",
+      "cost_gp": 2.0,
+      "weight_lbs": 1.0,
+      "description": "Dagger holds up to 5 doses of poison in an extradimentional space, wielder can release one onto the blade as a swift action."
+    },
+    {
+      "key": "Silent Sentry Crossbow",
+      "category": "ArmsArmor",
+      "name": "Silent Sentry Crossbow",
+      "cost_gp": 35.0,
+      "weight_lbs": 4.0,
+      "description": "Reduces sniping penalty by 5, 3/day can set an invisible alarm line up to 180 ft long."
+    },
+    {
+      "key": "Mystic Bolts",
+      "category": "ArmsArmor",
+      "name": "Mystic Bolts",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": "Damage by level"
+    },
+    {
+      "key": "Accent Pill",
+      "category": "MagicItems",
+      "name": "Accent Pill",
+      "cost_gp": 300.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Best Friend Pendant",
+      "category": "MagicItems",
+      "name": "Best Friend Pendant",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Best Friend Pendant (Greater)",
+      "category": "MagicItems",
+      "name": "Best Friend Pendant (Greater)",
+      "cost_gp": 9000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Black Marketeer's Bag",
+      "category": "MagicItems",
+      "name": "Black Marketeer's Bag",
+      "cost_gp": 6200.0,
+      "weight_lbs": 3.0,
+      "description": null
+    },
+    {
+      "key": "Candle of Comity",
+      "category": "MagicItems",
+      "name": "Candle of Comity",
+      "cost_gp": 2000.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Candle of Drowsiness",
+      "category": "MagicItems",
+      "name": "Candle of Drowsiness",
+      "cost_gp": 2500.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Coat of Pockets",
+      "category": "MagicItems",
+      "name": "Coat of Pockets",
+      "cost_gp": 2500.0,
+      "weight_lbs": 7.0,
+      "description": null
+    },
+    {
+      "key": "Coat of the Undercity",
+      "category": "MagicItems",
+      "name": "Coat of the Undercity",
+      "cost_gp": 7500.0,
+      "weight_lbs": 5.0,
+      "description": null
+    },
+    {
+      "key": "Coat of the Undercity (Greater)",
+      "category": "MagicItems",
+      "name": "Coat of the Undercity (Greater)",
+      "cost_gp": 37500.0,
+      "weight_lbs": 5.0,
+      "description": null
+    },
+    {
+      "key": "Codex of Conversations",
+      "category": "MagicItems",
+      "name": "Codex of Conversations",
+      "cost_gp": 10000.0,
+      "weight_lbs": 3.0,
+      "description": null
+    },
+    {
+      "key": "Costume Bureau",
+      "category": "MagicItems",
+      "name": "Costume Bureau",
+      "cost_gp": 7000.0,
+      "weight_lbs": 175.0,
+      "description": null
+    },
+    {
+      "key": "Courier's Secure Pouch",
+      "category": "MagicItems",
+      "name": "Courier's Secure Pouch",
+      "cost_gp": 1600.0,
+      "weight_lbs": 2.0,
+      "description": null
+    },
+    {
+      "key": "Communique Ring",
+      "category": "MagicItems",
+      "name": "Communique Ring",
+      "cost_gp": 6000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Deadened Shadows Cloak",
+      "category": "MagicItems",
+      "name": "Deadened Shadows Cloak",
+      "cost_gp": 63250.0,
+      "weight_lbs": 2.0,
+      "description": null
+    },
+    {
+      "key": "Deck of Doors",
+      "category": "MagicItems",
+      "name": "Deck of Doors",
+      "cost_gp": 12150.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Fan of Flirting",
+      "category": "MagicItems",
+      "name": "Fan of Flirting",
+      "cost_gp": 1700.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Ghost Needle",
+      "category": "MagicItems",
+      "name": "Ghost Needle",
+      "cost_gp": 3600.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Glass of Veils",
+      "category": "MagicItems",
+      "name": "Glass of Veils",
+      "cost_gp": 53000.0,
+      "weight_lbs": 40.0,
+      "description": null
+    },
+    {
+      "key": "Glittering Trinket (Belt Buckle)",
+      "category": "MagicItems",
+      "name": "Glittering Trinket (Belt Buckle)",
+      "cost_gp": 120.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Glittering Trinket (Bracelet)",
+      "category": "MagicItems",
+      "name": "Glittering Trinket (Bracelet)",
+      "cost_gp": 120.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Glittering Trinket (Necklace)",
+      "category": "MagicItems",
+      "name": "Glittering Trinket (Necklace)",
+      "cost_gp": 120.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Glittering Trinket (Ring)",
+      "category": "MagicItems",
+      "name": "Glittering Trinket (Ring)",
+      "cost_gp": 120.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Gloves of Unexpected Violence",
+      "category": "MagicItems",
+      "name": "Gloves of Unexpected Violence",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Gloves of Unexpected Violence (Expert)",
+      "category": "MagicItems",
+      "name": "Gloves of Unexpected Violence (Expert)",
+      "cost_gp": 30000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Ink of Mimicry",
+      "category": "MagicItems",
+      "name": "Ink of Mimicry",
+      "cost_gp": 1950.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Magnificent Map",
+      "category": "MagicItems",
+      "name": "Magnificent Map",
+      "cost_gp": 7800.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Mask of Stolen Mien",
+      "category": "MagicItems",
+      "name": "Mask of Stolen Mien",
+      "cost_gp": 17200.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Memory Box",
+      "category": "MagicItems",
+      "name": "Memory Box",
+      "cost_gp": 28000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Monocle of Flawlessness",
+      "category": "MagicItems",
+      "name": "Monocle of Flawlessness",
+      "cost_gp": 8750.0,
+      "weight_lbs": null,
+      "description": "+2 on saves to disbelieve illusions."
+    },
+    {
+      "key": "Murderer's Silence",
+      "category": "MagicItems",
+      "name": "Murderer's Silence",
+      "cost_gp": 900.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Parley Ward",
+      "category": "MagicItems",
+      "name": "Parley Ward",
+      "cost_gp": 52000.0,
+      "weight_lbs": 2.0,
+      "description": null
+    },
+    {
+      "key": "Pipe of Revealing Mists",
+      "category": "MagicItems",
+      "name": "Pipe of Revealing Mists",
+      "cost_gp": 2592.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Planar Parchment",
+      "category": "MagicItems",
+      "name": "Planar Parchment",
+      "cost_gp": 18000.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Polish of Inconspicuous Armor",
+      "category": "MagicItems",
+      "name": "Polish of Inconspicuous Armor",
+      "cost_gp": 750.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Private Palanquin",
+      "category": "MagicItems",
+      "name": "Private Palanquin",
+      "cost_gp": 63000.0,
+      "weight_lbs": 500.0,
+      "description": null
+    },
+    {
+      "key": "Quick-Change Mask",
+      "category": "MagicItems",
+      "name": "Quick-Change Mask",
+      "cost_gp": 650.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Raucous Canard",
+      "category": "MagicItems",
+      "name": "Raucous Canard",
+      "cost_gp": 100.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Ring of the Shadow Victim",
+      "category": "MagicItems",
+      "name": "Ring of the Shadow Victim",
+      "cost_gp": 101000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Rings of Bondage",
+      "category": "MagicItems",
+      "name": "Rings of Bondage",
+      "cost_gp": 18200.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Rings of Bondage (Greater)",
+      "category": "MagicItems",
+      "name": "Rings of Bondage (Greater)",
+      "cost_gp": 42000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Shadow Hand Smoke Pellet",
+      "category": "MagicItems",
+      "name": "Shadow Hand Smoke Pellet",
+      "cost_gp": 800.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Swarmwalker's Ring",
+      "category": "MagicItems",
+      "name": "Swarmwalker's Ring",
+      "cost_gp": 26000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Time Bomb",
+      "category": "MagicItems",
+      "name": "Time Bomb",
+      "cost_gp": 1000.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Time Bomb (Greater)",
+      "category": "MagicItems",
+      "name": "Time Bomb (Greater)",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Vestments of False Faith",
+      "category": "MagicItems",
+      "name": "Vestments of False Faith",
+      "cost_gp": 27000.0,
+      "weight_lbs": 5.0,
+      "description": null
+    },
+    {
+      "key": "Thieves' Tools (Concealable)",
+      "category": "General",
+      "name": "Thieves' Tools (Concealable)",
+      "cost_gp": 190.0,
+      "weight_lbs": 0.5,
+      "description": "+4 on Sleight of Hand checks to conceal these on your body."
+    }
+  ]
+}

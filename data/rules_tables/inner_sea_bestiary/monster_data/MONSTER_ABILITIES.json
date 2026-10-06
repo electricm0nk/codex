@@ -1,0 +1,3500 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "inner_sea_bestiary/monster_data/MONSTER_ABILITIES",
+  "licence": {
+    "license": "PI-REDACTED",
+    "book": "inner_sea_bestiary",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": [
+      {
+        "row": 125,
+        "field": "description"
+      },
+      {
+        "row": 127,
+        "field": "description"
+      },
+      {
+        "row": 128,
+        "field": "description"
+      },
+      {
+        "row": 129,
+        "field": "description"
+      },
+      {
+        "row": 130,
+        "field": "description"
+      },
+      {
+        "row": 131,
+        "field": "description"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "key": "Apostasy Wraith ~ Razmiri Aversion",
+      "name": "Razmiri Aversion",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "If confronted by a Razmiri priest or anyone successfully disguised in that garb, the apostasy wraith must make a Will save equal to 10 + 1/2 the Hit Dice + the Charisma modifier of the highest-level Razmiri priest present.If the saving throw fails, the apostasy wraith is forced to flee as if affected by the Turn Undead feat. If the save is successful, it overcomes its aversion and gains a +2 bonus on attack rolls and deals double damage against Razmiri priests (or those disguised as such) for the duration of the encounter.",
+      "description_variables": [],
+      "source_page": "p.4",
+      "owners": [
+        "Apostasy Wraith"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 31,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Apostasy Wraith ~ Rend Faith",
+      "name": "Rend Faith",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The victim must make a successful DC 16 Will save or be unable to use any divinely granted special ability for 1 round.",
+      "description_variables": [],
+      "source_page": "p.4",
+      "owners": [
+        "Apostasy Wraith"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 32,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Apostasy Wraith ~ Sense Apostate",
+      "name": "Sense Apostate",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Can sense the presence and direction of Razmiri priests as if using the locate creature spell (CL 20th).",
+      "description_variables": [],
+      "source_page": "p.4",
+      "owners": [
+        "Apostasy Wraith"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 33,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Scarab ~ Gnaw",
+      "name": "Gnaw",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A scarab beetle deals 1 point of Strength damage on a successful bite. This damage is doubled against creatures with no armor or natural armor, but creatures in heavy armor or with a natural armor bonus of +lO or greater are immune, as are creatures immune to critical hits or without flesh.",
+      "description_variables": [],
+      "source_page": "p.5",
+      "owners": [
+        "Beetle (Scarab)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 37,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Stalk Beetle ~ Sawtooth",
+      "name": "Sawtooth",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The serrated mandibles of a stalk beetle allow it to ignore hardness of 5 or less when attacking objects. In addition, a stalk beetle deals 1 point of bleed damage upon a successful critical hit with its bite attack.",
+      "description_variables": [],
+      "source_page": "p.5",
+      "owners": [
+        "Beetle (Stalk)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 41,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Blighted Fey ~ Fungal Rejuvenation",
+      "name": "Fungal Rejuvenation",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The Blighted Fey gains Fast Healing 5 while within 300 yards of any blighted tree within the Fangwood and while on moist ground.",
+      "description_variables": [],
+      "source_page": "p.7",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 45,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Blighted Fey ~ Parasitic Bond",
+      "name": "Parasitic Bond",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Following a successful Thorn Throw attack, the target must make a DC %1 Fortitude save or be cursed. For 5 rounds, all hit point damage taken by the blighted fey is halved and the target takes the other half.",
+      "description_variables": [
+        "10+TL/2+CON"
+      ],
+      "source_page": "p.7",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 46,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Blighted Fey ~ Thorn Throw",
+      "name": "Thorn Throw",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A Blighted Fey can shoot a fistful of needle-sharp thorns at a single target",
+      "description_variables": [],
+      "source_page": "p.7",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 47,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Blighted Fey ~ Cyth-V'sug's Unity",
+      "name": "Cyth-V'sug's Unity",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Blighted fey within 100 feet of each other can communicate through a shared fungal hive mind.",
+      "description_variables": [],
+      "source_page": "p.7",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 48,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Blighted Fey ~ Daughters of Arlantia",
+      "name": "Daughters of Arlantia",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Blighted Fey dryads are no longer dependant upon a single tree, but must remain within 300 yards of any blighted tree.",
+      "description_variables": [],
+      "source_page": "p.7",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 49,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Blighted Fey ~ Tainted Blood",
+      "name": "Tainted Blood",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Any creature that successfully ingests all or part of a Blighted Fey must make a Fortitude save with a DC of %1 or take 1 point of Str damage and 1 point of Dex damage. 1 minute later, the creature must save again or be nauseated 1 min and take 1d6 Str damage and 1d6 Dex damage.",
+      "description_variables": [
+        "10+TL/2+CON"
+      ],
+      "source_page": "p.7",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 50,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Cayhound ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "The cayhound has spell-like abilities.",
+      "description_variables": [],
+      "source_page": "p.8",
+      "owners": [
+        "Cayhound"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 54,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Cayhound ~ Righteous Bite",
+      "name": "Righteous Bite",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Bite is treated as magical for overcoming damage reduction.",
+      "description_variables": [],
+      "source_page": "p.8",
+      "owners": [
+        "Cayhound"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 55,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Cayhound ~ Thunderous Bark",
+      "name": "Thunderous Bark",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Once every 1d6 rounds, a Cayhound can cause every creature within a 15 foot cone to take 3d8 sonic damage and be knocked prone (Fort DC 14 half and negates knocked prone).",
+      "description_variables": [],
+      "source_page": "p.8",
+      "owners": [
+        "Cayhound"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 56,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Cayhound ~ Unbound",
+      "name": "Unbound",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Cayhounds move as though under a continuous Freedom of Movement spell and are immune to Dimensional Anchor although Dimensional Lock functions normally.",
+      "description_variables": [],
+      "source_page": "p.8",
+      "owners": [
+        "Cayhound"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 57,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Ceru ~ Luckbringer",
+      "name": "Luckbringer",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "%1/day, a Ceru can cause good or bad luck. If luck is bad, target must roll twice and take worse result on all rolls for 1 round. If luck is good, target may choose a single roll and roll twice taking the better result.",
+      "description_variables": [
+        "max(1,TL/4)"
+      ],
+      "source_page": "p.9",
+      "owners": [
+        "Ceru"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 61,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Ceru ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Injury, Fort save DC 13 1/round, 6 rounds, 1d2 Con, Cure 2 consecutive saves.",
+      "description_variables": [],
+      "source_page": "p.9",
+      "owners": [
+        "Ceru"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 62,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Charnel Colossus ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The Charnel Colossus has several spell-like abilities",
+      "description_variables": [],
+      "source_page": "p.10",
+      "owners": [
+        "Charnel Colossus"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 66,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Charnel Colossus ~ Corporate Will",
+      "name": "Corporate Will",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The Charnel Colossus can use up to two spell-like abilities in the same round that it makes physical attacks or other full-round actions. It also gains an additional spell attack per round. A Charnel Colossus is immune to being turned.",
+      "description_variables": [],
+      "source_page": "p.10",
+      "owners": [
+        "Charnel Colossus"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 67,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Charnel Colossus ~ Mind Feed",
+      "name": "Mind Feed",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "On successful Grapple, victim must make DC 38 Will save each round or take 1d6 Wis damage. If victim's Wis is reduced to 0, they are subsumed into the Charnel Colossus.",
+      "description_variables": [],
+      "source_page": "p.10",
+      "owners": [
+        "Charnel Colossus"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 68,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Charnel Colossus ~ Voice of the Ancients",
+      "name": "Voice of the Ancients",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any one creature within 100 ft must make DC 34 Will save or be paralyzed as per Hold Monster. [DC %1]",
+      "description_variables": [
+        "VoiceOfTheAncientsDC"
+      ],
+      "source_page": "p.10",
+      "owners": [
+        "Charnel Colossus"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 69,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Fungus Queen ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "The Fungus Queen gains spell-like abilities.",
+      "description_variables": [],
+      "source_page": "p.12",
+      "owners": [
+        "Fungus Queen"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 73,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Fungus Queen ~ Compel Plants",
+      "name": "Compel Plants",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A Fungus Queen's mind-affecting powers and spell-like abilities affect plant creatures (but not mindless plant creatures) as if they weren't immune to them.",
+      "description_variables": [],
+      "source_page": "p.12",
+      "owners": [
+        "Fungus Queen"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 74,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Fungus Queen ~ Create Spawn",
+      "name": "Create Spawn",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Creatures slain by the Fungus Queen's Energy Drain attack loses all negative levels and transforms into a fungoid minion of the Queen.",
+      "description_variables": [],
+      "source_page": "p.12",
+      "owners": [
+        "Fungus Queen"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 75,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Fungus Queen ~ Energy Drain",
+      "name": "Energy Drain",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A Fungus Queen drains energy from a mortal she lures into an act of passion, such as a kiss. An unwilling victim must be grappled before the Fungus Queen can use this ability. The Fungus Queen's kiss bestows one negative level. The kiss also has the effect of a suggestion spell, asking the victim to accept another act of passion from the Fungus Queen. The victim must succeed on a DC %1 Will save to negate the suggestion. The DC is 22 for the Fortitude save to remove a negative level.",
+      "description_variables": [
+        "10+(HD/2)+CHA"
+      ],
+      "source_page": "p.12",
+      "owners": [
+        "Fungus Queen"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 76,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Fungus Queen ~ Plant Empathy",
+      "name": "Plant Empathy",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The Fungus Queen can use Diplomacy to improve the attitude of a plant creature. She gains a +4 racial bonus on this check.",
+      "description_variables": [],
+      "source_page": "p.12",
+      "owners": [
+        "Fungus Queen"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 77,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Fungus Queen ~ Sporepod",
+      "name": "Sporepod",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The Fungus Queen can instantly travel to one of her spore pods or use them to make tentacle attacks. The Fungus Queen can maintain %1 spore pods.",
+      "description_variables": [
+        "CHA"
+      ],
+      "source_page": "p.12",
+      "owners": [
+        "Fungus Queen"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 78,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Shadow Giant ~ Militant",
+      "name": "Militant",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Proficient with all simple and martial weapons and 1 exotic weapon of choice.",
+      "description_variables": [],
+      "source_page": "p.15",
+      "owners": [
+        "Giant (Shadow)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 101,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Shadow Giant ~ Shadow Cloak",
+      "name": "Shadow Cloak",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "In any illumination other than direct sunlight, a shadow giant can cloak itself in moving shadows as per Blur for 1d6+6 rounds 3/day.",
+      "description_variables": [],
+      "source_page": "p.15",
+      "owners": [
+        "Giant (Shadow)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 102,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Marrowstone Golem ~ Negative Energy",
+      "name": "Negative Energy",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any time a marrowstone golem hits with a slam attack it does 2d6 addition energy damage.",
+      "description_variables": [],
+      "source_page": "p.17",
+      "owners": [
+        "Golem (Marrowstone)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 125,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Marrowstone Golem ~ Create Spawn",
+      "name": "Create Spawn",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any humanoid creature slain by the Marrowstone Golem rises from death as a ghoul in 24 hours. A creature with 4 or more class levels rises as a ghast instead. 25%% chance of retaining class levels.",
+      "description_variables": [],
+      "source_page": "p.17",
+      "owners": [
+        "Golem (Marrowstone)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 126,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Marrowstone Golem ~ Immunity to Magic",
+      "name": "Immunity to Magic",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the golem.",
+      "description_variables": [],
+      "source_page": "p.17",
+      "owners": [
+        "Golem (Marrowstone)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 127,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Marrowstone Golem ~ Necrotic Field",
+      "name": "Necrotic Field",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Undead within 30 feet of a marrowstone golem gain a + 2 resistance bonus on saving throws, increase the save DCs of their extraordinary and supernatural abilities by 2, and gain a + 4 bonus to channel resistance. Positive energy effects cause only half damage to a creature within the marrowstone golem's aura. Their aura particularly strengthens ghouls and ghasts, giving them a +2 bonus on attack and weapon damage rolls.",
+      "description_variables": [],
+      "source_page": "p.17",
+      "owners": [
+        "Golem (Marrowstone)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 128,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Noqual Golem ~ Construct Bane",
+      "name": "Construct Bane",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Deals an extra 2d6 points of damage against constructs and undead created by feats or spells.",
+      "description_variables": [],
+      "source_page": "p.18",
+      "owners": [
+        "Golem (Noqual)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 132,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Noqual Golem ~ Immunity to Magic",
+      "name": "Immunity to Magic",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A noqual golem is immune to and absorbs any spell or spell-like ability that allows spell resistance.",
+      "description_variables": [],
+      "source_page": "p.18",
+      "owners": [
+        "Golem (Noqual)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 133,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Noqual Golem ~ Impeded Magic",
+      "name": "Impeded Magic",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "To successfully cast a spell within 6o feet of a noqual golem , a caster must make a concentration check (DC 25 + the level of the spell being cast). If the check fails, the noqual golem absorbs the spell.",
+      "description_variables": [],
+      "source_page": "p.18",
+      "owners": [
+        "Golem (Noqual)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 134,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Noqual Golem ~ Powerful Blows",
+      "name": "Powerful Blows",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A noqual golem inflicts 1-1/2 times its Strength bonus and threatens a critical hit on a 19-20 with its slam attacks.",
+      "description_variables": [],
+      "source_page": "p.18",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 135,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Noqual Golem ~ Spell Absorption",
+      "name": "Spell Absorption",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Heals 5 hit points or gains 5 temporary hit points for each spell absorbed. Absorbing a spell gives the golem the benefits of Haste.",
+      "description_variables": [],
+      "source_page": "p.18",
+      "owners": [
+        "Golem (Noqual)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 136,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Noqual Golem ~ Spell Sunder",
+      "name": "Spell Sunder",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A creature struck by a noqual golem's slam attack is targeted by dispel magic (CL 18th). It absorbs any spells so dispelled.",
+      "description_variables": [],
+      "source_page": "p.18",
+      "owners": [
+        "Golem (Noqual)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 137,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Quantium Golem ~ Eldritch Surge",
+      "name": "Eldritch Surge",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A Quantium golem can hurl a lance of eldritch energy that deals 30d6 points of damage to all creatures in a 240-foot line (Reflex DC 25 for half). The crimson Quantium golem deals half electricity and half fire damage, and slows a creature (as the slow spell) that fails its save for 2d4 rounds. The green Quantium golem deals half acid and half fire damage, and nauseates any creature that fails its save for 1d4 rounds.",
+      "description_variables": [],
+      "source_page": "p.19",
+      "owners": [
+        "Golem (Quantium)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 141,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Quantium Golem ~ Immunity to Magic",
+      "name": "Immunity to Magic",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Immune to any spell or spell-like ability.",
+      "description_variables": [],
+      "source_page": "p.19",
+      "owners": [
+        "Golem (Quantium)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 142,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Quantium Golem ~ Link",
+      "name": "Link",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Each Quantium golem always knows the exact location of the other.",
+      "description_variables": [],
+      "source_page": "p.19",
+      "owners": [
+        "Golem (Quantium)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 143,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Quantium Golem ~ Urban Defender",
+      "name": "Urban Defender",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "150 bonus hit points as long as within 1 mile of the city.",
+      "description_variables": [],
+      "source_page": "p.19",
+      "owners": [
+        "Golem (Quantium)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 144,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Kakuen-Taka ~ Consume Flesh",
+      "name": "Consume Flesh",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Once per round, when a kakuen-taka kills or reduces a creature to negative hit points with its swarm attack, it automatically attempts to consume the target's flesh as a free action (Fortitude DC 24 negates). If the target fails its save, its body is destroyed and the kakuen-taka gains the benefits of a death knell spell. This is a death attack.[DC %1]",
+      "description_variables": [
+        "ConsumeFleshDC"
+      ],
+      "source_page": "p.20",
+      "owners": [
+        "Kakuen-Taka"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 148,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Kakuen-Taka ~ Create Carrionstorm",
+      "name": "Create Carrionstorm",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "As a full-round action at sunrise, a Kakuen-Taka can create 1d4 Carrionstorms with a blinding poison in addition to their swarm attack. Injury Fort DC 12 1/round 6 rounds, permanent blindness 2 consecutive saves.",
+      "description_variables": [],
+      "source_page": "p.20",
+      "owners": [
+        "Kakuen-Taka"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 149,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Kakuen-Taka ~ Dimensional Snare",
+      "name": "Dimensional Snare",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any creature affected by the kakuen-taka's swarm attack must succeed at a DC 21 Will save or be affected by dimensional anchor for 1 round.",
+      "description_variables": [],
+      "source_page": "p.20",
+      "owners": [
+        "Kakuen-Taka"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 150,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Kakuen-Taka ~ Flesh Mansion",
+      "name": "Flesh Mansion",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "As a standard action, the swarm can abandon its flesh mansion (which falls inert in its square), inhabit an empty flesh mansion, hide within its flesh mansion (gaining cover against all opponents but still being able to use its swarm attack), or stop hiding within the flesh mansion. If the flesh mansion is destroyed, the swarm can create another by performing a ritual that requires 1 hour and the corpse of a Huge creature.",
+      "description_variables": [],
+      "source_page": "p.20",
+      "owners": [
+        "Kakuen-Taka"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 151,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Kakuen-Taka ~ Fleshy Shield",
+      "name": "Fleshy Shield",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A newly created flesh mansion has 150 hit points. The swarm takes only half damage from all attacks that deal hit point damage, with the remainder taken by the flesh mansion. When the flesh mansion reaches 0 hit points, it is destroyed and the swarm functions like a normal swarm",
+      "description_variables": [],
+      "source_page": "p.20",
+      "owners": [
+        "Kakuen-Taka"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 152,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Kakuen-Taka ~ Swarm",
+      "name": "Swarm",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "On contact, 5d6 damage plus dimensional snare and distraction",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Kakuen-Taka"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 153,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Khaei ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "Khaei have access to spell-like abilities.",
+      "description_variables": [],
+      "source_page": "p.22",
+      "owners": [
+        "Khaei"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 157,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Khaei ~ Lost Time",
+      "name": "Lost Time",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a touch attack, a khaei can touch a creature and prematurely age it. The creature touched must succeed at a DC 14 Fortitude save or take 1d4 points of Constitution damage and be permanently aged 1d10 years. This effect also deals 1d4 points of damage to the khaei.",
+      "description_variables": [],
+      "source_page": "p.22",
+      "owners": [
+        "Khaei"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 158,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Korir-Kokembe ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "The Korir-Kokembe gains spell-like abilities",
+      "description_variables": [],
+      "source_page": "p.23",
+      "owners": [
+        "Korir-Kokembe"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 162,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Korir-Kokembe ~ Disease",
+      "name": "Disease",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Injury, Fort DC 20, onset 1 round, 1d3 Dex and 1d3 Str, cure 2 consecutive saves.",
+      "description_variables": [],
+      "source_page": "p.23",
+      "owners": [
+        "Korir-Kokembe"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 163,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Termagant ~ Poison",
+      "name": "Flux Infusion Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Injury; Fort DC 28; 1/round for 10 rounds; 1d4 Con, Dex or Str; Cure 2 consecutive saves.",
+      "description_variables": [],
+      "source_page": "p.24",
+      "owners": [
+        "Kyton (Termagant)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 167,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Termagant ~ Rupture",
+      "name": "Rupture",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "When killed, a termagant explodes in a blast of its flux infusion poison. All living creatures within 15 feet must save or be poisoned.",
+      "description_variables": [],
+      "source_page": "p.24",
+      "owners": [
+        "Kyton (Termagant)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 168,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Termagant ~ Shared Rupture",
+      "name": "Shared Rupture",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any creature killed while poisoned by a termagant explodes. All living creatures within 10 feet of the creature must succeed at a DC 23 Fortitude save or be poisoned.",
+      "description_variables": [],
+      "source_page": "p.24",
+      "owners": [
+        "Kyton (Termagant)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 169,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Termagant ~ Unnerving Gaze",
+      "name": "Unnerving Gaze",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A creature that succumbs to a termagant's unnerving gaze becomes nauseated for 1d4 rounds as its mind attempts to comprehend the horrors it has witnessed.",
+      "description_variables": [],
+      "source_page": "p.24",
+      "owners": [
+        "Kyton (Termagant)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 170,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Termagant ~ Regeneration",
+      "name": "Regeneration",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ModifyHP"
+      ],
+      "description": "You are difficult to kill. You heal damage at %1 points per round, as with fast healing, but you cannot die as long as your regeneration is still functioning (although you still fall unconscious when their hit points are below 0). Damage from silver weapons or good weapons and spells causes your regeneration to stop functioning on the round following the attack. During this round, you cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. You can regrow lost portions of you body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally.",
+      "description_variables": [
+        "RegenerationRate"
+      ],
+      "source_page": "p.303",
+      "owners": [
+        "Kyton (Termagant)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 171,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Termagent ~ Bleed Damage",
+      "name": "Bleed Damage",
+      "facet": "SpecialAttack",
+      "delivery": null,
+      "traits": [],
+      "description": "Termagent slam attacks do 2d6 bleed additional damage",
+      "description_variables": [],
+      "source_page": "p.24",
+      "owners": [
+        "Kyton (Termagant)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 172,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lorthact ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "Lorthact has spell-like abilities",
+      "description_variables": [],
+      "source_page": "p.26",
+      "owners": [
+        "Lorthact"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 194,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lorthact ~ Infernal Duke Traits",
+      "name": "Infernal Duke Traits",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "An infernal duke is a powerful devil that has not yet made the full transition from unique devil to full archdevil. Lorthact's natural weapons, as well as any weapon he wields, are treated as evil and lawful for the purpose of overcoming damage reduction.",
+      "description_variables": [],
+      "source_page": "p.26",
+      "owners": [
+        "Lorthact"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 195,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lorthact ~ Intelligence Drain",
+      "name": "Intelligence Drain",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Lorthact drains 1 point of Intelligence each time he hits with a weapon or natural weapon (Will DC 39 negates). Alternatively, he can make a single melee touch attack per round, dealing no hit point damage but draining 2d4 points of Intelligence (Will DC 39 half). After draining Intelligence from a creature, Lorthact gains the benefit of foresight (as the spell) against that creature for 1 minute.",
+      "description_variables": [],
+      "source_page": "p.26",
+      "owners": [
+        "Lorthact"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 196,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lorthact ~ Scholastic Masquerade",
+      "name": "Scholastic Masquerade",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "When targeting a dominated wizard with his spell reservoir ability, Lorthact can also steal a school power from that wizard's chosen school.",
+      "description_variables": [],
+      "source_page": "p.26",
+      "owners": [
+        "Lorthact"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 197,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lorthact ~ Spell Reservoir",
+      "name": "Spell Reservoir",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Lorthact can drain prepared arcane spells from the mind of a creature he has dominated and store them for later use, similarly to a ring of spell storing.",
+      "description_variables": [],
+      "source_page": "p.26",
+      "owners": [
+        "Lorthact"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 198,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lorthact ~ Temporal Anomaly",
+      "name": "Temporal Anomaly",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Lorthact exists slightly outside of the normal timestream. Spells that predict the future-such as augury, divination, Foresight, and moment of prescience can not perceive him and provide no benefit against him or information about him. In addition, whenever a creature within 6o feet of him uses time stop, Lorthact can act normally within the duration of the time stop, as if he had cast it himself.",
+      "description_variables": [],
+      "source_page": "p.26",
+      "owners": [
+        "Lorthact"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 199,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mana Wastes Mutant ~ Acid Resistance",
+      "name": "Acid Resistance",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "MutantSpecialAbility"
+      ],
+      "description": "The Mana Waste Mutant gains Acid Resistance %1 The Mana Waste Mutant gains Immunity to Acid",
+      "description_variables": [
+        "MutantAcidResistance"
+      ],
+      "source_page": "p.29",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 203,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mana Wastes Mutant ~ Acidic Pustules",
+      "name": "Acidic Pustules",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [
+        "MutantSpecialAbility"
+      ],
+      "description": "The Mana Waste Mutant is covered in necrotic pustules that burst at the slightest touch. Any piercing or slashing damage causes all creatures adjacent to make a Reflex save (DC %1) or take  0 Acid damage. 1 Acid damage. 1d2 Acid damage. 1d3 Acid damage. 1d4 Acid damage. 1d6 Acid damage. 1d8 Acid damage. 2d6 Acid damage. 3d6 Acid damage.",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "source_page": "p.29",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 204,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mana Wastes Mutant ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [
+        "MutantSpecialAbility"
+      ],
+      "description": "30-ft acid cone, %1d6 damage, Reflex half (DC %2)",
+      "description_variables": [
+        "HD/2",
+        "10+HD/2+CON"
+      ],
+      "source_page": "p.29",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 205,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mana Wastes Mutant ~ Disease",
+      "name": "Disease",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "MutantSpecialAbility"
+      ],
+      "description": "Mana Fever, Injury; Fort DC %1, onset 1d4 min, 1/day, cure 2 consecutive saves;  1d2 Con damage, 1d2 Cha drain. 1d3 Con Damage, 1d3 Cha drain. Anyone who lives with mana fever for a week straight without dying becomes immune to the disease, but also becomes a Mana Wastes mutant.",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "source_page": "p.29",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 206,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mana Wastes Mutant ~ Increased Speed",
+      "name": "Increased Speed",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "MutantSpecialAbility"
+      ],
+      "description": "Some Mana Wastes mutants are transformed in such a way that their base speed increases",
+      "description_variables": [],
+      "source_page": "p.29",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 207,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mana Wastes Mutant ~ Deformed Arm",
+      "name": "Deformed Arm",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [
+        "MutantDeformity"
+      ],
+      "description": "One hand can't wield weapons, but the mutant's slam attack deals damage as if it were two size categories larger than its actual size.",
+      "description_variables": [],
+      "source_page": "p.29",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 208,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mana Wastes Mutant ~ Deformed Leg",
+      "name": "Deformed Leg",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [
+        "MutantDeformity"
+      ],
+      "description": "The mutant's base speed is reduced by 10 feet (minimum base speed of 5 feet), but it gains a +4 racial bonus to its CMD.",
+      "description_variables": [],
+      "source_page": "p.29",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 209,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mana Wastes Mutant ~ Shattered Hide",
+      "name": "Shattered Mind",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [
+        "MutantDeformity"
+      ],
+      "description": "The mutant takes a -2 penalty to Intelligence, but gains a +2 racial bonus on Will saves.",
+      "description_variables": [],
+      "source_page": "p.29",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 210,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mana Wastes Mutant ~ Warped Mind",
+      "name": "Warped Hide",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [
+        "MutantDeformity"
+      ],
+      "description": "The mutant loses its +2 racial bonus to Con, but gains an additional +2 bonus to its natural armor.",
+      "description_variables": [],
+      "source_page": "p.29",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 211,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Deadly Mantis ~ Fling",
+      "name": "Fling",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "If a deadly mantis begins its turn with a Large or smaller creature grabbed in its claws, it can, as a standard action, fling that creature up to 30 feet away. Creatures thrown in this way take 3d6 points of damage as if they had fallen from the same distance.",
+      "description_variables": [],
+      "source_page": "p.30",
+      "owners": [
+        "Mantis (Deadly)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 215,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Deadly Mantis ~ Rending Mandibles",
+      "name": "Rending Mandibles",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "If a deadly mantis hits with both claws and successfully grabs a foe, it can make an immediate bite attack against that foe as a secondary attack. This bite attack has a +12 attack bonus and deals 4d6+6 points of damage. In addition to dealing damage, the mantis can tear away the victim's armor as a free action by making a combat maneuver check. If the mantis is successful, the target's armor is ripped from its body. If the target fails a DC 31 Reflex save, the armor subjected to this attack loses half its hit points and gains the broken condition. The save DC is Strength-based.",
+      "description_variables": [],
+      "source_page": "p.30",
+      "owners": [
+        "Mantis (Deadly)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 216,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mockingfey ~ Mock",
+      "name": "Mock",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a standard action, a mockingfey can magically take on the appearance of any creature it can see. This functions like disguise seif, but with no restrictions on duration, creature type, or size. The Mockingfey's size does not change.",
+      "description_variables": [],
+      "source_page": "p.31",
+      "owners": [
+        "Mockingfey"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 220,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Moxix ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "1/day: Summon (level 9, any 1 CR 19 or lower demon 100%%).",
+      "description_variables": [],
+      "source_page": "p.32",
+      "owners": [
+        "Moxix"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 224,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Moxix ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "60-ft acid cone, 16d6 damage. Any creature damaged must succeed at a DC 28 Fort save or contract Moxix's Delectation. A humanoid afflicted with this disease must attempt a new Will save each day. If the humanoid fails, it attacks and attempts to eat the weakest humanoid nearby. If the save is successful, it resists this impulse. A humanoid who dies while afflicted rises as a ghast at the next midnight.",
+      "description_variables": [],
+      "source_page": "p.32",
+      "owners": [
+        "Moxix"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 225,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Moxix ~ Moxix's Delectation",
+      "name": "Moxix's Delectation",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Inhaled; save Fortitude DC 28; onset 1 day; frequency 1 day; effect 1d4 Con and 1d4 Wis damage; cure 2 consecutive saves.",
+      "description_variables": [],
+      "source_page": "p.32",
+      "owners": [
+        "Moxix"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 226,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Moxix ~ Gush",
+      "name": "Gush",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Anytime Moxix takes more than 50 points of weapon damage in a round, blood and pus spews forth from the wound. The blood is extremely slippery and sprays out in a 20-foot radius, coating all creatures and surfaces in the area. Any creatures in the area must succeed at a DC 28 Reflex save or drop any items they are holding. A saving throw must be made each round that the creature attempts to use or pick up an item it previously dropped. In addition, the area coated in the gushing blood is difficult to move about in, and creatures moving throgh the area must succeed at a DC 15 Acrobatics check or fall prone.",
+      "description_variables": [],
+      "source_page": "p.32",
+      "owners": [
+        "Moxix"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 227,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Moxix ~ Hopedrinker",
+      "name": "Hopedrinker",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Moxix emits an aura that drains hope from all within 6o feet. All morale bonuses are suppressed within this aura, regardless of their source. In addition, spells and spell-like abilities granting a morale bonus are affected as dispel magic used to counterspell (caster level 23rd) every round at the beginning of Moxix's turn.",
+      "description_variables": [],
+      "source_page": "p.32",
+      "owners": [
+        "Moxix"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 228,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Moxix ~ Mindshatter",
+      "name": "Mindshatter",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "If a creature fails its save against Moxix's eyebite spell-like ability, as a standard action before the end of his turn he may unravel the target's mind and spirit. This acts as greater dispel magic (caster level 23rd) against effects that protect against mind-affecting or necromantic effects and automatically affects the target as enervation and touch of idiocy (duration 24 hours).",
+      "description_variables": [],
+      "source_page": "p.32",
+      "owners": [
+        "Moxix"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 229,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Nightripper ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "Constant: Air Walk, Detect Good, Detect Law, Freedom of Movement, True Seeing, Unholy Aura (DC 25). 1/day Summon (level 9, any demon or combination of demons whose total combined CR is 20 or lower 100%%)",
+      "description_variables": [],
+      "source_page": "p.34",
+      "owners": [
+        "Nightripper"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 233,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Nightripper ~ Curse of Living Death",
+      "name": "Curse of Living Death",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The target can resist thiscurse with a successful DC 30 Will save right before it dies,allowing the victim to die normally.",
+      "description_variables": [],
+      "source_page": "p.34",
+      "owners": [
+        "Nightripper"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 234,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Nascent Demon Lord Traits",
+      "name": "Nascent Demon Lord Traits",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "Once per day, Nightripper can summon any demon or combination of demons whose total combined CR is 20 or lower. This ability always works, and is equivalent to a 9th-level spell. Nightripper's natural weapons, as well as any weapon he wields, are treated as chaotic, epic, and evil for the purpose of overcoming damage reduction.",
+      "description_variables": [],
+      "source_page": "p.34",
+      "owners": [
+        "Nightripper"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 235,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Nightripper ~ Slowing Gaze",
+      "name": "Slowing Gaze",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Slowed (as per Slow) for 1 round, 30 ft, Will DC 30 negates.",
+      "description_variables": [],
+      "source_page": "p.34",
+      "owners": [
+        "Nightripper"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 236,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Nightripper ~ Swift Cuts",
+      "name": "Swift Cuts",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "As long as he is attacking with a sword, Nightripper treats foes who are staggered, nauseated, or slowed as if they were flat-footed.",
+      "description_variables": [],
+      "source_page": "p.34",
+      "owners": [
+        "Nightripper"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 237,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Nightripper ~ Sword Mastery",
+      "name": "Sword Mastery",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Nightripper possesses several sword-related bonus feats normally restricted to fighters.",
+      "description_variables": [],
+      "source_page": "p.34",
+      "owners": [
+        "Nightripper"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 238,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Oronci ~ Frenzy",
+      "name": "Frenzy",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "While in this state, an oronci cannot use any Charisma-, Dexterity-, or Intelligence-based skill checks, but functions as if under the effects of a haste spell.",
+      "description_variables": [],
+      "source_page": "p.36",
+      "owners": [
+        "Oronci"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 242,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Oronci ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Injury; Fort DC 17, 1/round, 6 rounds; 1d3 Dex; Cure 2 consecutive saves.",
+      "description_variables": [],
+      "source_page": "p.36",
+      "owners": [
+        "Oronci"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 243,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Oronci ~ Spit",
+      "name": "Spit",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Every 1d6 rounds, an oronci can spit poison up to 30 ft as a ranged touch attack.",
+      "description_variables": [],
+      "source_page": "p.36",
+      "owners": [
+        "Oronci"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 244,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Oronci ~ Undersized Weapons",
+      "name": "Undersized Weapons",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Although an oronci is Large, its upper torso is the same size as that of a Medium humanoid. As a result, oronci wield weapons as if they were one size category smaller than their actual size (Medium for most oronci).",
+      "description_variables": [],
+      "source_page": "p.36",
+      "owners": [
+        "Oronci"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 245,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Petrified Maiden ~ Curse of Stone",
+      "name": "Curse of Stone",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Creature afflicted slowly turns to stone. Touch; Fort DC 17, 1/day; onset 1 min; 1d6 Dex",
+      "description_variables": [],
+      "source_page": "p.37",
+      "owners": [
+        "Petrified Maiden"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 249,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Petrified Maiden ~ Petrified Body",
+      "name": "Petrified Body",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The stony flesh of a Petrified Maiden reacts to spells and effects as noted below. Transmute Rock to Mud deals 1d6 damage per caster level. Transmute Mud to Rock instantly heals all damage. Stone to Flesh negates damage reduction and SR for 1 round.",
+      "description_variables": [],
+      "source_page": "p.37",
+      "owners": [
+        "Petrified Maiden"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 250,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Petrified Maiden ~ Reconstitution",
+      "name": "Reconstitution",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A damaged Petrified Maiden slowly returns to its undamaged form unless it was damaged by a Transmute Rock to Mud spell.",
+      "description_variables": [],
+      "source_page": "p.37",
+      "owners": [
+        "Petrified Maiden"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 252,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Petrified Maiden ~ Weapon Expertise",
+      "name": "Weapon Expertise",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A Petrified Maiden is proficient with any one martial weapon.",
+      "description_variables": [],
+      "source_page": "p.37",
+      "owners": [
+        "Petrified Maiden"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 253,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Petrified Maiden ~ Weapon Selection",
+      "name": "Weapon Selection",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [
+        "PetrifiedMaidenWeaponSelection"
+      ],
+      "description": null,
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Petrified Maiden"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 257,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Psychopomp Traits",
+      "name": "Psychopomp Traits",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "Psychopomps are neutral outsiders native to the plain known as the Boneyard. Psychopomps have a particular suite of traits.",
+      "description_variables": [],
+      "source_page": "p.38",
+      "owners": [
+        "Psychopomp (Memitim)",
+        "Psychopomp (Shoki)",
+        "Psychopomp (Viduus)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 261,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Psychopomp ~ Spirit Touch",
+      "name": "Spirit Touch",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A psychopomp's natural weapons, as well as any weapon it wields , are treated as though they had the .Ghost Touch weapon special ability.",
+      "description_variables": [],
+      "source_page": "p.38",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 262,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Psychopomp ~ Spirit Sense",
+      "name": "Spirit Sense",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A psychopomp notices, locates, and can distinguish between living and undead creatures within 6o feet, just as if it had the blindsight ability.",
+      "description_variables": [],
+      "source_page": "p.38",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 263,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Memitim ~ Terminal Aura",
+      "name": "Terminal Aura",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any creature within 50 feet of a Memitim that has -1 or fewer hit points but is stable must succeed at a DC 23 Will save or be affected as per the Bleed spell.",
+      "description_variables": [],
+      "source_page": "p.39",
+      "owners": [
+        "Psychopomp (Memitim)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 267,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Shoki ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "Constant: Detect Chaos, Detect Evil, Detect Good, Detect Law, Detect Magic",
+      "description_variables": [],
+      "source_page": "p.40",
+      "owners": [
+        "Psychopomp (Shoki)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 271,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Shoki ~ Soul Lock",
+      "name": "Soul Lock",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "1/day a Shoki can capture a soul on the brink of death within the Shoki's staff.",
+      "description_variables": [],
+      "source_page": "p.40",
+      "owners": [
+        "Psychopomp (Shoki)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 272,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Viduus ~ Censor",
+      "name": "Censor",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "By striking a living creature with its quill, a Viduus can rewrite that creatures memories (DC 15 Will negates).",
+      "description_variables": [],
+      "source_page": "p.41",
+      "owners": [
+        "Psychopomp (Viduus)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 276,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Viduus ~ Expurgate",
+      "name": "Expurgate",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "By striking a dead creature with its quill, a Viduus can erase all that creatures memories (DC 15 Will negates).",
+      "description_variables": [],
+      "source_page": "p.41",
+      "owners": [
+        "Psychopomp (Viduus)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 277,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Viduus ~ Transformation",
+      "name": "Transformation",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A Viduus reduced to 0 or fewer hit points bursts open expelling a swarm of centipedes (identical to a spider swarm) and a bank of Mind Fog.",
+      "description_variables": [],
+      "source_page": "p.41",
+      "owners": [
+        "Psychopomp (Viduus)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 278,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Robot ~ Intelligent",
+      "name": "Intelligent",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "Robots are intelligent, and thus have skills and feats as appropriate for their Hit Dice.",
+      "description_variables": [],
+      "source_page": "p.42",
+      "owners": [
+        "Robot (Annihilator)",
+        "Robot (Gearsman)",
+        "Robot (Myrmidon)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 282,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Robot ~ Critical Hit Vulnerability",
+      "name": "Critical Hit Vulnerability",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "Whenever a robot takes extra damage from a critical hit, it must make a DC 15 Fortitude save to avoid being stunned for 1 round. If it makes a successful saving throw, it is staggered for 1 round.",
+      "description_variables": [],
+      "source_page": "p.42",
+      "owners": [
+        "Robot (Annihilator)",
+        "Robot (Gearsman)",
+        "Robot (Myrmidon)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 283,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Robot ~ Electricity Vulnerability",
+      "name": "Electricity Vulnerability",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "Robots take 150%% as much damage as normal from electricity attacks , unless they are immune to electricity via other special defenses.",
+      "description_variables": [],
+      "source_page": "p.42",
+      "owners": [
+        "Robot (Annihilator)",
+        "Robot (Gearsman)",
+        "Robot (Myrmidon)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 284,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Robot ~ Force Field",
+      "name": "Force Field",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A force field sheathes a robot in a thin layer of shimmering energy that grants a number of bonus hit points that varies according to the robot (typically 5 x the robot's CR). All damage dealt to a robot with an active force field is reduced from these hit points first. As long as the force field is active, the robot is immune to critical hits. A force field has fast healing equal to the robot's CR, but once its hit points are reduced to 0, the force field shuts down and does not reactivate for 24 hours.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Robot (Annihilator)",
+        "Robot (Myrmidon)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 285,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Annihilator ~ Booster Jets",
+      "name": "Booster Jets",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "As a swift action up to 10 times per hour an Annihilator can gain a fly speed of 60 ft (poor maneuverability) for a duration of 1 min.",
+      "description_variables": [],
+      "source_page": "p.43",
+      "owners": [
+        "Robot (Annihilator)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 289,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Annihilator ~ Chain Guns",
+      "name": "Chain Guns",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "These advanced firearms have a range increment of 200 feet, automatically reload as a free action, and never misfire. An annihilator's core can process scrap metal into new ammunition, effectively giving the annihilator infinite ammo with these weapons.",
+      "description_variables": [],
+      "source_page": "p.43",
+      "owners": [
+        "Robot (Annihilator)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 290,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Annihilator ~ Combined Arms",
+      "name": "Combined Arms",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "When taking a full attack action, an annihilator can attack with melee and ranged integrated weapons simultaneously.",
+      "description_variables": [],
+      "source_page": "p.43",
+      "owners": [
+        "Robot (Annihilator)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 291,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Annihilator ~ Plasma Lance",
+      "name": "Plasma Lance",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "As a standard action once every 3 rounds, an annihilator may fire a 120-foot-long line of plasma from its tail. All creatures in this area take 20d6 points of plasma damage (Reflex DC 22 halves).",
+      "description_variables": [],
+      "source_page": "p.43",
+      "owners": [
+        "Robot (Annihilator)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 292,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Annihilator ~ Suppressing Fire",
+      "name": "Suppressing Fire",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "As a standard action, an annihilator can use its chainguns to fire in a 100-foot cone. When it does so, it makes a single chaingun attack against every target in this area.",
+      "description_variables": [],
+      "source_page": "p.43",
+      "owners": [
+        "Robot (Annihilator)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 293,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Gearsman ~ Adaptive Learning",
+      "name": "Adaptive Learning",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A gearsman has a number of bonus skill ranks equal to its Hit Dice that can be reprogrammed to apply to any skill-these ranks cannot be split among multiple skills and must all apply to one skill. Rather than spend these bonus ranks on a skill, a gearsman can choose to devote them to weapon knowledge, gaining proficiency with a single weapon instead.",
+      "description_variables": [],
+      "source_page": "p.44",
+      "owners": [
+        "Robot (Gearsman)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 297,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Gearsman ~ Charge Weapon",
+      "name": "Charge Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Any metal melee weapon wielded by a gearsman becomes charged with electricity and deals +1d6 points of electricity damage on a hit.",
+      "description_variables": [],
+      "source_page": "p.44",
+      "owners": [
+        "Robot (Gearsman)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 298,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Gearsman ~ Self-Repair",
+      "name": "Self-Repair",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A gearsman's nanites heal it of damage at the rate of a number of hit points per hour equal to its Hit Dice. Up to once per day, as a full-round action, it can heal any robot it touches of 4d6 points of damage-if a gearsman uses this ability on itself, it automatically heals the maximum amount.",
+      "description_variables": [],
+      "source_page": "p.44",
+      "owners": [
+        "Robot (Gearsman)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 299,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Myrmidon ~ Combined Arms",
+      "name": "Combined Arms",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "When taking a full attack action, an myrmidon can attack with melee and ranged integrated weapons simultaneously.",
+      "description_variables": [],
+      "source_page": "p.45",
+      "owners": [
+        "Robot (Myrmidon)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 303,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Myrmidon ~ Laser Rifle",
+      "name": "Laser Rifle",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A myrmidon's eye is an integrated laser rifle. This weapon has a range increment of 250 feet and deals 2d10 fire vs touch AC.",
+      "description_variables": [],
+      "source_page": "p.45",
+      "owners": [
+        "Robot (Myrmidon)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 304,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Myrmidon ~ Quantum Lash",
+      "name": "Quantum Lash",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A myrmidon's two facial tentacles extend up to 20 feet and resolve as touch attacks. Chance to disrupt force fields or force effects.",
+      "description_variables": [],
+      "source_page": "p.45",
+      "owners": [
+        "Robot (Myrmidon)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 305,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Myrmidon ~ Resilient",
+      "name": "Resilient",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "+3 racial bonus on all saving throws.",
+      "description_variables": [],
+      "source_page": "p.45",
+      "owners": [
+        "Robot (Myrmidon)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 306,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Myrmidon ~ Rockets",
+      "name": "Rockets",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "As a standard action, a myrmidon can fire a rocket to a range of 8oo feet. A rocket explodes on impact in a 30-foot-radius burst, dealing 6d6 points of fire damage and 6d6 points of bludgeoning damage to all creatures in the area (Reflex DC 18 halves).",
+      "description_variables": [],
+      "source_page": "p.45",
+      "owners": [
+        "Robot (Myrmidon)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 307,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Myrmidon ~ Superior Optics",
+      "name": "Superior Optics",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Myrmidons see invisible creatures or objects as if they were visible.",
+      "description_variables": [],
+      "source_page": "p.45",
+      "owners": [
+        "Robot (Myrmidon)"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 308,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_312)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_312)",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 312,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_bestiary:isb_abilities_race.lst:312"
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_313)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_313)",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "300-ft radius aura of terror",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 313,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_bestiary:isb_abilities_race.lst:313"
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_314)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_314)",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 314,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_bestiary:isb_abilities_race.lst:314"
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_315)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_315)",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 315,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_bestiary:isb_abilities_race.lst:315"
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_316)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_316)",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 316,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_bestiary:isb_abilities_race.lst:316"
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_317)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_317)",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 317,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_bestiary:isb_abilities_race.lst:317"
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_318)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_bestiary_isb_abilities_race_lst_318)",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 318,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_bestiary:isb_abilities_race.lst:318"
+    },
+    {
+      "key": "Chemnosit ~ Hungry Gaze",
+      "name": "Hungry Gaze",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "3d6 nonlethal plus fatigue (Fort DC 30 negates). Affected creatures gain an overwhelming compulsion to eat flesh of creatures of its type (its own if none others available). Will DC 30 negates.[DC %1]",
+      "description_variables": [
+        "HungryGazeDC"
+      ],
+      "source_page": "p.47",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 322,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Chemnosit ~ Spines",
+      "name": "Spines",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Creatures dealing melee attacks take 2d6+12 piercing.",
+      "description_variables": [],
+      "source_page": "p.47",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 323,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Volnagur ~ Blood Rage",
+      "name": "Blood Rage",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Any creature taking bleed damage from Volnagur's razor tongues takes a -4 penalty on Will saves and is affected as the Murderous Command spell (Will DC 16 negates) each round that bleeding continues, ignoring allies that are also taking bleed damage from Volnagur.",
+      "description_variables": [],
+      "source_page": "p.48",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 327,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Volnagur ~ Eye Rays",
+      "name": "Eye Rays",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Volnagur fires eye rays at a range of up to 120 feet. Creatures struck by his eye rays are nauseated for 1 minute (Fortitude DC 29 negates).[DC %1]",
+      "description_variables": [
+        "EyeRaysDC"
+      ],
+      "source_page": "p.48",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 328,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Volnagur ~ Shatter Silence",
+      "name": "Shatter Silence",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "At the beginning of its turn, any Silence effect within 6o feet is targeted as dispel magic (caster level 25th).",
+      "description_variables": [],
+      "source_page": "p.48",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 329,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Spellscar Fext ~ Deadly Slam",
+      "name": "Deadly Slam",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A Spellscar Fext threatens a critical hit on an 18-20 with its slam attack",
+      "description_variables": [],
+      "source_page": "p.49",
+      "owners": [
+        "Spellscar Fext"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 333,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Spellscar Fext ~ Dispelling Critical",
+      "name": "Dispelling Critical",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Victims of a successful critical hit with the Spellscar Fext's slam attack are affected as though by the targeted dispel version of Dispel Magic (Will DC 19 negates).",
+      "description_variables": [],
+      "source_page": "p.49",
+      "owners": [
+        "Spellscar Fext"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 334,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Spellscar Fext ~ Ravage Magic",
+      "name": "Ravage Magic",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any targeted spell or spell-like ability that fails to penetrate a Spellscar fext's spell resistance is absorbed by the fext and warped into a form of primal magic. A Spellscar fext can twist only a number of spell levels per round equal to its Charisma modifier.",
+      "description_variables": [],
+      "source_page": "p.49",
+      "owners": [
+        "Spellscar Fext"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 335,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Spellscar Fext ~ Vulnerable to Glass",
+      "name": "Vulnerable to Glass",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Spellscar fexts take 150%% as much damage as normal from glass-headed piercing or slashing weapons.",
+      "description_variables": [],
+      "source_page": "p.49",
+      "owners": [
+        "Spellscar Fext"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 336,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Star Monarch ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "A Star Monarch has certain spell-like abilities.",
+      "description_variables": [],
+      "source_page": "p.50",
+      "owners": [
+        "Star Monarch"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 340,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Star Monarch ~ Dreamwarden",
+      "name": "Dreamwarden",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any sleeping creature within 30 feet of a star monarch is protected by Protection from Evil and Sanctuary (Will DC 15 negates).",
+      "description_variables": [],
+      "source_page": "p.50",
+      "owners": [
+        "Star Monarch"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 341,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Star Monarch ~ Glowsap",
+      "name": "Glowsap",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A creature struck by a Star Monarch's spittle (30-ft range) is affected as by a Tanglefoot Bag. Under starlight or moonlight, the victim also glows as if under Faerie Fire.",
+      "description_variables": [],
+      "source_page": "p.50",
+      "owners": [
+        "Star Monarch"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 342,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Star Monarch ~ Navigational Awareness",
+      "name": "Navigational Awareness",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Star Monarchs never become lost and are immune to maze spells or any effect that would cause them to lose their sense of direction.",
+      "description_variables": [],
+      "source_page": "p.50",
+      "owners": [
+        "Star Monarch"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 343,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Star Monarch ~ Starflight",
+      "name": "Starflight",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Star Monarchs can survive in the void of space.",
+      "description_variables": [],
+      "source_page": "p.50",
+      "owners": [
+        "Star Monarch"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 344,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Star Monarch ~ Toxic Flesh",
+      "name": "Toxic Flesh",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A creature injecting any part of a Star Monarch becomes sickened for 1d4 rounds and is affected as though it had consumed a dose of Arsenic (Fort DC 20 negates).",
+      "description_variables": [],
+      "source_page": "p.50",
+      "owners": [
+        "Star Monarch"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 345,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thin Man ~ Vanish",
+      "name": "Vanish",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Once per day as a move action while benefiting from concealment, a thin man can simply vanish from sight. This gives it a +20 bonus on Stealth checks and the ability to hide in plain sight for 1 round per Hit Die even when there is no cover, concealment, or shadow nearby. If it makes an attack, the thin man is no longer in its vanished state. It usually uses this ability when attempting to elude pursuit.",
+      "description_variables": [],
+      "source_page": "p.52",
+      "owners": [
+        "Thin Man"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 369,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Umbral Shepherd ~ Planebound",
+      "name": "Planebound",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Each round that an Umbral Shepherd is on another plane than the Plane of Shadow without a host body, it takes 1d6 damage.",
+      "description_variables": [],
+      "source_page": "p.53",
+      "owners": [
+        "Umbral Shepherd"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 373,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Umbral Shepherd ~ Possession",
+      "name": "Possession",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "An umbral shepherd can possess a host body as if using Magic Jar, save that if its host body is killed while possessed, the shepherd dies as well.",
+      "description_variables": [],
+      "source_page": "p.53",
+      "owners": [
+        "Umbral Shepherd"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 374,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Umbral Shepherd ~ Shadow Touch",
+      "name": "Shadow Touch",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "An umbral shepherd that succeeds at a touch attack can attempt to dissolve a portion of the victim's flesh into shadow, which then dissipates, dealing 1d4 points of Con damage (Fort DC 15 halves).",
+      "description_variables": [],
+      "source_page": "p.53",
+      "owners": [
+        "Umbral Shepherd"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 375,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vetala ~ Drain Prana",
+      "name": "Drain Prana",
+      "facet": "SpecialAttack",
+      "delivery": null,
+      "traits": [
+        "Supernatural q"
+      ],
+      "description": "A Vetala can drain the mental vitality of a grappled opponent. If the vetala establishes or maintains a pin, it drains this energy, dealing 1d4 points of Charisma damage. Additionally, the victim is affected by the spell Modify Memory, as if the Vetala had spent 5 minutes concentrating. The Vetala gains perfect knowledge of any memory it chooses to eliminate using this ability.",
+      "description_variables": [],
+      "source_page": "p.55",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 379,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vetala ~ Malevolence",
+      "name": "Malevolence",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a full-round action, a Vetala can attempt to take control of a helpless living creature's body, as the spell Magic Jar (caster level 10th or the Vetala's Hit Dice, whichever is higher), except that it does not require a receptacle. The target can resist the attack with a successful Will save (DC %1).",
+      "description_variables": [
+        "10+TL/2+CHA"
+      ],
+      "source_page": "p.55",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 380,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vetala ~ Possess Corpse",
+      "name": "Possess Corpse",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a full-round action, a Vetala can possess a Large or smaller corpse just as it can a living body. The Vetala's consciousness leaves its body and takes control of the corpse, animating it as either a skeleton or zombie (depending on its state of decay). The Vetala can remain in control of a corpse indefinitely, and can communicate through the body, but cannot use any of its other special abilities.",
+      "description_variables": [],
+      "source_page": "p.55",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 382,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vetala ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "If reduced to 0 hit points in combat, a vetala is helpless and its fast healing ceases to function for 1 hour. Additional damage dealt to the vetala has no effect. Its body might be subjected to any method of dismemberment or desecration, but after 1 hour-regardless of the state of its remains-it regains 1 hit point, is no longer helpless, and resumes healing at the rate of 5 hit points per round. However, consecrating the vetala's remains and burying the body destroys it forever.",
+      "description_variables": [],
+      "source_page": "p.54",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 383,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vetala ~ Weakness to Prayer",
+      "name": "Weakness to Prayer",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "Vetalas cannot tolerate the sound of prayers or religious mantras recited by those truly faithful to a good deity. Any character with a good-aligned deity can force a vetala to recoil by dramatically praying as a standard action. A recoiling vetala must stay at least 5 feet away from a praying character and cannot touch or make melee attacks against it. After 1 round, a vetala can fight past its revulsion and function normally each round it succeeds at a DC 25 Will save. The prayers of those who worship non-good deities or worship no deity have no effect on a vetala.",
+      "description_variables": [],
+      "source_page": "p.54",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 384,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Veiled Master ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "Veiled Masters possess spell-like abilities. Constant: Mage Armor",
+      "description_variables": [],
+      "source_page": "p.56",
+      "owners": [
+        "Veiled Master"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 388,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Veiled Master ~ Consume Memory",
+      "name": "Consume Memory",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "When a veiled master bites a creature, it consumes some of that creature's memories. The creature bitten must succeed at a DC 24 Fortitude save or gain one negative level. A veiled master heals 5 points of damage each time it grants a negative level in this way, and also learns some of the target creature's memories (subject to the GM's discretion). This is a mind-affecting effect.",
+      "description_variables": [],
+      "source_page": "p.56",
+      "owners": [
+        "Veiled Master"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 389,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Veiled Master ~ Delayed Suggestion",
+      "name": "Delayed Suggestion",
+      "facet": "SpecialAttack",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "Whenever the effect of a Dominate Monster or Dominate Person spell ends, the Veiled Master may leave behind a Suggestion (Spell-Like ability, CL 20th, Will DC 19 negates).",
+      "description_variables": [],
+      "source_page": "p.56",
+      "owners": [
+        "Veiled Master"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 390,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Veiled Master ~ Mucus Cloud",
+      "name": "Mucus Cloud",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "While underwater, all creatures within 30 feet lose ability to breathe air (but gain waterbreathing). DC 26 Fort negates, must be made each round.",
+      "description_variables": [],
+      "source_page": "p.56",
+      "owners": [
+        "Veiled Master"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 391,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Veiled Master ~ Runemastery",
+      "name": "Runemastery",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Veiled Masters never require material components when casting spells that create magical writing. Save DC increases by 1, Disable Device DC for symbols increases by 2.",
+      "description_variables": [],
+      "source_page": "p.56",
+      "owners": [
+        "Veiled Master"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 392,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Veiled Master ~ Slime",
+      "name": "Slime",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Creature hit by claw or bite attack has its skin transform into a soft membrane over 1d4 rounds",
+      "description_variables": [],
+      "source_page": "p.56",
+      "owners": [
+        "Veiled Master"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 393,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Veiled Master ~ Swift Transformation",
+      "name": "Swift Transformation",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A Veiled Master can use its change shape ability as a swift action.",
+      "description_variables": [],
+      "source_page": "p.57",
+      "owners": [
+        "Veiled Master"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 394,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Veiled Master ~ Thoughtlance",
+      "name": "Thoughtlance",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Four of a Veiled Master's tentacles end in glowing spheres of light. These spheres deal 2d6 points of electricity damage on a touch attack, and also blast a creature's mind with waves of mental energy.",
+      "description_variables": [],
+      "source_page": "p.57",
+      "owners": [
+        "Veiled Master"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 395,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Veiled Master ~ Spells",
+      "name": "Spells",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "A veiled master can cast spells as a 12th-level sorcerer.",
+      "description_variables": [],
+      "source_page": "p.57",
+      "owners": [
+        "Veiled Master"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 396,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vespergaunt ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "The Vespergaunt has spell-like abilities.",
+      "description_variables": [],
+      "source_page": "p.58",
+      "owners": [
+        "Vespergaunt"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 400,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vespergaunt ~ Aura of Madness",
+      "name": "Aura of Madness",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any creature within a 6o-foot radius of the vespergaunt must succeed at a DC 21 Will save or be confused for 1d4 rounds.",
+      "description_variables": [],
+      "source_page": "p.58",
+      "owners": [
+        "Vespergaunt"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 401,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vespergaunt ~ Damage Reduction",
+      "name": "Damage Reduction",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A vespergaunt's damage reduction is bypassed by any weapons that are chaos-, evil- , good-, or law-aligned.",
+      "description_variables": [],
+      "source_page": "p.58",
+      "owners": [
+        "Vespergaunt"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 402,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vespergaunt ~ Siphon Spirit",
+      "name": "Siphon Spirit",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any creature touched by a vespergaunt must succeed at a DC 21 Will save or gain 1 negative level. A divine spellcaster gains an additional negative level with each failed save.",
+      "description_variables": [],
+      "source_page": "p.58",
+      "owners": [
+        "Vespergaunt"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 403,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Water Wraith ~ Expressive Chameleon",
+      "name": "Expressive Chameleon",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Once per round as a free action, a water wraith can change its color to any of its own choosing. A water wraith using this ability to camouflage itself gains a +8 bonus on Stealth checks.",
+      "description_variables": [],
+      "source_page": "p.59",
+      "owners": [
+        "Water Wraith"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 407,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Whirlmaw ~ Burrowing Bite",
+      "name": "Burrowing Bite",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "If a whirlmaw successfully hits a Small or larger creature with its bite attack, it immediately attempts to start a grapple as a free action with a +4 bonus on the grapple check. If the grapple check is successful, the whirlmaw's spinning, sawlike mouth immediately begins to burrow into the flesh of the creature, dealing 4d6+12 points of damage per round until the grapple is broken.",
+      "description_variables": [],
+      "source_page": "p.60",
+      "owners": [
+        "Whirlmaw"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 411,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Whirlmaw ~ Dust Cloud",
+      "name": "Dust Cloud",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A whirlmaw can raise a cloud of debris while using its Hover feat just as if it were a Large creature.",
+      "description_variables": [],
+      "source_page": "p.60",
+      "owners": [
+        "Whirlmaw"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 412,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Whirlmaw ~ Flying Charge",
+      "name": "Flying Charge",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "When a whirlmaw makes a charge attack while flying, it gains a +4 bonus on its attack roll, and does not take the normal -2 penalty to Armor Class.",
+      "description_variables": [],
+      "source_page": "p.60",
+      "owners": [
+        "Whirlmaw"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 413,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Whirlmaw ~ Keen Sight",
+      "name": "Keen Sight",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A Whirlmaw takes only half the penalty on Perception checks for distance.",
+      "description_variables": [],
+      "source_page": "p.60",
+      "owners": [
+        "Whirlmaw"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 414,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Woundwyrm ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": null,
+      "traits": [],
+      "description": "100-ft. line of acid, 16d6, Reflex DC 25 for half, usable every 1d4 rounds",
+      "description_variables": [],
+      "source_page": "p.61",
+      "owners": [
+        "Woundwyrm"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 418,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Woundwyrm ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "The Woundwyrm possesses spell-like abilities. Constant: Entropic Shield, Freedom of Movement",
+      "description_variables": [],
+      "source_page": "p.61",
+      "owners": [
+        "Woundwyrm"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 419,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Woundwyrm ~ Entropic Breath",
+      "name": "Entropic Breath",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Instead of a line of acid, a woundwyrm can exhale a 30-foot cone of acid fog (as the spell) that persists for 1 minute. Any creature that begins its turn within the entropic breath becomes confused (Will DC 25 negates) for as long as it remains within the cloud and for 1d6 rounds thereafter.",
+      "description_variables": [],
+      "source_page": "p.61",
+      "owners": [
+        "Woundwyrm"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 420,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Woundwyrm ~ Maw of the Abyss",
+      "name": "Maw of the Abyss",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a full-round action, a woundwyrm can attempt to suck creatures and unattended objects in a 15-foot cone into a vortex in its maw. This acts as a drag combat maneuver (CMB +30) against creatures, and acts as a Strength check with a +10 bonus to break objects. Creatures and objects alike take 1d12 points of sonic damage per round within the cone.",
+      "description_variables": [],
+      "source_page": "p.61",
+      "owners": [
+        "Woundwyrm"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 421,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Zelishkar ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Supernatural",
+        "SpellLike"
+      ],
+      "description": "Zelishkar of the Bitter Flame has spell-like abilities.",
+      "description_variables": [],
+      "source_page": "p.62",
+      "owners": [
+        "Zelishkar"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 425,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Zelishker ~ Summon",
+      "name": "Summon",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "1/day, Zelishkar can summon 2 fiendish elder fire elementals or any daemon of 20 Hit Dice or fewer with 100%% certainty. This acts as a 9th level spell.",
+      "description_variables": [],
+      "source_page": "p.62",
+      "owners": [
+        "Zelishkar"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 426,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Zelishker ~ Fire Damage",
+      "name": "Fire Damage",
+      "facet": "SpecialAttack",
+      "delivery": null,
+      "traits": [],
+      "description": "2d6 fire damage added to every bite and claw attack.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Zelishkar"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 427,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Zelishkar ~ Bitter Flames",
+      "name": "Bitter Flames",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Whenever Zelishkar deals fire damage, half the damage is untyped damage. Any creatures that fail a save against any fire effect are sickened for 1 minute. Those damaged by melee attacks or fire effects that allow no save are instead sickened for 1 round.",
+      "description_variables": [],
+      "source_page": "p.62",
+      "owners": [
+        "Zelishkar"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 428,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Zelishkar ~ Corpse Cremation",
+      "name": "Corpse Cremation",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Whenever Zelishkar reduces a living creature to negative hit points, as a swift action he can turn ts body to ashes and feed upon the target's life force, as Death Knell (Will DC 28 negates). Whenever Zelishkar slays a creature with any attack or ability, the creature's corpse is reduced to ashes.",
+      "description_variables": [],
+      "source_page": "p.62",
+      "owners": [
+        "Zelishkar"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 429,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Zelishkar ~ Daemonic Harbinger Traits",
+      "name": "Daemonic Harbinger Traits",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "A daemonic harbinger is a powerful daemon that has not yet made the full transition from unique daemon to a horseman. The harbinger's natural weapons, as well as any weapon it wields, are treated as evil and lawful for the purpose of overcoming damage reduction.",
+      "description_variables": [],
+      "source_page": "p.62",
+      "owners": [
+        "Zelishkar"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 430,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Zelishkar ~ Incandescent Body",
+      "name": "Incandescent Body",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a free action, Zelishkar can cause his body to erupt into white-hot flame. He sheds light as bright as a daylight spell, and dazzles any creature that does not avert its gaze.",
+      "description_variables": [],
+      "source_page": "p.62",
+      "owners": [
+        "Zelishkar"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 431,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Zelishkar ~ Incendiary Grasp",
+      "name": "Incendiary Grasp",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "If Zelishkar hits a target with more than one natural weapon in the same round, the fire damage from each hit is combined as if from a single attack for the purpose of overcoming effects that provide resistance to fire. In addition, if Zelishkar succeeds at a grapple combat maneuver, as a swift action he can suppress any fire resistance or immunity the target possesses until the beginning of Zelishkar's next turn.",
+      "description_variables": [],
+      "source_page": "p.62",
+      "owners": [
+        "Zelishkar"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 432,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Immunity to Bleed Effects",
+      "name": "Immunity to Bleed Effects",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Immunity"
+      ],
+      "description": "You are never affected by bleed effects.",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 437,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Immunity to Turning",
+      "name": "Immunity to Turning",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Immunity"
+      ],
+      "description": "You are never affected by turning.",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [
+        "Charnel Colossus"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 438,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Immunity to Permanent Wounds",
+      "name": "Immunity to Permanent Wounds",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Immunity"
+      ],
+      "description": "You are never affected by permanent wounds.",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 439,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Good ~ Regeneration",
+      "name": "Regeneration",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ModifyHP"
+      ],
+      "description": "You are difficult to kill. You heal damage at %1 points per round, as with fast healing, but you cannot die as long as your regeneration is still functioning (although you still fall unconscious when their hit points are below 0). Damage from good weapons or spells causes your regeneration to stop functioning on the round following the attack. During this round, you cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. You can regrow lost portions of you body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally.",
+      "description_variables": [
+        "RegenerationRate"
+      ],
+      "source_page": "p.303",
+      "owners": [
+        "Lorthact",
+        "Nightripper"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 440,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Resistance to Mind-Affecting ~ Output",
+      "name": "Resistance to Mind-Affecting ~ Output",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Resistance"
+      ],
+      "description": "You may add %1 points to any saving throw to resist Mind-Affecting effects.",
+      "description_variables": [
+        "MindAffectingResistanceBonus"
+      ],
+      "source_page": null,
+      "owners": [],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 442,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Can't Be Disarmed",
+      "name": "Can't Be Disarmed",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A creature with this ability cannot be disarmed.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Petrified Maiden"
+      ],
+      "source_file": "isb_abilities_race.lst",
+      "source_line": 443,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    }
+  ]
+}

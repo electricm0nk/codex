@@ -4096,6 +4096,14 @@ mod schema_publish_tests {
         vec![
             ("sheet_rule.schema.json", render::<SheetRule>()),
             ("var_table.schema.json", render::<VarTable>()),
+            // SD-37 E4a.1: the rules_tables data package (one file per table; rows typed per
+            // table by the row types' own derives). Same settings and formatting as `render`.
+            ("rules_tables.schema.json", {
+                let mut text = serde_json::to_string_pretty(&crate::rules_core::rules_data_package::package_schema())
+                    .expect("a schema serialises");
+                text.push('\n');
+                text
+            }),
         ]
     }
 

@@ -64,7 +64,8 @@ use crate::rules_core::game_system::{BookRegistry, GameSystem};
 pub use super::companion_chassis::StatAdjustment;
 
 /// One movement mode from the row's `MOVE:` token, e.g. `Walk,30,Burrow,10`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct Speed {
     pub mode: &'static str,
     pub feet: u32,
@@ -74,7 +75,9 @@ pub struct Speed {
 ///
 /// `damage_dice` is `None` when the corpus names the attack but carries no die
 /// expression for it. It is never a placeholder string.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "monster_chassis__NaturalAttack"))]
 pub struct NaturalAttack {
     pub name: &'static str,
     pub damage_dice: Option<&'static str>,
@@ -90,7 +93,8 @@ pub struct NaturalAttack {
 /// `transcribe_monster_tables.py`'s standing contract. Nothing here is
 /// computed; the rule application lives in
 /// `derived_evaluator_fixture_check::spell_like_ability_save_dc`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct MonsterSpellLikeAbility {
     /// The token's first segment (`Innate`, `Neothelid`, …) — PCGen's own
     /// name for the spell-book this grant files under.
@@ -144,7 +148,8 @@ pub struct MonsterSpellLikeAbility {
 /// modelled here — each needs its own per-record read, not a vocabulary
 /// entry guessed from one sample (`t9-onboarding` cycle receipt, "What
 /// remains").
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum MonsterAbilityFacet {
     SpecialAttack,
     SpecialQuality,
@@ -184,7 +189,8 @@ impl MonsterAbilityFacet {
 /// How the ability is delivered — the `Supernatural` / `Extraordinary` /
 /// `SpellLike` segment of the same `TYPE:` token. `None` when the row does not
 /// say.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum MonsterAbilityDelivery {
     Supernatural,
     Extraordinary,
@@ -202,7 +208,8 @@ impl MonsterAbilityDelivery {
 }
 
 /// One `monster_ability` record.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct MonsterAbilityRecord {
     /// The corpus `KEY:` token — the identity. Falls back to the display name
     /// only for rows that carry no `KEY:`, which is what PCGen itself does.
@@ -212,15 +219,18 @@ pub struct MonsterAbilityRecord {
     pub delivery: Option<MonsterAbilityDelivery>,
     /// Remaining `TYPE:` segments that are neither facet nor delivery
     /// (`Aura`, `Immunity`), kept verbatim.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub traits: &'static [&'static str],
     /// The row's `DESC:` text. `None` when the row carries none.
     pub description: Option<&'static str>,
     /// The `DESC:` token's trailing variable list, which is what the `%1`
     /// placeholders in `description` refer to.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub description_variables: &'static [&'static str],
     pub source_page: Option<&'static str>,
     /// Every monster in this book whose row (or whose namespace, for a
     /// `<Monster> ~ <Ability>` key) claims this ability.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub owners: &'static [&'static str],
     /// The abilities-`.lst` file this record was read from, as a bare file
     /// name relative to the book directory.
@@ -257,11 +267,14 @@ pub struct MonsterAbilityRecord {
 }
 
 /// One monster stat block.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "monster_chassis__MonsterStatBlock"))]
 pub struct MonsterStatBlock {
     pub key: &'static str,
     pub name: &'static str,
     pub size: Option<&'static str>,
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub speeds: &'static [Speed],
     pub race_type: Option<&'static str>,
     pub race_subtype: Option<&'static str>,
@@ -272,6 +285,7 @@ pub struct MonsterStatBlock {
     /// computed from and this ingest deliberately does not compute.
     pub monster_class: Option<&'static str>,
     pub source_page: Option<&'static str>,
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub natural_attacks: &'static [NaturalAttack],
     /// Every `BONUS:STAT|<abbrev-list>|<amount>` token on the row, one record
     /// per ability (`companion_chassis::StatAdjustment`, reused rather than
@@ -286,6 +300,7 @@ pub struct MonsterStatBlock {
     /// `BONUS:STAT|STR|MutagenicMaulerMutagenStatBonus`) is **skipped**, not
     /// guessed: there is no formula interpreter here, and a wrong number in an
     /// ability column is worse than an absent one.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub stat_adjustments: &'static [StatAdjustment],
     /// Whether the row carries a `BONUS:VAR|SLA_CL|<...>` token — PCGen's
     /// encoding of PF1's Spell-Like Abilities universal monster rule (caster
@@ -351,10 +366,13 @@ pub struct MonsterStatBlock {
     /// token at all; Aboleth (`b1_races.lst:7`) carries `SPELLS:` grants and
     /// **no** `BONUS:VAR|SLA_CL|` token. Neither field may be derived from the
     /// other.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub spell_like_abilities: &'static [MonsterSpellLikeAbility],
     /// Keys into this book's `monster_abilities`, in row order.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub ability_keys: &'static [&'static str],
     /// Ability names this row cites that this book does not define.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub external_ability_refs: &'static [&'static str],
     /// The races-`.lst` file this record was read from, relative to the book
     /// directory.

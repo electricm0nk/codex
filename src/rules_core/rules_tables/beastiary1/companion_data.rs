@@ -71,7 +71,7 @@
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
 /// Every bestiary companion creature (55 rows).
-pub(super) static COMPANIONS: &[CompanionRecord] = &[
+pub(crate) static COMPANIONS: &[CompanionRecord] = &[
     CompanionRecord {
         key: "Companion (Bat (Dire))",
         name: "Companion (Bat (Dire))",
@@ -1285,7 +1285,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
 ];
 
 /// Every bestiary companion ability record (71 rows).
-pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
+pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
     CompanionAbilityRecord {
         key: "Companion Advancement ~ Bat (Dire)",
         name: "Companion Advancement (Bat (Dire))",

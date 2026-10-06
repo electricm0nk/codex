@@ -1,0 +1,20 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_equipment/spell_list/SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_equipment",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Medusa Mask Gaze",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": null,
+      "description": "The subject, along with all its carried gear, turns into a mindless, inert statue."
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/class_tables/CLASS_META",
+  "licence": {
+    "license": "OGL",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "class_id": "Barbarian",
+      "max_supported_level": 20,
+      "bab": "Full",
+      "good_saves": {
+        "fortitude": true,
+        "reflex": false,
+        "will": false
+      },
+      "hit_die": 12
+    },
+    {
+      "class_id": "Bard",
+      "max_supported_level": 20,
+      "bab": "ThreeQuarter",
+      "good_saves": {
+        "fortitude": false,
+        "reflex": true,
+        "will": true
+      },
+      "hit_die": 8
+    },
+    {
+      "class_id": "Cleric",
+      "max_supported_level": 20,
+      "bab": "ThreeQuarter",
+      "good_saves": {
+        "fortitude": true,
+        "reflex": false,
+        "will": true
+      },
+      "hit_die": 8
+    },
+    {
+      "class_id": "Druid",
+      "max_supported_level": 20,
+      "bab": "ThreeQuarter",
+      "good_saves": {
+        "fortitude": true,
+        "reflex": false,
+        "will": true
+      },
+      "hit_die": 8
+    },
+    {
+      "class_id": "Fighter",
+      "max_supported_level": 20,
+      "bab": "Full",
+      "good_saves": {
+        "fortitude": true,
+        "reflex": false,
+        "will": false
+      },
+      "hit_die": 10
+    },
+    {
+      "class_id": "Monk",
+      "max_supported_level": 20,
+      "bab": "ThreeQuarter",
+      "good_saves": {
+        "fortitude": true,
+        "reflex": true,
+        "will": true
+      },
+      "hit_die": 8
+    },
+    {
+      "class_id": "Paladin",
+      "max_supported_level": 20,
+      "bab": "Full",
+      "good_saves": {
+        "fortitude": true,
+        "reflex": false,
+        "will": true
+      },
+      "hit_die": 10
+    },
+    {
+      "class_id": "Ranger",
+      "max_supported_level": 20,
+      "bab": "Full",
+      "good_saves": {
+        "fortitude": true,
+        "reflex": true,
+        "will": false
+      },
+      "hit_die": 10
+    },
+    {
+      "class_id": "Rogue",
+      "max_supported_level": 20,
+      "bab": "ThreeQuarter",
+      "good_saves": {
+        "fortitude": false,
+        "reflex": true,
+        "will": false
+      },
+      "hit_die": 8
+    },
+    {
+      "class_id": "Sorcerer",
+      "max_supported_level": 20,
+      "bab": "Half",
+      "good_saves": {
+        "fortitude": false,
+        "reflex": false,
+        "will": true
+      },
+      "hit_die": 6
+    },
+    {
+      "class_id": "Wizard",
+      "max_supported_level": 20,
+      "bab": "Half",
+      "good_saves": {
+        "fortitude": false,
+        "reflex": false,
+        "will": true
+      },
+      "hit_die": 6
+    }
+  ]
+}

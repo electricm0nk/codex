@@ -42,7 +42,7 @@
 //!   [`MonsterStatBlock::external_ability_refs`] so the count of what this book
 //!   *defines* (17) never silently absorbs what it merely *cites*.
 
-mod monster_data;
+pub(crate) mod monster_data;
 
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,

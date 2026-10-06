@@ -78,7 +78,9 @@ use super::monk_features;
 /// saves. Same shape as `rules_tables::apg::ClassTableRow` and
 /// `rules_tables::acg::ClassTableRow`, kept book-local for the same reason
 /// those two are.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "pathfinder_unchained__class_chassis__ClassTableRow"))]
 pub struct ClassTableRow {
     pub level: u8,
     pub base_attack_bonus: i16,
@@ -91,7 +93,8 @@ pub struct ClassTableRow {
 /// the four and only four `CATEGORY:CLASS` selection abilities the book
 /// declares, and exactly the four `data/corpus/pathfinder_unchained/class/`
 /// records.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum PuClassId {
     UnchainedBarbarian,
     UnchainedMonk,

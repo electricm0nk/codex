@@ -1,0 +1,1741 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/INNER_SEA_GODS_GAP_ROWS",
+  "licence": {
+    "license": "PI-REDACTED",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": [
+      {
+        "row": 4,
+        "field": "description"
+      },
+      {
+        "row": 5,
+        "field": "description"
+      },
+      {
+        "row": 8,
+        "field": "description"
+      },
+      {
+        "row": 9,
+        "field": "description"
+      },
+      {
+        "row": 15,
+        "field": "description"
+      },
+      {
+        "row": 17,
+        "field": "description"
+      },
+      {
+        "row": 76,
+        "field": "description"
+      },
+      {
+        "row": 78,
+        "field": "description"
+      },
+      {
+        "row": 79,
+        "field": "description"
+      },
+      {
+        "row": 87,
+        "field": "description"
+      },
+      {
+        "row": 88,
+        "field": "description"
+      },
+      {
+        "row": 95,
+        "field": "description"
+      },
+      {
+        "row": 96,
+        "field": "description"
+      },
+      {
+        "row": 97,
+        "field": "description"
+      },
+      {
+        "row": 98,
+        "field": "description"
+      },
+      {
+        "row": 99,
+        "field": "description"
+      },
+      {
+        "row": 100,
+        "field": "description"
+      },
+      {
+        "row": 101,
+        "field": "description"
+      },
+      {
+        "row": 103,
+        "field": "description"
+      },
+      {
+        "row": 108,
+        "field": "description"
+      },
+      {
+        "row": 110,
+        "field": "description"
+      },
+      {
+        "row": 118,
+        "field": "description"
+      },
+      {
+        "row": 119,
+        "field": "description"
+      },
+      {
+        "row": 121,
+        "field": "description"
+      },
+      {
+        "row": 123,
+        "field": "description"
+      },
+      {
+        "row": 124,
+        "field": "description"
+      },
+      {
+        "row": 127,
+        "field": "description"
+      },
+      {
+        "row": 128,
+        "field": "description"
+      },
+      {
+        "row": 129,
+        "field": "description"
+      },
+      {
+        "row": 133,
+        "field": "description"
+      },
+      {
+        "row": 135,
+        "field": "description"
+      },
+      {
+        "row": 137,
+        "field": "description"
+      },
+      {
+        "row": 139,
+        "field": "description"
+      },
+      {
+        "row": 140,
+        "field": "description"
+      },
+      {
+        "row": 143,
+        "field": "description"
+      },
+      {
+        "row": 144,
+        "field": "description"
+      },
+      {
+        "row": 147,
+        "field": "description"
+      },
+      {
+        "row": 148,
+        "field": "description"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_13)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_13)",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1000.0,
+      "description": "This altar is a stone vault with an intricate, stylized lock decorated with golden keys, coins, and examples of flawless craftsmanship. Praying at the altar grants a +2 competence bonus on Diplomacy, perception, profession, and Sense Motive checks, as well as a Sanctuary effect (DC 13).",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        13
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_14)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_14)",
+      "category": "General",
+      "cost_gp": 16000.0,
+      "weight_lbs": 750.0,
+      "description": "This altar is an elaborate nine-tiered iron frame built over a shallow nine-tiered pit and features many trappings of prisons and slavery. Praying at the altar grants the ability to cast Hold Person (DC 13) as a spell-like ability once in the next 24 hours.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        14
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_15)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_15)",
+      "category": "General",
+      "cost_gp": 16000.0,
+      "weight_lbs": 500.0,
+      "description": "This altar is a silver or brass platform built around a mirror and decorated with elegant filigree. Praying at the altar grants a +3 luck bonus on attack rolls, weapon damage rolls, saving throws, and skill checks against one creature the worshiper names. The named creature must have harmed the worshiper in the past 24 hours.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        15
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_16)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_16)",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 150.0,
+      "description": "This altar is usually a heavy wooden box, often incorporated into the bar of a tavern or another social resting place for adventurers or revelers, and contains large stores of alcohol and the god's holy text. Praying at the altar grants a +2 resistance bonus on saving throws against fear and poison.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        16
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_17)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_17)",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1000.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        17
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_18)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_18)",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1000.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        18
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_19)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_19)",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 750.0,
+      "description": "This altar is an iron platform and frame designed to support a heavy suit of spiked armor and weapons, typically mounted in the shape of a massively imposing, 8-foot-tall warrior. Praying at the altar grants a +4 morale bonus on saves against fear effects, and any non-masterwork iron or steel weapon the worshiper wields is treated as if it were masterwork.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        19
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_20)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_20)",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1000.0,
+      "description": "This altar is made of rough-hewn stone, weathered whale bone, or ancient wood, usually standing over or next to a body of natural water and featuring carvings of gozreh in one or both aspects. Unlike with most altars, its magic circle effect is aligned against one alignment component appropriate to the interests of the temple. Praying at the altar grants a +4 resistance bonus on saving throws against weather effects and a +2 circumstance bonus on Fly, Profession (Sailor), and Swim checks.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        20
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_21)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_21)",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1000.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        21
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_22)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_22)",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 150.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        22
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_23)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_23)",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 500.0,
+      "description": "This altar is a flat rock covered in images of ferocious monsters such as gnolls and adorned with a venerable beast's skull, especially that of a jackal or hyena. Praying at the altar grants the creature the effects of Magic Fang on one of its natural weapons (a worshiper with a familiar, animal companion, eidolon, or similar companion creature may instead pass this blessing on to that creature).",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        23
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_24)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_24)",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 500.0,
+      "description": "This altar is a deceptively complex, many-chambered scroll rack or bookshelf capable of securing dozens of documents. Unlike most altars, its Magic Circle effects are aligned against one or two alignment components (such as only good or both evil and law) appropriate to the interests of the temple. Praying at the altar grants a +2 circumstance bonus on Knowledge (arcana), Perception, Spellcraft, and Use Magic Device checks; in addition, the worshiper selects one spell or spell-like ability it can cast and treats its caster level as 1 higher than normal when casting that spell.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        24
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_25)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_25)",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 250.0,
+      "description": "This altar is a lead-lined chest covered in dark fabric and a false cover, usually built into the floor or wall so that it can be easily concealed when not in use. Praying at the altar grants a +2 circumstance bonus on Bluff, Disguise, Sleight of Hand, and Stealth checks. The creature can choose to expend this blessing before the duration expires to cast False Alibi (DC 14), but the spell's DC decreases by 1 for every 4 hours that have passed since praying at the altar.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        25
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_26)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_26)",
+      "category": "General",
+      "cost_gp": 5380.0,
+      "weight_lbs": 1000.0,
+      "description": "This altar is an ornate marble memorial to the dead and unborn, featuring abstract sculptures of the Lady of graves in each of her aspects as midwife, prophet, and judge of souls. Instead of a Magic Circle, it is warded by a Hallow effect. Praying at the altar grants a +2 circumstance bonus on Heal and Knowledge (religion) checks, as well as the undead-bane magic weapon special ability to one weapon carried or wielded by the worshiper; this effect is suppressed if the weapon leaves the worshiper's grasp but resumes if the weapon is returned to the worshiper.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        26
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_27)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_27)",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 150.0,
+      "description": "This altar is usually built around the lip of a pit that resembles a linked ring of claws and fangs made from copper. praying at the altar grants a +1 bonus on damage rolls and a +2 bonus on attack rolls to confirm critical threats.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        27
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_28)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_28)",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 750.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        28
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_29)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_29)",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 150.0,
+      "description": "This altar is a wooden frame or display case for showing art or musical instruments. Praying at the altar grants a +2 circumstance bonus on Craft, Diplomacy, and perform checks, and a +1 morale bonus on Will saving throws.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        29
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_30)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_30)",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 500.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        30
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_31)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_31)",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 500.0,
+      "description": "This altar is a large sculpted table or slab for ceremonial feasts. Praying at the altar grants a +2 circumstance bonus on saving throws against death effects, disease, energy drain, and negative energy effects; an undead worshiper instead gains 5 temporary hit points.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        31
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_32)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_32)",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 150.0,
+      "description": "This altar is a veiled box of thick steel designed to house ritual implements of torture and self-mutilation in perfect darkness. Praying at the altar grants the worshiper a +2 competence bonus on attack rolls, weapon damage rolls, and saving throws for 1 minute whenever the worshiper takes damage or is the target of a pain effect during the next 24 hours after praying at the altar. Multiple sources of damage or pain reset this duration rather than stack.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        32
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "All-Seeing Armor",
+      "name": "All-Seeing Armor",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Armor Of The Unqenchable Fire",
+      "name": "Armor Of The Unqenchable Fire",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Blackfingers Apron",
+      "name": "Blackfingers Apron",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Bronze Whisperer's Shield",
+      "name": "Bronze Whisperer's Shield",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Calmitous Mail",
+      "name": "Calmitous Mail",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Dawnflower Chain Vest",
+      "name": "Dawnflower Chain Vest",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Deadeye Leather",
+      "name": "Deadeye Leather",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Driftwood Shield",
+      "name": "Driftwood Shield",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Eternal Iron Breastplate",
+      "name": "Eternal Iron Breastplate",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Fangtide Scale Mail",
+      "name": "Fangtide Scale Mail",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Forgefather's Half-Plate",
+      "name": "Forgefather's Half-Plate",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Golden Judge's Breastplate",
+      "name": "Golden Judge's Breastplate",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Gravewatcher Chainmail",
+      "name": "Gravewatcher Chainmail",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Gray Master's Leathers",
+      "name": "Gray Master's Leathers",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Grim Gloom Mail",
+      "name": "Grim Gloom Mail",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Half-Plate Of The Dark Prince",
+      "name": "Half-Plate Of The Dark Prince",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Inheritor's Breastplate",
+      "name": "Inheritor's Breastplate",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Kimle Coat",
+      "name": "Kimle Coat",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Lucky Drunk's Mail",
+      "name": "Lucky Drunk's Mail",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Milanite Armor",
+      "name": "Milanite Armor",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Painspike Armor",
+      "name": "Painspike Armor",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Pallid Chain",
+      "name": "Pallid Chain",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Pelt Of The Demon Mother",
+      "name": "Pelt Of The Demon Mother",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Perfection Leather",
+      "name": "Perfection Leather",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Red Stalker Armor",
+      "name": "Red Stalker Armor",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Rosy Hauberk",
+      "name": "Rosy Hauberk",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Sea Banshee Coat",
+      "name": "Sea Banshee Coat",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Starsong Mail",
+      "name": "Starsong Mail",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Toiler's Armor",
+      "name": "Toiler's Armor",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Veiled Chain",
+      "name": "Veiled Chain",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Black Alibi",
+      "name": "Black Alibi",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Blade Of Three Fancies",
+      "name": "Blade Of Three Fancies",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Bloodlight",
+      "name": "Bloodlight",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Carouser's Retort",
+      "name": "Carouser's Retort",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Dawnfire",
+      "name": "Dawnfire",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Enduring Bloom",
+      "name": "Enduring Bloom",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Fate Blade",
+      "name": "Fate Blade",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Forgefather's Sledge",
+      "name": "Forgefather's Sledge",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Fugitive Finder",
+      "name": "Fugitive Finder",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Fuming Blood Sabre",
+      "name": "Fuming Blood Sabre",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Hell's Eye",
+      "name": "Hell's Eye",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Inheritor's Light",
+      "name": "Inheritor's Light",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Kinbonded Bow",
+      "name": "Kinbonded Bow",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Nail Of The Princess",
+      "name": "Nail Of The Princess",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Obliviating Flail",
+      "name": "Obliviating Flail",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Perfectionist Shavtoosh",
+      "name": "Perfectionist Shavtoosh",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Quarterstaff Of Entwined Serpents",
+      "name": "Quarterstaff Of Entwined Serpents",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Redlust's Daughter",
+      "name": "Redlust's Daughter",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Rusting Teeth Of The Rough Beast",
+      "name": "Rusting Teeth Of The Rough Beast",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Shooting Starknife",
+      "name": "Shooting Starknife",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Stormstrike",
+      "name": "Stormstrike",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Umbral Chain",
+      "name": "Umbral Chain",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Vengeful Kiss",
+      "name": "Vengeful Kiss",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Deadeye's Spotter Ring",
+      "name": "Deadeye's Spotter Ring",
+      "category": "General",
+      "cost_gp": 1500.0,
+      "weight_lbs": 0.0,
+      "description": "This ring is carved from a single, thick antler and fashioned into the shape of a regal elk's head. The wearer gains a +2 competence bonus on Perception and Survival checks. Once per day, the wearer can use Animal Messenger.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_156)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_156)",
+      "category": "General",
+      "cost_gp": 2600.0,
+      "weight_lbs": 0.0,
+      "description": "This gold ring is misshapen and uncomfortable to wear for long periods of time; inscribed on it is a crude symbol of a fire burning under an arch. Once per day, the wearer may use charm person. If Droskar is the wearer's patron deity, any time the wearer crafts a magic item, she may choose to pay half of the item's construction cost instead of the full cost. The wearer spends time working on the item normally, but at the time of completion there is a 50% chance that the item turns out nonmagical and worthless. For example, if creating a magic bracer that normally costs 1,000 gp to craft, the wearer may craft it for only 500 gp, but there is a 50% chance the wearer's shortcuts and cheap materials result in a valueless, nonfunctional item.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        156
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Ghost Battling Ring",
+      "name": "Ghost Battling Ring",
+      "category": "General",
+      "cost_gp": 13000.0,
+      "weight_lbs": 0.0,
+      "description": "This silver ring is engraved with a skull flanked by twin hourglasses. It functions as a ring of the grasping grave. In addition, the wearer can use Ghostly Disguise and Haste each once per day.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Glorious Flame Ring",
+      "name": "Glorious Flame Ring",
+      "category": "General",
+      "cost_gp": 5400.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Gluttonous Feasting Ring",
+      "name": "Gluttonous Feasting Ring",
+      "category": "General",
+      "cost_gp": 5000.0,
+      "weight_lbs": 0.0,
+      "description": "This ring is carved from the flat part of a human skull and inscribed along the edge with images of skeletons at a banquet. Any food the wearer eats or drinks is automatically cleansed as if by Purify Food and Drink. Once per day after eating an extravagant meal (typically one worth at least 10 gp), the wearer gains the benefit of False Life.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Knight-Inheritor's Ring",
+      "name": "Knight-Inheritor's Ring",
+      "category": "General",
+      "cost_gp": 3000.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_161)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_161)",
+      "category": "General",
+      "cost_gp": 20000.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        161
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Profane Seal Signet",
+      "name": "Profane Seal Signet",
+      "category": "General",
+      "cost_gp": 3000.0,
+      "weight_lbs": 0.0,
+      "description": "This ring is made of red gold with a single ruby cut into a pentagon shape. It functions as a ring of protection +1. In addition, the wearer may use Arcane Mark at will, but only on objects and willing creatures. Once per day, the wearer may use Wrath.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Red Hound Ring",
+      "name": "Red Hound Ring",
+      "category": "General",
+      "cost_gp": 4700.0,
+      "weight_lbs": 0.0,
+      "description": "This white gold ring is engraved with the images of a mastiff and a thundercloud. It functions as a ring of protection +1. In addition, once per day, the wearer may use Summon Monster I to summon a red mastiff (use statistics for a celestial dog). Additionally, once per day the wearer may use Beast Shape I to transform into a Small red mastiff.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Ring Of Serene Contortions",
+      "name": "Ring Of Serene Contortions",
+      "category": "General",
+      "cost_gp": 1200.0,
+      "weight_lbs": 0.0,
+      "description": "This simple copper ring bears the image of a blue enamel hand. It grants the wearer a +2 bonus on Escape Artist checks. At will, the wearer may create the sound of a peaceful chime, small gong, or temple bell. Once per day, the wearer may also use True Strike.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Ring Of Seven Lovely Colors",
+      "name": "Ring Of Seven Lovely Colors",
+      "category": "General",
+      "cost_gp": 4000.0,
+      "weight_lbs": 0.0,
+      "description": "This golden ring, set with seven brightly colored gems, functions as a ring of protection +1. In addition, seven times per day, the wearer can use Beast Shape IV to transform into a songbird for 10 minutes (use statistics for a raven).",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Ring Of Stairs And Stars",
+      "name": "Ring Of Stairs And Stars",
+      "category": "General",
+      "cost_gp": 3020.0,
+      "weight_lbs": 0.0,
+      "description": "A stair-step pattern of stars wraps around the outside of this dark blue ring. In addition to the powers of a ring of feather falling, a ring of stairs and stars allows the wearer to use Magic Missile once per day, with the missiles taking the shape of shooting stars. As a standard action, the wearer may create an illusory butterfly that flits about within the wearer's square for 1 minute before fading away.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Ring Of Sundering Metals",
+      "name": "Ring Of Sundering Metals",
+      "category": "General",
+      "cost_gp": 6000.0,
+      "weight_lbs": 0.0,
+      "description": "This iron ring's head is shaped like a gilded anvil. In addition to the usual powers of a ring of ferocious action, the wearer can expend 1 charge from a ring of sundering metals to magically imbue a single wielded metal melee weapon with cold iron or silver. For 1 minute, the imbued weapon can bypass either DR/cold iron or DR/silver.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Ring Of Unquenchable Passions",
+      "name": "Ring Of Unquenchable Passions",
+      "category": "General",
+      "cost_gp": 6500.0,
+      "weight_lbs": 0.0,
+      "description": "This gold ring bears three dagger-shaped marks. It functions as a ring of protection +1. In addition, it grants a +5 competence bonus on Acrobatics checks and a +2 resistance bonus on saving throws against disease.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_172)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_172)",
+      "category": "General",
+      "cost_gp": 3000.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        172
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Beautiful War Paint",
+      "name": "Beautiful War Paint",
+      "category": "General",
+      "cost_gp": 6300.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Bear Pelt Of The Bonebreaker",
+      "name": "Bear Pelt Of The Bonebreaker",
+      "category": "General",
+      "cost_gp": 3300.0,
+      "weight_lbs": 10.0,
+      "description": "This large bearskin cloak is almost too big for a human to wear comfortably. The wearer gains a +2 competence bonus on Intimidate checks. Once per day, the wearer can use Bless; using this ability causes the hair on the cloak to bristle menacingly. If the stone giant deity Urazra is the wearer's patron, the wearer can use Beast Shape II once per day to transform into a black or brown bear for up to 7 minutes. Some champions of Urazra claim to have more powerful pelts that allow them to take the form of polar bears or even dire bears.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Belt Of The Snake King",
+      "name": "Belt Of The Snake King",
+      "category": "General",
+      "cost_gp": 2600.0,
+      "weight_lbs": 1.0,
+      "description": "This belt writhes like a living snake, and even hisses and blinks its red eyes. It clasps by holding its tail in its mouth. The wearer gains a +1 enhancement bonus to natural armor. If the serpentfolk god Ydersius is the wearer's patron, once per day, the wearer can use Magic Fang on one of his own natural weapons.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Besmara's Bicorne",
+      "name": "Besmara's Bicorne",
+      "category": "General",
+      "cost_gp": 1700.0,
+      "weight_lbs": 1.0,
+      "description": "This large pirate hat bears a skull-and-crossbones on the front. The wearer gains a +2 competence bonus on Acrobatics and Climb checks. If Besmara is the wearer's patron, the wearer automatically floats to the surface of any body of water (at a speed of 30 feet) unless she desires otherwise; this does not prevent the wearer from falling safely into water or interacting with water in any other way.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Besmara's Tricorne",
+      "name": "Besmara's Tricorne",
+      "category": "General",
+      "cost_gp": 2600.0,
+      "weight_lbs": 1.0,
+      "description": "This black leather tricorne hat is weather-beaten and salt-stained. It grants its wearer a +2 competence bonus on Profession (Sailor) and Swim checks. If Besmara is the wearer's patron, once per day the wearer can speak a command word to transform the hat into a small ship's boat such as a cutter, jolly boat, or longboat. The boat is 20 feet long, has two pairs of oars and a single mast with a square sail, and can carry up to 12 passengers and crew. Upon command, or after 8 hours, the boat returns to its hat form, dumping out any occupants.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Blessed Keepsake",
+      "name": "Blessed Keepsake",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 0.0,
+      "description": "The fine chain bears a glass-fronted locket. If a piece of an outsider with an alignment subtype - such as a tooth from a demon or an angel's wing feather - is held in the locket for 24 hours, the blessed keepsake's magic activates. If the creature has more than one alignment subtype, one must be chosen when the piece is added to the locket. The wearer can detect creatures of the chosen alignment at will, as the corresponding Detect Chaos/Evil/Good/Law spell. Three times per day, the wearer can use the blessed keepsake to gain protection from creatures of that alignment, as the corresponding Protection From Chaos/Evil/Good/Law spell. Lastly, if the wearer has the channel energy ability, she can channel energy to affect outsiders with that subtype as if she possessed the Alignment Channel feat. If the piece of outsider is removed, the blessed keepsake is inactive until a new piece is attuned.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Boots Of The Earth",
+      "name": "Boots Of The Earth",
+      "category": "General",
+      "cost_gp": 5000.0,
+      "weight_lbs": 5.0,
+      "description": "These sturdy leather dwarven boots have soles made of thick gray marble. As a move action, the wearer can plant her feet and draw strength from the earth, gaining fast healing 1 and a +4 bonus to CMD to resist bull rush, reposition, and trip combat maneuver attempts. These effects end if the wearer moves or is moved, knocked prone, or rendered unconscious.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Boots Of The Eternal Rose",
+      "name": "Boots Of The Eternal Rose",
+      "category": "General",
+      "cost_gp": 4000.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Broken Chain Of The Beast",
+      "name": "Broken Chain Of The Beast",
+      "category": "General",
+      "cost_gp": 4500.0,
+      "weight_lbs": 5.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Bronze Skinning Knife",
+      "name": "Bronze Skinning Knife",
+      "category": "General",
+      "cost_gp": 3300.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Cloak Of The Crusader",
+      "name": "Cloak Of The Crusader",
+      "category": "General",
+      "cost_gp": 2700.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Cloak Of The Night Sky",
+      "name": "Cloak Of The Night Sky",
+      "category": "General",
+      "cost_gp": 2500.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Dawnflower Lantern",
+      "name": "Dawnflower Lantern",
+      "category": "General",
+      "cost_gp": 6400.0,
+      "weight_lbs": 2.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Dawnflower Sash",
+      "name": "Dawnflower Sash",
+      "category": "General",
+      "cost_gp": 2500.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Deathlurker's Cloak",
+      "name": "Deathlurker's Cloak",
+      "category": "General",
+      "cost_gp": 2700.0,
+      "weight_lbs": 1.0,
+      "description": "This drab gray cloak billows about as if blown by an invisible wind. Once per day, the wearer can use Doom, which causes a deathlike shadow to fleetingly cross the wearer's face. If Groetus is the wearer's patron, once per day the wearer can use False Life. If the wearer successfully delivers a coup de grace against a dying foe while False Life is active, the wearer's temporary hit points from the False Life effect increase by 1 (to a maximum of 20 temporary hit points). The dying creature must have at least as many Hit Dice as the wearer for this effect to occur.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Demon Mother's Mask",
+      "name": "Demon Mother's Mask",
+      "category": "General",
+      "cost_gp": 3600.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Diabolical Masquerade Mask",
+      "name": "Diabolical Masquerade Mask",
+      "category": "General",
+      "cost_gp": 2900.0,
+      "weight_lbs": 1.0,
+      "description": "This masquerade mask resembles a handsome horned devil with red lenses in place of eyes. It functions as a hat of disguise. The wearer can use Charm Person and Infernal Healing each once per day. When infernal healing is active, the mask becomes visible whether or not the wearer is using its disguise abilities (although all other elements of the disguise remain).",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Dream Candle",
+      "name": "Dream Candle",
+      "category": "General",
+      "cost_gp": 2300.0,
+      "weight_lbs": 1.0,
+      "description": "This heavy pastel candle is carved and painted to look like its outer surface is covered with butterflies. A creature can use the candle to create a dream effect conveying a message of no longer than 10 minutes. Alternatively, the candle can be used to send up to 10 shorter messages, so long as the total time is no longer than 10 minutes. The user must light the candle, identify the intended recipient, speak the message, then snuff the candle; the next time the recipient sleeps, she receives the message.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Dreamwing Cape",
+      "name": "Dreamwing Cape",
+      "category": "General",
+      "cost_gp": 17500.0,
+      "weight_lbs": 1.0,
+      "description": "This knee-length cape is decorated with images of butterflies, moths, and stars. Once per day, the wearer can speak a command word to cause the cape to transform into a cloud of butterflies or moths. This functions as cape of wasps, except the swarm doesn't deal poison damage and deals full damage to incorporeal creatures. In addition, the wearer can use Glitterdust once per day.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Fate's Shears",
+      "name": "Fate's Shears",
+      "category": "General",
+      "cost_gp": 3600.0,
+      "weight_lbs": 1.0,
+      "description": "The blades of these antique scissors are engraved with images of an infant, a child, an adult, and an elder (female images on one blade, male images on the other). The blades are permanently coated with Salve of Slipperiness and therefore adhesives do not stick to them, making them especially suitable for cutting through sticky things (such as spiderwebs, cave fisher filaments, and so on). If used in combat, the shears function as a masterwork dagger. Once per day as an immediate action, the bearer can point the shears at a creature within 30 feet and force that creature to reroll its most recent attack, check, or save, and use the result of the second roll; the bearer is staggered on her next turn after using this ability. In addition, the bearer can use Deathwatch once per day.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Father's Forgehammer",
+      "name": "Father's Forgehammer",
+      "category": "General",
+      "cost_gp": 4800.0,
+      "weight_lbs": 2.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Featherscale Cloak",
+      "name": "Featherscale Cloak",
+      "category": "General",
+      "cost_gp": 4000.0,
+      "weight_lbs": 1.0,
+      "description": "This heavy linen cloak has a fish-scale pattern that darkens toward the bottom and white feathers on the shoulders. Once per day, the wearer can use Beast Shape I (bird or fish only), Hide from Animals (affecting only the wearer), and Feather Fall. The wearer also gains a +5 competence bonus on Swim checks.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Flask Of The Reaper",
+      "name": "Flask Of The Reaper",
+      "category": "General",
+      "cost_gp": 3800.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Gloves Of Bony Power",
+      "name": "Gloves Of Bony Power",
+      "category": "General",
+      "cost_gp": 5400.0,
+      "weight_lbs": 0.0,
+      "description": "These black gloves are decorated with images of white bones, as if revealing the bones within the wearer's hands. The left glove can be used once per day to create a Spectral Hand, which makes the bony hand image on that glove slide off and manifest as a ghostly skeletal hand for the duration of the effect. The right glove can be used once per day to deliver an Inflict Moderate Wounds spell, which gives that hand's bones a pale, sickly glow until the touch is delivered or discharged. If the wearer is a living creature, he can also use the right glove on himself to cast Cure Moderate Wounds instead of Inflict Moderate Wounds.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Gossamer Amberstone",
+      "name": "Gossamer Amberstone",
+      "category": "General",
+      "cost_gp": 2700.0,
+      "weight_lbs": 0.0,
+      "description": "This coin-sized piece of cracked amber is glued to a leather strap and contains a large, perfectly preserved bloodsucking insect. Once per day, the wearer can use Cure Light Wounds. If Ghlaunder is the wearer's patron, the wearer can use Summon Swarm once per day. The swarm can be an advanced spider swarm or a young mosquito swarm.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Gray Gambler's Hat",
+      "name": "Gray Gambler's Hat",
+      "category": "General",
+      "cost_gp": 2400.0,
+      "weight_lbs": 0.0,
+      "description": "This crumpled leather hat has roughly hammered metal studs around its brim, and is often worn by worshipers of Droskar who venerate the dwarf god for his cheating aspect. The wearer can use it as a hat of disguise, but only to disguise herself as a dwarf. Three times per day as a free action, the wearer can manipulate a rolled die within 10 feet (such as in a game of chance), altering the roll by a value of 1 in either direction. The wearer adds 1 to the DC of any enchantment (compulsion) spells she casts.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Great Barghest Hero Cloak",
+      "name": "Great Barghest Hero Cloak",
+      "category": "General",
+      "cost_gp": 2800.0,
+      "weight_lbs": 1.0,
+      "description": "This cloak looks like the skin of a goblin dog, including legs and tail; the clasp is a goblin dog's tooth. The wearer gains a +2 competence bonus on Intimidate checks. If the wearer's patron is one of the goblin barghest hero gods (Hadregash, Venkelvore, Zarongel, or Zogmugot), once per day the wearer can use Polymorph to transform into a goblin dog for up to 7 minutes.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Gutbite Belt",
+      "name": "Gutbite Belt",
+      "category": "General",
+      "cost_gp": 4500.0,
+      "weight_lbs": 1.0,
+      "description": "This heavy leather belt is reinforced with metal and detailed to resemble a gut wound that has sprouted teeth. In addition to functioning as a belt of mighty constitution +2, the mouth on the belt animates whenever the wearer gains the grappled condition, damaging the wearer's opponent as if it were armor spikes (1d6 points of damage for a Medium wearer, 1d4 for Small). Similar to armor spikes, the mouth can be made into a magic weapon in its own right; it can also be temporarily enhanced with magic such as Magic Weapon. The wearer can use the mouth to eat meat, gaining nutrition from it as if he had eaten with his own mouth (the mouth refuses any food other than meat).",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Hag's Shabble",
+      "name": "Hag's Shabble",
+      "category": "General",
+      "cost_gp": 3400.0,
+      "weight_lbs": 3.0,
+      "description": "This unkempt black smock is loose-fitting and stained from travel. In the River Kingdoms, the wearer is assumed to be a follower of Gyronna because of the garment's association with her faith. The wearer gains a +2 competence bonus on Diplomacy and Intimidate checks. If Gyronna is the wearer's patron, once per day the wearer can use Detect Thoughts.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Hero's Release Pendant",
+      "name": "Hero's Release Pendant",
+      "category": "General",
+      "cost_gp": 2800.0,
+      "weight_lbs": 1.0,
+      "description": "This small jeweled pendant looks like a tiny dagger set with handsome blue gems, but it is too small to be used as a weapon in combat. While wearing the pendant, the wearer does not provoke attacks of opportunity when delivering a coup de grace. In addition, the pendant grants its wearer a +2 resistance bonus on Will saves.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Icon Of The Midwife",
+      "name": "Icon Of The Midwife",
+      "category": "General",
+      "cost_gp": 3500.0,
+      "weight_lbs": 2.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Inheritor's Gauntlet",
+      "name": "Inheritor's Gauntlet",
+      "category": "General",
+      "cost_gp": 2700.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Iron Lord's Transforming Slivers",
+      "name": "Iron Lord's Transforming Slivers",
+      "category": "General",
+      "cost_gp": 1000.0,
+      "weight_lbs": 2.0,
+      "description": "The metal filings within this pouch are a mixture of adamantine, cold iron, mithral, and steel. The filings are faintly magnetic and stick to ferrous metal but are easily wiped away. If a metal or partly metal weapon is covered in the entire contents of the pouch and placed in a hot forge overnight, it slowly grows or shrinks by one size category toward the size of the creature who applied the powder. This transformation is permanent. The pouch contains enough material to transform one weapon, regardless of size.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Key Of The Second Vault",
+      "name": "Key Of The Second Vault",
+      "category": "General",
+      "cost_gp": 3000.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Mask Of Conflicting Energies",
+      "name": "Mask Of Conflicting Energies",
+      "category": "General",
+      "cost_gp": 4000.0,
+      "weight_lbs": 1.0,
+      "description": "This mask is white on one side and black on the other, with glittering gem lenses covering the eyes. Up to three times per day, the wearer can change the energy damage of a fire spell she casts to cold, a cold spell to fire, an acid spell to electricity, or an electricity spell to acid. All other effects of the spell are unchanged. The mask affects only spells up to 3rd level.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Mask Of Cutting Flash",
+      "name": "Mask Of Cutting Flash",
+      "category": "General",
+      "cost_gp": 3000.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Medal Of The Hero's Heart",
+      "name": "Medal Of The Hero's Heart",
+      "category": "General",
+      "cost_gp": 3400.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Nightstone Of Sorrow",
+      "name": "Nightstone Of Sorrow",
+      "category": "General",
+      "cost_gp": 3300.0,
+      "weight_lbs": 2.0,
+      "description": "This black rock, usually worn on a heavy chain, looks pitted and partially charred and melted. It gives the impression of reckless evil - more a dangerous scent than any other kind of feeling. The wearer gains fire resistance 1 and a +1 resistance bonus on Will saves against fear. If the wearer takes 10 or more points of fire damage in a single round, a claw-shaped pattern glows faintly on the surface of the stone, similar to an Arcane Mark. If the dragon god Dahak is the wearer's patron: the wearer can use Shatter once per day; at will, the wearer can cause the claw-symbol on the rock to glow; true dragons immediately recognize the symbol as an icon of Dahak.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Orb Of The Waybringer",
+      "name": "Orb Of The Waybringer",
+      "category": "General",
+      "cost_gp": 3900.0,
+      "weight_lbs": 1.0,
+      "description": "This giant pearl is carved with entwined flying dragons and strung on a fine silver chain; the pearl changes size according to the size of the wearer so that its diameter is no greater than the wearer's thumb. Once per day, the wearer can breathe a cone of searing flame that functions as Burning Hands, except it deals electricity damage instead of fire. If the dragon god Apsu is the wearer's patron: once per day the wearer can use Eagle's Splendor; on command, the orb glows with a Light spell or darkens again.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Pallid Crystal",
+      "name": "Pallid Crystal",
+      "category": "General",
+      "cost_gp": 3300.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Perfect Tuning Fork",
+      "name": "Perfect Tuning Fork",
+      "category": "General",
+      "cost_gp": 600.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Poison Gum",
+      "name": "Poison Gum",
+      "category": "General",
+      "cost_gp": 1250.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_215)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_215)",
+      "category": "General",
+      "cost_gp": 1500.0,
+      "weight_lbs": 5.0,
+      "description": "This strange leather-bound book contains erratic handwriting; the words within it appear to have been translated from Gnome into Common (and perhaps some other language before Gnome). It contains notations of strange cult practices, disturbing rants about ancient godlike beings, and confusing diagrams resembling summoning circles, with many parts crossed out or obliterated with ink or fire. The bearer of Preklikin's Book of Cults gains a +1 resistance bonus on Will saving throws while carrying the book. If the bearer's patron is one of the great Old Ones, the bearer can hold the book in one hand to use it as a lesser extend metamagic rod, but only for conjuration spells that summon or call an evil outsider.",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        215
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Purification Talisman",
+      "name": "Purification Talisman",
+      "category": "General",
+      "cost_gp": 1800.0,
+      "weight_lbs": 0.0,
+      "description": "A hand-sized clay rebus of the Master of Masters, sometimes inlaid with copper or tiny gemstones, hangs from this braided hair necklace. It is normally worn under clothing against the skin, and grants the wearer a +2 resistance bonus on saving throws against disease and poison. Once per day, the wearer can use Purify Food and Drink, cleansing 1 cubic foot of food and water.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Rhombocrystal",
+      "name": "Rhombocrystal",
+      "category": "General",
+      "cost_gp": 2250.0,
+      "weight_lbs": 0.0,
+      "description": "This jewel-like lens slowly changes colors over time, with no discernible pattern. It may appear as a ruby one morning and a sapphire that night, only to become opaline for the entire next day. Most owners set their rhombocrystal in a metal festoon on a chain and carry it as a pendant, monocle, or loupe. A rhombocrystal can be used as a magnifying glass, and grants its bearer a +5 competence bonus on Appraise checks involving gems and crystals. If Nivi Rhombodazzle is the bearer's patron, the bearer gains a +1 luck bonus on Reflex saving throws.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Robe Of The Master Of Masters",
+      "name": "Robe Of The Master Of Masters",
+      "category": "General",
+      "cost_gp": 2300.0,
+      "weight_lbs": 3.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Sacrificial Dagger Of The Blood Mother",
+      "name": "Sacrificial Dagger Of The Blood Mother",
+      "category": "General",
+      "cost_gp": 2700.0,
+      "weight_lbs": 1.0,
+      "description": "This dagger is usually made of chiseled stone, though some varieties are made of sharpened mammoth bone. Its hilt is especially long, as if created for a Large creature, and the blade is carved with a symbol of a woman holding meat in one hand and a stone tablet in the other. The dagger is symbolic, and cannot be used as an actual weapon. Once per day, the wielder can use Detect Animals or Plants. If the giant goddess Fandarra is the wielder's patron, once per day the wielder can use Death Knell if he offers the target's blood to the goddess.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Safecamp Wagon",
+      "name": "Safecamp Wagon",
+      "category": "General",
+      "cost_gp": 3000.0,
+      "weight_lbs": 2.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Scabbard Of Pain",
+      "name": "Scabbard Of Pain",
+      "category": "General",
+      "cost_gp": 2500.0,
+      "weight_lbs": 1.0,
+      "description": "This rugged black leather scabbard is wrapped in jet black chains that allow it to easily be hung from one's belt. A scabbard of pain grants it bearer knowledge of advanced torturing techniques used by depraved cultists of the Midnight Lord. It grows or shrinks to fit any bladed weapon sized for a Medium or Small creature. Three times per day, the bearer can declare that he is attempting to deliver a painful strike with a melee attack. If the attack hits, the opponent must succeed at a DC 11 Fortitude save or be affected by Ray of Sickening. The bearer can expend one use of the scabbard's painful strike as an immediate action to affect himself with the ray of sickening effect and voluntarily fail the saving throw. Doing so allows the bearer to reroll a failed saving throw against a mind-affecting effect.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_222)",
+      "name": "Codex-Named Unit (equipment_inner_sea_gods_isg_equip_lst_222)",
+      "category": "General",
+      "cost_gp": 4200.0,
+      "weight_lbs": 5.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": [
+        "isg_equip.lst",
+        222
+      ]
+    },
+    {
+      "book": "ISG",
+      "key": "Silent Blade Vest",
+      "name": "Silent Blade Vest",
+      "category": "General",
+      "cost_gp": 4300.0,
+      "weight_lbs": 0.0,
+      "description": "This dapper, halfling-sized gray vest has dull black buttons and several hidden pockets. Concealed under the vest's lapel is a symbol of a black dagger with a white circle on the blade near the hilt. Followers of Thamir gixx use this kind of vest or similar garments to discreetly indicate their allegiance to other members of the Silent Blade's church. The wearer gains a +5 competence bonus on Sleight of Hand checks. When adjacent to an ally using Stealth, the wearer gains a +5 competence bonus on Stealth checks.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Spellsight Bracer",
+      "name": "Spellsight Bracer",
+      "category": "General",
+      "cost_gp": 2100.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Stagger-Proof Boots",
+      "name": "Stagger-Proof Boots",
+      "category": "General",
+      "cost_gp": 2000.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Starfaring Robe",
+      "name": "Starfaring Robe",
+      "category": "General",
+      "cost_gp": 82000.0,
+      "weight_lbs": 1.0,
+      "description": "This simple blue robe appears plain during the day but sparkles in starlight or moonlight. The wearer is constantly protected as if wearing a necklace of adaptation. On command, the robe sprouts pale moth wings, allowing the wearer to fly as if using wings of flying. In the vacuum of space, the wearer can fly at an incredible speed. Although exact travel times vary, a trip within a single solar system normally takes 3d20 months, while a trip beyond should take 3d20 years (or more, at the GM's discretion), provided the wearer knows the way to its destination. While flying in this fashion, the wearer can enter a state of hibernation (similar to temporal stasis), waking instantly if attacked, upon reaching his destination, or after a set time period (such as a month or year).",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Steward's Iron Key",
+      "name": "Steward's Iron Key",
+      "category": "General",
+      "cost_gp": 3000.0,
+      "weight_lbs": 0.0,
+      "description": "This simple iron key looks like something a castellan or majordomo would carry on her key ring. When held in hand, the bearer can use Open/Close at will. Once per day the bearer can speak a command word to use either Arcane Lock or Knock. Though Alseta's church may use more elaborate keys for important ceremonies, the goddess's humble nature means most magical keys crafted by her followers are nondescript items such as this one.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Stinging Stiletto",
+      "name": "Stinging Stiletto",
+      "category": "General",
+      "cost_gp": 4500.0,
+      "weight_lbs": 0.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Tankard Of The Drunken Hero",
+      "name": "Tankard Of The Drunken Hero",
+      "category": "General",
+      "cost_gp": 5300.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Veil Of Veils",
+      "name": "Veil Of Veils",
+      "category": "General",
+      "cost_gp": 3300.0,
+      "weight_lbs": 0.0,
+      "description": "This fine silken veil can change color or alter its appearance to a highwayman's mask or similar cloth face covering. Once per day, the wearer can use Disguise Self, though the veil remains visible as some kind of garment on the wearer's head or face. If Sivanah is the wearer's patron: once per day the wearer can use Blur; the wearer gains a +2 competence bonus on Bluff checks.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Vurra Of The Maker",
+      "name": "Vurra Of The Maker",
+      "category": "General",
+      "cost_gp": 3300.0,
+      "weight_lbs": 5.0,
+      "description": "A vurra is a carving of a giant's head, usually a god but sometimes a hero, loved one, or historical figure. This hand-sized gray stone is carved to resemble a bearded, wise-looking man with a squarish skull. It has a leather strap threaded through a hole in the top, and is strangely heavy for its size. The wearer gains a +2 bonus on Craft (Sculpting) checks. Once per day, the wearer can use Magic Stone, and this ability can affect even the small boulders favored by giants. The carved face grows stern and angry when worn by a creature with a chaotic alignment, only returning to its normal expression when removed or in the hands of a nonchaotic creature. If the giant god Minderhal is the wearer's patron, once per day the wearer may use Owl's Wisdom.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Wayfinder Of Zephyrs",
+      "name": "Wayfinder Of Zephyrs",
+      "category": "General",
+      "cost_gp": 15000.0,
+      "weight_lbs": 1.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Windwave Kilt",
+      "name": "Windwave Kilt",
+      "category": "General",
+      "cost_gp": 7000.0,
+      "weight_lbs": 5.0,
+      "description": "[redacted PI]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISG",
+      "key": "Zonzon Doll Of Forgiveness",
+      "name": "Zonzon Doll Of Forgiveness",
+      "category": "General",
+      "cost_gp": 5000.0,
+      "weight_lbs": 1.0,
+      "description": "This rag doll, created in the likeness of a specific creature chosen at the time of crafting, must be loved to activate its powers. This love takes the form of time spent caring for the doll, keeping it on one's person, and preventing any harm from coming to it. In order to use the accumulated power within a Zonzon doll of forgiveness, the owner must give the doll to the creature that it resembles. Depending on how long the doll's owner took care of it, the doll may bestow up to three cumulative effects. Each benefit lasts 24 hours unless otherwise noted. If the doll is gifted after 1 day of care, it grants the owner a +5 sacred bonus on Diplomacy checks against the creature that the doll resembles (hereafter referred to as the target creature). If the doll is gifted after 1 week of care, the owner can use the Diplomacy skill to shift the target creature's attitude closer to helpful by up to three steps (exceeding the normal two-step limitation) and takes no penalty for failing a Diplomacy check by 5 or more. Finally, if the doll is gifted after 1 month of care, the recipient of the Zonzon doll may activate the doll within 24 hours to gain the benefit of an Atonement spell. After the doll has been gifted and the duration of the effect expires, a Zonzon doll reverts to a normal rag doll with no magical powers.",
+      "name_pi_citation": null
+    }
+  ]
+}

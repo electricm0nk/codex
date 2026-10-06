@@ -1,0 +1,1504 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/feat_data/combat/COMBAT_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Agile Maneuvers",
+      "category": "Combat",
+      "name": "Agile Maneuvers",
+      "description": "You learned to use your quickness in place of brute force when performing combat maneuvers.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_STAT",
+            "DEX-STR"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": false,
+              "family": "SIZEGT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "T"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Arcane Armor Mastery",
+      "category": "Combat",
+      "name": "Arcane Armor Mastery",
+      "description": "You have mastered the ability to cast spells while wearing armor.",
+      "effect": null
+    },
+    {
+      "key": "Arcane Armor Training",
+      "category": "Combat",
+      "name": "Arcane Armor Training",
+      "description": "You have learned how to cast spells while wearing armor.",
+      "effect": null
+    },
+    {
+      "key": "Arcane Strike",
+      "category": "Combat",
+      "name": "Arcane Strike",
+      "description": "As a swift action, you can imbue your weapons with a fraction of your power. For 1 round, you gain a +%1 damage bonus and your weapons are treated as magic for the purpose of overcoming damage reduction.|ArcaneStrikeDamageBonus",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "ArcaneStrikeDamageBonus",
+            "min(1+ArcaneStrikeLVL/5,5)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Armor Proficiency (Heavy)",
+      "category": "Combat",
+      "name": "Armor Proficiency (Heavy)",
+      "description": "You are skilled at wearing heavy armor.",
+      "effect": null
+    },
+    {
+      "key": "Armor Proficiency (Light)",
+      "category": "Combat",
+      "name": "Armor Proficiency (Light)",
+      "description": "You are skilled at wearing light armor.",
+      "effect": null
+    },
+    {
+      "key": "Armor Proficiency (Medium)",
+      "category": "Combat",
+      "name": "Armor Proficiency (Medium)",
+      "description": "You are skilled at wearing medium armor.",
+      "effect": null
+    },
+    {
+      "key": "Bleeding Critical",
+      "category": "Combat",
+      "name": "Bleeding Critical",
+      "description": "Your critical hits cause opponents to bleed profusely.",
+      "effect": null
+    },
+    {
+      "key": "Blind-Fight",
+      "category": "Combat",
+      "name": "Blind-Fight",
+      "description": "You are skillled at attacking opponents that you cannot clearly perceive.",
+      "effect": null
+    },
+    {
+      "key": "Blinding Critical",
+      "category": "Combat",
+      "name": "Blinding Critical",
+      "description": "Your critical hits blind your opponents.",
+      "effect": null
+    },
+    {
+      "key": "Catch Off-Guard",
+      "category": "Combat",
+      "name": "Catch Off-Guard",
+      "description": "Foes are surprised by your skilled use of unorthodox and improvised weapons.",
+      "effect": null
+    },
+    {
+      "key": "Channel Smite",
+      "category": "Combat",
+      "name": "Channel Smite",
+      "description": "You can channel your divine energy through your weapon.",
+      "effect": null
+    },
+    {
+      "key": "Cleave",
+      "category": "Combat",
+      "name": "Cleave",
+      "description": "You can strike two adjacent foes with a single swing.",
+      "effect": null
+    },
+    {
+      "key": "Combat Expertise",
+      "category": "Combat",
+      "name": "Combat Expertise",
+      "description": "You can increase your defense at the expense of your accuracy.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CombatExpertiseModifier",
+            "((BAB+(FlurryLVL-MonkBAB))/4)+1"
+          ],
+          "bonus_type": "Base",
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "CombatExpertiseModifierAttack",
+            "-CombatExpertiseModifier"
+          ],
+          "bonus_type": "Base",
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "CombatExpertiseModifierAC",
+            "CombatExpertiseModifier"
+          ],
+          "bonus_type": "Base",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Combat Expertise",
+      "category": "Combat",
+      "name": "Combat Expertise",
+      "description": "You can increase your defense at the expense of your accuracy.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CombatExpertiseModifier",
+            "floor(BAB/4)+1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "CombatExpertiseModifierAttack",
+            "-CombatExpertiseModifier"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "CombatExpertiseModifierAC",
+            "CombatExpertiseModifier"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Combat Reflexes",
+      "category": "Combat",
+      "name": "Combat Reflexes",
+      "description": "You can make additional attacks of opportunity.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CombatReflexesAttacks",
+            "DEX"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Critical Focus",
+      "category": "Combat",
+      "name": "Critical Focus",
+      "description": "You are trained in the arts of causing pain.",
+      "effect": null
+    },
+    {
+      "key": "Critical Mastery",
+      "category": "Combat",
+      "name": "Critical Mastery",
+      "description": "Your critical hits cause two additional effects.",
+      "effect": null
+    },
+    {
+      "key": "Dazzling Display",
+      "category": "Combat",
+      "name": "Dazzling Display",
+      "description": "Your skill with your favored weapon can frighten enemies.",
+      "effect": null
+    },
+    {
+      "key": "Deadly Aim",
+      "category": "Combat",
+      "name": "Deadly Aim",
+      "description": "You can make exceptionally deadly ranged attacks by pinpointing a foe's weak spot, at the expense of making the attack less likely to succeed.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "DeadlyAimModifier",
+            "floor(BAB/4)+1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Deadly Stroke",
+      "category": "Combat",
+      "name": "Deadly Stroke",
+      "description": "With a well-placed strike, you can bring a swift and painful end to most foes.",
+      "effect": null
+    },
+    {
+      "key": "Deafening Critical",
+      "category": "Combat",
+      "name": "Deafening Critical",
+      "description": "Your critical hits cause enemies to lose their hearing.",
+      "effect": null
+    },
+    {
+      "key": "Defensive Combat Training",
+      "category": "Combat",
+      "name": "Defensive Combat Training",
+      "description": "You excel at defending yourself from all manner of combat maneuvers.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMD_BAB",
+            "TL-BAB"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Deflect Arrows",
+      "category": "Combat",
+      "name": "Deflect Arrows",
+      "description": "You can know arrows and other projectiles off course, preventing them from hitting you.",
+      "effect": null
+    },
+    {
+      "key": "Disruptive",
+      "category": "Combat",
+      "name": "Disruptive",
+      "description": "Your training makes it difficult for enemy spellcasters to safely cast spells near you.",
+      "effect": null
+    },
+    {
+      "key": "Dodge",
+      "category": "Combat",
+      "name": "Dodge",
+      "description": "Your training and reflexes allow you to react swiftly to avoid an opponent's attack.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "AC",
+            "1"
+          ],
+          "bonus_type": "Dodge",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Double Slice",
+      "category": "Combat",
+      "name": "Double Slice",
+      "description": "Your off-hand weapon while dual-wielding strikes with greater power.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "DAMAGEMULT:0",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Exhausting Critical",
+      "category": "Combat",
+      "name": "Exhausting Critical",
+      "description": "Your critical hits cause opponents to become exhausted.",
+      "effect": null
+    },
+    {
+      "key": "Exotic Weapon Proficiency",
+      "category": "Combat",
+      "name": "Exotic Weapon Proficiency",
+      "description": "You understand how to use your chosen exotic weapon in combat, and can utilize any special tricks or qualities that exotic weapon might allow.",
+      "effect": null
+    },
+    {
+      "key": "Far Shot",
+      "category": "Combat",
+      "name": "Far Shot",
+      "description": "You are more accurate at longer ranges.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "RangePenaltyValue",
+            "1"
+          ],
+          "bonus_type": "Base",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Gorgon's Fist",
+      "category": "Combat",
+      "name": "Gorgon's Fist",
+      "description": "With one well-placed blow, you leave your target reeling.",
+      "effect": null
+    },
+    {
+      "key": "Great Cleave",
+      "category": "Combat",
+      "name": "Great Cleave",
+      "description": "You can strike many adjacent foes with a single blow.",
+      "effect": null
+    },
+    {
+      "key": "Greater Bull Rush",
+      "category": "Combat",
+      "name": "Greater Bull Rush",
+      "description": "Your bull rush attacks throw enemies off balance.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_BullRush",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Greater Disarm",
+      "category": "Combat",
+      "name": "Greater Disarm",
+      "description": "You can knock weapons far from an enemy's grasp.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_Disarm",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Greater Feint",
+      "category": "Combat",
+      "name": "Greater Feint",
+      "description": "You are skilled at making foes overreact to your attacks.",
+      "effect": null
+    },
+    {
+      "key": "Greater Grapple",
+      "category": "Combat",
+      "name": "Greater Grapple",
+      "description": "Maintaining a grapple is second nature to you.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_Grapple",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Greater Overrun",
+      "category": "Combat",
+      "name": "Greater Overrun",
+      "description": "Enemies must dive to avoid your dangerous move.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_Overrun",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Greater Penetrating Strike",
+      "category": "Combat",
+      "name": "Greater Penetrating Strike",
+      "description": "Your attacks with your chosen weapon penetrate the defenses of most creatures.",
+      "effect": null
+    },
+    {
+      "key": "Greater Shield Focus",
+      "category": "Combat",
+      "name": "Greater Shield Focus",
+      "description": "You are skilled at deflecting blows with your shield.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "AC",
+            "1"
+          ],
+          "bonus_type": "Shield.STACK",
+          "conditions": [
+            {
+              "negated": false,
+              "family": "EQUIP",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "TYPE",
+                  "value": "Shield"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Greater Sunder",
+      "category": "Combat",
+      "name": "Greater Sunder",
+      "description": "Your devastating strikes cleave through weapons and into their wielders, damaging both item and wielder alike in a single terrific strike.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_Sunder",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Greater Trip",
+      "category": "Combat",
+      "name": "Greater Trip",
+      "description": "You can make free attacks on foes that you knock down.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_Trip",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Greater Two-Weapon Fighting",
+      "category": "Combat",
+      "name": "Greater Two-Weapon Fighting",
+      "description": "You are incredibly skilled at fighting with two weapons at the same time.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "SECONDARYATTACKS",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Greater Vital Strike",
+      "category": "Combat",
+      "name": "Greater Vital Strike",
+      "description": "You can make a single attack that deals a tremendous amount of damage.",
+      "effect": null
+    },
+    {
+      "key": "Greater Weapon Focus",
+      "category": "Combat",
+      "name": "Greater Weapon Focus",
+      "description": "You are a master at your chosen weapon.",
+      "effect": [
+        {
+          "qualifiers": [
+            "TOHIT",
+            "GreaterWeaponFocusToHit"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": "ChosenWeapon"
+        }
+      ]
+    },
+    {
+      "key": "Greater Weapon Specialization",
+      "category": "Combat",
+      "name": "Greater Weapon Specialization",
+      "description": "You deal extra damage when using your chosen weapon.",
+      "effect": [
+        {
+          "qualifiers": [
+            "DAMAGE",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": "ChosenWeapon"
+        }
+      ]
+    },
+    {
+      "key": "Improved Bull Rush",
+      "category": "Combat",
+      "name": "Improved Bull Rush",
+      "description": "You are skilled at pushing your foes around.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_BullRush,CMD_BullRush",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Critical",
+      "category": "Combat",
+      "name": "Improved Critical",
+      "description": "Attacks made with your chosen weapon are quite deadly.",
+      "effect": [
+        {
+          "qualifiers": [
+            "CRITRANGEDOUBLE",
+            "1"
+          ],
+          "bonus_type": "NonStackingCrit",
+          "conditions": [],
+          "selection": "ChosenWeapon"
+        }
+      ]
+    },
+    {
+      "key": "Improved Disarm",
+      "category": "Combat",
+      "name": "Improved Disarm",
+      "description": "You are skilled at knocking weapons from a foe's grasp.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_Disarm,CMD_Disarm",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Feint",
+      "category": "Combat",
+      "name": "Improved Feint",
+      "description": "You are skilled at fooling your opponents in combat.",
+      "effect": null
+    },
+    {
+      "key": "Improved Grapple",
+      "category": "Combat",
+      "name": "Improved Grapple",
+      "description": "You are skilled at grappling opponents.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_Grapple,CMD_Grapple",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Initiative",
+      "category": "Combat",
+      "name": "Improved Initiative",
+      "description": "Your quick reflexes allow you to react quickly to danger.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "INITIATIVE",
+            "4"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Overrun",
+      "category": "Combat",
+      "name": "Improved Overrun",
+      "description": "You are skilled at running down your foes.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_Overrun,CMD_Overrun",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Precise Shot",
+      "category": "Combat",
+      "name": "Improved Precise Shot",
+      "description": "Your ranged attacks ignore anything but total concealment and cover.",
+      "effect": null
+    },
+    {
+      "key": "Improved Shield Bash",
+      "category": "Combat",
+      "name": "Improved Shield Bash",
+      "description": "You can protect yourself with your shield, even if you use it to attack.",
+      "effect": null
+    },
+    {
+      "key": "Improved Sunder",
+      "category": "Combat",
+      "name": "Improved Sunder",
+      "description": "You are skilled at damaging your foes' weapons and armor.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_Sunder,CMD_Sunder",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Trip",
+      "category": "Combat",
+      "name": "Improved Trip",
+      "description": "You are skilled at sending your opponents to the ground.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMB_Trip,CMD_Trip",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Two-Weapon Fighting",
+      "category": "Combat",
+      "name": "Improved Two-Weapon Fighting",
+      "description": "You are skilled at fighting with two weapons.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "SECONDARYATTACKS",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Unarmed Strike",
+      "category": "Combat",
+      "name": "Improved Unarmed Strike",
+      "description": "You are skilled while fighting unarmed.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "UnarmedLethal",
+            "1"
+          ],
+          "bonus_type": "Boolean",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Improved Vital Strike",
+      "category": "Combat",
+      "name": "Improved Vital Strike",
+      "description": "You can make a single attack that deals a large amount of damage.",
+      "effect": null
+    },
+    {
+      "key": "Improvised Weapon Mastery",
+      "category": "Combat",
+      "name": "Improvised Weapon Mastery",
+      "description": "You can turn nearly any object into a deadly weapon, from a razor sharp chair leg to a sack of flour.",
+      "effect": null
+    },
+    {
+      "key": "Intimidating Prowess",
+      "category": "Combat",
+      "name": "Intimidating Prowess",
+      "description": "Your physical might is intimidating to others.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SKILL",
+            "Intimidate",
+            "STR"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Lightning Stance",
+      "category": "Combat",
+      "name": "Lightning Stance",
+      "description": "The speed at which you move makes it nearly impossible for opponents to strike you.",
+      "effect": null
+    },
+    {
+      "key": "Lunge",
+      "category": "Combat",
+      "name": "Lunge",
+      "description": "You can strike foes that would normally be out of reach.",
+      "effect": null
+    },
+    {
+      "key": "Manyshot",
+      "category": "Combat",
+      "name": "Manyshot",
+      "description": "You can fire multiple arrows at a single target.",
+      "effect": null
+    },
+    {
+      "key": "Martial Weapon Proficiency",
+      "category": "Combat",
+      "name": "Martial Weapon Proficiency",
+      "description": "You understand how to use your chosen martial weapon in combat.",
+      "effect": null
+    },
+    {
+      "key": "Medusa's Wrath",
+      "category": "Combat",
+      "name": "Medusa's Wrath",
+      "description": "You can take advantage of your opponent's confusion, delivering multiple blows.",
+      "effect": null
+    },
+    {
+      "key": "Mobility",
+      "category": "Combat",
+      "name": "Mobility",
+      "description": "You can easily move through a dangerous melee.",
+      "effect": null
+    },
+    {
+      "key": "Mounted Archery",
+      "category": "Combat",
+      "name": "Mounted Archery",
+      "description": "You are skilled at making ranged attacks while mounted.",
+      "effect": null
+    },
+    {
+      "key": "Mounted Combat",
+      "category": "Combat",
+      "name": "Mounted Combat",
+      "description": "You are adept at guiding your mount through combat.",
+      "effect": null
+    },
+    {
+      "key": "Penetrating Strike",
+      "category": "Combat",
+      "name": "Penetrating Strike",
+      "description": "Your attacks with your chosen weapon are capable of penetrating the defenses of some creatures.",
+      "effect": null
+    },
+    {
+      "key": "Pinpoint Targeting",
+      "category": "Combat",
+      "name": "Pinpoint Targeting",
+      "description": "You can target the weak points in your opponent's armor.",
+      "effect": null
+    },
+    {
+      "key": "Point-Blank Shot",
+      "category": "Combat",
+      "name": "Point-Blank Shot",
+      "description": "You are especially accurate when making ranged attacks against close target.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "TOHIT-SHORTRANGE,DAMAGE-SHORTRANGE",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Power Attack",
+      "category": "Combat",
+      "name": "Power Attack",
+      "description": "You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "PowerAttackModifier",
+            "(BAB/4)+1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "PowerAttackDamageBase",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "PowerAttackDamageModifier",
+            "PowerAttackDamageBase*floor(PowerAttackModifier)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "MonkFlurryPowerAttackModifier",
+            "BAB+(FlurryLVL-MonkBAB)"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Precise Shot",
+      "category": "Combat",
+      "name": "Precise Shot",
+      "description": "You are adept at firing ranged attacks into melee.",
+      "effect": null
+    },
+    {
+      "key": "Quick Draw",
+      "category": "Combat",
+      "name": "Quick Draw",
+      "description": "You can draw weapons faster than most.",
+      "effect": null
+    },
+    {
+      "key": "Rapid Reload",
+      "category": "Combat",
+      "name": "Rapid Reload",
+      "description": "Choose a type of crossbow (hand, light, or heavy). You can reload such weapons quickly.",
+      "effect": null
+    },
+    {
+      "key": "Rapid Shot",
+      "category": "Combat",
+      "name": "Rapid Shot",
+      "description": "You can make an additional ranged attack.",
+      "effect": null
+    },
+    {
+      "key": "Ride-By Attack",
+      "category": "Combat",
+      "name": "Ride-By Attack",
+      "description": "While mounted, you can move, strike at a foe, and then continue moving.",
+      "effect": null
+    },
+    {
+      "key": "Scorpion Style",
+      "category": "Combat",
+      "name": "Scorpion Style",
+      "description": "You can perform an unarmed strike that greatly hampers your target's movement.",
+      "effect": null
+    },
+    {
+      "key": "Shatter Defenses",
+      "category": "Combat",
+      "name": "Shatter Defenses",
+      "description": "Your skill with your chosen weapon leaves opponents unable to defend themselves if you strike them when their defenses are already compromised.",
+      "effect": null
+    },
+    {
+      "key": "Shield Focus",
+      "category": "Combat",
+      "name": "Shield Focus",
+      "description": "You are skilled at deflecting blows with your shield.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "AC",
+            "1"
+          ],
+          "bonus_type": "Shield.STACK",
+          "conditions": [
+            {
+              "negated": false,
+              "family": "EQUIP",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "TYPE",
+                  "value": "Shield"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Shield Master",
+      "category": "Combat",
+      "name": "Shield Master",
+      "description": "Your mastery of the shield allows you to fight with it without hindrance.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "TOHIT.ShieldBash",
+            "var(\\\"ARMOR.SHIELD.EQUIPPED.0.ACBONUS\\\")-var(\\\"ARMOR.SHIELD.EQUIPPED.0.BASEAC\\\")"
+          ],
+          "bonus_type": "Enhancement",
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "COMBAT",
+            "DAMAGE.ShieldBash",
+            "var(\\\"ARMOR.SHIELD.EQUIPPED.0.ACBONUS\\\")-var(\\\"ARMOR.SHIELD.EQUIPPED.0.BASEAC\\\")"
+          ],
+          "bonus_type": "Enhancement",
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "ShieldBashAttackBonus,ShieldBashDamageBonus",
+            "var(\\\"ARMOR.SHIELD.EQUIPPED.0.ACBONUS\\\")-var(\\\"ARMOR.SHIELD.EQUIPPED.0.BASEAC\\\")"
+          ],
+          "bonus_type": "Enhancement",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Shield Proficiency",
+      "category": "Combat",
+      "name": "Shield Proficiency",
+      "description": "You are trained in how to properly use a shield.",
+      "effect": null
+    },
+    {
+      "key": "Shield Slam",
+      "category": "Combat",
+      "name": "Shield Slam",
+      "description": "In the right position, your shield can be used to send opponents flying.",
+      "effect": null
+    },
+    {
+      "key": "Shot on the Run",
+      "category": "Combat",
+      "name": "Shot on the Run",
+      "description": "You can move, fire a ranged weapon, and move again before your foes can react.",
+      "effect": null
+    },
+    {
+      "key": "Sickening Critical",
+      "category": "Combat",
+      "name": "Sickening Critical",
+      "description": "Your critical hits cause opponents to become sickened.",
+      "effect": null
+    },
+    {
+      "key": "Snatch Arrows",
+      "category": "Combat",
+      "name": "Snatch Arrows",
+      "description": "Instead of knocking an arrow or ranged attack aside, you can catch it in mid-flight.",
+      "effect": null
+    },
+    {
+      "key": "Spellbreaker",
+      "category": "Combat",
+      "name": "Spellbreaker",
+      "description": "You can strike at enemy spellcasters who fail to cast defensively when you threaten them.",
+      "effect": null
+    },
+    {
+      "key": "Spirited Charge",
+      "category": "Combat",
+      "name": "Spirited Charge",
+      "description": "Your mounted charge deals a tremendous amount of damage.",
+      "effect": null
+    },
+    {
+      "key": "Spring Attack",
+      "category": "Combat",
+      "name": "Spring Attack",
+      "description": "You can deftly move up to a foe, strike, and withdraw before he can react.",
+      "effect": null
+    },
+    {
+      "key": "Staggering Critical",
+      "category": "Combat",
+      "name": "Staggering Critical",
+      "description": "Your critical hits cause opponents to slow down.",
+      "effect": null
+    },
+    {
+      "key": "Stand Still",
+      "category": "Combat",
+      "name": "Stand Still",
+      "description": "You can stop foes that try to move past you.",
+      "effect": null
+    },
+    {
+      "key": "Step Up",
+      "category": "Combat",
+      "name": "Step Up",
+      "description": "You can close the distance when a foe tries to move away.",
+      "effect": null
+    },
+    {
+      "key": "Strike Back",
+      "category": "Combat",
+      "name": "Strike Back",
+      "description": "You can strike at foes that attack you using their superior reach, by targeting their limbs or weapons as they come at you.",
+      "effect": null
+    },
+    {
+      "key": "Stunning Critical",
+      "category": "Combat",
+      "name": "Stunning Critical",
+      "description": "Your critical hits cause opponents to become stunned.",
+      "effect": null
+    },
+    {
+      "key": "Stunning Fist",
+      "category": "Combat",
+      "name": "Stunning Fist",
+      "description": "You know just where to strike to temporarily stun a foe. %1/day (DC %2)|StunningFistAttack|StunningFistDC",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "StunningFistDC",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": false,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "FEAT"
+                },
+                {
+                  "facet": null,
+                  "value": "Ability Focus (Stunning Fist)"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "StunningFistDC",
+            "10+(TL/2)+WIS"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "StunningFistAttack",
+            "MonkLVL+floor((TL-MonkLVL)/4)"
+          ],
+          "bonus_type": "NoStack",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Throw Anything",
+      "category": "Combat",
+      "name": "Throw Anything",
+      "description": "You are used to throwing things you have on hand.",
+      "effect": [
+        {
+          "qualifiers": [
+            "WEAPONPROF=TYPE.Splash",
+            "TOHIT",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Tiring Critical",
+      "category": "Combat",
+      "name": "Tiring Critical",
+      "description": "Your critical hits cause opponents to become fatigued.",
+      "effect": null
+    },
+    {
+      "key": "Tower Shield Proficiency",
+      "category": "Combat",
+      "name": "Tower Shield Proficiency",
+      "description": "You are trained in how to properly use a tower shield.",
+      "effect": null
+    },
+    {
+      "key": "Trample",
+      "category": "Combat",
+      "name": "Trample",
+      "description": "While mounted, you can ride down opponents and thrample them under your mount.",
+      "effect": null
+    },
+    {
+      "key": "Two-Weapon Defense",
+      "category": "Combat",
+      "name": "Two-Weapon Defense",
+      "description": "You are skilled at defending yourself while fighting with two weapons.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "AC",
+            "TwoWeaponShield"
+          ],
+          "bonus_type": "Shield",
+          "conditions": [
+            {
+              "negated": false,
+              "family": "MULT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": [
+                {
+                  "negated": false,
+                  "family": "EQUIP",
+                  "items": [
+                    {
+                      "facet": null,
+                      "value": "1"
+                    },
+                    {
+                      "facet": "TYPE",
+                      "value": "Double"
+                    }
+                  ],
+                  "alternatives": []
+                },
+                {
+                  "negated": false,
+                  "family": "MULT",
+                  "items": [
+                    {
+                      "facet": null,
+                      "value": "2"
+                    }
+                  ],
+                  "alternatives": [
+                    {
+                      "negated": false,
+                      "family": "EQUIPPRIMARY",
+                      "items": [
+                        {
+                          "facet": null,
+                          "value": "1"
+                        },
+                        {
+                          "facet": "TYPE",
+                          "value": "Melee"
+                        }
+                      ],
+                      "alternatives": []
+                    },
+                    {
+                      "negated": false,
+                      "family": "EQUIPSECONDARY",
+                      "items": [
+                        {
+                          "facet": null,
+                          "value": "1"
+                        },
+                        {
+                          "facet": "TYPE",
+                          "value": "Melee"
+                        }
+                      ],
+                      "alternatives": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "VAR",
+            "TwoWeaponShield",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Two-Weapon Fighting",
+      "category": "Combat",
+      "name": "Two-Weapon Fighting",
+      "description": "You can fight with a weapon in each of your hands. You can make one extra attack each round with the secondary weapon.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "TOHIT-PRIMARY",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        },
+        {
+          "qualifiers": [
+            "COMBAT",
+            "TOHIT-SECONDARY",
+            "6"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Two-Weapon Rend",
+      "category": "Combat",
+      "name": "Two-Weapon Rend",
+      "description": "Striking with both your weapons simultanoeusly, you can use them to deliver devastating wounds.",
+      "effect": null
+    },
+    {
+      "key": "Unseat",
+      "category": "Combat",
+      "name": "Unseat",
+      "description": "You are skilled at unseating your mounted opponent.",
+      "effect": null
+    },
+    {
+      "key": "Vital Strike",
+      "category": "Combat",
+      "name": "Vital Strike",
+      "description": "You make a single attack that deals significantly more damage than normal.",
+      "effect": null
+    },
+    {
+      "key": "Weapon Finesse",
+      "category": "Combat",
+      "name": "Weapon Finesse",
+      "description": "You are trained in using your agility in melee combat, as opposed to brute strength.",
+      "effect": [
+        {
+          "qualifiers": [
+            "COMBAT",
+            "TOHIT.Finesseable",
+            "((max(STR,DEX)-STR)+SHIELDACCHECK)"
+          ],
+          "bonus_type": "NotRanged",
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Weapon Focus",
+      "category": "Combat",
+      "name": "Weapon Focus",
+      "description": "You are especially good at using your chosen weapon.",
+      "effect": [
+        {
+          "qualifiers": [
+            "TOHIT",
+            "WeaponFocusToHit"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": "ChosenWeapon"
+        }
+      ]
+    },
+    {
+      "key": "Weapon Specialization",
+      "category": "Combat",
+      "name": "Weapon Specialization",
+      "description": "You deal extra damage when using your chosen weapon.",
+      "effect": [
+        {
+          "qualifiers": [
+            "DAMAGE",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": "ChosenWeapon"
+        }
+      ]
+    },
+    {
+      "key": "Whirlwind Attack",
+      "category": "Combat",
+      "name": "Whirlwind Attack",
+      "description": "You can strike out at every foe within reach.",
+      "effect": null
+    },
+    {
+      "key": "Wind Stance",
+      "category": "Combat",
+      "name": "Wind Stance",
+      "description": "Your erratic movements make it difficult for enemies to pinpoint your location.",
+      "effect": null
+    }
+  ]
+}

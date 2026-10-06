@@ -25,8 +25,8 @@
 //! this book's companions have no `CompanionAdvancement` row in the corpus. A
 //! reader that "balanced" the two counts would be inventing records.
 
-mod companion_data;
-mod monster_data;
+pub(crate) mod companion_data;
+pub(crate) mod monster_data;
 pub mod spell_list;
 
 pub use super::companion_chassis::{

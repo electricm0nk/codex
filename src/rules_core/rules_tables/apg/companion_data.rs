@@ -225,7 +225,7 @@
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
 /// Every advanced_players_guide companion creature (9 rows).
-pub(super) static COMPANIONS: &[CompanionRecord] = &[
+pub(crate) static COMPANIONS: &[CompanionRecord] = &[
     CompanionRecord {
         key: "Familiar (Centipede (House))",
         name: "Familiar (Centipede (House))",
@@ -427,7 +427,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
 ];
 
 /// Every advanced_players_guide companion ability record (8 rows).
-pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
+pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
     CompanionAbilityRecord {
         key: "Eidolon ~ Link",
         name: "Link",

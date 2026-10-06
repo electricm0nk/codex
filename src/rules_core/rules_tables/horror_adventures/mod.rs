@@ -25,8 +25,8 @@
 //! shapes agree when both are present. They are recorded once, not twice: the
 //! chassis dedupes on the key.
 
-mod companion_data;
-mod monster_data;
+pub(crate) mod companion_data;
+pub(crate) mod monster_data;
 /// SD-32 card 11 (T9 onboarding, `decisions.md §19` sign-off): this book's
 /// third family, ingested by the shared config-driven `ingest_spells.rs`
 /// pass (`decisions.md §17`) rather than a dedicated per-book binary.

@@ -90,7 +90,8 @@ pub const SNEAK_ATTACK_DIE_SIZE: u8 = 6;
 /// The 15 `Unchained Rogue ~ ...` records this book declares — the same 15 that
 /// `data/corpus/pathfinder_unchained/class_feature/rogue_unchained_class/`
 /// holds.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum UnchainedRogueFeature {
     ArmorProficiency,
     DangerSense,

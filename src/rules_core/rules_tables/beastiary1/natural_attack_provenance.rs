@@ -92,7 +92,8 @@
 /// kinds that apply to this data; the other three kinds
 /// (`lst_inherited_copy`, `lst_corrected_ingest`, `same_book_fallback`)
 /// have no instance here.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum AttackSource {
     /// A real, checkable `NATURALATTACKS:` token in the live PCGen
     /// corpus — just not on the monster's own `b1_races.lst` row.
@@ -111,6 +112,7 @@ pub enum AttackSource {
         /// `aonprd.com` / `legacy.aonprd.com` / `d20pfsrd.com`; the
         /// grounding bar requires **at least two**, both asserted by
         /// `tests/v06_beastiary1_natural_attack_grounding.rs`.
+        #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
         urls: &'static [&'static str],
         /// ISO-8601 date the sources were read.
         fetched_at: &'static str,
@@ -123,7 +125,8 @@ pub enum AttackSource {
 
 /// One natural attack whose `damage_dice` is not transcribed from the
 /// monster's own `b1_races.lst` row.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct GroundedAttack {
     /// Canonical `beastiary1:monster:<slug>` key, matching
     /// `super::monster_key_resolve`'s key shape.

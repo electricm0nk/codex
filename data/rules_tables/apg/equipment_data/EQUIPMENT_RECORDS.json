@@ -1,0 +1,2717 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "apg/equipment_data/EQUIPMENT_RECORDS",
+  "licence": {
+    "license": "OGL",
+    "book": "apg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Backpack (Masterwork)",
+      "category": "General",
+      "name": "Backpack, Masterwork",
+      "cost_gp": 50.0,
+      "weight": 4.0,
+      "description": "A masterwork backpack with numerous pockets, hooks, and padded straps; treats the wearer's Strength as 1 higher for carrying-capacity purposes only."
+    },
+    {
+      "key": "Barbed Vest",
+      "category": "General",
+      "name": "Barbed Vest",
+      "cost_gp": 10.0,
+      "weight": 4.0,
+      "description": "A black vest lined with hundreds of tiny fishhook-like needles; anyone striking the wearer with a natural or unarmed attack takes 1 point of damage unless they make a Reflex save. Worn only over light armor."
+    },
+    {
+      "key": "Blanket",
+      "category": "General",
+      "name": "Blanket",
+      "cost_gp": 0.2,
+      "weight": 1.0,
+      "description": "A warm, woven blanket with straps so it can be rolled up and tied for carrying."
+    },
+    {
+      "key": "Buoy (Common)",
+      "category": "General",
+      "name": "Buoy, Common",
+      "cost_gp": 0.5,
+      "weight": 16.0,
+      "description": "A float used to mark a specific spot in a lake or river; includes 200 feet of twine and a 15-pound anchor stone."
+    },
+    {
+      "key": "Buoy (Superior)",
+      "category": "General",
+      "name": "Buoy (Superior)",
+      "cost_gp": 10.0,
+      "weight": 30.0,
+      "description": "A spherical or ovoid hollow metal float, typically copper, connected to a length of chain and a metal anchor rather than twine and a stone."
+    },
+    {
+      "key": "Butterfly Net",
+      "category": "General",
+      "name": "Butterfly Net",
+      "cost_gp": 5.0,
+      "weight": 2.0,
+      "description": "A 6-foot pole supporting a wide metal hoop covered by a thin mesh net, used to sift small objects or capture Fine or Diminutive creatures."
+    },
+    {
+      "key": "Chalkboard",
+      "category": "General",
+      "name": "Chalkboard",
+      "cost_gp": 1.0,
+      "weight": 2.0,
+      "description": "A wooden frame surrounding a thinly sliced piece of polished black stone; rubbing a damp cloth over the slate erases anything written on it."
+    },
+    {
+      "key": "Chest (Small)",
+      "category": "General",
+      "name": "Chest, Small",
+      "cost_gp": 2.0,
+      "weight": 25.0,
+      "description": "A small lockable storage chest: 2 cubic feet capacity, 1 hit point, break DC 17."
+    },
+    {
+      "key": "Chest (Medium)",
+      "category": "General",
+      "name": "Chest, Medium",
+      "cost_gp": 5.0,
+      "weight": 50.0,
+      "description": "A medium lockable storage chest: 4 cubic feet capacity, 15 hit points, break DC 23."
+    },
+    {
+      "key": "Chest (Large)",
+      "category": "General",
+      "name": "Chest, Large",
+      "cost_gp": 10.0,
+      "weight": 100.0,
+      "description": "A large lockable storage chest: 6 cubic feet capacity, 30 hit points, break DC 29."
+    },
+    {
+      "key": "Chest (Huge)",
+      "category": "General",
+      "name": "Chest, Huge",
+      "cost_gp": 25.0,
+      "weight": 250.0,
+      "description": "A huge lockable storage chest: 8 cubic feet capacity, 50 hit points, break DC 35."
+    },
+    {
+      "key": "Earplugs",
+      "category": "General",
+      "name": "Earplugs",
+      "cost_gp": 0.03,
+      "weight": 0.0,
+      "description": "Waxed cotton or cork earplugs granting a +2 circumstance bonus on saves against hearing-based effects, at the cost of a -5 penalty on hearing-based Perception checks."
+    },
+    {
+      "key": "Hourglass (1 Hour)",
+      "category": "General",
+      "name": "Hourglass, 1 hour",
+      "cost_gp": 25.0,
+      "weight": 1.0,
+      "description": "An hourglass that measures one hour of elapsed time."
+    },
+    {
+      "key": "Hourglass (1 minute)",
+      "category": "General",
+      "name": "Hourglass, 1 minute",
+      "cost_gp": 20.0,
+      "weight": 0.5,
+      "description": "An hourglass that measures one minute of elapsed time."
+    },
+    {
+      "key": "Hourglass (6 seconds)",
+      "category": "General",
+      "name": "Hourglass, 6 seconds",
+      "cost_gp": 10.0,
+      "weight": 0.0,
+      "description": "An hourglass that measures six seconds of elapsed time (one combat round)."
+    },
+    {
+      "key": "Iron Spike",
+      "category": "General",
+      "name": "Iron Spike",
+      "cost_gp": 0.05,
+      "weight": 1.0,
+      "description": "A foot-long iron spike used to keep doors open or closed and to secure ropes for climbing; a DC 5 Perception check detects the sound of one being driven in."
+    },
+    {
+      "key": "Magnet",
+      "category": "General",
+      "name": "Magnet",
+      "cost_gp": 0.5,
+      "weight": 0.5,
+      "description": "A hand-sized horseshoe magnet that can lift up to 3 pounds of iron; mainly used to detect or retrieve iron, mithral, or adamantine objects."
+    },
+    {
+      "key": "Marbles",
+      "category": "General",
+      "name": "Marbles",
+      "cost_gp": 0.1,
+      "weight": 2.0,
+      "description": "A 2-pound bag of marbles covering a 5-foot square; a creature entering the area must succeed at a DC 10 Reflex save or fall prone."
+    },
+    {
+      "key": "Periscope",
+      "category": "General",
+      "name": "Periscope",
+      "cost_gp": 20.0,
+      "weight": 4.0,
+      "description": "A 2-foot metal tube with mirrors at right angles at each end, letting the user safely peer over an obstacle at the cost of a -4 Perception penalty while in use."
+    },
+    {
+      "key": "Ring (Poison Pill)",
+      "category": "General",
+      "name": "Ring, Poison Pill",
+      "cost_gp": 20.0,
+      "weight": 0.0,
+      "description": "A ring with a tiny hidden compartment under the setting, typically used to conceal poison; opening or closing the compartment is a move action."
+    },
+    {
+      "key": "Powder",
+      "category": "General",
+      "name": "Powder",
+      "cost_gp": 0.01,
+      "weight": 0.5,
+      "description": "Powdered chalk, flour, or similar material that, thrown into a square, can momentarily reveal an invisible creature there, or be spread on a surface to reveal footprints."
+    },
+    {
+      "key": "Rice Paper (Sheet)",
+      "category": "General",
+      "name": "Rice Paper, Sheet",
+      "cost_gp": 0.05,
+      "weight": 0.0,
+      "description": "A sheet of paper made from rice or tree bark; hardness 0, 1 hit point, break DC 2."
+    },
+    {
+      "key": "Rope (Spider Silk/50 ft.)",
+      "category": "General",
+      "name": "Rope, Spider Silk (50 ft.)",
+      "cost_gp": 100.0,
+      "weight": 4.0,
+      "description": "Fifty feet of rope woven from monstrous spider silk by goblin slaves; has 6 hit points and requires a DC 25 Strength check to burst."
+    },
+    {
+      "key": "Signal Horn",
+      "category": "General",
+      "name": "Signal Horn",
+      "cost_gp": 1.0,
+      "weight": 2.0,
+      "description": "A horn that, when sounded with a DC 10 Perform (wind instruments) check, can convey simple prearranged messages such as \"Attack!\" or \"Help!\" audible up to half a mile away."
+    },
+    {
+      "key": "Smoked Goggles",
+      "category": "General",
+      "name": "Smoked Goggles",
+      "cost_gp": 10.0,
+      "weight": 0.0,
+      "description": "Spectacles with lenses of smoked glass that treat the wearer as always averting their gaze against gaze attacks, at the cost of a -4 Perception penalty and granting onlookers 20% concealment."
+    },
+    {
+      "key": "String (50 ft.)",
+      "category": "General",
+      "name": "String (50 ft.)",
+      "cost_gp": 0.01,
+      "weight": 0.5,
+      "description": "Fifty feet of string, sold in a ball or spool; hardness 0, 1 hit point, break DC 14. Useful for traps and alarms."
+    },
+    {
+      "key": "Swarmsuit",
+      "category": "General",
+      "name": "Swarmsuit",
+      "cost_gp": 20.0,
+      "weight": 10.0,
+      "description": "Heavy, overlapping layers of clothing and a veiled wide-brimmed hat that grant damage reduction against swarms of Fine or Diminutive creatures, at the cost of halved speed."
+    },
+    {
+      "key": "Tent (Medium)",
+      "category": "General",
+      "name": "Medium Tent",
+      "cost_gp": 15.0,
+      "weight": 30.0,
+      "description": "A tent holding two Medium creatures, taking 30 minutes to assemble."
+    },
+    {
+      "key": "Tent (Large)",
+      "category": "General",
+      "name": "Large Tent",
+      "cost_gp": 30.0,
+      "weight": 40.0,
+      "description": "A tent holding four Medium creatures, taking 45 minutes to assemble."
+    },
+    {
+      "key": "Tent (Pavilion)",
+      "category": "General",
+      "name": "Pavilion",
+      "cost_gp": 100.0,
+      "weight": 50.0,
+      "description": "A large pavilion tent holding ten Medium creatures and taking 90 minutes to assemble; roomy enough for a small fire inside."
+    },
+    {
+      "key": "Twine (50 ft.)",
+      "category": "General",
+      "name": "Twine (50 ft.)",
+      "cost_gp": 0.01,
+      "weight": 0.5,
+      "description": "Fifty feet of twine, sold in a ball or spool; hardness 0, 1 hit point, break DC 14. Useful for traps and alarms."
+    },
+    {
+      "key": "Weapon Cord",
+      "category": "General",
+      "name": "Weapon Cord",
+      "cost_gp": 0.1,
+      "weight": 0.0,
+      "description": "A leather strap attaching a weapon to the wielder's wrist; a dropped weapon can be recovered as a swift action, and cutting the cord is a move action (or an attack against it)."
+    },
+    {
+      "key": "Whistle (Signal)",
+      "category": "General",
+      "name": "Whistle, Signal",
+      "cost_gp": 0.8,
+      "weight": 0.0,
+      "description": "A whistle that, with a DC 5 Perform (wind instruments) check, can convey simple prearranged messages, audible up to a quarter mile away."
+    },
+    {
+      "key": "Whistle (Silent)",
+      "category": "General",
+      "name": "Whistle, Silent",
+      "cost_gp": 0.9,
+      "weight": 0.0,
+      "description": "A whistle pitched so only animals and creatures with keen hearing can perceive it."
+    },
+    {
+      "key": "Alchemical Grease",
+      "category": "General",
+      "name": "Alchemical Grease",
+      "cost_gp": 5.0,
+      "weight": 1.0,
+      "description": "A slick black goo, one pot of which covers one Medium or two Small creatures, granting a +5 alchemical bonus on Escape Artist checks and grapple-related checks for 4 hours."
+    },
+    {
+      "key": "Alchemical Solvent (Vial)",
+      "category": "General",
+      "name": "Alchemical Solvent (Vial)",
+      "cost_gp": 20.0,
+      "weight": 0.5,
+      "description": "A bubbling purple gel that eats through adhesives over a 5-foot square, destroying normal adhesives in 1 round and powerful adhesives in 1d4+1 rounds; has no effect on magical adhesives."
+    },
+    {
+      "key": "Alchemist's Kindness",
+      "category": "General",
+      "name": "Alchemist's Kindness",
+      "cost_gp": 1.0,
+      "weight": 0.0,
+      "description": "A crystalline powder resembling salt that, mixed with water, produces a fizzing drink that eliminates the effects of a hangover within 10 minutes."
+    },
+    {
+      "key": "Alkali (Flask)",
+      "category": "General",
+      "name": "Alkali (Flask)",
+      "cost_gp": 15.0,
+      "weight": 1.0,
+      "description": "A flask of caustic liquid that reacts with an ooze's natural acids, dealing double splash-weapon damage against oozes and normal damage against other targets."
+    },
+    {
+      "key": "Antiplague (Vial)",
+      "category": "General",
+      "name": "Antiplague (Vial)",
+      "cost_gp": 50.0,
+      "weight": 0.0,
+      "description": "A foul-tasting, milky tonic granting a +5 alchemical bonus on Fortitude saves against disease for 1 hour; a creature already infected may reroll its save that day using the better result."
+    },
+    {
+      "key": "Bladeguard",
+      "category": "General",
+      "name": "Bladeguard",
+      "cost_gp": 40.0,
+      "weight": 0.0,
+      "description": "A clear resin that, coated on a weapon or ammunition, renders it immune to attacks that damage weapons (such as those from oozes or rust monsters) for 24 hours."
+    },
+    {
+      "key": "Bloodblock",
+      "category": "General",
+      "name": "Bloodblock",
+      "cost_gp": 25.0,
+      "weight": 0.0,
+      "description": "A gooey, pinkish substance that grants a +5 alchemical bonus on Heal checks to treat wounds and can end an ongoing bleed effect with a DC 15 Heal check."
+    },
+    {
+      "key": "Casting Plaster",
+      "category": "General",
+      "name": "Casting Plaster",
+      "cost_gp": 0.5,
+      "weight": 5.0,
+      "description": "A white, dry powder that, mixed with water, forms a paste that hardens in one hour; used to make casts of footprints, fill gaps, or create medical splints."
+    },
+    {
+      "key": "Flash Powder",
+      "category": "General",
+      "name": "Flash Powder",
+      "cost_gp": 50.0,
+      "weight": 0.0,
+      "description": "A coarse gray powder that, ignited as a standard action, blinds creatures within a 10-foot-radius burst for 1 round unless they succeed at a DC 13 Fortitude save."
+    },
+    {
+      "key": "Light Detector",
+      "category": "General",
+      "name": "Light Detector",
+      "cost_gp": 1.0,
+      "weight": 0.0,
+      "description": "A hand-sized metal plate covered in light-sensitive paste that darkens at different rates depending on ambient light level, used to detect recent illumination."
+    },
+    {
+      "key": "Liquid Ice (Flask)",
+      "category": "General",
+      "name": "Liquid Ice (Flask)",
+      "cost_gp": 40.0,
+      "weight": 2.0,
+      "description": "A sealed jar of crystalline blue fluid that evaporates once opened, freezing liquids or coating objects over 1d6 rounds; can also be thrown as a splash weapon dealing cold damage."
+    },
+    {
+      "key": "Nushadir (Vial)",
+      "category": "General",
+      "name": "Nushadir (Vial)",
+      "cost_gp": 10.0,
+      "weight": 1.0,
+      "description": "Small salty pellets that, mixed with water, safely neutralize a cubic foot of acid within a minute, though the vapors can cause nausea."
+    },
+    {
+      "key": "Smelling Salts",
+      "category": "General",
+      "name": "Smelling Salts",
+      "cost_gp": 25.0,
+      "weight": 0.0,
+      "description": "Sharply scented gray crystals that let an unconscious creature attempt a new save against the effect that felled it, or grant momentary consciousness to a dying creature."
+    },
+    {
+      "key": "Smoke Pellet",
+      "category": "General",
+      "name": "Smoke Pellet",
+      "cost_gp": 25.0,
+      "weight": 0.0,
+      "description": "A small clay sphere containing two alchemical substances that, thrown as a ranged touch attack, breaks to fill a 5-foot square with yellow smoke for 1 round."
+    },
+    {
+      "key": "Sneezing Powder (Pouch)",
+      "category": "General",
+      "name": "Sneezing Powder (Pouch)",
+      "cost_gp": 60.0,
+      "weight": 2.0,
+      "description": "A coarse yellowish-red powder splash weapon that causes uncontrollable sneezing for 1d4+1 rounds in creatures that fail a Fortitude save."
+    },
+    {
+      "key": "Soothe Syrup",
+      "category": "General",
+      "name": "Soothe Syrup",
+      "cost_gp": 25.0,
+      "weight": 0.5,
+      "description": "A sweet, wholesome-tasting blue liquid granting a +5 alchemical bonus on saves against nausea and sickened effects for 1 hour after drinking."
+    },
+    {
+      "key": "Weapon Blanch (Adamantine)",
+      "category": "General",
+      "name": "Adamantine Weapon Blanch",
+      "cost_gp": 100.0,
+      "weight": 0.5,
+      "description": "An alchemical powder that, melted onto a weapon or ammunition over a flame, lets the coated attack bypass adamantine damage reduction on its first successful hit."
+    },
+    {
+      "key": "Weapon Blanch (Cold Iron)",
+      "category": "General",
+      "name": "Cold Iron Weapon Blanch",
+      "cost_gp": 20.0,
+      "weight": 0.5,
+      "description": "An alchemical powder that, melted onto a weapon or ammunition over a flame, lets the coated attack bypass cold iron damage reduction on its first successful hit."
+    },
+    {
+      "key": "Weapon Blanch (Silver)",
+      "category": "General",
+      "name": "Silver Weapon Blanch",
+      "cost_gp": 5.0,
+      "weight": 0.5,
+      "description": "An alchemical powder that, melted onto a weapon or ammunition over a flame, lets the coated attack bypass silver damage reduction on its first successful hit."
+    },
+    {
+      "key": "Abacus",
+      "category": "General",
+      "name": "Abacus",
+      "cost_gp": 2.0,
+      "weight": 2.0,
+      "description": "A simple mechanical device that helps its user perform mathematical calculations."
+    },
+    {
+      "key": "Alchemist's Kit",
+      "category": "General",
+      "name": "Alchemist's Kit",
+      "cost_gp": 25.0,
+      "weight": 5.0,
+      "description": "A kit assumed to include all the material components an alchemist needs for extracts, mutagens, and bombs, except components with a specific listed cost."
+    },
+    {
+      "key": "Alchemist's Lab (Portable)",
+      "category": "General",
+      "name": "Alchemist's Lab, Portable",
+      "cost_gp": 75.0,
+      "weight": 20.0,
+      "description": "A compact version of a full-size alchemist's lab, granting a +1 circumstance bonus on Craft (alchemy) checks."
+    },
+    {
+      "key": "Anvil (Blacksmith)",
+      "category": "General",
+      "name": "Anvil (Blacksmith)",
+      "cost_gp": 5.0,
+      "weight": 100.0,
+      "description": "A 100-pound blacksmith's anvil, needed for most metalworking Craft tasks."
+    },
+    {
+      "key": "Anvil (Farrier)",
+      "category": "General",
+      "name": "Anvil (Farrier)",
+      "cost_gp": 5.0,
+      "weight": 50.0,
+      "description": "A 50-pound farrier's anvil, sized for shoeing work rather than general blacksmithing."
+    },
+    {
+      "key": "Anvil (Goldsmith/Silversmith)",
+      "category": "General",
+      "name": "Anvil (Goldsmith/Silversmith)",
+      "cost_gp": 5.0,
+      "weight": 10.0,
+      "description": "A 10-pound goldsmith's or silversmith's anvil, sized for fine metalworking."
+    },
+    {
+      "key": "Astrolabe",
+      "category": "General",
+      "name": "Astrolabe",
+      "cost_gp": 100.0,
+      "weight": 6.0,
+      "description": "A flat disc with two smaller discs mounted on a central axis; lets its user determine the date and time at night in about a minute, and grants a +2 circumstance bonus on Knowledge (geography), Survival navigation, and Profession (sailor) checks."
+    },
+    {
+      "key": "Balancing Pole",
+      "category": "General",
+      "name": "Balancing Pole",
+      "cost_gp": 0.8,
+      "weight": 12.0,
+      "description": "A flexible 15-to-30-foot pole that grants a +1 circumstance bonus on Acrobatics checks made to balance on narrow surfaces."
+    },
+    {
+      "key": "Bear Trap",
+      "category": "General",
+      "name": "Bear Trap",
+      "cost_gp": 2.0,
+      "weight": 10.0,
+      "description": "A hinged-jaw trap chained to a ground spike; a captured creature must succeed at a DC 20 Strength check to pry it open or pull the spike free."
+    },
+    {
+      "key": "Bellows",
+      "category": "General",
+      "name": "Bellows",
+      "cost_gp": 1.0,
+      "weight": 3.0,
+      "description": "A tool useful for starting fires, granting a +1 circumstance bonus on Survival checks made to do so."
+    },
+    {
+      "key": "Cauldron",
+      "category": "General",
+      "name": "Cauldron",
+      "cost_gp": 1.0,
+      "weight": 5.0,
+      "description": "An iron pot, sometimes fitted with a hook for hanging over a fire, holding about a gallon; used for cooking and for brewing potions."
+    },
+    {
+      "key": "Compass",
+      "category": "General",
+      "name": "Compass",
+      "cost_gp": 10.0,
+      "weight": 0.5,
+      "description": "An ordinary compass pointing to magnetic north; grants a +2 circumstance bonus on Survival checks to avoid getting lost and on Knowledge (dungeoneering) checks for underground navigation."
+    },
+    {
+      "key": "Drill",
+      "category": "General",
+      "name": "Drill",
+      "cost_gp": 0.5,
+      "weight": 1.0,
+      "description": "A hand tool that can bore a 1-inch-diameter hole in stone, wood, or metal as a standard action; a DC 15 Perception check detects the sound of its use."
+    },
+    {
+      "key": "Footprint Book",
+      "category": "General",
+      "name": "Footprint Book",
+      "cost_gp": 50.0,
+      "weight": 3.0,
+      "description": "A 50-page tome of accurate drawings of common animal, humanoid, and monster tracks with notes on stride and tread, granting a +2 circumstance bonus to identify a creature from its tracks."
+    },
+    {
+      "key": "Fortune-Teller's Deck (Common)",
+      "category": "General",
+      "name": "Fortune-Teller's Deck (Common)",
+      "cost_gp": 1.0,
+      "weight": 0.5,
+      "description": "A simple deck of illustrated fortune-telling cards drawn on parchment or wooden plaques."
+    },
+    {
+      "key": "Fortune-Teller's Deck (Quality)",
+      "category": "General",
+      "name": "Fortune-Teller's Deck (Quality)",
+      "cost_gp": 25.0,
+      "weight": 1.0,
+      "description": "A quality deck of fortune-telling cards on painted wooden plaques, suitable as an augury spell focus and granting a +1 circumstance bonus on related Profession checks."
+    },
+    {
+      "key": "Fortune-Teller's Deck (Masterwork)",
+      "category": "General",
+      "name": "Fortune-Teller's Deck (Masterwork)",
+      "cost_gp": 50.0,
+      "weight": 1.0,
+      "description": "A masterwork fortune-telling deck of wood, ivory, or metal with painted or carved images, suitable as an augury spell focus and granting a +2 circumstance bonus on related Profession checks."
+    },
+    {
+      "key": "Leeching Kit",
+      "category": "General",
+      "name": "Leeching Kit",
+      "cost_gp": 5.0,
+      "weight": 5.0,
+      "description": "A ceramic jar half-filled with water containing four 6-inch leeches, granting a +2 circumstance bonus on Heal checks to treat poison; a leech can survive six months between feedings."
+    },
+    {
+      "key": "Map Maker's Kit",
+      "category": "General",
+      "name": "Map Maker's Kit",
+      "cost_gp": 10.0,
+      "weight": 2.0,
+      "description": "A small kit with a gridded slate and colored chalk, granting a +2 circumstance bonus on Survival checks to avoid getting lost while mapping."
+    },
+    {
+      "key": "Portrait Book",
+      "category": "General",
+      "name": "Portrait Book",
+      "cost_gp": 10.0,
+      "weight": 3.0,
+      "description": "A 100-page book of face drawings for various humanoid races, used to help create a likeness for a portrait or wanted poster."
+    },
+    {
+      "key": "Pulley",
+      "category": "General",
+      "name": "Pulley",
+      "cost_gp": 2.0,
+      "weight": 10.0,
+      "description": "A simple block-and-tackle pulley that, once secured, grants a +5 circumstance bonus on Strength checks to lift heavy objects."
+    },
+    {
+      "key": "Saw",
+      "category": "General",
+      "name": "Saw",
+      "cost_gp": 0.04,
+      "weight": 2.0,
+      "description": "A hand saw; inserted between a door and its frame it can cut through wooden bolts or bars, dealing 5 hit points of damage plus the user's Strength modifier as a full-round action."
+    },
+    {
+      "key": "Sextant",
+      "category": "General",
+      "name": "Sextant",
+      "cost_gp": 500.0,
+      "weight": 2.0,
+      "description": "A navigational instrument used to determine latitude, granting a +4 circumstance bonus on Survival checks to navigate above ground."
+    },
+    {
+      "key": "Formula Book",
+      "category": "General",
+      "name": "Formula Book",
+      "cost_gp": null,
+      "weight": null,
+      "description": null
+    },
+    {
+      "key": "Symptom Kit",
+      "category": "General",
+      "name": "Symptom Kit",
+      "cost_gp": 25.0,
+      "weight": 5.0,
+      "description": "A small compartmented box of items for feigning illness (false pustules, mouth-foaming pills, fever-inducing herbs) plus a reference book on diseases, granting a +5 bonus on Disguise checks simulating sickness."
+    },
+    {
+      "key": "Traveling Spellbook",
+      "category": "General",
+      "name": "Traveling Spellbook",
+      "cost_gp": 10.0,
+      "weight": 1.0,
+      "description": "A lighter, less cumbersome 50-page blank spellbook than a full-size spellbook."
+    },
+    {
+      "key": "Cleats",
+      "category": "General",
+      "name": "Cleats",
+      "cost_gp": 5.0,
+      "weight": 2.0,
+      "description": "Shoes fitted with spikes or hooks that reduce the movement penalty on slick surfaces by half, at the cost of damaging finished flooring."
+    },
+    {
+      "key": "Furs",
+      "category": "General",
+      "name": "Furs",
+      "cost_gp": 12.0,
+      "weight": 5.0,
+      "description": "The most basic cold-weather gear; animal furs grant a +2 bonus on Fortitude saves against cold weather (does not stack with the Survival skill's own bonus)."
+    },
+    {
+      "key": "Outfit (Hot Weather)",
+      "category": "General",
+      "name": "Hot Weather Outfit",
+      "cost_gp": 8.0,
+      "weight": 4.0,
+      "description": "A loose linen robe with a turban or head covering and veil, granting a +2 bonus on Fortitude saves against hot weather (does not stack with the Survival skill's own bonus)."
+    },
+    {
+      "key": "Snowshoes",
+      "category": "General",
+      "name": "Snowshoes",
+      "cost_gp": 5.0,
+      "weight": 4.0,
+      "description": "High-tension nets of rope or sinew in wooden frames, lashed to the feet to reduce the movement penalty in heavy snow by half."
+    },
+    {
+      "key": "Animal Harness",
+      "category": "General",
+      "name": "Animal Harness",
+      "cost_gp": 2.0,
+      "weight": 2.0,
+      "description": "A leather or hemp harness that lets its holder restrain and control a domesticated animal; ready-made for common animals, with custom harnesses available for others."
+    },
+    {
+      "key": "Cage (Diminutive or Fine)",
+      "category": "General",
+      "name": "Cage (Diminutive or Fine)",
+      "cost_gp": 10.0,
+      "weight": 2.0,
+      "description": "A secure, portable enclosure for holding a Diminutive or Fine creature."
+    },
+    {
+      "key": "Cage (Huge)",
+      "category": "General",
+      "name": "Cage (Huge)",
+      "cost_gp": 60.0,
+      "weight": 960.0,
+      "description": "A secure, portable enclosure for holding a Huge creature."
+    },
+    {
+      "key": "Cage (Large)",
+      "category": "General",
+      "name": "Cage (Large)",
+      "cost_gp": 30.0,
+      "weight": 240.0,
+      "description": "A secure, portable enclosure for holding a Large creature."
+    },
+    {
+      "key": "Cage (Small or Medium)",
+      "category": "General",
+      "name": "Cage (Small or Medium)",
+      "cost_gp": 15.0,
+      "weight": 60.0,
+      "description": "A secure, portable enclosure for holding a Small or Medium creature."
+    },
+    {
+      "key": "Cage (Tiny)",
+      "category": "General",
+      "name": "Cage (Tiny)",
+      "cost_gp": 2.0,
+      "weight": 5.0,
+      "description": "A secure, portable enclosure for holding a Tiny creature."
+    },
+    {
+      "key": "Dog Sled",
+      "category": "General",
+      "name": "Dog Sled",
+      "cost_gp": 20.0,
+      "weight": 300.0,
+      "description": "A sled several feet long, designed to be pulled over snow and ice by a team of trained riding dogs; most have runners for a musher and carry cargo up to the dogs' combined capacity."
+    },
+    {
+      "key": "Loaded Dice (Average)",
+      "category": "General",
+      "name": "Loaded Dice, Average",
+      "cost_gp": 10.0,
+      "weight": 0.0,
+      "description": "Dice weighted with a heavier substance opposite the desired number; a DC 15 Appraise or Perception check is needed to spot the tampering."
+    },
+    {
+      "key": "Loaded Dice (Superior)",
+      "category": "General",
+      "name": "Loaded Dice, Superior",
+      "cost_gp": 50.0,
+      "weight": 0.0,
+      "description": "Higher-quality loaded dice carved around a naturally heavy inclusion, requiring a DC 20 to 30 check to detect."
+    },
+    {
+      "key": "Marked Cards",
+      "category": "General",
+      "name": "Marked Cards",
+      "cost_gp": 1.0,
+      "weight": 1.0,
+      "description": "A deck of cards bent, colored, or scratched so an informed user can tell front from back; a DC 25 Perception check is needed to notice the marking."
+    },
+    {
+      "key": "Arrows (Blunt/20)",
+      "category": "ArmsArmor",
+      "name": "Arrow, Blunt (20)",
+      "cost_gp": 2.0,
+      "weight": 3.0,
+      "description": "A bundle of 20 blunted wooden-tipped arrows that deal bludgeoning damage instead of piercing damage."
+    },
+    {
+      "key": "Arrows (Flight/20)",
+      "category": "ArmsArmor",
+      "name": "Arrow, Flight (20)",
+      "cost_gp": 2.0,
+      "weight": 3.0,
+      "description": "A bundle of 20 arrows with light shafts and special fletching, granting 20 extra feet of range on a longbow (10 feet on a shortbow) but dealing damage as though one size category smaller."
+    },
+    {
+      "key": "Arrows (Smoke/20)",
+      "category": "ArmsArmor",
+      "name": "Arrow, Smoke (20)",
+      "cost_gp": 200.0,
+      "weight": 3.0,
+      "description": "A bundle of 20 specially shaped smokestick arrows that trail smoke in flight and create a 5-foot cube of smoke where they strike."
+    },
+    {
+      "key": "Arrow (Blunt)",
+      "category": "ArmsArmor",
+      "name": "Arrow, Blunt",
+      "cost_gp": 0.1,
+      "weight": 0.15,
+      "description": "A single blunted wooden-tipped arrow that deals bludgeoning damage instead of piercing damage."
+    },
+    {
+      "key": "Arrow (Flight)",
+      "category": "ArmsArmor",
+      "name": "Arrow, Flight",
+      "cost_gp": 0.1,
+      "weight": 0.15,
+      "description": "A single arrow with a light shaft and special fletching, granting extra range but dealing damage as though one size category smaller."
+    },
+    {
+      "key": "Arrow (Smoke)",
+      "category": "ArmsArmor",
+      "name": "Arrow, Smoke",
+      "cost_gp": 10.0,
+      "weight": 0.15,
+      "description": "A single specially shaped smokestick arrow that trails smoke in flight and creates a 5-foot cube of smoke where it strikes."
+    },
+    {
+      "key": "Arrow (Searing)",
+      "category": "ArmsArmor",
+      "name": "Arrow, Searing",
+      "cost_gp": 1516.0,
+      "weight": 0.15,
+      "description": "A +1 flaming arrow that continues to burn its target for 1d6 points of fire damage each round for three rounds after a hit; removing it requires a DC 10 Heal check (DC 15 to remove from oneself)."
+    },
+    {
+      "key": "Arrow (Sizzling)",
+      "category": "ArmsArmor",
+      "name": "Arrow, Sizzling",
+      "cost_gp": 1350.0,
+      "weight": 0.15,
+      "description": null
+    },
+    {
+      "key": "Bolt (Tangle)",
+      "category": "ArmsArmor",
+      "name": "Bolt, Tangle",
+      "cost_gp": 60.0,
+      "weight": 0.1,
+      "description": "A +1 seeking crossbow bolt etched with webs and vines that becomes a sticky mass on impact, entangling the target like a tanglefoot bag."
+    },
+    {
+      "key": "Bullet (Dustburst)",
+      "category": "ArmsArmor",
+      "name": "Bullet, Dustburst",
+      "cost_gp": 0.01,
+      "weight": 0.5,
+      "description": "A +1 sling bullet that explodes into a 5-foot cube of choking dust following the target for 1d6 rounds; a creature ending its turn there must save or become sickened and blinded for 1 round."
+    },
+    {
+      "key": "Quilted Cloth",
+      "category": "ArmsArmor",
+      "name": "Quilted Cloth",
+      "cost_gp": 100.0,
+      "weight": 15.0,
+      "description": "An enhanced form of padded armor with internal layers designed to trap incoming projectiles, granting DR 3/- against small ranged piercing weapons only."
+    },
+    {
+      "key": "Wooden",
+      "category": "ArmsArmor",
+      "name": "Wooden",
+      "cost_gp": 20.0,
+      "weight": 25.0,
+      "description": "Leather armor reinforced with plates of fire-treated wood over vital areas; slightly buoyant, reducing its swim armor check penalty to 0."
+    },
+    {
+      "key": "Armored Coat",
+      "category": "ArmsArmor",
+      "name": "Armored Coat",
+      "cost_gp": 50.0,
+      "weight": 20.0,
+      "description": "A sturdy leather coat reinforced with metal plates sewn into the lining; can be donned or removed as a move action, and layers over other armor for better AC at the cost of worse armor check penalties."
+    },
+    {
+      "key": "Agile Breastplate",
+      "category": "ArmsArmor",
+      "name": "Agile Breastplate",
+      "cost_gp": 400.0,
+      "weight": 25.0,
+      "description": "A breastplate crafted for extra maneuverability, reducing the usual armor check penalty on Climb and Jump checks to only -1 instead of -4."
+    },
+    {
+      "key": "Agile Half-Plate",
+      "category": "ArmsArmor",
+      "name": "Agile Half-Plate",
+      "cost_gp": 850.0,
+      "weight": 55.0,
+      "description": "A half-plate crafted for extra maneuverability, reducing the usual armor check penalty on Climb and Jump checks to -4, and letting the wearer run at quadruple speed as though wearing light armor."
+    },
+    {
+      "key": "Armor of Insults",
+      "category": "ArmsArmor",
+      "name": "Armor of Insults",
+      "cost_gp": 25.0,
+      "weight": 20.0,
+      "description": "A +1 studded leather that can force hostile creatures within 60 feet to attack its wearer for several rounds unless they succeed at a Will save."
+    },
+    {
+      "key": "Boneless Leather",
+      "category": "ArmsArmor",
+      "name": "Boneless Leather",
+      "cost_gp": 11010.0,
+      "weight": 15.0,
+      "description": "A +1 leather armor granting a +5 bonus on Escape Artist and Acrobatics checks, a +5 bonus to CMD, and DR 5/piercing or slashing."
+    },
+    {
+      "key": "Buccaneer's Breastplate",
+      "category": "ArmsArmor",
+      "name": "Buccaneer's Breastplate",
+      "cost_gp": 200.0,
+      "weight": 30.0,
+      "description": "A +1 breastplate that grants the wearer a continuous water walk effect."
+    },
+    {
+      "key": "Daystar Half-Plate",
+      "category": "ArmsArmor",
+      "name": "Daystar Half-Plate",
+      "cost_gp": 600.0,
+      "weight": 50.0,
+      "description": "A +1 half-plate that provides an at-will daylight effect and, once per day, a sunburst effect."
+    },
+    {
+      "key": "Folding Plate",
+      "category": "ArmsArmor",
+      "name": "Folding Plate",
+      "cost_gp": 1500.0,
+      "weight": 50.0,
+      "description": "A +1 full plate armor that can transform between a wearable brooch and its full armor form on command."
+    },
+    {
+      "key": "Forsaken Banded Mail",
+      "category": "ArmsArmor",
+      "name": "Forsaken Banded Mail",
+      "cost_gp": 250.0,
+      "weight": 35.0,
+      "description": "A +1 banded mail that prevents its wearer from casting divine spells but grants spell resistance against divine abilities and treats its enhancement bonus as 2 higher against divine creatures."
+    },
+    {
+      "key": "Giant Hide (Ogre)",
+      "category": "ArmsArmor",
+      "name": "[NAME]-hide",
+      "cost_gp": 15.0,
+      "weight": 25.0,
+      "description": "A +3 hide armor that lets the wearer transform, once per day, into the matching giant's form for up to 15 minutes."
+    },
+    {
+      "key": "Giant Hide (Hill)",
+      "category": "ArmsArmor",
+      "name": "[NAME] Giant-hide",
+      "cost_gp": 15.0,
+      "weight": 25.0,
+      "description": "A +3 hide armor that lets the wearer transform, once per day, into a hill giant's form for up to 15 minutes."
+    },
+    {
+      "key": "Giant Hide (Stone)",
+      "category": "ArmsArmor",
+      "name": "[NAME] Giant-hide",
+      "cost_gp": 15.0,
+      "weight": 25.0,
+      "description": "A +3 hide armor that lets the wearer transform, once per day, into a stone giant's form for up to 15 minutes."
+    },
+    {
+      "key": "Giant Hide (Fire)",
+      "category": "ArmsArmor",
+      "name": "[NAME] Giant-hide",
+      "cost_gp": 15.0,
+      "weight": 25.0,
+      "description": "A +3 hide armor that lets the wearer transform, once per day, into a fire giant's form for up to 15 minutes."
+    },
+    {
+      "key": "Giant Hide (Frost)",
+      "category": "ArmsArmor",
+      "name": "[NAME] Giant-hide",
+      "cost_gp": 15.0,
+      "weight": 25.0,
+      "description": "A +3 hide armor that lets the wearer transform, once per day, into a frost giant's form for up to 15 minutes."
+    },
+    {
+      "key": "Giant Hide (Troll)",
+      "category": "ArmsArmor",
+      "name": "[NAME]-hide",
+      "cost_gp": 15.0,
+      "weight": 25.0,
+      "description": "A +3 hide armor that lets the wearer transform, once per day, into a troll's form for up to 15 minutes."
+    },
+    {
+      "key": "Giant Hide (Cloud)",
+      "category": "ArmsArmor",
+      "name": "[NAME] Giant-hide",
+      "cost_gp": 15.0,
+      "weight": 25.0,
+      "description": "A +3 hide armor that lets the wearer transform, once per day, into a cloud giant's form for up to 15 minutes."
+    },
+    {
+      "key": "Giant Hide (Storm)",
+      "category": "ArmsArmor",
+      "name": "[NAME] Giant-hide",
+      "cost_gp": 15.0,
+      "weight": 25.0,
+      "description": "A +3 hide armor that lets the wearer transform, once per day, into a storm giant's form for up to 15 minutes."
+    },
+    {
+      "key": "Mistmail",
+      "category": "ArmsArmor",
+      "name": "Mistmail",
+      "cost_gp": 1100.0,
+      "weight": 25.0,
+      "description": "A +1 chain shirt that can transform into a concealing fog once per day."
+    },
+    {
+      "key": "Murderer's Blackcloth",
+      "category": "ArmsArmor",
+      "name": "Murderer's Blackcloth",
+      "cost_gp": 5.0,
+      "weight": 10.0,
+      "description": "A +1 shadow padded armor that increases a wearing rogue's sneak attack bleed damage by 1."
+    },
+    {
+      "key": "Soothsayer's Raiment (Battlecry)",
+      "category": "ArmsArmor",
+      "name": "Soothsayer's Raiment (Battlecry)",
+      "cost_gp": 150.0,
+      "weight": 40.0,
+      "description": "A +1 chainmail granting the wearer oracle spellcasting access to the Battle mystery's Battlecry revelation, plus a +5 bonus on the wearer's divination spell success."
+    },
+    {
+      "key": "Soothsayer's Raiment (Battlefield Clarity)",
+      "category": "ArmsArmor",
+      "name": "Soothsayer's Raiment (Battlefield Clarity)",
+      "cost_gp": 150.0,
+      "weight": 40.0,
+      "description": "A +1 chainmail granting the wearer oracle spellcasting access to the Battle mystery's Battlefield Clarity revelation, plus a +5 bonus on the wearer's divination spell success."
+    },
+    {
+      "key": "Battlement Shield",
+      "category": "ArmsArmor",
+      "name": "Battlement Shield",
+      "cost_gp": 16180.0,
+      "weight": 45.0,
+      "description": "A +2 tower shield that can transform, once per day, into a 10-by-10-by-1-foot masonry wall with battlements."
+    },
+    {
+      "key": "Fortress Shield",
+      "category": "ArmsArmor",
+      "name": "Fortress Shield",
+      "cost_gp": 19180.0,
+      "weight": 45.0,
+      "description": "A +1 tower shield that can create a sealed iron cube providing total cover, requiring occupants to hold their breath after the third round."
+    },
+    {
+      "key": "Quickdraw Shield (Light/Wooden)",
+      "category": "ArmsArmor",
+      "name": "Quickdraw Shield, Light Wooden",
+      "cost_gp": 53.0,
+      "weight": 6.0,
+      "description": "A light wooden shield fitted with straps letting a wielder with base attack bonus +1 or higher ready or stow it as a swift action; Quick Draw allows it as a free action."
+    },
+    {
+      "key": "Quickdraw Shield (Light/Steel)",
+      "category": "ArmsArmor",
+      "name": "Quickdraw Shield, Light Steel",
+      "cost_gp": 59.0,
+      "weight": 7.0,
+      "description": "A light steel shield fitted with straps letting a wielder with base attack bonus +1 or higher ready or stow it as a swift action; Quick Draw allows it as a free action."
+    },
+    {
+      "key": "Battle Aspergillum",
+      "category": "ArmsArmor",
+      "name": "Battle Aspergillum",
+      "cost_gp": 5.0,
+      "weight": 4.0,
+      "description": "A light mace with a hollow head and a metal plug that sprinkles holy water on a successful hit, dealing 1 extra point of damage per hit up to five times."
+    },
+    {
+      "key": "Cestus",
+      "category": "ArmsArmor",
+      "name": "Cestus",
+      "cost_gp": 5.0,
+      "weight": 1.0,
+      "description": "A leather or thick-cloth glove reinforced with metal plates, covering mid-finger to mid-forearm; deals bludgeoning or piercing damage, at a -2 penalty on tasks requiring precision with that hand."
+    },
+    {
+      "key": "Stake (Wood)",
+      "category": "ArmsArmor",
+      "name": "Wooden Stake",
+      "cost_gp": 0.0,
+      "weight": 1.0,
+      "description": "A sharpened piece of wood; an iron spike used as a weapon deals this same damage."
+    },
+    {
+      "key": "Bayonet",
+      "category": "ArmsArmor",
+      "name": "Bayonet",
+      "cost_gp": 5.0,
+      "weight": 1.0,
+      "description": "A close-combat blade designed to fit into the grooves or muzzle of a crossbow or firearm; attaching or removing it is a move action."
+    },
+    {
+      "key": "Spear (Boar)",
+      "category": "ArmsArmor",
+      "name": "Boar Spear",
+      "cost_gp": 5.0,
+      "weight": 8.0,
+      "description": "A spiral-bladed spear with a metal crossbar about halfway down its length; readying it against a charge grants a +2 shield bonus to AC."
+    },
+    {
+      "key": "Sword Cane",
+      "category": "ArmsArmor",
+      "name": "Sword Cane",
+      "cost_gp": 45.0,
+      "weight": 4.0,
+      "description": "A slender light blade concealed within a wooden container serving as both scabbard and hiding place; drawing it is a swift action, and a DC 20 Perception check (DC 10 if handled) is needed to identify it as a weapon."
+    },
+    {
+      "key": "Bardiche",
+      "category": "ArmsArmor",
+      "name": "Bardiche",
+      "cost_gp": 13.0,
+      "weight": 14.0,
+      "description": "A polearm with a long, heavy cutting blade mounted on a pole."
+    },
+    {
+      "key": "Bec de Corbin",
+      "category": "ArmsArmor",
+      "name": "Bec de Corbin",
+      "cost_gp": 15.0,
+      "weight": 12.0,
+      "description": "A polearm similar to a lucerne hammer but with a blunt head, granting a +2 bonus on combat maneuver checks to sunder medium or heavy armor."
+    },
+    {
+      "key": "Bill",
+      "category": "ArmsArmor",
+      "name": "Bill",
+      "cost_gp": 11.0,
+      "weight": 11.0,
+      "description": "A polearm with a curved or hooked cutting blade and a spiked rear projection; grants a +1 shield bonus to AC when fighting defensively, and imposes a Ride penalty on mounted opponents struck by it."
+    },
+    {
+      "key": "Glaive-Guisarme",
+      "category": "ArmsArmor",
+      "name": "Glaive-Guisarme",
+      "cost_gp": 12.0,
+      "weight": 10.0,
+      "description": "A polearm combining a glaive's blade with a hook, imposing an extra Ride penalty on mounted opponents struck by it."
+    },
+    {
+      "key": "Lucerne Hammer",
+      "category": "ArmsArmor",
+      "name": "Lucerne Hammer",
+      "cost_gp": 15.0,
+      "weight": 12.0,
+      "description": "A polearm with a pronged hammer head for crushing blows and a spiked head for piercing, granting a +2 bonus on combat maneuver checks to sunder armor."
+    },
+    {
+      "key": "Dagger (Swordbreaker)",
+      "category": "ArmsArmor",
+      "name": "Swordbreaker Dagger",
+      "cost_gp": 10.0,
+      "weight": 3.0,
+      "description": "A dagger with notched grooves designed to catch and disarm or sunder a bladed weapon, granting a +4 bonus on disarm or sunder attempts against bladed weapons for a proficient wielder."
+    },
+    {
+      "key": "Falcata",
+      "category": "ArmsArmor",
+      "name": "Falcata",
+      "cost_gp": 18.0,
+      "weight": 4.0,
+      "description": "A heavy blade with a single sharp, concave edge and a hook-shaped hilt, balancing an axe's weight distribution with a sword's cutting edge."
+    },
+    {
+      "key": "Khopesh",
+      "category": "ArmsArmor",
+      "name": "Khopesh",
+      "cost_gp": 20.0,
+      "weight": 8.0,
+      "description": "A heavy blade with a convex curve near its tip, giving it an overall shape similar to a battleaxe."
+    },
+    {
+      "key": "Sword (Temple)",
+      "category": "ArmsArmor",
+      "name": "Temple Sword",
+      "cost_gp": 30.0,
+      "weight": 3.0,
+      "description": "A heavy blade favored by guardians of religious sites, with a crescent-shaped edge resembling a hybrid of a sickle and sword; monks are proficient with it."
+    },
+    {
+      "key": "Spear (Chain)",
+      "category": "ArmsArmor",
+      "name": "Chain Spear",
+      "cost_gp": 15.0,
+      "weight": 13.0,
+      "description": "A short thrusting spear whose butt is fitted with a length of chain, often spiked and hooked, usable to make trip attacks."
+    },
+    {
+      "key": "Mancatcher",
+      "category": "ArmsArmor",
+      "name": "Mancatcher",
+      "cost_gp": 15.0,
+      "weight": 10.0,
+      "description": "A polearm with two curved metal bands, sized for a specific creature size category, that close around a target on a successful touch attack followed by a grapple check."
+    },
+    {
+      "key": "Spirit Blade",
+      "category": "ArmsArmor",
+      "name": "Spirit Blade",
+      "cost_gp": 2.0,
+      "weight": 1.0,
+      "description": "A +3 ghost touch dagger with a translucent blade decorated with faces and mist; can cast dispel magic once per day."
+    },
+    {
+      "key": "Beaststrike Club",
+      "category": "ArmsArmor",
+      "name": "Beaststrike Club",
+      "cost_gp": 0.0,
+      "weight": 3.0,
+      "description": "A +1 club that a wild shape user can expend a daily use to transform into a natural weapon form (bite, claw, gore, slam, sting, or talon), counting as both a natural and a manufactured weapon."
+    },
+    {
+      "key": "Mace (Boulderhead)",
+      "category": "ArmsArmor",
+      "name": "Mace, Boulderhead",
+      "cost_gp": 3500.0,
+      "weight": 8.0,
+      "description": "A +1 heavy mace that, once per day, releases a Large boulder rolling 60 feet and dealing 3d8+5 damage (Reflex DC 19 half), leaving difficult terrain that regrows over 24 hours."
+    },
+    {
+      "key": "Guarding Blade",
+      "category": "ArmsArmor",
+      "name": "Guarding Blade",
+      "cost_gp": 10.0,
+      "weight": 2.0,
+      "description": "A +1 dancing short sword that automatically defends an unconscious or sleeping wielder, attacking nearby enemies for several rounds before dropping back into the wielder's square."
+    },
+    {
+      "key": "Hammer (Ricochet)",
+      "category": "ArmsArmor",
+      "name": "Hammer, Ricochet",
+      "cost_gp": 1.0,
+      "weight": 2.0,
+      "description": "A +1 returning light hammer that ricochets between multiple targets using the wielder's extra base-attack-bonus attacks, with cumulative range penalties on each bounce."
+    },
+    {
+      "key": "Starknife (Sparkwake)",
+      "category": "ArmsArmor",
+      "name": "Starknife, Sparkwake",
+      "cost_gp": 19024.0,
+      "weight": 3.0,
+      "description": "A +1 shock starknife that leaves trails of sparks in flight; once per day it can transform into an 8d6 lightning bolt (Reflex DC 14 half) before returning to its physical form."
+    },
+    {
+      "key": "Axe (Undercutting)",
+      "category": "ArmsArmor",
+      "name": "Undercutting Axe",
+      "cost_gp": 10.0,
+      "weight": 6.0,
+      "description": "A +1 giant-bane battleaxe that, after a successful hit, can invoke a maximized ray of enfeeblement once per day against the struck creature."
+    },
+    {
+      "key": "Trident of Stability",
+      "category": "ArmsArmor",
+      "name": "Trident of Stability",
+      "cost_gp": 15.0,
+      "weight": 4.0,
+      "description": "A +1 trident fitted with a footrest bar that functions as an immovable rod when stepped on, granting a large CMD bonus and halting falls."
+    },
+    {
+      "key": "Blade of Binding",
+      "category": "ArmsArmor",
+      "name": "Blade of Binding",
+      "cost_gp": 50.0,
+      "weight": 8.0,
+      "description": "A +1 greatsword that enables free grapple attempts on a successful hit; the blade transforms into a chain that wraps around the target (Escape Artist DC 20, break DC 28, hardness 10, 10 hit points)."
+    },
+    {
+      "key": "Lance (Jousting)",
+      "category": "ArmsArmor",
+      "name": "Lance of Jousting",
+      "cost_gp": 10.0,
+      "weight": 10.0,
+      "description": "A +1 ornate lance that forces a mounted opponent struck by it to make a Ride check (DC 10 plus damage dealt) or be knocked from the saddle."
+    },
+    {
+      "key": "Lance (Shieldsplitter)",
+      "category": "ArmsArmor",
+      "name": "Shieldsplitter Lance",
+      "cost_gp": 10.0,
+      "weight": 10.0,
+      "description": "A +1 keen lance that can penetrate shields, dealing shield damage on a hit and bypassing hardness during sunder attempts against a shielded opponent."
+    },
+    {
+      "key": "Buffoon's Sword",
+      "category": "ArmsArmor",
+      "name": "Buffoon's Sword",
+      "cost_gp": 10.0,
+      "weight": 2.0,
+      "description": "A cursed blade that behaves like a sword of subtlety until used in combat, at which point it imposes a -10 penalty on Stealth checks and forces the wielder to blurt out the truth unless a DC 15 Will save succeeds."
+    },
+    {
+      "key": "Chakram",
+      "category": "ArmsArmor",
+      "name": "Chakram",
+      "cost_gp": 1.0,
+      "weight": 1.0,
+      "description": "A flat, open-centered metal discus with a sharpened edge; using it in melee imposes a -1 penalty and risks a DC 15 Reflex save to avoid cutting yourself."
+    },
+    {
+      "key": "Pilum",
+      "category": "ArmsArmor",
+      "name": "Pilum",
+      "cost_gp": 5.0,
+      "weight": 4.0,
+      "description": "A heavy javelin designed to break and embed itself in a shield on a hit, denying the shield's AC bonus until the wielder spends a standard action prying it free."
+    },
+    {
+      "key": "Boomerang",
+      "category": "ArmsArmor",
+      "name": "Boomerang",
+      "cost_gp": 3.0,
+      "weight": 3.0,
+      "description": "A flat, curved wooden thrown weapon that does not return to the thrower."
+    },
+    {
+      "key": "Crossbow (Double)",
+      "category": "ArmsArmor",
+      "name": "Crossbow, [NAME]",
+      "cost_gp": 300.0,
+      "weight": 18.0,
+      "description": "A heavy crossbow that fires a pair of iron-tipped bolts with a single trigger pull; imposes a -4 penalty if proficient (-8 if not), and only the first bolt can score a critical hit or sneak attack."
+    },
+    {
+      "key": "Bomb",
+      "category": "ArmsArmor",
+      "name": "Bomb",
+      "cost_gp": null,
+      "weight": null,
+      "description": null
+    },
+    {
+      "key": "Brass Knuckles",
+      "category": "ArmsArmor",
+      "name": "Brass Knuckles",
+      "cost_gp": 1.0,
+      "weight": 1.0,
+      "description": "A close-combat weapon fitted around the knuckles, dealing lethal unarmed damage; a monk using them deals monk unarmed damage."
+    },
+    {
+      "key": "Improvised Weapon (Light)",
+      "category": "ArmsArmor",
+      "name": "Improvised Weapon, Light",
+      "cost_gp": 5.0,
+      "weight": 4.0,
+      "description": "A light object not designed as a weapon but pressed into service as one, following the normal improvised weapon rules."
+    },
+    {
+      "key": "Improvised Weapon (One-Handed)",
+      "category": "ArmsArmor",
+      "name": "Improvised Weapon, One-Handed",
+      "cost_gp": 0.0,
+      "weight": 3.0,
+      "description": "A one-handed object not designed as a weapon but pressed into service as one, following the normal improvised weapon rules."
+    },
+    {
+      "key": "Improvised Weapon (Two-Handed)",
+      "category": "ArmsArmor",
+      "name": "Improvised Weapon, Two-Handed",
+      "cost_gp": 0.0,
+      "weight": 4.0,
+      "description": "A two-handed object not designed as a weapon but pressed into service as one, following the normal improvised weapon rules."
+    },
+    {
+      "key": "Beacon of True Faith",
+      "category": "MagicItems",
+      "name": "Beacon of True Faith",
+      "cost_gp": 0.0,
+      "weight": 2.0,
+      "description": "An ornate electrum torch bearing an undying magical flame; it functions as an everburning torch for most creatures, but grants alignment-based powers to divine spellcasters and faithful creatures."
+    },
+    {
+      "key": "Hammer of Thunderbolts",
+      "category": "MagicItems",
+      "name": "Hammer of Thunderbolts",
+      "cost_gp": 0.0,
+      "weight": 15.0,
+      "description": "A +3 Large returning warhammer; when wielded alongside a belt of giant strength by someone who knows its true nature, it becomes a +5 giant-bane thundering hammer with a thunderclap ability."
+    },
+    {
+      "key": "Knucklebone of Fickle Fortune",
+      "category": "MagicItems",
+      "name": "Knucklebone of Fickle Fortune",
+      "cost_gp": 0.0,
+      "weight": 0.01,
+      "description": "A piece of bone worn down to a near sphere, resembling a twenty-sided die, that produces random effects ranging from permanent negative levels to resurrection when rolled."
+    },
+    {
+      "key": "Perfect Golden Lute",
+      "category": "MagicItems",
+      "name": "Perfect Golden Lute",
+      "cost_gp": 0.0,
+      "weight": 3.0,
+      "description": "A flawless golden lute granting a +10 competence bonus on Perform checks and extending bardic performance abilities to those with appropriate ranks."
+    },
+    {
+      "key": "Spindle of Perfect Knowledge",
+      "category": "MagicItems",
+      "name": "Spindle of Perfect Knowledge",
+      "cost_gp": 0.0,
+      "weight": 0.01,
+      "description": "A flawless marquise-cut diamond ioun stone that functions as a +4 headband of mental superiority, granting five ranks in two random Knowledge skills and language comprehension."
+    },
+    {
+      "key": "Talisman of Reluctant Wishes",
+      "category": "MagicItems",
+      "name": "Talisman of Reluctant Wishes",
+      "cost_gp": 0.0,
+      "weight": 1.0,
+      "description": "A rugged rock resembling a stone of controlling earth elementals that grants wishes based on the holder's Charisma, but acts merely as a stone of weight on a failed attempt."
+    },
+    {
+      "key": "Bottle of the Bound",
+      "category": "MagicItems",
+      "name": "Bottle of the Bound",
+      "cost_gp": 0.0,
+      "weight": 4.0,
+      "description": "An ancient brass bottle that traps a fiendish army; a holder who knows the command words can use it like a summon monster IX spell at will, summoning only evil-subtype creatures."
+    },
+    {
+      "key": "Cloud Castle of the Storm King",
+      "category": "MagicItems",
+      "name": "Cloud Castle of the Storm King",
+      "cost_gp": 0.0,
+      "weight": 0.0,
+      "description": "A grand floating fortress held aloft and propelled by storm clouds rumbling with thunder and crackling with lightning, able to house up to 300 Medium creatures and grant its master various weather-related spell-like abilities."
+    },
+    {
+      "key": "Fork of the Forgotten One",
+      "category": "MagicItems",
+      "name": "Fork of the Forgotten One",
+      "cost_gp": 0.0,
+      "weight": 12.0,
+      "description": "A magical ranseur that once belonged to an archdevil, granting bonuses to Diplomacy and Intimidate checks and a scorching ray ability; any nonevil creature that touches it must become lawful evil immediately or die."
+    },
+    {
+      "key": "The Moaning Diamond",
+      "category": "MagicItems",
+      "name": "The Moaning Diamond",
+      "cost_gp": 0.0,
+      "weight": 4.0,
+      "description": "An uncut diamond that produces a constant moaning sound; three times per day its bearer can reshape earth and stone as if by stone shape, affecting a large volume of material."
+    },
+    {
+      "key": "The Shield of the Sun",
+      "category": "MagicItems",
+      "name": "The Shield of the Sun",
+      "cost_gp": 0.0,
+      "weight": 2.0,
+      "description": "A +5 shield that grants paladin spellcasting ability and spell resistance; a chaotic or evil character wielding it gains four negative levels for as long as they possess it."
+    },
+    {
+      "key": "Staff of Bolstering",
+      "category": "MagicItems",
+      "name": "Staff of Bolstering",
+      "cost_gp": 20800.0,
+      "weight": 5.0,
+      "description": "A rosewood staff bound with metal rings, granting bear's endurance, bull's strength, cat's grace, and greater magic weapon."
+    },
+    {
+      "key": "Staff of Cackling Wrath",
+      "category": "MagicItems",
+      "name": "Staff of Cackling Wrath",
+      "cost_gp": 23600.0,
+      "weight": 5.0,
+      "description": "A gnarled, thorn-covered staff granting blindness/deafness, charm person, hold person, and inflict moderate wounds, plus baleful polymorph, bestow curse, and vampiric touch."
+    },
+    {
+      "key": "Staff of Hoarding",
+      "category": "MagicItems",
+      "name": "Staff of Hoarding",
+      "cost_gp": 30016.0,
+      "weight": 5.0,
+      "description": "A teak staff studded with gold and silver coins, granting identify, locate object, magic aura, secret chest, and legend lore."
+    },
+    {
+      "key": "Staff of Journeys",
+      "category": "MagicItems",
+      "name": "Staff of Journeys",
+      "cost_gp": 13600.0,
+      "weight": 5.0,
+      "description": "A dark gray-barked walking stick forked at the top, granting detect snares and pits, endure elements, longstrider, pass without trace, and freedom of movement."
+    },
+    {
+      "key": "Staff of Many Rays",
+      "category": "MagicItems",
+      "name": "Staff of Many Rays",
+      "cost_gp": 52800.0,
+      "weight": 5.0,
+      "description": "A white wooden staff with swirls of shining metal, granting ray of enfeeblement, ray of exhaustion, scorching ray, enervation, and disintegrate."
+    },
+    {
+      "key": "Staff of Obstacles",
+      "category": "MagicItems",
+      "name": "Staff of Obstacles",
+      "cost_gp": 25800.0,
+      "weight": 5.0,
+      "description": "A worn stone-like staff that is surprisingly light, granting arcane lock, grease, wind wall, wall of fire, wall of ice, and wall of stone."
+    },
+    {
+      "key": "Staff of Performance",
+      "category": "MagicItems",
+      "name": "Staff of Performance",
+      "cost_gp": 26800.0,
+      "weight": 5.0,
+      "description": "A varnished cedar staff that grows ornamental keys and strings to resemble its owner's favorite instrument, granting calm emotions, glibness, hypnotic pattern, pyrotechnics, enthrall, major image, and sculpt sound."
+    },
+    {
+      "key": "Staff of Revelations",
+      "category": "MagicItems",
+      "name": "Staff of Revelations",
+      "cost_gp": 20400.0,
+      "weight": 5.0,
+      "description": "A forked walnut staff resembling a dowsing rod, granting augury, speak with dead, divination, and commune."
+    },
+    {
+      "key": "Staff of Rigor",
+      "category": "MagicItems",
+      "name": "Staff of Rigor",
+      "cost_gp": 13600.0,
+      "weight": 5.0,
+      "description": "An iron-shod black staff granting bane, cause fear, command, magic weapon, and align weapon."
+    },
+    {
+      "key": "Staff of Slumber",
+      "category": "MagicItems",
+      "name": "Staff of Slumber",
+      "cost_gp": 34050.0,
+      "weight": 5.0,
+      "description": "A staff with a smoky, almost hypnotic spiral pattern, granting deep slumber, ray of exhaustion, dream, nightmare, waves of fatigue, and symbol of sleep."
+    },
+    {
+      "key": "Staff of Shrieking",
+      "category": "MagicItems",
+      "name": "Staff of Shrieking",
+      "cost_gp": 14400.0,
+      "weight": 5.0,
+      "description": "A metal staff with holes that make it emit an eerie moan when swung, granting shatter, sound burst, and shout."
+    },
+    {
+      "key": "Staff of Souls",
+      "category": "MagicItems",
+      "name": "Staff of Souls",
+      "cost_gp": 16400.0,
+      "weight": 5.0,
+      "description": "An ominous-looking staff granting deathwatch, detect undead, gentle repose, speak with dead, and death ward."
+    },
+    {
+      "key": "Staff of Stealth",
+      "category": "MagicItems",
+      "name": "Staff of Stealth",
+      "cost_gp": 18400.0,
+      "weight": 5.0,
+      "description": "A twisted, dark gray staff granting disguise self, invisibility, nondetection, and greater invisibility."
+    },
+    {
+      "key": "Staff of Toxins",
+      "category": "MagicItems",
+      "name": "Staff of Toxins",
+      "cost_gp": 12600.0,
+      "weight": 5.0,
+      "description": "A hemlock-shrouded oak staff giving off a faint whiff of rot, granting stinking cloud and cloudkill."
+    },
+    {
+      "key": "Staff of Traps",
+      "category": "MagicItems",
+      "name": "Staff of Traps",
+      "cost_gp": 21200.0,
+      "weight": 5.0,
+      "description": "A dark wooden staff tipped with chalk-like stone, granting alarm, magic mouth, phantom trap, explosive runes, fire trap, and sepia snake sigil."
+    },
+    {
+      "key": "Staff of Vision",
+      "category": "MagicItems",
+      "name": "Staff of Vision",
+      "cost_gp": 41250.0,
+      "weight": 5.0,
+      "description": "A brass staff topped with a clear crystal lens, granting arcane eye, arcane sight, see invisibility, prying eyes, scrying, and true seeing."
+    },
+    {
+      "key": "Staff of Weather",
+      "category": "MagicItems",
+      "name": "Staff of Weather",
+      "cost_gp": 44200.0,
+      "weight": 5.0,
+      "description": "A carved oaken staff depicting weather opposite the current conditions, granting fog cloud, gust of wind, wind wall, ice storm, sleet storm, and control weather."
+    },
+    {
+      "key": "Rod (Bouncing/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that bounce, as though using the Bouncing Spell feat."
+    },
+    {
+      "key": "Rod (Bouncing/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that bounce, as though using the Bouncing Spell feat."
+    },
+    {
+      "key": "Rod (Bouncing/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that bounce, as though using the Bouncing Spell feat."
+    },
+    {
+      "key": "Rod (Dazing/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 14000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that daze affected creatures, as though using the Dazing Spell feat."
+    },
+    {
+      "key": "Rod (Dazing/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 54000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that daze affected creatures, as though using the Dazing Spell feat."
+    },
+    {
+      "key": "Rod (Dazing/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 121500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that daze affected creatures, as though using the Dazing Spell feat."
+    },
+    {
+      "key": "Rod (Disruptive/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that are disruptive, as though using the Disruptive Spell feat."
+    },
+    {
+      "key": "Rod (Disruptive/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that are disruptive, as though using the Disruptive Spell feat."
+    },
+    {
+      "key": "Rod (Disruptive/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that are disruptive, as though using the Disruptive Spell feat."
+    },
+    {
+      "key": "Rod (Ectoplasmic/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that have full effect against incorporeal creatures, as though using the Ectoplasmic Spell feat."
+    },
+    {
+      "key": "Rod (Ectoplasmic/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that have full effect against incorporeal creatures, as though using the Ectoplasmic Spell feat."
+    },
+    {
+      "key": "Rod (Ectoplasmic/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that have full effect against incorporeal creatures, as though using the Ectoplasmic Spell feat."
+    },
+    {
+      "key": "Rod (Elemental Acid/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to acid, as though using the Elemental Spell (acid) feat."
+    },
+    {
+      "key": "Rod (Elemental Acid/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to acid, as though using the Elemental Spell (acid) feat."
+    },
+    {
+      "key": "Rod (Elemental Acid/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to acid, as though using the Elemental Spell (acid) feat."
+    },
+    {
+      "key": "Rod (Elemental Cold/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to cold, as though using the Elemental Spell (cold) feat."
+    },
+    {
+      "key": "Rod (Elemental Cold/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to cold, as though using the Elemental Spell (cold) feat."
+    },
+    {
+      "key": "Rod (Elemental Cold/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to cold, as though using the Elemental Spell (cold) feat."
+    },
+    {
+      "key": "Rod (Elemental Electricity/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to electricity, as though using the Elemental Spell (electricity) feat."
+    },
+    {
+      "key": "Rod (Elemental Electricity/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to electricity, as though using the Elemental Spell (electricity) feat."
+    },
+    {
+      "key": "Rod (Elemental Electricity/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to electricity, as though using the Elemental Spell (electricity) feat."
+    },
+    {
+      "key": "Rod (Elemental Fire/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to fire, as though using the Elemental Spell (fire) feat."
+    },
+    {
+      "key": "Rod (Elemental Fire/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to fire, as though using the Elemental Spell (fire) feat."
+    },
+    {
+      "key": "Rod (Elemental Fire/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with their damage type changed to fire, as though using the Elemental Spell (fire) feat."
+    },
+    {
+      "key": "Rod (Focused/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that are focused, as though using the Focused Spell feat."
+    },
+    {
+      "key": "Rod (Focused/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that are focused, as though using the Focused Spell feat."
+    },
+    {
+      "key": "Rod (Focused/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that are focused, as though using the Focused Spell feat."
+    },
+    {
+      "key": "Rod (Intensified/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that are intensified, as though using the Intensified Spell feat."
+    },
+    {
+      "key": "Rod (Intensified/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that are intensified, as though using the Intensified Spell feat."
+    },
+    {
+      "key": "Rod (Intensified/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that are intensified, as though using the Intensified Spell feat."
+    },
+    {
+      "key": "Rod (Lingering/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that linger for 1 round, as though using the Lingering Spell feat."
+    },
+    {
+      "key": "Rod (Lingering/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that linger for 1 round, as though using the Lingering Spell feat."
+    },
+    {
+      "key": "Rod (Lingering/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that linger for 1 round, as though using the Lingering Spell feat."
+    },
+    {
+      "key": "Rod (Merciful/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 1500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that deal nonlethal damage, as though using the Merciful Spell feat."
+    },
+    {
+      "key": "Rod (Merciful/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 5500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that deal nonlethal damage, as though using the Merciful Spell feat."
+    },
+    {
+      "key": "Rod (Merciful/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 12250.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that deal nonlethal damage, as though using the Merciful Spell feat."
+    },
+    {
+      "key": "Rod (Persistent/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 9000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day as though using the Persistent Spell feat."
+    },
+    {
+      "key": "Rod (Persistent/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 32500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day as though using the Persistent Spell feat."
+    },
+    {
+      "key": "Rod (Persistent/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 73000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day as though using the Persistent Spell feat."
+    },
+    {
+      "key": "Rod (Reach/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with a one-step increase to their range category, as though using the Reach Spell feat."
+    },
+    {
+      "key": "Rod (Reach/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with a one-step increase to their range category, as though using the Reach Spell feat."
+    },
+    {
+      "key": "Rod (Reach/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day with a one-step increase to their range category, as though using the Reach Spell feat."
+    },
+    {
+      "key": "Rod (Selective/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day while excluding up to four chosen creatures in the area, as though using the Selective Spell feat."
+    },
+    {
+      "key": "Rod (Selective/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 11000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day while excluding up to four chosen creatures in the area, as though using the Selective Spell feat."
+    },
+    {
+      "key": "Rod (Selective/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 24500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day while excluding up to four chosen creatures in the area, as though using the Selective Spell feat."
+    },
+    {
+      "key": "Rod (Sickening/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 9000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that sicken affected creatures, as though using the Sickening Spell feat."
+    },
+    {
+      "key": "Rod (Sickening/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 32500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that sicken affected creatures, as though using the Sickening Spell feat."
+    },
+    {
+      "key": "Rod (Sickening/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 73000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that sicken affected creatures, as though using the Sickening Spell feat."
+    },
+    {
+      "key": "Rod (Thundering/Lesser)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 9000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that deafen affected creatures, as though using the Thundering Spell feat."
+    },
+    {
+      "key": "Rod (Thundering/Normal)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 32500.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that deafen affected creatures, as though using the Thundering Spell feat."
+    },
+    {
+      "key": "Rod (Thundering/Greater)",
+      "category": "MagicItems",
+      "name": "Metamagic Rod of [NAME]",
+      "cost_gp": 73000.0,
+      "weight": 5.0,
+      "description": "A metamagic rod letting its wielder cast up to three spells per day that deafen affected creatures, as though using the Thundering Spell feat."
+    },
+    {
+      "key": "Rod of Arson",
+      "category": "MagicItems",
+      "name": "Rod of Arson",
+      "cost_gp": 0.0,
+      "weight": 5.0,
+      "description": "A cursed rod, disguised as a rod of flame extinguishing, that instead channels flame into its wielder's body, compelling them to set flammable objects alight or take fire damage resisting the urge."
+    },
+    {
+      "key": "Dungeon Ring (Jailers)",
+      "category": "MagicItems",
+      "name": "Jailer's Ring",
+      "cost_gp": 16000.0,
+      "weight": null,
+      "description": "A ring that keeps its wearer constantly aware, status-like, of any linked prisoner's ring wearers, letting the jailer scry or teleport to them."
+    },
+    {
+      "key": "Dungeon Ring (Prisoners)",
+      "category": "MagicItems",
+      "name": "Prisoner's Ring",
+      "cost_gp": 250.0,
+      "weight": null,
+      "description": "A cursed ring that, once placed on a subject by a jailer's ring wearer, cannot be removed by the wearer without powerful magic."
+    },
+    {
+      "key": "Ring of Arcane Signets",
+      "category": "MagicItems",
+      "name": "Ring of Arcane Signets",
+      "cost_gp": 1000.0,
+      "weight": null,
+      "description": "A plain copper ring whose amorphous crystal setting forms into a specific rune or sigil the first time each wearer puts it on, letting them stamp that mark onto objects."
+    },
+    {
+      "key": "Ring of Delayed Doom",
+      "category": "MagicItems",
+      "name": "Ring of Delayed Doom",
+      "cost_gp": 45000.0,
+      "weight": null,
+      "description": "A ring set with garnets that lets its wearer delay a harmful saving-throw effect by destroying a garnet, for up to nine total one-minute delays."
+    },
+    {
+      "key": "Ring of Forcefangs",
+      "category": "MagicItems",
+      "name": "Ring of Forcefangs",
+      "cost_gp": 8000.0,
+      "weight": null,
+      "description": "A ring that negates force spells targeted at its wearer and stores their energy as charges the wearer can later expend to cast magic missile offensively."
+    },
+    {
+      "key": "Ring of Maniacal Devices",
+      "category": "MagicItems",
+      "name": "Ring of Maniacal Devices",
+      "cost_gp": 5000.0,
+      "weight": null,
+      "description": "A ring granting a +5 competence bonus on checks to build or disable traps and to use Disable Device, including untrained use."
+    },
+    {
+      "key": "Ring of Retribution",
+      "category": "MagicItems",
+      "name": "Ring of Retribution",
+      "cost_gp": 15000.0,
+      "weight": null,
+      "description": "A ring that, once per day, detonates in a 30-foot radius dealing 10d6 points of fire damage."
+    },
+    {
+      "key": "Cannibal Ring",
+      "category": "MagicItems",
+      "name": "Cannibal Ring",
+      "cost_gp": 0.0,
+      "weight": 0.01,
+      "description": "A cursed ring that appears to be a ring of sustenance but, after 7 days, causes constant hunger and thirst so severe the wearer is eventually driven to cannibalism."
+    },
+    {
+      "key": "Ring of Truth",
+      "category": "MagicItems",
+      "name": "Ring of Truth",
+      "cost_gp": 0.0,
+      "weight": 0.01,
+      "description": "A cursed ring that renders its wearer unable to tell a deliberate lie, in speech or writing, unless they succeed at a DC 20 Will save."
+    },
+    {
+      "key": "All Tools Vest",
+      "category": "MagicItems",
+      "name": "All Tools Vest",
+      "cost_gp": 1800.0,
+      "weight": 5.0,
+      "description": "A light leather vest with many pockets that, once per day for 24 hours, summons the complete standard tools for any one Craft skill."
+    },
+    {
+      "key": "Amulet of Magecraft",
+      "category": "MagicItems",
+      "name": "Amulet of Magecraft",
+      "cost_gp": 20000.0,
+      "weight": 2.0,
+      "description": "A heavy silver necklace that functions as a universalist wizard's bonded object, letting its bearer spontaneously convert spells of their chosen school."
+    },
+    {
+      "key": "Amulet of Spell Cunning",
+      "category": "MagicItems",
+      "name": "Amulet of Spell Cunning",
+      "cost_gp": 10000.0,
+      "weight": 1.0,
+      "description": "A silver locket that functions as a wizard's bonded object, letting its bearer prepare three additional spell levels of spells each day."
+    },
+    {
+      "key": "Annihilation Spectacles",
+      "category": "MagicItems",
+      "name": "Annihilation Spectacles",
+      "cost_gp": 2500.0,
+      "weight": 0.25,
+      "description": "Darkly tinted glasses that let a transmuter spontaneously convert prepared spells into transmutation spells, or cast disintegrate once per day."
+    },
+    {
+      "key": "Apple of Eternal Sleep",
+      "category": "MagicItems",
+      "name": "Apple of Eternal Sleep",
+      "cost_gp": 2500.0,
+      "weight": 0.01,
+      "description": "A beautiful red apple that, if eaten, forces a DC 19 Will save or induces an eternal magical sleep requiring break enchantment to end."
+    },
+    {
+      "key": "Assisting Gloves",
+      "category": "MagicItems",
+      "name": "Assisting Gloves",
+      "cost_gp": 180.0,
+      "weight": 1.0,
+      "description": "A simple glove that, on a spoken command word, transforms into a glowing disembodied hand; as a swift action the wearer can have the glove assist them with a task as if using the aid another action."
+    },
+    {
+      "key": "Bandages of Rapid Recovery",
+      "category": "MagicItems",
+      "name": "Bandages of Rapid Recovery",
+      "cost_gp": 200.0,
+      "weight": 1.0,
+      "description": "Linen bandages that let their user recover as if under complete bed rest regardless of activity, and grant a +4 bonus to effective character level when receiving long-term care."
+    },
+    {
+      "key": "Book of the Loremaster",
+      "category": "MagicItems",
+      "name": "Book of the Loremaster",
+      "cost_gp": 15000.0,
+      "weight": 2.0,
+      "description": "A digest-sized book that grants a bard a +5 competence bonus, up to three times daily, when taking 10 or 20 on a Knowledge check."
+    },
+    {
+      "key": "Boots of Friendly Terrain (Cold)",
+      "category": "MagicItems",
+      "name": "Boots of Friendly Terrain (Cold)",
+      "cost_gp": 2400.0,
+      "weight": 1.0,
+      "description": "Supple leather boots letting a ranger treat cold terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    },
+    {
+      "key": "Boots of Friendly Terrain (Desert)",
+      "category": "MagicItems",
+      "name": "Boots of Friendly Terrain (Desert)",
+      "cost_gp": 2400.0,
+      "weight": 1.0,
+      "description": "Supple leather boots letting a ranger treat desert terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    },
+    {
+      "key": "Boots of Friendly Terrain (Forest)",
+      "category": "MagicItems",
+      "name": "Boots of Friendly Terrain (Forest)",
+      "cost_gp": 2400.0,
+      "weight": 1.0,
+      "description": "Supple leather boots letting a ranger treat forest terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    },
+    {
+      "key": "Boots of Friendly Terrain (Jungle)",
+      "category": "MagicItems",
+      "name": "Boots of Friendly Terrain (Jungle)",
+      "cost_gp": 2400.0,
+      "weight": 1.0,
+      "description": "Supple leather boots letting a ranger treat jungle terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    },
+    {
+      "key": "Boots of Friendly Terrain (Mountain)",
+      "category": "MagicItems",
+      "name": "Boots of Friendly Terrain (Mountain)",
+      "cost_gp": 2400.0,
+      "weight": 1.0,
+      "description": "Supple leather boots letting a ranger treat mountain terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    },
+    {
+      "key": "Boots of Friendly Terrain (Plains)",
+      "category": "MagicItems",
+      "name": "Boots of Friendly Terrain (Plains)",
+      "cost_gp": 2400.0,
+      "weight": 1.0,
+      "description": "Supple leather boots letting a ranger treat plains terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    },
+    {
+      "key": "Boots of Friendly Terrain (Planes)",
+      "category": "MagicItems",
+      "name": "Boots of Friendly Terrain (Planes)",
+      "cost_gp": 2400.0,
+      "weight": 1.0,
+      "description": "Supple leather boots letting a ranger treat planar terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    },
+    {
+      "key": "Boots of Friendly Terrain (Swamp)",
+      "category": "MagicItems",
+      "name": "Boots of Friendly Terrain (Swamp)",
+      "cost_gp": 2400.0,
+      "weight": 1.0,
+      "description": "Supple leather boots letting a ranger treat swamp terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    },
+    {
+      "key": "Boots of Friendly Terrain (Underground)",
+      "category": "MagicItems",
+      "name": "Boots of Friendly Terrain (Underground)",
+      "cost_gp": 2400.0,
+      "weight": 1.0,
+      "description": "Supple leather boots letting a ranger treat underground terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    },
+    {
+      "key": "Boots of Friendly Terrain (Urban)",
+      "category": "MagicItems",
+      "name": "Boots of Friendly Terrain (Urban)",
+      "cost_gp": 2400.0,
+      "weight": 1.0,
+      "description": "Supple leather boots letting a ranger treat urban terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    },
+    {
+      "key": "Boots of Friendly Terrain (Water)",
+      "category": "MagicItems",
+      "name": "Boots of Friendly Terrain (Water)",
+      "cost_gp": 2400.0,
+      "weight": 1.0,
+      "description": "Supple leather boots letting a ranger treat water terrain as a favored terrain, granting a +2 bonus on the associated checks."
+    },
+    {
+      "key": "Bottle of Messages",
+      "category": "MagicItems",
+      "name": "Bottle of Messages",
+      "cost_gp": 300.0,
+      "weight": 1.0,
+      "description": "A green glass bottle with a tiny winding key on its stem that, when turned, causes a shadowy cork to slowly become substantial over a round."
+    },
+    {
+      "key": "Bracelet of Mercy",
+      "category": "MagicItems",
+      "name": "Bracelet of Mercy",
+      "cost_gp": 15000.0,
+      "weight": 0.01,
+      "description": "A metal bracelet with holy inscriptions that grants, or improves, the diseased mercy for a paladin wearer."
+    },
+    {
+      "key": "Campfire Bead",
+      "category": "MagicItems",
+      "name": "Campfire Bead",
+      "cost_gp": 720.0,
+      "weight": null,
+      "description": "A tiny glass bead that transforms, on command, into a 2-foot-tall pile of burning logs lasting 8 hours."
+    },
+    {
+      "key": "Catching Cape",
+      "category": "MagicItems",
+      "name": "Catching Cape",
+      "cost_gp": 200.0,
+      "weight": 3.0,
+      "description": "A silvery cape that transforms into a protective sphere, granting 20% concealment against ranged attacks for one minute or until it absorbs a hit."
+    },
+    {
+      "key": "Cauldron of Brewing",
+      "category": "MagicItems",
+      "name": "Cauldron of Brewing",
+      "cost_gp": 3000.0,
+      "weight": 5.0,
+      "description": "A fine cooking pot that maintains liquids at a precise temperature and grants a +5 competence bonus on alchemy-related Craft checks."
+    },
+    {
+      "key": "Cauldron of Flying",
+      "category": "MagicItems",
+      "name": "Cauldron of Flying",
+      "cost_gp": 40000.0,
+      "weight": 100.0,
+      "description": "An iron pot large enough for two Medium creatures that grants overland flight with a substantial carrying capacity."
+    },
+    {
+      "key": "Cauldron of Plenty",
+      "category": "MagicItems",
+      "name": "Cauldron of Plenty",
+      "cost_gp": 15000.0,
+      "weight": 25.0,
+      "description": "An enchanted iron pot that can produce nourishing food for 36 people daily, or a heroes' feast for 12 people weekly."
+    },
+    {
+      "key": "Cauldron of Resurrection",
+      "category": "MagicItems",
+      "name": "Cauldron of Resurrection",
+      "cost_gp": 33000.0,
+      "weight": 35.0,
+      "description": "A heavy dark iron cauldron with a monstrous maw that can restore the dead when used alongside raise dead or resurrection spells."
+    },
+    {
+      "key": "Cauldron of Seeing",
+      "category": "MagicItems",
+      "name": "Cauldron of Seeing",
+      "cost_gp": 42000.0,
+      "weight": 5.0,
+      "description": "A small cauldron filled with liquid that functions as a scrying device, letting its user scry at any distance like a crystal ball."
+    },
+    {
+      "key": "Cauldron of Seeing (See Invisibility)",
+      "category": "MagicItems",
+      "name": "Cauldron of Seeing (See Invisibility)",
+      "cost_gp": 50000.0,
+      "weight": 5.0,
+      "description": null
+    },
+    {
+      "key": "Cauldron of Seeing (Detect Thoughts)",
+      "category": "MagicItems",
+      "name": "Cauldron of Seeing (Detect Thoughts)",
+      "cost_gp": 51000.0,
+      "weight": 5.0,
+      "description": null
+    },
+    {
+      "key": "Cauldron of Seeing (Telepathy)",
+      "category": "MagicItems",
+      "name": "Cauldron of Seeing (Telepathy)",
+      "cost_gp": 70000.0,
+      "weight": 5.0,
+      "description": null
+    },
+    {
+      "key": "Cauldron of Seeing (True Seeing)",
+      "category": "MagicItems",
+      "name": "Cauldron of Seeing (True Seeing)",
+      "cost_gp": 80000.0,
+      "weight": 5.0,
+      "description": null
+    },
+    {
+      "key": "Cauldron of the Dead",
+      "category": "MagicItems",
+      "name": "Cauldron of the Dead",
+      "cost_gp": 30000.0,
+      "weight": 35.0,
+      "description": "A dark iron cauldron capable of transforming corpses into zombies for a material cost per Hit Die of the resulting undead."
+    },
+    {
+      "key": "Clamor Box",
+      "category": "MagicItems",
+      "name": "Clamor Box",
+      "cost_gp": 2000.0,
+      "weight": 2.0,
+      "description": "A tin music box that, after a configurable delay of 1 to 20 minutes, produces sounds as loud as a crowd of forty people (battle, fire, massacre, or riot)."
+    },
+    {
+      "key": "Construct Channel Brick",
+      "category": "MagicItems",
+      "name": "Construct Channel Brick",
+      "cost_gp": 10000.0,
+      "weight": 1.0,
+      "description": "A red brick matching its bearer's holy symbol, letting the bearer channel positive or negative energy to repair constructs and damaged objects."
+    },
+    {
+      "key": "Cowardly Crouching Cloak",
+      "category": "MagicItems",
+      "name": "Cowardly Crouching Cloak",
+      "cost_gp": 1800.0,
+      "weight": 4.0,
+      "description": "A gray hooded cloak that lets its wearer huddle into a crouch, granting a sanctuary effect (Will save negates) while rendering the wearer effectively blind."
+    },
+    {
+      "key": "Crystal of Healing Hands",
+      "category": "MagicItems",
+      "name": "Crystal of Healing Hands",
+      "cost_gp": 12000.0,
+      "weight": 1.0,
+      "description": "A prism worn on a cord that stores a paladin's lay on hands energy for later release as a standard action."
+    },
+    {
+      "key": "Defoliant Polish",
+      "category": "MagicItems",
+      "name": "Defoliant Polish",
+      "cost_gp": 800.0,
+      "weight": null,
+      "description": "A gray paste coated on armor that produces fumes causing natural plants to wilt, letting the wearer move through vegetation without difficulty."
+    },
+    {
+      "key": "Doomharp",
+      "category": "MagicItems",
+      "name": "Doomharp",
+      "cost_gp": 10000.0,
+      "weight": 5.0,
+      "description": "A bone-and-sinew masterwork harp that lets a non-bardic user perform the dirge of doom bardic performance."
+    },
+    {
+      "key": "Dust of Emulation",
+      "category": "MagicItems",
+      "name": "Dust of Emulation",
+      "cost_gp": 800.0,
+      "weight": null,
+      "description": "A glittering golden dust that grants an automatic result of 25 on a Use Magic Device check made to emulate a class feature for 1 hour."
+    },
+    {
+      "key": "Flying Ointment",
+      "category": "MagicItems",
+      "name": "Flying Ointment",
+      "cost_gp": 2250.0,
+      "weight": 0.01,
+      "description": "An herbal preparation that, applied to the skin, grants overland flight for up to 9 hours."
+    },
+    {
+      "key": "Gloves of Dueling",
+      "category": "MagicItems",
+      "name": "Gloves of Dueling",
+      "cost_gp": 15000.0,
+      "weight": 0.01,
+      "description": "Supple leather gloves granting a +4 bonus to CMD against disarm and sunder attacks, plus a weapon training bonus."
+    },
+    {
+      "key": "Glowing Glove",
+      "category": "MagicItems",
+      "name": "Glowing Glove",
+      "cost_gp": 2000.0,
+      "weight": null,
+      "description": "A white leather glove that creates luminous handprints, glowing in any chosen color and lasting a day, on surfaces it touches."
+    },
+    {
+      "key": "Grappler's Mask",
+      "category": "MagicItems",
+      "name": "Grappler's Mask",
+      "cost_gp": 5000.0,
+      "weight": 2.0,
+      "description": "A dark leather mask covering the head and upper body, letting its wearer attempt bull rushes and grapples without provoking attacks of opportunity."
+    },
+    {
+      "key": "Helm of Fearsome Mien",
+      "category": "MagicItems",
+      "name": "Helm of Fearsome Mien",
+      "cost_gp": 5000.0,
+      "weight": 4.0,
+      "description": "A metal helm shaped like a fearsome predator, letting a barbarian use the intimidating glare rage power while raging."
+    },
+    {
+      "key": "Horn of the Huntmaster",
+      "category": "MagicItems",
+      "name": "Horn of the Huntmaster",
+      "cost_gp": 5000.0,
+      "weight": 5.0,
+      "description": "A curved horn that, once per day for a minute, lets a hunter grant their full favored enemy bonus to allies within 30 feet."
+    },
+    {
+      "key": "Ioun Torch",
+      "category": "MagicItems",
+      "name": "Ioun Torch",
+      "cost_gp": 75.0,
+      "weight": null,
+      "description": "A burned-out, dull gray ioun stone bearing a continual flame spell; it still floats and orbits its bearer, letting them carry light while keeping both hands free."
+    },
+    {
+      "key": "Key of Lock Jamming",
+      "category": "MagicItems",
+      "name": "Key of Lock Jamming",
+      "cost_gp": 400.0,
+      "weight": 0.5,
+      "description": "A brass key that reshapes to fit standard keyholes, merging with a lock to make it unopenable while adding to its hardness and hit points."
+    },
+    {
+      "key": "Ki Mat",
+      "category": "MagicItems",
+      "name": "Ki Mat",
+      "cost_gp": 10000.0,
+      "weight": 3.0,
+      "description": "A woven river-reed mat that lets a monk regain ki points through meditation using a Wisdom check."
+    },
+    {
+      "key": "Knight's Pennon (Battle)",
+      "category": "MagicItems",
+      "name": "Knight's Pennon (Battle)",
+      "cost_gp": 4500.0,
+      "weight": 1.0,
+      "description": "A red cloth flag mounted on a weapon that, once per day, grants heroism to its bearer."
+    },
+    {
+      "key": "Knight's Pennon (Honor)",
+      "category": "MagicItems",
+      "name": "Knight's Pennon (Honor)",
+      "cost_gp": 2200.0,
+      "weight": 1.0,
+      "description": "A gold cloth flag mounted on a lance that, once per day, grants its bearer a protection from evil effect."
+    },
+    {
+      "key": "Knight's Pennon (Parley)",
+      "category": "MagicItems",
+      "name": "Knight's Pennon (Parley)",
+      "cost_gp": 4500.0,
+      "weight": 1.0,
+      "description": "A white cloth flag that, for one hour, grants a +4 enhancement bonus on Bluff, Diplomacy, Intimidate, and Sense Motive checks."
+    },
+    {
+      "key": "Lord's Banner (Crusades)",
+      "category": "MagicItems",
+      "name": "Lord's Banner (Crusades)",
+      "cost_gp": 100000.0,
+      "weight": 3.0,
+      "description": "A noble cloth flag emitting a hallow effect in a 40-foot radius for true believers of the religion it depicts."
+    },
+    {
+      "key": "Lord's Banner (Swiftness)",
+      "category": "MagicItems",
+      "name": "Lord's Banner (Swiftness)",
+      "cost_gp": 10000.0,
+      "weight": 3.0,
+      "description": "A cloth flag that lets a traveling force make forced marches without Constitution checks or nonlethal damage."
+    },
+    {
+      "key": "Lord's Banner (Terror)",
+      "category": "MagicItems",
+      "name": "Lord's Banner (Terror)",
+      "cost_gp": 56000.0,
+      "weight": 3.0,
+      "description": "A cloth flag that panics enemies within 30 feet who can see it, unless they succeed at a Will save."
+    },
+    {
+      "key": "Lord's Banner (Victory)",
+      "category": "MagicItems",
+      "name": "Lord's Banner (Victory)",
+      "cost_gp": 75000.0,
+      "weight": 3.0,
+      "description": "A cloth banner that grants a +2 morale bonus on attack rolls, saving throws, and skill checks to visible allies."
+    },
+    {
+      "key": "Manacles of Cooperation",
+      "category": "MagicItems",
+      "name": "Manacles of Cooperation",
+      "cost_gp": 2000.0,
+      "weight": 2.0,
+      "description": "Iron cuffs that render a restrained humanoid docile and compliant through enchantment."
+    },
+    {
+      "key": "Mask of Giants (Lesser)",
+      "category": "MagicItems",
+      "name": "Mask of Giants (Lesser)",
+      "cost_gp": 30000.0,
+      "weight": 1.0,
+      "description": "A wooden mask that lets a wild shape user assume a giant humanoid's form, granting some of that giant's abilities."
+    },
+    {
+      "key": "Mask of Giants (Greater)",
+      "category": "MagicItems",
+      "name": "Mask of Giants (Greater)",
+      "cost_gp": 90000.0,
+      "weight": 1.0,
+      "description": "An enhanced wooden mask that lets a wild shape user assume a giant humanoid's form with additional abilities, including rend, regeneration, and rock throwing."
+    },
+    {
+      "key": "Moon Circlet",
+      "category": "MagicItems",
+      "name": "Moon Circlet",
+      "cost_gp": 20000.0,
+      "weight": null,
+      "description": "A silver circlet that grants darkvision and adjusts an arcane caster's effective caster level based on the current lunar phase."
+    },
+    {
+      "key": "Muleback Cords",
+      "category": "MagicItems",
+      "name": "Muleback Cords",
+      "cost_gp": 1000.0,
+      "weight": 0.25,
+      "description": "Thick leather cords that treat the wearer's Strength score as 8 higher for determining carrying capacity only, never applying to combat or other Strength-related rolls."
+    },
+    {
+      "key": "Necklace of Ki Serenity",
+      "category": "MagicItems",
+      "name": "Necklace of Ki Serenity",
+      "cost_gp": 16000.0,
+      "weight": null,
+      "description": "A knotted leather cord granting a +4 bonus to effective character level for ki pool calculations."
+    },
+    {
+      "key": "Necromancer's Athame",
+      "category": "MagicItems",
+      "name": "Necromancer's Athame",
+      "cost_gp": 20000.0,
+      "weight": 2.0,
+      "description": "A bone dagger that functions as a necromancer's bonded object, letting its bearer spontaneously convert prepared spells into necromancy spells."
+    },
+    {
+      "key": "Philter of Love",
+      "category": "MagicItems",
+      "name": "Philter of Love",
+      "cost_gp": 3000.0,
+      "weight": null,
+      "description": "A potent preparation that causes a creature drinking it to fall madly in love with the first creature it perceives afterward."
+    },
+    {
+      "key": "Robe of Arcane Heritage",
+      "category": "MagicItems",
+      "name": "Robe of Arcane Heritage",
+      "cost_gp": 16000.0,
+      "weight": 1.0,
+      "description": "Dark purple and blue robes that treat a sorcerer's level as 4 higher for the purposes of bloodline powers."
+    },
+    {
+      "key": "Sash of the War Champion",
+      "category": "MagicItems",
+      "name": "Sash of the War Champion",
+      "cost_gp": 4000.0,
+      "weight": 1.0,
+      "description": "A red cloth sash bearing crowd imagery that treats the wearer's fighter level as 4 higher for armor training and bravery class features."
+    },
+    {
+      "key": "Scabbard of Stanching",
+      "category": "MagicItems",
+      "name": "Scabbard of Stanching",
+      "cost_gp": 5000.0,
+      "weight": 2.0,
+      "description": "A red leather sheath with gold filigree that automatically stanches bleed effects below a set severity affecting the sheathed weapon's wielder."
+    },
+    {
+      "key": "Scabbard of Vigor",
+      "category": "MagicItems",
+      "name": "Scabbard of Vigor",
+      "cost_gp": 1800.0,
+      "weight": 3.0,
+      "description": "A scabbard that, once per day as part of drawing the weapon it holds, can endow that weapon with a temporary enhancement bonus."
+    },
+    {
+      "key": "Sheath of Bladestealth",
+      "category": "MagicItems",
+      "name": "Sheath of Bladestealth",
+      "cost_gp": 5000.0,
+      "weight": 2.0,
+      "description": "A mundane-appearing sheath that renders a sheathed bladed weapon invisible until it is drawn."
+    },
+    {
+      "key": "Silver Smite Bracelet",
+      "category": "MagicItems",
+      "name": "Silver Smite Bracelet",
+      "cost_gp": 16000.0,
+      "weight": 1.0,
+      "description": "A heavy silver bracelet etched with virtue icons that treats a paladin's level as 4 higher for smite evil."
+    },
+    {
+      "key": "Sniper Goggles",
+      "category": "MagicItems",
+      "name": "Sniper Goggles",
+      "cost_gp": 20000.0,
+      "weight": 1.0,
+      "description": "Bulbous lenses that let their wearer make ranged sneak attacks at any distance, gaining an extra +2 damage bonus within 30 feet."
+    },
+    {
+      "key": "Soul Soap",
+      "category": "MagicItems",
+      "name": "Soul Soap",
+      "cost_gp": 200.0,
+      "weight": 2.0,
+      "description": "A gray soap bar that, after a minute of washing with it, lets a creature attempt a new Will save against a hostile mind-affecting effect."
+    },
+    {
+      "key": "Torc of Lionheart Fury",
+      "category": "MagicItems",
+      "name": "Torc of Lionheart Fury",
+      "cost_gp": 8000.0,
+      "weight": 1.0,
+      "description": "A heavy copper neckpiece bearing lion imagery that grants a +2 morale bonus on saves against fear."
+    },
+    {
+      "key": "Vest of the Cockroach",
+      "category": "MagicItems",
+      "name": "Vest of the Cockroach",
+      "cost_gp": 16000.0,
+      "weight": 2.0,
+      "description": "A red-brown padded vest that grants or enhances a rogue's resiliency talent, improving damage reduction."
+    },
+    {
+      "key": "War Paint of the Terrible Visage",
+      "category": "MagicItems",
+      "name": "War Paint of the Terrible Visage",
+      "cost_gp": 100.0,
+      "weight": 0.01,
+      "description": "Face paint that lets the wearer rearrange its pigments into a disturbing visage as a swift action, affecting one visible creature within 30 feet with fear."
+    },
+    {
+      "key": "Cloak of Immolation",
+      "category": "MagicItems",
+      "name": "Cloak of Immolation",
+      "cost_gp": 0.0,
+      "weight": 1.0,
+      "description": "A cursed cloak that bursts into continuous flame the moment it is worn, dealing fire damage to the wearer each round without harming the cloak itself."
+    },
+    {
+      "key": "Crown of Blindness",
+      "category": "MagicItems",
+      "name": "Crown of Blindness",
+      "cost_gp": 0.0,
+      "weight": 1.0,
+      "description": "A cursed silver circlet that forces a DC 14 Fortitude save or permanently blinds the wearer, requiring curse-removal magic to reverse."
+    },
+    {
+      "key": "Hat of Hatreds",
+      "category": "MagicItems",
+      "name": "Hat of Hatreds",
+      "cost_gp": 0.0,
+      "weight": null,
+      "description": "A cursed hat that resembles a hat of disguise but instead causes its wearer to take on the appearance of whatever person or creature a nearby hostile creature most wants to harm."
+    },
+    {
+      "key": "Girdle of Opposite Gender",
+      "category": "MagicItems",
+      "name": "Girdle of Opposite Gender",
+      "cost_gp": 0.0,
+      "weight": 1.0,
+      "description": "A cursed magical belt that, once put on, forces a DC 20 Fortitude save or transforms the wearer into a person of the opposite gender."
+    },
+    {
+      "key": "Riot Pipes",
+      "category": "MagicItems",
+      "name": "Riot Pipes",
+      "cost_gp": 0.0,
+      "weight": 3.0,
+      "description": "Cursed musical pipes that force everyone within hearing to succeed at a DC 15 Will save or fall into a murderous rage-like fury for 1d6 hours."
+    },
+    {
+      "key": "Brooch (Folding Plate)",
+      "category": "MagicItems",
+      "name": "Brooch (Folding Plate)",
+      "cost_gp": 12650.0,
+      "weight": null,
+      "description": "The brooch form of folding plate armor, which transforms between a wearable brooch and a suit of +1 full plate armor on command."
+    }
+  ]
+}

@@ -13,7 +13,7 @@
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, Speed, StatAdjustment};
 
 /// Every inner_sea_combat companion creature (4 rows).
-pub(super) static COMPANIONS: &[CompanionRecord] = &[
+pub(crate) static COMPANIONS: &[CompanionRecord] = &[
     CompanionRecord {
         key: "Companion (Griffon)",
         name: "Companion (Griffon)",
@@ -105,7 +105,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
 ];
 
 /// Every inner_sea_combat companion ability record (6 rows).
-pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
+pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
     CompanionAbilityRecord {
         key: "Companion Advancement ~ Griffon",
         name: "Companion Advancement (Griffon)",

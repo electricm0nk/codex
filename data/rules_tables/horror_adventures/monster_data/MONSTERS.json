@@ -1,0 +1,207 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "horror_adventures/monster_data/MONSTERS",
+  "licence": {
+    "license": "OGL",
+    "book": "horror_adventures",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Hive Larva Swarm",
+      "name": "Hive Larva Swarm",
+      "size": "F",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Climb",
+          "feet": 10
+        }
+      ],
+      "race_type": "Aberration",
+      "race_subtype": "Hive|Swarm",
+      "challenge_rating": "5",
+      "monster_class": "Aberration:7",
+      "source_page": "p.236",
+      "natural_attacks": [
+        {
+          "name": "Swarm",
+          "damage_dice": "2d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -10
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": -10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Hive Larva Swarm ~ Infest",
+        "Hive Larva Swarm ~ Poison"
+      ],
+      "external_ability_refs": [],
+      "source_file": "ha_races.lst",
+      "source_line": 3
+    },
+    {
+      "key": "Hive Queen",
+      "name": "Hive Queen",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "race_type": "Aberration",
+      "race_subtype": "Hive",
+      "challenge_rating": "10",
+      "monster_class": "Aberration:15",
+      "source_page": "p.236",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "1d10"
+        },
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Tail Slap",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 18
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 8
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 8
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Hive Queen ~ Egg Layer",
+        "Hive Queen ~ Telepathy"
+      ],
+      "external_ability_refs": [],
+      "source_file": "ha_races.lst",
+      "source_line": 4
+    },
+    {
+      "key": "Hive Warrior",
+      "name": "Hive Warrior",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "race_type": "Aberration",
+      "race_subtype": "Hive",
+      "challenge_rating": "5",
+      "monster_class": "Aberration:8",
+      "source_page": "p.237",
+      "natural_attacks": [
+        {
+          "name": "Acid Spit",
+          "damage_dice": "7d6"
+        },
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        },
+        {
+          "name": "Tail Slap",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Hive Warrior ~ Acid Spit",
+        "Hive Warrior ~ Rending Mandibles"
+      ],
+      "external_ability_refs": [],
+      "source_file": "ha_races.lst",
+      "source_line": 5
+    }
+  ]
+}

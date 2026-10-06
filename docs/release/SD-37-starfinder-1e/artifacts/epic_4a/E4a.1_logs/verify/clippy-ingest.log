@@ -1,0 +1,23 @@
+    Checking codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+error: this `if` statement can be collapsed
+   --> src/rules_core/rules_data_package.rs:374:5
+    |
+374 | /     if let Some(hit) = cache.lock().unwrap_or_else(|p| p.into_inner()).get(&key) {
+375 | |         if let Some(rows) = hit.downcast_ref::<&'static [T]>() {
+376 | |             return Ok(rows);
+377 | |         }
+378 | |     }
+    | |_____^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+374 ~     if let Some(hit) = cache.lock().unwrap_or_else(|p| p.into_inner()).get(&key)
+375 ~         && let Some(rows) = hit.downcast_ref::<&'static [T]>() {
+376 |             return Ok(rows);
+377 ~         }
+    |
+
+error: could not compile `codex` (lib) due to 1 previous error

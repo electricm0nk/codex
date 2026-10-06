@@ -1,0 +1,83 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/BESTIARY_2_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "B2",
+      "key": "Leprechaun Shillelagh",
+      "name": "Leprechaun Shillelagh",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "B2",
+      "key": "Gaff",
+      "name": "Gaff",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "B2",
+      "key": "Elysian Maul of the Titans",
+      "name": "Maul of the Titans",
+      "category": "ArmsArmor",
+      "cost_gp": 25305.0,
+      "weight_lbs": 320.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "B2",
+      "key": "Rhoka Sword",
+      "name": "Rhoka Sword",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "B2",
+      "key": "Rock (Korred)",
+      "name": "Rock (Korred)",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 100.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "B2",
+      "key": "Rock (Huge)",
+      "name": "Rock (Huge)",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 100.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "B2",
+      "key": "Royal Jelly",
+      "name": "Royal Jelly",
+      "category": "General",
+      "cost_gp": 100.0,
+      "weight_lbs": 1.0,
+      "description": "A pound of royal jelly provides enough nourishment for a full day, and grants a +4 resistance bonus on all saving throws against disease for the next 24 hours.  If a creature sleeps enough to heal damage within 24 hours of eating at least a pound of royal jelly, it heals twice the hit points and ability damage as it otherwise would.",
+      "name_pi_citation": null
+    }
+  ]
+}

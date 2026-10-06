@@ -108,7 +108,9 @@
 
 use super::super::crb::feats::FeatCategory as SharedFeatCategory;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_psionics__feat_tables__FeatCategory"))]
 pub enum FeatCategory {
     General,
     Combat,
@@ -132,7 +134,8 @@ impl FeatCategory {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct UpsiFeatEntry {
     /// The record's corpus identity. No record in this catalog carries a
     /// distinct `KEY:` token, so `key == name` for every entry.

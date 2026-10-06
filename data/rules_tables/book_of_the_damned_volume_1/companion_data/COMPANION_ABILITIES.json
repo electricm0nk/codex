@@ -1,0 +1,36 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "book_of_the_damned_volume_1/companion_data/COMPANION_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "book_of_the_damned_volume_1",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Imp Companion ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "Sting - injury; save Fort DC %1; frequency 1/round for 5 minutes; effect 1d2 Dex; cure 1 save.",
+      "description_variables": [
+        "ImpCompPoisonDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.78",
+      "owners": [
+        "Companion (Imp)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "botd1_abilities_companion.lst",
+      "source_line": 8
+    }
+  ]
+}

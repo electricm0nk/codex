@@ -41,14 +41,18 @@ use crate::rules_core::rules_tables::RuleSetId;
 
 pub use super::equipment_data::EQUIPMENT_RECORDS;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "apg__equipment_tables__EquipmentCategory"))]
 pub enum EquipmentCategory {
     General,
     ArmsArmor,
     MagicItems,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "apg__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
     /// Equipment records carry their `name` as the corpus identity by
     /// default (no distinct `KEY:` token on most rows), same fallback

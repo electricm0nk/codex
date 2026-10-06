@@ -1,0 +1,27 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "bestiary_6/spell_list/SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "bestiary_6",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Animal Growth (Reptiles Only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 5,
+      "description": "The target reptile grows to twice its normal size and eight times its normal weight."
+    },
+    {
+      "key": "Animal Shapes (Reptiles Only)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 8,
+      "description": "You change the form of up to (CASTERLEVEL) willing reptiles into an animal of your choice."
+    }
+  ]
+}

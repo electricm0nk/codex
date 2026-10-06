@@ -42,7 +42,8 @@
 
 use crate::rules_core::size::SizeCategory;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum RaceId {
     Human,
     Dwarf,
@@ -65,6 +66,8 @@ impl RaceId {
     ];
 }
 
+#[derive(serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct RaceTraitEntry {
     pub race_id: RaceId,
     pub trait_name: &'static str,
@@ -76,7 +79,7 @@ pub struct RaceTraitEntry {
 /// `pilot_compute.rs` grounds as of the SD-19 Full-matrix-closure sweep
 /// (2026-07-16): Human 6, Dwarf 9, Elf 7, Gnome 8, Half-Elf 6, Half-Orc 5,
 /// Halfling 8 (49 total).
-const RACE_TRAITS: &[RaceTraitEntry] = &[
+pub(crate) const RACE_TRAITS: &[RaceTraitEntry] = &[
     // ----- Human (6) -----
     RaceTraitEntry {
         race_id: RaceId::Human,

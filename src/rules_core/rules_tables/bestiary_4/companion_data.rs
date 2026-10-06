@@ -22,7 +22,7 @@
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, ConditionItem, EffectCondition, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
 /// Every bestiary_4 companion creature (34 rows).
-pub(super) static COMPANIONS: &[CompanionRecord] = &[
+pub(crate) static COMPANIONS: &[CompanionRecord] = &[
     CompanionRecord {
         key: "Companion (Dinosaur (Dimorphodon))",
         name: "Companion (Dinosaur (Dimorphodon))",
@@ -774,7 +774,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
 ];
 
 /// Every bestiary_4 companion ability record (44 rows).
-pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
+pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
     CompanionAbilityRecord {
         key: "Companion Advancement ~ Dinosaur (Dimorphodon)",
         name: "Companion Advancement (Dinosaur (Dimorphodon))",

@@ -14,7 +14,7 @@
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
 /// Every book_of_the_damned_volume_1 monster stat block (5 rows).
-pub(super) static MONSTERS: &[MonsterStatBlock] = &[
+pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
     MonsterStatBlock {
         key: "Devil (Apostate)",
         name: "Devil, Apostate (Deimavigga)",
@@ -118,7 +118,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
 ];
 
 /// Every book_of_the_damned_volume_1 monster-ability record (36 rows).
-pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
+pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Apostate Devil ~ Spell-Like Abilities",
         name: "Spell-Like Abilities",

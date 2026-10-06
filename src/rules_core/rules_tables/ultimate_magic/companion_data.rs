@@ -170,7 +170,7 @@
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityGrant, CompanionAbilityRecord, CompanionClassRecord, CompanionDescriptionVariant, CompanionRecord, ConditionItem, EffectCondition, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
 /// Every ultimate_magic companion creature (29 rows).
-pub(super) static COMPANIONS: &[CompanionRecord] = &[
+pub(crate) static COMPANIONS: &[CompanionRecord] = &[
     CompanionRecord {
         key: "Familiar (Blue-Ringed Octopus)",
         name: "Familiar (Blue-Ringed Octopus)",
@@ -812,7 +812,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
 ];
 
 /// Every ultimate_magic companion ability record (30 rows).
-pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
+pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
     CompanionAbilityRecord {
         key: "Blue-Ringed Octopus ~ Ink Cloud",
         name: "Ink Cloud",
@@ -1296,7 +1296,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
 ];
 
 /// Every ultimate_magic `*_classes_companion.lst` row (3 rows).
-pub(super) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
+pub(crate) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
     CompanionClassRecord {
         key: "Vermin Companion",
         output_name: Some("Vermin"),

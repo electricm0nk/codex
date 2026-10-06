@@ -1,0 +1,1075 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/bard_spell_list/BARD_SPELL_LIST",
+  "licence": {
+    "license": "PI",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [
+      {
+        "row": 68,
+        "field": "0",
+        "term": "Nex"
+      }
+    ],
+    "redacted": []
+  },
+  "rows": [
+    [
+      "Adjustable Disguise",
+      3
+    ],
+    [
+      "Adjustable Polymorph",
+      4
+    ],
+    [
+      "Air Step",
+      2
+    ],
+    [
+      "Alarm",
+      1
+    ],
+    [
+      "Alter Musical Instrument",
+      1
+    ],
+    [
+      "Alter Self",
+      2
+    ],
+    [
+      "Analyze Dweomer",
+      6
+    ],
+    [
+      "Animal Messenger",
+      2
+    ],
+    [
+      "Animal Purpose Training",
+      2
+    ],
+    [
+      "Animal Trance",
+      2
+    ],
+    [
+      "Animate Objects",
+      6
+    ],
+    [
+      "Animate Rope",
+      1
+    ],
+    [
+      "Anonymous Interaction",
+      2
+    ],
+    [
+      "Arcane Concordance",
+      3
+    ],
+    [
+      "Bard's Escape",
+      5
+    ],
+    [
+      "Beguiling Gift",
+      1
+    ],
+    [
+      "Blindness/Deafness",
+      2
+    ],
+    [
+      "Blink",
+      3
+    ],
+    [
+      "Blood Biography",
+      2
+    ],
+    [
+      "Blur",
+      2
+    ],
+    [
+      "Blurred Movement",
+      1
+    ],
+    [
+      "Borrow Skill",
+      1
+    ],
+    [
+      "Break Enchantment",
+      4
+    ],
+    [
+      "Brilliant Inspiration",
+      6
+    ],
+    [
+      "Bullet Ward",
+      2
+    ],
+    [
+      "Buoyancy",
+      2
+    ],
+    [
+      "Cacophonous Call",
+      2
+    ],
+    [
+      "Cacophonous Call (Mass)",
+      5
+    ],
+    [
+      "Calm Emotions",
+      2
+    ],
+    [
+      "Campfire Wall",
+      3
+    ],
+    [
+      "Cat's Grace",
+      2
+    ],
+    [
+      "Cat's Grace (Mass)",
+      6
+    ],
+    [
+      "Cause Fear",
+      1
+    ],
+    [
+      "Charm Monster",
+      3
+    ],
+    [
+      "Charm Monster (Mass)",
+      6
+    ],
+    [
+      "Charm Person",
+      1
+    ],
+    [
+      "Clairaudience/Clairvoyance",
+      3
+    ],
+    [
+      "Cloak of Dreams",
+      5
+    ],
+    [
+      "Comprehend Languages",
+      1
+    ],
+    [
+      "Confusion",
+      3
+    ],
+    [
+      "Confusion (Lesser)",
+      1
+    ],
+    [
+      "Contingent Action",
+      3
+    ],
+    [
+      "Contingent Scroll",
+      4
+    ],
+    [
+      "Coordinated Effort",
+      3
+    ],
+    [
+      "Create Treasure Map",
+      2
+    ],
+    [
+      "Crushing Despair",
+      3
+    ],
+    [
+      "Cure Critical Wounds",
+      4
+    ],
+    [
+      "Cure Light Wounds",
+      1
+    ],
+    [
+      "Cure Light Wounds (Mass)",
+      5
+    ],
+    [
+      "Cure Moderate Wounds",
+      2
+    ],
+    [
+      "Cure Moderate Wounds (Mass)",
+      6
+    ],
+    [
+      "Cure Serious Wounds",
+      3
+    ],
+    [
+      "Dancing Lantern",
+      1
+    ],
+    [
+      "Dancing Lights",
+      0
+    ],
+    [
+      "Darkness",
+      2
+    ],
+    [
+      "Daylight",
+      3
+    ],
+    [
+      "Daze",
+      0
+    ],
+    [
+      "Daze Monster",
+      2
+    ],
+    [
+      "Deadly Finale",
+      6
+    ],
+    [
+      "Deafening Song Bolt",
+      5
+    ],
+    [
+      "Deep Slumber",
+      3
+    ],
+    [
+      "Delay Poison",
+      2
+    ],
+    [
+      "Denounce",
+      4
+    ],
+    [
+      "Detect Magic",
+      0
+    ],
+    [
+      "Detect Scrying",
+      4
+    ],
+    [
+      "Detect Secret Doors",
+      1
+    ],
+    [
+      "Detect Thoughts",
+      2
+    ],
+    [
+      "Dimension Door",
+      4
+    ],
+    [
+      "Discern Next of Kin",
+      1
+    ],
+    [
+      "Discordant Blast",
+      4
+    ],
+    [
+      "Disguise Self",
+      1
+    ],
+    [
+      "Disguise Weapon",
+      1
+    ],
+    [
+      "Dispel Magic",
+      3
+    ],
+    [
+      "Dispel Magic (Greater)",
+      5
+    ],
+    [
+      "Displacement",
+      3
+    ],
+    [
+      "Dominate Person",
+      4
+    ],
+    [
+      "Dream",
+      5
+    ],
+    [
+      "Dust of Twilight",
+      2
+    ],
+    [
+      "Eagle's Splendor",
+      2
+    ],
+    [
+      "Eagle's Splendor (Mass)",
+      6
+    ],
+    [
+      "Elemental Speech",
+      3
+    ],
+    [
+      "Enter Image",
+      2
+    ],
+    [
+      "Enthrall",
+      2
+    ],
+    [
+      "Erase",
+      1
+    ],
+    [
+      "Euphoric Tranquility",
+      6
+    ],
+    [
+      "Expeditious Retreat",
+      1
+    ],
+    [
+      "Eyebite",
+      6
+    ],
+    [
+      "False Vision",
+      5
+    ],
+    [
+      "Fear",
+      3
+    ],
+    [
+      "Feast on Fear",
+      4
+    ],
+    [
+      "Feather Fall",
+      1
+    ],
+    [
+      "Feather Step",
+      1
+    ],
+    [
+      "Feather Step (Mass)",
+      3
+    ],
+    [
+      "Find the Path",
+      6
+    ],
+    [
+      "Flare",
+      0
+    ],
+    [
+      "Flare Burst",
+      1
+    ],
+    [
+      "Flexible Fury",
+      3
+    ],
+    [
+      "Focused Scrutiny",
+      2
+    ],
+    [
+      "Foe to Friend",
+      5
+    ],
+    [
+      "Fool's Forbiddance",
+      6
+    ],
+    [
+      "Fox's Cunning",
+      2
+    ],
+    [
+      "Fox's Cunning (Mass)",
+      6
+    ],
+    [
+      "Freedom of Movement",
+      4
+    ],
+    [
+      "Frozen Note",
+      5
+    ],
+    [
+      "Gallant Inspiration",
+      2
+    ],
+    [
+      "Gaseous Form",
+      3
+    ],
+    [
+      "Geas (Lesser)",
+      4
+    ],
+    [
+      "Geas/Quest",
+      6
+    ],
+    [
+      "Getaway",
+      6
+    ],
+    [
+      "Ghost Sound",
+      0
+    ],
+    [
+      "Ghostbane Dirge",
+      2
+    ],
+    [
+      "Ghostbane Dirge (Mass)",
+      4
+    ],
+    [
+      "Glibness",
+      3
+    ],
+    [
+      "Glitterdust",
+      2
+    ],
+    [
+      "Glue Seal",
+      1
+    ],
+    [
+      "Good Hope",
+      3
+    ],
+    [
+      "Grease",
+      1
+    ],
+    [
+      "Hallucinatory Terrain",
+      4
+    ],
+    [
+      "Haste",
+      3
+    ],
+    [
+      "Heightened Awareness",
+      1
+    ],
+    [
+      "Heightened Reflexes",
+      2
+    ],
+    [
+      "Heroes' Feast",
+      6
+    ],
+    [
+      "Heroic Finale",
+      4
+    ],
+    [
+      "Heroic Fortune",
+      2
+    ],
+    [
+      "Heroic Fortune (Mass)",
+      4
+    ],
+    [
+      "Heroism",
+      2
+    ],
+    [
+      "Heroism (Greater)",
+      5
+    ],
+    [
+      "Hidden Speech",
+      2
+    ],
+    [
+      "Hideous Laughter",
+      1
+    ],
+    [
+      "Hold Monster",
+      4
+    ],
+    [
+      "Hold Person",
+      2
+    ],
+    [
+      "Honeyed Tongue",
+      2
+    ],
+    [
+      "Hypnotic Pattern",
+      2
+    ],
+    [
+      "Hypnotism",
+      1
+    ],
+    [
+      "Identify",
+      1
+    ],
+    [
+      "Illusory Script",
+      3
+    ],
+    [
+      "Innocence",
+      1
+    ],
+    [
+      "Investigative Mind",
+      2
+    ],
+    [
+      "Invigorate",
+      1
+    ],
+    [
+      "Invigorate (Mass)",
+      3
+    ],
+    [
+      "Invisibility",
+      2
+    ],
+    [
+      "Invisibility (Greater)",
+      4
+    ],
+    [
+      "Invisibility Alarm",
+      1
+    ],
+    [
+      "Invisibility Sphere",
+      3
+    ],
+    [
+      "Irresistible Dance",
+      6
+    ],
+    [
+      "Jester's Jaunt",
+      3
+    ],
+    [
+      "Know Direction",
+      0
+    ],
+    [
+      "Legend Lore",
+      4
+    ],
+    [
+      "Light",
+      0
+    ],
+    [
+      "Locate Creature",
+      4
+    ],
+    [
+      "Locate Object",
+      2
+    ],
+    [
+      "Lullaby",
+      0
+    ],
+    [
+      "Mage Hand",
+      0
+    ],
+    [
+      "Magic Aura",
+      1
+    ],
+    [
+      "Magic Mouth",
+      1
+    ],
+    [
+      "Magnifying Chime",
+      6
+    ],
+    [
+      "Major Image",
+      3
+    ],
+    [
+      "Marching Chant",
+      2
+    ],
+    [
+      "Memorize Page",
+      1
+    ],
+    [
+      "Memory Lapse",
+      1
+    ],
+    [
+      "Mending",
+      0
+    ],
+    [
+      "Message",
+      0
+    ],
+    [
+      "Mind Fog",
+      5
+    ],
+    [
+      "Mindlocked Messenger",
+      2
+    ],
+    [
+      "Minor Image",
+      2
+    ],
+    [
+      "Mirage Arcana",
+      5
+    ],
+    [
+      "Mirror Image",
+      2
+    ],
+    [
+      "Misdirection",
+      2
+    ],
+    [
+      "Mislead",
+      5
+    ],
+    [
+      "Modify Memory",
+      4
+    ],
+    [
+      "Muffle Sound",
+      2
+    ],
+    [
+      "Neutralize Poison",
+      4
+    ],
+    [
+      "Nightmare",
+      5
+    ],
+    [
+      "Obscure Object",
+      1
+    ],
+    [
+      "Open/Close",
+      0
+    ],
+    [
+      "Path of Glory",
+      2
+    ],
+    [
+      "Path of Glory (Greater)",
+      4
+    ],
+    [
+      "Permanent Image",
+      6
+    ],
+    [
+      "Persistent Image",
+      5
+    ],
+    [
+      "Phantasmal Web",
+      5
+    ],
+    [
+      "Phantom Steed",
+      3
+    ],
+    [
+      "Pied Piping",
+      6
+    ],
+    [
+      "Pierce Disguise",
+      3
+    ],
+    [
+      "Prestidigitation",
+      0
+    ],
+    [
+      "Programmed Image",
+      6
+    ],
+    [
+      "Project Image",
+      6
+    ],
+    [
+      "Purging Finale",
+      3
+    ],
+    [
+      "Pyrotechnics",
+      2
+    ],
+    [
+      "Rage",
+      2
+    ],
+    [
+      "Rainbow Pattern",
+      4
+    ],
+    [
+      "Read Magic",
+      0
+    ],
+    [
+      "Remove Curse",
+      3
+    ],
+    [
+      "Remove Fear",
+      1
+    ],
+    [
+      "Repel Vermin",
+      4
+    ],
+    [
+      "Resistance",
+      0
+    ],
+    [
+      "Restful Sleep",
+      1
+    ],
+    [
+      "Reviving Finale",
+      3
+    ],
+    [
+      "Saving Finale",
+      1
+    ],
+    [
+      "Scare",
+      2
+    ],
+    [
+      "Scrying",
+      3
+    ],
+    [
+      "Scrying (Greater)",
+      6
+    ],
+    [
+      "Sculpt Sound",
+      3
+    ],
+    [
+      "Secret Page",
+      3
+    ],
+    [
+      "Secure Shelter",
+      4
+    ],
+    [
+      "See Invisibility",
+      3
+    ],
+    [
+      "Seek Thoughts",
+      3
+    ],
+    [
+      "Seeming",
+      5
+    ],
+    [
+      "Sepia Snake Sigil",
+      3
+    ],
+    [
+      "Shadow Conjuration",
+      4
+    ],
+    [
+      "Shadow Evocation",
+      5
+    ],
+    [
+      "Shadow Walk",
+      5
+    ],
+    [
+      "Share Language",
+      1
+    ],
+    [
+      "Shatter",
+      2
+    ],
+    [
+      "Shout",
+      4
+    ],
+    [
+      "Shout (Greater)",
+      6
+    ],
+    [
+      "Sift",
+      0
+    ],
+    [
+      "Silence",
+      2
+    ],
+    [
+      "Silent Image",
+      1
+    ],
+    [
+      "Silent Table",
+      2
+    ],
+    [
+      "Sleep",
+      1
+    ],
+    [
+      "Slow",
+      3
+    ],
+    [
+      "Solid Note",
+      1
+    ],
+    [
+      "Song of Discord",
+      5
+    ],
+    [
+      "Sonic Form",
+      6
+    ],
+    [
+      "Sonic Scream",
+      2
+    ],
+    [
+      "Sound Burst",
+      2
+    ],
+    [
+      "Spark",
+      0
+    ],
+    [
+      "Speak with Animals",
+      3
+    ],
+    [
+      "Speak with Plants",
+      4
+    ],
+    [
+      "Stunning Finale",
+      5
+    ],
+    [
+      "Suggestion",
+      2
+    ],
+    [
+      "Suggestion (Mass)",
+      5
+    ],
+    [
+      "Summon Instrument",
+      0
+    ],
+    [
+      "Summon Monster I",
+      1
+    ],
+    [
+      "Summon Monster II",
+      2
+    ],
+    [
+      "Summon Monster III",
+      3
+    ],
+    [
+      "Summon Monster IV",
+      4
+    ],
+    [
+      "Summon Monster V",
+      5
+    ],
+    [
+      "Summon Monster VI",
+      6
+    ],
+    [
+      "Summon Swarm",
+      2
+    ],
+    [
+      "Sympathetic Vibration",
+      6
+    ],
+    [
+      "Thundering Drums",
+      3
+    ],
+    [
+      "Timely Inspiration",
+      1
+    ],
+    [
+      "Tiny Hut",
+      3
+    ],
+    [
+      "Tongues",
+      2
+    ],
+    [
+      "Touch of Gracelessness",
+      1
+    ],
+    [
+      "Treasure Stitching",
+      4
+    ],
+    [
+      "Triggered Suggestion",
+      3
+    ],
+    [
+      "Undetectable Alignment",
+      1
+    ],
+    [
+      "Unseen Servant",
+      1
+    ],
+    [
+      "Unwilling Shield",
+      5
+    ],
+    [
+      "Unwitting Ally",
+      0
+    ],
+    [
+      "Vanish",
+      1
+    ],
+    [
+      "Veil",
+      6
+    ],
+    [
+      "Ventriloquism",
+      1
+    ],
+    [
+      "Versatile Weapon",
+      2
+    ],
+    [
+      "Wall of Blindness/Deafness",
+      4
+    ],
+    [
+      "Wall of Nausea",
+      3
+    ],
+    [
+      "Wandering Star Motes",
+      4
+    ],
+    [
+      "Whip of Ants",
+      6
+    ],
+    [
+      "Whip of Centipedes",
+      5
+    ],
+    [
+      "Whip of Spiders",
+      2
+    ],
+    [
+      "Whispering Wind",
+      2
+    ],
+    [
+      "Zone of Silence",
+      4
+    ]
+  ]
+}

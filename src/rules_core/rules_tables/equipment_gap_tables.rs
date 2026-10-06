@@ -29,7 +29,8 @@
 /// `EquipmentCategory` enum and field set), these rows exist to be chained
 /// into `equipment_resolver::equipment_catalog_rows()` and rendered by the
 /// desktop equipment catalog, both of which read exactly these fields.
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct EquipmentGapRow {
     /// One of `equipment_resolver`'s `EQUIPMENT_BOOK_*` codes.
     pub book: &'static str,

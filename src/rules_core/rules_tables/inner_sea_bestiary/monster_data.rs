@@ -104,7 +104,7 @@
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
 /// Every inner_sea_bestiary monster stat block (38 rows).
-pub(super) static MONSTERS: &[MonsterStatBlock] = &[
+pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
     MonsterStatBlock {
         key: "Apostasy Wraith",
         name: "Apostasy Wraith",
@@ -868,7 +868,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
 ];
 
 /// Every inner_sea_bestiary monster-ability record (192 rows).
-pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
+pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Apostasy Wraith ~ Razmiri Aversion",
         name: "Razmiri Aversion",

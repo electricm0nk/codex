@@ -17,7 +17,9 @@
 
 /// The full 9-school PF1 spell-school enum, mirroring
 /// `advanced_race_guide::spell_list::Pf1SchoolId` exactly.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_intrigue__spell_list__Pf1SchoolId"))]
 pub enum Pf1SchoolId {
     Abjuration,
     Conjuration,
@@ -60,7 +62,9 @@ impl Pf1SchoolId {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_intrigue__spell_list__SpellListEntry"))]
 pub struct SpellListEntry {
     /// The spell's `name` is its identity in `ui_spells.lst` (no `KEY:`
     /// token on any in-scope record).

@@ -14,7 +14,7 @@
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
 /// Every monster_codex monster stat block (2 rows).
-pub(super) static MONSTERS: &[MonsterStatBlock] = &[
+pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
     MonsterStatBlock {
         key: "Seru",
         name: "Seru",
@@ -58,7 +58,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
 ];
 
 /// Every monster_codex monster-ability record (3 rows).
-pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
+pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Bat (Sootwing) ~ Disease",
         name: "Disease",

@@ -27,7 +27,9 @@
 //! 4 files). Multiple `SPROP:` entries on one record are joined with `"; "`;
 //! a trailing `|<conditional-tag>` qualifier is stripped before storage.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__equipment_tables__EquipmentCategory"))]
 pub enum EquipmentCategory {
     General,
     ArmsArmor,
@@ -44,7 +46,9 @@ impl EquipmentCategory {
     ];
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
     /// Equipment records carry their `name` (or, for `arg_equipmods.lst`,
     /// the explicit `KEY:` token when present) as the corpus identity.

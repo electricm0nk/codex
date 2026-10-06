@@ -145,7 +145,8 @@
 //! "verbatim from the real corpus row" discipline and `crb`'s documented
 //! `%%`-stays-escaped convention for literal `%` in corpus prose.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct StoryFeatEntry {
     /// The corpus record identity. No record in this catalog carries a
     /// distinct `KEY:` token of its own, so `key == name` for every entry,

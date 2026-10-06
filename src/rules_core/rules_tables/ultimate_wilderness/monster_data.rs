@@ -24,11 +24,11 @@
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
 /// Every ultimate_wilderness monster stat block (0 rows).
-pub(super) static MONSTERS: &[MonsterStatBlock] = &[
+pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
 ];
 
 /// Every ultimate_wilderness monster-ability record (2 rows).
-pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
+pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Plant Traits Output (PC)",
         name: "Plant Traits",

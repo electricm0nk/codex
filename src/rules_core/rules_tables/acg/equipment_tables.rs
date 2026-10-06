@@ -24,7 +24,9 @@
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::rules_tables::acg::equipment_data;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "acg__equipment_tables__EquipmentCategory"))]
 pub enum EquipmentCategory {
     General,
     ArmsArmor,
@@ -41,7 +43,9 @@ impl EquipmentCategory {
     ];
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "acg__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
     /// Equipment records carry their `name` (or, for `acg_equipmods.lst`,
     /// the explicit `KEY:` token) as the corpus identity. `acg_equip.lst`

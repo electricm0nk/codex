@@ -39,11 +39,11 @@
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
 /// Every bestiary_6 monster stat block (0 rows).
-pub(super) static MONSTERS: &[MonsterStatBlock] = &[
+pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
 ];
 
 /// Every bestiary_6 monster-ability record (16 rows).
-pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
+pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Coral Capuchin ~ Cursed Bite",
         name: "Cursed Bite",

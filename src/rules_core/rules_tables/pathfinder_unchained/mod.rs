@@ -56,7 +56,7 @@ pub mod barbarian_features;
 pub mod class_chassis;
 pub mod equipment_tables;
 pub mod feat_tables;
-mod monster_data;
+pub(crate) mod monster_data;
 pub mod monk_features;
 pub mod rogue_features;
 pub mod summoner_features;

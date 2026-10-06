@@ -1,0 +1,630 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "inner_sea_world_guide/monster_data/MONSTERS",
+  "licence": {
+    "license": "OGL",
+    "book": "inner_sea_world_guide",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Rat (Donkey)",
+      "name": "Rat (Donkey)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "race_type": "Animal",
+      "race_subtype": null,
+      "challenge_rating": "1/4",
+      "monster_class": "Animal:1",
+      "source_page": "p.254",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "source_file": "iswg_races_bestiary.lst",
+      "source_line": 8
+    },
+    {
+      "key": "Spider (Drain)",
+      "name": "Spider (Drain)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "race_type": "Vermin",
+      "race_subtype": null,
+      "challenge_rating": "1/4",
+      "monster_class": "Vermin:1",
+      "source_page": "p.254",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Giant Spider ~ Poison"
+      ],
+      "source_file": "iswg_races_bestiary.lst",
+      "source_line": 9
+    },
+    {
+      "key": "Aluum",
+      "name": "Aluum",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "10",
+      "monster_class": "Construct:14",
+      "source_page": "p.306",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "2d10"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 16
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Aluum ~ Immunity to Magic",
+        "Aluum ~ Paralysis",
+        "Aluum ~ Soul Shriek"
+      ],
+      "external_ability_refs": [],
+      "source_file": "iswg_races.lst",
+      "source_line": 10
+    },
+    {
+      "key": "Fennec (Firefoot)",
+      "name": "Fennec (Firefoot)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Animal",
+      "race_subtype": null,
+      "challenge_rating": "1/3",
+      "monster_class": "Animal:1",
+      "source_page": "p.254",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "source_file": "iswg_races_bestiary.lst",
+      "source_line": 10
+    },
+    {
+      "key": "Calikang",
+      "name": "Calikang",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Monstrous Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "12",
+      "monster_class": "Monstrous Humanoid:15",
+      "source_page": "p.307",
+      "natural_attacks": [
+        {
+          "name": "Slam (Primary)",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Slam (1H wpn)",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Slam (2H wpns)",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Slam (3H wpns)",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Slam (4H wpns)",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Slam (5H wpns)",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 10
+        },
+        {
+          "ability": "INT",
+          "amount": -2
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "has_spell_like_abilities": true,
+      "sla_cl_token": "(max(TL,1))",
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "(max(TL,1))",
+          "spell": "Lightning Bolt",
+          "save_dc_token": "13+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "(max(TL,1))",
+          "spell": "Chain Lightning",
+          "save_dc_token": "16+CHA"
+        }
+      ],
+      "ability_keys": [
+        "Calikang ~ Breath Weapon",
+        "Calikang ~ Defensive Slam",
+        "Calikang ~ Energy Absorption",
+        "Calikang ~ Fast Healing",
+        "Calikang ~ Suspend Animation",
+        "Constant ~ Magic Weapon"
+      ],
+      "external_ability_refs": [
+        "Air Walk ~ Constant",
+        "True Seeing ~ Constant",
+        "Water Walk ~ Constant"
+      ],
+      "source_file": "iswg_races.lst",
+      "source_line": 11
+    },
+    {
+      "key": "Gecko (Giant)",
+      "name": "Gecko (Giant)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "race_type": "Animal",
+      "race_subtype": null,
+      "challenge_rating": "2",
+      "monster_class": "Animal:3",
+      "source_page": "p.254",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Grab",
+        "Scent"
+      ],
+      "source_file": "iswg_races_bestiary.lst",
+      "source_line": 11
+    },
+    {
+      "key": "Charau-ka",
+      "name": "Charau-ka",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": "Charau-ka",
+      "challenge_rating": "2",
+      "monster_class": "Humanoid (Reflex):3",
+      "source_page": "p.308",
+      "natural_attacks": [
+        {
+          "name": "Bite (Primary)",
+          "damage_dice": "1d3"
+        },
+        {
+          "name": "Bite (Weapon equipped)",
+          "damage_dice": "1d3"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Charau-ka ~ Shrieking Frenzy",
+        "Charau-ka ~ Thrown-Weapon Mastery"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "source_file": "iswg_races.lst",
+      "source_line": 12
+    },
+    {
+      "key": "Shark (Jigsaw)",
+      "name": "Shark (Jigsaw)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Swim",
+          "feet": 60
+        }
+      ],
+      "race_type": "Animal",
+      "race_subtype": "Aquatic",
+      "challenge_rating": "2",
+      "monster_class": "Animal:4",
+      "source_page": "p.255",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Shark ~ Keen Scent"
+      ],
+      "source_file": "iswg_races_bestiary.lst",
+      "source_line": 12
+    },
+    {
+      "key": "Dragon (Spine)",
+      "name": "Dragon (Spine)",
+      "size": "G",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Dragon",
+      "race_subtype": "Earth",
+      "challenge_rating": "16",
+      "monster_class": "Dragon:16",
+      "source_page": "p.312",
+      "natural_attacks": [
+        {
+          "name": "Tail",
+          "damage_dice": "2d8"
+        },
+        {
+          "name": "Spine",
+          "damage_dice": "2d8"
+        },
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 22
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 18
+        },
+        {
+          "ability": "INT",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 12
+        },
+        {
+          "ability": "CHA",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "(max(TL,1))",
+          "spell": "Spike Growth",
+          "save_dc_token": "13+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "(max(TL,1))",
+          "spell": "Spike Stones",
+          "save_dc_token": "14+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "(max(TL,1))",
+          "spell": "Telekinesis",
+          "save_dc_token": "15+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "(max(TL,1))",
+          "spell": "Telekinetic Sphere",
+          "save_dc_token": "18+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "(max(TL,1))",
+          "spell": "Wall of Force",
+          "save_dc_token": null
+        }
+      ],
+      "ability_keys": [
+        "Spine Dragon ~ Breath Weapon",
+        "Spine Dragon ~ Ray Deflection",
+        "Spine Dragon ~ Spines"
+      ],
+      "external_ability_refs": [
+        "Immunity to Sonic",
+        "Resistance to Cold",
+        "Resistance to Electricity",
+        "Resistance to Fire"
+      ],
+      "source_file": "iswg_races.lst",
+      "source_line": 15
+    }
+  ]
+}

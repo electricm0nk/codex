@@ -1,0 +1,34 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "inner_sea_faiths/spell_list/SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "inner_sea_faiths",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Codex-Named Unit (spell_inner_sea_faiths_isf_spells_lst_5)",
+      "name_pi_line": 5,
+      "school": "Transmutation",
+      "level": null,
+      "description": "You greatly magnify the target's ability to smell the presence of blood. The target is considered to have the scent universal monster ability, but only for purposes of detecting and pinpointing injured creatures (below full hit points). Creatures below half their full hit points or suffering bleed damage are considered strong scents for this ability."
+    },
+    {
+      "key": "Curse of Disgust (Besmaran)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "Target is sickened when viewing a trigger."
+    },
+    {
+      "key": "Geas (Lesser/Besmaran)",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": null,
+      "description": "A lesser geas places a magical command on a creature to carry out some service or to refrain from some action or course of activity, as desired by you."
+    }
+  ]
+}

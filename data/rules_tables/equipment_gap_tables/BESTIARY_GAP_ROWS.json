@@ -1,0 +1,43 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/BESTIARY_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "B1",
+      "key": "Rock (Small)",
+      "name": "Rock (Small)",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 50.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "B1",
+      "key": "Rock (Medium)",
+      "name": "Rock (Medium)",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 100.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "B1",
+      "key": "Poison (Violet Venom)",
+      "name": "Poison (Violet Venom)",
+      "category": "General",
+      "cost_gp": 800.0,
+      "weight_lbs": 0.0,
+      "description": "Injury; Fort DC 13; Freq. 1 minute (6); Effect 1d2 Str and 1d2 Con damage; Cure 1 save",
+      "name_pi_citation": null
+    }
+  ]
+}

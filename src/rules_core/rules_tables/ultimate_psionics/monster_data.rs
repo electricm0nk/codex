@@ -87,7 +87,7 @@
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
 /// Every ultimate_psionics monster stat block (21 rows).
-pub(super) static MONSTERS: &[MonsterStatBlock] = &[
+pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
     MonsterStatBlock {
         key: "Blue",
         name: "Blue",
@@ -511,7 +511,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
 ];
 
 /// Every ultimate_psionics monster-ability record (191 rows).
-pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
+pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Psionic Aptitude",
         name: "Psionic Aptitude",

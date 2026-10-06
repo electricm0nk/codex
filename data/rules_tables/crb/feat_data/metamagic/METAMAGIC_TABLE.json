@@ -1,0 +1,231 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/feat_data/metamagic/METAMAGIC_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Empower Spell",
+      "category": "Metamagic",
+      "name": "Empower Spell",
+      "description": "You can increase the power of your spells, causing them to deal more damage.",
+      "effect": null
+    },
+    {
+      "key": "Enlarge Spell",
+      "category": "Metamagic",
+      "name": "Enlarge Spell",
+      "description": "You can increase the range of your spells.",
+      "effect": null
+    },
+    {
+      "key": "Extend Spell",
+      "category": "Metamagic",
+      "name": "Extend Spell",
+      "description": "You can make your spells last twice as long.",
+      "effect": null
+    },
+    {
+      "key": "Heighten Spell",
+      "category": "Metamagic",
+      "name": "Heighten Spell",
+      "description": "You can cast spells as if they were a higher level.",
+      "effect": [
+        {
+          "qualifiers": [
+            "DC",
+            "FEATBONUS",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Maximize Spell",
+      "category": "Metamagic",
+      "name": "Maximize Spell",
+      "description": "Your spells have the maximum possible effect.",
+      "effect": null
+    },
+    {
+      "key": "Quicken Spell",
+      "category": "Metamagic",
+      "name": "Quicken Spell",
+      "description": "You can cast spells in the fraction of the normal time.",
+      "effect": null
+    },
+    {
+      "key": "Silent Spell",
+      "category": "Metamagic",
+      "name": "Silent Spell",
+      "description": "You can cast your spells without making any sound.",
+      "effect": null
+    },
+    {
+      "key": "Still Spell",
+      "category": "Metamagic",
+      "name": "Still Spell",
+      "description": "You can cast spells without moving.",
+      "effect": null
+    },
+    {
+      "key": "Widen Spell",
+      "category": "Metamagic",
+      "name": "Widen Spell",
+      "description": "You can cast your spells so that they occupy a larger space.",
+      "effect": null
+    },
+    {
+      "key": "Heighten Spell +2",
+      "category": "Metamagic",
+      "name": "Heighten Spell +2",
+      "description": null,
+      "effect": [
+        {
+          "qualifiers": [
+            "DC",
+            "FEATBONUS",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Heighten Spell +3",
+      "category": "Metamagic",
+      "name": "Heighten Spell +3",
+      "description": null,
+      "effect": [
+        {
+          "qualifiers": [
+            "DC",
+            "FEATBONUS",
+            "3"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Heighten Spell +4",
+      "category": "Metamagic",
+      "name": "Heighten Spell +4",
+      "description": null,
+      "effect": [
+        {
+          "qualifiers": [
+            "DC",
+            "FEATBONUS",
+            "4"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Heighten Spell +5",
+      "category": "Metamagic",
+      "name": "Heighten Spell +5",
+      "description": null,
+      "effect": [
+        {
+          "qualifiers": [
+            "DC",
+            "FEATBONUS",
+            "5"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Heighten Spell +6",
+      "category": "Metamagic",
+      "name": "Heighten Spell +6",
+      "description": null,
+      "effect": [
+        {
+          "qualifiers": [
+            "DC",
+            "FEATBONUS",
+            "6"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Heighten Spell +7",
+      "category": "Metamagic",
+      "name": "Heighten Spell +7",
+      "description": null,
+      "effect": [
+        {
+          "qualifiers": [
+            "DC",
+            "FEATBONUS",
+            "7"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Heighten Spell +8",
+      "category": "Metamagic",
+      "name": "Heighten Spell +8",
+      "description": null,
+      "effect": [
+        {
+          "qualifiers": [
+            "DC",
+            "FEATBONUS",
+            "8"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Heighten Spell +9",
+      "category": "Metamagic",
+      "name": "Heighten Spell +9",
+      "description": null,
+      "effect": [
+        {
+          "qualifiers": [
+            "DC",
+            "FEATBONUS",
+            "9"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    }
+  ]
+}

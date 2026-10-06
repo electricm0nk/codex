@@ -76,7 +76,9 @@
 //! record's real corpus identity (its `KEY:` token when present, else the
 //! leading field), matching every other table's own key/name split.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_psionics__equipment_tables__EquipmentCategory"))]
 pub enum EquipmentCategory {
     ArmsArmor,
     MagicItems,
@@ -91,7 +93,9 @@ impl EquipmentCategory {
     ];
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_psionics__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
     /// The record's `KEY:` token when present, else its own leading
     /// display field -- the corpus identity, distinct from `name` when
@@ -146,7 +150,7 @@ pub fn field_coverage_report() -> EquipmentFieldCoverage {
 
 /// Full UPsi equipment table: `up_equipment.lst`'s 326 real records
 /// (52 ArmsArmor + 274 MagicItems).
-const EQUIPMENT_TABLE: &[EquipmentTableEntry] = &[
+pub(crate) const EQUIPMENT_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "Astral Skin", category: EquipmentCategory::MagicItems, name: "Astral Skin", cost_gp: Some(0.0_f64), weight_lbs: Some(0.0_f64), description: None }, // up_equipment.lst:11
     EquipmentTableEntry { key: "Astral Armor", category: EquipmentCategory::ArmsArmor, name: "Astral Armor", cost_gp: Some(-150.0_f64), weight_lbs: Some(40.0_f64), description: None }, // up_equipment.lst:12
     EquipmentTableEntry { key: "Astral Juggernaut", category: EquipmentCategory::ArmsArmor, name: "Astral Juggernaut", cost_gp: Some(-150.0_f64), weight_lbs: Some(50.0_f64), description: None }, // up_equipment.lst:13
@@ -479,7 +483,7 @@ const EQUIPMENT_TABLE: &[EquipmentTableEntry] = &[
 /// standalone records, excluding the one `.MOD`-injected grant and the 113
 /// `VISIBLE:NO` `.COPY=` legacy-alias rows -- see this module's own doc
 /// comment.
-const EQUIPMODS_TABLE: &[EquipmentTableEntry] = &[
+pub(crate) const EQUIPMODS_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "Special Ability ~ Psionic Blade ~ Weapon", category: EquipmentCategory::Equipmods, name: "Psionic Blade", cost_gp: Some(0.0_f64), weight_lbs: None, description: None }, // up_equipmods.lst:12
     EquipmentTableEntry { key: "Material ~ Crystal / Mundane", category: EquipmentCategory::Equipmods, name: "Crystal (Mundane)", cost_gp: Some(0.0_f64), weight_lbs: None, description: Some("25hp/inch and 8 hardness") }, // up_equipmods.lst:17
     EquipmentTableEntry { key: "Material ~ Crystal / Deep", category: EquipmentCategory::Equipmods, name: "Crystal (Deep)", cost_gp: Some(0.0_f64), weight_lbs: None, description: Some("30hp/inch and 10 hardness;Weapon may be charged with 2 Psionic Power Points for +2d6 damage") }, // up_equipmods.lst:18

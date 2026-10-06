@@ -1,0 +1,7 @@
+stage	status
+1-root-full	exit=101
+2-ingest	exit=0
+3-desktop	exit=0
+4-pf-hash	exit=0
+5-verify-stages	exit=1
+ALL_DONE

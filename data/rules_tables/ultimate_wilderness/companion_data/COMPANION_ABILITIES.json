@@ -1,0 +1,4199 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_wilderness/companion_data/COMPANION_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_wilderness",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion Advancement ~ Anglerfish",
+      "name": "Companion Advancement (Anglerfish)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Anglerfish)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 16
+    },
+    {
+      "key": "Companion Advancement ~ Archaeopteryx",
+      "name": "Companion Advancement (Archaeopteryx)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Archaeopteryx)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 17
+    },
+    {
+      "key": "Companion Advancement ~ Armorfish",
+      "name": "Companion Advancement (Armorfish)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Armorfish)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 18
+    },
+    {
+      "key": "Companion Advancement ~ Bustard",
+      "name": "Companion Advancement (Bustard)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Bustard)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 19
+    },
+    {
+      "key": "Companion Advancement ~ Capybara",
+      "name": "Companion Advancement (Capybara)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Capybara)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 20
+    },
+    {
+      "key": "Companion Advancement ~ Cattle",
+      "name": "Companion Advancement (Cattle)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Cattle)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 21
+    },
+    {
+      "key": "Companion Advancement ~ Chimpanzee",
+      "name": "Companion Advancement (Chimpanzee)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Chimpanzee)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 22
+    },
+    {
+      "key": "Companion Advancement ~ Eohippus",
+      "name": "Companion Advancement (Eohippus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Eohippus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 23
+    },
+    {
+      "key": "Companion Advancement ~ Falcon",
+      "name": "Companion Advancement (Falcon)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Falcon)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 24
+    },
+    {
+      "key": "Companion Advancement ~ Frilled Lizard (Giant)",
+      "name": "Companion Advancement (Frilled Lizard (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Frilled Lizard (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 25
+    },
+    {
+      "key": "Companion Advancement ~ Grizzly Bear",
+      "name": "Companion Advancement (Grizzly Bear)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Grizzly Bear)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 26
+    },
+    {
+      "key": "Companion Advancement ~ Hammerhead Shark",
+      "name": "Companion Advancement (Hammerhead Shark)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -6
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Hammerhead Shark)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 27
+    },
+    {
+      "key": "Companion Advancement ~ Llama",
+      "name": "Companion Advancement (Llama)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Llama)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 28
+    },
+    {
+      "key": "Companion Advancement ~ Marsupial Devil",
+      "name": "Companion Advancement (Marsupial Devil)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Marsupial Devil)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 29
+    },
+    {
+      "key": "Companion Advancement ~ Marsupial Lion",
+      "name": "Companion Advancement (Marsupial Lion)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Marsupial Lion)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 30
+    },
+    {
+      "key": "Companion Advancement ~ Mole (Giant)",
+      "name": "Companion Advancement (Mole (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Mole (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 31
+    },
+    {
+      "key": "Companion Advancement ~ Moose",
+      "name": "Companion Advancement (Moose)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Moose)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 32
+    },
+    {
+      "key": "Companion Advancement ~ Ornithomimosaur",
+      "name": "Companion Advancement (Ornithomimosaur)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Ornithomimosaur)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 33
+    },
+    {
+      "key": "Companion Advancement ~ Owl (Giant)",
+      "name": "Companion Advancement (Owl (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Owl (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 34
+    },
+    {
+      "key": "Companion Advancement ~ Panda",
+      "name": "Companion Advancement (Panda)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Panda)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 35
+    },
+    {
+      "key": "Companion Advancement ~ Porcupine (Giant)",
+      "name": "Companion Advancement (Porcupine (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Porcupine (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 36
+    },
+    {
+      "key": "Companion Advancement ~ Prionosuchus",
+      "name": "Companion Advancement (Prionosuchus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Prionosuchus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 37
+    },
+    {
+      "key": "Companion Advancement ~ Reef Snake",
+      "name": "Companion Advancement (Reef Snake)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Reef Snake)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 38
+    },
+    {
+      "key": "Companion Advancement ~ Reindeer",
+      "name": "Companion Advancement (Reindeer)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Reindeer)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 39
+    },
+    {
+      "key": "Companion Advancement ~ Saber-Toothed Cat",
+      "name": "Companion Advancement (Saber-Toothed Cat)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Saber-Toothed Cat)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 40
+    },
+    {
+      "key": "Companion Advancement ~ Salamander (Giant)",
+      "name": "Companion Advancement (Salamander (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Salamander (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 41
+    },
+    {
+      "key": "Companion Advancement ~ Skunk (Giant)",
+      "name": "Companion Advancement (Skunk (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Skunk (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 42
+    },
+    {
+      "key": "Companion Advancement ~ Spitting Cobra",
+      "name": "Companion Advancement (Spitting Cobra)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Spitting Cobra)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 43
+    },
+    {
+      "key": "Companion Advancement ~ Squid (Giant)",
+      "name": "Companion Advancement (Squid (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Squid (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 44
+    },
+    {
+      "key": "Companion Advancement ~ Wolfdog",
+      "name": "Companion Advancement (Wolfdog)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Wolfdog)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 45
+    },
+    {
+      "key": "Companion Advancement ~ Yak",
+      "name": "Companion Advancement (Yak)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Yak)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 46
+    },
+    {
+      "key": "Companion Advancement ~ Zebra",
+      "name": "Companion Advancement (Zebra)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Zebra)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 47
+    },
+    {
+      "key": "Companion Advancement ~ Corpse-Eater Fungus",
+      "name": "Companion Advancement (Corpse-Eater Fungus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Corpse-Eater Fungus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 52
+    },
+    {
+      "key": "Companion Advancement ~ Creeping Puffball",
+      "name": "Companion Advancement (Creeping Puffball)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Creeping Puffball)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 53
+    },
+    {
+      "key": "Companion Advancement ~ Gulper Plant",
+      "name": "Companion Advancement (Gulper Plant)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Gulper Plant)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 54
+    },
+    {
+      "key": "Companion Advancement ~ Hunting Cactus",
+      "name": "Companion Advancement (Hunting Cactus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "CON",
+          "amount": -2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Hunting Cactus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 55
+    },
+    {
+      "key": "Companion Advancement ~ Rash Creeper",
+      "name": "Companion Advancement (Rash Creeper)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Rash Creeper)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 56
+    },
+    {
+      "key": "Companion Advancement ~ Slithering Sundew",
+      "name": "Companion Advancement (Slithering Sundew)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Slithering Sundew)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 57
+    },
+    {
+      "key": "Companion Advancement ~ Snapping Flytrap",
+      "name": "Companion Advancement (Snapping Flytrap)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Snapping Flytrap)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 58
+    },
+    {
+      "key": "Companion Advancement ~ Sniper Cactus",
+      "name": "Companion Advancement (Sniper Cactus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Sniper Cactus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 59
+    },
+    {
+      "key": "Companion Advancement ~ Assassin Bug (Giant)",
+      "name": "Companion Advancement (Assassin Bug (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Assassin Bug (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 64
+    },
+    {
+      "key": "Companion Advancement ~ Caterpillar (Giant)",
+      "name": "Companion Advancement (Caterpillar (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Caterpillar (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 65
+    },
+    {
+      "key": "Companion Advancement ~ Cockroach (Giant)",
+      "name": "Companion Advancement (Cockroach (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Cockroach (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 66
+    },
+    {
+      "key": "Companion Advancement ~ Dragonfly (Giant)",
+      "name": "Companion Advancement (Dragonfly (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Dragonfly (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 67
+    },
+    {
+      "key": "Companion Advancement ~ Eurypterid",
+      "name": "Companion Advancement (Eurypterid)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Eurypterid)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 68
+    },
+    {
+      "key": "Companion Advancement ~ Locust (Giant)",
+      "name": "Companion Advancement (Locust (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Locust (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 69
+    },
+    {
+      "key": "Companion Advancement ~ Mantis Shrimp (Giant)",
+      "name": "Companion Advancement (Mantis Shrimp (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Mantis Shrimp (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 70
+    },
+    {
+      "key": "Companion Advancement ~ Mosquito (Giant)",
+      "name": "Companion Advancement (Mosquito (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Mosquito (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 71
+    },
+    {
+      "key": "Companion Advancement ~ Solifugid (Giant)",
+      "name": "Companion Advancement (Solifugid (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Solifugid (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 72
+    },
+    {
+      "key": "Companion Advancement ~ Spider (Web Tyrant)",
+      "name": "Companion Advancement (Spider (Web Tyrant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Spider (Web Tyrant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 73
+    },
+    {
+      "key": "Companion Advancement ~ Termite (Giant)",
+      "name": "Companion Advancement (Termite (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Termite (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 74
+    },
+    {
+      "key": "Companion Advancement ~ Whiptail Centipede (Giant)",
+      "name": "Companion Advancement (Whiptail Centipede (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Whiptail Centipede (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 75
+    },
+    {
+      "key": "Anglerfish ~ Lure",
+      "name": "Lure",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuaility",
+        "Extraordinary",
+        "AnglerfishRacialTrait"
+      ],
+      "description": "Sheds light as per a candle.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.178",
+      "owners": [
+        "Companion (Anglerfish)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 194
+    },
+    {
+      "key": "Armadillo ~ Natural Diver",
+      "name": "Natural Diver",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Extraordinary",
+        "SpecialQuality",
+        "ArmadilloRacialTrait"
+      ],
+      "description": "Armadillos can hold their breath underwater for up to 6 minutes.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.192",
+      "owners": [
+        "Familiar (Armadillo)",
+        "Armadillo"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 197
+    },
+    {
+      "key": "Armadillo ~ Protective Ball",
+      "name": "Protective Ball",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Extraordinary",
+        "SpecialQuality",
+        "ArmadilloRacialTrait"
+      ],
+      "description": "Some armadillos can roll up into a ball, increasing their natural armor bonus to +3 but decreasing their speed to 0. Unrolling is a move action.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.192",
+      "owners": [
+        "Familiar (Armadillo)",
+        "Armadillo"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 198
+    },
+    {
+      "key": "Assassin Bug (Giant) ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "GiantAssassinBugRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [
+        {
+          "text": "Frequency 1 round [4]; effect 1d2 Dex; cure 1 save; Fort DC %1",
+          "variables": [
+            "10+HD/2+CON"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "text": "Frequency 1 round [4]; effect 1d2 Dex; cure 2 saves; Fort DC %1",
+          "variables": [
+            "10+HD/2+CON"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARGTEQ",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "stat_adjustments": [],
+      "source_page": "p.184",
+      "owners": [
+        "Companion (Assassin Bug (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 201
+    },
+    {
+      "key": "Assassin Bug (Giant) ~ Poison Stream",
+      "name": "Poison Stream",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "GiantAssassinBugRacialTrait"
+      ],
+      "description": "Exposes all creatures in a 15-ft. line to poison, Reflex save negates; Dex-based DC; usable every 1d4 rounds as a standard action",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.184",
+      "owners": [
+        "Companion (Assassin Bug (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 202
+    },
+    {
+      "key": "Caterpillar (Giant) ~ Bristles",
+      "name": "Bristles",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "GiantCaterpillarRacialTrait"
+      ],
+      "description": "A creature attacking the giant caterpillar with a natural attack or non-reach melee weapon must succeed at a Reflex save or take damage as if the caterpillar had struck the creature with its bristles attack; Reflex DC %1",
+      "description_variables": [
+        "12+HD/2+DEX"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.184",
+      "owners": [
+        "Companion (Caterpillar (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 205
+    },
+    {
+      "key": "Caterpillar (Giant) ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "GiantCaterpillarRacialTrait"
+      ],
+      "description": "Frequency 1 round [4]; effect 1d2 Str damage; cure 1 save; Fort DC %1",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.184",
+      "owners": [
+        "Companion (Caterpillar (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 206
+    },
+    {
+      "key": "Chicken ~ Drift",
+      "name": "Drift",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "ChickenRacialTrait"
+      ],
+      "description": "A chicken flies in short bursts, and can't use its fly speed to hover. When it flies, it must end its move action by landing or perching on a solid surface.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.112",
+      "owners": [
+        "Familiar (Chicken)",
+        "Chicken"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 209
+    },
+    {
+      "key": "Corpse-Eater Fungus ~ Natural Attacks",
+      "name": "Natural Attacks",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "CorpseEaterFungusRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.182",
+      "owners": [
+        "Companion (Corpse-Eater Fungus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 212
+    },
+    {
+      "key": "Creeping Puffball ~ Defensive Puff",
+      "name": "Defensive Puff",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuaility",
+        "Extraordinary",
+        "CreepingPuffballRacialTrait"
+      ],
+      "description": "1/minute as an immediate action when hit, the fungus can expose one adjacent creature to its poison",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.182",
+      "owners": [
+        "Companion (Creeping Puffball)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 215
+    },
+    {
+      "key": "Creeping Puffball ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "CreepingPuffballRacialTrait"
+      ],
+      "description": "Frequency 1 round [4]; effect 1d2 Wis damage and dazzled; cure 1 save; Fort DC %1",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.182",
+      "owners": [
+        "Companion (Creeping Puffball)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 216
+    },
+    {
+      "key": "Dolphin (Popoto) ~ Hold Breath",
+      "name": "Hold Breath",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "PopotoDolphinRacialTrait"
+      ],
+      "description": "A popoto can hold its breath for %1 minutes before it risks drowning.",
+      "description_variables": [
+        "CONSCORE*6"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.194",
+      "owners": [
+        "Dolphin (Popoto)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 219
+    },
+    {
+      "key": "Dwarf Caiman ~ Hold Breath",
+      "name": "Hold Breath",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "DwarfCaimanRacialTrait"
+      ],
+      "description": "A dwarf caiman can hold its breath for %1 rounds before it risks drowning.",
+      "description_variables": [
+        "4*CONSCORE"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.195",
+      "owners": [
+        "Familiar (Dwarf Caiman)",
+        "Dwarf Caiman"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 222
+    },
+    {
+      "key": "Dwarf Caiman ~ Sprint",
+      "name": "Sprint",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "DwarfCaimanRacialTrait"
+      ],
+      "description": "Once per minute, a dwarf caiman may sprint, increasing its land speed to 20 feet for 1 round.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.195",
+      "owners": [
+        "Familiar (Dwarf Caiman)",
+        "Dwarf Caiman"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 223
+    },
+    {
+      "key": "Dweomer Cap ~ Arcanophage",
+      "name": "Arcanophage",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialQuality",
+        "Supernatural",
+        "DweomerCapRacialTrait"
+      ],
+      "description": "When a dweomer cap succeeds at a saving throw against a spell, but not a spell-like ability, it gains fast healing 1 for a number of rounds equal to the spell's level.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.195",
+      "owners": [
+        "Familiar (Dweomer Cap)",
+        "Dweomer Cap"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 226
+    },
+    {
+      "key": "Dweomer Cap ~ Aura Luminescence",
+      "name": "Aura Luminescence",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "DweomerCapRacialTrait",
+        "Aura"
+      ],
+      "description": "A dweomer cap naturally emits dim light in a 10-foot radius. When in contact with a creature or object that has a faint or stronger magical aura, a dweomer cap's light shimmers perceptibly, changing its hue and pattern. A dweomer cap can suppress or resume its luminescence as a standard action, though it has reason to do so only when serving as a familiar and ordered by its master to do so.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.195",
+      "owners": [
+        "Familiar (Dweomer Cap)",
+        "Dweomer Cap"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 227
+    },
+    {
+      "key": "Dweomer Cap ~ Resistant to Spells",
+      "name": "Resistant to Spells",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "DweomerCapRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.195",
+      "owners": [
+        "Familiar (Dweomer Cap)",
+        "Dweomer Cap"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 228
+    },
+    {
+      "key": "Eurypterid ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "EurypteridRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [
+        {
+          "text": "Frequency 1 round [4]; effect 1 Con damage; cure 1 save; Fort DC %1",
+          "variables": [
+            "10+HD/2+CON"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "text": "Frequency 1 round [6]; effect 1d2 Con damage; cure 1 save; Fort DC %1",
+          "variables": [
+            "10+HD/2+CON"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARGTEQ",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "stat_adjustments": [],
+      "source_page": "p.184",
+      "owners": [
+        "Companion (Eurypterid)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 231
+    },
+    {
+      "key": "Fire Salamander ~ Skin Secretions",
+      "name": "Skin Secretions",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "FireSalamanderRacialTrait"
+      ],
+      "description": "A creature that strikes a fire salamander with an unarmed strike or natural weapon exposes itself to the salamander's toxic skin and must immediately succeed at a DC %1 Fortitude save to resist being sickened for 1 round. The secretions also make the salamander difficult to grab, giving it a +4 racial bonus on Escape Artist checks.",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.196",
+      "owners": [
+        "Familiar (Fire Salamander)",
+        "Fire Salamander"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 234
+    },
+    {
+      "key": "Flowering Lattice ~ Bountiful Fruits",
+      "name": "Bountiful Fruits",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "FloweringLatticeRacialTrait"
+      ],
+      "description": "Once per week, a flowering lattice produces a handful of small fruits or berries that remain ripe for 1 week. Eating all of the fruit takes 1 minute and affects the eater as if she had consumed a berry affected by goodberry.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.196",
+      "owners": [
+        "Familiar (Flowering Lattice)",
+        "Flowering Lattice"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 237
+    },
+    {
+      "key": "Flowering Lattice ~ Pollen",
+      "name": "Pollen",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "FloweringLatticeRacialTrait"
+      ],
+      "description": "Once every 1d4 rounds, a flowering lattice can expel a cloud of pollen in a 10-foot cone. Creatures in the area are dazzled for 2 rounds (Fortitude DC %1 negates). If a creature currently dazzled by the pollen is affected again, it is blinded for 1 round (Fortitude DC %1 negates).",
+      "description_variables": [
+        "12+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.196",
+      "owners": [
+        "Familiar (Flowering Lattice)",
+        "Flowering Lattice"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 238
+    },
+    {
+      "key": "Horned Lizard ~ Blood Squirt",
+      "name": "Blood Squirt",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "HornedLizardRacialTrait"
+      ],
+      "description": "Once per day as a standard action that doesn't provoke attacks of opportunity, a horned lizard can squirt a 5-foot-long stream of blood from the corners of its eyes. The animal's blood contains noxious chemicals, and a creature hit by the blood must succeed at a DC %1 Fortitude save or be sickened for 1d4 rounds.",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.197",
+      "owners": [
+        "Familiar (Horned Lizard)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 241
+    },
+    {
+      "key": "Horned Lizard ~ Camouflage",
+      "name": "Camouflage",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "HornedLizardRacialTrait"
+      ],
+      "description": "While in desert terrain, a horned lizard can use the Stealth skill to hide even if the terrain doesn't grant cover or concealment.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.197",
+      "owners": [
+        "Familiar (Horned Lizard)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 242
+    },
+    {
+      "key": "Horned Lizard ~ Puff Up",
+      "name": "Puff Up",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "HornedLizardRacialTrait"
+      ],
+      "description": "When taking the total defense action, a horned lizard puffs up its body, appearing larger and more horned and gaining an additional +4 bonus to CMD against grapple attempts.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.197",
+      "owners": [
+        "Familiar (Horned Lizard)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 243
+    },
+    {
+      "key": "Hunting Cactus ~ Needles",
+      "name": "Needles",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "HuntingCactusRacialTrait"
+      ],
+      "description": "A creature grappling a hunting cactus or attacking it with a natural attack or unarmed strike takes 1d4 points of piercing damage",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.183",
+      "owners": [
+        "Companion (Hunting Cactus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 246
+    },
+    {
+      "key": "Ioun Wyrd ~ Ioun Affinity",
+      "name": "Ioun Affinity",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialQuality",
+        "Supernatural",
+        "IounWyrdRacialTrait"
+      ],
+      "description": "An ioun wyrd may integrate %1 ioun stones into its body. Because an ioun wyrd sees all ioun stones as equal and gains no benefits from them, the wyrd's ioun stones can be swapped out by any creature the wyrd trusts.",
+      "description_variables": [
+        "1+HD/2"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.197",
+      "owners": [
+        "Familiar (Ioun Wyrd)",
+        "Ioun Wyrd"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 249
+    },
+    {
+      "key": "Ioun Wyrd ~ Share Iouns",
+      "name": "Share Iouns",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialQuality",
+        "Supernatural",
+        "IounWyrdRacialTrait"
+      ],
+      "description": "A character with an ioun wyrd familiar gains the benefits of its ioun stones as long as he's within 30 feet of the ioun wyrd.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.197",
+      "owners": [
+        "Familiar (Ioun Wyrd)",
+        "Ioun Wyrd"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 250
+    },
+    {
+      "key": "Kakapo ~ Glide",
+      "name": "Glide",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "KakapoRacialTrait"
+      ],
+      "description": "Though it cannot fly, a kakapo can spread its wings midfall to glide safely to the ground without taking damage. For every 10 feet it falls, a kakapo can move 5 feet horizontally in midair. For instance, a kakapo falling a vertical distance of 20 feet can move 10 feet horizontally.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.198",
+      "owners": [
+        "Familiar (Kakapo)",
+        "Kakapo"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 256
+    },
+    {
+      "key": "Lamprey ~ Blood Drain",
+      "name": "Blood Drain",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "LampreyRacialTrait"
+      ],
+      "description": "A Lamprey drains blood at the end of its turn if it is attached to a foe, inflicting 1 point of Strength damage.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.199",
+      "owners": [
+        "Familiar (Lamprey)",
+        "Lamprey"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 259
+    },
+    {
+      "key": "Leopard Slug ~ Slime Strand",
+      "name": "Slime Strand",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "LeopardSlugRacialTrait"
+      ],
+      "description": "A leopard slug can turn its mucus into a 30-foot-long strand, much like a spider's silk. It can hang from this strand indefinitely, and lower itself safely at a rate of 5 feet per round. It can climb back up the strand at the same rate. Once the slug breaks contact with the strand, the mucus disintegrates in 1d4 rounds.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.200",
+      "owners": [
+        "Familiar (Leopard Slug)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 262
+    },
+    {
+      "key": "Leopard Slug ~ Suction",
+      "name": "Suction",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "LeopardSlugRacialTrait"
+      ],
+      "description": "A leopard slug secretes sticky mucus, which allows it to apply its 10-foot climb speed to any surface, even sheer walls and ceilings. Once attached to a surface, it has no chance of falling off, unless it's grappled and actively peeled away.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.200",
+      "owners": [
+        "Familiar (Leopard Slug)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 263
+    },
+    {
+      "key": "Locust (Giant) ~ Leap",
+      "name": "Leap",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuaility",
+        "Extraordinary",
+        "GiantLocustRacialTrait"
+      ],
+      "description": "A giant locust can take 10 on Acrobatics checks to jump, even when distracted or threatened.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.185",
+      "owners": [
+        "Companion (Locust (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 266
+    },
+    {
+      "key": "Locust (Giant) ~ Spit Goo",
+      "name": "Spit Goo",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "GiantLocustRacialTrait"
+      ],
+      "description": "Ranged touch attack, 30-foot range, sickened for 1 round.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.185",
+      "owners": [
+        "Companion (Locust (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 267
+    },
+    {
+      "key": "Locust (Giant) ~ Voracious",
+      "name": "Voracious",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "GiantLocustRacialTrait"
+      ],
+      "description": "A giant locust bite attack deals double damage to creatures with the plant subtype and to objects made of paper, wood, or other plant materials.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.185",
+      "owners": [
+        "Companion (Locust (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 268
+    },
+    {
+      "key": "Locust (Sawleg) ~ Leap",
+      "name": "Leap",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuaility",
+        "Extraordinary",
+        "SawlegLocustRacialTrait"
+      ],
+      "description": "A sawleg locust can take 10 on Acrobatics checks to jump even if distracted or in danger.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.205",
+      "owners": [
+        "Locust (Sawleg)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 271
+    },
+    {
+      "key": "Locust (Sawleg) ~ Voracious",
+      "name": "Voracious",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "SawlegLocustRacialTrait"
+      ],
+      "description": "A sawleg locust bite attack deals double damage to creatures with the plant subtype and to objects made of paper, wood, or other plant materials.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.205",
+      "owners": [
+        "Locust (Sawleg)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 272
+    },
+    {
+      "key": "Marine Iguana ~ Hold Breath",
+      "name": "Hold Breath",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "MarineIguanaRacialTrait"
+      ],
+      "description": "A marine iguana can hold its breath for %1 rounds before it risks drowning.",
+      "description_variables": [
+        "4*CONSCORE"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.190",
+      "owners": [
+        "Companion (Reef Snake)",
+        "Companion (Cockroach (Giant))",
+        "Familiar (Cockroach)",
+        "Familiar (Mole)",
+        "Familiar (Penguin)",
+        "Familiar (Seal)",
+        "Cockroach",
+        "Mole",
+        "Penguin",
+        "Seal",
+        "Familiar (Marine Iguana)",
+        "Marine Iguana"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 278
+    },
+    {
+      "key": "Meerkat ~ Immunity to Scorpion Venom",
+      "name": "Immunity to Scorpion Venom",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "MeerkatRacialTrait"
+      ],
+      "description": "Meerkats are immune to the poison of all scorpions.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.200",
+      "owners": [
+        "Familiar (Meerkat)",
+        "Meerkat"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 281
+    },
+    {
+      "key": "Meerkat ~ Mob",
+      "name": "Mob",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "MeerkatRacialTrait"
+      ],
+      "description": "If two meerkats in the same square attack the same foe, they are considered to be flanking that foe as if they were in two opposite squares.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.200",
+      "owners": [
+        "Familiar (Meerkat)",
+        "Meerkat"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 282
+    },
+    {
+      "key": "Mantis Shrimp (Giant) ~ Speedy Pincers",
+      "name": "Speedy Pincers",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "GiantMantisShrimpRacialTrait"
+      ],
+      "description": "A giant mantis shrimp can make iterative attacks with one of its pincer attacks.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.185",
+      "owners": [
+        "Companion (Mantis Shrimp (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 285
+    },
+    {
+      "key": "Mongoose ~ Poison Resistance",
+      "name": "Poison Resistance",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "MongooseRacialTrait"
+      ],
+      "description": "A Mongoose has a +4 bonus on saving throws against poison from snakes.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.190",
+      "owners": [
+        "Familiar (Mongoose)",
+        "Mongoose"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 288
+    },
+    {
+      "key": "Ornithomimosaur ~ Sprint",
+      "name": "Sprint",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuaility",
+        "Extraordinary",
+        "OrnithomimosaurRacialTrait"
+      ],
+      "description": "Once per hour, a ornithomimosaur can move at 10 times its normal speed (400 feet) when it makes a charge.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.180",
+      "owners": [
+        "Companion (Ornithomimosaur)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 291
+    },
+    {
+      "key": "Panda ~ Powerful Bite",
+      "name": "Powerful Bite",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Extraordinary",
+        "SpecialQuality",
+        "PandaRacialTrait"
+      ],
+      "description": "A panda applies twice its Strength bonus to bite damage.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Panda)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 294
+    },
+    {
+      "key": "Peafowl ~ Drift",
+      "name": "Drift",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "PeafowlRacialTrait"
+      ],
+      "description": "A Peafowl flies in short bursts, and can't use its fly speed to hover. When it flies, a Peafowl must end its move action by landing or perching on a solid surface.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.201",
+      "owners": [
+        "Familiar (Peafowl)",
+        "Peafowl"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 297
+    },
+    {
+      "key": "Penguin ~ Toboggan",
+      "name": "Toboggan",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "PenguinRacialTrait"
+      ],
+      "description": "On snow- or ice-covered terrain, a penguin can move at a rate of 30 feet by sliding on its belly rather than walking.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Familiar (Penguin)",
+        "Penguin"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 300
+    },
+    {
+      "key": "Petrifern ~ Self-Petrification",
+      "name": "Self-Petrification",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "PetrifernRacialTrait"
+      ],
+      "description": "A petrifern can petrify itself as a standard action in order to defend itself from predators. When it does so, the petrifern's natural armor bonus to AC increases by 5, it gains resistance 10 to cold and fire, and it can take 20 on Stealth checks to appear as a sprout or fallen tree branch. While petrified, the petrifern can't move or take any actions. A petrifern can remain petrified indefinitely, and it can cease its petrification as a standard action.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Familiar (Petrifern)",
+        "Petrifern"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 303
+    },
+    {
+      "key": "Petrifern ~ Toxic Secretion",
+      "name": "Toxic Secretion",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "PetrifernRacialTrait"
+      ],
+      "description": "Petriferns secrete a bitter toxin meant to make them distasteful to predators. Once per day when a creature touches a petrifern, the plant can release its toxin, causing the attacker to become sickened for 1d4 rounds if it fails a DC %1 Fortitude saving throw.",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Familiar (Petrifern)",
+        "Petrifern"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 304
+    },
+    {
+      "key": "Platypus ~ Electrolocation",
+      "name": "Electrolocation",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Extraordinary",
+        "SpecialQuality",
+        "PlatypusRacialTrait"
+      ],
+      "description": "While underwater, platypuses can sense the tiny electrical currents that trigger muscle movement. This allows them to locate living prey and distinguish it from inanimate objects. Treat electrolocation as blindsight 30 feet, but platypuses can sense only living creatures, and it functions only underwater.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.203",
+      "owners": [
+        "Familiar (Platypus)",
+        "Platypus"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 307
+    },
+    {
+      "key": "Platypus ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Extraordinary",
+        "SpecialQuality",
+        "PlatypusRacialTrait"
+      ],
+      "description": "Spur-injury; save Fort DC %1; frequency 1/round for 4 rounds; effect 1 nonlethal damage; cure 1 save.",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.203",
+      "owners": [
+        "Familiar (Platypus)",
+        "Platypus"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 308
+    },
+    {
+      "key": "Pufferfish ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "PufferfishRacialTrait"
+      ],
+      "description": "Spines-injury; save Fort DC %1; frequency once; initial effect staggered for 1 round; secondary effect 1 Str damage; cure 2 consecutive saves. If certain portions of the pufferfish's body are eaten, the poison's effect is instead 1d4 points of Constitution damage.",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.204",
+      "owners": [
+        "Familiar (Pufferfish)",
+        "Pufferfish"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 314
+    },
+    {
+      "key": "Pufferfish ~ Spines",
+      "name": "Spines",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "PufferfishRacialTrait"
+      ],
+      "description": "Pufferfish aren't equipped to attack other creatures, but foes that strike a pufferfish with an unarmed strike or a natural attack take 1 point of piercing damage from the fish's toxic spines, and must immediately attempt a saving throw against the pufferfish's poison.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.204",
+      "owners": [
+        "Familiar (Pufferfish)",
+        "Pufferfish"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 315
+    },
+    {
+      "key": "Rash Creeper ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "RashCreeperRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [
+        {
+          "text": "Frequency 1 round [4]; effect 1 Dex damage and sickened for 1 round; cure 1 save; Fort DC %1",
+          "variables": [
+            "10+HD/2+CON"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "text": "Frequency 1 round [4]; effect 1d2 Dex damage and sickened for 1 round; cure 2 saves; Fort DC %1",
+          "variables": [
+            "10+HD/2+CON"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARGTEQ",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "stat_adjustments": [],
+      "source_page": "p.183",
+      "owners": [
+        "Companion (Rash Creeper)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 318
+    },
+    {
+      "key": "Ravenous Tumbleweed ~ Hurtling Charge",
+      "name": "Hurtling Charge",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "RavenousTumbleweedRacialTrait"
+      ],
+      "description": "A ravenous tumbleweed that travels at least 20 feet as part of a charge action does not provoke an attack of opportunity when it enters an opponent's space to make a melee attack.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.205",
+      "owners": [
+        "Familiar (Ravenous Tumbleweed)",
+        "Ravenous Tumbleweed"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 321
+    },
+    {
+      "key": "Ravenous Tumbleweed ~ Wind-Borne",
+      "name": "Wind-Borne",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "RavenousTumbleweedRacialTrait"
+      ],
+      "description": "While in an area of moderate wind (11-20 mph), a ravenous tumbleweed's speed increases by 10 feet when it moves in the direction of the wind. In an area of at least strong wind (21+ mph), its speed instead increases by 20 feet when it moves in the direction of the wind, and it gains a +2 dodge bonus to its AC against attacks of opportunity on any round in which it moves in that direction.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.205",
+      "owners": [
+        "Familiar (Ravenous Tumbleweed)",
+        "Ravenous Tumbleweed"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 322
+    },
+    {
+      "key": "Ravenous Tumbleweed ~ Master's Bonus",
+      "name": "Master's Bonus",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "A ravenous tumbleweed's master gains a 10-foot bonus to speed when using the charge, run, or withdraw actions",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.205",
+      "owners": [
+        "Familiar (Ravenous Tumbleweed)",
+        "Ravenous Tumbleweed"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 323
+    },
+    {
+      "key": "Razor Fern ~ Shielding Frond",
+      "name": "Shielding Frond",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "RazorFernRacialTrait"
+      ],
+      "description": "A razor fern can deflect incoming attacks as a move action, gaining it a +2 shield bonus to its AC until the beginning of its next turn.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.205",
+      "owners": [
+        "Familiar (Razor Fern)",
+        "Razor Fern"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 326
+    },
+    {
+      "key": "Reef Snake ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "ReefSnakeRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [
+        {
+          "text": "Bite - frequency 1 round [6]; effect 1 Str damage; cure 1 save; Fort DC %1",
+          "variables": [
+            "10+HD/2+CON"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "text": "Bite - frequency 1 round [6]; effect 1d2 Str damage; cure 2 saves; Fort DC %1",
+          "variables": [
+            "10+HD/2+CON"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARGTEQ",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "stat_adjustments": [],
+      "source_page": "p.181",
+      "owners": [
+        "Companion (Reef Snake)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 329
+    },
+    {
+      "key": "Reindeer ~ Snow Adaptation",
+      "name": "Snow Adaptation",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "ReindeerRacialTrait"
+      ],
+      "description": "Ignore difficult terrain from ice and snow.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.181",
+      "owners": [
+        "Companion (Reindeer)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 332
+    },
+    {
+      "key": "Rhamphorhynchus ~ Sudden Swoop",
+      "name": "Sudden Swoop",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "RhamphorhynchusRacialTrait"
+      ],
+      "description": "If a rhamphorhynchus makes a charge attack while flying, it does not provoke attacks of opportunity when it enters an opponent's space to make a melee attack. It also gains a +2 bonus on damage rolls with its bite attack when it makes a sudden swoop.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.204",
+      "owners": [
+        "Familiar (Rhamphorhynchus)",
+        "Rhamphorhynchus"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 335
+    },
+    {
+      "key": "Saber-Toothed Cat ~ Saber-Toothed Bite",
+      "name": "Saber-Toothed Bite",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "SaberToothedCatRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [
+        {
+          "text": "1d10 bite attack, only on a grapple check to deal damage.",
+          "variables": [],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "text": "2d8 bite attack, only on a grapple check to deal damage.",
+          "variables": [],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARGTEQ",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "stat_adjustments": [],
+      "source_page": "p.181",
+      "owners": [
+        "Companion (Saber-Toothed Cat)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 338
+    },
+    {
+      "key": "Skunk ~ Musk",
+      "name": "Musk",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "SkunkRacialTrait",
+        "SkunkRacialAbility"
+      ],
+      "description": "Up to twice per day, a skunk can spray a stream of noxious musk at a single target within 10 feet as a standard action. With a successful ranged touch attack, the creature struck by this spray must make a DC %1 Fortitude save or be nauseated for 1d4 rounds and then sickened for 1d4 minutes by the horrific stench. A successful save reduces the effect to only 1d4 rounds of being sickened. A creature cannot use the scent ability as long as it is affected by this musk.",
+      "description_variables": [
+        "12+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.191",
+      "owners": [
+        "Familiar (Skunk)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 341
+    },
+    {
+      "key": "Skunk (Giant) ~ Spray",
+      "name": "Spray",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "GiantSkunkRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [
+        {
+          "text": "Ranged touch attack, 30-ft. range, usable 1/day; musk (Fort save or sickened for 1d6 rounds; Fort DC %1)",
+          "variables": [
+            "10+HD/2+CON"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "text": "Ranged touch attack, 30-ft. range, usable 2/day; musk (Fort save or nauseated for 1d3 rounds; Fort DC %1)",
+          "variables": [
+            "10+HD/2+CON"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARGTEQ",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "stat_adjustments": [],
+      "source_page": "p.181",
+      "owners": [
+        "Companion (Skunk (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 344
+    },
+    {
+      "key": "Slithering Sundew ~ Constrict",
+      "name": "Constrict",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "SlitheringSundewRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [
+        {
+          "text": "A slithering sundew deals 1d8 acid damage with a successful grapple check.",
+          "variables": [],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "text": "A slithering sundew deals 2d6 acid damage with a successful grapple check.",
+          "variables": [],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARGTEQ",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "stat_adjustments": [],
+      "source_page": "p.183",
+      "owners": [
+        "Companion (Prionosuchus)",
+        "Companion (Slithering Sundew)",
+        "Familiar (Creeper Ivy)",
+        "Creeper Ivy",
+        "Companion (Squid (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 347
+    },
+    {
+      "key": "Slithering Sundew ~ Natural Attack",
+      "name": "Natural Attack",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "SlitheringSundewRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.183",
+      "owners": [
+        "Companion (Slithering Sundew)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 348
+    },
+    {
+      "key": "Sniper Cactus ~ Natural Attack",
+      "name": "Natural Attack",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "SniperCactusRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.183",
+      "owners": [
+        "Companion (Sniper Cactus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 351
+    },
+    {
+      "key": "Spiny Starfish ~ Firm Grip",
+      "name": "Firm Grip",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "SpinyStarfishRacialTrait"
+      ],
+      "description": "A spiny starfish excels at grappling prey, and it gains a +6 racial bonus on grapple checks (rather than the standard +4 bonus most creatures gain as a result of having the grab ability).",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.207",
+      "owners": [
+        "Familiar (Spiny Starfish)",
+        "Spiny Starfish"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 354
+    },
+    {
+      "key": "Spiny Starfish ~ Rapid Healing",
+      "name": "Rapid Healing",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "SpinyStarfishRacialTrait"
+      ],
+      "description": "A spiny starfish heals very quickly, regaining %1 hit points each hour.",
+      "description_variables": [
+        "HD"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.207",
+      "owners": [
+        "Familiar (Spiny Starfish)",
+        "Spiny Starfish"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 355
+    },
+    {
+      "key": "Spiny Starfish ~ Master's Bonus",
+      "name": "Master's Bonus",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "A spiny starfish's master treats his effective character level as 4 higher to recover hit points by resting.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.207",
+      "owners": [
+        "Familiar (Spiny Starfish)",
+        "Spiny Starfish"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 356
+    },
+    {
+      "key": "Spitting Cobra ~ Spit",
+      "name": "Spit",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "SpittingCobraRacialTrait"
+      ],
+      "description": "Ranged touch attack, 10-foot range, poison, usable every 2d4 rounds",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.182",
+      "owners": [
+        "Companion (Spitting Cobra)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 359
+    },
+    {
+      "key": "Spitting Cobra ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "SpittingCobraRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [
+        {
+          "text": "Spit; frequency 1 round [6]; effect blurred vision [20%% miss chance] 1 round; cure 1 save; Fort DC %1",
+          "variables": [
+            "10+HD/2+CON"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "text": "Spit; frequency 1 round [6]; effect blindness 1 round; cure 1 save; Fort DC %1",
+          "variables": [
+            "10+HD/2+CON."
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARGTEQ",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "CompanionAdvancement"
+                },
+                {
+                  "facet": null,
+                  "value": "1"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "stat_adjustments": [],
+      "source_page": "p.182",
+      "owners": [
+        "Companion (Spitting Cobra)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 360
+    },
+    {
+      "key": "Suture Vine ~ Blood Sense",
+      "name": "Blood Sense",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "SutureVineRacialTrait"
+      ],
+      "description": "A suture vine can sense badly wounded creatures, including those at less than half their normal hit point total or suffering from bleed damage, as if it had the scent ability.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.207",
+      "owners": [
+        "Familiar (Suture Vine)",
+        "Suture Vine"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 363
+    },
+    {
+      "key": "Suture Vine ~ Seal Wound",
+      "name": "Seal Wound",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "SutureVineRacialTrait"
+      ],
+      "description": "A suture vine instinctively latches on to a creature that suffers from bleed damage or is at less than half its normal hit point total. When it attempts to seal wounds in this way, it must make a normal vine attack but gains attach as per the universal monster rule. If it successfully attaches to the target (dealing damage as normal), any bleed damage currently suffered by the target immediately ends. The suture vine remains attached for 24 hours, gaining nutrients from sipping at the victim's blood but never enough to cause any further damage. The vine drops off automatically once a target has no hit point damage or 24 hours have passed, whichever comes first. A suture vine can seal wounds in this manner only once per day.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.207",
+      "owners": [
+        "Familiar (Suture Vine)",
+        "Suture Vine"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 364
+    },
+    {
+      "key": "Tardigrade (Giant) ~ Hardy",
+      "name": "Hardy",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "GiantTardigradeRacialTrait"
+      ],
+      "description": "A giant tardigrade is able to endure extreme conditions for extended periods of time. It is unharmed by extreme cold, extreme heat, and less extreme temperatures. It takes no damage from decompression (such as in the vacuum of space) or high-pressure environments (such as in extremely deep water).",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.207",
+      "owners": [
+        "Familiar (Tardigrade (Giant))",
+        "Tardigrade (Giant)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 367
+    },
+    {
+      "key": "Tarsier ~ Tarsier's Leap",
+      "name": "Tarsier's Leap",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "TarsierRacialTrait"
+      ],
+      "description": "A tarsier's long hind limbs make it an excellent leaper. A tarsier attempts Acrobatics checks to jump as though it had a running start and doesn't take a penalty on Acrobatics checks to jump from having a slow base speed.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.207",
+      "owners": [
+        "Familiar (Tarsier)",
+        "Tarsier"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 370
+    },
+    {
+      "key": "Termite (Giant) ~ Gnaw",
+      "name": "Gnaw",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "GiantTermiteRacialTrait"
+      ],
+      "description": "A giant termite's bite attack ignores hardness of 5 or less and deals an additional 1d6 acid.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.185",
+      "owners": [
+        "Companion (Termite (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 373
+    },
+    {
+      "key": "Termite (Giant) ~ Swarming",
+      "name": "Swarming",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "GiantTermiteRacialTrait"
+      ],
+      "description": "Two giant termites can share the same space, and if they both attack the same target, they are considered to be flanking that foe.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.185",
+      "owners": [
+        "Companion (Termite (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 374
+    },
+    {
+      "key": "Sea Krait ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "SeaKraitRacialTrait"
+      ],
+      "description": "Injury; Frequency 1/round for 6 rounds; Effect 1d2 Con damage; Cure 1 save; Fort DC %1",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.190",
+      "owners": [
+        "Familiar (Sea Krait)",
+        "Sea Krait"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 377
+    },
+    {
+      "key": "Squid (Vampire) ~ Photophores",
+      "name": "Photophores",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "VampireSquidRacialTrait"
+      ],
+      "description": "Once per day as a standard action while underwater, the vampire squid can release a 15-foot cone of disorienting bioluminescent mucus from its photophores, illuminating the area with dim light. A creature within this shimmering cloud of blue light must succeed at a DC %1 Fortitude save or be dazzled for as long as it remains in the cloud and for 1 round thereafter. The cloud persists for 1d4+1 rounds.",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.209",
+      "owners": [
+        "Squid (Vampire)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 380
+    },
+    {
+      "key": "Squid (Vampire) ~ Pressure Adaptation",
+      "name": "Pressure Adaptation",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "VampireSquidRacialTrait"
+      ],
+      "description": "A vampire squid takes no pressure damage from changes in water depth.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.209",
+      "owners": [
+        "Squid (Vampire)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 381
+    },
+    {
+      "key": "Squid (Vampire) ~ Tentacles",
+      "name": "Tentacles",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "VampireSquidRacialTrait"
+      ],
+      "description": "A vampire squid's tentacles all strike as a single primary attack but only to grapple.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.209",
+      "owners": [
+        "Squid (Vampire)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 382
+    },
+    {
+      "key": "Whiptail Centipede (Giant) ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "GiantWhiptailCentipedeRacialTrait"
+      ],
+      "description": "Frequency 1 round [4]; effect 1d2 Dex damage; cure 1 save; Fort DC %1",
+      "description_variables": [
+        "10+HD/2+CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.185",
+      "owners": [
+        "Companion (Whiptail Centipede (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 385
+    },
+    {
+      "key": "Companion Body Type ~ Avian",
+      "name": "Avian",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuaility"
+      ],
+      "description": "Available Magic Item Slots; armor, belt, chest (saddle), eyes, head, headband, neck, ring, wrist; can grasp objects (including rods, staves, wands, and weapons)",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.176",
+      "owners": [
+        "Companion (Archaeopteryx)",
+        "Companion (Bustard)",
+        "Companion (Falcon)",
+        "Companion (Ornithomimosaur)",
+        "Companion (Owl (Giant))",
+        "Familiar (Arctic Tern)",
+        "Familiar (Chicken)",
+        "Familiar (Dodo)",
+        "Familiar (Kakapo)",
+        "Familiar (Osprey)",
+        "Familiar (Parrot)",
+        "Familiar (Peafowl)",
+        "Familiar (Penguin)",
+        "Familiar (Ptarmigan)",
+        "Familiar (Puffin)",
+        "Familiar (Rhamphorhynchus)",
+        "Familiar (Snail Kite)",
+        "Familiar (Toucan)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 391
+    },
+    {
+      "key": "Companion Body Type ~ Biped (Claws)",
+      "name": "Biped (Claws)",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuaility"
+      ],
+      "description": "Available Magic Item Slots; armor, belt, chest, eyes, head, headband, neck, ring, shoulders, wrist; can grasp objects (including rods, staves, wands, and weapons)",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.176",
+      "owners": [
+        "Familiar (Wallaby)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 392
+    },
+    {
+      "key": "Companion Body Type ~ Biped (Hands)",
+      "name": "Biped (Hands)",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuaility"
+      ],
+      "description": "Available Magic Item Slots; all; can grasp objects (including rods, staves, wands, and weapons)",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.176",
+      "owners": [
+        "Companion (Chimpanzee)",
+        "Familiar (Tarsier)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 393
+    },
+    {
+      "key": "Companion Body Type ~ Piscine",
+      "name": "Piscine",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuaility"
+      ],
+      "description": "Available Magic Item Slots; belt, chest (saddle), eyes",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.176",
+      "owners": [
+        "Companion (Anglerfish)",
+        "Companion (Armorfish)",
+        "Companion (Hammerhead Shark)",
+        "Familiar (Lamprey)",
+        "Familiar (Popoto Dolphin)",
+        "Familiar (Pufferfish)",
+        "Familiar (Seal)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 394
+    },
+    {
+      "key": "Companion Body Type ~ Quadruped (Claws)",
+      "name": "Quadruped (Claws)",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuaility"
+      ],
+      "description": "Available Magic Item Slots; armor, belt (saddle), chest, eyes, head, headband, neck, shoulders, wrist",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.176",
+      "owners": [
+        "Companion (Capybara)",
+        "Companion (Grizzly Bear)",
+        "Companion (Marsupial Devil)",
+        "Companion (Marsupial Lion)",
+        "Companion (Mole (Giant))",
+        "Companion (Panda)",
+        "Companion (Porcupine (Giant))",
+        "Companion (Saber-Toothed Cat)",
+        "Companion (Skunk (Giant))",
+        "Companion (Wolfdog)",
+        "Familiar (Arctic Fox)",
+        "Familiar (Arctic Hare)",
+        "Familiar (Armadillo)",
+        "Familiar (Ermine)",
+        "Familiar (Jerboa)",
+        "Familiar (Koala)",
+        "Familiar (Lemming)",
+        "Familiar (Margay)",
+        "Familiar (Meerkat)",
+        "Familiar (Mole)",
+        "Familiar (Mongoose)",
+        "Familiar (Platypus)",
+        "Familiar (Rabbit)",
+        "Familiar (Skunk)",
+        "Familiar (Squirrel)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 395
+    },
+    {
+      "key": "Companion Body Type ~ Quadruped (Hooves)",
+      "name": "Quadruped (Hooves)",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuaility"
+      ],
+      "description": "Available Magic Item Slots; armor, belt (saddle), chest, eyes, feet (horseshoes), head, headband, neck, shoulders",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.177",
+      "owners": [
+        "Companion (Cattle)",
+        "Companion (Llama)",
+        "Companion (Moose)",
+        "Companion (Reindeer)",
+        "Companion (Yak)",
+        "Companion (Zebra)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 396
+    },
+    {
+      "key": "Companion Body Type ~ Quadruped (Short Legs)",
+      "name": "Quadruped (Short Legs)",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuaility"
+      ],
+      "description": "Available Magic Item Slots; armor, eyes, head, headband, neck, shoulders",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.177",
+      "owners": [
+        "Companion (Frilled Lizard (Giant))",
+        "Companion (Prionosuchus)",
+        "Companion (Salamander (Giant))",
+        "Familiar (Dwarf Caiman)",
+        "Familiar (Fire Salamander)",
+        "Familiar (Horned Lizard)",
+        "Familiar (Marine Iguana)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 397
+    },
+    {
+      "key": "Companion Body Type ~ Quadruped (Other)",
+      "name": "Quadruped (Other)",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuaility"
+      ],
+      "description": "Available Magic Item Slots; armor, belt (saddle), chest, eyes, head, headband, neck, shoulders",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.177",
+      "owners": [
+        "Companion (Eohippus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 398
+    },
+    {
+      "key": "Companion Body Type ~ Serpentine",
+      "name": "Serpentine",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuaility"
+      ],
+      "description": "Available Magic Item Slots; belt, eyes, headband",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.177",
+      "owners": [
+        "Companion (Reef Snake)",
+        "Companion (Spitting Cobra)",
+        "Familiar (Sea Krait)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 399
+    },
+    {
+      "key": "Companion Body Type ~ Unusual (Plant and Vermin)",
+      "name": "Unusual (Plant and Vermin)",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuaility"
+      ],
+      "description": "Available Magic Item Slots; belt, eyes",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.177",
+      "owners": [
+        "Companion (Squid (Giant))",
+        "Companion (Corpse-Eater Fungus)",
+        "Companion (Creeping Puffball)",
+        "Companion (Gulper Plant)",
+        "Companion (Hunting Cactus)",
+        "Companion (Rash Creeper)",
+        "Companion (Slithering Sundew)",
+        "Companion (Snapping Flytrap)",
+        "Companion (Sniper Cactus)",
+        "Companion (Assassin Bug (Giant))",
+        "Companion (Caterpillar (Giant))",
+        "Companion (Cockroach (Giant))",
+        "Companion (Dragonfly (Giant))",
+        "Companion (Eurypterid)",
+        "Companion (Locust (Giant))",
+        "Companion (Mantis Shrimp (Giant))",
+        "Companion (Mosquito (Giant))",
+        "Companion (Solifugid (Giant))",
+        "Companion (Spider (Web Tyrant))",
+        "Companion (Termite (Giant))",
+        "Companion (Whiptail Centipede (Giant))",
+        "Familiar (Butterfly)",
+        "Familiar (Cockroach)",
+        "Familiar (Creeper Ivy)",
+        "Familiar (Dweomer Cap)",
+        "Familiar (Flowering Lattice)",
+        "Familiar (Ioun Wyrd)",
+        "Familiar (Isopod (Giant))",
+        "Familiar (Leopard Slug)",
+        "Familiar (Moth)",
+        "Familiar (Petrifern)",
+        "Familiar (Ravenous Tumbleweed)",
+        "Familiar (Razor Fern)",
+        "Familiar (Sawleg Locust)",
+        "Familiar (Shimmerwing Dragonfly)",
+        "Familiar (Spiny Starfish)",
+        "Familiar (Suture Vine)",
+        "Familiar (Tardigrade (Giant))",
+        "Familiar (Vampire Squid)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 400
+    },
+    {
+      "key": "Grab ~ Medium",
+      "name": "Grab",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "AttackOption"
+      ],
+      "description": "If you hit with the indicated attack (usually a claw or bite attack), you deal normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. You have the option to conduct the grapple normally, or simply use the part of your body you used in the grab to hold the opponent. If you choose to do the latter, you takes a -20 penalty on your CMB check to make and maintain the grapple, but do not gain the grappled condition itself. A successful hold does not deal any extra damage unless you also have the constrict special attack. If you do not constrict, each successful grapple check you make during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, you deal constriction damage as well. You receive a +4 bonus on combat maneuver checks made to start and maintain a grapple. Unless otherwise noted, grab can only be used on creatures of size Medium or smaller.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Chimpanzee)",
+        "Companion (Prionosuchus)",
+        "Companion (Saber-Toothed Cat)",
+        "Companion (Squid (Giant))",
+        "Companion (Gulper Plant)",
+        "Companion (Slithering Sundew)",
+        "Companion (Snapping Flytrap)",
+        "Companion (Mosquito (Giant))",
+        "Familiar (Creeper Ivy)",
+        "Creeper Ivy",
+        "Companion (Grizzly Bear)",
+        "Companion (Marsupial Lion)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 406
+    },
+    {
+      "key": "Grab ~ One Size Larger",
+      "name": "Grab (One Size Larger)",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "AttackOption"
+      ],
+      "description": "If you hit with the indicated attack (usually a claw or bite attack), you deal normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. You have the option to conduct the grapple normally, or simply use the part of your body you used in the grab to hold the opponent. If you choose to do the latter, you takes a -20 penalty on your CMB check to make and maintain the grapple, but do not gain the grappled condition itself. A successful hold does not deal any extra damage unless you also have the constrict special attack. If you do not constrict, each successful grapple check you make during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, you deal constriction damage as well. You receive a +4 bonus on combat maneuver checks made to start and maintain a grapple. This ability can be used on creatures of up to one size category larger than yourself.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Anglerfish)",
+        "Familiar (Spiny Starfish)",
+        "Spiny Starfish"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 407
+    },
+    {
+      "key": "Pack Animal",
+      "name": "Pack Animal",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "Speed is never modified by encumbrance.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Yak)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 408
+    },
+    {
+      "key": "Swallow Whole ~ Same Size",
+      "name": "Swallow Whole (Same Size)",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary",
+        "AttackOption"
+      ],
+      "description": "If you begin your turn with an opponent grappled in your mouth, you can attempt a new combat maneuver check. If you succeed, you swallow your prey, and the opponent takes bite damage. The opponent can be up to the same size category as you. Being swallowed causes a creature to take damage each round. A swallowed creature keeps the grappled condition, while you do not. A swallowed creature can try to cut its way free with any light slashing or piercing weapon (the amount of cutting damage required to get free is equal to 1/10 of your total hit points), or it can just try to escape the grapple. The Armor Class of your interior is normally 10 + 1/2 of your natural armor bonus, with no modifiers for size or Dexterity. If a swallowed creature cuts its way out, you cannot use swallow whole again until the damage is healed. If the swallowed creature escapes the grapple, success puts it back in your mouth, where it may be bitten or swallowed again.  (%1d%2+%3, AC %4, %5 hp)",
+      "description_variables": [
+        "SwallowWholeDice",
+        "SwallowWholeDamageDie",
+        "SwallowWholeBonusDamage",
+        "SwallowWholeAC",
+        "SwallowWholeHP"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Anglerfish)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 409
+    },
+    {
+      "key": "Tremorsense (underwater only)",
+      "name": "Tremorsense (underwater only)",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "Vision"
+      ],
+      "description": "Range %1 ft.; A creature with tremorsense automatically senses the location of anything that is in contact with the water and within range.If no straight path exists through the water from the creature to those that it's sensing, then the range defines the maximum distance of the shortest indirect path. It must itself be in contact with the water, and the creatures must be moving. As long as the other creatures are taking physical actions, including casting spells with somatic components, they're considered moving; they don't have to move from place to place for a creature with tremorsense to detect them.",
+      "description_variables": [
+        "UnderwaterTremorsenseRange"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Salamander (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 410
+    },
+    {
+      "key": "Fungus Leshy ~ Puffball",
+      "name": "Puffball",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "FungusLeshyRacialAbility",
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "A fungus leshy can spit a puffball as a standard action. If it hits, this attack deals 1 point of damage (this damage is not modified by Strength) and affects the target struck (but not adjacent targets) with the fungus leshy's spores. The puffball has a range increment of 20 feet.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "B3 p.177",
+      "owners": [
+        "Familiar (Fungus Leshy)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 724
+    },
+    {
+      "key": "Fungus Leshy ~ Spores",
+      "name": "Spores",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "FungusLeshyRacialAbility",
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "A fungus leshy is riddled with molds and spores. Anytime a fungus leshy takes damage, a cloud of spores bursts from its body, forcing all adjacent creatures to make a DC 14 Fortitude save or have their vision reduced to 10 feet for 1 minute. Spending a full-round action to wash one's eyes with water ends this effect. The save DC is Constitution-based.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "B3 p.177",
+      "owners": [
+        "Familiar (Fungus Leshy)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 725
+    },
+    {
+      "key": "Gourd Leshy ~ Ensnare",
+      "name": "Ensnare",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "GourdLeshyRacialAbility",
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "The seeds and slam attack of a gourd leshy entangle the target in vines for 2d4 rounds unless the target makes a DC 12 Reflex save. The target can attempt to burst these entangling vines before the duration expires with a DC 12 Strength check as a full-round action. The save and burst DCs are Constitution-based.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "B3 p.178",
+      "owners": [
+        "Familiar (Gourd Leshy)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 728
+    },
+    {
+      "key": "Gourd Leshy ~ Keepsake",
+      "name": "Keepsake",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "GourdLeshyRacialAbility",
+        "SpecialQuality",
+        "Supernatural"
+      ],
+      "description": "Gourd leshys can pop off the top of their heads and store a single Fine-sized object such as a dagger or potion inside. While within the leshy's head, the item is warded by nondetection. In addition, after 24 hours, the item within is cleaned and polished, and, if damaged, repaired as if by a mending spell. Both spell effects have a caster level equal to twice the leshy's Hit Dice (CL 2nd for most gourd leshys).",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "B3 p.178",
+      "owners": [
+        "Familiar (Gourd Leshy)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 729
+    },
+    {
+      "key": "Gourd Leshy ~ Seed",
+      "name": "Seed",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "GourdLeshyRacialAbility",
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "A gourd leshy can hurl its seeds as a ranged attack. If it hits, this attack deals 1 point of damage (this damage is not modified by Strength) and affects the target with the gourd leshy's ensnare ability. This attack has a 10-foot range increment.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "B3 p.178",
+      "owners": [
+        "Familiar (Gourd Leshy)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 730
+    },
+    {
+      "key": "Leaf Leshy ~ Glide",
+      "name": "Glide",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "LeafLeshyRacialAbility",
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "A leaf leshy cannot use its fly speed to hover. When flying, a leaf leshy must end its movement at least 5 feet lower in elevation than it started.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "B3 p.179",
+      "owners": [
+        "Familiar (Leaf Leshy)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 733
+    },
+    {
+      "key": "Leaf Leshy ~ Seedpods",
+      "name": "Seedpods",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "LeafLeshyRacialAbility",
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "Leaf leshys sprout explosive acorns, pine cones, or other seedpods, and can hurl these as ranged attacks. A seedpod has a range increment of 10 feet and detonates on contact to deal 1 point of bludgeoning damage (this damage is not modified by Strength). Anyone struck by a seedpod must succeed at a DC 11 Fortitude save or be deafened for 1 round. The save DC is Constitution-based.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "B3 p.179",
+      "owners": [
+        "Familiar (Leaf Leshy)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 734
+    },
+    {
+      "key": "Seaweed Leshy ~ Air Cyst",
+      "name": "Air Cyst",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SeaweedLeshyRacialAbility",
+        "SpecialQuality",
+        "Supernatural"
+      ],
+      "description": "Seaweed leshys constantly grow small bulbs filled with air. As a move action, they can detach a bulb and give it to another creature. If consumed as a standard action, this air cyst grants water breathing (as the spell) for 10 minutes. Seaweed leshys can have a maximum of four usable air cysts at any one time, and air cysts regrow at a rate of one per 24 hours.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "B3 p.180",
+      "owners": [
+        "Familiar (Seaweed Leshy)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 737
+    },
+    {
+      "key": "Seaweed Leshy ~ Water Jet",
+      "name": "Water Jet",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SeaweedLeshyRacialAbility",
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "A seaweed leshy can expel a high-pressure jet of water from its mouth to a range of 30 feet. It must make a ranged touch attack to strike a target-if it hits, the blast deals 1 point of bludgeoning damage (this damage is not modified by Strength). In addition, the creature hit must make a DC %%1 Fortitude save or be blinded by the water for 1 round. The save DC is Dexterity-based.",
+      "description_variables": [
+        "WaterJetDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "B3 p.180",
+      "owners": [
+        "Familiar (Seaweed Leshy)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 738
+    },
+    {
+      "key": "Seaweed Leshy ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "type_segments": [
+        "SeaweedLeshyRacialAbility",
+        "SpecialQuality",
+        "SpellLike"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Familiar (Seaweed Leshy)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "uw_abilities_companion.lst",
+      "source_line": 739
+    }
+  ]
+}

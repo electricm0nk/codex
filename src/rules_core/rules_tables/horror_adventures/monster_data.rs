@@ -88,7 +88,7 @@
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
 /// Every horror_adventures monster stat block (3 rows).
-pub(super) static MONSTERS: &[MonsterStatBlock] = &[
+pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
     MonsterStatBlock {
         key: "Hive Larva Swarm",
         name: "Hive Larva Swarm",
@@ -152,7 +152,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
 ];
 
 /// Every horror_adventures monster-ability record (71 rows).
-pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
+pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Traits Output ~ Deep One",
         name: "Deep One Traits",

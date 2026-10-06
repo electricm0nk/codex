@@ -42,7 +42,9 @@ use crate::rules_core::rules_tables::RuleSetId;
 /// this from the 4-school bootstrap subset — `Universal` does not appear
 /// in `acg_spells.lst` today but is included for parity with
 /// `rules_tables::crb::spell_list::Pf1SchoolId`, which this mirrors).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "acg__spell_list__Pf1SchoolId"))]
 pub enum Pf1SchoolId {
     Abjuration,
     Conjuration,
@@ -85,7 +87,9 @@ impl Pf1SchoolId {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "acg__spell_list__SpellListEntry"))]
 pub struct SpellListEntry {
     /// The record's identity in `acg_spells.lst`: its `KEY:` token when
     /// the row carries one, else its display name (no `KEY:` token on

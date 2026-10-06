@@ -143,11 +143,17 @@ fn screen_generated_table_is_clean_on_real_class_feature_content_without_a_pi_te
     assert!(hits.is_empty(), "unexpected hit(s) on real, non-PI class_feature content: {hits:?}");
 }
 
-/// The gate itself, over the live tree.
+/// The gate itself, over the live tree: the Rust tables and (SD-37 E4a.1) the `rules_tables`
+/// data package, reconciled against the one baseline exactly as `pi_sweep_rules_tables` does.
 #[test]
 fn rules_tables_carry_no_unbaselined_product_identity_hits() {
     let root = repo_root();
-    let hits = sweep_dir(&root.join("src/rules_core/rules_tables")).expect("sweep runs");
+    let mut hits = sweep_dir(&root.join("src/rules_core/rules_tables")).expect("sweep runs");
+    let (package_hits, bad_stamps) =
+        codex::rules_core::rules_data_package::sweep_package(&codex::rules_core::rules_data_package::package_root(&root))
+            .expect("package sweep runs");
+    assert!(bad_stamps.is_empty(), "package files whose licence/PI stamp disagrees with a re-screen: {bad_stamps:?}");
+    hits.extend(package_hits);
     let baseline_text =
         std::fs::read_to_string(root.join("docs/governance/pi-sweep-baseline.tsv")).expect("baseline file exists");
     let baseline = parse_baseline(&baseline_text).expect("baseline parses");

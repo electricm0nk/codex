@@ -83,7 +83,7 @@ pub mod tactician_features;
 pub mod vitalist_features;
 pub mod wilder_features;
 
-mod monster_data;
+pub(crate) mod monster_data;
 
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,

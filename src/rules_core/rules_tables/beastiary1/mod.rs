@@ -145,7 +145,7 @@
 //! `Wolf` is a stat block. Both come from Bestiary 1 and neither is the
 //! other, so nothing here reconciles the two counts.
 
-mod companion_data;
+pub(crate) mod companion_data;
 pub mod equipment_data;
 pub mod equipment_tables;
 pub mod natural_attack_provenance;
@@ -177,7 +177,9 @@ use crate::rules_core::rules_tables::RuleSetId;
 /// `,*1,0`. The per-attack `*N` count on a `NATURALATTACKS:` token is
 /// deliberately **not** modelled: this struct records distinct attack
 /// types, so a Ghoul's `Claw,...,*2,1d6` yields one `Claw` entry.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "beastiary1__NaturalAttack"))]
 pub struct NaturalAttack {
     pub name: String,
     pub damage_dice: String,
@@ -189,7 +191,9 @@ pub struct NaturalAttack {
 /// for the scope-boundary rationale: AC/HP/saves are PCGen-computed, not
 /// literal row tokens, and are deliberately out of scope for this
 /// cycle).
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "beastiary1__MonsterStatBlock"))]
 pub struct MonsterStatBlock {
     pub name: String,
     pub challenge_rating: f32,
@@ -204,7 +208,8 @@ pub struct MonsterStatBlock {
 /// Identifies which Bestiary 1 monster a chassis query targets. Subset
 /// 01's and subset 02's corrected rosters (see this module's doc
 /// comment).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum MonsterId {
     Ghoul,
     Gnoll,

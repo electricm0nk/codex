@@ -1,0 +1,69 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_intrigue/equipment_tables/equipmod_tables",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_intrigue",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Special Ability ~ Liberating ~ Melee",
+      "category": "Equipmods",
+      "name": "Liberating",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Aids wielder in detecting when a creature is under an enchantment. Striking a mentally controlled deals nonlethal damage, grants new save with a bonus."
+    },
+    {
+      "key": "Special Ability ~ Peaceful ~ Weapon",
+      "category": "Equipmods",
+      "name": "Peaceful",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A creature that has taken nonlethal damage from a peaceful weapon becomes shaken for 1 round each time it deals lethal damage to another living creature."
+    },
+    {
+      "key": "Special Ability ~ Silencing ~ Weapon",
+      "category": "Equipmods",
+      "name": "Silencing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A silencing weapon makes no noise when drawn or when used to attack. Targets struck can be muffled, somewhat. Critical hits silence target."
+    },
+    {
+      "key": "Special Ability ~ Slithering ~ Melee",
+      "category": "Equipmods",
+      "name": "Slithering",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Weapon ignores half of AC bonus from cover, half of penalty from squeezing, and is harder to disarm or sunder."
+    },
+    {
+      "key": "Special Ability ~ Truthful ~ Melee",
+      "category": "Equipmods",
+      "name": "Truthful",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Weapon ignores miss chance provided by illusions, such as blur, and acts as a dispelling weapon against figments and shadow conjuration effects."
+    },
+    {
+      "key": "Special Ability ~ Umbral ~ Melee",
+      "category": "Equipmods",
+      "name": "Umbral",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Weapon is considered to have concealment for the purposes of attacks or effects directed at the weapon, grants wielder darkvision, 30 ft, while held, radiates 20-ft radius of darkness on command."
+    },
+    {
+      "key": "Special Ability ~ Unseen ~ Melee",
+      "category": "Equipmods",
+      "name": "Unseen",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Weapon, and scabbard, become invisible on command, may deny unaware target Dex bonus to AC on first strike, has total concealment against attacks or effects directed at the weapon."
+    }
+  ]
+}

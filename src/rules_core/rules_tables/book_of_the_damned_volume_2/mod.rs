@@ -42,7 +42,7 @@
 //! `Aura` (2 rows) and `Defensive` (5) — which the chassis keeps verbatim in
 //! [`MonsterAbilityRecord::traits`] rather than discarding.
 
-mod monster_data;
+pub(crate) mod monster_data;
 /// SD-32 `decisions.md §20`, no_record-to-zero wave: base spell
 /// declarations transcribed from `botd2_spells.lst` (the unconditionally-
 /// loaded of this book's two spell lists; see `ingest_spells.rs`'s own

@@ -15,7 +15,8 @@
 //! verifiable in-repo source would be exactly the fabricated-data risk
 //! `AGENTS.md` rules out.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum ClassId {
     Barbarian,
     Bard,
@@ -51,21 +52,25 @@ impl ClassId {
 /// 20-real-base-classes-without-tables cycle) can reuse this exact
 /// classification and the two formula functions below rather than
 /// re-declaring a second, independently-maintained copy of either.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub(crate) enum BabProgression {
     Full,
     ThreeQuarter,
     Half,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-struct GoodSaves {
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub(crate) struct GoodSaves {
     fortitude: bool,
     reflex: bool,
     will: bool,
 }
 
-struct ClassMeta {
+#[derive(serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub(crate) struct ClassMeta {
     class_id: ClassId,
     max_supported_level: u8,
     bab: BabProgression,
@@ -85,7 +90,7 @@ struct ClassMeta {
 
 /// Mirrors `MAX_SUPPORTED_<CLASS>_LEVEL` in `pilot_compute.rs` as of the
 /// SD-18 level-20 capstone-widening sweep (2026-07-16).
-const CLASS_META: &[ClassMeta] = &[
+pub(crate) const CLASS_META: &[ClassMeta] = &[
     ClassMeta { class_id: ClassId::Barbarian, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: false }, hit_die: 12 },
     ClassMeta { class_id: ClassId::Bard, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: false, reflex: true, will: true }, hit_die: 8 },
     ClassMeta { class_id: ClassId::Cleric, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
@@ -140,7 +145,9 @@ pub fn hit_die_for(class_id: ClassId) -> Option<u8> {
     CLASS_META.iter().find(|meta| meta.class_id == class_id).map(|meta| meta.hit_die)
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "crb__class_tables__ClassTableRow"))]
 pub struct ClassTableRow {
     pub class_id: ClassId,
     pub level: u8,

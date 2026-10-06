@@ -1,0 +1,1453 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_equipment/equipment_tables/equipmod_tables",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_equipment",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Material ~ Bone",
+      "category": "Equipmods",
+      "name": "Bone",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Bronze",
+      "category": "Equipmods",
+      "name": "Bronze",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Gold",
+      "category": "Equipmods",
+      "name": "Gold",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Obsidian",
+      "category": "Equipmods",
+      "name": "Obsidian",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Stone",
+      "category": "Equipmods",
+      "name": "Stone",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Stone ~ Weapon",
+      "category": "Equipmods",
+      "name": "Stone",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Angelskin ~ Armor / Light",
+      "category": "Equipmods",
+      "name": "Angelskin",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "5 hp/inch, hardness 5"
+    },
+    {
+      "key": "Material ~ Angelskin ~ Armor / Medium",
+      "category": "Equipmods",
+      "name": "Angelskin",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "5 hp/inch, hardness 5"
+    },
+    {
+      "key": "Material ~ Blood Crystal ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Blood Crystal",
+      "cost_gp": 30.0,
+      "weight_lbs": null,
+      "description": "10 hp/inch, hardness 10"
+    },
+    {
+      "key": "Material ~ Blood Crystal ~ Weapon",
+      "category": "Equipmods",
+      "name": "Blood Crystal",
+      "cost_gp": 1500.0,
+      "weight_lbs": null,
+      "description": "10 hp/inch, hardness 10"
+    },
+    {
+      "key": "Material ~ Eel Hide ~ Armor / Light",
+      "category": "Equipmods",
+      "name": "Eel Hide",
+      "cost_gp": 1200.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Eel Hide ~ Armor / Medium",
+      "category": "Equipmods",
+      "name": "Eel Hide",
+      "cost_gp": 1800.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Elysian Bronze ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Elysian Bronze",
+      "cost_gp": 20.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Elysian Bronze ~ Armor / Light",
+      "category": "Equipmods",
+      "name": "Elysian Bronze",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Elysian Bronze ~ Armor / Medium",
+      "category": "Equipmods",
+      "name": "Elysian Bronze",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Elysian Bronze ~ Armor / Heavy",
+      "category": "Equipmods",
+      "name": "Elysian Bronze",
+      "cost_gp": 3000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Elysian Bronze ~ Weapon",
+      "category": "Equipmods",
+      "name": "Elysian Bronze",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Fire-Forged Steel ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Fire-Forged Steel",
+      "cost_gp": 15.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Fire-Forged Steel ~ Armor / Light",
+      "category": "Equipmods",
+      "name": "Fire-Forged Steel",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Fire-Forged Steel ~ Armor / Medium",
+      "category": "Equipmods",
+      "name": "Fire-Forged Steel",
+      "cost_gp": 2500.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Fire-Forged Steel ~ Armor / Heavy",
+      "category": "Equipmods",
+      "name": "Fire-Forged Steel",
+      "cost_gp": 3000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Fire-Forged Steel ~ Weapon",
+      "category": "Equipmods",
+      "name": "Fire-Forged Steel",
+      "cost_gp": 600.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Frost-Forged Steel ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Frost-Forged Steel",
+      "cost_gp": 15.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Frost-Forged Steel ~ Armor / Light",
+      "category": "Equipmods",
+      "name": "Frost-Forged Steel",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Frost-Forged Steel ~ Armor / Medium",
+      "category": "Equipmods",
+      "name": "Frost-Forged Steel",
+      "cost_gp": 2500.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Frost-Forged Steel ~ Armor / Heavy",
+      "category": "Equipmods",
+      "name": "Frost-Forged Steel",
+      "cost_gp": 3000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Frost-Forged Steel ~ Weapon",
+      "category": "Equipmods",
+      "name": "Frost-Forged Steel",
+      "cost_gp": 600.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Greenwood",
+      "category": "Equipmods",
+      "name": "Greenwood",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Griffon Mane ~ Armor / Light",
+      "category": "Equipmods",
+      "name": "Griffon Mane",
+      "cost_gp": 200.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Griffon Mane ~ Clothing",
+      "category": "Equipmods",
+      "name": "Griffon Mane",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Living Steel ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Living Steel",
+      "cost_gp": 10.0,
+      "weight_lbs": null,
+      "description": "35 hp/inch, hardness 15"
+    },
+    {
+      "key": "Material ~ Living Steel ~ Armor / Light",
+      "category": "Equipmods",
+      "name": "Living Steel",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "35 hp/inch, hardness 15"
+    },
+    {
+      "key": "Material ~ Living Steel ~ Armor / Medium",
+      "category": "Equipmods",
+      "name": "Living Steel",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "35 hp/inch, hardness 15"
+    },
+    {
+      "key": "Material ~ Living Steel ~ Armor / Heavy",
+      "category": "Equipmods",
+      "name": "Living Steel",
+      "cost_gp": 1500.0,
+      "weight_lbs": null,
+      "description": "35 hp/inch, hardness 15"
+    },
+    {
+      "key": "Material ~ Living Steel ~ Shield",
+      "category": "Equipmods",
+      "name": "Living Steel",
+      "cost_gp": 100.0,
+      "weight_lbs": null,
+      "description": "35 hp/inch, hardness 15"
+    },
+    {
+      "key": "Material ~ Living Steel ~ Weapon",
+      "category": "Equipmods",
+      "name": "Living Steel",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "35 hp/inch, hardness 15"
+    },
+    {
+      "key": "Material ~ Living Steel ~ Item",
+      "category": "Equipmods",
+      "name": "Living Steel",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "35 hp/inch, hardness 15"
+    },
+    {
+      "key": "Material ~ Viridium ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Viridium",
+      "cost_gp": 20.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Viridium ~ Weapon",
+      "category": "Equipmods",
+      "name": "Viridium",
+      "cost_gp": 200.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Viridium / Strengthened ~ Ammunition",
+      "category": "Equipmods",
+      "name": "Viridium (Strengthened)",
+      "cost_gp": 20.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Viridium / Strengthened ~ Weapon",
+      "category": "Equipmods",
+      "name": "Viridium (Strengthened)",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Quality ~ Tear-away Clothing ~ Clothing",
+      "category": "Equipmods",
+      "name": "Tear-away Clothing",
+      "cost_gp": 5.0,
+      "weight_lbs": null,
+      "description": "The seams on this clothing are designed to break easily, making it a simple matter (a standard action) to remove these items and walk away with none the wiser."
+    },
+    {
+      "key": "Special Quality ~ Waterproof Lantern ~ Lantern",
+      "category": "Equipmods",
+      "name": "Waterproof Lantern",
+      "cost_gp": 5.0,
+      "weight_lbs": null,
+      "description": "This lantern treats severe winds as strong winds, windstorms as severe winds, and hurricanes as windstorms for the purpose of determining whether they extinguish its flame. It holds enough air to burn underwater for 5 rounds before going dark."
+    },
+    {
+      "key": "Holy Symbol (Iron)",
+      "category": "Equipmods",
+      "name": "Iron",
+      "cost_gp": 5.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Holy Symbol (Gold)",
+      "category": "Equipmods",
+      "name": "Gold",
+      "cost_gp": 100.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Holy Symbol (Platinum)",
+      "category": "Equipmods",
+      "name": "Platinum",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Artisan's Tools (Tattoos)",
+      "category": "Equipmods",
+      "name": "Tattoos",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Adhesive ~ Armor",
+      "category": "Equipmods",
+      "name": "Adhesive",
+      "cost_gp": 7000.0,
+      "weight_lbs": null,
+      "description": "On command for 10 rds/day, climb speed of 20 feet and +2 enhancement bonus on combat maneuver checks made to disarm, grapple, reposition, steal, or trip when the wearer is using a natural weapon or unarmed strike."
+    },
+    {
+      "key": "Special Ability ~ Balanced ~ Armor",
+      "category": "Equipmods",
+      "name": "Balanced",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+4 to CMD vs overrun or trip and on Acrobatics check made to maintain balance. Dropping prone is a move action instead of a free action."
+    },
+    {
+      "key": "Special Ability ~ Benevolent ~ Armor",
+      "category": "Equipmods",
+      "name": "Benevolent",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "when using aid another action, grant armor's enhancement bonus to ally's AC"
+    },
+    {
+      "key": "Special Ability ~ Bitter ~ Armor",
+      "category": "Equipmods",
+      "name": "Bitter",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "On grapple wearer with mouth, DC14 Fortitude save or immediately end grapple. On swallow wearer, DC14 Fortitude or become nauseated for 1 round."
+    },
+    {
+      "key": "Special Ability ~ Bolstering ~ Armor",
+      "category": "Equipmods",
+      "name": "Bolstering",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 competence bonus on saving throws against abilities of creature hit in melee or ranged attack."
+    },
+    {
+      "key": "Special Ability ~ Brawling ~ Armor",
+      "category": "Equipmods",
+      "name": "Brawling",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 bonus on unarmed attack and damage rolls, including combat maneuver checks made to grapple. Unarmed strikes bypass magic weapon DR."
+    },
+    {
+      "key": "Special Ability ~ Clangorous ~ Shield",
+      "category": "Equipmods",
+      "name": "Clangorous",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When wearer hit, immediate action to create bang equivalent to a thunder stone. If hit was a critical, can instead create a sound burst (Fortitude DC 13 partial)."
+    },
+    {
+      "key": "Special Ability ~ Creeping ~ Armor",
+      "category": "Equipmods",
+      "name": "Creeping",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "check penalty does not apply to stealth. Once per day add enhancement bonus to stealth for 1 minute."
+    },
+    {
+      "key": "Special Ability ~ Deathless ~ Armor",
+      "category": "Equipmods",
+      "name": "Deathless",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Absorbs the first 10 points of positive or negative energy damage per attack. 25% chance to ignore negative levels"
+    },
+    {
+      "key": "Special Ability ~ Defiant ~ Armor",
+      "category": "Equipmods",
+      "name": "Defiant",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 enhancement bonus and DR 2/-"
+    },
+    {
+      "key": "Special Ability ~ Delving ~ Armor",
+      "category": "Equipmods",
+      "name": "Delving",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "burrow speed of 10 feet. +4 bonus on all saving throws against landslides, avalanches, tunnel collapses, and similar effects"
+    },
+    {
+      "key": "Special Ability ~ Expeditious ~ Armor",
+      "category": "Equipmods",
+      "name": "Expeditious",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": "As swift action 3 /day, +10-foot enhancement bonus on all modes of movement for 1 round"
+    },
+    {
+      "key": "Special Ability ~ Grinding ~ Armor",
+      "category": "Equipmods",
+      "name": "Grinding",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Any successful grapple check against wearer causes enhancement bonus hp damage on attacker."
+    },
+    {
+      "key": "Special Ability ~ Harmonizing ~ Armor",
+      "category": "Equipmods",
+      "name": "Harmonizing",
+      "cost_gp": 15000.0,
+      "weight_lbs": null,
+      "description": "+5 competence bonus on Perform checks, but takes a -5 penalty on Stealth checks. Wearer vulnerable to sonic energy damage. Extra round of audible bardic performance abilities"
+    },
+    {
+      "key": "Special Ability ~ Hosteling ~ Armor",
+      "category": "Equipmods",
+      "name": "Hosteling",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "Stores bonded animal for up to 24 hours"
+    },
+    {
+      "key": "Special Ability ~ Impervious ~ Armor",
+      "category": "Equipmods",
+      "name": "Impervious",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Double its enhancement bonus to hardness, hit points and break DC. Enhancement bonus to saves vs direct attacks on shield or armor"
+    },
+    {
+      "key": "Special Ability ~ Martyring ~ Armor",
+      "category": "Equipmods",
+      "name": "Martyring",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "Once per day as an immediate action, when an enemy confirms a critical hit against someone wearing martyring armor, the wearer can heal up to nine allies within 30 feet as if using the mass cure light wounds spell (1d8+9 hit points each)."
+    },
+    {
+      "key": "Special Ability ~ Merging ~ Shield",
+      "category": "Equipmods",
+      "name": "Merging",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "The wearer chooses each round whether to attack with the previously merged weapon or defend with the shield."
+    },
+    {
+      "key": "Special Ability ~ Mirrored ~ Armor",
+      "category": "Equipmods",
+      "name": "Mirrored",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When averting eyes, roll the miss chance twice, selecting the better result and can also deal sneak or precision damage. Add enhancement bonus to touch AC vs rays."
+    },
+    {
+      "key": "Special Ability ~ Poison-Resistant ~ Armor",
+      "category": "Equipmods",
+      "name": "Poison-Resistant",
+      "cost_gp": 2250.0,
+      "weight_lbs": null,
+      "description": "+3 resistance bonus on saving throws against poison."
+    },
+    {
+      "key": "Special Ability ~ Putrid ~ Armor",
+      "category": "Equipmods",
+      "name": "Putrid",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "Living creatures within 10 feet of the wearer must succeed at a DC 14 Fortitude save or be sickened for 5 rounds."
+    },
+    {
+      "key": "Special Ability ~ Radiant ~ Armor",
+      "category": "Equipmods",
+      "name": "Radiant",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "Shines as brightly as a torch when worn. Once per day, can be brightened to the strength of a daylight spell for up to 1 hour."
+    },
+    {
+      "key": "Special Ability ~ Rallying ~ Armor",
+      "category": "Equipmods",
+      "name": "Rallying",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "Allies within 30 feet of the wearer gain a +4 morale bonus on saving throws against fear effects."
+    },
+    {
+      "key": "Special Ability ~ Ramming ~ Shield",
+      "category": "Equipmods",
+      "name": "Ramming",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Add enhancement bonus to attack and damage for a shield bash as part of a charge. If it hits, can attempt bull rush as a swift action."
+    },
+    {
+      "key": "Special Ability ~ Spell Storing ~ Armor",
+      "category": "Equipmods",
+      "name": "Spell Storing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Can store a single touch spell of up to 3rd level which can be cast as a swift action when wearer hit by melee  or melee touch attack."
+    },
+    {
+      "key": "Special Ability ~ Stanching ~ Armor",
+      "category": "Equipmods",
+      "name": "Stanching",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Reduces hit point damage, ability damage, or ability drain by an amount equal to its enhancement bonus if the damage or drain was from a bleed effect. The wearer also adds the armor's enhancement bonus to Constitution checks to become stable."
+    },
+    {
+      "key": "Special Ability ~ Titanic ~ Armor",
+      "category": "Equipmods",
+      "name": "Titanic",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Wearer is considered one size category larger for the purpose of using or being affected by special attacks that depend on size, such as swallow whole and trample. Once per day on command, the wearer can increase her size as if using enlarge person for 1 minute. Once per minute as a free action add the armor's enhancement bonus to a single strength check or combat maneuver check, or to her CMD against a single combat maneuver. The armor check penalty of titanic armor is increased by an abilities amount equal to its enhancement bonus."
+    },
+    {
+      "key": "Special Ability ~ Unbound ~ Armor",
+      "category": "Equipmods",
+      "name": "Unbound",
+      "cost_gp": 27000.0,
+      "weight_lbs": null,
+      "description": "On command once per day can invoke an effect as per the spell righteous might granting DR 5/lawful"
+    },
+    {
+      "key": "Special Ability ~ Vigilant ~ Armor",
+      "category": "Equipmods",
+      "name": "Vigilant",
+      "cost_gp": 27000.0,
+      "weight_lbs": null,
+      "description": "On command once per day can invoke an effect as per the spell righteous might granting DR 5/chaotic"
+    },
+    {
+      "key": "Special Ability ~ Warding ~ Armor",
+      "category": "Equipmods",
+      "name": "Warding",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Once per day as an immediate action, the wearer of warding armor can activate it to end all active challenge, judgment, and smite abilities affecting her. Can be refreshed as a swift action by the wearer expending one of her own challenge, judgment, or smite abilities."
+    },
+    {
+      "key": "Special Ability ~ Wyrmsbreath / Acid ~ Shield",
+      "category": "Equipmods",
+      "name": "Wyrmsbreath (Acid)",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "On command, the bearer can expend 1 to 5 charges from the shield to have it create a breath weapon in a 15 foot cone dealing 1d4 points of acid damage per charge expended (Reflex DC 11 half)."
+    },
+    {
+      "key": "Special Ability ~ Wyrmsbreath / Cold ~ Shield",
+      "category": "Equipmods",
+      "name": "Wyrmsbreath (Cold)",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "On command, the bearer can expend 1 to 5 charges from the shield to have it create a breath weapon in a 15 foot cone dealing 1d4 points of cold damage per charge expended (Reflex DC 11 half)."
+    },
+    {
+      "key": "Special Ability ~ Wyrmsbreath / Electricity ~ Shield",
+      "category": "Equipmods",
+      "name": "Wyrmsbreath (Electricity)",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "On command, the bearer can expend 1 to 5 charges from the shield to have it create a breath weapon in a 15 foot cone dealing 1d4 points of electricity damage per charge expended (Reflex DC 11 half)."
+    },
+    {
+      "key": "Special Ability ~ Wyrmsbreath / Fire ~ Shield",
+      "category": "Equipmods",
+      "name": "Wyrmsbreath (Fire)",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "On command, the bearer can expend 1 to 5 charges from the shield to have it create a breath weapon in a 15 foot cone dealing 1d4 points of fire damage per charge expended (Reflex DC 11 half)."
+    },
+    {
+      "key": "Special Quality ~ Scatter ~ Firearm",
+      "category": "Equipmods",
+      "name": "Scatter",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "scatter; A weapon with the scatter weapon quality can shoot two different types of ammunition. It can fire normal bullets that target one creature, or it can make a scattering shot, attacking all creatures within a cone. Cannons with the scatter weapon quality only fire grapeshot, unless their descriptions state otherwise. When a scatter weapon attacks all creatures within a cone, it makes a separate attack roll against each creature within the cone. Each attack roll takes a -2 penalty, and its attack damage cannot be modified by precision damage or damage-increasing feats such as Vital Strike. Effects that grant concealment, such as fog or smoke, or the blur, invisibility, or mirror image spells, do not foil a scatter attack. If any of the attack rolls threaten a critical, confirm the critical for that attack roll alone. A firearm that makes a scatter shot misfires only if all of the attack rolls made misfire. If a scatter weapon explodes on a misfire, it deals triple its damage to all creatures within the misfire radius."
+    },
+    {
+      "key": "Special Quality ~ Sawback ~ Sword",
+      "category": "Equipmods",
+      "name": "Sawback",
+      "cost_gp": 5.0,
+      "weight_lbs": null,
+      "description": "This is a modification to any light or heavy blade rather than a unique weapon type. The saw blade on the back of the sword lets you use it to perform crude carpentry."
+    },
+    {
+      "key": "Special Quality ~ Fragile",
+      "category": "Equipmods",
+      "name": "Fragile",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "Fragile weapons and armor cannot take the beating that sturdier weapons can. A fragile weapon gains the broken condition if the wielder rolls a natural 1 on an attack roll with the weapon. If a fragile weapon is already broken, the roll of a natural 1 destroys it instead. Armor with the fragile quality falls apart when hit with heavy blows. If an attacker hits a creature wearing fragile armor with an attack roll of a natural 20 and confirms the critical hit (even if the creature is immune to critical hits), the armor gains the broken condition. If already broken, the armor is destroyed instead. Fragile armor is not broken or destroyed by critical threats that are not generated by natural 20s, so if a creature wielding a weapon with a 19-20 or 18-20 critical range scores a critical hit on the wearer of this armor with a roll of less than a natural 20, that critical hit has no chance to break or destroy the armor. Masterwork and magical fragile weapons and armor lack these flaws unless otherwise noted in the item description or the special material description"
+    },
+    {
+      "key": "Special Quality ~ Performance",
+      "category": "Equipmods",
+      "name": "Performance",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "When wielding this weapon, if an attack or combat maneuver made with this weapon prompts a combat performance check, you gain a +2 bonus on that check."
+    },
+    {
+      "key": "Special Ability ~ Adaptive ~ Ranged",
+      "category": "Equipmods",
+      "name": "Adaptive",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "The wielder can fire the bow with a lesser Strength bonus (and cause less damage) if desired."
+    },
+    {
+      "key": "Special Ability ~ Advancing ~ Melee",
+      "category": "Equipmods",
+      "name": "Advancing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Once per round, when the wielder damages a creature in melee with an advancing weapon, she can take a 5-foot step as a swift action after the attack but before the end of her turn."
+    },
+    {
+      "key": "Special Ability ~ Anchoring ~ Weapon",
+      "category": "Equipmods",
+      "name": "Anchoring",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "An anchoring weapon pins a target in place and prevents it from moving. As a swift action, the weapon can be fixed in place in a point in space, functioning as an immovable rod."
+    },
+    {
+      "key": "Special Ability ~ Benevolent ~ Melee",
+      "category": "Equipmods",
+      "name": "Benevolent",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Increases the aid another bonus by the enhancement bonus of the weapon."
+    },
+    {
+      "key": "Special Ability ~ Called ~ Weapon",
+      "category": "Equipmods",
+      "name": "Called",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A called weapon can be teleported from up to 100 feet away to the wielder's hand as a swift action."
+    },
+    {
+      "key": "Special Ability ~ Conserving ~ Ranged",
+      "category": "Equipmods",
+      "name": "Conserving",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When the wielder misses with a ranged attack, the fired ammunition teleports unharmed to its quiver, case, or pouch."
+    },
+    {
+      "key": "Special Ability ~ Countering ~ Melee",
+      "category": "Equipmods",
+      "name": "Countering",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A countering weapon gives its wielder a +2 bonus to his combat maneuver defense against combat maneuvers made to disarm or sunder this weapon."
+    },
+    {
+      "key": "Special Ability ~ Courageous ~ Melee",
+      "category": "Equipmods",
+      "name": "Courageous",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "The wielder gains a morale bonus on saving throws against fear equal to the weapon's enhancement bonus. In addition, any morale bonus the wielder gains from any other source is increased by half the weapon's enhancement bonus (minimum 1)."
+    },
+    {
+      "key": "Special Ability ~ Defiant ~ Melee",
+      "category": "Equipmods",
+      "name": "Defiant",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A defiant weapon helps its wielder stay alive in desperate conditions."
+    },
+    {
+      "key": "Special Ability ~ Designating / Greater ~ Ranged",
+      "category": "Equipmods",
+      "name": "Designating (Greater)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When a target is hit, allies gain a +4 morale bonus on melee attack and a +6 morale bonus on melee damage rolls against the designated target for 1 round."
+    },
+    {
+      "key": "Special Ability ~ Designating / Lesser ~ Ranged",
+      "category": "Equipmods",
+      "name": "Designating (Lesser)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When a target is hit, allies gain a +2 morale bonus on melee attack and melee damage rolls against the designated target for 1 round."
+    },
+    {
+      "key": "Special Ability ~ Dispelling ~ Melee",
+      "category": "Equipmods",
+      "name": "Dispelling",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A dispelling weapon functions like a spell storing weapon, but it may only store dispel magic."
+    },
+    {
+      "key": "Special Ability ~ Dispelling Burst ~ Melee",
+      "category": "Equipmods",
+      "name": "Dispelling Burst",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A dispelling weapon functions like a spell storing weapon, but it may only store dispel magic or greater dispel magic, both of which may be cast from it as a free action."
+    },
+    {
+      "key": "Special Ability ~ Dry Load ~ Firearm / Ammunition",
+      "category": "Equipmods",
+      "name": "Dry Load",
+      "cost_gp": 30.0,
+      "weight_lbs": null,
+      "description": "Dry load cartridges can be used to load guns underwater or in other airless environments, such as a vacuum."
+    },
+    {
+      "key": "Special Ability ~ Endless Ammunition ~ Ranged",
+      "category": "Equipmods",
+      "name": "Endless Ammunition",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Each time an endless ammunition weapon is nocked, a single nonmagical arrow or bolt is spontaneously created by the magic, so the weapon's wielder never needs to load the weapon with ammunition."
+    },
+    {
+      "key": "Special Ability ~ Furyborn ~ Melee",
+      "category": "Equipmods",
+      "name": "Furyborn",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Each time the wielder damages an opponent with the weapon, its enhancement bonus increases by +1 when making attacks against that opponent."
+    },
+    {
+      "key": "Special Ability ~ Glamered ~ Weapon",
+      "category": "Equipmods",
+      "name": "Glamered",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": "A glamered weapon can be commanded to change its shape and appearance to assume the form of another object of similar size."
+    },
+    {
+      "key": "Special Ability ~ Glorious ~ Melee",
+      "category": "Equipmods",
+      "name": "Glorious",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A glorious weapon glows with a dazzling light equal to a daylight spell when drawn. Any creature the wielder attacks in melee is automatically dazzled until the beginning of the wielder's next turn. On a conformed critical hit, the target is blinded."
+    },
+    {
+      "key": "Special Ability ~ Grounding ~ Melee",
+      "category": "Equipmods",
+      "name": "Grounding",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Deals an extra 1d6 points of damage to creatures with the air subtype. +2 competence bonus on saving throws against air- and electricity-based effects, and the weapon itself is immune to electricity damage."
+    },
+    {
+      "key": "Special Ability ~ Guardian ~ Melee",
+      "category": "Equipmods",
+      "name": "Guardian",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A guardian weapon allows the wielder to transfer some or all of the weapon's enhancement bonus to his saving throws as a bonus that stacks with all others."
+    },
+    {
+      "key": "Special Ability ~ Heartseeker ~ Melee",
+      "category": "Equipmods",
+      "name": "Heartseeker",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A heartseeker weapon ignores the miss chance for concealment against most living targets, though the attack must still target the proper square."
+    },
+    {
+      "key": "Special Ability ~ Igniting ~ Weapon",
+      "category": "Equipmods",
+      "name": "Igniting",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "An igniting weapon functions as a flaming weapon that also causes the target to catch fire upon striking it with a successful critical hit."
+    },
+    {
+      "key": "Special Ability ~ Impact ~ Melee",
+      "category": "Equipmods",
+      "name": "Impact",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "An impact weapon deals damage as if the weapon were one size category larger. In addition, any bull rush combat maneuver the wielder attempts while wielding the weapon gains a bonus equal to the weapon's enhancement bonus."
+    },
+    {
+      "key": "Special Ability ~ Impervious ~ Weapon",
+      "category": "Equipmods",
+      "name": "Impervious",
+      "cost_gp": 3000.0,
+      "weight_lbs": null,
+      "description": "An impervious weapon is warded from damage and decay."
+    },
+    {
+      "key": "Special Ability ~ Invigorating ~ Melee",
+      "category": "Equipmods",
+      "name": "Invigorating",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "After an attack with this weapon drops a living foe (kills it or drops it to negative hit points), the weapon infuses its wielder with vigor."
+    },
+    {
+      "key": "Special Ability ~ Ki Intensifying ~ Melee",
+      "category": "Equipmods",
+      "name": "Ki Intensifying",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "After a successful strike with a ki intensifying weapon, the wielder can spend 1 ki point as a swift action to perform a combat maneuver."
+    },
+    {
+      "key": "Special Ability ~ Lifesurge ~ Melee",
+      "category": "Equipmods",
+      "name": "Lifesurge",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A lifesurge weapon boosts and sustains the wielder's life energy while he is in the throes of combat."
+    },
+    {
+      "key": "Special Ability ~ Limning ~ Weapon",
+      "category": "Equipmods",
+      "name": "Limning",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "On a successful strike against a creature affected by a means of magical concealment, the weapon outlines the creature in faerie fire (as the spell) for 1 round."
+    },
+    {
+      "key": "Special Ability ~ Lucky ~ Firearm",
+      "category": "Equipmods",
+      "name": "Lucky",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A lucky firearm has its own magical reservoir of 1 grit point."
+    },
+    {
+      "key": "Special Ability ~ Lucky / Greater ~ Firearm",
+      "category": "Equipmods",
+      "name": "Lucky (Greater)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A greater lucky firearm has its own magical reservoir of 3 grit points."
+    },
+    {
+      "key": "Special Ability ~ Mimetic ~ Melee",
+      "category": "Equipmods",
+      "name": "Mimetic",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Each time the wielder damages a creature using a mimetic weapon, he gains resistance 10 to one energy type that the creature is resistant or immune to for 1 round."
+    },
+    {
+      "key": "Special Ability ~ Negating ~ Melee",
+      "category": "Equipmods",
+      "name": "Negating",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A negating weapon briefly nullifies some forms of damage reduction when it damages a creature."
+    },
+    {
+      "key": "Special Ability ~ Neutralizing ~ Melee",
+      "category": "Equipmods",
+      "name": "Neutralizing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Deals an extra 1d6 points of damage to creatures with the earth subtype. +2 competence bonus on saving throws against acid- and earth-based effects, and the weapon itself is immune to acid damage."
+    },
+    {
+      "key": "Special Ability ~ Nimble Shot ~ Ranged",
+      "category": "Equipmods",
+      "name": "Nimble Shot",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A nimble shot weapon doesn't provoke attacks of opportunity when fired."
+    },
+    {
+      "key": "Special Ability ~ Nullifying ~ Melee",
+      "category": "Equipmods",
+      "name": "Nullifying",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A creature that takes damage from the weapon, has its spell resistance reduced by 1 for 1 minute. On a confirmed critical hit, its spell resistance is instead reduced by an mount equal to the weapon's critical multiplier."
+    },
+    {
+      "key": "Special Ability ~ Ominous ~ Melee",
+      "category": "Equipmods",
+      "name": "Ominous",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "An ominous weapon trails a shadowy haze behind every stroke, and moans a menacing dirge in battle. An ominous weapon adds its enhancement bonus on Intimidate checks made by the wielder. In addition, when an ominous weapon confirms a critical hit, the target is shaken for 1 minute (DC 13 Will negates)."
+    },
+    {
+      "key": "Special Ability ~ Phase Locking ~ Weapon",
+      "category": "Equipmods",
+      "name": "Phase Locking",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A creature damaged by a phase locking weapon is affected as though by the dimensional anchor spell for 1 round."
+    },
+    {
+      "key": "Special Ability ~ Planar ~ Weapon",
+      "category": "Equipmods",
+      "name": "Planar",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When used to attack outsiders, a planar weapon ignores 5 points of their damage reduction."
+    },
+    {
+      "key": "Special Ability ~ Quenching ~ Melee",
+      "category": "Equipmods",
+      "name": "Quenching",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Deals an extra 1d6 points of damage to creatures with the fire subtype. +2 competence bonus on saving throws against fire-based effects, and the weapon itself is immune to fire damage."
+    },
+    {
+      "key": "Special Ability ~ Reliable ~ Firearm",
+      "category": "Equipmods",
+      "name": "Reliable",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Reduces the misfire value of the affected firearm by 1 (minimum 0)."
+    },
+    {
+      "key": "Special Ability ~ Reliable / Greater ~ Firearm",
+      "category": "Equipmods",
+      "name": "Reliable (Greater)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Reduces the misfire value of the affected firearm by 4 (minimum 0)."
+    },
+    {
+      "key": "Special Ability ~ Repositioning ~ Melee",
+      "category": "Equipmods",
+      "name": "Repositioning",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 enhancement bonus on combat maneuver checks to reposition a foe. On a critical hit with the weapon, wielder can attempt to reposition his opponent as a free action."
+    },
+    {
+      "key": "Special Ability ~ Seaborne ~ Melee",
+      "category": "Equipmods",
+      "name": "Seaborne",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "With the weapon in hand, the wielder gains a bonus on Swim checks equal to twice the weapon's enhancement bonus. In addition, the wielder does not take the normal penalties to attack and damage rolls imposed by being underwater, as if he were subject to the spell freedom of movement."
+    },
+    {
+      "key": "Special Ability ~ Second Chance ~ Ranged",
+      "category": "Equipmods",
+      "name": "Second Chance",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Once per round, when a shot made with this weapon misses its target, as a free action the weapon's wielder can cause that shot to swerve and try to hit the target again."
+    },
+    {
+      "key": "Special Ability ~ Spellstealing ~ Melee",
+      "category": "Equipmods",
+      "name": "Spellstealing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A spellstealing weapon allows its wielder to siphon protective magic from a target and transfer it to herself."
+    },
+    {
+      "key": "Special Ability ~ Stalking ~ Weapon",
+      "category": "Equipmods",
+      "name": "Stalking",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "As a standard action, a character wielding a stalking weapon can command it to study a creature within 60 feet. When the wielder attacks the studied creature, on a successful hit the stalking weapon deals +1d6 points of bonus damage per consecutive round spent studying a target, up to a number of bonus dice equal to the stalking weapon's enhancement bonus."
+    },
+    {
+      "key": "Special Ability ~ Thawing ~ Melee",
+      "category": "Equipmods",
+      "name": "Thawing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Deals an extra 1d6 points of damage to creatures with the cold subtype. +2 competence bonus on saving throws against ice-based effects, and the weapon itself is immune to cold damage."
+    },
+    {
+      "key": "Special Ability ~ Valiant ~ Melee",
+      "category": "Equipmods",
+      "name": "Valiant",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When a cavalier wielding a valiant weapon targets a foe with his challenge ability, the valiant weapon deals an additional 1d6 points of damage against that foe. The wielder receives a +2 bonus on combat maneuver checks made to disarm or sunder a challenged foe's weapon as well as a +4 bonus to his CMD against disarm and sunder attacks from that foe."
+    },
+    {
+      "key": "Page of Spell Knowledge ~ 1st Level",
+      "category": "Equipmods",
+      "name": "Page of Spell Knowledge (1st)",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Page of Spell Knowledge ~ 2nd Level",
+      "category": "Equipmods",
+      "name": "Page of Spell Knowledge (2nd)",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Page of Spell Knowledge ~ 3rd Level",
+      "category": "Equipmods",
+      "name": "Page of Spell Knowledge (3rd)",
+      "cost_gp": 9000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Page of Spell Knowledge ~ 4th Level",
+      "category": "Equipmods",
+      "name": "Page of Spell Knowledge (4th)",
+      "cost_gp": 16000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Page of Spell Knowledge ~ 5th Level",
+      "category": "Equipmods",
+      "name": "Page of Spell Knowledge (5th)",
+      "cost_gp": 25000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Page of Spell Knowledge ~ 6th Level",
+      "category": "Equipmods",
+      "name": "Page of Spell Knowledge (6th)",
+      "cost_gp": 36000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Page of Spell Knowledge ~ 7th Level",
+      "category": "Equipmods",
+      "name": "Page of Spell Knowledge (7th)",
+      "cost_gp": 49000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Page of Spell Knowledge ~ 8th Level",
+      "category": "Equipmods",
+      "name": "Page of Spell Knowledge (8th)",
+      "cost_gp": 64000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Page of Spell Knowledge ~ 9th Level",
+      "category": "Equipmods",
+      "name": "Page of Spell Knowledge (9th)",
+      "cost_gp": 81000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Ability ~ Benevolent ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Benevolent",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Increases the aid another bonus by the enhancement bonus of the weapon."
+    },
+    {
+      "key": "Special Ability ~ Conductive ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Conductive",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Conducts touch attacks from spell-like and supernatural abilities."
+    },
+    {
+      "key": "Special Ability ~ Corrosive ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Corrosive",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks do +1d6 acid damage"
+    },
+    {
+      "key": "Special Ability ~ Corrosive Burst ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Corrosive Burst",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "unarmed and natural attacks do +1d6 acid damage, on a critical hit deals 1d10 additional acid damage"
+    },
+    {
+      "key": "Special Ability ~ Cruel ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Cruel",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When the wielder strikes a creature that is frightened, shaken, or panicked with a cruel weapon, that creature becomes sickened for 1 round. When the wielder uses the weapon to knock unconscious or kill a creature, he gains 5 temporary hit points that last for 10 minutes."
+    },
+    {
+      "key": "Special Ability ~ Cunning ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Cunning",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 on critical confirmation rolls; requires 5 or more ranks in Knowledge skill appropriate to target"
+    },
+    {
+      "key": "Special Ability ~ Dispelling ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Dispelling",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A dispelling weapon functions like a spell storing weapon, but it may only store dispel magic."
+    },
+    {
+      "key": "Special Ability ~ Dispelling Burst ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Dispelling Burst",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A dispelling weapon functions like a spell storing weapon, but it may only store dispel magic or greater dispel magic, both of which may be cast from it as a free action."
+    },
+    {
+      "key": "Special Ability ~ Furious ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Furious",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 to enhancement bonus when raging, always applies its enhancement bonus to skills which are enhanced by rage powers"
+    },
+    {
+      "key": "Special Ability ~ Furyborn ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Furyborn",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Each time the wielder damages an opponent with the weapon, its enhancement bonus increases by +1 when making attacks against that opponent."
+    },
+    {
+      "key": "Special Ability ~ Glorious ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Glorious",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A glorious weapon glows with a dazzling light equal to a daylight spell when drawn. Any creature the wielder attacks in melee is automatically dazzled until the beginning of the wielder's next turn. On a conformed critical hit, the target is blinded."
+    },
+    {
+      "key": "Special Ability ~ Grounding ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Grounding",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Deals an extra 1d6 points of damage to creatures with the air subtype. +2 competence bonus on saving throws against air- and electricity-based effects, and the weapon itself is immune to electricity damage."
+    },
+    {
+      "key": "Special Ability ~ Grayflame ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Grayflame",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1 to enhancement bonus, +1d6 holy/unholy damage, counts as good/silver or evil/cold iron, when infused with channeled energy"
+    },
+    {
+      "key": "Special Ability ~ Guardian ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Guardian",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A guardian weapon allows the wielder to transfer some or all of the weapon's enhancement bonus to his saving throws as a bonus that stacks with all others."
+    },
+    {
+      "key": "Special Ability ~ Heartseeker ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Heartseeker",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A heartseeker weapon ignores the miss chance for concealment against most living targets, though the attack must still target the proper square."
+    },
+    {
+      "key": "Special Ability ~ Huntsman ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Huntsman",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1d6 damage to creatures tracked with Survival, provides enhancement bonus to track creatures the weapon has"
+    },
+    {
+      "key": "Special Ability ~ Igniting ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Igniting",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "An igniting weapon functions as a flaming weapon that also causes the target to catch fire upon striking it with a successful critical hit."
+    },
+    {
+      "key": "Special Ability ~ Invigorating ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Invigorating",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "After an attack with this weapon drops a living foe (kills it or drops it to negative hit points), the weapon infuses its wielder with vigor."
+    },
+    {
+      "key": "Special Ability ~ Jurist ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Jurist",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+1 to +3 enhancement bonus to Perception checks and CMD when using judgement class ability"
+    },
+    {
+      "key": "Special Ability ~ Ki Intensifying ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Ki Intensifying",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "After a successful strike with a ki intensifying weapon, the wielder can spend 1 ki point as a swift action to perform a combat maneuver."
+    },
+    {
+      "key": "Special Ability ~ Lifesurge ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Lifesurge",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A lifesurge weapon boosts and sustains the wielder's life energy while he is in the throes of combat."
+    },
+    {
+      "key": "Special Ability ~ Limning ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Limning",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "On a successful strike against a creature affected by a means of magical concealment, the weapon outlines the creature in faerie fire (as the spell) for 1 round."
+    },
+    {
+      "key": "Special Ability ~ Menacing ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Menacing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 to flanking bonus for allies while wielder is adjacent to flanked creature"
+    },
+    {
+      "key": "Special Ability ~ Mimetic ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Mimetic",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Each time the wielder damages a creature using a mimetic weapon, he gains resistance 10 to one energy type that the creature is resistant or immune to for 1 round."
+    },
+    {
+      "key": "Special Ability ~ Negating ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Negating",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A negating weapon briefly nullifies some forms of damage reduction when it damages a creature."
+    },
+    {
+      "key": "Special Ability ~ Neutralizing ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Neutralizing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Deals an extra 1d6 points of damage to creatures with the earth subtype. +2 competence bonus on saving throws against acid- and earth-based effects, and the weapon itself is immune to acid damage."
+    },
+    {
+      "key": "Special Ability ~ Nullifying ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Nullifying",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A creature that takes damage from the weapon, has its spell resistance reduced by 1 for 1 minute. On a confirmed critical hit, its spell resistance is instead reduced by an mount equal to the weapon's critical multiplier."
+    },
+    {
+      "key": "Special Ability ~ Phase locking ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Phase locking",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A creature damaged by a phase locking weapon is affected as though by the dimensional anchor spell for 1 round."
+    },
+    {
+      "key": "Special Ability ~ Planar ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Planar",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When used to attack outsiders, a planar weapon ignores 5 points of their damage reduction."
+    },
+    {
+      "key": "Special Ability ~ Quenching ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Quenching",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Deals an extra 1d6 points of damage to creatures with the fire subtype. +2 competence bonus on saving throws against fire-based effects, and the weapon itself is immune to fire damage."
+    },
+    {
+      "key": "Special Ability ~ Repositioning ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Repositioning",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "+2 enhancement bonus on combat maneuver checks to reposition a foe. On a critical hit with the weapon, wielder can attempt to reposition his opponent as a free action."
+    },
+    {
+      "key": "Special Ability ~ Seaborne ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Seaborne",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "With the weapon in hand, the wielder gains a bonus on Swim checks equal to twice the weapon's enhancement bonus. In addition, the wielder does not take the normal penalties to attack and damage rolls imposed by being underwater, as if he were subject to the spell freedom of movement."
+    },
+    {
+      "key": "Special Ability ~ Spellstealing ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Spellstealing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A spellstealing weapon allows its wielder to siphon protective magic from a target and transfer it to herself."
+    },
+    {
+      "key": "Special Ability ~ Stalking ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Stalking",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "As a standard action, a character wielding a stalking weapon can command it to study a creature within 60 feet. When the wielder attacks the studied creature, on a successful hit the stalking weapon deals +1d6 points of bonus damage per consecutive round spent studying a target, up to a number of bonus dice equal to the stalking weapon's enhancement bonus."
+    },
+    {
+      "key": "Special Ability ~ Thawing ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Thawing",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Deals an extra 1d6 points of damage to creatures with the cold subtype. +2 competence bonus on saving throws against ice-based effects, and the weapon itself is immune to cold damage."
+    },
+    {
+      "key": "Special Ability ~ Valiant ~ Amulet of Might Fists",
+      "category": "Equipmods",
+      "name": "Valiant",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When a cavalier wielding a valiant weapon targets a foe with his challenge ability, the valiant weapon deals an additional 1d6 points of damage against that foe. The wielder receives a +2 bonus on combat maneuver checks made to disarm or sunder a challenged foe's weapon as well as a +4 bonus to his CMD against disarm and sunder attacks from that foe."
+    },
+    {
+      "key": "Special Quality ~ Blood Reservoir of Physical Prowess ~ Weapon",
+      "category": "Equipmods",
+      "name": "Blood Reservoir of Physical Prowess",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Masterwork Tool",
+      "category": "Equipmods",
+      "name": "Masterwork Tool",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "circumstance Bonus"
+    }
+  ]
+}

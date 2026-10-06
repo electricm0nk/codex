@@ -1,0 +1,666 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/ULTIMATE_EQUIPMENT_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "UE",
+      "key": "Alchemist's Kit",
+      "name": "Alchemist's Kit",
+      "category": "General",
+      "cost_gp": 40.0,
+      "weight_lbs": 24.0,
+      "description": "This kit includes an alchemy crafting kit, a backpack, a bedroll, a belt pouch, a flint and steel, ink, an inkpen, an iron pot, a mess kit, soap, torches (10), trail rations (5 days), and a waterskin.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Flash Powder",
+      "name": "Flash Powder",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": null,
+      "description": "Creatures within a 10-foot-radius burst are blinded for 1 round (Fortitude DC 13 negates).",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Gecko (Riding)",
+      "name": "Gecko (Riding)",
+      "category": "General",
+      "cost_gp": 300.0,
+      "weight_lbs": 1200.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Gecko (Riding/Combat Trained)",
+      "name": "Gecko (Riding/Combat Trained)",
+      "category": "General",
+      "cost_gp": 400.0,
+      "weight_lbs": 1500.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Celestial Shield",
+      "name": "Celestial Shield",
+      "category": "ArmsArmor",
+      "cost_gp": 4020.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Codex-Named Unit (equipment_ultimate_equipment_ue_equip_arms_armor_lst_129)",
+      "name": "Codex-Named Unit (equipment_ultimate_equipment_ue_equip_arms_armor_lst_129)",
+      "category": "ArmsArmor",
+      "cost_gp": 27470.0,
+      "weight_lbs": 45.0,
+      "description": null,
+      "name_pi_citation": [
+        "ue_equip_arms_armor.lst",
+        129
+      ]
+    },
+    {
+      "book": "UE",
+      "key": "Mithral Heavy Shield",
+      "name": "Mithral Heavy Shield",
+      "category": "ArmsArmor",
+      "cost_gp": 20.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Dogslicer",
+      "name": "Dogslicer",
+      "category": "ArmsArmor",
+      "cost_gp": 8.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Horsechopper",
+      "name": "Horsechopper",
+      "category": "ArmsArmor",
+      "cost_gp": 10.0,
+      "weight_lbs": 12.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Lucerne Hammer",
+      "name": "Lucerne Hammer",
+      "category": "ArmsArmor",
+      "cost_gp": 15.0,
+      "weight_lbs": 12.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Gloom Blade",
+      "name": "Gloom Blade",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Hammer (Ricochet)",
+      "name": "Hammer, Ricochet",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Underwater Crossbow (Heavy)",
+      "name": "Underwater Crossbow (Heavy)",
+      "category": "ArmsArmor",
+      "cost_gp": 100.0,
+      "weight_lbs": 8.0,
+      "description": "20 ft range when used underwater",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Underwater Crossbow (Light)",
+      "name": "Underwater Crossbow (Light)",
+      "category": "ArmsArmor",
+      "cost_gp": 70.0,
+      "weight_lbs": 4.0,
+      "description": "20 ft range when used underwater",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Aklys",
+      "name": "Aklys",
+      "category": "ArmsArmor",
+      "cost_gp": 5.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Snag Net",
+      "name": "Snag Net",
+      "category": "ArmsArmor",
+      "cost_gp": 30.0,
+      "weight_lbs": 10.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Dungeon Ring (Jailers)",
+      "name": "Dungeon Ring (Jailers)",
+      "category": "MagicItems",
+      "cost_gp": 16000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Dungeon Ring (Prisoners)",
+      "name": "Dungeon Ring (Prisoners)",
+      "category": "MagicItems",
+      "cost_gp": 250.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Ring of Craft Magic",
+      "name": "Ring of Craft Magic",
+      "category": "MagicItems",
+      "cost_gp": 12000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Ring of Ferocious Action",
+      "name": "Ring of Ferocious Action",
+      "category": "MagicItems",
+      "cost_gp": 3000.0,
+      "weight_lbs": 0.0,
+      "description": "May ignore the Staggered condition up to 5/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Ring of Maniacal Devices",
+      "name": "Ring of Maniacal Devices",
+      "category": "MagicItems",
+      "cost_gp": 5000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Ring of Rat Fangs",
+      "name": "Ring of Rat Fangs",
+      "category": "MagicItems",
+      "cost_gp": 5000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Ring of Swarming Stabs",
+      "name": "Ring of Swarming Stabs",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 0.0,
+      "description": "Wearer can deal an additional 1d6 flanking sneak attack damage.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Ring of the Sophisticate",
+      "name": "Ring of the Sophisticate",
+      "category": "MagicItems",
+      "cost_gp": 11000.0,
+      "weight_lbs": 0.0,
+      "description": "Wearer instantly knows direction to nearest watering hole.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Belt of Foraging",
+      "name": "Belt of Foraging",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Belt of Stoneskin",
+      "name": "Belt of Stoneskin",
+      "category": "MagicItems",
+      "cost_gp": 60000.0,
+      "weight_lbs": 10.0,
+      "description": "Every 24 hours, this belt's wearer gains DR 10/adamantine until the belt absorbs 100 points of damage, at which point the belt becomes useless for the remainder of the 24-hour period. When first worn, or after each time this belt is taken off, it must worn for 24 consecutive hours in order for its magic to take effect again.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Meridian Belt",
+      "name": "Meridian Belt",
+      "category": "MagicItems",
+      "cost_gp": 1000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Corset of the Vishkanya",
+      "name": "Corset of the Vishkanya",
+      "category": "MagicItems",
+      "cost_gp": 3000.0,
+      "weight_lbs": 1.0,
+      "description": "Wearer can gain +5 on Escape Artist checks for up to 10 rounds per day.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Robe of Arcane Heritage",
+      "name": "Robe of Arcane Heritage",
+      "category": "MagicItems",
+      "cost_gp": 16000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Boots of Escape",
+      "name": "Boots of Escape",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Horseshoes of Crushing Blows +1",
+      "name": "Horseshoes of Crushing Blows +1",
+      "category": "MagicItems",
+      "cost_gp": 4000.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Horseshoes of Crushing Blows +2",
+      "name": "Horseshoes of Crushing Blows +2",
+      "category": "MagicItems",
+      "cost_gp": 16000.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Horseshoes of Crushing Blows +3",
+      "name": "Horseshoes of Crushing Blows +3",
+      "category": "MagicItems",
+      "cost_gp": 36000.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Horseshoes of Crushing Blows +4",
+      "name": "Horseshoes of Crushing Blows +4",
+      "category": "MagicItems",
+      "cost_gp": 64000.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Horseshoes of Crushing Blows +5",
+      "name": "Horseshoes of Crushing Blows +5",
+      "category": "MagicItems",
+      "cost_gp": 100000.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Slippers of the Triton",
+      "name": "Slippers of the Triton",
+      "category": "MagicItems",
+      "cost_gp": 56000.0,
+      "weight_lbs": 1.0,
+      "description": "Water Breathing",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Assisting Gloves",
+      "name": "Assisting Gloves",
+      "category": "MagicItems",
+      "cost_gp": 180.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Cap of Human Guise",
+      "name": "Cap of Human Guise",
+      "category": "MagicItems",
+      "cost_gp": 800.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Cat's Eye Crown",
+      "name": "Cat's Eye Crown",
+      "category": "MagicItems",
+      "cost_gp": 18000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Crown of Conquest",
+      "name": "Crown of Conquest",
+      "category": "MagicItems",
+      "cost_gp": 24600.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Crown of Swords",
+      "name": "Crown of Swords",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Halo of Inner Calm",
+      "name": "Halo of Inner Calm",
+      "category": "MagicItems",
+      "cost_gp": 16000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Halo of Menace",
+      "name": "Halo of Menace",
+      "category": "MagicItems",
+      "cost_gp": 84000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Mask of Stony Demeanor",
+      "name": "Mask of Stony Demeanor",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Necklace of Ki Serenity",
+      "name": "Necklace of Ki Serenity",
+      "category": "MagicItems",
+      "cost_gp": 16000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Cloak of Fangs",
+      "name": "Cloak of Fangs",
+      "category": "MagicItems",
+      "cost_gp": 2800.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Cloak of Fiery Vanishing",
+      "name": "Cloak of Fiery Vanishing",
+      "category": "MagicItems",
+      "cost_gp": 2600.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Cloak of Human Guise",
+      "name": "Cloak of Human Guise",
+      "category": "MagicItems",
+      "cost_gp": 900.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Cloak of the Diplomat",
+      "name": "Cloak of the Diplomat",
+      "category": "MagicItems",
+      "cost_gp": 20000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Cloak of the Scuttling Rat",
+      "name": "Cloak of the Scuttling Rat",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Seafoam Shawl",
+      "name": "Seafoam Shawl",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Shawl of Life-Keeping",
+      "name": "Shawl of Life-Keeping",
+      "category": "MagicItems",
+      "cost_gp": 1000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Stonemist Cloak",
+      "name": "Stonemist Cloak",
+      "category": "MagicItems",
+      "cost_gp": 3500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Bracers of Sworn Vengeance",
+      "name": "Bracers of Sworn Vengeance",
+      "category": "MagicItems",
+      "cost_gp": 25000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Shackles of Durance Vile",
+      "name": "Shackles of Durance Vile",
+      "category": "MagicItems",
+      "cost_gp": 16200.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Material ~ Darkleaf Cloth ~ Clothing",
+      "name": "Darkleaf Cloth",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Material ~ Darkleaf Cloth ~ Armor / Light",
+      "name": "Darkleaf Cloth",
+      "category": "Equipmods",
+      "cost_gp": 750.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Material ~ Darkleaf Cloth ~ Armor / Medium",
+      "name": "Darkleaf Cloth",
+      "category": "Equipmods",
+      "cost_gp": 1500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Material ~ Darkleaf Cloth ~ Item",
+      "name": "Darkleaf Cloth",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Material ~ Whipwood",
+      "name": "Whipwood",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "+5 Weapon's HP",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Material ~ Wyroot / 1 Life Point",
+      "name": "Wyroot (1 Life Point)",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Material ~ Wyroot / 2 Life Points",
+      "name": "Wyroot (2 Life Points)",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Material ~ Wyroot / 3 Life Points",
+      "name": "Wyroot (3 Life Points)",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Special Ability ~ Cruel ~ Weapon",
+      "name": "Cruel",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When the wielder strikes a creature that is frightened, shaken, or panicked with a cruel weapon, that creature becomes sickened for 1 round. When the wielder uses the weapon to knock unconscious or kill a creature, he gains 5 temporary hit points that last for 10 minutes.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "UE",
+      "key": "Special Ability ~ Deadly ~ Weapon",
+      "name": "Deadly",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This special ability can only be placed on weapons that normally deal nonlethal damage, such as whips and saps. All damage a deadly weapon deals is lethal damage. A whip (or similar weapon that cannot damage creatures with armor or natural armor bonuses) with this special ability deals damage even to creatures with armor or natural armor. On command, the weapon suppresses this ability until told to resume it.",
+      "name_pi_citation": null
+    }
+  ]
+}

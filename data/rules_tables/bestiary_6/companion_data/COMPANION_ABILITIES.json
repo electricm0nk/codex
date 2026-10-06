@@ -1,0 +1,253 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "bestiary_6/companion_data/COMPANION_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "bestiary_6",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion Advancement ~ Amargasaurus",
+      "name": "Companion Advancement (Amargasaurus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Amargasaurus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 4
+    },
+    {
+      "key": "Companion Advancement ~ Brontotherium",
+      "name": "Companion Advancement (Brontotherium)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Brontotherium)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 5
+    },
+    {
+      "key": "Companion Advancement ~ Deinotherium",
+      "name": "Companion Advancement (Deinotherium)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Deinotherium)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 6
+    },
+    {
+      "key": "Companion Advancement ~ Devil Monkey",
+      "name": "Companion Advancement (Devil Monkey)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Devil Monkey)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 7
+    },
+    {
+      "key": "Companion Advancement ~ Dunkleosteus",
+      "name": "Companion Advancement (Dunkleosteus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Dunkleosteus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 8
+    },
+    {
+      "key": "Companion Advancement ~ Elasmotherium",
+      "name": "Companion Advancement (Elasmotherium)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Elasmotherium)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 9
+    },
+    {
+      "key": "Companion Advancement ~ Giganotosaurus",
+      "name": "Companion Advancement (Giganotosaurus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Giganotosaurus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 10
+    },
+    {
+      "key": "Companion Advancement ~ Kentrosaurus",
+      "name": "Companion Advancement (Kentrosaurus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Kentrosaurus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 11
+    },
+    {
+      "key": "Companion Advancement ~ Mokele-Mbembe",
+      "name": "Companion Advancement (Mokele-Mbembe)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Mokele-Mbembe)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 12
+    },
+    {
+      "key": "Companion Advancement ~ Quetzalcoatlus",
+      "name": "Companion Advancement (Quetzalcoatlus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Quetzalcoatlus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 13
+    },
+    {
+      "key": "Companion Advancement ~ Raven (Giant)",
+      "name": "Companion Advancement (Raven (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Raven (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 14
+    },
+    {
+      "key": "Companion Advancement ~ Titanoboa",
+      "name": "Companion Advancement (Titanoboa)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Titanoboa)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b6_abilities_companion.lst",
+      "source_line": 15
+    }
+  ]
+}

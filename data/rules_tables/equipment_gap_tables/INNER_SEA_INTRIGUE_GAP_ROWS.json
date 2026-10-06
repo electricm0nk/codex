@@ -1,0 +1,457 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/INNER_SEA_INTRIGUE_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "ISI",
+      "key": "Antidote (Vial)",
+      "name": "Antidote (Vial)",
+      "category": "General",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "Price is half that of the specific poison it counteracts; grants a +10 alchemical bonus on saves against that poison for 4 hours.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_general_lst_13)",
+      "name": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_general_lst_13)",
+      "category": "General",
+      "cost_gp": 3.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": [
+        "isi_equip_general.lst",
+        13
+      ]
+    },
+    {
+      "book": "ISI",
+      "key": "Chameleon Pill",
+      "name": "Chameleon Pill",
+      "category": "General",
+      "cost_gp": 100.0,
+      "weight_lbs": null,
+      "description": "+4 circumstance bonus on Stealth checks for 4 hours.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Waspguts",
+      "name": "Waspguts",
+      "category": "General",
+      "cost_gp": 100.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Broadsheet",
+      "name": "Broadsheet",
+      "category": "General",
+      "cost_gp": 0.6,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Piecemeal Weapon",
+      "name": "Piecemeal Weapon",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": 10.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Wing Staff",
+      "name": "Wing Staff",
+      "category": "General",
+      "cost_gp": 1000.0,
+      "weight_lbs": 6.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_general_lst_29)",
+      "name": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_general_lst_29)",
+      "category": "General",
+      "cost_gp": 400.0,
+      "weight_lbs": 0.0,
+      "description": "Injury; Fort DC 14; Freq 1 rnd (4); Effect Muteness 1 rnd; Cure 1 save",
+      "name_pi_citation": [
+        "isi_equip_general.lst",
+        29
+      ]
+    },
+    {
+      "book": "ISI",
+      "key": "Poison (Breath of the Mantis God)",
+      "name": "Poison (Breath of the Mantis God)",
+      "category": "General",
+      "cost_gp": 1300.0,
+      "weight_lbs": 0.0,
+      "description": "Inhaled; Fort DC 21; Onset Injury; Freq 1 min (6); Effect 1d4 bleed; see text/1d3 Con dmg; Cure 2 saves",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_general_lst_31)",
+      "name": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_general_lst_31)",
+      "category": "General",
+      "cost_gp": 500.0,
+      "weight_lbs": 0.0,
+      "description": "Ingested; Fort DC 16; Onset Drinking alcohol; Freq 1 min (6); Effect 1d2 Dex dmg; Cure 2 saves",
+      "name_pi_citation": [
+        "isi_equip_general.lst",
+        31
+      ]
+    },
+    {
+      "book": "ISI",
+      "key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_general_lst_32)",
+      "name": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_general_lst_32)",
+      "category": "General",
+      "cost_gp": 200.0,
+      "weight_lbs": 0.0,
+      "description": "Ingested; Fort DC 23; Onset 1 min.; Freq 1 min (2); Effect Deathlike trance 1 min./deathlike trance 8 hrs; Cure 1 save",
+      "name_pi_citation": [
+        "isi_equip_general.lst",
+        32
+      ]
+    },
+    {
+      "book": "ISI",
+      "key": "Poison (Marvelous Fear Gas)",
+      "name": "Poison (Marvelous Fear Gas)",
+      "category": "General",
+      "cost_gp": 150.0,
+      "weight_lbs": 0.0,
+      "description": "Inhaled; Fort DC 17; Onset Injury or fear; Freq 1 min (4); Effect Shaken 10 min./1d2 Wis dmg; Cure 1 save",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Poison (Twilight Illness)",
+      "name": "Poison (Twilight Illness)",
+      "category": "General",
+      "cost_gp": 750.0,
+      "weight_lbs": 0.0,
+      "description": "Contact; Fort DC 19; Onset Eating food; Freq 1 hr (8); Effect Nauseated 1 hr. and sickened 1 day; Cure 1 save",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Poison (Vessel Between)",
+      "name": "Poison (Vessel Between)",
+      "category": "General",
+      "cost_gp": 400.0,
+      "weight_lbs": 0.0,
+      "description": "Ingested; Fort DC 20; Onset Sickened; Freq 1 min (4); Effect 1d2 Con and Wis dmg; Cure 2 saves",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Bloodlink",
+      "name": "Bloodlink",
+      "category": "MagicItems",
+      "cost_gp": 4800.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Brastlewark Brew",
+      "name": "Brastlewark Brew",
+      "category": "MagicItems",
+      "cost_gp": 150.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Chalice of Poison",
+      "name": "Chalice of Poison",
+      "category": "MagicItems",
+      "cost_gp": 10080.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Charmer's Kiss",
+      "name": "Charmer's Kiss",
+      "category": "MagicItems",
+      "cost_gp": 750.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_magic_items_lst_16)",
+      "name": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_magic_items_lst_16)",
+      "category": "MagicItems",
+      "cost_gp": 10080.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": [
+        "isi_equip_magic_items.lst",
+        16
+      ]
+    },
+    {
+      "book": "ISI",
+      "key": "Elixir of Amnesia",
+      "name": "Elixir of Amnesia",
+      "category": "MagicItems",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Forger's Friend",
+      "name": "Forger's Friend",
+      "category": "MagicItems",
+      "cost_gp": 11200.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_magic_items_lst_19)",
+      "name": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_magic_items_lst_19)",
+      "category": "MagicItems",
+      "cost_gp": 34400.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": [
+        "isi_equip_magic_items.lst",
+        19
+      ]
+    },
+    {
+      "book": "ISI",
+      "key": "Hat of Infinite Disguises",
+      "name": "Hat of Infinite Disguises",
+      "category": "MagicItems",
+      "cost_gp": 25000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Holdout Wand Wrap",
+      "name": "Holdout Wand Wrap",
+      "category": "MagicItems",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_magic_items_lst_22)",
+      "name": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_magic_items_lst_22)",
+      "category": "MagicItems",
+      "cost_gp": 720.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": [
+        "isi_equip_magic_items.lst",
+        22
+      ]
+    },
+    {
+      "book": "ISI",
+      "key": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_magic_items_lst_23)",
+      "name": "Codex-Named Unit (equipment_inner_sea_intrigue_isi_equip_magic_items_lst_23)",
+      "category": "MagicItems",
+      "cost_gp": 4800.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": [
+        "isi_equip_magic_items.lst",
+        23
+      ]
+    },
+    {
+      "book": "ISI",
+      "key": "Mask of the Cursed Eye",
+      "name": "Mask of the Cursed Eye",
+      "category": "MagicItems",
+      "cost_gp": 2500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Masterful Gray Gloves",
+      "name": "Masterful Gray Gloves",
+      "category": "MagicItems",
+      "cost_gp": 5400.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Medicinal Bezoar",
+      "name": "Medicinal Bezoar",
+      "category": "MagicItems",
+      "cost_gp": 1600.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Memory Musk Gourd",
+      "name": "Memory Musk Gourd",
+      "category": "MagicItems",
+      "cost_gp": 4800.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Platter of Exquisite Feasting",
+      "name": "Platter of Exquisite Feasting",
+      "category": "MagicItems",
+      "cost_gp": 250.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Rod of the Alicorn",
+      "name": "Rod of the Alicorn",
+      "category": "MagicItems",
+      "cost_gp": 25000.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Saboteur's Gloves",
+      "name": "Saboteur's Gloves",
+      "category": "MagicItems",
+      "cost_gp": 15240.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Seamless Skin",
+      "name": "Seamless Skin",
+      "category": "MagicItems",
+      "cost_gp": 70000.0,
+      "weight_lbs": 8.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Spectacles of Lip Reading",
+      "name": "Spectacles of Lip Reading",
+      "category": "MagicItems",
+      "cost_gp": 3000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Survivor's Ring",
+      "name": "Survivor's Ring",
+      "category": "MagicItems",
+      "cost_gp": 56160.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Toastmaster's Teacup",
+      "name": "Toastmaster's Teacup",
+      "category": "MagicItems",
+      "cost_gp": 5000.0,
+      "weight_lbs": 0.25,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Triple Eyes of Vivid Auras",
+      "name": "Triple Eyes of Vivid Auras",
+      "category": "MagicItems",
+      "cost_gp": 15000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Witness Hunter's Ring",
+      "name": "Witness Hunter's Ring",
+      "category": "MagicItems",
+      "cost_gp": 25200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Special Ability ~ Obliviating ~ Melee",
+      "name": "Obliviating",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Critical hit or sneak attack causes victim to lose all memory of previous 1d6 minutes and become flat-footed until its next turn (DC 16 Fort negates)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Special Ability ~ Training ~ Weapon",
+      "name": "Training",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Grants one combat feat to the wielder while drawn; the feat is chosen when this ability is placed on the weapon and cannot be changed",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISI",
+      "key": "Special Ability ~ Transformative / Greater ~ Melee",
+      "name": "Transformative (Greater)",
+      "category": "Equipmods",
+      "cost_gp": 15000.0,
+      "weight_lbs": null,
+      "description": "SPROP:On command, alters its shape to become any other weapon (but not ammo)",
+      "name_pi_citation": null
+    }
+  ]
+}

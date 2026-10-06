@@ -1,0 +1,3184 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "inner_sea_gods/monster_data/MONSTER_ABILITIES",
+  "licence": {
+    "license": "PI-REDACTED",
+    "book": "inner_sea_gods",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": [
+      {
+        "row": 18,
+        "field": "description"
+      },
+      {
+        "row": 19,
+        "field": "description"
+      },
+      {
+        "row": 20,
+        "field": "description"
+      },
+      {
+        "row": 60,
+        "field": "description"
+      },
+      {
+        "row": 66,
+        "field": "description"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "key": "First Blade ~ Powerful Blows (Slam)",
+      "name": "Powerful Blows (Slam)",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The creature's slam attacks add 1-1/2 times the creature's Strength bonus to damage instead of its normal Strength bonus or half its Strength bonus.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The First Blade"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 14,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "First Blade ~ Regeneration",
+      "name": "Regeneration",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ModifyHP"
+      ],
+      "description": "The First Blade is difficult to kill. It heal damage at %1 points per round, as with fast healing, but it cannot die as long as its regeneration is still functioning (although it will still fall unconscious when its hit points are below 0). Adamantine weapons cause its regeneration to stop functioning on the round following the attack. During this round, it cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. It can regrow lost portions of its body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally.",
+      "description_variables": [
+        "RegenerationRate"
+      ],
+      "source_page": null,
+      "owners": [
+        "The First Blade"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 15,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "First Blade ~ Bladed Slam",
+      "name": "Bladed Slam",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The First Blade's slam attacks deal bludgeoning and slashing damage. Its slams count as natural weapons or manufactured weapons (whichever is most beneficial to it) for the purpose of spells that enhance attacks, and as adamantine, chaotic, and magic for the purpose of overcoming damage reduction and bypassing hardness.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The First Blade"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 16,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "First Blade ~ Swarm Form",
+      "name": "Swarm Form",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The First Blade can transform into a floating swarm of Tiny sharp metal fragments. In this form it has the swarm subtype, cannot make slam attacks, gains the distraction ability (DC %1), and can make a swarm attack that deals 4d6 points of slashing damage to its targets.",
+      "description_variables": [
+        "10+(HD/2)+CON"
+      ],
+      "source_page": null,
+      "owners": [
+        "The First Blade"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 17,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "First Blade ~ Lord of Battle",
+      "name": "Lord of Battle",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The First Blade is proficient in all weapons, and counts as an 18th-level barbarian and fighter for the purposes of all prerequisites.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The First Blade"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 19,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "First Blade ~ Rage Aura",
+      "name": "Rage Aura",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Aura"
+      ],
+      "description": "Willing creatures within 100 feet of the First Blade gain the effects of rage automatically (as Rage spell), whether they are allies or enemies of the herald. Those who choose not to be affected are immune to the aura until they leave the area and return.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The First Blade"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 20,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "First Blade ~ Ironsense",
+      "name": "Ironsense",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Vision"
+      ],
+      "description": "The First Blade automatically detects iron objects within %1 feet, just as if it possessed the blindsight ability.",
+      "description_variables": [
+        "IronsenseRange"
+      ],
+      "source_page": null,
+      "owners": [
+        "The First Blade"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 21,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Skein Steward ~ Immunity to Possession",
+      "name": "Immunity to Possession",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Immunity"
+      ],
+      "description": "The herald cannot be possessed or forced out of their body.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Steward of the Skein"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 24,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Skein Steward ~ Fate Aura",
+      "name": "Fate Aura",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Aura"
+      ],
+      "description": "The herald's aura acts as Consecrate and grants her a +4 deflection bonus to AC, a +5 insight bonus to AC, and a +4 resistance bonus on saving throws. Any creature striking the herald from within her aura either is blinded or takes 1d6 points of Strength damage (herald's choice, Will DC %1 negates).",
+      "description_variables": [
+        "FateAuraDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Steward of the Skein"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 25,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Skein Steward ~ Gaze",
+      "name": "Gaze",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Dazed 2d6 rounds (or stunned if 5 HD or fewer, or held for 2d6 rounds if undead), 60 feet; Will DC %1 negates. A creature that succeeds at its save is immune to the gaze for 24 hours. This is a mind-affecting effect (or a necromancy effect against undead).",
+      "description_variables": [
+        "GazeDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Steward of the Skein"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 26,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Skein Steward ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Incorporeal form; when incorporeal, the herald can use her spell-like abilities and gaze attack but can't make slam attacks.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Steward of the Skein"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 27,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Skein Steward ~ Constant Spells",
+      "name": "Constant Spells",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": null,
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Steward of the Skein"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 28,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Skein Steward ~ Tugging Strands",
+      "name": "Tugging Strands",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The herald can force a creature within line of sight to reroll any one roll that it has just made before the result of the roll is revealed. The result of the reroll must be taken, even if it is worse than the original roll. She can use this ability 3 times per day.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Steward of the Skein"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 29,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Ahmuuth ~ Animated Shield",
+      "name": "Animated Shield",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "An ahmuuth's gravestones defend the it in a manner similar to an animated shield but without a limited duration. If the stones leave the psychopomp's square or the ahmuuth is slain, they become inert stone.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Psychopomp (Ahmuuth)"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 32,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Ahmuuth ~ Death's Dagger",
+      "name": "Death's Dagger",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "An ahmuuth's dagger is treated as a +1 returning undead bane dagger. It loses this ability if it is held by anyone other than the ahmuuth, and regains it once returned.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Psychopomp (Ahmuuth)"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 33,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Ahmuuth ~ Ectoplasmic Focus",
+      "name": "Ectoplasmic Focus",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "An ahmuuth's spells and spell- like abilities have their full effect against incorporeal or ethereal creatures.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Psychopomp (Ahmuuth)"
+      ],
+      "source_file": "isg_abilities_races_b4.lst",
+      "source_line": 34,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Herald ~ Always Armed",
+      "name": "Always Armed",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Heralds can summon their signature weapon as a standard action. If its herald doesn't have a signature weapon, it can summon any nonmagical weapon as a standard action (including special materials); the weapon disappears if it leaves the herald's grasp.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 38,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Herald ~ Emissary",
+      "name": "Emissary",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Heralds can always be summoned by the faithful using greater planar ally or gate, regardless of limitations of that spell, even if it's not an outsider.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 39,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_43)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_43)",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 43,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_gods:isg_abilities_races.lst:43"
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_44)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_44)",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ModifyHP"
+      ],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 44,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_gods:isg_abilities_races.lst:44"
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_45)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_45)",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 45,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_gods:isg_abilities_races.lst:45"
+    },
+    {
+      "key": "Lawgiver ~ Immunity to Rust",
+      "name": "Immunity to Rust",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Immunity"
+      ],
+      "description": "Though made of metal, the Lawgiver is immune to rust and rusting effects.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Lawgiver"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 88,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lawgiver ~ Freeze",
+      "name": "Freeze",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The Lawgiver can hold itself so still it appears to be a statue. When using freeze it can take 20 on its Stealth check to hide in plain sight as a metal statue.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Lawgiver"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 89,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lawgiver ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A giant eagle (per Beastiary) or two-headed golden eagle (same stats as an eagle, but with two bite attacks) as Beast Shape IV.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Lawgiver"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 90,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Orsheval ~ Electric Hooves",
+      "name": "Electric Hooves",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "An orsheval's hoof does an additional 1d4 electricity damage on a successful strike.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Orsheval"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 93,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Orsheval ~ Glittering Radiance",
+      "name": "Glittering Radiance",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "An orsheval usually glows with a golden light equivalent to that of a candle. In battle, its glow increases, filling the area within 5 feet of it with shining motes. These motes cling to all creatures in the affected area, outlining them as glitterdust for 6 rounds. Opponents in the area must succeed at a DC %1 Will save or be blinded; a blinded creature may attempt a new saving throw each round at the end of its turn to end the blindness. The motes persist for 1 round after the orsheval moves from a square, leaving a trailing cloud that can affect creatures that move into the affected area. The orsheval can suppress or reactivate the glow or motes as a free action.",
+      "description_variables": [
+        "OrshevalGlitterDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Orsheval"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 94,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Orsheval ~ Truespeech",
+      "name": "Truespeech",
+      "facet": "Communicate",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "An orsheval can speak with any creature that has a language, as if using a tongues spell (caster level 5th).  This ability is always active.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Orsheval"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 95,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Basileus ~ Gaze",
+      "name": "Gaze",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Death (if 6 HD or less) or 6d6 damage and panicked for 2d4 rounds (7 HD or more), range 30 feet, Will DC %1 negates the death or panicked effect. This gaze is a mind-affecting fear effect that causes its targets to perceive Basileus as the most terrifying thing that it can imagine.",
+      "description_variables": [
+        "BaslieusGazeDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Basileus"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 98,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Basileus ~ Terror Shape",
+      "name": "Terror Shape",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "While using his gaze ability, Basileus manifests one to five monstrous limbs that can make slam attacks.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Basileus"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 99,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Basileus ~ Veil of Forms",
+      "name": "Veil of Forms",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "All creatures see Basileus as a powerful and attractive member of thier own race. While using this ability, Basileus's gaze ability is suppressed. He can activate or suppress this ability as a free action.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Basileus"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 100,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Hesperian ~ Detect Good",
+      "name": "Detect Good",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "Sense"
+      ],
+      "description": "An Accomplice Devil can Detect Good as a constant ability.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Devil (Accomplice)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 103,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Hesperian ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any Medium humanoid or a Medium amphisbaena (snake with a head at both ends). In amphisbaena form, the Accomplice Devil gains All-Around Vision and can use his bite attack.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Devil (Accomplice)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 104,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Hesperian ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "In amphisbaena form, the Accomplice Devil has a poisonous bite - Injury; Save Fort DC %1; Frequency 1/round for 4 rounds; Effect 1d2 Con damage; Cure 1 save.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Devil (Accomplice)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 105,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Menotherian ~ Alluring Scent",
+      "name": "Alluring Scent",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Aura"
+      ],
+      "description": "The Menotherian's subtle aroma causes creatures in her vicinity to become placid and react favorably towards her. Any creature that fails a DC %1 Fortitude save improves its atitude towards her one step closer to friendly. Creatures with the scent ability take a -4 penalty on this save. Creatures in the aura must save each minute. This is a mind-affecting poison effect.",
+      "description_variables": [
+        "AlluringDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Menotherian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 108,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Menotherian ~ Implant",
+      "name": "Implant",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "1/day the Menotherian can implant eggs in a creature using its sting. The creature must succeed at a DC %1 Fortitude save to resist implantation. The target is nauseated for the next 2d4 rounds while the eggs gestate. When the eggs hatch, they form a chaotic neutral hellwasp swarm, kill the host in 1 round, and inhabit the corpse. The eggs can be surgically removed with a successful DC 30 Heal check (this check deals 2d6 damage to the host regardless of success) or by Remove Disease or similar spell.",
+      "description_variables": [
+        "ImplantDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Menotherian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 109,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Menotherian ~ Mind Control",
+      "name": "Mind Control",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The Menotherian can inject its scent into the brain of a helpless or willing target, controlling it for the next 24 hours (as Dominate Person, Fort DC %1 negates), although she must verbally give the target instructions.",
+      "description_variables": [
+        "MindControlDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Menotherian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 110,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Menotherian ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Injury; Save Fort DC %1; Frequency 1/round for 6 rounds; Effect 1d3 Dex damage; Cure 2 consecutive saves.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Menotherian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 111,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Menotherian ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Elf, wasp, or giant wasp (as Alter Self or Vermin Shape II).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Menotherian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 112,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vendenopterix ~ Ability Drain",
+      "name": "Ability Drain",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "A vendenopterix drains energy from a mortal she lures into an act of passion, such as a kiss. An unwilling victim must be grappled before the vendenopterix can use this ability. The kiss drains 1 point of INT, WIS, or CHA (her choice), and has the effect of a Suggestion spell, asking the victim to accept another act of passion (DC %1 Will negates Suggestion).",
+      "description_variables": [
+        "VendenKissDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Vendenopterix"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 115,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vendenopterix ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Injury; Save Fort DC %1; Frequency 1/round for 6 rounds; Effect 1d2 Dex damage; Cure 2 consecutive saves.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Vendenopterix"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 116,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vendenopterix ~ Swift Tracker",
+      "name": "Swift Tracker",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A Vendenopterix can move at normal speed while using Survival to follow tracks without taking the normal -5 penalty. She takes only a -10 penalty (instead of the normal -20) when moving at up to twice normal speed while tracking.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Vendenopterix"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 117,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vendenopterix ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any humanoid (as Alter Self).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Vendenopterix"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 118,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Vendenopterix ~ Enchantment Resistance",
+      "name": "Enchantment Resistance",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "+2 to saves versus enchantments.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Vendenopterix"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 119,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thais ~ Armor of Valor",
+      "name": "Armor of Valor",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Defensive"
+      ],
+      "description": "Thais adds her Charisma modifier as a deflection bonus to her AC and gains a +1 luck bonus on all saves.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Thais"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 122,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thais ~ Aura of Bravery",
+      "name": "Aura of Bravery",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Aura"
+      ],
+      "description": "Allies within Thais' aura are affected by Remove Fear and Remove Paralysis. Allies gain a +1 morale bonus on attack rolls, weapon damage rolls, saves, and skill checks; opponents take a -1 morale penalty on such rolls.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Thais"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 123,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thais ~ Luck Domain",
+      "name": "Luck Domain",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "3/day Thais can use the Luck domain powers (30 ft range for Bit of Luck).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Thais"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 124,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thais ~ Penetrating Gaze",
+      "name": "Penetrating Gaze",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Lawful opponents within 30 feet take 5d6 damage and are dazed for 1 round. A successful DC %1 Will save halves the damage and negates the daze effect.",
+      "description_variables": [
+        "ThaisGazeDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Thais"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 125,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thais ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Female elf, half-elf, or human from Medium to Huge size (as Alter Self or Giant Form II).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Thais"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 126,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Ataxian ~ Possession",
+      "name": "Possession",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "An Ataxian does not require a receptacle to use its Magic Jar spell-like ability. When using this ability on the Material Plan, its body becomes ehtereal for the duration. When the Ataxian leaves its host, the host must succeed at a DC %1 Will save or fall asleep for 1d3 minutes.",
+      "description_variables": [
+        "AtaxianPossessDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Ataxian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 129,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Ataxian ~ Staggered",
+      "name": "Staggered",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any creature struck by an Ataxian's ray attack must succeed at a DC %1 Fortitude save or be staggered for 1d4 rounds.",
+      "description_variables": [
+        "AtaxianStagDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Ataxian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 130,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Ataxian ~ Staggering Drunk",
+      "name": "Staggering Drunk",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "For each alcoholic drink an Ataxian has consumed in the past hour, it gains a +1 dodge bonus to AC and takes a -1 penalty on all attack rolls, saving throws, skill checks, and ability checks, to a maximum of +4 and -4 respectively. These effects wear off after 1 hour.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Ataxian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 131,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Ataxian ~ Ray",
+      "name": "Ray",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "An Ataxian can fire a ray of cold up to 30 feet with no range increment.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Ataxian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 132,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Night Monarch ~ No Breath",
+      "name": "No Breath",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The Night Monarch does not breathe, and is immune to effects that require breathing (such as inhaled poison), and this ability is imparted onto any riders. This does not give immunity to cloud or gas attacks that do not require breathing.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Night Monarch"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 135,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Night Monarch ~ Immunity to Cold",
+      "name": "Immunity to Cold",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Immunity"
+      ],
+      "description": "The Night Monarch never takes cold damage, and this ability is imparted onto any riders.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Night Monarch"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 136,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Night Monarch ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "BreathWeapon"
+      ],
+      "description": "The Night Monarch's breath weapon creates sticky webbing (as Web universal monster ability, DC %1). It can use this ability in the air to entangle flying creatures without requiring the use of anchor points to hold the web in place.",
+      "description_variables": [
+        "MonarchWebDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Night Monarch"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 137,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Night Monarch ~ Poison Flesh",
+      "name": "Poison Flesh",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Any creature that bites the Night Monarch is exposed to Black Lotus Extract poison (see Core Rulebook p.558). Eating its flesh gives the attacker a -4 penalty on the poison's saving throw.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Night Monarch"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 138,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Night Monarch ~ Dream Dust",
+      "name": "Dream Dust",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "As a full-round action, the Night Monarch can flutter its wings to create a 30-foot burst of dust centered on itself. This dust affects creatures as Deep Slumber, but with no HD limit (Will DC %1 negates). This ability is usable once every 1d4 rounds.",
+      "description_variables": [
+        "DreamDustDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Night Monarch"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 139,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Night Monarch ~ Languages",
+      "name": "Languages",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Communicate"
+      ],
+      "description": "The Night Monarch is unable to speak, but can understand spoken languages. It can also use telepathy with any creature it touches.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Night Monarch"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 140,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thyrlien ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ModifyHP"
+      ],
+      "description": "Regain 1 hp/round when outside under a night sky. Except where noted here, fast healing is just like natural healing. Fast healing does not restore hit points lost from starvation, thirst, or suffocation, nor does it allow a creature to regrow lost body parts. Unless otherwise stated, it does not allow lost body parts to be reattached. Fast healing continues to function (even at negative hit points) until a creature dies, at which point the effects of fast healing end immediately.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Azata (Thyrlien)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 144,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thyrlien ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Injury; Save Fort DC %1; Frequency 1/round for 6 rounds; Effect 1d3 Str damage; Cure 2 consecutive saves.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Azata (Thyrlien)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 145,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thyrlien ~ Starlight Blast",
+      "name": "Starlight Blast",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Azata (Thyrlien)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 146,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thyrlien ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Giant Moth (use Giant Wasp stats) as Vermin Shape II.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Azata (Thyrlien)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 147,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thyrlien ~ Poison Resistance",
+      "name": "Poison Resistance",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "+4 to saves versus poison.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Azata (Thyrlien)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 148,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thyrlien ~ Detect Evil",
+      "name": "Detect Evil",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "Sense"
+      ],
+      "description": "A Thyrlien can Detect Evil as a constant ability.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Azata (Thyrlien)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 149,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thyrlien ~ Detect Magic",
+      "name": "Detect Magic",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "Sense"
+      ],
+      "description": "A Thyrlien can Detect Magic as a constant ability.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Azata (Thyrlien)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 150,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grim White Stag ~ Poison Resistance",
+      "name": "Grim White Stag ~ Poison Resistance",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "+4 to saves versus poison.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Grim White Stag"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 154,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grim White Stag ~ Bugle",
+      "name": "Bugle",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Grim White Stag"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 155,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grim White Stag ~ Cascade of Spears",
+      "name": "Cascade of Spears",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "1/day the Stag can shed fragments of its antlers, creating up to 18 +1 shortspears, +1 spears, or +1 longspears in any combination (or substitute five +1 arrows or +1 bolts for each spear). These weapons retain their magic for %1 minutes, after which they become common weapons made of antler.",
+      "description_variables": [
+        "SpearCascadeLVL"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Grim White Stag"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 156,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grim White Stag ~ Heroes' Feast",
+      "name": "Heroes' Feast",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "To cast this spell, the Stag lies down and dies, its body becoming the magical feast. At the next sunrise, it returns to life with full hit points.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Grim White Stag"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 157,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grim White Stag ~ Protective Aura",
+      "name": "Protective Aura",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "This ability provides a +4 deflection bonus to AC and a +4 resistance bonus on saving throws, but only against attacks or effects from evil creatures.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Grim White Stag"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 158,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grim White Stag ~ Lay on Hands",
+      "name": "Lay on Hands",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "LayOnHands",
+        "Lay on Hand"
+      ],
+      "description": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability %1 times per day. With one use of this ability, you can heal %2d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this healing power to deal damage to undead creatures, dealing %2d6 points of damage. Using Lay on Hands in this way requires a melee touch attack and doesn't provide an attack of opportunity. Undead do not receive a saving throw against this damage.",
+      "description_variables": [
+        "LayOnHandsTimes",
+        "LayOnHandsDice"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Grim White Stag"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 159,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grim White Stag ~ Detect Evil",
+      "name": "Detect Evil",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "Sense"
+      ],
+      "description": "The Grim White Stag can Detect Evil as a constant ability.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Grim White Stag"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 160,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grim White Stag ~ Languages",
+      "name": "Languages",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Communicate"
+      ],
+      "description": "The Grim White Stag is unable to speak, but can understand spoken languages. It can also use Speak with Animals at will.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Grim White Stag"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 161,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Stag Archon ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Large stag (as Beast Shape II).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Archon (Stag)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 165,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Zentragt ~ Adamantine Attacks",
+      "name": "Adamantine Attacks",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A zentragt's bite and claw attacks count as adamantine, chaotic, and magic for the purposes of overcoming damage reduction and bypassing hardness.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Zentragt"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 168,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Zentragt ~ Eat Metal",
+      "name": "Eat Metal",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A zentragt can eat metal to heal itself. For every 5 pounds of iron or steel it consumes, it heals 5 hit points. Adamantine, cold iron, mithral, or metals with an enhancement bonus of +1 or higher heal it double this amount. It takes a zentragt 1 minute to eat 5 pounds of metal.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Zentragt"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 169,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Personification of Fury ~ Water Mastery",
+      "name": "Water Mastery",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The herald gains a +1 bonus on attack and damage rolls if both it and its opponent are touching water. These modifiers apply to bull rush and overrun maneuvers, whether the elemental is initiating or resisting these kinds of attacks. (Unlike a water elemental, the herald does not have a penalty if it or its opponent is touching the ground.)",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Personification of Fury"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 172,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Personification of Fury ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Air or water elemental only (as Elemental Body IV).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Personification of Fury"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 173,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Personification of Fury ~ Energy Ray",
+      "name": "Energy Ray",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "The herald can shoot rays of cold or electricity up to 100 feet. These can threaten a critical hit on a roll of 18, 19, or 20.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Personification of Fury"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 174,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Xocothian ~ Form of Sea and Sky",
+      "name": "Form of Sea and Sky",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Once per hour, a xocothian can transform itself into two Small elementals (one air and one water) for up to 7 minutes. These elementals appear in adjacent squares. Each have half of the xocothian's current hit points and share the same mind. They can reform into the xocothian as a standard action if they are adjacent to each other - the reformed xocothian's hit points are equal to the total of the two elementals' hit points. If either elemental is slain, the xocothian must use its standard action on its next turn to reform (treat a slain elemental's hit points as 0 when determining the reformed xocothian's total hit points).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Xocothian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 177,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Xocothian ~ Speed Burst",
+      "name": "Speed Burst",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ModifyMovement"
+      ],
+      "description": "A xocothian can fly or swim up to 200 feet as a full-round action. When using this ability, it must move in a straight line. This does not provoke attacks of opportunity.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Xocothian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 178,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Xocothian ~ Speak with Animals",
+      "name": "Speak with Animals",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Communicate"
+      ],
+      "description": "A xocothian is permanently under the effects of Speak with Animals (as the spell).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Xocothian"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 179,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Hand of the Inheritor ~ Lay on Hands",
+      "name": "Lay on Hands",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "LayOnHands",
+        "Lay on Hand"
+      ],
+      "description": "You can heal wounds (your own or those of others) by touch. Each day you can use this ability %1 times per day. With one use of this ability, you can heal %2d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this healing power to deal damage to undead creatures, dealing %2d6 points of damage. Using Lay on Hands in this way requires a melee touch attack and doesn't provide an attack of opportunity. Undead do not receive a saving throw against this damage.",
+      "description_variables": [
+        "LayOnHandsTimes",
+        "LayOnHandsDice"
+      ],
+      "source_page": null,
+      "owners": [
+        "Hand of the Inheritor"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 182,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Hand of the Inheritor ~ Divine Trigger",
+      "name": "Divine Trigger",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The Hand of the Inheritor can activate any paladin spell from a spell trigger item as if he were an 18th-level paladin.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Hand of the Inheritor"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 183,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Iophanite Angel ~ Radiance",
+      "name": "Radiance",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "An iophanite usually glows with a golden light equivalent to that of a candle. In battle, its glow increases, filling the area within 5 feet. An iophanite can suppress or resume this glow as a free action. Additionally, as a standard action at will an iophanite can intensify its glow to reproduce the effects of the spell Flare. A creature can resist this effect with a DC %1 Fortitude save, though evil creatures take a -4 penalty on their saves.",
+      "description_variables": [
+        "RadianceDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Angel (Iophanite)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 186,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Iophanite Angel ~ Shield Form",
+      "name": "Shield Form",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Once per day, an iophanite can transform into a +1 spiked light steel shield sized for a Small or Medium creature. An iophanite cannot communicate or use any of its other abilities while in this form. Once it transforms, it cannot change back for 24 hours, though the spell Break Enchantment can end the transformation early. An iophanite regains its full hit points when it shifts back into its normal form. If the shield is destroyed, the iophanite is killed.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Angel (Iophanite)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 187,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Iophanite Angel ~ Protection from Evil",
+      "name": "Protection from Evil",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "An iophanite is constantly under the effects of Protection from Evil at a caster level of 6.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Angel (Iophanite)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 188,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "The Old Man ~ Regeneration",
+      "name": "Regeneration",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ModifyHP"
+      ],
+      "description": "You are difficult to kill. You heal damage at %1 points per round, as with fast healing, but you cannot die as long as your regeneration is still functioning (although you still fall unconscious when their hit points are below 0). Chaotic weapons and effects cause your regeneration to stop functioning on the round following the attack. During this round, you cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. You can regrow lost portions of you body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally.",
+      "description_variables": [
+        "RegenerationRate"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Old Man"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 191,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "The Old Man ~ Monk Abilities",
+      "name": "Monk Abilities",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "The Old Man has the following abilities of a 16th-level monk: AC bonus (+4), fast movement (50 ft.), flurry of blows, high jump, ki pool (18 points, adamantine, cold iron, lawful, magic, silver), quivering palm (DC 28), slow fall (80 ft.), stunning fist (blinded, deafened, fatigued, staggered, or stunned), unarmed strike",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Old Man"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 192,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Pavbagha ~ Stunning Claw",
+      "name": "Stunning Claw",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "This ability functions like the Stunning Fist feat, except the pavbagha uses a claw attack instead of an unarmed strike. The servitor can use this ability %1 times per day. A successful DC %2 Fortitude saving throw negates this effect. The save DC is Wisdom-based.",
+      "description_variables": [
+        "StunningClawTimes",
+        "StunningClawDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Pavbagha"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 195,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Pavbagha ~ Fade",
+      "name": "Fade",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a standard action, a pavbagha can fade from sight, as invisibility, for up to 10 rounds per day. These rounds need not be consecutive.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Pavbagha"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 196,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Yethazmari ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "BreathWeapon"
+      ],
+      "description": "%1' Cone of fire and smoke %2d%3 fire, DC %4, usable every 1d4 rounds. Targets also must make a DC %5 Will save or be confused for 1d6 rounds.",
+      "description_variables": [
+        "BreathWeaponCone",
+        "BreathWeaponDice",
+        "BreathWeaponDamageDie",
+        "BreathWeaponDC",
+        "BreathWillDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Yethazmari"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 199,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Yethazmari ~ Bay",
+      "name": "Bay",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "When the Yethazmari howls or barks, each creature within a 300-foot-radius spread must succeed at a DC 25 Will save or be panicked for 2d4 rounds. This is a sonic mind-affecting fear effect. Evil outsiders are immune to this ability. Whether or not it succeeds at its save, a creature in the area is immune to the Yethazmari's bay for 24 hours. The save DC is Charisma-based.",
+      "description_variables": [
+        "BayDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Yethazmari"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 200,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Yethazmari ~ Poison Gout",
+      "name": "Poison Gout",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "The Yethazmari's snake tail can shoot a gout of poison as a ranged touch attack against a single foe, dealing 6d10 acid damage plus exposing them to its poison.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Yethazmari"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 201,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Yethazmari ~ Soul Scream",
+      "name": "Soul Scream",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Anytime the Yethazmari takes piercing or slashing damage, its wounds create a terrifying cacophony equivalent to its bay ability. Creatures within 10 feet of it take a -4 penalty on their saves against this effect.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Yethazmari"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 202,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Yethazmari ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Injury; Save Fort DC %1; Frequency 1/round for 4 rounds; Effect 1d6 Str damage; Cure 2 consecutive saves.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Yethazmari"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 203,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Swaithe ~ Eyeless",
+      "name": "Eyeless",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Vision"
+      ],
+      "description": "A swaithe has no eyes, but can sense its immediate surroundings (within 60 feet) as well as a human can see.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Demon (Swaithe)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 206,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Swaithe ~ Hexes",
+      "name": "Hexes",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "A swaithe has the cackle, evil eye, and misfortune hexes of a 5th-level witch.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Demon (Swaithe)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 207,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Swaithe ~ Witchcraft",
+      "name": "Witchcraft",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A swaithe can use spell completion and spell trigger items as if it were a 5th-level witch.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Demon (Swaithe)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 208,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Arcanotheign ~ Resistance to Divine Power",
+      "name": "Resistance to Divine Power",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Resistance"
+      ],
+      "description": "The Arcanotheign has resistance against the first 30 points of damage from a divine source (such as Flame Strike).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Arcanotheign"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 211,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Arcanotheign ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As an immediate action, the herald can take physical form, losing its incorporeal special quality and subtype and its deflection bonus to AC, but gaining a Strength score of 20 and a natural armor bonus equal to its incorporeal deflection bonus.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Arcanotheign"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 212,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Arcanotheign ~ Eldritch Blast",
+      "name": "Eldritch Blast",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "The herald chooses an additional effect for its eldritch blasts each round (DC %1 negates). A creature that fails its saves against both blasts in the same round suffers an increased effect. Dement (Will): The creature is confused for 1 minute. Increased effect: The creature goes insane (as insanity). Displace (Fortitude): The creature teleports (as dimension door) 5 feet in a random horizontal direction at the end of its turn each round for the next 10 rounds. Increased effect: The creature is affected by maze. Ignite (Reflex): The creature takes 2d6 points of fire damage. Increased effect: The creature catches on fire.",
+      "description_variables": [
+        "EldritchDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Arcanotheign"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 213,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Arcanotheign ~ Energy Channel Aura",
+      "name": "Energy Channel Aura",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Aura"
+      ],
+      "description": "On its turn, the herald can channel energy (Will DC %1 half) to deal 2d6 points of acid, cold, electricity, or fire damage to each creature in its aura. A creature struck by its incorporeal touch attack also takes this damage (no saving throw).",
+      "description_variables": [
+        "EnergyChannelDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Arcanotheign"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 214,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Arcanotheign ~ Constant Spells",
+      "name": "Constant Spells",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "The Arcanotheign is constantly under the effects of the following spells: Arcane Sight, Protection from Chaos/Evil/Good/Law.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Arcanotheign"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 215,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Burleev ~ Frostfire Spirit",
+      "name": "Frostfire Spirit",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A burleev is surrounded by either cold or fire energy. The burleev can change the energy type as a swift action. When surrounded by fire, the burleev has the fire subtype, is immune to fire, it adds fire damage to its attacks, and creatures striking it with melee weapons, natural attacks, or unarmed strikes take 1d6 points of fire damage; when surrounded by cold, it instead gains the cold subtype, is immune to cold and deals cold damage rather than fire damage. It can also completely dampen its aura for 1d6 rounds, but cannot reactivate it until this time has passed.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Burleev"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 218,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Stabbing Beast ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Huge scorpion or scorpion-tailed human. In its scorpion form, replace or add the following statistics: Size Huge; init +14; AC 31, touch 21, flat-footed 20 (+10 Dex, +1 dodge, +10 natural); ref +16; Melee claws +28 (2d6+13 plus bleed and grab), sting +26 (2d6+11 plus bleed and poison); Space 15 ft.; reach 15 ft.; Special attacks constrict (2d6+12); Str 32, Dex 31; CMB +30 (+34 grapple); CMD 53 (65 vs. trip); Skills Climb +20, Stealth +24.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Stabbing Beast"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 221,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Stabbing Beast ~ Murderer's Reward",
+      "name": "Murderer's Reward",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "If the Stabbing Beast's attack reduces a target to fewer than 0 hit points, the herald immediately gains 2d6 temporary hit points (or 3d8, if the attack kills the target), but no more than the target's maximum hit points. The temporary hit points last for 1 hour.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Stabbing Beast"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 222,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Stabbing Beast ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Injury; Save Fort DC %1; Frequency 1/round for 6 rounds; Effect 1d6 Str damage; Cure 2 consecutive saves.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Stabbing Beast"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 223,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Stabbing Beast ~ Poison Stream",
+      "name": "Poison Stream",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "As a ranged attack (or in place of a melee sting attack), the Stabbing Beast can fire a stream of poison up to 180 feet at an opponent's eyes. The target must succeed at a save against the Stabbing Beast's poison or be blinded for 1d4+1 rounds.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Stabbing Beast"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 224,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Stabbing Beast ~ Sudden Strike",
+      "name": "Sudden Strike",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "During a surprise round, the herald may act as if it had a full round to act, rather than just one standard action.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Stabbing Beast"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 225,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Karumzek ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Diminutive spider (as Vermin Shape II).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Karumzek"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 228,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Karumzek ~ Deft Limbs",
+      "name": "Deft Limbs",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A karumzek's front pair of feet are as nimble and dexterous as human hands. It takes a karumzek half the normal amount of time to create alchemical items.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Karumzek"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 229,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Karumzek ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Injury; Save Fort DC %1; Frequency 1/round for 6 rounds; Effect 1d3 Str, Dex or Con damage (karumzek's choice); Cure 2 consecutive saves.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Karumzek"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 230,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Karumzek ~ Sense Poison",
+      "name": "Sense Poison",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "As a free action, a karumzek can detect if a creature within 15 feet of it is poisoned. It can attempt to determine the exact type of poison, as if using Detect Poison.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Karumzek"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 231,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Karumzek ~ Negate Aroma",
+      "name": "Negate Aroma",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "A karumzek is constantly under the effect of the Negate Aroma spell.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Karumzek"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 232,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thognorok ~ Acid Web",
+      "name": "Acid Web",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "This ability functions like the Web universal monster ability, except a creature entangled by a thognorok's web also takes 1 point of acid damage (web DC %1).",
+      "description_variables": [
+        "AcidWebDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Qlippoth (Thognorok)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 235,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thognorok ~ Horrific Appearance",
+      "name": "Horrific Appearance",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Creatures that succumb to a thognorok's horrific appearance (DC %1 Will) become sickened for 1 round - a thognorok's horrific appearance only functions to a range of 10 feet.  Once a creature makes a saving throw against a particular thognorok's horrific appearance, that creature is immune to the horrific appearance of all thognoroks for 24 hours.",
+      "description_variables": [
+        "ThognorokHorrificAppearanceDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Qlippoth (Thognorok)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 236,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thognorok ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Injury; Save Fort DC %1; Frequency 1/round for 4 rounds; Effect 1d2 Str; Cure 2 consecutive saves.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Qlippoth (Thognorok)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 237,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thalachos ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Small or Medium humanoid or elemental (as Alter Self or Elemental Body II).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Sunlord Thalachos"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 240,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thalachos ~ Divine Trigger",
+      "name": "Divine Trigger",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Thalachos can activate any divine spell from a spell trigger item as if he were a 15th-level caster.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Sunlord Thalachos"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 241,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thalachos ~ Regeneration",
+      "name": "Regeneration",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ModifyHP"
+      ],
+      "description": "Thalachos is difficult to kill. He heals damage at %1 points per round, as with fast healing, but cannot die as long as his regeneration is still functioning (although he still falls unconscious when his hit points are below 0). Evil weapons and effects cause his regeneration to stop functioning on the round following the attack. During this round, he cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. You can regrow lost portions of you body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally.",
+      "description_variables": [
+        "RegenerationRate"
+      ],
+      "source_page": null,
+      "owners": [
+        "Sunlord Thalachos"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 242,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thalachos ~ Stun",
+      "name": "Stun",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "If Thalachos strikes a creature twice in the same round with his scimitars (whether two strikes with one scimitar or one strike with each), that creature must succeed at a DC %1 Fortitude save or be stunned for 1d6 rounds.",
+      "description_variables": [
+        "StunDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Sunlord Thalachos"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 243,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Thalachos ~ Uncanny Dodge",
+      "name": "Uncanny Dodge",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": null,
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Sunlord Thalachos"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 244,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Yhohm ~ Holy Fire",
+      "name": "Holy Fire",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Like a Flame Strike, half the fire damage from a yhohm's fire attacks is fire damage; the other half is divine power and is not subject to fire immunity or resistance.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Yhohm"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 247,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Yhohm ~ Self-Resurrection",
+      "name": "Self-Resurrection",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A slain yhohm remains dead for only 1d4 rounds unless its body is completely destroyed by an effect such as disintegrate. Otherwise, a fully healed yhohm emerges from the remains 1d4 rounds after death, as if brought back to life via Resurrection. The yhohm gains 1 permanent negative level when this occurs. A yhohm can self-resurrect only once per year. If a yhohm dies a second time before that year passes, its death is permanent. A yhohm that dies within the area of a desecrate spell cannot self-resurrect until the desecrate effect ends, at which point the yhohm immediately resurrects. A yhohm brought back to life by other means never gains negative levels as a result.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Yhohm"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 248,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Yhohm ~ Shroud of Flame",
+      "name": "Shroud of Flame",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Aura"
+      ],
+      "description": "A yhohm can cause its feathers to burst into fire as a free action. As long as its feathers are burning (up to 10 rounds), it deals an additional 1d6 points of fire damage with each natural attack, and any creature within 5 feet must attempt a DC %1 Reflex save each round or take 1d6 points of fire damage at the start of its turn. A creature that attacks the yhohm with a natural or non-reach melee weapon takes 1d6 points of fire damage (no save) with each successful hit.",
+      "description_variables": [
+        "FlameShroudDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Yhohm"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 249,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Adoration Spirit ~ Bardic Magic",
+      "name": "Bardic Magic",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Each day, the Spirit can cast any three bard spells of any level and in any combination (caster level 16th).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Spirit of Adoration"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 252,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Adoration Spirit ~ Bardic Performance",
+      "name": "Bardic Performance",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The Spirit has can use some bardic performance abilities and can start them as a swift action; countersong, distraction, fascinate and inspire courage.",
+      "description_variables": [
+        "BardicPerformanceDuration"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Spirit of Adoration"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 253,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Adoration Spirit ~ Inspiration",
+      "name": "Inspiration",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The Spirit of Adoration can inspire an intelligent creature by giving it a token of her favor. As long as the creature carries her token, it gains a +4 insight bonus on all Will saving throws, Craft checks, and Perform checks. An inspired bard adds the spirit's Charisma bonus (+6) to his number of bardic performance rounds per day. The spirit retains a link to her token and its carrier as if she had cast the spell status on the carrier. The spirit can end this effect at any time as a free action. The spirit may inspire a number of creatures at a time equal to her Charisma bonus.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Spirit of Adoration"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 254,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Adoration Spirit ~ Stunning Ray",
+      "name": "Stunning Ray",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "The Spirit can make a ranged attack with a ray of brilliant energy as a standard action (180 feet ranged touch). The target takes 1d8 points of damage and is stunned for 1d6 rounds (Will DC %1 reduces this to dazzled).",
+      "description_variables": [
+        "StunningRayDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Spirit of Adoration"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 255,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Adoration Spirit ~ Unearthly Grace",
+      "name": "Unearthly Grace",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The Spirit adds her Charisma modifier as a racial bonus on all her saving throws, as well as a deflection bonus to her Armor Class.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Spirit of Adoration"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 256,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Adoration Spirit ~ Charming Aura",
+      "name": "Charming Aura",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Aura"
+      ],
+      "description": "The Spirit's aura sways the feelings of creatures within 30 feet that have an attitude of unfriendly or worse. Such creatures must succeed at a DC %1 Will save or be affected by charm monster for 1 day. Creatures that attack the spirit must save against the aura, regardless of their attitude. A creature that makes its save is immune to the spirit's aura for 24 hours.",
+      "description_variables": [
+        "CharmingAuraDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Spirit of Adoration"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 257,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Adoration Spirit ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Small or Medium humanoid (as Alter Self).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Spirit of Adoration"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 258,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Dapsara ~ Bardic Performance",
+      "name": "Bardic Performance",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A dapsara has the bardic performance ability of a 5th-level bard.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Dapsara"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 261,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Dapsara ~ Ghostly Arms",
+      "name": "Ghostly Arms",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A dapsara's two spectral arms may manipulate corporeal or incorporeal creatures and objects, as if they had the ghost touch weapon property. She may manifest or hide these arms at will in any shape, even in gaseous form.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Dapsara"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 262,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Dapsara ~ Versatile Performance",
+      "name": "Versatile Performance",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A dapsara has the bard's versatile performance ability, using one Perform bonus in place of the skill bonuses of that Perform skill's associated skills.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Dapsara"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 263,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Dapsara ~ Weapon Proficiencies",
+      "name": "Weapon Proficiencies",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A dapsara is proficient with all simple weapons, plus the glaive, longsword, rapier, sap, short sword, shortbow, and whip.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Dapsara"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 264,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Dapsara ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Any humanoid or a cloud of perfume (as Alter Self or Gaseous Form).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Dapsara"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 265,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grand Defender ~ Ablative Adaptation",
+      "name": "Ablative Adaptation",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a standard action, the Grand Defender can shed its outer layer of metal, revealing a slightly smaller version of itself underneath. This new form may be made of cold iron (changing its DR to 15/cold iron), mithral (DR 15/silver), or iron (DR 15/adamantine, as normal). Its attacks count as this metal type for overcoming damage reduction. If the herald is brought to 0 hit points, it becomes inert; 1d4 hours after it last took damage, it sheds its outer layer and reanimates at half its normal hit points. Once shed, the outer layer decays into worthless powder over 1d4 minutes.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Grand Defender"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 268,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grand Defender ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Like an iron golem, as a free action once every 1d4+1 rounds, the Grand Defender can exhale a 10-foot cube of poisonous gas. This gas cloud persists for 1 round; any creature within the area when the Grand Defender creates it (as well as any creature that passes through the cloud during the remainder of that round) is exposed to the cloud's poisonous effects. This poison is magically created each time the golem uses this power. Inhaled; save Fort %1; frequency 1/round for 4 rounds; effect 1d4 Constitution damage; cure 2 saves.",
+      "description_variables": [
+        "BreathWeaponDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Grand Defender"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 269,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grand Defender ~ Defender's Shield",
+      "name": "Defender's Shield",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The herald's shield is a +3 heavy steel shield, though it becomes nonmagical if the herald is destroyed or is no longer holding or wearing it.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Grand Defender"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 270,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Grand Defender ~ Hammer Storm",
+      "name": "Hammer Storm",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The herald can expel a volley of warhammers from its mouth, which functions like a breath weapon (30-foot cone, 15d6 bludgeoning damage plus Awesome Blow, Reflex %1 half, usable 1/day). If the herald is in its cold iron or mithral form, these hammers count as cold iron or silver, respectively. The herald can exclude any number of squares in the cone. The hammer storm creates 24 physical warhammers that persist after the instantaneous attack and may be used by creatures (though they're normal warhammers, not masterwork, cold iron, or mithral). The herald can spend 1 minute eating 24 warhammers (or an equivalent amount of metal such as that created by its ablative adaptation ability) to recharge this ability.",
+      "description_variables": [
+        "HammerStormDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Grand Defender"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 271,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Chalkost ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a free action once every 1d4+1 rounds, a chalkost can breathe a 5-foot cone of electricity (2d6 electricity damage, DC %1 Reflex for half).",
+      "description_variables": [
+        "BreathWeaponDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Chalkost"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 274,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Chalkost ~ Change Shape",
+      "name": "Change Shape",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "When a chalkost uses its change shape ability, it can turn into a boar with metallic flesh, coppery bristles, and glistening steel tusks. In this form, a chalkost retains its damage reduction and energy resistances. The copper boar has the same statistics as a normal boar, but its natural armor bonus is +6 and its gore attack deals an extra 1d6 points of electricity damage on a successful hit.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Chalkost"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 275,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Chalkost ~ Dwarf Blood",
+      "name": "Dwarf Blood",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A chalkost counts as a dwarf for any effect related to race, and has the hardy, slow and steady, and stability dwarven racial traits.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Chalkost"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 276,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Chalkost ~ Shock Cestus",
+      "name": "Shock Cestus",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "As a free action, a chalkost can summon or dismiss a masterwork cestus on one of its hands. While wielded by the chalkost, the cestus deals an extra 1d6 points of electricity damage on a successful hit. If the cestus is given away or taken, the chalkost loses this ability until it reclaims its weapon.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Chalkost"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 277,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mother's Maw ~ Desecrate Aura",
+      "name": "Desecrate Aura",
+      "facet": "Aura",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The herald has a 20-foot-radius emanation equivalent to a Desecrate spell centered on a shrine of evil power.  Undead within this radius (including the Maw) gain a +2 profane bonus on attack and damage rolls and saving throws, as well as +2 hit points per die, and the save DC of channeled negative energy is increased by +6 (these adjustments are included for the Maw in its entry).  This aura can be negated by Dispel Evil, but the herald can reactivate it on its turn as a free action.  A desecrating aura suppresses and is suppressed by Consecrate or Hallow; both effects are negated within any overlapping area of effect.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Mother's Maw"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 280,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mother's Maw ~ Spell Deflection",
+      "name": "Spell Deflection",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Defensive"
+      ],
+      "description": "If any of the following spells are cast at the Mother's Maw and overcome its spell resistance, they instead affect a devoured soul: banishment, chaos hammer, confusion, crushing despair, detect thoughts, dispel evil, dominate person, fear, geas/quest, holy word, hypnotism, imprisonment, magic jar, maze, suggestion, trap the soul, or any form of charm or compulsion. While none of these effects harms the soul, the caster makes a DC 25 caster level check when a spell is deflected -- success indicates that the trapped soul is released from its prison and the creature whose body it belonged to can now be restored to life as normal. Mother's Maw can only benefit from this ability while it has a soul devoured.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Mother's Maw"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 281,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mother's Maw ~ Devour Soul",
+      "name": "Devour Soul",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A creature swallowed by the herald must save every round against slay living (DC %1, caster level %2). The soul of a creature slain by this attack becomes trapped within the herald's skull and the mangled corpse is immediately regurgitated. The creature cannot be brought back to life until the herald's destruction releases its soul. The Maw can hold only one soul at a time. The trapped essence provides the Maw with fast healing 20, lasting 1 round for every Hit Die of the devoured soul. The trapped soul gains 1 permanent negative level for every round it spends within the Maw -- these negative levels remain if the creature is brought back to life (but don't stack with any negative levels imparted by being brought back to life). A soul that is completely consumed may be restored to life only by a miracle or wish spell.",
+      "description_variables": [
+        "DevourSoulDC"
+      ],
+      "source_page": "p.82",
+      "owners": [
+        "Mother's Maw"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 282,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mother's Maw ~ Deathless",
+      "name": "Deathless",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "If destroyed, the herald it returns to unlife 1 hour later at 1 hit point, allowing its fast healing to resume healing it. It can be permanently destroyed by positive energy, being reduced to 0 hit points in the area of a Bless or Hallow spell, or if 20 vials of holy water are sprinkled on its remains.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Mother's Maw"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 283,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mother's Maw ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a free action once every 1d4+1 rounds, the herald can breathe a 60-foot cone of negative energy (15d6 negative energy damage, DC %1 Reflex for half).",
+      "description_variables": [
+        "BreathWeaponDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "Mother's Maw"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 284,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mother's Maw ~ Channel Negative Energy",
+      "name": "Channel Negative Energy",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The herald can channel negative energy as a cleric.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Mother's Maw"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 285,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Mother's Maw ~ Swallow Whole",
+      "name": "Swallow Whole",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [
+        "AttackOption"
+      ],
+      "description": "If the herald begins its turn with an opponent grappled in its mouth, it can attempt a new combat maneuver check. If it succeeds, it swallows its prey, and the opponent takes bite damage. The opponent can be up to one size category smaller than the Maw. Being swallowed causes a creature to take damage each round. A swallowed creature keeps the grappled condition, while the Maw does not. A swallowed creature can try to cut its way free with any light slashing or piercing weapon, or it can just try to escape the grapple. If a swallowed creature cuts its way out, you cannot use swallow whole again until the damage is healed. If the swallowed creature escapes the grapple, success puts it back in the Maw's mouth, where it may be bitten or swallowed again. (see Devour Soul, AC %1, %2 hp)",
+      "description_variables": [
+        "SwallowWholeAC",
+        "SwallowWholeHP"
+      ],
+      "source_page": null,
+      "owners": [
+        "Mother's Maw"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 286,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Sarcovalt ~ Detach Head",
+      "name": "Detach Head",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A sarcovalt can survive without its head. Attacks that sever its head (such as those of a vorpal weapon) do not kill it. If attacked by multiple creatures, it grapples one opponent, detaches its head (which continues to drain blood), and uses its body to continue attacking with spell-like abilities. Its head and body share a common pool of hit points but are otherwise treated as different creatures while separated. The head is AC 19, touch 15, flat-footed 16 (+3 Dex, +4 natural, +2 size) and can fly at the creature's normal speed. The head cannot initiate attacks on its own, and if removed from a target, it flies back to the body on its next turn. The body cannot see, but it can perceive through the head's eye cavities if it has line of effect to the head.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Sarcovalt"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 289,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Sarcovalt ~ Disease Swarm",
+      "name": "Disease Swarm",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A sarcovalt's vomit swarm ability summons a cloud of flies instead of spiders, which has a fly speed of 40 feet (good) and infects its target with filth fever instead of poison.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Sarcovalt"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 290,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Prince in Chains ~ Chainstorm",
+      "name": "Chainstorm",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Aura"
+      ],
+      "description": "Chains and flesh tendrils constantly lash at anything that approaches the herald. A creature that enters the area or begins its turn within it takes 1d12 points of bludgeoning and slashing damage. The chains entangle any creature so long as it's in the area (Reflex DC %1 negates).",
+      "description_variables": [
+        "ChainstormDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Prince in Chains"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 293,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Prince in Chains ~ Exaction",
+      "name": "Exaction",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The herald is healed of 10 points of damage in any round it deals damage, as if it had fast healing 10.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Prince in Chains"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 294,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Prince in Chains ~ Howl of Despair",
+      "name": "Howl of Despair",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The Prince in Chains can loose a howl of immortal agony once every 1d4 rounds. All nonevil creatures within 60 feet must succeed at a DC %1 Will saving throw or take 6d6 points of sonic damage. Any within 10 feet who fail their saves are also affected as per the Insanity spell. This is a sonic, mind-affecting effect.",
+      "description_variables": [
+        "HowlDespairDC"
+      ],
+      "source_page": null,
+      "owners": [
+        "The Prince in Chains"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 295,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Prince in Chains ~ Vicious Critical",
+      "name": "Vicious Critical",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "If the herald confirms a critical hit, the attack also deals 2 points of Constitution damage.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Prince in Chains"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 296,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Prince in Chains ~ Unnerving Gaze",
+      "name": "Unnerving Gaze",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A creature that fails its save against the herald's unnerving gaze is staggered for 1 round.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "The Prince in Chains"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 297,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lampadarius ~ Regeneration",
+      "name": "Regeneration",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ModifyHP"
+      ],
+      "description": "Lampadarii are difficult to kill. They heals damage at %1 points per round, as with fast healing, but cannot die as long as their regeneration is still functioning (although they still falls unconscious when their hit points are below 0). Good weapons and effects or silver weapons cause their regeneration to stop functioning on the round following the attack. During this round, they cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. You can regrow lost portions of you body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally.",
+      "description_variables": [
+        "RegenerationRate"
+      ],
+      "source_page": null,
+      "owners": [
+        "Kyton (Lampadarius)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 300,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lampadarius ~ Semi-Incorporeal",
+      "name": "Semi-Incorporeal",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Some of a lampadarius's body is composed of incorporeal shadow. As a result, it has a 25%% chance of taking no damage from any nonmagical attack. It takes only 75%% of the damage from magic weapons, spells, spell-like effects, and supernatural effects. However, it takes full damage from incorporeal creatures and effects, force effects, and ghost touch weapons.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Kyton (Lampadarius)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 301,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lampadarius ~ Strength Damage",
+      "name": "Strength Damage",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A lampadarius's touch deals 1d%1 points of Strength damage to a living creature. This is a negative energy effect. If the kyton deals Strength damage that equals or exceeds the target's Strength score, the kyton gains the benefits of death knell for 1 hour.",
+      "description_variables": [
+        "StrengthDamageDieSize"
+      ],
+      "source_page": null,
+      "owners": [
+        "Kyton (Lampadarius)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 302,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Lampadarius ~ Unnerving Gaze",
+      "name": "Unnerving Gaze",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A lampadarius can make an opponent feel like its own shadow is attempting to claw its face. Those who fail their saves are shaken for 1d3 rounds. This ability has no effect if there is no light present to create shadows. In dim illumination, the DC increases by 2. This is a mind-affecting fear effect.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Kyton (Lampadarius)"
+      ],
+      "source_file": "isg_abilities_races.lst",
+      "source_line": 303,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    }
+  ]
+}

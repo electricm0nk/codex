@@ -26,3 +26,23 @@ src/rules_core/rules_tables/crb/sorcerer_spell_list.rs	Nex	1	false-positive	same
 src/rules_core/rules_tables/crb/wizard_spell_list.rs	Nex	1	false-positive	same "Next of Kin" substring collision
 src/rules_core/rules_tables/ultimate_magic/equipment_tables.rs	Geb	1	false-positive	blacklist term "Geb" (a place name) inside the unrelated proper noun "Gebr" — the example license-matrix.md already records
 src/rules_core/rules_tables/simple_kind_tables.rs	Pharasma	1	false-positive	AT-34-E3-001 negative assertion: proves the PI-redacted domain name does NOT resolve directly (resolve_by_coordinate returns the masked record instead). The literal is the thing under test -- removing it would delete the proof that redaction works. Two further prose occurrences were removed rather than baselined, so this file carries the minimum PI surface the test needs.
+#
+# SD-37 E4a.1 — the rules_tables data package (data/rules_tables/<table id>.json).
+# The package ships each compiled table's text unchanged, so it carries exactly
+# the hits its source .rs rows above carry (Pharasma excepted: that literal is
+# test code, never a table row). Each row below is the package copy of the .rs
+# row with the same term and keeps that row's disposition. Counted per row
+# VALUE (one per field), so the Ultimate Magic `Gebr` item counts 2: its `key`
+# and `name` are separate fields of one source line. The file's own licence
+# stamp lists the same hits and says "PI"; pi_sweep_rules_tables fails if the
+# stamp and a re-screen disagree.
+data/rules_tables/acg/archetype_tables/archetype_swap_tables.json	Sarenrae	1	real-leak	package copy of acg/archetype_tables.rs (Ecclesitheurge ~ Domain Mastery description); redaction owned outside SD-37, as the .rs row
+data/rules_tables/acg/spell_list/SPELL_LIST.json	Jarn	1	real-leak	package copy of acg/spell_list.rs (Discern Next of Kin flavor text), as the .rs row
+data/rules_tables/advanced_race_guide/archetype_tables/archetype_swap_tables.json	Asmodeus	1	real-leak	package copy of advanced_race_guide/archetype_tables.rs (Fiendish Vessel ~ Fiendish Familiar description), as the .rs row
+data/rules_tables/acg/shaman_spell_list/SHAMAN_SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision, as the .rs row
+data/rules_tables/acg/spell_list/SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision (the spell key), as the .rs row
+data/rules_tables/apg/witch_spell_list/WITCH_SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision, as the .rs row
+data/rules_tables/crb/bard_spell_list/BARD_SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision, as the .rs row
+data/rules_tables/crb/sorcerer_spell_list/SORCERER_SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision, as the .rs row
+data/rules_tables/crb/wizard_spell_list/WIZARD_SPELL_LIST.json	Nex	1	false-positive	"Next of Kin" substring collision, as the .rs row
+data/rules_tables/ultimate_magic/equipment_tables/GENERAL_TABLE.json	Geb	2	false-positive	"Geb" inside the unrelated proper noun "Gebr" (key and name fields), as the .rs row

@@ -26,7 +26,8 @@ use std::path::Path;
 /// One corpus record, flattened to the fields every one of the seven kinds
 /// carries in `data/corpus/**/*.json`. Nothing here is computed or
 /// inferred -- every field is read straight off the record's own JSON.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct SimpleKindRecord {
     pub book: String,
     pub key: String,

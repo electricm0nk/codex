@@ -1,0 +1,1007 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "bestiary_2/companion_data/COMPANIONS",
+  "licence": {
+    "license": "OGL",
+    "book": "bestiary_2",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Familiar (Compsognathus)",
+      "name": "Familiar (Compsognathus)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.90",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Compsognathus ~ Poison",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 5
+    },
+    {
+      "key": "Familiar (Snapping Turtle)",
+      "name": "Familiar (Snapping Turtle)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -6
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.273",
+      "ability_keys": [
+        "Snapping Turtle ~ Shell"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 6
+    },
+    {
+      "key": "Familiar (Paracletus)",
+      "name": "Familiar (Paracletus)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Outsider",
+      "race_subtype": "Aeon|Extraplanar",
+      "monster_class": "Outsider (Fort/Will):3",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": 0
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.11",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Can't Be Tripped",
+        "Flight Maneuverability",
+        "Paracletus ~ Electricity"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 9
+    },
+    {
+      "key": "Familiar (Silvanshee)",
+      "name": "Familiar (Silvanshee)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 90
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Agathion|Extraplanar|Good",
+      "monster_class": "Outsider (Fort/Ref):2",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.21",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Flight ~ Su",
+        "Flight Maneuverability",
+        "Know Direction ~ Constant",
+        "Pounce",
+        "Silvanshee ~ Cat's Luck",
+        "Silvanshee ~ Heroic Strength",
+        "Silvanshee ~ Spectral Mist"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 10
+    },
+    {
+      "key": "Familiar (Cassisian)",
+      "name": "Familiar (Cassisian)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Outsider",
+      "race_subtype": "Angel ~ Cassisian|Extraplanar|Good",
+      "monster_class": "Outsider (Fort/Ref):2",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Slam",
+          "formula": "max(0,STR/2)",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 3,
+      "source_page": "p.26",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Can't Be Tripped",
+        "Cassisian ~ Breath Weapon",
+        "Cassisian ~ Change Shape",
+        "Cassisian ~ Lesser Protective Aura",
+        "Cassisian ~ Perfect Memory",
+        "Detect Evil ~ Constant",
+        "Flight Maneuverability",
+        "Know Direction ~ Constant"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 11
+    },
+    {
+      "key": "Familiar (Lyrakien)",
+      "name": "Familiar (Lyrakien)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 80
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Azata|Chaotic|Extraplanar|Good",
+      "monster_class": "Outsider (Ref/Will):3",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -6
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": 10
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.38",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Detect Evil ~ Constant",
+        "Detect Magic ~ Constant",
+        "Flight Maneuverability",
+        "Freedom of Movement ~ Constant",
+        "Lyrakien ~ Starlight Blast",
+        "Lyrakien ~ Traveler's Friend",
+        "Resistance to Cold",
+        "Resistance to Fire"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 12
+    },
+    {
+      "key": "Familiar (Brownie)",
+      "name": "Familiar (Brownie)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Fey",
+      "race_subtype": null,
+      "monster_class": "Fey:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Fey"
+      ],
+      "natural_attacks": [],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.49",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Brownie ~ Bonus vs Illusions"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 13
+    },
+    {
+      "key": "Familiar (Cacodaemon)",
+      "name": "Familiar (Cacodaemon)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 5
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Daemon|Evil|Extraplanar",
+      "monster_class": "Outsider (Ref/Will):3",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -2
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.64",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Cacodaemon ~ Change Shape",
+        "Cacodaemon ~ Disease",
+        "Cacodaemon ~ Soul Lock",
+        "Detect Good ~ Constant",
+        "Detect Magic ~ Constant",
+        "Fast Healing",
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 14
+    },
+    {
+      "key": "Familiar (Elemental (Ice/Small))",
+      "name": "Familiar (Elemental (Ice/Small))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Outsider",
+      "race_subtype": "Air|Cold|Elemental|Extraplanar|Water",
+      "monster_class": "Outsider (Fort/Ref):2",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Slam",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 6,
+      "source_page": "p.114",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Can't Be Tripped",
+        "Ice Elemental ~ Burrow",
+        "Ice Elemental ~ Cold",
+        "Ice Elemental ~ Ice Glide",
+        "Ice Elemental ~ Icewalking",
+        "Ice Elemental ~ Numbing Cold",
+        "Ice Elemental ~ Snow Vision"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 15
+    },
+    {
+      "key": "Familiar (Elemental (Lightning/Small))",
+      "name": "Familiar (Elemental (Lightning/Small))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Fly",
+          "feet": 100
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Outsider",
+      "race_subtype": "Air|Elemental|Extraplanar",
+      "monster_class": "Outsider (Fort/Ref):2",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Slam",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.116",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Flight Maneuverability",
+        "Immunity to electricity",
+        "Lightning Elemental ~ Electricity",
+        "Lightning Elemental ~ Metal Mastery",
+        "Lightning Elemental ~ Spark Leap"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 16
+    },
+    {
+      "key": "Familiar (Elemental (Magma/Small))",
+      "name": "Familiar (Elemental (Magma/Small))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Burrow",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Outsider",
+      "race_subtype": "Earth|Elemental|Extraplanar|Fire",
+      "monster_class": "Outsider (Fort/Ref):2",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Slam",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 5,
+      "source_page": "p.118",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Burn",
+        "Magma Elemental ~ Earth Glide",
+        "Magma Elemental ~ Lava Puddle"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 17
+    },
+    {
+      "key": "Familiar (Elemental (Mud/Small))",
+      "name": "Familiar (Elemental (Mud/Small))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Burrow",
+          "feet": 10
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Outsider",
+      "race_subtype": "Earth|Elemental|Extraplanar|Water",
+      "monster_class": "Outsider (Fort/Ref):2",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Slam",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 6,
+      "source_page": "p.120",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Immunity to acid",
+        "Mud Elemental ~ Earth Glide",
+        "Mud Elemental ~ Entrap"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 18
+    },
+    {
+      "key": "Familiar (Arbiter)",
+      "name": "Familiar (Arbiter)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Inevitable|Lawful",
+      "monster_class": "Outsider (Fort/Will):2",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.162",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Arbiter ~ Constant Vigilance",
+        "Arbiter ~ Electrical Burst",
+        "Arbiter ~ Locate Inevitable",
+        "Detect Chaos ~ Constant",
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 19
+    },
+    {
+      "key": "Familiar (Voidworm)",
+      "name": "Familiar (Voidworm)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Extraplanar|Protean ~ Voidworm|Shapechanger",
+      "monster_class": "Outsider (Ref/Will):3",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Tail Slap",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -2
+        },
+        {
+          "ability": "WIS",
+          "amount": -2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.217",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Can't Be Tripped",
+        "Detect Law ~ Constant",
+        "Fast Healing",
+        "Flight Maneuverability",
+        "Voidworm ~ Change Shape",
+        "Voidworm ~ Confusion"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 20
+    },
+    {
+      "key": "Familiar (Cythnigot)",
+      "name": "Familiar (Cythnigot)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Evil|Extraplanar|Qlippoth",
+      "monster_class": "Outsider (Ref/Will):3",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": -2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.221",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Cythnigot ~ Horrific Appearance",
+        "Cythnigot ~ Spores",
+        "Detect Law ~ Constant",
+        "Detect Magic ~ Constant",
+        "Fly ~ Constant",
+        "Telepathy ~ Touch"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b2_races_familiar.lst",
+      "source_line": 21
+    }
+  ]
+}

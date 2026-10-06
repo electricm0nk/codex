@@ -1,0 +1,339 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "bonus_bestiary/monster_data/MONSTER_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "bonus_bestiary",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Babble",
+      "name": "Babble",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "Aura"
+      ],
+      "description": "An allip constantly mutters and whines to itself, creating a hypnotic effect. All sane creatures within 60 feet of the allip must succeed on a DC %1 Will save or be fascinated for 2d4 rounds. While a target is fascinated, the allip can approach without breaking the effect, but an attack by the allip breaks the effect. This is a sonic, mind-affecting compulsion effect. Creatures that successfully save cannot be affected by the same allip's babble for 24 hours.",
+      "description_variables": [
+        "BabbleDC"
+      ],
+      "source_page": "p.4",
+      "owners": [
+        "Allip"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 6,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Madness",
+      "name": "Madness",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Anyone targeting an allip with a thought detection, mind control, or telepathic ability makes direct contact with its tortured mind and takes 1d4 points of Wisdom damage.",
+      "description_variables": [],
+      "source_page": "p.4",
+      "owners": [
+        "Allip"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 7,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Touch of Insanity",
+      "name": "Touch of Insanity",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The touch of an allip deals 1d4 points of Wisdom damage. A successful critical hit causes 1d4 points of Wisdom damage and 1 point of Wisdom drain (instead of double Wisdom damage). On each such successful attack, an allip gains 5 temporary hit points.",
+      "description_variables": [],
+      "source_page": "p.4",
+      "owners": [
+        "Allip"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 8,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Sand Trap",
+      "name": "Sand Trap",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A giant ant lion can create a 60-foot-diameter trap in any sand or soft earth surface (mechanical trap, Perception DC 15, 20 ft. deep, no damage; DC 15 Reflex to avoid; DC 20 Climb check to climb out). Creating a sand trap takes 1 hour. A giant ant lion can make an attack of opportunity against any creature that falls to the bottom of its sand trap. These creatures can move across sand traps at their normal speed and are immune to these trap effects.",
+      "description_variables": [],
+      "source_page": "p.5",
+      "owners": [
+        "Ant Lion (Giant)"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 12,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Spores",
+      "name": "Spores",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Once per round, as a free action, an ascomoid can release a jet of deadly spores in a 30-foot line. Upon impacting a solid surface, such as a wall or creature, the jet billows out into a cloud of spores, that fills a 10-foot-radius area. This cloud lasts for 1 round before dispersing. Any creature in the cloud inhales ascomoid poison (Save Fortitude DC %1, Frequency 1 round (7), Effect 1 Con damage, Cure 1 save). Even if the save succeeds, creatures inside the cloud are nauseated as long as they remain in the cloud. Ascomoids are immune to ascomoid spores.",
+      "description_variables": [
+        "SporesDC"
+      ],
+      "source_page": "p.6",
+      "owners": [
+        "Ascomoid"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 16,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Sudden Charge",
+      "name": "Sudden Charge",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "When making a charge attack, an axe beak makes a single bite attack. If successful, it may also attempt to trip its opponent as a free action without provoking a attack of opportunity. If the attempt fails, the axe beak is not tripped in return.",
+      "description_variables": [],
+      "source_page": "p.7",
+      "owners": [
+        "Axe Beak"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 20,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Caryatid Column ~ Immunity to Magic",
+      "name": "Immunity to Magic",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Immunity"
+      ],
+      "description": "A caryatid column is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature. A Transmute Rock to Mud spell deals 1d6 points of damage per caster level to a caryatid column, with no saving throw. Transmute Mud to Rock, on the other hand, heals any lost hit points. A Stone to Flesh spell does not actually change the column's structure but negates its damage reduction and immunity to magic for 1 round.",
+      "description_variables": [],
+      "source_page": "p.8",
+      "owners": [
+        "Caryatid Column"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 24,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Shatter Weapons",
+      "name": "Shatter Weapons",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Whenever a character strikes a caryatid column with a weapon (magical or nonmagical), the weapon takes 3d6 points of damage. Apply the weapon's hardness normally. Weapons that take any amount of damage in excess of their hardness gain the broken quality.",
+      "description_variables": [],
+      "source_page": "p.8",
+      "owners": [
+        "Caryatid Column"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 25,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Statue",
+      "name": "Statue",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A caryatid column can stand perfectly still, emulating a statue (usually one that is holding up the ceiling, like a carved column). An observer must succeed on a DC 20 Perception check to notice the caryatid column is alive.",
+      "description_variables": [],
+      "source_page": "p.8",
+      "owners": [
+        "Caryatid Column"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 26,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Faerie Dragon ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "5-foot cone, euphoria for 1d6 rounds, DC %1 Fortitude negates. Affected creatures are staggered, sickened, and immunte to fear effects for the duration of the euphoria. A faerie dragon can use this breath weapon once every 1d4 rounds.",
+      "description_variables": [
+        "BreathWeaponDC"
+      ],
+      "source_page": "p.9",
+      "owners": [
+        "Dragon (Faerie)"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 30,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Roar",
+      "name": "Roar",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A dragonne can unleash a devastating roar every 1d4 rounds as a standard action. All creatures except dragonnes within 120 feet must succed on a DC %1 Fortitude save or become fatigued. Those within 30 feet who fail their saves are also deafened for 2d4 rounds. This is a sonic effect.",
+      "description_variables": [
+        "RoarDC"
+      ],
+      "source_page": "p.10",
+      "owners": [
+        "Dragonne"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 34,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Huecuva ~ Disease",
+      "name": "Disease",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Claw, Save Fortitude DC %1, Frequency 1d3 days/1 day, Effect 1d3 Dex damage and 1d3 Con damage, Cure 2 consecutive saves.",
+      "description_variables": [
+        "HuecuvaDiseaseDC"
+      ],
+      "source_page": "p.12",
+      "owners": [
+        "Huecuva"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 38,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Faithless",
+      "name": "Faithless",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Aura"
+      ],
+      "description": "The huecuva and all undead creatures within 30 feet receive a +2 profane bonus on Will saves made toresist channeled energy and any effects based off that ability. This bonus stacks with channel resistance.",
+      "description_variables": [],
+      "source_page": "p.12",
+      "owners": [
+        "Huecuva"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 39,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Magic Circle against Evil",
+      "name": "Magic Circle against Evil",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": null,
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Lammasu"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 43,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Water Naga ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Bite, Level 7, Save Fortitude DC %1, Frequency 1 round (10), Effect 1 Con damage, Cure 1 save.",
+      "description_variables": [
+        "WaterNagaPoisonDC"
+      ],
+      "source_page": "p.14",
+      "owners": [
+        "Naga (Water)"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 47,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Shadow Mastiff ~ Bay",
+      "name": "Bay",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "When a shadow mastiff howls or barks, all creatures except evil outsiders within a 300-foot spread must succeed on a DC %1 Will save or become panicked for 2d4 rounds. This is a sonic, mind-affecting fear effect. A creature that successfully saves cannot be affected by the same mastiff's bay for 24 hours.",
+      "description_variables": [
+        "BayDC"
+      ],
+      "source_page": "p.16",
+      "owners": [
+        "Shadow Mastiff"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 51,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Shadow Mastiff ~ Shadow Blend",
+      "name": "Shadow Blend",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "In any condition of illumination other than full daylight, a shadow mastiff disappears into the shadows, giving it total concealment. Artificial illumination, even a Light or Continual Flame spell, does not negate this ability. A Daylight spell, however, will. A shadow mastiff can suspend or resume this ability as a free action.",
+      "description_variables": [],
+      "source_page": "p.16",
+      "owners": [
+        "Shadow Mastiff"
+      ],
+      "source_file": "bb_abilities_race.lst",
+      "source_line": 52,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "feat_gap_tables/INNER_SEA_WORLD_GUIDE_FEAT_GAP_ROWS",
+  "licence": {
+    "license": "PI-REDACTED",
+    "book": "feat_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": [
+      {
+        "row": 3,
+        "field": "description"
+      },
+      {
+        "row": 4,
+        "field": "description"
+      },
+      {
+        "row": 9,
+        "field": "description"
+      },
+      {
+        "row": 19,
+        "field": "description"
+      },
+      {
+        "row": 30,
+        "field": "description"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "key": "Altitude Affinity",
+      "category": "General",
+      "name": "Altitude Affinity",
+      "description": "You have hardened your body against the grueling rigors of surviving at high altitudes. Automatically acclimated to high altitude. You have hardened your body against the grueling rigors of surviving at high altitudes. You are automatically acclimated at high altitudes. In addition, you gain a +2 competence bonus on all Survival checks made at altitudes of 5,000 ft. or higher."
+    },
+    {
+      "key": "Arcane Vendetta",
+      "category": "General",
+      "name": "Arcane Vendetta",
+      "description": "The mistreatment of your people by an arcane society has made you particularly eager to inflict harm on those who use arcane magic. +2 bonus on damage vs. arcane spellcaster. The mistreatment of your people by an arcane society has made you particularly eager to inflict harm on those who use arcane magic. You deal +2 damage with weapon attacks made against any target you hsve witnessed casting an arcane spell (not using a spell-like ability) in the last 5 rounds. You must have successfully identified the spell with a Spellcraft check to know without a doubt that the spell is arcane."
+    },
+    {
+      "key": "Careful Speaker",
+      "category": "General",
+      "name": "Careful Speaker",
+      "description": "The paranoid terror that comes from living in a region with a dangerous government has made you unusually aware of what you say. +2 bonus on some Bluff checks and some Will saves. The paranoid terror that comes from living in a region with a dangerous government has made you unusually aware of what you say. You gain a +2 bonus on all Bluff checks made to fool someone or pass secret messages (but not to feint in combat), and a +2 bonus on all Will saves against attempts to scry upon you or read your mind."
+    },
+    {
+      "key": "Cypher Magic",
+      "category": "General",
+      "name": "Cypher Magic",
+      "description": "[redacted PI]"
+    },
+    {
+      "key": "Cypher Script",
+      "category": "General",
+      "name": "Cypher Script",
+      "description": "[redacted PI]"
+    },
+    {
+      "key": "Demon Hunter",
+      "category": "Combat",
+      "name": "Demon Hunter",
+      "description": "You are well-versed in demonic lore. Gain Knowledge and combat bonuses vs. demons. You are well-versed in demonic lore. You gain a +2 bonus on Knowledge (planes) checks to know the powers and abilities of demons. You gain a +2 morale bonus on all attack rolls and a +2 morale bonus on caster level checks to penetrate spell resistance made against creatures with the demon subtype you recognize as demons."
+    },
+    {
+      "key": "Dervish Dance",
+      "category": "Combat",
+      "name": "Dervish Dance",
+      "description": "You have learned to turn your speed into power, even with a heavier blade. Use Dex modifier instead of Str modifier with scimitar. You have learned to turn your speed into power, even with a heavier blade. When wielding a scimitar with one hand, you can use your Dexterity modifier intead of your Strength modifier on melee attack and damage rolls. You treat the scimitar as a one-handed piercing weapon for all feats and class abilities that require such a weapon. The scimitar must be for a creature of your size. You cannot use this feat if you are carrying a weapon or shield in your off hand."
+    },
+    {
+      "key": "Desert Dweller",
+      "category": "General",
+      "name": "Desert Dweller",
+      "description": "Your time spent living in merciless deserts has granted you resistance to extreme heat, starvation, and thirst. Starvation, thirst, and extreme heat effects lessened. Your time spent living in merciless deserts has granted you resistance to extreme heat, starvation, and thirst. You treat extreme heat conditions as severe heat, and severe heat as very hot conditions. You are not impacted at all by very hot conditions. In addition, you gain a +4 bonus on all Constitution checks made to resist the effects of starvation or thirst."
+    },
+    {
+      "key": "Desperate Battler",
+      "category": "Combat",
+      "name": "Desperate Battler",
+      "description": "Your experiences fighting against numerous foes that have already overwhelmed your allies, friends, and family have forced you to excel at fighting on your own. Gain +1 morale bonus on melee attack and damage when alone. Your experiences fighting against numerous foes that have already overwhelmed your allies, friends, and family have forced you to excel at fighting on your own. When no ally is within 10 ft. of you and you are not receving benefits from the aid another action, you gain a +1 morale bonus on melee attack and damage rolls."
+    },
+    {
+      "key": "Eye of the Arclord",
+      "category": "General",
+      "name": "Eye of the Arclord",
+      "description": "[redacted PI]"
+    },
+    {
+      "key": "Fey Foundling",
+      "category": "General",
+      "name": "Fey Foundling",
+      "description": "You were found in the wilds as a child, bearing a mark of the First World. Magical healing works better on you. You were found in the wilds as a child, bearing a mark of the First World. Your strange connection to the First World and the fey infuses you with life, and whenever you receive magical healing, you heal an additional 2 points/die rolled. You gain a +2 bonus on all saving throws against death effects. Unfortunately, you also suffer +1 point of damage from cold iron weapons (although you can wield cold iron weapons without significant discomfort)."
+    },
+    {
+      "key": "Flagbearer",
+      "category": "Combat",
+      "name": "Flagbearer",
+      "description": "When brandishing a flag adorned with the standard of an organization you owe allegiance to, you inspire nearby members of the same allegiance. Grant bonuses to allies who see your flag. When brandishing a flag adorned with the standard of an organization you owe allegiance to, you inspire nearby members of the same allegiance. As long as you hold your clan, house, or party's flag, members of that allegiance within 30 ft. who can see the flag (including yourself) gain a +1 morale bonus on attack rolls, weapon damage rolls, and saving throws against fear and charm effects. You must hold the flag in one hand in order to grant this bonus. If the standard is taken by the enemy or destroyed, this bonus becomes a penalty, affecting all creatures that the bonus previously affected for 1 hour (or until you reclaim the lost flag)."
+    },
+    {
+      "key": "Focused Discipline",
+      "category": "Combat",
+      "name": "Focused Discipline",
+      "description": "Familiarity with the military traditions of your homeland inspires uncommon valor in you. Gain temporary combat bonuses after resisting fear effects. Familiarity with the military traditions of your homeland inspires uncommon valor in you. You gain a +2 bonus on all saving throws against fear effect. Whenever a fear effect targets you and fails to affect you (either because of a successful saving throw or because of immunity to fear), you gain a +2 morale bonus on attack rolls, weapon damage rolls, and CMB checks against the creature that attempted to use the fear affect on you for 1 round."
+    },
+    {
+      "key": "Fortune Teller",
+      "category": "General",
+      "name": "Fortune Teller",
+      "description": "As a result of being raised in a land steeped in tradition and superstition, you are skilled at communicating with the spirit world. Cast some divination spells at +1 caster level. As a result of being raised in a land steeped in tradition and superstition, you are skilled at communicating with the spirit world. Whenever you cast a spell from the divination school, you may use your instead of the spell's material component, as long as the cost of the material component is no more than 1,000 gp. If you choose to perform the spell using your and the spell's normal material component (regardless of that component's cost), you cast the spell at +1 caster level."
+    },
+    {
+      "key": "Free Spirit",
+      "category": "General",
+      "name": "Free Spirit",
+      "description": "Your strong belief in the value of freedom protects you from mental and physical shackles. +2 bonus on saves vs. mind-affecting and on escape attempts. Your strong belief in the value of freedom protects you from mental and physical shackles. You gain a +2 bonus on saving throws made against mind-affecting effects and on all Escape Artist or grapple checks made to escape a grapple or to escape from bonds."
+    },
+    {
+      "key": "Godless Healing",
+      "category": "General",
+      "name": "Godless Healing",
+      "description": "You have mastered a specialized and complex technique to ignore pain by focusing your belief on the self rather than relying on faith. Heal yourself 1d8+(TL) hp /day. You have mastered a specialized and complex technique to ignore pain by focusing your belief on the self rather than relying on faith. /day when you have half your total hit points or fewer, you may heal yourself of an amount of damage equal to 1d8 plus your total Hit Dice as a move action. This is a supernatural ability."
+    },
+    {
+      "key": "Green Faith Acolyte",
+      "category": "General",
+      "name": "Green Faith Acolyte",
+      "description": "You have trained to channel your magical energies in ways that do not harm the natural world around you. Your spells work more efficiently on plants. You have trained to channel your magical energies in ways that do not harm the natural world around you. Spells you cast that deal damage, channel negative energy, or otherwise harm life do not hurt normal or magical plants. In addition, whenever you cast a spell that utilizes, heals, or enhances normal or magical plants, you cast the spell at +1 caster level."
+    },
+    {
+      "key": "Hamatulatsu",
+      "category": "Combat",
+      "name": "Hamatulatsu",
+      "description": "You have mastered a deadly fighting form inspired by the hideous attacks of the barbed devil. Unarmed attacks can inflict piercing damage and sicken foes. You have mastered a deadly fighting form inspired by the hideous attacks of the barbed devil. Your unarmed attacks can deal either bludgeoning or piercing damage. You decide which type of damage you deal whenever you attack a foe, but you may only choose one type at a time. If you critically hit a foe with your unarmed strike while doing piercing damage, the additional pain caused by the strike causes the foe to become sickened for 1 round (or staggered for 1 round if the target is already sickened). Multiple critical hits in a round against a single foe do not increases the duration of the sickened or staggered condition."
+    },
+    {
+      "key": "Harmonic Spell",
+      "category": "General",
+      "name": "Harmonic Spell",
+      "description": "You can weave bardic music effects into your spellcasting in such a way that your spellcasting and bardic performance become indistinguishable. Casting spells extends duration of bardic performance. You can weave bardic music effects into your spellcasting in such a way that your spellcasting and bardic performance become indistinguishable. Whenever you cast a spell while you are maintaining a bardic performance, you can maintain the bardic performance for that round without expending one of your rounds of performance for the day. In addition, you can switch from one bardic performance to another as a swift action when you cast a spell while maintaining a bardic performance."
+    },
+    {
+      "key": "Harrowed",
+      "category": "General",
+      "name": "Harrowed",
+      "description": "[redacted PI]"
+    },
+    {
+      "key": "Necromantic Affinity",
+      "category": "General",
+      "name": "Necromantic Affinity",
+      "description": "Long exposure to necromantic energies has granted you a small measure of resistance against them. You resist necromantic effects and heal as if undead. Long exposure to necromantic energies has granted you a small measure of resistance against them. You gain a +2 bonus on saving throws made to resist spells and effects that utilize negative energy, cause negative levels, or cause ability damage, ability drain, or ability penalties. In addition, damage caused by inflict spells heals you as if you were an undead creature, but you also take damage from cure spells."
+    },
+    {
+      "key": "Noble Scion",
+      "category": "General",
+      "name": "Noble Scion",
+      "description": "You are a member of a proud noble family, whether or not you remain in good standing with your family. +2 on Knowledge (nobility) plus gain a nobility-related boon. You are a member of a proud noble family, whether or not you remain in good standing with your family. You gain a +2 bonus on all Knowledge (nobility) checks, and Knowledge (nobility) is always considered a class skill for you. You also gain a benefit appropriate to your noble family."
+    },
+    {
+      "key": "Rugged Northerner",
+      "category": "General",
+      "name": "Rugged Northerner",
+      "description": "You live a hard life in a cold climate and gain some benefit from it. Frostbite, hypothermia, and extreme cold effects lessened. You live a hard life in a cold climate and gain some benefit from it. You treat extreme cold conditions as severe cold, and severe cold as cold weather conditions. You are not impacted at all by normal cold weather conditions. In addition, you do not become fatigued by frostbite or hypothermia."
+    },
+    {
+      "key": "Scholar",
+      "category": "General",
+      "name": "Scholar",
+      "description": "You have graduated from one of the many colleges, universities, and specialty schools of higher learning scattered throughout the Inner Sea region. +2 bonus on two Knowledge skills. You have graduated from one of the many colleges, universities, and specialty schools of higher learning scattered throughout the Inner Sea region. You gain a bonus on two selected Knowledge skills."
+    },
+    {
+      "key": "Secret Signs",
+      "category": "General",
+      "name": "Secret Signs",
+      "description": "You are particularly adept at communicating with others via innuendo, gestures, and secret hand signs. You can hide somatic components of spellcasting. You are particularly adept at communicating with others via innuendo, gestures, and secret hand signs. You gain a +4 bonus on Bluff checks made to pass secret messages. In addition, you are adept at hiding the somatic components of spellcasting. If you cast a spell that has only somatic components, an observer must make a Perception check opposed by your Sleight of Hand check to notice your spellcasting. Spellcraft checks made to identify any spell you cast that has somatic components take a -2 penalty."
+    },
+    {
+      "key": "Shrewd Tactician",
+      "category": "Combat",
+      "name": "Shrewd Tactician",
+      "description": "Your dealings with pirates, thieves, and assassins have taught you to be exceedingly careful. Flanking is less efficient against you. Your dealings with pirates, thieves, and assassins have taught you to be exceedingly careful. Opponents do not gain a +2 bonus on attack rolls for flanking you, although they can still sneak attack you. You also gain a +3 bonus on Sense Motive checks made to resist a foe's Bluff checks to feint in combat."
+    },
+    {
+      "key": "Stoic",
+      "category": "General",
+      "name": "Stoic",
+      "description": "You know from firsthand experience that life is a series of unforgiving trials, and that fear itself is something that can be conquered. +1 save vs. fear, limited fear immunity. You know from firsthand experience that life is a series of unforgiving trials, and that fear itself is something that can be conquered. You gain a +1 bonus on all saving throws against fear effects. If you successfully save against any fear effect, you are immune to further fear effects from that source for 24 hours."
+    },
+    {
+      "key": "Storm-Lashed",
+      "category": "General",
+      "name": "Storm-Lashed",
+      "description": "A life spent enduring gales and storms has hardened your body to the elements. Ignore many of the effects of bad weather. A life spent enduring gales and storms has hardened your body to the elements. You can ignore many of the effects of severe weather. In rainy conditions, your visibility is only reduced by one-quarter (not by half) and you only take a -2 penalty on Perception checks. You are treated as if you were one size category larger for the purpose of wind effects, and halve any penalty to Perception caused by high winds. Finally, you gain a +2 bonus on all saving throws against electrical effects."
+    },
+    {
+      "key": "Survivor",
+      "category": "General",
+      "name": "Survivor",
+      "description": "Only the strong thrive in your homeland, and you are no weakling, even among your kin. When you're dying, you stabilize more easily. Only the strong thrive in your homeland, and you are no weakling, even among your kin. You gain a +5 bonus on all Constitution checks made to stabilize while dying. 1/day, if you are struck by a critical hit or sneak attack, you can spend an immediate action to negate the critical or the sneak attack damage, making the attack a normal hit."
+    },
+    {
+      "key": "Totem Spirit",
+      "category": "General",
+      "name": "Totem Spirit",
+      "description": "You are mystically tied to your tribe's sacred totem. Gain a boon related to your tribe's theme. You are mystically tied to your tribe's sacred totem. You gain a boon related to your tribe."
+    },
+    {
+      "key": "Wand Dancer",
+      "category": "General",
+      "name": "Wand Dancer",
+      "description": "[redacted PI]"
+    }
+  ]
+}

@@ -35,7 +35,9 @@
 //! joined `SPROP:Preparation Ritual - <name>` description text, so it is not
 //! silently dropped, only not separately computed.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_magic__equipment_tables__EquipmentCategory"))]
 pub enum EquipmentCategory {
     General,
     ArmsArmor,
@@ -46,7 +48,9 @@ impl EquipmentCategory {
         &[EquipmentCategory::General, EquipmentCategory::ArmsArmor];
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_magic__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
     /// UM's equipment records carry no explicit `KEY:` token anywhere in
     /// either source file -- the corpus identity is the record's own
@@ -97,7 +101,7 @@ pub fn field_coverage_report() -> EquipmentFieldCoverage {
 /// Full UM equipment table store: every real corpus record across both
 /// source files -- 24 General (spellbooks) + 2 ArmsArmor (Scrollmaster
 /// Gear) = 26.
-const GENERAL_TABLE: &[EquipmentTableEntry] = &[
+pub(crate) const GENERAL_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "Defensive Primer", category: EquipmentCategory::General, name: "Defensive Primer", cost_gp: Some(185.0_f64), weight_lbs: None, description: Some("Level 1 Abjurer; Protection - Average lock (DC 25); Opposition Schools - Conjuration, enchantment; Spells - 1.burning hands, detect undead, expeditious retreat, magic missile, protection from evil(S), ray of enfeeblement, shield(S)") }, // um_equip_general.lst:12
     EquipmentTableEntry { key: "Apprentice Chapbook of Rul Thaven", category: EquipmentCategory::General, name: "Apprentice Chapbook of Rul Thaven", cost_gp: Some(195.0_f64), weight_lbs: None, description: Some("Level 2 Diviner; Opposition Schools - Illusion, transmutation; Spells - 1.comprehend languages(S), detect secret doors(S), detect undead(S), identify(S), protection from evil, protection from law, summon monster I, true strike(S)") }, // um_equip_general.lst:13
     EquipmentTableEntry { key: "Unnamed Journal", category: EquipmentCategory::General, name: "Unnamed Journal", cost_gp: Some(275.0_f64), weight_lbs: None, description: Some("Level 3 Universalist; Spells - 2.fox's cunning, scorching ray; 1.alarm, feather fall, obscuring mist, mount, shield, shocking grasp, silent image, sleep") }, // um_equip_general.lst:14
@@ -124,7 +128,7 @@ const GENERAL_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "Mastery of Word and Thought", category: EquipmentCategory::General, name: "Mastery of Word and Thought", cost_gp: Some(27265.0_f64), weight_lbs: Some(12.0_f64), description: Some("Level 20 enchanter; Protection - Symbol of death on the first page of the book (Fort DC 22); Opposition Schools - Conjuration, illusion; Spells - 9.dominate monster(S), foresight, mage's disjunction, mass hold monster(S), mass suffocation, power word kill(S), time stop; 8.binding(S), clone, irresistible dance(S), mind blank, polymorph any object, power word stun(S), sunburst; 7.deflection, greater arcane sight, instant summons(OP), limited wish, mass hold person(S), plane shift(OP), power word blind(S), resonating word, symbol of stunning(S); 6.cloak of dreams(S), contingency, enemy hammer, forceful hand, greater dispel magic, geas/quest(S), legend lore, mage's lucubration, true seeing; 5.dismissal, dominate person(S), fabricate, icy prison, feeblemind(S), mage's private sanctum, permanency, prying eyes, teleport(OP); 4.bestow curse, crushing despair(S), dimensional anchor, fear, moonstruck(S), resilient sphere, stone shape, stoneskin; 3.fireball, fly, greater magic weapon, heroism(S), loathsome veil, nondetection, protection from energy, symbol of peace(S), suggestion(S); 2.arcane lock, continual flame, false life, hideous laughter(S), magic mouth(OP), mirror image(OP), resist energy, rope trick, see invisibility, touch of idiocy(S); 1.alarm, charm person(S), feather fall, forced quiet, hydraulic push, identify, magic missile, memory lapse(S), ray of enfeeblement, shield, unseen servant(OP); Preparation Ritual - Curse of Names") }, // um_equip_general.lst:35
 ];
 
-const ARMS_ARMOR_TABLE: &[EquipmentTableEntry] = &[
+pub(crate) const ARMS_ARMOR_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "Scroll Shield", category: EquipmentCategory::ArmsArmor, name: "Scroll Shield", cost_gp: Some(0.0_f64), weight_lbs: Some(0.0_f64), description: None }, // um_equip_arms_armor.lst:7
     EquipmentTableEntry { key: "Scroll Blade", category: EquipmentCategory::ArmsArmor, name: "Scroll Blade", cost_gp: Some(0.0_f64), weight_lbs: Some(0.0_f64), description: None }, // um_equip_arms_armor.lst:8
 ];

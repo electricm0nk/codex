@@ -68,7 +68,7 @@
 
 pub mod archetype_tables;
 pub mod class_spell_levels;
-mod companion_data;
+pub(crate) mod companion_data;
 
 pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
 
@@ -97,7 +97,7 @@ pub mod equipment_tables;
 pub mod feat_data;
 pub mod feats;
 pub mod json_cache;
-mod monster_data;
+pub(crate) mod monster_data;
 pub mod spell_list;
 
 // `decisions.md §20` no_record-to-zero, round 4: this book's own single

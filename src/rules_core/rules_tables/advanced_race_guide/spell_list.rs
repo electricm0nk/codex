@@ -33,7 +33,9 @@
 /// `rules_tables::acg::spell_list::Pf1SchoolId` exactly. `Universal` does
 /// not appear in `arg_spells.lst` today but is included for cross-book
 /// schema parity.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__spell_list__Pf1SchoolId"))]
 pub enum Pf1SchoolId {
     Abjuration,
     Conjuration,
@@ -76,7 +78,9 @@ impl Pf1SchoolId {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__spell_list__SpellListEntry"))]
 pub struct SpellListEntry {
     /// The spell's `name` is its identity in `arg_spells.lst` (no `KEY:`
     /// token on any in-scope record).

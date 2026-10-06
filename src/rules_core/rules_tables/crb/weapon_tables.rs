@@ -31,7 +31,8 @@
 
 /// Simple/Martial/Exotic, the PF1 proficiency tiers a weapon's `TYPE:`
 /// facet can carry.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum WeaponProficiency {
     Simple,
     Martial,
@@ -39,7 +40,8 @@ pub enum WeaponProficiency {
 }
 
 /// One weapon's real corpus stat block.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct WeaponTableEntry {
     /// The corpus record's own name, used as the lookup key.
     pub key: &'static str,
@@ -418,20 +420,24 @@ mod tests {
 /// only `Weapon Prof ~ Auto` plus an explicit `AUTO:WEAPONPROF|` list.
 /// Modelling them as "simple-weapon classes" would hand a Wizard every
 /// simple weapon in the book when the corpus grants it exactly five.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct ClassWeaponProficiency {
     /// The engine's class id, e.g. `"class:wizard"`.
     pub class_id: &'static str,
     /// Blanket tiers, from `ABILITY:Internal|AUTOMATIC|Weapon Prof ~ X`
     /// (which resolves to `AUTO:WEAPONPROF|TYPE=X`) and the `.MOD` grants.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub tiers: &'static [WeaponProficiency],
     /// Individually named proficiencies, verbatim from the class's own
     /// `AUTO:WEAPONPROF|` list. These are `PROFICIENCY:WEAPON` names, NOT
     /// weapon display keys — see [`WeaponTableEntry::proficiency_name`].
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub named: &'static [&'static str],
     /// Whole `Weapon Group <name>` grants. Only Brawler uses this among the
     /// 27 base classes, but omitting it would have silently understated
     /// Brawler's proficiency for every Close-group weapon.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub weapon_groups: &'static [&'static str],
 }
 
@@ -749,7 +755,8 @@ pub fn class_is_proficient_with(
 /// shape guess. PF1 armor proficiency has no per-item exotic-armor
 /// analogue to a weapon's named list, so a class's whole grant is exactly
 /// these five booleans.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct ClassArmorProficiency {
     /// The engine's class id, e.g. `"class:fighter"`.
     pub class_id: &'static str,

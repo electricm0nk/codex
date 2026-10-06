@@ -1,0 +1,49 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "acg/spell_list/ARCHETYPE_QUALIFIED_KEYS",
+  "licence": {
+    "license": "OGL",
+    "book": "acg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    [
+      "Naturalist Summon Nature's Ally I",
+      "Summon Nature's Ally I"
+    ],
+    [
+      "Naturalist Summon Nature's Ally II",
+      "Summon Nature's Ally II"
+    ],
+    [
+      "Naturalist Summon Nature's Ally III",
+      "Summon Nature's Ally III"
+    ],
+    [
+      "Naturalist Summon Nature's Ally IV",
+      "Summon Nature's Ally IV"
+    ],
+    [
+      "Naturalist Summon Nature's Ally V",
+      "Summon Nature's Ally V"
+    ],
+    [
+      "Naturalist Summon Nature's Ally VI",
+      "Summon Nature's Ally VI"
+    ],
+    [
+      "Naturalist Summon Nature's Ally VII",
+      "Summon Nature's Ally VII"
+    ],
+    [
+      "Naturalist Summon Nature's Ally VIII",
+      "Summon Nature's Ally VIII"
+    ],
+    [
+      "Naturalist Summon Nature's Ally IX",
+      "Summon Nature's Ally IX"
+    ]
+  ]
+}

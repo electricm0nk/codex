@@ -1,0 +1,45 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "beastiary1/equipment_tables/EQUIPMENT_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "beastiary1",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Poison (Black Smear)",
+      "category": "General",
+      "name": "Poison (Black Smear)",
+      "cost_gp": null,
+      "weight_lbs": 0.0,
+      "description": "Injury; save Fort DC 15; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save"
+    },
+    {
+      "key": "Rag Armor (Dark Creeper)",
+      "category": "ArmsArmor",
+      "name": "Rag Armor",
+      "cost_gp": 0.0,
+      "weight_lbs": 15.0,
+      "description": "A dark creeper's multiple layers of filthy rags function as leather armor when worn by one of their kind."
+    },
+    {
+      "key": "Aklys",
+      "category": "ArmsArmor",
+      "name": "Aklys",
+      "cost_gp": 0.0,
+      "weight_lbs": 3.0,
+      "description": "A 20-footlong cord limits the Aklys's range, but allows it to be retrieved as a move equivalent action after it has been thrown."
+    },
+    {
+      "key": "Heartstone (Night Hag)",
+      "category": "MagicItems",
+      "name": "Heartstone",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": "Gemstone worth 1800gp"
+    }
+  ]
+}

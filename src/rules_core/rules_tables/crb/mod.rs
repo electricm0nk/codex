@@ -59,7 +59,7 @@
 //! than the arithmetic.
 //! ---------------------------------------------------------------------------
 
-mod companion_data;
+pub(crate) mod companion_data;
 
 pub use super::companion_chassis::{CompanionAbilityRecord, CompanionClassRecord, CompanionRecord};
 

@@ -1,0 +1,49 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "apg/spell_list/ARCHETYPE_QUALIFIED_KEYS",
+  "licence": {
+    "license": "OGL",
+    "book": "apg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    [
+      "Summoner Summon Monster I",
+      "Summon Monster I"
+    ],
+    [
+      "Summoner Summon Monster II",
+      "Summon Monster II"
+    ],
+    [
+      "Summoner Summon Monster III",
+      "Summon Monster III"
+    ],
+    [
+      "Summoner Summon Monster IV",
+      "Summon Monster IV"
+    ],
+    [
+      "Summoner Summon Monster V",
+      "Summon Monster V"
+    ],
+    [
+      "Summoner Summon Monster VI",
+      "Summon Monster VI"
+    ],
+    [
+      "Summoner Summon Monster VII",
+      "Summon Monster VII"
+    ],
+    [
+      "Summoner Summon Monster VIII",
+      "Summon Monster VIII"
+    ],
+    [
+      "Summoner Summon Monster IX",
+      "Summon Monster IX"
+    ]
+  ]
+}

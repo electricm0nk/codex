@@ -13,7 +13,7 @@
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
 /// Every inner_sea_intrigue companion creature (2 rows).
-pub(super) static COMPANIONS: &[CompanionRecord] = &[
+pub(crate) static COMPANIONS: &[CompanionRecord] = &[
     CompanionRecord {
         key: "Familiar (Clockwork Spy)",
         name: "Familiar (Clockwork Spy)",
@@ -61,7 +61,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
 ];
 
 /// Every inner_sea_intrigue companion ability record (9 rows).
-pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
+pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
     CompanionAbilityRecord {
         key: "Clockwork Spy ~ Record Audio",
         name: "Record Audio",

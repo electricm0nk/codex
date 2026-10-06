@@ -49,7 +49,9 @@
 //! resolution, the identical treatment `ultimate_psionics::equipment_tables`
 //! already established for its own `[NAME]`-templated Psicrown records.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_combat__equipment_tables__EquipmentCategory"))]
 pub enum EquipmentCategory {
     General,
     MagicItems,
@@ -66,7 +68,9 @@ impl EquipmentCategory {
     ];
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_combat__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
     /// The record's corpus `KEY:` token when present (every `Equipmods`
     /// row), else its own display name.
@@ -118,7 +122,7 @@ pub fn field_coverage_report() -> EquipmentFieldCoverage {
     }
 }
 
-const GENERAL_TABLE: &[EquipmentTableEntry] = &[
+pub(crate) const GENERAL_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "Black Powder (Dose)", category: EquipmentCategory::General, name: "Black Powder (Dose)", cost_gp: Some(10.0_f64), weight_lbs: None, description: None }, // uc_equip_general.lst:8
     EquipmentTableEntry { key: "Black Powder (Keg)", category: EquipmentCategory::General, name: "Black Powder (Keg)", cost_gp: Some(1000.0_f64), weight_lbs: Some(5.0_f64), description: None }, // uc_equip_general.lst:9
     EquipmentTableEntry { key: "Gunsmith's Kit", category: EquipmentCategory::General, name: "Gunsmith's Kit", cost_gp: Some(15.0_f64), weight_lbs: Some(2.0_f64), description: None }, // uc_equip_general.lst:10
@@ -147,7 +151,7 @@ const GENERAL_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "Siege Tower (Large)", category: EquipmentCategory::General, name: "Siege Tower (Large)", cost_gp: Some(1000.0_f64), weight_lbs: None, description: Some("Crew 6, Speed 15 ft.") }, // uc_equip_general.lst:37
 ];
 
-const MAGIC_ITEMS_TABLE: &[EquipmentTableEntry] = &[
+pub(crate) const MAGIC_ITEMS_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "Amulet of Bullet Protection +1", category: EquipmentCategory::MagicItems, name: "Amulet of Bullet Protection +1", cost_gp: Some(1500.0_f64), weight_lbs: None, description: Some("This amulet, usually crafted from the splintered remains of spent firearm bullets shaped into a rough holy symbol or clover, grants the wearer a luck bonus to AC against firearm attacks that target touch AC.") }, // uc_equip_magic_items.lst:7
     EquipmentTableEntry { key: "Amulet of Bullet Protection +2", category: EquipmentCategory::MagicItems, name: "Amulet of Bullet Protection +2", cost_gp: Some(6000.0_f64), weight_lbs: None, description: Some("This amulet, usually crafted from the splintered remains of spent firearm bullets shaped into a rough holy symbol or clover, grants the wearer a luck bonus to AC against firearm attacks that target touch AC.") }, // uc_equip_magic_items.lst:8
     EquipmentTableEntry { key: "Amulet of Bullet Protection +3", category: EquipmentCategory::MagicItems, name: "Amulet of Bullet Protection +3", cost_gp: Some(13500.0_f64), weight_lbs: None, description: Some("This amulet, usually crafted from the splintered remains of spent firearm bullets shaped into a rough holy symbol or clover, grants the wearer a luck bonus to AC against firearm attacks that target touch AC.") }, // uc_equip_magic_items.lst:9
@@ -160,7 +164,7 @@ const MAGIC_ITEMS_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "See Invisibility Sight", category: EquipmentCategory::MagicItems, name: "See Invisibility Sight", cost_gp: Some(12000.0_f64), weight_lbs: Some(1.0_f64), description: Some("This sight can be attached to a single two-handed firearm. When this is done, the sight becomes part of the weapon, but can be removed from that weapon with a full-round action. A firearm wielder using a firearm that has this sight can choose to spend a full-round action to either locate an invisible creature within line of sight or make a single shot that ignores the invisibility of a creature that she knows is in the area.") }, // uc_equip_magic_items.lst:16
 ];
 
-const ARMS_ARMOR_TABLE: &[EquipmentTableEntry] = &[
+pub(crate) const ARMS_ARMOR_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "Alchemical Cartridge (Dragon's Breath)", category: EquipmentCategory::ArmsArmor, name: "Alchemical Cartridge (Dragon's Breath)", cost_gp: Some(40.0_f64), weight_lbs: None, description: None }, // uc_equip_arms_armor.lst:8
     EquipmentTableEntry { key: "Alchemical Cartridge (Entangling Shot)", category: EquipmentCategory::ArmsArmor, name: "Alchemical Cartridge (Entangling Shot)", cost_gp: Some(40.0_f64), weight_lbs: None, description: None }, // uc_equip_arms_armor.lst:9
     EquipmentTableEntry { key: "Alchemical Cartridge (Flare)", category: EquipmentCategory::ArmsArmor, name: "Alchemical Cartridge (Flare)", cost_gp: Some(10.0_f64), weight_lbs: None, description: None }, // uc_equip_arms_armor.lst:10
@@ -312,7 +316,7 @@ const ARMS_ARMOR_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "Trebuchet (Standard)", category: EquipmentCategory::ArmsArmor, name: "Trebuchet (Standard)", cost_gp: Some(1000.0_f64), weight_lbs: None, description: Some(" Range (150 ft. min.); Crew 4, Aim 2, Load 3, Speed 0 ft.") }, // uc_equip_arms_armor.lst:175
 ];
 
-const EQUIPMODS_TABLE: &[EquipmentTableEntry] = &[
+pub(crate) const EQUIPMODS_TABLE: &[EquipmentTableEntry] = &[
     EquipmentTableEntry { key: "Special Quality ~ Thrown", category: EquipmentCategory::Equipmods, name: "Thrown", cost_gp: None, weight_lbs: None, description: Some("Weapon can be thrown") }, // uc_equipmods.lst:6
     EquipmentTableEntry { key: "Special Quality ~ Scatter ~ Firearm", category: EquipmentCategory::Equipmods, name: "Scatter", cost_gp: Some(0.0_f64), weight_lbs: None, description: Some("scatter") }, // uc_equipmods.lst:10
     EquipmentTableEntry { key: "Special Ability ~ Dry Load ~ Firearm / Ammunition", category: EquipmentCategory::Equipmods, name: "Dry Load", cost_gp: Some(30.0_f64), weight_lbs: None, description: Some("This special ability can only be applied to alchemical or metal firearm cartridges. Dry load cartridges can be used to load guns underwater or in other airless environments, such as a vacuum. This ability protects the cartridge's contents as it is being loaded and creates a residual bubble of air that surrounds the firearm, further protecting the ammunition and allowing the firearm with this ammunition to be fired in an airless environment. After the cartridge is loaded, the bubble of air lasts for 3 minutes, or until the firearm is fired, whichever occurs first. A firearm loaded with this ammunition still takes the -2 penalty on attack rolls when fired underwater for every 5 feet of water the bullet passes through, in addition to the normal penalties to range. When firing a dry load cartridge underwater or in an airless environment, a misfire that results in a firearm explosion occurs normally.") }, // uc_equipmods.lst:14

@@ -56,7 +56,9 @@ use crate::rules_core::rules_tables::RuleSetId;
 /// which class was queried. Mirrors `rules_tables::apg::ClassTableRow`
 /// (kept book-local rather than shared, per that module's own
 /// established shape).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "acg__ClassTableRow"))]
 pub struct ClassTableRow {
     pub level: u8,
     pub base_attack_bonus: i16,
@@ -71,7 +73,8 @@ pub struct ClassTableRow {
 /// corrected roster (see this module's doc comment for the roster
 /// correction). Criterion 13 (shared ACG spell/equipment tables) remains
 /// open as Epic 4's last piece.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum AcgClassId {
     Arcanist,
     Bloodrager,

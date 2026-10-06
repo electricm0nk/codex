@@ -1,0 +1,470 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "advanced_race_guide/feat_data/combat/COMBAT_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "advanced_race_guide",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Blazing Aura",
+      "category": "Combat",
+      "name": "Blazing Aura",
+      "description": "An inferno rages inside you, causing your body to radiate intense heat.",
+      "effect": null
+    },
+    {
+      "key": "Blistering Feint",
+      "category": "Combat",
+      "name": "Blistering Feint",
+      "description": "Your foes flinch from the heat of your weapon, giving you an opportunity to slip past their defenses.",
+      "effect": null
+    },
+    {
+      "key": "Blood Beak",
+      "category": "Combat",
+      "name": "Blood Beak",
+      "description": "Your bleed attack is bloody and dangerous.",
+      "effect": [
+        {
+          "qualifiers": [
+            "WEAPONPROF=Beak",
+            "DAMAGESIZE",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Blundering Defense",
+      "category": "Combat",
+      "name": "Blundering Defense",
+      "description": "Your feverish and sometimes comical defensive techniques offer enough distraction to aid allies.",
+      "effect": null
+    },
+    {
+      "key": "Bullying Blow",
+      "category": "Combat",
+      "name": "Bullying Blow",
+      "description": "With a simple hit, you more easily intimidate an opponent.",
+      "effect": null
+    },
+    {
+      "key": "Cautious Fighter",
+      "category": "Combat",
+      "name": "Cautious Fighter",
+      "description": "You care more about survival than victory.",
+      "effect": null
+    },
+    {
+      "key": "Claw Pounce",
+      "category": "Combat",
+      "name": "Claw Pounce",
+      "description": "You can charge and make an attack with your paws.",
+      "effect": null
+    },
+    {
+      "key": "Cleave Through",
+      "category": "Combat",
+      "name": "Cleave Through",
+      "description": "You are ferocious at hewing smaller opponents.",
+      "effect": null
+    },
+    {
+      "key": "Cloven Helm",
+      "category": "Combat",
+      "name": "Cloven Helm",
+      "description": "Your helm turns aside lethal blows.",
+      "effect": null
+    },
+    {
+      "key": "Critical Versatility",
+      "category": "Combat",
+      "name": "Critical Versatility",
+      "description": "An open mind and combat training grant versatility to your critical hits.",
+      "effect": null
+    },
+    {
+      "key": "Demoralizing Lash",
+      "category": "Combat",
+      "name": "Demoralizing Lash",
+      "description": "You cow your enemies with the lash of a whip.",
+      "effect": null
+    },
+    {
+      "key": "Dented Helm",
+      "category": "Combat",
+      "name": "Dented Helm",
+      "description": "Your helm protects you from hard hits.",
+      "effect": null
+    },
+    {
+      "key": "Desperate Swing",
+      "category": "Combat",
+      "name": "Desperate Swing",
+      "description": "You land your most telling blows in desperate situations.",
+      "effect": null
+    },
+    {
+      "key": "Destroyer's Blessing",
+      "category": "Combat",
+      "name": "Destroyer's Blessing",
+      "description": "Breaking things adds to your power.",
+      "effect": null
+    },
+    {
+      "key": "Elven Battle Training",
+      "category": "Combat",
+      "name": "Elven Battle Training",
+      "description": "You have been specially trained to wield a variety of traditional elven weapons.",
+      "effect": null
+    },
+    {
+      "key": "Ferocious Tenacity",
+      "category": "Combat",
+      "name": "Ferocious Tenacity",
+      "description": "You spit in the face of death.",
+      "effect": null
+    },
+    {
+      "key": "Fire Hand",
+      "category": "Combat",
+      "name": "Fire Hand",
+      "description": "Born with a torch in your hand, you have a gift with anything that burns.",
+      "effect": null
+    },
+    {
+      "key": "Giant Killer",
+      "category": "Combat",
+      "name": "Giant Killer",
+      "description": "Your cleaving strokes menace giants and larger foes.",
+      "effect": null
+    },
+    {
+      "key": "Gloom Strike",
+      "category": "Combat",
+      "name": "Gloom Strike",
+      "description": "Few creatures are as accustomed to fighting in the shadows as you.",
+      "effect": null
+    },
+    {
+      "key": "Gnome Weapon Focus",
+      "category": "Combat",
+      "name": "Gnome Weapon Focus",
+      "description": "Your extensive training with traditional gnome weapons gives you an advantage.",
+      "effect": [
+        {
+          "qualifiers": [
+            "WEAPONPROF=TYPE.Gnome",
+            "TOHIT",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Goblin Cleaver",
+      "category": "Combat",
+      "name": "Goblin Cleaver",
+      "description": "You are ferocious at hewing smaller opponents.",
+      "effect": null
+    },
+    {
+      "key": "Goblin Gunslinger",
+      "category": "Combat",
+      "name": "Goblin Gunslinger",
+      "description": "You have learned how to fire the big guns.",
+      "effect": [
+        {
+          "qualifiers": [
+            "WEAPONPROF=Firearms",
+            "PCSIZE",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Great Hatred",
+      "category": "Combat",
+      "name": "Great Hatred",
+      "description": "Your rage burns with vast intensity.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "Gnome_Hatred_AttackBonus",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Grudge Fighter",
+      "category": "Combat",
+      "name": "Grudge Fighter",
+      "description": "You feel great anger at anyone who dares to attack you, and this fury makes your own attacks that much stronger.",
+      "effect": null
+    },
+    {
+      "key": "Hard-Headed",
+      "category": "Combat",
+      "name": "Hard-Headed",
+      "description": "Your thick skull is almost a weapon unto itself.",
+      "effect": null
+    },
+    {
+      "key": "Improved Low Blow",
+      "category": "Combat",
+      "name": "Improved Low Blow",
+      "description": "You are adept at hitting larger opponents where it hurts.",
+      "effect": null
+    },
+    {
+      "key": "Improved Surprise Follow-Through",
+      "category": "Combat",
+      "name": "Improved Surprise Follow-Through",
+      "description": "You follow up an attack with a surprising series of sweeping blows.",
+      "effect": null
+    },
+    {
+      "key": "Inner Flame",
+      "category": "Combat",
+      "name": "Inner Flame",
+      "description": "Your body generates so much heat that your mere touch scorches your enemies.",
+      "effect": null
+    },
+    {
+      "key": "Kobold Ambusher",
+      "category": "Combat",
+      "name": "Kobold Ambusher",
+      "description": "You are adept at moving fast and staying hidden.",
+      "effect": null
+    },
+    {
+      "key": "Kobold Sniper",
+      "category": "Combat",
+      "name": "Kobold Sniper",
+      "description": "You snipe quickly, making it harder for others to find the location of your attack.",
+      "effect": null
+    },
+    {
+      "key": "Lucky Strike",
+      "category": "Combat",
+      "name": "Lucky Strike",
+      "description": "Your luck increases the potency of your weapon attacks.",
+      "effect": null
+    },
+    {
+      "key": "Martial Mastery",
+      "category": "Combat",
+      "name": "Martial Mastery",
+      "description": "You broaden your study of weapons to encompass multiple similar weapons.",
+      "effect": null
+    },
+    {
+      "key": "Martial Versatility",
+      "category": "Combat",
+      "name": "Martial Versatility",
+      "description": "You further broaden your study of weapons to encompass multiple similar weapons.",
+      "effect": null
+    },
+    {
+      "key": "Nimble Striker",
+      "category": "Combat",
+      "name": "Nimble Striker",
+      "description": "You were born to charge your enemies and nobody does it better.",
+      "effect": null
+    },
+    {
+      "key": "Orc Hewer",
+      "category": "Combat",
+      "name": "Orc Hewer",
+      "description": "You are ferocious at hewing your enemies, especially orcs.",
+      "effect": null
+    },
+    {
+      "key": "Orc Weapon Expertise",
+      "category": "Combat",
+      "name": "Orc Weapon Expertise",
+      "description": "You can do more with the weapons orcs favor the most.",
+      "effect": [
+        {
+          "qualifiers": [
+            "ABILITYPOOL",
+            "Orc Weapon Expertise",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Reverse-Feint",
+      "category": "Combat",
+      "name": "Reverse-Feint",
+      "description": "You can goad an opponent into attacking you in order to make your counter attack all the more powerful.",
+      "effect": null
+    },
+    {
+      "key": "Risky Striker",
+      "category": "Combat",
+      "name": "Risky Striker",
+      "description": "You can make yourself a little more vulnerable to larger creatures in order to land a devastating blow.",
+      "effect": null
+    },
+    {
+      "key": "Scorching Weapons",
+      "category": "Combat",
+      "name": "Scorching Weapons",
+      "description": "Elemental fire stirs within your body, boiling your blood and rendering you resistant to flame.",
+      "effect": null
+    },
+    {
+      "key": "Sea Hunter",
+      "category": "Combat",
+      "name": "Sea Hunter",
+      "description": "Your blows knock swimming opponents off balance.",
+      "effect": null
+    },
+    {
+      "key": "Sharpclaw",
+      "category": "Combat",
+      "name": "Sharpclaw",
+      "description": "Your nails are large and strong.",
+      "effect": null
+    },
+    {
+      "key": "Shatterspell",
+      "category": "Combat",
+      "name": "Shatterspell",
+      "description": "Your mighty blows shatter your enemy's magic.",
+      "effect": null
+    },
+    {
+      "key": "Spit Venom",
+      "category": "Combat",
+      "name": "Spit Venom",
+      "description": "You have mastered the nagaji warrior technique of spitting venom into your opponent's eyes.",
+      "effect": null
+    },
+    {
+      "key": "Surprise Follow-Through",
+      "category": "Combat",
+      "name": "Surprise Follow-Through",
+      "description": "When striking one opponent, you catch its ally off guard.",
+      "effect": null
+    },
+    {
+      "key": "Surprise Strike",
+      "category": "Combat",
+      "name": "Surprise Strike",
+      "description": "You actually seem to do more damage when frantically trying to avoid your enemies.",
+      "effect": null
+    },
+    {
+      "key": "Sympathetic Rage",
+      "category": "Combat",
+      "name": "Sympathetic Rage",
+      "description": "Seeing an ally rage fills you with your own fury.",
+      "effect": null
+    },
+    {
+      "key": "Tail Terror",
+      "category": "Combat",
+      "name": "Tail Terror",
+      "description": "You have strengthened your tail enough to make slap attacks with it.",
+      "effect": [
+        {
+          "qualifiers": [
+            "SLOTS",
+            "WEAPON",
+            "1"
+          ],
+          "bonus_type": null,
+          "conditions": [
+            {
+              "negated": false,
+              "family": "EQUIP",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "TYPE",
+                  "value": "KoboldTailAttachment"
+                }
+              ],
+              "alternatives": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Tangle Feet",
+      "category": "Combat",
+      "name": "Tangle Feet",
+      "description": "Creatures who cross your path find themselves tripping over their own feet.",
+      "effect": null
+    },
+    {
+      "key": "Taskmaster",
+      "category": "Combat",
+      "name": "Taskmaster",
+      "description": "You intimidate weaker allies into reckless ferocity.",
+      "effect": null
+    },
+    {
+      "key": "Tree Hanger",
+      "category": "Combat",
+      "name": "Tree Hanger",
+      "description": "You can use your tail to defend against trip attacks and to hang from nearby protrusions.",
+      "effect": [
+        {
+          "qualifiers": [
+            "VAR",
+            "CMD_Trip",
+            "2"
+          ],
+          "bonus_type": null,
+          "conditions": [],
+          "selection": null
+        }
+      ]
+    },
+    {
+      "key": "Uncanny Defense",
+      "category": "Combat",
+      "name": "Uncanny Defense",
+      "description": "Your instinct for self-preservation gives you many advantages.",
+      "effect": null
+    },
+    {
+      "key": "Vast Hatred",
+      "category": "Combat",
+      "name": "Vast Hatred",
+      "description": "Your rage stretches beyond normal bounds.",
+      "effect": null
+    }
+  ]
+}

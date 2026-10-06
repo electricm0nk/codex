@@ -1,0 +1,19 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "feat_gap_tables/BOOK_OF_THE_DAMNED_VOLUME_2_FEAT_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "feat_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Demonic Obedience",
+      "category": "General",
+      "name": "Demonic Obedience",
+      "description": "You physically defile yourself, others, or holy objects in order to prove your blasphemous devotion to a demon lord and gain special boons. Once you spend an hour performing the required obedience of your demon lord, you gain the associated benefits. If you ever fail to perform a daily obedience, you lose all benefits granted by this feat until you next perform the obedience."
+    }
+  ]
+}

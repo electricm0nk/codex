@@ -1,0 +1,67 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "monster_codex/monster_data/MONSTER_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "monster_codex",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Bat (Sootwing) ~ Disease",
+      "name": "Disease",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Ghoul Fever; See Pathfinder RPG Bestiary entry on ghouls.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Bat (Sootwing)"
+      ],
+      "source_file": "mc_abilities_race.lst",
+      "source_line": 71,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Seru ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Bite or spit venom-injury; save Fort DC 15; frequency 1/minute for 6 minutes; effect 1 Con damage plus blindness for 1 minute; cure 1 save.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Seru"
+      ],
+      "source_file": "mc_abilities_race.lst",
+      "source_line": 85,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Seru ~ Spit Venom",
+      "name": "Spit Venom",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "As a standard action, a seru can spit venom up to 30 feet. This is a ranged touch attack with no range increment. Any opponent hit by this attack is exposed to the seru's poison.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [
+        "Seru"
+      ],
+      "source_file": "mc_abilities_race.lst",
+      "source_line": 86,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    }
+  ]
+}

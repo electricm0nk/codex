@@ -23,7 +23,7 @@
 
 pub mod spell_list;
 
-mod monster_data;
+pub(crate) mod monster_data;
 
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,

@@ -40,8 +40,8 @@
 //! because the gate is on the pcc line and a `grep PRECAMPAIGN` over the
 //! `.lst` itself returns nothing.
 
-mod companion_data;
-mod monster_data;
+pub(crate) mod companion_data;
+pub(crate) mod monster_data;
 
 pub use super::companion_chassis::{
     CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord,

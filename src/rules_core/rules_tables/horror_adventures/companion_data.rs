@@ -13,7 +13,7 @@
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, Speed, StatAdjustment};
 
 /// Every horror_adventures companion creature (1 rows).
-pub(super) static COMPANIONS: &[CompanionRecord] = &[
+pub(crate) static COMPANIONS: &[CompanionRecord] = &[
     CompanionRecord {
         key: "Companion (Devolved Humanoid)",
         name: "Companion (Devolved Humanoid)",
@@ -39,7 +39,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
 ];
 
 /// Every horror_adventures companion ability record (1 rows).
-pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
+pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
     CompanionAbilityRecord {
         key: "Companion Advancement ~ Devolved Humanoid",
         name: "Companion Advancement (Devolved Humanoid)",

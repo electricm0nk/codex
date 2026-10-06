@@ -95,7 +95,8 @@ pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 /// The 17 `Unchained Summoner ~ ...` records this book declares — the same 17
 /// that `data/corpus/pathfinder_unchained/class_feature/
 /// summoner_unchained_class/` holds.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum UnchainedSummonerFeature {
     Aspect,
     BondSenses,

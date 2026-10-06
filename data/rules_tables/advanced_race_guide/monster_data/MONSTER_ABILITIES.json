@@ -1,0 +1,33 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "advanced_race_guide/monster_data/MONSTER_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "advanced_race_guide",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Grippli ~ Toxic Skin ~ Grippli Poison",
+      "name": "Grippli Poison",
+      "facet": "SpecialAttack",
+      "delivery": null,
+      "traits": [
+        "Special Ability"
+      ],
+      "description": "Skin or weapon--contact or injury; save Fort DC %1 (10 + 1/2 the grippli's Hit Dice plus its Constitution modifier); frequency 1/round for 6 rounds; effect 1d2 Dexterity damage; cure 1 save.",
+      "description_variables": [
+        "Grippli_ToxicSkin_PoisonDC"
+      ],
+      "source_page": "p.190",
+      "owners": [],
+      "source_file": "arg_abilities_race.lst",
+      "source_line": 912,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    }
+  ]
+}

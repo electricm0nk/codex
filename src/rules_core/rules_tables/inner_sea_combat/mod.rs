@@ -38,7 +38,7 @@
 //! proves the row-named ownership shape is load-bearing: it has neither a
 //! `PRERACE:` gate nor a namespaced key, so shapes 2 and 3 would both miss it.
 
-mod companion_data;
+pub(crate) mod companion_data;
 
 pub use super::companion_chassis::{
     CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord,

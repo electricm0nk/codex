@@ -1,0 +1,118 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "pathfinder_unchained/rogue_features/UnchainedRogueFeature",
+  "licence": {
+    "license": "OGL",
+    "book": "pathfinder_unchained",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "feature": "Skills",
+      "key": "Unchained Rogue ~ Skills",
+      "name": "Skills",
+      "declaring_line": 579,
+      "min_level": 1
+    },
+    {
+      "feature": "WeaponProficiency",
+      "key": "Unchained Rogue ~ Weapon Proficiency",
+      "name": "Weapon Proficiency",
+      "declaring_line": 580,
+      "min_level": 1
+    },
+    {
+      "feature": "ArmorProficiency",
+      "key": "Unchained Rogue ~ Armor Proficiency",
+      "name": "Armor Proficiency",
+      "declaring_line": 581,
+      "min_level": 1
+    },
+    {
+      "feature": "DangerSense",
+      "key": "Unchained Rogue ~ Danger Sense",
+      "name": "Danger Sense",
+      "declaring_line": 582,
+      "min_level": 3
+    },
+    {
+      "feature": "DebilitatingInjury",
+      "key": "Unchained Rogue ~ Debilitating Injury",
+      "name": "Debilitating Injury",
+      "declaring_line": 583,
+      "min_level": 4
+    },
+    {
+      "feature": "Evasion",
+      "key": "Unchained Rogue ~ Evasion",
+      "name": "Evasion",
+      "declaring_line": 584,
+      "min_level": 2
+    },
+    {
+      "feature": "FinesseTraining",
+      "key": "Unchained Rogue ~ Finesse Training",
+      "name": "Finesse Training",
+      "declaring_line": 585,
+      "min_level": 1
+    },
+    {
+      "feature": "MasterStrike",
+      "key": "Unchained Rogue ~ Master Strike",
+      "name": "Master Strike",
+      "declaring_line": 586,
+      "min_level": 20
+    },
+    {
+      "feature": "RogueTalents",
+      "key": "Unchained Rogue ~ Rogue Talents",
+      "name": "Rogue Talents",
+      "declaring_line": 587,
+      "min_level": 2
+    },
+    {
+      "feature": "RoguesEdge",
+      "key": "Unchained Rogue ~ Rogues Edge",
+      "name": "Rogue's Edge",
+      "declaring_line": 588,
+      "min_level": 5
+    },
+    {
+      "feature": "SneakAttack",
+      "key": "Unchained Rogue ~ Sneak Attack",
+      "name": "Sneak Attack",
+      "declaring_line": 589,
+      "min_level": 1
+    },
+    {
+      "feature": "Trapfinding",
+      "key": "Unchained Rogue ~ Trapfinding",
+      "name": "Trapfinding",
+      "declaring_line": 590,
+      "min_level": 1
+    },
+    {
+      "feature": "UncannyDodge",
+      "key": "Unchained Rogue ~ Uncanny Dodge",
+      "name": "Uncanny Dodge",
+      "declaring_line": 591,
+      "min_level": null
+    },
+    {
+      "feature": "ImprovedUncannyDodge",
+      "key": "Unchained Rogue ~ Improved Uncanny Dodge",
+      "name": "Improved Uncanny Dodge",
+      "declaring_line": 592,
+      "min_level": null
+    },
+    {
+      "feature": "UncannyDodgeTracker",
+      "key": "Unchained Rogue ~ Uncanny Dodge Tracker",
+      "name": "Unchained Rogue ~ Uncanny Dodge Tracker",
+      "declaring_line": 594,
+      "min_level": 4
+    }
+  ]
+}

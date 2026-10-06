@@ -38,7 +38,8 @@
       "resources/corpus_fixtures/_settled/": "resources/corpus_fixtures/_settled/",
       "resources/corpus_bundle/": "data/corpus/",
       "../../../data/sheet_rules/": "data/sheet_rules/",
-      "../../../data/starfinder-1e/sheet_rules/": "data/starfinder-1e/sheet_rules/"
+      "../../../data/starfinder-1e/sheet_rules/": "data/starfinder-1e/sheet_rules/",
+      "../../../data/rules_tables/": "data/rules_tables/"
     },
     "icon": [
       "icons/icon.png",

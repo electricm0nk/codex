@@ -40,7 +40,8 @@
 
 /// One CRB base class's own class-skill list, or the special "every skill"
 /// grant (`Jack of All Trades`).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct ClassSkillList {
     /// The engine's class id, e.g. `"class:barbarian"`, or a non-class
     /// pseudo-id (`"class_feature:jack_of_all_trades"`) for the one
@@ -66,6 +67,7 @@ pub struct ClassSkillList {
     /// record's own `CSKILL:` token, rebuilt element for element, so the
     /// typing is proved lossless by the same check that proved the
     /// transcription.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub skills: &'static [ClassSkillEntry],
 }
 
@@ -74,7 +76,8 @@ pub struct ClassSkillList {
 /// The ingest format writes a whole-family grant as `TYPE=<Family>` and a
 /// single skill as its bare name. This crate carries the same distinction in
 /// its own vocabulary.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum ClassSkillEntry {
     /// One named skill, exactly as the record spells it — `"Acrobatics"`,
     /// `"Knowledge (Nature)"`.

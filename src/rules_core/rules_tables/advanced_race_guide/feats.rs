@@ -40,7 +40,9 @@
 //! partial description coverage) -- `arg_feats.lst` never omits `DESC:` on a
 //! real `CATEGORY:FEAT` row.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__feats__FeatCategory"))]
 pub enum FeatCategory {
     General,
     Combat,
@@ -58,7 +60,9 @@ impl FeatCategory {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__feats__FeatTableEntry"))]
 pub struct FeatTableEntry {
     /// The corpus `KEY:` token, falling back to the record's `name` when no
     /// `KEY:` token is present (no in-scope `arg_feats.lst` record carries
@@ -73,6 +77,7 @@ pub struct FeatTableEntry {
     /// order. `None` when the record has no `BONUS:` token at all -- mirrors
     /// `rules_tables::crb::feats::FeatTableEntry.effect`'s own convention
     /// exactly, including never using `Some(&[])` for "no data gathered yet".
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_opt_slice")]
     pub effect: Option<&'static [FeatEffectBonus]>,
 }
 
@@ -87,14 +92,18 @@ pub use crate::rules_core::rules_tables::crb::feats::{
 /// SD-35 `AT-35-E6-003-SWEEP` cycle 7 split the ingest tail off the qualifier
 /// list here too; the condition types are shared with the CRB catalog rather
 /// than re-declared, so one round-trip oracle covers all four catalogs.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__feats__FeatEffectBonus"))]
 pub struct FeatEffectBonus {
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub qualifiers: &'static [&'static str],
     /// The stacking-type label, if the record named one. Mirrors
     /// `rules_tables::crb::feats::FeatEffectBonus.bonus_type`.
     pub bonus_type: Option<&'static str>,
     /// The conditions gating this bonus; empty when it is unconditional.
     /// Mirrors `rules_tables::crb::feats::FeatEffectBonus.conditions`.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub conditions: &'static [EffectCondition],
     /// What the character's own choice supplies to this bonus. Mirrors
     /// `rules_tables::crb::feats::FeatEffectBonus.selection`; SD-35

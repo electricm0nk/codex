@@ -81,7 +81,8 @@
 /// `data/corpus/pathfinder_unchained/class_feature/barbarian_unchained_class/`
 /// — no more (nothing invented) and no fewer (nothing quietly dropped).
 /// `corpus_line` is the 1-based line in `pu_abilities_class.lst`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct UnchainedBarbarianFeature {
     /// PCGen `KEY:` token.
     pub key: &'static str,
@@ -157,7 +158,7 @@ pub const INDOMITABLE_WILL_SAVE_BONUS: i16 = 4;
 /// (301), which is what the progression actually grants; the third is
 /// reached through line 290's
 /// `ABILITY:Special Ability|AUTOMATIC|Unchained Rage`.
-const FEATURES: &[UnchainedBarbarianFeature] = &[
+pub(crate) const FEATURES: &[UnchainedBarbarianFeature] = &[
     UnchainedBarbarianFeature {
         key: "Unchained Barbarian ~ Weapon and Armor Proficiency",
         name: "Weapon and Armor Proficiency",

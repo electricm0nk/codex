@@ -35,7 +35,9 @@
 //! doc comment for the correction. CRB spell record coverage was already
 //! 100% (652/652) entering this cycle; no new records were added.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "crb__spell_list__Pf1SchoolId"))]
 pub enum Pf1SchoolId {
     Abjuration,
     Conjuration,
@@ -80,7 +82,9 @@ impl Pf1SchoolId {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "crb__spell_list__SpellListEntry"))]
 pub struct SpellListEntry {
     /// The spell's corpus identity. `cr_spells.lst` has no `KEY:` token
     /// for spells (unlike equipment records) -- the record's `name` field

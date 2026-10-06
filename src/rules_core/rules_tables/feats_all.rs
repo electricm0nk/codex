@@ -138,7 +138,8 @@ use super::RuleSetId;
 /// One feat record, projected out of whichever per-book table it came
 /// from. See this module's own doc comment for why the four fields are
 /// these four and why `category` is a string.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct FeatCatalogRecord {
     /// The record's corpus identity -- its `KEY:` token when its row
     /// carries one, else its display name. Each book's own table already

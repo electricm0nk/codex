@@ -120,7 +120,8 @@ pub use super::crb::feats::{ConditionItem, EffectCondition};
 /// [`EffectCondition`] schema, the same conversion cycle 9 applied to
 /// [`CompanionAbilityGrant::conditions`]. The verbatim pre-conversion arrays are
 /// the round-trip oracle in `pcgen_import::companion_pcgen_guards`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct ExternalAbilityRefCondition {
     /// The entry of [`CompanionRecord::external_ability_refs`] this gates,
     /// verbatim. Held closed against that slice by
@@ -128,6 +129,7 @@ pub struct ExternalAbilityRefCondition {
     pub ability: &'static str,
     /// The conditions gating the grant. Never empty -- a row with no guard
     /// carries no entry here at all.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub conditions: &'static [EffectCondition],
 }
 
@@ -139,7 +141,8 @@ pub struct ExternalAbilityRefCondition {
 /// result, exactly as [`CompanionRecord::monster_class`] carries the hit-dice
 /// token without computing hit points. Serving `6` in a column labelled
 /// "Strength" would be the quieter lie.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct StatAdjustment {
     /// `"STR"`, `"DEX"`, ... — the corpus abbreviation, verbatim. A token naming
     /// several abilities (`BONUS:STAT|DEX,WIS|4`) is split into one record each,
@@ -170,7 +173,8 @@ pub struct StatAdjustment {
 /// name -- so SD-35 `AT-35-E6-003-SWEEP` cycle 9 split them into fields rather
 /// than reinterpreting them, and moved the optional guard tail into
 /// [`Self::conditions`].
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct CompanionAbilityGrant {
     /// The grant's category: `"Special Ability"`, `"FEAT"`, `"Internal"`.
     pub kind: &'static str,
@@ -180,6 +184,7 @@ pub struct CompanionAbilityGrant {
     /// The granted feature's name, verbatim.
     pub name: &'static str,
     /// The conditions gating the grant. Empty on all but three registered rows.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub conditions: &'static [EffectCondition],
 }
 
@@ -190,7 +195,8 @@ pub struct CompanionAbilityGrant {
 /// `BONUS:WEAPONPROF=Claw|DAMAGE|max(0,(STR/2))` while its only natural attack
 /// is `Bite`. Carried as the row states it rather than joined-and-dropped —
 /// inventing the join would hide a real corpus fact.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct NaturalAttackDamageBonus {
     /// The `WEAPONPROF=` selector verbatim: `"Bite"`, `"Claw"`, `"Slam"`, …
     pub attack: &'static str,
@@ -205,6 +211,7 @@ pub struct NaturalAttackDamageBonus {
     pub formula: &'static str,
     /// The conditions gating this bonus, in this crate's own schema. Empty
     /// when the row stated it unconditionally, which is all but three of them.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub conditions: &'static [EffectCondition],
 }
 
@@ -223,9 +230,11 @@ pub struct NaturalAttackDamageBonus {
 /// Dexterity typically exceeds their Strength get their Climb and Swim
 /// checks computed from the DIFFERENCE between the two modifiers rather than
 /// from Strength alone, which is what Climb and Swim otherwise key off.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct SkillAbilityDiffBonus {
     /// Every skill the token names, in row order: `["Climb", "Swim"]`.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub skills: &'static [&'static str],
     /// The token's trailing formula half, verbatim: `"DEX-STR"`. Never
     /// normalised — a future book stating the terms in the other order or
@@ -241,7 +250,8 @@ pub struct SkillAbilityDiffBonus {
 /// and dropping them or forcing them into the nearest variant would both be
 /// worse than saying so. [`CompanionAbilityRecord::type_segments`] keeps every
 /// segment verbatim regardless, so nothing the corpus states is ever lost.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum CompanionAbilityFacet {
     /// The level-up package a companion gains at a master-level threshold. The
     /// dominant shape: 11 of the 23 registered ability rows.
@@ -264,7 +274,8 @@ impl CompanionAbilityFacet {
 /// How the ability is delivered — the `Supernatural` / `Extraordinary` /
 /// `SpellLike` segment of the same `TYPE:` token. `None` when the row does not
 /// say. Spelled and read exactly as `monster_chassis::MonsterAbilityDelivery`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum CompanionAbilityDelivery {
     Supernatural,
     Extraordinary,
@@ -295,11 +306,13 @@ impl CompanionAbilityDelivery {
 /// from the row and rendered into prose on the wire; this chassis has no
 /// character to evaluate them against, and picking one variant would be the
 /// same lie as picking one by position.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct CompanionDescriptionVariant {
     /// The variant's `DESC:` text, exactly as the row states it.
     pub text: &'static str,
     /// The `%N` argument list belonging to *this* token, not to the row.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub variables: &'static [&'static str],
     /// Every condition gating this token, in row order, in this crate's own
     /// schema. Empty is a real state: a row carrying one ungated token plus
@@ -310,11 +323,13 @@ pub struct CompanionDescriptionVariant {
     /// verbatim tails are kept converter-side in
     /// `pcgen_import::companion_pcgen_guards`, whose round-trip test rebuilds
     /// each one from the fields here and proves nothing was lost.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub conditions: &'static [EffectCondition],
 }
 
 /// One `companion` ability record.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct CompanionAbilityRecord {
     /// The corpus `KEY:` token — the identity. Falls back to the display name
     /// only for rows carrying no `KEY:`, which is what PCGen itself does.
@@ -327,11 +342,13 @@ pub struct CompanionAbilityRecord {
     /// EVERY `TYPE:` segment of the row, verbatim and in row order — including
     /// the ones `facet` and `delivery` were read from. This is the field that
     /// makes an unmodelled shape visible rather than lost.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub type_segments: &'static [&'static str],
     /// The row's `DESC:` text. `None` when the row carries none.
     pub description: Option<&'static str>,
     /// The `DESC:` token's trailing variable list, which is what the `%N`
     /// placeholders in `description` refer to.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub description_variables: &'static [&'static str],
     /// Every `DESC:` token of a row that carries SEVERAL under differing
     /// `PRE…` gates, in row order — see [`CompanionDescriptionVariant`].
@@ -342,9 +359,11 @@ pub struct CompanionAbilityRecord {
     /// UNGATED token if it has exactly one and `None` otherwise: a row whose
     /// every token is conditional has no unconditional rules text, and saying
     /// so is the honest state.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub description_variants: &'static [CompanionDescriptionVariant],
     /// `BONUS:STAT` tokens the advancement package applies. Adjustments, never
     /// scores — see [`StatAdjustment`].
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub stat_adjustments: &'static [StatAdjustment],
     pub source_page: Option<&'static str>,
     /// Every creature IN THIS BOOK whose row, `PRERACE:` gate or namespaced
@@ -352,6 +371,7 @@ pub struct CompanionAbilityRecord {
     /// [`cross_book_owners`](Self::cross_book_owners)) carries this empty —
     /// see that field's own doc for when that is legitimate rather than an
     /// orphan.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub owners: &'static [&'static str],
     /// Shape 8, cross-book ownership (`AT-34-E3-001`, `decisions.md §67`):
     /// every `(owner_book, creature_key)` pair naming a creature that owns
@@ -366,6 +386,7 @@ pub struct CompanionAbilityRecord {
     /// A row with BOTH `owners` and `cross_book_owners` non-empty is legal
     /// (multiple ownership shapes may name the same ability) but does not
     /// occur among currently-registered books.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub cross_book_owners: &'static [(&'static str, &'static str)],
     /// The abilities-`.lst` basename this record was read from. Carried per row
     /// because [`source_line`](Self::source_line) is only meaningful together
@@ -380,13 +401,15 @@ pub struct CompanionAbilityRecord {
 }
 
 /// One companion or familiar creature.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct CompanionRecord {
     pub key: &'static str,
     pub name: &'static str,
     /// From `SIZE:` or, where the row carries none, `FACT:BaseSize|` — both
     /// shapes occur, and 8 of the registered creature rows use only the second.
     pub size: Option<&'static str>,
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub speeds: &'static [Speed],
     /// The `REACH:` token in feet. `None` when the row carries none.
     pub reach_feet: Option<u32>,
@@ -400,23 +423,29 @@ pub struct CompanionRecord {
     /// Every `TYPE:` segment verbatim (`Companion`, `Familiar`, `Construct`).
     /// Empty is a real corpus state: 9 of the registered creature rows carry no
     /// `TYPE:` token at all.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub type_segments: &'static [&'static str],
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub natural_attacks: &'static [NaturalAttack],
     /// Every `BONUS:WEAPONPROF=<attack>|DAMAGE|<formula>` token on the row, in
     /// row order — see [`NaturalAttackDamageBonus`]. Empty for the majority of
     /// rows, which is a real corpus state and not a gap this chassis fills.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub natural_attack_damage_bonuses: &'static [NaturalAttackDamageBonus],
     /// `BONUS:SKILL|<skills>|<ability-diff-formula>` tokens on the creature's
     /// row — see [`SkillAbilityDiffBonus`]. Empty for the majority of rows: a
     /// flat `TYPE=Racial` skill bonus is a different, static quantity this
     /// field does not carry.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub skill_ability_diff_bonuses: &'static [SkillAbilityDiffBonus],
     /// `BONUS:STAT` tokens on the creature's own row. Adjustments, never scores.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub stat_adjustments: &'static [StatAdjustment],
     /// `BONUS:VAR|AC_Natural_Armor|<n>|TYPE=Base`, when the row carries one.
     pub natural_armor: Option<i16>,
     pub source_page: Option<&'static str>,
     /// Keys into this book's `companion_abilities`, in creature-row order.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub ability_keys: &'static [&'static str],
     /// Ability names this row cites that this book does not define.
     ///
@@ -426,12 +455,14 @@ pub struct CompanionRecord {
     /// which is what `apps/desktop/src-tauri/src/companion_catalog.rs` served
     /// it as. The guards now live in
     /// [`Self::external_ability_ref_conditions`], typed.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub external_ability_refs: &'static [&'static str],
     /// The conditions gating an entry of
     /// [`Self::external_ability_refs`], in this crate's own schema. Empty on
     /// all but three registered rows (CRB Hippopotamus, Arsinoitherium,
     /// Gylptodon), which is the whole corpus population re-derived by
     /// `grep -rn external_ability_refs --include=*.rs src/ | grep -E '!?PRE[A-Z]+:'`.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub external_ability_ref_conditions: &'static [ExternalAbilityRefCondition],
     /// The races-`.lst` basename this record was read from. Carried per row for
     /// the same reason as [`CompanionAbilityRecord::source_file`]: Bestiary 3
@@ -469,7 +500,8 @@ pub struct CompanionRecord {
 /// monster_class`'s own doc states for the creature side of this identical
 /// PCGen shape. It only proves the engine HOLDS the row — bucket B to bucket
 /// M/D/V is a different mechanism's job (`decisions.md §2a`).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct CompanionClassRecord {
     pub key: &'static str,
     pub output_name: Option<&'static str>,
@@ -478,6 +510,7 @@ pub struct CompanionClassRecord {
     /// the three registered consumers, and none is a number this chassis
     /// computes with.
     pub max_level: Option<&'static str>,
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub type_segments: &'static [&'static str],
     /// `VISIBLE:NO` is universal across every registered row (a companion
     /// class never shows on a character sheet's own class list) but is read
@@ -492,6 +525,7 @@ pub struct CompanionClassRecord {
     /// Split into [`CompanionAbilityGrant`]'s fields by SD-35
     /// `AT-35-E6-003-SWEEP` cycle 9; the payload was a pipe-joined string, and
     /// three rows appended an ingest guard to it.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub ability_grants: &'static [CompanionAbilityGrant],
     pub fact_class_type: Option<&'static str>,
     /// The classes-`.lst` basename this record was read from.

@@ -48,7 +48,9 @@ pub mod spell_list;
 /// book-local rather than shared, per that module's own established
 /// shape -- `pathfinder_unchained::class_chassis`'s own doc comment on
 /// the same non-sharing choice applies here too).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_combat__ClassTableRow"))]
 pub struct ClassTableRow {
     pub level: u8,
     pub base_attack_bonus: i16,
@@ -60,7 +62,8 @@ pub struct ClassTableRow {
 /// Identifies which UC class a chassis-table query targets. Gunslinger,
 /// Ninja and Samurai, as of `SD31-E4-F1-004` -- all three of UC's real
 /// `Base.PC`/`Base.PC.Rogue`/`Base.PC.Cavalier` classes are now named.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum UcClassId {
     Gunslinger,
     Ninja,

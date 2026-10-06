@@ -1,0 +1,813 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "acg/bloodrager_spell_list/BLOODRAGER_SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "acg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    [
+      "Ablative Barrier",
+      2
+    ],
+    [
+      "Absorbing Inhalation",
+      4
+    ],
+    [
+      "Acid Arrow",
+      2
+    ],
+    [
+      "Adhesive Blood",
+      2
+    ],
+    [
+      "Air Geyser",
+      3
+    ],
+    [
+      "Animal Aspect",
+      2
+    ],
+    [
+      "Animal Aspect (Greater)",
+      3
+    ],
+    [
+      "Aqueous Orb",
+      3
+    ],
+    [
+      "Ball Lightning",
+      4
+    ],
+    [
+      "Bear's Endurance",
+      2
+    ],
+    [
+      "Beast Shape I",
+      3
+    ],
+    [
+      "Beast Shape II",
+      4
+    ],
+    [
+      "Bestow Curse",
+      4
+    ],
+    [
+      "Black Tentacles",
+      4
+    ],
+    [
+      "Blade Lash",
+      1
+    ],
+    [
+      "Blindness/Deafness",
+      2
+    ],
+    [
+      "Blood Armor",
+      2
+    ],
+    [
+      "Blood Biography",
+      3
+    ],
+    [
+      "Blood Blaze",
+      2
+    ],
+    [
+      "Blood Scent",
+      3
+    ],
+    [
+      "Blurred Movement",
+      1
+    ],
+    [
+      "Boiling Blood",
+      2
+    ],
+    [
+      "Break",
+      1
+    ],
+    [
+      "Brow Gasher",
+      2
+    ],
+    [
+      "Bull's Strength",
+      2
+    ],
+    [
+      "Bullet Shield",
+      2
+    ],
+    [
+      "Burning Gaze",
+      2
+    ],
+    [
+      "Burning Hands",
+      1
+    ],
+    [
+      "Burrow",
+      3
+    ],
+    [
+      "Burst of Speed",
+      3
+    ],
+    [
+      "Calcific Touch",
+      4
+    ],
+    [
+      "Cat's Grace",
+      2
+    ],
+    [
+      "Cause Fear",
+      1
+    ],
+    [
+      "Certain Grip",
+      2
+    ],
+    [
+      "Chain of Perdition",
+      3
+    ],
+    [
+      "Chill Touch",
+      1
+    ],
+    [
+      "Cloak of Winds",
+      3
+    ],
+    [
+      "Color Spray",
+      1
+    ],
+    [
+      "Confusion",
+      4
+    ],
+    [
+      "Contagion",
+      4
+    ],
+    [
+      "Corrosive Touch",
+      1
+    ],
+    [
+      "Countless Eyes",
+      3
+    ],
+    [
+      "Crushing Despair",
+      4
+    ],
+    [
+      "Daze Monster",
+      2
+    ],
+    [
+      "Death From Below",
+      2
+    ],
+    [
+      "Defensive Shock",
+      2
+    ],
+    [
+      "Delay Pain",
+      2
+    ],
+    [
+      "Detonate",
+      4
+    ],
+    [
+      "Disfiguring Touch",
+      2
+    ],
+    [
+      "Draconic Reservoir",
+      3
+    ],
+    [
+      "Dragon's Breath",
+      4
+    ],
+    [
+      "Dust of Twilight",
+      2
+    ],
+    [
+      "Eagle's Splendor",
+      2
+    ],
+    [
+      "Ear-Piercing Scream",
+      1
+    ],
+    [
+      "Earth Glide",
+      4
+    ],
+    [
+      "Elemental Aura",
+      3
+    ],
+    [
+      "Elemental Body I",
+      4
+    ],
+    [
+      "Elemental Touch",
+      2
+    ],
+    [
+      "Endure Elements",
+      1
+    ],
+    [
+      "Enervation",
+      4
+    ],
+    [
+      "Enlarge Person",
+      1
+    ],
+    [
+      "Enlarge Person (Mass)",
+      4
+    ],
+    [
+      "Eruptive Pustules",
+      3
+    ],
+    [
+      "Excruciating Deformation",
+      3
+    ],
+    [
+      "Expeditious Retreat",
+      1
+    ],
+    [
+      "Extreme Flexibility",
+      2
+    ],
+    [
+      "False Life",
+      2
+    ],
+    [
+      "False Life (Greater)",
+      4
+    ],
+    [
+      "Fear",
+      4
+    ],
+    [
+      "Feather Fall",
+      1
+    ],
+    [
+      "Fire Breath",
+      2
+    ],
+    [
+      "Fire Shield",
+      4
+    ],
+    [
+      "Fire Trail",
+      3
+    ],
+    [
+      "Fireball",
+      3
+    ],
+    [
+      "Firefall",
+      4
+    ],
+    [
+      "Firestream",
+      3
+    ],
+    [
+      "Flame Arrow",
+      3
+    ],
+    [
+      "Flaming Sphere",
+      2
+    ],
+    [
+      "Flaming Sphere (Greater)",
+      4
+    ],
+    [
+      "Flare Burst",
+      1
+    ],
+    [
+      "Fly",
+      3
+    ],
+    [
+      "Force Hook Charge",
+      3
+    ],
+    [
+      "Force Punch",
+      3
+    ],
+    [
+      "Frigid Touch",
+      2
+    ],
+    [
+      "Frostbite",
+      1
+    ],
+    [
+      "Ghost Wolf",
+      4
+    ],
+    [
+      "Ghoul Touch",
+      2
+    ],
+    [
+      "Glitterdust",
+      2
+    ],
+    [
+      "Gloomblind Bolts",
+      3
+    ],
+    [
+      "Gust of Wind",
+      2
+    ],
+    [
+      "Gusting Sphere",
+      2
+    ],
+    [
+      "Haste",
+      3
+    ],
+    [
+      "Hellmouth Lash",
+      4
+    ],
+    [
+      "Heroism",
+      3
+    ],
+    [
+      "Hold Person",
+      3
+    ],
+    [
+      "Hostile Levitation",
+      3
+    ],
+    [
+      "Howling Agony",
+      3
+    ],
+    [
+      "Hydraulic Push",
+      1
+    ],
+    [
+      "Hydraulic Torrent",
+      3
+    ],
+    [
+      "Ice Storm",
+      4
+    ],
+    [
+      "Icicle Dagger",
+      1
+    ],
+    [
+      "Imbue With Elemental Might",
+      2
+    ],
+    [
+      "Jump",
+      1
+    ],
+    [
+      "Keen Edge",
+      3
+    ],
+    [
+      "Lightning Bolt",
+      3
+    ],
+    [
+      "Line in the Sand",
+      1
+    ],
+    [
+      "Locate Weakness",
+      3
+    ],
+    [
+      "Long Arm",
+      1
+    ],
+    [
+      "Mage Armor",
+      1
+    ],
+    [
+      "Magic Missile",
+      1
+    ],
+    [
+      "Magic Weapon",
+      1
+    ],
+    [
+      "Magic Weapon (Greater)",
+      3
+    ],
+    [
+      "Marid's Mastery",
+      1
+    ],
+    [
+      "Mirror Image",
+      2
+    ],
+    [
+      "Mirror Strike",
+      1
+    ],
+    [
+      "Molten Orb",
+      2
+    ],
+    [
+      "Monstrous Physique I",
+      3
+    ],
+    [
+      "Monstrous Physique II",
+      4
+    ],
+    [
+      "Moonstruck",
+      4
+    ],
+    [
+      "Mount",
+      1
+    ],
+    [
+      "Mudball",
+      1
+    ],
+    [
+      "Pain Strike",
+      3
+    ],
+    [
+      "Paragon Surge",
+      3
+    ],
+    [
+      "Pellet Blast",
+      4
+    ],
+    [
+      "Phantasmal Killer",
+      4
+    ],
+    [
+      "Phantom Blood",
+      1
+    ],
+    [
+      "Phantom Steed",
+      3
+    ],
+    [
+      "Protection from Arrows",
+      2
+    ],
+    [
+      "Protection from Chaos",
+      1
+    ],
+    [
+      "Protection from Energy",
+      3
+    ],
+    [
+      "Protection from Evil",
+      1
+    ],
+    [
+      "Protection from Good",
+      1
+    ],
+    [
+      "Protection from Law",
+      1
+    ],
+    [
+      "Pyrotechnics",
+      2
+    ],
+    [
+      "Rage",
+      3
+    ],
+    [
+      "Raging Rubble",
+      3
+    ],
+    [
+      "Ray of Enfeeblement",
+      1
+    ],
+    [
+      "Ray of Exhaustion",
+      3
+    ],
+    [
+      "Ray of Sickening",
+      1
+    ],
+    [
+      "Reduce Person",
+      1
+    ],
+    [
+      "Reduce Person (Mass)",
+      4
+    ],
+    [
+      "Resinous Skin",
+      3
+    ],
+    [
+      "Resist Energy",
+      2
+    ],
+    [
+      "Returning Weapon",
+      1
+    ],
+    [
+      "Ride the Waves",
+      4
+    ],
+    [
+      "River of Wind",
+      4
+    ],
+    [
+      "Scorching Ray",
+      2
+    ],
+    [
+      "See Invisibility",
+      2
+    ],
+    [
+      "Shadow Weapon",
+      1
+    ],
+    [
+      "Shatter",
+      2
+    ],
+    [
+      "Shield",
+      1
+    ],
+    [
+      "Shock Shield",
+      1
+    ],
+    [
+      "Shocking Grasp",
+      1
+    ],
+    [
+      "Shocking Image",
+      4
+    ],
+    [
+      "Shout",
+      4
+    ],
+    [
+      "Silver Darts",
+      3
+    ],
+    [
+      "Sleet Storm",
+      3
+    ],
+    [
+      "Slipstream",
+      2
+    ],
+    [
+      "Slow",
+      3
+    ],
+    [
+      "Sonic Scream",
+      2
+    ],
+    [
+      "Spider Climb",
+      2
+    ],
+    [
+      "Steal Breath",
+      2
+    ],
+    [
+      "Stinking Cloud",
+      3
+    ],
+    [
+      "Stone Call",
+      2
+    ],
+    [
+      "Stone Discus",
+      2
+    ],
+    [
+      "Stone Fist",
+      1
+    ],
+    [
+      "Stone Shield",
+      1
+    ],
+    [
+      "Stoneskin",
+      4
+    ],
+    [
+      "Strong Wings",
+      1
+    ],
+    [
+      "Sundering Shards",
+      1
+    ],
+    [
+      "Telekinetic Charge",
+      4
+    ],
+    [
+      "Thunderstomp",
+      1
+    ],
+    [
+      "Thunderstomp (Greater)",
+      3
+    ],
+    [
+      "Touch of Combustion",
+      1
+    ],
+    [
+      "Touch of Gracelessness",
+      1
+    ],
+    [
+      "Touch of Idiocy",
+      2
+    ],
+    [
+      "Touch of Slime",
+      4
+    ],
+    [
+      "Touch of the Sea",
+      1
+    ],
+    [
+      "True Strike",
+      1
+    ],
+    [
+      "Twilight Knife",
+      3
+    ],
+    [
+      "Undead Anatomy I",
+      3
+    ],
+    [
+      "Unerring Weapon",
+      1
+    ],
+    [
+      "Unshakable Chill",
+      2
+    ],
+    [
+      "Vampiric Touch",
+      3
+    ],
+    [
+      "Vermin Shape I",
+      4
+    ],
+    [
+      "Versatile Weapon",
+      3
+    ],
+    [
+      "Vision of Hell",
+      3
+    ],
+    [
+      "Vitriolic Mist",
+      4
+    ],
+    [
+      "Volcanic Storm",
+      4
+    ],
+    [
+      "Wall of Fire",
+      4
+    ],
+    [
+      "Wall of Ice",
+      4
+    ],
+    [
+      "Wall of Sound",
+      4
+    ],
+    [
+      "Warding Weapon",
+      1
+    ],
+    [
+      "Water Breathing",
+      3
+    ],
+    [
+      "Wave Shield",
+      1
+    ],
+    [
+      "Web Bolt",
+      1
+    ],
+    [
+      "Wind Wall",
+      3
+    ],
+    [
+      "Windy Escape",
+      1
+    ],
+    [
+      "Winter Feathers",
+      1
+    ],
+    [
+      "Wreath of Blades",
+      4
+    ]
+  ]
+}

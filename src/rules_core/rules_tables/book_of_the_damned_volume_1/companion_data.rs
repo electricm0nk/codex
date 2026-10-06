@@ -58,7 +58,7 @@
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityGrant, CompanionAbilityRecord, CompanionClassRecord, CompanionRecord, NaturalAttack, Speed, StatAdjustment};
 
 /// Every book_of_the_damned_volume_1 companion creature (1 rows).
-pub(super) static COMPANIONS: &[CompanionRecord] = &[
+pub(crate) static COMPANIONS: &[CompanionRecord] = &[
     CompanionRecord {
         key: "Companion (Imp)",
         name: "Companion (Imp)",
@@ -84,7 +84,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
 ];
 
 /// Every book_of_the_damned_volume_1 companion ability record (1 rows).
-pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
+pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
     CompanionAbilityRecord {
         key: "Imp Companion ~ Poison",
         name: "Poison",
@@ -104,7 +104,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
 ];
 
 /// Every book_of_the_damned_volume_1 `*_classes_companion.lst` row (2 rows).
-pub(super) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
+pub(crate) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
     CompanionClassRecord {
         key: "Imp Companion",
         output_name: Some("Imp Companion"),

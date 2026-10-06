@@ -1,0 +1,857 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "bonus_bestiary/monster_data/MONSTERS",
+  "licence": {
+    "license": "OGL",
+    "book": "bonus_bestiary",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Allip",
+      "name": "Allip",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Fly",
+          "feet": 30
+        }
+      ],
+      "race_type": "Undead",
+      "race_subtype": "Incorporeal",
+      "challenge_rating": "3",
+      "monster_class": "Undead:4",
+      "source_page": "p.4",
+      "natural_attacks": [
+        {
+          "name": "Incorporeal touch",
+          "damage_dice": "0"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Babble",
+        "Madness",
+        "Touch of Insanity"
+      ],
+      "external_ability_refs": [
+        "Channel Resistance",
+        "Flight Maneuverability"
+      ],
+      "source_file": "bb_races.lst",
+      "source_line": 6
+    },
+    {
+      "key": "Ant Lion (Giant)",
+      "name": "Ant Lion (Giant)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Burrow",
+          "feet": 10
+        }
+      ],
+      "race_type": "Vermin",
+      "race_subtype": null,
+      "challenge_rating": "5",
+      "monster_class": "Vermin:8",
+      "source_page": "p.5",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Sand Trap"
+      ],
+      "external_ability_refs": [
+        "Grab"
+      ],
+      "source_file": "bb_races.lst",
+      "source_line": 7
+    },
+    {
+      "key": "Ant Lion (Mature)",
+      "name": "Ant Lion (Mature)",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Vermin",
+      "race_subtype": null,
+      "challenge_rating": "6",
+      "monster_class": "Vermin:10",
+      "source_page": "p.5",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "source_file": "bb_races.lst",
+      "source_line": 8
+    },
+    {
+      "key": "Ascomoid",
+      "name": "Ascomoid",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Plant",
+      "race_subtype": null,
+      "challenge_rating": "5",
+      "monster_class": "Plant:7",
+      "source_page": "p.6",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": -9
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Spores"
+      ],
+      "external_ability_refs": [
+        "Resistance to Electricity",
+        "Resistance to Fire",
+        "Trample"
+      ],
+      "source_file": "bb_races.lst",
+      "source_line": 9
+    },
+    {
+      "key": "Axe Beak",
+      "name": "Axe Beak",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "race_type": "Animal",
+      "race_subtype": null,
+      "challenge_rating": "2",
+      "monster_class": "Animal:3",
+      "source_page": "p.7",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Sudden Charge"
+      ],
+      "external_ability_refs": [],
+      "source_file": "bb_races.lst",
+      "source_line": 10
+    },
+    {
+      "key": "Caryatid Column",
+      "name": "Caryatid Column",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "3",
+      "monster_class": "Construct:3",
+      "source_page": "p.8",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "CHA",
+          "amount": -9
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Caryatid Column ~ Immunity to Magic",
+        "Shatter Weapons",
+        "Statue"
+      ],
+      "external_ability_refs": [],
+      "source_file": "bb_races.lst",
+      "source_line": 11
+    },
+    {
+      "key": "Dragon (Faerie)",
+      "name": "Dragon (Faerie)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "race_type": "Dragon",
+      "race_subtype": null,
+      "challenge_rating": "2",
+      "monster_class": "Faerie Dragon:3",
+      "source_page": "p.9",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "3",
+          "spell": "Invisibility (Greater/self only)",
+          "save_dc_token": null
+        }
+      ],
+      "ability_keys": [
+        "Faerie Dragon ~ Breath Weapon"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability",
+        "Immunity to Paralysis",
+        "Immunity to Sleep"
+      ],
+      "source_file": "bb_races.lst",
+      "source_line": 12
+    },
+    {
+      "key": "Dragonne",
+      "name": "Dragonne",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Fly",
+          "feet": 30
+        }
+      ],
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "challenge_rating": "7",
+      "monster_class": "Magical Beast:9",
+      "source_page": "p.10",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Roar"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability",
+        "Pounce",
+        "Scent"
+      ],
+      "source_file": "bb_races.lst",
+      "source_line": 13
+    },
+    {
+      "key": "Hag (Annis)",
+      "name": "Hag (Annis)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Monstrous Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "6",
+      "monster_class": "Monstrous Humanoid:7",
+      "source_page": "p.11",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "7",
+          "spell": "Disguise Self",
+          "save_dc_token": "11+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "7",
+          "spell": "Fog Cloud",
+          "save_dc_token": "12+CHA"
+        }
+      ],
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Grab",
+        "Rend"
+      ],
+      "source_file": "bb_races.lst",
+      "source_line": 14
+    },
+    {
+      "key": "Huecuva",
+      "name": "Huecuva",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Undead",
+      "race_subtype": null,
+      "challenge_rating": "2",
+      "monster_class": "Undead:3",
+      "source_page": "p.12",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "3",
+          "spell": "Disguise Self",
+          "save_dc_token": "11+CHA"
+        }
+      ],
+      "ability_keys": [
+        "Faithless",
+        "Huecuva ~ Disease"
+      ],
+      "external_ability_refs": [],
+      "source_file": "bb_races.lst",
+      "source_line": 15
+    },
+    {
+      "key": "Lammasu",
+      "name": "Lammasu",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "challenge_rating": "8",
+      "monster_class": "Lammasu:9",
+      "source_page": "p.13",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 12
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 8
+        },
+        {
+          "ability": "INT",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "9",
+          "spell": "Dimension Door",
+          "save_dc_token": "14+CHA"
+        },
+        {
+          "label": "Innate",
+          "times": "2",
+          "time_unit": null,
+          "caster_level_token": "9",
+          "spell": "Invisibility (Greater/self only)",
+          "save_dc_token": null
+        }
+      ],
+      "ability_keys": [
+        "Magic Circle against Evil"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability",
+        "Pounce",
+        "Rake"
+      ],
+      "source_file": "bb_races.lst",
+      "source_line": 16
+    },
+    {
+      "key": "Naga (Water)",
+      "name": "Naga (Water)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Swim",
+          "feet": 50
+        }
+      ],
+      "race_type": "Aberration",
+      "race_subtype": null,
+      "challenge_rating": "7",
+      "monster_class": "Water Naga:8",
+      "source_page": "p.14",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 12
+        },
+        {
+          "ability": "CON",
+          "amount": 10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Water Naga ~ Poison"
+      ],
+      "external_ability_refs": [],
+      "source_file": "bb_races.lst",
+      "source_line": 17
+    },
+    {
+      "key": "Nixie",
+      "name": "Nixie",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "race_type": "Fey",
+      "race_subtype": "Aquatic",
+      "challenge_rating": "1",
+      "monster_class": "Fey:2",
+      "source_page": "p.15",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "12",
+          "spell": "Water Breathing",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "3",
+          "time_unit": null,
+          "caster_level_token": "12",
+          "spell": "Charm Person",
+          "save_dc_token": "11+CHA"
+        }
+      ],
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Wild Empathy"
+      ],
+      "source_file": "bb_races.lst",
+      "source_line": 18
+    },
+    {
+      "key": "Shadow Mastiff",
+      "name": "Shadow Mastiff",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Evil|Extraplanar",
+      "challenge_rating": "5",
+      "monster_class": "Outsider (Fort/Ref):6",
+      "source_page": "p.16",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Shadow Mastiff ~ Bay",
+        "Shadow Mastiff ~ Shadow Blend"
+      ],
+      "external_ability_refs": [
+        "Scent",
+        "Trip"
+      ],
+      "source_file": "bb_races.lst",
+      "source_line": 19
+    }
+  ]
+}

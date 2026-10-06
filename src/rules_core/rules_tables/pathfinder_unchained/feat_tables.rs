@@ -48,7 +48,9 @@
 //! LST at generation time; every value comes from the compiled Rust
 //! module's own accessors").
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "pathfinder_unchained__feat_tables__FeatCategory"))]
 pub enum FeatCategory {
     /// The 9 "Champion of <alignment>" feats (`###Block: Alignment
     /// Feats`).
@@ -78,7 +80,9 @@ impl FeatCategory {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "pathfinder_unchained__feat_tables__FeatTableEntry"))]
 pub struct FeatTableEntry {
     /// The corpus record identity (first column). No record in this
     /// catalog carries a distinct `KEY:` token, so `key == name` for

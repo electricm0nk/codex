@@ -43,7 +43,7 @@
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityGrant, CompanionAbilityRecord, CompanionClassRecord, CompanionDescriptionVariant, CompanionRecord, ConditionItem, EffectCondition, ExternalAbilityRefCondition, NaturalAttack, NaturalAttackDamageBonus, Speed, StatAdjustment};
 
 /// Every core_rulebook companion creature (38 rows).
-pub(super) static COMPANIONS: &[CompanionRecord] = &[
+pub(crate) static COMPANIONS: &[CompanionRecord] = &[
     CompanionRecord {
         key: "Companion (Ape)",
         name: "Companion (Ape)",
@@ -883,7 +883,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
 ];
 
 /// Every core_rulebook companion ability record (132 rows).
-pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
+pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
     CompanionAbilityRecord {
         key: "Familiar Alertness Choice ~ Alertness Active",
         name: "Familiar's Alertness ability Active",
@@ -2999,7 +2999,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
 ];
 
 /// Every core_rulebook `*_classes_companion.lst` row (2 rows).
-pub(super) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
+pub(crate) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
     CompanionClassRecord {
         key: "Companion",
         output_name: Some("Animal"),

@@ -9,9 +9,9 @@
 //! `RuleSetId`: different `.lst` file, different chassis, different screen.
 
 pub mod archetype_tables;
-mod companion_data;
+pub(crate) mod companion_data;
 pub mod feat_tables;
-mod monster_data;
+pub(crate) mod monster_data;
 // SD-32 card 11 (T12), cycle 4: real per-feature compute functions for the
 // Shifter, this book's single magnitude-bearing class.
 pub mod shifter_features;

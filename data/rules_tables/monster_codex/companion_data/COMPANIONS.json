@@ -1,0 +1,522 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "monster_codex/companion_data/COMPANIONS",
+  "licence": {
+    "license": "OGL",
+    "book": "monster_codex",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion (Cave Salamander)",
+      "name": "Companion (Cave Salamander)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.128",
+      "ability_keys": [
+        "Companion Advancement ~ Cave Salamander"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "mc_races_companion.lst",
+      "source_line": 5
+    },
+    {
+      "key": "Companion (Gorthek)",
+      "name": "Companion (Gorthek)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Gore",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.172",
+      "ability_keys": [
+        "Companion Advancement ~ Gorthek"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "mc_races_companion.lst",
+      "source_line": 6
+    },
+    {
+      "key": "Companion (Python (Riding))",
+      "name": "Companion (Python (Riding))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.128",
+      "ability_keys": [
+        "Companion Advancement ~ Python (Riding)"
+      ],
+      "external_ability_refs": [
+        "Can't Be Tripped"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "mc_races_companion.lst",
+      "source_line": 7
+    },
+    {
+      "key": "Companion (Rat (Riding))",
+      "name": "Companion (Rat (Riding))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.117",
+      "ability_keys": [
+        "Companion Advancement ~ Rat (Riding)"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "mc_races_companion.lst",
+      "source_line": 8
+    },
+    {
+      "key": "Companion (Yzobu)",
+      "name": "Companion (Yzobu)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Gore",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.124",
+      "ability_keys": [
+        "Companion Advancement ~ Yzobu",
+        "Yzobu ~ Stampede"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "mc_races_companion.lst",
+      "source_line": 9
+    },
+    {
+      "key": "Familiar (Seru)",
+      "name": "Familiar (Seru)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Magical Beast",
+      "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+      "monster_class": "Magical Beast:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Magical Beast"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Venom",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.208",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "mc_races_companion.lst",
+      "source_line": 11
+    },
+    {
+      "key": "Familiar (Sootwing Bat)",
+      "name": "Familiar (Sootwing Bat)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 5
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Undead",
+      "race_subtype": "Familiar|Augmented Undead|FamiliarBase",
+      "monster_class": "Undead:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Undead"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -6
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.88",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "mc_races_companion.lst",
+      "source_line": 12
+    },
+    {
+      "key": "Companion (Giant Vulture)",
+      "name": "Companion (Giant Vulture)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": null,
+      "ability_keys": [
+        "Companion Advancement ~ Giant Vulture"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "mc_races_companion.lst",
+      "source_line": 15
+    }
+  ]
+}

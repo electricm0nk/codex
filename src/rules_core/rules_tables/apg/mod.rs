@@ -51,7 +51,7 @@
 pub mod alchemist_spell_list;
 pub mod antipaladin_features;
 pub mod archetype_tables;
-mod companion_data;
+pub(crate) mod companion_data;
 
 pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
 
@@ -95,7 +95,9 @@ use crate::rules_core::rules_tables::RuleSetId;
 /// Shared shape across every per-class module in this directory so
 /// `class_chassis_resolve` can return a single type regardless of
 /// which class was queried.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "apg__ClassTableRow"))]
 pub struct ClassTableRow {
     pub level: u8,
     pub base_attack_bonus: i16,
@@ -108,7 +110,8 @@ pub struct ClassTableRow {
 /// real APG classes now have a variant (Gunslinger and Magus are not
 /// real APG content in the PCGen corpus, see this module's doc
 /// comment).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum ApgClassId {
     Alchemist,
     Cavalier,

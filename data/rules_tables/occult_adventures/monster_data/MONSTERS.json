@@ -1,0 +1,63 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "occult_adventures/monster_data/MONSTERS",
+  "licence": {
+    "license": "OGL",
+    "book": "occult_adventures",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Kami (Shikigami)",
+      "name": "Shikigami",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Kami|Native",
+      "challenge_rating": "2",
+      "monster_class": "Outsider (Fort/Will):3",
+      "source_page": "p.163",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 0
+        },
+        {
+          "ability": "WIS",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "source_file": "oa_races_b3.lst",
+      "source_line": 6
+    }
+  ]
+}

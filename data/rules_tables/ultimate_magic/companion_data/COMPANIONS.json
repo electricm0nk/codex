@@ -1,0 +1,1977 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_magic/companion_data/COMPANIONS",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_magic",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Familiar (Blue-Ringed Octopus)",
+      "name": "Familiar (Blue-Ringed Octopus)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        },
+        {
+          "mode": "Jet",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": "Aquatic",
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Tentacles",
+          "damage_dice": "0"
+        },
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Tentacles",
+          "formula": "-STR",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 0
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.117",
+      "ability_keys": [
+        "Blue-Ringed Octopus ~ Ink Cloud",
+        "Blue-Ringed Octopus ~ Jet",
+        "Blue-Ringed Octopus ~ Poison"
+      ],
+      "external_ability_refs": [
+        "Can't Be Tripped",
+        "Grab"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 6
+    },
+    {
+      "key": "Familiar (Donkey Rat)",
+      "name": "Familiar (Donkey Rat)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.117",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 7
+    },
+    {
+      "key": "Companion (Ant (Giant))",
+      "name": "Companion (Ant (Giant))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.36",
+      "ability_keys": [
+        "Companion Advancement ~ Ant (Giant)",
+        "Giant Ant Companion ~ Poison"
+      ],
+      "external_ability_refs": [
+        "Grab"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "um_races_companion.lst",
+      "source_line": 9
+    },
+    {
+      "key": "Familiar (Goat)",
+      "name": "Familiar (Goat)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Gore",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 0
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.118",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 9
+    },
+    {
+      "key": "Companion (Beetle (Giant))",
+      "name": "Companion (Beetle (Giant))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 6,
+      "source_page": "p.36",
+      "ability_keys": [
+        "Companion Advancement ~ Beetle (Giant)"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "um_races_companion.lst",
+      "source_line": 10
+    },
+    {
+      "key": "Companion (Centipede (Giant))",
+      "name": "Companion (Centipede (Giant))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.36",
+      "ability_keys": [
+        "Giant Centipede Vermin Companion ~ Poison",
+        "Companion Advancement ~ Centipede (Giant)"
+      ],
+      "external_ability_refs": [
+        "Can't Be Tripped"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "um_races_companion.lst",
+      "source_line": 11
+    },
+    {
+      "key": "Familiar (Hedgehog)",
+      "name": "Familiar (Hedgehog)",
+      "size": "D",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -9
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": -4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.119",
+      "ability_keys": [
+        "Hedgehog ~ Spiny Defense"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 11
+    },
+    {
+      "key": "Companion (Crab (Giant))",
+      "name": "Companion (Crab (Giant))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "Aquatic",
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 5,
+      "source_page": "p.36",
+      "ability_keys": [
+        "Giant Crab Companion ~ Water Dependency",
+        "Companion Advancement ~ Crab (Giant)"
+      ],
+      "external_ability_refs": [
+        "Constrict",
+        "Grab"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "um_races_companion.lst",
+      "source_line": 12
+    },
+    {
+      "key": "Companion (Leech (Giant))",
+      "name": "Companion (Leech (Giant))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 5
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d4"
+        },
+        {
+          "name": "Giant Leech Blindsense",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -9
+        }
+      ],
+      "natural_armor": 0,
+      "source_page": "p.36",
+      "ability_keys": [
+        "Companion ~ Susceptible to Salt",
+        "Giant Leech Companion ~ Blood Drain",
+        "Companion Advancement ~ Leech (Giant)"
+      ],
+      "external_ability_refs": [
+        "Amphibious",
+        "Universal Monster Rule ~ Attach",
+        "Can't Be Tripped"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "um_races_companion.lst",
+      "source_line": 13
+    },
+    {
+      "key": "Companion (Mantis (Giant))",
+      "name": "Companion (Mantis (Giant))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 3,
+      "source_page": "p.37",
+      "ability_keys": [
+        "Giant Mantis Companion ~ Lunge",
+        "Companion Advancement ~ Mantis (Giant)",
+        "Giant Mantis Companion ~ Mandibles",
+        "Giant Mantis Companion ~ Sudden Strike"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability",
+        "Grab"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "um_races_companion.lst",
+      "source_line": 14
+    },
+    {
+      "key": "Familiar (Pig)",
+      "name": "Familiar (Pig)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 0
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.119",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 14
+    },
+    {
+      "key": "Companion (Scorpion (Giant))",
+      "name": "Companion (Scorpion (Giant))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "1d4"
+        },
+        {
+          "name": "Sting",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.37",
+      "ability_keys": [
+        "Giant Scorpion Companion ~ Poison",
+        "Companion Advancement ~ Scorpion (Giant)"
+      ],
+      "external_ability_refs": [
+        "Grab"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "um_races_companion.lst",
+      "source_line": 15
+    },
+    {
+      "key": "Companion (Slug (Giant))",
+      "name": "Companion (Slug (Giant))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Tongue",
+          "damage_dice": "1d4"
+        },
+        {
+          "name": "Giant Slug Blindsense",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -9
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.37",
+      "ability_keys": [
+        "Companion ~ Susceptible to Salt",
+        "Giant Slug Companion ~ Acid",
+        "Giant Slug Companion ~ Spit Acid",
+        "Companion Advancement ~ Slug (Giant)"
+      ],
+      "external_ability_refs": [
+        "Can't Be Tripped"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "um_races_companion.lst",
+      "source_line": 16
+    },
+    {
+      "key": "Familiar (Thrush)",
+      "name": "Familiar (Thrush)",
+      "size": "D",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -9
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": -4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.120",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 16
+    },
+    {
+      "key": "Companion (Spider (Giant))",
+      "name": "Companion (Spider (Giant))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 0,
+      "source_page": "p.37",
+      "ability_keys": [
+        "Companion Advancement ~ Spider (Giant)"
+      ],
+      "external_ability_refs": [
+        "Giant Spider Companion ~ Poison"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "um_races_companion.lst",
+      "source_line": 17
+    },
+    {
+      "key": "Familiar (Turtle)",
+      "name": "Familiar (Turtle)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 5
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": -4
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 6,
+      "source_page": "p.120",
+      "ability_keys": [
+        "Turtle ~ Shell Retreat"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 17
+    },
+    {
+      "key": "Companion (Wasp (Giant))",
+      "name": "Companion (Wasp (Giant))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Sting",
+          "damage_dice": "1d6"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.37",
+      "ability_keys": [
+        "Giant Wasp Companion ~ Poison",
+        "Companion Advancement ~ Wasp (Giant)"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "um_races_companion.lst",
+      "source_line": 18
+    },
+    {
+      "key": "Blue-Ringed Octopus",
+      "name": "Blue-Ringed Octopus",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        },
+        {
+          "mode": "Jet",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": "Aquatic",
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Tentacles",
+          "damage_dice": "0"
+        },
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Tentacles",
+          "formula": "-STR",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 0
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.117",
+      "ability_keys": [
+        "Blue-Ringed Octopus ~ Ink Cloud",
+        "Blue-Ringed Octopus ~ Jet",
+        "Blue-Ringed Octopus ~ Poison"
+      ],
+      "external_ability_refs": [
+        "Can't Be Tripped",
+        "Grab"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 20
+    },
+    {
+      "key": "Donkey Rat",
+      "name": "Donkey Rat",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.117",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 21
+    },
+    {
+      "key": "Fox",
+      "name": "Fox",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.117",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 22
+    },
+    {
+      "key": "Goat",
+      "name": "Goat",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Gore",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 0
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.118",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 23
+    },
+    {
+      "key": "Scorpion (Greensting))",
+      "name": "Scorpion (Greensting))",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Vermin",
+      "race_subtype": null,
+      "monster_class": "Vermin:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Sting",
+          "damage_dice": "1d2"
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Sting",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": 0
+        },
+        {
+          "ability": "WIS",
+          "amount": 0
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 3,
+      "source_page": "p.118",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 24
+    },
+    {
+      "key": "Hedgehog",
+      "name": "Hedgehog",
+      "size": "D",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -9
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": -4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.119",
+      "ability_keys": [
+        "Hedgehog ~ Spiny Defense"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 25
+    },
+    {
+      "key": "House Centipede",
+      "name": "House Centipede",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Climb",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Vermin",
+      "race_subtype": null,
+      "monster_class": "Vermin:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -9
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 0
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.119",
+      "ability_keys": [
+        "House Centipede ~ Poison"
+      ],
+      "external_ability_refs": [
+        "Can't Be Tripped"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 26
+    },
+    {
+      "key": "King Crab",
+      "name": "King Crab",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Vermin",
+      "race_subtype": null,
+      "monster_class": "Vermin:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "1d2"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 0
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.119",
+      "ability_keys": [
+        "King Crab ~ Water Dependency"
+      ],
+      "external_ability_refs": [
+        "Grab"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 27
+    },
+    {
+      "key": "Pig",
+      "name": "Pig",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 0
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.119",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 28
+    },
+    {
+      "key": "Scarlet Spider",
+      "name": "Scarlet Spider",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Vermin",
+      "race_subtype": null,
+      "monster_class": "Vermin:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 0
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 0
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.120",
+      "ability_keys": [
+        "Scarlet Spider ~ Poison"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 29
+    },
+    {
+      "key": "Thrush",
+      "name": "Thrush",
+      "size": "D",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -9
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": -4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.120",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 30
+    },
+    {
+      "key": "Turtle",
+      "name": "Turtle",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 5
+        },
+        {
+          "mode": "Swim",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": null,
+      "monster_class": "Animal:1",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": -4
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "natural_armor": 6,
+      "source_page": "p.120",
+      "ability_keys": [
+        "Turtle ~ Shell Retreat"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "ce_races_familiar_um.lst",
+      "source_line": 31
+    }
+  ]
+}

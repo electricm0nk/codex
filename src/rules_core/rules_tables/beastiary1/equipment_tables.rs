@@ -45,7 +45,9 @@
 
 use crate::rules_core::rules_tables::RuleSetId;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "beastiary1__equipment_tables__EquipmentCategory"))]
 pub enum EquipmentCategory {
     General,
     ArmsArmor,
@@ -72,7 +74,9 @@ impl EquipmentCategory {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "beastiary1__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
     /// The corpus's raw first-column name (its `SORTKEY:`-equivalent
     /// identity when no explicit `KEY:` token is present, which is every

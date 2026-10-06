@@ -35,11 +35,11 @@
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
 /// Every ultimate_magic monster stat block (0 rows).
-pub(super) static MONSTERS: &[MonsterStatBlock] = &[
+pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
 ];
 
 /// Every ultimate_magic monster-ability record (13 rows).
-pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
+pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
     MonsterAbilityRecord {
         key: "Animated Object ~ Augmented Critical Range",
         name: "Augmented Critical (Range/1 CP)",

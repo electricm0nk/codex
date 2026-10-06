@@ -50,7 +50,8 @@
 
 use super::super::crb::feats::FeatCategory;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct UiFeatEntry {
     /// The corpus record identity. No record in this catalog carries a
     /// distinct `KEY:` token, so `key == name` for every entry.

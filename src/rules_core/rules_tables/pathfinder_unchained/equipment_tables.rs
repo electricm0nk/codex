@@ -35,7 +35,9 @@
 //! `src/bin/gen_core_rulebook_cache.rs`'s established generation
 //! discipline.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "pathfinder_unchained__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
     /// The real corpus `KEY:` token -- every one of the 42 real
     /// `pu_equipmods.lst` records carries one (unlike

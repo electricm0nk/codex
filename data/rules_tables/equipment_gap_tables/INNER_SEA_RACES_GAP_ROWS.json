@@ -1,0 +1,736 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/INNER_SEA_RACES_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "ISR",
+      "key": "Armor of Grim Triumph",
+      "name": "Armor of Grim Triumph",
+      "category": "ArmsArmor",
+      "cost_gp": 250.0,
+      "weight_lbs": 40.0,
+      "description": "Spikes are +1 attack and damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Coat of Shells",
+      "name": "Coat of Shells",
+      "category": "ArmsArmor",
+      "cost_gp": 50.0,
+      "weight_lbs": 30.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Gnome Scrap Armor",
+      "name": "Gnome Scrap Armor",
+      "category": "ArmsArmor",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Goblin Plate",
+      "name": "Goblin Plate",
+      "category": "ArmsArmor",
+      "cost_gp": 1500.0,
+      "weight_lbs": 50.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Hallowed Chain",
+      "name": "Hallowed Chain",
+      "category": "ArmsArmor",
+      "cost_gp": 150.0,
+      "weight_lbs": 40.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Hallowed Chain (Greater)",
+      "name": "Hallowed Chain (Greater)",
+      "category": "ArmsArmor",
+      "cost_gp": 150.0,
+      "weight_lbs": 40.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Hide of Grim Triumph",
+      "name": "Hide of Grim Triumph",
+      "category": "ArmsArmor",
+      "cost_gp": 15.0,
+      "weight_lbs": 30.0,
+      "description": "Spikes are +1 attack and damage",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Mail of Sly Steps",
+      "name": "Mail of Sly Steps",
+      "category": "ArmsArmor",
+      "cost_gp": 100.0,
+      "weight_lbs": 25.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Panoply of the Fierani Knight",
+      "name": "Panoply of the Fierani Knight",
+      "category": "ArmsArmor",
+      "cost_gp": 1500.0,
+      "weight_lbs": 50.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Clever Sling Staff",
+      "name": "Clever Sling Staff",
+      "category": "ArmsArmor",
+      "cost_gp": 20.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Dueling Bokken",
+      "name": "Dueling Bokken",
+      "category": "ArmsArmor",
+      "cost_gp": 50.0,
+      "weight_lbs": 6.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Errani Kamaki",
+      "name": "Errani Kamaki",
+      "category": "ArmsArmor",
+      "cost_gp": 5.0,
+      "weight_lbs": 16.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Gentleman's Foil",
+      "name": "Gentleman's Foil",
+      "category": "ArmsArmor",
+      "cost_gp": 20.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Hunter's Mambele",
+      "name": "Hunter's Mambele",
+      "category": "ArmsArmor",
+      "cost_gp": 4.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Junkblade",
+      "name": "Junkblade",
+      "category": "ArmsArmor",
+      "cost_gp": 8.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Mount-Splitting Pick",
+      "name": "Mount-Splitting Pick",
+      "category": "ArmsArmor",
+      "cost_gp": 8.0,
+      "weight_lbs": 6.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Scalerazor",
+      "name": "Scalerazor",
+      "category": "ArmsArmor",
+      "cost_gp": 15.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Shadow Cleaver",
+      "name": "Shadow Cleaver",
+      "category": "ArmsArmor",
+      "cost_gp": 10.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Shields' Bane",
+      "name": "Shields' Bane",
+      "category": "ArmsArmor",
+      "cost_gp": 10.0,
+      "weight_lbs": 6.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Stalker's Fang",
+      "name": "Stalker's Fang",
+      "category": "ArmsArmor",
+      "cost_gp": 12.0,
+      "weight_lbs": 6.0,
+      "description": "Klar is also a +1 shield",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Storval's Thunder",
+      "name": "Storval's Thunder",
+      "category": "ArmsArmor",
+      "cost_gp": 40.0,
+      "weight_lbs": 14.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Treekeeper's Staff",
+      "name": "Treekeeper's Staff",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "True Warrior's Blade",
+      "name": "True Warrior's Blade",
+      "category": "ArmsArmor",
+      "cost_gp": 50.0,
+      "weight_lbs": 8.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Agent's Clasp",
+      "name": "Agent's Clasp",
+      "category": "General",
+      "cost_gp": 60000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Amulet of Eldest's Blessing",
+      "name": "Amulet of Eldest's Blessing",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Amulet of Undead Persuasion",
+      "name": "Amulet of Undead Persuasion",
+      "category": "General",
+      "cost_gp": 15000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Anvil of the Skyseeker",
+      "name": "Anvil of the Skyseeker",
+      "category": "General",
+      "cost_gp": 6700.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Baldric of Magical Stability",
+      "name": "Baldric of Magical Stability",
+      "category": "General",
+      "cost_gp": 14000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Codex-Named Unit (equipment_inner_sea_races_isr_equip_general_lst_17)",
+      "name": "Codex-Named Unit (equipment_inner_sea_races_isr_equip_general_lst_17)",
+      "category": "General",
+      "cost_gp": 34000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": [
+        "isr_equip_general.lst",
+        17
+      ]
+    },
+    {
+      "book": "ISR",
+      "key": "Belt of Impossible Action",
+      "name": "Belt of Impossible Action",
+      "category": "General",
+      "cost_gp": 16000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Binding Contract",
+      "name": "Binding Contract",
+      "category": "General",
+      "cost_gp": 7500.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Boots of Fiendish Escape",
+      "name": "Boots of Fiendish Escape",
+      "category": "General",
+      "cost_gp": 45000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Bracelet of Good Luck Charms",
+      "name": "Bracelet of Good Luck Charms",
+      "category": "General",
+      "cost_gp": 16000.0,
+      "weight_lbs": 0.0,
+      "description": "7 times a halfling withthe luck or adaptable luck racial trait can reroll a roll taking the second result",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Broken Rune Bracers",
+      "name": "Broken Rune Bracers",
+      "category": "General",
+      "cost_gp": 9000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Cap of Darkest Dreams",
+      "name": "Cap of Darkest Dreams",
+      "category": "General",
+      "cost_gp": 90000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Cloak of Blood Alarm",
+      "name": "Cloak of Blood Alarm",
+      "category": "General",
+      "cost_gp": 3200.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Cloak of Summer and Winter",
+      "name": "Cloak of Summer and Winter",
+      "category": "General",
+      "cost_gp": 30000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Commander's Helm (Lesser)",
+      "name": "Commander's Helm (Lesser)",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Commander's Helm (Greater)",
+      "name": "Commander's Helm (Greater)",
+      "category": "General",
+      "cost_gp": 16000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Commander's Helm (Superior)",
+      "name": "Commander's Helm (Superior)",
+      "category": "General",
+      "cost_gp": 24000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Diadem of the Interplanetary Emissary",
+      "name": "Diadem of the Interplanetary Emissary",
+      "category": "General",
+      "cost_gp": 67500.0,
+      "weight_lbs": 0.5,
+      "description": "constant planetary adaptation, mentally communicate with any creature that has a language",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Elven Still",
+      "name": "Elven Still",
+      "category": "General",
+      "cost_gp": 7500.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Eye Patch of Infamy",
+      "name": "Eye Patch of Infamy",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Eyes of Mind Reading",
+      "name": "Eyes of Mind Reading",
+      "category": "General",
+      "cost_gp": 11000.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Headband of Controlling Illusions",
+      "name": "Headband of Controlling Illusions",
+      "category": "General",
+      "cost_gp": 40000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Horn of the War-Leader",
+      "name": "Horn of the War-Leader",
+      "category": "General",
+      "cost_gp": 12000.0,
+      "weight_lbs": 4.0,
+      "description": "Blow horn up to 3 times per day to be heard up to 5 miles",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Horseshoes of Desert Fury",
+      "name": "Horseshoes of Desert Fury",
+      "category": "General",
+      "cost_gp": 88000.0,
+      "weight_lbs": 12.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Jinx Eater's Shirt",
+      "name": "Jinx Eater's Shirt",
+      "category": "General",
+      "cost_gp": 22600.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Locket of True and False Friends",
+      "name": "Locket of True and False Friends",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Lupine Robe",
+      "name": "Lupine Robe",
+      "category": "General",
+      "cost_gp": 6800.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Lycanthrope Skin (Bat)",
+      "name": "Lycanthrope Skin (Bat)",
+      "category": "General",
+      "cost_gp": 40000.0,
+      "weight_lbs": 2.0,
+      "description": "speak with animals of the matching species and related species as per the spell speak with animals, skinwalker with matching skinwalker heritage gains animals form as the change shape ability",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Lycanthrope Skin (Boar)",
+      "name": "Lycanthrope Skin (Boar)",
+      "category": "General",
+      "cost_gp": 24000.0,
+      "weight_lbs": 2.0,
+      "description": "speak with animals of the matching species and related species as per the spell speak with animals, skinwalker with matching skinwalker heritage gains animals form as the change shape ability",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Lycanthrope Skin (Brown Bear)",
+      "name": "Lycanthrope Skin (Brown Bear)",
+      "category": "General",
+      "cost_gp": 40000.0,
+      "weight_lbs": 2.0,
+      "description": "speak with animals of the matching species and related species as per the spell speak with animals, skinwalker with matching skinwalker heritage gains animals form as the change shape ability",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Lycanthrope Skin (Crocodile)",
+      "name": "Lycanthrope Skin (Crocodile)",
+      "category": "General",
+      "cost_gp": 40000.0,
+      "weight_lbs": 2.0,
+      "description": "speak with animals of the matching species and related species as per the spell speak with animals, skinwalker with matching skinwalker heritage gains animals form as the change shape ability",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Lycanthrope Skin (Rat)",
+      "name": "Lycanthrope Skin (Rat)",
+      "category": "General",
+      "cost_gp": 24000.0,
+      "weight_lbs": 2.0,
+      "description": "speak with animals of the matching species and related species as per the spell speak with animals, skinwalker with matching skinwalker heritage gains animals form as the change shape ability",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Lycanthrope Skin (Shark)",
+      "name": "Lycanthrope Skin (Shark)",
+      "category": "General",
+      "cost_gp": 40000.0,
+      "weight_lbs": 2.0,
+      "description": "speak with animals of the matching species and related species as per the spell speak with animals, skinwalker with matching skinwalker heritage gains animals form as the change shape ability",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Lycanthrope Skin (Tiger)",
+      "name": "Lycanthrope Skin (Tiger)",
+      "category": "General",
+      "cost_gp": 40000.0,
+      "weight_lbs": 2.0,
+      "description": "speak with animals of the matching species and related species as per the spell speak with animals, skinwalker with matching skinwalker heritage gains animals form as the change shape ability",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Lycanthrope Skin (Wolf)",
+      "name": "Lycanthrope Skin (Wolf)",
+      "category": "General",
+      "cost_gp": 24000.0,
+      "weight_lbs": 2.0,
+      "description": "speak with animals of the matching species and related species as per the spell speak with animals, skinwalker with matching skinwalker heritage gains animals form as the change shape ability",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Mask of Stolen Identities",
+      "name": "Mask of Stolen Identities",
+      "category": "General",
+      "cost_gp": 20000.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Master's Brand",
+      "name": "Master's Brand",
+      "category": "General",
+      "cost_gp": 18200.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Ointment of Secret Seeing",
+      "name": "Ointment of Secret Seeing",
+      "category": "General",
+      "cost_gp": 2000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Scarf of Glorious Histories",
+      "name": "Scarf of Glorious Histories",
+      "category": "General",
+      "cost_gp": 9000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Shirt of Inconspicuousness",
+      "name": "Shirt of Inconspicuousness",
+      "category": "General",
+      "cost_gp": 8000.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Spell Winder (2nd Level)",
+      "name": "Spell Winder (2nd Level)",
+      "category": "General",
+      "cost_gp": 18000.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Spell Winder (4th Level)",
+      "name": "Spell Winder (4th Level)",
+      "category": "General",
+      "cost_gp": 39000.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Spell Winder (6th Level)",
+      "name": "Spell Winder (6th Level)",
+      "category": "General",
+      "cost_gp": 58000.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Spyglass of Discovery",
+      "name": "Spyglass of Discovery",
+      "category": "General",
+      "cost_gp": 17500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Stampede Drum",
+      "name": "Stampede Drum",
+      "category": "General",
+      "cost_gp": 27000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Standard of the Celestial Heir",
+      "name": "Standard of the Celestial Heir",
+      "category": "General",
+      "cost_gp": 33000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Translator's Cap",
+      "name": "Translator's Cap",
+      "category": "General",
+      "cost_gp": 14000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Tremor Bar",
+      "name": "Tremor Bar",
+      "category": "General",
+      "cost_gp": 70000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISR",
+      "key": "Warchanter's Torch",
+      "name": "Warchanter's Torch",
+      "category": "General",
+      "cost_gp": 30000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    }
+  ]
+}

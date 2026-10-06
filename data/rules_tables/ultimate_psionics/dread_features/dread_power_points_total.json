@@ -1,0 +1,93 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_psionics/dread_features/dread_power_points_total",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_psionics",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "level": 1,
+      "base_power_points": 1
+    },
+    {
+      "level": 2,
+      "base_power_points": 1
+    },
+    {
+      "level": 3,
+      "base_power_points": 2
+    },
+    {
+      "level": 4,
+      "base_power_points": 2
+    },
+    {
+      "level": 5,
+      "base_power_points": 2
+    },
+    {
+      "level": 6,
+      "base_power_points": 4
+    },
+    {
+      "level": 7,
+      "base_power_points": 4
+    },
+    {
+      "level": 8,
+      "base_power_points": 4
+    },
+    {
+      "level": 9,
+      "base_power_points": 4
+    },
+    {
+      "level": 10,
+      "base_power_points": 4
+    },
+    {
+      "level": 11,
+      "base_power_points": 8
+    },
+    {
+      "level": 12,
+      "base_power_points": 8
+    },
+    {
+      "level": 13,
+      "base_power_points": 8
+    },
+    {
+      "level": 14,
+      "base_power_points": 8
+    },
+    {
+      "level": 15,
+      "base_power_points": 8
+    },
+    {
+      "level": 16,
+      "base_power_points": 12
+    },
+    {
+      "level": 17,
+      "base_power_points": 12
+    },
+    {
+      "level": 18,
+      "base_power_points": 12
+    },
+    {
+      "level": 19,
+      "base_power_points": 12
+    },
+    {
+      "level": 20,
+      "base_power_points": 12
+    }
+  ]
+}

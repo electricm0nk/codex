@@ -130,7 +130,8 @@
 /// `Monk ~ Unchained Class.MOD` progression block
 /// (`pu_abilities_class.lst:154-171`), so there is no Full/Ex-Class split
 /// and no ungranted record.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct UnchainedMonkFeature {
     /// PCGen `KEY:` token.
     pub key: &'static str,
@@ -222,7 +223,7 @@ pub const PERFECT_SELF_DAMAGE_REDUCTION: i16 = 10;
 
 /// The 18 ingested Unchained Monk `class_feature` records, in
 /// `pu_abilities_class.lst` line order.
-const FEATURES: &[UnchainedMonkFeature] = &[
+pub(crate) const FEATURES: &[UnchainedMonkFeature] = &[
     UnchainedMonkFeature {
         key: "Unchained Monk ~ Weapon and Armor Proficiency",
         name: "Weapon and Armor Proficiency",

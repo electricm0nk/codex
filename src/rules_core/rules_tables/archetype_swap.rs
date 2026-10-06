@@ -36,7 +36,8 @@
 //! (`decisions.md §51`) -- so a future companion-subject table reuses
 //! this same struct without a shape change.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct ArchetypeGrant {
     /// The named sub-feature's own corpus `KEY:` (e.g. `"Raging Beast ~
     /// Raging Beast Manifesting"`), verbatim.
@@ -56,7 +57,8 @@ pub struct ArchetypeGrant {
     pub benefit: Option<&'static str>,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct ArchetypeSwapEntry {
     /// The master/selection row's own corpus `KEY:`, verbatim (e.g.
     /// `"Barbarian Archetype ~ Raging Beast"`).
@@ -79,9 +81,11 @@ pub struct ArchetypeSwapEntry {
     /// The base-class feature-slot IDs this archetype's own `TYPE:`
     /// facet names as replaced, verbatim, in source order. **Not
     /// paired 1:1 with `grants`** -- see this module's own doc comment.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_opt_slice")]
     pub replaces: Option<&'static [&'static str]>,
     /// Every feature this archetype's own `ABILITY:...AUTOMATIC` tokens
     /// grant, each with its real level gate and (where resolved) its
     /// own real mechanical text.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub grants: &'static [ArchetypeGrant],
 }

@@ -1,0 +1,570 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "inner_sea_world_guide/monster_data/MONSTER_ABILITIES",
+  "licence": {
+    "license": "PI-REDACTED",
+    "book": "inner_sea_world_guide",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": [
+      {
+        "row": 12,
+        "field": "description"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "key": "Aluum ~ Immunity to Magic",
+      "name": "Immunity to Magic",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Immunity"
+      ],
+      "description": "An aluum is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature. A magical attack that uses negative energy deals no damage, but speeds up the aluum's attacks and movment as if it were under the effects of a haste spell for 1d6 rounds. A magical attack that uses positive energy slows the aluum as if by a slow spell for 1d6 rounds and dispels any haste effects currently affecting it. Magic jar confuses the creature for 1d6 rounds.",
+      "description_variables": [],
+      "source_page": "p.307",
+      "owners": [
+        "Aluum"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 7,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Aluum ~ Paralysis",
+      "name": "Paralysis",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The touch of an aluum paralyzes living creatures that fail a DC %1 Fortitude save for 1d4 minutes.",
+      "description_variables": [
+        "10+TL/2+CON"
+      ],
+      "source_page": "p.307",
+      "owners": [
+        "Aluum"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 8,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Aluum ~ Soul Shriek",
+      "name": "Soul Shriek",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a free action every 1d4 rounds, the aluum's enslaved souls may emit a keening wail in a 15-ft. cone. Creatures in the cone take 10d6 points of sonic damage and are stunned for 1 round. A DC %1 Will save halves the damage and negates the stun effect. This is a sonic mind-affecting effect.",
+      "description_variables": [
+        "8+TL/2+CON"
+      ],
+      "source_page": "p.307",
+      "owners": [
+        "Aluum"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 9,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Calikang ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ModifyHp"
+      ],
+      "description": "A calikang regains hit points at %1 per round. Fast healing does not restore hit points lost from starvation, thirst, or suffocation, nor does it allow a creature to regrow lost body parts or allow lost body parts to be reattached. Fast healing continues to function (even at negative hit points) until a creature dies, at which point the effects of fast healing end immediately.",
+      "description_variables": [
+        "FastHealingRate"
+      ],
+      "source_page": "p.308",
+      "owners": [
+        "Calikang"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 12,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Calikang ~ Defensive Slam",
+      "name": "Defensive Slam",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A calikang gains a cumulative +1 shield bonus to its AC for each of its arms that does not wield a manufactured weapon, to a maximum of +4 for four hands. A calikang can make slam attacks with these arms without losing this AC bonus.",
+      "description_variables": [],
+      "source_page": "p.308",
+      "owners": [
+        "Calikang"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 13,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Calikang ~ Energy Absorption",
+      "name": "Energy Absorption",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A spell that inflicts energy damage that is defeated by the calikang's SR or immunity to electricity is absorbed into its body, healing it for an amount of damage equal to the absorbed spell's caster level and granting an additional daily use of its breath weapon.",
+      "description_variables": [],
+      "source_page": "p.308",
+      "owners": [
+        "Calikang"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 14,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Calikang ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "%1-ft. line, %2d6 energy damage, Reflex DC %3 half, usable %4/day. A calikang can choose what kind of energy damage its breath weapon inflicts when it uses this ability. Calikangs are particularly adept at using electricity in this manner, and inflict %5 additional points of damage when they elect to inflict electricity damage with their breath weapon.",
+      "description_variables": [
+        "BreathWeaponLine",
+        "BreathWeaponDice",
+        "BreathWeaponDC",
+        "BreathWeaponTimes",
+        "HD"
+      ],
+      "source_page": "p.308",
+      "owners": [
+        "Calikang"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 15,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Calikang ~ Suspend Animation",
+      "name": "Suspend Animation",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a full-round action, a calikang can enter a state of suspended animation, freezing in place and becoming motionless. It remains aware of its surroundings. In this state, the calikang is immune to disease, inhaled toxins, poison, starvation, and thirst, and receives a +4 bonus on all Fortitude saves. The calikang can exit this state as an immediate action - if it does so to attack a foe or initiate combat, it gains a +4 insight bonus on its Initiative check.",
+      "description_variables": [],
+      "source_page": "p.308",
+      "owners": [
+        "Calikang"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 16,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Charau-ka ~ Shrieking Frenzy",
+      "name": "Shrieking Frenzy",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "1/day, a charau-ka can enter a state of shrieking frenzy as a free action. While in this state, the charau-ka automatically fails Stealth checks and cannot speak or cast spells that use verbal components (or use items that require command words to activate), but functions as if under the effects of a haste spell. The charau-ka can continue shrieking for up to 3 rounds, after which it is staggered for 1 round.",
+      "description_variables": [],
+      "source_page": "p.309",
+      "owners": [
+        "Charau-ka"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 19,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Charau-ka ~ Thrown-Weapon Mastery",
+      "name": "Thrown-Weapon Mastery",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Charau-ka are masters of thrown weapons. All charau-ka gain Throw Anything as a bonus feat. In addition, a charau-ka gains a +1 racial bonus on all thrown weapons, and their threat range for thrown weapons is doubled, as if the charau-ka possessed the Improve Critical feat for all thrown weapons. This effect doesn't stack with any other effect that expands the threat range of a weapon.",
+      "description_variables": [],
+      "source_page": "p.309",
+      "owners": [
+        "Charau-ka"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 20,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24)",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Bubonic Plague: Great claw--injury; save Fort DC %1; onset immediate; frequency 1/day; effect 1d4 damage and target is fatigued; cure 2 consecutive saves.",
+      "description_variables": [
+        "DoUDiseaseDC"
+      ],
+      "source_page": "p.310",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 24,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_world_guide:iswg_abilities_race.lst:24"
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25)",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "One of the daughter's hands is a tremendous scythe-shaped claw. This attack inflicts x4 damage on a critical hit, and is treated as an evil weapon for the purposes of penetrating damage reduction.",
+      "description_variables": [],
+      "source_page": "p.310",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 25,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_world_guide:iswg_abilities_race.lst:25"
+    },
+    {
+      "key": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27)",
+      "name": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27)",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "[redacted PI]",
+      "description_variables": [],
+      "source_page": "p.310",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 27,
+      "codex_generated_name": true,
+      "rename_reason": "name_pi_blocked",
+      "rename_coordinate": "inner_sea_world_guide:iswg_abilities_race.lst:27"
+    },
+    {
+      "key": "Sandpoint Devil ~ Bay",
+      "name": "Bay",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "When the Sandpoint Devil screams as a standard action, all creatures within a 300-ft.-radius spread must succeed at a DC %1 Will save or become panicked for 2d5 rounds. This is a sonic, mind-affecting fear effect. Whether or not the save is successful, creatures within the effect are immune to the Sandpoint Devil's bay for 24 hours thereafter.",
+      "description_variables": [
+        "10+(HD/2)+CHA"
+      ],
+      "source_page": "p.312",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 50,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Sandpoint Devil ~ Hellfire Breath",
+      "name": "Hellfire Breath",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Once every 1d4 rounds, the Sandpoint Devil can unleash a blast of infernal flame from its mouth as a standard action. This hellfire fills a 30-ft. cone and causes 10d6 points of fire damage (Reflex DC %1 half). Anyone who takes damage from this breath weapon must also make a DC %1 Wo;; save to avoid becoming cursed by the infernal flames--those who become cursed take a -4 penalty on all attack rolls, saving throws, and skill checks for a number of days equal to the damage taken--during this time, the victim's skin appears to be horribly burned in places regardless of any healing applied. This curse effect functions at caster level %2.",
+      "description_variables": [
+        "10+(HD/2)+CON",
+        "HD"
+      ],
+      "source_page": "p.312",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 51,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Sandpoint Devil ~ Kick",
+      "name": "Kick",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The Sandpoint Devil's hoof attacks are primary attacks that deal bludgeoning and slashing damage.",
+      "description_variables": [],
+      "source_page": "p.312",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 52,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Spine Dragon ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Once every 1d4 rounds as a standard action, a spine dragon can emit a devastating shriek of powerful sonic energy in a %1-ft. cone. Creatures caught in this cone take %2d6 sonic damage and are permanently deafened. A DC %3 Reflex save halves the damage and negates the deafness. This sonic damage is particularly devastating to constructs--they take a -4 penalty to save against its effects, and if they fail the save, they are staggered for 1d4 rounds as well.",
+      "description_variables": [
+        "BreathWeaponCone",
+        "BreathWeaponDice",
+        "BreathWeaponDC"
+      ],
+      "source_page": "p.313",
+      "owners": [
+        "Dragon (Spine)"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 55,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Spine Dragon ~ Ray Deflection",
+      "name": "Ray Deflection",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A spine dragon's scales deflect rays and magic missile spells, rendering the spine dragon immune to such effects. There's a 30%% chance a deflected effect reflects back in full force at the caster; otherwise it is simply negated.",
+      "description_variables": [],
+      "source_page": "p.313",
+      "owners": [
+        "Dragon (Spine)"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 56,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Spine Dragon ~ Spines",
+      "name": "Spines",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "A spine dragon's body is covered with long, crystalling spines. It can fire up to four of these spines/round as a full-attack action (or one as a standard action). A creature that attacks a spine dragon with a melee weapon, unarmed strike, or natural weapon must make a DC %1 Reflex save or take 2d8+%2 points of piercing damage from the spines.",
+      "description_variables": [
+        "10+(HD/2)+DEX",
+        "STR"
+      ],
+      "source_page": "p.313",
+      "owners": [
+        "Dragon (Spine)"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 57,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Treerazer ~ Regeneration",
+      "name": "Regeneration",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ModifyHP"
+      ],
+      "description": "You are difficult to kill. You heal damage at %1 points per round, and you cannot die as long as your regeneration is still functioning (although you still fall unconscious when your hit points are below 0). Good aligned damage causes your regeneration to stop functioning on the round following the attack: you cannot heal any damage and can die normally. Attack forms that don't deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. You can regrow lost portions of you body and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally.",
+      "description_variables": [
+        "RegenerationRate"
+      ],
+      "source_page": "p.315",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 81,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Treerazer ~ Aura of Corruption",
+      "name": "Aura of Corruption",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Aura"
+      ],
+      "description": "Treerazer exudes an aura of corruption to a radius of 120 ft. This aura causes plants to grow hideous, sprouting thorns, twisting, and becoming fungoid in nature. Creatures with woodland stride or freedom of movement can move through this fungal bloom with ease. Living creatures within Treerazer's aura of corruption must make a DC %1 Fortitude save each round or their flesh grows pasty and clammy as tendrils of diseased plant matter and fungal growth sprout from it. This condition persists as long as the creature remains within Treerazer's aura of corruption and for 1 minute thereafter. While suffering the effects of this aura, the living creature is treated as a plant for the purposes of spells and effects that harm or otherwise inconvenience plant creatures more than other creatures. The corruption does not otherwise impart plant traits to creatures.",
+      "description_variables": [
+        "10+(HD/2)+CON",
+        "Base"
+      ],
+      "source_page": "p.315",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 82,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Treerazer ~ Defoliation",
+      "name": "Defoliation",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "As a standard action once every 1d4 rounds, Treerazer can exude a pulse of defoliating energy in a 30-ft.-radius spread. This pulse appears as a wave of sickly green energy, and causes all plants and plant creatures in the area to blacken and wither. Such creatures take 20d10 points of damage and 1d8 points of Strength drain, or half with a successful DC %1 Fort save. A plant that isn't a creature (such as a tree or a shrub) doesn't receive a save and immediately withers and dies. Treerazer can choose to exclude any number of plants in the area from this effect, and generally does so to preserve twisted and corrupted plants and fungus.",
+      "description_variables": [
+        "10+(HD/2)+CON",
+        "Base"
+      ],
+      "source_page": "p.315",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 83,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Nascent Demon Lord ~ Aligned Strike",
+      "name": "Aligned Strike",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A nascent demon lord's natural weapons, as well as any weapon it wields, are treated as chaotic, epic, and evil for the purpose of resolving damage reduction.",
+      "description_variables": [],
+      "source_page": "p.315",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 86,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Nascent Demon Lord ~ Grant Spells",
+      "name": "Grant Spells",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "Nascent demon lords can grant spells to their worshipers. Granting spells does not require any specific action on the nascent demon lord's behalf. All nascent demon lords grant access to the domains of Chaos and Evil--in addition, they grant access to two other domains and a favored weapon that vary according to the nascent demon lord's themes and interests.",
+      "description_variables": [],
+      "source_page": "p.315",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 87,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Constant ~ Desecrate",
+      "name": "Desecrate",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "Aura"
+      ],
+      "description": "You can use desecrate, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.",
+      "description_variables": [],
+      "source_page": "p.265",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 90,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Constant ~ Magic Weapon",
+      "name": "Magic Weapon",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "You can use magic weapon, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.",
+      "description_variables": [],
+      "source_page": "p.310",
+      "owners": [
+        "Calikang"
+      ],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 91,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Constant ~ Water Breathing",
+      "name": "Water Breathing",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "You can use water breathing, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.",
+      "description_variables": [],
+      "source_page": "p.368",
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 92,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Clockwork ~ Winding",
+      "name": "Winding",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "The construct must be wound with a special key in order to function. As a general rule, a fully wound clockwork can remain active for 1 day/HD, but shorter or longer durations are possible.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 96,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Clockwork ~ Swift Reactions",
+      "name": "Swift Reactions",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Clockwork constructs generally react much more swiftly than other constructs. They gain Improved Initiative and Lightning Reflexes as bonus feats, and gain a +2 dodge bonus to AC.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 97,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Clockwork ~ Difficult to Create",
+      "name": "Difficult to Create",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "traits": [],
+      "description": "Increase the time and gp cost required to create a clockwork by 50%% over normal.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "iswg_abilities_race.lst",
+      "source_line": 98,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    }
+  ]
+}

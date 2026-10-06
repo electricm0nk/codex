@@ -176,7 +176,9 @@ use crate::rules_core::rules_tables::RuleSetId;
 /// 3-school subset to the full set actually present — see
 /// `rules_tables::crb::spell_list::Pf1SchoolId` for CRB's own, separately
 /// maintained copy of this enum).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "apg__spell_list__Pf1SchoolId"))]
 pub enum Pf1SchoolId {
     Abjuration,
     Conjuration,
@@ -208,7 +210,9 @@ impl Pf1SchoolId {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "apg__spell_list__SpellListEntry"))]
 pub struct SpellListEntry {
     /// The record's identity in `apg_spells.lst`: its `KEY:` token when
     /// the row carries one, else its display name (most rows carry no

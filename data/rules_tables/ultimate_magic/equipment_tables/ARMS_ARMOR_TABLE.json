@@ -1,0 +1,29 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_magic/equipment_tables/ARMS_ARMOR_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_magic",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Scroll Shield",
+      "category": "ArmsArmor",
+      "name": "Scroll Shield",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Scroll Blade",
+      "category": "ArmsArmor",
+      "name": "Scroll Blade",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    }
+  ]
+}

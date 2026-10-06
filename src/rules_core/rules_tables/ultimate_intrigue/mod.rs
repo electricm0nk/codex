@@ -5,7 +5,7 @@
 
 pub mod equipment_tables;
 pub mod feat_tables;
-mod monster_data;
+pub(crate) mod monster_data;
 pub mod spell_list;
 // SD-32 card 11 (T12), cycle 4: real per-feature compute functions for the
 // Vigilante, this book's single magnitude-bearing class.

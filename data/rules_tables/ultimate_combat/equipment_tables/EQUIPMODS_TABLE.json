@@ -1,0 +1,165 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_combat/equipment_tables/EQUIPMODS_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_combat",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Special Quality ~ Thrown",
+      "category": "Equipmods",
+      "name": "Thrown",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Weapon can be thrown"
+    },
+    {
+      "key": "Special Quality ~ Scatter ~ Firearm",
+      "category": "Equipmods",
+      "name": "Scatter",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "scatter"
+    },
+    {
+      "key": "Special Ability ~ Dry Load ~ Firearm / Ammunition",
+      "category": "Equipmods",
+      "name": "Dry Load",
+      "cost_gp": 30.0,
+      "weight_lbs": null,
+      "description": "This special ability can only be applied to alchemical or metal firearm cartridges. Dry load cartridges can be used to load guns underwater or in other airless environments, such as a vacuum. This ability protects the cartridge's contents as it is being loaded and creates a residual bubble of air that surrounds the firearm, further protecting the ammunition and allowing the firearm with this ammunition to be fired in an airless environment. After the cartridge is loaded, the bubble of air lasts for 3 minutes, or until the firearm is fired, whichever occurs first. A firearm loaded with this ammunition still takes the -2 penalty on attack rolls when fired underwater for every 5 feet of water the bullet passes through, in addition to the normal penalties to range. When firing a dry load cartridge underwater or in an airless environment, a misfire that results in a firearm explosion occurs normally."
+    },
+    {
+      "key": "Special Ability ~ Lucky ~ Firearm",
+      "category": "Equipmods",
+      "name": "Lucky",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A lucky firearm has its own magical reservoir of grit (see page 9). Usually this grit is stored within the marks of an engraving or in a trinket that hangs from the firearm. Often these marks take the form of holy symbols or fetishes, but such a reservoir can take just about any form. This reservoir holds 1 grit point, which is refreshed at the start of each day. Whether or not the wielder of a lucky firearm has any deeds (see page 10), she can always spend 1 grit point from the lucky firearm to reroll an attack from it that would result in a misfire. When the wielder does so, she must take the second result, even if that attack roll also results in a misfire."
+    },
+    {
+      "key": "Special Ability ~ Lucky / Greater ~ Firearm",
+      "category": "Equipmods",
+      "name": "Lucky (Greater)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A greater lucky firearm has its own magical reservoir of grit (see page 9). Usually this grit is stored within the marks of an engraving or in a trinket that hangs from the firearm. Often these marks take the form of holy symbols or fetishes, but such a reservoir can take just about any form. This reservoir holds 3 grit points, which is refreshed at the start of each day. Whether or not the wielder of a lucky firearm has any deeds (see page 10), she can always spend 1 grit point from the lucky firearm to reroll an attack from it that would result in a misfire. When the wielder does so, she must take the second result, even if that attack roll also results in a misfire."
+    },
+    {
+      "key": "Special Ability ~ Reliable ~ Firearm",
+      "category": "Equipmods",
+      "name": "Reliable",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A reliable firearm is enchanted so that it is less likely to jam than other firearms. This enchantment reduces the misfire value of the affected firearm by 1 (minimum 0). This reduction occurs after any increases are calculated for firing with the broken condition, or for any other effect that might increase the misfire value of a firearm."
+    },
+    {
+      "key": "Special Ability ~ Reliable / Greater ~ Firearm",
+      "category": "Equipmods",
+      "name": "Reliable (Greater)",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A greater reliable firearm is enchanted so as to be less likely to jam than other firearms. It reduces the misfire value of the affected firearm by 4 (minimum 0). This reduction occurs after any increases are calculated for firing with the broken condition, or for any other effect that might increase the misfire value of a firearm. A firearm with greater reliable cannot have the reliable special ability."
+    },
+    {
+      "key": "Special Quality ~ Blocking",
+      "category": "Equipmods",
+      "name": "Blocking",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "blocking"
+    },
+    {
+      "key": "Special Quality ~ Deadly",
+      "category": "Equipmods",
+      "name": "Deadly",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "deadly"
+    },
+    {
+      "key": "Special Quality ~ Distracting",
+      "category": "Equipmods",
+      "name": "Distracting",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "distracting"
+    },
+    {
+      "key": "Special Quality ~ Grapple",
+      "category": "Equipmods",
+      "name": "Grapple",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "grapple"
+    },
+    {
+      "key": "Special Quality ~ Fragile",
+      "category": "Equipmods",
+      "name": "Fragile",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "fragile"
+    },
+    {
+      "key": "Special Quality ~ Performance",
+      "category": "Equipmods",
+      "name": "Performance",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "performance"
+    },
+    {
+      "key": "Material ~ Bone",
+      "category": "Equipmods",
+      "name": "Bone",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Bronze",
+      "category": "Equipmods",
+      "name": "Bronze",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Gold",
+      "category": "Equipmods",
+      "name": "Gold",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Stone",
+      "category": "Equipmods",
+      "name": "Stone",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Material ~ Obsidian",
+      "category": "Equipmods",
+      "name": "Obsidian",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Special Quality ~ Throwing Shield ~ Shield",
+      "category": "Equipmods",
+      "name": "Throwing Shield",
+      "cost_gp": 50.0,
+      "weight_lbs": null,
+      "description": "small 1d4 damage; medium 1d6 damage; range 20 ft., deals bludgeoning damage."
+    }
+  ]
+}

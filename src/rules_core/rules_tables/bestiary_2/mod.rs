@@ -106,8 +106,8 @@
 //! `prerace` — the row carries no `PRERACE:` at all. It is recorded once; the
 //! chassis dedupes on the key.
 
-mod companion_data;
-mod monster_data;
+pub(crate) mod companion_data;
+pub(crate) mod monster_data;
 
 pub use super::companion_chassis::{
     CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord,

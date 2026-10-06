@@ -1,0 +1,2689 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "inner_sea_bestiary/monster_data/MONSTERS",
+  "licence": {
+    "license": "OGL",
+    "book": "inner_sea_bestiary",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Apostasy Wraith",
+      "name": "Apostasy Wraith",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Undead",
+      "race_subtype": "Incorporeal",
+      "challenge_rating": "6",
+      "monster_class": "Undead:8",
+      "source_page": "p.4",
+      "natural_attacks": [
+        {
+          "name": "Incorporeal Touch",
+          "damage_dice": "1d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -10
+        },
+        {
+          "ability": "CON",
+          "amount": -10
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "CHA",
+          "amount": 3
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Apostasy Wraith ~ Razmiri Aversion",
+        "Apostasy Wraith ~ Rend Faith",
+        "Apostasy Wraith ~ Sense Apostate"
+      ],
+      "external_ability_refs": [
+        "Maneuverability (Perfect)",
+        "Channel Resistance",
+        "Energy Drain",
+        "Incorporeal"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 9
+    },
+    {
+      "key": "Beetle (Scarab)",
+      "name": "Beetle (Scarab)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 20
+        }
+      ],
+      "race_type": "Vermin",
+      "race_subtype": null,
+      "challenge_rating": "6",
+      "monster_class": "Vermin:9",
+      "source_page": "p.5",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 13
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Scarab ~ Gnaw"
+      ],
+      "external_ability_refs": [
+        "Maneuverability (Average)",
+        "Immunity to Death Effects",
+        "Immunity to Disease",
+        "Immunity to Mind-Affecting Effects",
+        "Immunity to Paralysis"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 13
+    },
+    {
+      "key": "Beetle (Stalk)",
+      "name": "Beetle (Stalk)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Burrow",
+          "feet": 10
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "race_type": "Vermin",
+      "race_subtype": null,
+      "challenge_rating": "2",
+      "monster_class": "Vermin:4",
+      "source_page": "p.5",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 7
+        },
+        {
+          "ability": "DEX",
+          "amount": 3
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Stalk Beetle ~ Sawtooth"
+      ],
+      "external_ability_refs": [
+        "Immunity to Mind-Affecting Effects"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 14
+    },
+    {
+      "key": "Cayhound",
+      "name": "Cayhound",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": null,
+      "challenge_rating": "5",
+      "monster_class": "Outsider (Ref/Will):6",
+      "source_page": "p.8",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d10"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 10
+        },
+        {
+          "ability": "DEX",
+          "amount": 5
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Cayhound ~ Righteous Bite",
+        "Cayhound ~ Spell-Like Abilities",
+        "Cayhound ~ Thunderous Bark",
+        "Cayhound ~ Unbound"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 18
+    },
+    {
+      "key": "Ceru",
+      "name": "Ceru",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "challenge_rating": "2",
+      "monster_class": "Magical Beast:3",
+      "source_page": "p.9",
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": "1d3"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "6",
+          "spell": "Detect Magic",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "6",
+          "spell": "Mage Hand",
+          "save_dc_token": null
+        }
+      ],
+      "ability_keys": [
+        "Ceru ~ Luckbringer",
+        "Ceru ~ Poison"
+      ],
+      "external_ability_refs": [
+        "Fast Healing",
+        "Immunity to Poison",
+        "Resistance to Acid",
+        "Resistance to Electricity"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 19
+    },
+    {
+      "key": "Charnel Colossus",
+      "name": "Charnel Colossus",
+      "size": "C",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Undead",
+      "race_subtype": null,
+      "challenge_rating": "19",
+      "monster_class": "Undead:30",
+      "source_page": "p.10",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "2d8"
+        },
+        {
+          "name": "Tendril",
+          "damage_dice": "2d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 24
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": -10
+        },
+        {
+          "ability": "INT",
+          "amount": 8
+        },
+        {
+          "ability": "WIS",
+          "amount": 26
+        },
+        {
+          "ability": "CHA",
+          "amount": 14
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Charnel Colossus ~ Corporate Will",
+        "Charnel Colossus ~ Mind Feed",
+        "Charnel Colossus ~ Spell-Like Abilities",
+        "Charnel Colossus ~ Voice of the Ancients",
+        "Immunity to Turning"
+      ],
+      "external_ability_refs": [
+        "Amorphous",
+        "Can't Be Tripped",
+        "Channel Resistance",
+        "Grab",
+        "Immunity to Critical Hits",
+        "Immunity to Precision Damage",
+        "Pull"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 20
+    },
+    {
+      "key": "Fungus Queen",
+      "name": "Fungus Queen",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "race_type": "Plant",
+      "race_subtype": "Extraplanar",
+      "challenge_rating": "9",
+      "monster_class": "Plant:12",
+      "source_page": "p.12",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Tentacle",
+          "damage_dice": "1d4"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 10
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": 8
+        },
+        {
+          "ability": "WIS",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": 14
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Fungus Queen ~ Compel Plants",
+        "Fungus Queen ~ Create Spawn",
+        "Fungus Queen ~ Energy Drain",
+        "Fungus Queen ~ Plant Empathy",
+        "Fungus Queen ~ Spell-Like Abilities",
+        "Fungus Queen ~ Sporepod"
+      ],
+      "external_ability_refs": [
+        "Constrict",
+        "Grab",
+        "Immunity to Electricity",
+        "Resistance to Acid",
+        "Resistance to Cold",
+        "Telepathy"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 25
+    },
+    {
+      "key": "Giant (Shadow)",
+      "name": "Giant (Shadow)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Humanoid",
+      "race_subtype": "Extraplanar|Giant",
+      "challenge_rating": "13",
+      "monster_class": "Humanoid:19",
+      "source_page": "p.15",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 24
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 14
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Shadow Giant ~ Militant",
+        "Shadow Giant ~ Shadow Cloak"
+      ],
+      "external_ability_refs": [
+        "Energy Drain",
+        "Rock Catching",
+        "Rock Throwing"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 30
+    },
+    {
+      "key": "Golem (Marrowstone)",
+      "name": "Golem (Marrowstone)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "8",
+      "monster_class": "Construct:10",
+      "source_page": "p.17",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "2d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": -10
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Marrowstone Golem ~ Create Spawn",
+        "Marrowstone Golem ~ Immunity to Magic",
+        "Marrowstone Golem ~ Necrotic Field",
+        "Marrowstone Golem ~ Negative Energy"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isb_races.lst",
+      "source_line": 32
+    },
+    {
+      "key": "Golem (Noqual)",
+      "name": "Golem (Noqual)",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "18",
+      "monster_class": "Construct:25",
+      "source_page": "p.18",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "4d8"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 26
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": -10
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Noqual Golem ~ Construct Bane",
+        "Noqual Golem ~ Immunity to Magic",
+        "Noqual Golem ~ Impeded Magic",
+        "Noqual Golem ~ Spell Absorption",
+        "Noqual Golem ~ Spell Sunder"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isb_races.lst",
+      "source_line": 33
+    },
+    {
+      "key": "Golem (Quantium)",
+      "name": "Golem (Quantium)",
+      "size": "G",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": null,
+      "challenge_rating": "20",
+      "monster_class": "Construct:30",
+      "source_page": "p.19",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 30
+        },
+        {
+          "ability": "DEX",
+          "amount": -4
+        },
+        {
+          "ability": "CON",
+          "amount": -10
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Quantium Golem ~ Eldritch Surge",
+        "Quantium Golem ~ Immunity to Magic",
+        "Quantium Golem ~ Link",
+        "Quantium Golem ~ Urban Defender"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isb_races.lst",
+      "source_line": 34
+    },
+    {
+      "key": "Kakuen-Taka",
+      "name": "Kakuen-Taka",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Evil|Chaotic|Extraplanar|Swarm",
+      "challenge_rating": "14",
+      "monster_class": "Outsider (Fort/Ref):21",
+      "source_page": "p.20",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "5d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 12
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Kakuen-Taka ~ Consume Flesh",
+        "Kakuen-Taka ~ Create Carrionstorm",
+        "Kakuen-Taka ~ Dimensional Snare",
+        "Kakuen-Taka ~ Flesh Mansion",
+        "Kakuen-Taka ~ Fleshy Shield",
+        "Kakuen-Taka ~ Swarm"
+      ],
+      "external_ability_refs": [
+        "Immunity to Poison",
+        "Resistance to Acid",
+        "Resistance to Cold",
+        "Resistance to Electricity",
+        "Resistance to Fire",
+        "Trample"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 38
+    },
+    {
+      "key": "Khaei",
+      "name": "Khaei",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "race_type": "Monstrous Humanoid",
+      "race_subtype": null,
+      "challenge_rating": "3",
+      "monster_class": "Monstrous Humanoid:4",
+      "source_page": "p.22",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Khaei ~ Lost Time",
+        "Khaei ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isb_races.lst",
+      "source_line": 39
+    },
+    {
+      "key": "Korir-Kokembe",
+      "name": "Korir-Kokembe",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Climb",
+          "feet": 40
+        },
+        {
+          "mode": "Fly",
+          "feet": 80
+        },
+        {
+          "mode": "Swim",
+          "feet": 40
+        }
+      ],
+      "race_type": "Dragon",
+      "race_subtype": null,
+      "challenge_rating": "10",
+      "monster_class": "Dragon:13",
+      "source_page": "p.23",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "2d6"
+        },
+        {
+          "name": "Claw",
+          "damage_dice": "2d6"
+        },
+        {
+          "name": "Tail Slap",
+          "damage_dice": "2d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Korir-Kokembe ~ Disease",
+        "Korir-Kokembe ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [
+        "Maneuverability (Good)",
+        "Compression",
+        "Constrict",
+        "Frightful Presence",
+        "Grab",
+        "Immunity to Disease",
+        "Immunity to Paralysis",
+        "Immunity to Sleep",
+        "Rake",
+        "Scent"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 40
+    },
+    {
+      "key": "Kyton (Termagant)",
+      "name": "Kyton (Termagant)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Evil|Lawful|Extraplanar|Kyton",
+      "challenge_rating": "17",
+      "monster_class": "Outsider (Fort/Will):17",
+      "source_page": "p.24",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d8"
+        },
+        {
+          "name": "Tentacle",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 18
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 20
+        },
+        {
+          "ability": "INT",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 14
+        },
+        {
+          "ability": "CHA",
+          "amount": 10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Termagant ~ Poison",
+        "Termagant ~ Regeneration",
+        "Termagant ~ Rupture",
+        "Termagant ~ Shared Rupture",
+        "Termagant ~ Unnerving Gaze",
+        "Termagent ~ Bleed Damage"
+      ],
+      "external_ability_refs": [
+        "Maneuverability (Perfect)",
+        "Can't Be Tripped",
+        "Grab",
+        "Immunity to Cold",
+        "Telepathy"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 41
+    },
+    {
+      "key": "Lorthact",
+      "name": "Lorthact",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Evil|Lawful|Devil|Extraplanar",
+      "challenge_rating": "25",
+      "monster_class": "Outsider (Ref/Will):32",
+      "source_page": "p.26",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 12
+        },
+        {
+          "ability": "DEX",
+          "amount": 22
+        },
+        {
+          "ability": "CON",
+          "amount": 24
+        },
+        {
+          "ability": "INT",
+          "amount": 20
+        },
+        {
+          "ability": "WIS",
+          "amount": 16
+        },
+        {
+          "ability": "CHA",
+          "amount": 26
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Good ~ Regeneration",
+        "Lorthact ~ Infernal Duke Traits",
+        "Lorthact ~ Intelligence Drain",
+        "Lorthact ~ Scholastic Masquerade",
+        "Lorthact ~ Spell-Like Abilities",
+        "Lorthact ~ Spell Reservoir",
+        "Lorthact ~ Temporal Anomaly"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isb_races.lst",
+      "source_line": 46
+    },
+    {
+      "key": "Mantis (Deadly)",
+      "name": "Mantis (Deadly)",
+      "size": "C",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 60
+        }
+      ],
+      "race_type": "Vermin",
+      "race_subtype": null,
+      "challenge_rating": "11",
+      "monster_class": "Vermin:16",
+      "source_page": "p.30",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 26
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 10
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Deadly Mantis ~ Fling",
+        "Deadly Mantis ~ Rending Mandibles"
+      ],
+      "external_ability_refs": [
+        "Grab",
+        "Immunity to Mind-Affecting Effects"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 50
+    },
+    {
+      "key": "Mockingfey",
+      "name": "Mockingfey",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Fey",
+      "race_subtype": null,
+      "challenge_rating": "1",
+      "monster_class": "Fey:3",
+      "source_page": "p.31",
+      "natural_attacks": [
+        {
+          "name": "Talons",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "3",
+          "spell": "Daze",
+          "save_dc_token": "11"
+        }
+      ],
+      "ability_keys": [
+        "Mockingfey ~ Mock"
+      ],
+      "external_ability_refs": [
+        "Maneuverability (Good)"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 51
+    },
+    {
+      "key": "Moxix",
+      "name": "Moxix",
+      "size": "G",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+      "challenge_rating": "20",
+      "monster_class": "Outsider (Fort/Will):23",
+      "source_page": "p.32",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Gore",
+          "damage_dice": null
+        },
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 20
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 22
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 14
+        },
+        {
+          "ability": "CHA",
+          "amount": 14
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Moxix ~ Breath Weapon",
+        "Moxix ~ Gush",
+        "Moxix ~ Hopedrinker",
+        "Moxix ~ Mindshatter",
+        "Moxix ~ Moxix's Delectation",
+        "Moxix ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [
+        "Constrict",
+        "Immunity to Electricity",
+        "Immunity to Poison",
+        "Rend",
+        "Resistance to Acid",
+        "Resistance to Cold",
+        "Resistance to Fire"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 52
+    },
+    {
+      "key": "Nightripper",
+      "name": "Nightripper",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 60
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+      "challenge_rating": "24",
+      "monster_class": "Outsider (Ref/Will):27",
+      "source_page": "p.34",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "2d6"
+        },
+        {
+          "name": "Talons",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 18
+        },
+        {
+          "ability": "DEX",
+          "amount": 22
+        },
+        {
+          "ability": "CON",
+          "amount": 28
+        },
+        {
+          "ability": "INT",
+          "amount": 8
+        },
+        {
+          "ability": "WIS",
+          "amount": 12
+        },
+        {
+          "ability": "CHA",
+          "amount": 14
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Good ~ Regeneration",
+        "Nascent Demon Lord Traits",
+        "Nightripper ~ Curse of Living Death",
+        "Nightripper ~ Slowing Gaze",
+        "Nightripper ~ Spell-Like Abilities",
+        "Nightripper ~ Swift Cuts",
+        "Nightripper ~ Sword Mastery"
+      ],
+      "external_ability_refs": [
+        "Sneak Attack"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 56
+    },
+    {
+      "key": "Oronci",
+      "name": "Oronci",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Climb",
+          "feet": 40
+        }
+      ],
+      "race_type": "Aberration",
+      "race_subtype": null,
+      "challenge_rating": "5",
+      "monster_class": "Aberration:7",
+      "source_page": "p.36",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 12
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 8
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Oronci ~ Frenzy",
+        "Oronci ~ Poison",
+        "Oronci ~ Spit",
+        "Oronci ~ Undersized Weapons"
+      ],
+      "external_ability_refs": [
+        "Can't Be Tripped",
+        "Ferocity",
+        "Light Sensitivity"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 60
+    },
+    {
+      "key": "Petrified Maiden",
+      "name": "Petrified Maiden",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Undead",
+      "race_subtype": null,
+      "challenge_rating": "6",
+      "monster_class": "Undead:9",
+      "source_page": "p.37",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": -10
+        },
+        {
+          "ability": "INT",
+          "amount": -2
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Can't Be Disarmed",
+        "Petrified Maiden ~ Curse of Stone",
+        "Petrified Maiden ~ Petrified Body",
+        "Petrified Maiden ~ Reconstitution",
+        "Petrified Maiden ~ Weapon Expertise",
+        "Petrified Maiden ~ Weapon Selection"
+      ],
+      "external_ability_refs": [
+        "Channel Resistance"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 64
+    },
+    {
+      "key": "Psychopomp (Memitim)",
+      "name": "Psychopomp (Memitim)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 100
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Psychopomp|Extraplanar",
+      "challenge_rating": "15",
+      "monster_class": "Outsider (Ref/Will):16",
+      "source_page": "p.39",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 18
+        },
+        {
+          "ability": "CON",
+          "amount": 16
+        },
+        {
+          "ability": "INT",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 10
+        },
+        {
+          "ability": "CHA",
+          "amount": 10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Detect Evil",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Detect Good",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Dimensional Anchor",
+          "save_dc_token": "19"
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Dispel Magic",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Freedom of Movement",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Gaseous Form",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Invisibility",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Plane Shift",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Speak with Dead",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Status",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Teleport (Greater)",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "True Seeing",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "ATWILL",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Veil",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "5",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Finger of Death",
+          "save_dc_token": "22"
+        },
+        {
+          "label": "Innate",
+          "times": "5",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Forbiddance",
+          "save_dc_token": null
+        },
+        {
+          "label": "Innate",
+          "times": "5",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Undeath to Death",
+          "save_dc_token": "21"
+        },
+        {
+          "label": "Innate",
+          "times": "1",
+          "time_unit": null,
+          "caster_level_token": "14",
+          "spell": "Energy Drain",
+          "save_dc_token": "24"
+        }
+      ],
+      "ability_keys": [
+        "Memitim ~ Terminal Aura",
+        "Psychopomp Traits"
+      ],
+      "external_ability_refs": [
+        "Maneuverability (Good)",
+        "Change Shape",
+        "Immunity to Acid"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 65
+    },
+    {
+      "key": "Psychopomp (Shoki)",
+      "name": "Psychopomp (Shoki)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Psychopomp",
+      "challenge_rating": "9",
+      "monster_class": "Outsider (Ref/Will):10",
+      "source_page": "p.40",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "INT",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 12
+        },
+        {
+          "ability": "WIS",
+          "amount": 10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Psychopomp Traits",
+        "Shoki ~ Soul Lock",
+        "Shoki ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [
+        "Change Shape",
+        "Immunity to Acid",
+        "Immunity to Charm",
+        "Immunity to Cold",
+        "Immunity to Fear",
+        "Immunity to Sleep"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 66
+    },
+    {
+      "key": "Psychopomp (Viduus)",
+      "name": "Psychopomp (Viduus)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Psychopomp",
+      "challenge_rating": "4",
+      "monster_class": "Outsider (Ref/Will):5",
+      "source_page": "p.41",
+      "natural_attacks": [
+        {
+          "name": "Quill",
+          "damage_dice": "1d4"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "CON",
+          "amount": 8
+        },
+        {
+          "ability": "WIS",
+          "amount": 8
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Psychopomp Traits",
+        "Viduus ~ Censor",
+        "Viduus ~ Expurgate",
+        "Viduus ~ Transformation"
+      ],
+      "external_ability_refs": [
+        "Immunity to Mind-Affecting Effects"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 67
+    },
+    {
+      "key": "Robot (Annihilator)",
+      "name": "Robot (Annihilator)",
+      "size": "G",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": "Robot",
+      "challenge_rating": "16",
+      "monster_class": "Construct:20",
+      "source_page": "p.43",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 24
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Annihilator ~ Booster Jets",
+        "Annihilator ~ Chain Guns",
+        "Annihilator ~ Combined Arms",
+        "Annihilator ~ Plasma Lance",
+        "Annihilator ~ Suppressing Fire",
+        "Robot ~ Critical Hit Vulnerability",
+        "Robot ~ Electricity Vulnerability",
+        "Robot ~ Force Field",
+        "Robot ~ Intelligent"
+      ],
+      "external_ability_refs": [
+        "Immunity to Cold",
+        "Resistance to Electricity",
+        "Resistance to Fire"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 71
+    },
+    {
+      "key": "Robot (Gearsman)",
+      "name": "Robot (Gearsman)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": "Robot",
+      "challenge_rating": "4",
+      "monster_class": "Construct:4",
+      "source_page": "p.44",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 10
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Gearsman ~ Adaptive Learning",
+        "Gearsman ~ Charge Weapon",
+        "Gearsman ~ Self-Repair",
+        "Robot ~ Critical Hit Vulnerability",
+        "Robot ~ Electricity Vulnerability",
+        "Robot ~ Intelligent"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isb_races.lst",
+      "source_line": 72
+    },
+    {
+      "key": "Robot (Myrmidon)",
+      "name": "Robot (Myrmidon)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 90
+        }
+      ],
+      "race_type": "Construct",
+      "race_subtype": "Robot",
+      "challenge_rating": "11",
+      "monster_class": "Construct:15",
+      "source_page": "p.45",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 16
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -10
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Myrmidon ~ Combined Arms",
+        "Myrmidon ~ Laser Rifle",
+        "Myrmidon ~ Quantum Lash",
+        "Myrmidon ~ Resilient",
+        "Myrmidon ~ Rockets",
+        "Myrmidon ~ Superior Optics",
+        "Robot ~ Critical Hit Vulnerability",
+        "Robot ~ Electricity Vulnerability",
+        "Robot ~ Force Field",
+        "Robot ~ Intelligent"
+      ],
+      "external_ability_refs": [
+        "Maneuverability (Perfect)",
+        "Can't Be Tripped",
+        "Constrict",
+        "Immunity to Cold"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 73
+    },
+    {
+      "key": "Spellscar Fext",
+      "name": "Spellscar Fext",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "race_type": "Undead",
+      "race_subtype": null,
+      "challenge_rating": "7",
+      "monster_class": "Undead:10",
+      "source_page": "p.49",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 14
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": -10
+        },
+        {
+          "ability": "INT",
+          "amount": -2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Spellscar Fext ~ Deadly Slam",
+        "Spellscar Fext ~ Dispelling Critical",
+        "Spellscar Fext ~ Ravage Magic",
+        "Spellscar Fext ~ Vulnerable to Glass"
+      ],
+      "external_ability_refs": [],
+      "source_file": "isb_races.lst",
+      "source_line": 80
+    },
+    {
+      "key": "Star Monarch",
+      "name": "Star Monarch",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 80
+        }
+      ],
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "challenge_rating": "9",
+      "monster_class": "Magical Beast:12",
+      "source_page": "p.50",
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": "1d8"
+        },
+        {
+          "name": "Tail",
+          "damage_dice": "2d6"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 8
+        },
+        {
+          "ability": "CHA",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 12
+        },
+        {
+          "ability": "WIS",
+          "amount": 6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Star Monarch ~ Dreamwarden",
+        "Star Monarch ~ Glowsap",
+        "Star Monarch ~ Navigational Awareness",
+        "Star Monarch ~ Spell-Like Abilities",
+        "Star Monarch ~ Starflight",
+        "Star Monarch ~ Toxic Flesh"
+      ],
+      "external_ability_refs": [
+        "Maneuverability (Average)",
+        "Grab",
+        "Immunity to Cold",
+        "Rake",
+        "Telepathy"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 81
+    },
+    {
+      "key": "Thin Man",
+      "name": "Thin Man",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Burrow",
+          "feet": 20
+        }
+      ],
+      "race_type": "Fey",
+      "race_subtype": null,
+      "challenge_rating": "4",
+      "monster_class": "Fey:7",
+      "source_page": "p.52",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        },
+        {
+          "name": "Claw",
+          "damage_dice": "1d4"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -2
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Thin Man ~ Vanish"
+      ],
+      "external_ability_refs": [
+        "Bleed",
+        "Compression",
+        "Immunity to Poison"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 86
+    },
+    {
+      "key": "Umbral Shepherd",
+      "name": "Umbral Shepherd",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 0
+        },
+        {
+          "mode": "Fly",
+          "feet": 30
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Incorporeal",
+      "challenge_rating": "5",
+      "monster_class": "Outsider (Ref/Will):6",
+      "source_page": "p.53",
+      "natural_attacks": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -10
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Umbral Shepherd ~ Planebound",
+        "Umbral Shepherd ~ Possession",
+        "Umbral Shepherd ~ Shadow Touch"
+      ],
+      "external_ability_refs": [
+        "Can't Be Tripped",
+        "Light Sensitivity",
+        "Maneuverability (Perfect)"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 90
+    },
+    {
+      "key": "Veiled Master",
+      "name": "Veiled Master",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Swim",
+          "feet": 80
+        }
+      ],
+      "race_type": "Aberration",
+      "race_subtype": "Aquatic|Shapechanger",
+      "challenge_rating": "14",
+      "monster_class": "Aberration:16",
+      "source_page": "p.56",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        },
+        {
+          "name": "Tentacle",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 12
+        },
+        {
+          "ability": "DEX",
+          "amount": 12
+        },
+        {
+          "ability": "CHA",
+          "amount": 12
+        },
+        {
+          "ability": "CON",
+          "amount": 16
+        },
+        {
+          "ability": "INT",
+          "amount": 10
+        },
+        {
+          "ability": "WIS",
+          "amount": 8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Veiled Master ~ Consume Memory",
+        "Veiled Master ~ Delayed Suggestion",
+        "Veiled Master ~ Mucus Cloud",
+        "Veiled Master ~ Runemastery",
+        "Veiled Master ~ Slime",
+        "Veiled Master ~ Spell-Like Abilities",
+        "Veiled Master ~ Spells",
+        "Veiled Master ~ Swift Transformation",
+        "Veiled Master ~ Thoughtlance"
+      ],
+      "external_ability_refs": [
+        "Can't Be Tripped",
+        "Fast Healing",
+        "Immunity to Electricity",
+        "Immunity to Mind-Affecting Effects",
+        "Resistance to Cold",
+        "Telepathy"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 94
+    },
+    {
+      "key": "Vespergaunt",
+      "name": "Vespergaunt",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Ooze",
+      "race_subtype": null,
+      "challenge_rating": "12",
+      "monster_class": "Ooze:17",
+      "source_page": "p.58",
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 16
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 14
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Vespergaunt ~ Aura of Madness",
+        "Vespergaunt ~ Damage Reduction",
+        "Vespergaunt ~ Siphon Spirit",
+        "Vespergaunt ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [
+        "All-Around Vision",
+        "Amorphous",
+        "Can't Be Tripped",
+        "Light Sensitivity",
+        "Maneuverability (Perfect)",
+        "No Breath",
+        "Telepathy"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 95
+    },
+    {
+      "key": "Water Wraith",
+      "name": "Water Wraith",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Swim",
+          "feet": 40
+        }
+      ],
+      "race_type": "Magical Beast",
+      "race_subtype": "Aquatic",
+      "challenge_rating": "2",
+      "monster_class": "Magical Beast:3",
+      "source_page": "p.59",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Water Wraith ~ Expressive Chameleon"
+      ],
+      "external_ability_refs": [
+        "Amphibious",
+        "Blood Drain",
+        "Rend"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 99
+    },
+    {
+      "key": "Whirlmaw",
+      "name": "Whirlmaw",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Burrow",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 90
+        }
+      ],
+      "race_type": "Aberration",
+      "race_subtype": null,
+      "challenge_rating": "8",
+      "monster_class": "Aberration:12",
+      "source_page": "p.60",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 12
+        },
+        {
+          "ability": "DEX",
+          "amount": 12
+        },
+        {
+          "ability": "CON",
+          "amount": 8
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -8
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Whirlmaw ~ Burrowing Bite",
+        "Whirlmaw ~ Dust Cloud",
+        "Whirlmaw ~ Flying Charge",
+        "Whirlmaw ~ Keen Sight"
+      ],
+      "external_ability_refs": [
+        "Can't Be Tripped",
+        "Immunity to Fire",
+        "Maneuverability (Perfect)"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 100
+    },
+    {
+      "key": "Woundwyrm",
+      "name": "Woundwyrm",
+      "size": "H",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Burrow",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "race_type": "Dragon",
+      "race_subtype": "Chaotic|Evil",
+      "challenge_rating": "15",
+      "monster_class": "Dragon:18",
+      "source_page": "p.61",
+      "natural_attacks": [
+        {
+          "name": "Tail Slap",
+          "damage_dice": "2d8"
+        },
+        {
+          "name": "Wing",
+          "damage_dice": "1d8"
+        },
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 20
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 12
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 10
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Woundwyrm ~ Breath Weapon",
+        "Woundwyrm ~ Entropic Breath",
+        "Woundwyrm ~ Maw of the Abyss",
+        "Woundwyrm ~ Spell-Like Abilities"
+      ],
+      "external_ability_refs": [
+        "Immunity to Acid",
+        "Immunity to Gaze Attacks",
+        "Immunity to Illusions",
+        "Immunity to Paralysis",
+        "Immunity to Poison",
+        "Immunity to Polymorph",
+        "Immunity to Sleep",
+        "Immunity to Visual Effects",
+        "Maneuverability (Average)"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 101
+    },
+    {
+      "key": "Zelishkar",
+      "name": "Zelishkar",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "race_type": "Outsider",
+      "race_subtype": "Daemon|Evil|Extraplanar|Fire",
+      "challenge_rating": "21",
+      "monster_class": "Outsider (Fort/Will):24",
+      "source_page": "p.62",
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 22
+        },
+        {
+          "ability": "CON",
+          "amount": 22
+        },
+        {
+          "ability": "DEX",
+          "amount": 10
+        },
+        {
+          "ability": "INT",
+          "amount": 6
+        },
+        {
+          "ability": "WIS",
+          "amount": 12
+        },
+        {
+          "ability": "CHA",
+          "amount": 12
+        }
+      ],
+      "has_spell_like_abilities": false,
+      "sla_cl_token": null,
+      "spell_like_abilities": [],
+      "ability_keys": [
+        "Zelishkar ~ Bitter Flames",
+        "Zelishkar ~ Corpse Cremation",
+        "Zelishkar ~ Daemonic Harbinger Traits",
+        "Zelishkar ~ Incandescent Body",
+        "Zelishkar ~ Incendiary Grasp",
+        "Zelishkar ~ Spell-Like Abilities",
+        "Zelishker ~ Fire Damage",
+        "Zelishker ~ Summon"
+      ],
+      "external_ability_refs": [
+        "Immunity to Ability Damage",
+        "Maneuverability (Perfect)",
+        "Rake",
+        "Scent"
+      ],
+      "source_file": "isb_races.lst",
+      "source_line": 105
+    }
+  ]
+}
