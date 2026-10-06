@@ -1,0 +1,21 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+error: this `if` can be collapsed into the outer `match`
+   --> src/sf_choices.rs:381:13
+    |
+381 | /             if !out.problems.iter().any(|p| p.id == refusal.id) {
+382 | |                 out.problems.push(refusal_problem(&refusal));
+383 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#collapsible_match
+    = note: `-D clippy::collapsible-match` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_match)]`
+help: collapse nested if block
+    |
+380 ~         Some(Err(refusal))
+381 ~             if !out.problems.iter().any(|p| p.id == refusal.id) => {
+382 |                 out.problems.push(refusal_problem(&refusal));
+383 ~             }
+    |
+
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 1 previous error
