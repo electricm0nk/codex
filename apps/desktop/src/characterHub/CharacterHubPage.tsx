@@ -9,6 +9,8 @@ import {
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { CreateCharacterForm } from './CreateCharacterForm';
 import { StarfinderCreateForm } from './StarfinderCreateForm';
+import { StarfinderCharacterSheet } from './StarfinderCharacterSheet';
+import { isStarfinderCharacter } from './starfinderSheetModel';
 import { LandingScreen, type RuleSetId } from './LandingScreen';
 import { LoadCharacterScreen } from './LoadCharacterScreen';
 import { CharacterSheet } from './CharacterSheet';
@@ -182,6 +184,20 @@ export function CharacterHubPage() {
           setSheet({ row, detail });
           setSheetReturnMode('campaign-sheet');
           setMode('sheet');
+        }}
+      />
+    );
+  }
+
+  if (mode === 'sheet' && sheet && sheet.detail !== null && isStarfinderCharacter(sheet.detail.summary)) {
+    // SD-37 E6.3: a Starfinder character opens the Starfinder sheet, never the Pathfinder one.
+    return (
+      <StarfinderCharacterSheet
+        detail={sheet.detail}
+        onClose={() => setMode(sheetReturnMode)}
+        onOpen={() => {
+          setSheetReturnMode('load');
+          setMode('load');
         }}
       />
     );

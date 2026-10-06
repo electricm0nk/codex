@@ -1,0 +1,1283 @@
+{
+  "summary": {
+    "characterId": "SF-Mystic-5",
+    "displayLabel": "SF-Mystic-5 label",
+    "gameSystem": "starfinder-1e",
+    "schemaVersion": 2,
+    "savedAt": "2026-10-04T00:00:00Z",
+    "raceId": "core:race:lashunta",
+    "classSummary": "core:class:mystic:5"
+  },
+  "snapshot": {
+    "abilityModifiers": {
+      "strength": 0,
+      "dexterity": 2,
+      "constitution": -1,
+      "intelligence": 2,
+      "wisdom": 4,
+      "charisma": 2
+    },
+    "baseAttackBonus": 3,
+    "baseSaves": {
+      "fortitude": 1,
+      "reflex": 1,
+      "will": 4
+    },
+    "baselineMeleeAttackBonus": 0,
+    "baselineArmorClass": 0,
+    "totalSaves": {
+      "fortitude": 0,
+      "reflex": 3,
+      "will": 8
+    },
+    "selectedSkillModifiers": {
+      "climb": 0,
+      "intimidate": 0,
+      "swim": 0
+    }
+  },
+  "diagnostics": [
+    {
+      "id": "sf_adapter.pathfinder_fields_zero",
+      "message": "baseline_melee_attack_bonus, baseline_armor_class and selected_skill_modifiers are Pathfinder fixed-posture totals with no Starfinder meaning and are 0; the Starfinder sheet totals are the sf.* explanation rows (sf.eac, sf.kac, sf.skill.<skill>, ...)",
+      "claimBlocking": false
+    }
+  ],
+  "corpusDerived": {
+    "schoolCoverage": [],
+    "equippedItems": [],
+    "equipmentEffects": {
+      "perItem": [],
+      "armorClassDelta": 0,
+      "armorCheckPenaltyTotal": 0
+    },
+    "encumbrance": {
+      "totalCarriedWeightLbs": 0.0,
+      "totalCarriedCostGp": 0.0,
+      "lightMaxLbs": 0.0,
+      "mediumMaxLbs": 0.0,
+      "heavyMaxLbs": 0.0,
+      "level": "unencumbered",
+      "loadArmorCheckPenalty": 0,
+      "perItem": [],
+      "unresolvedItemIds": []
+    },
+    "unresolvedSpellIds": [],
+    "unresolvedEquipmentItemIds": []
+  },
+  "selectedFeats": [
+    "core:ability:priest",
+    "core:ability:empath",
+    "core:ability:2_racial_bonus_to_skill",
+    "core:ability:lashunta_subrace_damaya",
+    "core:feat:spell_penetration",
+    "core:feat:spell_focus",
+    "core:feat:quick_draw"
+  ],
+  "spellsSelected": [
+    {
+      "spellId": "core:spell:detect_affliction",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:detect_magic",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:ghost_sound",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:grave_words",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:stabilize",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:telepathic_message",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:charm_person",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:command",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:mystic_cure_level_1",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:share_language",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:hold_person",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:remove_condition",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:status",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Known"
+    },
+    {
+      "spellId": "core:spell:detect_thoughts",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Granted"
+    },
+    {
+      "spellId": "core:spell:zone_of_truth",
+      "sourceClassId": "core:class:mystic",
+      "acquisitionMode": "Granted"
+    }
+  ],
+  "chosenFeatTargets": [],
+  "explanations": [
+    {
+      "id": "sf.ability_score.strength",
+      "value": 10,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.ability_score.dexterity",
+      "value": 14,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.ability_score.constitution",
+      "value": 8,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.ability_score.intelligence",
+      "value": 14,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.ability_score.wisdom",
+      "value": 19,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.ability_score.charisma",
+      "value": 15,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.class_level.mystic",
+      "value": 5,
+      "detail": "core:class:mystic level 5"
+    },
+    {
+      "id": "sf.ability_modifier.strength",
+      "value": 0,
+      "detail": "score 10: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.ability_modifier.dexterity",
+      "value": 2,
+      "detail": "score 14: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.ability_modifier.constitution",
+      "value": -1,
+      "detail": "score 8: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.ability_modifier.intelligence",
+      "value": 2,
+      "detail": "score 14: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.ability_modifier.wisdom",
+      "value": 4,
+      "detail": "score 19: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.ability_modifier.charisma",
+      "value": 2,
+      "detail": "score 15: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.base_attack_bonus",
+      "value": 3,
+      "detail": "Mystic +3 (core:class:mystic)"
+    },
+    {
+      "id": "sf.fortitude",
+      "value": 0,
+      "detail": "Mystic (base Fortitude save) +1 (core:class:mystic#bonus3); Con modifier -1 (SRD Saving Throw Types (https://www.aonsrd.com/Rules.aspx?ID=106))"
+    },
+    {
+      "id": "sf.reflex",
+      "value": 3,
+      "detail": "Mystic (base Reflex save) +1 (core:class:mystic#bonus4); Dex modifier +2 (SRD Saving Throw Types (https://www.aonsrd.com/Rules.aspx?ID=106))"
+    },
+    {
+      "id": "sf.will",
+      "value": 8,
+      "detail": "Mystic (base Will save) +4 (core:class:mystic#bonus5); Wis modifier +4 (SRD Saving Throw Types (https://www.aonsrd.com/Rules.aspx?ID=106))"
+    },
+    {
+      "id": "sf.hit_points",
+      "value": 34,
+      "detail": "Mystic (hit points) +25 (core:class:mystic#bonus1); Mystic (hit die, 1 per level) +5 (core:class:mystic); Lashunta (racial Hit Points) +4 (core:race:lashunta#race_hp)"
+    },
+    {
+      "id": "sf.stamina",
+      "value": 25,
+      "detail": "Mystic (Stamina Points) +30 (core:class:mystic#bonus2); Constitution modifier × level -5 (SRD Calculating Stamina Points (https://www.aonsrd.com/Rules.aspx?ID=49))"
+    },
+    {
+      "id": "sf.resolve",
+      "value": 6,
+      "detail": "½ character level (minimum 1) +2 (SRD Calculating Resolve Points (https://www.aonsrd.com/Rules.aspx?ID=50)); Wis (key ability) modifier +4 (SRD Calculating Resolve Points (https://www.aonsrd.com/Rules.aspx?ID=50))"
+    },
+    {
+      "id": "sf.eac",
+      "value": 16,
+      "detail": "base +10 (SRD Armor Class (https://www.aonsrd.com/Rules.aspx?ID=102)); Lashunta tempweave, basic +4 (core:equipment:lashunta_tempweave_basic); Dexterity modifier (max 5 in Lashunta tempweave, basic) +2 (core:equipment:lashunta_tempweave_basic)"
+    },
+    {
+      "id": "sf.kac",
+      "value": 16,
+      "detail": "base +10 (SRD Armor Class (https://www.aonsrd.com/Rules.aspx?ID=102)); Lashunta tempweave, basic (KAC) +4 (core:equipment:lashunta_tempweave_basic#bonus1); Dexterity modifier (max 5 in Lashunta tempweave, basic) +2 (core:equipment:lashunta_tempweave_basic)"
+    },
+    {
+      "id": "sf.initiative",
+      "value": 2,
+      "detail": "Dexterity modifier +2 (SRD Initiative (https://www.aonsrd.com/Rules.aspx?ID=96))"
+    },
+    {
+      "id": "sf.skill.acrobatics",
+      "value": 2,
+      "detail": "Dex modifier +2 (core:skill:acrobatics)"
+    },
+    {
+      "id": "sf.skill.athletics",
+      "value": 0,
+      "detail": "Str modifier +0 (core:skill:athletics)"
+    },
+    {
+      "id": "sf.skill.bluff",
+      "value": 10,
+      "detail": "ranks +5 (core:skill:bluff); Cha modifier +2 (core:skill:bluff); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78))"
+    },
+    {
+      "id": "sf.skill.culture",
+      "value": 10,
+      "detail": "ranks +5 (core:skill:culture); Int modifier +2 (core:skill:culture); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78))"
+    },
+    {
+      "id": "sf.skill.diplomacy",
+      "value": 12,
+      "detail": "ranks +5 (core:skill:diplomacy); Cha modifier +2 (core:skill:diplomacy); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)); +2 Racial Bonus to Skill +2 (core:ability:2_racial_bonus_to_skill)"
+    },
+    {
+      "id": "sf.skill.disguise",
+      "value": 2,
+      "detail": "Cha modifier +2 (core:skill:disguise)"
+    },
+    {
+      "id": "sf.skill.intimidate",
+      "value": 2,
+      "detail": "Cha modifier +2 (core:skill:intimidate)"
+    },
+    {
+      "id": "sf.skill.life_science",
+      "value": 10,
+      "detail": "ranks +5 (core:skill:life_science); Int modifier +2 (core:skill:life_science); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78))"
+    },
+    {
+      "id": "sf.skill.medicine",
+      "value": 12,
+      "detail": "ranks +5 (core:skill:medicine); Int modifier +2 (core:skill:medicine); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)); +2 Racial Bonus to Skill +2 (core:ability:2_racial_bonus_to_skill)"
+    },
+    {
+      "id": "sf.skill.mysticism",
+      "value": 13,
+      "detail": "ranks +5 (core:skill:mysticism); Wis modifier +4 (core:skill:mysticism); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)); THEME KNOWLEDGE (Mysticism) +1 (core:ability:priest_theme_benefit_theme_knowledge#bonus0)"
+    },
+    {
+      "id": "sf.skill.perception",
+      "value": 14,
+      "detail": "ranks +5 (core:skill:perception); Wis modifier +4 (core:skill:perception); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)); Empath (Perception) +2 (core:ability:empath)"
+    },
+    {
+      "id": "sf.skill.piloting",
+      "value": 2,
+      "detail": "Dex modifier +2 (core:skill:piloting)"
+    },
+    {
+      "id": "sf.skill.sense_motive",
+      "value": 14,
+      "detail": "ranks +5 (core:skill:sense_motive); Wis modifier +4 (core:skill:sense_motive); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)); Empath (Sense Motive) +2 (core:ability:empath#bonus1)"
+    },
+    {
+      "id": "sf.skill.stealth",
+      "value": 2,
+      "detail": "Dex modifier +2 (core:skill:stealth)"
+    },
+    {
+      "id": "sf.skill.survival",
+      "value": 4,
+      "detail": "Wis modifier +4 (core:skill:survival)"
+    },
+    {
+      "id": "sf.spells.mystic.0.known",
+      "value": 6,
+      "detail": "Mystic (level 0 spells known) +6 (core:class:mystic#spells_known_0)"
+    },
+    {
+      "id": "sf.spells.mystic.0.save_dc",
+      "value": 15,
+      "detail": "base +10 (SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)); spell level +0 (SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)); Wis (key ability) modifier +4 (SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)); Spell Focus +1 (core:feat:spell_focus)"
+    },
+    {
+      "id": "sf.spells.mystic.1.per_day",
+      "value": 5,
+      "detail": "Mystic (level 1 spells per day) +4 (core:class:mystic#spells_per_day_1); bonus spells (Wis 19) +1 (SRD Bonus Spells Per Day (class pages, e.g. https://www.aonsrd.com/Classes.aspx?ItemName=Mystic))"
+    },
+    {
+      "id": "sf.spells.mystic.1.known",
+      "value": 5,
+      "detail": "Empath Connection Spell - 2: detect thoughts (level 1 Mystic spell known) +1 (core:ability:empath#spell_known_empath_connection_spell_2_1_detect_thoughts); Mystic (level 1 spells known) +4 (core:class:mystic#spells_known_1)"
+    },
+    {
+      "id": "sf.spells.mystic.1.save_dc",
+      "value": 16,
+      "detail": "base +10 (SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)); spell level +1 (SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)); Wis (key ability) modifier +4 (SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)); Spell Focus +1 (core:feat:spell_focus)"
+    },
+    {
+      "id": "sf.spells.mystic.2.per_day",
+      "value": 3,
+      "detail": "Mystic (level 2 spells per day) +2 (core:class:mystic#spells_per_day_2); bonus spells (Wis 19) +1 (SRD Bonus Spells Per Day (class pages, e.g. https://www.aonsrd.com/Classes.aspx?ItemName=Mystic))"
+    },
+    {
+      "id": "sf.spells.mystic.2.known",
+      "value": 4,
+      "detail": "Empath Connection Spell - 2: zone of truth (level 2 Mystic spell known) +1 (core:ability:empath#spell_known_empath_connection_spell_2_2_zone_of_truth); Mystic (level 2 spells known) +3 (core:class:mystic#spells_known_2)"
+    },
+    {
+      "id": "sf.spells.mystic.2.save_dc",
+      "value": 17,
+      "detail": "base +10 (SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)); spell level +2 (SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)); Wis (key ability) modifier +4 (SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)); Spell Focus +1 (core:feat:spell_focus)"
+    },
+    {
+      "id": "sf.credits.starting",
+      "value": 9000,
+      "detail": "wealth at character level 5 +9000 (SRD Table 11-5 Character Wealth per Level (https://www.aonsrd.com/Rules.aspx?ID=230))"
+    },
+    {
+      "id": "sf.credits.spent",
+      "value": 2650,
+      "detail": "Lashunta tempweave, basic × 1 +1950 (core:equipment:lashunta_tempweave_basic); Laser pistol, azimuth × 1 +350 (core:equipment:laser_pistol_azimuth); Baton, tactical × 1 +90 (core:equipment:baton_tactical); Battery × 1 +60 (core:equipment:battery); Medkit (Basic) × 1 +100 (core:equipment:medkit_basic); Serum of Healing Mk 1 × 2 +100 (core:equipment:serum_of_healing_mk_1)"
+    },
+    {
+      "id": "sf.credits.remaining",
+      "value": 6350,
+      "detail": "wealth at character level 5 +9000 (SRD Table 11-5 Character Wealth per Level (https://www.aonsrd.com/Rules.aspx?ID=230)); credits spent -2650 (the carried items' prices)"
+    },
+    {
+      "id": "sf.bulk",
+      "value": 1,
+      "detail": "Medkit (Basic) × 1 +1 (core:equipment:medkit_basic); 5 light items ÷ 10, rounded down (Lashunta tempweave, basic × 1, Laser pistol, azimuth × 1, Baton, tactical × 1, Serum of Healing Mk 1 × 2) +0 (SRD Carrying Capacity (https://www.aonsrd.com/Equipment.aspx))"
+    },
+    {
+      "id": "sf.bulk_limit.unencumbered_max",
+      "value": 5,
+      "detail": "half the Strength score 10, rounded down (SRD Bulk Limits (https://www.aonsrd.com/Equipment.aspx))"
+    },
+    {
+      "id": "sf.bulk_limit.overburdened_above",
+      "value": 10,
+      "detail": "the Strength score 10 (SRD Bulk Limits (https://www.aonsrd.com/Equipment.aspx))"
+    }
+  ],
+  "weaponDamage": [],
+  "selectedAlternateTraitKeys": [],
+  "selectedTraits": [],
+  "resolvedRacialTraits": {
+    "raceId": "core:race:lashunta",
+    "raceKey": "core:race:lashunta",
+    "raceName": "",
+    "book": "",
+    "appliedTraits": [],
+    "suppressions": [],
+    "firedFlags": [],
+    "inertFlags": [],
+    "unmatchedSelections": [],
+    "blockedAlternates": [],
+    "conflictingSelections": [],
+    "renderedTraitDescriptions": [],
+    "displayValueFeats": [],
+    "errors": [
+      "core:race:lashunta: the race-trait picker reads the Pathfinder race corpus; a Starfinder race's traits are its sheet lines"
+    ]
+  },
+  "abilityScores": {
+    "strength": 10,
+    "dexterity": 14,
+    "constitution": 8,
+    "intelligence": 14,
+    "wisdom": 19,
+    "charisma": 15
+  },
+  "skillAllocations": [
+    {
+      "skillId": "bluff",
+      "ranks": 5
+    },
+    {
+      "skillId": "culture",
+      "ranks": 5
+    },
+    {
+      "skillId": "diplomacy",
+      "ranks": 5
+    },
+    {
+      "skillId": "life_science",
+      "ranks": 5
+    },
+    {
+      "skillId": "medicine",
+      "ranks": 5
+    },
+    {
+      "skillId": "mysticism",
+      "ranks": 5
+    },
+    {
+      "skillId": "perception",
+      "ranks": 5
+    },
+    {
+      "skillId": "sense_motive",
+      "ranks": 5
+    }
+  ],
+  "equipmentSelections": [
+    {
+      "itemId": "core:equipment:lashunta_tempweave_basic",
+      "activeState": "EquippedActive"
+    },
+    {
+      "itemId": "core:equipment:laser_pistol_azimuth",
+      "activeState": "SelectedInactive"
+    },
+    {
+      "itemId": "core:equipment:baton_tactical",
+      "activeState": "SelectedInactive"
+    },
+    {
+      "itemId": "core:equipment:battery",
+      "activeState": "SelectedInactive"
+    },
+    {
+      "itemId": "core:equipment:medkit_basic",
+      "activeState": "SelectedInactive"
+    },
+    {
+      "itemId": "core:equipment:serum_of_healing_mk_1",
+      "activeState": "SelectedInactive"
+    },
+    {
+      "itemId": "core:equipment:serum_of_healing_mk_1",
+      "activeState": "SelectedInactive"
+    }
+  ],
+  "sheetLines": [
+    {
+      "id": "core:ability:2_racial_bonus_to_skill",
+      "kind": "ability",
+      "label": "+2 Racial Bonus to Skill",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:armor_prof_light_armor",
+      "kind": "ability",
+      "label": "Armor Prof ~ Light Armor",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:mystic_class_feature_channel_skill",
+      "kind": "ability",
+      "label": "Channel Skill",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You draw strange feelings, instincts, knowledge, and urges from your connection, augmenting your prowess in certain tasks. Each connection has two skills associated with it. You gain a +1 insight bonus to skill checks with your connection's associated skills. This bonus increases by 1 at 5th level and every 3 levels thereafter.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:mystic_class_feature_connection",
+      "kind": "ability",
+      "label": "Connection",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:mystic_class_feature_connection_power",
+      "kind": "ability",
+      "label": "Connection Power",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "At 1st level, 3rd level, and every 3 levels thereafter, you gain a connection power unique to your connection. If a connection power allows a saving throw to resist its effects, the DC is equal to 10 + half your mystic level + your Wisdom modifier. If the power requires an enemy to attempt a skill check, the DC is equal to 10 + 1-1/2 x your mystic level + your Wisdom modifier.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:mystic_class_feature_connection_spell",
+      "kind": "ability",
+      "label": "Connection Spell",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Your connection grants you additional spells known, one for each level of mystic spell you can cast, starting at 1st level and at any level when you normally gain access to a new spell level. These spells are in addition to the spells known listed on Table 4-6: Mystic Spells Known. These spells can't be exchanged for different spells at higher levels (except in specific cases; see below). The spell level of each spell is listed in your connection's entry. If your connection lists a single variable-level spell (see page 330) for all spell levels at the start of its spells entry, you gain that variable-level spell when you first get your connection spell for each level. The next time you gain a connection spell, add the next higher level of the variable-level spell to your list of spells known. You immediately lose the lower-level version of that variable-level spell and replace it with the listed connection spell for that lower level.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:lashunta_default_dimorphic",
+      "kind": "ability",
+      "label": "DIMORPHIC",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "All lashuntas gain +2 Charisma at character creation. Korasha lashuntas are muscular (+2 Strength at character creation) but often brash and unobservant (-2 Wisdom at character creation). Damaya lashuntas are typically clever and well-spoken (+2 Intelligence at character creation) but somewhat delicate (-2 Constitution at character creation).",
+      "condition": null
+    },
+    {
+      "id": "core:ability:lashunta_subrace_damaya#bonus1",
+      "kind": "ability",
+      "label": "Damaya (Con)",
+      "form": "number",
+      "value": "-2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:lashunta_subrace_damaya",
+      "kind": "ability",
+      "label": "Damaya (Int)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:empath",
+      "kind": "ability",
+      "label": "Empath (Perception)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:empath#bonus1",
+      "kind": "ability",
+      "label": "Empath (Sense Motive)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:empath#spell_known_empath_connection_spell_2_1_detect_thoughts",
+      "kind": "ability",
+      "label": "Empath Connection Spell - 2: detect thoughts (level 1 Mystic spell known)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:empath#spell_known_empath_connection_spell_2_2_zone_of_truth",
+      "kind": "ability",
+      "label": "Empath Connection Spell - 2: zone of truth (level 2 Mystic spell known)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:empath_connection_power_empathy",
+      "kind": "ability",
+      "label": "Empathy",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "As a full action, you can attempt a Sense Motive check to read the emotions of a particular creature (DC = 20 or 10 + its Bluff modifier, whichever is higher). If you succeed, you learn its general disposition and attitude toward creatures within 30 feet of it, and you gain a +2 circumstance bonus to Bluff, Diplomacy, Intimidate, and Sense Motive checks against that creature for 1 hour. Whether you succeed or fail, after opening your mind to read emotions, you take a -2 penalty to saving throws against mind-affecting effects for 1 minute.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:empath_connection_power_greater_mindlink",
+      "kind": "ability",
+      "label": "Greater Mindlink",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You can use your mindlink ability on the same creature as many times per day as you wish, and the communication can be both ways, though the maximum of 10 minutes of communication per round still applies.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:mystic_class_feature_healing_touch",
+      "kind": "ability",
+      "label": "Healing Touch",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Once per day, you can spend 10 minutes to magically heal an ally up to 5 Hit Points per mystic level.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:lashunta_default_lashunta_magic",
+      "kind": "ability",
+      "label": "LASHUNTA MAGIC",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Lashuntas gain the following spell-like abilities: At will: daze, psychokinetic hand 1/day: detect thoughts See Spell-like Abilities on page 262. The caster level for these effects is equal to the lashunta's level.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:lashunta_default_limited_telepathy",
+      "kind": "ability",
+      "label": "LIMITED TELEPATHY",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Lashuntas can mentally communicate with any creatures within 30 feet with whom they share a language. Conversing telepathically with multiple creatures simultaneously is just as difficult as listening to multiple people speaking.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:lashunta",
+      "kind": "ability",
+      "label": "Lashunta",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:mystic_class_feature_mindlink",
+      "kind": "ability",
+      "label": "Mindlink",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You can form a mental link with creatures you touch, communicating information rapidly through it. You can use mindlink at will as a spell-like ability, though only once per day on any given individual.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:mystic",
+      "kind": "ability",
+      "label": "Mystic (mystic archetype picks)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:priest",
+      "kind": "ability",
+      "label": "Priest",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You are a member of an organized religion or similar association. Your belief, whether it has been a part of you since childhood or it came to you later in life, is an integral part of your character. You might travel the stars proselytizing your deity, or your church might have sent you out on a specific holy (or unholy) mission. No matter what obstacles life puts in your way, you always have the conviction of your beliefs to fall back on.\nTITLE: Priest",
+      "condition": null
+    },
+    {
+      "id": "core:ability:lashunta_default_size_and_type",
+      "kind": "ability",
+      "label": "SIZE AND TYPE",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Lashuntas are Medium humanoids with the lashunta subtype.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:lashunta_default_student",
+      "kind": "ability",
+      "label": "STUDENT",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "Lashuntas love to learn, and they receive a +2 racial bonus to any two skills of their choice.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:priest_theme_benefit_theme_knowledge",
+      "kind": "ability",
+      "label": "THEME KNOWLEDGE (Mysticism)",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Choose a deity or a philosophy whose alignment is within one step (on either the good-evil axis or the law-chaos axis) of your own. Reduce the DC of Culture and Mysticism checks to recall knowledge about religious traditions, religious symbols, and famous religious leaders by 5. Mysticism becomes a class skill for you, though if it's a class skill from the class you take at 1st level, you instead gain a +1 bonus to Mysticism checks. In addition, you gain an ability adjustment of +1 to Wisdom at character creation.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:priest_theme_benefit_theme_knowledge#bonus0",
+      "kind": "ability",
+      "label": "THEME KNOWLEDGE (Mysticism)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:priest_theme_benefit_theme_knowledge#bonus1",
+      "kind": "ability",
+      "label": "THEME KNOWLEDGE (Wis)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:weapon_prof_basic_melee_weapons",
+      "kind": "ability",
+      "label": "Weapon Prof ~ Basic Melee Weapons",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:weapon_prof_small_arms",
+      "kind": "ability",
+      "label": "Weapon Prof ~ Small Arms",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:mystic_class_feature_weapon_specialization",
+      "kind": "ability",
+      "label": "Weapon Specialization",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You gain Weapon Specialization as a bonus feat for each weapon type this class grants you proficiency with.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:weapon_specialization_basic_melee_weapons",
+      "kind": "ability",
+      "label": "Weapon Specialization ~ Basic Melee Weapons",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:weapon_specialization_small_arms",
+      "kind": "ability",
+      "label": "Weapon Specialization ~ Small Arms",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic",
+      "kind": "class",
+      "label": "Mystic",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "Skill ranks per level: 6",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic#bonus2",
+      "kind": "class",
+      "label": "Mystic (Stamina Points)",
+      "form": "number",
+      "value": "+30",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic#bonus3",
+      "kind": "class",
+      "label": "Mystic (base Fortitude save)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic#bonus4",
+      "kind": "class",
+      "label": "Mystic (base Reflex save)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic#bonus5",
+      "kind": "class",
+      "label": "Mystic (base Will save)",
+      "form": "number",
+      "value": "+4",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic#bonus6",
+      "kind": "class",
+      "label": "Mystic (caster level)",
+      "form": "number",
+      "value": "+5",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic#bonus1",
+      "kind": "class",
+      "label": "Mystic (hit points)",
+      "form": "number",
+      "value": "+25",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic#spells_known_0",
+      "kind": "class",
+      "label": "Mystic (level 0 spells known)",
+      "form": "number",
+      "value": "+6",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic#spells_known_1",
+      "kind": "class",
+      "label": "Mystic (level 1 spells known)",
+      "form": "number",
+      "value": "+4",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic#spells_per_day_1",
+      "kind": "class",
+      "label": "Mystic (level 1 spells per day)",
+      "form": "number",
+      "value": "+4",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic#spells_known_2",
+      "kind": "class",
+      "label": "Mystic (level 2 spells known)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:mystic#spells_per_day_2",
+      "kind": "class",
+      "label": "Mystic (level 2 spells per day)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:lashunta_tempweave_basic",
+      "kind": "equipment",
+      "label": "Lashunta tempweave, basic",
+      "form": "number",
+      "value": "+4",
+      "also": [
+        "quantity 1",
+        "upgrade slots used 0 of 1"
+      ],
+      "prose": "EAC = 4\nKAC = 4\nPrice: 1950\nArmor check penalty: 0\nMax Dex bonus: 5\nQuality: Level: 4\nQuality: BULK: L\nUpgrade slots: 1",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:lashunta_tempweave_basic#bonus1",
+      "kind": "equipment",
+      "label": "Lashunta tempweave, basic (KAC)",
+      "form": "number",
+      "value": "+4",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:lashunta_tempweave_basic#speed2",
+      "kind": "equipment",
+      "label": "Lashunta tempweave, basic (walk speed)",
+      "form": "number",
+      "value": "+0",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:feat:quick_draw",
+      "kind": "feat",
+      "label": "Quick Draw",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You can draw weapons faster than most.\nYou can draw a weapon as a swift action. Additionally, when making an attack using a thrown weapon as an attack or full attack action, you can draw a weapon as part of the action of making a thrown attack with it. You can draw a hidden weapon (see Sleight of Hand on page 146) as a move action.\nNormal: You can draw a weapon as a move action, or (if your base attack bonus is +1 or higher) as part of a move action, and you can draw a hidden weapon as a standard action.",
+      "condition": null
+    },
+    {
+      "id": "core:feat:spell_focus",
+      "kind": "feat",
+      "label": "Spell Focus",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "Through careful study, you have developed methods to make your spells harder to resist.\nThe DC of spells you cast increases by 1. At 11th level, the DC of your spells instead increases by 2, and at 17th level, the DC of spells you cast instead increases by 3. This bonus does not apply to spell-like abilities.",
+      "condition": null
+    },
+    {
+      "id": "core:feat:spell_penetration",
+      "kind": "feat",
+      "label": "Spell Penetration",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Your spells break through spell resistance more easily than those of other spellcasters.\nYou gain a +2 bonus to caster level checks to overcome a creature's spell resistance (see page 265).",
+      "condition": null
+    },
+    {
+      "id": "core:race:lashunta",
+      "kind": "race",
+      "label": "Lashunta",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "Speed: Walk 30 ft.",
+      "condition": null
+    },
+    {
+      "id": "core:race:lashunta#race_hp",
+      "kind": "race",
+      "label": "Lashunta (racial Hit Points)",
+      "form": "number",
+      "value": "+4",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:spell:detect_affliction",
+      "kind": "spell",
+      "label": "Detect Affliction",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 0"
+      ],
+      "prose": "You determine whether a creature or object has been poisoned, is diseased, is cursed, or is suffering a similar affliction. If the target is poisoned or diseased, you automatically detect that fact and can determine the exact type of poison or disease with a successful DC 20 Intelligence or Wisdom check. If you are trained in Life Science or Medicine (depending on the nature of the poison or disease), you can attempt a DC 20 check of that skill if you fail your Wisdom or Intelligence check. If the target is cursed or suffering from a similar affliction, you must succeed at a DC 20 Intelligence or Wisdom check to determine that fact. You can then determine the exact nature of the curse with a successful DC 25 Mysticism check.\nSchool: Divination\nCasting time: 1 standard action\nRange: 35 ft.\nTarget or area: One creature or object\nDuration: Instantaneous\nSaving throw: None\nSpell resistance: Yes (harmless)",
+      "condition": null
+    },
+    {
+      "id": "core:spell:detect_magic",
+      "kind": "spell",
+      "label": "Detect Magic",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 0"
+      ],
+      "prose": "You detect all magic spells, effects, items, and objects (including those on or affecting creatures you can see), as well as hybrid items, in the area. You can't detect magical traps in this way, as they are created with additional magic that wards them from this common spell. Each round you concentrate on the same area, you can determine if one magic source you detect is from a spell, magic item, or other effect, and the caster level (or item level) of the effect. You can't determine if there are magic sources in areas you can't see, or if there was a magic source in an area at one time but that has since expired.\nSchool: Divination\nCasting time: 1 standard action\nRange: 60 ft.\nTarget or area: Cone-shaped emanation\nDuration: Concentration, up to 5 minutes\nSaving throw: None\nSpell resistance: No",
+      "condition": null
+    },
+    {
+      "id": "core:spell:ghost_sound",
+      "kind": "spell",
+      "label": "Ghost Sound",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 0"
+      ],
+      "prose": "You create a volume of sound that rises, falls, recedes, approaches, or remains fixed. You choose what type of sound this spell creates when casting it and cannot thereafter change the sound's basic character. The volume of sound created can produce as much noise as 20 normal humans. Thus, you can create shouting, singing, talking, marching, running, or walking sounds, as well as sounds of battle or small explosions. You can make noises that sound like machines, the general chatter of distant conversation, or the roar of an alien predator, but you can't make specific sounds such as intelligible speech or the exact hum of a particular starship's engines.\nSchool: Illusion\nCasting time: 1 standard action\nRange: 35 ft.\nTarget or area: Illusory sounds\nDuration: 5 rounds (D)\nSaving throw: Will disbelief\nSpell resistance: No",
+      "condition": null
+    },
+    {
+      "id": "core:spell:grave_words",
+      "kind": "spell",
+      "label": "Grave Words",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 0"
+      ],
+      "prose": "You can force a touched corpse talk to you, but you can't ask it specific questions or communicate with it at all. The corpse utters random sentences for 1 round, with a 10% chance this information is of some use to you. Useful information might include warnings about dangers in a wrecked starship, the password to unlock a computer, or the name of a supernatural creature seeking you or your allies. The GM makes the d% roll in secret and decides what information, useful or not, the corpse spews out in its babbling. Once a corpse has been subjected to grave words by any caster, any new attempt to cast grave words on that corpse fails. A corpse must have a mouth or means to speak in order for this spell to function, and the spell doesn't affect a corpse that has been turned into an undead creature.\nSchool: Necromancy\nDescriptor: Language-Dependent\nCasting time: 1 minute\nRange: Touch\nTarget or area: One dead creature\nDuration: 1 round\nSaving throw: None\nSpell resistance: No",
+      "condition": null
+    },
+    {
+      "id": "core:spell:stabilize",
+      "kind": "spell",
+      "label": "Stabilize",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 0"
+      ],
+      "prose": "If the target of this spell has 0 Hit Points and is dying, it automatically stabilizes. If the creature later takes damage, it is no longer stable.\nSchool: Conjuration\nDescriptor: Healing\nCasting time: 1 standard action\nRange: 35 ft.\nTarget or area: One living creature\nDuration: Instantaneous\nSaving throw: Will negates (harmless)\nSpell resistance: Yes (harmless)",
+      "condition": null
+    },
+    {
+      "id": "core:spell:telepathic_message",
+      "kind": "spell",
+      "label": "Telepathic Message",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 0"
+      ],
+      "prose": "You can send a short telepathic message and hear simple telepathic replies. Any living creature within 10 feet of you or an intended recipient also receives your telepathic message if it succeeds at a DC 25 Perception check. You must be able to see or hear each recipient. The creatures that receive the message can reply telepathically, but no more than a single message can be sent each round, and each message cannot exceed 10 words. A technomancer casting this spell can also use it to send a message to a computer or a construct with the technological subtype if the receiving target is designed to receive messages.\nSchool: Divination\nDescriptor: Language-Dependent, Mind-Affecting\nCasting time: 1 standard action\nRange: 150 ft.\nTarget or area: Up to 5 creatures\nDuration: 50 minutes\nSaving throw: None\nSpell resistance: No",
+      "condition": null
+    },
+    {
+      "id": "core:spell:charm_person",
+      "kind": "spell",
+      "label": "Charm Person",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 1"
+      ],
+      "prose": "This charm makes a humanoid creature regard you as its trusted friend and ally (treat the target's attitude as friendly). If the creature is currently being threatened or attacked by you or your allies, however, it receives a +5 bonus to its saving throw. The spell does not enable you to control the charmed creature as if it were an automaton. It is unlikely to attempt to harm you, but it is also unlikely to attack any of its true friends or allies. You can try to give the target suggestions, but you must succeed at an opposed Charisma check to convince it to do anything it wouldn't ordinarily do. (Retries of this check are not allowed.) An affected creature never obeys suicidal or obviously harmful suggestions. Any act by you or your apparent allies that threatens the charmed creature breaks the spell. You must speak the creature's language to communicate your suggestions, or else be good at pantomiming.\nSchool: Enchantment\nDescriptor: Charm, Mind-Affecting\nCasting time: 1 standard action\nRange: 35 ft.\nTarget or area: One humanoid creature\nDuration: 5 hours\nSaving throw: Will negates\nSpell resistance: Yes",
+      "condition": null
+    },
+    {
+      "id": "core:spell:command",
+      "kind": "spell",
+      "label": "Command",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 1"
+      ],
+      "prose": "You give the target one of the following commands, which it obeys to the best of its ability at its earliest opportunity. If the target can't carry out your command on its next turn, the spell automatically fails. Approach - The target moves toward you as quickly and directly as possible for 1 round, taking no other actions and triggering reactions (such as attacks of opportunity) for this movement as normal. Drop - The target drops whatever it is holding. It can't pick up any dropped item until its next turn. Fall - The target falls to the ground and remains prone for 1 round. It can otherwise act normally. Flee - The target moves away from you as quickly and directly as possible for 1 round, taking no other actions and provoking reactions (such as attacks of opportunity) for this movement as normal. Halt - The target is dazed for 1 round.\nSchool: Enchantment\nDescriptor: Compulsion, Language-Dependent, Mind-Affecting\nCasting time: 1 standard action\nRange: 35 ft.\nTarget or area: One living creature\nDuration: 1 round\nSaving throw: Will negates\nSpell resistance: Yes",
+      "condition": null
+    },
+    {
+      "id": "core:spell:detect_thoughts",
+      "kind": "spell",
+      "label": "Detect Thoughts",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 1"
+      ],
+      "prose": "You detect the surface thoughts of intelligent creatures around you. The amount of information revealed depends on how long you study a particular area or target. (1st Round) You detect the presence or absence of thoughts from conscious creatures that have Intelligence scores of at least 1 (or an Intelligence modifier of –5) or higher. (2nd Round) You detect the number of thinking minds and the Intelligence score (or modifier) of each. If the highest Intelligence score is 26 (or a modifier of +8) or higher and at least 10 points higher than your own Intelligence score (or 5 points higher than your own Intelligence modifier), you are stunned for 1 round and the spell ends. This spell doesn't let you determine the location of the thinking minds if you can't see the creatures whose thoughts you are detecting. (3rd Round) You can read the surface thoughts of any mind in the area. A target who succeeds at its Will save prevents you from reading its thoughts, and you must cast detect thoughts again to have another chance. Creatures of animal intelligence (an Intelligence score of 1 or 2 or an Intelligence modifier of –4 or lower) have simple, instinctual thoughts. Each round, you can turn to detect thoughts in a new area. The spell can penetrate barriers, but 3 feet of dirt or wood, 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or any force field blocks it.\nSchool: Divination\nDescriptor: Mind-Affecting\nCasting time: 1 standard action\nRange: 60 ft.\nTarget or area: Cone-shaped emanation\nDuration: Concentration, up to 5 minutes\nSaving throw: Will negates; see text\nSpell resistance: No",
+      "condition": null
+    },
+    {
+      "id": "core:spell:mystic_cure_level_1",
+      "kind": "spell",
+      "label": "Mystic Cure",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 1"
+      ],
+      "prose": "With a touch, you heal and invigorate your target, restoring a number of Hit Points. If the target regains all of its Hit Points as a result of this healing, you can apply the remaining healing to yourself, as long as you are a living creature. On the other hand, if this isn't enough to restore all the target's Hit Points, you can transfer any number of your own Hit Points to the target, healing the target that amount. You can't transfer more Hit Points than you have or more Hit Points than the target is missing. Mystic cure restores a number of Hit Points to your target depending on the spell's level. (1st) 1d8 + your Wisdom modifier\nSchool: Conjuration\nDescriptor: Healing\nCasting time: 1 standard action\nRange: Touch\nTarget or area: One living creature\nDuration: Instantaneous\nSaving throw: Will half (harmless)\nSpell resistance: Yes (harmless)",
+      "condition": null
+    },
+    {
+      "id": "core:spell:share_language",
+      "kind": "spell",
+      "label": "Share Language",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 1"
+      ],
+      "prose": "For 24 hours, the target can read, understand, and communicate to the best of its ability in up to three languages that you already know. This doesn't change the physical nature of the creature (if it lacks a means of speech, it still can't talk) or its attitude toward you. It does, however, allow intelligent creatures that normally have no language to understand and (if physically capable) communicate in the languages granted by this spell.\nSchool: Divination\nCasting time: 1 standard action\nRange: Touch\nTarget or area: One creature\nDuration: 24 hours\nSaving throw: Will negates (harmless)\nSpell resistance: Yes (harmless)",
+      "condition": null
+    },
+    {
+      "id": "core:spell:hold_person",
+      "kind": "spell",
+      "label": "Hold Person",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 2"
+      ],
+      "prose": "The target becomes paralyzed and freezes in place. It is aware and breathes normally but can't take any physical actions, even speech. A held creature can't cast spells. Each round on its turn, the target can spend a full action to attempt a new saving throw to end the effect. This does not provoke attacks of opportunity. A winged creature that is paralyzed can't flap its wings and falls. A swimmer can't swim and may drown.\nSchool: Enchantment\nDescriptor: Compulsion, Mind-Affecting\nCasting time: 1 standard action\nRange: 150 ft.\nTarget or area: One humanoid creature\nDuration: 5 rounds (D)\nSaving throw: Will negates, see text\nSpell resistance: Yes",
+      "condition": null
+    },
+    {
+      "id": "core:spell:remove_condition",
+      "kind": "spell",
+      "label": "Remove Condition",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 2"
+      ],
+      "prose": "You remove any one of the following conditions affecting the target; frightened, nauseated, shaken, sickened, or staggered. If the condition is the result of a disease or another ongoing effect, this spell removes the condition but does not cure the disease or ongoing effect, and the target can regain the condition from that effect as normal, potentially immediately. Lesser remove condition also doesn't cure or remove other damage or conditions the target is suffering from any source, even the same source that caused the removed condition. Since this spell's duration is instantaneous, it does not prevent the target from gaining the condition again. Casting this spell doesn't provoke attacks of opportunity.\nSchool: Conjuration\nDescriptor: Healing\nCasting time: 1 standard action\nRange: Touch\nTarget or area: One creature\nDuration: Instantaneous\nSaving throw: Fortitude negates (harmless)\nSpell resistance: Yes (harmless)",
+      "condition": null
+    },
+    {
+      "id": "core:spell:status",
+      "kind": "spell",
+      "label": "Status",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 2"
+      ],
+      "prose": "School: Divination\nCasting time: 1 standard action\nRange: Touch\nTarget or area: Up to 1 living creatures touched\nDuration: 5 hours\nSaving throw: Will negates (harmless)\nSpell resistance: Yes (harmless)",
+      "condition": null
+    },
+    {
+      "id": "core:spell:zone_of_truth",
+      "kind": "spell",
+      "label": "Zone of Truth",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Mystic spell level 2"
+      ],
+      "prose": "Creatures within the emanation area can't speak any deliberate and intentional lies. Each potentially affected creature can attempt a Will saving throw to avoid the effect when the spell is cast or when that creature first enters the emanation area. Affected creatures are aware of this enchantment, and they can therefore avoid answering questions to which they would normally respond with a lie, or they can be evasive as long as they remain within the boundaries of the truth. Creatures who leave the area are free to speak as they choose.\nSchool: Enchantment\nDescriptor: Compulsion, Mind-Affecting\nCasting time: 1 standard action\nRange: 35 ft.\nTarget or area: 20-ft.-radius emanation\nDuration: 5 minutes\nSaving throw: Will negates\nSpell resistance: Yes",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:laser_pistol_azimuth",
+      "kind": "equipment",
+      "label": "Laser pistol, azimuth",
+      "form": "dice",
+      "value": "1d4",
+      "also": [
+        "quantity 1"
+      ],
+      "prose": "-\nPrice: 350\nRange: 80\nQuality: Level: 1\nQuality: Critical: Burn 1d4\nQuality: Capacity: 20 charges\nQuality: Usage: 1\nQuality: Bulk: L\nItem level: 1\nDamage: 1d4",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:baton_tactical",
+      "kind": "equipment",
+      "label": "Baton, tactical",
+      "form": "dice",
+      "value": "1d4",
+      "also": [
+        "quantity 1"
+      ],
+      "prose": "Analog.operative\nPrice: 90\nQuality: Level: 1\nQuality: Critical: -\nQuality: Bulk: L\nItem level: 1\nDamage: 1d4",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:battery",
+      "kind": "equipment",
+      "label": "Battery",
+      "form": "words",
+      "value": "",
+      "also": [
+        "quantity 1"
+      ],
+      "prose": "-\nPrice: 60\nQuality: Level: 1\nQuality: ChargesCartridges: 20\nQuality: Bulk: -\nItem level: 1",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:medkit_basic",
+      "kind": "equipment",
+      "label": "Medkit (Basic)",
+      "form": "words",
+      "value": "",
+      "also": [
+        "quantity 1"
+      ],
+      "prose": "Price: 100\nQuality: Level: 1\nQuality: Bulk: 1",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:serum_of_healing_mk_1",
+      "kind": "equipment",
+      "label": "Serum of Healing Mk 1",
+      "form": "words",
+      "value": "",
+      "also": [
+        "quantity 2"
+      ],
+      "prose": "Price: 50\nQuality: Level: 1\nQuality: Bulk: L",
+      "condition": null
+    }
+  ],
+  "sheetRulesUnavailableReason": null,
+  "featSkillBonuses": {
+    "skills": {},
+    "groups": {},
+    "contributions": [],
+    "situational": [],
+    "unknown": []
+  }
+}

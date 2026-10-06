@@ -239,6 +239,8 @@ pub fn build_from_input(
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SfSheet {
     pub ability_scores: [i64; 6],
+    /// Each class rule id and its level (the build's classes).
+    pub classes: Vec<(String, u8)>,
     pub chassis: SfChassis,
     pub defense: SfDefense,
     pub skills: SfSkills,
@@ -262,7 +264,16 @@ pub fn compute_sheet(package: &SheetRulePackage, input: &CharacterInput) -> Resu
     let lines = crate::sf_sheet_print::sheet_lines(package, &build, &held, &input.chosen.spells_selected, &input.chosen.equipment_selections)?;
     let carried = sf_loadout::compute(package, &build, &loadout)?;
     apply_bulk_condition(&mut defense, &mut skills, carried.condition);
-    Ok(SfSheet { ability_scores: build.chassis.ability_scores, chassis, defense, skills, spells, carried, lines })
+    Ok(SfSheet {
+        ability_scores: build.chassis.ability_scores,
+        classes: build.chassis.classes.clone(),
+        chassis,
+        defense,
+        skills,
+        spells,
+        carried,
+        lines,
+    })
 }
 
 fn resum(total: &mut SfTotal) {
@@ -340,9 +351,24 @@ impl SfSheet {
         self.ability_scores.map(ability_modifier)
     }
 
-    /// One `sf.*` explanation row per sheet total.
+    /// One `sf.*` explanation row per sheet total, plus one per ability score and per
+    /// class level, so every number the Starfinder sheet shows is a row (E6.3).
     pub fn explanations(&self) -> Vec<ComputationExplanation> {
         let mut rows = Vec::new();
+        for (i, name) in ABILITY_NAMES.iter().enumerate() {
+            rows.push(ComputationExplanation {
+                id: format!("sf.ability_score.{name}"),
+                value: to_i16(self.ability_scores[i]),
+                detail: "the saved score: race, theme, point buy and ability increases applied".to_owned(),
+            });
+        }
+        for (class, level) in &self.classes {
+            rows.push(ComputationExplanation {
+                id: format!("sf.class_level.{}", split_rule_id(class).2),
+                value: i16::from(*level),
+                detail: format!("{class} level {level}"),
+            });
+        }
         for (i, name) in ABILITY_NAMES.iter().enumerate() {
             rows.push(ComputationExplanation {
                 id: format!("sf.ability_modifier.{name}"),
@@ -1151,6 +1177,59 @@ pub(crate) mod tests {
         }
         assert!(mismatches.is_empty(), "{} mismatches:\n{}", mismatches.len(), mismatches.join("\n"));
         assert_eq!(compared, 160, "every hand-value row of the four seeds is compared");
+    }
+
+    /// E6.3: the Starfinder sheet prints no number the engine did not send as a row. The
+    /// two sheet numbers that were build inputs rather than rows — each ability score and
+    /// each class's level — are `sf.ability_score.<ability>` and `sf.class_level.<class>`.
+    #[test]
+    fn every_seed_carries_its_ability_score_and_class_level_rows() {
+        for (seed, class, input) in seeds() {
+            let rows = StarfinderAdapter.chassis_resolve(&input).explanations;
+            let value = |id: &str| rows.iter().find(|e| e.id == id).map(|e| i64::from(e.value));
+            let s = &input.chosen.ability_scores;
+            let scores = [s.strength, s.dexterity, s.constitution, s.intelligence, s.wisdom, s.charisma];
+            for (name, score) in ABILITY_NAMES.iter().zip(scores) {
+                assert_eq!(value(&format!("sf.ability_score.{name}")), Some(i64::from(score)), "{seed} {name}");
+            }
+            let level = input.chosen.class_levels[0].level;
+            assert_eq!(value(&format!("sf.class_level.{class}")), Some(i64::from(level)), "{seed}");
+        }
+    }
+
+    /// The directory of the frontend Starfinder sheet fixtures (E6.3).
+    fn sheet_fixture_dir() -> PathBuf {
+        repo_root().join("apps/desktop/src/characterHub/starfinderSheetFixtures")
+    }
+
+    /// E6.3: the frontend Starfinder sheet test (`starfinderSheet.test.ts`) renders each
+    /// seed's real `load_saved_character` response. This keeps those files equal to what the
+    /// adapter returns today, so the frontend proof never runs on a stale engine answer.
+    /// Regenerate: `SF_SHEET_FIXTURES_WRITE=1 cargo test --bin codex-desktop
+    /// the_frontend_starfinder_sheet_fixtures_are_the_adapters_load_responses`.
+    #[test]
+    fn the_frontend_starfinder_sheet_fixtures_are_the_adapters_load_responses() {
+        let write = std::env::var_os("SF_SHEET_FIXTURES_WRITE").is_some();
+        let characters = tempdir("sheet-fixtures");
+        let mut stale = Vec::new();
+        for (seed, _, input) in seeds() {
+            let root = characters.join(seed);
+            SavedCharacterStore::save(&envelope(seed, STARFINDER_RULE_SYSTEM_ID, input), &root).expect("saves");
+            let loaded = StarfinderAdapter.load_saved_character(&root).expect("loads");
+            let json = serde_json::to_string_pretty(&loaded).expect("serialises") + "\n";
+            let path = sheet_fixture_dir().join(format!("{seed}.json"));
+            if write {
+                std::fs::create_dir_all(sheet_fixture_dir()).expect("fixture dir");
+                std::fs::write(&path, &json).expect("writes the fixture");
+            } else if std::fs::read_to_string(&path).ok().as_deref() != Some(json.as_str()) {
+                stale.push(path.display().to_string());
+            }
+        }
+        std::fs::remove_dir_all(&characters).ok();
+        assert!(
+            stale.is_empty(),
+            "stale or missing Starfinder sheet fixtures {stale:?}; regenerate with SF_SHEET_FIXTURES_WRITE=1 cargo test --bin codex-desktop the_frontend_starfinder_sheet_fixtures_are_the_adapters_load_responses"
+        );
     }
 
     /// The `CharacterInput` -> build table of this module's doc comment, on SF-Soldier-3:

@@ -1426,6 +1426,57 @@
       "notes": "SD-37 E6.2 (epic-breakdown.md E6.2: 'Creation flow: race -> theme -> class -> point buy, with the SF cost table'). Selects Starfinder 1e on the landing, opens New Character (the Starfinder flow, StarfinderCreateForm.tsx), and builds seed-builds.md §1's SF-Soldier-3 at 1st level: Human (its '+2 Racial Stat Bonus' pick -> STR, asked because the converted human now carries the oracle's BONUS:ABILITYPOOL), Mercenary theme, Soldier with key ability Str, and the point buy 3/4/2/1/0/0 spent through the '+1 <abbr>' buttons (the budget, the 18 cap and every score are the engine's preview, preview_starfinder_character). The variant-ability and archetype picks start on the package's 'No ...' options. 'Create character' saves through create_starfinder_character. Expects the outcome tiles from the saved character's sf.* rows (uppercase per the tile CSS) and the engine's creation scores, which equal seed-builds.md §1's ability row (16/14/12/11/10/10). Selects use the option VALUE (record id / ability code) via the select op; each select's own first option ('— choose a race —', ...) makes its target unique. The trailing scroll-up + key are the same probe refresh create-character-fill-and-submit documents. This row leaves Starfinder selected on the landing: it runs after every Pathfinder row, and landing-select-pathfinder (next) restores the Pathfinder selection."
     },
     {
+      "id": "open-starfinder-sheet",
+      "screen": "sheet",
+      "setup": [
+        "create-starfinder-soldier"
+      ],
+      "steps": [
+        {
+          "op": "click",
+          "target": "Back"
+        },
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "SF Smoke Soldier"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        }
+      ],
+      "marker": "Kinetic Armor Class (KAC)",
+      "expect": [
+        "Energy Armor Class (EAC)",
+        "Kinetic Armor Class (KAC)",
+        "Stamina Points",
+        "Hit Points",
+        "Resolve Points",
+        "Base Attack Bonus",
+        "Fortitude",
+        "Initiative",
+        "Credits remaining",
+        "Strength",
+        "Soldier"
+      ],
+      "forbid": [
+        "CMB",
+        "CMD",
+        "Flat-Footed",
+        "Touch",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.3 (epic-breakdown.md E6.3: 'SF sheet layout: SP/HP/RP, EAC/KAC; no CMB/CMD/Touch/Flat-Footed on SF sheets'). The setup creates seed-builds.md §1's soldier at 1st level through the Starfinder flow (create-starfinder-soldier's steps; Starfinder stays selected on the landing), then this row backs out, opens Load Character (the Starfinder list, StarfinderAdapter), selects 'SF Smoke Soldier' and loads it. A Starfinder save opens StarfinderCharacterSheet.tsx, not the Pathfinder sheet: the forbid list holds the Pathfinder sheet's own marker '☰ Menu' and its CMB/CMD/Touch/Flat-Footed tiles. Every number on the Starfinder sheet is one sf.* explanation row (starfinderSheet.test.ts proves it over the four seeds' load responses); this row proves the real app routes a saved Starfinder character to that sheet. landing-select-pathfinder (next) restores the Pathfinder selection."
+    },
+    {
       "id": "landing-select-pathfinder",
       "screen": "landing",
       "steps": [
