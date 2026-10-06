@@ -168,6 +168,7 @@ const MAIN = [
   card('E6.3', 'opus', P.E6, 'SF sheet layout, engine-single-source', 'No hand-kept tables in the desktop (R2). Every SF number on the sheet comes from an engine explanation row.'),
   card('E6.4', 'opus', P.E6, 'SF catalogs from data/starfinder-1e/sheet_rules'),
   card('E6.5', 'opus', P.E6, 'SF level-up'),
+  card('E6.5a', 'opus', P.E6, 'SF feats, spells known and gear chosen through the real app (discovered by E6.5)', 'New card, adopted 2026-10-06 (kanban.md row E6.5a; epic-breakdown.md E6 table; the row pin is now 56). Read the E6.5 receipt and the E6.5a kanban note first. Every affordance writes through the engine pools and catalogs (R2, no hand-kept lists). Your ui-smoke row must build one SF seed\'s full loadout from artifacts/epic_0/seed-builds.md and show EAC/KAC/credits equal to E0.4. E6.6 then creates all 4 seeds through what you build.'),
   card('E6.6', 'sonnet', P.E6, 'Six seeds open in the real app, isolated XDG_DATA_HOME', 'R5: a per-run XDG_DATA_HOME, a guard that refuses the real root, and the real store\'s entry count + sha256 before and after. Long run: wait inside your turn.'),
   card('E6.MC', 'opus', P.E6, 'E6 adversarial merge check', MC + ' Render real builds and open all six seeds in the real app under an isolated XDG_DATA_HOME (R5).'),
   card('E7.1', 'opus', P.E71, 'SF oracle parity roster + "what the oracle does not contain" list', 'Read decisions.md §21(b) and (c) and artifacts/epic_5/E5.4_cycle_receipt.md: if E5.4 left the drone Hit Points line as a named refusal, you own that row: build the PCGen drone run for the Mechanic 1 parity build, add the oracle observation and the mapping row (E3 gates re-run), and make the drone HP line print. Likewise the hover-chassis Flight System check if E5.4 left it to parity.'),
@@ -189,7 +190,7 @@ const MAIN = [
 
 const results = {}
 const handoffs = {}
-const KNOWN = new Set(MAIN.map((c) => c.id).concat(['C0.1', 'C1', 'E0.1', 'E0.2', 'E0.3', 'E0.4', 'E1.1', 'E1.2', 'E1.3', 'E1.4', 'E1.MC']))
+const KNOWN = new Set(MAIN.map((c) => c.id).concat(['E6.5a'],['C0.1', 'C1', 'E0.1', 'E0.2', 'E0.3', 'E0.4', 'E1.1', 'E1.2', 'E1.3', 'E1.4', 'E1.MC']))
 const passes = (r) => r && (r.status === 'complete' || r.status === 'handed-off')
 
 async function runCard(c) {
@@ -237,7 +238,7 @@ const report = (stopped) => ({ stopped: stopped, results: results, handoffs: han
 // prefix; the E0/E1 lanes interleaved differently on resume, so the cache missed and complete
 // cards were re-dispatched (E0.4, E1.4, E0.2 declined them). Trim instead of resume: C, E0 and
 // E1 are skipped here. To restart later, move START to the first non-complete kanban row.
-const START = 'E5.4'
+const START = 'E6.5a'
 const REMAINING = MAIN.slice(MAIN.findIndex((c) => c.id === START))
 log('starting at ' + START + ': ' + REMAINING.length + ' cards remain of ' + MAIN.length)
 
