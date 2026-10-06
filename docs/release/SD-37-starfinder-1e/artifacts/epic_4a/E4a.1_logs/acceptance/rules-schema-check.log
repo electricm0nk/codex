@@ -1,0 +1,20 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.13s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 1 test
+test rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2839 filtered out; finished in 0.10s
+
+--- regenerated vs published (diff -r) ---
+diff exit 0
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 3 tests
+test rules_core::sheet_rule::schema_publish_tests::the_schema_names_the_starfinder_variants_and_every_shape_the_package_uses ... ok
+test rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types ... ok
+test rules_core::sheet_rule::schema_publish_tests::sampled_package_files_agree_with_the_schema_at_the_top_level ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2837 filtered out; finished in 0.57s
+
