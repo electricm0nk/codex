@@ -70,6 +70,8 @@ export interface SfLevelUpPreviewDto {
   classLines: string[];
   ruleLines: string[];
   increaseDue: boolean;
+  /** How many different scores the increase raises (the engine's count); 0 with no increase. */
+  increaseScores: number;
   abilities: SfLevelUpAbilityDto[];
   slots: SfCreationSlotDto[];
   chosenOnTheSheet: string[];

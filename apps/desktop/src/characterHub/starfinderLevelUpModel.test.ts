@@ -34,6 +34,7 @@ function preview(partial: Partial<SfLevelUpPreviewDto> = {}): SfLevelUpPreviewDt
     classLines: ['Skill ranks per level: 4'],
     ruleLines: [],
     increaseDue: false,
+    increaseScores: 0,
     abilities: [],
     slots: [],
     chosenOnTheSheet: [],
@@ -83,13 +84,26 @@ function testTheDialogStartsOnAHeldClass() {
 }
 
 function testTheIncreaseTakesFourDifferentScores() {
+  const shown = preview({ increaseDue: true, increaseScores: 4 });
   let draft = EMPTY_LEVEL_UP_DRAFT;
   for (const code of ['STR', 'DEX', 'CON', 'INT', 'WIS']) {
-    draft = toggleIncrease(draft, code);
+    draft = toggleIncrease(draft, code, shown);
   }
   assertEqual(draft.abilityIncreases.join(','), 'STR,DEX,CON,INT', 'a fifth score is not taken');
-  draft = toggleIncrease(draft, 'DEX');
+  draft = toggleIncrease(draft, 'DEX', shown);
   assertEqual(draft.abilityIncreases.join(','), 'STR,CON,INT', 'a chosen score toggles off');
+}
+
+function testTheIncreaseCountIsTheEnginesNotTheDesktops() {
+  // SD-37 E6.MC: the count of scores an increase raises is the preview's (the engine's
+  // `sf_abilities::SCORES_PER_INCREASE`), never a desktop constant (R2).
+  let draft = EMPTY_LEVEL_UP_DRAFT;
+  for (const code of ['STR', 'DEX', 'CON']) {
+    draft = toggleIncrease(draft, code, preview({ increaseDue: true, increaseScores: 2 }));
+  }
+  assertEqual(draft.abilityIncreases.join(','), 'STR,DEX', 'the preview asks for two: a third is not taken');
+  const none = toggleIncrease(EMPTY_LEVEL_UP_DRAFT, 'STR', preview({ increaseDue: false, increaseScores: 0 }));
+  assertEqual(none.abilityIncreases.length, 0, 'a level with no increase takes no score');
 }
 
 function testRankButtonsStayInsideTheEnginesCap() {
@@ -137,6 +151,7 @@ function testOnlyAPreviewWithNoBlockingProblemAccepts() {
 testTheRequestCarriesEveryChoice();
 testTheDialogStartsOnAHeldClass();
 testTheIncreaseTakesFourDifferentScores();
+testTheIncreaseCountIsTheEnginesNotTheDesktops();
 testRankButtonsStayInsideTheEnginesCap();
 testChangeLinesAreTheEnginesValuesWithTheSheetsLabels();
 testOnlyAPreviewWithNoBlockingProblemAccepts();

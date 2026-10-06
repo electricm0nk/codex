@@ -169,7 +169,7 @@ export function StarfinderLevelUpDialog(props: {
 
       {preview?.increaseDue ? (
         <div style={SECTION_STYLE}>
-          <p style={{ fontWeight: 700, margin: '0 0 0.4rem' }}>Ability increase: choose four scores</p>
+          <p style={{ fontWeight: 700, margin: '0 0 0.4rem' }}>Ability increase: choose {preview.increaseScores} different scores</p>
           <div style={{ display: 'grid', gap: '0.3rem' }}>
             {preview.abilities.map((ability) => (
               <div key={ability.ability} style={{ alignItems: 'center', display: 'flex', gap: '0.6rem' }}>
@@ -177,7 +177,7 @@ export function StarfinderLevelUpDialog(props: {
                   type="button"
                   aria-pressed={draft.abilityIncreases.includes(ability.ability)}
                   style={SMALL_BUTTON_STYLE}
-                  onClick={() => setDraft(toggleIncrease(draft, ability.ability))}
+                  onClick={() => setDraft(toggleIncrease(draft, ability.ability, preview))}
                 >
                   Increase {ability.label}
                 </button>

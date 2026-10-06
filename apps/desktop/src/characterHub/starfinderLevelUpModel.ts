@@ -11,9 +11,6 @@ import { starfinderRowLabel, starfinderRowSigned } from './starfinderSheetModel'
  * `maxRanks`.
  */
 
-/** The ability increase raises this many different scores (the engine refuses any other count). */
-const SCORES_PER_INCREASE = 4;
-
 export interface StarfinderLevelUpDraft {
   classId: string | null;
   keyAbility: string | null;
@@ -69,11 +66,12 @@ export function draftAfterClassChange(draft: StarfinderLevelUpDraft, classId: st
   return { ...draft, classId, keyAbility: null, picks: [] };
 }
 
-export function toggleIncrease(draft: StarfinderLevelUpDraft, ability: string): StarfinderLevelUpDraft {
+/** Toggles one score of the increase; the preview's `increaseScores` (the engine's count) bounds it. */
+export function toggleIncrease(draft: StarfinderLevelUpDraft, ability: string, preview: SfLevelUpPreviewDto): StarfinderLevelUpDraft {
   if (draft.abilityIncreases.includes(ability)) {
     return { ...draft, abilityIncreases: draft.abilityIncreases.filter((code) => code !== ability) };
   }
-  if (draft.abilityIncreases.length >= SCORES_PER_INCREASE) {
+  if (draft.abilityIncreases.length >= preview.increaseScores) {
     return draft;
   }
   return { ...draft, abilityIncreases: [...draft.abilityIncreases, ability] };

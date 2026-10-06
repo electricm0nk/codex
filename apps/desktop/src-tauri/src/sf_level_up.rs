@@ -159,6 +159,9 @@ pub struct SfLevelUpPreviewDto {
     /// Printed advancement rules for the new level (the odd-level feat), with their source.
     pub rule_lines: Vec<String>,
     pub increase_due: bool,
+    /// How many different scores the increase raises (`sf_abilities::SCORES_PER_INCREASE`); 0 when
+    /// the new level has no increase.
+    pub increase_scores: usize,
     pub abilities: Vec<SfLevelUpAbilityDto>,
     /// The picks the new level opens.
     pub slots: Vec<SfCreationSlotDto>,
@@ -375,6 +378,7 @@ pub fn preview(package: &SheetRulePackage, current: &CharacterInput, request: &S
         class_lines: Vec::new(),
         rule_lines: Vec::new(),
         increase_due: INCREASE_LEVELS.contains(&new_level),
+        increase_scores: if INCREASE_LEVELS.contains(&new_level) { SCORES_PER_INCREASE } else { 0 },
         abilities: ABILITIES
             .iter()
             .enumerate()
@@ -755,6 +759,7 @@ pub(crate) mod tests {
         assert_eq!(shown.level_line.as_deref(), Some("Soldier 2 \u{2014} character level 2"));
         assert_eq!(shown.class_lines, ["Skill ranks per level: 4"]);
         assert!(!shown.increase_due);
+        assert_eq!(shown.increase_scores, 0, "level 2 has no increase: it asks for no score");
         assert!(shown.rule_lines.is_empty(), "level 2 is even: no feat line");
         let leveled = leveled.expect("leveled input");
         let before = values(&sf_adapter::compute_sheet(package(), &current).unwrap());
@@ -772,6 +777,23 @@ pub(crate) mod tests {
         assert_eq!(changed.len() + unchanged, after.len().max(before.len()), "every row is listed or unchanged");
         // The level is not saved by a preview.
         assert_eq!(character_level(&saved(&root).character_input), 1);
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// The 5th-level increase asks for the engine's count of scores (`sf_abilities::SCORES_PER_INCREASE`),
+    /// so the dialog holds no copy of the rule (SD-37 E6.MC, R2).
+    #[test]
+    fn the_increase_asks_for_the_engines_count_of_scores() {
+        let root = tempdir("sf-level-up-increase-count").join("mystic");
+        create_seed("SF-Mystic-5", &root);
+        for _ in 0..3 {
+            level_once(&root, "core:class:mystic", &BTreeMap::new(), &[]);
+        }
+        let current = saved(&root).character_input;
+        assert_eq!(character_level(&current), 4);
+        let (shown, _) = preview(package(), &current, &request("core:class:mystic"));
+        assert!(shown.increase_due);
+        assert_eq!(shown.increase_scores, SCORES_PER_INCREASE);
         std::fs::remove_dir_all(root.parent().unwrap()).ok();
     }
 
