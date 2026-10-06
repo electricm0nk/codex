@@ -30,11 +30,11 @@ it (`workflow-instruction.md §5`).
 | E3 | complete | 6 of 6 (E3.1–E3.5, E3.MC) | E3.MC receipt `artifacts/epic_3/E3.MC_cycle_receipt.md` (E3.MC corrected this row from 3 of 6; retro correction) |
 | E4 | complete | 7 of 7 (E4.1–E4.6, E4.MC) | E4.MC receipt `artifacts/epic_4/E4.MC_cycle_receipt.md` |
 | E5 | complete | 5 of 5 (E5.1–E5.4, E5.MC) | E5.MC receipt `artifacts/epic_5/E5.MC_cycle_receipt.md` (E5.MC corrected this row from 0 of 5) |
-| E6 | in progress | 7 of 8 (E6.1–E6.6 incl. E6.5a; E6.MC left) | E6.6 receipt `artifacts/epic_6/E6.6_cycle_receipt.md`; count from `kanban.md` rows (`awk -F'|' '$2 ~ /^ E6/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| E6 | complete | 8 of 8 (E6.1–E6.6 incl. E6.5a, E6.MC) | E6.MC receipt `artifacts/epic_6/E6.MC_cycle_receipt.md`; count from `kanban.md` rows (`awk -F'|' '$2 ~ /^ E6/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | E7.1 | waiting | 0 of 1 | |
 | E4a | waiting | 0 of 5 | serial after E7.1 (C0.2) |
 | E7.2–E7.9 | waiting | 0 of 8 | |
-| **Total** | | **41 of 56** | command below the table (E6.6 re-ran it after its own row: 41; 56 cards since E6.5a) |
+| **Total** | | **42 of 56** | command below the table (E6.MC re-ran it after its own row: 42; 56 cards since E6.5a) |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -178,6 +178,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E6.5 | 2026-10-06 | Opus 5.5 | `0e6d0f3d2c` (`feat(sd37,e6.5)`) | complete | Aldric unchanged (1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); Soldier / Mystic / Technomancer / Envoy unchanged (no saved seed input changes; 160 of 160 and the E6.3 sheet fixtures green); new path: each built at 1st level and leveled through the level-up reaches its 13 level rows (52 of 52); SF-Soldier-3 → Soldier 2 in the real app: Hit Points 11 → 18, BAB +1 → +2 | `artifacts/epic_6/E6.5_cycle_receipt.md`; ui-smoke 3/3 green (RED 1/3 on base); root sweep red since E6.3 (audit hit on a test fixture) self-healed; discovery E6.5a |
 | E6.5a | 2026-10-06 | Opus 5.5 | `fbbafda2bf` (`feat(sd37,e6.5a)`) | complete | Aldric unchanged (1d830682…a569 = E1.4); Elowen unchanged (8d1a711c…00f2 = E1.4); Soldier / Mystic / Technomancer / Envoy unchanged (no saved seed input changes; 160 of 160 and the E6.3 sheet fixtures green); new path: each built at 1st level, leveled and given its feats, spells and gear through the app's commands reaches 190 of 190 sheet totals and 24 of 24 loadout hand values; SF-Soldier-3 in the real app: EAC 16, KAC 19, credits remaining 2045, bulk 4 | `artifacts/epic_6/E6.5a_cycle_receipt.md`; ui-smoke 7/7 green (RED 1/2 on base); 11 of 11 plants red |
 | E6.6 | 2026-10-06 | Sonnet 5.5 | `c3bc1e11b4` (`feat(sd37,e6.6)`) | complete | Aldric unchanged (opened, `Fighter 3`; hash pair not re-run, no engine file touched); Elowen unchanged (opened, `Wizard 5`); Soldier / Mystic / Technomancer / Envoy unchanged in code; each now built through the real app and reopened from the saved store with 27 / 34 / 36 / 29 hand values equal (126 of 150; 22 untrained + 2 `Spells known: 0` not asserted); real store 15379 entries, sha256 ddfc4461…b8bf before = after | `artifacts/epic_6/E6.6_cycle_receipt.md` |
+| E6.MC | 2026-10-06 | Opus 5.5 | `ab67be6082` (`fix(sd37,e6.mc)`) | complete | Aldric unchanged (`1d830682…a569` before = after = E1.4; opened in the app); Elowen unchanged (`8d1a711c…00f2` before = after = E1.4; opened); Soldier: +1 printed line across E6 (E6.2's `Human (+2 racial stat bonus picks) +1`), no total moved; Mystic / Technomancer / Envoy printed lines byte-identical before/after; all 4 at 160 of 160 on both trees and opened in the real app with their hand values; the fix moves no seed line or total | `artifacts/epic_6/E6.MC_cycle_receipt.md`; full ui-smoke 99/103 green, 1 blocked (pre-existing `campaign-manager-list` stall, attributed); 45 of 45 plants red; finding fixed: level-up increase count from the engine (R2) |
 
 ## Decisions taken on safe defaults
 

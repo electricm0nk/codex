@@ -1,0 +1,13 @@
+MC1 the sheet adds 1 to KAC: exit=1 RED restored=True
+    Error: SF-Soldier-3: sf.kac: expected 19, got 20
+MC2 the adapter serves KAC as EAC: exit=101 RED restored=True
+    test sf_adapter::tests::the_frontend_starfinder_sheet_fixtures_are_the_adapters_load_responses ... FAILED
+    test sf_adapter::tests::sf_seed_every_hand_value_equals_the_adapters_explanation_row ... FAILED
+    thread 'sf_adapter::tests::the_frontend_starfinder_sheet_fixtures_are_the_adapters_load_responses' (1778864) panicked at src/sf_adapter.rs:1230:9:
+    thread 'sf_adapter::tests::sf_seed_every_hand_value_equals_the_adapters_explanation_row' (1778863) panicked at src/sf_adapter.rs:1179:9:
+MC3 the increase ignores the engine count: exit=1 RED restored=True
+    Error: the preview asks for two: a third is not taken: expected STR,DEX, got STR,DEX,CON
+MC4 point buy ignores the engine budget: exit=1 RED restored=True
+    Error: a different engine budget moves the bound (no desktop constant): expected 2, got 0
+4 of 4 plants red, every file restored
+exit=0

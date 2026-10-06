@@ -1,0 +1,20 @@
+
+> codex@0.17.0 build
+> node ../../scripts/gen-corpus-bundle.mjs && vite build
+
+files_copied=14029 dst=/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri/resources/corpus_bundle
+vite v8.1.5 building client environment for production...
+[2Ktransforming...✓ 305 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.39 kB │ gzip:   0.26 kB
+dist/assets/index-BmxfP9uN.css    2.73 kB │ gzip:   0.76 kB
+dist/assets/index-B030Qr3D.js   798.69 kB │ gzip: 202.33 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 747ms
+exit=0

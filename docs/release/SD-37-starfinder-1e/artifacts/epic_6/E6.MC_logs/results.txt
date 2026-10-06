@@ -1,0 +1,22 @@
+frontend_test exit=0
+frontend_typecheck exit=0
+frontend_build exit=0
+tauri_resources exit=0
+desktop_e6 exit=0
+pf_hash_after exit=0
+e62_plants exit=0
+e63_plants exit=0
+e64_plants exit=0
+e65_plants exit=0
+e65a_plants exit=0
+mc_plants exit=0
+pf_plant exit=0
+clippy exit=0
+root_full exit=0
+desktop_full exit=0
+before_tree exit=0
+pf_hash_before exit=0
+sf_before exit=0
+smoke_full exit=1
+smoke_plant exit=0
+RUN_DONE
