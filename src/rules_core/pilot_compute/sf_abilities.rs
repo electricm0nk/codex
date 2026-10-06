@@ -107,6 +107,18 @@ fn ordinal(level: u8) -> String {
     format!("{level}th")
 }
 
+/// One ability increase on a score of `score` at character level `at`: +2, or +1 when the
+/// score is already 17 or higher (SRD Step 1: Apply any Ability Increases). The level-up
+/// (desktop `sf_level_up`) applies it to a saved character's final scores with this same term.
+pub fn increase_term(score: i64, at: u8) -> SfTerm {
+    let (value, label) = if score >= 17 {
+        (1, format!("{} level ability increase (+1: score 17 or higher)", ordinal(at)))
+    } else {
+        (2, format!("{} level ability increase", ordinal(at)))
+    };
+    SfTerm { label, value, source: SRD_INCREASE.into() }
+}
+
 /// The increase levels `level` has reached, checked against the build's choices.
 fn check_increases(abilities: &SfAbilityBuild, level: i64) -> Result<(), SfChassisRefusal> {
     for (&at, chosen) in &abilities.increases {
@@ -173,13 +185,9 @@ pub fn compute(package: &SheetRulePackage, build: &SfBuild, abilities: &SfAbilit
         for (at, chosen) in &abilities.increases {
             for a in chosen {
                 let i = ability_index(*a);
-                let (value, label) = if current[i] >= 17 {
-                    (1, format!("{} level ability increase (+1: score 17 or higher)", ordinal(*at)))
-                } else {
-                    (2, format!("{} level ability increase", ordinal(*at)))
-                };
-                current[i] += value;
-                terms[i].push(SfTerm { label, value, source: SRD_INCREASE.into() });
+                let term = increase_term(current[i], *at);
+                current[i] += term.value;
+                terms[i].push(term);
             }
         }
         if current == guess {

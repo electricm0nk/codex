@@ -510,7 +510,7 @@ fn blocking(chassis: &PilotBaseChassisComputation) -> Option<String> {
 }
 
 /// The envelope at `root`, refused unless it is a Starfinder character.
-fn load_starfinder(root: &Path) -> Result<SavedCharacterEnvelope, String> {
+pub(crate) fn load_starfinder(root: &Path) -> Result<SavedCharacterEnvelope, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     if envelope.game_system != STARFINDER_RULE_SYSTEM_ID {
         return Err(format!(
@@ -600,7 +600,7 @@ fn corpus_derived_dto(sheet: &SfSheet) -> CorpusDerivedDto {
 }
 
 /// The next `<id>.rev.<n>` revision (the same scheme `Pf1Adapter`'s mutations use).
-fn next_revision_id(character_id: &str, current: &str) -> String {
+pub(crate) fn next_revision_id(character_id: &str, current: &str) -> String {
     let prefix = format!("{character_id}.rev.");
     let next = current
         .strip_prefix(prefix.as_str())
@@ -623,7 +623,8 @@ impl RuleSystemAdapter for StarfinderAdapter {
     /// book), which cannot name a Starfinder package row, so the plan is the
     /// empty plan `level_up::compute_level_up_grants` returns for a class it
     /// does not dispatch. A Starfinder level-up is a re-save at the new level:
-    /// the new totals are `chassis_resolve`'s. (SF level-up is E6.5.)
+    /// the new totals are `chassis_resolve`'s. The desktop's Starfinder level-up is
+    /// `crate::sf_level_up` (SD-37 E6.5), which saves the leveled `CharacterInput`.
     fn level_up(&self, _character: &CharacterInput, _deltas: &[ClassLevelDelta]) -> LevelUpPlan {
         LevelUpPlan::default()
     }
@@ -1199,7 +1200,7 @@ pub(crate) mod tests {
 
     /// The directory of the frontend Starfinder sheet fixtures (E6.3).
     fn sheet_fixture_dir() -> PathBuf {
-        repo_root().join("apps/desktop/src/characterHub/starfinderSheetFixtures")
+        repo_root().join("apps/desktop/src/characterHub/__tests__/starfinderSheetFixtures")
     }
 
     /// E6.3: the frontend Starfinder sheet test (`starfinderSheet.test.ts`) renders each

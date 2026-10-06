@@ -40,6 +40,7 @@ mod sf_adapter;
 mod sf_catalog;
 mod sf_creation;
 mod sf_drone_print;
+mod sf_level_up;
 mod sf_sheet_print;
 mod spell_catalog;
 mod stub_adapter;
@@ -196,6 +197,8 @@ fn main() {
             create_character,
             sf_creation::preview_starfinder_character,
             sf_creation::create_starfinder_character,
+            sf_level_up::preview_starfinder_level_up,
+            sf_level_up::level_up_starfinder_character,
             sf_catalog::list_starfinder_catalog,
             clone_character,
             level_up_character,

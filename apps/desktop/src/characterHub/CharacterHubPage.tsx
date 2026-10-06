@@ -206,7 +206,14 @@ export function CharacterHubPage() {
     // SD-37 E6.3: a Starfinder character opens the Starfinder sheet, never the Pathfinder one.
     return (
       <StarfinderCharacterSheet
+        key={sheet.detail.summary.characterId}
         detail={sheet.detail}
+        onDetailRefreshed={(detail) => {
+          // SD-37 E6.5: after a level-up the row's class/level label follows the saved character.
+          const updatedRow = toRowSurface(detail.summary);
+          setSheet((current) => (current ? { row: updatedRow, detail } : current));
+          setSurface((current) => (current ? replaceRowInSurface(current, updatedRow) : current));
+        }}
         onClose={() => setMode(sheetReturnMode)}
         onOpen={() => {
           setSheetReturnMode('load');

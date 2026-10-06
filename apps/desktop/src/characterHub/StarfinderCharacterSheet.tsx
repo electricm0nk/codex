@@ -1,6 +1,7 @@
-import type { CSSProperties } from 'react';
-import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import { useState, type CSSProperties } from 'react';
+import { loadSavedCharacterDetail, type LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { RulesAndFeaturesSection } from './CharacterSheet';
+import { StarfinderLevelUpDialog } from './StarfinderLevelUpDialog';
 import { buildStarfinderSheet, type StarfinderSheetCell, type StarfinderSheetSection } from './starfinderSheetModel';
 
 /**
@@ -9,9 +10,34 @@ import { buildStarfinderSheet, type StarfinderSheetCell, type StarfinderSheetSec
  * credits and bulk. No CMB, CMD, touch or flat-footed AC -- Starfinder has
  * none. Every number is one engine explanation row (`starfinderSheetModel.ts`);
  * the printed lines are the engine's "Rules and features", rendered verbatim.
+ *
+ * "Level up" (SD-37 E6.5) opens the Starfinder level-up; once the level is saved the sheet
+ * re-reads the character (`load_saved_character`) and shows the engine's totals at the new level.
  */
-export function StarfinderCharacterSheet(props: { detail: LoadSavedCharacterResponse; onClose: () => void; onOpen: () => void }) {
-  const sheet = buildStarfinderSheet(props.detail);
+export function StarfinderCharacterSheet(props: {
+  detail: LoadSavedCharacterResponse;
+  onClose: () => void;
+  onOpen: () => void;
+  /** Told the re-read character after a level-up, so the caller's copy stays current. */
+  onDetailRefreshed?: (detail: LoadSavedCharacterResponse) => void;
+}) {
+  const [detail, setDetail] = useState(props.detail);
+  const [levelUpOpen, setLevelUpOpen] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
+  const sheet = buildStarfinderSheet(detail);
+  const characterId = detail.summary.characterId;
+
+  async function handleLeveledUp(levelLine: string) {
+    setLevelUpOpen(false);
+    try {
+      const refreshed = await loadSavedCharacterDetail({ characterId });
+      setDetail(refreshed);
+      props.onDetailRefreshed?.(refreshed);
+      setStatus(`Leveled up: ${levelLine}`);
+    } catch (cause: unknown) {
+      setStatus(`Leveled up (${levelLine}), but the sheet did not reload: ${cause instanceof Error ? cause.message : String(cause)}`);
+    }
+  }
   return (
     <section data-testid="sf-character-sheet" style={{ marginTop: '1.5rem' }}>
       <div style={{ alignItems: 'center', display: 'flex', gap: '0.75rem', justifyContent: 'space-between', marginBottom: '1rem' }}>
@@ -22,6 +48,9 @@ export function StarfinderCharacterSheet(props: { detail: LoadSavedCharacterResp
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button type="button" data-testid="sf-sheet-level-up" onClick={() => setLevelUpOpen(true)} disabled={levelUpOpen} style={buttonStyle}>
+            Level up
+          </button>
           <button type="button" data-testid="sf-sheet-open" onClick={props.onOpen} style={buttonStyle}>
             Open
           </button>
@@ -30,6 +59,16 @@ export function StarfinderCharacterSheet(props: { detail: LoadSavedCharacterResp
           </button>
         </div>
       </div>
+
+      {status === null ? null : (
+        <p data-testid="sf-sheet-status" style={{ fontWeight: 700, margin: '0 0 1rem' }}>
+          {status}
+        </p>
+      )}
+
+      {levelUpOpen ? (
+        <StarfinderLevelUpDialog characterId={characterId} onClose={() => setLevelUpOpen(false)} onLeveledUp={(line) => void handleLeveledUp(line)} />
+      ) : null}
 
       {sheet.blocking.length === 0 ? null : (
         <div data-testid="sf-sheet-blocking" style={{ border: '1px solid var(--color-danger, #c0392b)', borderRadius: 8, marginBottom: '1rem', padding: '0.75rem' }}>

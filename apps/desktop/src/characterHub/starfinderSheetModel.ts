@@ -137,6 +137,49 @@ function formatValue(value: number, signed: boolean): string {
   return signed && value >= 0 ? `+${value}` : String(value);
 }
 
+/**
+ * The label of one `sf.*` row, from the same tables the sheet lays out with (the level-up's
+ * change lines use it). A row the layout does not name keeps its id, as on the sheet.
+ */
+export function starfinderRowLabel(id: string): string {
+  for (const section of SINGLE_VALUE_SECTIONS) {
+    const row = section.rows.find((candidate) => candidate.id === id);
+    if (row !== undefined) {
+      return row.label;
+    }
+  }
+  const [, group, first, second, third] = id.split('.');
+  const ability = ABILITIES.find((candidate) => candidate.key === first);
+  if (group === 'ability_score' && ability !== undefined) {
+    return ability.label;
+  }
+  if (group === 'ability_modifier' && ability !== undefined) {
+    return `${ability.label} modifier`;
+  }
+  if (group === 'class_level' && first !== undefined) {
+    return `${humanise(first)} level`;
+  }
+  if (group === 'skill' && first !== undefined) {
+    return humanise(first);
+  }
+  const field = SPELL_FIELDS.find((candidate) => candidate.field === third);
+  if (group === 'spells' && first !== undefined && second !== undefined && field !== undefined) {
+    return `${humanise(first)} spells level ${second}, ${field.column.toLowerCase()}`;
+  }
+  return id;
+}
+
+/** Whether the sheet prints the row as a bonus (with its sign). */
+export function starfinderRowSigned(id: string): boolean {
+  for (const section of SINGLE_VALUE_SECTIONS) {
+    const row = section.rows.find((candidate) => candidate.id === id);
+    if (row !== undefined) {
+      return row.signed;
+    }
+  }
+  return id.startsWith('sf.ability_modifier.') || id.startsWith('sf.skill.');
+}
+
 /** The printed label of the held record `<book>:<kind>:<slug>` (no `#` sub-line), if sent. */
 function recordLabel(lines: readonly SheetLineDto[], kind: string, slug: string): string | null {
   const line = lines.find((candidate) => candidate.kind === kind && !candidate.id.includes('#') && candidate.id.endsWith(`:${kind}:${slug}`));

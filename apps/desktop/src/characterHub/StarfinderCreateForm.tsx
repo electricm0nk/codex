@@ -66,7 +66,7 @@ type Outcome =
   | { kind: 'saved'; headline: string; detail: string; tiles: StarfinderOutcomeTile[] }
   | { kind: 'blocked'; headline: string; detail: string; diagnostics: DiagnosticDto[] };
 
-function SlotPicker(props: {
+export function SlotPicker(props: {
   slot: SfCreationSlotDto;
   chosen: string[];
   onChange: (position: number, optionId: string) => void;

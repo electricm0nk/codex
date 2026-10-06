@@ -1477,6 +1477,347 @@
       "notes": "SD-37 E6.3 (epic-breakdown.md E6.3: 'SF sheet layout: SP/HP/RP, EAC/KAC; no CMB/CMD/Touch/Flat-Footed on SF sheets'). The setup creates seed-builds.md §1's soldier at 1st level through the Starfinder flow (create-starfinder-soldier's steps; Starfinder stays selected on the landing), then this row backs out, opens Load Character (the Starfinder list, StarfinderAdapter), selects 'SF Smoke Soldier' and loads it. A Starfinder save opens StarfinderCharacterSheet.tsx, not the Pathfinder sheet: the forbid list holds the Pathfinder sheet's own marker '☰ Menu' and its CMB/CMD/Touch/Flat-Footed tiles. Every number on the Starfinder sheet is one sf.* explanation row (starfinderSheet.test.ts proves it over the four seeds' load responses); this row proves the real app routes a saved Starfinder character to that sheet. landing-select-pathfinder (next) restores the Pathfinder selection."
     },
     {
+      "id": "level-up-starfinder-soldier-preview",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Starfinder 1e"
+        },
+        {
+          "op": "click",
+          "target": "New\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "sf-character-name"
+        },
+        {
+          "op": "type",
+          "text": "SF Smoke Level Alpha"
+        },
+        {
+          "op": "select",
+          "target": "— choose a race —",
+          "text": "core:race:human"
+        },
+        {
+          "op": "select",
+          "target": "— choose a theme —",
+          "text": "core:ability:mercenary"
+        },
+        {
+          "op": "select",
+          "target": "— choose a class —",
+          "text": "core:class:soldier"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "— choose the key ability —",
+          "text": "STR"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "— choose: +2 Racial Stat Bonus —",
+          "text": "STR"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Int"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Create character"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "scroll",
+          "ticks": 40,
+          "direction": "up"
+        },
+        {
+          "op": "key",
+          "key": "Shift"
+        },
+        {
+          "op": "click",
+          "target": "Back"
+        },
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "SF Smoke Level Alpha"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Athletics"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        }
+      ],
+      "marker": "What this level changes on the sheet",
+      "expect": [
+        "Soldier 2 — character level 2",
+        "Skill ranks per level: 4",
+        "Hit Points: 11 → 18",
+        "Base Attack Bonus: +1 → +2",
+        "Soldier level: 1 → 2",
+        "Accept level-up"
+      ],
+      "forbid": [
+        "Hit die",
+        "This character did not compute",
+        "Failed to preview"
+      ],
+      "notes": "SD-37 E6.5 (epic-breakdown.md E6.5: 'SF level-up'; acceptance 'ui-smoke level-up row green on a seed'). Creates seed-builds.md §1's SF-Soldier-3 at 1st level through the Starfinder flow under its own name ('SF Smoke Level Alpha', create-starfinder-soldier's steps), loads it (the Starfinder sheet), opens 'Level up' (StarfinderLevelUpDialog.tsx) and adds one Athletics rank. The dialog starts on the held class (Soldier, advance) and shows the engine's preview (preview_starfinder_level_up, sf_level_up.rs): the level line, the class record's printed 'Skill ranks per level: 4' row (no hit die: a Starfinder class has none) and every sheet total the level changes, before -> after, from compute_sheet at level 1 and level 2 (Hit Points 11 -> 18, Base Attack Bonus +1 -> +2). Leaves the dialog open; the sheet's Close/Back reset the next row. landing-select-pathfinder restores the Pathfinder selection."
+    },
+    {
+      "id": "level-up-starfinder-soldier-accept",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Starfinder 1e"
+        },
+        {
+          "op": "click",
+          "target": "New\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "sf-character-name"
+        },
+        {
+          "op": "type",
+          "text": "SF Smoke Level Bravo"
+        },
+        {
+          "op": "select",
+          "target": "— choose a race —",
+          "text": "core:race:human"
+        },
+        {
+          "op": "select",
+          "target": "— choose a theme —",
+          "text": "core:ability:mercenary"
+        },
+        {
+          "op": "select",
+          "target": "— choose a class —",
+          "text": "core:class:soldier"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "— choose the key ability —",
+          "text": "STR"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "— choose: +2 Racial Stat Bonus —",
+          "text": "STR"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Int"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Create character"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "scroll",
+          "ticks": 40,
+          "direction": "up"
+        },
+        {
+          "op": "key",
+          "key": "Shift"
+        },
+        {
+          "op": "click",
+          "target": "Back"
+        },
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "SF Smoke Level Bravo"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "+1 rank Athletics"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        }
+      ],
+      "marker": "Leveled up: Soldier 2 — character level 2",
+      "expect": [
+        "Leveled up: Soldier 2 — character level 2",
+        "Kinetic Armor Class (KAC)",
+        "Hit Points",
+        "Soldier",
+        "Athletics"
+      ],
+      "forbid": [
+        "This character did not compute",
+        "Failed to level up",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.5: the Accept half of level-up-starfinder-soldier-preview. Same 1st-level soldier seed build under its own name ('SF Smoke Level Bravo', so it never levels a character a previous row created), one Athletics rank, then 'Accept level-up' saves through level_up_starfinder_character (the character re-saved at Soldier 2 with the rank, every Starfinder total recomputed) and the Starfinder sheet re-reads it (load_saved_character) and prints 'Leveled up: Soldier 2 — character level 2' above the engine's level-2 totals. The forbid list holds the Pathfinder sheet's marker: the leveled character still opens the Starfinder sheet. landing-select-pathfinder restores the Pathfinder selection."
+    },
+    {
       "id": "browse-starfinder-catalog",
       "screen": "landing",
       "steps": [

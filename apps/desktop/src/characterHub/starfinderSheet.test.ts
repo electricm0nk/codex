@@ -2,7 +2,7 @@
  * SD-37 E6.3 -- the Starfinder sheet layout, engine-single-source.
  *
  * Renders each of the four Starfinder seeds' real `load_saved_character`
- * responses (`starfinderSheetFixtures/<seed>.json`, kept equal to the adapter's
+ * responses (`__tests__/starfinderSheetFixtures/<seed>.json`, kept equal to the adapter's
  * answer by `sf_adapter::tests::the_frontend_starfinder_sheet_fixtures_are_the_adapters_load_responses`)
  * and proves two things:
  *
@@ -28,7 +28,7 @@ const SEEDS = ['SF-Soldier-3', 'SF-Mystic-5', 'SF-Technomancer-5', 'SF-Envoy-3']
 const PATHFINDER_ONLY = /CMB|CMD|Touch|Flat-Footed/g;
 
 function fixture(seed: string): LoadSavedCharacterResponse {
-  return JSON.parse(readFileSync(new URL(`./starfinderSheetFixtures/${seed}.json`, import.meta.url), 'utf8')) as LoadSavedCharacterResponse;
+  return JSON.parse(readFileSync(new URL(`./__tests__/starfinderSheetFixtures/${seed}.json`, import.meta.url), 'utf8')) as LoadSavedCharacterResponse;
 }
 
 function render(detail: LoadSavedCharacterResponse): string {

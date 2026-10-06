@@ -67,7 +67,7 @@ pub const REFUSED_NO_NAME: &str = "sf_creation.name_missing";
 pub const NOT_CHOSEN_YET: &str = "sf_creation.not_chosen_yet";
 
 const SRD_POINT_BUY: &str = "SRD Buying Ability Scores (https://www.aonsrd.com/Rules.aspx?ID=42)";
-const ABILITIES: [(Ability, &str, &str); 6] = [
+pub(crate) const ABILITIES: [(Ability, &str, &str); 6] = [
     (Ability::Str, "STR", "Strength"),
     (Ability::Dex, "DEX", "Dexterity"),
     (Ability::Con, "CON", "Constitution"),
@@ -237,16 +237,16 @@ fn refusal_problem(refusal: &SfChassisRefusal) -> DiagnosticDto {
     problem(refusal.id, refusal.message.clone())
 }
 
-fn ability_code(a: Ability) -> &'static str {
+pub(crate) fn ability_code(a: Ability) -> &'static str {
     ABILITIES.iter().find(|(x, _, _)| *x == a).map_or("", |(_, code, _)| code)
 }
 
-fn ability_option(a: Ability) -> SfOptionDto {
+pub(crate) fn ability_option(a: Ability) -> SfOptionDto {
     let (_, code, name) = ABILITIES.iter().find(|(x, _, _)| *x == a).copied().unwrap_or((a, "", ""));
     SfOptionDto { id: code.to_owned(), label: name.to_owned() }
 }
 
-fn parse_ability(code: &str) -> Option<Ability> {
+pub(crate) fn parse_ability(code: &str) -> Option<Ability> {
     ABILITIES.iter().find(|(_, c, name)| c.eq_ignore_ascii_case(code.trim()) || name.eq_ignore_ascii_case(code.trim())).map(|(a, _, _)| *a)
 }
 
@@ -377,7 +377,7 @@ fn count_of(package: &SheetRulePackage, sf: &SfHeld, rule: &SheetRule, expr: &co
 
 /// The skills an option set names (every base skill when it names none, or `all`): the
 /// package's `Base`-tagged skill records, not their `Display` twins.
-fn skill_options(package: &SheetRulePackage, listed: &[String]) -> Vec<SfOptionDto> {
+pub(crate) fn skill_options(package: &SheetRulePackage, listed: &[String]) -> Vec<SfOptionDto> {
     let every = listed.is_empty() || listed.iter().any(|s| s == "all");
     let mut seen = BTreeSet::new();
     let mut out: Vec<SfOptionDto> = principals_of_kind(package, "skill")
@@ -413,17 +413,17 @@ fn held_rules<'a>(package: &'a SheetRulePackage, sf: &SfHeld) -> Vec<&'a SheetRu
 }
 
 /// What the held set asks for, and the pool records it holds on the player's behalf.
-struct Discovery {
-    slots: Vec<SfCreationSlotDto>,
-    chosen_on_the_sheet: Vec<String>,
-    auto_picks: Vec<String>,
+pub(crate) struct Discovery {
+    pub(crate) slots: Vec<SfCreationSlotDto>,
+    pub(crate) chosen_on_the_sheet: Vec<String>,
+    pub(crate) auto_picks: Vec<String>,
     /// The class's key-ability pick as the package states it (`Class ~ Soldier` offers
     /// `Strength` / `Dexterity`): the choosing template and each option's ability. The form's
     /// key-ability field answers it, so it is not asked twice.
-    key_ability_slots: Vec<(String, Vec<(Ability, String)>)>,
+    pub(crate) key_ability_slots: Vec<(String, Vec<(Ability, String)>)>,
 }
 
-fn discover(package: &SheetRulePackage, sf: &SfHeld, pool_counts_from: &BTreeMap<String, i64>) -> Discovery {
+pub(crate) fn discover(package: &SheetRulePackage, sf: &SfHeld, pool_counts_from: &BTreeMap<String, i64>) -> Discovery {
     let mut slots: Vec<SfCreationSlotDto> = Vec::new();
     let mut later: Vec<String> = Vec::new();
     let mut pools: BTreeMap<String, (i64, Vec<String>)> = BTreeMap::new();
@@ -532,7 +532,7 @@ fn discover(package: &SheetRulePackage, sf: &SfHeld, pool_counts_from: &BTreeMap
 }
 
 /// The pool counts for each record a pool holds (the record's id -> pool points).
-fn pool_counts(package: &SheetRulePackage, sf: &SfHeld) -> BTreeMap<String, i64> {
+pub(crate) fn pool_counts(package: &SheetRulePackage, sf: &SfHeld) -> BTreeMap<String, i64> {
     let mut out: BTreeMap<String, i64> = BTreeMap::new();
     for r in held_rules(package, sf) {
         if r.offers.as_ref().is_some_and(|o| o.id == r.id) {
@@ -595,11 +595,11 @@ fn settle(package: &SheetRulePackage, request: &SfCreationRequest) -> Result<(Sf
 }
 
 /// The answered picks checked against the slots: every slot full, every pick offered.
-fn pick_problems(request: &SfCreationRequest, slots: &[SfCreationSlotDto]) -> Vec<DiagnosticDto> {
+pub(crate) fn pick_problems(picks: &[SfPickDto], slots: &[SfCreationSlotDto]) -> Vec<DiagnosticDto> {
     let mut out = Vec::new();
     for slot in slots {
         let chosen: Vec<&str> =
-            request.picks.iter().filter(|p| p.slot_id == slot.slot_id).map(|p| p.option_id.as_str()).collect();
+            picks.iter().filter(|p| p.slot_id == slot.slot_id).map(|p| p.option_id.as_str()).collect();
         if chosen.len() > slot.count {
             out.push(problem(
                 REFUSED_CHOICE_NOT_OFFERED,
@@ -622,7 +622,7 @@ fn pick_problems(request: &SfCreationRequest, slots: &[SfCreationSlotDto]) -> Ve
             }
         }
     }
-    for pick in &request.picks {
+    for pick in picks {
         if !slots.iter().any(|s| s.slot_id == pick.slot_id) {
             out.push(problem(REFUSED_CHOICE_NOT_OFFERED, format!("{}: no such choice for this character", pick.slot_id)));
         }
@@ -691,7 +691,7 @@ pub fn preview(package: &SheetRulePackage, request: &SfCreationRequest) -> (SfCr
             return (out, None);
         }
     };
-    out.problems.extend(pick_problems(request, &found.slots));
+    out.problems.extend(pick_problems(&request.picks, &found.slots));
     out.slots = found.slots;
     out.chosen_on_the_sheet = found.chosen_on_the_sheet;
     let _ = sf;
@@ -795,7 +795,7 @@ pub fn create_starfinder_character(app: tauri::AppHandle, request: SfCreationReq
 }
 
 #[cfg(test)]
-mod tests {
+pub(crate) mod tests {
     use super::*;
 
     use std::path::PathBuf;
@@ -809,7 +809,7 @@ mod tests {
         sf_adapter::package().expect("the Starfinder package loads")
     }
 
-    fn tempdir(label: &str) -> PathBuf {
+    pub(crate) fn tempdir(label: &str) -> PathBuf {
         let unique = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).expect("time").as_nanos();
         let path = std::env::temp_dir().join(format!("codex-sf-creation-{label}-{}-{unique}", std::process::id()));
         std::fs::create_dir_all(&path).expect("temp dir");
@@ -873,7 +873,7 @@ mod tests {
 
     /// The four seeds as creation requests (`seed-builds.md` §1-§4: race, theme, class, key
     /// ability and the racial/theme picks), each with its own `Points spent` row.
-    fn seed_requests() -> Vec<(&'static str, SfCreationRequest, [i64; 6])> {
+    pub(crate) fn seed_requests() -> Vec<(&'static str, SfCreationRequest, [i64; 6])> {
         let (soldier_spent, soldier_scores) = seed_rows("1. SF-Soldier-3");
         let (mystic_spent, mystic_scores) = seed_rows("2. SF-Mystic-5");
         let (tech_spent, tech_scores) = seed_rows("3. SF-Technomancer-5");
