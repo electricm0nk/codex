@@ -837,6 +837,9 @@ jobs:
           fi
 
           # Build the file glob: every artifact we have staged.
+          # nullglob: optional artifacts (*.msi, *.dmg) may be absent; an
+          # unmatched pattern must expand to nothing, not pass literally.
+          shopt -s nullglob
           GLOB=( *.deb *.AppImage *.msi *.exe *.dmg
                  checksums.sha256 provenance.json
                  update-manifest.json update-manifest-stub.json
