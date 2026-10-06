@@ -1477,6 +1477,36 @@
       "notes": "SD-37 E6.3 (epic-breakdown.md E6.3: 'SF sheet layout: SP/HP/RP, EAC/KAC; no CMB/CMD/Touch/Flat-Footed on SF sheets'). The setup creates seed-builds.md §1's soldier at 1st level through the Starfinder flow (create-starfinder-soldier's steps; Starfinder stays selected on the landing), then this row backs out, opens Load Character (the Starfinder list, StarfinderAdapter), selects 'SF Smoke Soldier' and loads it. A Starfinder save opens StarfinderCharacterSheet.tsx, not the Pathfinder sheet: the forbid list holds the Pathfinder sheet's own marker '☰ Menu' and its CMB/CMD/Touch/Flat-Footed tiles. Every number on the Starfinder sheet is one sf.* explanation row (starfinderSheet.test.ts proves it over the four seeds' load responses); this row proves the real app routes a saved Starfinder character to that sheet. landing-select-pathfinder (next) restores the Pathfinder selection."
     },
     {
+      "id": "browse-starfinder-catalog",
+      "screen": "landing",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Starfinder 1e"
+        },
+        {
+          "op": "click",
+          "target": "Browse Classes"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        }
+      ],
+      "marker": "Starfinder 1e \u2014 Classes",
+      "expect": [
+        "Soldier",
+        "Technomancer",
+        "Soldier (Stamina Points):",
+        "classes from"
+      ],
+      "forbid": [
+        "Fighter",
+        "Hit die"
+      ],
+      "notes": "SD-37 E6.4 (epic-breakdown.md E6.4: 'SF catalogs read data/starfinder-1e/sheet_rules'). With Starfinder 1e selected, the landing offers the six Starfinder catalogs (sf_catalog.rs list_starfinder_catalog) instead of the Pathfinder ones; Browse Classes lists the Starfinder package's class records with the rows that feed a sheet total (Stamina, Hit Points, saves per level). The forbid list holds a Pathfinder-only class (Fighter) and the PCGen HD:1 device line (a Starfinder class has no hit die). landing-select-pathfinder (next) restores the Pathfinder selection."
+    },
+    {
       "id": "landing-select-pathfinder",
       "screen": "landing",
       "steps": [

@@ -1,0 +1,2324 @@
+{
+  "kind": "race",
+  "source": "data/starfinder-1e/sheet_rules",
+  "entries": [
+    {
+      "id": "alien_archive_2:race:aasimar",
+      "name": "Aasimar",
+      "book": "alien_archive_2",
+      "tags": [
+        "Outsider"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:aasimar",
+          "label": "Aasimar",
+          "summary": "Value: 2; Adds to Charisma; Tags: Outsider; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Aasimar"
+        },
+        {
+          "id": "alien_archive_2:race:aasimar#race_hp",
+          "label": "Aasimar (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Outsider"
+        }
+      ]
+    },
+    {
+      "id": "core:race:android",
+      "name": "Android",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:android",
+          "label": "Android (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Declares RacialDexBonus as true; Declares RacialIntBonus as true; Grants Android"
+        },
+        {
+          "id": "core:race:android#bonus1",
+          "label": "Android (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:android#bonus2",
+          "label": "Android (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:android#race_hp",
+          "label": "Android (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "pact_worlds:race:astrazoan",
+      "name": "Astrazoan",
+      "book": "pact_worlds",
+      "tags": [
+        "Aberration"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid\nLegs: +3",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "pact_worlds:race:astrazoan",
+          "label": "Astrazoan (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Aberration; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Astrazoan"
+        },
+        {
+          "id": "pact_worlds:race:astrazoan#bonus1",
+          "label": "Astrazoan (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Aberration"
+        },
+        {
+          "id": "pact_worlds:race:astrazoan#bonus2",
+          "label": "Astrazoan (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Aberration"
+        },
+        {
+          "id": "pact_worlds:race:astrazoan#race_hp",
+          "label": "Astrazoan (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Aberration"
+        }
+      ]
+    },
+    {
+      "id": "pact_worlds:race:bantrid",
+      "name": "Bantrid",
+      "book": "pact_worlds",
+      "tags": [
+        "Aberration"
+      ],
+      "description": "Speed: Walk 40 ft.\nBody plan: humanoid\nLegs: -1",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "pact_worlds:race:bantrid",
+          "label": "Bantrid (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Aberration; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Bantrid language; Declares BaseSize as S; Grants Bantrid"
+        },
+        {
+          "id": "pact_worlds:race:bantrid#bonus1",
+          "label": "Bantrid (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Aberration"
+        },
+        {
+          "id": "pact_worlds:race:bantrid#bonus2",
+          "label": "Bantrid (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Aberration"
+        },
+        {
+          "id": "pact_worlds:race:bantrid#race_hp",
+          "label": "Bantrid (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Aberration"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:barathu",
+      "name": "Barathu",
+      "book": "alien_archive",
+      "tags": [
+        "Abberation"
+      ],
+      "description": "Speed: Walk 0 ft., Fly 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:barathu",
+          "label": "Barathu (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Abberation; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Barathu"
+        },
+        {
+          "id": "alien_archive:race:barathu#bonus1",
+          "label": "Barathu (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Abberation"
+        },
+        {
+          "id": "alien_archive:race:barathu#bonus2",
+          "label": "Barathu (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Abberation"
+        },
+        {
+          "id": "alien_archive:race:barathu#race_hp",
+          "label": "Barathu (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Abberation"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:bolida",
+      "name": "Bolida",
+      "book": "alien_archive_2",
+      "tags": [
+        "Vermin"
+      ],
+      "description": "Speed: Walk 30 ft., Burrow 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:bolida",
+          "label": "Bolida (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Vermin; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Bolida"
+        },
+        {
+          "id": "alien_archive_2:race:bolida#bonus1",
+          "label": "Bolida (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Vermin"
+        },
+        {
+          "id": "alien_archive_2:race:bolida#bonus2",
+          "label": "Bolida (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Vermin"
+        },
+        {
+          "id": "alien_archive_2:race:bolida#race_hp",
+          "label": "Bolida (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Vermin"
+        }
+      ]
+    },
+    {
+      "id": "pact_worlds:race:borai",
+      "name": "Borai",
+      "book": "pact_worlds",
+      "tags": [
+        "Undead"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "pact_worlds:race:borai",
+          "label": "Borai (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Undead; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Borai"
+        },
+        {
+          "id": "pact_worlds:race:borai#bonus1",
+          "label": "Borai (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Undead"
+        },
+        {
+          "id": "pact_worlds:race:borai#bonus2",
+          "label": "Borai (Wis)",
+          "summary": "Value: -2; Adds to Wisdom; Tags: Undead"
+        },
+        {
+          "id": "pact_worlds:race:borai#race_hp",
+          "label": "Borai (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Undead"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:brenneri",
+      "name": "Brenneri",
+      "book": "alien_archive_3",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft., Swim 20 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:brenneri",
+          "label": "Brenneri (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Brenneri"
+        },
+        {
+          "id": "alien_archive_3:race:brenneri#bonus1",
+          "label": "Brenneri (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:brenneri#bonus2",
+          "label": "Brenneri (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:brenneri#race_hp",
+          "label": "Brenneri (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:cephalume",
+      "name": "Cephalume",
+      "book": "alien_archive_3",
+      "tags": [
+        "Abberation"
+      ],
+      "description": "Speed: Walk 10 ft., Swim 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:cephalume",
+          "label": "Cephalume (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Abberation; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Cephalume"
+        },
+        {
+          "id": "alien_archive_3:race:cephalume#bonus1",
+          "label": "Cephalume (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Abberation"
+        },
+        {
+          "id": "alien_archive_3:race:cephalume#bonus2",
+          "label": "Cephalume (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Abberation"
+        },
+        {
+          "id": "alien_archive_3:race:cephalume#race_hp",
+          "label": "Cephalume (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Abberation"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:contemplative",
+      "name": "Contemplative",
+      "book": "alien_archive",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 5 ft., Fly 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:contemplative",
+          "label": "Contemplative (Int)",
+          "summary": "Value: 4; Adds to Intelligence; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Contemplative"
+        },
+        {
+          "id": "alien_archive:race:contemplative#bonus1",
+          "label": "Contemplative (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:contemplative#bonus2",
+          "label": "Contemplative (Str)",
+          "summary": "Value: -2; Adds to Strength; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:contemplative#bonus3",
+          "label": "Contemplative (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:contemplative#race_hp",
+          "label": "Contemplative (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:damai",
+      "name": "Damai",
+      "book": "alien_archive_2",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:damai",
+          "label": "Damai (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Damai"
+        },
+        {
+          "id": "alien_archive_2:race:damai#bonus1",
+          "label": "Damai (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:damai#bonus2",
+          "label": "Damai (Wis)",
+          "summary": "Value: -2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:damai#race_hp",
+          "label": "Damai (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:dessamar",
+      "name": "Dessamar",
+      "book": "alien_archive_3",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 20 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:dessamar",
+          "label": "Dessamar",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Dessamar"
+        },
+        {
+          "id": "alien_archive_3:race:dessamar#race_hp",
+          "label": "Dessamar (racial Hit Points)",
+          "summary": "Value: 3; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:dirindi",
+      "name": "Dirindi",
+      "book": "alien_archive_3",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:dirindi",
+          "label": "Dirindi (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Dirindi"
+        },
+        {
+          "id": "alien_archive_3:race:dirindi#bonus1",
+          "label": "Dirindi (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:dirindi#bonus2",
+          "label": "Dirindi (Wis)",
+          "summary": "Value: -2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:dirindi#race_hp",
+          "label": "Dirindi (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:draelik",
+      "name": "Draelik",
+      "book": "alien_archive",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:draelik",
+          "label": "Draelik (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Draelik"
+        },
+        {
+          "id": "alien_archive:race:draelik#bonus1",
+          "label": "Draelik (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:draelik#bonus2",
+          "label": "Draelik (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:draelik#race_hp",
+          "label": "Draelik (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:dragonkin",
+      "name": "Dragonkin",
+      "book": "alien_archive",
+      "tags": [
+        "Dragon"
+      ],
+      "description": "Speed: Walk 30 ft., Fly 30 ft.\nBody plan: humanoid\nSpace: 10 ft.\nReach: 10",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:dragonkin",
+          "label": "Dragonkin (Str)",
+          "summary": "Value: 4; Adds to Strength; Tags: Dragon; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as L; Grants Dragonkin"
+        },
+        {
+          "id": "alien_archive:race:dragonkin#bonus1",
+          "label": "Dragonkin (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Dragon"
+        },
+        {
+          "id": "alien_archive:race:dragonkin#race_hp",
+          "label": "Dragonkin (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Dragon"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:dromada",
+      "name": "Dromada",
+      "book": "alien_archive_3",
+      "tags": [
+        "Magical Beast"
+      ],
+      "description": "Speed: Walk 40 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:dromada",
+          "label": "Dromada (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Magical Beast; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Dromada"
+        },
+        {
+          "id": "alien_archive_3:race:dromada#bonus1",
+          "label": "Dromada (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Magical Beast"
+        },
+        {
+          "id": "alien_archive_3:race:dromada#bonus2",
+          "label": "Dromada (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Magical Beast"
+        },
+        {
+          "id": "alien_archive_3:race:dromada#race_hp",
+          "label": "Dromada (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Magical Beast"
+        }
+      ]
+    },
+    {
+      "id": "core:race:drone",
+      "name": "Drone (initial drone proficiency picks)",
+      "book": "core",
+      "tags": [
+        "Construct"
+      ],
+      "description": "Speed: Walk Walk ft.\nSpeed: Fly Fly ft.\nSpeed: Burrow Burrow ft.\nSpeed: Climb Climb ft.\nSpeed: Swim Swim ft.",
+      "descriptionTier": "statBlock",
+      "rows": []
+    },
+    {
+      "id": "alien_archive:race:drow",
+      "name": "Drow",
+      "book": "alien_archive",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:drow",
+          "label": "Drow (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Drow"
+        },
+        {
+          "id": "alien_archive:race:drow#bonus1",
+          "label": "Drow (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:drow#bonus2",
+          "label": "Drow (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:drow#race_hp",
+          "label": "Drow (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "core:race:dwarf",
+      "name": "Dwarf",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 20 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:dwarf",
+          "label": "Dwarf (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Dwarven language; Declares BaseSize as M; Declares RacialConBonus as true; Declares RacialWisBonus as true; Grants Dwarf"
+        },
+        {
+          "id": "core:race:dwarf#bonus1",
+          "label": "Dwarf (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:dwarf#bonus2",
+          "label": "Dwarf (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:dwarf#race_hp",
+          "label": "Dwarf (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "core:race:elf",
+      "name": "Elf",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:elf",
+          "label": "Elf (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Elven language; Declares BaseSize as M; Declares RacialDexBonus as true; Declares RacialIntBonus as true; Grants Elf"
+        },
+        {
+          "id": "core:race:elf#bonus1",
+          "label": "Elf (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:elf#bonus2",
+          "label": "Elf (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:elf#race_hp",
+          "label": "Elf (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:embri",
+      "name": "Embri",
+      "book": "alien_archive_2",
+      "tags": [
+        "Abberation"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:embri",
+          "label": "Embri (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Abberation; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Embri"
+        },
+        {
+          "id": "alien_archive_2:race:embri#bonus1",
+          "label": "Embri (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Abberation"
+        },
+        {
+          "id": "alien_archive_2:race:embri#bonus2",
+          "label": "Embri (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Abberation"
+        },
+        {
+          "id": "alien_archive_2:race:embri#race_hp",
+          "label": "Embri (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Abberation"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:espraksa",
+      "name": "Espraksa",
+      "book": "alien_archive_3",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft., Fly 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:espraksa",
+          "label": "Espraksa (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Espraksa"
+        },
+        {
+          "id": "alien_archive_3:race:espraksa#bonus1",
+          "label": "Espraksa (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:espraksa#bonus2",
+          "label": "Espraksa (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:espraksa#race_hp",
+          "label": "Espraksa (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:formian",
+      "name": "Formian",
+      "book": "alien_archive",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 40 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:formian",
+          "label": "Formian (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Formian"
+        },
+        {
+          "id": "alien_archive:race:formian#bonus1",
+          "label": "Formian (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:formian#bonus2",
+          "label": "Formian (Wis)",
+          "summary": "Value: -2; Adds to Wisdom; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:formian#race_hp",
+          "label": "Formian (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:ghoran",
+      "name": "Ghoran",
+      "book": "alien_archive_2",
+      "tags": [
+        "Plant"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:ghoran",
+          "label": "Ghoran (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Plant; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Ghoran"
+        },
+        {
+          "id": "alien_archive_2:race:ghoran#bonus1",
+          "label": "Ghoran (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Plant"
+        },
+        {
+          "id": "alien_archive_2:race:ghoran#race_hp",
+          "label": "Ghoran (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Plant"
+        }
+      ]
+    },
+    {
+      "id": "core:race:gnome",
+      "name": "Gnome",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:gnome",
+          "label": "Gnome (Str)",
+          "summary": "Value: -2; Adds to Strength; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Gnome language; Declares BaseSize as S; Declares RacialConBonus as true; Declares RacialWisBonus as true; Grants Gnome"
+        },
+        {
+          "id": "core:race:gnome#bonus1",
+          "label": "Gnome (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:gnome#race_hp",
+          "label": "Gnome (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:gray",
+      "name": "Gray",
+      "book": "alien_archive",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:gray",
+          "label": "Gray (Int)",
+          "summary": "Value: 4; Adds to Intelligence; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Gray"
+        },
+        {
+          "id": "alien_archive:race:gray#bonus1",
+          "label": "Gray (Str)",
+          "summary": "Value: -2; Adds to Strength; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:gray#race_hp",
+          "label": "Gray (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:haan",
+      "name": "Haan",
+      "book": "alien_archive",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 40 ft.\nSpace: 10 ft.\nReach: 10\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:haan",
+          "label": "Haan (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as L; Grants Haan"
+        },
+        {
+          "id": "alien_archive:race:haan#bonus1",
+          "label": "Haan (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:haan#bonus2",
+          "label": "Haan (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:haan#race_hp",
+          "label": "Haan (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "core:race:half_elf",
+      "name": "Half-Elf",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:half_elf#race_hp",
+          "label": "Half-Elf (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "core:race:half_orc",
+      "name": "Half-Orc",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:half_orc#race_hp",
+          "label": "Half-Orc (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "core:race:halfling",
+      "name": "Halfling",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:halfling",
+          "label": "Halfling (Str)",
+          "summary": "Value: -2; Adds to Strength; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Halfling language; Declares BaseSize as S; Declares RacialChaBonus as true; Declares RacialDexBonus as true; Grants Halfling"
+        },
+        {
+          "id": "core:race:halfling#bonus1",
+          "label": "Halfling (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:halfling#bonus2",
+          "label": "Halfling (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:halfling#race_hp",
+          "label": "Halfling (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:hanakan",
+      "name": "Hanakan",
+      "book": "alien_archive_3",
+      "tags": [
+        "Magical Beast"
+      ],
+      "description": "Speed: Walk 40 ft., Climb 20 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:hanakan",
+          "label": "Hanakan (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Magical Beast; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as S; Grants the Common language; Grants Hanakan"
+        },
+        {
+          "id": "alien_archive_3:race:hanakan#bonus1",
+          "label": "Hanakan (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Magical Beast"
+        },
+        {
+          "id": "alien_archive_3:race:hanakan#bonus2",
+          "label": "Hanakan (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Magical Beast"
+        },
+        {
+          "id": "alien_archive_3:race:hanakan#race_hp",
+          "label": "Hanakan (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Magical Beast"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:hobgoblin",
+      "name": "Hobgoblin",
+      "book": "alien_archive_2",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:hobgoblin",
+          "label": "Hobgoblin",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Hobgoblin"
+        },
+        {
+          "id": "alien_archive_2:race:hobgoblin#race_hp",
+          "label": "Hobgoblin (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:hortus",
+      "name": "Hortus",
+      "book": "alien_archive_3",
+      "tags": [
+        "Plant"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:hortus",
+          "label": "Hortus (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Plant; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Hortus"
+        },
+        {
+          "id": "alien_archive_3:race:hortus#bonus1",
+          "label": "Hortus (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Plant"
+        },
+        {
+          "id": "alien_archive_3:race:hortus#bonus2",
+          "label": "Hortus (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Plant"
+        },
+        {
+          "id": "alien_archive_3:race:hortus#race_hp",
+          "label": "Hortus (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Plant"
+        }
+      ]
+    },
+    {
+      "id": "core:race:human",
+      "name": "Human",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:human#race_hp",
+          "label": "Human (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:ijtikri",
+      "name": "Ijtikri",
+      "book": "alien_archive_3",
+      "tags": [
+        "Aberration"
+      ],
+      "description": "Speed: Walk 30 ft., Swim 30 ft., Crawl 15 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:ijtikri",
+          "label": "Ijtikri (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Aberration; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Ijtikri"
+        },
+        {
+          "id": "alien_archive_3:race:ijtikri#bonus1",
+          "label": "Ijtikri (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Aberration"
+        },
+        {
+          "id": "alien_archive_3:race:ijtikri#bonus2",
+          "label": "Ijtikri (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Aberration"
+        },
+        {
+          "id": "alien_archive_3:race:ijtikri#race_hp",
+          "label": "Ijtikri (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Aberration"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:ikeshti",
+      "name": "Ikeshti",
+      "book": "alien_archive",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft., Climb 15 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:ikeshti",
+          "label": "Ikeshti (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as S; Grants Ikeshti"
+        },
+        {
+          "id": "alien_archive:race:ikeshti#bonus1",
+          "label": "Ikeshti (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:ikeshti#bonus2",
+          "label": "Ikeshti (Wis)",
+          "summary": "Value: -2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:ikeshti#race_hp",
+          "label": "Ikeshti (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:izalguun",
+      "name": "Izalguun",
+      "book": "alien_archive_3",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 20 ft., Quadrupedal Walk 40 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:izalguun",
+          "label": "Izalguun (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as L; Grants the Common language; Grants Izalguun"
+        },
+        {
+          "id": "alien_archive_3:race:izalguun#bonus1",
+          "label": "Izalguun (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:izalguun#bonus2",
+          "label": "Izalguun (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:izalguun#race_hp",
+          "label": "Izalguun (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:kalo",
+      "name": "Kalo",
+      "book": "alien_archive",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 20 ft., Swim 50 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:kalo",
+          "label": "Kalo (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Kalo"
+        },
+        {
+          "id": "alien_archive:race:kalo#bonus1",
+          "label": "Kalo (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:kalo#bonus2",
+          "label": "Kalo (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:kalo#race_hp",
+          "label": "Kalo (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "core:race:kasatha",
+      "name": "Kasatha",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:kasatha",
+          "label": "Kasatha (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Kasatha language; Declares BaseSize as M; Declares RacialStrBonus as true; Declares RacialWisBonus as true; Grants Kasatha"
+        },
+        {
+          "id": "core:race:kasatha#bonus1",
+          "label": "Kasatha (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:kasatha#bonus2",
+          "label": "Kasatha (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:kasatha#race_hp",
+          "label": "Kasatha (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "pact_worlds:race:khizar",
+      "name": "Khizar",
+      "book": "pact_worlds",
+      "tags": [
+        "Plantlike"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "pact_worlds:race:khizar",
+          "label": "Khizar (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Plantlike; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Codex-Named Unit (language_core_scr_languages_lst_9) language; Declares BaseSize as M; Grants Khizar"
+        },
+        {
+          "id": "pact_worlds:race:khizar#bonus1",
+          "label": "Khizar (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Plantlike"
+        },
+        {
+          "id": "pact_worlds:race:khizar#bonus2",
+          "label": "Khizar (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Plantlike"
+        },
+        {
+          "id": "pact_worlds:race:khizar#race_hp",
+          "label": "Khizar (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Plantlike"
+        }
+      ]
+    },
+    {
+      "id": "core:race:lashunta",
+      "name": "Lashunta",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:lashunta",
+          "label": "Lashunta",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Codex-Named Unit (language_core_scr_languages_lst_9) language; Declares BaseSize as M; Declares RacialChaBonus as true; Grants Lashunta"
+        },
+        {
+          "id": "core:race:lashunta#race_hp",
+          "label": "Lashunta (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:maraquoi",
+      "name": "Maraquoi",
+      "book": "alien_archive",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft., Climb 20 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:maraquoi",
+          "label": "Maraquoi (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Maraquoi"
+        },
+        {
+          "id": "alien_archive:race:maraquoi#bonus1",
+          "label": "Maraquoi (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:maraquoi#bonus2",
+          "label": "Maraquoi (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:maraquoi#race_hp",
+          "label": "Maraquoi (racial Hit Points)",
+          "summary": "Value: 5; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:morlamaw",
+      "name": "Morlamaw",
+      "book": "alien_archive_3",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 20 ft., Swim 40 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:morlamaw",
+          "label": "Morlamaw (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as L; Grants the Common language; Grants Morlamaw"
+        },
+        {
+          "id": "alien_archive_3:race:morlamaw#bonus1",
+          "label": "Morlamaw (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:morlamaw#bonus2",
+          "label": "Morlamaw (Wis)",
+          "summary": "Value: -2; Adds to Wisdom; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:morlamaw#race_hp",
+          "label": "Morlamaw (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:nuar",
+      "name": "Nuar",
+      "book": "alien_archive",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 40 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:nuar",
+          "label": "Nuar (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Nuar"
+        },
+        {
+          "id": "alien_archive:race:nuar#bonus1",
+          "label": "Nuar (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:nuar#bonus2",
+          "label": "Nuar (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:nuar#race_hp",
+          "label": "Nuar (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:oni",
+      "name": "Oni",
+      "book": "alien_archive_2",
+      "tags": [
+        "Outsider"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:oni",
+          "label": "Oni (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Outsider; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Oni"
+        },
+        {
+          "id": "alien_archive_2:race:oni#bonus1",
+          "label": "Oni (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Outsider"
+        },
+        {
+          "id": "alien_archive_2:race:oni#bonus2",
+          "label": "Oni (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Outsider"
+        },
+        {
+          "id": "alien_archive_2:race:oni#race_hp",
+          "label": "Oni (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Outsider"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:orc",
+      "name": "Orc",
+      "book": "alien_archive_2",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:orc",
+          "label": "Orc (Str)",
+          "summary": "Value: 4; Adds to Strength; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Orc"
+        },
+        {
+          "id": "alien_archive_2:race:orc#bonus1",
+          "label": "Orc (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:orc#race_hp",
+          "label": "Orc (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:osharu",
+      "name": "Osharu",
+      "book": "alien_archive_2",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 25 ft., Swim 25 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:osharu",
+          "label": "Osharu (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Osharu"
+        },
+        {
+          "id": "alien_archive_2:race:osharu#bonus1",
+          "label": "Osharu (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:osharu#bonus2",
+          "label": "Osharu (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:osharu#race_hp",
+          "label": "Osharu (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:pahtra",
+      "name": "Pahtra",
+      "book": "alien_archive_2",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:pahtra",
+          "label": "Pahtra (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Pahtra"
+        },
+        {
+          "id": "alien_archive_2:race:pahtra#bonus1",
+          "label": "Pahtra (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:pahtra#bonus2",
+          "label": "Pahtra (Str)",
+          "summary": "Value: -2; Adds to Strength; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:pahtra#race_hp",
+          "label": "Pahtra (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:phentomite",
+      "name": "Phentomite",
+      "book": "alien_archive_2",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:phentomite",
+          "label": "Phentomite (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Phentomite"
+        },
+        {
+          "id": "alien_archive_2:race:phentomite#bonus1",
+          "label": "Phentomite (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:phentomite#bonus2",
+          "label": "Phentomite (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:phentomite#race_hp",
+          "label": "Phentomite (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:quorlu",
+      "name": "Quorlu",
+      "book": "alien_archive_2",
+      "tags": [
+        "Monstrous humanoid"
+      ],
+      "description": "Speed: Walk 25 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:quorlu",
+          "label": "Quorlu (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Monstrous humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Quorlu"
+        },
+        {
+          "id": "alien_archive_2:race:quorlu#bonus1",
+          "label": "Quorlu (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Monstrous humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:quorlu#bonus2",
+          "label": "Quorlu (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Monstrous humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:quorlu#race_hp",
+          "label": "Quorlu (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Monstrous humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:raxilite",
+      "name": "Raxilite",
+      "book": "alien_archive_3",
+      "tags": [
+        "Plant"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:raxilite",
+          "label": "Raxilite (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Plant; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as T; Grants the Common language; Grants Raxilite"
+        },
+        {
+          "id": "alien_archive_3:race:raxilite#bonus1",
+          "label": "Raxilite (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Plant"
+        },
+        {
+          "id": "alien_archive_3:race:raxilite#bonus2",
+          "label": "Raxilite (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Plant"
+        },
+        {
+          "id": "alien_archive_3:race:raxilite#bonus3",
+          "label": "Raxilite (Str)",
+          "summary": "Value: -4; Adds to Strength; Tags: Plant"
+        },
+        {
+          "id": "alien_archive_3:race:raxilite#race_hp",
+          "label": "Raxilite (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Plant"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:reptoid",
+      "name": "Reptoid",
+      "book": "alien_archive",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:reptoid",
+          "label": "Reptoid (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Reptoid"
+        },
+        {
+          "id": "alien_archive:race:reptoid#bonus1",
+          "label": "Reptoid (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:reptoid#bonus2",
+          "label": "Reptoid (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:reptoid#race_hp",
+          "label": "Reptoid (racial Hit Points)",
+          "summary": "Value: 5; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:ryphorian",
+      "name": "Ryphorian",
+      "book": "alien_archive",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:ryphorian",
+          "label": "Ryphorian (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Ryphorian"
+        },
+        {
+          "id": "alien_archive:race:ryphorian#bonus1",
+          "label": "Ryphorian (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:ryphorian#bonus2",
+          "label": "Ryphorian (Str)",
+          "summary": "Value: -2; Adds to Strength; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:ryphorian#race_hp",
+          "label": "Ryphorian (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "pact_worlds:race:sro",
+      "name": "SRO",
+      "book": "pact_worlds",
+      "tags": [
+        "Construct"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "pact_worlds:race:sro#race_hp",
+          "label": "SRO (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Construct"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:sarcesian",
+      "name": "Sarcesian",
+      "book": "alien_archive",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft., Fly 60 ft.\nSpace: 10 ft.\nReach: 10\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:sarcesian",
+          "label": "Sarcesian (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as L; Grants Sarcesian"
+        },
+        {
+          "id": "alien_archive:race:sarcesian#bonus1",
+          "label": "Sarcesian (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:sarcesian#bonus2",
+          "label": "Sarcesian (Str)",
+          "summary": "Value: -2; Adds to Strength; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:sarcesian#race_hp",
+          "label": "Sarcesian (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:sazaron",
+      "name": "Sazaron",
+      "book": "alien_archive_3",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:sazaron",
+          "label": "Sazaron (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as L; Grants the Common language; Grants Sazaron"
+        },
+        {
+          "id": "alien_archive_3:race:sazaron#bonus1",
+          "label": "Sazaron (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:sazaron#bonus2",
+          "label": "Sazaron (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:sazaron#race_hp",
+          "label": "Sazaron (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:shakalta",
+      "name": "Shakalta",
+      "book": "alien_archive_3",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:shakalta",
+          "label": "Shakalta (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Shakalta"
+        },
+        {
+          "id": "alien_archive_3:race:shakalta#bonus1",
+          "label": "Shakalta (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:shakalta#bonus2",
+          "label": "Shakalta (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:shakalta#race_hp",
+          "label": "Shakalta (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:shatori",
+      "name": "Shatori",
+      "book": "alien_archive_3",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:shatori",
+          "label": "Shatori (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Shatori"
+        },
+        {
+          "id": "alien_archive_3:race:shatori#bonus1",
+          "label": "Shatori (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:shatori#bonus2",
+          "label": "Shatori (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:shatori#race_hp",
+          "label": "Shatori (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:shimreen",
+      "name": "Shimreen",
+      "book": "alien_archive_3",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:shimreen",
+          "label": "Shimreen (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Shimreen"
+        },
+        {
+          "id": "alien_archive_3:race:shimreen#bonus1",
+          "label": "Shimreen (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:shimreen#bonus2",
+          "label": "Shimreen (Wis)",
+          "summary": "Value: -2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:shimreen#race_hp",
+          "label": "Shimreen (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "core:race:shirren",
+      "name": "Shirren",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:shirren",
+          "label": "Shirren (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Shirren language; Declares BaseSize as M; Declares RacialConBonus as true; Declares RacialWisBonus as true; Grants Shirren"
+        },
+        {
+          "id": "core:race:shirren#bonus1",
+          "label": "Shirren (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:shirren#bonus2",
+          "label": "Shirren (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:shirren#race_hp",
+          "label": "Shirren (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:shobhad",
+      "name": "Shobhad",
+      "book": "alien_archive",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 40 ft.\nSpace: 10 ft.\nReach: 10\nBody plan: humanoid\nHands: 14",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:shobhad",
+          "label": "Shobhad (Str)",
+          "summary": "Value: 4; Adds to Strength; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as L; Grants Shobhad"
+        },
+        {
+          "id": "alien_archive:race:shobhad#bonus1",
+          "label": "Shobhad (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:shobhad#race_hp",
+          "label": "Shobhad (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:skittermander",
+      "name": "Skittermander",
+      "book": "alien_archive",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid\nHands: 6",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:skittermander",
+          "label": "Skittermander (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as S; Grants Skittermander"
+        },
+        {
+          "id": "alien_archive:race:skittermander#bonus1",
+          "label": "Skittermander (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:skittermander#bonus2",
+          "label": "Skittermander (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:skittermander#race_hp",
+          "label": "Skittermander (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:space_goblin",
+      "name": "Space Goblin",
+      "book": "alien_archive",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 35 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:space_goblin",
+          "label": "Space Goblin (Dex)",
+          "summary": "Value: 4; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Space Goblin"
+        },
+        {
+          "id": "alien_archive:race:space_goblin#bonus1",
+          "label": "Space Goblin (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:space_goblin#race_hp",
+          "label": "Space Goblin (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:spathinae",
+      "name": "Spathinae",
+      "book": "alien_archive_3",
+      "tags": [
+        "Vermin"
+      ],
+      "description": "Speed: Walk 30 ft., Fly 20 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:spathinae",
+          "label": "Spathinae (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Vermin; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Spathinae"
+        },
+        {
+          "id": "alien_archive_3:race:spathinae#bonus1",
+          "label": "Spathinae (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Vermin"
+        },
+        {
+          "id": "alien_archive_3:race:spathinae#bonus2",
+          "label": "Spathinae (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Vermin"
+        },
+        {
+          "id": "alien_archive_3:race:spathinae#race_hp",
+          "label": "Spathinae (racial Hit Points)",
+          "summary": "Value: 3; Adds to hit points; Tags: Vermin"
+        }
+      ]
+    },
+    {
+      "id": "pact_worlds:race:strix",
+      "name": "Strix",
+      "book": "pact_worlds",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 20 ft., Fly 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "pact_worlds:race:strix",
+          "label": "Strix (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Vercite language; Declares BaseSize as M; Grants Strix"
+        },
+        {
+          "id": "pact_worlds:race:strix#bonus1",
+          "label": "Strix (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "pact_worlds:race:strix#bonus2",
+          "label": "Strix (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "pact_worlds:race:strix#race_hp",
+          "label": "Strix (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:telia",
+      "name": "Telia",
+      "book": "alien_archive_3",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 25 ft., Swim 20 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:telia",
+          "label": "Telia (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as M; Grants the Common language; Grants Telia"
+        },
+        {
+          "id": "alien_archive_3:race:telia#bonus1",
+          "label": "Telia (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:telia#bonus2",
+          "label": "Telia (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive_3:race:telia#race_hp",
+          "label": "Telia (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:tiefling",
+      "name": "Tiefling",
+      "book": "alien_archive_2",
+      "tags": [
+        "Outsider"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:tiefling",
+          "label": "Tiefling (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Outsider; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Tiefling"
+        },
+        {
+          "id": "alien_archive_2:race:tiefling#bonus1",
+          "label": "Tiefling (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Outsider"
+        },
+        {
+          "id": "alien_archive_2:race:tiefling#bonus2",
+          "label": "Tiefling (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Outsider"
+        },
+        {
+          "id": "alien_archive_2:race:tiefling#race_hp",
+          "label": "Tiefling (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Outsider"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:trox",
+      "name": "Trox",
+      "book": "alien_archive_2",
+      "tags": [
+        "Monstrous humanoid"
+      ],
+      "description": "Speed: Walk 40 ft., Burrow 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:trox",
+          "label": "Trox (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Monstrous humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as L; Grants Trox"
+        },
+        {
+          "id": "alien_archive_2:race:trox#bonus1",
+          "label": "Trox (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Monstrous humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:trox#bonus2",
+          "label": "Trox (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Monstrous humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:trox#race_hp",
+          "label": "Trox (racial Hit Points)",
+          "summary": "Value: 8; Adds to hit points; Tags: Monstrous humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:uplifted_bear",
+      "name": "Uplifted Bear",
+      "book": "alien_archive_2",
+      "tags": [
+        "Uplifted Bear"
+      ],
+      "description": "Speed: Walk 40 ft., Climb 20 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:uplifted_bear",
+          "label": "Uplifted Bear (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Uplifted Bear; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as L; Grants Uplifted Bear"
+        },
+        {
+          "id": "alien_archive_2:race:uplifted_bear#bonus1",
+          "label": "Uplifted Bear (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Uplifted Bear"
+        },
+        {
+          "id": "alien_archive_2:race:uplifted_bear#bonus2",
+          "label": "Uplifted Bear (Wis)",
+          "summary": "Value: -2; Adds to Wisdom; Tags: Uplifted Bear"
+        },
+        {
+          "id": "alien_archive_2:race:uplifted_bear#race_hp",
+          "label": "Uplifted Bear (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Uplifted Bear"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:urog",
+      "name": "Urog",
+      "book": "alien_archive",
+      "tags": [
+        "Magical Beast"
+      ],
+      "description": "Speed: Walk 20 ft.\nSpace: 10 ft.\nReach: 5\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:urog",
+          "label": "Urog (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Magical Beast; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as L; Grants Urog"
+        },
+        {
+          "id": "alien_archive:race:urog#bonus1",
+          "label": "Urog (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Magical Beast"
+        },
+        {
+          "id": "alien_archive:race:urog#bonus2",
+          "label": "Urog (Cha)",
+          "summary": "Value: -2; Adds to Charisma; Tags: Magical Beast"
+        },
+        {
+          "id": "alien_archive:race:urog#race_hp",
+          "label": "Urog (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Magical Beast"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_3:race:varculak",
+      "name": "Varculak",
+      "book": "alien_archive_3",
+      "tags": [
+        "Undead"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_3:race:varculak",
+          "label": "Varculak (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Undead; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Declares BaseSize as S; Grants the Common language; Grants Varculak"
+        },
+        {
+          "id": "alien_archive_3:race:varculak#bonus1",
+          "label": "Varculak (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Undead"
+        },
+        {
+          "id": "alien_archive_3:race:varculak#bonus2",
+          "label": "Varculak (Wis)",
+          "summary": "Value: -2; Adds to Wisdom; Tags: Undead"
+        },
+        {
+          "id": "alien_archive_3:race:varculak#race_hp",
+          "label": "Varculak (racial Hit Points)",
+          "summary": "Value: 3; Adds to hit points; Tags: Undead"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:verthani",
+      "name": "Verthani",
+      "book": "alien_archive",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:verthani",
+          "label": "Verthani (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Verthani"
+        },
+        {
+          "id": "alien_archive:race:verthani#bonus1",
+          "label": "Verthani (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:verthani#bonus2",
+          "label": "Verthani (Str)",
+          "summary": "Value: -2; Adds to Strength; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive:race:verthani#race_hp",
+          "label": "Verthani (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "core:race:vesk",
+      "name": "Vesk",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:vesk",
+          "label": "Vesk (Str)",
+          "summary": "Value: 2; Adds to Strength; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Vesk language; Declares BaseSize as M; Declares RacialStrBonus as true; Declares RacialConBonus as true; Grants Vesk"
+        },
+        {
+          "id": "core:race:vesk#bonus1",
+          "label": "Vesk (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:vesk#bonus2",
+          "label": "Vesk (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:vesk#race_hp",
+          "label": "Vesk (racial Hit Points)",
+          "summary": "Value: 6; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive_2:race:vlaka",
+      "name": "Vlaka",
+      "book": "alien_archive_2",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive_2:race:vlaka",
+          "label": "Vlaka (Wis)",
+          "summary": "Value: 2; Adds to Wisdom; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Vlaka"
+        },
+        {
+          "id": "alien_archive_2:race:vlaka#bonus1",
+          "label": "Vlaka (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:vlaka#bonus2",
+          "label": "Vlaka (Int)",
+          "summary": "Value: -2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "alien_archive_2:race:vlaka#race_hp",
+          "label": "Vlaka (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:witchwyrd",
+      "name": "Witchwyrd",
+      "book": "alien_archive",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.\nBody plan: humanoid\nHands: 14",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:witchwyrd",
+          "label": "Witchwyrd (Cha)",
+          "summary": "Value: 2; Adds to Charisma; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Witchwyrd"
+        },
+        {
+          "id": "alien_archive:race:witchwyrd#bonus1",
+          "label": "Witchwyrd (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:witchwyrd#bonus2",
+          "label": "Witchwyrd (Con)",
+          "summary": "Value: -2; Adds to Constitution; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:witchwyrd#race_hp",
+          "label": "Witchwyrd (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "alien_archive:race:wrikreechee",
+      "name": "Wrikreechee",
+      "book": "alien_archive",
+      "tags": [
+        "Monstrous Humanoid"
+      ],
+      "description": "Speed: Walk 20 ft., Swim 30 ft.\nBody plan: humanoid",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "alien_archive:race:wrikreechee",
+          "label": "Wrikreechee (Con)",
+          "summary": "Value: 2; Adds to Constitution; Tags: Monstrous Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Declares BaseSize as M; Grants Wrikreechee"
+        },
+        {
+          "id": "alien_archive:race:wrikreechee#bonus1",
+          "label": "Wrikreechee (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:wrikreechee#bonus2",
+          "label": "Wrikreechee (Dex)",
+          "summary": "Value: -2; Adds to Dexterity; Tags: Monstrous Humanoid"
+        },
+        {
+          "id": "alien_archive:race:wrikreechee#race_hp",
+          "label": "Wrikreechee (racial Hit Points)",
+          "summary": "Value: 4; Adds to hit points; Tags: Monstrous Humanoid"
+        }
+      ]
+    },
+    {
+      "id": "core:race:ysoki",
+      "name": "Ysoki",
+      "book": "core",
+      "tags": [
+        "Humanoid"
+      ],
+      "description": "Speed: Walk 30 ft.",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:race:ysoki",
+          "label": "Ysoki (Str)",
+          "summary": "Value: -2; Adds to Strength; Tags: Humanoid; Offers a choice of the higher of 0 and Intelligence modifier from languages: Spoken; Grants the Common language; Grants the Ysoki language; Declares BaseSize as S; Declares RacialDexBonus as true; Declares RacialIntBonus as true; Grants Ysoki"
+        },
+        {
+          "id": "core:race:ysoki#bonus1",
+          "label": "Ysoki (Int)",
+          "summary": "Value: 2; Adds to Intelligence; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:ysoki#bonus2",
+          "label": "Ysoki (Dex)",
+          "summary": "Value: 2; Adds to Dexterity; Tags: Humanoid"
+        },
+        {
+          "id": "core:race:ysoki#race_hp",
+          "label": "Ysoki (racial Hit Points)",
+          "summary": "Value: 2; Adds to hit points; Tags: Humanoid"
+        }
+      ]
+    }
+  ]
+}

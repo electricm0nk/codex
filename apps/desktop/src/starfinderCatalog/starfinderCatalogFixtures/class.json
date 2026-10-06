@@ -1,0 +1,698 @@
+{
+  "kind": "class",
+  "source": "data/starfinder-1e/sheet_rules",
+  "entries": [
+    {
+      "id": "character_operations_manual:class:biohacker",
+      "name": "Biohacker",
+      "book": "character_operations_manual",
+      "tags": [
+        "Base",
+        "PC"
+      ],
+      "description": "Skill ranks per level: 4",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "character_operations_manual:class:biohacker",
+          "label": "Biohacker",
+          "summary": "Value: biohacker level times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if biohacker level at most 20; Declares KeyAbilityScore as INT or WIS; Declares Abb as Bio; Declares ClassType as PC; Grants bluff as a class skill; Grants computers as a class skill; Grants culture as a class skill; Grants diplomacy as a class skill; Grants engineering as a class skill; Grants life science as a class skill; Grants medicine as a class skill; Grants perception as a class skill; Grants physical science as a class skill; Grants every Profession skill as a class skill; Grants sense motive as a class skill; Grants sleight of hand as a class skill; Grants Class ~ Biohacker"
+        },
+        {
+          "id": "character_operations_manual:class:biohacker#bonus1",
+          "label": "Biohacker (hit points)",
+          "summary": "Value: 5 times biohacker level; Adds to hit points; Tags: Base, PC; Applies if biohacker level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:biohacker#bonus2",
+          "label": "Biohacker (Stamina Points)",
+          "summary": "Value: 6 times biohacker level; Adds to Stamina Points; Tags: Base, PC; Applies if biohacker level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:biohacker#bonus3",
+          "label": "Biohacker (base Fortitude save)",
+          "summary": "Value: biohacker level divided by 2 plus 2; Adds to the base Fortitude save; Tags: Base, PC; Applies if biohacker level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:biohacker#bonus4",
+          "label": "Biohacker (base Reflex save)",
+          "summary": "Value: biohacker level divided by 3; Adds to the base Reflex save; Tags: Base, PC; Applies if biohacker level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:biohacker#bonus5",
+          "label": "Biohacker (base Will save)",
+          "summary": "Value: biohacker level divided by 3; Adds to the base Will save; Tags: Base, PC; Applies if biohacker level at most 20"
+        }
+      ]
+    },
+    {
+      "id": "core:class:drone",
+      "name": "Drone",
+      "book": "core",
+      "tags": [
+        "Monster"
+      ],
+      "description": null,
+      "descriptionTier": null,
+      "rows": [
+        {
+          "id": "core:class:drone",
+          "label": "Drone",
+          "summary": "Value: Drone LVL plus 1 times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Monster; Declares ClassType as Monster; Granted by Drone"
+        },
+        {
+          "id": "core:class:drone#bonus1",
+          "label": "Drone (hit points)",
+          "summary": "Value: 10 times Drone LVL plus the lower of 1 and the higher of 0 and Drone LVL plus -18 plus 1 times 10 plus the lower of 1 and the higher of 0 and Drone LVL plus -19 plus 1 times 10 plus the lower of 1 and the higher of 0 and Drone LVL plus -20 plus 1 times 10; Adds to hit points; Tags: Monster"
+        },
+        {
+          "id": "core:class:drone#bonus2",
+          "label": "Drone (base Fortitude save)",
+          "summary": "Value: Drone LVL divided by 2 plus 2; Adds to the base Fortitude save; Tags: Monster; Applies if Drone Good Save Fort exactly 1"
+        },
+        {
+          "id": "core:class:drone#bonus3",
+          "label": "Drone (base Fortitude save)",
+          "summary": "Value: Drone LVL divided by 3; Adds to the base Fortitude save; Tags: Monster; Applies if Drone Good Save Fort exactly 0"
+        },
+        {
+          "id": "core:class:drone#bonus4",
+          "label": "Drone (base Reflex save)",
+          "summary": "Value: Drone LVL divided by 2 plus 2; Adds to the base Reflex save; Tags: Monster; Applies if Drone Good Save Reflex exactly 1"
+        },
+        {
+          "id": "core:class:drone#bonus5",
+          "label": "Drone (base Reflex save)",
+          "summary": "Value: Drone LVL divided by 3; Adds to the base Reflex save; Tags: Monster; Applies if Drone Good Save Reflex exactly 0"
+        },
+        {
+          "id": "core:class:drone#bonus6",
+          "label": "Drone (base Will save)",
+          "summary": "Value: Drone LVL divided by 2 plus 2; Adds to the base Will save; Tags: Monster; Applies if Drone Good Save Will exactly 1"
+        },
+        {
+          "id": "core:class:drone#bonus7",
+          "label": "Drone (base Will save)",
+          "summary": "Value: Drone LVL divided by 3; Adds to the base Will save; Tags: Monster; Applies if Drone Good Save Will exactly 0"
+        }
+      ]
+    },
+    {
+      "id": "core:class:envoy",
+      "name": "Envoy",
+      "book": "core",
+      "tags": [
+        "Base",
+        "PC"
+      ],
+      "description": "Skill ranks per level: 8",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:class:envoy",
+          "label": "Envoy",
+          "summary": "Value: envoy level times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if envoy level at most 20; Declares KeyAbilityScore as CHA; Declares Abb as Evy; Declares ClassType as PC; Grants acrobatics as a class skill; Grants intimidate as a class skill; Grants athletics as a class skill; Grants medicine as a class skill; Grants bluff as a class skill; Grants perception as a class skill; Grants computers as a class skill; Grants piloting as a class skill; Grants culture as a class skill; Grants every Profession skill as a class skill; Grants diplomacy as a class skill; Grants sense motive as a class skill; Grants disguise as a class skill; Grants sleight of hand as a class skill; Grants engineering as a class skill; Grants stealth as a class skill; Grants Class ~ Envoy"
+        },
+        {
+          "id": "core:class:envoy#bonus1",
+          "label": "Envoy (hit points)",
+          "summary": "Value: 5 times envoy level; Adds to hit points; Tags: Base, PC; Applies if envoy level at most 20"
+        },
+        {
+          "id": "core:class:envoy#bonus2",
+          "label": "Envoy (Stamina Points)",
+          "summary": "Value: 6 times envoy level; Adds to Stamina Points; Tags: Base, PC; Applies if envoy level at most 20"
+        },
+        {
+          "id": "core:class:envoy#bonus3",
+          "label": "Envoy (base Fortitude save)",
+          "summary": "Value: envoy level divided by 3; Adds to the base Fortitude save; Tags: Base, PC; Applies if envoy level at most 20"
+        },
+        {
+          "id": "core:class:envoy#bonus4",
+          "label": "Envoy (base Reflex save)",
+          "summary": "Value: envoy level divided by 2 plus 2; Adds to the base Reflex save; Tags: Base, PC; Applies if envoy level at most 20"
+        },
+        {
+          "id": "core:class:envoy#bonus5",
+          "label": "Envoy (base Will save)",
+          "summary": "Value: envoy level divided by 2 plus 2; Adds to the base Will save; Tags: Base, PC; Applies if envoy level at most 20"
+        }
+      ]
+    },
+    {
+      "id": "core:class:mechanic",
+      "name": "Mechanic",
+      "book": "core",
+      "tags": [
+        "Base",
+        "PC"
+      ],
+      "description": "Skill ranks per level: 4",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:class:mechanic",
+          "label": "Mechanic",
+          "summary": "Value: mechanic level times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if mechanic level at most 20; Declares KeyAbilityScore as INT; Declares Abb as Mnc; Declares ClassType as PC; Grants athletics as a class skill; Grants perception as a class skill; Grants computers as a class skill; Grants physical science as a class skill; Grants engineering as a class skill; Grants piloting as a class skill; Grants medicine as a class skill; Grants every Profession skill as a class skill; Grants Class ~ Mechanic"
+        },
+        {
+          "id": "core:class:mechanic#bonus1",
+          "label": "Mechanic (hit points)",
+          "summary": "Value: 5 times mechanic level; Adds to hit points; Tags: Base, PC; Applies if mechanic level at most 20"
+        },
+        {
+          "id": "core:class:mechanic#bonus2",
+          "label": "Mechanic (Stamina Points)",
+          "summary": "Value: 6 times mechanic level; Adds to Stamina Points; Tags: Base, PC; Applies if mechanic level at most 20"
+        },
+        {
+          "id": "core:class:mechanic#bonus3",
+          "label": "Mechanic (base Fortitude save)",
+          "summary": "Value: mechanic level divided by 2 plus 2; Adds to the base Fortitude save; Tags: Base, PC; Applies if mechanic level at most 20"
+        },
+        {
+          "id": "core:class:mechanic#bonus4",
+          "label": "Mechanic (base Reflex save)",
+          "summary": "Value: mechanic level divided by 2 plus 2; Adds to the base Reflex save; Tags: Base, PC; Applies if mechanic level at most 20"
+        },
+        {
+          "id": "core:class:mechanic#bonus5",
+          "label": "Mechanic (base Will save)",
+          "summary": "Value: mechanic level divided by 3; Adds to the base Will save; Tags: Base, PC; Applies if mechanic level at most 20"
+        }
+      ]
+    },
+    {
+      "id": "core:class:mystic",
+      "name": "Mystic",
+      "book": "core",
+      "tags": [
+        "Base",
+        "PC"
+      ],
+      "description": "Skill ranks per level: 6",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:class:mystic",
+          "label": "Mystic",
+          "summary": "Value: mystic level times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if mystic level at most 20; Declares KeyAbilityScore as WIS; Declares Abb as Mys; Declares ClassType as PC; Declares SpellType as Spell; Grants bluff as a class skill; Grants medicine as a class skill; Grants culture as a class skill; Grants mysticism as a class skill; Grants diplomacy as a class skill; Grants perception as a class skill; Grants disguise as a class skill; Grants every Profession skill as a class skill; Grants intimidate as a class skill; Grants sense motive as a class skill; Grants life science as a class skill; Grants survival as a class skill; Grants Class ~ Mystic"
+        },
+        {
+          "id": "core:class:mystic#bonus1",
+          "label": "Mystic (hit points)",
+          "summary": "Value: 5 times mystic level; Adds to hit points; Tags: Base, PC; Applies if mystic level at most 20"
+        },
+        {
+          "id": "core:class:mystic#bonus2",
+          "label": "Mystic (Stamina Points)",
+          "summary": "Value: 6 times mystic level; Adds to Stamina Points; Tags: Base, PC; Applies if mystic level at most 20"
+        },
+        {
+          "id": "core:class:mystic#bonus3",
+          "label": "Mystic (base Fortitude save)",
+          "summary": "Value: mystic level divided by 3; Adds to the base Fortitude save; Tags: Base, PC; Applies if mystic level at most 20"
+        },
+        {
+          "id": "core:class:mystic#bonus4",
+          "label": "Mystic (base Reflex save)",
+          "summary": "Value: mystic level divided by 3; Adds to the base Reflex save; Tags: Base, PC; Applies if mystic level at most 20"
+        },
+        {
+          "id": "core:class:mystic#bonus5",
+          "label": "Mystic (base Will save)",
+          "summary": "Value: mystic level divided by 2 plus 2; Adds to the base Will save; Tags: Base, PC; Applies if mystic level at most 20"
+        },
+        {
+          "id": "core:class:mystic#bonus6",
+          "label": "Mystic (caster level)",
+          "summary": "Value: mystic level; Adds to caster level as a mystic; Tags: Base, PC; Applies if mystic level at most 20"
+        },
+        {
+          "id": "core:class:mystic#spells_known_0",
+          "label": "Mystic (level 0 spells known)",
+          "summary": "Value: 4 plus the lower of 1 and the higher of 0 and mystic level plus -1 plus the lower of 1 and the higher of 0 and mystic level plus -2; Adds to level 0 mystic spells known; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 1"
+        },
+        {
+          "id": "core:class:mystic#spells_known_1",
+          "label": "Mystic (level 1 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -1 plus the lower of 1 and the higher of 0 and mystic level plus -2 plus the lower of 1 and the higher of 0 and mystic level plus -6 plus the lower of 1 and the higher of 0 and mystic level plus -10; Adds to level 1 mystic spells known; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 1"
+        },
+        {
+          "id": "core:class:mystic#spells_known_2",
+          "label": "Mystic (level 2 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -4 plus the lower of 1 and the higher of 0 and mystic level plus -5 plus the lower of 1 and the higher of 0 and mystic level plus -9 plus the lower of 1 and the higher of 0 and mystic level plus -13; Adds to level 2 mystic spells known; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 4"
+        },
+        {
+          "id": "core:class:mystic#spells_known_3",
+          "label": "Mystic (level 3 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -7 plus the lower of 1 and the higher of 0 and mystic level plus -8 plus the lower of 1 and the higher of 0 and mystic level plus -12 plus the lower of 1 and the higher of 0 and mystic level plus -16; Adds to level 3 mystic spells known; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 7"
+        },
+        {
+          "id": "core:class:mystic#spells_known_4",
+          "label": "Mystic (level 4 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -10 plus the lower of 1 and the higher of 0 and mystic level plus -11 plus the lower of 1 and the higher of 0 and mystic level plus -15 plus the lower of 1 and the higher of 0 and mystic level plus -19; Adds to level 4 mystic spells known; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 10"
+        },
+        {
+          "id": "core:class:mystic#spells_known_5",
+          "label": "Mystic (level 5 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -13 plus the lower of 1 and the higher of 0 and mystic level plus -14 plus the lower of 1 and the higher of 0 and mystic level plus -18; Adds to level 5 mystic spells known; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 13"
+        },
+        {
+          "id": "core:class:mystic#spells_known_6",
+          "label": "Mystic (level 6 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -16 plus the lower of 1 and the higher of 0 and mystic level plus -17 plus the lower of 1 and the higher of 0 and mystic level plus -19; Adds to level 6 mystic spells known; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 16"
+        },
+        {
+          "id": "core:class:mystic#spells_per_day_1",
+          "label": "Mystic (level 1 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -2 plus the lower of 1 and the higher of 0 and mystic level plus -4 plus the lower of 1 and the higher of 0 and mystic level plus -8; Adds to level 1 mystic spells per day; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 1"
+        },
+        {
+          "id": "core:class:mystic#spells_per_day_2",
+          "label": "Mystic (level 2 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -5 plus the lower of 1 and the higher of 0 and mystic level plus -7 plus the lower of 1 and the higher of 0 and mystic level plus -11; Adds to level 2 mystic spells per day; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 4"
+        },
+        {
+          "id": "core:class:mystic#spells_per_day_3",
+          "label": "Mystic (level 3 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -8 plus the lower of 1 and the higher of 0 and mystic level plus -10 plus the lower of 1 and the higher of 0 and mystic level plus -14; Adds to level 3 mystic spells per day; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 7"
+        },
+        {
+          "id": "core:class:mystic#spells_per_day_4",
+          "label": "Mystic (level 4 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -11 plus the lower of 1 and the higher of 0 and mystic level plus -13 plus the lower of 1 and the higher of 0 and mystic level plus -17; Adds to level 4 mystic spells per day; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 10"
+        },
+        {
+          "id": "core:class:mystic#spells_per_day_5",
+          "label": "Mystic (level 5 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -14 plus the lower of 1 and the higher of 0 and mystic level plus -16 plus the lower of 1 and the higher of 0 and mystic level plus -18; Adds to level 5 mystic spells per day; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 13"
+        },
+        {
+          "id": "core:class:mystic#spells_per_day_6",
+          "label": "Mystic (level 6 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and mystic level plus -17 plus the lower of 1 and the higher of 0 and mystic level plus -18 plus the lower of 1 and the higher of 0 and mystic level plus -19; Adds to level 6 mystic spells per day; Tags: Base, PC; Applies if mystic level at most 20 and mystic level at least 16"
+        }
+      ]
+    },
+    {
+      "id": "core:class:operative",
+      "name": "Operative",
+      "book": "core",
+      "tags": [
+        "Base",
+        "PC"
+      ],
+      "description": "Skill ranks per level: 8",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:class:operative",
+          "label": "Operative",
+          "summary": "Value: operative level times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if operative level at most 20; Declares KeyAbilityScore as DEX; Declares Abb as Opr; Declares ClassType as PC; Grants acrobatics as a class skill; Grants medicine as a class skill; Grants athletics as a class skill; Grants perception as a class skill; Grants bluff as a class skill; Grants piloting as a class skill; Grants computers as a class skill; Grants every Profession skill as a class skill; Grants culture as a class skill; Grants sense motive as a class skill; Grants disguise as a class skill; Grants sleight of hand as a class skill; Grants engineering as a class skill; Grants stealth as a class skill; Grants intimidate as a class skill; Grants survival as a class skill; Grants Class ~ Operative"
+        },
+        {
+          "id": "core:class:operative#bonus1",
+          "label": "Operative (hit points)",
+          "summary": "Value: 5 times operative level; Adds to hit points; Tags: Base, PC; Applies if operative level at most 20"
+        },
+        {
+          "id": "core:class:operative#bonus2",
+          "label": "Operative (Stamina Points)",
+          "summary": "Value: 6 times operative level; Adds to Stamina Points; Tags: Base, PC; Applies if operative level at most 20"
+        },
+        {
+          "id": "core:class:operative#bonus3",
+          "label": "Operative (base Fortitude save)",
+          "summary": "Value: operative level divided by 3; Adds to the base Fortitude save; Tags: Base, PC; Applies if operative level at most 20"
+        },
+        {
+          "id": "core:class:operative#bonus4",
+          "label": "Operative (base Reflex save)",
+          "summary": "Value: operative level divided by 2 plus 2; Adds to the base Reflex save; Tags: Base, PC; Applies if operative level at most 20"
+        },
+        {
+          "id": "core:class:operative#bonus5",
+          "label": "Operative (base Will save)",
+          "summary": "Value: operative level divided by 2 plus 2; Adds to the base Will save; Tags: Base, PC; Applies if operative level at most 20"
+        }
+      ]
+    },
+    {
+      "id": "core:class:solarian",
+      "name": "Solarian",
+      "book": "core",
+      "tags": [
+        "Base",
+        "PC"
+      ],
+      "description": "Skill ranks per level: 4",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:class:solarian",
+          "label": "Solarian",
+          "summary": "Value: solarian level; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if solarian level at most 20; Declares KeyAbilityScore as CHA; Declares Abb as Sol; Declares ClassType as PC; Grants acrobatics as a class skill; Grants perception as a class skill; Grants athletics as a class skill; Grants physical science as a class skill; Grants diplomacy as a class skill; Grants every Profession skill as a class skill; Grants intimidate as a class skill; Grants sense motive as a class skill; Grants mysticism as a class skill; Grants stealth as a class skill; Grants Class ~ Solarian"
+        },
+        {
+          "id": "core:class:solarian#bonus1",
+          "label": "Solarian (hit points)",
+          "summary": "Value: 6 times solarian level; Adds to hit points; Tags: Base, PC; Applies if solarian level at most 20"
+        },
+        {
+          "id": "core:class:solarian#bonus2",
+          "label": "Solarian (Stamina Points)",
+          "summary": "Value: 7 times solarian level; Adds to Stamina Points; Tags: Base, PC; Applies if solarian level at most 20"
+        },
+        {
+          "id": "core:class:solarian#bonus3",
+          "label": "Solarian (base Fortitude save)",
+          "summary": "Value: solarian level divided by 2 plus 2; Adds to the base Fortitude save; Tags: Base, PC; Applies if solarian level at most 20"
+        },
+        {
+          "id": "core:class:solarian#bonus4",
+          "label": "Solarian (base Reflex save)",
+          "summary": "Value: solarian level divided by 3; Adds to the base Reflex save; Tags: Base, PC; Applies if solarian level at most 20"
+        },
+        {
+          "id": "core:class:solarian#bonus5",
+          "label": "Solarian (base Will save)",
+          "summary": "Value: solarian level divided by 2 plus 2; Adds to the base Will save; Tags: Base, PC; Applies if solarian level at most 20"
+        }
+      ]
+    },
+    {
+      "id": "core:class:soldier",
+      "name": "Soldier",
+      "book": "core",
+      "tags": [
+        "Base",
+        "PC"
+      ],
+      "description": "Skill ranks per level: 4",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:class:soldier",
+          "label": "Soldier",
+          "summary": "Value: soldier level; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if soldier level at most 20; Declares KeyAbilityScore as Str or Dex; Declares Abb as Sld; Declares ClassType as PC; Grants acrobatics as a class skill; Grants medicine as a class skill; Grants athletics as a class skill; Grants piloting as a class skill; Grants engineering as a class skill; Grants every Profession skill as a class skill; Grants intimidate as a class skill; Grants survival as a class skill; Grants Class ~ Soldier"
+        },
+        {
+          "id": "core:class:soldier#bonus1",
+          "label": "Soldier (hit points)",
+          "summary": "Value: 6 times soldier level; Adds to hit points; Tags: Base, PC; Applies if soldier level at most 20"
+        },
+        {
+          "id": "core:class:soldier#bonus2",
+          "label": "Soldier (Stamina Points)",
+          "summary": "Value: 7 times soldier level; Adds to Stamina Points; Tags: Base, PC; Applies if soldier level at most 20"
+        },
+        {
+          "id": "core:class:soldier#bonus3",
+          "label": "Soldier (base Fortitude save)",
+          "summary": "Value: soldier level divided by 2 plus 2; Adds to the base Fortitude save; Tags: Base, PC; Applies if soldier level at most 20"
+        },
+        {
+          "id": "core:class:soldier#bonus4",
+          "label": "Soldier (base Reflex save)",
+          "summary": "Value: soldier level divided by 3; Adds to the base Reflex save; Tags: Base, PC; Applies if soldier level at most 20"
+        },
+        {
+          "id": "core:class:soldier#bonus5",
+          "label": "Soldier (base Will save)",
+          "summary": "Value: soldier level divided by 2 plus 2; Adds to the base Will save; Tags: Base, PC; Applies if soldier level at most 20"
+        }
+      ]
+    },
+    {
+      "id": "core:class:technomancer",
+      "name": "Technomancer",
+      "book": "core",
+      "tags": [
+        "Base",
+        "PC"
+      ],
+      "description": "Skill ranks per level: 4",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "core:class:technomancer",
+          "label": "Technomancer",
+          "summary": "Value: technomancer level times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if technomancer level at most 20; Declares KeyAbilityScore as INT; Declares Abb as Tec; Declares ClassType as PC; Declares SpellType as Spell; Grants computers as a class skill; Grants physical science as a class skill; Grants engineering as a class skill; Grants piloting as a class skill; Grants life science as a class skill; Grants every Profession skill as a class skill; Grants mysticism as a class skill; Grants sleight of hand as a class skill; Grants Class ~ Technomancer"
+        },
+        {
+          "id": "core:class:technomancer#bonus1",
+          "label": "Technomancer (hit points)",
+          "summary": "Value: 4 times technomancer level; Adds to hit points; Tags: Base, PC; Applies if technomancer level at most 20"
+        },
+        {
+          "id": "core:class:technomancer#bonus2",
+          "label": "Technomancer (Stamina Points)",
+          "summary": "Value: 5 times technomancer level; Adds to Stamina Points; Tags: Base, PC; Applies if technomancer level at most 20"
+        },
+        {
+          "id": "core:class:technomancer#bonus3",
+          "label": "Technomancer (base Fortitude save)",
+          "summary": "Value: technomancer level divided by 3; Adds to the base Fortitude save; Tags: Base, PC; Applies if technomancer level at most 20"
+        },
+        {
+          "id": "core:class:technomancer#bonus4",
+          "label": "Technomancer (base Reflex save)",
+          "summary": "Value: technomancer level divided by 3; Adds to the base Reflex save; Tags: Base, PC; Applies if technomancer level at most 20"
+        },
+        {
+          "id": "core:class:technomancer#bonus5",
+          "label": "Technomancer (base Will save)",
+          "summary": "Value: technomancer level divided by 2 plus 2; Adds to the base Will save; Tags: Base, PC; Applies if technomancer level at most 20"
+        },
+        {
+          "id": "core:class:technomancer#bonus6",
+          "label": "Technomancer (caster level)",
+          "summary": "Value: technomancer level; Adds to caster level as a technomancer; Tags: Base, PC; Applies if technomancer level at most 20"
+        },
+        {
+          "id": "core:class:technomancer#spells_known_0",
+          "label": "Technomancer (level 0 spells known)",
+          "summary": "Value: 4 plus the lower of 1 and the higher of 0 and technomancer level plus -1 plus the lower of 1 and the higher of 0 and technomancer level plus -2; Adds to level 0 technomancer spells known; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 1"
+        },
+        {
+          "id": "core:class:technomancer#spells_known_1",
+          "label": "Technomancer (level 1 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -1 plus the lower of 1 and the higher of 0 and technomancer level plus -2 plus the lower of 1 and the higher of 0 and technomancer level plus -6 plus the lower of 1 and the higher of 0 and technomancer level plus -10; Adds to level 1 technomancer spells known; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 1"
+        },
+        {
+          "id": "core:class:technomancer#spells_known_2",
+          "label": "Technomancer (level 2 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -4 plus the lower of 1 and the higher of 0 and technomancer level plus -5 plus the lower of 1 and the higher of 0 and technomancer level plus -9 plus the lower of 1 and the higher of 0 and technomancer level plus -13; Adds to level 2 technomancer spells known; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 4"
+        },
+        {
+          "id": "core:class:technomancer#spells_known_3",
+          "label": "Technomancer (level 3 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -7 plus the lower of 1 and the higher of 0 and technomancer level plus -8 plus the lower of 1 and the higher of 0 and technomancer level plus -12 plus the lower of 1 and the higher of 0 and technomancer level plus -16; Adds to level 3 technomancer spells known; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 7"
+        },
+        {
+          "id": "core:class:technomancer#spells_known_4",
+          "label": "Technomancer (level 4 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -10 plus the lower of 1 and the higher of 0 and technomancer level plus -11 plus the lower of 1 and the higher of 0 and technomancer level plus -15 plus the lower of 1 and the higher of 0 and technomancer level plus -19; Adds to level 4 technomancer spells known; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 10"
+        },
+        {
+          "id": "core:class:technomancer#spells_known_5",
+          "label": "Technomancer (level 5 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -13 plus the lower of 1 and the higher of 0 and technomancer level plus -14 plus the lower of 1 and the higher of 0 and technomancer level plus -18; Adds to level 5 technomancer spells known; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 13"
+        },
+        {
+          "id": "core:class:technomancer#spells_known_6",
+          "label": "Technomancer (level 6 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -16 plus the lower of 1 and the higher of 0 and technomancer level plus -17 plus the lower of 1 and the higher of 0 and technomancer level plus -19; Adds to level 6 technomancer spells known; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 16"
+        },
+        {
+          "id": "core:class:technomancer#spells_per_day_1",
+          "label": "Technomancer (level 1 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -2 plus the lower of 1 and the higher of 0 and technomancer level plus -4 plus the lower of 1 and the higher of 0 and technomancer level plus -8; Adds to level 1 technomancer spells per day; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 1"
+        },
+        {
+          "id": "core:class:technomancer#spells_per_day_2",
+          "label": "Technomancer (level 2 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -5 plus the lower of 1 and the higher of 0 and technomancer level plus -7 plus the lower of 1 and the higher of 0 and technomancer level plus -11; Adds to level 2 technomancer spells per day; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 4"
+        },
+        {
+          "id": "core:class:technomancer#spells_per_day_3",
+          "label": "Technomancer (level 3 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -8 plus the lower of 1 and the higher of 0 and technomancer level plus -10 plus the lower of 1 and the higher of 0 and technomancer level plus -14; Adds to level 3 technomancer spells per day; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 7"
+        },
+        {
+          "id": "core:class:technomancer#spells_per_day_4",
+          "label": "Technomancer (level 4 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -11 plus the lower of 1 and the higher of 0 and technomancer level plus -13 plus the lower of 1 and the higher of 0 and technomancer level plus -17; Adds to level 4 technomancer spells per day; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 10"
+        },
+        {
+          "id": "core:class:technomancer#spells_per_day_5",
+          "label": "Technomancer (level 5 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -14 plus the lower of 1 and the higher of 0 and technomancer level plus -16 plus the lower of 1 and the higher of 0 and technomancer level plus -18; Adds to level 5 technomancer spells per day; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 13"
+        },
+        {
+          "id": "core:class:technomancer#spells_per_day_6",
+          "label": "Technomancer (level 6 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and technomancer level plus -17 plus the lower of 1 and the higher of 0 and technomancer level plus -18 plus the lower of 1 and the higher of 0 and technomancer level plus -19; Adds to level 6 technomancer spells per day; Tags: Base, PC; Applies if technomancer level at most 20 and technomancer level at least 16"
+        }
+      ]
+    },
+    {
+      "id": "character_operations_manual:class:vanguard",
+      "name": "Vanguard",
+      "book": "character_operations_manual",
+      "tags": [
+        "Base",
+        "PC"
+      ],
+      "description": "Skill ranks per level: 6",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "character_operations_manual:class:vanguard",
+          "label": "Vanguard",
+          "summary": "Value: vanguard level; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if vanguard level at most 20; Declares KeyAbilityScore as CON; Declares Abb as Van; Declares ClassType as PC; Grants acrobatics as a class skill; Grants athletics as a class skill; Grants culture as a class skill; Grants diplomacy as a class skill; Grants intimidate as a class skill; Grants life science as a class skill; Grants medicine as a class skill; Grants mysticism as a class skill; Grants perception as a class skill; Grants every Profession skill as a class skill; Grants stealth as a class skill; Grants survival as a class skill; Grants Class ~ Vanguard"
+        },
+        {
+          "id": "character_operations_manual:class:vanguard#bonus1",
+          "label": "Vanguard (hit points)",
+          "summary": "Value: 6 times vanguard level; Adds to hit points; Tags: Base, PC; Applies if vanguard level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:vanguard#bonus2",
+          "label": "Vanguard (Stamina Points)",
+          "summary": "Value: 7 times vanguard level; Adds to Stamina Points; Tags: Base, PC; Applies if vanguard level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:vanguard#bonus3",
+          "label": "Vanguard (base Fortitude save)",
+          "summary": "Value: vanguard level divided by 2 plus 2; Adds to the base Fortitude save; Tags: Base, PC; Applies if vanguard level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:vanguard#bonus4",
+          "label": "Vanguard (base Reflex save)",
+          "summary": "Value: vanguard level divided by 2 plus 2; Adds to the base Reflex save; Tags: Base, PC; Applies if vanguard level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:vanguard#bonus5",
+          "label": "Vanguard (base Will save)",
+          "summary": "Value: vanguard level divided by 3; Adds to the base Will save; Tags: Base, PC; Applies if vanguard level at most 20"
+        }
+      ]
+    },
+    {
+      "id": "character_operations_manual:class:witchwarper",
+      "name": "Witchwarper",
+      "book": "character_operations_manual",
+      "tags": [
+        "Base",
+        "PC"
+      ],
+      "description": "Skill ranks per level: 4",
+      "descriptionTier": "statBlock",
+      "rows": [
+        {
+          "id": "character_operations_manual:class:witchwarper",
+          "label": "Witchwarper",
+          "summary": "Value: witchwarper level times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if witchwarper level at most 20; Declares KeyAbilityScore as CHA; Declares Abb as WRP; Declares ClassType as PC; Declares SpellType as Spell; Grants acrobatics as a class skill; Grants bluff as a class skill; Grants culture as a class skill; Grants diplomacy as a class skill; Grants intimidate as a class skill; Grants mysticism as a class skill; Grants physical science as a class skill; Grants every Profession skill as a class skill; Grants Class ~ Witchwarper"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#bonus1",
+          "label": "Witchwarper (hit points)",
+          "summary": "Value: 4 times witchwarper level; Adds to hit points; Tags: Base, PC; Applies if witchwarper level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#bonus2",
+          "label": "Witchwarper (Stamina Points)",
+          "summary": "Value: 5 times witchwarper level; Adds to Stamina Points; Tags: Base, PC; Applies if witchwarper level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#bonus3",
+          "label": "Witchwarper (base Fortitude save)",
+          "summary": "Value: witchwarper level divided by 3; Adds to the base Fortitude save; Tags: Base, PC; Applies if witchwarper level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#bonus4",
+          "label": "Witchwarper (base Reflex save)",
+          "summary": "Value: witchwarper level divided by 2 plus 2; Adds to the base Reflex save; Tags: Base, PC; Applies if witchwarper level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#bonus5",
+          "label": "Witchwarper (base Will save)",
+          "summary": "Value: witchwarper level divided by 3; Adds to the base Will save; Tags: Base, PC; Applies if witchwarper level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#bonus6",
+          "label": "Witchwarper (caster level)",
+          "summary": "Value: witchwarper level; Adds to caster level as a witchwarper; Tags: Base, PC; Applies if witchwarper level at most 20"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_known_0",
+          "label": "Witchwarper (level 0 spells known)",
+          "summary": "Value: 4 plus the lower of 1 and the higher of 0 and witchwarper level plus -1 plus the lower of 1 and the higher of 0 and witchwarper level plus -2; Adds to level 0 witchwarper spells known; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 1"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_known_1",
+          "label": "Witchwarper (level 1 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -1 plus the lower of 1 and the higher of 0 and witchwarper level plus -2 plus the lower of 1 and the higher of 0 and witchwarper level plus -6 plus the lower of 1 and the higher of 0 and witchwarper level plus -10; Adds to level 1 witchwarper spells known; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 1"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_known_2",
+          "label": "Witchwarper (level 2 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -4 plus the lower of 1 and the higher of 0 and witchwarper level plus -5 plus the lower of 1 and the higher of 0 and witchwarper level plus -9 plus the lower of 1 and the higher of 0 and witchwarper level plus -13; Adds to level 2 witchwarper spells known; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 4"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_known_3",
+          "label": "Witchwarper (level 3 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -7 plus the lower of 1 and the higher of 0 and witchwarper level plus -8 plus the lower of 1 and the higher of 0 and witchwarper level plus -12 plus the lower of 1 and the higher of 0 and witchwarper level plus -16; Adds to level 3 witchwarper spells known; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 7"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_known_4",
+          "label": "Witchwarper (level 4 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -10 plus the lower of 1 and the higher of 0 and witchwarper level plus -11 plus the lower of 1 and the higher of 0 and witchwarper level plus -15 plus the lower of 1 and the higher of 0 and witchwarper level plus -19; Adds to level 4 witchwarper spells known; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 10"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_known_5",
+          "label": "Witchwarper (level 5 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -13 plus the lower of 1 and the higher of 0 and witchwarper level plus -14 plus the lower of 1 and the higher of 0 and witchwarper level plus -18; Adds to level 5 witchwarper spells known; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 13"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_known_6",
+          "label": "Witchwarper (level 6 spells known)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -16 plus the lower of 1 and the higher of 0 and witchwarper level plus -17 plus the lower of 1 and the higher of 0 and witchwarper level plus -19; Adds to level 6 witchwarper spells known; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 16"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_per_day_1",
+          "label": "Witchwarper (level 1 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -2 plus the lower of 1 and the higher of 0 and witchwarper level plus -4 plus the lower of 1 and the higher of 0 and witchwarper level plus -8; Adds to level 1 witchwarper spells per day; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 1"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_per_day_2",
+          "label": "Witchwarper (level 2 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -5 plus the lower of 1 and the higher of 0 and witchwarper level plus -7 plus the lower of 1 and the higher of 0 and witchwarper level plus -11; Adds to level 2 witchwarper spells per day; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 4"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_per_day_3",
+          "label": "Witchwarper (level 3 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -8 plus the lower of 1 and the higher of 0 and witchwarper level plus -10 plus the lower of 1 and the higher of 0 and witchwarper level plus -14; Adds to level 3 witchwarper spells per day; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 7"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_per_day_4",
+          "label": "Witchwarper (level 4 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -11 plus the lower of 1 and the higher of 0 and witchwarper level plus -13 plus the lower of 1 and the higher of 0 and witchwarper level plus -17; Adds to level 4 witchwarper spells per day; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 10"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_per_day_5",
+          "label": "Witchwarper (level 5 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -14 plus the lower of 1 and the higher of 0 and witchwarper level plus -16 plus the lower of 1 and the higher of 0 and witchwarper level plus -18; Adds to level 5 witchwarper spells per day; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 13"
+        },
+        {
+          "id": "character_operations_manual:class:witchwarper#spells_per_day_6",
+          "label": "Witchwarper (level 6 spells per day)",
+          "summary": "Value: 2 plus the lower of 1 and the higher of 0 and witchwarper level plus -17 plus the lower of 1 and the higher of 0 and witchwarper level plus -18 plus the lower of 1 and the higher of 0 and witchwarper level plus -19; Adds to level 6 witchwarper spells per day; Tags: Base, PC; Applies if witchwarper level at most 20 and witchwarper level at least 16"
+        }
+      ]
+    }
+  ]
+}

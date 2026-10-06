@@ -21,6 +21,8 @@ import { RaceCatalogScreen } from '../raceCatalog/RaceCatalogScreen';
 import { CompanionCatalogScreen } from '../companionCatalog/CompanionCatalogScreen';
 import { MonsterCatalogScreen } from '../monsterCatalog/MonsterCatalogScreen';
 import { IntelligentItemCatalogScreen } from '../intelligentItemCatalog/IntelligentItemCatalogScreen';
+import { StarfinderCatalogScreen } from '../starfinderCatalog/StarfinderCatalogScreen';
+import type { StarfinderCatalogKind } from '../boundary/loadStarfinderCatalog';
 import { CorpusIngestDiagnosticPanel } from './CorpusIngestDiagnosticPanel';
 import { DmToolkitScreen } from '../dmToolkit/DmToolkitScreen';
 import { isGoogleDriveConfigured } from '../settings/googleDrive';
@@ -42,6 +44,7 @@ type Mode =
   | 'monsterCatalog'
   | 'companionCatalog'
   | 'intelligentItemCatalog'
+  | 'starfinderCatalog'
   | 'corpusIngestDiagnostic'
   | 'dm-toolkit'
   | 'campaign-list'
@@ -52,6 +55,7 @@ type Mode =
 export function CharacterHubPage() {
   const [mode, setMode] = useState<Mode>('landing');
   const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
+  const [starfinderCatalogKind, setStarfinderCatalogKind] = useState<StarfinderCatalogKind>('race');
   const [sheet, setSheet] = useState<{ row: CharacterHubListRowSurface; detail: LoadSavedCharacterResponse | null } | null>(null);
   // Where the ✕ on the character sheet should return to — Load Character
   // normally, but the campaign screen when opened from a party member there.
@@ -88,6 +92,10 @@ export function CharacterHubPage() {
         onBrowseMonsters={() => setMode('monsterCatalog')}
         onBrowseCompanions={() => setMode('companionCatalog')}
         onBrowseIntelligentItems={() => setMode('intelligentItemCatalog')}
+        onBrowseStarfinder={(kind) => {
+          setStarfinderCatalogKind(kind);
+          setMode('starfinderCatalog');
+        }}
         onCorpusIngestDiagnostic={() => setMode('corpusIngestDiagnostic')}
         onCampaignManager={() => setMode('campaign-list')}
         campaignManagerGate={computeCampaignManagerAccessGate(isGoogleDriveConfigured())}
@@ -122,6 +130,11 @@ export function CharacterHubPage() {
 
   if (mode === 'intelligentItemCatalog') {
     return <IntelligentItemCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'starfinderCatalog') {
+    // SD-37 E6.4: Starfinder 1e's catalogs, read from its own package.
+    return <StarfinderCatalogScreen initialKind={starfinderCatalogKind} onClose={() => setMode('landing')} />;
   }
 
   if (mode === 'corpusIngestDiagnostic') {

@@ -46,7 +46,7 @@ pub const REFUSED_AUGMENTATION_SYSTEM: &str = "sf_sheet_print.augmentation_syste
 const WEAPON_POOL: &str = "weapon";
 
 /// The stat-block row of PCGen's `HD:1` device on a Starfinder class line.
-const HIT_DIE_ROW: &str = "Hit die: ";
+pub(crate) const HIT_DIE_ROW: &str = "Hit die: ";
 
 /// The BaseClass template gated on `class_slug` level 1 -- the record the first class level
 /// holds (`sf_defense::held` seeds the same one; a package with none or several is refused
