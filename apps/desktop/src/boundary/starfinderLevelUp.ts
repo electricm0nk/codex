@@ -2,6 +2,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from './runtime';
 import type { DiagnosticDto } from './loadCreateCharacter';
 import type { SfCreateResponse, SfCreationSlotDto, SfOptionDto, SfPickDto } from './starfinderCreation';
+import type { SfChoicesDto, SfChoicesPreviewDto } from './starfinderChoices';
 
 /**
  * Desktop boundary over the Starfinder 1e level-up (SD-37 E6.5):
@@ -28,6 +29,8 @@ export interface SfLevelUpRequest {
   abilityIncreases: string[];
   picks: SfPickDto[];
   skillRanks: SfSkillRanksDto[];
+  /** Feats, spells known and gear at the new level (SD-37 E6.5a); `null` keeps the character's own. */
+  choices: SfChoicesDto | null;
 }
 
 export interface SfLevelUpClassOptionDto {
@@ -74,6 +77,8 @@ export interface SfLevelUpPreviewDto {
   skillRule: string;
   changes: SfLevelUpChangeDto[];
   problems: DiagnosticDto[];
+  /** The feats, spells known and gear at the new level, once the level composes. */
+  choices: SfChoicesPreviewDto | null;
 }
 
 export async function previewStarfinderLevelUp(request: SfLevelUpRequest): Promise<SfLevelUpPreviewDto> {

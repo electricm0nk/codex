@@ -1,5 +1,6 @@
 import type { SfLevelUpPreviewDto, SfLevelUpRequest } from '../boundary/starfinderLevelUp';
 import type { SfPickDto } from '../boundary/starfinderCreation';
+import type { SfChoicesDto } from '../boundary/starfinderChoices';
 import { starfinderRowLabel, starfinderRowSigned } from './starfinderSheetModel';
 
 /**
@@ -20,6 +21,8 @@ export interface StarfinderLevelUpDraft {
   picks: SfPickDto[];
   /** Package skill id -> ranks this level adds. */
   skillRanks: Record<string, number>;
+  /** Feats, spells known and gear at the new level (SD-37 E6.5a); `null` until the player edits them. */
+  choices: SfChoicesDto | null;
 }
 
 export const EMPTY_LEVEL_UP_DRAFT: StarfinderLevelUpDraft = {
@@ -28,6 +31,7 @@ export const EMPTY_LEVEL_UP_DRAFT: StarfinderLevelUpDraft = {
   abilityIncreases: [],
   picks: [],
   skillRanks: {},
+  choices: null,
 };
 
 export function buildStarfinderLevelUpRequest(characterId: string, draft: StarfinderLevelUpDraft, now: () => string): SfLevelUpRequest {
@@ -41,6 +45,7 @@ export function buildStarfinderLevelUpRequest(characterId: string, draft: Starfi
     skillRanks: Object.entries(draft.skillRanks)
       .filter(([, ranks]) => ranks > 0)
       .map(([skill, ranks]) => ({ skill, ranks })),
+    choices: draft.choices,
   };
 }
 

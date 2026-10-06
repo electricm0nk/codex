@@ -1,6 +1,7 @@
 import { useState, type CSSProperties } from 'react';
 import { loadSavedCharacterDetail, type LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { RulesAndFeaturesSection } from './CharacterSheet';
+import { StarfinderChoicesDialog } from './StarfinderChoicesDialog';
 import { StarfinderLevelUpDialog } from './StarfinderLevelUpDialog';
 import { buildStarfinderSheet, type StarfinderSheetCell, type StarfinderSheetSection } from './starfinderSheetModel';
 
@@ -13,6 +14,8 @@ import { buildStarfinderSheet, type StarfinderSheetCell, type StarfinderSheetSec
  *
  * "Level up" (SD-37 E6.5) opens the Starfinder level-up; once the level is saved the sheet
  * re-reads the character (`load_saved_character`) and shows the engine's totals at the new level.
+ * "Feats, spells and gear" (SD-37 E6.5a) opens the choices dialog; once they are saved the sheet
+ * re-reads the character the same way and prints the engine's EAC, KAC, credits and bulk.
  */
 export function StarfinderCharacterSheet(props: {
   detail: LoadSavedCharacterResponse;
@@ -23,20 +26,30 @@ export function StarfinderCharacterSheet(props: {
 }) {
   const [detail, setDetail] = useState(props.detail);
   const [levelUpOpen, setLevelUpOpen] = useState(false);
+  const [choicesOpen, setChoicesOpen] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const sheet = buildStarfinderSheet(detail);
   const characterId = detail.summary.characterId;
 
-  async function handleLeveledUp(levelLine: string) {
-    setLevelUpOpen(false);
+  async function reread(done: string) {
     try {
       const refreshed = await loadSavedCharacterDetail({ characterId });
       setDetail(refreshed);
       props.onDetailRefreshed?.(refreshed);
-      setStatus(`Leveled up: ${levelLine}`);
+      setStatus(done);
     } catch (cause: unknown) {
-      setStatus(`Leveled up (${levelLine}), but the sheet did not reload: ${cause instanceof Error ? cause.message : String(cause)}`);
+      setStatus(`${done} (the sheet did not reload: ${cause instanceof Error ? cause.message : String(cause)})`);
     }
+  }
+
+  async function handleLeveledUp(levelLine: string) {
+    setLevelUpOpen(false);
+    await reread(`Leveled up: ${levelLine}`);
+  }
+
+  async function handleChoicesSaved(totalsLine: string) {
+    setChoicesOpen(false);
+    await reread(`Saved feats, spells and gear: ${totalsLine}`);
   }
   return (
     <section data-testid="sf-character-sheet" style={{ marginTop: '1.5rem' }}>
@@ -48,8 +61,11 @@ export function StarfinderCharacterSheet(props: {
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button type="button" data-testid="sf-sheet-level-up" onClick={() => setLevelUpOpen(true)} disabled={levelUpOpen} style={buttonStyle}>
+          <button type="button" data-testid="sf-sheet-level-up" onClick={() => setLevelUpOpen(true)} disabled={levelUpOpen || choicesOpen} style={buttonStyle}>
             Level up
+          </button>
+          <button type="button" data-testid="sf-sheet-choices" onClick={() => setChoicesOpen(true)} disabled={levelUpOpen || choicesOpen} style={buttonStyle}>
+            Feats, spells and gear
           </button>
           <button type="button" data-testid="sf-sheet-open" onClick={props.onOpen} style={buttonStyle}>
             Open
@@ -68,6 +84,10 @@ export function StarfinderCharacterSheet(props: {
 
       {levelUpOpen ? (
         <StarfinderLevelUpDialog characterId={characterId} onClose={() => setLevelUpOpen(false)} onLeveledUp={(line) => void handleLeveledUp(line)} />
+      ) : null}
+
+      {choicesOpen ? (
+        <StarfinderChoicesDialog characterId={characterId} onClose={() => setChoicesOpen(false)} onSaved={(line) => void handleChoicesSaved(line)} />
       ) : null}
 
       {sheet.blocking.length === 0 ? null : (

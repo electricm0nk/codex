@@ -94,6 +94,10 @@ pub struct SfLevelUpRequest {
     pub picks: Vec<SfPickDto>,
     #[serde(default)]
     pub skill_ranks: Vec<SfSkillRanksDto>,
+    /// Feats, spells known and gear at the new level ([`crate::sf_choices`]): the picks the level
+    /// owes. `None` keeps the character's own.
+    #[serde(default)]
+    pub choices: Option<crate::sf_choices::SfChoicesDto>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -165,6 +169,10 @@ pub struct SfLevelUpPreviewDto {
     /// Every `sf.*` row whose value the level changes, engine values on both sides.
     pub changes: Vec<SfLevelUpChangeDto>,
     pub problems: Vec<DiagnosticDto>,
+    /// The feats, spells known and gear at the new level ([`crate::sf_choices`]), once the level
+    /// composes.
+    #[serde(default)]
+    pub choices: Option<crate::sf_choices::SfChoicesPreviewDto>,
 }
 
 fn problem(id: &str, message: impl Into<String>) -> DiagnosticDto {
@@ -393,6 +401,7 @@ pub fn preview(package: &SheetRulePackage, current: &CharacterInput, request: &S
         skill_rule: format!("Ranks in one skill: at most the character level, {new_level} ({SRD_ACQUIRING_SKILLS})"),
         changes: Vec::new(),
         problems: Vec::new(),
+        choices: None,
     };
 
     let before_sheet = match sf_adapter::compute_sheet(package, current) {
@@ -524,10 +533,26 @@ pub fn preview(package: &SheetRulePackage, current: &CharacterInput, request: &S
     let owed_before: BTreeSet<&String> = before.chosen_on_the_sheet.iter().collect();
     out.chosen_on_the_sheet = after.chosen_on_the_sheet.iter().filter(|l| !owed_before.contains(l)).cloned().collect();
 
+    // The feats, spells known and gear at the new level: the level's owed picks are made here.
+    let leveled = match &request.choices {
+        Some(choices) => crate::sf_choices::apply(&leveled, choices),
+        None => leveled,
+    };
+    let shown = crate::sf_choices::preview(package, &leveled);
+    for p in &shown.problems {
+        if !out.problems.iter().any(|q| q.id == p.id && q.message == p.message) {
+            out.problems.push(p.clone());
+        }
+    }
+    out.choices = Some(shown);
+
     match sf_adapter::compute_sheet(package, &leveled) {
         Ok(after_sheet) => out.changes = changes(&before_sheet, &after_sheet),
         Err(refusal) => {
-            out.problems.push(refusal_problem(&refusal));
+            let refused = refusal_problem(&refusal);
+            if !out.problems.iter().any(|q| q.id == refused.id && q.message == refused.message) {
+                out.problems.push(refused);
+            }
             return (out, None);
         }
     }
@@ -580,7 +605,7 @@ pub fn level_up_starfinder_character(app: tauri::AppHandle, request: SfLevelUpRe
 }
 
 #[cfg(test)]
-mod tests {
+pub(crate) mod tests {
     use super::*;
 
     use std::collections::BTreeMap;
@@ -612,7 +637,7 @@ mod tests {
 
     /// The seed's 5th-level increase from `seed-builds.md` (the abilities whose cell in the
     /// `5th-level increase` row is not empty): bytes the engine does not read.
-    fn seed_increase(section: &str) -> Vec<String> {
+    pub(crate) fn seed_increase(section: &str) -> Vec<String> {
         let text = std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..").join(SEED_BUILDS)).expect("seed-builds.md");
         let body: String = text.split("\n## ").find(|s| s.starts_with(section)).expect("seed section").to_owned();
         let Some(line) = body.lines().find(|l| l.starts_with("| 5th-level increase")) else { return Vec::new() };
@@ -626,7 +651,7 @@ mod tests {
     }
 
     /// Creates `seed` at 1st level through the creation flow (`sf_creation`), at `root`.
-    fn create_seed(seed: &str, root: &Path) {
+    pub(crate) fn create_seed(seed: &str, root: &Path) {
         let (_, mut r, _) = seed_requests().into_iter().find(|(s, _, _)| *s == seed).expect("seed request");
         r.character_id = seed.to_ascii_lowercase();
         let created = sf_creation::create_at_root(package(), root, &r, "test".into()).expect("creates");
@@ -652,7 +677,7 @@ mod tests {
 
     /// Levels the character at `root` one level in `class`, adding toward `target_ranks` as many
     /// ranks as the new level allows, with `increase` when the level has one.
-    fn level_once(root: &Path, class: &str, target_ranks: &BTreeMap<String, i64>, increase: &[String]) -> SfLevelUpPreviewDto {
+    pub(crate) fn level_once(root: &Path, class: &str, target_ranks: &BTreeMap<String, i64>, increase: &[String]) -> SfLevelUpPreviewDto {
         let current = saved(root).character_input;
         let new_level = i64::from(character_level(&current)) + 1;
         let mut r = request(class);

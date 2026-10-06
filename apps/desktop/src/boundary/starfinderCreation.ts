@@ -3,6 +3,7 @@ import { formatError, hasTauriRuntime } from './runtime';
 import type { CharacterSummaryDto } from './loadListSavedCharacters';
 import type { DiagnosticDto } from './loadCreateCharacter';
 import type { ExplanationDto } from './loadSavedCharacterDetail';
+import type { SfChoicesDto, SfChoicesPreviewDto } from './starfinderChoices';
 
 /**
  * Desktop boundary over Starfinder 1e character creation (SD-37 E6.2):
@@ -39,6 +40,8 @@ export interface SfCreationRequest {
   keyAbility: string | null;
   pointBuy: SfPointBuyDto;
   picks: SfPickDto[];
+  /** Feats, spells known and gear chosen at creation (SD-37 E6.5a). */
+  choices: SfChoicesDto | null;
 }
 
 export interface SfOptionDto {
@@ -96,6 +99,8 @@ export interface SfCreationPreviewDto {
   pointsSpent: number;
   pointsUnspent: number;
   problems: DiagnosticDto[];
+  /** The 1st-level character's feats, spells known and gear, once its scores compute. */
+  choices: SfChoicesPreviewDto | null;
 }
 
 export type SfCreateResponse =

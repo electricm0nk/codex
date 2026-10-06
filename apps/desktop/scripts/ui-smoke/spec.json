@@ -1818,6 +1818,361 @@
       "notes": "SD-37 E6.5: the Accept half of level-up-starfinder-soldier-preview. Same 1st-level soldier seed build under its own name ('SF Smoke Level Bravo', so it never levels a character a previous row created), one Athletics rank, then 'Accept level-up' saves through level_up_starfinder_character (the character re-saved at Soldier 2 with the rank, every Starfinder total recomputed) and the Starfinder sheet re-reads it (load_saved_character) and prints 'Leveled up: Soldier 2 — character level 2' above the engine's level-2 totals. The forbid list holds the Pathfinder sheet's marker: the leveled character still opens the Starfinder sheet. landing-select-pathfinder restores the Pathfinder selection."
     },
     {
+      "id": "choices-starfinder-soldier-loadout",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Starfinder 1e"
+        },
+        {
+          "op": "click",
+          "target": "New\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "sf-character-name"
+        },
+        {
+          "op": "type",
+          "text": "SF Smoke Loadout"
+        },
+        {
+          "op": "select",
+          "target": "— choose a race —",
+          "text": "core:race:human"
+        },
+        {
+          "op": "select",
+          "target": "— choose a theme —",
+          "text": "core:ability:mercenary"
+        },
+        {
+          "op": "select",
+          "target": "— choose a class —",
+          "text": "core:class:soldier"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "— choose the key ability —",
+          "text": "STR"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        },
+        {
+          "op": "select",
+          "target": "— choose: +2 Racial Stat Bonus —",
+          "text": "STR"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Str"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Dex"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Con"
+        },
+        {
+          "op": "click",
+          "target": "+1 Int"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "click",
+          "target": "Create character"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "scroll",
+          "ticks": 40,
+          "direction": "up"
+        },
+        {
+          "op": "key",
+          "key": "Shift"
+        },
+        {
+          "op": "click",
+          "target": "Back"
+        },
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "SF Smoke Loadout"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "click",
+          "target": "Level up"
+        },
+        {
+          "op": "wait",
+          "ms": 2500
+        },
+        {
+          "op": "click",
+          "target": "Accept level-up"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "click",
+          "target": "Feats, spells and gear"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:weapon_focus"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:quick_draw"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:deadly_aim"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— add a feat —",
+          "text": "core:feat:coordinated_shot"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:defiance_series_squad"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add equipped"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:laser_rifle_azimuth"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add equipped"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:baton_tactical"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:battery"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:battery"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:serum_of_healing_mk_1"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "select",
+          "target": "— choose equipment —",
+          "text": "core:equipment:serum_of_healing_mk_1"
+        },
+        {
+          "op": "wait",
+          "ms": 500
+        },
+        {
+          "op": "click",
+          "target": "Add carried"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "Save choices"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        }
+      ],
+      "marker": "Saved feats, spells and gear:",
+      "expect": [
+        "Energy Armor Class (EAC) 16",
+        "Kinetic Armor Class (KAC) 19",
+        "Credits remaining 2045",
+        "Bulk carried 4",
+        "Defiance Series, Squad",
+        "Coordinated Shot"
+      ],
+      "forbid": [
+        "This character did not compute",
+        "Failed to",
+        "over_budget",
+        "☰ Menu"
+      ],
+      "notes": "SD-37 E6.5a: SF-Soldier-3's full loadout (artifacts/epic_0/seed-builds.md §1) chosen through the real app. The 1st-level soldier seed build (the E6.5 rows' creation steps, under its own name 'SF Smoke Loadout') is created, loaded and leveled to Soldier 3 through 'Level up' twice (E6.5); then the sheet's 'Feats, spells and gear' dialog (StarfinderChoicesDialog.tsx) takes the seed's four feats from the engine's feat list (Weapon Focus, Quick Draw, Deadly Aim, Coordinated Shot; each prerequisite the engine's verdict) and its seven items from the package's equipment list, each added through append_to_character (StarfinderAdapter: the Defiance Series Squad and the azimuth laser rifle equipped, baton, two batteries and two serums carried), and 'Save choices' saves through save_starfinder_choices. The sheet re-reads the character and prints the engine's totals: EAC 16, KAC 19, credits remaining 2045, bulk 4 = E0.4 (seed-hand-values.md R8/R9; E4.5-loadout-hand-values.md). landing-select-pathfinder restores the Pathfinder selection."
+    },
+    {
       "id": "browse-starfinder-catalog",
       "screen": "landing",
       "steps": [

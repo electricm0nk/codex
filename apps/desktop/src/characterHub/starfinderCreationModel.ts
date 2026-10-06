@@ -9,6 +9,7 @@ import type {
 } from '../boundary/starfinderCreation';
 import type { DiagnosticDto } from '../boundary/loadCreateCharacter';
 import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
+import type { SfChoicesDto } from '../boundary/starfinderChoices';
 
 /**
  * Pure state for the Starfinder 1e creation flow (SD-37 E6.2): race -> theme
@@ -47,6 +48,8 @@ export interface StarfinderCreationDraft {
   keyAbility: string | null;
   pointBuy: SfPointBuyDto;
   picks: SfPickDto[];
+  /** Feats, spells known and gear (SD-37 E6.5a). */
+  choices: SfChoicesDto;
 }
 
 export const EMPTY_STARFINDER_DRAFT: StarfinderCreationDraft = {
@@ -57,6 +60,7 @@ export const EMPTY_STARFINDER_DRAFT: StarfinderCreationDraft = {
   keyAbility: null,
   pointBuy: { strength: 0, dexterity: 0, constitution: 0, intelligence: 0, wisdom: 0, charisma: 0 },
   picks: [],
+  choices: { feats: [], featPicks: [], spells: [], gear: [] },
 };
 
 /** The request for the draft (`create_starfinder_character`, or the preview with an empty identity). */
@@ -74,6 +78,12 @@ export function buildStarfinderCreationRequest(
     keyAbility: draft.keyAbility,
     pointBuy: { ...draft.pointBuy },
     picks: draft.picks.map((pick) => ({ ...pick })),
+    choices: {
+      feats: [...draft.choices.feats],
+      featPicks: draft.choices.featPicks.map((pick) => ({ ...pick })),
+      spells: draft.choices.spells.map((spell) => ({ ...spell })),
+      gear: draft.choices.gear.map((gear) => ({ ...gear, modifiers: [...gear.modifiers] })),
+    },
   };
 }
 

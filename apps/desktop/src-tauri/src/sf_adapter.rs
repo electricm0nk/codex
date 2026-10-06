@@ -869,7 +869,7 @@ pub(crate) mod tests {
     }
 
     /// `None` = "untrained (trained only)": no total printed.
-    fn hand_values() -> Vec<(String, String, Option<i64>)> {
+    pub(crate) fn hand_values() -> Vec<(String, String, Option<i64>)> {
         let mut out = Vec::new();
         for rel in HAND_VALUE_FILES {
             let path = repo_root().join(rel);

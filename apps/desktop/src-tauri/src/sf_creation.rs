@@ -127,6 +127,10 @@ pub struct SfCreationRequest {
     pub point_buy: PointBuyDto,
     #[serde(default)]
     pub picks: Vec<SfPickDto>,
+    /// Feats, spells known and gear chosen at creation ([`crate::sf_choices`]); `None` until the
+    /// player chooses any.
+    #[serde(default)]
+    pub choices: Option<crate::sf_choices::SfChoicesDto>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -215,6 +219,10 @@ pub struct SfCreationPreviewDto {
     /// Everything that keeps the character from being created (`claimBlocking`), and the
     /// optional picks still open (not blocking), by stable id.
     pub problems: Vec<DiagnosticDto>,
+    /// The feats, spells known and gear of the 1st-level character ([`crate::sf_choices`]), once
+    /// the scores compute.
+    #[serde(default)]
+    pub choices: Option<crate::sf_choices::SfChoicesPreviewDto>,
 }
 
 /// The created character, or why it was not created (nothing saved).
@@ -648,6 +656,7 @@ pub fn preview(package: &SheetRulePackage, request: &SfCreationRequest) -> (SfCr
         points_spent,
         points_unspent: POINT_BUY_BUDGET - points_spent,
         problems: Vec::new(),
+        choices: None,
     };
     for (field, value, list, id) in [
         ("race", &request.race_id, &out.races, REFUSED_NO_RACE),
@@ -722,6 +731,18 @@ pub fn preview(package: &SheetRulePackage, request: &SfCreationRequest) -> (SfCr
             let s = finals.map(|v| i16::try_from(v).unwrap_or(i16::MAX));
             input.chosen.ability_scores =
                 AbilityScores { strength: s[0], dexterity: s[1], constitution: s[2], intelligence: s[3], wisdom: s[4], charisma: s[5] };
+            // Feats, spells known and gear: applied to the 1st-level character and previewed by
+            // the same reader the sheet's dialog uses.
+            if let Some(choices) = &request.choices {
+                input = crate::sf_choices::apply(&input, choices);
+            }
+            let shown = crate::sf_choices::preview(package, &input);
+            for p in &shown.problems {
+                if !out.problems.iter().any(|q| q.id == p.id && q.message == p.message) {
+                    out.problems.push(p.clone());
+                }
+            }
+            out.choices = Some(shown);
             (out, Some(input))
         }
         Err(refusal) => {
@@ -835,6 +856,7 @@ pub(crate) mod tests {
             key_ability: key.map(str::to_owned),
             point_buy: points(spent),
             picks,
+            choices: None,
         }
     }
 

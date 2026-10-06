@@ -6,6 +6,8 @@ import {
   type SfCreationSlotDto,
 } from '../boundary/starfinderCreation';
 import type { DiagnosticDto } from '../boundary/loadCreateCharacter';
+import { listStarfinderEquipmentOptions, type SfEquipmentOptionDto } from '../boundary/starfinderChoices';
+import { StarfinderChoicesPanel } from './StarfinderChoicesPanel';
 import {
   EMPTY_STARFINDER_DRAFT,
   SF_ABILITY_ABBREVIATIONS,
@@ -27,7 +29,8 @@ import {
 
 /**
  * Starfinder 1e character creation (SD-37 E6.2): race -> theme -> class ->
- * point buy. Every list, pick, budget and score on this form is the engine's
+ * point buy, then feats, spells known and gear (SD-37 E6.5a, `StarfinderChoicesPanel`). Every
+ * list, pick, budget and score on this form is the engine's
  * answer for the current choices (`preview_starfinder_character`); "Create
  * character" saves through `create_starfinder_character`, which recomputes the
  * character with every Starfinder total and refuses (saving nothing) a build
@@ -107,6 +110,13 @@ export function StarfinderCreateForm(props: { onCreated: () => void }) {
   const [submitting, setSubmitting] = useState(false);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const previewRound = useRef(0);
+  const [equipment, setEquipment] = useState<SfEquipmentOptionDto[]>([]);
+
+  useEffect(() => {
+    listStarfinderEquipmentOptions()
+      .then(setEquipment)
+      .catch((cause: unknown) => setError(cause instanceof Error ? cause.message : String(cause)));
+  }, []);
 
   // Every choice change asks the engine for the form's next state. The name is not a
   // rules choice, so typing it never re-previews.
@@ -336,6 +346,18 @@ export function StarfinderCreateForm(props: { onCreated: () => void }) {
           })}
         </div>
       </fieldset>
+
+      {preview?.choices ? (
+        <fieldset style={{ border: '1px solid var(--color-border)', borderRadius: 8, margin: '0 0 1rem', padding: '0.75rem 1rem' }}>
+          <legend style={{ fontSize: '0.85rem', fontWeight: 700 }}>Feats, spells known and gear</legend>
+          <StarfinderChoicesPanel
+            preview={preview.choices}
+            choices={draft.choices}
+            equipment={equipment}
+            onChange={(choices) => setDraft({ ...draft, choices })}
+          />
+        </fieldset>
+      ) : null}
 
       {preview && preview.chosenOnTheSheet.length > 0 ? (
         <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0 0 0.75rem' }}>

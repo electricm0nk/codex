@@ -44,6 +44,7 @@ function preview(partial: Partial<SfLevelUpPreviewDto> = {}): SfLevelUpPreviewDt
     skillRule: 'Ranks in one skill: at most the character level, 2',
     changes: [],
     problems: [],
+    choices: null,
     ...partial,
   };
 }
@@ -55,8 +56,11 @@ function testTheRequestCarriesEveryChoice() {
     abilityIncreases: ['STR', 'DEX', 'CON', 'WIS'],
     picks: [{ slotId: 'core:ability:soldier_class_feature_gear_boost', optionId: 'core:ability:laser_accuracy' }],
     skillRanks: { athletics: 1, medicine: 0 },
+    choices: { feats: ['core:feat:coordinated_shot'], featPicks: [], spells: [], gear: [] },
   };
   const request = buildStarfinderLevelUpRequest('sf-1', draft, () => '2026-10-05T00:00:00Z');
+  assertEqual(request.choices?.feats.join(','), 'core:feat:coordinated_shot', 'the feat the level owes, chosen in the dialog (SD-37 E6.5a)');
+  assertEqual(buildStarfinderLevelUpRequest('sf-1', EMPTY_LEVEL_UP_DRAFT, () => '').choices, null, 'untouched choices: the character keeps its own');
   assertEqual(request.characterId, 'sf-1', 'the character');
   assertEqual(request.classId, 'core:class:soldier', 'the class');
   assertEqual(request.keyAbility, null, 'no key ability for an advanced class');

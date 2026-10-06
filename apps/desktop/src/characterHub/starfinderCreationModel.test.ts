@@ -56,8 +56,17 @@ function testTheRequestCarriesEveryChoiceAndAFreshIdentity() {
     keyAbility: 'STR',
     pointBuy: { ...EMPTY_STARFINDER_DRAFT.pointBuy, strength: 3, dexterity: 4 },
     picks: [{ slotId: 'core:ability:2_racial_stat_bonus', optionId: 'STR' }],
+    choices: {
+      feats: ['core:feat:quick_draw'],
+      featPicks: [],
+      spells: [],
+      gear: [{ itemId: 'core:equipment:baton_tactical', equipped: false, modifiers: [] }],
+    },
   };
   const request = buildStarfinderCreationRequest(draft, { generateId: () => 'id-1', now: () => '2026-10-05T00:00:00Z' });
+  assertEqual(request.choices?.feats.join(','), 'core:feat:quick_draw', 'the feats chosen at creation (SD-37 E6.5a)');
+  assertEqual(request.choices?.gear[0]?.itemId, 'core:equipment:baton_tactical', 'the gear chosen at creation');
+  assert(request.choices !== draft.choices, 'the request carries a copy, not the draft itself');
   assertEqual(request.characterId, 'id-1', 'a fresh character id');
   assertEqual(request.savedAt, '2026-10-05T00:00:00Z', 'the save time');
   assertEqual(request.displayLabel, 'Vex', 'the name is trimmed');

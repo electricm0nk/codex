@@ -5,6 +5,8 @@ import {
   type SfLevelUpPreviewDto,
 } from '../boundary/starfinderLevelUp';
 import type { DiagnosticDto } from '../boundary/loadCreateCharacter';
+import { listStarfinderEquipmentOptions, type SfEquipmentOptionDto } from '../boundary/starfinderChoices';
+import { StarfinderChoicesPanel } from './StarfinderChoicesPanel';
 import { picksForSlot, reconcilePicks, samePicks, setSlotPick } from './starfinderCreationModel';
 import { SlotPicker } from './StarfinderCreateForm';
 import {
@@ -23,7 +25,8 @@ import {
 /**
  * The Starfinder level-up (SD-37 E6.5): the class for the next character level (a held class
  * advances by one; another class starts at 1), the ability increase when the level has one,
- * this level's skill ranks and the picks the level opens. Every list, cap and number here is
+ * this level's skill ranks and the picks the level opens, and the feats, spells known and gear
+ * at the new level (SD-37 E6.5a: the picks the level owes). Every list, cap and number here is
  * the engine's answer for the current choices (`preview_starfinder_level_up`), including the
  * sheet totals the level changes; "Accept level-up" saves through
  * `level_up_starfinder_character`, which recomputes the character at the new level and refuses
@@ -61,6 +64,13 @@ export function StarfinderLevelUpDialog(props: {
   const [refused, setRefused] = useState<DiagnosticDto[]>([]);
   const [saving, setSaving] = useState(false);
   const round = useRef(0);
+  const [equipment, setEquipment] = useState<SfEquipmentOptionDto[]>([]);
+
+  useEffect(() => {
+    listStarfinderEquipmentOptions()
+      .then(setEquipment)
+      .catch((cause: unknown) => setError(cause instanceof Error ? cause.message : String(cause)));
+  }, []);
 
   const requestKey = JSON.stringify(buildStarfinderLevelUpRequest(props.characterId, draft, () => ''));
   useEffect(() => {
@@ -219,6 +229,18 @@ export function StarfinderLevelUpDialog(props: {
               onChange={(position, optionId) => setDraft({ ...draft, picks: setSlotPick(draft.picks, slot, position, optionId) })}
             />
           ))}
+        </div>
+      ) : null}
+
+      {preview?.choices ? (
+        <div style={SECTION_STYLE}>
+          <p style={{ fontWeight: 700, margin: '0 0 0.4rem' }}>Feats, spells known and gear at the new level</p>
+          <StarfinderChoicesPanel
+            preview={preview.choices}
+            choices={draft.choices ?? preview.choices.chosen}
+            equipment={equipment}
+            onChange={(choices) => setDraft({ ...draft, choices })}
+          />
         </div>
       ) : null}
 

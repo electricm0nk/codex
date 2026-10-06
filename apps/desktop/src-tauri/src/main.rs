@@ -38,6 +38,7 @@ mod reference_library_catalog;
 mod rule_system_adapter;
 mod sf_adapter;
 mod sf_catalog;
+mod sf_choices;
 mod sf_creation;
 mod sf_drone_print;
 mod sf_level_up;
@@ -200,6 +201,9 @@ fn main() {
             sf_level_up::preview_starfinder_level_up,
             sf_level_up::level_up_starfinder_character,
             sf_catalog::list_starfinder_catalog,
+            sf_choices::preview_starfinder_choices,
+            sf_choices::save_starfinder_choices,
+            sf_choices::list_starfinder_equipment_options,
             clone_character,
             level_up_character,
             recompute_character,

@@ -67,7 +67,7 @@ fn first_class_template(package: &SheetRulePackage, class_slug: &str) -> Option<
 }
 
 /// The level `rule` (a spell) has on `class`'s spell list (its `ClassSpellList` grant).
-fn spell_level_on(rule: &SheetRule, class: &str) -> Option<u8> {
+pub(crate) fn spell_level_on(rule: &SheetRule, class: &str) -> Option<u8> {
     rule.granted_by.iter().find_map(|g| match &g.by {
         Granter::ClassSpellList { id, spell_level } if id == class => Some(*spell_level),
         _ => None,
@@ -127,7 +127,7 @@ fn refuse(id: &'static str, message: String) -> SfChassisRefusal {
 }
 
 /// The text of `rule`'s first `StatBlock "<label>"` row.
-fn stat_row(rule: &SheetRule, label: &str) -> Option<String> {
+pub(crate) fn stat_row(rule: &SheetRule, label: &str) -> Option<String> {
     rule.prose.iter().find_map(|seg| match &seg.family {
         ProseFamily::StatBlock(l) if l == label => Some(
             seg.pieces.iter().filter_map(|p| if let ProsePiece::Text(t) = p { Some(t.as_str()) } else { None }).collect::<String>(),
@@ -158,6 +158,28 @@ fn augmentation(rule: &SheetRule) -> Option<(&'static str, Vec<&str>)> {
         })
         .collect();
     Some((kind, systems))
+}
+
+/// Whether `modifier` (an `equipment_modifier` record) can be applied to `item`: an armour
+/// upgrade or armour-tagged special material only to armour, a weapon fusion only to a weapon
+/// (an item with a damage row); any other modifier to any item. The upgrade-slot count is
+/// checked per selection by the sheet lines, not here. One rule, read by the sheet lines and by
+/// the desktop's upgrade picker (`sf_choices`).
+pub(crate) fn modifier_fits(item: &SheetRule, modifier: &SheetRule) -> Result<(), SfChassisRefusal> {
+    if has_tag(modifier, UPGRADE_TAG) {
+        if !has_tag(item, ARMOR_TAG) {
+            return Err(refuse(
+                REFUSED_MODIFIER_DOES_NOT_FIT,
+                format!("{}: an armour modifier applied to {}, which is not armour", modifier.id, item.id),
+            ));
+        }
+    } else if has_tag(modifier, FUSION_TAG) && stat_row(item, DAMAGE_ROW).is_none() {
+        return Err(refuse(
+            REFUSED_MODIFIER_DOES_NOT_FIT,
+            format!("{}: a weapon fusion applied to {}, which is not a weapon", modifier.id, item.id),
+        ));
+    }
+    Ok(())
 }
 
 /// One carried item: its record, how many are carried, whether one is worn or installed, and
@@ -236,10 +258,8 @@ fn equipment_lines(
                     .rule(id)
                     .filter(|r| split_rule_id(&r.id).1 == "equipment_modifier" && !r.id.contains('#'))
                     .ok_or_else(|| refuse(REFUSED_UNKNOWN_MODIFIER, format!("{id}: no such equipment modifier in the Starfinder package")))?;
+                modifier_fits(rule, modifier)?;
                 let place = if has_tag(modifier, UPGRADE_TAG) {
-                    if !has_tag(rule, ARMOR_TAG) {
-                        return Err(refuse(REFUSED_MODIFIER_DOES_NOT_FIT, format!("{id}: an armour modifier applied to {}, which is not armour", rule.id)));
-                    }
                     match stat_row(modifier, SLOTS_USED_ROW) {
                         Some(used) => {
                             used_here += used.trim().trim_start_matches('+').parse::<i64>().map_err(|_| {
@@ -251,9 +271,6 @@ fn equipment_lines(
                         None => "applied to",
                     }
                 } else if has_tag(modifier, FUSION_TAG) {
-                    if stat_row(rule, DAMAGE_ROW).is_none() {
-                        return Err(refuse(REFUSED_MODIFIER_DOES_NOT_FIT, format!("{id}: a weapon fusion applied to {}, which is not a weapon", rule.id)));
-                    }
                     "fusion on"
                 } else {
                     "applied to"
