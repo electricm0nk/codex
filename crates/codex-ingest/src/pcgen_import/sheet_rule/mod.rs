@@ -1447,6 +1447,33 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
     attest::attest_class_closures(&mut files, &defective);
     // D7: the global abilities every character holds unconditionally (`always_held.rs`).
     let (_, unresolved_globals) = always_held::mark_always_held(tree, &mut files, index, &always_held::global_grants(tree));
+    // SD-37 E7.1: a Starfinder global no population record stands for (`Default`) converts as one
+    // always-held record carrying its variable bookkeeping (`always_held::convert_unconverted_globals`).
+    // No inventory unit is added: the record count does not move.
+    let (globals, unresolved_globals) = always_held::convert_unconverted_globals(tree, index, &unresolved_globals);
+    for gb in globals {
+        let id = gb.rule.id.clone();
+        let c = gb.converted;
+        for (vid, name) in c.var_names {
+            var_names.insert(vid, name);
+        }
+        for (vid, label) in c.var_labels {
+            var_labels.entry(vid).or_insert(label);
+        }
+        for (vid, name) in c.var_declares {
+            declares.entry(vid).or_insert_with(|| (name, BTreeSet::new())).1.insert(id.clone());
+        }
+        for (vid, name, mut contrib) in c.var_contribs {
+            contrib.rule_id = id.clone();
+            contribs.entry(vid).or_insert_with(|| (name, Vec::new())).1.push(contrib);
+        }
+        let rel = rule_file_rel(&gb.rule.provenance.book, "ability", &id);
+        if files.contains_key(&rel) {
+            defects.entry("unresolved-references".into()).or_default().push(format!("{id}: a converted global collides with {rel}"));
+            continue;
+        }
+        files.insert(rel, vec![gb.rule]);
+    }
     if !unresolved_globals.is_empty() {
         defects.entry("unresolved-references".into()).or_default().extend(unresolved_globals.iter().map(always_held::unresolved_global_line));
     }

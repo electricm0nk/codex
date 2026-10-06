@@ -1,0 +1,43 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 33.20s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 33 tests
+test race_trait_picker::tests::race_books_load_through_the_per_system_registry ... ok
+test sf_adapter::tests::a_packaged_app_reads_the_starfinder_package_from_its_resource_root ... ok
+test sf_adapter::tests::build_from_input_reads_theme_armour_loadout_and_choices ... ok
+test sf_adapter::tests::a_refused_build_is_a_named_blocking_diagnostic ... ok
+test sf_adapter::tests::starfinder_package_from_a_packaged_resource_root_probe ... ignored, child process of a_packaged_app_reads_the_starfinder_package_from_its_resource_root
+test rule_system_adapter::tests::starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed ... ok
+test sf_adapter::tests::bulk_condition_caps_dex_and_takes_the_worse_penalty_on_str_and_dex_skills ... ok
+test sf_adapter::tests::the_list_command_path_routes_through_the_selected_rule_system ... ok
+test sf_adapter::tests::the_command_paths_route_starfinder_1e_to_the_starfinder_adapter ... ok
+test sf_adapter::tests::applied_modifiers_and_an_augmentation_reach_the_credits_and_bulk_totals ... ok
+test sf_adapter::tests::every_seed_carries_its_ability_score_and_class_level_rows ... ok
+test sf_drone_print::tests::a_mechanic_1_render_prints_the_drone_block ... ok
+test sf_drone_print::tests::a_mechanic_without_a_drone_prints_no_companion_block ... ok
+test sf_adapter::tests::the_frontend_starfinder_sheet_fixtures_are_the_adapters_load_responses ... ok
+test sf_adapter::tests::persistence_methods_work_on_a_saved_starfinder_character ... ok
+test sf_adapter::tests::a_saved_starfinder_caster_loads_with_its_spells_known ... ok
+test sf_adapter::tests::sf_seed_every_hand_value_equals_the_adapters_explanation_row ... ok
+test sf_sheet_print::tests::every_sf_spell_prints_its_formulas_as_words_with_no_character ... ok
+test sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal ... ok
+test sf_sheet_print::tests::an_installed_augmentation_prints_its_system_and_one_per_system ... ok
+test sf_sheet_print::tests::an_unprintable_spell_selection_is_a_named_refusal ... ok
+test sf_sheet_print::tests::installed_upgrades_and_fusions_print_on_their_item ... ok
+test sf_sheet_print::tests::an_equipped_items_bonus_reaches_the_skill_totals ... ok
+test sf_sheet_print::tests::sf_seed_feats_print_the_seed_builds_feats ... ok
+test sf_sheet_print::tests::sf_seed_lines_print_every_resolved_term_and_no_pcgen_residue ... ok
+test sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant ... ok
+test sf_sheet_print::tests::sf_seed_loadouts_print_every_carried_item_with_its_quantity ... ok
+test sf_sheet_print::tests::sf_seed_spell_prose_resolves_the_casters_terms ... ok
+test sf_sheet_print::tests::sf_seed_spell_lists_equal_the_seed_builds_spells_known ... ok
+test sf_oracle_parity::tests::sf_oracle_parity_the_not_in_oracle_list_is_current ... ok
+sf_oracle_parity: 15 builds, 782 oracle fields compared, 36 differ, 36 explained
+test sf_oracle_parity::tests::sf_oracle_parity_every_difference_is_explained ... ok
+test sf_sheet_print::tests::sf_seed_weapon_lines_print_their_damage_dice ... ok
+test sf_adapter::tests::the_load_command_path_routes_a_starfinder_save_to_the_starfinder_adapter ... ok
+
+test result: ok. 32 passed; 0 failed; 1 ignored; 0 measured; 665 filtered out; finished in 20.35s
+
+exit=0

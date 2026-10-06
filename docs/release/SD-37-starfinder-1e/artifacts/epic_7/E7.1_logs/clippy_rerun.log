@@ -1,0 +1,14 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /tmp/codex-verify-f8UESc
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 2  (THREE crates)
+    desktop: cargo exit 101 — /tmp/codex-verify-f8UESc/clippy-desktop.log
+    FAIL  clippy  (root:0 desktop:0 ingest:0 — logs in /tmp/codex-verify-f8UESc)
+---------------------------------------------------------------
+SUMMARY
+  passed:  0  
+  FAILED:  1  clippy
+
+RESULT: FAIL — logs in /tmp/codex-verify-f8UESc
+exit=1

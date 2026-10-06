@@ -1,1 +1,1 @@
-{"var":"v1882cc4e78f9d227","label":"Skill Cap Profession Electrician","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:40"]}}
+{"var":"v1882cc4e78f9d227","label":"Skill Cap Profession Electrician","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:40"]}}

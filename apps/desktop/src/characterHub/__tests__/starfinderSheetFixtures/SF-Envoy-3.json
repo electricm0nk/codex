@@ -189,6 +189,36 @@
       "detail": "Dexterity modifier +1 (SRD Initiative (https://www.aonsrd.com/Rules.aspx?ID=96))"
     },
     {
+      "id": "sf.attack.melee",
+      "value": 1,
+      "detail": "base attack bonus +2 (sf.base_attack_bonus); Strength modifier -1 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105))"
+    },
+    {
+      "id": "sf.attack.ranged",
+      "value": 3,
+      "detail": "base attack bonus +2 (sf.base_attack_bonus); Dexterity modifier +1 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105))"
+    },
+    {
+      "id": "sf.weapon.semi_auto_pistol_tactical.attack",
+      "value": 3,
+      "detail": "base attack bonus +2 (sf.base_attack_bonus); Dexterity modifier +1 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105)); Semi-auto pistol (tactical) attack +0 (core:ability:semi_auto_pistol_tactical)"
+    },
+    {
+      "id": "sf.weapon.semi_auto_pistol_tactical.damage",
+      "value": 1,
+      "detail": "Semi-auto pistol (tactical) damage +1 (core:ability:semi_auto_pistol_tactical#weapon1)"
+    },
+    {
+      "id": "sf.weapon.baton_tactical.attack",
+      "value": 3,
+      "detail": "base attack bonus +2 (sf.base_attack_bonus); Dexterity modifier (operative) +1 (SRD weapon special property Operative (https://www.aonsrd.com/WeaponProperties.aspx?ItemName=Operative)); Baton (tactical) attack +0 (core:ability:baton_tactical)"
+    },
+    {
+      "id": "sf.weapon.baton_tactical.damage",
+      "value": 0,
+      "detail": "Strength modifier -1 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105)); Baton (tactical) damage +1 (core:ability:baton_tactical#weapon1)"
+    },
+    {
       "id": "sf.skill.acrobatics",
       "value": 0,
       "detail": "Dex modifier +1 (core:skill:acrobatics); armor check penalty -1 (core:equipment:carbon_skin_graphite)"

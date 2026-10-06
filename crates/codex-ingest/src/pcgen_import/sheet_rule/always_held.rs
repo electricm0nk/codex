@@ -164,6 +164,107 @@ pub fn unresolved_global_line(g: &GlobalGrant) -> String {
     format!("{}|{} ({}): an always-held global grant names no converted record", g.category, g.key, g.cite)
 }
 
+/// SD-37 E7.1: the variable bookkeeping of one always-held global no population record stands
+/// for (Starfinder's `Default`), converted as one always-held record.
+pub struct GlobalBookkeeping {
+    pub grant: GlobalGrant,
+    /// The record: principal only, `always_held`, printing nothing and folding no bonus.
+    pub rule: SheetRule,
+    pub converted: super::convert::Converted,
+}
+
+/// SD-37 E7.1: convert each Starfinder global [`mark_always_held`] could not mark into one
+/// always-held record carrying the global's own rows' variable bookkeeping.
+///
+/// Starfinder's `Default` (`scr__stats.lst:4`, `ABILITY:Internal|AUTOMATIC|Default`) is an
+/// internal helper no population record stands for, so nothing was marked and its rows were
+/// dropped: its `DEFINE:`s (E4.2 folded those, [`defined_at_zero_only_on`]) and its unconditional
+/// `BONUS:VAR` rows, among them `BONUS:VAR|EffectiveLVL|TL|TYPE=Base` (`scr_abilities.lst:68`), the
+/// character level every weapon specialization's damage reads. With the global dropped,
+/// `EffectiveLVL` was 0 on every character but a drone.
+///
+/// The record is the global's base row and every `.MOD` row onto it (the closure PCGen folds into
+/// the one object), converted by the one record converter. Only its variable declarations and
+/// contributions are kept: an always-held record is the BASE STATE of every evaluation
+/// ([`SheetRule::always_held`]) -- its declarations, and its contributions whose own gate is
+/// `Always`, count for every character -- and its principal prints nothing, targets nothing and
+/// grants nothing. Its other tokens (an `ABILITY:` grant, a `BONUS:SKILL` with a `PRE`) are not
+/// carried: each stays what it was before, unconverted. Pathfinder is not touched (its `Default`
+/// is the PFS overlay's record, `core_rulebook:ability:default`).
+///
+/// Returns the converted globals and the grants still unresolved.
+pub fn convert_unconverted_globals(
+    tree: &PinnedTree,
+    index: &CorpusIndex,
+    unresolved: &[GlobalGrant],
+) -> (Vec<GlobalBookkeeping>, Vec<GlobalGrant>) {
+    use codex::rules_core::game_system::GameSystem;
+    use codex::rules_core::sheet_rule::{Applies, SheetValue};
+
+    let mut out = Vec::new();
+    let mut still = Vec::new();
+    for g in unresolved {
+        let base = (tree.system == GameSystem::Starfinder1e)
+            .then(|| tree.base_index.get(&(super::closure::FileFamily::Ability, g.key.clone())).copied())
+            .flatten()
+            .filter(|r| !tree.files[r.file].is_pfs)
+            .filter(|r| {
+                let id = row_identity(tree.row_text(*r));
+                id.category == g.category && matches!(id.shape, RowShape::Plain)
+            });
+        let Some(base) = base else {
+            still.push(g.clone());
+            continue;
+        };
+        let file = &tree.files[base.file];
+        let (name, _) = tokenize_row(tree.row_text(base));
+        let name = name.trim().to_string();
+        let record = super::ctx::RecordRef {
+            id: format!("{}:ability:{}", file.book, super::ctx::slug(&name)),
+            book: file.book.clone(),
+            kind: "ability".into(),
+            name: name.clone(),
+            key: name.clone(),
+            category: g.category.clone(),
+            type_facet: String::new(),
+            rel_path: file.rel_path.clone(),
+            line: base.line,
+            shipped_tokens: None,
+            prerequisites: Vec::new(),
+            copy_base_key: None,
+            license_pi: false,
+            pi_fields: Vec::new(),
+            description: None,
+            class_name: None,
+            class_selection_of: None,
+            joined: true,
+        };
+        let closure = tree.closure(&file.rel_path, base.line, None, &g.category, &g.key, None);
+        let converted = super::convert::convert_record(tree, index, &record, &closure);
+        let Some(first) = converted.rules.first() else {
+            still.push(g.clone());
+            continue;
+        };
+        let mut rule = first.clone();
+        rule.id = record.id.clone();
+        rule.label = name;
+        rule.value = SheetValue::Text;
+        rule.also = Vec::new();
+        rule.prose = Vec::new();
+        rule.applies = Applies::Always;
+        rule.target = None;
+        rule.bonus_type = None;
+        rule.print = false;
+        rule.granted_by = Vec::new();
+        rule.offers = None;
+        rule.grants = Vec::new();
+        rule.always_held = true;
+        rule.provenance.closure_rows = closure.rows.iter().map(|r| r.cite.clone()).collect();
+        out.push(GlobalBookkeeping { grant: g.clone(), rule, converted });
+    }
+    (out, still)
+}
+
 /// SD-37 E4.2: whether variable `name` is DEFINEd only on always-held global objects that NO
 /// converted record stands for (`unconverted`, the grants [`mark_always_held`] could not mark),
 /// and only at `0`.

@@ -102,7 +102,11 @@ const SINGLE_VALUE_SECTIONS: readonly { id: string; title: string; rows: readonl
   {
     id: 'offense',
     title: 'Attack',
-    rows: [{ id: 'sf.base_attack_bonus', label: 'Base Attack Bonus', signed: true }],
+    rows: [
+      { id: 'sf.base_attack_bonus', label: 'Base Attack Bonus', signed: true },
+      { id: 'sf.attack.melee', label: 'Melee attack', signed: true },
+      { id: 'sf.attack.ranged', label: 'Ranged attack', signed: true },
+    ],
   },
   {
     id: 'carried',
@@ -116,6 +120,13 @@ const SINGLE_VALUE_SECTIONS: readonly { id: string; title: string; rows: readonl
       { id: 'sf.bulk_limit.overburdened_above', label: 'Overburdened above (bulk)', signed: false },
     ],
   },
+];
+
+/** `sf.weapon.<equipment slug>.<field>`: one row per carried weapon (SD-37 E7.1). The damage
+ * cell is the number added to the weapon's dice; the dice print on the weapon's own line. */
+const WEAPON_FIELDS: readonly { field: string; column: string }[] = [
+  { field: 'attack', column: 'Attack' },
+  { field: 'damage', column: 'Damage bonus' },
 ];
 
 const SPELL_FIELDS: readonly { field: string; column: string }[] = [
@@ -162,6 +173,10 @@ export function starfinderRowLabel(id: string): string {
   if (group === 'skill' && first !== undefined) {
     return humanise(first);
   }
+  const weaponField = WEAPON_FIELDS.find((candidate) => candidate.field === second);
+  if (group === 'weapon' && first !== undefined && weaponField !== undefined) {
+    return `${humanise(first)} ${weaponField.column.toLowerCase()}`;
+  }
   const field = SPELL_FIELDS.find((candidate) => candidate.field === third);
   if (group === 'spells' && first !== undefined && second !== undefined && field !== undefined) {
     return `${humanise(first)} spells level ${second}, ${field.column.toLowerCase()}`;
@@ -177,7 +192,7 @@ export function starfinderRowSigned(id: string): boolean {
       return row.signed;
     }
   }
-  return id.startsWith('sf.ability_modifier.') || id.startsWith('sf.skill.');
+  return id.startsWith('sf.ability_modifier.') || id.startsWith('sf.skill.') || id.startsWith('sf.weapon.');
 }
 
 /** The printed label of the held record `<book>:<kind>:<slug>` (no `#` sub-line), if sent. */
@@ -228,6 +243,17 @@ export function buildStarfinderSheet(detail: LoadSavedCharacterResponse): Starfi
   for (const section of SINGLE_VALUE_SECTIONS) {
     push({ id: section.id, title: section.title, columns: null, rows: section.rows.map((row) => ({ label: row.label, cells: [cell(row.id, row.signed)] })) });
   }
+  // `sf.weapon.<equipment slug>.<field>`: one row per carried weapon.
+  const weaponSlugs = [...new Set(idsWithPrefix('sf.weapon.').map((id) => id.split('.')[2]).filter((slug): slug is string => slug !== undefined))];
+  push({
+    id: 'weapons',
+    title: 'Weapons',
+    columns: WEAPON_FIELDS.map((field) => field.column),
+    rows: weaponSlugs.map((slug) => ({
+      label: recordLabel(detail.sheetLines, 'equipment', slug) ?? humanise(slug),
+      cells: WEAPON_FIELDS.map((field) => cell(`sf.weapon.${slug}.${field.field}`, true)),
+    })),
+  });
   push({
     id: 'skills',
     title: 'Skills',

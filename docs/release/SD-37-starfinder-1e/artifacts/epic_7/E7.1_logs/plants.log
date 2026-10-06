@@ -1,0 +1,13 @@
+P1 Effective LVL loses the global's contribution: check exit 101 -> FAIL (red, as required)
+P2 the global record is not always held: check exit 101 -> FAIL (red, as required)
+P3 a var table moves outside the classes: check exit 1 -> FAIL (red, as required)
+P4 the operative property is ignored: check exit 101 -> FAIL (red, as required)
+P5 the non-proficiency -4 is dropped: check exit 101 -> FAIL (red, as required)
+P6 melee damage loses the Strength modifier: check exit 101 -> FAIL (red, as required)
+P7 one oracle value moves: check exit 101 -> FAIL (red, as required)
+P8 one ledger row's values move: check exit 101 -> FAIL (red, as required)
+P9 a build's identity moves in the oracle: check exit 101 -> FAIL (red, as required)
+P10 the not-in-oracle list loses a row: check exit 101 -> FAIL (red, as required)
+P11 the Weapons table is not laid out: check exit 1 -> FAIL (red, as required)
+11 of 11 plants red; files restored byte-identical
+exit=0

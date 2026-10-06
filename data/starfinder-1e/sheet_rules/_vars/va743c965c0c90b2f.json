@@ -1,1 +1,1 @@
-{"var":"va743c965c0c90b2f","label":"Skill Cap Profession Merchant","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:51"]}}
+{"var":"va743c965c0c90b2f","label":"Skill Cap Profession Merchant","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:51"]}}

@@ -1,1 +1,1 @@
-{"var":"v9ef46720e5d472b6","label":"Burrow","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:87"]}}
+{"var":"v9ef46720e5d472b6","label":"Burrow","declared_by":["core:ability:default"],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:87"]}}

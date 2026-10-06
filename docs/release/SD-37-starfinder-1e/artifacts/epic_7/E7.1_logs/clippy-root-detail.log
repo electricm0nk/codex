@@ -1,0 +1,14 @@
+    Checking codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+error: this manual char comparison can be written more succinctly
+  --> src/rules_core/pilot_compute/sf_attack.rs:99:16
+   |
+99 |         .split(|c: char| matches!(c, '.' | ',' | ';' | '/'))
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider using an array of `char`: `['.', ',', ';', '/']`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#manual_pattern_char_comparison
+   = note: `-D clippy::manual-pattern-char-comparison` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::manual_pattern_char_comparison)]`
+
+error: could not compile `codex` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `codex` (lib test) due to 1 previous error

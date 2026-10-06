@@ -218,6 +218,9 @@ pub mod sf_spells;
 /// SD-37 E4.5: the Starfinder 1e credits and bulk totals and the bulk limits, from the
 /// converted Starfinder package.
 pub mod sf_loadout;
+/// SD-37 E7.1: the Starfinder 1e melee and ranged attack bonus and each carried weapon's attack
+/// and damage bonus, from the converted Starfinder package.
+pub mod sf_attack;
 /// SD-36 Epic F §3.4: a class's weapon proficiency read from the converted package -- the
 /// source for every class without a `CLASS_WEAPON_PROFICIENCIES` row. `pub` so the
 /// codex-ingest oracle pin (`class_weapon_proficiency_via_converter.rs`) can call it.

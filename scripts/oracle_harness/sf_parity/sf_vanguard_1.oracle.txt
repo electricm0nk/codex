@@ -1,0 +1,43 @@
+name=sf_vanguard_1
+race=Human
+class=Vanguard
+level=1
+stat.STR=12
+stat.DEX=13
+stat.CON=18
+stat.INT=10
+stat.WIS=10
+stat.CHA=10
+hp=11
+stamina=11
+resolve=5
+eac=12
+kac=13
+initiative=+1
+bab=+1
+save.Fortitude=+6
+save.Reflex=+3
+save.Will=+0
+attack.melee=+2
+attack.ranged=+2
+skill.Acrobatics=5|ranks=1.0|untrained=Y
+skill.Athletics=5|ranks=1.0|untrained=Y
+skill.Bluff=0|ranks=0.0|untrained=Y
+skill.Diplomacy=0|ranks=0.0|untrained=Y
+skill.Disguise=0|ranks=0.0|untrained=Y
+skill.Intimidate=4|ranks=1.0|untrained=Y
+skill.Perception=0|ranks=0.0|untrained=Y
+skill.Piloting=1|ranks=0.0|untrained=Y
+skill.Sense Motive=0|ranks=0.0|untrained=Y
+skill.Stealth=1|ranks=0.0|untrained=Y
+skill.Survival=1|ranks=0.0|untrained=Y
+weapon.*Laser pistol, azimuth=+2|damage=1d4|category=Non-Standard-Ranged
+weapon.Baton, tactical=+2|damage=1d4+1|category=OPERATIVE-Melee
+bulk=0.3 lbs.
+credits=0
+credits.spent=690 cr
+acp=+0
+abilities.feat=
+abilities.theme=Bounty Hunter, THEME KNOWLEDGE
+abilities.class_feature=Entropic Pool, Entropic Strike, First Vanguard Aspect, Aspect Insight
+abilities.racial_trait=SIZE AND TYPE, BONUS FEAT, SKILLED

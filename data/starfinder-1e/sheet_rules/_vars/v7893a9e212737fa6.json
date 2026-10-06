@@ -1,1 +1,1 @@
-{"var":"v7893a9e212737fa6","label":"Skill Cap Profession Counselor","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:37"]}}
+{"var":"v7893a9e212737fa6","label":"Skill Cap Profession Counselor","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:37"]}}

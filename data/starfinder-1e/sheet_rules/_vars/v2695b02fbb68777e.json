@@ -1,1 +1,1 @@
-{"var":"v2695b02fbb68777e","label":"Skill Cap Profession Miner","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:52"]}}
+{"var":"v2695b02fbb68777e","label":"Skill Cap Profession Miner","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:52"]}}

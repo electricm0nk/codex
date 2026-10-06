@@ -1,0 +1,14 @@
+# SD-37 E7.1 SRD pages fetched 2026-10-06 with curl -s -L -A 'Mozilla/5.0' https://www.aonsrd.com/<page> ; bytes, sha256
+https://www.aonsrd.com/Rules.aspx?ID=105 21737 a72c94fe79abe849ebb6460f76983c06abfa13456716066009c42a621a5b8979
+https://www.aonsrd.com/Rules.aspx?ID=108 32676 28fe21c0f479430ca2f4b1988bb40523d5f381239f4156cd510aec617131a97b
+https://www.aonsrd.com/Rules.aspx?ID=87 39948 6503b20a80b67c32d34025dff02458646444b3a393c7c75232d85fd0f598a362
+https://www.aonsrd.com/WeaponProperties.aspx?ItemName=Operative 26557 223c2d8f6008d72875ba771d97c16b2d1c4648d36e1f396be4e7f91ccad8a063
+https://www.aonsrd.com/WeaponProperties.aspx?ItemName=Thrown 25153 2f6c11c67dca675477a2be5753667ecdce2e03806d6a29a4b83acb9b9f31015e
+https://www.aonsrd.com/FeatDisplay.aspx?ItemName=Weapon%20Specialization 20799 cc4a09bc230683e04d2123bce909a8dfe57f48c1abf1f2a16d6dec0a9eff5e6b
+https://www.aonsrd.com/Equipment.aspx 45314 22fa08f9fdf0030e780b8e85a031f6dd9a3b51926b421aeb70a960685ad916d7
+https://www.aonsrd.com/Skills.aspx?ItemName=Acrobatics 45134 d4199d1e7807216f6ff372765ab9493d4be192b39b0fd4e70a9590a499130eda
+https://www.aonsrd.com/Classes.aspx?ItemName=Mystic 60957 fa388f590c3a0e7dbe4124375135ad7ba7dfc89f2179ab16a5e00793b8a117f9
+https://www.aonsrd.com/Classes.aspx?ItemName=Technomancer 69292 1aa9d5b8de3ab85824f7a2b846a77464f2434b725ff5f9c029317df900f4e8ed
+https://www.aonsrd.com/Classes.aspx?ItemName=Witchwarper 93170 a866ffdfbf0118cab670cd719fe0dc4fb1d0740851b4f7316e8e08b0cd7d7125
+https://www.aonsrd.com/Classes.aspx?ItemName=Drone 61193 4cf515cc72e194efdc0b5ed27df341e940fd8b8651c20a03c478d793e79fdf4b
+https://www.aonsrd.com/DroneChassis.aspx?ItemName=All 48889 fad4256b7f8376e6333b15ad7c8f66f41570f7f8ec4b354b3c3c84a20c46df07

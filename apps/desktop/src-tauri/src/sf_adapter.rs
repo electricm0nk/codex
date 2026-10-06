@@ -42,6 +42,7 @@ use codex::rules_core::character_input::{ActiveState, CharacterInput, EquipmentS
 use codex::rules_core::encumbrance::BulkCondition;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::level_up::LevelUpPlan;
+use codex::rules_core::pilot_compute::sf_attack::{self, SfAttacks};
 use codex::rules_core::pilot_compute::sf_chassis::{
     self, ability_modifier, SfChassis, SfChassisBuild, SfChassisRefusal, SfTerm, SfTotal,
 };
@@ -246,6 +247,9 @@ pub struct SfSheet {
     pub skills: SfSkills,
     pub spells: Vec<SfSpellcasting>,
     pub carried: SfCarried,
+    /// The melee and ranged attack bonus and each carried weapon's attack and damage bonus
+    /// (`sf_attack`, SD-37 E7.1).
+    pub attacks: SfAttacks,
     /// The printed lines: race, theme, class features, feats and every other held record
     /// (`sf_sheet_print`, E5.1), and the spells known (E5.2).
     pub lines: Vec<codex::rules_core::sheet_rule::SheetLine>,
@@ -263,6 +267,7 @@ pub fn compute_sheet(package: &SheetRulePackage, input: &CharacterInput) -> Resu
     // wrong item, slots exceeded) by its own name before the loadout totals its price.
     let lines = crate::sf_sheet_print::sheet_lines(package, &build, &held, &input.chosen.spells_selected, &input.chosen.equipment_selections)?;
     let carried = sf_loadout::compute(package, &build, &loadout)?;
+    let attacks = sf_attack::compute_with(package, &held, &chassis.base_attack_bonus, &loadout.carried);
     apply_bulk_condition(&mut defense, &mut skills, carried.condition);
     Ok(SfSheet {
         ability_scores: build.chassis.ability_scores,
@@ -272,6 +277,7 @@ pub fn compute_sheet(package: &SheetRulePackage, input: &CharacterInput) -> Resu
         skills,
         spells,
         carried,
+        attacks,
         lines,
     })
 }
@@ -388,8 +394,17 @@ impl SfSheet {
             ("sf.eac", &self.defense.eac),
             ("sf.kac", &self.defense.kac),
             ("sf.initiative", &self.defense.initiative),
+            ("sf.attack.melee", &self.attacks.melee),
+            ("sf.attack.ranged", &self.attacks.ranged),
         ] {
             explain(&mut rows, id.to_owned(), total);
+        }
+        // `sf.weapon.<equipment slug>.attack` / `.damage`: each carried weapon's attack bonus and
+        // the number added to its damage dice (the dice print on the weapon's own line).
+        for weapon in &self.attacks.weapons {
+            let item = split_rule_id(&weapon.item).2;
+            explain(&mut rows, format!("sf.weapon.{item}.attack"), &weapon.attack);
+            explain(&mut rows, format!("sf.weapon.{item}.damage"), &weapon.damage);
         }
         for skill in &self.skills.skills {
             if let Some(total) = &skill.total {

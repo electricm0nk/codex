@@ -1,1 +1,1 @@
-{"var":"vbacd144d53546ea7","label":"Damage Grenades","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:86"]}}
+{"var":"vbacd144d53546ea7","label":"Damage Grenades","declared_by":["core:ability:default"],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:86"]}}

@@ -1,1 +1,1 @@
-{"var":"v68270e47e27a2773","label":"Skill Cap Mysticism","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:22"]}}
+{"var":"v68270e47e27a2773","label":"Skill Cap Mysticism","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:22"]}}

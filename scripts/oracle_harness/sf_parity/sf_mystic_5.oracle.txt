@@ -1,0 +1,54 @@
+name=sf_mystic_5
+race=Lashunta (Damaya)
+class=Mystic
+level=5
+stat.STR=10
+stat.DEX=14
+stat.CON=8
+stat.INT=14
+stat.WIS=19
+stat.CHA=15
+hp=34
+stamina=25
+resolve=6
+eac=16
+kac=16
+initiative=+2
+bab=+3
+save.Fortitude=+0
+save.Reflex=+3
+save.Will=+8
+attack.melee=+3
+attack.ranged=+5
+skill.Acrobatics=2|ranks=0.0|untrained=Y
+skill.Athletics=0|ranks=0.0|untrained=Y
+skill.Bluff=10|ranks=5.0|untrained=Y
+skill.Culture=10|ranks=5.0|untrained=NO
+skill.Diplomacy=12|ranks=5.0|untrained=Y
+skill.Disguise=2|ranks=0.0|untrained=Y
+skill.Intimidate=2|ranks=0.0|untrained=Y
+skill.Life Science=10|ranks=5.0|untrained=NO
+skill.Medicine=12|ranks=5.0|untrained=NO
+skill.Mysticism=13|ranks=5.0|untrained=NO
+skill.Perception=14|ranks=5.0|untrained=Y
+skill.Piloting=2|ranks=0.0|untrained=Y
+skill.Sense Motive=14|ranks=5.0|untrained=Y
+skill.Stealth=2|ranks=0.0|untrained=Y
+skill.Survival=4|ranks=0.0|untrained=Y
+weapon.Laser pistol, azimuth=+5|damage=1d4+2|category=Non-Standard-Ranged
+weapon.Baton, tactical=+5|damage=1d4+2|category=OPERATIVE-Melee
+spells.Mystic.0=per_day:0|known:6|dcs:,,15,,15,|in_book:6
+spells.Mystic.1=per_day:5|known:5|dcs:16,16,16,16,16|in_book:5
+spells.Mystic.2=per_day:3|known:4|dcs:17,17,17,17|in_book:4
+spells.Mystic.3=per_day:0|known:0
+spells.Mystic.4=per_day:0|known:0
+spells.Mystic.5=per_day:0|known:0
+spells.Mystic.6=per_day:0|known:0
+bulk=1.5 lbs.
+credits=0
+credits.spent=2650 cr
+acp=+0
+abilities.feat=Quick Draw, Spell Focus, Spell Penetration
+abilities.theme=Priest, THEME KNOWLEDGE
+abilities.class_feature=Channel Skill, Connection, Connection Power, Connection Spell, Empath, Empathy, Greater Mindlink, Healing Touch, Mindlink, Weapon Specialization
+abilities.racial_trait=+2 Racial Bonus to Skill (Diplomacy, Medicine), Damaya, SIZE AND TYPE, DIMORPHIC, LASHUNTA MAGIC, LIMITED TELEPATHY, STUDENT

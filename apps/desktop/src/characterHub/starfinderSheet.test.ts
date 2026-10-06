@@ -49,7 +49,7 @@ function printedText(lines: readonly SheetLineDto[]): string {
 }
 
 function signed(id: string): boolean {
-  return /^sf\.(ability_modifier\.|skill\.|fortitude$|reflex$|will$|initiative$|base_attack_bonus$)/.test(id);
+  return /^sf\.(ability_modifier\.|skill\.|fortitude$|reflex$|will$|initiative$|base_attack_bonus$|attack\.|weapon\.)/.test(id);
 }
 
 function expectedText(id: string, value: number): string {
@@ -73,9 +73,16 @@ for (const seed of SEEDS) {
   assertEqual(count(html, PATHFINDER_ONLY), enginePrinted, `${seed}: every CMB|CMD|Touch|Flat-Footed in the render is the engine's printed text`);
   const layoutOnly = decode(render({ ...detail, sheetLines: [] }));
   assertEqual(count(layoutOnly, PATHFINDER_ONLY), 0, `${seed}: CMB|CMD|Touch|Flat-Footed in the layout`);
-  for (const tile of ['Energy Armor Class (EAC)', 'Kinetic Armor Class (KAC)', 'Stamina Points', 'Hit Points', 'Resolve Points']) {
+  for (const tile of ['Energy Armor Class (EAC)', 'Kinetic Armor Class (KAC)', 'Stamina Points', 'Hit Points', 'Resolve Points', 'Melee attack', 'Ranged attack']) {
     assert(layoutOnly.includes(tile), `${seed}: the ${tile} tile is laid out`);
   }
+  // SD-37 E7.1: each carried weapon's attack and damage bonus is laid out in the Weapons table,
+  // never left under "Other totals" as a raw row id.
+  const weaponRows = detail.explanations.filter((row) => row.id.startsWith('sf.weapon.'));
+  assert(weaponRows.length > 0, `${seed}: the engine sent weapon rows`);
+  assert(layoutOnly.includes('Weapons'), `${seed}: the Weapons table is laid out`);
+  const other = buildStarfinderSheet(detail).sections.find((section) => section.id === 'other');
+  assert(other === undefined || other.rows.every((row) => !row.label.startsWith('sf.weapon.') && !row.label.startsWith('sf.attack.')), `${seed}: an attack row fell to Other totals`);
 
   // 2a. Every data-sf-row value is its row's value; every row appears exactly once.
   const rows = renderedRows(layoutOnly);

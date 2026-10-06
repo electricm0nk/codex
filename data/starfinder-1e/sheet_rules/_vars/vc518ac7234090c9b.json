@@ -1,1 +1,1 @@
-{"var":"vc518ac7234090c9b","label":"Skill Cap Survival","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:67"]}}
+{"var":"vc518ac7234090c9b","label":"Skill Cap Survival","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:67"]}}

@@ -269,6 +269,36 @@
       "detail": "Dexterity modifier +2 (SRD Initiative (https://www.aonsrd.com/Rules.aspx?ID=96))"
     },
     {
+      "id": "sf.attack.melee",
+      "value": 3,
+      "detail": "base attack bonus +3 (sf.base_attack_bonus); Strength modifier +0 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105))"
+    },
+    {
+      "id": "sf.attack.ranged",
+      "value": 5,
+      "detail": "base attack bonus +3 (sf.base_attack_bonus); Dexterity modifier +2 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105))"
+    },
+    {
+      "id": "sf.weapon.laser_pistol_azimuth.attack",
+      "value": 5,
+      "detail": "base attack bonus +3 (sf.base_attack_bonus); Dexterity modifier +2 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105)); Laser pistol (azimuth) attack +0 (core:ability:laser_pistol_azimuth)"
+    },
+    {
+      "id": "sf.weapon.laser_pistol_azimuth.damage",
+      "value": 2,
+      "detail": "Laser pistol (azimuth) damage +2 (core:ability:laser_pistol_azimuth#weapon1)"
+    },
+    {
+      "id": "sf.weapon.baton_tactical.attack",
+      "value": 5,
+      "detail": "base attack bonus +3 (sf.base_attack_bonus); Dexterity modifier (operative) +2 (SRD weapon special property Operative (https://www.aonsrd.com/WeaponProperties.aspx?ItemName=Operative)); Baton (tactical) attack +0 (core:ability:baton_tactical)"
+    },
+    {
+      "id": "sf.weapon.baton_tactical.damage",
+      "value": 2,
+      "detail": "Strength modifier +0 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105)); Baton (tactical) damage +2 (core:ability:baton_tactical#weapon1)"
+    },
+    {
       "id": "sf.skill.acrobatics",
       "value": 2,
       "detail": "Dex modifier +2 (core:skill:acrobatics)"

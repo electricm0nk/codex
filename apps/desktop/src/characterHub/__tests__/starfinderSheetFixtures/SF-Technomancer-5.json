@@ -257,6 +257,26 @@
       "detail": "Dexterity modifier +3 (SRD Initiative (https://www.aonsrd.com/Rules.aspx?ID=96))"
     },
     {
+      "id": "sf.attack.melee",
+      "value": 3,
+      "detail": "base attack bonus +3 (sf.base_attack_bonus); Strength modifier +0 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105))"
+    },
+    {
+      "id": "sf.attack.ranged",
+      "value": 6,
+      "detail": "base attack bonus +3 (sf.base_attack_bonus); Dexterity modifier +3 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105))"
+    },
+    {
+      "id": "sf.weapon.laser_pistol_azimuth.attack",
+      "value": 6,
+      "detail": "base attack bonus +3 (sf.base_attack_bonus); Dexterity modifier +3 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105)); Laser pistol (azimuth) attack +0 (core:ability:laser_pistol_azimuth)"
+    },
+    {
+      "id": "sf.weapon.laser_pistol_azimuth.damage",
+      "value": 2,
+      "detail": "Laser pistol (azimuth) damage +2 (core:ability:laser_pistol_azimuth#weapon1)"
+    },
+    {
       "id": "sf.skill.acrobatics",
       "value": 3,
       "detail": "Dex modifier +3 (core:skill:acrobatics)"

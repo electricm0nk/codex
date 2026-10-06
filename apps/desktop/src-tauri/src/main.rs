@@ -42,6 +42,7 @@ mod sf_choices;
 mod sf_creation;
 mod sf_drone_print;
 mod sf_level_up;
+mod sf_oracle_parity;
 mod sf_sheet_print;
 mod spell_catalog;
 mod stub_adapter;

@@ -1,0 +1,44 @@
+name=sf_mechanic_1
+race=Human
+class=Mechanic
+level=1
+stat.STR=11
+stat.DEX=14
+stat.CON=12
+stat.INT=18
+stat.WIS=10
+stat.CHA=8
+hp=10
+stamina=7
+resolve=5
+eac=12
+kac=12
+initiative=+2
+bab=+0
+save.Fortitude=+3
+save.Reflex=+4
+save.Will=+0
+attack.melee=+0
+attack.ranged=+2
+skill.Acrobatics=2|ranks=0.0|untrained=Y
+skill.Athletics=1|ranks=0.0|untrained=Y
+skill.Bluff=-1|ranks=0.0|untrained=Y
+skill.Computers=9|ranks=1.0|untrained=NO
+skill.Diplomacy=-1|ranks=0.0|untrained=Y
+skill.Disguise=-1|ranks=0.0|untrained=Y
+skill.Engineering=9|ranks=1.0|untrained=NO
+skill.Intimidate=-1|ranks=0.0|untrained=Y
+skill.Perception=4|ranks=1.0|untrained=Y
+skill.Physical Science=8|ranks=1.0|untrained=NO
+skill.Piloting=6|ranks=1.0|untrained=Y
+skill.Sense Motive=0|ranks=0.0|untrained=Y
+skill.Stealth=2|ranks=0.0|untrained=Y
+skill.Survival=0|ranks=0.0|untrained=Y
+bulk=0 lbs.
+credits=0
+credits.spent=0 cr
+acp=+0
+abilities.feat=
+abilities.theme=Mercenary, THEME KNOWLEDGE
+abilities.class_feature=Artificial Intelligence, Bypass, Custom Rig, Drone
+abilities.racial_trait=SIZE AND TYPE, BONUS FEAT, SKILLED

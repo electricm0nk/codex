@@ -1,0 +1,44 @@
+name=sf_soldier_1
+race=Human
+class=Soldier
+level=1
+stat.STR=12
+stat.DEX=18
+stat.CON=12
+stat.INT=10
+stat.WIS=11
+stat.CHA=10
+hp=11
+stamina=8
+resolve=5
+eac=15
+kac=16
+initiative=+4
+bab=+1
+save.Fortitude=+3
+save.Reflex=+4
+save.Will=+2
+attack.melee=+2
+attack.ranged=+5
+skill.Acrobatics=4|ranks=0.0|untrained=Y
+skill.Athletics=5|ranks=1.0|untrained=Y
+skill.Bluff=0|ranks=0.0|untrained=Y
+skill.Diplomacy=0|ranks=0.0|untrained=Y
+skill.Disguise=0|ranks=0.0|untrained=Y
+skill.Intimidate=0|ranks=0.0|untrained=Y
+skill.Perception=0|ranks=0.0|untrained=Y
+skill.Piloting=8|ranks=1.0|untrained=Y
+skill.Sense Motive=0|ranks=0.0|untrained=Y
+skill.Sleight of Hand=8|ranks=1.0|untrained=NO
+skill.Stealth=4|ranks=0.0|untrained=Y
+skill.Survival=0|ranks=0.0|untrained=Y
+weapon.*Laser pistol, azimuth=+5|damage=1d4|category=Non-Standard-Ranged
+weapon.Baton, tactical=+5|damage=1d4+1|category=OPERATIVE-Melee
+bulk=0.3 lbs.
+credits=0
+credits.spent=690 cr
+acp=+0
+abilities.feat=
+abilities.theme=Outlaw, THEME KNOWLEDGE
+abilities.class_feature=Primary Fighting Style, Primary Style Technique
+abilities.racial_trait=SIZE AND TYPE, BONUS FEAT, SKILLED

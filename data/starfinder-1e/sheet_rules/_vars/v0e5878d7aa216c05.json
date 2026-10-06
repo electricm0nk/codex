@@ -1,1 +1,1 @@
-{"var":"v0e5878d7aa216c05","label":"Skill Cap Profession Psychologist","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:59"]}}
+{"var":"v0e5878d7aa216c05","label":"Skill Cap Profession Psychologist","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:59"]}}

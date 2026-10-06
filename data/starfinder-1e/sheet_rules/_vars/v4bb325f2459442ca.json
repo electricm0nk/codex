@@ -1,1 +1,1 @@
-{"var":"v4bb325f2459442ca","label":"Skill Cap Profession Lawyer","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:46"]}}
+{"var":"v4bb325f2459442ca","label":"Skill Cap Profession Lawyer","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:46"]}}

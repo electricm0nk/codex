@@ -1,1 +1,1 @@
-{"var":"v673405f2808253d8","label":"Skill Cap Profession Farmer","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:41"]}}
+{"var":"v673405f2808253d8","label":"Skill Cap Profession Farmer","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:41"]}}

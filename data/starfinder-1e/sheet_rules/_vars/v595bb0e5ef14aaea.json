@@ -1,1 +1,1 @@
-{"var":"v595bb0e5ef14aaea","label":"Skill Cap Sense Motive","declared_by":[],"contributions":[],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:64"]}}
+{"var":"v595bb0e5ef14aaea","label":"Skill Cap Sense Motive","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:64"]}}
