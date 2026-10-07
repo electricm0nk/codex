@@ -105,6 +105,28 @@ sub-step fires regardless of diff content:
    bundle's retrospective, then run the full worktree/branch sweep. Both must be done before
    step 2 below opens the PR — a retrospective or a stray worktree found *after* the PR is open is
    a correction cycle, not a clean closure.
+1a. **Release artifacts shippable?** (fires with step 1, before the PR opens; a bundle that changes
+   nothing a user installs still does the version/notes pointer check). Every item has a command:
+
+   - **Version and notes move together.** The tranche bump (`0.<tranche>.0` in
+     `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`, `apps/desktop/src-tauri/Cargo.toml`
+     and the stamp job's `VERSION="0.<tranche>.${GITHUB_RUN_NUMBER}"` literal) and
+     `docs/release/current-release.json` (`tranche` + `notes_path` → this bundle's `release-notes.md`)
+     land in the same commit. Check: `python3 tools/release/resolve_release_notes.py --repo-root .` prints this
+     bundle's notes path (it fails on a tranche mismatch, a missing file, or the "Populated at closure"
+     placeholder).
+   - **The notes are real.** `python3 scripts/tranche/validate-tranche-notes.py --release-notes-path <notes_path>` passes and no
+     closure-placeholder text remains.
+   - **The release tooling's own tests pass.** `python3 -m pytest tools/release -q` (CI: `release-tooling-tests.yml`).
+   - **Fresh-install acceptance.** Before closure, install each shipped artifact (the .deb **and** the AppImage on
+     Linux) on a clean profile, open Settings → Update and press Check. Nothing may read "unknown": the Installed panel
+     shows the stamped version, source commit and artifact hash; release notes load; Install is enabled when a newer
+     release exists. Record what was observed in the cycle receipt — "the suite passed" is not this evidence, because the suites
+     never ran a first launch with no `installed-state.json`.
+
+   The publish workflow re-checks the mechanical half on every release (`assert_version_stamp.py` before each build and
+   `verify_release_consistency.py` — versions, deb metadata, hashes, and the bytes served at `release_notes_url` — before
+   the GitHub release is created); this step is how the *inputs* to those gates get set.
 2. **Architecture docs updated?** If not, run the truth-up script at
    `~/.hermes/profiles/god-emporer/skills/devops/architecture-truth-up/scripts/architecture_truth_up.py`
    with `--integration-target <target> --receipts-md <this-folder>/receipts.md --bundle <SD-NN>`.

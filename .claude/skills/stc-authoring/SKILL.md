@@ -146,9 +146,32 @@ define the full procedure; condensed:
 - **Bundle closure (once):** final-acceptance scan of every criterion **and every epic/kanban card
   at `complete`** → write and cite the bundle's retrospective (above) → full worktree/branch sweep
   for the whole bundle → architecture-docs refresh + graphify + PR + merge-conflict resolution
-  (`docs/release/template/template.md §6`) → release notes + version bump. The retro write-up and
+  (`docs/release/template/template.md §6`) → release notes + version bump (§6 step 1a: the two move
+  together, see below). The retro write-up and
   worktree sweep happen **before** the PR opens — finding either one missing after the PR is
   already open means the closure needs a correction cycle, not a clean pass.
+
+### Release-artifact closure (version, notes, installable)
+
+A bundle that ships to testers is not closed because its tests pass. Alpha v0.16.140 shipped with every
+suite green and still: the binary said 0.16.0 while the manifest said 0.16.140, the Update panel read
+"unknown" for every installed field, and its release notes were another tranche's placeholder. The closure
+checklist is `docs/release/template/template.md §6 step 1a`; the points a bundle author must carry into
+`acceptance-and-verification.md` and `workflow-instruction.md` are:
+
+- **Tranche bump and notes pointer are one change.** `docs/release/current-release.json` names the notes the
+  publish workflow ships and must agree with the app's tranche (`0.<tranche>.<build>`).
+  `tools/release/resolve_release_notes.py` enforces it; never write a notes path literal into a workflow.
+- **The build number is part of the app version** (`<major>.<tranche>.<build>`), stamped before build and
+  asserted in every platform job (`tools/release/assert_version_stamp.py`). Artifacts that carry a different
+  version than the manifest fail the release (`tools/release/verify_release_consistency.py`).
+- **Every user-facing install path gets a fresh-install acceptance criterion** — .deb and AppImage — covering
+  first launch with no `installed-state.json`: Settings → Update → Check shows no "unknown" and offers Install when
+  a newer release exists. A criterion phrased only as "tests pass" does not cover this; it is the narrow-proof trap
+  (`AGENTS.md` rule 7).
+- **Changing a manifest field changes three places**: `schemas/update/update-manifest.schema.json`, the writer
+  (`scripts/release/write_release_manifest.py`) and the app's parser/eligibility code. A bundle that adds an
+  artifact kind lists all three in `FILES YOU OWN`.
 
 **A filed blocker does not satisfy the final-acceptance scan**
 (`docs/governance/blocker-closure-doctrine.md`). A `## Open blockers` entry is a request for an

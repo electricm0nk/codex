@@ -141,11 +141,30 @@ struct BackendHealthSnapshot {
     git_commit: String,
 }
 
-#[tauri::command]
-fn load_backend_health() -> BackendHealthSnapshot {
+/// `version` is the packaged app version (Tauri's `package_info`), which the release stamp sets.
+/// `CARGO_PKG_VERSION` is not stamped, so using it showed `v0.16.0` on every 0.16.x build.
+fn backend_health_snapshot(version: &str, git_commit: &str) -> BackendHealthSnapshot {
     BackendHealthSnapshot {
-        version: env!("CARGO_PKG_VERSION").to_string(),
-        git_commit: env!("CODEX_GIT_SHA").to_string(),
+        version: version.to_string(),
+        git_commit: git_commit.to_string(),
+    }
+}
+
+#[tauri::command]
+fn load_backend_health(app: tauri::AppHandle) -> BackendHealthSnapshot {
+    backend_health_snapshot(&app.package_info().version.to_string(), env!("CODEX_GIT_SHA"))
+}
+
+#[cfg(test)]
+mod backend_health_tests {
+    use super::backend_health_snapshot;
+
+    #[test]
+    fn reports_the_packaged_app_version_not_the_crate_version() {
+        let snapshot = backend_health_snapshot("0.16.141", "157873a67e80");
+        assert_eq!(snapshot.version, "0.16.141");
+        assert_ne!(snapshot.version, env!("CARGO_PKG_VERSION"));
+        assert_eq!(snapshot.git_commit, "157873a67e80");
     }
 }
 
