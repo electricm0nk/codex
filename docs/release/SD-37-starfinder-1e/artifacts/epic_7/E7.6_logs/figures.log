@@ -1,0 +1,21 @@
+R-1	0.17.0,0.17.0	0.17.0,0.17.0	AGREE	build version in the two desktop manifests
+R-2	117	117	AGREE	commits on tranche/17 past the cut 20bf84a3b2, to 1335bb7248
+R-3	57 53	57 53	AGREE	kanban rows, then rows `complete`, at 1335bb7248 (before this card's own row moved)
+R-4	8582 12718 229	8582 12718 229	AGREE	Starfinder work units, in-scope LST rows, excluded rows (CRB + 7 books)
+R-5	8582 8582 0 30	8582 8582 0 30	AGREE	converter report: records, converted, refused, degraded records
+R-6	49450	49450	AGREE	Pathfinder work-inventory units (the PF side, unmoved)
+R-7	aldric 1d830682 elowen 8d1a711c	aldric 1d830682 elowen 8d1a711c	AGREE	Pathfinder seed render hashes (first 8 hex), last run in E7.2
+R-8	53	53	AGREE	`verify.sh` stages passed in the full run (E7.2)
+R-9	2838 6514 1832 700	2838 6514 1832 700	AGREE	tests passed: root lib, root full, ingest full, desktop
+R-10	0 0 0 0	0 0 0 0	AGREE	`test result: FAILED` lines in the same four logs
+R-11	137/137	137/137	AGREE	frontend test files passed
+R-12	160	160	AGREE	Starfinder seed hand values (4 seeds), each with an SRD URL
+R-13	15 36 1413	15 36 1413	AGREE	oracle parity: PCGen observation files, explained differences, engine fields the oracle exports no value for
+R-14	103 14 15379 15379 true	103 14 15379 15379 true	AGREE	ui-smoke rows in `spec.json`, of them Starfinder rows, then the real store's entry count before and after, then whether its sha256 is equal
+R-15	281 0 absent	281 0 absent	AGREE	`data/rules_tables` JSON files, files carrying the text `.lst`, and the Rust module `src/rules_core/rules_tables`
+R-16	11 8 3 11	11 8 3 11	AGREE	Starfinder licence-matrix rows, `include`, `exclude`, `operator_sign_off` false
+R-17	41	41	AGREE	Starfinder product-identity screen terms (`SF_PI_TERMS`)
+R-18	8582 289	8582 289	AGREE	Starfinder corpus records (files carrying a `license` field), of them `PI-REDACTED`
+R-19	17717	17717	AGREE	tracked files under `data/starfinder-1e`
+R-20	160 37 15	160 37 15	AGREE	retro events since 2026-10-02 (recorded summary), corrections, incidents
+FIGURES 20 DISAGREE 0

@@ -70,7 +70,7 @@ data package, as a serial block (C0.2 re-sequencing, `decisions.md §3`).
 | `artifacts/`, `artifacts/README.md` | Per-epic receipts and evidence |
 | `references/`, `references/README.md` | Doctrine, skills, sibling bundles, retrospectives |
 
-`release-notes.md` is written at E7.6. It does not exist yet.
+`release-notes.md` was written at E7.6 (every figure `R-n` with its command; check: `python3 artifacts/epic_7/E7.6_check.py --plant`).
 
 ## 3. In-repo cross-references
 
