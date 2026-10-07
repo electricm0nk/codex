@@ -56,7 +56,7 @@ use character_hub::{
     load_character_bio,
     load_character_hit_points,
     load_character_durability, load_character_money, load_character_portrait,
-    list_class_creation_roster, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
+    list_class_creation_roster, list_feats_for_draft, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
     add_trait_selection, remove_trait_selection, set_equipment_active_state,
     remove_spell_selection,
@@ -315,6 +315,7 @@ fn main() {
             // verdict for a specific saved character, so the picker can grey
             // out what that character cannot take and say why.
             list_feats_for_character,
+            list_feats_for_draft,
             list_weapon_targets,
             list_class_catalog,
             list_class_spell_levels,

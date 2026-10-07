@@ -2,7 +2,8 @@ import { assert, assertEqual } from '../testSupport/asserts';
 import type { CharacterTraitOptionDto } from '../boundary/loadCharacterTraits';
 import type { AlternateTraitRow } from './alternateTraitSelection';
 import type { RacialTraitRow } from './racialTraitsModel';
-import { CHARACTER_TRAIT_LIMIT, alternateTraitItems, characterTraitItems, traitBonusSummary } from './manageItems';
+import type { FeatCatalogEntryDto } from '../boundary/listFeats';
+import { CHARACTER_TRAIT_LIMIT, alternateTraitItems, characterTraitItems, creationFeatSlots, featItems, traitBonusSummary } from './manageItems';
 
 const altRow = (over: Record<string, unknown> = {}): AlternateTraitRow =>
   ({
@@ -30,6 +31,45 @@ const trait = (over: Partial<CharacterTraitOptionDto> = {}): CharacterTraitOptio
   abilitySubstitution: null,
   ...over,
 });
+
+const feat = (over: Partial<FeatCatalogEntryDto> = {}): FeatCatalogEntryDto => ({
+  key: 'feat:power_attack',
+  category: 'Combat',
+  name: 'Power Attack',
+  description: 'You can make powerful attacks.',
+  source: 'Crb',
+  chooserTargetKind: null,
+  eligibility: { eligible: true, unavailableReason: null, met: ['Str 13'], unmet: [], unverified: [], prerequisiteCount: 1 },
+  ...over,
+} as FeatCatalogEntryDto);
+
+function verifiesFeatItemsCarryTheDraftsVerdicts() {
+  const [ok, no, chooser, plain] = featItems([
+    feat(),
+    feat({ key: 'feat:improved_crit', name: 'Improved Critical', eligibility: { eligible: false, unavailableReason: 'BAB +8 required', met: [], unmet: ['BAB +8'], unverified: [], prerequisiteCount: 1 } }),
+    feat({ key: 'feat:weapon_focus', name: 'Weapon Focus', chooserTargetKind: 'Weapon' }),
+    feat({ key: 'feat:dodge', name: 'Dodge', eligibility: undefined }),
+  ]);
+  assertEqual(ok.qualified, true, 'an eligible feat is qualified');
+  assert(ok.label.includes('Power Attack') && ok.label.includes('CRB'), 'label names the feat and its book');
+  assert((ok.description ?? '').includes('powerful attacks'), 'the description is carried');
+  assert((ok.description ?? '').includes('Str 13'), 'with the prerequisites it meets');
+  assertEqual(no.qualified, false, 'an ineligible feat is not qualified');
+  assertEqual(no.unqualifiedReason, 'BAB +8 required', 'with the engine\'s reason');
+  assertEqual(chooser.qualified, false, 'a feat that needs a target is not selectable here');
+  assert((chooser.unqualifiedReason ?? '').includes('target'), 'and says its target is chosen on the sheet');
+  assertEqual(plain.qualified, true, 'no verdict means no restriction');
+  assertEqual(featItems([feat(), feat()]).length, 1, 'a key listed twice is offered once');
+}
+
+function verifiesTheNumberOfFeatsACharacterStartsWith() {
+  assertEqual(creationFeatSlots(1, 'race:elf'), 1, 'one feat at 1st level');
+  assertEqual(creationFeatSlots(2, 'race:elf'), 1, 'none at 2nd');
+  assertEqual(creationFeatSlots(3, 'race:elf'), 2, 'another at 3rd');
+  assertEqual(creationFeatSlots(20, 'race:elf'), 10, 'ten by 20th');
+  assertEqual(creationFeatSlots(1, 'race:human'), 2, 'humans take a bonus feat');
+  assertEqual(creationFeatSlots(0, 'race:human'), 0, 'no levels, no feats');
+}
 
 function verifiesAlternateTraitsBecomeSelectableItemsAndStandardOnesBecomeInnate() {
   const items = alternateTraitItems([altRow()], [innateRow()]);
@@ -87,4 +127,6 @@ verifiesALockedOutAlternateIsUnqualifiedWithTheBackendsReason();
 verifiesAnIncompleteDescriptionIsFlagged();
 verifiesTraitBonusSummaries();
 verifiesCharacterTraitsAreAllQualifiedAndCarryTheirNumbers();
+verifiesFeatItemsCarryTheDraftsVerdicts();
+verifiesTheNumberOfFeatsACharacterStartsWith();
 console.log('manageItems.test.ts: all assertions passed');

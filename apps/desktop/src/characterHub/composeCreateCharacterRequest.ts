@@ -1,6 +1,10 @@
 import type {
   AbilityScoresDto,
   CreateCharacterRequest,
+  CreateEquipmentDto,
+  CreateFeatDto,
+  CreateSkillAllocationDto,
+  CreateSpellDto,
   HitPointLevelDto,
   TraitSkillChoiceDto,
 } from '../boundary/loadCreateCharacter';
@@ -86,6 +90,12 @@ export interface CreateCharacterFormFields {
   additionalLevels?: readonly string[];
   /** The player's hit point result for every level. Absent means "no rolls". */
   hitPointLevels?: readonly HitPointLevelDto[];
+  /** Selections from the Manage dialogs; every one absent composes the plain single-class request. */
+  selectedFeats?: readonly CreateFeatDto[];
+  skillAllocations?: readonly CreateSkillAllocationDto[];
+  selectedSpells?: readonly CreateSpellDto[];
+  selectedEquipment?: readonly CreateEquipmentDto[];
+  priceMode?: CreateCharacterRequest['priceMode'];
   abilityScores: AbilityScoresDto;
   abilityBonusTarget: string;
   /**
@@ -135,6 +145,11 @@ export function composeCreateCharacterRequest(
     level: fields.level,
     additionalLevels: [...(fields.additionalLevels ?? [])],
     hitPointLevels: (fields.hitPointLevels ?? []).map((entry) => ({ ...entry })),
+    selectedFeats: (fields.selectedFeats ?? []).map((entry) => ({ ...entry })),
+    skillAllocations: (fields.skillAllocations ?? []).map((entry) => ({ ...entry })),
+    selectedSpells: (fields.selectedSpells ?? []).map((entry) => ({ ...entry })),
+    selectedEquipment: (fields.selectedEquipment ?? []).map((entry) => ({ ...entry })),
+    priceMode: fields.priceMode ?? 'standard',
     abilityScores: { ...fields.abilityScores },
     abilityBonusTarget: fields.abilityBonusTarget,
     savedAt: deps.now(),

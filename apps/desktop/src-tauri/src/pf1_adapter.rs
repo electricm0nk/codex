@@ -1452,6 +1452,11 @@ mod tests {
             additional_choices: Vec::new(),
             additional_levels: Vec::new(),
             hit_point_levels: Vec::new(),
+            selected_feats: Vec::new(),
+            skill_allocations: Vec::new(),
+            selected_spells: Vec::new(),
+            selected_equipment: Vec::new(),
+            price_mode: crate::character_hub::PriceMode::Standard,
             saved_at: TEST_SAVED_AT.to_owned(),
         }
     }

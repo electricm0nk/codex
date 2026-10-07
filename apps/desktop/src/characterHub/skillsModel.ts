@@ -252,3 +252,14 @@ export function totalSkillPointsAvailable(heldClasses: HeldClass[], intelligence
   }
   return total;
 }
+
+/**
+ * What the skills dialogs print at the top: how many points are left of how many. `total` is `null`
+ * when a held class states no skill ranks per level, which is Unknown, never a guessed number.
+ */
+export function skillPointsStatus(total: number | null, remaining: number): { text: string; tone: 'ok' | 'over' | 'unknown' } {
+  if (total === null) {
+    return { text: 'Skill points Unknown: a held class states no skill ranks per level', tone: 'unknown' };
+  }
+  return { text: `${remaining} of ${total} points remaining`, tone: remaining >= 0 ? 'ok' : 'over' };
+}

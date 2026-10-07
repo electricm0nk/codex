@@ -7,6 +7,7 @@ import { assertEqual } from '../testSupport/asserts';
 
 async function main() {
   verifiesLevelsAndHitPointResultsDefaultToEmptyAndPassThrough();
+  verifiesDialogSelectionsDefaultToEmptyAndPassThrough();
   verifiesRequestShapeFromFormFields();
   verifiesRacialAdjustmentsAreBakedIntoSubmittedScores();
   verifiesHumanEmptyAdjustmentsLeaveScoresUnchanged();
@@ -266,6 +267,42 @@ function verifiesLevelsAndHitPointResultsDefaultToEmptyAndPassThrough() {
   assertEqual(request.additionalLevels.join(','), 'class:wizard', 'additional levels pass through in order');
   assertEqual(request.hitPointLevels.length, 3, 'every hit point result passes through');
   assertEqual(request.hitPointLevels[2]!.value, 3, 'with its value');
+}
+
+// Selections from the Manage dialogs ride along too; a caller that sends none composes the same request.
+function verifiesDialogSelectionsDefaultToEmptyAndPassThrough() {
+  const base = {
+    displayLabel: 'Aldric',
+    raceId: 'race:human',
+    classId: 'class:fighter',
+    level: 1,
+    abilityScores: { strength: 16, dexterity: 14, constitution: 14, intelligence: 10, wisdom: 12, charisma: 8 },
+    abilityBonusTarget: 'dexterity',
+  };
+  const deps = { generateId: () => 'char-fixed-id', now: () => '2026-07-08T00:00:00Z' };
+  const plain = composeCreateCharacterRequest(base, deps);
+  assertEqual(plain.selectedFeats.length, 0, 'no feats by default');
+  assertEqual(plain.skillAllocations.length, 0, 'no skill ranks by default (the seeded ones stay)');
+  assertEqual(plain.selectedSpells.length, 0, 'no spells by default');
+  assertEqual(plain.selectedEquipment.length, 0, 'no equipment by default');
+  assertEqual(plain.priceMode, 'standard', 'standard pricing by default');
+
+  const request = composeCreateCharacterRequest(
+    {
+      ...base,
+      selectedFeats: [{ featId: 'feat:dodge', target: null }],
+      skillAllocations: [{ skillId: 'skill:swim', ranks: 1 }],
+      selectedSpells: [{ spellId: 'Mage Armor', sourceClassId: 'class:wizard', acquisitionMode: 'Known' }],
+      selectedEquipment: [{ itemId: 'item:dagger' }],
+      priceMode: 'cashless',
+    },
+    deps
+  );
+  assertEqual(request.selectedFeats[0]!.featId, 'feat:dodge', 'feats pass through');
+  assertEqual(request.skillAllocations[0]!.ranks, 1, 'skill ranks pass through');
+  assertEqual(request.selectedSpells[0]!.spellId, 'Mage Armor', 'spells pass through');
+  assertEqual(request.selectedEquipment[0]!.itemId, 'item:dagger', 'equipment passes through');
+  assertEqual(request.priceMode, 'cashless', 'and so does the pricing mode');
 }
 
 main().catch((error: unknown) => {

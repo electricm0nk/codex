@@ -27,6 +27,27 @@ export interface HitPointLevelDto {
   value: number;
 }
 
+/** A feat chosen in the Create screen's feats dialog; `target` names the weapon/skill/school of a chooser feat. */
+export interface CreateFeatDto {
+  featId: string;
+  target?: string | null;
+}
+
+export interface CreateSpellDto {
+  spellId: string;
+  sourceClassId: string;
+  acquisitionMode: 'Known' | 'Prepared' | 'Granted';
+}
+
+export interface CreateEquipmentDto {
+  itemId: string;
+}
+
+export interface CreateSkillAllocationDto {
+  skillId: string;
+  ranks: number;
+}
+
 export interface CreateCharacterRequest {
   characterId: string;
   displayLabel: string;
@@ -38,6 +59,14 @@ export interface CreateCharacterRequest {
   additionalLevels: string[];
   /** The die result for every character level, in order (the first is the full die). */
   hitPointLevels: HitPointLevelDto[];
+  /** Feats from the Manage dialog; each must be one the character qualifies for or creation is refused. */
+  selectedFeats: CreateFeatDto[];
+  /** The complete skill-rank set from the skills dialog; empty keeps the seeded ranks. */
+  skillAllocations: CreateSkillAllocationDto[];
+  selectedSpells: CreateSpellDto[];
+  /** Equipment bought with starting money (or free when `priceMode` is `cashless`). */
+  selectedEquipment: CreateEquipmentDto[];
+  priceMode: 'cashless' | 'standard' | 'characterBuild';
   abilityScores: AbilityScoresDto;
   abilityBonusTarget: string;
   savedAt: string;

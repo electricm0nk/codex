@@ -1,3 +1,4 @@
+import type { FeatCatalogEntryDto } from '../boundary/listFeats';
 import type { CharacterTraitOptionDto } from '../boundary/loadCharacterTraits';
 import type { AlternateTraitRow } from './alternateTraitSelection';
 import type { RacialTraitRow } from './racialTraitsModel';
@@ -72,4 +73,59 @@ export function characterTraitItems(options: CharacterTraitOptionDto[]): Transfe
       qualified: true,
     };
   });
+}
+
+const FEAT_BOOK_LABELS: Record<string, string> = { Crb: 'CRB', Apg: 'APG', Acg: 'ACG', Arg: 'ARG', Pu: 'PU' };
+
+/**
+ * Feats for the Manage dialog, with the draft character's verdicts. A feat that needs a target
+ * (a weapon, skill or school) is listed but not selectable here: its target is chosen on the sheet.
+ * A key the catalog lists twice (PU re-lists Endurance) is offered once.
+ */
+export function featItems(entries: FeatCatalogEntryDto[]): TransferItem[] {
+  const seen = new Set<string>();
+  const items: TransferItem[] = [];
+  for (const entry of entries) {
+    if (seen.has(entry.key)) {
+      continue;
+    }
+    seen.add(entry.key);
+    const verdict = entry.eligibility;
+    const book = FEAT_BOOK_LABELS[entry.source] ?? entry.source;
+    const lines = [entry.description ?? 'No description available.'];
+    if (verdict !== undefined && verdict.met.length > 0) {
+      lines.push(`Prerequisites met: ${verdict.met.join('; ')}.`);
+    }
+    if (verdict !== undefined && verdict.unmet.length > 0) {
+      lines.push(`Prerequisites not met: ${verdict.unmet.join('; ')}.`);
+    }
+    if (verdict !== undefined && verdict.unverified.length > 0) {
+      lines.push(`Could not be checked: ${verdict.unverified.join('; ')}.`);
+    }
+    const needsTarget = entry.chooserTargetKind !== null;
+    const eligible = verdict === undefined || verdict.eligible;
+    items.push({
+      id: entry.key,
+      label: `${entry.name} (${book})`,
+      description: lines.join('\n\n'),
+      qualified: eligible && !needsTarget,
+      ...(needsTarget
+        ? { unqualifiedReason: `Choose this feat's ${entry.chooserTargetKind?.toLowerCase()} target on the sheet after creation.` }
+        : eligible
+          ? {}
+          : { unqualifiedReason: verdict?.unavailableReason ?? 'The character does not qualify.' }),
+    });
+  }
+  return items;
+}
+
+/**
+ * How many feats a new character picks: one at every odd character level (1st, 3rd, ...), plus a
+ * human's bonus feat. Class bonus feats (a Fighter's, say) are class features chosen on the sheet.
+ */
+export function creationFeatSlots(characterLevel: number, raceId: string): number {
+  if (characterLevel <= 0) {
+    return 0;
+  }
+  return Math.ceil(characterLevel / 2) + (raceId === 'race:human' ? 1 : 0);
 }

@@ -33,6 +33,23 @@ import { ManageBox } from './ManageBox';
 import { TransferListDialog } from './TransferListDialog';
 import { CHARACTER_TRAIT_LIMIT, alternateTraitItems, characterTraitItems } from './manageItems';
 import { remainingSelections } from './transferListModel';
+import { SkillAllocationDialog } from './SkillAllocationDialog';
+import {
+  allocationFromPersisted,
+  classSkillLookup,
+  persistedFromAllocation,
+  skillPointsSpent,
+  skillPointsStatus,
+  totalSkillPointsAvailable,
+} from './skillsModel';
+import { LOADING_CLASS_FACTS, failedClassFacts, loadedClassFacts, type ClassFactsState } from './classFactsModel';
+import { classFactsQueries } from './classFactsModel';
+import { listClassFacts } from '../boundary/listClassFacts';
+import { NO_FEAT_SKILL_BONUSES } from '../boundary/loadSavedCharacterDetail';
+import { listFeatsForDraft, type FeatCatalogEntryDto } from '../boundary/listFeats';
+import { creationFeatSlots, featItems } from './manageItems';
+import type { HeldClass } from './characterProgression';
+import { heldClassesOf } from './levelsModel';
 import {
   addLevel,
   creationRequestShape,
@@ -59,6 +76,7 @@ import type {
 } from '../boundary/loadAlternateRacialTraits';
 import { loadCharacterTraits, type CharacterTraitOptionDto } from '../boundary/loadCharacterTraits';
 import type { CreateCharacterOutcomeSurface } from './buildCreateCharacterOutcomeSurface';
+import type { CreateCharacterRequest } from '../boundary/loadCreateCharacter';
 import {
   ABILITY_SCORE_METHOD_OPTIONS,
   POINT_BUY_DEFAULT_POOL,
@@ -336,6 +354,23 @@ function CreateCharacterFields(props: {
   const [racialSnapshot, setRacialSnapshot] = useState<string[]>([]);
   const [traitsDialogOpen, setTraitsDialogOpen] = useState(false);
   const [traitsSnapshot, setTraitsSnapshot] = useState<string[]>([]);
+  // Skills: starts at the ranks every new character is seeded with; only sent when the player edits them.
+  const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>(() =>
+    allocationFromPersisted([
+      { skillId: 'skill:climb', ranks: 1 },
+      { skillId: 'skill:intimidate', ranks: 1 },
+      { skillId: 'skill:swim', ranks: 1 },
+    ])
+  );
+  const [skillsTouched, setSkillsTouched] = useState(false);
+  const [skillDialogOpen, setSkillDialogOpen] = useState(false);
+  const [classFacts, setClassFacts] = useState<ClassFactsState>(LOADING_CLASS_FACTS);
+  // Feats: chosen in the dialog against the draft character's own verdicts.
+  const [selectedFeats, setSelectedFeats] = useState<string[]>([]);
+  const [featsSnapshot, setFeatsSnapshot] = useState<string[]>([]);
+  const [featDialogOpen, setFeatDialogOpen] = useState(false);
+  const [draftFeats, setDraftFeats] = useState<FeatCatalogEntryDto[] | null>(null);
+  const [draftFeatsError, setDraftFeatsError] = useState<string | null>(null);
   // AT-34-E4-002 (second slice): the player's resolved skill choice for
   // each selected fixed-choice open-slot trait, keyed by trait id. A trait
   // with no entry here yet (just checked, choice not made) submits no
@@ -377,6 +412,64 @@ function CreateCharacterFields(props: {
 
   // The HP box is the sum of the Levels list: each level's die result plus the Constitution modifier.
   const maxHp = levels.length === 0 ? null : totalHitPoints(levels, abilityModifier(calculatedScore('constitution')));
+
+  const heldClasses: HeldClass[] = heldClassesOf(levels).map((held) => ({
+    classId: held.classId,
+    classLabel: classOptions.find((option) => option.id === held.classId)?.label ?? held.classId,
+    level: held.level,
+  }));
+  const heldClassKey = heldClasses.map((held) => held.classId).join(',');
+  const isHuman = raceId === 'race:human';
+  const skillPointsTotal = totalSkillPointsAvailable(heldClasses, abilityModifier(calculatedScore('intelligence')), isHuman);
+  const skillPointsLeft = (skillPointsTotal ?? 0) - skillPointsSpent(skillAllocation);
+  const feats = creationFeatSlots(characterLevel(levels), raceId);
+
+  // The engine's class skills for the classes in the Levels list (the skills dialog marks them).
+  useEffect(() => {
+    if (heldClasses.length === 0) {
+      setClassFacts(LOADING_CLASS_FACTS);
+      return undefined;
+    }
+    let cancelled = false;
+    setClassFacts(LOADING_CLASS_FACTS);
+    listClassFacts(classFactsQueries(heldClasses))
+      .then((response) => {
+        if (!cancelled) setClassFacts(loadedClassFacts(response));
+      })
+      .catch((cause: unknown) => {
+        if (!cancelled) setClassFacts(failedClassFacts(cause));
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [heldClassKey]);
+
+  // While the feats dialog is open, ask the backend which feats this draft character qualifies for.
+  const draftFeatsKey = JSON.stringify([heldClassKey, levels.map((entry) => entry.classId), raceId, selectedFeats, selectedAlternateTraitKeys, selectedTraits]);
+  useEffect(() => {
+    if (!featDialogOpen) {
+      return undefined;
+    }
+    const draft = buildRequest();
+    if (draft === null) {
+      setDraftFeats(null);
+      return undefined;
+    }
+    let cancelled = false;
+    setDraftFeatsError(null);
+    listFeatsForDraft(draft, { nameContains: null, category: null })
+      .then((response) => {
+        if (!cancelled) setDraftFeats(response.entries);
+      })
+      .catch((cause: unknown) => {
+        if (!cancelled) setDraftFeatsError(cause instanceof Error ? cause.message : String(cause));
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [featDialogOpen, draftFeatsKey]);
 
   function handleAddLevel(addedClassId: string) {
     const option = classOptions.find((candidate) => candidate.id === addedClassId);
@@ -595,6 +688,64 @@ function CreateCharacterFields(props: {
     return target;
   }
 
+  /**
+   * The creation request for the form as it stands, or `null` when there is no level yet. Used to
+   * create the character and, unsaved, to ask the backend what the draft qualifies for.
+   */
+  function buildRequest(): CreateCharacterRequest | null {
+    const levelShape = creationRequestShape(levels);
+    if (levelShape === null) {
+      return null;
+    }
+    const rawAbilityScores = ABILITY_KEYS.reduce(
+      (scores, key) => ({ ...scores, [key]: rawScore(key) }),
+      {} as Record<AbilityKey, number>
+    );
+    // The raw entered/rolled scores don't yet include the race's fixed
+    // ability adjustments (Elf +2 DEX/-2 CON/+2 INT etc.) — `calculatedScore`
+    // applies them for the on-screen preview only. The compute engine
+    // expects them baked into the submitted score for every race except
+    // Human (see `applyRacialAbilityAdjustments`'s own doc comment).
+    const adjustedAbilityScores = applyRacialAbilityAdjustments(rawAbilityScores, selectedRace.abilityAdjustments);
+    // The freely-distributed "+2 to one ability score" points, for the
+    // races the backend does not apply them for. See
+    // `applyFloatingAbilityAllocation` — this is the seam that was missing
+    // entirely, which cost Half-Elf and Half-Orc their +2.
+    const finalAbilityScores = applyFloatingAbilityAllocation(adjustedAbilityScores, allocation, raceId);
+    // AT-34-E4-002 (second slice): one `traitSkillChoices` entry per
+    // selected trait that both is choice-based (`choiceSetId !== null`)
+    // and has a recorded skill choice. A choice-based trait somehow
+    // selected with no recorded choice yet (should not happen --
+    // `applyTraitSelection` seeds a default the moment it is chosen) is simply
+    // omitted rather than sent with a fabricated skill.
+    const resolvedTraitSkillChoices = selectedTraits.flatMap((traitId) => {
+      const option = traitOptions?.find((candidate) => candidate.id === traitId);
+      const skillId = traitSkillChoices[traitId];
+      if (option?.choiceSetId == null || skillId === undefined) {
+        return [];
+      }
+      return [{ choiceSetId: option.choiceSetId, selectionId: skillId }];
+    });
+    return composeCreateCharacterRequest(
+      {
+        displayLabel,
+        raceId,
+        classId: levelShape.primaryClassId,
+        level: levelShape.primaryLevel,
+        additionalLevels: levelShape.additionalLevels,
+        hitPointLevels: levelShape.hitPointLevels,
+        abilityScores: finalAbilityScores,
+        abilityBonusTarget: deriveAbilityBonusTarget(),
+        selectedAlternateTraitKeys,
+        selectedTraits,
+        traitSkillChoices: resolvedTraitSkillChoices,
+        selectedFeats: selectedFeats.map((featId) => ({ featId, target: null })),
+        skillAllocations: skillsTouched ? persistedFromAllocation(skillAllocation) : [],
+      },
+      { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
+    );
+  }
+
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     const levelShape = creationRequestShape(levels);
@@ -610,55 +761,22 @@ function CreateCharacterFields(props: {
       setError(`Point buy is over budget by ${-pointBuyRemaining} points — lower a score or raise the pool before creating.`);
       return;
     }
+    if (skillsTouched && skillPointsTotal !== null && skillPointsLeft < 0) {
+      setError(`Skills are over budget by ${-skillPointsLeft} points: open Manage on Skills and lower a rank before creating.`);
+      return;
+    }
+    if (selectedFeats.length > feats) {
+      setError(`${selectedFeats.length} feats are chosen but this character has ${feats}: open Manage on Feats and remove ${selectedFeats.length - feats}.`);
+      return;
+    }
     setSubmitting(true);
     setError(null);
     setBioSaveWarning(null);
     try {
-      const rawAbilityScores = ABILITY_KEYS.reduce(
-        (scores, key) => ({ ...scores, [key]: rawScore(key) }),
-        {} as Record<AbilityKey, number>
-      );
-      // The raw entered/rolled scores don't yet include the race's fixed
-      // ability adjustments (Elf +2 DEX/-2 CON/+2 INT etc.) — `calculatedScore`
-      // applies them for the on-screen preview only. The compute engine
-      // expects them baked into the submitted score for every race except
-      // Human (see `applyRacialAbilityAdjustments`'s own doc comment).
-      const adjustedAbilityScores = applyRacialAbilityAdjustments(rawAbilityScores, selectedRace.abilityAdjustments);
-      // The freely-distributed "+2 to one ability score" points, for the
-      // races the backend does not apply them for. See
-      // `applyFloatingAbilityAllocation` — this is the seam that was missing
-      // entirely, which cost Half-Elf and Half-Orc their +2.
-      const finalAbilityScores = applyFloatingAbilityAllocation(adjustedAbilityScores, allocation, raceId);
-      // AT-34-E4-002 (second slice): one `traitSkillChoices` entry per
-      // selected trait that both is choice-based (`choiceSetId !== null`)
-      // and has a recorded skill choice. A choice-based trait somehow
-      // selected with no recorded choice yet (should not happen --
-      // `applyTraitSelection` seeds a default the moment it is chosen) is simply
-      // omitted rather than sent with a fabricated skill.
-      const resolvedTraitSkillChoices = selectedTraits.flatMap((traitId) => {
-        const option = traitOptions?.find((candidate) => candidate.id === traitId);
-        const skillId = traitSkillChoices[traitId];
-        if (option?.choiceSetId == null || skillId === undefined) {
-          return [];
-        }
-        return [{ choiceSetId: option.choiceSetId, selectionId: skillId }];
-      });
-      const request = composeCreateCharacterRequest(
-        {
-          displayLabel,
-          raceId,
-          classId: levelShape.primaryClassId,
-          level: levelShape.primaryLevel,
-          additionalLevels: levelShape.additionalLevels,
-          hitPointLevels: levelShape.hitPointLevels,
-          abilityScores: finalAbilityScores,
-          abilityBonusTarget: deriveAbilityBonusTarget(),
-          selectedAlternateTraitKeys,
-          selectedTraits,
-          traitSkillChoices: resolvedTraitSkillChoices,
-        },
-        { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
-      );
+      const request = buildRequest();
+      if (request === null) {
+        return;
+      }
       const result = await createCharacterRuntime(request);
       setOutcome(result);
       if (result.kind === 'saved') {
@@ -941,6 +1059,73 @@ function CreateCharacterFields(props: {
             onCancel={() => {
               applyTraitSelection(traitsSnapshot);
               setTraitsDialogOpen(false);
+            }}
+          />
+
+          {/* Skills: a full list with + and - to add ranks; the remaining points show at the top of the dialog. */}
+          <ManageBox
+            title="Skills"
+            remaining={heldClasses.length === 0 ? undefined : skillPointsStatus(skillPointsTotal, skillPointsLeft).text}
+            summary={Object.entries(skillAllocation)
+              .filter(([, ranks]) => ranks > 0)
+              .map(([name, ranks]) => `${name}: ${ranks} rank${ranks === 1 ? '' : 's'}`)}
+            disabledReason={heldClasses.length === 0 ? 'Add a level first: skill points come from the class levels.' : undefined}
+            onManage={() => setSkillDialogOpen(true)}
+          />
+          <SkillAllocationDialog
+            open={skillDialogOpen}
+            onClose={() => setSkillDialogOpen(false)}
+            heldClasses={heldClasses}
+            classSkills={classSkillLookup(heldClasses, classFacts)}
+            characterLevel={characterLevel(levels)}
+            abilities={{
+              strength: abilityModifier(calculatedScore('strength')),
+              dexterity: abilityModifier(calculatedScore('dexterity')),
+              constitution: abilityModifier(calculatedScore('constitution')),
+              intelligence: abilityModifier(calculatedScore('intelligence')),
+              wisdom: abilityModifier(calculatedScore('wisdom')),
+              charisma: abilityModifier(calculatedScore('charisma')),
+            }}
+            totalPoints={skillPointsTotal}
+            allocation={skillAllocation}
+            featSkillBonuses={NO_FEAT_SKILL_BONUSES}
+            onAccept={(next) => {
+              setSkillAllocation(next);
+              setSkillsTouched(true);
+              setSkillDialogOpen(false);
+            }}
+          />
+
+          {/* Feats: qualification is the draft character's own verdict from the backend. */}
+          <ManageBox
+            title="Feats"
+            remaining={heldClasses.length === 0 ? undefined : `${remainingSelections(feats, selectedFeats)} of ${feats} remaining`}
+            summary={selectedFeats.map((id) => draftFeats?.find((entry) => entry.key === id)?.name ?? id)}
+            disabledReason={heldClasses.length === 0 ? 'Add a level first: feats come with the character level.' : undefined}
+            onManage={() => {
+              setFeatsSnapshot(selectedFeats);
+              setFeatDialogOpen(true);
+            }}
+          />
+          <TransferListDialog
+            open={featDialogOpen}
+            title="Feats"
+            notice={
+              draftFeatsError !== null
+                ? `Feats could not be checked for this character: ${draftFeatsError}`
+                : draftFeats === null
+                  ? 'Checking which feats this character qualifies for…'
+                  : 'One feat at every odd level, plus a human\'s bonus feat. Class bonus feats (a Fighter\'s, say) are chosen on the sheet, as are the targets of feats that name a weapon, skill or school.'
+            }
+            items={featItems(draftFeats ?? [])}
+            selected={selectedFeats}
+            onSelectedChange={setSelectedFeats}
+            limit={feats}
+            remainingNoun="feats"
+            onAccept={() => setFeatDialogOpen(false)}
+            onCancel={() => {
+              setSelectedFeats(featsSnapshot);
+              setFeatDialogOpen(false);
             }}
           />
         </div>
