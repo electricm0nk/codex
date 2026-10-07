@@ -57,6 +57,7 @@ export type EligibilityResult = 'eligible' | 'ineligible' | 'unknown';
  */
 export type InstallKind =
   | 'appimage'
+  | 'deb'
   | 'tarball'
   | 'dev'
   | 'unknown';
@@ -134,6 +135,17 @@ export interface UpdateController {
   ): string | null;
   /** Resolved release notes after a successful check, or null. */
   releaseNotes(): ReleaseNotes | null;
+  /**
+   * Install the release the last Check fetched. Rejects, with the backend's own reason, when
+   * nothing was checked, the install is not eligible, or the install fails.
+   */
+  install(): Promise<InstallResult>;
+}
+
+/** What a completed install reports back to the UI. */
+export interface InstallResult {
+  fromVersion: string;
+  toVersion: string;
 }
 
 export interface UpdateControllerDeps {
@@ -170,6 +182,9 @@ export const UNWIRED_CONTROLLER: UpdateController = {
   },
   releaseNotes(): ReleaseNotes | null {
     return null;
+  },
+  async install(): Promise<InstallResult> {
+    throw new Error('update controller not wired (F3a/F3b pending)');
   },
 };
 

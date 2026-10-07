@@ -11,7 +11,7 @@
 export type ChannelLabel = 'alpha' | 'beta' | 'stable';
 
 /** Install provenance. `unknown` is the sentinel used before E7 records it. */
-export type InstallKind = 'appimage' | 'dev' | 'tarball' | 'unknown';
+export type InstallKind = 'appimage' | 'deb' | 'dev' | 'tarball' | 'unknown';
 
 /** Outcome of a single fetch+validate step. */
 export type FetchStatus = 'ok' | 'failed' | 'schema-invalid';
@@ -22,7 +22,11 @@ export interface EligibilityInput {
   selectedChannel: ChannelLabel;
   manifest: {
     version: string;
-    artifact_sha256: string;
+    /**
+     * sha256 of the artifact this install kind would download (AppImage for an AppImage
+     * install, .deb for a deb install); `null` when the release publishes none for it.
+     */
+    artifact_sha256: string | null;
   };
   installedState: {
     version: string;
@@ -110,15 +114,25 @@ export function decideEligibility(input: EligibilityInput): EligibilityDecision 
   if (installedState.install_kind === 'tarball') {
     return ineligible('tarball install is not update-eligible');
   }
-  if (!installedState.isManagedPathWritable) {
+  // A deb install is replaced through the package manager (privilege escalation at install
+  // time), so the user-writability of /usr/bin is irrelevant to it.
+  if (installedState.install_kind !== 'deb' && !installedState.isManagedPathWritable) {
     return ineligible('managed executable path is not writable');
+  }
+  if (manifest.artifact_sha256 === null) {
+    return ineligible('this release publishes no .deb artifact for a deb install');
   }
 
   // 8..9 — the manifest must offer something newer and distinct.
   if (compareVersions(manifest.version, installedState.version) <= 0) {
     return ineligible('installed version is at or above manifest version');
   }
-  if (manifest.artifact_sha256 === installedState.artifact_sha256) {
+  // For a deb install the installed hash is the unpacked binary's and the manifest's is the
+  // .deb's, so they can never match; the version comparison above is the whole check.
+  if (
+    installedState.install_kind !== 'deb' &&
+    manifest.artifact_sha256 === installedState.artifact_sha256
+  ) {
     return ineligible('installed artifact hash already matches manifest');
   }
 

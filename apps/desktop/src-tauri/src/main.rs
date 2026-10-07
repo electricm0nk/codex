@@ -164,6 +164,13 @@ fn main() {
                 authoring_workbench::set_app_resource_dir(resource_dir);
             }
 
+            // Record the running build's real identity so the Update panel never has to say
+            // "unknown". Failure is reported, not hidden: the panel then states the probe error.
+            let version = app.package_info().version.to_string();
+            if let Err(err) = update::seed::seed_installed_state_for_running_build(&version) {
+                eprintln!("Failed to record installed-state: {err}");
+            }
+
             if let Err(err) = character_hub::seed_default_character_if_needed(app.handle()) {
                 eprintln!("Failed to seed default character: {err}");
             }

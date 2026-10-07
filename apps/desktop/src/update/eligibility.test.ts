@@ -35,6 +35,8 @@ function main() {
   verifiesDevIneligible();
   verifiesTarballIneligible();
   verifiesNonWritablePathIneligible();
+  verifiesDebEligibleDespiteRootOwnedPath();
+  verifiesDebWithoutManifestArtifactIneligible();
   verifiesVersionNotGreaterIneligible();
   verifiesVersionEqualIneligible();
   verifiesHashMatchIneligible();
@@ -52,6 +54,30 @@ function verifiesHappyPathEligible() {
   const decision = decideEligibility(eligibleInput());
   assertEqual(decision.result, 'eligible', 'happy path is eligible');
   assertEqual(decision.install_disabled_reason, null, 'happy path has no disabled reason');
+}
+
+function verifiesDebEligibleDespiteRootOwnedPath() {
+  const input = eligibleInput();
+  input.installedState.install_kind = 'deb';
+  input.installedState.managed_executable_path = '/usr/bin/codex-desktop';
+  input.installedState.isManagedPathWritable = false;
+  // The installed hash is the binary's, the manifest's is the .deb's; they are not comparable.
+  input.installedState.artifact_sha256 = input.manifest.artifact_sha256 as string;
+  const decision = decideEligibility(input);
+  assertEqual(decision.result, 'eligible', 'deb installs update through the package manager, not a writable path');
+}
+
+function verifiesDebWithoutManifestArtifactIneligible() {
+  const input = eligibleInput();
+  input.installedState.install_kind = 'deb';
+  input.manifest.artifact_sha256 = null;
+  const decision = decideEligibility(input);
+  assertEqual(decision.result, 'ineligible', 'no .deb in the release is ineligible');
+  assertEqual(
+    decision.install_disabled_reason,
+    'this release publishes no .deb artifact for a deb install',
+    'missing deb artifact reason string',
+  );
 }
 
 function verifiesDevIneligible() {

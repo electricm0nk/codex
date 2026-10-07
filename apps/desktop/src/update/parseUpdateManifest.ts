@@ -64,6 +64,15 @@ export interface MacosDmgArtifact {
   size_bytes: number;
 }
 
+// Parallel to LinuxAppImageArtifact, for the .deb a package-installed shell self-updates to.
+// Optional: schema < 1.2.0 manifests do not set it.
+export interface LinuxDebArtifact {
+  name: string;
+  url: string;
+  sha256: string;
+  size_bytes: number;
+}
+
 export interface WorkflowProvenance {
   workflow: string;
   run_id: number | string;
@@ -73,6 +82,7 @@ export interface WorkflowProvenance {
 export interface Eligibility {
   min_supported_version: string;
   appimage_install: boolean;
+  deb_install?: boolean;
   required_install_kind: 'appimage' | 'dev' | 'any';
 }
 
@@ -94,6 +104,7 @@ export interface UpdateManifestFile {
   release_notes_url: string;
   release_notes_hash: string;
   linux_appimage: LinuxAppImageArtifact;
+  linux_deb?: LinuxDebArtifact;
   windows_msi?: WindowsMsiArtifact;
   macos_dmg?: MacosDmgArtifact;
   workflow_provenance: WorkflowProvenance;

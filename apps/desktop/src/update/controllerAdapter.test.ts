@@ -404,44 +404,65 @@ async function verifiesIneligibleWhenRealLocalProbeReportsUnwritableManagedPath(
   assert((reason ?? '').includes('not writable'), `reason must name the writability gate, got: ${reason}`);
 }
 
-async function verifiesIneligibleWhenRealLocalProbeReportsDebInstall() {
+const DEB_PROBE = {
+  installed: {
+    managedExecutablePath: '/usr/bin/codex-desktop',
+    installKind: 'deb',
+    channel: 'alpha',
+    version: '0.1.0',
+    sourceCommit: 'deadbeef',
+    releaseTag: 'alpha/v0.1.0',
+    manifestHash: '',
+    artifactSha256: SHA64,
+    installedAt: '2026-07-03T00:00:00Z',
+    updateEligible: true,
+    ineligibleReason: null,
+  },
+  // /usr/bin is root-owned: the deb path installs through pkexec, so this must not gate it.
+  isManagedPathWritable: false,
+};
+
+const LINUX_DEB_BLOCK = {
+  name: 'Codex_0.2.0_amd64.deb',
+  url: 'https://github.com/electricm0nk/codex/releases/download/alpha-v0.2.0/Codex_0.2.0_amd64.deb',
+  sha256: 'd'.repeat(64),
+  size_bytes: 10,
+};
+
+async function checkDebInstallAgainst(manifestOverrides: Record<string, unknown>) {
   const mountTimeState = await emptyMountTimeState();
   const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
     fetchImpl: makeFetchImpl([
       { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
-      { url: MANIFEST_URL, status: 200, responded: manifestText({ version: '0.2.0' }) },
+      { url: MANIFEST_URL, status: 200, responded: manifestText({ version: '0.2.0', ...manifestOverrides }) },
     ]),
     invokeImpl: (async (cmd: string) => {
-      if (cmd === 'is_install_eligible') {
-        return {
-          installed: {
-            managedExecutablePath: '/usr/bin/codex-desktop',
-            installKind: 'deb',
-            channel: 'alpha',
-            version: '0.1.0',
-            sourceCommit: 'deadbeef',
-            releaseTag: 'alpha/v0.1.0',
-            manifestHash: 'manifest-hash',
-            artifactSha256: SHA64,
-            installedAt: '2026-07-03T00:00:00Z',
-            updateEligible: false,
-            ineligibleReason: 'deb install is not update-eligible via the AppImage self-update path',
-          },
-          isManagedPathWritable: true,
-        };
-      }
+      if (cmd === 'is_install_eligible') return DEB_PROBE;
       throw new Error(`unexpected invoke ${cmd}`);
     }) as InvokeLike,
   });
-
   await deps.controller.runCheck('alpha');
+  return deps;
+}
 
-  const eligibility = deps.controller.computeEligibility(deps.installed, deps.lastCheck);
+async function verifiesEligibleWhenDebInstallSeesNewerManifestWithDebArtifact() {
+  const deps = await checkDebInstallAgainst({ schema_version: '1.2.0', linux_deb: LINUX_DEB_BLOCK });
   assertEqual(
-    eligibility,
-    'ineligible',
-    'a deb install (mapped onto the tarball bucket) must resolve ineligible via decideEligibility',
+    deps.controller.computeEligibility(deps.installed, deps.lastCheck),
+    'eligible',
+    'a deb install with a newer manifest that carries linux_deb must be eligible, regardless of path writability',
   );
+}
+
+async function verifiesIneligibleWhenDebInstallSeesManifestWithoutDebArtifact() {
+  const deps = await checkDebInstallAgainst({});
+  assertEqual(
+    deps.controller.computeEligibility(deps.installed, deps.lastCheck),
+    'ineligible',
+    'a deb install must not be offered an AppImage-only release',
+  );
+  const reason = deps.controller.disabledReason(deps.installed, deps.lastCheck);
+  assert((reason ?? '').includes('.deb'), `reason must name the missing .deb artifact, got: ${reason}`);
 }
 
 async function verifiesIneligibleWhenFetchedManifestMatchesAlreadyInstalledVersion() {
@@ -617,6 +638,152 @@ async function verifiesPromotedMapsKnownFieldsOnlyWithoutFabricating() {
   assertEqual(state.restoreOffer, null, 'no restore offer once promoted cleanly');
 }
 
+// ---------- mount-time installed-state record ----------
+
+const MOUNT_DEB_RECORD = {
+  installed: {
+    managedExecutablePath: '/usr/bin/codex-desktop',
+    installKind: 'deb',
+    channel: 'alpha',
+    version: '0.16.140',
+    sourceCommit: '157873a67e80',
+    releaseTag: 'alpha/v0.16.140-157873a6',
+    manifestHash: '',
+    artifactSha256: SHA64,
+    installedAt: '2026-10-07T00:00:00Z',
+    updateEligible: true,
+    ineligibleReason: null,
+  },
+  isManagedPathWritable: false,
+};
+
+async function verifiesMountTimeInstalledPanelReadsTheRealRecord() {
+  const state = await loadMountTimeState({
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'verify_relaunch_artifact') return { kind: 'no-pending-update' };
+      if (cmd === 'is_install_eligible') return MOUNT_DEB_RECORD;
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+  assertEqual(state.installed.version, '0.16.140', 'version comes from installed-state.json');
+  assertEqual(state.installed.sourceCommit, '157873a67e80', 'source commit comes from the record');
+  assertEqual(state.installed.artifactSha256, SHA64, 'artifact hash comes from the record');
+  assertEqual(state.installed.installKind, 'deb', 'install kind comes from the record');
+  assertEqual(state.installed.managedExecutablePath, '/usr/bin/codex-desktop', 'managed path comes from the record');
+  assertEqual(state.installed.updateEligible, true, 'eligibility flag comes from the record');
+  assertEqual(state.installed.channel, 'alpha', 'channel comes from the record');
+}
+
+async function verifiesMountTimeProbeFailureIsReportedNotHidden() {
+  const state = await loadMountTimeState({
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'verify_relaunch_artifact') return { kind: 'no-pending-update' };
+      throw new Error('installed-state.json at /x is unreadable: expected value');
+    }) as InvokeLike,
+  });
+  assertEqual(state.installed.version, 'unknown', 'no record means the version is genuinely unknown');
+  assert(
+    (state.installed.ineligibleReason ?? '').includes('unreadable'),
+    `the probe failure must be shown, got: ${state.installed.ineligibleReason}`,
+  );
+}
+
+async function verifiesPromotedStatePrefersTheWrittenRecord() {
+  const state = await loadMountTimeState({
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'verify_relaunch_artifact') {
+        return { kind: 'promoted', installedStatePath: '/x/installed-state.json', promotedVersion: '0.16.140' };
+      }
+      if (cmd === 'is_install_eligible') return MOUNT_DEB_RECORD;
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+  assertEqual(state.installed.artifactSha256, SHA64, 'the freshly written record supplies the hash');
+}
+
+// ---------- install(): the Install button's real action ----------
+
+async function checkedDebDeps(performInstall: (args: Record<string, unknown> | undefined) => unknown) {
+  const calls: Array<{ cmd: string; args: Record<string, unknown> | undefined }> = [];
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      {
+        url: MANIFEST_URL,
+        status: 200,
+        responded: manifestText({ version: '0.2.0', schema_version: '1.2.0', linux_deb: LINUX_DEB_BLOCK }),
+      },
+    ]),
+    invokeImpl: (async (cmd: string, args?: Record<string, unknown>) => {
+      calls.push({ cmd, args });
+      if (cmd === 'is_install_eligible') return DEB_PROBE;
+      if (cmd === 'perform_install') return performInstall(args);
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+  return { deps, calls };
+}
+
+async function verifiesInstallHandsTheFetchedManifestToPerformInstall() {
+  const { deps, calls } = await checkedDebDeps(() => ({
+    pendingUpdatePath: '/home/u/.config/codex/update/installed-state.json',
+    managedExecutablePath: '/usr/bin/codex-desktop',
+    fromVersion: '0.1.0',
+    toVersion: '0.2.0',
+    artifactSha256: 'd'.repeat(64),
+  }));
+  await deps.controller.runCheck('alpha');
+  const response = await deps.controller.install();
+  const call = calls.find((c) => c.cmd === 'perform_install');
+  assert(call !== undefined, 'install() must invoke perform_install');
+  const sent = call?.args as { manifest: { version: string; linux_deb: { sha256: string } }; indexUrl: string };
+  assertEqual(sent.manifest.version, '0.2.0', 'the fetched manifest is what gets installed');
+  assertEqual(sent.manifest.linux_deb.sha256, 'd'.repeat(64), 'the deb block reaches the backend untouched');
+  assertEqual(sent.indexUrl, CHANNEL_INDEX_URL, 'the index url is passed through');
+  assertEqual(response.toVersion, '0.2.0', 'the backend response is returned');
+}
+
+async function verifiesInstallBeforeAnyCheckFailsLoudly() {
+  const { deps } = await checkedDebDeps(() => {
+    throw new Error('must not be reached');
+  });
+  let message = '';
+  try {
+    await deps.controller.install();
+  } catch (cause) {
+    message = cause instanceof Error ? cause.message : String(cause);
+  }
+  assert(message.includes('Check'), `install without a checked manifest must say to run Check, got: ${message}`);
+}
+
+async function verifiesInstallSurfacesTheBackendFailure() {
+  const { deps } = await checkedDebDeps(() => {
+    throw new Error('installation was cancelled at the authorization prompt');
+  });
+  await deps.controller.runCheck('alpha');
+  let message = '';
+  try {
+    await deps.controller.install();
+  } catch (cause) {
+    message = cause instanceof Error ? cause.message : String(cause);
+  }
+  assert(message.includes('cancelled'), `the backend reason must reach the UI, got: ${message}`);
+}
+
+async function verifiesInstallRefusesWhenNotEligible() {
+  const { deps, calls } = await checkedDebDeps(() => {
+    throw new Error('must not be reached');
+  });
+  // No Check has run: eligibility is unknown, so the backend must not be asked to install.
+  try {
+    await deps.controller.install();
+  } catch {
+    /* expected */
+  }
+  assert(!calls.some((c) => c.cmd === 'perform_install'), 'perform_install must not be called when not eligible');
+}
+
 // ---------- restorePreviousVersion ----------
 
 async function verifiesRestorePreviousVersionCallsRealCommand() {
@@ -666,12 +833,20 @@ async function main() {
   await verifiesUnknownHonestlyWhenNoLocalInstalledStateRecordExists();
   await verifiesUnknownHonestlyWhenLocalProbeInvokeFails();
   await verifiesIneligibleWhenRealLocalProbeReportsUnwritableManagedPath();
-  await verifiesIneligibleWhenRealLocalProbeReportsDebInstall();
+  await verifiesEligibleWhenDebInstallSeesNewerManifestWithDebArtifact();
+  await verifiesIneligibleWhenDebInstallSeesManifestWithoutDebArtifact();
   await verifiesIneligibleWhenFetchedManifestMatchesAlreadyInstalledVersion();
   await verifiesEligibilityUnknownBeforeAnyCheck();
   await verifiesNoPendingUpdateMapsToEmptyState();
   await verifiesVerificationFailedOffersRestoreHonestly();
   await verifiesPromotedMapsKnownFieldsOnlyWithoutFabricating();
+  await verifiesMountTimeInstalledPanelReadsTheRealRecord();
+  await verifiesMountTimeProbeFailureIsReportedNotHidden();
+  await verifiesPromotedStatePrefersTheWrittenRecord();
+  await verifiesInstallHandsTheFetchedManifestToPerformInstall();
+  await verifiesInstallBeforeAnyCheckFailsLoudly();
+  await verifiesInstallSurfacesTheBackendFailure();
+  await verifiesInstallRefusesWhenNotEligible();
   await verifiesRestorePreviousVersionCallsRealCommand();
   await verifiesRestorePreviousVersionSurfacesFailureHonestly();
   console.log('controllerAdapter.test.ts: all assertions passed');

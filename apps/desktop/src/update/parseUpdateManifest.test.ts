@@ -305,6 +305,42 @@ export function test_macos_dmg_block_optional_and_typed(): void {
   }
 }
 
+const LINUX_DEB_MANIFEST_JSON = UPDATE_MANIFEST_JSON.replace('"schema_version": "1.1.0"', '"schema_version": "1.2.0"')
+  .replace(
+    '"workflow_provenance": {',
+    `"linux_deb": {
+    "name": "Codex_0.16.140_amd64.deb",
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.16.140-157873a6/Codex_0.16.140_amd64.deb",
+    "sha256": "8a603c709ef6a39aabe9a1869bb4be8d93feef9ad5729123e5831f2ff6d168de",
+    "size_bytes": 27163196
+  },
+  "workflow_provenance": {`,
+  )
+  .replace('"appimage_install": true,', '"appimage_install": true,\n    "deb_install": true,')
+  .replace('"required_install_kind": "appimage"', '"required_install_kind": "any"');
+
+export function test_linux_deb_block_optional_and_typed(): void {
+  const result = parseUpdateManifest(LINUX_DEB_MANIFEST_JSON);
+  assert(
+    result.ok,
+    `manifest 1.2.0 with linux_deb must parse: ${JSON.stringify(result.ok ? null : result.errors)}`,
+  );
+  if (result.ok) {
+    assertEqual(result.data.linux_deb?.name, 'Codex_0.16.140_amd64.deb', 'linux_deb.name must round-trip');
+    assertEqual(result.data.eligibility.deb_install, true, 'eligibility.deb_install must round-trip');
+  }
+}
+
+export function test_linux_deb_block_rejects_missing_sha256(): void {
+  const broken = LINUX_DEB_MANIFEST_JSON.replace(/"sha256": "8a603c[0-9a-f]+",\n\s*/, '');
+  assert(broken !== LINUX_DEB_MANIFEST_JSON, 'fixture mutation must change the document');
+  assert(!parseUpdateManifest(broken).ok, 'a linux_deb block without sha256 must be rejected');
+}
+
+export function test_manifest_1_1_0_without_linux_deb_still_parses(): void {
+  assert(parseUpdateManifest(UPDATE_MANIFEST_JSON).ok, 'pre-1.2.0 manifests must keep validating');
+}
+
 function run(): void {
   test_av_sch_2_update_manifest_positive();
   test_av_sch_3_update_manifest_signature_missing_accepted();
@@ -313,7 +349,10 @@ function run(): void {
   test_parseUpdateManifest_invalid_json_returns_typed_error();
   test_windows_msi_block_optional_and_typed();
   test_macos_dmg_block_optional_and_typed();
-  console.log('parseUpdateManifest.test.ts: 7/7 AV-SCH-* + Windows MSI + macOS DMG assertions passed');
+  test_linux_deb_block_optional_and_typed();
+  test_linux_deb_block_rejects_missing_sha256();
+  test_manifest_1_1_0_without_linux_deb_still_parses();
+  console.log('parseUpdateManifest.test.ts: 10/10 AV-SCH-* + Windows MSI + macOS DMG + Linux deb assertions passed');
 }
 
 run();
