@@ -18,6 +18,7 @@ use codex::rules_core::class_census::{
     class_creation_roster, load_mix_panel, load_sweep_fixture, MIX_PANEL_RELATIVE_PATH,
 };
 use codex::rules_core::class_seeds::FIXTURE_RELATIVE_PATH;
+use codex::rules_core::equipment_types::{equipment_types, EQUIPMENT_TYPES_PATH};
 use codex::rules_core::record_vars::RECORD_VARS_PATH;
 
 fn src_tauri() -> PathBuf {
@@ -73,6 +74,7 @@ fn the_packaged_bundle_carries_everything_the_rules_engine_reads() {
         FIXTURE_RELATIVE_PATH,
         MIX_PANEL_RELATIVE_PATH,
         RECORD_VARS_PATH,
+        EQUIPMENT_TYPES_PATH,
         "data/sheet_rules",
         "data/class_feature_grants",
         "data/corpus",
@@ -88,6 +90,12 @@ fn the_packaged_bundle_carries_everything_the_rules_engine_reads() {
         roster.len() > 31,
         "roster has {} classes: the app would offer only the built-in 31-class fallback",
         roster.len()
+    );
+
+    assert!(
+        equipment_types().is_ok(),
+        "the equipment type sidecar does not load from the packaged root: {:?}",
+        equipment_types().as_ref().err()
     );
 
     assert!(

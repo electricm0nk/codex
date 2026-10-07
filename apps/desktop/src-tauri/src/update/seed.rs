@@ -30,7 +30,7 @@ pub struct RunningInstall {
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum SeedOutcome {
-    Written(InstalledState),
+    Written(Box<InstalledState>),
     Unchanged,
 }
 
@@ -106,7 +106,7 @@ pub fn reconcile_installed_state(
         fs::create_dir_all(parent).map_err(|err| format!("cannot create {}: {err}", parent.display()))?;
     }
     write_atomic_json(&path, &record).map_err(|err| format!("cannot write {}: {err}", path.display()))?;
-    Ok(SeedOutcome::Written(record))
+    Ok(SeedOutcome::Written(Box::new(record)))
 }
 
 /// Gather the running build's identity. `appimage_env` is `$APPIMAGE`; when present it is the
@@ -199,7 +199,7 @@ mod tests {
         let config = temp_config("missing");
         let outcome = reconcile_installed_state(&config, &deb_running("sha-new", "0.16.140")).unwrap();
         let record = read_record(&config);
-        assert_eq!(outcome, SeedOutcome::Written(record.clone()));
+        assert_eq!(outcome, SeedOutcome::Written(Box::new(record.clone())));
         assert_eq!(record.install_kind, InstallKind::Deb);
         assert_eq!(record.version, "0.16.140");
         assert_eq!(record.source_commit, "157873a67e80");

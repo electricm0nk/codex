@@ -133,6 +133,11 @@ pub struct EquipmentCatalogEntryDto {
     /// not read it is unaffected, and one that does can label or filter
     /// by book the way the Spell Catalog screen already does.
     pub book: String,
+    /// PCGen `TYPE:` tags for this record (`["Magic", "Wand", "Combat Gear"]`), joined by key from
+    /// `data/equipment_types.json`. Empty when the record has no entry there: shown as
+    /// uncategorized by the picker, never guessed.
+    #[serde(default)]
+    pub types: Vec<String>,
     /// The record's own words, from [`row_description`]. `None` where the record
     /// genuinely states none — a real and documented gap for template and bookkeeping
     /// rows, never a fabricated stand-in.
@@ -241,10 +246,15 @@ fn converted_description(book: &str, key: &str) -> Option<String> {
 #[serde(rename_all = "camelCase")]
 pub struct EquipmentCatalogResponse {
     pub entries: Vec<EquipmentCatalogEntryDto>,
+    /// Why the type sidecar could not be read, when it could not. Rows are then untyped (the
+    /// picker says so) rather than silently uncategorized.
+    #[serde(default)]
+    pub types_error: Option<String>,
 }
 
 fn map_crb_entry(entry: &crb::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: entry.key.to_string(),
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
@@ -257,6 +267,7 @@ fn map_crb_entry(entry: &crb::equipment_tables::EquipmentTableEntry) -> Equipmen
 
 fn map_apg_entry(entry: &apg::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: entry.key.to_string(),
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
@@ -269,6 +280,7 @@ fn map_apg_entry(entry: &apg::equipment_tables::EquipmentTableEntry) -> Equipmen
 
 fn map_acg_entry(entry: &acg::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: entry.key.to_string(),
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
@@ -283,6 +295,7 @@ fn map_beastiary1_entry(
     entry: &beastiary1::equipment_tables::EquipmentTableEntry,
 ) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: entry.key.to_string(),
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
@@ -295,6 +308,7 @@ fn map_beastiary1_entry(
 
 fn map_arg_entry(entry: &arg::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: entry.key.to_string(),
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
@@ -312,6 +326,7 @@ fn map_arg_entry(entry: &arg::equipment_tables::EquipmentTableEntry) -> Equipmen
 /// fabricated `Some(0.0)`.
 fn map_pu_entry(entry: &pu::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: entry.key.to_string(),
         category: PU_CATEGORY.to_string(),
         name: entry.name.to_string(),
@@ -333,6 +348,7 @@ fn map_pu_entry(entry: &pu::equipment_tables::EquipmentTableEntry) -> EquipmentC
 /// under one book code rather than a separate one.
 fn map_ui_entry(entry: &ui::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: entry.key.to_string(),
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
@@ -350,6 +366,7 @@ fn map_ui_entry(entry: &ui::equipment_tables::EquipmentTableEntry) -> EquipmentC
 /// records) are served under the same `BOOK_UE` code.
 fn map_ue_entry(entry: &ue::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: entry.key.to_string(),
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
@@ -374,6 +391,7 @@ fn map_ue_entry(entry: &ue::equipment_tables::EquipmentTableEntry) -> EquipmentC
 /// Add Equipment / Equipment Catalog screens.
 fn map_um_entry(entry: &um::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: entry.key.to_string(),
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
@@ -392,6 +410,7 @@ fn map_um_entry(entry: &um::equipment_tables::EquipmentTableEntry) -> EquipmentC
 /// UM above.
 fn map_upsi_entry(entry: &upsi::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: entry.key.to_string(),
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
@@ -410,6 +429,7 @@ fn map_upsi_entry(entry: &upsi::equipment_tables::EquipmentTableEntry) -> Equipm
 /// comment) are both chained under `BOOK_UC`.
 fn map_uc_entry(entry: &uc::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: entry.key.to_string(),
         category: format!("{:?}", entry.category),
         name: entry.name.to_string(),
@@ -428,6 +448,7 @@ fn map_gap_entry(
     row: &equipment_gap_tables::EquipmentGapRow,
 ) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
+        types: Vec::new(),
         key: row.key.to_string(),
         category: row.category.to_string(),
         name: row.name.to_string(),
@@ -443,7 +464,7 @@ fn map_gap_entry(
 /// codebase's other command/pure-fn split, e.g.
 /// `authoring_workbench::build_authoring_workbench_snapshot`).
 pub fn build_equipment_catalog() -> EquipmentCatalogResponse {
-    let entries = crb::equipment_tables::equipment_tables()
+    let mut entries = crb::equipment_tables::equipment_tables()
         .iter()
         .map(map_crb_entry)
         .chain(apg::equipment_tables::EQUIPMENT_TABLE.iter().map(map_apg_entry))
@@ -472,9 +493,21 @@ pub fn build_equipment_catalog() -> EquipmentCatalogResponse {
         // screen and `list_equipment` all read this one response — so the
         // rows are surfaced, not merely resolvable.
         .chain(equipment_gap_tables::equipment_gap_rows().map(map_gap_entry))
-        .collect();
+        .collect::<Vec<_>>();
 
-    EquipmentCatalogResponse { entries }
+    let mut types_error = None;
+    match codex::rules_core::equipment_types::equipment_types() {
+        Ok(types) => {
+            for entry in &mut entries {
+                if let Some(tags) = types.get(&entry.key) {
+                    entry.types.clone_from(tags);
+                }
+            }
+        }
+        Err(reason) => types_error = Some(reason.clone()),
+    }
+
+    EquipmentCatalogResponse { entries, types_error }
 }
 
 #[tauri::command]
@@ -513,7 +546,9 @@ pub fn filter_equipment_catalog(filter: &EquipmentCatalogFilter) -> EquipmentCat
         .filter(|needle| !needle.is_empty())
         .map(|needle| needle.to_lowercase());
 
-    let entries = build_equipment_catalog()
+    let full = build_equipment_catalog();
+    let types_error = full.types_error;
+    let entries = full
         .entries
         .into_iter()
         .filter(|entry| match &name_needle {
@@ -530,7 +565,7 @@ pub fn filter_equipment_catalog(filter: &EquipmentCatalogFilter) -> EquipmentCat
         })
         .collect();
 
-    EquipmentCatalogResponse { entries }
+    EquipmentCatalogResponse { entries, types_error }
 }
 
 /// Returns the full cross-book equipment catalog narrowed by `filter` —
@@ -1829,4 +1864,30 @@ mod tests {
         assert_eq!(json.get("book").and_then(|v| v.as_str()), Some("ARG"));
         assert!(json.get("costGp").is_some(), "existing camelCase fields are unchanged");
     }
+
+    /// Rows carry the PCGen `TYPE:` tags the picker's category filter is built from
+    /// (`data/equipment_types.json`). The equipment modifiers are their own category already, so
+    /// the floor is measured over everything else; an untyped row is shown as uncategorized, not guessed.
+    #[test]
+    fn catalog_rows_carry_pcgen_type_tags_and_most_item_rows_are_typed() {
+        let catalog = build_equipment_catalog();
+        assert!(catalog.types_error.is_none(), "type sidecar failed to load: {:?}", catalog.types_error);
+
+        let staff = catalog
+            .entries
+            .iter()
+            .find(|e| e.name == "Staff of Scorching")
+            .expect("Staff of Scorching is in the catalog");
+        assert_eq!(staff.types[..2], ["Magic".to_string(), "Staff".to_string()]);
+
+        let items: Vec<_> = catalog.entries.iter().filter(|e| e.category != "Equipmods").collect();
+        let typed = items.iter().filter(|e| !e.types.is_empty()).count();
+        let percent = typed * 100 / items.len();
+        eprintln!("equipment type coverage: {typed}/{} = {percent}%", items.len());
+        // Measured 95% (5941/6225 item rows): re-derive with
+        // `cargo test --bin codex-desktop catalog_rows_carry_pcgen -- --nocapture`. The untyped
+        // remainder is rows whose identity is a PI-neutral generated name or has no `TYPE:` token.
+        assert!(percent >= 90, "only {percent}% of item rows carry a type ({typed}/{})", items.len());
+    }
+
 }

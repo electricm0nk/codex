@@ -263,6 +263,8 @@ export interface ItemPickerConfig {
   searchPlaceholder: string;
   loadEntries: () => Promise<ItemPickerEntry[]>;
   onSelect: (entry: ItemPickerEntry) => void;
+  /** Category the picker opens on; absent opens on All. Only meaningful for catalogs with categories. */
+  initialGroup?: string;
 }
 
 /**
@@ -298,6 +300,7 @@ export function buildItemPickerConfig(
       searchPlaceholder: 'Search arms & armor…',
       loadEntries: () => deps.loadEquipment(WEAPONS_AND_ARMOR_CATEGORY),
       onSelect: deps.onSelectEquipment,
+      initialGroup: kind === 'weapon' ? 'Weapons' : 'Armor',
     };
   }
   if (kind === 'gear') {
@@ -4228,7 +4231,9 @@ export function CharacterSheet(props: {
   // the plain `handleAddFeat` — same catalog and UI, different mutation.
   const itemPickerConfig = buildItemPickerConfig(itemPickerOpen, {
     loadEquipment: (category) =>
-      listEquipment({ nameContains: null, category }).then((response) => mapEquipmentCatalogEntries(response.entries)),
+      listEquipment({ nameContains: null, category }).then((response) =>
+        mapEquipmentCatalogEntries(response.entries, response.typesError)
+      ),
     loadSpells: loadSpellPickerEntries,
     // SD-27: the Add Feat picker reads the catalog *for this character*, so
     // every row carries its real prerequisite verdict and the ones this
@@ -4685,6 +4690,7 @@ export function CharacterSheet(props: {
         title={itemPickerTitle}
         searchPlaceholder={itemPickerConfig?.searchPlaceholder ?? ''}
         loadEntries={itemPickerConfig?.loadEntries ?? (() => Promise.resolve([]))}
+        initialGroup={itemPickerConfig?.initialGroup}
         onClose={() => {
           setItemPickerOpen(null);
           setPendingFeatLevelUp(null);
