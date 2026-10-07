@@ -6,6 +6,7 @@ import {
   innateItems,
   moveLeft,
   moveRight,
+  remainingByGroup,
   remainingSelections,
   selectedItems,
   type TransferItem,
@@ -18,6 +19,29 @@ const ITEMS: TransferItem[] = [
   item('c', { qualified: false, unqualifiedReason: 'Needs BAB +6' }),
   item('d', { innate: true }),
 ];
+
+// Spells are limited per spell level: two level-0 picks and one level-1 pick, say, not three anywhere.
+function verifiesPerGroupLimits() {
+  const spells: TransferItem[] = [
+    item('c1', { group: 'wiz:0' }), item('c2', { group: 'wiz:0' }), item('c3', { group: 'wiz:0' }),
+    item('l1a', { group: 'wiz:1' }), item('l1b', { group: 'wiz:1' }),
+    item('x', { group: 'cle:0' }),
+  ];
+  const limits = { 'wiz:0': 2, 'wiz:1': 1 };
+  assertEqual(moveRight(spells, ['c1'], 'c2', null, limits).join(','), 'c1,c2', 'room in the group');
+  assertEqual(moveRight(spells, ['c1', 'c2'], 'c3', null, limits).join(','), 'c1,c2', 'a full group takes no more');
+  assertEqual(moveRight(spells, ['c1', 'c2'], 'l1a', null, limits).join(','), 'c1,c2,l1a', 'another group is unaffected');
+  const full = canMoveRight(spells, ['c1', 'c2'], 'c3', null, limits);
+  assertEqual(full.ok, false, 'blocked');
+  assert((full.reason ?? '').includes('wiz:0'), `the reason names the group, got ${full.reason}`);
+  assertEqual(moveRight(spells, [], 'x', null, limits).join(','), '', 'a group with no quota takes nothing');
+  assertEqual(JSON.stringify(remainingByGroup(spells, ['c1', 'l1a'], limits)), JSON.stringify([
+    { key: 'wiz:0', limit: 2, remaining: 1 },
+    { key: 'wiz:1', limit: 1, remaining: 0 },
+  ]), 'remaining per group, in the limits\' order');
+  assertEqual(canMoveRight(spells, ['c1'], 'c2', 5, limits).ok, true, 'a global limit and group limits can both apply');
+  assertEqual(canMoveRight(spells, ['c1', 'l1a'], 'c2', 2, limits).ok, false, 'the global limit still wins');
+}
 
 function verifiesAvailableShowsEverythingUnselectedExceptInnate() {
   assertEqual(availableItems(ITEMS, [], false).map((i) => i.id).join(''), 'abc', 'everything selectable, qualified or not, but not innate');
@@ -86,4 +110,5 @@ verifiesAnUnlimitedListHasNoCap();
 verifiesRemainingSelections();
 verifiesCanMoveRightExplainsWhy();
 verifiesTheDescriptionFollowsWhateverIsClickedOnEitherSide();
+verifiesPerGroupLimits();
 console.log('transferListModel.test.ts: all assertions passed');

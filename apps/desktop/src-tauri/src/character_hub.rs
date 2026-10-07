@@ -1765,6 +1765,77 @@ pub fn list_feats_for_draft(request: ListFeatsForDraftRequest) -> Result<crate::
     list_feats_for_draft_impl(&request.draft, &request.filter)
 }
 
+/// A class's maximum starting money for the Create screen's equipment dialog. `max_gp` is `None`
+/// (with the reason in `note`) for a class with no published starting wealth.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct StartingWealthDto {
+    pub max_gp: Option<u32>,
+    pub note: Option<String>,
+}
+
+fn starting_wealth_for_class_impl(class_id: &str) -> StartingWealthDto {
+    StartingWealthDto {
+        max_gp: money::starting_wealth_max_gp(class_id),
+        note: money::starting_wealth_unpublished_reason(class_id).map(str::to_owned),
+    }
+}
+
+#[tauri::command]
+pub fn starting_wealth_for_class(class_id: String) -> StartingWealthDto {
+    starting_wealth_for_class_impl(&class_id)
+}
+
+/// What the Create screen's spells dialog needs for a character that is not saved yet.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DraftSpellOptionsDto {
+    /// The engine's own spells-per-day rows for the draft (`class_spell.*per_day*` explanations).
+    pub per_day: Vec<ExplanationDto>,
+    /// Spell names the race grants as spell-like abilities (`ABILITY:Spell-Like Ability|AUTOMATIC|Racial SLA ~ <spell>`),
+    /// in corpus order, for the dialog's read-only Innate column. A trait the draft's alternates suppress is not listed.
+    pub innate: Vec<String>,
+}
+
+const RACIAL_SLA_PREFIX: &str = "Racial SLA ~ ";
+
+fn draft_spell_options_impl(request: &CreateCharacterRequest) -> Result<DraftSpellOptionsDto, String> {
+    let (input, _) = build_create_input(request, FeatPolicy::Trust)
+        .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
+    let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
+    let per_day = map_explanations_dto(&receipt.base.explanations)
+        .into_iter()
+        .filter(|row| row.id.contains("spells_per_day") || row.id.contains("extracts_per_day"))
+        .collect();
+
+    let corpus = crate::race_catalog::race_corpus().as_ref().map_err(Clone::clone)?;
+    let mut innate: Vec<String> = Vec::new();
+    if let Some(race_key) = corpus.resolve_key(&request.race_id) {
+        let alternates: Vec<&str> = request.selected_alternate_trait_keys.iter().map(String::as_str).collect();
+        if let Some(resolved) = corpus.resolve(race_key, &alternates) {
+            let applied: std::collections::BTreeSet<&str> = resolved.traits.iter().map(|t| t.key.as_str()).collect();
+            for record in corpus.traits_for(race_key) {
+                if !applied.contains(record.data.key.as_str()) {
+                    continue;
+                }
+                for grant in record.automatic_trait_grants() {
+                    if let Some(spell) = grant.strip_prefix(RACIAL_SLA_PREFIX) {
+                        if !innate.iter().any(|known| known == spell) {
+                            innate.push(spell.to_owned());
+                        }
+                    }
+                }
+            }
+        }
+    }
+    Ok(DraftSpellOptionsDto { per_day, innate })
+}
+
+#[tauri::command]
+pub fn draft_spell_options(request: CreateCharacterRequest) -> Result<DraftSpellOptionsDto, String> {
+    draft_spell_options_impl(&request)
+}
+
 pub(crate) fn create_character_at_root(
     root: &Path,
     request: &CreateCharacterRequest,
@@ -7729,6 +7800,37 @@ mod tests {
         assert!(feats.entries.len() > 100, "the whole catalog is listed");
         assert!(feats.entries.iter().any(|e| e.eligibility.as_ref().is_some_and(|v| v.eligible)), "some feats qualify");
         assert!(feats.entries.iter().any(|e| e.eligibility.as_ref().is_some_and(|v| !v.eligible)), "and some do not");
+    }
+
+    #[test]
+    fn starting_wealth_for_class_reports_the_maximum_or_the_reason_there_is_none() {
+        let fighter = starting_wealth_for_class_impl("class:fighter");
+        assert_eq!(fighter.max_gp, money::starting_wealth_max_gp("class:fighter"), "the same figure create grants");
+        assert!(fighter.max_gp.is_some_and(|gp| gp > 0), "fighter has published wealth");
+        assert!(fighter.note.is_none(), "so there is no note");
+        let commoner = starting_wealth_for_class_impl("class:commoner");
+        assert_eq!(commoner.max_gp, None, "commoner has no published figure");
+        assert!(commoner.note.as_deref().is_some_and(|n| !n.is_empty()), "and the reason is stated");
+    }
+
+    #[test]
+    fn the_draft_spell_options_state_a_quota_per_spell_level_and_the_races_innate_spells() {
+        // A level-1 cleric has a stated per-day quota for spell levels 0 and 1.
+        let cleric = draft_spell_options_impl(&request_for_class("race:human", "class:cleric", 1)).expect("options");
+        assert!(
+            cleric.per_day.iter().any(|row| row.id.contains("total_spells_per_day.spell_level_1")),
+            "level-1 slots are stated: {:?}",
+            cleric.per_day.iter().map(|row| &row.id).collect::<Vec<_>>()
+        );
+        assert!(cleric.innate.is_empty(), "a human has no racial spell-like abilities: {:?}", cleric.innate);
+
+        // A gnome's innate spell-like abilities come from the race's own trait record.
+        let gnome = draft_spell_options_impl(&request_for_class("race:gnome", "class:fighter", 1)).expect("options");
+        for spell in ["Dancing Lights", "Ghost Sound", "Prestidigitation", "Speak with Animals"] {
+            assert!(gnome.innate.iter().any(|name| name == spell), "{spell} is innate to a gnome: {:?}", gnome.innate);
+        }
+        // Choosing an alternate trait that replaces Gnome Magic removes them (suppression is the resolver's).
+        assert!(gnome.per_day.is_empty(), "a fighter has no spell quota");
     }
 
     #[test]

@@ -12,6 +12,8 @@ export interface TransferItem {
   /** False when the character may not take it (prerequisites unmet). It is still listed unless the Qualified filter is on. */
   qualified: boolean;
   unqualifiedReason?: string;
+  /** The limit group it counts against (a spell level, say); see `groupLimits`. */
+  group?: string;
   /** Granted by the build (a racial spell-like ability, say): shown in its own column, never moved. */
   innate?: boolean;
 }
@@ -43,7 +45,8 @@ export function canMoveRight(
   items: TransferItem[],
   selected: string[],
   id: string,
-  limit: number | null
+  limit: number | null,
+  groupLimits?: Record<string, number>
 ): { ok: boolean; reason?: string } {
   const item = items.find((candidate) => candidate.id === id);
   if (item === undefined) {
@@ -59,6 +62,13 @@ export function canMoveRight(
   if (limit !== null && selected.length >= limit) {
     return { ok: false, reason: 'No selections remaining.' };
   }
+  if (groupLimits !== undefined && item.group !== undefined) {
+    const quota = groupLimits[item.group] ?? 0;
+    const taken = selected.filter((chosen) => items.find((candidate) => candidate.id === chosen)?.group === item.group).length;
+    if (taken >= quota) {
+      return { ok: false, reason: `No selections remaining for ${item.group}.` };
+    }
+  }
   if (!item.qualified) {
     return { ok: false, reason: item.unqualifiedReason ?? 'The character does not qualify.' };
   }
@@ -66,8 +76,26 @@ export function canMoveRight(
 }
 
 /** The selection after moving `id` right; unchanged when it cannot move. */
-export function moveRight(items: TransferItem[], selected: string[], id: string, limit: number | null): string[] {
-  return canMoveRight(items, selected, id, limit).ok ? [...selected, id] : selected;
+export function moveRight(
+  items: TransferItem[],
+  selected: string[],
+  id: string,
+  limit: number | null,
+  groupLimits?: Record<string, number>
+): string[] {
+  return canMoveRight(items, selected, id, limit, groupLimits).ok ? [...selected, id] : selected;
+}
+
+/** For each limited group, how many more may be chosen, in the order the limits are declared. */
+export function remainingByGroup(
+  items: TransferItem[],
+  selected: string[],
+  groupLimits: Record<string, number>
+): Array<{ key: string; limit: number; remaining: number }> {
+  return Object.entries(groupLimits).map(([key, limit]) => {
+    const taken = selected.filter((id) => items.find((candidate) => candidate.id === id)?.group === key).length;
+    return { key, limit, remaining: Math.max(0, limit - taken) };
+  });
 }
 
 /** The selection after moving `id` back to the options. */

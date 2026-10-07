@@ -7,6 +7,7 @@ import {
   innateItems,
   moveLeft,
   moveRight,
+  remainingByGroup,
   remainingSelections,
   selectedItems,
   type TransferItem,
@@ -91,6 +92,10 @@ export function TransferListBody(props: {
   focusedId: string | null;
   qualifiedOnly: boolean;
   limit: number | null;
+  /** Per-group quotas (spell levels): each group fills separately and shows its own remaining count. */
+  groupLimits?: Record<string, number>;
+  /** Display names for the group keys in the remaining line. */
+  groupLabels?: Record<string, string>;
   /** What is being chosen, for the remaining count ("feats", "racial traits"). */
   remainingNoun: string;
   onFocus: (id: string) => void;
@@ -103,13 +108,20 @@ export function TransferListBody(props: {
   const innate = innateItems(props.items);
   const remaining = remainingSelections(props.limit, props.selected);
   const focusedIsSelected = props.focusedId !== null && props.selected.includes(props.focusedId);
-  const rightMove = props.focusedId === null ? { ok: false } : canMoveRight(props.items, props.selected, props.focusedId, props.limit);
+  const rightMove = props.focusedId === null ? { ok: false } : canMoveRight(props.items, props.selected, props.focusedId, props.limit, props.groupLimits);
   const focus = describeFocus(props.items, props.focusedId);
 
   return (
     <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.75rem', minHeight: 0 }}>
       <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
-        {props.limit !== null && remaining !== null ? (
+        {props.groupLimits !== undefined ? (
+          <p role="status" style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0 }}>
+            {remainingByGroup(props.items, props.selected, props.groupLimits)
+              .map((group) => `${props.groupLabels?.[group.key] ?? group.key}: ${group.remaining} of ${group.limit}`)
+              .join(' · ') || `No ${props.remainingNoun} to choose`}{' '}
+            remaining
+          </p>
+        ) : props.limit !== null && remaining !== null ? (
           <p role="status" style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0 }}>
             {remaining} of {props.limit} {props.remainingNoun} remaining
           </p>
@@ -180,6 +192,8 @@ export function TransferListDialog(props: {
   selected: string[];
   onSelectedChange: (selected: string[]) => void;
   limit: number | null;
+  groupLimits?: Record<string, number>;
+  groupLabels?: Record<string, string>;
   remainingNoun: string;
   /** A line under the title: what the list covers or what is not modelled. */
   notice?: string;
@@ -240,9 +254,11 @@ export function TransferListDialog(props: {
           focusedId={focusedId}
           qualifiedOnly={qualifiedOnly}
           limit={props.limit}
+          groupLimits={props.groupLimits}
+          groupLabels={props.groupLabels}
           remainingNoun={props.remainingNoun}
           onFocus={setFocusedId}
-          onMoveRight={(id) => props.onSelectedChange(moveRight(props.items, props.selected, id, props.limit))}
+          onMoveRight={(id) => props.onSelectedChange(moveRight(props.items, props.selected, id, props.limit, props.groupLimits))}
           onMoveLeft={(id) => props.onSelectedChange(moveLeft(props.selected, id))}
           onQualifiedChange={setQualifiedOnly}
         />

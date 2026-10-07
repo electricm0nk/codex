@@ -48,6 +48,14 @@ import { listClassFacts } from '../boundary/listClassFacts';
 import { NO_FEAT_SKILL_BONUSES } from '../boundary/loadSavedCharacterDetail';
 import { listFeatsForDraft, type FeatCatalogEntryDto } from '../boundary/listFeats';
 import { creationFeatSlots, featItems } from './manageItems';
+import { CreationEquipmentDialog, type CreationEquipmentItem } from './CreationEquipmentDialog';
+import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
+import { equipmentBudget } from './creationEquipmentModel';
+import { loadStartingWealth, type StartingWealthDto } from '../boundary/startingWealth';
+import { loadDraftSpellOptions } from '../boundary/draftSpellOptions';
+import { listSpells } from '../boundary/listSpells';
+import { loadClassSpellLevels } from '../boundary/loadClassSpellLevels';
+import { creationSpellDialog, keepOfferedSpells, spellQuotaOverruns, spellSelectionsFromIds, type SpellDialog } from './spellDialogModel';
 import type { HeldClass } from './characterProgression';
 import { heldClassesOf } from './levelsModel';
 import {
@@ -371,6 +379,18 @@ function CreateCharacterFields(props: {
   const [featDialogOpen, setFeatDialogOpen] = useState(false);
   const [draftFeats, setDraftFeats] = useState<FeatCatalogEntryDto[] | null>(null);
   const [draftFeatsError, setDraftFeatsError] = useState<string | null>(null);
+  // Spells: quotas per spell level and the race's innate spells come from the backend for this draft.
+  const [selectedSpellIds, setSelectedSpellIds] = useState<string[]>([]);
+  const [spellsSnapshot, setSpellsSnapshot] = useState<string[]>([]);
+  const [spellDialogOpen, setSpellDialogOpen] = useState(false);
+  const [spellDialog, setSpellDialog] = useState<SpellDialog | null>(null);
+  const [spellDialogError, setSpellDialogError] = useState<string | null>(null);
+  // Equipment: bought out of the class's maximum starting money. The pricing choice is session state, never saved.
+  const [chosenEquipment, setChosenEquipment] = useState<CreationEquipmentItem[]>([]);
+  const [priceMode, setPriceMode] = useState<PriceMode>(DEFAULT_PRICE_MODE);
+  const [equipmentDialogOpen, setEquipmentDialogOpen] = useState(false);
+  const [wealth, setWealth] = useState<StartingWealthDto | null>(null);
+  const [wealthError, setWealthError] = useState<string | null>(null);
   // AT-34-E4-002 (second slice): the player's resolved skill choice for
   // each selected fixed-choice open-slot trait, keyed by trait id. A trait
   // with no entry here yet (just checked, choice not made) submits no
@@ -470,6 +490,66 @@ function CreateCharacterFields(props: {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [featDialogOpen, draftFeatsKey]);
+
+  // The first class in the Levels list decides the starting money; load it whenever that class changes.
+  useEffect(() => {
+    if (primaryClassId === null) {
+      setWealth(null);
+      return undefined;
+    }
+    let cancelled = false;
+    setWealthError(null);
+    loadStartingWealth(primaryClassId)
+      .then((value) => {
+        if (!cancelled) setWealth(value);
+      })
+      .catch((cause: unknown) => {
+        if (!cancelled) setWealthError(cause instanceof Error ? cause.message : String(cause));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [primaryClassId]);
+
+  // Spell quotas follow the draft (class levels, Intelligence/Wisdom/Charisma, race). Reload whenever the
+  // inputs change while the dialog is open, and drop picks that are no longer offered.
+  const spellKey = JSON.stringify([heldClassKey, raceId, ABILITY_KEYS.map((key) => calculatedScore(key)), selectedAlternateTraitKeys]);
+  useEffect(() => {
+    if (!spellDialogOpen && selectedSpellIds.length === 0) {
+      return undefined;
+    }
+    const draft = buildRequest();
+    if (draft === null) {
+      setSpellDialog(null);
+      return undefined;
+    }
+    let cancelled = false;
+    setSpellDialogError(null);
+    (async () => {
+      const options = await loadDraftSpellOptions(draft);
+      const tokens = [...new Set(options.perDay.flatMap((row) => {
+        const match = /^class_spell\.(?:.+\.)?([a-z_]+)\.(?:total|base)_/.exec(row.id);
+        return match ? [`class:${match[1]}`] : [];
+      }))];
+      const [levels, catalog] = await Promise.all([
+        tokens.length === 0 ? Promise.resolve({ classes: [] }) : loadClassSpellLevels(tokens),
+        listSpells({ nameContains: null, school: null }),
+      ]);
+      return creationSpellDialog({ perDay: options.perDay, classLevels: levels.classes, catalog: catalog.entries, innate: options.innate });
+    })()
+      .then((dialog) => {
+        if (cancelled) return;
+        setSpellDialog(dialog);
+        setSelectedSpellIds((current) => keepOfferedSpells(dialog.items, current));
+      })
+      .catch((cause: unknown) => {
+        if (!cancelled) setSpellDialogError(cause instanceof Error ? cause.message : String(cause));
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [spellDialogOpen, spellKey]);
 
   function handleAddLevel(addedClassId: string) {
     const option = classOptions.find((candidate) => candidate.id === addedClassId);
@@ -740,6 +820,9 @@ function CreateCharacterFields(props: {
         selectedTraits,
         traitSkillChoices: resolvedTraitSkillChoices,
         selectedFeats: selectedFeats.map((featId) => ({ featId, target: null })),
+        selectedSpells: spellSelectionsFromIds(selectedSpellIds),
+        selectedEquipment: chosenEquipment.map((item) => ({ itemId: item.itemId })),
+        priceMode,
         skillAllocations: skillsTouched ? persistedFromAllocation(skillAllocation) : [],
       },
       { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
@@ -763,6 +846,16 @@ function CreateCharacterFields(props: {
     }
     if (skillsTouched && skillPointsTotal !== null && skillPointsLeft < 0) {
       setError(`Skills are over budget by ${-skillPointsLeft} points: open Manage on Skills and lower a rank before creating.`);
+      return;
+    }
+    const spellOverruns = spellDialog === null ? [] : spellQuotaOverruns(spellDialog, selectedSpellIds);
+    if (spellOverruns.length > 0) {
+      setError(`Too many spells chosen (${spellOverruns.join('; ')}): open Manage on Spells and remove some.`);
+      return;
+    }
+    const equipmentSpend = equipmentBudget({ startingGp: wealth?.maxGp ?? null, mode: priceMode, costsGp: chosenEquipment.map((item) => item.costGp ?? 0) });
+    if (equipmentSpend.over) {
+      setError(`Equipment costs more than the starting money (${equipmentSpend.text}) Open Manage on Equipment and remove something.`);
       return;
     }
     if (selectedFeats.length > feats) {
@@ -1127,6 +1220,70 @@ function CreateCharacterFields(props: {
               setSelectedFeats(featsSnapshot);
               setFeatDialogOpen(false);
             }}
+          />
+
+          {/* Spells: a quota per spell level from the engine; racial spell-like abilities sit in a read-only Innate column. */}
+          <ManageBox
+            title="Spells"
+            remaining={
+              spellDialog === null || Object.keys(spellDialog.groupLimits).length === 0
+                ? undefined
+                : `${Object.values(spellDialog.groupLimits).reduce((sum, n) => sum + n, 0) - selectedSpellIds.length} of ${Object.values(spellDialog.groupLimits).reduce((sum, n) => sum + n, 0)} remaining`
+            }
+            summary={selectedSpellIds.map((id) => id.split('|')[1] ?? id)}
+            disabledReason={heldClasses.length === 0 ? 'Add a level first: spell slots come from the class levels.' : undefined}
+            onManage={() => {
+              setSpellsSnapshot(selectedSpellIds);
+              setSpellDialogOpen(true);
+            }}
+          />
+          <TransferListDialog
+            open={spellDialogOpen}
+            title="Spells"
+            notice={
+              spellDialogError !== null
+                ? `Spells could not be loaded for this character: ${spellDialogError}`
+                : spellDialog === null
+                  ? 'Working out how many spells of each level this character may pick…'
+                  : Object.keys(spellDialog.groupLimits).length === 0
+                    ? 'This character has no spell slots at this level, so there is nothing to pick. Innate abilities are listed below.'
+                    : 'Quotas are the engine\'s spells per day for each level (a wizard\'s spellbook holds more than it prepares; a spontaneous caster knows a different count). Picks are added as known spells.'
+            }
+            items={spellDialog?.items ?? []}
+            selected={selectedSpellIds}
+            onSelectedChange={setSelectedSpellIds}
+            limit={null}
+            groupLimits={spellDialog?.groupLimits}
+            groupLabels={spellDialog?.groupLabels}
+            remainingNoun="spells"
+            onAccept={() => setSpellDialogOpen(false)}
+            onCancel={() => {
+              setSelectedSpellIds(spellsSnapshot);
+              setSpellDialogOpen(false);
+            }}
+          />
+
+          {/* Equipment: starting money is the class's maximum; categories, search and the pricing choice live in the dialog. */}
+          <ManageBox
+            title="Equipment"
+            remaining={
+              primaryClassId === null
+                ? undefined
+                : equipmentBudget({ startingGp: wealth?.maxGp ?? null, mode: priceMode, costsGp: chosenEquipment.map((item) => item.costGp ?? 0) }).text
+            }
+            summary={chosenEquipment.map((item) => item.name)}
+            disabledReason={primaryClassId === null ? 'Add a level first: starting money comes from the class.' : undefined}
+            onManage={() => setEquipmentDialogOpen(true)}
+          />
+          <CreationEquipmentDialog
+            open={equipmentDialogOpen}
+            wealth={wealth}
+            wealthError={wealthError}
+            mode={priceMode}
+            onModeChange={setPriceMode}
+            chosen={chosenEquipment}
+            onChange={setChosenEquipment}
+            onClose={() => setEquipmentDialogOpen(false)}
           />
         </div>
 
