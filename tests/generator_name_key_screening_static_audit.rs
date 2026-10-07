@@ -77,11 +77,11 @@ const SANCTIONED_SCREEN_SYMBOLS: &[&str] = &[
 /// populates it lives elsewhere.
 const SCHEMA_ONLY_FILES: &[(&str, &str)] = &[
     (
-        "src/rules_core/rules_tables/crb/json_cache.rs",
+        "src/rules_core/rules_catalog/crb/json_cache.rs",
         "crates/codex-ingest/src/bin/gen_core_rulebook_cache.rs",
     ),
     (
-        "src/rules_core/rules_tables/advanced_race_guide/json_cache.rs",
+        "src/rules_core/rules_catalog/advanced_race_guide/json_cache.rs",
         "crates/codex-ingest/src/bin/gen_book_cache.rs",
     ),
 ];
@@ -125,10 +125,10 @@ fn discover_identity_bearing_generators(root: &Path) -> Vec<(String, String)> {
         root.join("crates/codex-ingest/src/pcgen_import/cache_gen"),
         root.join("crates/codex-ingest/src/bin"),
     ];
-    // `rules_tables/*/json_cache.rs` schema files -- checked via their
+    // `rules_catalog/*/json_cache.rs` schema files (`rules_tables/` until SD-37 E4a.4) -- checked via their
     // SCHEMA_ONLY_FILES-mapped generator, never their own (empty) text.
     // Deliberately narrower than the two dirs above: every OTHER file
-    // under `rules_tables/*/` (e.g. `mod.rs`) is a compiled RAW DATA
+    // under `rules_catalog/*/` (e.g. `mod.rs`) is catalog code over a RAW DATA
     // table -- `decisions.md §11.3`, this program's own convention that a
     // generator "never re-parses raw LST to derive a field's *value*;
     // every value written [to `data/corpus/`] is read straight from the
@@ -137,7 +137,7 @@ fn discover_identity_bearing_generators(root: &Path) -> Vec<(String, String)> {
     // happens downstream in the `cache_gen`/`bin` generator that reads
     // the table, which is already covered by the two dirs above.
     let mut json_cache_files: Vec<PathBuf> = Vec::new();
-    if let Ok(entries) = fs::read_dir(root.join("src/rules_core/rules_tables")) {
+    if let Ok(entries) = fs::read_dir(root.join("src/rules_core/rules_catalog")) {
         for e in entries.flatten() {
             let candidate = e.path().join("json_cache.rs");
             if candidate.is_file() {

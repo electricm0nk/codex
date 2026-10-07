@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub static INQUISITOR_SPELL_LIST: crate::rules_core::rules_catalog::Table<(&str, u8)> =
     crate::rules_core::rules_catalog::Table::new("apg/inquisitor_spell_list/INQUISITOR_SPELL_LIST");
@@ -16,4 +15,65 @@ pub fn inquisitor_spell_level(spell_key: &str) -> Option<u8> {
         .iter()
         .find(|(key, _)| *key == spell_key)
         .map(|(_, level)| *level)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn the_list_matches_the_verified_corpus_extraction() {
+        assert_eq!(INQUISITOR_SPELL_LIST.len(), 219, "219 real Inquisitor spell records");
+        let expected = [15, 38, 43, 44, 35, 24, 20];
+        for (level, want) in expected.iter().enumerate() {
+            let count = INQUISITOR_SPELL_LIST
+                .iter()
+                .filter(|(_, l)| usize::from(*l) == level)
+                .count();
+            assert_eq!(count, *want, "spell level {level} count");
+        }
+    }
+
+    /// Regression guard for the mid-group `CLASSES:` parsing bug: each of
+    /// these tags Inquisitor mid-group (not last), so a
+    /// `CLASSES:.*Inquisitor=` grep would find neither.
+    #[test]
+    fn spells_tagged_mid_list_in_their_classes_group_are_present() {
+        for (name, level) in [("Blood Biography", 3), ("Perceive Cues", 2), ("Bloodhound", 2)] {
+            assert_eq!(
+                inquisitor_spell_level(name),
+                Some(level),
+                "{name} is tagged Inquisitor mid-group and must not be dropped"
+            );
+        }
+    }
+
+    /// Regression guard for the `.MOD` bug: the vast majority of this
+    /// list is `.MOD` records grafting Inquisitor onto an existing CRB
+    /// spell. The stripped base name must resolve; the raw `.MOD`-suffixed
+    /// key must NOT (nothing else in this codebase ever looks up a spell
+    /// by a `.MOD`-suffixed name).
+    #[test]
+    fn mod_records_resolve_under_their_stripped_base_name_only() {
+        assert_eq!(inquisitor_spell_level("Bless"), Some(1));
+        assert_eq!(inquisitor_spell_level("Cure Light Wounds"), Some(1));
+        assert_eq!(inquisitor_spell_level("Bless.MOD"), None);
+        assert_eq!(inquisitor_spell_level("Cure Light Wounds.MOD"), None);
+    }
+
+    /// Inquisitor is a 0-6 caster (verified against `apg_classes`'s
+    /// own `CAST:0,5,5,5,5,5,5` level-20 row, seven columns).
+    #[test]
+    fn inquisitor_tops_out_at_sixth_level_spells() {
+        for (name, level) in &*INQUISITOR_SPELL_LIST {
+            assert!(*level <= 6, "{name} at level {level}: 6 is the ceiling");
+        }
+        assert!(INQUISITOR_SPELL_LIST.iter().any(|(_, l)| *l == 0));
+        assert!(INQUISITOR_SPELL_LIST.iter().any(|(_, l)| *l == 6));
+    }
+
+    #[test]
+    fn unknown_spell_resolves_to_none() {
+        assert_eq!(inquisitor_spell_level("Definitely Not A Real Spell"), None);
+    }
 }

@@ -7,11 +7,94 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
 pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     crate::rules_core::rules_catalog::rows::<ArchetypeSwapEntry>(
         "ultimate_combat/archetype_tables/archetype_swap_tables",
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn catalog_has_68_records() {
+        // 65 from the original SD28-E30 tier-1 extraction + 2 Gunslinger
+        // archetypes (Pistolero, Mysterious Stranger) added by
+        // `SD31-E4-F1-002` + 1 Ninja archetype (Scout) added by
+        // `SD31-E4-F1-003` -- see this module's own doc comment.
+        assert_eq!(archetype_swap_tables().len(), 68);
+    }
+
+    #[test]
+    fn keys_are_unique_within_book() {
+        let keys: std::collections::BTreeSet<&str> =
+            archetype_swap_tables().iter().map(|e| e.key).collect();
+        assert_eq!(keys.len(), archetype_swap_tables().len());
+    }
+
+    #[test]
+    fn every_master_record_carries_a_real_description() {
+        for e in archetype_swap_tables() {
+            assert!(e.description.is_some(), "{} has no DESC:", e.key);
+        }
+    }
+
+    /// UC's original 65-record rate: 22% (14/65) -- a fifth distinct
+    /// value alongside UPsi 33%, ACG 33%, APG 52%, UM 27%. No
+    /// convergence across five books; the durable claim is that
+    /// TYPE:/ABILITY: disagree in most records at a book-dependent
+    /// rate, not any specific percentage. `SD31-E4-F1-002`'s 2 added
+    /// Gunslinger records and `SD31-E4-F1-003`'s 1 added Ninja record
+    /// shift the raw totals (293/366, 16/68 = 23.5%) without changing
+    /// that claim -- Pistolero disagrees (4 replaces vs. 5 grants),
+    /// Mysterious Stranger happens to agree (5 vs. 5), and Scout also
+    /// agrees (2 vs. 2, though `replaces` is `FACT:`-derived here, not
+    /// `TYPE:`-derived -- see this module's own doc comment).
+    #[test]
+    fn the_type_and_ability_lists_genuinely_disagree() {
+        let total_replaces: usize =
+            archetype_swap_tables().iter().map(|e| e.replaces.map_or(0, |r| r.len())).sum();
+        let total_grants: usize = archetype_swap_tables().iter().map(|e| e.grants.len()).sum();
+        assert_eq!(total_replaces, 293, "total TYPE:/FACT:-derived replaced-slot count across all 68 records");
+        assert_eq!(total_grants, 366, "total ABILITY: granted-feature count across all 68 records, after the category ruling");
+        assert_ne!(total_replaces, total_grants);
+
+        let equal_count_records = archetype_swap_tables()
+            .iter()
+            .filter(|e| e.replaces.map_or(0, |r| r.len()) == e.grants.len())
+            .count();
+        assert_eq!(equal_count_records, 16, "of 68 -- UC's own rate, original 14 plus Mysterious Stranger's 5-vs-5 match plus Scout's 2-vs-2 match");
+    }
+
+    #[test]
+    fn every_grant_names_a_real_level_and_key() {
+        for e in archetype_swap_tables() {
+            for g in e.grants {
+                assert!(!g.grants_feature_key.is_empty(), "{} has an empty grant key", e.key);
+                assert!(g.at_level >= 1 && g.at_level <= 20, "{} grant {} has an implausible level {}", e.key, g.grants_feature_key, g.at_level);
+            }
+        }
+    }
+
+    #[test]
+    fn no_internal_category_bookkeeping_grant_is_present() {
+        for e in archetype_swap_tables() {
+            for g in e.grants {
+                assert_ne!(g.grants_feature_key, "Armor Aptitude 7th Level", "Internal-category bookkeeping grant leaked back in");
+            }
+        }
+    }
+
+    #[test]
+    fn resolved_grant_descriptions_are_the_real_count() {
+        let resolved: usize = archetype_swap_tables()
+            .iter()
+            .flat_map(|e| e.grants.iter())
+            .filter(|g| g.description.is_some() || g.benefit.is_some())
+            .count();
+        assert_eq!(resolved, 306, "306 of 366 grants carry real DESC:/BENEFIT: text: the original 294 of 354, plus all 10 of the 2 Gunslinger archetypes' own grants, plus both of Scout's own grants -- see this module's own doc comment for the original 60 that did not");
+    }
 }

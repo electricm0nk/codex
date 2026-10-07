@@ -1,6 +1,8 @@
-//! Provenance gate CLI: sweep `src/rules_core/rules_tables/**/*.rs` for
-//! Product-Identity blacklist terms and reconcile against
-//! `docs/governance/pi-sweep-baseline.tsv`.
+//! Provenance gate CLI: sweep the rules-table code for Product-Identity
+//! blacklist terms and reconcile against `docs/governance/pi-sweep-baseline.tsv`.
+//! The code swept is `src/rules_core/rules_catalog/**/*.rs` (SD-37 E4a.4 removed
+//! the compiled `src/rules_core/rules_tables/**/*.rs` this first swept; its rows
+//! are the data package below, its types and formulas the catalog).
 //!
 //! SD-37 E4a.1: the same gate covers the `rules_tables` data package
 //! (`data/rules_tables/**/*.json`). Every package file's rows are re-screened
@@ -28,7 +30,7 @@ use std::path::PathBuf;
 use std::process::ExitCode;
 
 const BASELINE_REL: &str = "docs/governance/pi-sweep-baseline.tsv";
-const TABLES_REL: &str = "src/rules_core/rules_tables";
+const TABLES_REL: &str = "src/rules_core/rules_catalog";
 
 fn main() -> ExitCode {
     let mut repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));

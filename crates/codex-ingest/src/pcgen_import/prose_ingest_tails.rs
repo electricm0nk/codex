@@ -29,7 +29,8 @@
 /// One relocated ingest tail.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ProseIngestTail {
-    /// The shipped table the prose lives in, as a repo-relative path.
+    /// The shipped table the prose lives in, as a repo-relative path (its `data/rules_tables`
+    /// package file since SD-37 E4a.4 removed the compiled `src/rules_core/rules_tables` module).
     pub table: &'static str,
     /// The record's own corpus key.
     pub record_key: &'static str,
@@ -43,12 +44,12 @@ pub struct ProseIngestTail {
 
 /// Every relocated tail.
 pub const PROSE_INGEST_TAILS: &[ProseIngestTail] = &[
-    ProseIngestTail { table: "src/rules_core/rules_tables/ultimate_combat/feat_tables.rs", record_key: "Skilled Driver", field: "benefit", prose: "You gain a +4 bonus on driving checks with your chosen vehicle.", tail: "%LIST" },
-    ProseIngestTail { table: "src/rules_core/rules_tables/ultimate_combat/feat_tables.rs", record_key: "Dispelling Fist", field: "description", prose: "By focusing on your knowledge of magic and spells that negate its powers, you use your bare hands to rip magical defenses from your enemy.", tail: "PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike" },
-    ProseIngestTail { table: "src/rules_core/rules_tables/ultimate_magic/feat_tables.rs", record_key: "Versatile Channeler", field: "benefit", prose: "You may choose to channel positive energy as if your effective cleric level were 2 levels lower than normal.", tail: "PREABILITY:1,CATEGORY=Special Ability,Versatile Channeler ~ Positive Energy" },
-    ProseIngestTail { table: "src/rules_core/rules_tables/acg/archetype_tables.rs", record_key: "Mutagenic Mauler Brawler ~ Beastmorph", field: "description", prose: "A mutagenic mauler gains additional abilities when using her mutagen. She gains low-light vision and a +%1 enhancement bonus to her base speed.", tail: "BeastmorphSpeed|PREVAREQ:BeastmorphProgression,1" },
-    ProseIngestTail { table: "src/rules_core/rules_tables/ultimate_magic/archetype_tables.rs", record_key: "Internal Alchemist ~ Disease Resistance", field: "description", prose: "You gain a +%1 bonus on all saving throws against disease.", tail: "AlchemistPoisonResistanceBonus|!PREABILITY:1,CATEGORY=Special Ability,Poison Immunity ~ Alchemist" },
-    ProseIngestTail { table: "src/rules_core/rules_tables/ultimate_psionics/archetype_tables.rs", record_key: "Thoughtsinger ~ Collective", field: "description", prose: "Join %1 minds, plus your own, within %2 feet; can manifest some powers through collective.", tail: "ThoughtsingerCollectiveMinds|ThoughtsingerCollectiveRange|!PREABILITY:1,CATEGORY=Internal,Thoughtsinger ~ Collective Range Unlimited" },
+    ProseIngestTail { table: "data/rules_tables/ultimate_combat/feat_tables/feat_tables.json", record_key: "Skilled Driver", field: "benefit", prose: "You gain a +4 bonus on driving checks with your chosen vehicle.", tail: "%LIST" },
+    ProseIngestTail { table: "data/rules_tables/ultimate_combat/feat_tables/feat_tables.json", record_key: "Dispelling Fist", field: "description", prose: "By focusing on your knowledge of magic and spells that negate its powers, you use your bare hands to rip magical defenses from your enemy.", tail: "PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike" },
+    ProseIngestTail { table: "data/rules_tables/ultimate_magic/feat_tables/feat_tables.json", record_key: "Versatile Channeler", field: "benefit", prose: "You may choose to channel positive energy as if your effective cleric level were 2 levels lower than normal.", tail: "PREABILITY:1,CATEGORY=Special Ability,Versatile Channeler ~ Positive Energy" },
+    ProseIngestTail { table: "data/rules_tables/acg/archetype_tables/archetype_swap_tables.json", record_key: "Mutagenic Mauler Brawler ~ Beastmorph", field: "description", prose: "A mutagenic mauler gains additional abilities when using her mutagen. She gains low-light vision and a +%1 enhancement bonus to her base speed.", tail: "BeastmorphSpeed|PREVAREQ:BeastmorphProgression,1" },
+    ProseIngestTail { table: "data/rules_tables/ultimate_magic/archetype_tables/archetype_swap_tables.json", record_key: "Internal Alchemist ~ Disease Resistance", field: "description", prose: "You gain a +%1 bonus on all saving throws against disease.", tail: "AlchemistPoisonResistanceBonus|!PREABILITY:1,CATEGORY=Special Ability,Poison Immunity ~ Alchemist" },
+    ProseIngestTail { table: "data/rules_tables/ultimate_psionics/archetype_tables/archetype_swap_tables.json", record_key: "Thoughtsinger ~ Collective", field: "description", prose: "Join %1 minds, plus your own, within %2 feet; can manifest some powers through collective.", tail: "ThoughtsingerCollectiveMinds|ThoughtsingerCollectiveRange|!PREABILITY:1,CATEGORY=Internal,Thoughtsinger ~ Collective Range Unlimited" },
 ];
 
 #[cfg(test)]

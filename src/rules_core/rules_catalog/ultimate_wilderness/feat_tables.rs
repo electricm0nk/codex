@@ -7,13 +7,104 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::super::crb::feats::FeatCategory as SharedFeatCategory;
-pub use rt::ultimate_wilderness::feat_tables::FeatCategory;
-pub use rt::ultimate_wilderness::feat_tables::UwFeatEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_wilderness__feat_tables__FeatCategory"))]
+pub enum FeatCategory {
+    General,
+    Combat,
+    ItemCreation,
+    Metamagic,
+    Teamwork,
+    /// Companion/animal-focused feats -- e.g. a druid's animal companion
+    /// gaining a bonus feat. No corpus book before UW carries this facet.
+    Animal,
+    /// Mount-focused feats (e.g. cavalier/samurai mount options). No
+    /// corpus book before UW carries this facet.
+    Mount,
+}
+impl FeatCategory {
+    pub const ALL: &'static [FeatCategory] = &[
+        FeatCategory::General,
+        FeatCategory::Combat,
+        FeatCategory::ItemCreation,
+        FeatCategory::Metamagic,
+        FeatCategory::Teamwork,
+        FeatCategory::Animal,
+        FeatCategory::Mount,
+    ];
+
+    /// The subset of variants that coincide with the shared
+    /// `crb::feats::FeatCategory` enum, for books/consumers that fold UW's
+    /// records into that shared classification. `Animal`/`Mount` have no
+    /// shared equivalent and are not present here.
+    pub fn as_shared(self) -> Option<SharedFeatCategory> {
+        match self {
+            FeatCategory::General => Some(SharedFeatCategory::General),
+            FeatCategory::Combat => Some(SharedFeatCategory::Combat),
+            FeatCategory::ItemCreation => Some(SharedFeatCategory::ItemCreation),
+            FeatCategory::Metamagic => Some(SharedFeatCategory::Metamagic),
+            FeatCategory::Teamwork => Some(SharedFeatCategory::Teamwork),
+            FeatCategory::Animal | FeatCategory::Mount => None,
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct UwFeatEntry {
+    /// The record's corpus identity. No record in this catalog carries a
+    /// distinct `KEY:` token, so `key == name` for every entry.
+    pub key: &'static str,
+    pub category: FeatCategory,
+    pub name: &'static str,
+    /// The corpus `DESC:` token, verbatim.
+    pub description: Option<&'static str>,
+    /// The corpus `PRETEXT:` token, verbatim display prerequisite prose --
+    /// `None` when the row carries no `PRETEXT:`.
+    pub pretext: Option<&'static str>,
+    pub source_page: Option<&'static str>,
+    /// The corpus `BENEFIT:` token, verbatim -- the actual mechanical text.
+    pub benefit: Option<&'static str>,
+    // The `prerequisites: Option<&'static [&'static str]>` field that stood
+    // here held every top-level `PRE`-family token of the corpus row,
+    // verbatim. It moved to `pcgen_import::feat_prereq_tokens` — SD-35
+    // `AT-35-E6-003-SWEEP` cycle 3, `decisions.md` §11: nothing on the live
+    // side reads a PCGen token. Its two readers were both converter modules
+    // and both still read the same tokens, keyed by `(rule_set, index)`.
+}
 pub fn feat_tables() -> &'static [UwFeatEntry] {
     crate::rules_core::rules_catalog::rows::<UwFeatEntry>(
         "ultimate_wilderness/feat_tables/feat_tables",
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn catalog_has_135_records() {
+        assert_eq!(feat_tables().len(), 135);
+    }
+
+    #[test]
+    fn every_record_carries_desc_and_benefit() {
+        for e in feat_tables() {
+            assert!(e.description.is_some(), "{} has no DESC:", e.key);
+            assert!(e.benefit.is_some(), "{} has no BENEFIT:", e.key);
+        }
+    }
+
+    #[test]
+    fn no_record_is_deferred() {
+        assert_eq!(feat_tables().iter().filter(|e| e.benefit.is_none()).count(), 0);
+    }
+
+    #[test]
+    fn keys_are_unique_within_book() {
+        let keys: std::collections::BTreeSet<&str> = feat_tables().iter().map(|e| e.key).collect();
+        assert_eq!(keys.len(), feat_tables().len());
+    }
 }

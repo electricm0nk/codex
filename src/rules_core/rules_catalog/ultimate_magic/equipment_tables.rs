@@ -7,11 +7,54 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::ultimate_magic::equipment_tables::EquipmentCategory;
-pub use rt::ultimate_magic::equipment_tables::EquipmentFieldCoverage;
-pub use rt::ultimate_magic::equipment_tables::EquipmentTableEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_magic__equipment_tables__EquipmentCategory"))]
+pub enum EquipmentCategory {
+    General,
+    ArmsArmor,
+}
+impl EquipmentCategory {
+    pub const ALL: &'static [EquipmentCategory] =
+        &[EquipmentCategory::General, EquipmentCategory::ArmsArmor];
+}
+/// SD-28-E15 equipment field-coverage audit row, mirroring the shape
+/// `advanced_race_guide::equipment_tables::EquipmentFieldCoverage` and its
+/// siblings already establish.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct EquipmentFieldCoverage {
+    pub total_records: u32,
+    pub records_expected: u32,
+    pub has_cost: u32,
+    pub has_weight: u32,
+    pub has_description: u32,
+}
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_magic__equipment_tables__EquipmentTableEntry"))]
+pub struct EquipmentTableEntry {
+    /// UM's equipment records carry no explicit `KEY:` token anywhere in
+    /// either source file -- the corpus identity is the record's own
+    /// display `name` (the `Spellbook.COPY=<name>` value, or the plain
+    /// leading field for the two Scrollmaster Gear rows).
+    pub key: &'static str,
+    pub category: EquipmentCategory,
+    pub name: &'static str,
+    /// Cost in gold pieces from the corpus `COST:` token. Every one of
+    /// UM's 26 records carries a real `COST:` token (both Scrollmaster
+    /// Gear rows are `COST:0`, a real corpus value, not a missing one).
+    pub cost_gp: Option<f64>,
+    /// Weight in pounds from the corpus `WT:` token. 13 of 26 carry one
+    /// (11 higher-level spellbooks with a real `WT:` token, both
+    /// Scrollmaster Gear rows at `WT:0`); the other 13 spellbooks genuinely
+    /// carry no `WT:` token at all in the corpus.
+    pub weight_lbs: Option<f64>,
+    /// Descriptive text, sourced from the corpus `SPROP:` token(s) -- see
+    /// this module's own doc comment. `None` only when the corpus record
+    /// has no `SPROP:` token at all (both Scrollmaster Gear records).
+    pub description: Option<&'static str>,
+}
 pub fn field_coverage_report() -> EquipmentFieldCoverage {
     let table = equipment_tables();
     EquipmentFieldCoverage {
@@ -48,4 +91,76 @@ pub fn equipmod_tables() -> &'static [EquipmentTableEntry] {
 }
 pub fn equipment_resolve(key: &str) -> Option<&'static EquipmentTableEntry> {
     equipment_tables().iter().find(|entry| entry.key == key)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn catalog_has_26_records_24_general_2_arms_armor() {
+        assert_eq!(GENERAL_TABLE.len(), 24, "24 real Spellbook.COPY= records in um_equip_general");
+        assert_eq!(ARMS_ARMOR_TABLE.len(), 2, "Scroll Shield + Scroll Blade in um_equip_arms_armor");
+        assert_eq!(equipment_tables().len(), 26);
+    }
+
+    #[test]
+    fn keys_are_unique() {
+        let mut keys: Vec<&str> = equipment_tables().iter().map(|e| e.key).collect();
+        keys.sort_unstable();
+        let before = keys.len();
+        keys.dedup();
+        assert_eq!(keys.len(), before, "every UM equipment key must be unique");
+    }
+
+    /// Every record carries a real COST: token (including the two
+    /// Scrollmaster Gear rows' real COST:0) -- no record should ever read
+    /// `cost_gp: None` for this book.
+    #[test]
+    fn every_record_carries_a_real_cost() {
+        for entry in equipment_tables() {
+            assert!(entry.cost_gp.is_some(), "{} must carry a real cost_gp", entry.key);
+        }
+    }
+
+    /// The Scrollmaster Gear pair carries no SPROP: token at all -- `None`
+    /// is the real corpus shape, not an extraction gap. Every General
+    /// (spellbook) record DOES carry real SPROP: text.
+    #[test]
+    fn scrollmaster_gear_has_no_description_every_spellbook_does() {
+        for entry in equipment_tables() {
+            match entry.category {
+                EquipmentCategory::ArmsArmor => {
+                    assert!(entry.description.is_none(), "{} (Scrollmaster Gear) must carry no description", entry.key)
+                }
+                EquipmentCategory::General => {
+                    assert!(entry.description.is_some(), "{} (spellbook) must carry a real SPROP-sourced description", entry.key)
+                }
+            }
+        }
+    }
+
+    /// Regression guard against the double-count this module's own doc
+    /// comment traced and ruled out: the 17 `_pfs/pfs_um_equip_general`
+    /// legality-flag rows must never appear as separate table entries.
+    #[test]
+    fn pfs_legality_overlay_rows_are_not_separate_entries() {
+        assert_eq!(
+            equipment_tables().len(),
+            26,
+            "if this ever reads more than 26, the PFS legality-overlay rows have been              double-counted as new records instead of recognized as flags on existing ones"
+        );
+    }
+
+    /// Field-coverage audit row pins the exact counts named in this
+    /// module's own doc comment.
+    #[test]
+    fn field_coverage_matches_documented_counts() {
+        let report = field_coverage_report();
+        assert_eq!(report.total_records, 26);
+        assert_eq!(report.records_expected, 26);
+        assert_eq!(report.has_cost, 26);
+        assert_eq!(report.has_weight, 13);
+        assert_eq!(report.has_description, 24);
+    }
 }

@@ -7,11 +7,62 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::ultimate_combat::equipment_tables::EquipmentCategory;
-pub use rt::ultimate_combat::equipment_tables::EquipmentFieldCoverage;
-pub use rt::ultimate_combat::equipment_tables::EquipmentTableEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_combat__equipment_tables__EquipmentCategory"))]
+pub enum EquipmentCategory {
+    General,
+    MagicItems,
+    ArmsArmor,
+    Equipmods,
+}
+impl EquipmentCategory {
+    pub const ALL: &'static [EquipmentCategory] = &[
+        EquipmentCategory::General,
+        EquipmentCategory::MagicItems,
+        EquipmentCategory::ArmsArmor,
+        EquipmentCategory::Equipmods,
+    ];
+}
+/// SD-28-E15-style equipment field-coverage audit row, mirroring the
+/// shape every other book's equipment table already establishes.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct EquipmentFieldCoverage {
+    pub total_records: u32,
+    pub records_expected: u32,
+    pub has_cost: u32,
+    pub has_weight: u32,
+    pub has_description: u32,
+}
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_combat__equipment_tables__EquipmentTableEntry"))]
+pub struct EquipmentTableEntry {
+    /// The record's corpus `KEY:` token when present (every `Equipmods`
+    /// row), else its own display name.
+    pub key: &'static str,
+    pub category: EquipmentCategory,
+    /// `OUTPUTNAME:` when the corpus record carries one, else the same as
+    /// `key`'s source field.
+    pub name: &'static str,
+    /// Cost in gold pieces from the corpus `COST:` token. `None` when the
+    /// token is absent (several `Equipmods` rows price via `PLUS:`, an
+    /// enhancement-bonus slot cost, not a flat gp number) or carries a
+    /// PCGen formula this table does not evaluate (`Material ~ Gold`'s
+    /// `COST:(BASECOST)*9`).
+    pub cost_gp: Option<f64>,
+    /// Weight in pounds from the corpus `WT:` token. `None` for every
+    /// `Equipmods` row (modifiers carry no independent weight, matching
+    /// every other book's own established finding) and for any
+    /// `General`/`MagicItems`/`ArmsArmor` row whose corpus record
+    /// genuinely carries no `WT:` token.
+    pub weight_lbs: Option<f64>,
+    /// Descriptive text, sourced from the corpus `SPROP:` token(s) --
+    /// joined with `"; "` when more than one. `None` only when the corpus
+    /// record has no `SPROP:` token at all.
+    pub description: Option<&'static str>,
+}
 pub fn field_coverage_report() -> EquipmentFieldCoverage {
     let table = equipment_tables();
     EquipmentFieldCoverage {
@@ -62,4 +113,54 @@ pub fn equipment_resolve(key: &str) -> Option<&'static EquipmentTableEntry> {
         .iter()
         .chain(equipmod_tables())
         .find(|entry| entry.key == key)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::collections::BTreeSet;
+
+    #[test]
+    fn record_counts_are_pinned() {
+        assert_eq!(GENERAL_TABLE.len(), 26);
+        assert_eq!(MAGIC_ITEMS_TABLE.len(), 10);
+        assert_eq!(ARMS_ARMOR_TABLE.len(), 149);
+        assert_eq!(equipment_tables().len(), 185);
+        assert_eq!(EQUIPMODS_TABLE.len(), 19);
+        assert_eq!(equipmod_tables().len(), 19);
+    }
+
+    #[test]
+    fn keys_are_unique_within_this_book() {
+        let keys: BTreeSet<&str> = equipment_tables()
+            .iter()
+            .chain(equipmod_tables())
+            .map(|entry| entry.key)
+            .collect();
+        assert_eq!(
+            keys.len(),
+            204,
+            "204 real records (185 equipment + 19 equipmods) must carry 204 distinct keys              within this book -- a collision here would silently merge two real items"
+        );
+    }
+
+    #[test]
+    fn field_coverage_is_pinned() {
+        let report = field_coverage_report();
+        assert_eq!(report.total_records, 185);
+        assert_eq!(report.records_expected, 185);
+        assert!(report.has_cost > 0);
+        assert!(report.has_description > 0);
+    }
+
+    #[test]
+    fn no_copy_alias_or_mod_row_reached_the_tables() {
+        for entry in equipment_tables().iter().chain(equipmod_tables()) {
+            assert!(
+                !entry.key.ends_with(".MOD") && !entry.key.contains(".COPY="),
+                "a raw PCGen modifier/alias suffix leaked into a real table entry: {:?}",
+                entry
+            );
+        }
+    }
 }

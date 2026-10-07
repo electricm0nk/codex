@@ -1,13 +1,16 @@
-//! Write or check the `rules_tables` data package (`data/rules_tables/`) — SD-37 E4a.1.
+//! Normalise or check the `rules_tables` data package (`data/rules_tables/`) — SD-37 E4a.1, E4a.4.
 //!
-//! The package is rendered from the compiled tables by
-//! `codex::rules_core::rules_data_package::render_package`: one JSON file per table, each with
-//! its licence/PI stamp.
+//! The package is the source of the Pathfinder rules tables (E4a.4 removed the compiled module
+//! it was first rendered from). `codex::rules_core::rules_data_package::render_package` loads
+//! every registered table as its row type and renders it back in canonical form, with a licence/PI
+//! stamp from a fresh screen: one JSON file per table.
 //!
 //! Usage: `rules_tables_package (--write | --check) [--root <package dir>]`
 //!
-//! * `--write` writes every file and deletes any `*.json` under the root that no table owns.
-//! * `--check` writes nothing; it exits 1 if any file is missing, differs, or is not owned.
+//! * `--write` rewrites every file in canonical form (re-stamped) and deletes any `*.json` under
+//!   the root that no table owns. A file that does not load is reported and nothing is written.
+//! * `--check` writes nothing; it exits 1 if any file is missing, does not load as its row type,
+//!   is not in canonical form (layout or a stale stamp), or is not owned.
 //!
 //! Prints one summary line: `rules_tables_package: tables=<n> rows_bytes=<b> pi_files=<p> verdict=<PASS|FAIL|WROTE>`.
 
@@ -53,7 +56,14 @@ fn main() -> ExitCode {
     };
     let root = root.unwrap_or_else(|| package_root(Path::new(env!("CARGO_MANIFEST_DIR"))));
 
-    let files = render_package();
+    let files = match render_package(&root) {
+        Ok(files) => files,
+        Err(error) => {
+            println!("UNLOADABLE {error}");
+            println!("rules_tables_package: verdict=FAIL");
+            return ExitCode::from(1);
+        }
+    };
     let owned: BTreeSet<String> = files.iter().map(|(rel, _)| rel.clone()).collect();
     let bytes: usize = files.iter().map(|(_, text)| text.len()).sum();
     let pi_files = files

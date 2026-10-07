@@ -23,7 +23,8 @@
 //!
 //! Both are now reported, and
 //! `tests::every_book_landed_in_rules_tables_is_reported` derives the
-//! expected book set by **reading `src/rules_core/rules_tables/`**, so book
+//! expected book set by **reading the module tree** (`src/rules_core/rules_tables/`
+//! until SD-37 E4a.4, `src/rules_core/rules_catalog/` since), so book
 //! seven fails this module's own test suite until it is added here. That
 //! guard, not the one-time correction, is the fix.
 //!
@@ -135,7 +136,8 @@ pub struct BookIngestStatus {
     /// than zero, `"empty"` otherwise — computed, never hand-set per book.
     pub status: String,
     /// RFC 3339 timestamp of the most recent git commit that touched this
-    /// book's `rules_tables` directory, or `None` when git history isn't
+    /// book's `rules_tables` data (`data/rules_tables/<book>/`, the package
+    /// SD-37 E4a.4 left as the tables' only home), or `None` when git history isn't
     /// reachable (e.g. a packaged build with no `.git` checkout alongside
     /// it — the same graceful-degradation shape `build.rs`'s
     /// `git_short_sha` already uses for `CODEX_GIT_SHA`).
@@ -802,24 +804,24 @@ fn book_status(
 pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
     let races = race_counts_by_diagnostic_book();
     vec![
-        book_status("crb", "src/rules_core/rules_tables/crb", crb_counts(), &races),
-        book_status("apg", "src/rules_core/rules_tables/apg", apg_counts(), &races),
-        book_status("acg", "src/rules_core/rules_tables/acg", acg_counts(), &races),
+        book_status("crb", "data/rules_tables/crb", crb_counts(), &races),
+        book_status("apg", "data/rules_tables/apg", apg_counts(), &races),
+        book_status("acg", "data/rules_tables/acg", acg_counts(), &races),
         book_status(
             "beastiary1",
-            "src/rules_core/rules_tables/beastiary1",
+            "data/rules_tables/beastiary1",
             beastiary1_counts(),
             &races,
         ),
         book_status(
             "bonus_bestiary",
-            "src/rules_core/rules_tables/bonus_bestiary",
+            "data/rules_tables/bonus_bestiary",
             chassis_book_counts("bonus_bestiary"),
             &races,
         ),
         book_status(
             "monster_codex",
-            "src/rules_core/rules_tables/monster_codex",
+            "data/rules_tables/monster_codex",
             monster_and_companion_book_counts("monster_codex"),
             &races,
         ),
@@ -836,13 +838,13 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         // corrected rather than dropped.
         book_status(
             "inner_sea_combat",
-            "src/rules_core/rules_tables/inner_sea_combat",
+            "data/rules_tables/inner_sea_combat",
             companion_book_counts("inner_sea_combat"),
             &races,
         ),
         book_status(
             "inner_sea_intrigue",
-            "src/rules_core/rules_tables/inner_sea_intrigue",
+            "data/rules_tables/inner_sea_intrigue",
             companion_book_counts("inner_sea_intrigue"),
             &races,
         ),
@@ -855,7 +857,7 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         // would have repeated it in the file that records it.
         book_status(
             "horror_adventures",
-            "src/rules_core/rules_tables/horror_adventures",
+            "data/rules_tables/horror_adventures",
             monster_and_companion_book_counts("horror_adventures"),
             &races,
         ),
@@ -868,13 +870,13 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         // registers the books.
         book_status(
             "bestiary_5",
-            "src/rules_core/rules_tables/bestiary_5",
+            "data/rules_tables/bestiary_5",
             companion_book_counts("bestiary_5"),
             &races,
         ),
         book_status(
             "bestiary_6",
-            "src/rules_core/rules_tables/bestiary_6",
+            "data/rules_tables/bestiary_6",
             companion_book_counts("bestiary_6"),
             &races,
         ),
@@ -886,7 +888,7 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         // when `monster_codex` became the first such book.
         book_status(
             "bestiary_2",
-            "src/rules_core/rules_tables/bestiary_2",
+            "data/rules_tables/bestiary_2",
             monster_and_companion_book_counts("bestiary_2"),
             &races,
         ),
@@ -896,7 +898,7 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         // monster-only books below.
         book_status(
             "bestiary_3",
-            "src/rules_core/rules_tables/bestiary_3",
+            "data/rules_tables/bestiary_3",
             chassis_book_counts("bestiary_3"),
             &races,
         ),
@@ -904,7 +906,7 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         // above it.
         book_status(
             "bestiary_4",
-            "src/rules_core/rules_tables/bestiary_4",
+            "data/rules_tables/bestiary_4",
             chassis_book_counts("bestiary_4"),
             &races,
         ),
@@ -912,7 +914,7 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         // rows above it.
         book_status(
             "inner_sea_bestiary",
-            "src/rules_core/rules_tables/inner_sea_bestiary",
+            "data/rules_tables/inner_sea_bestiary",
             chassis_book_counts("inner_sea_bestiary"),
             &races,
         ),
@@ -920,7 +922,7 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         // above it.
         book_status(
             "inner_sea_gods",
-            "src/rules_core/rules_tables/inner_sea_gods",
+            "data/rules_tables/inner_sea_gods",
             chassis_book_counts("inner_sea_gods"),
             &races,
         ),
@@ -931,103 +933,103 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         // it by the size of the other.
         book_status(
             "book_of_the_damned_volume_1",
-            "src/rules_core/rules_tables/book_of_the_damned_volume_1",
+            "data/rules_tables/book_of_the_damned_volume_1",
             monster_and_companion_book_counts("book_of_the_damned_volume_1"),
             &races,
         ),
         book_status(
             "book_of_the_damned_volume_2",
-            "src/rules_core/rules_tables/book_of_the_damned_volume_2",
+            "data/rules_tables/book_of_the_damned_volume_2",
             chassis_book_counts("book_of_the_damned_volume_2"),
             &races,
         ),
         book_status(
             "inner_sea_world_guide",
-            "src/rules_core/rules_tables/inner_sea_world_guide",
+            "data/rules_tables/inner_sea_world_guide",
             chassis_book_counts("inner_sea_world_guide"),
             &races,
         ),
         book_status(
             "advanced_race_guide",
-            "src/rules_core/rules_tables/advanced_race_guide",
+            "data/rules_tables/advanced_race_guide",
             advanced_race_guide_counts(),
             &races,
         ),
         book_status(
             "pathfinder_unchained",
-            "src/rules_core/rules_tables/pathfinder_unchained",
+            "data/rules_tables/pathfinder_unchained",
             pathfinder_unchained_counts(),
             &races,
         ),
         book_status(
             "ultimate_campaign",
-            "src/rules_core/rules_tables/ultimate_campaign",
+            "data/rules_tables/ultimate_campaign",
             ultimate_campaign_counts(),
             &races,
         ),
         book_status(
             "ultimate_intrigue",
-            "src/rules_core/rules_tables/ultimate_intrigue",
+            "data/rules_tables/ultimate_intrigue",
             ultimate_intrigue_counts(),
             &races,
         ),
         book_status(
             "ultimate_equipment",
-            "src/rules_core/rules_tables/ultimate_equipment",
+            "data/rules_tables/ultimate_equipment",
             ultimate_equipment_counts(),
             &races,
         ),
         book_status(
             "ultimate_wilderness",
-            "src/rules_core/rules_tables/ultimate_wilderness",
+            "data/rules_tables/ultimate_wilderness",
             ultimate_wilderness_counts(),
             &races,
         ),
         book_status(
             "ultimate_combat",
-            "src/rules_core/rules_tables/ultimate_combat",
+            "data/rules_tables/ultimate_combat",
             ultimate_combat_counts(),
             &races,
         ),
         book_status(
             "ultimate_magic",
-            "src/rules_core/rules_tables/ultimate_magic",
+            "data/rules_tables/ultimate_magic",
             ultimate_magic_counts(),
             &races,
         ),
         book_status(
             "ultimate_psionics",
-            "src/rules_core/rules_tables/ultimate_psionics",
+            "data/rules_tables/ultimate_psionics",
             ultimate_psionics_counts(),
             &races,
         ),
         book_status(
             "occult_adventures",
-            "src/rules_core/rules_tables/occult_adventures",
+            "data/rules_tables/occult_adventures",
             occult_adventures_counts(),
             &races,
         ),
         book_status(
             "adventurers_guide",
-            "src/rules_core/rules_tables/adventurers_guide",
+            "data/rules_tables/adventurers_guide",
             adventurers_guide_counts(),
             &races,
         ),
         book_status(
             "inner_sea_faiths",
-            "src/rules_core/rules_tables/inner_sea_faiths",
+            "data/rules_tables/inner_sea_faiths",
             inner_sea_faiths_counts(),
             &races,
         ),
         book_status(
             "inner_sea_magic",
-            "src/rules_core/rules_tables/inner_sea_magic",
+            "data/rules_tables/inner_sea_magic",
             inner_sea_magic_counts(),
             &races,
         ),
         book_status(
             "inner_sea_temples",
-            "src/rules_core/rules_tables/inner_sea_temples",
+            "data/rules_tables/inner_sea_temples",
             inner_sea_temples_counts(),
             &races,
         ),
@@ -1036,19 +1038,19 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         // assertion fix, `corpus_ingest_diagnostic.rs` RED-branch cycle).
         book_status(
             "inner_sea_races",
-            "src/rules_core/rules_tables/inner_sea_races",
+            "data/rules_tables/inner_sea_races",
             inner_sea_races_counts(),
             &races,
         ),
         book_status(
             "mythic_adventures",
-            "src/rules_core/rules_tables/mythic_adventures",
+            "data/rules_tables/mythic_adventures",
             mythic_adventures_counts(),
             &races,
         ),
         book_status(
             "ultimate_magic_wordsofpower",
-            "src/rules_core/rules_tables/ultimate_magic_wordsofpower",
+            "data/rules_tables/ultimate_magic_wordsofpower",
             ultimate_magic_wordsofpower_counts(),
             &races,
         ),
@@ -1111,7 +1113,7 @@ mod tests {
         let missing: Vec<&String> = landed.difference(&reported).collect();
         assert!(
             missing.is_empty(),
-            "these books are landed in src/rules_core/rules_tables/ and this diagnostic does not \
+            "these books are landed in src/rules_core/rules_catalog/ and this diagnostic does not \
              report them: {missing:?}. The Corpus Ingest panel states it shows every rule book \
              landed in rules_tables, so an unreported book reads to a tester as an un-ingested \
              book. Add a `book_status(..)` row deriving its counts from its own real tables."
@@ -1120,15 +1122,17 @@ mod tests {
         let phantom: Vec<&String> = reported.difference(&landed).collect();
         assert!(
             phantom.is_empty(),
-            "this diagnostic reports books with no src/rules_core/rules_tables/ directory: \
+            "this diagnostic reports books with no src/rules_core/rules_catalog/ directory: \
              {phantom:?}"
         );
     }
 
-    /// Every book directory under `src/rules_core/rules_tables/`, which is
+    /// Every book directory under `src/rules_core/rules_catalog/` (the compiled `src/rules_core/rules_tables/` until SD-37 E4a.4), which is
     /// where the diagnostic's own `book_id` values come from.
     fn books_on_disk() -> BTreeSet<String> {
-        let dir = repo_root().join("src/rules_core/rules_tables");
+        // The catalog mirrors the module tree the compiled `rules_tables` had (SD-37 E4a.4
+        // removed that directory; its rows are the `data/rules_tables/` package).
+        let dir = repo_root().join("src/rules_core/rules_catalog");
         std::fs::read_dir(&dir)
             .unwrap_or_else(|e| panic!("{} must be readable: {e}", dir.display()))
             .filter_map(|entry| {
@@ -1703,7 +1707,7 @@ mod tests {
     fn a_book_with_no_entry_in_the_race_map_reports_no_race_row() {
         let status = book_status(
             "beastiary1",
-            "src/rules_core/rules_tables/beastiary1",
+            "data/rules_tables/beastiary1",
             beastiary1_counts(),
             &BTreeMap::new(),
         );

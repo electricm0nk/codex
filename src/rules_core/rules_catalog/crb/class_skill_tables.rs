@@ -7,15 +7,73 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use ClassSkillEntry::{Family, Named};
-pub use rt::crb::class_skill_tables::ClassSkillEntry;
-pub use rt::crb::class_skill_tables::ClassSkillList;
+/// One element of a class-skill list.
+///
+/// The ingest format writes a whole-family grant as `TYPE=<Family>` and a
+/// single skill as its bare name. This crate carries the same distinction in
+/// its own vocabulary.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub enum ClassSkillEntry {
+    /// One named skill, exactly as the record spells it — `"Acrobatics"`,
+    /// `"Knowledge (Nature)"`.
+    Named(&'static str),
+    /// Every subskill of a family — `Family("Craft")` grants every Craft
+    /// subskill. The roster a family expands to lives with the consumer
+    /// (`skill_allocation::skill_family_member_ids`), never here.
+    Family(&'static str),
+}
+/// One CRB base class's own class-skill list, or the special "every skill"
+/// grant (`Jack of All Trades`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct ClassSkillList {
+    /// The engine's class id, e.g. `"class:barbarian"`, or a non-class
+    /// pseudo-id (`"class_feature:jack_of_all_trades"`) for the one
+    /// class-feature-granted, not class-granted, row this table carries.
+    pub owner_id: &'static str,
+    /// `true` only for `"Jack of All Trades ~ Class Skills"`'s own
+    /// `CSKILL:ALL` grant — every skill becomes a class skill, and
+    /// `skills` is deliberately empty for this row (there is no
+    /// enumerable list to transcribe; `ALL` is the record's whole
+    /// content).
+    pub all_skills: bool,
+    /// The record's class-skill entries, in the corpus's own order, one per
+    /// pipe-split `CSKILL:` element. Never expanded — expansion is a SEPARATE
+    /// concern (`skill_allocation.rs`'s consumer work), not this table's own
+    /// "does the engine hold this record's content" question.
+    ///
+    /// SD-35 `AT-35-E6-003-SWEEP` cycle 7: these used to ship as the literal
+    /// token strings, so a family wildcard sat here as the ingest spelling
+    /// `"TYPE=Craft"` and `decisions.md` §11 counted it on the live side. The
+    /// distinction the wildcard carries is real and load-bearing, so it is
+    /// typed rather than dropped — see [`ClassSkillEntry`]. The corpus
+    /// verification test below still compares this field against the live
+    /// record's own `CSKILL:` token, rebuilt element for element, so the
+    /// typing is proved lossless by the same check that proved the
+    /// transcription.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
+    pub skills: &'static [ClassSkillEntry],
+}
 pub static CLASS_SKILL_LISTS: crate::rules_core::rules_catalog::Table<ClassSkillList> =
     crate::rules_core::rules_catalog::Table::new("crb/class_skill_tables/CLASS_SKILL_LISTS");
 pub fn class_skill_list(owner_id: &str) -> Option<&'static ClassSkillList> {
     CLASS_SKILL_LISTS
         .iter()
         .find(|entry| entry.owner_id == owner_id)
+}
+
+#[cfg(test)]
+mod class_skill_list_tests {
+    use super::*;
+
+    /// A class this table does not cover returns `None`, not a fabricated
+    /// empty list — `None` must never be read as "no class skills".
+    #[test]
+    fn unknown_owner_returns_none() {
+        assert_eq!(class_skill_list("class:sorcerer"), None);
+        assert_eq!(class_skill_list("class:wizard"), None);
+    }
 }

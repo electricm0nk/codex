@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::super::crb::feats::FeatTableEntry;
 pub fn feat_tables() -> &'static [FeatTableEntry] {

@@ -7,11 +7,83 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
 pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     crate::rules_core::rules_catalog::rows::<ArchetypeSwapEntry>(
         "acg/archetype_tables/archetype_swap_tables",
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn catalog_has_87_records() {
+        // SD31-E4-F1-001 (2026-08-16): +3 Slayer archetypes (Bounty Hunter,
+        // Deliverer, Stygian Slayer) -- Slayer's own archetype block was
+        // entirely absent before this cycle (SD31-E3-F1-001 found the gap).
+        // 87 -> 90.
+        assert_eq!(archetype_swap_tables().len(), 90);
+    }
+
+    #[test]
+    fn keys_are_unique_within_book() {
+        let keys: std::collections::BTreeSet<&str> =
+            archetype_swap_tables().iter().map(|e| e.key).collect();
+        assert_eq!(keys.len(), archetype_swap_tables().len());
+    }
+
+    #[test]
+    fn every_master_record_carries_a_real_description() {
+        for e in archetype_swap_tables() {
+            assert!(e.description.is_some(), "{} has no DESC:", e.key);
+        }
+    }
+
+    /// The finding this table exists to check: does UPsi's own
+    /// TYPE/ABILITY disagreement generalize? Confirmed: 33% here vs
+    /// UPsi's twice-corrected 33% -- essentially the same rate.
+    #[test]
+    fn the_type_and_ability_lists_genuinely_disagree() {
+        let total_replaces: usize =
+            archetype_swap_tables().iter().map(|e| e.replaces.map_or(0, |r| r.len())).sum();
+        let total_grants: usize = archetype_swap_tables().iter().map(|e| e.grants.len()).sum();
+        // SD31-E4-F1-001: +3 Slayer archetypes add 13 replaces (5+4+4) and
+        // 12 grants (4+4+4). 378->391, 336->348.
+        assert_eq!(total_replaces, 391, "total TYPE:/PREFACT: replaced-slot count across all 90 records");
+        assert_eq!(total_grants, 348, "total ABILITY: granted-feature count across all 90 records, after the category ruling");
+        assert_ne!(total_replaces, total_grants);
+
+        let equal_count_records = archetype_swap_tables()
+            .iter()
+            .filter(|e| e.replaces.map_or(0, |r| r.len()) == e.grants.len())
+            .count();
+        // SD31-E4-F1-001: Deliverer (4 replaces/4 grants) and Stygian Slayer
+        // (4/4) are both equal-count; Bounty Hunter (5/4) is not. 29->31.
+        assert_eq!(equal_count_records, 31, "of 90 -- see this module's own doc comment for the base 87's 33% figure; +2 equal-count records added by SD31-E4-F1-001");
+    }
+
+    #[test]
+    fn every_grant_names_a_real_level_and_key() {
+        for e in archetype_swap_tables() {
+            for g in e.grants {
+                assert!(!g.grants_feature_key.is_empty(), "{} has an empty grant key", e.key);
+                assert!(g.at_level >= 1 && g.at_level <= 20, "{} grant {} has an implausible level {}", e.key, g.grants_feature_key, g.at_level);
+            }
+        }
+    }
+
+    #[test]
+    fn resolved_grant_descriptions_are_the_real_count() {
+        let resolved: usize = archetype_swap_tables()
+            .iter()
+            .flat_map(|e| e.grants.iter())
+            .filter(|g| g.description.is_some() || g.benefit.is_some())
+            .count();
+        // SD31-E4-F1-001: all 12 of the 3 new Slayer archetypes' grants
+        // resolved a real DESC:. 333 -> 345, of the new 348 total.
+        assert_eq!(resolved, 345, "345 of 348 grants carry real DESC:/BENEFIT: text");
+    }
 }

@@ -7,11 +7,120 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::super::crb::feats::FeatCategory as SharedFeatCategory;
-pub use rt::ultimate_combat::feat_tables::FeatCategory;
-pub use rt::ultimate_combat::feat_tables::UcFeatEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_combat__feat_tables__FeatCategory"))]
+pub enum FeatCategory {
+    General,
+    Combat,
+    ItemCreation,
+    Metamagic,
+    Teamwork,
+    /// Combat-style feat chains (e.g. Two-Weapon Fighting styles) UC
+    /// names as their own `TYPE:Style` facet.
+    Style,
+    /// Gunslinger Grit-spending feats.
+    Grit,
+    /// Swashbuckler/Duelist Panache-spending feats -- UC's own corpus
+    /// facet, distinct from ACG's `Panache` (kept as a separate variant
+    /// rather than assumed identical without checking).
+    Panache,
+    /// `Dispelling Critical`'s own bare `TYPE:Critical` facet (distinct
+    /// from the more common `Combat.Critical` sub-facet, which folds to
+    /// `Combat`).
+    Critical,
+    /// `Improved Called Shot`/`Greater Called Shot`'s own `TYPE:Called
+    /// Shot` facet.
+    CalledShot,
+}
+impl FeatCategory {
+    pub const ALL: &'static [FeatCategory] = &[
+        FeatCategory::General,
+        FeatCategory::Combat,
+        FeatCategory::ItemCreation,
+        FeatCategory::Metamagic,
+        FeatCategory::Teamwork,
+        FeatCategory::Style,
+        FeatCategory::Grit,
+        FeatCategory::Panache,
+        FeatCategory::Critical,
+        FeatCategory::CalledShot,
+    ];
+
+    /// The subset of variants that coincide with the shared
+    /// `crb::feats::FeatCategory` enum. `Style`/`Grit`/`Critical`/
+    /// `CalledShot` have no shared equivalent; `Panache` is kept distinct
+    /// from ACG's own `Panache` variant rather than assumed to be the
+    /// same facet without checking.
+    pub fn as_shared(self) -> Option<SharedFeatCategory> {
+        match self {
+            FeatCategory::General => Some(SharedFeatCategory::General),
+            FeatCategory::Combat => Some(SharedFeatCategory::Combat),
+            FeatCategory::ItemCreation => Some(SharedFeatCategory::ItemCreation),
+            FeatCategory::Metamagic => Some(SharedFeatCategory::Metamagic),
+            FeatCategory::Teamwork => Some(SharedFeatCategory::Teamwork),
+            FeatCategory::Style
+            | FeatCategory::Grit
+            | FeatCategory::Panache
+            | FeatCategory::Critical
+            | FeatCategory::CalledShot => None,
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct UcFeatEntry {
+    /// The record's corpus identity. No record in this catalog carries a
+    /// distinct `KEY:` token, so `key == name` for every entry.
+    pub key: &'static str,
+    pub category: FeatCategory,
+    pub name: &'static str,
+    /// The corpus `DESC:` token, verbatim.
+    pub description: Option<&'static str>,
+    /// The corpus `PRETEXT:` token, verbatim display prerequisite prose --
+    /// `None` when the row carries no `PRETEXT:`.
+    pub pretext: Option<&'static str>,
+    pub source_page: Option<&'static str>,
+    /// The corpus `BENEFIT:` token, verbatim -- the actual mechanical text.
+    pub benefit: Option<&'static str>,
+    // The `prerequisites: Option<&'static [&'static str]>` field that stood
+    // here held every top-level `PRE`-family token of the corpus row,
+    // verbatim. It moved to `pcgen_import::feat_prereq_tokens` — SD-35
+    // `AT-35-E6-003-SWEEP` cycle 3, `decisions.md` §11: nothing on the live
+    // side reads a PCGen token. Its two readers were both converter modules
+    // and both still read the same tokens, keyed by `(rule_set, index)`.
+}
 pub fn feat_tables() -> &'static [UcFeatEntry] {
     crate::rules_core::rules_catalog::rows::<UcFeatEntry>("ultimate_combat/feat_tables/feat_tables")
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn catalog_has_261_records() {
+        assert_eq!(feat_tables().len(), 261);
+    }
+
+    #[test]
+    fn every_record_carries_desc_and_benefit() {
+        for e in feat_tables() {
+            assert!(e.description.is_some(), "{} has no DESC:", e.key);
+            assert!(e.benefit.is_some(), "{} has no BENEFIT:", e.key);
+        }
+    }
+
+    #[test]
+    fn no_record_is_deferred() {
+        assert_eq!(feat_tables().iter().filter(|e| e.benefit.is_none()).count(), 0);
+    }
+
+    #[test]
+    fn keys_are_unique_within_book() {
+        let keys: std::collections::BTreeSet<&str> = feat_tables().iter().map(|e| e.key).collect();
+        assert_eq!(keys.len(), feat_tables().len());
+    }
 }

@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use crate::rules_core::rules_catalog::crb::feats::{
     ConditionItem, EffectCondition, EffectSelection, FeatCategory, FeatEffectBonus, FeatTableEntry,

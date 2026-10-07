@@ -7,15 +7,78 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub use super::equipment_data::EQUIPMENT_RECORDS;
 use crate::rules_core::rules_catalog::RuleSetId;
-pub use rt::apg::equipment_tables::EquipmentCategory;
-pub use rt::apg::equipment_tables::EquipmentTableEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "apg__equipment_tables__EquipmentCategory"))]
+pub enum EquipmentCategory {
+    General,
+    ArmsArmor,
+    MagicItems,
+}
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "apg__equipment_tables__EquipmentTableEntry"))]
+pub struct EquipmentTableEntry {
+    /// Equipment records carry their `name` as the corpus identity by
+    /// default (no distinct `KEY:` token on most rows), same fallback
+    /// `rules_catalog::crb::equipment_tables` documents for its own `key`
+    /// field. A handful of `arms_armor` rows do carry a real `KEY:`
+    /// token, which wins when present.
+    pub key: &'static str,
+    pub category: EquipmentCategory,
+    pub name: &'static str,
+    /// Cost in gold pieces from the corpus `COST:` token. `f64` because
+    /// real corpus costs are frequently fractional. `Some(0.0)` for
+    /// artifact-priced items (`COST:0`, meaning priceless/not for sale)
+    /// per the real `Knucklebone of Fickle Fortune` record.
+    pub cost_gp: Option<f64>,
+    /// Weight in pounds from the corpus `WT:` token. `None` for the 19 of
+    /// 338 records whose corpus line carries no `WT:` token at all (a
+    /// real, honest gap — see `equipment_data`'s doc comment) — never a
+    /// fabricated `Some(0.0)`.
+    pub weight: Option<f64>,
+    /// Prose description. `None` for 7 of the 338 records today (real,
+    /// honest gaps — see `equipment_data`'s doc comment): the LST corpus
+    /// itself still carries zero `DESC:` tokens on any equipment row, but
+    /// SD-25 criterion 7.N's web second-source pass (register A16 / SD-24
+    /// Open Blocker #2) identity-matched and sourced 331/338 from
+    /// `legacy.aonprd.com`/`aonprd.com`/`d20pfsrd.com` (see this cycle's
+    /// receipt for the full citation table).
+    pub description: Option<&'static str>,
+}
 pub static EQUIPMENT_TABLE: crate::rules_core::rules_catalog::Table<EquipmentTableEntry> =
     crate::rules_core::rules_catalog::Table::new("apg/equipment_tables/EQUIPMENT_TABLE");
-pub use rt::apg::equipment_tables::EquipmentFieldCoverage;
+/// SD-24 Epic 6 criterion 6.1 — equipment field-coverage audit row.
+/// Mirrors `rules_catalog::crb::equipment_tables::EquipmentFieldCoverage`'s
+/// shape so the audit can iterate a book's whole equipment table the same
+/// way regardless of book. Every field is computed from `EQUIPMENT_TABLE`'s
+/// real content or a documented corpus record count.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct EquipmentFieldCoverage {
+    /// Records currently in `EQUIPMENT_TABLE`.
+    pub total_records: u32,
+    /// Real, active, deduplicated-by-name record count across
+    /// `apg_equip_general` (93) + `apg_equip_arms_armor` (75) +
+    /// `apg_equip_magic_items` (170) = 338. Corrected from the
+    /// criterion 6.1 audit's originally-documented 341 (94+76+171) — see
+    /// `equipment_data`'s module doc comment for the off-by-one-per-file
+    /// `SOURCELONG:` header-line miscount this corrects.
+    pub records_expected: u32,
+    /// Records with `cost_gp.is_some()`.
+    pub has_cost: u32,
+    /// Records with `weight.is_some()` -- a real per-row count (319/338;
+    /// the remaining 19 have no `WT:` token in the corpus).
+    pub has_weight: u32,
+    /// Records with `description.is_some()` -- 331/338 as of SD-25
+    /// criterion 7.N's web second-source pass (the real APG equipment
+    /// corpus still carries no `DESC:` token on any row; see
+    /// `equipment_data`'s doc comment for sourcing and the 7 honest
+    /// remaining gaps).
+    pub has_description: u32,
+}
 pub fn field_coverage_report() -> EquipmentFieldCoverage {
     EquipmentFieldCoverage {
         total_records: EQUIPMENT_TABLE.len() as u32,

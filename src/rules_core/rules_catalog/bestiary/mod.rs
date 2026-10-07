@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
@@ -29,4 +28,334 @@ pub fn monster_abilities() -> &'static [MonsterAbilityRecord] {
 }
 pub(crate) fn cross_table_owner_names() -> &'static [&'static str] {
     crate::rules_core::rules_catalog::rows::<&'static str>("bestiary/cross_table_owner_names")
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::rules_core::rules_catalog::{beastiary1, RuleSetId};
+
+    /// What ships is the book's complement, less its overlay rows: 280 of 330
+    /// monster rows and (**corrected `SD31-E6-F9-005`**, was 323) 399 of 523
+    /// ability rows -- the transcriber used to `raise SystemExit` the instant
+    /// it found ANY owned ability row with a `parse_desc`-unmodelled
+    /// multi-`DESC:` shape (3 such rows, `OPEN-ISSUES.md` row 157), crashing
+    /// the WHOLE book's transcription and silently capping this table at 323
+    /// even though 76 MORE owned, cleanly-parseable ability rows existed. The
+    /// fix drops only the 3 ambiguous rows (named in this book's own module
+    /// doc comment above), the same treatment a Product Identity row already
+    /// gets, and the other 76 now ship for real.
+    #[test]
+    fn the_chassis_ships_the_books_complement() {
+        assert_eq!(monsters().len(), 280);
+        // 399 -> 467 (SD31-W21-MONSTER-001): the `CATEGORY:Internal` bundle-row
+        // ownership hop (`transcribe_monster_tables.py::find_internal_bundle_
+        // ability_refs`) resolved 68 previously-orphaned ability rows this
+        // book's monsters name only indirectly, through a bundle row.
+        // 467 -> 522 (SD31-W23-MONSTER-001): the cross-table-owner remedy
+        // `decisions.md §58.3` named and left unbuilt -- 55 ability rows
+        // whose owner's OWN stat block ships from `rules_catalog::beastiary1`
+        // (this book's OTHER, 46-monster table) now transcribe here too,
+        // keyed to that real owner's name rather than dropped. This table's
+        // own `monsters()` count above is UNCHANGED (still 280 -- these 55
+        // rows' owners are still not among them, by the same `§58.3` ruling
+        // this test already asserts on the line above).
+        // 522 -> 529 (T9 `MonsterAbilityFacet` widening cycle): re-running
+        // `scripts/transcribe_monster_tables.py bestiary` against the widened
+        // facet vocabulary (`Weakness`/`Defensive`/`Aura`/`Sense`/
+        // `Communicate` added to `FACETS`) shipped 7 more owned, reachable
+        // ability rows that previously carried a `TYPE:` shape the chassis
+        // did not model. 2 owned rows remain excluded and named on stderr
+        // (`Morlock ~ Sneak Attack`, bare `Internal`; `Spectre ~ Create
+        // Spawn`, comma-joined `TYPE:SpecialAttack,Supernatural` — a likely
+        // corpus typo for `.`, deliberately not auto-corrected).
+        // 529 -> 709 (`decisions.md §20`, no_record-to-zero wave 2): 180 of
+        // the 197 rows no monster row of this book claims now SHIP with
+        // `owners: &[]` rather than being dropped — an un-ingested row's
+        // shape cannot be measured, and Gate 1's DoD needs every unit's
+        // shape measured. The other 17 are excluded for an UNRELATED reason
+        // that now applies to them too, because they are no longer dropped
+        // before reaching those screens: `unscreenable`'s multi-`DESC:`
+        // shape (22 hits total, some against already-owned rows) and
+        // `unmodelled_facet` (2 hits total, both already-owned) — re-derive
+        // with `python3 scripts/transcribe_monster_tables.py bestiary`.
+        // `no_shipped_ability_is_an_orphan` below is rewritten to pin the
+        // exact owner-less set instead of forbidding it; reachability is
+        // NOT claimed for the 180 — each is pinned by exact key in
+        // `reach_gate.rs::UNREACHED_RECORD_FINDINGS` under
+        // `("bestiary1", "monster_abilities")`.
+        // 709 -> 710 (`decisions.md §22`/round 6, +1): the comma-delimiter
+        // `TYPE:` upstream correction resolved `Spectre ~ Create Spawn`'s
+        // facet for the first time -- this file's own pin was missed when
+        // round 6 bumped the identical delta in `apps/desktop/src-tauri/
+        // src/reach_gate.rs` and `corpus_ingest_diagnostic.rs`; re-derived
+        // here, not caused by this cycle's own diff (`git diff --stat` for
+        // `bestiary/monster_data.rs` shows zero deletions, only the 3
+        // trailing `codex_generated_name`/`rename_*` fields appended per
+        // record).
+        // 710 -> 711 (`decisions.md §27`/round 8, +1): `Morlock ~ Sneak
+        // Attack` (`TYPE:Internal`, no facet/delivery segment) now ships
+        // with a PROVISIONAL `SpecialQuality` facet default instead of
+        // being dropped -- `reason: type_internal_only_no_facet_no_delivery`.
+        // 711 -> 733 (`decisions.md §27b` round 9, +22): the multi-`DESC:`
+        // `PREVAREQ`/`PREVARGT`-gated parse-refusal group closes via
+        // `parse_desc`'s new generalised sixth branch -- every token's own
+        // text ships, concatenated verbatim, rather than guessing which
+        // variant wins. 21 real `no_record` units plus `Lycanthrope ~
+        // Change Shape` (already `text-complete` by inventory evidence
+        // alone, same shape as round 8's `Bunyip ~ Blood Rage`).
+        assert_eq!(monster_abilities().len(), 733);
+    }
+
+    /// The four `.MOD`-only overlay rows are not records, pinned by the corpus
+    /// line each one is. An overlay states a delta on a record defined
+    /// elsewhere; shipping one puts a card with a name and almost nothing else
+    /// in front of a player.
+    #[test]
+    fn the_mod_only_overlay_rows_are_not_records() {
+        for line in [239u32, 241, 251, 257] {
+            assert!(
+                !monsters().iter().any(|m| m.source_line == line),
+                "b1_races:{line} is a `.MOD` overlay and must not ship"
+            );
+        }
+    }
+
+    /// The shipped total, pinned directly rather than re-derived through
+    /// `classify_monster_ability_rows.py`'s own arithmetic.
+    ///
+    /// **CORRECTED `SD31-E6-F9-005`.** The prior version of this test derived
+    /// 603 from `807 (classifier "remaining") - 146 orphans - 54 cross-table -
+    /// 4 .MOD overlays`. Re-deriving that formula against `SD31-E6-F9-005`'s
+    /// own fix (which unblocked 76 more real ability rows, `679` total)
+    /// surfaced a genuine, previously-unknown limitation in the classifier
+    /// script itself: `classify_monster_ability_rows.py` computes its
+    /// `row-named`/`prefix` "reachable" counts purely from a monster's own
+    /// `ABILITY:`/prefix token, with NO awareness of `CROSS_TABLE_MONSTER_
+    /// RECORDS` -- so it counts an ability as reachable even when its
+    /// OWNING monster (e.g. `Ankheg`, one of SD-22's 46 `beastiary1`-served
+    /// monsters) is one this chassis deliberately does not ship
+    /// (`decisions.md §58.3`). Corpus-wide re-check: of the classifier's 135
+    /// `row-named`+`prefix` units for this book, exactly 59 are owned only
+    /// through a cross-table monster and the transcriber correctly does NOT
+    /// ship them (135 - 59 = 76, exactly this fix's own measured delta) --
+    /// `OPEN-ISSUES.md` names the classifier gap as its own follow-up. The
+    /// arithmetic-derivation shape this test used is retired in favor of a
+    /// direct pin, which cannot silently inherit the same blind spot again.
+    #[test]
+    fn the_shipped_total_is_the_books_real_measured_count() {
+        // 679 -> 747 (SD31-W21-MONSTER-001, +68 bundle-hop-owned abilities;
+        // see `the_chassis_ships_the_books_complement`'s own comment).
+        // 747 -> 802 (SD31-W23-MONSTER-001, +55 cross-table-owner ability
+        // rows -- see `the_chassis_ships_the_books_complement`'s own comment
+        // and `cross_table_owner_names` above). `monsters().len()` (280) is
+        // UNCHANGED: these 55 rows' real owners still ship from
+        // `beastiary1`, never from here.
+        // 802 -> 809 (T9 `MonsterAbilityFacet` widening cycle, +7 abilities;
+        // see `the_chassis_ships_the_books_complement`'s own comment).
+        // 809 -> 989 (`decisions.md §20`, +180 owner-less abilities; see
+        // `the_chassis_ships_the_books_complement`'s own comment).
+        // 989 -> 990 (`decisions.md §22`/round 6, +1; see
+        // `the_chassis_ships_the_books_complement`'s own comment on the
+        // identical, previously-unpinned delta here).
+        // 990 -> 991 (`decisions.md §27`/round 8, +1; see
+        // `the_chassis_ships_the_books_complement`'s own comment on the
+        // identical delta here).
+        // 991 -> 1013 (`decisions.md §27b` round 9, +22; see
+        // `the_chassis_ships_the_books_complement`'s own comment on the
+        // identical delta here).
+        assert_eq!(monsters().len() + monster_abilities().len(), 1013);
+    }
+
+    /// **The ruling, as a test.** Not one creature is served twice. This is the
+    /// defect `decisions.md §58.3` chose ALONGSIDE over ABSORB to avoid, and it
+    /// is player-visible: both tables reach `list_monster_catalog` under the
+    /// same wire code `B1`, so a row held by both would appear twice in one
+    /// catalog.
+    #[test]
+    fn no_creature_is_served_by_both_bestiary_1_tables() {
+        let sd22: Vec<String> = beastiary1::MonsterId::ALL
+            .iter()
+            .filter_map(|&id| beastiary1::monster_resolve(id, RuleSetId::Bestiary1))
+            .map(|block| block.name)
+            .collect();
+        assert_eq!(sd22.len(), 46, "the other table's roster is 46 stat blocks");
+        for block in monsters() {
+            assert!(
+                !sd22.iter().any(|name| name == block.name),
+                "{} is served by rules_catalog::beastiary1 as well as by this chassis",
+                block.key
+            );
+        }
+    }
+
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2).** Until
+    /// this cycle every transcribed ability row named at least one owner --
+    /// a monster row this table holds, or one of the 55 cross-table-owner
+    /// rows whose real owner ships from `beastiary1` instead -- because an
+    /// unowned row was dropped rather than shipped. `§20` overturned that:
+    /// an un-ingested row's shape cannot be measured, so the 180 rows no
+    /// monster row of this book claims now SHIP with `owners: &[]`, and this
+    /// test's job changes from "forbid an empty owner list" to "pin the
+    /// EXACT set of records that carry one" -- a silent new arrival OR a
+    /// silent disappearance both fail here, by name, the same discipline
+    /// `monster_chassis::tests::widening_the_facet_vocabulary_does_not_
+    /// reclassify_any_existing_record` already established for the facet
+    /// axis. `list_monster_catalog` never walks these directly (only a
+    /// monster's own `ability_keys`), so shipping them does not surface a
+    /// stub; each key is pinned separately, by name, in `reach_gate.rs::
+    /// UNREACHED_RECORD_FINDINGS` under `("bestiary1", "monster_abilities")`
+    /// as a proven non-reach, not a silent claim of reachability.
+    #[test]
+    fn every_owner_less_ability_is_a_named_and_pinned_non_reach() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut unowned: Vec<&str> = monster_abilities()
+            .iter()
+            .filter(|a| a.owners.is_empty())
+            .map(|a| a.key)
+            .collect();
+        unowned.sort_unstable();
+
+        assert_eq!(
+            unowned.len(),
+            197,
+            "the number of owner-less (unreachable-by-design) monster_ability records \
+             changed — re-derive this pin from a real \
+             `scripts/transcribe_monster_tables.py bestiary` run, and update the matching \
+             `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set. 180 -> 197 \
+             (`decisions.md §27b` round 9, +17): the multi-DESC: parse-refusal group closes; \
+             13 `Permanency Spell / *` rows, `Outsider`/`Swarm`/`Undead Traits Output`, and \
+             `Lycanthrope ~ Change Shape` (the round-8-shaped bonus unit, already \
+             `text-complete` by inventory evidence alone) are shared reference-library text no \
+             single stat block in this book owns, same shape as the existing 180."
+        );
+
+        let mut hasher = DefaultHasher::new();
+        unowned.hash(&mut hasher);
+        let digest = hasher.finish();
+        assert_eq!(
+            digest, 0x0bce_5246_54f6_6a5d,
+            "the SET of owner-less keys moved even though the count held — a row gained or \
+             lost its owner. This does not mean a defect on its own (an in-book monster row \
+             could legitimately start/stop claiming one of these), but it means \
+             `reach_gate.rs::UNREACHED_RECORD_FINDINGS`'s pinned key list for \
+             (\"bestiary1\", \"monster_abilities\") must move with it. 0x87d526f2aaeac3c6 -> \
+             0x0bce524654f66a5d (`decisions.md §27b` round 9): the set gains 17 new members \
+             (see the count assertion above), re-derived live from this test's own failing \
+             run, never guessed, per `decisions.md §17a`; `reach_gate.rs`'s matching entry \
+             gains the identical 17 keys."
+        );
+    }
+
+    /// The stronger form, which this book needs more than any before it: 46 of
+    /// its monster rows exist in the corpus, are deliberately not shipped here
+    /// as `MonsterStatBlock`s, and are named as owners by 55 ability rows this
+    /// chassis DOES ship anyway (`SD31-W23-MONSTER-001`, `decisions.md
+    /// §58.3`'s cross-table-owner class). An owner named by neither `monsters`
+    /// NOR `cross_table_owner_names` is a link the catalog truly cannot
+    /// follow -- that is still what this test catches.
+    #[test]
+    fn every_owner_named_by_a_shipped_ability_is_a_shipped_monster() {
+        let cross_table = cross_table_owner_names();
+        for ability in monster_abilities() {
+            for owner in ability.owners {
+                assert!(
+                    monsters().iter().any(|m| m.key == *owner)
+                        || cross_table.contains(owner),
+                    "{} names owner {owner}, which is not a shipped monster of this table \
+                     and not in cross_table_owner_names either",
+                    ability.key
+                );
+            }
+        }
+    }
+
+    /// Guards `cross_table_owner_names`'s own hand-kept literal list against
+    /// drift from the real `beastiary1` roster it stands in for -- re-derives
+    /// the true 46 names from `beastiary1::MonsterId::ALL` independently (the
+    /// same derivation `no_creature_is_served_by_both_bestiary_1_tables`
+    /// already trusts) and asserts set-equality, so a future `beastiary1`
+    /// subset addition that forgets to update the literal list fails HERE
+    /// rather than silently under-covering the cross-table-owner check above.
+    #[test]
+    fn cross_table_owner_names_matches_the_real_beastiary1_roster_exactly() {
+        let real: std::collections::BTreeSet<String> = beastiary1::MonsterId::ALL
+            .iter()
+            .filter_map(|&id| beastiary1::monster_resolve(id, RuleSetId::Bestiary1))
+            .map(|block| block.name)
+            .collect();
+        let listed: std::collections::BTreeSet<&str> =
+            cross_table_owner_names().iter().copied().collect();
+        assert_eq!(real.len(), 46);
+        assert_eq!(listed.len(), 46, "cross_table_owner_names must not repeat a name");
+        for name in &real {
+            assert!(
+                listed.contains(name.as_str()),
+                "beastiary1 ships {name:?} but cross_table_owner_names does not list it"
+            );
+        }
+        for name in &listed {
+            assert!(
+                real.contains(*name),
+                "cross_table_owner_names lists {name:?}, which beastiary1 does not ship"
+            );
+        }
+    }
+
+    /// Every ability key a shipped monster names resolves in this table. The
+    /// cross-table and orphan screens remove ability rows *after* the link pass
+    /// builds each monster's `ability_keys`, so a screen that forgot to prune
+    /// the owner's array would ship a stat block pointing at a record that does
+    /// not exist — and `gen_book_cache` would write that dangling key into the
+    /// corpus record verbatim.
+    #[test]
+    fn every_ability_key_a_shipped_monster_names_resolves_here() {
+        for block in monsters() {
+            for key in block.ability_keys {
+                assert!(
+                    monster_abilities().iter().any(|a| a.key == *key),
+                    "{} names ability {key}, which this table does not define",
+                    block.key
+                );
+            }
+        }
+    }
+
+    /// The variable-bearing `DESC:` row ships the FULL text, not the ungated
+    /// summary. Before round 8 widened `parse_desc` this row stopped the
+    /// transcription outright; taking the first token would have served the
+    /// range and dropped every mechanic.
+    #[test]
+    fn the_variable_bearing_desc_row_ships_its_full_text() {
+        let record = monster_abilities()
+            .iter()
+            .find(|a| a.source_line == 1068)
+            .expect("b1_abilities_race:1068 ships");
+        let text = record.description.expect("the row carries DESC: text");
+        assert!(
+            text.contains("severed by any amount of slashing damage")
+                && text.contains("Fortitude save"),
+            "the record serves only the ungated summary: {text:?}"
+        );
+        assert!(
+            !record.description_variables.is_empty(),
+            "the selected token's `%N` variable list did not survive selection"
+        );
+    }
+
+    /// The superset `DESC:` row ships the containing token.
+    #[test]
+    fn the_superset_desc_row_ships_the_containing_token() {
+        let record = monster_abilities()
+            .iter()
+            .find(|a| a.source_line == 1183)
+            .expect("b1_abilities_race:1183 ships");
+        let text = record.description.expect("the row carries DESC: text");
+        assert!(
+            text.contains("rises from death 3 rounds later"),
+            "the record serves only the shorter of the two tokens: {text:?}"
+        );
+    }
 }

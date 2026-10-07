@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub use super::companion_chassis::{
     CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord,
@@ -26,4 +25,81 @@ pub fn companions() -> &'static [CompanionRecord] {
 }
 pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
     companion_abilities_static()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// From `docs/work-inventory.json`'s own units for this book: 11 total,
+    /// split 2 creature / 9 ability by `scripts/classify_companion_rows.py`.
+    #[test]
+    fn the_book_defines_two_familiars_and_nine_abilities() {
+        assert_eq!(companions().len(), 2);
+        assert_eq!(companion_abilities().len(), 9);
+    }
+
+    /// The two `Tinkering` rows are distinct records with distinct owners.
+    /// A name-keyed join would have collapsed them.
+    #[test]
+    fn tinkering_is_two_records_not_one() {
+        let tinkering: Vec<_> = companion_abilities()
+            .iter()
+            .filter(|a| a.name == "Tinkering")
+            .collect();
+        assert_eq!(tinkering.len(), 2);
+        let mut owners: Vec<&str> = tinkering.iter().flat_map(|a| a.owners.iter().copied()).collect();
+        owners.sort_unstable();
+        assert_eq!(owners, vec!["Familiar (Clockwork Familiar)", "Familiar (Clockwork Spy)"]);
+    }
+
+    /// The three unmodelled-facet rows, pinned by exact key in both directions:
+    /// they are exactly the `ClockworkFamiliarInstalledItem` rows, they keep
+    /// their segment verbatim, and every one of them carries real rules text a
+    /// player can read.
+    #[test]
+    fn the_installed_item_rows_keep_their_unmodelled_type_verbatim() {
+        let unmodelled: Vec<&str> = companion_abilities()
+            .iter()
+            .filter(|a| a.facet.is_none())
+            .map(|a| a.key)
+            .collect();
+        assert_eq!(
+            unmodelled,
+            vec![
+                "Clockwork Familiar ~ Potion Installation",
+                "Clockwork Familiar ~ Scroll Installation",
+                "Clockwork Familiar ~ Wand Installation",
+            ]
+        );
+        for key in unmodelled {
+            let record = companion_abilities()
+                .iter()
+                .find(|a| a.key == key)
+                .expect("the row is in this book");
+            assert_eq!(record.type_segments, &["ClockworkFamiliarInstalledItem"]);
+            assert!(
+                record.description.is_some_and(|d| !d.trim().is_empty()),
+                "{key} would reach the catalog with nothing to read"
+            );
+        }
+    }
+
+    /// Verbatim spot-check against `isi_races_companion:9`. `Construct:3` is
+    /// carried, never expanded: this ingest computes no hit dice.
+    #[test]
+    fn the_clockwork_familiar_matches_its_corpus_row() {
+        let familiar = companions()
+            .iter()
+            .find(|c| c.key == "Familiar (Clockwork Familiar)")
+            .expect("the Clockwork Familiar is in this book");
+        assert_eq!(familiar.source_line, 9);
+        assert_eq!(familiar.size, Some("T"));
+        assert_eq!(familiar.race_type, Some("Construct"));
+        assert_eq!(familiar.race_subtype, Some("Clockwork"));
+        assert_eq!(familiar.monster_class, Some("Construct:3"));
+        assert_eq!(familiar.source_page, Some("p.47"));
+        assert_eq!(familiar.type_segments, &["Companion", "Familiar", "Construct"]);
+        assert_eq!(familiar.ability_keys.len(), 6);
+    }
 }

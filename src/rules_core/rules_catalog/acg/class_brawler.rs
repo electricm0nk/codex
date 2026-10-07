@@ -7,11 +7,13 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::ClassTableRow;
-pub use rt::acg::class_brawler::MAX_SUPPORTED_LEVEL;
+/// `MAXLEVEL:20` on the real `CLASS:Brawler` record.
+pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 pub fn class_table() -> Vec<ClassTableRow> {
     crate::rules_core::rules_catalog::rows_vec::<ClassTableRow>("acg/class_brawler/class_table")
 }
-pub use rt::acg::class_brawler::HIT_DIE;
+/// `HD:10` on the real `CLASS:Brawler` record (Brawler HD:10 in
+/// `advanced_class_guide/acg_classes`).
+pub const HIT_DIE: u8 = 10;

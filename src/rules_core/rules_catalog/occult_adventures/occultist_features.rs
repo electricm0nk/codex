@@ -7,12 +7,108 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::occult_adventures::occultist_features::binding_circles_dc;
-pub use rt::occult_adventures::occultist_features::focus_powers_count;
-pub use rt::occult_adventures::occultist_features::focus_powers_dc;
-pub use rt::occult_adventures::occultist_features::implements_school_count;
-pub use rt::occult_adventures::occultist_features::magic_item_skill_bonus;
-pub use rt::occult_adventures::occultist_features::mental_focus;
-pub use rt::occult_adventures::occultist_features::outside_contact_count;
+/// `oa_abilities_class:117`, `Binding Circles`:
+/// `BONUS:VAR|OccultistCircleDC|10+OccultistLVL/2+INT`.
+pub fn binding_circles_dc(level: u8, int: i16) -> Option<i16> {
+    if level < 12 {
+        return None;
+    }
+    Some(10 + i16::from(level) / 2 + int)
+}
+/// `oa_abilities_class:107`, `Focus Powers`:
+/// `BONUS:VAR|OccultistFocusPower|(OccultistLVL+1)/2`.
+pub fn focus_powers_count(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some((i16::from(level) + 1) / 2)
+}
+/// `oa_abilities_class:107`, `Focus Powers`:
+/// `BONUS:VAR|OccultistFocusPowerDC|10+OccultistLVL/2+INT`.
+pub fn focus_powers_dc(level: u8, int: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(10 + i16::from(level) / 2 + int)
+}
+/// `oa_abilities_class:108`, `Implements`:
+/// `BONUS:VAR|OccultistImplementSchool|2+((OccultistLVL+2)/4)`.
+pub fn implements_school_count(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(2 + (i16::from(level) + 2) / 4)
+}
+/// `oa_abilities_class:111`, `Magic Item Skill`:
+/// `BONUS:SKILL|Use Magic Device|OccultistLVL/2`.
+pub fn magic_item_skill_bonus(level: u8) -> Option<i16> {
+    if level < 2 {
+        return None;
+    }
+    Some(i16::from(level) / 2)
+}
+/// `oa_abilities_class:110`, `Mental Focus`:
+/// `BONUS:VAR|OccultistMentalFocus|OccultistLVL+INT+if(...FCB...)` (FCB
+/// term dropped, see module doc).
+pub fn mental_focus(level: u8, int: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    Some(i16::from(level) + int)
+}
+/// `oa_abilities_class:116`, `Outside Contact`:
+/// `BONUS:VAR|OccultistOutsiderNum|1+(OccultistLVL-8)/4`.
+pub fn outside_contact_count(level: u8) -> Option<i16> {
+    if level < 8 {
+        return None;
+    }
+    Some(1 + (i16::from(level) - 8) / 4)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn focus_powers_count_scales_with_level() {
+        assert_eq!(focus_powers_count(1), Some(1));
+        assert_eq!(focus_powers_count(20), Some(10));
+        assert_eq!(focus_powers_count(0), None);
+    }
+
+    #[test]
+    fn focus_powers_dc_combines_level_and_intelligence() {
+        assert_eq!(focus_powers_dc(20, 3), Some(23));
+    }
+
+    #[test]
+    fn implements_school_count_scales_with_level() {
+        assert_eq!(implements_school_count(1), Some(2));
+        assert_eq!(implements_school_count(20), Some(7));
+    }
+
+    #[test]
+    fn mental_focus_combines_level_and_intelligence() {
+        assert_eq!(mental_focus(20, 3), Some(23));
+        assert_eq!(mental_focus(0, 3), None);
+    }
+
+    #[test]
+    fn magic_item_skill_bonus_gates_at_level_two() {
+        assert_eq!(magic_item_skill_bonus(2), Some(1));
+        assert_eq!(magic_item_skill_bonus(1), None);
+    }
+
+    #[test]
+    fn outside_contact_count_gates_at_level_eight() {
+        assert_eq!(outside_contact_count(8), Some(1));
+        assert_eq!(outside_contact_count(7), None);
+    }
+
+    #[test]
+    fn binding_circles_dc_gates_at_level_twelve() {
+        assert_eq!(binding_circles_dc(12, 3), Some(19));
+        assert_eq!(binding_circles_dc(11, 3), None);
+    }
+}

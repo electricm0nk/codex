@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub static SHAMAN_SPELL_LIST: crate::rules_core::rules_catalog::Table<(&str, u8)> =
     crate::rules_core::rules_catalog::Table::new("acg/shaman_spell_list/SHAMAN_SPELL_LIST");
@@ -20,4 +19,116 @@ pub fn shaman_spell_level(spell_key: &str) -> Option<u8> {
         .iter()
         .find(|(key, _)| *key == spell_key)
         .map(|(_, level)| *level)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::rules_core::rules_catalog::acg::spell_list as acg_spell_list;
+    use crate::rules_core::rules_catalog::apg::spell_list as apg_spell_list;
+    use crate::rules_core::rules_catalog::crb::spell_list::SPELL_LIST;
+
+    #[test]
+    fn the_list_matches_the_verified_corpus_extraction() {
+        assert_eq!(SHAMAN_SPELL_LIST.len(), 304, "304 real Shaman spell records");
+        let expected = [17, 48, 46, 46, 41, 30, 22, 22, 18, 14];
+        for (level, want) in expected.iter().enumerate() {
+            let count = SHAMAN_SPELL_LIST
+                .iter()
+                .filter(|(_, l)| usize::from(*l) == level)
+                .count();
+            assert_eq!(count, *want, "spell level {level} count");
+        }
+    }
+
+    #[test]
+    fn every_shaman_spell_level_is_within_the_real_shaman_ceiling() {
+        for (key, level) in &*SHAMAN_SPELL_LIST {
+            assert!(
+                (0..=9).contains(level),
+                "{key} has out-of-range Shaman spell level {level}"
+            );
+        }
+    }
+
+    #[test]
+    fn no_duplicate_spell_names() {
+        let mut names: Vec<&str> = SHAMAN_SPELL_LIST.iter().map(|(name, _)| *name).collect();
+        let original_len = names.len();
+        names.sort_unstable();
+        names.dedup();
+        assert_eq!(names.len(), original_len, "expected zero duplicate spell names");
+    }
+
+    /// Guards the `CLASSES:` mid-group parsing hazard. Both of these name
+    /// Shaman in a comma group where Shaman is NOT last, so the substring
+    /// `Shaman=` never appears on their raw lines:
+    /// `Adjustable Polymorph` is
+    /// `CLASSES:Alchemist,Bard,Magus,Shaman,Sorcerer,Witch,Wizard=4` and
+    /// `Aura Sight` is
+    /// `CLASSES:Alchemist,Cleric,Shaman,Sorcerer,Witch,Wizard=3|Inquisitor=4`
+    /// -- note the latter also proves the per-class level is isolated
+    /// correctly, since Inquisitor's own group says 4, not 3.
+    #[test]
+    fn spells_tagged_mid_list_in_their_classes_group_are_present() {
+        assert_eq!(shaman_spell_level("Adjustable Polymorph"), Some(4));
+        assert_eq!(shaman_spell_level("Aura Sight"), Some(3));
+    }
+
+    /// `Commune With Birds` must NOT be here. Its only record anywhere in
+    /// the three ingested books is `#Commune With Birds.MOD` -- commented
+    /// out -- and no corresponding `data/corpus/` spell record exists
+    /// either. Including it would fabricate a spell this engine cannot
+    /// resolve.
+    #[test]
+    fn a_corpus_commented_out_grant_is_not_on_the_list() {
+        assert_eq!(shaman_spell_level("Commune With Birds"), None);
+    }
+
+    #[test]
+    fn an_unrelated_or_nonexistent_spell_resolves_to_none() {
+        assert_eq!(shaman_spell_level("Magic Missile"), None);
+        assert_eq!(shaman_spell_level("Not A Real Spell"), None);
+    }
+
+    /// Every name here must be a real spell key in some ingested book --
+    /// never an invented name -- EXCEPT the explicitly-listed
+    /// not-yet-ingested entries, which are real Shaman spells whose base
+    /// records this repo does not carry.
+    #[test]
+    fn every_shaman_spell_key_is_real_or_explicitly_listed_as_engine_does_not_hold() {
+        for (key, _) in &*SHAMAN_SPELL_LIST {
+            let known = SPELL_LIST.iter().any(|entry| entry.key == *key)
+                || apg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
+                || acg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key);
+            if !known {
+                assert!(
+                    SHAMAN_SPELLS_NOT_INGESTED.contains(key),
+                    "{key} resolves nowhere and is not declared in SHAMAN_SPELLS_NOT_INGESTED"
+                );
+            }
+        }
+    }
+
+    /// The converse direction: every declared engine-does-not-hold entry must
+    /// actually be on the list and actually be unresolvable. This is what
+    /// makes the gap shrink loudly if corpus ingestion later widens.
+    #[test]
+    fn the_engine_does_not_hold_list_is_accurate_in_both_directions() {
+        assert_eq!(SHAMAN_SPELLS_NOT_INGESTED.len(), 21);
+        for key in &*SHAMAN_SPELLS_NOT_INGESTED {
+            assert!(
+                shaman_spell_level(key).is_some(),
+                "{key} is declared engine-does-not-hold but is not on the Shaman list at all"
+            );
+            let resolves = SPELL_LIST.iter().any(|entry| entry.key == *key)
+                || apg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
+                || acg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key);
+            assert!(
+                !resolves,
+                "{key} is declared engine-does-not-hold but now resolves -- corpus ingestion widened, \
+                 shrink SHAMAN_SPELLS_NOT_INGESTED"
+            );
+        }
+    }
 }

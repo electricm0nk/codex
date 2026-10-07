@@ -7,9 +7,31 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::pathfinder_unchained::equipment_tables::EquipmentTableEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "pathfinder_unchained__equipment_tables__EquipmentTableEntry"))]
+pub struct EquipmentTableEntry {
+    /// The real corpus `KEY:` token -- every one of the 42 real
+    /// `pu_equipmods` records carries one (unlike
+    /// `rules_catalog::crb`/`rules_catalog::acg`'s own equipment catalogs,
+    /// where `key == name` fallback is common).
+    pub key: &'static str,
+    pub name: &'static str,
+    /// The corpus `TYPE:` token, verbatim (`"Weapon"`, `"Ammunition"`,
+    /// `"Armor"`, `"Shield"`, or `"Armor.Clothing"` for the 6 "Attuned
+    /// Armor" records, which target both armor and clothing item slots).
+    pub equip_type: &'static str,
+    /// The corpus `PLUS:` token, parsed to an integer 0-5. `None` for
+    /// the 8 real `+0` records, which genuinely carry no `PLUS:` token
+    /// at all in the corpus (an honest gap: PCGen's own `PLUS:` token is
+    /// omitted, not present-as-zero, for the baseline rung of each
+    /// ladder) -- never fabricated as `Some(0)`.
+    pub plus: Option<u8>,
+    /// The corpus `DESC:` token, verbatim. Populated for all 42 records
+    /// (100% real coverage for this file).
+    pub description: Option<&'static str>,
+}
 pub fn equipment_tables() -> &'static [EquipmentTableEntry] {
     crate::rules_core::rules_catalog::rows::<EquipmentTableEntry>(
         "pathfinder_unchained/equipment_tables/equipment_tables",

@@ -7,12 +7,57 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::ClassTableRow;
-pub use rt::ultimate_combat::class_ninja::MAX_SUPPORTED_LEVEL;
+/// `MAXLEVEL:20` on the real `CLASS:Ninja` record.
+pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 pub fn class_table() -> Vec<ClassTableRow> {
     crate::rules_core::rules_catalog::rows_vec::<ClassTableRow>(
         "ultimate_combat/class_ninja/class_table",
     )
+}
+
+/// 3/4 (moderate) BAB: `classlevel*3/4`, integer division, from the real
+/// record's `BONUS:COMBAT|BASEAB|classlevel(...)*3/4` token.
+fn base_attack_bonus(level: u8) -> i16 {
+    (i16::from(level) * 3) / 4
+}
+/// `good` selects the Reflex-only formula (`level/2+2`, from the real
+/// record's `BASE.Reflex` token); Fortitude and Will both use the poor
+/// formula (`level/3`, from the real record's combined
+/// `BASE.Fortitude,BASE.Will` token).
+fn save_bonus(level: u8, good: bool) -> i16 {
+    let level = i16::from(level);
+    if good { level / 2 + 2 } else { level / 3 }
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// 3/4 BAB, one good save (Reflex), two poor saves (Fort/Will), at a
+    /// spread of levels including 1 and the 20th-level ceiling. Matches
+    /// the real corpus formulas quoted in this module's own doc comment,
+    /// not a RAW recollection -- and independently matches the standard
+    /// published Ninja class table (BAB +0/+7/+15, Fort +0/+3/+6,
+    /// Ref +2/+7/+12, Will +0/+3/+6 at levels 1/10/20).
+    #[test]
+    fn matches_the_real_corpus_formulas_at_levels_1_10_and_20() {
+        for (level, bab, fort, reflex, will) in
+            [(1u8, 0i16, 0i16, 2i16, 0i16), (10, 7, 3, 7, 3), (20, 15, 6, 12, 6)]
+        {
+            assert_eq!(base_attack_bonus(level), bab, "level {level} BAB");
+            assert_eq!(save_bonus(level, false), fort, "level {level} Fortitude");
+            assert_eq!(save_bonus(level, true), reflex, "level {level} Reflex");
+            assert_eq!(save_bonus(level, false), will, "level {level} Will");
+        }
+    }
+
+    #[test]
+    fn class_table_has_exactly_twenty_rows_in_order() {
+        let table = class_table();
+        assert_eq!(table.len(), 20);
+        for (i, row) in table.iter().enumerate() {
+            assert_eq!(row.level, (i + 1) as u8);
+        }
+    }
 }

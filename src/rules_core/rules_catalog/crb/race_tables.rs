@@ -7,16 +7,186 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use crate::rules_core::size::SizeCategory;
-pub use rt::crb::race_tables::RaceId;
-pub use rt::crb::race_tables::RaceTraitEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub enum RaceId {
+    Human,
+    Dwarf,
+    Elf,
+    Gnome,
+    HalfElf,
+    HalfOrc,
+    Halfling,
+}
+impl RaceId {
+    pub const ALL: &'static [RaceId] = &[
+        RaceId::Human,
+        RaceId::Dwarf,
+        RaceId::Elf,
+        RaceId::Gnome,
+        RaceId::HalfElf,
+        RaceId::HalfOrc,
+        RaceId::Halfling,
+    ];
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct RaceTraitEntry {
+    pub race_id: RaceId,
+    pub trait_name: &'static str,
+    pub value: i16,
+    pub detail: &'static str,
+}
 pub(crate) static RACE_TRAITS: crate::rules_core::rules_catalog::Table<RaceTraitEntry> =
     crate::rules_core::rules_catalog::Table::new("crb/race_tables/RACE_TRAITS");
 pub fn race_traits() -> &'static [RaceTraitEntry] {
     &*RACE_TRAITS
 }
-pub use rt::crb::race_tables::race_id_from_token;
-pub use rt::crb::race_tables::race_size;
-pub use rt::crb::race_tables::race_size_for_race_id;
+/// Resolves this crate's `race:<slug>` character-input token to a
+/// `RaceId`. `None` for any race outside the seven curated playable ones.
+pub fn race_id_from_token(race_id: &str) -> Option<RaceId> {
+    match race_id {
+        "race:human" => Some(RaceId::Human),
+        "race:dwarf" => Some(RaceId::Dwarf),
+        "race:elf" => Some(RaceId::Elf),
+        "race:gnome" => Some(RaceId::Gnome),
+        "race:half-elf" => Some(RaceId::HalfElf),
+        "race:half-orc" => Some(RaceId::HalfOrc),
+        "race:halfling" => Some(RaceId::Halfling),
+        _ => None,
+    }
+}
+/// Each playable race's creature size, as the verbatim payload of its own
+/// corpus `FACT:BaseSize|<code>` token (v0.6 alpha swarm).
+///
+/// # Where these come from
+///
+/// The authoritative record is each race's `<race>_races` in the PCGen
+/// checkout the ingested corpus is built from:
+/// `data/pathfinder/paizo/roleplaying_game/core_essentials/races/<race>/`,
+/// line 6 of each file.
+///
+/// ```text
+/// human_races:6     Human     ... FACT:BaseSize|M ...
+/// dwarf_races:6     Dwarf     ... FACT:BaseSize|M ...
+/// elf_races:6       Elf       ... FACT:BaseSize|M ...
+/// gnome_races:6     Gnome     ... FACT:BaseSize|S ...
+/// halfelf_races:6   Half-Elf  ... FACT:BaseSize|M ...
+/// halforc_races:6   Half-Orc  ... FACT:BaseSize|M ...
+/// halfling_races:6  Halfling  ... FACT:BaseSize|S ...
+/// ```
+///
+/// # A citation correction
+///
+/// The `Size` rows in `RACE_TRAITS` above cite
+/// `cr_races race:human SIZE:MEDIUM`. Their **values are right**, but
+/// that citation is not: `cr_races` carries only `.MOD` records with
+/// `SOURCEPAGE:` (which is what led `encumbrance.rs` to conclude size was
+/// un-ingestable), and the token is spelled `FACT:BaseSize|M`, not
+/// `SIZE:MEDIUM`. The real base race records live in the
+/// `core_essentials/races/` PCC pack -- the same discovery
+/// `pilot_compute.rs`'s `explain_elf_race_seam` already documents for
+/// Elf's ability-score row. These constants are re-derived from that real
+/// token rather than lifted from the prose above, because the prose is a
+/// transcription and transcriptions are what this table exists to check.
+pub fn race_size(race: RaceId) -> SizeCategory {
+    match race {
+        RaceId::Human => SizeCategory::Medium,    // FACT:BaseSize|M
+        RaceId::Dwarf => SizeCategory::Medium,    // FACT:BaseSize|M
+        RaceId::Elf => SizeCategory::Medium,      // FACT:BaseSize|M
+        RaceId::Gnome => SizeCategory::Small,     // FACT:BaseSize|S
+        RaceId::HalfElf => SizeCategory::Medium,  // FACT:BaseSize|M
+        RaceId::HalfOrc => SizeCategory::Medium,  // FACT:BaseSize|M
+        RaceId::Halfling => SizeCategory::Small,  // FACT:BaseSize|S
+    }
+}
+/// Creature size for a `race:<slug>` token, or `None` for an unrecognized
+/// race. Deliberately not defaulted to Medium here: a caller that needs a
+/// fallback must choose and document one at its own call site, so the
+/// assumption stays visible instead of being laundered through this
+/// function.
+pub fn race_size_for_race_id(race_id: &str) -> Option<SizeCategory> {
+    race_id_from_token(race_id).map(race_size)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn every_race_has_its_grounded_trait_count() {
+        let count = |race: RaceId| race_traits().iter().filter(|t| t.race_id == race).count();
+        assert_eq!(count(RaceId::Human), 6);
+        assert_eq!(count(RaceId::Dwarf), 9);
+        assert_eq!(count(RaceId::Elf), 7);
+        assert_eq!(count(RaceId::Gnome), 8);
+        assert_eq!(count(RaceId::HalfElf), 6);
+        assert_eq!(count(RaceId::HalfOrc), 5);
+        assert_eq!(count(RaceId::Halfling), 8);
+        assert_eq!(race_traits().len(), 49);
+    }
+
+    /// `race_size` and the `Size` rows in `RACE_TRAITS` are two
+    /// independent statements of the same fact -- one machine-readable,
+    /// one prose. This pins them together so they cannot drift: a future
+    /// edit to either that disagrees with the other fails here rather than
+    /// quietly handing a Gnome a Medium creature's carrying capacity.
+    ///
+    /// Matched on the prose row's leading size word, which is the only
+    /// part of that string asserting a size.
+    #[test]
+    fn race_size_agrees_with_the_prose_size_row_for_every_race() {
+        for &race in RaceId::ALL {
+            let prose = race_traits()
+                .iter()
+                .find(|t| t.race_id == race && t.trait_name == "Size")
+                .unwrap_or_else(|| panic!("{race:?} must have a Size trait row"));
+            let expected = match race_size(race) {
+                SizeCategory::Small => "Small size",
+                SizeCategory::Medium => "Medium size",
+                other => panic!("{race:?} resolved to {other:?}; no playable race is that size"),
+            };
+            assert!(
+                prose.detail.starts_with(expected),
+                "{race:?}: race_size() says {expected:?} but the trait row reads {:?}",
+                prose.detail
+            );
+        }
+    }
+
+    /// Only Gnome and Halfling are Small. Stated as an explicit whole-set
+    /// assertion rather than left implicit in the per-race match, because
+    /// this is the exact fact carrying capacity depends on.
+    #[test]
+    fn exactly_gnome_and_halfling_are_small() {
+        let small: Vec<RaceId> =
+            RaceId::ALL.iter().copied().filter(|&r| race_size(r) == SizeCategory::Small).collect();
+        assert_eq!(small, vec![RaceId::Gnome, RaceId::Halfling]);
+    }
+
+    #[test]
+    fn every_curated_race_token_resolves_and_unknown_ones_do_not() {
+        for &race in RaceId::ALL {
+            assert!(
+                race_traits().iter().any(|t| t.race_id == race),
+                "{race:?} must appear in the trait table"
+            );
+        }
+        assert_eq!(race_id_from_token("race:halfling"), Some(RaceId::Halfling));
+        assert_eq!(race_size_for_race_id("race:gnome"), Some(SizeCategory::Small));
+        assert_eq!(race_size_for_race_id("race:human"), Some(SizeCategory::Medium));
+        // An unrecognized race must not silently resolve to a size.
+        assert_eq!(race_size_for_race_id("race:tiefling"), None);
+        assert_eq!(race_size_for_race_id(""), None);
+    }
+
+    #[test]
+    fn every_entry_has_a_non_empty_name_and_detail() {
+        for entry in race_traits() {
+            assert!(!entry.trait_name.is_empty());
+            assert!(!entry.detail.is_empty());
+        }
+    }
+}

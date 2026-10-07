@@ -7,10 +7,140 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::pathfinder_unchained::summoner_features::MAX_SUPPORTED_LEVEL;
-pub use rt::pathfinder_unchained::summoner_features::UnchainedSummonerFeature;
+/// `MAXLEVEL:20` on the base `CLASS:Summoner` record
+/// (`advanced_players_guide/apg_classes:139`, the same record
+/// `rules_catalog::apg::class_summoner` transcribes). PU overrides no chassis
+/// field for the summoner — `data/corpus/pathfinder_unchained/class/
+/// summoner_unchained_class.json` leaves `hit_die`, `bab` and all three saves
+/// `null` — so the variant inherits d8 / three-quarter BAB / good Will
+/// unchanged, and this cap with them.
+pub const MAX_SUPPORTED_LEVEL: u8 = 20;
+/// The 17 `Unchained Summoner ~ ...` records this book declares — the same 17
+/// that `data/corpus/pathfinder_unchained/class_feature/
+/// summoner_unchained_class/` holds.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub enum UnchainedSummonerFeature {
+    Aspect,
+    BondSenses,
+    Cantrips,
+    Eidolon,
+    GreaterAspect,
+    GreaterShieldAlly,
+    LifeBond,
+    LifeLink,
+    MakersCall,
+    MergeForms,
+    ShieldAlly,
+    Skills,
+    Spells,
+    SummonMonster,
+    Transposition,
+    TwinEidolon,
+    WeaponAndArmorProficiency,
+}
+impl UnchainedSummonerFeature {
+    /// This variant's row of the package table `pathfinder_unchained/summoner_features/UnchainedSummonerFeature`: the variant facts (`key`, `name`,
+    /// `declaring_line`, `min_level`) are table data and live there (SD-37 E4a.4), not in
+    /// `match` arms.
+    fn row(self) -> &'static crate::rules_core::rules_data_package::UnchainedSummonerFeatureRow {
+        crate::rules_core::rules_catalog::rows::<crate::rules_core::rules_data_package::UnchainedSummonerFeatureRow>("pathfinder_unchained/summoner_features/UnchainedSummonerFeature")
+            .iter()
+            .find(|row| row.feature == self)
+            .unwrap_or_else(|| panic!("rules_tables package table pathfinder_unchained/summoner_features/UnchainedSummonerFeature has no row for {self:?}"))
+    }
+
+    /// Source order of the declaring rows (`:727..743`).
+    pub const ALL: &'static [UnchainedSummonerFeature] = &[
+        UnchainedSummonerFeature::Skills,
+        UnchainedSummonerFeature::WeaponAndArmorProficiency,
+        UnchainedSummonerFeature::Spells,
+        UnchainedSummonerFeature::Cantrips,
+        UnchainedSummonerFeature::Eidolon,
+        UnchainedSummonerFeature::LifeLink,
+        UnchainedSummonerFeature::SummonMonster,
+        UnchainedSummonerFeature::BondSenses,
+        UnchainedSummonerFeature::ShieldAlly,
+        UnchainedSummonerFeature::MakersCall,
+        UnchainedSummonerFeature::Transposition,
+        UnchainedSummonerFeature::Aspect,
+        UnchainedSummonerFeature::GreaterShieldAlly,
+        UnchainedSummonerFeature::LifeBond,
+        UnchainedSummonerFeature::MergeForms,
+        UnchainedSummonerFeature::GreaterAspect,
+        UnchainedSummonerFeature::TwinEidolon,
+    ];
+
+    /// The corpus `KEY:` token, verbatim. Deliberately `Unchained Summoner ~ ...`
+    /// so it can never collide with an APG `Summoner ~ ...` key.
+    pub fn key(self) -> &'static str {
+        self.row().key
+    }
+
+    /// The corpus row's display name (first column). Note `SummonMonster`'s row
+    /// is named `Summon Monster I` even though the ability scales to IX — the
+    /// row overrides its own display via nine `ASPECT:NAME|Summon Monster <n>`
+    /// clauses keyed on `SummonerSummonMonsterLVL`. The raw first column is
+    /// reproduced here; [`summon_monster_spell_level`] is what actually says
+    /// which one a character has.
+    pub fn name(self) -> &'static str {
+        self.row().name
+    }
+
+    /// 1-based line of the row that declares this feature.
+    pub fn declaring_line(self) -> u32 {
+        self.row().declaring_line
+    }
+
+    /// The `PREVARGTEQ:Summoner_CFP_Level,N` on this feature's progression row
+    /// (`:250..266`).
+    ///
+    /// Unlike the rogue's, **every** declared summoner feature is granted: all
+    /// 17 rows appear in the 17 progression rows, so this never returns `None`
+    /// and is deliberately not an `Option`.
+    ///
+    /// The asymmetry worth knowing is the other direction — APG's progression
+    /// has an **18th** entry, `Summoner ~ Gate` at 19th
+    /// (`advanced_players_guide/apg_abilities_class:761`), and PU declares
+    /// no counterpart. The Unchained Summon Monster row's own `DESC:` promises
+    /// "At 19th level, this ability can be used as gate or summon monster IX",
+    /// so the corpus under-implements its own prose. Recorded, not patched:
+    /// inventing a `Gate` row PCGen does not have is exactly the fabrication
+    /// `AGENTS.md` forbids.
+    pub fn min_level(self) -> u8 {
+        self.row().min_level
+    }
+
+    /// The row's `SOURCEPAGE:` token, verbatim. Every one of the 17 summoner
+    /// rows carries a real page — a markedly better citation rate than the
+    /// rogue's 3-of-15 — and none is the `p.xx` placeholder `decisions.md §27.2`
+    /// found pervasive elsewhere.
+    pub fn source_page(self) -> &'static str {
+        match self {
+            UnchainedSummonerFeature::Skills
+            | UnchainedSummonerFeature::WeaponAndArmorProficiency
+            | UnchainedSummonerFeature::Spells
+            | UnchainedSummonerFeature::Cantrips
+            | UnchainedSummonerFeature::Eidolon => "p.25",
+            UnchainedSummonerFeature::LifeLink | UnchainedSummonerFeature::SummonMonster => "p.26",
+            UnchainedSummonerFeature::BondSenses
+            | UnchainedSummonerFeature::ShieldAlly
+            | UnchainedSummonerFeature::MakersCall
+            | UnchainedSummonerFeature::Transposition
+            | UnchainedSummonerFeature::Aspect
+            | UnchainedSummonerFeature::GreaterShieldAlly
+            | UnchainedSummonerFeature::LifeBond
+            | UnchainedSummonerFeature::MergeForms => "p.27",
+            UnchainedSummonerFeature::GreaterAspect | UnchainedSummonerFeature::TwinEidolon => "p.28",
+        }
+    }
+
+    /// Whether a summoner of `level` has this feature.
+    pub fn is_granted_at(self, level: u8) -> bool {
+        (1..=MAX_SUPPORTED_LEVEL).contains(&level) && level >= self.min_level()
+    }
+}
 fn active_level(feature: UnchainedSummonerFeature, level: u8) -> Option<u8> {
     feature.is_granted_at(level).then_some(level)
 }
@@ -220,4 +350,432 @@ pub mod prose_derived {
     /// named for the third band so the receipt can state all three without
     /// re-using a constant under a misleading name.
     pub const LIFE_LINK_BANISHMENT_RANGE_FEET: i32 = LIFE_LINK_QUARTER_STRENGTH_RANGE_FEET;
+}
+
+#[cfg(test)]
+mod tests {
+    use super::prose_derived;
+    use super::*;
+
+    /// The ingested `description` for one Unchained Summoner record, read off
+    /// disk. Every prose-derived reading in this module is checked against
+    /// this rather than against a copy of the sentence kept here — a pin that
+    /// quotes itself pins nothing.
+    fn description_of(key: &str) -> String {
+        let dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class");
+        let entries = std::fs::read_dir(&dir)
+            .unwrap_or_else(|e| panic!("ingested Summoner corpus dir {dir:?} must exist: {e}"));
+        for entry in entries {
+            let path = entry.expect("readable dir entry").path();
+            if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                continue;
+            }
+            let text = std::fs::read_to_string(&path).expect("readable corpus record");
+            let value: serde_json::Value =
+                serde_json::from_str(&text).expect("corpus record is valid JSON");
+            if value["data"]["key"] == key {
+                return value["data"]["description"]
+                    .as_str()
+                    .unwrap_or_else(|| panic!("{key} must carry a rendered description"))
+                    .to_owned();
+            }
+        }
+        panic!("no ingested record with KEY:{key}");
+    }
+
+    #[test]
+    fn every_declared_feature_is_enumerated_exactly_once() {
+        assert_eq!(UnchainedSummonerFeature::ALL.len(), 17, "the corpus declares 17 Unchained Summoner ~ rows");
+        let mut keys: Vec<&str> = UnchainedSummonerFeature::ALL.iter().map(|f| f.key()).collect();
+        keys.sort_unstable();
+        keys.dedup();
+        assert_eq!(keys.len(), 17, "no duplicate keys");
+    }
+
+    #[test]
+    fn every_key_is_namespaced_away_from_the_apg_summoner() {
+        for feature in UnchainedSummonerFeature::ALL {
+            assert!(
+                feature.key().starts_with("Unchained Summoner ~ "),
+                "{} must not be able to collide with an APG `Summoner ~ ...` key",
+                feature.key()
+            );
+        }
+    }
+
+    #[test]
+    fn all_is_in_declaring_source_order() {
+        let lines: Vec<u32> = UnchainedSummonerFeature::ALL.iter().map(|f| f.declaring_line()).collect();
+        let mut sorted = lines.clone();
+        sorted.sort_unstable();
+        assert_eq!(lines, sorted, "ALL should list features in pu_abilities_class order");
+    }
+
+    #[test]
+    fn min_levels_match_the_seventeen_progression_rows() {
+        // pu_abilities_class:250..266 — 17 rows, transcribed as pairs.
+        let expected: &[(UnchainedSummonerFeature, u8)] = &[
+            (UnchainedSummonerFeature::Skills, 1),
+            (UnchainedSummonerFeature::WeaponAndArmorProficiency, 1),
+            (UnchainedSummonerFeature::Spells, 1),
+            (UnchainedSummonerFeature::Cantrips, 1),
+            (UnchainedSummonerFeature::Eidolon, 1),
+            (UnchainedSummonerFeature::LifeLink, 1),
+            (UnchainedSummonerFeature::SummonMonster, 1),
+            (UnchainedSummonerFeature::BondSenses, 2),
+            (UnchainedSummonerFeature::ShieldAlly, 4),
+            (UnchainedSummonerFeature::MakersCall, 6),
+            (UnchainedSummonerFeature::Transposition, 8),
+            (UnchainedSummonerFeature::Aspect, 10),
+            (UnchainedSummonerFeature::GreaterShieldAlly, 12),
+            (UnchainedSummonerFeature::LifeBond, 14),
+            (UnchainedSummonerFeature::MergeForms, 16),
+            (UnchainedSummonerFeature::GreaterAspect, 18),
+            (UnchainedSummonerFeature::TwinEidolon, 20),
+        ];
+        assert_eq!(expected.len(), UnchainedSummonerFeature::ALL.len(), "17 features, 17 grant rows");
+        for (feature, min) in expected {
+            assert_eq!(feature.min_level(), *min, "{}", feature.key());
+        }
+    }
+
+    #[test]
+    fn aspect_has_no_upper_bound_unlike_the_apg_summoner() {
+        // APG :756 adds PREVARLT:Summoner_CFP_Level,18; PU :261 does not.
+        for level in 10..=MAX_SUPPORTED_LEVEL {
+            assert!(UnchainedSummonerFeature::Aspect.is_granted_at(level), "Aspect must survive past 17th at {level}");
+        }
+    }
+
+    #[test]
+    fn every_row_cites_a_real_page() {
+        for feature in UnchainedSummonerFeature::ALL {
+            let page = feature.source_page();
+            assert!(page.starts_with("p."), "{}: {page}", feature.key());
+            assert_ne!(page, "p.xx", "decisions.md §27.2 placeholder must never be transcribed as a real page");
+        }
+        let pages: Vec<&str> = UnchainedSummonerFeature::ALL.iter().map(|f| f.source_page()).collect();
+        assert_eq!(pages.iter().filter(|p| ***p == *"p.25").count(), 5);
+        assert_eq!(pages.iter().filter(|p| ***p == *"p.26").count(), 2);
+        assert_eq!(pages.iter().filter(|p| ***p == *"p.27").count(), 8);
+        assert_eq!(pages.iter().filter(|p| ***p == *"p.28").count(), 2);
+    }
+
+    #[test]
+    fn class_skill_list_is_the_verbatim_cskill_row() {
+        use crate::rules_core::rules_catalog::crb::class_skill_tables::ClassSkillEntry;
+        let skills = class_skills();
+        assert_eq!(skills.len(), 9, "CSKILL: on :727 has 9 pipe-separated entries");
+        assert_eq!(skills[0], ClassSkillEntry::Family("Craft"));
+        assert_eq!(skills[8], ClassSkillEntry::Named("Use Magic Device"));
+        assert!(
+            skills.contains(&ClassSkillEntry::Family("Knowledge")),
+            "the summoner gets every Knowledge, not a named subset"
+        );
+        assert!(skills.contains(&ClassSkillEntry::Named("Fly")));
+        assert!(skills.contains(&ClassSkillEntry::Named("Handle Animal")));
+    }
+
+    // ---- formula pins -----------------------------------------------------
+
+    #[test]
+    fn eidolon_companion_level_tracks_class_level_one_to_one() {
+        for level in 1..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(eidolon_companion_level(level), Some(level), "level {level}");
+        }
+    }
+
+    #[test]
+    fn eidolon_evolution_pool_matches_the_indicator_sum() {
+        // Derived from the :746 token, not from memory: 1 + one point at each
+        // of the 14 thresholds. Pauses on 4th, 8th, 12th, 16th, 20th.
+        let expected = [1u8, 2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15, 15];
+        for (idx, want) in expected.iter().enumerate() {
+            let level = idx as u8 + 1;
+            assert_eq!(eidolon_evolution_pool(level), Some(*want), "level {level}");
+        }
+    }
+
+    #[test]
+    fn eidolon_evolution_thresholds_are_the_fourteen_from_the_token() {
+        assert_eq!(EIDOLON_EVOLUTION_THRESHOLDS.len(), 14);
+        // Every level that is NOT a threshold is a level the pool does not grow.
+        for level in 2..=MAX_SUPPORTED_LEVEL {
+            let grew = eidolon_evolution_pool(level) != eidolon_evolution_pool(level - 1);
+            assert_eq!(grew, EIDOLON_EVOLUTION_THRESHOLDS.contains(&level), "level {level}");
+        }
+    }
+
+    #[test]
+    fn unchained_eidolon_pool_starts_at_one_where_the_apg_one_starts_at_three() {
+        // apg_abilities_class:813 writes `3+...`; this book's :746 writes `1+...`.
+        assert_eq!(eidolon_evolution_pool(1), Some(1), "the whole point of the unchained eidolon");
+        assert_ne!(eidolon_evolution_pool(1), Some(3), "must never resolve to the APG summoner's base");
+    }
+
+    #[test]
+    fn eidolon_subtypes_are_the_thirteen_declared_rows() {
+        let subtypes = eidolon_subtypes();
+        assert_eq!(subtypes.len(), 13, ":747..759 is 13 rows");
+        let mut sorted = subtypes.to_vec();
+        sorted.sort_unstable();
+        sorted.dedup();
+        assert_eq!(sorted.len(), 13, "no duplicates");
+        assert_eq!(subtypes[0], "Agathion");
+        assert_eq!(subtypes[12], "Psychopomp");
+    }
+
+    #[test]
+    fn summon_monster_spell_level_climbs_every_other_level_and_caps_at_nine() {
+        let expected = [1i16, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 9, 9];
+        for (idx, want) in expected.iter().enumerate() {
+            let level = idx as u8 + 1;
+            assert_eq!(summon_monster_spell_level(level), Some(*want), "level {level}");
+        }
+        assert_eq!(summon_monster_spell_level(17), Some(9), "the DESC's stated maximum, reached at 17th");
+    }
+
+    #[test]
+    fn summon_monster_uses_never_drop_below_three() {
+        assert_eq!(summon_monster_uses_per_day(1, 4), Some(7));
+        assert_eq!(summon_monster_uses_per_day(1, 0), Some(3));
+        assert_eq!(
+            summon_monster_uses_per_day(1, -3),
+            Some(3),
+            "max(CHA,0)+3 — the APG summoner's plain CHA+3 would give 0 here"
+        );
+        assert_eq!(summon_monster_uses_per_day(20, -3), Some(3));
+    }
+
+    #[test]
+    fn the_unchained_marker_is_live_from_first_level() {
+        assert_eq!(unchained_summoner_marker(1), Some(1));
+        assert_eq!(unchained_summoner_marker(20), Some(1));
+        assert_eq!(unchained_summoner_marker(0), None);
+        assert_eq!(unchained_summoner_marker(21), None);
+    }
+
+    // ---- prose-derived ----------------------------------------------------
+
+    #[test]
+    fn bond_senses_rounds_equal_class_level_from_second() {
+        assert_eq!(prose_derived::bond_senses_rounds_per_day(1), None, "granted at 2nd (:257)");
+        assert_eq!(prose_derived::bond_senses_rounds_per_day(2), Some(2));
+        assert_eq!(prose_derived::bond_senses_rounds_per_day(20), Some(20));
+    }
+
+    #[test]
+    fn makers_call_gains_a_use_every_four_levels_after_sixth() {
+        assert_eq!(prose_derived::makers_call_uses_per_day(5), None, "granted at 6th (:259)");
+        assert_eq!(prose_derived::makers_call_uses_per_day(6), Some(1));
+        assert_eq!(prose_derived::makers_call_uses_per_day(9), Some(1));
+        assert_eq!(prose_derived::makers_call_uses_per_day(10), Some(2));
+        assert_eq!(prose_derived::makers_call_uses_per_day(14), Some(3));
+        assert_eq!(prose_derived::makers_call_uses_per_day(18), Some(4));
+        assert_eq!(prose_derived::makers_call_uses_per_day(20), Some(4));
+    }
+
+    #[test]
+    fn divertible_evolution_points_step_at_ten_and_eighteen() {
+        assert_eq!(prose_derived::divertible_evolution_points(9), Some(0));
+        assert_eq!(prose_derived::divertible_evolution_points(10), Some(2));
+        assert_eq!(prose_derived::divertible_evolution_points(17), Some(2));
+        assert_eq!(prose_derived::divertible_evolution_points(18), Some(6));
+        assert_eq!(prose_derived::divertible_evolution_points(20), Some(6));
+        assert_eq!(prose_derived::divertible_evolution_points(0), None);
+        assert_eq!(prose_derived::divertible_evolution_points(21), None);
+
+        // Keyed to the Greater Aspect record rather than the Aspect one.
+        for level in 0..18 {
+            assert_eq!(
+                prose_derived::greater_aspect_divertible_evolution_points(level),
+                None,
+                "level {level}"
+            );
+        }
+        for level in 18..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(
+                prose_derived::greater_aspect_divertible_evolution_points(level),
+                Some(6),
+                "level {level}"
+            );
+        }
+        assert_eq!(prose_derived::greater_aspect_divertible_evolution_points(21), None);
+    }
+
+    #[test]
+    fn shield_ally_bonuses_are_the_stated_two_and_four() {
+        assert_eq!(prose_derived::SHIELD_ALLY_BONUS, 2);
+        assert_eq!(prose_derived::GREATER_SHIELD_ALLY_SELF_BONUS, 4);
+    }
+
+    /// From the summoner's own point of view `Shield Ally` (`:735`) and
+    /// `Greater Shield Ally` (`:739`) are one progression: `+2` at 4th, `+4`
+    /// at 12th. Before this, both rows computed nothing.
+    #[test]
+    fn shield_ally_self_bonus_steps_from_two_to_four_at_twelfth() {
+        for level in [0u8, 1, 2, 3] {
+            assert_eq!(prose_derived::shield_ally_self_bonus(level), None, "level {level}");
+        }
+        for level in 4..12 {
+            assert_eq!(prose_derived::shield_ally_self_bonus(level), Some(2), "level {level}");
+        }
+        for level in 12..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(prose_derived::shield_ally_self_bonus(level), Some(4), "level {level}");
+        }
+        assert_eq!(prose_derived::shield_ally_self_bonus(21), None);
+
+        // The genuinely new half of :739 — allies other than the summoner.
+        for level in 0..12 {
+            assert_eq!(prose_derived::greater_shield_ally_bonus_to_allies(level), None, "level {level}");
+        }
+        for level in 12..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(prose_derived::greater_shield_ally_bonus_to_allies(level), Some(2), "level {level}");
+        }
+    }
+
+    /// `Merge Forms` (`:741`) is rounds per day; `Twin Eidolon` (`:743`) is
+    /// **minutes** per day. Both equal the summoner's level, and the differing
+    /// unit is the whole reason they are two functions.
+    #[test]
+    fn merge_forms_is_rounds_and_twin_eidolon_is_minutes_both_equal_to_level() {
+        for level in 0..16 {
+            assert_eq!(prose_derived::merge_forms_rounds_per_day(level), None, "level {level}");
+        }
+        for level in 16..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(prose_derived::merge_forms_rounds_per_day(level), Some(level), "level {level}");
+        }
+        for level in 0..20 {
+            assert_eq!(prose_derived::twin_eidolon_minutes_per_day(level), None, "level {level}");
+        }
+        assert_eq!(prose_derived::twin_eidolon_minutes_per_day(20), Some(20));
+        assert_eq!(prose_derived::twin_eidolon_minutes_per_day(21), None);
+    }
+
+    /// Life Link's leash: 100 feet at full strength, then two degradation
+    /// bands and banishment.
+    #[test]
+    fn life_link_leash_is_the_hundred_feet_its_prose_states() {
+        assert_eq!(prose_derived::life_link_full_strength_range_feet(0), None);
+        for level in 1..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(prose_derived::life_link_full_strength_range_feet(level), Some(100), "level {level}");
+        }
+        assert_eq!(prose_derived::life_link_full_strength_range_feet(21), None);
+        assert_eq!(prose_derived::LIFE_LINK_HALF_STRENGTH_RANGE_FEET, 1_000);
+        assert_eq!(prose_derived::LIFE_LINK_QUARTER_STRENGTH_RANGE_FEET, 10_000);
+        assert_eq!(prose_derived::LIFE_LINK_BANISHMENT_RANGE_FEET, 10_000);
+    }
+
+    /// Every prose-derived reading above is a sentence, so every sentence is
+    /// re-read off the ingested corpus record. A corpus edit that changes the
+    /// wording fails here instead of silently invalidating a number.
+    #[test]
+    fn prose_derived_readings_still_match_the_ingested_corpus_prose() {
+        for (key, sentence) in [
+            (
+                "Unchained Summoner ~ Shield Ally",
+                "the summoner gains a +2 shield bonus to his Armor Class and a +2 circumstance \
+                 bonus on his saving throws",
+            ),
+            (
+                "Unchained Summoner ~ Greater Shield Ally",
+                "the ally gains a +2 shield bonus to its Armor Class and a +2 circumstance bonus \
+                 on its saving throws. If this ally is the summoner, these bonuses increase to +4",
+            ),
+            (
+                "Unchained Summoner ~ Merge Forms",
+                "The summoner can use this ability for a number of rounds per day equal to his \
+                 summoner level",
+            ),
+            (
+                "Unchained Summoner ~ Twin Eidolon",
+                "The summoner can keep this form for a number of minutes per day equal to his \
+                 summoner level",
+            ),
+            (
+                "Unchained Summoner ~ Life Link",
+                "the eidolon and the summoner must remain within 100 feet of one another for the \
+                 eidolon to remain at full strength",
+            ),
+            (
+                "Unchained Summoner ~ Bond Senses",
+                "He can use this ability a number of rounds per day equal to his summoner level",
+            ),
+            (
+                "Unchained Summoner ~ Maker's Call",
+                "The summoner can use this ability once per day at 6th level, plus one additional \
+                 time per day for every four levels beyond 6th",
+            ),
+            (
+                "Unchained Summoner ~ Aspect",
+                "a summoner can divert up to 2 points from his eidolon's evolution pool",
+            ),
+            (
+                "Unchained Summoner ~ Greater Aspect",
+                "the maximum number of evolution points the summoner can divert increases to 6",
+            ),
+        ] {
+            let description = description_of(key);
+            assert!(
+                description.contains(sentence),
+                "{key} prose changed; the reading derived from it must be re-derived.\n\
+                 expected to contain: {sentence}\ncorpus says: {description}"
+            );
+        }
+    }
+
+    /// The three Unchained Summoner features that state no number even in
+    /// prose. Pinning the *reason* keeps a later cycle from inventing one —
+    /// and makes a corpus that grows a number fail loudly.
+    #[test]
+    fn cantrips_transposition_and_life_bond_state_no_displayable_number() {
+        assert!(
+            description_of("Unchained Summoner ~ Cantrips").contains("as noted on Table 1-5"),
+            "Cantrips' count still lives on a table this row does not carry"
+        );
+        assert!(
+            description_of("Unchained Summoner ~ Transposition")
+                .contains("a summoner can use his maker's call ability to swap locations"),
+            "Transposition still spends a Maker's Call use rather than adding a magnitude"
+        );
+        let life_bond = description_of("Unchained Summoner ~ Life Bond");
+        assert!(
+            life_bond.contains("As long as the eidolon has 1 or more hit points")
+                && life_bond.contains("transferred 1 point at a time"),
+            "Life Bond's only numbers are still the mechanic's granularity, not a quantity"
+        );
+    }
+
+    // ---- refusal ----------------------------------------------------------
+
+    #[test]
+    fn no_formula_answers_outside_the_legal_level_band() {
+        for level in [0u8, 21, 30, 255] {
+            assert_eq!(eidolon_companion_level(level), None, "level {level}");
+            assert_eq!(eidolon_evolution_pool(level), None, "level {level}");
+            assert_eq!(summon_monster_spell_level(level), None, "level {level}");
+            assert_eq!(summon_monster_uses_per_day(level, 3), None, "level {level}");
+            assert_eq!(unchained_summoner_marker(level), None, "level {level}");
+            assert_eq!(prose_derived::bond_senses_rounds_per_day(level), None, "level {level}");
+            assert_eq!(prose_derived::makers_call_uses_per_day(level), None, "level {level}");
+            assert_eq!(prose_derived::divertible_evolution_points(level), None, "level {level}");
+        }
+    }
+
+    #[test]
+    fn every_formula_is_defined_across_the_whole_granted_band() {
+        for level in 1..=MAX_SUPPORTED_LEVEL {
+            assert!(eidolon_evolution_pool(level).is_some(), "Eidolon is a 1st-level feature; level {level}");
+            assert!(summon_monster_spell_level(level).is_some(), "level {level}");
+            assert_eq!(
+                prose_derived::bond_senses_rounds_per_day(level).is_some(),
+                UnchainedSummonerFeature::BondSenses.is_granted_at(level)
+            );
+            assert_eq!(
+                prose_derived::makers_call_uses_per_day(level).is_some(),
+                UnchainedSummonerFeature::MakersCall.is_granted_at(level)
+            );
+        }
+    }
 }

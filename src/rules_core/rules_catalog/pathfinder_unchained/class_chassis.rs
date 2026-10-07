@@ -7,14 +7,120 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::monk_features;
 use crate::rules_core::rules_catalog::RuleSetId;
 use crate::rules_core::rules_catalog::apg::{self, ApgClassId};
 use crate::rules_core::rules_catalog::crb::class_tables::{self, ClassId};
-pub use rt::pathfinder_unchained::class_chassis::ClassTableRow;
-pub use rt::pathfinder_unchained::class_chassis::PuClassId;
+/// One Unchained class's chassis-table row: level, BAB, and the three
+/// saves. Same shape as `rules_catalog::apg::ClassTableRow` and
+/// `rules_catalog::acg::ClassTableRow`, kept book-local for the same reason
+/// those two are.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "pathfinder_unchained__class_chassis__ClassTableRow"))]
+pub struct ClassTableRow {
+    pub level: u8,
+    pub base_attack_bonus: i16,
+    pub fort_save: i16,
+    pub ref_save: i16,
+    pub will_save: i16,
+}
+/// Identifies which Pathfinder Unchained class a query targets. These are
+/// the four and only four `CATEGORY:CLASS` selection abilities the book
+/// declares, and exactly the four `data/corpus/pathfinder_unchained/class/`
+/// records.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub enum PuClassId {
+    UnchainedBarbarian,
+    UnchainedMonk,
+    UnchainedRogue,
+    UnchainedSummoner,
+}
+impl PuClassId {
+    /// The full four-class roster, in corpus declaration order
+    /// (`pu_abilities_class:114..117`).
+    pub const ALL: [PuClassId; 4] = [
+        PuClassId::UnchainedBarbarian,
+        PuClassId::UnchainedMonk,
+        PuClassId::UnchainedRogue,
+        PuClassId::UnchainedSummoner,
+    ];
+
+    /// Lowercase class name, matching the `class_id` string convention
+    /// `pilot_compute.rs` uses (`"class:<name>"`). Deliberately prefixed
+    /// `unchained_` so `class:unchained_rogue` can never be confused with
+    /// CRB's `class:rogue` by a string comparison anywhere in the stack —
+    /// including in persisted character records on disk.
+    pub const fn name(self) -> &'static str {
+        match self {
+            PuClassId::UnchainedBarbarian => "unchained_barbarian",
+            PuClassId::UnchainedMonk => "unchained_monk",
+            PuClassId::UnchainedRogue => "unchained_rogue",
+            PuClassId::UnchainedSummoner => "unchained_summoner",
+        }
+    }
+
+    /// The player-facing label, verbatim from the `name` field of this
+    /// class's own `data/corpus/pathfinder_unchained/class/*.json` record.
+    /// Not derived by capitalising [`name`](Self::name): the corpus states
+    /// it, so the corpus supplies it.
+    pub const fn display_name(self) -> &'static str {
+        match self {
+            PuClassId::UnchainedBarbarian => "Unchained Barbarian",
+            PuClassId::UnchainedMonk => "Unchained Monk",
+            PuClassId::UnchainedRogue => "Unchained Rogue",
+            PuClassId::UnchainedSummoner => "Unchained Summoner",
+        }
+    }
+
+    /// The `key` field of this class's corpus record — PCGen's own
+    /// `KEY:` token for the selection ability.
+    pub const fn corpus_key(self) -> &'static str {
+        match self {
+            PuClassId::UnchainedBarbarian => "Barbarian ~ Unchained Class",
+            PuClassId::UnchainedMonk => "Monk ~ Unchained Class",
+            PuClassId::UnchainedRogue => "Rogue ~ Unchained Class",
+            PuClassId::UnchainedSummoner => "Summoner ~ Unchained Class",
+        }
+    }
+
+    /// The `class_id` string of the class this one *replaces* — the other
+    /// member of its single-slot PCGen selection pool. Stated so callers
+    /// (and auditors) can check the two never appear together, and so the
+    /// replacement relationship is machine-readable rather than prose-only.
+    pub const fn replaces_class_id(self) -> &'static str {
+        match self {
+            PuClassId::UnchainedBarbarian => "class:barbarian",
+            PuClassId::UnchainedMonk => "class:monk",
+            PuClassId::UnchainedRogue => "class:rogue",
+            PuClassId::UnchainedSummoner => "class:summoner",
+        }
+    }
+
+    /// Reverse of [`name`](Self::name): resolves a `"class:<name>"` id
+    /// string back to a `PuClassId`. Mirrors
+    /// `apg::ApgClassId::from_class_id_str` / `acg::AcgClassId::from_class_id_str`.
+    pub fn from_class_id_str(class_id_str: &str) -> Option<Self> {
+        Self::ALL
+            .iter()
+            .copied()
+            .find(|id| class_id_str == format!("class:{}", id.name()))
+    }
+
+    /// This class's `MAXLEVEL` ceiling, from its own feature module's
+    /// `MAX_SUPPORTED_LEVEL` constant (each of which cites the base
+    /// class's real `MAXLEVEL:20` record — PU adds no levels).
+    pub const fn max_supported_level(self) -> u8 {
+        match self {
+            PuClassId::UnchainedBarbarian => super::barbarian_features::MAX_SUPPORTED_LEVEL,
+            PuClassId::UnchainedMonk => monk_features::MAX_SUPPORTED_LEVEL,
+            PuClassId::UnchainedRogue => super::rogue_features::MAX_SUPPORTED_LEVEL,
+            PuClassId::UnchainedSummoner => super::summoner_features::MAX_SUPPORTED_LEVEL,
+        }
+    }
+}
 pub fn hit_die_for(class_id: PuClassId) -> u8 {
     match class_id {
         // `class_tables::hit_die_for` returns `Option`, but only because it
@@ -42,4 +148,181 @@ pub fn class_chassis_resolve(
         .iter()
         .find(|row| row.class_id == class_id && row.row.level == level)
         .map(|row| row.row)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn the_roster_is_the_four_corpus_class_records() {
+        assert_eq!(PuClassId::ALL.len(), 4);
+        let names: Vec<&str> = PuClassId::ALL.iter().map(|id| id.name()).collect();
+        assert_eq!(
+            names,
+            vec![
+                "unchained_barbarian",
+                "unchained_monk",
+                "unchained_rogue",
+                "unchained_summoner"
+            ]
+        );
+    }
+
+    /// The identity axis of the replacement invariant: no Unchained class
+    /// id string equals, or is a prefix/suffix of, the id it replaces.
+    #[test]
+    fn no_unchained_class_id_collides_with_the_class_it_replaces() {
+        for id in PuClassId::ALL {
+            let own = format!("class:{}", id.name());
+            assert_ne!(own, id.replaces_class_id());
+            assert_ne!(PuClassId::from_class_id_str(id.replaces_class_id()), Some(id));
+            assert_eq!(PuClassId::from_class_id_str(&own), Some(id));
+        }
+    }
+
+    /// The display axis. Verbatim from each corpus record's `name` field.
+    #[test]
+    fn display_names_are_the_corpus_names() {
+        assert_eq!(
+            PuClassId::UnchainedBarbarian.display_name(),
+            "Unchained Barbarian"
+        );
+        assert_eq!(PuClassId::UnchainedMonk.display_name(), "Unchained Monk");
+        assert_eq!(PuClassId::UnchainedRogue.display_name(), "Unchained Rogue");
+        assert_eq!(
+            PuClassId::UnchainedSummoner.display_name(),
+            "Unchained Summoner"
+        );
+    }
+
+    /// A CRB/APG class id must never resolve to a PU class, and vice versa.
+    #[test]
+    fn resolution_never_crosses_between_the_books() {
+        for base in ["class:barbarian", "class:monk", "class:rogue", "class:summoner"] {
+            assert_eq!(PuClassId::from_class_id_str(base), None, "{base}");
+        }
+        for id in PuClassId::ALL {
+            let own = format!("class:{}", id.name());
+            assert_eq!(ApgClassId::from_class_id_str(&own), None, "{own}");
+        }
+    }
+
+    #[test]
+    fn the_chassis_resolver_answers_only_for_the_pu_rule_set() {
+        for id in PuClassId::ALL {
+            assert!(class_chassis_resolve(id, 1, RuleSetId::Pu).is_some());
+            for other in [
+                RuleSetId::Crb,
+                RuleSetId::Apg,
+                RuleSetId::Acg,
+                RuleSetId::Bestiary1,
+                RuleSetId::Arg,
+            ] {
+                assert_eq!(class_chassis_resolve(id, 1, other), None);
+            }
+        }
+    }
+
+    #[test]
+    fn every_class_resolves_every_level_one_through_twenty_and_nothing_outside() {
+        for id in PuClassId::ALL {
+            assert_eq!(id.max_supported_level(), 20);
+            for level in 1..=20u8 {
+                assert!(
+                    class_chassis_resolve(id, level, RuleSetId::Pu).is_some(),
+                    "{} level {level}",
+                    id.name()
+                );
+            }
+            assert_eq!(class_chassis_resolve(id, 0, RuleSetId::Pu), None);
+            assert_eq!(class_chassis_resolve(id, 21, RuleSetId::Pu), None);
+        }
+    }
+
+    /// The three borrowing classes must be byte-identical to the base class
+    /// table they borrow — that is the whole justification for not
+    /// transcribing a second copy. If a future edit invents a PU-local
+    /// table, this fails.
+    #[test]
+    fn the_three_non_overriding_classes_match_their_base_class_row_exactly() {
+        for level in 1..=20u8 {
+            let barbarian = class_tables::class_tables()
+                .into_iter()
+                .find(|row| row.class_id == ClassId::Barbarian && row.level == level)
+                .expect("CRB Barbarian row");
+            let unchained =
+                class_chassis_resolve(PuClassId::UnchainedBarbarian, level, RuleSetId::Pu)
+                    .expect("Unchained Barbarian row");
+            assert_eq!(unchained.base_attack_bonus, barbarian.base_attack_bonus);
+            assert_eq!(unchained.fort_save, barbarian.fort_save);
+            assert_eq!(unchained.ref_save, barbarian.ref_save);
+            assert_eq!(unchained.will_save, barbarian.will_save);
+
+            let rogue = class_tables::class_tables()
+                .into_iter()
+                .find(|row| row.class_id == ClassId::Rogue && row.level == level)
+                .expect("CRB Rogue row");
+            let unchained = class_chassis_resolve(PuClassId::UnchainedRogue, level, RuleSetId::Pu)
+                .expect("Unchained Rogue row");
+            assert_eq!(unchained.base_attack_bonus, rogue.base_attack_bonus);
+            assert_eq!(unchained.fort_save, rogue.fort_save);
+            assert_eq!(unchained.ref_save, rogue.ref_save);
+            assert_eq!(unchained.will_save, rogue.will_save);
+
+            let summoner = apg::class_chassis_resolve(ApgClassId::Summoner, level, RuleSetId::Apg)
+                .expect("APG Summoner row");
+            let unchained =
+                class_chassis_resolve(PuClassId::UnchainedSummoner, level, RuleSetId::Pu)
+                    .expect("Unchained Summoner row");
+            assert_eq!(unchained.base_attack_bonus, summoner.base_attack_bonus);
+            assert_eq!(unchained.fort_save, summoner.fort_save);
+            assert_eq!(unchained.ref_save, summoner.ref_save);
+            assert_eq!(unchained.will_save, summoner.will_save);
+        }
+    }
+
+    /// The computation axis of the replacement invariant, for the one class
+    /// whose chassis genuinely differs. A future edit that aliases the
+    /// Unchained Monk onto the CRB Monk fails here loudly.
+    #[test]
+    fn the_unchained_monk_chassis_diverges_from_the_crb_monk_at_every_level() {
+        for level in 1..=20u8 {
+            let crb = class_tables::class_tables()
+                .into_iter()
+                .find(|row| row.class_id == ClassId::Monk && row.level == level)
+                .expect("CRB Monk row");
+            let pu = class_chassis_resolve(PuClassId::UnchainedMonk, level, RuleSetId::Pu)
+                .expect("Unchained Monk row");
+
+            // Full BAB here, three-quarter in CRB: never lower, and
+            // strictly higher at every level from 1 up.
+            assert_eq!(pu.base_attack_bonus, i16::from(level), "full BAB");
+            assert!(pu.base_attack_bonus >= crb.base_attack_bonus);
+
+            // Will is poor here and good in CRB.
+            assert_eq!(pu.will_save, i16::from(level) / 3);
+            assert_eq!(crb.will_save, i16::from(level) / 2 + 2);
+            assert!(pu.will_save < crb.will_save);
+
+            // Fort/Ref are good in both, so those two cells agree — recorded
+            // rather than left implicit, so "they differ" is never read as
+            // "every cell differs".
+            assert_eq!(pu.fort_save, crb.fort_save);
+            assert_eq!(pu.ref_save, crb.ref_save);
+        }
+    }
+
+    #[test]
+    fn hit_dice_come_from_the_stated_source_per_class() {
+        assert_eq!(hit_die_for(PuClassId::UnchainedBarbarian), 12);
+        assert_eq!(hit_die_for(PuClassId::UnchainedRogue), 8);
+        assert_eq!(
+            hit_die_for(PuClassId::UnchainedSummoner),
+            apg::hit_die_for(ApgClassId::Summoner)
+        );
+        // The one override: d10, against the CRB Monk's operator-ruled d8.
+        assert_eq!(hit_die_for(PuClassId::UnchainedMonk), 10);
+        assert_eq!(class_tables::hit_die_for(ClassId::Monk), Some(8));
+    }
 }

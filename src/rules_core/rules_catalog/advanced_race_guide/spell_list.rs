@@ -7,10 +7,67 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::advanced_race_guide::spell_list::Pf1SchoolId;
-pub use rt::advanced_race_guide::spell_list::SpellListEntry;
+/// The full 9-school PF1 spell-school enum, mirroring
+/// `rules_catalog::acg::spell_list::Pf1SchoolId` exactly. `Universal` does
+/// not appear in `arg_spells` today but is included for cross-book
+/// schema parity.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__spell_list__Pf1SchoolId"))]
+pub enum Pf1SchoolId {
+    Abjuration,
+    Conjuration,
+    Divination,
+    Enchantment,
+    Evocation,
+    Illusion,
+    Necromancy,
+    Transmutation,
+    Universal,
+}
+impl Pf1SchoolId {
+    pub const ALL: &'static [Pf1SchoolId] = &[
+        Pf1SchoolId::Abjuration,
+        Pf1SchoolId::Conjuration,
+        Pf1SchoolId::Divination,
+        Pf1SchoolId::Enchantment,
+        Pf1SchoolId::Evocation,
+        Pf1SchoolId::Illusion,
+        Pf1SchoolId::Necromancy,
+        Pf1SchoolId::Transmutation,
+        Pf1SchoolId::Universal,
+    ];
+
+    /// Maps the corpus's raw `SCHOOL:` string to this enum.
+    pub fn from_corpus_str(raw: &str) -> Option<Self> {
+        match raw {
+            "Abjuration" => Some(Pf1SchoolId::Abjuration),
+            "Conjuration" => Some(Pf1SchoolId::Conjuration),
+            "Divination" => Some(Pf1SchoolId::Divination),
+            "Enchantment" => Some(Pf1SchoolId::Enchantment),
+            "Evocation" => Some(Pf1SchoolId::Evocation),
+            "Illusion" => Some(Pf1SchoolId::Illusion),
+            "Necromancy" => Some(Pf1SchoolId::Necromancy),
+            "Transmutation" => Some(Pf1SchoolId::Transmutation),
+            "Universal" => Some(Pf1SchoolId::Universal),
+            _ => None,
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__spell_list__SpellListEntry"))]
+pub struct SpellListEntry {
+    /// The spell's `name` is its identity in `arg_spells` (no `KEY:`
+    /// token on any in-scope record).
+    pub key: &'static str,
+    pub school: Pf1SchoolId,
+    /// Minimum spell level across the record's `CLASSES:` tag(s).
+    pub level: u8,
+    /// Full corpus spell text -- see this module's doc comment.
+    pub description: &'static str,
+}
 pub static SPELL_LIST: crate::rules_core::rules_catalog::Table<SpellListEntry> =
     crate::rules_core::rules_catalog::Table::new("advanced_race_guide/spell_list/SPELL_LIST");
 pub fn spell_resolve(key: &str) -> Option<&'static SpellListEntry> {

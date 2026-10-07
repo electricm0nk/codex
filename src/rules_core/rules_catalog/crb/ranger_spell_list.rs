@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub static RANGER_SPELL_LIST: crate::rules_core::rules_catalog::Table<(&str, u8)> =
     crate::rules_core::rules_catalog::Table::new("crb/ranger_spell_list/RANGER_SPELL_LIST");
@@ -16,4 +15,72 @@ pub fn ranger_spell_level(spell_key: &str) -> Option<u8> {
         .iter()
         .find(|(key, _)| *key == spell_key)
         .map(|(_, level)| *level)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::rules_core::rules_catalog::acg::spell_list as acg_spell_list;
+    use crate::rules_core::rules_catalog::apg::spell_list as apg_spell_list;
+    use crate::rules_core::rules_catalog::crb::spell_list::SPELL_LIST;
+
+    #[test]
+    fn ranger_spell_list_has_the_real_corpus_verified_count() {
+        assert_eq!(RANGER_SPELL_LIST.len(), 114);
+    }
+
+    /// Guards the book-scope widening (task #26). One anchor per ingested
+    /// book, each of which names Ranger mid-group so its raw line carries
+    /// no `Ranger=` substring at all:
+    /// `Alarm` is `CLASSES:Bard,Ranger,Sorcerer,Wizard=1` (CRB),
+    /// `Ant Haul` is `CLASSES:Alchemist,Cleric,Druid,Ranger,Sorcerer,Wizard=1` (APG),
+    /// `Air Step` is `CLASSES:Alchemist,Bard,Cleric,Druid,Ranger,Sorcerer,Witch,Wizard=2` (ACG).
+    #[test]
+    fn spells_tagged_mid_list_in_their_classes_group_are_present() {
+        assert_eq!(ranger_spell_level("Alarm"), Some(1));
+        assert_eq!(ranger_spell_level("Ant Haul"), Some(1));
+        assert_eq!(ranger_spell_level("Air Step"), Some(2));
+    }
+
+    #[test]
+    fn every_ranger_spell_level_is_within_the_real_ranger_ceiling() {
+        for (key, level) in &*RANGER_SPELL_LIST {
+            assert!(
+                (1..=4).contains(level),
+                "{key} has out-of-range Ranger spell level {level}"
+            );
+        }
+    }
+
+    /// Ranger's list spans all three ingested books, so a CRB-only
+    /// cross-check would reject every APG/ACG entry as fictional. Checks
+    /// the union instead -- still a real "never an invented name"
+    /// guarantee, just scoped to everything this repo actually ingests.
+    #[test]
+    fn every_ranger_spell_key_is_a_real_spell_list_entry() {
+        for (key, _) in &*RANGER_SPELL_LIST {
+            let known = SPELL_LIST.iter().any(|entry| entry.key == *key)
+                || apg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
+                || acg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key);
+            assert!(known, "{key} is not a real spell key in any ingested book");
+        }
+    }
+
+    #[test]
+    fn ranger_spell_level_looks_up_known_values() {
+        assert_eq!(ranger_spell_level("Alarm"), Some(1));
+        assert_eq!(ranger_spell_level("Animal Growth"), Some(4));
+        assert_eq!(ranger_spell_level("Cure Light Wounds"), Some(2));
+        assert_eq!(ranger_spell_level("Magic Missile"), None);
+    }
+
+    #[test]
+    fn level_distribution_matches_the_real_corpus_parse() {
+        let count_at =
+            |level: u8| RANGER_SPELL_LIST.iter().filter(|(_, l)| *l == level).count();
+        assert_eq!(count_at(1), 40);
+        assert_eq!(count_at(2), 36);
+        assert_eq!(count_at(3), 28);
+        assert_eq!(count_at(4), 10);
+    }
 }

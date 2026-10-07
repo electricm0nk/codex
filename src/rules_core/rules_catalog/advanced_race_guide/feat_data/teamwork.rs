@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::super::feats::{FeatCategory, FeatEffectBonus, FeatTableEntry};
 pub static TEAMWORK_TABLE: crate::rules_core::rules_catalog::Table<FeatTableEntry> =

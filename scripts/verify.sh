@@ -2246,7 +2246,7 @@ run_clippy() {
 # ---------------------------------------------------------------------------
 
 run_pi_sweep() {
-    stage_start "pi-sweep — Product-Identity blacklist over src/rules_core/rules_tables"
+    stage_start "pi-sweep — Product-Identity blacklist over src/rules_core/rules_catalog + data/rules_tables"
     local log="$LOG_DIR/pi-sweep.log"
 
     # The provenance gate for kind-lane ingestion
@@ -2278,7 +2278,7 @@ run_pi_sweep() {
 # Stage: declared-pi-audit
 #
 # SD31-PI-REPAIR-001 (OPEN-ISSUES rows 38/39). `pi-sweep` above is the
-# heuristic 55-term blacklist over `src/rules_core/rules_tables`; this stage
+# heuristic 55-term blacklist over `src/rules_core/rules_catalog` and the `data/rules_tables` package; this stage
 # is the corpus's OWN per-record declaration (`NAMEISPI:`/`DESCISPI:`),
 # cross-checked against what actually shipped under `data/corpus/`. Two real
 # defects reached `tranche/11` past every other gate because nothing did

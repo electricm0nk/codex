@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::equipment_tables::{EquipmentCategory, EquipmentTableEntry};
 pub static EQUIPMENT_RECORDS: crate::rules_core::rules_catalog::Table<EquipmentTableEntry> =

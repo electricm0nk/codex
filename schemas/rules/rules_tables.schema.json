@@ -2172,7 +2172,7 @@
       "type": "object"
     },
     "acg__ClassTableRow": {
-      "description": "One ACG class's chassis-table row: level, BAB, and the three saves. Shared shape across every per-class module in this directory so `class_chassis_resolve` can return a single type regardless of which class was queried. Mirrors `rules_tables::apg::ClassTableRow` (kept book-local rather than shared, per that module's own established shape).",
+      "description": "One ACG class's chassis-table row: level, BAB, and the three saves. Shared shape across every per-class module in this directory so `class_chassis_resolve` can return a single type regardless of which class was queried. Mirrors `rules_catalog::apg::ClassTableRow` (kept book-local rather than shared, per that module's own established shape).",
       "properties": {
         "base_attack_bonus": {
           "format": "int16",
@@ -2235,7 +2235,7 @@
           ]
         },
         "key": {
-          "description": "Equipment records carry their `name` (or, for `acg_equipmods`, the explicit `KEY:` token) as the corpus identity. `acg_equip` rows have no distinct `KEY:` token, so `key == name` for General/ ArmsArmor/MagicItems (same fallback `rules_tables::apg::equipment_tables` documents for its own `key` field); Equipmods rows use the real `KEY:` token, which can differ from the display name (e.g. `Special Ability ~ Amorphous ~ Armor` vs. display name `Amorphous`).",
+          "description": "Equipment records carry their `name` (or, for `acg_equipmods`, the explicit `KEY:` token) as the corpus identity. `acg_equip` rows have no distinct `KEY:` token, so `key == name` for General/ ArmsArmor/MagicItems (same fallback `rules_catalog::apg::equipment_tables` documents for its own `key` field); Equipmods rows use the real `KEY:` token, which can differ from the display name (e.g. `Special Ability ~ Amorphous ~ Armor` vs. display name `Amorphous`).",
           "type": "string"
         },
         "name": {
@@ -2258,7 +2258,7 @@
       "type": "object"
     },
     "acg__spell_list__Pf1SchoolId": {
-      "description": "The full 9-school PF1 spell-school enum (SD-24 criterion 6.2 widened this from the 4-school bootstrap subset — `Universal` does not appear in `acg_spells` today but is included for parity with `rules_tables::crb::spell_list::Pf1SchoolId`, which this mirrors).",
+      "description": "The full 9-school PF1 spell-school enum (SD-24 criterion 6.2 widened this from the 4-school bootstrap subset — `Universal` does not appear in `acg_spells` today but is included for parity with `rules_catalog::crb::spell_list::Pf1SchoolId`, which this mirrors).",
       "enum": [
         "Abjuration",
         "Conjuration",
@@ -2361,17 +2361,17 @@
       "type": "string"
     },
     "advanced_race_guide__feats__FeatEffectBonus": {
-      "description": "One `BONUS:` token lifted from a feat's corpus record, captured as a flat pipe-delimited qualifier list. Mirrors `rules_tables::crb::feats::FeatEffectBonus` exactly.\n\nSD-35 `AT-35-E6-003-SWEEP` cycle 7 split the ingest tail off the qualifier list here too; the condition types are shared with the CRB catalog rather than re-declared, so one round-trip oracle covers all four catalogs.",
+      "description": "One `BONUS:` token lifted from a feat's corpus record, captured as a flat pipe-delimited qualifier list. Mirrors `rules_catalog::crb::feats::FeatEffectBonus` exactly.\n\nSD-35 `AT-35-E6-003-SWEEP` cycle 7 split the ingest tail off the qualifier list here too; the condition types are shared with the CRB catalog rather than re-declared, so one round-trip oracle covers all four catalogs.",
       "properties": {
         "bonus_type": {
-          "description": "The stacking-type label, if the record named one. Mirrors `rules_tables::crb::feats::FeatEffectBonus.bonus_type`.",
+          "description": "The stacking-type label, if the record named one. Mirrors `rules_catalog::crb::feats::FeatEffectBonus.bonus_type`.",
           "type": [
             "string",
             "null"
           ]
         },
         "conditions": {
-          "description": "The conditions gating this bonus; empty when it is unconditional. Mirrors `rules_tables::crb::feats::FeatEffectBonus.conditions`.",
+          "description": "The conditions gating this bonus; empty when it is unconditional. Mirrors `rules_catalog::crb::feats::FeatEffectBonus.conditions`.",
           "items": {
             "$ref": "#/definitions/EffectCondition"
           },
@@ -2392,7 +2392,7 @@
               "type": "null"
             }
           ],
-          "description": "What the character's own choice supplies to this bonus. Mirrors `rules_tables::crb::feats::FeatEffectBonus.selection`; SD-35 `AT-35-E6-003-SWEEP` cycle 12."
+          "description": "What the character's own choice supplies to this bonus. Mirrors `rules_catalog::crb::feats::FeatEffectBonus.selection`; SD-35 `AT-35-E6-003-SWEEP` cycle 12."
         }
       },
       "required": [
@@ -2414,7 +2414,7 @@
           ]
         },
         "effect": {
-          "description": "Every `BONUS:` token the corpus record carries, verbatim, in source order. `None` when the record has no `BONUS:` token at all -- mirrors `rules_tables::crb::feats::FeatTableEntry.effect`'s own convention exactly, including never using `Some(&[])` for \"no data gathered yet\".",
+          "description": "Every `BONUS:` token the corpus record carries, verbatim, in source order. `None` when the record has no `BONUS:` token at all -- mirrors `rules_catalog::crb::feats::FeatTableEntry.effect`'s own convention exactly, including never using `Some(&[])` for \"no data gathered yet\".",
           "items": {
             "$ref": "#/definitions/advanced_race_guide__feats__FeatEffectBonus"
           },
@@ -2439,7 +2439,7 @@
       "type": "object"
     },
     "advanced_race_guide__spell_list__Pf1SchoolId": {
-      "description": "The full 9-school PF1 spell-school enum, mirroring `rules_tables::acg::spell_list::Pf1SchoolId` exactly. `Universal` does not appear in `arg_spells` today but is included for cross-book schema parity.",
+      "description": "The full 9-school PF1 spell-school enum, mirroring `rules_catalog::acg::spell_list::Pf1SchoolId` exactly. `Universal` does not appear in `arg_spells` today but is included for cross-book schema parity.",
       "enum": [
         "Abjuration",
         "Conjuration",
@@ -2603,7 +2603,7 @@
           ]
         },
         "key": {
-          "description": "Equipment records carry their `name` as the corpus identity by default (no distinct `KEY:` token on most rows), same fallback `rules_tables::crb::equipment_tables` documents for its own `key` field. A handful of `arms_armor` rows do carry a real `KEY:` token, which wins when present.",
+          "description": "Equipment records carry their `name` as the corpus identity by default (no distinct `KEY:` token on most rows), same fallback `rules_catalog::crb::equipment_tables` documents for its own `key` field. A handful of `arms_armor` rows do carry a real `KEY:` token, which wins when present.",
           "type": "string"
         },
         "name": {
@@ -2626,7 +2626,7 @@
       "type": "object"
     },
     "apg__spell_list__Pf1SchoolId": {
-      "description": "The 8 canonical PF1 arcane/divine spell schools that appear in the real `apg_spells` corpus (widened from the SD-22 bootstrap's 3-school subset to the full set actually present — see `rules_tables::crb::spell_list::Pf1SchoolId` for CRB's own, separately maintained copy of this enum).",
+      "description": "The 8 canonical PF1 arcane/divine spell schools that appear in the real `apg_spells` corpus (widened from the SD-22 bootstrap's 3-school subset to the full set actually present — see `rules_catalog::crb::spell_list::Pf1SchoolId` for CRB's own, separately maintained copy of this enum).",
       "enum": [
         "Abjuration",
         "Conjuration",
@@ -2769,14 +2769,14 @@
           ]
         },
         "description": {
-          "description": "Descriptive text. Sourced from the corpus `SPROP:` (\"Special Property\") token where present — Bestiary 1's equipment corpus carries no `DESC:` token at all (checked directly), but 3 of the 4 records do carry `SPROP:` (register A10: same convention `rules_tables::acg::equipment_data` already established, \"ACG hit 98.1% via `SPROP:` alone\"). The 1 record with neither `DESC:` nor `SPROP:` (`Rag Armor (Dark Creeper)`) is filled from a web second-source per this cycle's receipt — never fabricated, and only after an identity-match confirmation (name + monster + source page) against the same Dark Creeper stat block the LST record itself is keyed to.",
+          "description": "Descriptive text. Sourced from the corpus `SPROP:` (\"Special Property\") token where present — Bestiary 1's equipment corpus carries no `DESC:` token at all (checked directly), but 3 of the 4 records do carry `SPROP:` (register A10: same convention `rules_catalog::acg::equipment_data` already established, \"ACG hit 98.1% via `SPROP:` alone\"). The 1 record with neither `DESC:` nor `SPROP:` (`Rag Armor (Dark Creeper)`) is filled from a web second-source per this cycle's receipt — never fabricated, and only after an identity-match confirmation (name + monster + source page) against the same Dark Creeper stat block the LST record itself is keyed to.",
           "type": [
             "string",
             "null"
           ]
         },
         "key": {
-          "description": "The corpus's raw first-column name (its `SORTKEY:`-equivalent identity when no explicit `KEY:` token is present, which is every record in this book), falling back to `name` otherwise — same convention `rules_tables::{crb,apg,acg}::equipment_tables` document for their own `key` field.",
+          "description": "The corpus's raw first-column name (its `SORTKEY:`-equivalent identity when no explicit `KEY:` token is present, which is every record in this book), falling back to `name` otherwise — same convention `rules_catalog::{crb,apg,acg}::equipment_tables` document for their own `key` field.",
           "type": "string"
         },
         "name": {
@@ -2859,7 +2859,7 @@
       "type": "object"
     },
     "bestiary_6__spell_list__Pf1SchoolId": {
-      "description": "The full 9-school PF1 spell-school enum, mirroring every other book's own copy exactly (`rules_tables::advanced_race_guide::spell_list::Pf1SchoolId`).",
+      "description": "The full 9-school PF1 spell-school enum, mirroring every other book's own copy exactly (`rules_catalog::advanced_race_guide::spell_list::Pf1SchoolId`).",
       "enum": [
         "Abjuration",
         "Conjuration",
@@ -4122,7 +4122,7 @@
       "type": "object"
     },
     "pathfinder_unchained__class_chassis__ClassTableRow": {
-      "description": "One Unchained class's chassis-table row: level, BAB, and the three saves. Same shape as `rules_tables::apg::ClassTableRow` and `rules_tables::acg::ClassTableRow`, kept book-local for the same reason those two are.",
+      "description": "One Unchained class's chassis-table row: level, BAB, and the three saves. Same shape as `rules_catalog::apg::ClassTableRow` and `rules_catalog::acg::ClassTableRow`, kept book-local for the same reason those two are.",
       "properties": {
         "base_attack_bonus": {
           "format": "int16",
@@ -4169,7 +4169,7 @@
           "type": "string"
         },
         "key": {
-          "description": "The real corpus `KEY:` token -- every one of the 42 real `pu_equipmods` records carries one (unlike `rules_tables::crb`/`rules_tables::acg`'s own equipment catalogs, where `key == name` fallback is common).",
+          "description": "The real corpus `KEY:` token -- every one of the 42 real `pu_equipmods` records carries one (unlike `rules_catalog::crb`/`rules_catalog::acg`'s own equipment catalogs, where `key == name` fallback is common).",
           "type": "string"
         },
         "name": {
@@ -4230,7 +4230,7 @@
           "$ref": "#/definitions/pathfinder_unchained__feat_tables__FeatCategory"
         },
         "description": {
-          "description": "The corpus `DESC:` token, verbatim. Every one of the 17 real records in this catalog carries a `DESC:` token (unlike CRB's own catalog, which has 8 real gaps) -- `None` never actually occurs here today, but the type stays `Option` to match the established `rules_tables::crb::feats::FeatTableEntry.description` convention (\"`None` when the record has no `DESC:` token\") rather than asserting a non-optional field this book's corpus happens not to need yet.",
+          "description": "The corpus `DESC:` token, verbatim. Every one of the 17 real records in this catalog carries a `DESC:` token (unlike CRB's own catalog, which has 8 real gaps) -- `None` never actually occurs here today, but the type stays `Option` to match the established `rules_catalog::crb::feats::FeatTableEntry.description` convention (\"`None` when the record has no `DESC:` token\") rather than asserting a non-optional field this book's corpus happens not to need yet.",
           "type": [
             "string",
             "null"
@@ -4259,7 +4259,7 @@
       "type": "object"
     },
     "ultimate_combat__ClassTableRow": {
-      "description": "One resolved class-chassis row: level, base attack bonus, and the three base saves. Mirrors `rules_tables::acg::ClassTableRow` (kept book-local rather than shared, per that module's own established shape -- `pathfinder_unchained::class_chassis`'s own doc comment on the same non-sharing choice applies here too).",
+      "description": "One resolved class-chassis row: level, base attack bonus, and the three base saves. Mirrors `rules_catalog::acg::ClassTableRow` (kept book-local rather than shared, per that module's own established shape -- `pathfinder_unchained::class_chassis`'s own doc comment on the same non-sharing choice applies here too).",
       "properties": {
         "base_attack_bonus": {
           "format": "int16",

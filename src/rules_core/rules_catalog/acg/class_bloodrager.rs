@@ -7,11 +7,13 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::ClassTableRow;
-pub use rt::acg::class_bloodrager::MAX_SUPPORTED_LEVEL;
+/// `MAXLEVEL:20` on the real `CLASS:Bloodrager` record.
+pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 pub fn class_table() -> Vec<ClassTableRow> {
     crate::rules_core::rules_catalog::rows_vec::<ClassTableRow>("acg/class_bloodrager/class_table")
 }
-pub use rt::acg::class_bloodrager::HIT_DIE;
+/// `HD:10` on the real `CLASS:Bloodrager` record (Bloodrager HD:10 in
+/// `advanced_class_guide/acg_classes`).
+pub const HIT_DIE: u8 = 10;

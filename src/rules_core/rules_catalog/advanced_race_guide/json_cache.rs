@@ -7,9 +7,48 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::advanced_race_guide::json_cache::EquipmentCacheData;
-pub use rt::advanced_race_guide::json_cache::FeatCacheData;
-pub use rt::advanced_race_guide::json_cache::SpellCacheData;
+/// `data/corpus/advanced_race_guide/equipment/<category>/<slug>.json`
+/// payload. Mirrors `rules_catalog::crb::json_cache::EquipmentCacheData`
+/// field-for-field.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct EquipmentCacheData {
+    pub key: String,
+    pub category: String,
+    pub name: String,
+    pub cost_gp: Option<f64>,
+    pub weight_lbs: Option<f64>,
+    pub description: Option<String>,
+}
+/// `data/corpus/advanced_race_guide/feat/<category>/<slug>.json` payload.
+/// This is the first book in this codebase to cache `feat` records to
+/// Shape B JSON (CRB's own `feats.rs`/`feat_data/` has never had a
+/// `data/corpus/core_rulebook/feat/` cache directory) — the shape mirrors
+/// `rules_catalog::advanced_race_guide::feats::FeatTableEntry` directly,
+/// following the same "one payload struct per content kind" convention
+/// `SpellCacheData`/`EquipmentCacheData` already establish.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FeatCacheData {
+    pub key: String,
+    pub category: String,
+    pub name: String,
+    pub description: Option<String>,
+    /// Every `BONUS:` token's pipe-delimited qualifier list, verbatim, in
+    /// source order — mirrors `FeatTableEntry.effect`'s shape as plain
+    /// `Vec<Vec<String>>` (JSON has no tuple-struct distinction to
+    /// preserve). Empty vec, not `null`, when the record has no `BONUS:`
+    /// token — JSON's own natural "no entries" shape for a list field,
+    /// distinguished from `FeatTableEntry`'s Rust-side `None` only by the
+    /// serialization boundary, not a meaning change.
+    pub effect: Vec<Vec<String>>,
+}
+/// `data/corpus/advanced_race_guide/spell/<slug>.json` payload. Mirrors
+/// `rules_catalog::crb::json_cache::SpellCacheData` field-for-field.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SpellCacheData {
+    pub key: String,
+    pub school: String,
+    pub level: u8,
+    pub description: String,
+}
 use serde::{Deserialize, Serialize};

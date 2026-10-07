@@ -7,14 +7,111 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use crate::rules_core::rules_catalog::RuleSetId;
-pub use rt::apg::spell_list::Pf1SchoolId;
-pub use rt::apg::spell_list::SpellListEntry;
+/// The 8 canonical PF1 arcane/divine spell schools that appear in the
+/// real `apg_spells` corpus (widened from the SD-22 bootstrap's
+/// 3-school subset to the full set actually present — see
+/// `rules_catalog::crb::spell_list::Pf1SchoolId` for CRB's own, separately
+/// maintained copy of this enum).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "apg__spell_list__Pf1SchoolId"))]
+pub enum Pf1SchoolId {
+    Abjuration,
+    Conjuration,
+    Divination,
+    Enchantment,
+    Evocation,
+    Illusion,
+    Necromancy,
+    Transmutation,
+}
+impl Pf1SchoolId {
+    /// Maps the corpus's raw `SCHOOL:` string to this enum. `None` for
+    /// any string outside the 8 canonical schools (e.g. a `SUBSCHOOL:`
+    /// value like `Charm`/`Glamer`/`Polymorph` is never passed here — the
+    /// ingester only reads the `SCHOOL:` token, never `SUBSCHOOL:`).
+    pub fn from_corpus_str(raw: &str) -> Option<Self> {
+        match raw {
+            "Abjuration" => Some(Pf1SchoolId::Abjuration),
+            "Conjuration" => Some(Pf1SchoolId::Conjuration),
+            "Divination" => Some(Pf1SchoolId::Divination),
+            "Enchantment" => Some(Pf1SchoolId::Enchantment),
+            "Evocation" => Some(Pf1SchoolId::Evocation),
+            "Illusion" => Some(Pf1SchoolId::Illusion),
+            "Necromancy" => Some(Pf1SchoolId::Necromancy),
+            "Transmutation" => Some(Pf1SchoolId::Transmutation),
+            _ => None,
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "apg__spell_list__SpellListEntry"))]
+pub struct SpellListEntry {
+    /// The record's identity in `apg_spells`: its `KEY:` token when
+    /// the row carries one, else its display name (most rows carry no
+    /// `KEY:`), or — for a `.COPY=` variant record — the variant's own
+    /// display name (see this module's doc comment).
+    ///
+    /// Exactly 9 rows in this file carry a `KEY:` token, all of them the
+    /// Summoner-archetype summon spells (`apg_spells:649`+), whose
+    /// KEY is archetype-qualified — `KEY:Summoner Summon Monster I` for
+    /// the row displayed as `Summon Monster I`. Those are genuinely
+    /// different records from CRB's own `Summon Monster I` (they carry
+    /// their own `DURATION:` formula keyed to
+    /// `ConjurationSummonersCharmBonus`), so storing the display name
+    /// here — as this table originally did — collided all 9 with the CRB
+    /// record and made a selection carrying that name unresolvable
+    /// between the two. The `KEY:` token is stored instead; see
+    /// `tests/spell_cross_book_identity.rs`.
+    ///
+    /// This field is the record's *identity*, not its lookup surface:
+    /// those 9 rows are still reachable by their display name through
+    /// [`spell_resolve`], which consults [`ARCHETYPE_QUALIFIED_KEYS`].
+    /// Do not read a qualified `key` as "this record can only be found
+    /// under its archetype name".
+    pub key: &'static str,
+    /// `None` when the corpus record has no `SCHOOL:` token (a real,
+    /// documented gap — see this module's doc comment).
+    pub school: Option<Pf1SchoolId>,
+    /// Minimum spell level across every `CLASSES:` group on the real
+    /// record. `None` when the corpus record has no `CLASSES:` token (a
+    /// real, documented gap).
+    pub level: Option<u8>,
+    /// `None` only when neither the base record nor a matching `.MOD`
+    /// record supplies any `DESC:` text at all (a small, real,
+    /// documented gap — see this module's doc comment).
+    pub description: Option<&'static str>,
+    /// `true` when `description` is sourced from the corpus's
+    /// `<Name>.MOD` record's own full SRD/PRD `DESC:` text (criterion
+    /// 6.5); `false` when it is only the base record's short summary, or
+    /// when `description` is `None`.
+    pub full_text: bool,
+}
 pub static SPELL_LIST: crate::rules_core::rules_catalog::Table<SpellListEntry> =
     crate::rules_core::rules_catalog::Table::new("apg/spell_list/SPELL_LIST");
-pub use rt::apg::spell_list::SpellFieldCoverage;
+/// SD-24 Epic 6 criterion 6.1 — spell field-coverage audit row. Mirrors
+/// `rules_catalog::crb::spell_list::SpellFieldCoverage`'s shape.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct SpellFieldCoverage {
+    /// Records currently in `SPELL_LIST`.
+    pub total_records: u32,
+    /// Real, active (non-`.MOD`, non-comment), deduplicated-by-name
+    /// record count in `apg_spells` (297 — see this module's doc
+    /// comment for the 298 -> 297 audit correction).
+    pub records_expected: u32,
+    /// Records with `description.is_some()` -- a real per-row count
+    /// (this field is `Option`, not always-populated, unlike the SD-22
+    /// bootstrap's non-optional field of the same name).
+    pub has_description: u32,
+    /// Records whose ingested `description` is the full SRD/PRD spell
+    /// text (`full_text: true`), sourced from a matching `<Name>.MOD`
+    /// record's own `DESC:` token, not merely the short base-record
+    /// summary.
+    pub full_text_verified: u32,
+}
 pub fn spell_coverage_report() -> SpellFieldCoverage {
     SpellFieldCoverage {
         total_records: SPELL_LIST.len() as u32,

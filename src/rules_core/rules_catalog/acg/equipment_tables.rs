@@ -7,13 +7,98 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use crate::rules_core::rules_catalog::RuleSetId;
 use crate::rules_core::rules_catalog::acg::equipment_data;
-pub use rt::acg::equipment_tables::EquipmentCategory;
-pub use rt::acg::equipment_tables::EquipmentFieldCoverage;
-pub use rt::acg::equipment_tables::EquipmentTableEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "acg__equipment_tables__EquipmentCategory"))]
+pub enum EquipmentCategory {
+    General,
+    ArmsArmor,
+    MagicItems,
+    Equipmods,
+}
+impl EquipmentCategory {
+    pub const ALL: &'static [EquipmentCategory] = &[
+        EquipmentCategory::General,
+        EquipmentCategory::ArmsArmor,
+        EquipmentCategory::MagicItems,
+        EquipmentCategory::Equipmods,
+    ];
+}
+/// SD-24 Epic 6 criterion 6.1 (originating audit) / 6.2-6.4 (this cycle's
+/// remediation) — equipment field-coverage audit row. Mirrors
+/// `rules_catalog::crb::equipment_tables::EquipmentFieldCoverage`'s shape.
+/// Every field is computed from `equipment_tables()`'s real content or a
+/// documented corpus record count (never a hand-guessed or invented
+/// number).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct EquipmentFieldCoverage {
+    /// Records currently in `equipment_tables()`.
+    pub total_records: u32,
+    /// Real, active (non-`.MOD`) record count: `acg_equip` (221:
+    /// 60 General + 20 Arms/Armor + 141 Magic Items, `TYPE:`-disambiguated)
+    /// \+ `acg_equipmods` (48 `KEY:`-bearing modifier records,
+    /// excluding the file's own trailing "Old KEYs" `.COPY=`-only block).
+    /// SD-24 criterion 6.1 originally cited 221 for equipment (not
+    /// counting `acg_equipmods` at all, unlike CRB's four-category
+    /// scope) — this cycle widens the scope to match CRB's own four-file
+    /// treatment; see `progress.md`'s `## DISCOVERED` for the correction.
+    pub records_expected: u32,
+    /// Records with `cost_gp.is_some()`.
+    pub has_cost: u32,
+    /// Records with `weight_lbs.is_some()` (SD-24 criterion 6.3, landed
+    /// this cycle for ACG).
+    pub has_weight: u32,
+    /// Records with `description.is_some()` (SD-24 criterion 6.4, landed
+    /// this cycle for ACG, sourced from `SPROP:` — see `description`'s own
+    /// doc comment).
+    pub has_description: u32,
+}
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "acg__equipment_tables__EquipmentTableEntry"))]
+pub struct EquipmentTableEntry {
+    /// Equipment records carry their `name` (or, for `acg_equipmods`,
+    /// the explicit `KEY:` token) as the corpus identity. `acg_equip`
+    /// rows have no distinct `KEY:` token, so `key == name` for General/
+    /// ArmsArmor/MagicItems (same fallback `rules_catalog::apg::equipment_tables`
+    /// documents for its own `key` field); Equipmods rows use the real
+    /// `KEY:` token, which can differ from the display name (e.g.
+    /// `Special Ability ~ Amorphous ~ Armor` vs. display name `Amorphous`).
+    pub key: &'static str,
+    pub category: EquipmentCategory,
+    pub name: &'static str,
+    /// Cost in gold pieces from the corpus `COST:` token. `f64` because
+    /// real corpus costs are frequently fractional. `None` when the token
+    /// is absent — genuine for Equipmods rows priced via `PLUS:` (an
+    /// enhancement-bonus slot cost, not a flat gp number) rather than a
+    /// fixed `COST:`.
+    pub cost_gp: Option<f64>,
+    /// Weight in pounds from the corpus `WT:` token (SD-24 criterion 6.3,
+    /// ACG scope). `None` when the corpus genuinely carries no `WT:`
+    /// token for this record — true for every `acg_equipmods` record
+    /// (equipment *modifiers* have no independent physical weight of
+    /// their own, matching the same finding CRB's own `Equipmods`
+    /// category already established) and for a smaller number of
+    /// General/Magic Items rows. Never a fabricated value.
+    pub weight_lbs: Option<f64>,
+    /// Descriptive text for this record (SD-24 criterion 6.4, ACG scope).
+    /// Sourced from the corpus `SPROP:` ("Special Property") token —
+    /// `acg_equip`/`acg_equipmods` carry no `DESC:` token
+    /// anywhere, unlike CRB's equipment files, so `SPROP:` is the closest
+    /// real per-item prose ACG's corpus provides. When a record has more
+    /// than one `SPROP:` entry they are joined with `"; "`. A trailing
+    /// `|<conditional-tag>` qualifier (e.g. `|PRECLASS:1,Slayer=1`) is
+    /// stripped before storage — verified by inspection that every real
+    /// `|`-suffixed `SPROP:` in this corpus follows the
+    /// `<prose>|<directive>` shape, never real item text after the pipe.
+    /// `None` only when the corpus record has no `SPROP:` token at all
+    /// (rare — see `EquipmentFieldCoverage`'s per-category ceiling). Never
+    /// fabricated.
+    pub description: Option<&'static str>,
+}
 pub fn field_coverage_report() -> EquipmentFieldCoverage {
     let table = equipment_tables();
     EquipmentFieldCoverage {

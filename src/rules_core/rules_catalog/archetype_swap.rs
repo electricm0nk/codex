@@ -7,7 +7,56 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::archetype_swap::ArchetypeGrant;
-pub use rt::archetype_swap::ArchetypeSwapEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct ArchetypeGrant {
+    /// The named sub-feature's own corpus `KEY:` (e.g. `"Raging Beast ~
+    /// Raging Beast Manifesting"`), verbatim.
+    pub grants_feature_key: &'static str,
+    /// The class level this grant's own `PRECLASS:1,<Class>=<Level>`
+    /// token names, verbatim.
+    pub at_level: u8,
+    /// The named sub-feature's own corpus `DESC:` token, resolved from
+    /// its separate row. `None` when the row has no `DESC:`, or when
+    /// this extraction could not find the row at all -- the two cases
+    /// are not distinguished here; both are honestly `None`, never
+    /// fabricated. Each book's own table doc comment names its own
+    /// unresolved grants individually.
+    pub description: Option<&'static str>,
+    /// The named sub-feature's own corpus `BENEFIT:` token, resolved the
+    /// same way. `None` when absent or unresolved.
+    pub benefit: Option<&'static str>,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct ArchetypeSwapEntry {
+    /// The master/selection row's own corpus `KEY:`, verbatim (e.g.
+    /// `"Barbarian Archetype ~ Raging Beast"`).
+    pub key: &'static str,
+    /// The base class (or other subject -- see this module's own doc
+    /// comment) this archetype replaces features of.
+    pub subject: &'static str,
+    pub archetype_name: &'static str,
+    /// The master row's own corpus `DESC:` token, verbatim -- the
+    /// archetype's flavour text, not any specific feature's mechanic.
+    pub description: Option<&'static str>,
+    pub source_page: Option<&'static str>,
+    // The master row's `PRE`-family tokens used to sit here, verbatim and
+    // unparsed. Nothing on the live side ever read them -- `archetype_resolver`
+    // leaves prerequisites to `feat_prereqs`, and `feat_prereqs` reads the
+    // CONVERTED `Applies` gate, never a token string. SD-35
+    // `AT-35-E6-003-SWEEP` cycle 2 moved all 409 rows to the converter side
+    // (`src/pcgen_import/archetype_swap_prereq_tokens.rs`), where the ingest
+    // format belongs (`decisions.md` §11). A move, not a removal.
+    /// The base-class feature-slot IDs this archetype's own `TYPE:`
+    /// facet names as replaced, verbatim, in source order. **Not
+    /// paired 1:1 with `grants`** -- see this module's own doc comment.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_opt_slice")]
+    pub replaces: Option<&'static [&'static str]>,
+    /// Every feature this archetype's own `ABILITY:...AUTOMATIC` tokens
+    /// grant, each with its real level gate and (where resolved) its
+    /// own real mechanical text.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
+    pub grants: &'static [ArchetypeGrant],
+}

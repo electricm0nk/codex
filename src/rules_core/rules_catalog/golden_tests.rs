@@ -21,36 +21,26 @@ trait Rows {
 }
 impl<T> Rows for [T] {
     type Item = T;
-    fn rows(&self) -> &[T] {
-        self
-    }
+    fn rows(&self) -> &[T] { self }
 }
 impl<T, const N: usize> Rows for [T; N] {
     type Item = T;
-    fn rows(&self) -> &[T] {
-        self
-    }
+    fn rows(&self) -> &[T] { self }
 }
 impl<T> Rows for &[T] {
     type Item = T;
-    fn rows(&self) -> &[T] {
-        self
-    }
+    fn rows(&self) -> &[T] { self }
 }
 impl<T> Rows for cat::Table<T>
 where
     T: serde::Deserialize<'static> + Send + Sync + 'static,
 {
     type Item = T;
-    fn rows(&self) -> &[T] {
-        self
-    }
+    fn rows(&self) -> &[T] { self }
 }
 impl<T: Send + Sync + 'static> Rows for cat::Derived<T> {
     type Item = T;
-    fn rows(&self) -> &[T] {
-        self
-    }
+    fn rows(&self) -> &[T] { self }
 }
 fn rows_of<R: Rows + ?Sized>(r: &R) -> &[R::Item] {
     r.rows()
@@ -590,10 +580,7 @@ fn digests(transcripts: Vec<(&'static str, String)>) -> Vec<(String, String)> {
     transcripts
         .into_iter()
         .map(|(id, text)| {
-            let digest: String = Sha256::digest(text.as_bytes())
-                .iter()
-                .map(|b| format!("{b:02x}"))
-                .collect();
+            let digest: String = Sha256::digest(text.as_bytes()).iter().map(|b| format!("{b:02x}")).collect();
             (id.to_owned(), digest)
         })
         .collect()
@@ -623,33 +610,5 @@ fn every_catalog_table_view_and_lookup_matches_its_golden_digest() {
         .map(|(e, _)| e.0.as_str())
         .collect();
     assert_eq!(expected.len(), actual.len());
-    assert!(
-        differing.is_empty(),
-        "transcripts whose digest moved: {differing:#?}"
-    );
-}
-
-/// The compiled half: the same transcripts over the compiled module, the oracle the digests are
-/// written from (`RULES_CATALOG_GOLDEN_WRITE=1`). Removed with the module (E4a.4).
-#[test]
-fn the_golden_digests_are_the_compiled_tables_digests() {
-    use crate::rules_core::rules_tables as rt;
-    let compiled = digests(transcripts!(rt));
-    if std::env::var_os("RULES_CATALOG_GOLDEN_WRITE").is_some() {
-        let text: String = compiled
-            .iter()
-            .map(|(id, d)| format!("{d}  {id}\n"))
-            .collect();
-        std::fs::write(
-            std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-                .join("src/rules_core/rules_catalog/golden_digests.txt"),
-            text,
-        )
-        .expect("write golden_digests.txt");
-    }
-    assert_eq!(
-        manifest(),
-        compiled,
-        "golden_digests.txt is not the compiled tables' digest set"
-    );
+    assert!(differing.is_empty(), "transcripts whose digest moved: {differing:#?}");
 }

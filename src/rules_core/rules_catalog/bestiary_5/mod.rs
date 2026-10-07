@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub use super::companion_chassis::{
     CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord,
@@ -35,4 +34,82 @@ pub fn monsters_static() -> &'static [MonsterStatBlock] {
 }
 pub fn monster_abilities_static() -> &'static [MonsterAbilityRecord] {
     &*monster_data::MONSTER_ABILITIES
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// From `docs/work-inventory.json`'s own units for this book: all 57
+    /// units, 35 creature rows and 22 ability rows. Row-19 desktop
+    /// reach/catalog reds (SD-32, 2026-08-24): 33 -> 35 -- see `mod.rs`'s
+    /// own module doc comment for why the two Occult-Adventures-gated
+    /// familiars are no longer excluded.
+    #[test]
+    fn the_book_defines_thirty_five_companions_and_twenty_two_abilities() {
+        assert_eq!(companions().len(), 35);
+        assert_eq!(companion_abilities().len(), 22);
+    }
+
+    /// The formerly-Occult-Adventures-gated rows are now present BY NAME,
+    /// not by a count that any two other records would satisfy. Row-19
+    /// desktop reach/catalog reds (SD-32, 2026-08-24): this test used to
+    /// assert their ABSENCE (`decisions.md §47.2`); that premise is now
+    /// false (`reach_gate.rs::CORPUS_BOOK_IDS` carries `occult_adventures`,
+    /// and `decisions.md §27b` separately overturned this exact exclusion
+    /// shape) so the assertion inverts rather than being deleted -- a
+    /// future transcriber change that dropped `support/` rows again fails
+    /// here, by name, same as before.
+    #[test]
+    fn the_formerly_occult_adventures_gated_familiars_are_in_this_rule_set() {
+        for key in ["Familiar (Brain Mole)", "Familiar (Chuspiki)"] {
+            assert!(
+                companions().iter().any(|c| c.key == key),
+                "{key} was loaded only under PRECAMPAIGN:1,Occult Adventures, but Occult \
+                 Adventures is now an ingested book (`decisions.md §27b`) and this row \
+                 should be transcribed"
+            );
+        }
+    }
+
+    /// Verbatim spot-check against `b5_races_companion`, on the row that
+    /// exercises the most reader paths at once: three speed modes including one
+    /// (`Jet`) no other registered book carries, and a `RACESUBTYPE` beside a
+    /// `RACETYPE`.
+    #[test]
+    fn the_cameroceras_matches_its_corpus_row() {
+        let companion = companions()
+            .iter()
+            .find(|c| c.key == "Companion (Cameroceras)")
+            .expect("Cameroceras is in this book");
+        assert_eq!(companion.size, Some("M"));
+        assert_eq!(companion.race_type, Some("Companion"));
+        assert_eq!(companion.race_subtype, Some("Aquatic"));
+        assert_eq!(
+            companion.speeds,
+            &[
+                Speed { mode: "Walk", feet: 5 },
+                Speed { mode: "Swim", feet: 20 },
+                Speed { mode: "Jet", feet: 90 },
+            ]
+        );
+    }
+
+    /// Every ability row in this book is owned by a creature row of this book,
+    /// and every owner names it back. The chassis holds the same invariant for
+    /// every registered book; this pins it for the book with the most rows.
+    #[test]
+    fn every_ability_row_names_at_least_one_owner_in_this_book() {
+        let keys: Vec<_> = companions().iter().map(|c| c.key).collect();
+        for ability in companion_abilities() {
+            assert!(!ability.owners.is_empty(), "{} is an orphan", ability.key);
+            for owner in ability.owners {
+                assert!(
+                    keys.contains(owner),
+                    "{}: owner {owner} is not a creature in this book",
+                    ability.key
+                );
+            }
+        }
+    }
 }

@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
@@ -38,4 +37,157 @@ pub fn monsters() -> &'static [MonsterStatBlock] {
 }
 pub fn monster_abilities() -> &'static [MonsterAbilityRecord] {
     monster_abilities_static()
+}
+
+#[cfg(test)]
+mod monster_tests {
+    use super::*;
+    use std::collections::HashSet;
+
+    /// What ships is 21 and 127, against corpus unit counts of 21 and 176
+    /// (`docs/work-inventory.json`'s current `monster_ability` count for this
+    /// book, up from the 79 the original round-10 transcription ran
+    /// against).
+    ///
+    /// Every corpus monster row of this book ships — no `NAMEISPI:YES`, no
+    /// `.COPY=` delta and no `.MOD` overlay reaches the monster side here.
+    ///
+    /// 13 -> 15 (SD31-W21-MONSTER-001, +2): the `CATEGORY:Internal` bundle-row
+    /// ownership hop resolved 2 previously-orphaned ability rows.
+    ///
+    /// 15 -> 127 (SD-32 card 11, T9 onboarding, `decisions.md §19` sign-off /
+    /// `§17` generic-pass discipline, +112): re-running `transcribe_monster_
+    /// tables.py ultimate_psionics` against the current corpus/inventory
+    /// found 112 rows reachable through the namespaced-prefix shape
+    /// (`Astral Warrior ~ Link` etc. -- a monster row's own name as the
+    /// ability row's key prefix) that the round-10 transcription's own
+    /// snapshot had not yet resolved. 64 `Astral_`-namespaced rows remain
+    /// genuine orphans (no monster row of this book owns a bundle named
+    /// `Astral`) and are correctly still excluded -- named explicitly by the
+    /// transcriber's own stderr, not silently dropped. Re-derive: `python3
+    /// scripts/transcribe_monster_tables.py ultimate_psionics && cargo run
+    /// --locked --release --bin gen_book_cache -- ultimate_psionics`.
+    #[test]
+    fn the_shipped_counts_are_the_reachable_ones() {
+        assert_eq!(monsters().len(), 21, "every corpus monster row of this book ships");
+        // 127 owned + 64 owner-less (`decisions.md §20`, no_record-to-zero
+        // wave 2 follow-on) = 191. The 64 `Astral_`-namespaced rows this
+        // module's own doc comment already names as genuine orphans now SHIP
+        // instead of being excluded. The owner-less count is pinned
+        // separately below
+        // (`every_owner_less_ability_is_a_named_and_pinned_non_reach`).
+        let owned = monster_abilities()
+            .iter()
+            .filter(|a| !a.owners.is_empty())
+            .count();
+        assert_eq!(owned, 127);
+        assert_eq!(monster_abilities().len(), 191);
+    }
+
+    /// Every record cites one of this book's two source file files, asserted on the
+    /// records rather than on the spec — a spec naming a file no record cites
+    /// would pass a spec-shaped test while shipping nothing.
+    #[test]
+    fn every_record_cites_one_of_this_books_files() {
+        for monster in monsters() {
+            assert_eq!(
+                monster.source_file, "up_races",
+                "{} cites {}, which is not this book's races file",
+                monster.key, monster.source_file
+            );
+        }
+        for ability in monster_abilities() {
+            assert_eq!(
+                ability.source_file, "up_abilities_race",
+                "{} cites {}, which is not this book's abilities file",
+                ability.key, ability.source_file
+            );
+        }
+    }
+
+    /// Every OWNED ability's owner ships.
+    ///
+    /// **Superseded `decisions.md §20` for the owner-less half** (previously
+    /// asserted every ability has a non-empty `owners`; the 64 genuinely
+    /// orphaned `Astral_`-namespaced rows now ship for shape measurement
+    /// instead, pinned separately below).
+    #[test]
+    fn every_ability_has_a_shipped_owner() {
+        let monster_keys: HashSet<&str> = monsters().iter().map(|m| m.key).collect();
+        for ability in monster_abilities() {
+            for owner in ability.owners {
+                assert!(
+                    monster_keys.contains(owner),
+                    "{} is owned by {owner}, which this book does not ship",
+                    ability.key
+                );
+            }
+        }
+    }
+
+    /// **Superseded `decisions.md §20` (no_record-to-zero wave 2 follow-on).**
+    /// The 64 `Astral_`-namespaced rows no monster row of this book claims
+    /// now SHIP with `owners: &[]`, and this test pins the EXACT set of
+    /// records that carry one. `list_monster_catalog` never walks these
+    /// directly (only a monster's own `ability_keys`), so shipping them does
+    /// not surface a stub; each key is pinned separately, by name, in
+    /// `reach_gate.rs::UNREACHED_RECORD_FINDINGS` under
+    /// `("ultimate_psionics", "monster_abilities")` as a proven non-reach,
+    /// not a silent claim of reachability.
+    #[test]
+    fn every_owner_less_ability_is_a_named_and_pinned_non_reach() {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
+        let mut unowned: Vec<&str> = monster_abilities()
+            .iter()
+            .filter(|a| a.owners.is_empty())
+            .map(|a| a.key)
+            .collect();
+        unowned.sort_unstable();
+
+        assert_eq!(
+            unowned.len(),
+            64,
+            "the number of owner-less (unreachable-by-design) monster_ability records \
+             changed — re-derive this pin from a real \
+             `scripts/transcribe_monster_tables.py ultimate_psionics` run, and update the \
+             matching `reach_gate.rs::UNREACHED_RECORD_FINDINGS` entry to the same key set"
+        );
+
+        let mut hasher = DefaultHasher::new();
+        unowned.hash(&mut hasher);
+        let digest = hasher.finish();
+        assert_eq!(
+            digest, 0x20e3_944a_3d90_ea44,
+            "the owner-less key SET changed (same count, different members) — re-derive and \
+             update `reach_gate.rs::UNREACHED_RECORD_FINDINGS` to match exactly"
+        );
+    }
+
+    /// The `Racial Traits ~` bundle finding, RESOLVED (`SD31-W21-MONSTER-001`):
+    /// `Naturally Psionic` and `Psionic Aptitude` now ship, owned by all ten
+    /// races the `CATEGORY:Internal` bundle row names. Was `no_internal_
+    /// bundle_ability_ships_yet`, asserting the pre-hop emptiness; now asserts
+    /// both keys ship AND carry the full ten-race owner set, so a future
+    /// regression (a race silently dropped from the bundle row, or the hop
+    /// breaking outright) is caught either way.
+    #[test]
+    fn the_bundle_owned_abilities_ship_with_every_named_race() {
+        let expected_owners: &[&str] = &[
+            "Blue", "Dromite", "Duergar ~ Psionic", "Elan", "Forgeborn", "Half-Giant", "Maenad",
+            "Noral", "Ophiduan", "Xeph",
+        ];
+        for key in ["Naturally Psionic", "Psionic Aptitude"] {
+            let ability = monster_abilities()
+                .iter()
+                .find(|a| a.key == key)
+                .unwrap_or_else(|| panic!("{key} must ship, owned via the `Racial Traits ~` bundle row"));
+            let mut owners = ability.owners.to_vec();
+            owners.sort_unstable();
+            let mut expected = expected_owners.to_vec();
+            expected.sort_unstable();
+            assert_eq!(owners, expected, "{key}'s owner set no longer matches the bundle row");
+        }
+    }
 }

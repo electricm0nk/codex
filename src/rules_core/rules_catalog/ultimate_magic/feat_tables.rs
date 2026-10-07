@@ -7,11 +7,89 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::super::crb::feats::FeatCategory as SharedFeatCategory;
-pub use rt::ultimate_magic::feat_tables::FeatCategory;
-pub use rt::ultimate_magic::feat_tables::UmFeatEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_magic__feat_tables__FeatCategory"))]
+pub enum FeatCategory {
+    General,
+    Combat,
+    ItemCreation,
+    Metamagic,
+    Teamwork,
+    Critical,
+    Masterpiece,
+    Discovery,
+}
+impl FeatCategory {
+    /// Maps onto the shared `crb::feats::FeatCategory` vocabulary where
+    /// one exists -- `None` for UM's own `Critical`/`Masterpiece`/
+    /// `Discovery` facets, mirroring UC's own `as_shared` rule for its
+    /// own book-specific facets without checking.
+    pub fn as_shared(self) -> Option<SharedFeatCategory> {
+        match self {
+            FeatCategory::General => Some(SharedFeatCategory::General),
+            FeatCategory::Combat => Some(SharedFeatCategory::Combat),
+            FeatCategory::ItemCreation => Some(SharedFeatCategory::ItemCreation),
+            FeatCategory::Metamagic => Some(SharedFeatCategory::Metamagic),
+            FeatCategory::Teamwork => Some(SharedFeatCategory::Teamwork),
+            FeatCategory::Critical | FeatCategory::Masterpiece | FeatCategory::Discovery => None,
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct UmFeatEntry {
+    /// The record's corpus identity. No record in this catalog carries a
+    /// distinct `KEY:` token, so `key == name` for every entry.
+    pub key: &'static str,
+    pub category: FeatCategory,
+    pub name: &'static str,
+    /// The corpus `DESC:` token, verbatim. `None` when the record has no
+    /// `DESC:` token.
+    pub description: Option<&'static str>,
+    /// The corpus `PRETEXT:` token, verbatim display prerequisite prose --
+    /// `None` when the row carries no `PRETEXT:`.
+    pub pretext: Option<&'static str>,
+    pub source_page: Option<&'static str>,
+    /// The corpus `BENEFIT:` token, verbatim -- the actual mechanical
+    /// text, when the record carries prose at all. `None` when the
+    /// record has no `BENEFIT:` token.
+    pub benefit: Option<&'static str>,
+    // The `effect: Option<&'static [&'static str]>` field that stood here held
+    // every `BONUS:`/`DEFINE:` token of the corpus row, verbatim, in source
+    // order. It moved to `pcgen_import::feat_effect_tokens` — SD-35
+    // `AT-35-E6-003-SWEEP` cycle 6, `decisions.md` §11: nothing on the live
+    // side reads a PCGen token. It had no live reader at all; its only three
+    // readers were this file's own tests, which now read the relocated table.
+    // The `prerequisites: Option<&'static [&'static str]>` field that stood
+    // here held every top-level `PRE`-family token of the corpus row,
+    // verbatim. It moved to `pcgen_import::feat_prereq_tokens` — SD-35
+    // `AT-35-E6-003-SWEEP` cycle 3, `decisions.md` §11: nothing on the live
+    // side reads a PCGen token. Its two readers were both converter modules
+    // and both still read the same tokens, keyed by `(rule_set, index)`.
+}
 pub fn feat_tables() -> &'static [UmFeatEntry] {
     crate::rules_core::rules_catalog::rows::<UmFeatEntry>("ultimate_magic/feat_tables/feat_tables")
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+
+    #[test]
+    fn catalog_has_144_records() {
+        assert_eq!(feat_tables().len(), 144);
+    }
+
+
+
+    #[test]
+    fn keys_are_unique_within_book() {
+        let keys: std::collections::BTreeSet<&str> = feat_tables().iter().map(|e| e.key).collect();
+        assert_eq!(keys.len(), feat_tables().len());
+    }
+
 }

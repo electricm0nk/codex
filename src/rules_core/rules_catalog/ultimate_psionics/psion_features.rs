@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub fn psion_power_points_total(level: u8, int_mod: i16) -> Option<i16> {
     if level < 1 {
@@ -22,5 +21,129 @@ pub fn psion_power_points_total(level: u8, int_mod: i16) -> Option<i16> {
         .base_power_points;
     Some(base + (int_mod * i16::from(level)) / 2)
 }
-pub use rt::ultimate_psionics::psion_features::psion_max_power_level;
-pub use rt::ultimate_psionics::psion_features::psion_powers_known;
+/// `PsionMaxPowerLevel`'s single `BONUS:VAR` term:
+/// `min(9,floor((PsionMPL+1)/2),PsionPLStatScore-10)` -- no combination
+/// question (one term, no sibling entry on the same target). `int_score`
+/// is the Psion's raw Intelligence score (`PsionPLStatScore = INTSCORE`,
+/// not the modifier). `None` below level 1.
+pub fn psion_max_power_level(level: u8, int_score: i16) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let mpl = i16::from(level);
+    Some(((mpl + 1) / 2).min(9).min(int_score - 10))
+}
+/// `PsionPowersKnown`: `min(21,(2*PsionPKL)+1)` always active, plus
+/// `floor((PsionPKL-10)*3/2)` summed on top once `PsionPKL>=11`
+/// (the converter-side bonus-stack reader's documented "multiple
+/// same-target bonus rows on one
+/// target SUM, gated by each entry's own currently-passing `PREVARGTEQ`"
+/// semantics -- see this module's own doc comment). `PsionPKL` is the raw
+/// class level on a single-classed Psion (no bonus manifester levels
+/// tracked by this engine). `None` below level 1.
+pub fn psion_powers_known(level: u8) -> Option<i16> {
+    if level < 1 {
+        return None;
+    }
+    let pkl = i16::from(level);
+    let base = (2 * pkl + 1).min(21);
+    let bonus = if pkl >= 11 { ((pkl - 10) * 3) / 2 } else { 0 };
+    Some(base + bonus)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn psion_power_points_total_uses_the_base_ladder_and_int_bonus() {
+        // Level 1, INT modifier 0: base 2, bonus (0*1)/2 = 0.
+        assert_eq!(psion_power_points_total(1, 0), Some(2));
+        // Level 5, INT modifier 3: base 8, bonus (3*5)/2 = 7 (floor).
+        assert_eq!(psion_power_points_total(5, 3), Some(15));
+        // Level 20, INT modifier 5: base 32, bonus (5*20)/2 = 50.
+        assert_eq!(psion_power_points_total(20, 5), Some(82));
+        // Level 0 is not a real manifester level.
+        assert_eq!(psion_power_points_total(0, 3), None);
+    }
+
+    #[test]
+    fn psion_power_points_total_ladder_steps_at_every_named_threshold() {
+        let expected: [(u8, i16); 20] = [
+            (1, 2),
+            (2, 4),
+            (3, 5),
+            (4, 6),
+            (5, 8),
+            (6, 10),
+            (7, 11),
+            (8, 12),
+            (9, 14),
+            (10, 16),
+            (11, 18),
+            (12, 20),
+            (13, 21),
+            (14, 23),
+            (15, 25),
+            (16, 26),
+            (17, 29),
+            (18, 30),
+            (19, 31),
+            (20, 32),
+        ];
+        for (level, base) in expected {
+            // INT modifier 0 isolates the base ladder from the bonus term.
+            assert_eq!(
+                psion_power_points_total(level, 0),
+                Some(base),
+                "level {level} base power points"
+            );
+        }
+    }
+
+    #[test]
+    fn psion_power_points_total_handles_a_negative_int_modifier() {
+        // Level 4, INT modifier -1: base 6, bonus (-1*4)/2 = -2.
+        assert_eq!(psion_power_points_total(4, -1), Some(4));
+    }
+
+    #[test]
+    fn psion_powers_known_only_the_base_term_below_level_eleven() {
+        // Level 1: min(21,2*1+1)=3, no bonus term yet.
+        assert_eq!(psion_powers_known(1), Some(3));
+        // Level 10: min(21,2*10+1)=21 (base term itself saturates here).
+        assert_eq!(psion_powers_known(10), Some(21));
+        assert_eq!(psion_powers_known(0), None);
+    }
+
+    #[test]
+    fn psion_powers_known_sums_both_terms_from_level_eleven() {
+        // Level 11: base min(21,23)=21, bonus floor(1*3/2)=1 -> 22.
+        assert_eq!(psion_powers_known(11), Some(22));
+        // Level 20: base min(21,41)=21, bonus floor(10*3/2)=15 -> 36.
+        assert_eq!(psion_powers_known(20), Some(36));
+    }
+
+    #[test]
+    fn psion_powers_known_mutation_proof_replace_semantics_would_drop_at_level_eleven() {
+        // Sanity check on the module doc's own claim: a "replace, don't
+        // sum" reading (using ONLY the level->=11 term once its gate
+        // passes) produces an implausible drop from level 10's 21 to a
+        // level-11 value of 1 -- this is why "sum" (this function's real
+        // behavior) is the correct PCGen semantics, not a coin flip.
+        let replace_semantics_at_11 = 3 / 2; // = 1
+        assert_eq!(replace_semantics_at_11, 1);
+        assert_ne!(psion_powers_known(11), Some(replace_semantics_at_11));
+    }
+
+    #[test]
+    fn psion_max_power_level_is_capped_by_the_lowest_of_three_terms() {
+        // Level 1, INT score 10 (modifier 0): min(9, floor(2/2)=1, 10-10=0) = 0.
+        assert_eq!(psion_max_power_level(1, 10), Some(0));
+        // Level 20, INT score 20 (modifier +5): min(9, floor(21/2)=10, 20-10=10) = 9.
+        assert_eq!(psion_max_power_level(20, 20), Some(9));
+        // Level 5, INT score 12: min(9, floor(6/2)=3, 12-10=2) = 2 (stat-capped).
+        assert_eq!(psion_max_power_level(5, 12), Some(2));
+        assert_eq!(psion_max_power_level(0, 20), None);
+    }
+}

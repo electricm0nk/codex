@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub use super::companion_chassis::{CompanionAbilityRecord, CompanionClassRecord, CompanionRecord};
 pub use super::monster_chassis::{

@@ -7,11 +7,95 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
 pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     crate::rules_core::rules_catalog::rows::<ArchetypeSwapEntry>(
         "ultimate_psionics/archetype_tables/archetype_swap_tables",
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn catalog_has_15_records() {
+        assert_eq!(archetype_swap_tables().len(), 15);
+    }
+
+    #[test]
+    fn keys_are_unique_within_book() {
+        let keys: std::collections::BTreeSet<&str> =
+            archetype_swap_tables().iter().map(|e| e.key).collect();
+        assert_eq!(keys.len(), archetype_swap_tables().len());
+    }
+
+    #[test]
+    fn every_master_record_carries_a_real_description_and_at_least_one_grant() {
+        for e in archetype_swap_tables() {
+            assert!(e.description.is_some(), "{} has no DESC:", e.key);
+            assert!(!e.grants.is_empty(), "{} grants no features", e.key);
+        }
+    }
+
+    /// The real finding this table exists to measure: `TYPE:`'s replaced-
+    /// slot count and `ABILITY:`'s granted-feature count are NOT the same
+    /// list under two names. Corrected twice: once for a parser gap that
+    /// undercounted grants (missing PREVARGTEQ:/multi-name shapes), once
+    /// for a category-inclusion ruling (Internal-categorized bookkeeping
+    /// grants and NORMAL-type player-chosen grants excluded) that had
+    /// been over-counting instead. Real rate: 33% (5/15).
+    #[test]
+    fn the_type_and_ability_lists_genuinely_disagree() {
+        let total_replaces: usize =
+            archetype_swap_tables().iter().map(|e| e.replaces.map_or(0, |r| r.len())).sum();
+        let total_grants: usize = archetype_swap_tables().iter().map(|e| e.grants.len()).sum();
+        assert_eq!(total_replaces, 68, "total TYPE: replaced-slot count across all 15 records");
+        assert_eq!(total_grants, 75, "total ABILITY: granted-feature count across all 15 records, after the category ruling");
+        assert_ne!(
+            total_replaces, total_grants,
+            "TYPE: and ABILITY: are two different lists, not two views of one -- if this ever \
+             passes as equal, the corpus shape has changed and the doc comment's own claim needs \
+             re-checking, not silently trusting the new equality"
+        );
+
+        let equal_count_records = archetype_swap_tables()
+            .iter()
+            .filter(|e| e.replaces.map_or(0, |r| r.len()) == e.grants.len())
+            .count();
+        assert_eq!(equal_count_records, 5, "of 15 (33%) -- twice-corrected figure, see this module's own doc comment");
+    }
+
+    #[test]
+    fn every_grant_names_a_real_level_and_key() {
+        for e in archetype_swap_tables() {
+            for g in e.grants {
+                assert!(!g.grants_feature_key.is_empty(), "{} has an empty grant key", e.key);
+                assert!(g.at_level >= 1 && g.at_level <= 20, "{} grant {} has an implausible level {}", e.key, g.grants_feature_key, g.at_level);
+            }
+        }
+    }
+
+    /// No Internal-categorized bookkeeping grant (e.g. `Armor Aptitude
+    /// 7th Level`) should ever appear in this table again -- pinned as
+    /// its own regression guard after it was found in a prior commit.
+    #[test]
+    fn no_internal_category_bookkeeping_grant_is_present() {
+        for e in archetype_swap_tables() {
+            for g in e.grants {
+                assert_ne!(g.grants_feature_key, "Armor Aptitude 7th Level", "Internal-category bookkeeping grant leaked back in");
+            }
+        }
+    }
+
+    #[test]
+    fn resolved_grant_descriptions_are_the_real_count() {
+        let resolved: usize = archetype_swap_tables()
+            .iter()
+            .flat_map(|e| e.grants.iter())
+            .filter(|g| g.description.is_some() || g.benefit.is_some())
+            .count();
+        assert_eq!(resolved, 65, "65 of 75 grants carry real DESC:/BENEFIT: text");
+    }
 }

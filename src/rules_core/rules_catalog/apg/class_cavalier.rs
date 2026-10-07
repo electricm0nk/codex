@@ -7,11 +7,13 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::ClassTableRow;
-pub use rt::apg::class_cavalier::HIT_DIE;
-pub use rt::apg::class_cavalier::MAX_SUPPORTED_LEVEL;
+/// `HD:10` on the real `CLASS:Cavalier` record (v0.6 alpha swarm, risks
+/// item 8), verified directly against `apg_classes` line 42.
+pub const HIT_DIE: u8 = 10;
+/// `MAXLEVEL:20` on the real `CLASS:Cavalier` record.
+pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 pub fn class_table() -> Vec<ClassTableRow> {
     crate::rules_core::rules_catalog::rows_vec::<ClassTableRow>("apg/class_cavalier/class_table")
 }

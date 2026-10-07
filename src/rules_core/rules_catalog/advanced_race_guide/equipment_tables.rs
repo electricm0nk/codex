@@ -7,11 +7,60 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::advanced_race_guide::equipment_tables::EquipmentCategory;
-pub use rt::advanced_race_guide::equipment_tables::EquipmentFieldCoverage;
-pub use rt::advanced_race_guide::equipment_tables::EquipmentTableEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__equipment_tables__EquipmentCategory"))]
+pub enum EquipmentCategory {
+    General,
+    ArmsArmor,
+    MagicItems,
+    Equipmods,
+}
+impl EquipmentCategory {
+    pub const ALL: &'static [EquipmentCategory] = &[
+        EquipmentCategory::General,
+        EquipmentCategory::ArmsArmor,
+        EquipmentCategory::MagicItems,
+        EquipmentCategory::Equipmods,
+    ];
+}
+/// SD-27 Cycle E2.1/E2.2 equipment field-coverage audit row. Mirrors
+/// `rules_catalog::acg::equipment_tables::EquipmentFieldCoverage`'s shape.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct EquipmentFieldCoverage {
+    pub total_records: u32,
+    /// Real, active (non-`.MOD`), de-duplicated record count (this module's
+    /// own doc comment: 200 total).
+    pub records_expected: u32,
+    pub has_cost: u32,
+    pub has_weight: u32,
+    pub has_description: u32,
+}
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__equipment_tables__EquipmentTableEntry"))]
+pub struct EquipmentTableEntry {
+    /// Equipment records carry their `name` (or, for `arg_equipmods`,
+    /// the explicit `KEY:` token when present) as the corpus identity.
+    pub key: &'static str,
+    pub category: EquipmentCategory,
+    pub name: &'static str,
+    /// Cost in gold pieces from the corpus `COST:` token. `None` when the
+    /// token is absent, or when it is a non-numeric PCGen formula (e.g.
+    /// `COST:WT*375` on `Material ~ Darkleaf Cloth ~ Item`) this table does
+    /// not evaluate -- never a fabricated flat number for a formula cost.
+    pub cost_gp: Option<f64>,
+    /// Weight in pounds from the corpus `WT:` token. `None` when the corpus
+    /// genuinely carries no `WT:` token for this record (true for every
+    /// `arg_equipmods` record, matching CRB's/ACG's own established
+    /// finding that equipment *modifiers* carry no independent weight).
+    pub weight_lbs: Option<f64>,
+    /// Descriptive text, sourced from the corpus `SPROP:` token -- see this
+    /// module's own doc comment. `None` only when the corpus record has no
+    /// `SPROP:` token at all. Never fabricated.
+    pub description: Option<&'static str>,
+}
 pub fn field_coverage_report() -> EquipmentFieldCoverage {
     let table = equipment_tables();
     EquipmentFieldCoverage {

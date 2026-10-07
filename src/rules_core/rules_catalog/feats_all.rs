@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::RuleSetId;
 use super::advanced_race_guide::feats as arg_feats;
@@ -21,8 +20,45 @@ use super::ultimate_intrigue::feat_tables as ui_feats;
 use super::ultimate_magic::feat_tables as um_feats;
 use super::ultimate_psionics::feat_tables as upsi_feats;
 use super::ultimate_wilderness::feat_tables as uw_feats;
-pub use rt::feats_all::BookFeatTable;
-pub use rt::feats_all::FeatCatalogRecord;
+/// One book's feat catalog, tagged with the book it came from.
+#[derive(Debug, Clone, Copy)]
+pub struct BookFeatTable {
+    pub rule_set: RuleSetId,
+    pub entries: &'static [FeatCatalogRecord],
+}
+/// One feat record, projected out of whichever per-book table it came
+/// from. See this module's own doc comment for why the four fields are
+/// these four and why `category` is a string.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct FeatCatalogRecord {
+    /// The record's corpus identity -- its `KEY:` token when its row
+    /// carries one, else its display name. Each book's own table already
+    /// applies that fallback; this is that value, unchanged.
+    ///
+    /// Not unique across books -- see this module's "Key collisions"
+    /// section.
+    pub key: &'static str,
+    /// The source book's own `FeatCategory` variant name, verbatim (e.g.
+    /// `"Combat"`, `"Panache"`, `"WoundThreshold"`).
+    pub category: &'static str,
+    pub name: &'static str,
+    /// The corpus `DESC:` token, verbatim; `None` when the record has
+    /// none. Passed through from the book's own table, which already
+    /// applies that rule -- never substituted or borrowed from a sibling
+    /// record.
+    pub description: Option<&'static str>,
+    // The `prerequisites: Option<&'static [&'static str]>` field that stood
+    // here held every top-level `PRE`-family token of the corpus row,
+    // verbatim, for every book in the joined catalog. It moved to
+    // `pcgen_import::feat_prereq_tokens` — SD-35 `AT-35-E6-003-SWEEP`
+    // cycle 3, `decisions.md` §11: nothing on the live side reads a PCGen
+    // token. The live prerequisite evaluator never read it — it reads the
+    // CONVERTED `Applies` gate out of `data/sheet_rules/`
+    // (`feat_prereqs::evaluate_catalog_feat_prerequisites`) — and its two
+    // readers were both converter modules, which still read the same
+    // tokens keyed by `(rule_set, index)`.
+}
 fn map_uca_entry(entry: &uca_feats::StoryFeatEntry) -> FeatCatalogRecord {
     let joined_description = match entry.benefit {
         Some(benefit) => entry.description.map(|desc| format!("{desc} {benefit}")),
@@ -474,4 +510,340 @@ fn arg_category_name(category: arg_feats::FeatCategory) -> &'static str {
         arg_feats::FeatCategory::Combat => "Combat",
         arg_feats::FeatCategory::Teamwork => "Teamwork",
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::collections::BTreeMap;
+
+    /// Asserted against [`hand_authored_feat_tables`], not [`all_feat_tables`]:
+    /// every number below is a fact about what that book's OWN module
+    /// authored, and the corpus gap rows are by construction records those
+    /// modules never held. Pointing this at the joined catalog would silently
+    /// turn a per-book ingest pin into a pin on the gap lane's size. The
+    /// joined total is pinned separately, immediately below.
+    #[test]
+    fn spans_every_ingested_book_with_their_real_counts() {
+        let books = hand_authored_feat_tables();
+        assert_eq!(books.len(), 23);
+        assert_eq!(books[0].rule_set, RuleSetId::Crb);
+        assert_eq!(books[0].entries.len(), 185);
+        assert_eq!(books[1].rule_set, RuleSetId::Apg);
+        assert_eq!(books[1].entries.len(), 172);
+        assert_eq!(books[2].rule_set, RuleSetId::Acg);
+        assert_eq!(books[2].entries.len(), 129);
+        assert_eq!(books[3].rule_set, RuleSetId::Arg);
+        assert_eq!(books[3].entries.len(), 187);
+        assert_eq!(books[4].rule_set, RuleSetId::Pu);
+        assert_eq!(books[4].entries.len(), 17);
+        assert_eq!(books[5].rule_set, RuleSetId::Uca);
+        assert_eq!(books[5].entries.len(), 23);
+        assert_eq!(books[6].rule_set, RuleSetId::Ui);
+        assert_eq!(books[6].entries.len(), 104);
+        assert_eq!(books[7].rule_set, RuleSetId::Uw);
+        assert_eq!(books[7].entries.len(), 135);
+        assert_eq!(books[8].rule_set, RuleSetId::Uc);
+        assert_eq!(books[8].entries.len(), 261);
+        assert_eq!(books[9].rule_set, RuleSetId::Um);
+        assert_eq!(books[9].entries.len(), 144);
+        assert_eq!(books[10].rule_set, RuleSetId::Upsi);
+        assert_eq!(books[10].entries.len(), 221);
+        // `core_essentials` has no hand-authored feat table of its own
+        // (`SD31-E6-F8-001`) -- see `hand_authored_feat_tables`'s own doc
+        // comment on why an empty entry is still filed here.
+        assert_eq!(books[11].rule_set, RuleSetId::Ce);
+        assert_eq!(books[11].entries.len(), 0);
+        // `SD31-E6-F8-002` -- five more books, each already compiled for
+        // another kind, given an empty hand-authored feat slice so their real
+        // `*_feats` rows can join via `feat_gap_rows_for` below.
+        assert_eq!(books[12].rule_set, RuleSetId::Ha);
+        assert_eq!(books[12].entries.len(), 0);
+        assert_eq!(books[13].rule_set, RuleSetId::Isr);
+        assert_eq!(books[13].entries.len(), 0);
+        assert_eq!(books[14].rule_set, RuleSetId::Oa);
+        assert_eq!(books[14].entries.len(), 0);
+        assert_eq!(books[15].rule_set, RuleSetId::Iswg);
+        assert_eq!(books[15].entries.len(), 0);
+        assert_eq!(books[16].rule_set, RuleSetId::MonsterCodex);
+        assert_eq!(books[16].entries.len(), 0);
+        // `SD31-E6-F2-007` -- Mythic Adventures' first compiled rule set of
+        // any kind, same empty-hand-authored-slice shape as the five above.
+        assert_eq!(books[17].rule_set, RuleSetId::Mythic);
+        assert_eq!(books[17].entries.len(), 0);
+        // `SD31-E6-F8-003` -- two more books, each already compiled for
+        // another kind, given an empty hand-authored feat slice so their
+        // real `*_feats` rows can join via `feat_gap_rows_for` below.
+        assert_eq!(books[18].rule_set, RuleSetId::Isi);
+        assert_eq!(books[18].entries.len(), 0);
+        assert_eq!(books[19].rule_set, RuleSetId::Botd2);
+        assert_eq!(books[19].entries.len(), 0);
+        // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
+        // onboarding-precondition`, AT-32-G0-003) -- Inner Sea Taverns'
+        // first compiled rule set of any kind, given an empty
+        // hand-authored feat slice so its real `istav_feats` rows can
+        // join via `feat_gap_rows_for` below.
+        assert_eq!(books[20].rule_set, RuleSetId::InnerSeaTaverns);
+        assert_eq!(books[20].entries.len(), 0);
+        // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off --
+        // `Isc`/`Isg` already compiled for equipment/monster content, given
+        // an empty hand-authored feat slice so their real
+        // `isc_abilities_feat`/`isg_abilities_feat` rows can join
+        // via `feat_gap_rows_for` below.
+        assert_eq!(books[21].rule_set, RuleSetId::Isc);
+        assert_eq!(books[21].entries.len(), 0);
+        assert_eq!(books[22].rule_set, RuleSetId::Isg);
+        assert_eq!(books[22].entries.len(), 0);
+
+        let total: usize = books.iter().map(|book| book.entries.len()).sum();
+        assert_eq!(
+            total,
+            1578,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi + 0 Ce + 0 Ha + 0 Isr + 0 Oa + 0 Iswg + 0 MonsterCodex + 0 Mythic + 0 Isi + 0 Botd2 + 0 InnerSeaTaverns + 0 Isc + 0 Isg"
+        );
+    }
+
+    /// The catalog a player actually sees: the hand-authored records plus the
+    /// corpus gap rows. Pinned per book so a regeneration that drops one
+    /// book's rows fails here rather than silently shrinking the picker.
+    #[test]
+    fn the_joined_catalog_is_the_hand_authored_one_plus_the_corpus_gap_rows() {
+        let hand = hand_authored_feat_tables();
+        let joined = all_feat_tables();
+        assert_eq!(joined.len(), hand.len());
+        for (j, h) in joined.iter().zip(hand.iter()) {
+            assert_eq!(j.rule_set, h.rule_set, "book order must be preserved");
+            let gaps = super::super::feat_gap_tables::feat_gap_rows_for(h.rule_set).len();
+            assert_eq!(
+                j.entries.len(),
+                h.entries.len() + gaps,
+                "{:?}: joined slice must be the book's own table plus exactly its gap rows",
+                h.rule_set
+            );
+        }
+        let total: usize = joined.iter().map(|book| book.entries.len()).sum();
+        assert_eq!(
+            total, 2227,
+            "1578 hand-authored + 649 corpus gap rows: the original 325 \
+             (SD31-E6-F8-001's 83: 1 CRB, 15 core_essentials, 48 ARG, 12 UM, 3 UI, \
+             2 UC, 1 UPsi, 1 UW; SD31-E6-F8-002's 242: 61 Ha, 50 Isr, 68 Oa, 31 Iswg, \
+             32 MonsterCodex) + 199 more from Mythic Adventures' first-ever compiled \
+             rule set (SD31-E6-F2-007, `ma_feats`'s non-`.MOD` declarations -- \
+             SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing \
+             twins from the original 358) + 7 more from two more already-compiled \
+             books (SD31-E6-F8-003: inner_sea_intrigue 6 + book_of_the_damned_volume_2 1) \
+             + 9 more from Inner Sea Taverns' first-ever compiled rule set \
+             (SD-32 Gate 0 book-onboarding precondition, `gate-0-book-onboarding-\
+             precondition`, AT-32-G0-003, `istav_feats`'s non-`.MOD` declarations) \
+             + 109 more from T9 onboarding (card 11, `decisions.md §19` PI sign-off): \
+             `Isc` 23 (inner_sea_combat, isc_abilities_feat, 1 NAMEISPI:YES record \
+             dropped) + `Isg` 86 (inner_sea_gods, isg_abilities_feat, deity-name \
+             prerequisites redacted per the book's existing blacklist screen, not dropped)"
+        );
+    }
+
+    /// The projection must not lose or invent a record: each book's slice
+    /// is exactly as long as the book's own table, checked against the
+    /// per-book functions rather than against the numbers above.
+    #[test]
+    fn each_books_slice_is_exactly_its_own_table() {
+        let books = hand_authored_feat_tables();
+        assert_eq!(books[0].entries.len(), super::super::crb::feats::feat_tables().len());
+        assert_eq!(books[1].entries.len(), super::super::apg::feats::feat_tables().len());
+        assert_eq!(books[2].entries.len(), super::super::acg::feats::feat_tables().len());
+        assert_eq!(books[3].entries.len(), arg_feats::feat_tables().len());
+        assert_eq!(books[4].entries.len(), pu_feats::feat_tables().len());
+        assert_eq!(books[5].entries.len(), uca_feats::feat_tables().len());
+        assert_eq!(books[6].entries.len(), ui_feats::feat_tables().len());
+        assert_eq!(books[7].entries.len(), uw_feats::feat_tables().len());
+        assert_eq!(books[8].entries.len(), uc_feats::feat_tables().len());
+        assert_eq!(books[9].entries.len(), um_feats::feat_tables().len());
+        assert_eq!(books[10].entries.len(), upsi_feats::feat_tables().len());
+    }
+
+    #[test]
+    fn every_record_carries_a_real_key_and_name() {
+        for book in all_feat_tables() {
+            for entry in book.entries {
+                assert!(!entry.key.is_empty(), "{:?} entry with empty key", book.rule_set);
+                assert!(
+                    !entry.name.is_empty(),
+                    "{:?} entry '{}' has an empty name",
+                    book.rule_set,
+                    entry.key
+                );
+                assert!(
+                    !entry.category.is_empty(),
+                    "{:?} entry '{}' has an empty category",
+                    book.rule_set,
+                    entry.key
+                );
+            }
+        }
+    }
+
+    /// The category strings are the wire form the desktop picker filters
+    /// on, so each literal must be its variant's `Debug` form. Written
+    /// over each enum's own `ALL` roster, so a variant added without a
+    /// `match` arm fails to compile and a variant added *with* a
+    /// mismatched literal fails here.
+    #[test]
+    fn category_names_match_the_debug_form_of_every_variant() {
+        for category in SharedFeatCategory::ALL {
+            assert_eq!(shared_category_name(*category), format!("{category:?}"));
+        }
+        for category in arg_feats::FeatCategory::ALL {
+            assert_eq!(arg_category_name(*category), format!("{category:?}"));
+        }
+        for category in pu_feats::FeatCategory::ALL {
+            assert_eq!(pu_category_name(*category), format!("{category:?}"));
+        }
+    }
+
+    /// The real per-book category breakdown, derived from the live
+    /// tables. Pins ARG's and PU's own corpus-documented splits (ARG:
+    /// 132 General / 52 Combat / 3 Teamwork, of which one "General" is
+    /// the corpus's own `TYPE:Genaral` typo, classified rather than
+    /// dropped; PU: 9 Alignment / 3 CombatStamina / 3 WoundThreshold /
+    /// 2 General) at the join boundary, so a regression in either book's
+    /// table surfaces here and not only in that book's own module.
+    #[test]
+    fn the_per_book_category_split_is_the_real_one() {
+        let split = |rule_set: RuleSetId| -> BTreeMap<&'static str, usize> {
+            let mut counts = BTreeMap::new();
+            // Over `hand_authored_feat_tables()`: these splits are each
+            // book's own `FeatCategory` enum roster. Gap rows carry the
+            // corpus `TYPE:` facet verbatim instead of an enum variant name
+            // (see `feat_gap_tables`' module doc), so folding them in here
+            // would mix two different classification systems in one map.
+            for book in hand_authored_feat_tables().iter().filter(|book| book.rule_set == rule_set)
+            {
+                for entry in book.entries {
+                    *counts.entry(entry.category).or_insert(0) += 1;
+                }
+            }
+            counts
+        };
+
+        assert_eq!(
+            split(RuleSetId::Arg),
+            BTreeMap::from([("Combat", 52), ("General", 132), ("Teamwork", 3)])
+        );
+        assert_eq!(
+            split(RuleSetId::Pu),
+            BTreeMap::from([
+                ("Alignment", 9),
+                ("CombatStamina", 3),
+                ("General", 2),
+                ("WoundThreshold", 3),
+            ])
+        );
+        // UCA's corpus carries no `###Block:`/`TYPE:` category facet at
+        // all -- every one of its 23 records is `TYPE:Story`, so every
+        // record lands in the single "Story" category rather than
+        // inventing a split the corpus doesn't support.
+        assert_eq!(split(RuleSetId::Uca), BTreeMap::from([("Story", 23)]));
+        // UI reuses the shared `FeatCategory` enum -- General/Combat
+        // (folding the Combat.* sub-facets) / Metamagic / Teamwork.
+        assert_eq!(
+            split(RuleSetId::Ui),
+            BTreeMap::from([("Combat", 46), ("General", 52), ("Metamagic", 4), ("Teamwork", 2)])
+        );
+        // UW's own two new facets -- Animal (Companion-focused feats) and
+        // Mount -- have no shared-enum equivalent. `Mount` carries zero
+        // real feat records in this corpus: the only `TYPE:Mount` row
+        // (`Samurai ~ Mount.MOD`) is a `CATEGORY:Special Ability` row, not
+        // a feat at all, and was never a candidate.
+        assert_eq!(
+            split(RuleSetId::Uw),
+            BTreeMap::from([
+                ("Animal", 11),
+                ("Combat", 41),
+                ("General", 77),
+                ("ItemCreation", 1),
+                ("Metamagic", 2),
+                ("Teamwork", 3),
+            ])
+        );
+        // UC's own new facets: `CalledShot`, `Critical` (its bare
+        // `TYPE:Critical` facet, distinct from `Combat.Critical`, which
+        // folds to `Combat`), and `Style` (its bare `TYPE:Style` facet,
+        // distinct from `Combat.Style`). No UC record carries `TYPE:Grit`'s
+        // sibling `Panache` facet today (`"UcPanache"` never appears).
+        assert_eq!(
+            split(RuleSetId::Uc),
+            BTreeMap::from([
+                ("CalledShot", 2),
+                ("Combat", 181),
+                ("Critical", 1),
+                ("General", 62),
+                ("Grit", 7),
+                ("Style", 1),
+                ("Teamwork", 7),
+            ])
+        );
+        // UM's own new facets: `Masterpiece` (Bard performance feats) and
+        // `Discovery` (Wizard bonus-discovery-as-feat records). No UM
+        // record carries `TYPE:Style`/`Grit`/`Panache`/`CalledShot`.
+        assert_eq!(
+            split(RuleSetId::Um),
+            BTreeMap::from([
+                ("Combat", 3),
+                ("Critical", 3),
+                ("Discovery", 11),
+                ("General", 100),
+                ("ItemCreation", 2),
+                ("Masterpiece", 15),
+                ("Metamagic", 9),
+                ("Teamwork", 1),
+            ])
+        );
+        // UPsi's own new facets: `Psionic` (this book's dominant facet)
+        // and `Metapsionic` (its metamagic equivalent) -- no shared-enum
+        // equivalent for either. No UPsi record carries `TYPE:Teamwork`.
+        assert_eq!(
+            split(RuleSetId::Upsi),
+            BTreeMap::from([
+                ("Combat", 9),
+                ("General", 21),
+                ("ItemCreation", 3),
+                ("Metapsionic", 35),
+                ("Psionic", 153),
+            ])
+        );
+    }
+
+    /// The point of widening the aggregate: real ARG and PU feats are in
+    /// it, with their real corpus description text.
+    #[test]
+    fn real_arg_and_pu_records_are_in_the_aggregate_with_their_descriptions() {
+        let find = |key: &str| {
+            all_feat_tables()
+                .iter()
+                .flat_map(|book| book.entries.iter().map(move |entry| (book.rule_set, entry)))
+                .find(|(_, entry)| entry.key == key)
+                .unwrap_or_else(|| panic!("'{key}' must be in the aggregate catalog"))
+        };
+
+        let (book, wings) = find("Angel Wings");
+        assert_eq!(book, RuleSetId::Arg);
+        assert_eq!(wings.category, "General");
+        assert_eq!(wings.description, Some("Feathered wings sprout from your back."));
+
+        let (book, champion) = find("Champion of Tyranny");
+        assert_eq!(book, RuleSetId::Pu);
+        assert_eq!(champion.category, "Alignment");
+        assert_eq!(
+            champion.description,
+            Some("You must beat down the masses to have true order.")
+        );
+
+        let (book, stamina) = find("Combat Stamina");
+        assert_eq!(book, RuleSetId::Pu);
+        assert_eq!(stamina.category, "CombatStamina");
+    }
+
+
+
+
 }

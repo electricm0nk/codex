@@ -7,13 +7,119 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::super::crb::feats::FeatCategory as SharedFeatCategory;
-pub use rt::ultimate_psionics::feat_tables::FeatCategory;
-pub use rt::ultimate_psionics::feat_tables::UpsiFeatEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_psionics__feat_tables__FeatCategory"))]
+pub enum FeatCategory {
+    General,
+    Combat,
+    ItemCreation,
+    Psionic,
+    Metapsionic,
+}
+impl FeatCategory {
+    /// Maps onto the shared `crb::feats::FeatCategory` vocabulary where
+    /// one exists -- `None` for UPsi's own `Psionic`/`Metapsionic`
+    /// facets, mirroring every other book's own `as_shared` rule for its
+    /// own book-specific facets without checking.
+    pub fn as_shared(self) -> Option<SharedFeatCategory> {
+        match self {
+            FeatCategory::General => Some(SharedFeatCategory::General),
+            FeatCategory::Combat => Some(SharedFeatCategory::Combat),
+            FeatCategory::ItemCreation => Some(SharedFeatCategory::ItemCreation),
+            FeatCategory::Psionic | FeatCategory::Metapsionic => None,
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct UpsiFeatEntry {
+    /// The record's corpus identity. No record in this catalog carries a
+    /// distinct `KEY:` token, so `key == name` for every entry.
+    pub key: &'static str,
+    pub category: FeatCategory,
+    pub name: &'static str,
+    /// The corpus `DESC:` token, verbatim. For 216 of this catalog's 221
+    /// records, this is the record's *only* content -- Dreamscarred
+    /// Press's own convention, not a stub (see this module's own doc
+    /// comment).
+    pub description: Option<&'static str>,
+    /// The corpus `PRETEXT:` token, verbatim display prerequisite prose --
+    /// `None` when the row carries no `PRETEXT:`.
+    pub pretext: Option<&'static str>,
+    pub source_page: Option<&'static str>,
+    /// The corpus `BENEFIT:` token, verbatim -- present on only 5 of
+    /// this catalog's 221 records (see this module's own doc comment).
+    pub benefit: Option<&'static str>,
+    // The `prerequisites: Option<&'static [&'static str]>` field that stood
+    // here held every top-level `PRE`-family token of the corpus row,
+    // verbatim. It moved to `pcgen_import::feat_prereq_tokens` — SD-35
+    // `AT-35-E6-003-SWEEP` cycle 3, `decisions.md` §11: nothing on the live
+    // side reads a PCGen token. Its two readers were both converter modules
+    // and both still read the same tokens, keyed by `(rule_set, index)`.
+}
 pub fn feat_tables() -> &'static [UpsiFeatEntry] {
     crate::rules_core::rules_catalog::rows::<UpsiFeatEntry>(
         "ultimate_psionics/feat_tables/feat_tables",
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn catalog_has_221_records() {
+        assert_eq!(feat_tables().len(), 221);
+    }
+
+    #[test]
+    fn every_record_carries_real_content() {
+        for e in feat_tables() {
+            assert!(
+                e.description.is_some() || e.benefit.is_some(),
+                "{} has neither DESC: nor BENEFIT:",
+                e.key
+            );
+        }
+    }
+
+    #[test]
+    fn no_record_is_deferred() {
+        assert_eq!(
+            feat_tables()
+                .iter()
+                .filter(|e| e.description.is_none() && e.benefit.is_none())
+                .count(),
+            0
+        );
+    }
+
+    #[test]
+    fn keys_are_unique_within_book() {
+        let keys: std::collections::BTreeSet<&str> = feat_tables().iter().map(|e| e.key).collect();
+        assert_eq!(keys.len(), feat_tables().len());
+    }
+
+    #[test]
+    fn the_desc_benefit_split_is_the_real_one() {
+        let both = feat_tables()
+            .iter()
+            .filter(|e| e.description.is_some() && e.benefit.is_some())
+            .count();
+        let desc_only = feat_tables()
+            .iter()
+            .filter(|e| e.description.is_some() && e.benefit.is_none())
+            .count();
+        let benefit_only = feat_tables()
+            .iter()
+            .filter(|e| e.benefit.is_some() && e.description.is_none())
+            .count();
+        assert_eq!(both, 5, "Piranha Strike, Psionic Shot, Psionic Talent, Unwilling Participant, Urban Tracking");
+        assert_eq!(desc_only, 216, "Dreamscarred Press's own DESC:-is-complete convention -- see this module's doc comment");
+        assert_eq!(benefit_only, 0, "no record in this book carries BENEFIT: without DESC:");
+        assert_eq!(both + desc_only + benefit_only, 221);
+    }
 }

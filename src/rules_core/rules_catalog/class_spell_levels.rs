@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 use super::{acg, advanced_race_guide, apg, crb};
 pub(crate) static STATIC_CLASS_SPELL_LISTS: crate::rules_core::rules_catalog::Derived<(
@@ -128,3 +127,260 @@ pub fn class_spell_list_entries(class_id: &str) -> Option<Vec<(&'static str, u8)
         })
 }
 const HUNTER_CLASS_ID: &str = "class:hunter";
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::rules_core::rules_catalog::crb::spell_list::SPELL_LIST;
+
+    #[test]
+    fn a_wizard_learns_hideous_laughter_at_second_level_not_first() {
+        assert_eq!(class_spell_level("class:wizard", "Hideous Laughter"), Some(2));
+        assert_eq!(class_spell_level("class:bard", "Hideous Laughter"), Some(1));
+        assert_eq!(
+            class_spell_level("class:sorcerer", "Hideous Laughter"),
+            Some(2)
+        );
+    }
+
+    #[test]
+    fn a_class_with_no_ingested_spell_list_answers_unknown_rather_than_guessing() {
+        assert!(!class_has_spell_list("class:magus"));
+        assert_eq!(class_spell_level("class:magus", "Hideous Laughter"), None);
+        // Magus really does name itself in the corpus, so this is a gap in
+        // what has been ingested, not a claim that a Magus casts nothing.
+        assert!(!class_has_spell_list("class:summoner"));
+        assert!(!class_has_spell_list("class:oracle"));
+        // A non-caster, and an id that is not a class at all.
+        assert!(!class_has_spell_list("class:fighter"));
+        assert!(!class_has_spell_list("class:demo"));
+        assert!(!class_has_spell_list(""));
+    }
+
+    /// More spells that sit at genuinely different levels for different
+    /// classes — each one a row the old record-level rendering got wrong
+    /// for at least one class. Raw `CLASSES:` tags, read off
+    /// `cr_spells` (not recalled):
+    /// `Cure Light Wounds` -> `Bard,Cleric,Druid,Paladin=1|Ranger=2`,
+    /// `Animal Growth` -> `Ranger=4|Druid,Sorcerer,Wizard=5`,
+    /// `Cure Moderate Wounds` -> `Bard,Cleric=2|Druid,Paladin,Ranger=3`,
+    /// `Neutralize Poison` -> `Druid,Ranger=3|Bard,Cleric,Paladin=4`,
+    /// `Bestow Curse` -> `Cleric=3|Sorcerer,Wizard=4`.
+    #[test]
+    fn spells_that_differ_across_classes_resolve_per_class() {
+        assert_eq!(class_spell_level("class:cleric", "Cure Light Wounds"), Some(1));
+        assert_eq!(class_spell_level("class:druid", "Cure Light Wounds"), Some(1));
+        assert_eq!(class_spell_level("class:paladin", "Cure Light Wounds"), Some(1));
+        assert_eq!(class_spell_level("class:ranger", "Cure Light Wounds"), Some(2));
+
+        // Ranger is the only class that gets Animal Growth at 4; the
+        // record level is therefore 4 and reads wrong for everyone else.
+        assert_eq!(class_spell_level("class:ranger", "Animal Growth"), Some(4));
+        assert_eq!(class_spell_level("class:druid", "Animal Growth"), Some(5));
+        assert_eq!(class_spell_level("class:wizard", "Animal Growth"), Some(5));
+        assert_eq!(class_spell_level("class:sorcerer", "Animal Growth"), Some(5));
+
+        assert_eq!(class_spell_level("class:bard", "Cure Moderate Wounds"), Some(2));
+        assert_eq!(class_spell_level("class:cleric", "Cure Moderate Wounds"), Some(2));
+        assert_eq!(class_spell_level("class:druid", "Cure Moderate Wounds"), Some(3));
+        assert_eq!(class_spell_level("class:paladin", "Cure Moderate Wounds"), Some(3));
+        assert_eq!(class_spell_level("class:ranger", "Cure Moderate Wounds"), Some(3));
+
+        assert_eq!(class_spell_level("class:druid", "Neutralize Poison"), Some(3));
+        assert_eq!(class_spell_level("class:ranger", "Neutralize Poison"), Some(3));
+        assert_eq!(class_spell_level("class:bard", "Neutralize Poison"), Some(4));
+        assert_eq!(class_spell_level("class:cleric", "Neutralize Poison"), Some(4));
+        assert_eq!(class_spell_level("class:paladin", "Neutralize Poison"), Some(4));
+
+        assert_eq!(class_spell_level("class:cleric", "Bestow Curse"), Some(3));
+        assert_eq!(class_spell_level("class:wizard", "Bestow Curse"), Some(4));
+    }
+
+    /// Each spell above carries a record `level` that is the minimum
+    /// across its classes — the single number the sheet used to show every
+    /// class, and the reason at least one class read wrong.
+    #[test]
+    fn the_record_level_is_the_minimum_and_so_wrong_for_the_higher_classes() {
+        let record_level = |key: &str| {
+            SPELL_LIST
+                .iter()
+                .find(|entry| entry.key == key)
+                .map(|entry| entry.level)
+        };
+        assert_eq!(record_level("Hideous Laughter"), Some(1));
+        assert_eq!(record_level("Cure Light Wounds"), Some(1));
+        assert_eq!(record_level("Animal Growth"), Some(4));
+        assert_eq!(record_level("Cure Moderate Wounds"), Some(2));
+        assert_eq!(record_level("Neutralize Poison"), Some(3));
+        assert_eq!(record_level("Bestow Curse"), Some(3));
+    }
+
+    #[test]
+    fn a_spell_absent_from_a_classs_list_is_unknown_not_the_record_level() {
+        // Real CRB spell, record level 3, but no Paladin ever casts it.
+        assert!(SPELL_LIST.iter().any(|entry| entry.key == "Fireball"));
+        assert!(class_has_spell_list("class:paladin"));
+        assert_eq!(class_spell_level("class:paladin", "Fireball"), None);
+    }
+
+    #[test]
+    fn every_dispatched_class_has_a_non_empty_list() {
+        for class_id in classes_with_spell_lists() {
+            assert!(class_has_spell_list(class_id), "{class_id}");
+            let entries =
+                class_spell_list_entries(class_id).expect("a dispatched class must have entries");
+            assert!(!entries.is_empty(), "{class_id} dispatches an empty list");
+        }
+    }
+
+    #[test]
+    fn the_dispatch_roster_is_the_sixteen_static_classes_plus_hunter() {
+        let ids = classes_with_spell_lists();
+        assert_eq!(ids.len(), 17);
+        assert!(ids.contains(&"class:hunter"));
+        assert!(ids.contains(&"class:wizard"));
+        // Sorted, so a caller can binary-search or diff it stably.
+        let mut sorted = ids.clone();
+        sorted.sort_unstable();
+        assert_eq!(ids, sorted);
+    }
+
+    /// The corpus-stated `SPELLLIST:` redirects serve exactly the borrowed
+    /// list, not an approximation of it.
+    #[test]
+    fn spelllist_redirect_classes_serve_the_borrowed_list_verbatim() {
+        assert_eq!(
+            class_spell_list_entries("class:arcanist"),
+            class_spell_list_entries("class:wizard")
+        );
+        assert_eq!(
+            class_spell_list_entries("class:investigator"),
+            class_spell_list_entries("class:alchemist")
+        );
+        assert_eq!(
+            class_spell_list_entries("class:skald"),
+            class_spell_list_entries("class:bard")
+        );
+        assert_eq!(
+            class_spell_list_entries("class:warpriest"),
+            class_spell_list_entries("class:cleric")
+        );
+        // And the borrowed answer is the per-class one, not the record's.
+        assert_eq!(
+            class_spell_level("class:arcanist", "Hideous Laughter"),
+            Some(2)
+        );
+    }
+
+    #[test]
+    fn class_spell_list_entries_is_none_not_empty_for_an_unknown_class() {
+        assert!(class_spell_list_entries("class:magus").is_none());
+        assert!(class_spell_list_entries("class:wizard").is_some());
+    }
+
+    /// 255 while the union was Druid+Ranger from CRB/APG/ACG alone; **297
+    /// once ARG's own `CLASSES:` token was ingested** (SD-27) and its 38
+    /// Druid and 19 Ranger rows joined the union under the same
+    /// lower-level-wins, capped-at-6 rule. Re-derive rather than relax
+    /// this when another book lands.
+    #[test]
+    fn hunters_union_is_materialised_and_agrees_with_its_lookup() {
+        let entries = class_spell_list_entries("class:hunter").expect("hunter has a list");
+        assert_eq!(entries.len(), 297);
+        for (key, level) in &entries {
+            assert_eq!(class_spell_level("class:hunter", key), Some(*level));
+            assert!(*level <= 6, "{key} exceeds Hunter's 6th-level ceiling");
+        }
+    }
+
+    /// **The two layers are the same corpus token read by the same rules,
+    /// so they must never contradict each other.** The static tables were
+    /// generated from `cr_spells` + `apg_spells` + `acg_spells`;
+    /// the ARG supplement from `arg_spells`. A key present in both at
+    /// different levels would mean one of the two ingests misread the
+    /// corpus, and [`class_spell_level`]'s static-wins precedence would
+    /// quietly hide it. Pinned so it cannot.
+    #[test]
+    fn the_two_layers_agree_wherever_they_overlap() {
+        let mut conflicts: Vec<(&str, &str, u8, u8)> = Vec::new();
+        for (class_id, list, corpus_class_id) in &*STATIC_CLASS_SPELL_LISTS {
+            for (key, arg_level) in arg_supplement_entries(corpus_class_id) {
+                if let Some((_, static_level)) =
+                    list.iter().find(|(k, _)| k == key).filter(|(_, l)| l != arg_level)
+                {
+                    conflicts.push((class_id, key, *static_level, *arg_level));
+                }
+            }
+        }
+        assert_eq!(conflicts, Vec::new(), "static vs ARG per-class level conflicts");
+    }
+
+    /// ARG's `CLASSES:` token names Magus on 25 spells, Summoner on 5 and
+    /// Antipaladin on 13 — real corpus facts. They are deliberately NOT
+    /// used to make those classes answerable, because a 25-spell "Magus
+    /// spell list" is a far worse answer than "not known here": the real
+    /// list is in Ultimate Magic, which this repo has not ingested.
+    #[test]
+    fn the_arg_supplement_never_promotes_a_class_that_has_no_static_list() {
+        for class_id in ["class:magus", "class:summoner", "class:antipaladin", "class:oracle"] {
+            assert!(!class_has_spell_list(class_id), "{class_id}");
+            assert!(class_spell_list_entries(class_id).is_none(), "{class_id}");
+            // A spell ARG genuinely puts on the Magus list still answers
+            // unknown, because the rest of that class's list is unknown.
+            assert_eq!(class_spell_level(class_id, "Blood Blaze"), None, "{class_id}");
+        }
+    }
+
+    /// **Not every dispatched key has an ingested spell record, and that
+    /// is deliberate.** `bloodrager_spell_list`'s own doc comment records
+    /// the ruling (team lead, 2026-07-27): 73 of its 200 entries are
+    /// `.MOD` grafts whose base records live in Ultimate Magic, Ultimate
+    /// Combat and the Advanced Race Guide — books this repo does not
+    /// ingest. They stay on the list because they genuinely are on
+    /// Bloodrager's PF1 spell list; what is missing is the *record*, not
+    /// the membership. `shaman_spell_list` carries the same shape.
+    ///
+    /// This is inert for the display path, which joins in the other
+    /// direction: the Spells tab resolves a selection against the catalog
+    /// first and only then asks this module for that record's per-class
+    /// level, so a class key with no catalog record is never reached.
+    /// Pinned here so the gap stays visible and any change to it is a
+    /// deliberate edit rather than a silent drift.
+    ///
+    /// The union checked here is all FOUR ingested books; ARG joined it in
+    /// SD-27 alongside the ARG per-class supplement, and the two landed
+    /// together precisely so the supplement's keys resolve.
+    #[test]
+    fn the_dispatched_keys_with_no_ingested_record_are_the_known_documented_gap() {
+        use crate::rules_core::rules_catalog::acg::spell_list as acg_spell_list;
+        use crate::rules_core::rules_catalog::advanced_race_guide::spell_list as arg_spell_list;
+        use crate::rules_core::rules_catalog::apg::spell_list as apg_spell_list;
+
+        let mut gaps: Vec<(&str, usize)> = Vec::new();
+        for class_id in classes_with_spell_lists() {
+            let missing = class_spell_list_entries(class_id)
+                .expect("dispatched")
+                .into_iter()
+                .filter(|(key, _)| {
+                    !(SPELL_LIST.iter().any(|entry| entry.key == *key)
+                        || apg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
+                        || acg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key)
+                        || arg_spell_list::SPELL_LIST.iter().any(|entry| entry.key == *key))
+                })
+                .count();
+            if missing > 0 {
+                gaps.push((class_id, missing));
+            }
+        }
+        assert_eq!(gaps, vec![("class:bloodrager", 50), ("class:shaman", 15)]);
+    }
+
+    #[test]
+    fn every_served_level_is_a_real_pf1_spell_level() {
+        for class_id in classes_with_spell_lists() {
+            for (key, level) in class_spell_list_entries(class_id).expect("dispatched") {
+                assert!((0..=9).contains(&level), "{class_id} {key} level {level}");
+            }
+        }
+    }
+}

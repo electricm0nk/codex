@@ -7,10 +7,62 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::pathfinder_unchained::feat_tables::FeatCategory;
-pub use rt::pathfinder_unchained::feat_tables::FeatTableEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "pathfinder_unchained__feat_tables__FeatCategory"))]
+pub enum FeatCategory {
+    /// The 9 "Champion of <alignment>" feats (`###Block: Alignment
+    /// Feats`).
+    Alignment,
+    /// Combat Stamina, Extra Stamina, Push the Limits (`###Block:
+    /// Stamina Feats`).
+    CombatStamina,
+    /// Critical Cure, Endurance, Twist the Knife (`###Block: Wound
+    /// Threshold Feats`).
+    WoundThreshold,
+    /// Extra Unchained Rogue Talent, Signature Skill -- both carry a
+    /// real `TYPE:General` token and sit outside any named `###Block:`.
+    General,
+}
+impl FeatCategory {
+    pub const ALL: &'static [FeatCategory] = &[
+        FeatCategory::Alignment,
+        FeatCategory::CombatStamina,
+        FeatCategory::WoundThreshold,
+        FeatCategory::General,
+    ];
+
+    /// This catalog's single corpus source file.
+    pub fn corpus_file_name(self) -> &'static str {
+        "pu_feats"
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "pathfinder_unchained__feat_tables__FeatTableEntry"))]
+pub struct FeatTableEntry {
+    /// The corpus record identity (first column). No record in this
+    /// catalog carries a distinct `KEY:` token, so `key == name` for
+    /// every entry (see this module's own doc comment).
+    pub key: &'static str,
+    pub category: FeatCategory,
+    pub name: &'static str,
+    /// The corpus `DESC:` token, verbatim. Every one of the 17 real
+    /// records in this catalog carries a `DESC:` token (unlike CRB's own
+    /// catalog, which has 8 real gaps) -- `None` never actually occurs
+    /// here today, but the type stays `Option` to match the established
+    /// `rules_catalog::crb::feats::FeatTableEntry.description` convention
+    /// ("`None` when the record has no `DESC:` token") rather than
+    /// asserting a non-optional field this book's corpus happens not to
+    /// need yet.
+    pub description: Option<&'static str>,
+    /// The corpus `SOURCEPAGE:` token, verbatim (e.g. `"p.98"`,
+    /// `"APG p.160"`). `None` for the one real record with no
+    /// `SOURCEPAGE:` token at all (`Signature Skill`) -- an honest gap,
+    /// not a fabricated page number.
+    pub source_page: Option<&'static str>,
+}
 pub fn feat_tables() -> &'static [FeatTableEntry] {
     crate::rules_core::rules_catalog::rows::<FeatTableEntry>(
         "pathfinder_unchained/feat_tables/feat_tables",

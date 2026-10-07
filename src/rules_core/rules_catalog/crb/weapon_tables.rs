@@ -7,11 +7,64 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::crb::weapon_tables::WeaponProficiency;
-pub use rt::crb::weapon_tables::WeaponTableEntry;
-pub use rt::crb::weapon_tables::weapon_critical_threat_low;
+/// Simple/Martial/Exotic, the PF1 proficiency tiers a weapon's `TYPE:`
+/// facet can carry.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub enum WeaponProficiency {
+    Simple,
+    Martial,
+    Exotic,
+}
+/// One weapon's real corpus stat block.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct WeaponTableEntry {
+    /// The corpus record's own name, used as the lookup key.
+    pub key: &'static str,
+    /// Verbatim `DAMAGE:` token for a Medium weapon, e.g. `"1d8"`.
+    pub damage_die: &'static str,
+    /// `CRITRANGE:` — how many natural rolls threaten a critical. The
+    /// threat range is `(21 - width)..=20`; see this module's own doc
+    /// comment for why this is a width rather than a low bound.
+    pub critical_threat_range_width: u8,
+    /// `CRITMULT:` with the leading `x` stripped, e.g. `x3` -> `3`.
+    pub critical_multiplier: u8,
+    /// The weapon's `PROFICIENCY:WEAPON|` token — **a separate namespace
+    /// from `key`, and the only correct thing to match a class's
+    /// `AUTO:WEAPONPROF|` list against.**
+    ///
+    /// 58 of the 106 differ from the display key, so matching on `key`
+    /// would be wrong for more than half the table: the corpus writes
+    /// `Heavy Crossbow` as a display name but `Crossbow (Heavy)` as a
+    /// proficiency, `Short Sword` as `Sword (Short)`, `Bastard Sword` as
+    /// `Sword (Bastard)`. Wizard's own list names `Crossbow (Heavy)`, so a
+    /// key-based join would have reported a Wizard as NOT proficient with
+    /// the crossbow it is explicitly granted — the exact inverse of the
+    /// bug this field exists to fix.
+    ///
+    /// It also collapses variants that share one proficiency: both
+    /// Composite Longbow and Longbow are `Longbow`, and every Improvised
+    /// Weapon size is `Improvised Weapon`.
+    ///
+    /// `None` for the four shields, which carry no `PROFICIENCY:WEAPON`
+    /// token at all — shield bash proficiency comes from shield
+    /// proficiency, which is a different mechanic this does not model.
+    pub proficiency_name: Option<&'static str>,
+    /// `None` for the 29 records with no proficiency facet.
+    pub proficiency: Option<WeaponProficiency>,
+    /// The `Weapon Group <name>` facet, if present — the grouping
+    /// Fighter's Weapon Training keys on.
+    pub weapon_group: Option<&'static str>,
+    pub is_melee: bool,
+    pub is_ranged: bool,
+}
+/// The lowest natural roll that threatens a critical for this weapon.
+/// `21 - width`, so width 1 -> 20, width 2 -> 19, width 3 -> 18.
+pub fn weapon_critical_threat_low(entry: &WeaponTableEntry) -> u8 {
+    21 - entry.critical_threat_range_width
+}
 pub fn weapon_by_key(key: &str) -> Option<&'static WeaponTableEntry> {
     WEAPON_TABLE.iter().find(|entry| entry.key == key)
 }
@@ -22,7 +75,34 @@ pub static FINESSEABLE_WEAPON_KEYS: crate::rules_core::rules_catalog::Table<&str
 pub fn weapon_is_finesseable(entry: &WeaponTableEntry) -> bool {
     FINESSEABLE_WEAPON_KEYS.contains(&entry.key)
 }
-pub use rt::crb::weapon_tables::ClassWeaponProficiency;
+/// One class's weapon proficiency: the blanket tiers it is granted, plus
+/// the individually named weapons on top.
+///
+/// **Both halves are load-bearing — a tier-only model is wrong.** Druid,
+/// Monk and Wizard receive NO blanket Simple grant: their records carry
+/// only `Weapon Prof ~ Auto` plus an explicit `AUTO:WEAPONPROF|` list.
+/// Modelling them as "simple-weapon classes" would hand a Wizard every
+/// simple weapon in the book when the corpus grants it exactly five.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct ClassWeaponProficiency {
+    /// The engine's class id, e.g. `"class:wizard"`.
+    pub class_id: &'static str,
+    /// Blanket tiers, from `ABILITY:Internal|AUTOMATIC|Weapon Prof ~ X`
+    /// (which resolves to `AUTO:WEAPONPROF|TYPE=X`) and the `.MOD` grants.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
+    pub tiers: &'static [WeaponProficiency],
+    /// Individually named proficiencies, verbatim from the class's own
+    /// `AUTO:WEAPONPROF|` list. These are `PROFICIENCY:WEAPON` names, NOT
+    /// weapon display keys — see [`WeaponTableEntry::proficiency_name`].
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
+    pub named: &'static [&'static str],
+    /// Whole `Weapon Group <name>` grants. Only Brawler uses this among the
+    /// 27 base classes, but omitting it would have silently understated
+    /// Brawler's proficiency for every Close-group weapon.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
+    pub weapon_groups: &'static [&'static str],
+}
 pub static CLASS_WEAPON_PROFICIENCIES: crate::rules_core::rules_catalog::Table<
     ClassWeaponProficiency,
 > = crate::rules_core::rules_catalog::Table::new("crb/weapon_tables/CLASS_WEAPON_PROFICIENCIES");
@@ -31,8 +111,57 @@ pub fn class_weapon_proficiency(class_id: &str) -> Option<&'static ClassWeaponPr
         .iter()
         .find(|entry| entry.class_id == class_id)
 }
-pub use rt::crb::weapon_tables::ClassArmorProficiency;
-pub use rt::crb::weapon_tables::class_is_proficient_with;
+/// `AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine`
+/// mechanism, cycle 6, armor/shield-flavored slice of the proficiency/
+/// mechanical-grant possession-tracking sub-cause cycle 5's own next-cycle
+/// plan named). One class's armor/shield proficiency, read the same way
+/// [`ClassWeaponProficiency`] is: each field transcribed from that class's
+/// own `cr_abilities_class` `"Weapon and Armor Proficiency ~ <Class>"`
+/// record's literal `ABILITY:Internal|AUTOMATIC|Armor Prof ~ <Tier>` /
+/// `Shield Prof` / `Shield Prof ~ Tower` indirection targets -- never a
+/// shape guess. PF1 armor proficiency has no per-item exotic-armor
+/// analogue to a weapon's named list, so a class's whole grant is exactly
+/// these five booleans.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct ClassArmorProficiency {
+    /// The engine's class id, e.g. `"class:fighter"`.
+    pub class_id: &'static str,
+    pub light: bool,
+    pub medium: bool,
+    pub heavy: bool,
+    /// Buckler/Light Shield/Heavy Shield (`Shield Prof`'s own grant, NOT
+    /// the tower shield).
+    pub shield: bool,
+    pub tower_shield: bool,
+}
+/// Whether a class is proficient with a weapon.
+///
+/// Matches the weapon's `proficiency_name` against the class's named list
+/// first, then its tier against the class's blanket tiers. A weapon with
+/// no `proficiency_name` (the four shields) can only ever match on tier,
+/// and no CRB class grants a tier those shields carry, so they come back
+/// non-proficient — correct for weapon proficiency, since shield bash
+/// proficiency is a separate mechanic.
+pub fn class_is_proficient_with(
+    proficiency: &ClassWeaponProficiency,
+    weapon: &WeaponTableEntry,
+) -> bool {
+    if let Some(name) = weapon.proficiency_name
+        && proficiency.named.contains(&name)
+    {
+        return true;
+    }
+    if let Some(group) = weapon.weapon_group
+        && proficiency.weapon_groups.contains(&group)
+    {
+        return true;
+    }
+    match weapon.proficiency {
+        Some(tier) => proficiency.tiers.contains(&tier),
+        None => false,
+    }
+}
 pub static CLASS_ARMOR_PROFICIENCIES: crate::rules_core::rules_catalog::Table<
     ClassArmorProficiency,
 > = crate::rules_core::rules_catalog::Table::new("crb/weapon_tables/CLASS_ARMOR_PROFICIENCIES");
@@ -40,4 +169,582 @@ pub fn class_armor_proficiency(class_id: &str) -> Option<&'static ClassArmorProf
     CLASS_ARMOR_PROFICIENCIES
         .iter()
         .find(|entry| entry.class_id == class_id)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Every finesseable key must resolve to a real row -- a typo here
+    /// would silently mean "this weapon is never finesseable".
+    #[test]
+    fn every_finesseable_key_resolves_to_a_real_weapon() {
+        assert_eq!(FINESSEABLE_WEAPON_KEYS.len(), 26);
+        for key in &*FINESSEABLE_WEAPON_KEYS {
+            let entry = weapon_by_key(key)
+                .unwrap_or_else(|| panic!("{key} is not a real WEAPON_TABLE key"));
+            assert!(entry.is_melee, "{key} must be usable in melee to be finessed");
+            assert!(weapon_is_finesseable(entry), "{key} must answer true");
+        }
+    }
+
+    /// The collision the list's doc comment exists to prevent: two records
+    /// share one proficiency name, and only one of them is finesseable.
+    #[test]
+    fn spiked_armor_is_finesseable_but_armor_spikes_is_not() {
+        let spiked_armor = weapon_by_key("Spiked Armor").expect("present");
+        let armor_spikes = weapon_by_key("Armor Spikes").expect("present");
+        assert_eq!(
+            spiked_armor.proficiency_name, armor_spikes.proficiency_name,
+            "the two share one proficiency name, which is why key-matching matters"
+        );
+        assert!(weapon_is_finesseable(spiked_armor));
+        assert!(
+            !weapon_is_finesseable(armor_spikes),
+            "Armor Spikes carries no Finesseable facet in the corpus"
+        );
+    }
+
+    /// The base Bastard Sword is not finesseable -- only the Sun Blade
+    /// `.COPY` record derived from it is, and that is a magic item this
+    /// table does not carry.
+    #[test]
+    fn heavy_weapons_are_not_finesseable() {
+        for key in ["Bastard Sword", "Longsword", "Greatsword", "Battleaxe"] {
+            assert!(
+                !weapon_is_finesseable(weapon_by_key(key).expect("present")),
+                "{key} must not be finesseable"
+            );
+        }
+    }
+
+    #[test]
+    fn the_table_matches_the_verified_corpus_extraction() {
+        assert_eq!(WEAPON_TABLE.len(), 106, "106 CRB weapon records carry DAMAGE + CRITMULT");
+        let melee = WEAPON_TABLE.iter().filter(|w| w.is_melee).count();
+        let ranged = WEAPON_TABLE.iter().filter(|w| w.is_ranged).count();
+        assert_eq!((melee, ranged), (78, 36), "some records are both (thrown)");
+    }
+
+    #[test]
+    fn proficiency_tiers_match_the_corpus_facets() {
+        let count = |p: Option<WeaponProficiency>| {
+            WEAPON_TABLE.iter().filter(|w| w.proficiency == p).count()
+        };
+        assert_eq!(count(Some(WeaponProficiency::Simple)), 20);
+        assert_eq!(count(Some(WeaponProficiency::Martial)), 39);
+        assert_eq!(count(Some(WeaponProficiency::Exotic)), 18);
+        assert_eq!(count(None), 29, "shields, unarmed/flurry, improvised, ray touch");
+    }
+
+    /// The six weapons whose published PF1 stats were checked directly
+    /// against the corpus before this table was built. These pin both
+    /// the damage die and -- critically -- that CRITRANGE is a WIDTH.
+    #[test]
+    fn spot_checked_weapons_match_their_published_pf1_stats() {
+        for (key, die, low, mult) in [
+            ("Longsword", "1d8", 19u8, 2u8),
+            ("Dagger", "1d4", 19, 2),
+            ("Scimitar", "1d6", 18, 2),
+            ("Rapier", "1d6", 18, 2),
+            ("Battleaxe", "1d8", 20, 3),
+            ("Greataxe", "1d12", 20, 3),
+        ] {
+            let w = weapon_by_key(key).unwrap_or_else(|| panic!("{key} must be in the table"));
+            assert_eq!(w.damage_die, die, "{key} damage");
+            assert_eq!(weapon_critical_threat_low(w), low, "{key} threat range low");
+            assert_eq!(w.critical_multiplier, mult, "{key} crit multiplier");
+        }
+    }
+
+    /// Guards the width-vs-low-bound reading specifically. If the field
+    /// were ever reinterpreted as a low bound, a Longsword would report
+    /// a threat range starting at 2 and this fails loudly.
+    #[test]
+    fn the_threat_range_is_derived_from_a_width_not_a_low_bound() {
+        let longsword = weapon_by_key("Longsword").expect("Longsword");
+        assert_eq!(longsword.critical_threat_range_width, 2, "raw corpus CRITRANGE");
+        assert_eq!(weapon_critical_threat_low(longsword), 19, "21 - 2");
+        assert_ne!(
+            longsword.critical_threat_range_width,
+            weapon_critical_threat_low(longsword),
+            "width and low bound must not be conflated"
+        );
+    }
+
+    /// Monk's own weapons are present and untiered -- they are why the
+    /// 29 untiered records were kept rather than filtered out.
+    #[test]
+    fn monk_unarmed_weapons_are_present_and_untiered() {
+        for key in ["Unarmed Strike", "Flurry of Blows"] {
+            let w = weapon_by_key(key).unwrap_or_else(|| panic!("{key} must be present"));
+            assert_eq!(w.proficiency, None, "{key} carries no proficiency facet");
+            assert!(w.is_melee, "{key} is melee");
+        }
+    }
+
+    #[test]
+    fn every_entry_has_a_sane_stat_block() {
+        for w in &*WEAPON_TABLE {
+            assert!(!w.damage_die.is_empty(), "{} has no damage die", w.key);
+            assert!(
+                (1..=3).contains(&w.critical_threat_range_width),
+                "{} threat width {} out of the real 1..=3 range",
+                w.key,
+                w.critical_threat_range_width
+            );
+            assert!(
+                (2..=4).contains(&w.critical_multiplier),
+                "{} crit multiplier {} out of the real x2..x4 range",
+                w.key,
+                w.critical_multiplier
+            );
+            assert!(w.is_melee || w.is_ranged, "{} is neither melee nor ranged", w.key);
+        }
+    }
+
+    #[test]
+    fn keys_are_unique_and_lookup_rejects_unknown_weapons() {
+        let mut keys: Vec<&str> = WEAPON_TABLE.iter().map(|w| w.key).collect();
+        let n = keys.len();
+        keys.sort_unstable();
+        keys.dedup();
+        assert_eq!(keys.len(), n, "duplicate weapon keys");
+        assert!(weapon_by_key("Lightsaber").is_none());
+    }
+}
+#[cfg(test)]
+mod class_armor_proficiency_tests {
+    use super::*;
+
+
+    #[test]
+    fn druid_and_monk_are_deliberately_absent() {
+        assert!(class_armor_proficiency("class:druid").is_none());
+        assert!(class_armor_proficiency("class:monk").is_none());
+    }
+}
+#[cfg(test)]
+mod class_weapon_proficiency_tests {
+    use super::*;
+
+    fn prof(class_id: &str) -> &'static ClassWeaponProficiency {
+        class_weapon_proficiency(class_id).expect("class must be covered")
+    }
+
+    fn weapon(key: &str) -> &'static WeaponTableEntry {
+        weapon_by_key(key).expect("weapon must be in the table")
+    }
+
+    /// The bug this whole table exists to fix: a Wizard is not proficient
+    /// with a Longsword, so the melee total owes a nonproficiency penalty.
+    #[test]
+    fn a_wizard_is_not_proficient_with_a_longsword() {
+        assert!(!class_is_proficient_with(prof("class:wizard"), weapon("Longsword")));
+    }
+
+    /// The join that would have silently broken. Wizard's corpus list
+    /// names `Crossbow (Heavy)`; the weapon's display key is `Heavy
+    /// Crossbow`. Matching on the display key would report a Wizard as NOT
+    /// proficient with a weapon it is explicitly granted.
+    #[test]
+    fn the_proficiency_namespace_join_survives_the_renamed_weapons() {
+        let wizard = prof("class:wizard");
+        assert!(class_is_proficient_with(wizard, weapon("Heavy Crossbow")));
+        assert!(class_is_proficient_with(wizard, weapon("Light Crossbow")));
+        // And the display key really does differ, so this test is not
+        // passing for a trivial reason.
+        assert_eq!(weapon("Heavy Crossbow").proficiency_name, Some("Crossbow (Heavy)"));
+        assert_ne!(weapon("Heavy Crossbow").proficiency_name, Some("Heavy Crossbow"));
+    }
+
+    #[test]
+    fn a_wizard_is_proficient_with_exactly_its_five_granted_weapons() {
+        let wizard = prof("class:wizard");
+        for granted in ["Club", "Dagger", "Heavy Crossbow", "Light Crossbow", "Quarterstaff"] {
+            assert!(
+                class_is_proficient_with(wizard, weapon(granted)),
+                "{granted} is on Wizard's own corpus list"
+            );
+        }
+        // No blanket Simple grant: a Wizard is NOT proficient with every
+        // simple weapon, only those five.
+        for denied in ["Spear", "Sling", "Light Mace", "Sickle"] {
+            assert!(
+                !class_is_proficient_with(wizard, weapon(denied)),
+                "{denied} is Simple but NOT on Wizard's list -- a tier-only model would wrongly allow it"
+            );
+        }
+    }
+
+    /// Fighter's Martial grant lives in a `.MOD` record and an internal
+    /// ability, not on the feature record's own `AUTO:WEAPONPROF`. A
+    /// partial read of that record says Fighter has no Martial at all.
+    #[test]
+    fn a_fighter_is_proficient_with_simple_and_martial_weapons() {
+        let fighter = prof("class:fighter");
+        assert!(class_is_proficient_with(fighter, weapon("Longsword")), "Martial");
+        assert!(class_is_proficient_with(fighter, weapon("Club")), "Simple");
+        assert!(
+            !class_is_proficient_with(fighter, weapon("Whip")),
+            "an Exotic weapon is not granted to a Fighter by proficiency alone"
+        );
+    }
+
+    /// Bastard Sword and Dwarven Waraxe carry BOTH `Exotic` and `Martial`
+    /// in one `TYPE:` facet -- PF1's real rule that they are Martial used
+    /// two-handed and Exotic used one-handed. This table stores one tier
+    /// (Martial), so a Fighter reads as proficient: correct two-handed,
+    /// over-permissive one-handed.
+    ///
+    /// Recorded as a test rather than only a comment so the limit is
+    /// visible if anyone later relies on it. Resolving it properly needs
+    /// wield state, which this engine does not record anywhere -- the same
+    /// missing input that keeps the per-weapon damage record a feat-bonus
+    /// rather than a damage total. Inventing it here would be fabrication.
+    #[test]
+    fn the_two_dual_tier_weapons_resolve_to_their_martial_tier() {
+        for key in ["Bastard Sword", "Dwarven Waraxe"] {
+            assert_eq!(
+                weapon(key).proficiency,
+                Some(WeaponProficiency::Martial),
+                "{key} is Exotic one-handed and Martial two-handed; this table keeps Martial"
+            );
+            assert!(class_is_proficient_with(prof("class:fighter"), weapon(key)));
+        }
+    }
+
+    #[test]
+    fn a_bard_gets_simple_plus_its_six_named_martial_weapons() {
+        let bard = prof("class:bard");
+        assert!(class_is_proficient_with(bard, weapon("Longsword")), "named");
+        assert!(class_is_proficient_with(bard, weapon("Short Sword")), "named as Sword (Short)");
+        assert!(class_is_proficient_with(bard, weapon("Club")), "blanket Simple");
+        assert!(
+            !class_is_proficient_with(bard, weapon("Greataxe")),
+            "an unnamed Martial weapon stays out of reach"
+        );
+    }
+
+    /// Every named proficiency in the class table must be a real
+    /// `PROFICIENCY:WEAPON` value carried by some weapon. A typo here
+    /// would silently narrow a class's proficiency with no test failing
+    /// anywhere else.
+    #[test]
+    fn every_named_class_proficiency_matches_a_real_weapon() {
+        // Names legitimately absent, documented rather than skipped so the
+        // guard still catches real typos: `Bomb` is the Alchemist's class
+        // feature (no stat block); `Sword Cane` is a real weapon but an APG
+        // one; `Kusarigama (Sickle and Chain)` and `Wakizashi` (SD-34 wave
+        // 34 lane C, Ninja's own corpus token) are real Ultimate Combat
+        // weapons -- all three are outside this CRB-only table's own scope,
+        // a genuine scope mismatch, recorded here as a known limit.
+        const OUTSIDE_THE_CRB_WEAPON_TABLE: &[&str] =
+            &[
+                "Bomb", "Sword Cane", "Kusarigama (Sickle and Chain)", "Wakizashi",
+                // SD-36 Epic F1c (D5): oracle WEAPONPROF names with no CRB weapon row carrying
+                // that PROFICIENCY token -- Sword (Temple) is an APG weapon; Flurry of Blows,
+                // Spells (Ray)/(Touch) and Splash Weapon are proficiency names, not table weapons.
+                "Flurry of Blows", "Sword (Temple)", "Spells (Ray)", "Spells (Touch)", "Splash Weapon",
+            ];
+        for class in &*CLASS_WEAPON_PROFICIENCIES {
+            for named in class.named {
+                if OUTSIDE_THE_CRB_WEAPON_TABLE.contains(named) {
+                    continue;
+                }
+                assert!(
+                    WEAPON_TABLE.iter().any(|w| w.proficiency_name == Some(*named)),
+                    "{}'s named proficiency {named:?} matches no weapon's PROFICIENCY:WEAPON token",
+                    class.class_id
+                );
+            }
+        }
+    }
+
+    /// SD-31 wave 20 (chassis-coverage lane): Ultimate Combat's Gunslinger
+    /// carries a real corpus proficiency record
+    /// (`uc_abilities_class`, `KEY:Gunslinger ~ Proficiencies`) --
+    /// `ABILITY:Internal|AUTOMATIC|TYPE=WeaponProfMartial|TYPE=ArmorProfLight`
+    /// plus a second indirection through `Weapon Prof ~ Auto`/`Weapon Prof
+    /// ~ Simple` -- the same convention-2 indirection shape Fighter and
+    /// Barbarian already use for their own Simple+Martial grant. `TYPE=Firearm`
+    /// is also on that record; it is a weapon TYPE selector, not a tier this
+    /// table models (the same documented, deliberate boundary the Unchained
+    /// Monk's `TYPE=Monk` selector already carries above), so it is NOT
+    /// claimed here. Was previously absent entirely -- `class:gunslinger`
+    /// read `None` ("not ingested"), which claim-blocked the whole melee
+    /// baseline for every Gunslinger regardless of what weapon it held.
+    #[test]
+    fn gunslinger_has_simple_and_martial_tiers_from_its_real_corpus_record() {
+        let gunslinger = prof("class:gunslinger");
+        assert_eq!(gunslinger.tiers, &[WeaponProficiency::Simple, WeaponProficiency::Martial]);
+        assert!(gunslinger.named.is_empty());
+        assert!(gunslinger.weapon_groups.is_empty());
+        // The actual bug this closes: a Gunslinger IS proficient with the
+        // Longsword (Martial tier), so `combat.baseline_weapon_proficiency_unknown`
+        // must resolve rather than claim-block.
+        assert!(class_is_proficient_with(gunslinger, weapon("Longsword")));
+    }
+
+    /// SD-34 wave 34 lane C: Ninja's own real corpus token (`ultimate_
+    /// combat/class_feature/ninja/ninja_weapon_proficiencies.json`) --
+    /// nine named weapons, transcribed verbatim. SD-36 Epic F1c (D5) added
+    /// the Simple tier and the automatic proficiencies its class row grants
+    /// (uc_abilities_globalvar:178).
+    #[test]
+    fn ninja_has_its_real_named_weapon_list_and_the_simple_tier() {
+        let ninja = prof("class:ninja");
+        // SD-36 Epic F1c (D5): the class row grants the Simple Weapon Proficiency feat
+        // (uc_abilities_globalvar:178) -- the Simple tier, and nothing Martial.
+        assert_eq!(ninja.tiers, &[WeaponProficiency::Simple]);
+        assert!(ninja.weapon_groups.is_empty());
+        for granted in ["Shortbow", "Short Sword", "Kama", "Nunchaku", "Sai", "Shuriken", "Siangham"] {
+            assert!(
+                class_is_proficient_with(ninja, weapon(granted)),
+                "{granted} is on Ninja's own corpus AUTO:WEAPONPROF list"
+            );
+        }
+        // The bug this closes: Ninja now resolves a real (correct)
+        // Longsword verdict instead of leaving
+        // `combat.baseline_weapon_proficiency_unknown` claim-blocking the
+        // whole melee baseline. Longsword is Martial-tier and not on
+        // Ninja's own named list, so the correct verdict is non-proficient.
+        assert!(!class_is_proficient_with(ninja, weapon("Longsword")));
+    }
+
+    #[test]
+    fn an_unknown_class_reports_unknown_rather_than_non_proficient() {
+        assert!(class_weapon_proficiency("class:not_a_class").is_none());
+        assert!(class_weapon_proficiency("class:eldritch_knight").is_none());
+    }
+
+    /// The whole 31-class roster, not just the CRB set.
+    ///
+    /// Shipping this CRB-only was a real near-miss: it returned "unknown"
+    /// for 16 classes, and any caller flagging non-proficiency by omission
+    /// would have penalised seven martial ones (Bloodrager, Skald, Slayer,
+    /// Swashbuckler, Cavalier, Hunter, Warpriest).
+    ///
+    /// SD-27 (2026-07-31) added Pathfinder Unchained's four. The same
+    /// near-miss applied to them in a sharper form: an Unchained class with
+    /// no row here reads as "unknown", which claim-blocks the whole combat
+    /// baseline, so the class would have been selectable and uncomputable.
+    #[test]
+    fn every_class_in_the_roster_is_covered() {
+        for class_id in [
+            "class:alchemist", "class:arcanist", "class:barbarian", "class:bard",
+            "class:bloodrager", "class:brawler", "class:cavalier", "class:cleric",
+            "class:druid", "class:fighter", "class:hunter", "class:inquisitor",
+            "class:investigator", "class:monk", "class:oracle", "class:paladin",
+            "class:ranger", "class:rogue", "class:shaman", "class:skald",
+            "class:slayer", "class:sorcerer", "class:summoner", "class:swashbuckler",
+            "class:warpriest", "class:witch", "class:wizard",
+            "class:unchained_barbarian", "class:unchained_monk",
+            "class:unchained_rogue", "class:unchained_summoner",
+            "class:gunslinger",
+            "class:kineticist", "class:medium", "class:mesmerist", "class:occultist",
+            "class:vigilante", "class:psychic", "class:spiritualist", "class:psion",
+            "class:shifter",
+            // SD-34 wave 34 lane C.
+            "class:ninja",
+        ] {
+            assert!(
+                class_weapon_proficiency(class_id).is_some(),
+                "{class_id} has a real corpus proficiency record and must be covered"
+            );
+        }
+        assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 42);
+    }
+
+    /// SD-36 Epic F1 (spec §3.4, F1.2/F1.5): the 42 static rows above stay; every census class
+    /// WITHOUT one is answered by the converted-record reader
+    /// (`class_proficiency_sheet_rules::class_weapon_proficiency_view`). This walks every class in
+    /// `class_census::census()` with no static row, at every level `1..=max_level`, and collects
+    /// each class the reader still answers Unknown, with its reason. The test passes only when that
+    /// set equals the enumerated remainder recorded, with a mechanism per class, in
+    /// `docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md` -- no silent
+    /// tolerance: a class that gains an answer must leave the record, and a class that loses one
+    /// fails here by name.
+    #[test]
+    fn every_census_class_has_a_known_proficiency_answer() {
+        use crate::rules_core::class_census::census;
+        use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
+            class_weapon_proficiency_view, ProficiencyAnswer,
+        };
+        use std::collections::BTreeMap;
+
+        const REMAINDER: &str = include_str!(
+            "../../../../docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md"
+        );
+        let recorded: BTreeMap<String, ()> = REMAINDER
+            .lines()
+            .filter_map(|line| line.strip_prefix("| class:"))
+            .map(|rest| (format!("class:{}", rest.split('|').next().unwrap_or("").trim()), ()))
+            .collect();
+
+        let entries = census();
+        let mut walked = 0usize;
+        let mut known = 0usize;
+        let mut unknown: BTreeMap<String, String> = BTreeMap::new();
+        for entry in entries.values() {
+            if class_weapon_proficiency(&entry.class_id).is_some() {
+                continue;
+            }
+            walked += 1;
+            let slug = crate::rules_core::sheet_rule::id_slug(&entry.class_id);
+            let first_unknown = (1..=entry.max_level).find_map(|level| {
+                match class_weapon_proficiency_view(&slug, level) {
+                    // A Known view carrying an unresolved weapon pick answers only the weapons
+                    // its counted grants cover; every other weapon is Unknown (reader batch
+                    // blocker 2), so the class is not "Known at every level".
+                    ProficiencyAnswer::Known(view) if !view.unresolved_picks.is_empty() => {
+                        Some(format!("level {level}: unresolved pick: {}", view.unresolved_picks.join("; ")))
+                    }
+                    ProficiencyAnswer::Known(_) => None,
+                    ProficiencyAnswer::Unknown { reason } => Some(format!("level {level}: {reason}")),
+                }
+            });
+            match first_unknown {
+                Some(reason) => {
+                    unknown.insert(entry.class_id.clone(), reason);
+                }
+                None => known += 1,
+            }
+        }
+        eprintln!(
+            "census classes: {}; with a static row: {}; walked by the reader: {walked}; \
+             Known at every level: {known}; Unknown: {}",
+            entries.len(),
+            entries.len() - walked,
+            unknown.len()
+        );
+        for (class_id, reason) in &unknown {
+            eprintln!("UNKNOWN {class_id} -- {reason}");
+        }
+        let unknown_ids: Vec<&String> = unknown.keys().collect();
+        let recorded_ids: Vec<&String> = recorded.keys().collect();
+        assert_eq!(
+            unknown_ids, recorded_ids,
+            "the classes the reader answers Unknown must equal the remainder recorded in \
+             reader-remainder.md (with a mechanism per class); Unknown with reasons: {unknown:#?}"
+        );
+    }
+
+    /// Each Unchained class's grants against the class it replaces. Three
+    /// match exactly; the Unchained Monk does not, and the difference is
+    /// pinned rather than tolerated -- PU's `AUTO:WEAPONPROF` names 16
+    /// weapons where CRB's Monk row names 17, omitting `Unarmed Strike`.
+    #[test]
+    fn unchained_weapon_grants_match_their_base_class_except_the_monks_unarmed_strike() {
+        for (unchained, base) in [
+            ("class:unchained_barbarian", "class:barbarian"),
+            ("class:unchained_rogue", "class:rogue"),
+            ("class:unchained_summoner", "class:summoner"),
+        ] {
+            let u = prof(unchained);
+            let b = prof(base);
+            assert_eq!(u.tiers, b.tiers, "{unchained} tiers");
+            assert_eq!(u.named, b.named, "{unchained} named weapons");
+            assert_eq!(u.weapon_groups, b.weapon_groups, "{unchained} weapon groups");
+        }
+
+        let pu_monk = prof("class:unchained_monk");
+        let crb_monk = prof("class:monk");
+        // SD-36 Epic F1c (D5): both gained Flurry of Blows and Sword (Temple) from the oracle.
+        assert_eq!(pu_monk.named.len(), 18);
+        assert_eq!(crb_monk.named.len(), 19);
+        assert!(crb_monk.named.contains(&"Unarmed Strike"));
+        assert!(
+            !pu_monk.named.contains(&"Unarmed Strike"),
+            "PU's own token does not name it -- transcribed, not corrected"
+        );
+        // Everything else on the CRB list is on PU's list too, so the
+        // difference really is exactly the one entry.
+        for weapon_name in crb_monk.named {
+            if *weapon_name == "Unarmed Strike" {
+                continue;
+            }
+            assert!(pu_monk.named.contains(weapon_name), "{weapon_name}");
+        }
+    }
+
+    /// The Longsword question decided for the whole roster in one place --
+    /// this is what the melee baseline actually turns on. 13 proficient,
+    /// 18 not.
+    ///
+    /// SD-27 added `class:unchained_barbarian` to the proficient side and
+    /// the other three Unchained classes to the non-proficient side, each
+    /// on its own corpus record: the Unchained Barbarian grants the Martial
+    /// tier, and the Unchained Monk / Rogue / Summoner do not, exactly like
+    /// the classes they replace.
+    #[test]
+    fn longsword_proficiency_is_correct_for_every_class() {
+        let longsword = weapon("Longsword");
+        let expected_proficient = [
+            "class:barbarian", "class:bard", "class:bloodrager", "class:cavalier",
+            "class:fighter", "class:hunter", "class:paladin", "class:ranger",
+            "class:skald", "class:slayer", "class:swashbuckler", "class:warpriest",
+            "class:unchained_barbarian", "class:gunslinger",
+            // SD-34 wave 33 lane C: both carry ONLY `TYPE=WeaponProfMartial`
+            // in their real corpus token (see the roster comment above),
+            // and Longsword is a Martial-tier weapon.
+            "class:occultist", "class:vigilante",
+        ];
+        let mut proficient = 0;
+        for class in &*CLASS_WEAPON_PROFICIENCIES {
+            let actual = class_is_proficient_with(class, longsword);
+            let expected = expected_proficient.contains(&class.class_id);
+            assert_eq!(
+                actual, expected,
+                "{} Longsword proficiency: expected {expected}, got {actual}",
+                class.class_id
+            );
+            proficient += usize::from(actual);
+        }
+        // SD-34 wave 34 lane C: Ninja added to the roster, non-proficient
+        // (Longsword is Martial-tier and not on Ninja's own named list),
+        // so the proficient count is unchanged, only the denominator moves.
+        assert_eq!(proficient, 16, "16 of 42 classes are Longsword-proficient");
+    }
+
+    /// Bard reaches Longsword through its explicit list, NOT a martial
+    /// tier. A tier-only model would wrongly deny it.
+    #[test]
+    fn bard_reaches_longsword_by_name_not_by_tier() {
+        let bard = prof("class:bard");
+        assert!(!bard.tiers.contains(&WeaponProficiency::Martial), "Bard has no martial tier");
+        assert!(class_is_proficient_with(bard, weapon("Longsword")), "but names it explicitly");
+    }
+
+    /// Inquisitor is Simple + bows/crossbows + deity weapons -- NOT
+    /// martial, contrary to a common RAW recollection that would have
+    /// excluded it from the affected set.
+    #[test]
+    fn inquisitor_is_not_martial_despite_the_common_assumption() {
+        let inquisitor = prof("class:inquisitor");
+        assert!(!class_is_proficient_with(inquisitor, weapon("Longsword")));
+        assert!(class_is_proficient_with(inquisitor, weapon("Shortbow")), "named");
+        assert!(class_is_proficient_with(inquisitor, weapon("Club")), "blanket Simple");
+    }
+
+    /// Brawler is the only class granted a whole weapon GROUP. Longsword
+    /// is Blades Heavy, not Close, so it stays non-proficient -- but a
+    /// Close-group weapon must resolve through the group grant.
+    #[test]
+    fn brawler_gets_its_close_weapon_group() {
+        let brawler = prof("class:brawler");
+        assert!(!class_is_proficient_with(brawler, weapon("Longsword")), "Blades Heavy");
+        let close = WEAPON_TABLE
+            .iter()
+            .find(|w| {
+                w.weapon_group == Some("Close")
+                    && w.proficiency == Some(WeaponProficiency::Martial)
+            })
+            .expect("the table has a martial Close-group weapon");
+        assert!(
+            class_is_proficient_with(brawler, close),
+            "{} is Close group and must resolve via the group grant",
+            close.key
+        );
+    }
 }

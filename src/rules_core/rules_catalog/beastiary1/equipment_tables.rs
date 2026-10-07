@@ -7,15 +7,101 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub use super::equipment_data::EQUIPMENT_RECORDS;
 use crate::rules_core::rules_catalog::RuleSetId;
-pub use rt::beastiary1::equipment_tables::EquipmentCategory;
-pub use rt::beastiary1::equipment_tables::EquipmentTableEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "beastiary1__equipment_tables__EquipmentCategory"))]
+pub enum EquipmentCategory {
+    General,
+    ArmsArmor,
+    MagicItems,
+}
+impl EquipmentCategory {
+    pub const ALL: &'static [EquipmentCategory] = &[
+        EquipmentCategory::General,
+        EquipmentCategory::ArmsArmor,
+        EquipmentCategory::MagicItems,
+    ];
+
+    /// Which `bestiary` corpus file this category's records live in.
+    /// (The on-disk directory/filename prefix is `b1_`, matching the
+    /// corpus's own naming; there is no `b1_equipmods` file at all —
+    /// Bestiary 1 introduces no equipment *modifiers*, only base items.)
+    pub fn corpus_file_name(self) -> &'static str {
+        match self {
+            EquipmentCategory::General => "b1_equip_general",
+            EquipmentCategory::ArmsArmor => "b1_equip_arms_armor",
+            EquipmentCategory::MagicItems => "b1_equip_magic_items",
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "beastiary1__equipment_tables__EquipmentTableEntry"))]
+pub struct EquipmentTableEntry {
+    /// The corpus's raw first-column name (its `SORTKEY:`-equivalent
+    /// identity when no explicit `KEY:` token is present, which is every
+    /// record in this book), falling back to `name` otherwise — same
+    /// convention `rules_catalog::{crb,apg,acg}::equipment_tables`
+    /// document for their own `key` field.
+    pub key: &'static str,
+    pub category: EquipmentCategory,
+    /// Display name from the corpus's `OUTPUTNAME:` token when present
+    /// (`[NAME]` means "echo the raw name unchanged"), else the raw name.
+    pub name: &'static str,
+    /// Cost in gold pieces from the corpus `COST:` token. Every one of
+    /// this book's 4 records carries `COST:0` — these are
+    /// monster-intrinsic items (a poison, a racial rag-armor quality, a
+    /// thrown weapon, a periapt gemstone) rather than PC shop-priced
+    /// goods, so `Some(0.0)` is the honest, literal corpus value, not a
+    /// missing-data placeholder.
+    pub cost_gp: Option<f64>,
+    /// Weight in pounds from the corpus `WT:` token. Present on all 4
+    /// records (including `Some(0.0)` where the corpus literally states
+    /// `WT:0`).
+    pub weight_lbs: Option<f64>,
+    /// Descriptive text. Sourced from the corpus `SPROP:` ("Special
+    /// Property") token where present — Bestiary 1's equipment corpus
+    /// carries no `DESC:` token at all (checked directly), but 3 of the
+    /// 4 records do carry `SPROP:` (register A10: same convention
+    /// `rules_catalog::acg::equipment_data` already established, "ACG hit
+    /// 98.1% via `SPROP:` alone"). The 1 record with neither `DESC:` nor
+    /// `SPROP:` (`Rag Armor (Dark Creeper)`) is filled from a web
+    /// second-source per this cycle's receipt — never fabricated, and
+    /// only after an identity-match confirmation (name + monster +
+    /// source page) against the same Dark Creeper stat block the LST
+    /// record itself is keyed to.
+    pub description: Option<&'static str>,
+}
 pub static EQUIPMENT_TABLE: crate::rules_core::rules_catalog::Table<EquipmentTableEntry> =
     crate::rules_core::rules_catalog::Table::new("beastiary1/equipment_tables/EQUIPMENT_TABLE");
-pub use rt::beastiary1::equipment_tables::EquipmentFieldCoverage;
+/// SD-25 criterion 7.N equipment field-coverage audit row. Mirrors
+/// `rules_catalog::{crb,apg,acg}::equipment_tables::EquipmentFieldCoverage`'s
+/// shape.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct EquipmentFieldCoverage {
+    /// Records currently in `EQUIPMENT_TABLE`.
+    pub total_records: u32,
+    /// Real, active (non-`.MOD`, non-`.COPY=`, non-`SOURCELONG`-header,
+    /// non-comment, non-blank) record count across `b1_equip_general`
+    /// (1) + `b1_equip_arms_armor` (2) + `b1_equip_magic_items`
+    /// (1) = 4. Verified directly (no `.MOD`/`.COPY=` rows exist in any
+    /// of the 3 files; each carries exactly one `SOURCELONG:` header line
+    /// excluded from this count per the same off-by-one-per-file
+    /// methodology correction `rules_catalog::apg::equipment_data`
+    /// documents (register A11)).
+    pub records_expected: u32,
+    /// Records with `cost_gp.is_some()`.
+    pub has_cost: u32,
+    /// Records with `weight_lbs.is_some()`.
+    pub has_weight: u32,
+    /// Records with `description.is_some()` — 4/4 after this cycle's web
+    /// second-source pass closed the one `Rag Armor (Dark Creeper)` gap
+    /// neither `DESC:` nor `SPROP:` covered.
+    pub has_description: u32,
+}
 pub fn field_coverage_report() -> EquipmentFieldCoverage {
     EquipmentFieldCoverage {
         total_records: EQUIPMENT_TABLE.len() as u32,

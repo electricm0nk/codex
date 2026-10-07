@@ -7,9 +7,92 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::ultimate_intrigue::spell_list::Pf1SchoolId;
-pub use rt::ultimate_intrigue::spell_list::SpellListEntry;
+/// The full 9-school PF1 spell-school enum, mirroring
+/// `advanced_race_guide::spell_list::Pf1SchoolId` exactly.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_intrigue__spell_list__Pf1SchoolId"))]
+pub enum Pf1SchoolId {
+    Abjuration,
+    Conjuration,
+    Divination,
+    Enchantment,
+    Evocation,
+    Illusion,
+    Necromancy,
+    Transmutation,
+    Universal,
+}
+impl Pf1SchoolId {
+    pub const ALL: &'static [Pf1SchoolId] = &[
+        Pf1SchoolId::Abjuration,
+        Pf1SchoolId::Conjuration,
+        Pf1SchoolId::Divination,
+        Pf1SchoolId::Enchantment,
+        Pf1SchoolId::Evocation,
+        Pf1SchoolId::Illusion,
+        Pf1SchoolId::Necromancy,
+        Pf1SchoolId::Transmutation,
+        Pf1SchoolId::Universal,
+    ];
+
+    /// Maps the corpus's raw `SCHOOL:` string to this enum.
+    pub fn from_corpus_str(raw: &str) -> Option<Self> {
+        match raw {
+            "Abjuration" => Some(Pf1SchoolId::Abjuration),
+            "Conjuration" => Some(Pf1SchoolId::Conjuration),
+            "Divination" => Some(Pf1SchoolId::Divination),
+            "Enchantment" => Some(Pf1SchoolId::Enchantment),
+            "Evocation" => Some(Pf1SchoolId::Evocation),
+            "Illusion" => Some(Pf1SchoolId::Illusion),
+            "Necromancy" => Some(Pf1SchoolId::Necromancy),
+            "Transmutation" => Some(Pf1SchoolId::Transmutation),
+            "Universal" => Some(Pf1SchoolId::Universal),
+            _ => None,
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "ultimate_intrigue__spell_list__SpellListEntry"))]
+pub struct SpellListEntry {
+    /// The spell's `name` is its identity in `ui_spells` (no `KEY:`
+    /// token on any in-scope record).
+    pub key: &'static str,
+    /// `decisions.md §24`: `Some(line)` ONLY when `key` above is a
+    /// Codex-generated neutral identity. `None` for this book -- every
+    /// record here is hand-authored, non-PI content.
+    pub name_pi_line: Option<u32>,
+    pub school: Pf1SchoolId,
+    /// Minimum spell level across the record's `CLASSES:` tag(s).
+    pub level: u8,
+    /// Full corpus spell text, verbatim -- see this module's doc comment.
+    pub description: &'static str,
+}
 pub static SPELL_LIST: crate::rules_core::rules_catalog::Table<SpellListEntry> =
     crate::rules_core::rules_catalog::Table::new("ultimate_intrigue/spell_list/SPELL_LIST");
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn catalog_has_101_records() {
+        assert_eq!(SPELL_LIST.len(), 101);
+    }
+
+    #[test]
+    fn every_record_carries_real_description_text() {
+        for e in &*SPELL_LIST {
+            assert!(!e.description.is_empty(), "{} has empty description", e.key);
+            assert!(e.level <= 9, "{} level {} out of PF1 spell-level range", e.key, e.level);
+        }
+    }
+
+    #[test]
+    fn keys_are_unique_within_book() {
+        let keys: std::collections::BTreeSet<&str> = SPELL_LIST.iter().map(|e| e.key).collect();
+        assert_eq!(keys.len(), SPELL_LIST.len());
+    }
+}

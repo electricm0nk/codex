@@ -7,14 +7,73 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub use crate::rules_core::rules_catalog::crb::feats::{
     ConditionItem, EffectCondition, EffectSelection,
 };
-pub use rt::advanced_race_guide::feats::FeatCategory;
-pub use rt::advanced_race_guide::feats::FeatEffectBonus;
-pub use rt::advanced_race_guide::feats::FeatTableEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__feats__FeatCategory"))]
+pub enum FeatCategory {
+    General,
+    Combat,
+    Teamwork,
+}
+impl FeatCategory {
+    pub const ALL: &'static [FeatCategory] = &[FeatCategory::General, FeatCategory::Combat, FeatCategory::Teamwork];
+
+    /// This catalog's single corpus source file -- all 3 categories are
+    /// drawn from the same `arg_feats` (mirrors
+    /// `rules_catalog::crb::feats::FeatCategory::corpus_file_name`).
+    pub fn corpus_file_name(self) -> &'static str {
+        "arg_feats"
+    }
+}
+/// One `BONUS:` token lifted from a feat's corpus record, captured as a
+/// flat pipe-delimited qualifier list. Mirrors
+/// `rules_catalog::crb::feats::FeatEffectBonus` exactly.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 7 split the ingest tail off the qualifier
+/// list here too; the condition types are shared with the CRB catalog rather
+/// than re-declared, so one round-trip oracle covers all four catalogs.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__feats__FeatEffectBonus"))]
+pub struct FeatEffectBonus {
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
+    pub qualifiers: &'static [&'static str],
+    /// The stacking-type label, if the record named one. Mirrors
+    /// `rules_catalog::crb::feats::FeatEffectBonus.bonus_type`.
+    pub bonus_type: Option<&'static str>,
+    /// The conditions gating this bonus; empty when it is unconditional.
+    /// Mirrors `rules_catalog::crb::feats::FeatEffectBonus.conditions`.
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
+    pub conditions: &'static [EffectCondition],
+    /// What the character's own choice supplies to this bonus. Mirrors
+    /// `rules_catalog::crb::feats::FeatEffectBonus.selection`; SD-35
+    /// `AT-35-E6-003-SWEEP` cycle 12.
+    pub selection: Option<EffectSelection>,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "advanced_race_guide__feats__FeatTableEntry"))]
+pub struct FeatTableEntry {
+    /// The corpus `KEY:` token, falling back to the record's `name` when no
+    /// `KEY:` token is present (no in-scope `arg_feats` record carries
+    /// one, so `key == name` for every entry here today).
+    pub key: &'static str,
+    pub category: FeatCategory,
+    pub name: &'static str,
+    /// The corpus `DESC:` token, verbatim. Always `Some` in this book's real
+    /// in-scope corpus (see this module's own doc comment).
+    pub description: Option<&'static str>,
+    /// Every `BONUS:` token the corpus record carries, verbatim, in source
+    /// order. `None` when the record has no `BONUS:` token at all -- mirrors
+    /// `rules_catalog::crb::feats::FeatTableEntry.effect`'s own convention
+    /// exactly, including never using `Some(&[])` for "no data gathered yet".
+    #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_opt_slice")]
+    pub effect: Option<&'static [FeatEffectBonus]>,
+}
 pub fn feat_tables() -> &'static [FeatTableEntry] {
     static TABLES: std::sync::OnceLock<Vec<FeatTableEntry>> = std::sync::OnceLock::new();
     TABLES.get_or_init(|| {

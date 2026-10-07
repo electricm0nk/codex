@@ -7,7 +7,6 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
 pub static ARG_CLASS_SPELL_LEVELS: crate::rules_core::rules_catalog::Derived<(
     &'static str,

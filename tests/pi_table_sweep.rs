@@ -1,5 +1,8 @@
 //! Provenance gate: the Product-Identity blacklist sweep over Pipeline B
-//! (`src/rules_core/rules_tables/**/*.rs`).
+//! (the `rules_tables` data package, `data/rules_tables/**/*.json`, and the
+//! code that reads it, `src/rules_core/rules_catalog/**/*.rs` -- SD-37 E4a.4
+//! removed the compiled `src/rules_core/rules_tables/**/*.rs` this swept
+//! first).
 //!
 //! `docs/governance/license-matrix.md` recorded that **zero** files under
 //! `rules_tables/` had ever been screened against `pi_screening`'s blacklist,
@@ -76,11 +79,12 @@ fn reconcile_flags_a_baseline_row_the_tree_no_longer_carries() {
 /// `gen_feat_gap_tables`/`gen_equipment_gap_tables` already call before
 /// writing) must refuse when the text it is about to write is
 /// `class_feature`/archetype content carrying a declared blacklist term.
-/// `acg/archetype_tables.rs` line's `Sarenrae` hit
+/// `acg/archetype_tables`'s `Sarenrae` hit
 /// (`docs/governance/pi-sweep-baseline.tsv`, disposition `real-leak`,
 /// "Ecclesitheurge ~ Domain Mastery description") is already-shipped, real
 /// `class_feature` table content — this test reads that exact line back out
-/// of the live file and re-plays it through the pre-commit screen a future
+/// of the live package file (`archetype_swap_tables.json`; SD-37 E4a.4 removed
+/// the compiled `.rs` it was read from first) and re-plays it through the pre-commit screen a future
 /// `class_feature` generator (SD-31's Epic 3 chassis-sweep, per
 /// `SD-30-.../decisions.md` this feature seed's invocation-contract entry)
 /// would call, so the proof exercises the real pipeline shape, not a
@@ -88,8 +92,8 @@ fn reconcile_flags_a_baseline_row_the_tree_no_longer_carries() {
 #[test]
 fn screen_generated_table_refuses_real_class_feature_content_carrying_a_known_pi_term() {
     let root = repo_root();
-    let path = root.join("src/rules_core/rules_tables/acg/archetype_tables.rs");
-    let text = std::fs::read_to_string(&path).expect("acg archetype_tables.rs exists");
+    let path = root.join("data/rules_tables/acg/archetype_tables/archetype_swap_tables.json");
+    let text = std::fs::read_to_string(&path).expect("the acg archetype_swap_tables package file exists");
     let sarenrae_line = text
         .lines()
         .find(|l| l.contains("Sarenrae"))
@@ -116,15 +120,15 @@ fn screen_generated_table_refuses_real_class_feature_content_carrying_a_known_pi
 
 /// The companion true-negative: the same pre-commit entry point, called on
 /// real, adjacent `class_feature`/archetype content that carries no
-/// blacklist term (`acg/archetype_tables.rs`'s "Weapon and Armor
-/// Proficiency" grant, three lines above the `Sarenrae` hit above), must NOT
+/// blacklist term (`acg/archetype_tables`'s "Weapon and Armor
+/// Proficiency" grant, in the same package file as the `Sarenrae` hit above), must NOT
 /// refuse. A gate that flags everything proves as little as one that flags
 /// nothing.
 #[test]
 fn screen_generated_table_is_clean_on_real_class_feature_content_without_a_pi_term() {
     let root = repo_root();
-    let path = root.join("src/rules_core/rules_tables/acg/archetype_tables.rs");
-    let text = std::fs::read_to_string(&path).expect("acg archetype_tables.rs exists");
+    let path = root.join("data/rules_tables/acg/archetype_tables/archetype_swap_tables.json");
+    let text = std::fs::read_to_string(&path).expect("the acg archetype_swap_tables package file exists");
     let clean_line = text
         .lines()
         .find(|l| l.contains("Weapon and Armor Proficiency"))
@@ -143,12 +147,17 @@ fn screen_generated_table_is_clean_on_real_class_feature_content_without_a_pi_te
     assert!(hits.is_empty(), "unexpected hit(s) on real, non-PI class_feature content: {hits:?}");
 }
 
-/// The gate itself, over the live tree: the Rust tables and (SD-37 E4a.1) the `rules_tables`
-/// data package, reconciled against the one baseline exactly as `pi_sweep_rules_tables` does.
+/// The gate itself, over the live tree: the `rules_tables` data package (SD-37 E4a.1) and the
+/// catalog code that reads it (SD-37 E4a.4: the compiled Rust tables are gone), reconciled
+/// against the one baseline exactly as `pi_sweep_rules_tables` does.
 #[test]
 fn rules_tables_carry_no_unbaselined_product_identity_hits() {
     let root = repo_root();
-    let mut hits = sweep_dir(&root.join("src/rules_core/rules_tables")).expect("sweep runs");
+    assert!(
+        !root.join("src/rules_core/rules_tables").exists(),
+        "the compiled rules_tables directory is back; sweep it or remove it"
+    );
+    let mut hits = sweep_dir(&root.join("src/rules_core/rules_catalog")).expect("sweep runs");
     let (package_hits, bad_stamps) =
         codex::rules_core::rules_data_package::sweep_package(&codex::rules_core::rules_data_package::package_root(&root))
             .expect("package sweep runs");

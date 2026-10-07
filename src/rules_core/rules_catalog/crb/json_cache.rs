@@ -7,14 +7,179 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::crb::json_cache::ClassCacheData;
-pub use rt::crb::json_cache::Completeness;
-pub use rt::crb::json_cache::CorpusRecord;
-pub use rt::crb::json_cache::CorpusSource;
-pub use rt::crb::json_cache::EquipmentCacheData;
-pub use rt::crb::json_cache::Population;
-pub use rt::crb::json_cache::RenameInfo;
-pub use rt::crb::json_cache::SpellCacheData;
+/// `data/corpus/core_rulebook/class/<slug>.json` payload. Mirrors
+/// `class_tables::ClassMeta`'s real chassis fields (BAB/save formula
+/// strings match `class_tables.rs`'s own `base_attack_bonus`/`save_bonus`
+/// functions verbatim -- not re-derived independently).
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ClassCacheData {
+    pub class_id: String,
+    pub maxlevel: u8,
+    pub bab: String,
+    pub save_fort: String,
+    pub save_ref: String,
+    pub save_will: String,
+}
+/// Shape B's `completeness` discriminator (`decisions.md §7`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum Completeness {
+    ChassisOnly,
+    ChassisPlusExtract,
+    Full,
+}
+/// One JSON-cache record, generic over the book-specific `data` payload
+/// (`decisions.md §7`'s shape). `ingested_at` is stamped at JSON-file-write
+/// time by the generator -- never derived from git log (`decisions.md
+/// §11.1`).
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CorpusRecord<T> {
+    pub population: Population,
+    pub completeness: Completeness,
+    pub ingested_at: String,
+    pub data: T,
+    pub source: CorpusSource,
+    /// GE-01: what kind of evidence would prove this record done, from
+    /// `codex::pcgen_import::wiring_class`'s real corpus token closure.
+    /// `#[serde(default)]` so a not-yet-regenerated on-disk record
+    /// (there are none once this cycle's regeneration lands, but the
+    /// field must not become a hard parse failure for any reader that
+    /// predates it) still deserializes.
+    #[serde(default)]
+    pub wiring_class: String,
+    #[serde(default)]
+    pub wiring_class_signals: Vec<String>,
+    /// `"OGL" | "PI" | "PI-REDACTED"`, per `docs/governance/ogl-pi-blacklist.md`.
+    /// Computed by the generator itself via `rules_core::pi_screening`
+    /// (this book previously reached this classification only through a
+    /// post-hoc retrofit pass the generator knew nothing about, which
+    /// silently reverted on every regeneration -- see
+    /// `rules_core::pi_screening`'s module doc comment).
+    /// `#[serde(default)]` matching `shape_b_v1::CorpusRecordV1`'s own
+    /// convention for this field.
+    #[serde(default)]
+    pub license: Option<crate::rules_core::shape_b_v1::License>,
+    #[serde(default)]
+    pub pi_field: Option<String>,
+    #[serde(default)]
+    pub pi_marker: Option<String>,
+    /// `t9-onboarding-pi-last-leak-and-generators` cycle: `decisions.md
+    /// §24b`-3, ported from `cache_gen::equipment_gap`'s identical field --
+    /// this file predated the `name`/`key` blacklist scan entirely (only
+    /// `description` was ever screened), the eighth instance of "screens
+    /// some shipped fields, not all" in this bundle. `#[serde(default)]`
+    /// so this is additive to every already-shipped record's shape.
+    #[serde(default)]
+    pub codex_generated_name: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rename: Option<RenameInfo>,
+}
+/// The discriminated `source` union (`decisions.md §11.2`). SD-25's real
+/// corpus-intake execution proved a large, real fraction of CRB's
+/// completed fields have no single `lst_token`-shaped citation -- see the
+/// module-level doc comment on `equipment_tables.rs::EquipmentTableEntry::description`
+/// for the 3 real provenance kinds CRB actually exercises
+/// (`LstToken`, `LstInheritedCopy`, `LstCorrectedIngest`, plus
+/// `WebSecondSource` for the `cr_equipmods` d20pfsrd pass).
+/// `SameBookFallback` is defined for full-schema parity with the other 3
+/// books' cycles (per `decisions.md §11.2`'s table, CRB does not itself
+/// exercise this kind) but is included here so the type is a complete,
+/// reusable discriminated union rather than a CRB-only subset.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(tag = "kind", rename_all = "snake_case")]
+pub enum CorpusSource {
+    /// A real, direct corpus `DESC:`/`KEY:` token citation.
+    LstToken {
+        path: String,
+        sha256: String,
+        line: u32,
+        record_key: String,
+    },
+    /// A same-book `.COPY=`-derived record with no `DESC:` token of its
+    /// own, whose value was inherited from another already-ingested
+    /// record per the LST's own declared `.COPY=` data-inheritance
+    /// convention (`decisions.md §11.2`, CRB register A11: 117 records).
+    LstInheritedCopy {
+        path: String,
+        sha256: String,
+        line: u32,
+        record_key: String,
+        /// The corpus's own `.COPY=` source-record identity (the literal
+        /// text preceding `.COPY=` on this record's LST row) -- real and
+        /// checkable even where it does not byte-match this cache's own
+        /// `key` naming for that base record.
+        inherited_from_record_key: String,
+    },
+    /// A real corpus `DESC:` token that a prior codegen pass mis-captured
+    /// (e.g. the `DESC:.CLEAR`-then-real-`DESC:` same-line convention
+    /// SD-25 fixed for 67 `cr_equip_arms_armor` rows) -- the field's
+    /// current value is corrected/re-derived from the same real LST line,
+    /// not fabricated.
+    LstCorrectedIngest {
+        path: String,
+        sha256: String,
+        line: u32,
+        record_key: String,
+        original_ingest_defect: String,
+    },
+    /// A cited d20pfsrd.com/aonprd.com second source for a corpus record
+    /// that carries no `DESC:` token at all (SD-25 criterion 7.N; 83
+    /// `cr_equipmods` records, `decisions.md §11.5`'s methodology).
+    WebSecondSource {
+        url: String,
+        fetched_at: String,
+        identity_match_basis: String,
+    },
+    /// A same-book fallback where a base/`PRESPELL` record's own text
+    /// narrates a variant sub-form by name, with no independent corpus
+    /// token of its own. Not exercised by CRB's own data this cycle
+    /// (kept for discriminated-union schema completeness/genericity).
+    SameBookFallback { fallback_basis: String },
+}
+/// `data/corpus/core_rulebook/equipment/<category>/<slug>.json` payload.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct EquipmentCacheData {
+    pub key: String,
+    pub category: String,
+    pub name: String,
+    pub cost_gp: Option<f64>,
+    pub weight_lbs: Option<f64>,
+    pub description: Option<String>,
+}
+/// Shape B's `population` discriminator (`decisions.md §7`). Every CRB
+/// record generated by this cycle is `InScope` -- CRB is one of the 4
+/// in-scope books (`decisions.md §1`), never a future-state/rule-system
+/// stub.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum Population {
+    InScope,
+    FutureState,
+    RuleSystemStub,
+}
+/// Divergence provenance on a cached record: coordinate + reason only,
+/// never the original PI string (`decisions.md §24b`-4).
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 3: this field's type was
+/// `cache_gen::equipment_gap::RenameInfo` — a live reader naming a
+/// converter module to describe the shape of its own on-disk JSON
+/// (`decisions.md §19`/B16). The wire shape is two strings and is
+/// unchanged; `cache_gen` already keeps three separate local copies of
+/// it (`equipment_gap`, `class_feature`, `spell_lane_dump`) under the
+/// no-shared-types-file convention `equipment_gap.rs`'s own doc comment
+/// establishes, and this is the fourth, owned by the side that reads it.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct RenameInfo {
+    pub reason: String,
+    pub coordinate: String,
+}
+/// `data/corpus/core_rulebook/spell/level_<n>/<slug>.json` payload.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SpellCacheData {
+    pub key: String,
+    pub school: String,
+    pub level: u8,
+    pub description: String,
+}
 use serde::{Deserialize, Serialize};

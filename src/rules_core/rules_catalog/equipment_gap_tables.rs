@@ -7,9 +7,36 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::equipment_gap_tables::EquipmentGapRow;
+/// One recovered corpus equipment row. Deliberately one flat shape for
+/// every book: unlike the hand-authored per-book tables (each with its own
+/// `EquipmentCategory` enum and field set), these rows exist to be chained
+/// into `equipment_resolver::equipment_catalog_rows()` and rendered by the
+/// desktop equipment catalog, both of which read exactly these fields.
+#[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+pub struct EquipmentGapRow {
+    /// One of `equipment_resolver`'s `EQUIPMENT_BOOK_*` codes.
+    pub book: &'static str,
+    /// The record's `KEY:` token when it carries one, else its display name.
+    pub key: &'static str,
+    pub name: &'static str,
+    /// The catalog category, matching the `EquipmentCategory` variant names
+    /// the per-book tables project onto `EquipmentCatalogEntryDto::category`.
+    pub category: &'static str,
+    pub cost_gp: Option<f64>,
+    pub weight_lbs: Option<f64>,
+    pub description: Option<&'static str>,
+    /// `decisions.md §24`: `Some((source_file, source_line))`
+    /// ONLY when `key`/`name` above are a Codex-generated neutral
+    /// identity (the row's real name/key is Product Identity) --
+    /// carries the real citation so `cache_gen::equipment_gap::
+    /// generate` can resolve it directly instead of text-searching
+    /// for a `key`/`name` the real corpus no longer contains.
+    /// `source_file` is relative to the book's own directory.
+    /// `None` for an ordinary row.
+    pub name_pi_citation: Option<(&'static str, u32)>,
+}
 pub fn equipment_gap_rows() -> impl Iterator<Item = &'static EquipmentGapRow> {
     [
         &*CORE_RULEBOOK_GAP_ROWS,

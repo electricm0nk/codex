@@ -7,11 +7,104 @@
     clippy::needless_borrow,
     clippy::type_complexity
 )]
-use crate::rules_core::rules_tables as rt;
 
-pub use rt::crb::spell_list::Pf1SchoolId;
-pub use rt::crb::spell_list::SpellFieldCoverage;
-pub use rt::crb::spell_list::SpellListEntry;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "crb__spell_list__Pf1SchoolId"))]
+pub enum Pf1SchoolId {
+    Abjuration,
+    Conjuration,
+    Divination,
+    Enchantment,
+    Evocation,
+    Illusion,
+    Necromancy,
+    Transmutation,
+    Universal,
+}
+impl Pf1SchoolId {
+    pub const ALL: &'static [Pf1SchoolId] = &[
+        Pf1SchoolId::Abjuration,
+        Pf1SchoolId::Conjuration,
+        Pf1SchoolId::Divination,
+        Pf1SchoolId::Enchantment,
+        Pf1SchoolId::Evocation,
+        Pf1SchoolId::Illusion,
+        Pf1SchoolId::Necromancy,
+        Pf1SchoolId::Transmutation,
+        Pf1SchoolId::Universal,
+    ];
+
+    /// Maps the corpus's raw `SCHOOL:` string to the strict-school enum.
+    /// Returns `None` for an unrecognized string (SD-19's resolvers
+    /// route that case to `Open Blockers` rather than guessing).
+    pub fn from_corpus_str(raw: &str) -> Option<Self> {
+        match raw {
+            "Abjuration" => Some(Pf1SchoolId::Abjuration),
+            "Conjuration" => Some(Pf1SchoolId::Conjuration),
+            "Divination" => Some(Pf1SchoolId::Divination),
+            "Enchantment" => Some(Pf1SchoolId::Enchantment),
+            "Evocation" => Some(Pf1SchoolId::Evocation),
+            "Illusion" => Some(Pf1SchoolId::Illusion),
+            "Necromancy" => Some(Pf1SchoolId::Necromancy),
+            "Transmutation" => Some(Pf1SchoolId::Transmutation),
+            "Universal" => Some(Pf1SchoolId::Universal),
+            _ => None,
+        }
+    }
+}
+/// SD-24 Epic 6 criterion 6.1 — spell field-coverage audit row. Every
+/// field is computed from `SPELL_LIST`'s real content or a documented
+/// corpus record count (never a hand-guessed or invented number). See
+/// `tests/sd24_equipment_coverage_audit.rs` for the standing regression
+/// coverage.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct SpellFieldCoverage {
+    /// Records currently in `SPELL_LIST`.
+    pub total_records: u32,
+    /// Real, active spell-record count in `cr_spells`: 664. SD-24
+    /// criterion 6.1's original "675" figure (`grep -vE '\.MOD' | awk
+    /// -F'\t' '{print $1}' | sort -u | wc -l`) included 10 further
+    /// `TEMPBONUS`/`TEMPVALUE` sub-choice records (e.g. `Resist Energy
+    /// (Acid)`, `Desecrate (Standard)`) that carry no `SCHOOL:`/`CLASSES:`
+    /// token at all and are not independent spells, plus a `SOURCELONG:`
+    /// header line -- 675 - 10 - 1 = 664 matches this file's own entry
+    /// count. The original SD-24 write-up additionally proposed *merging*
+    /// the 12 `.COPY=`-suffixed rows into their base spell rather than
+    /// ingesting them separately; SD31 `decisions.md §15` (2026-08-17)
+    /// corrected that call -- each `.COPY=` row is a real, distinct,
+    /// player-visible racial spell-like-ability record (`CLASSES:.CLEARALL`
+    /// means no CLASS grants it, not that it doesn't exist) and is ingested
+    /// as its own `SpellListEntry`, inheriting school/level/description
+    /// from its named parent. See `spell_list.rs`'s own module doc comment.
+    pub records_expected: u32,
+    /// Records with a non-empty `description`. `description` is a
+    /// non-optional `&'static str` field, so this always equals
+    /// `total_records` -- there is no per-row "missing description" case
+    /// with the current schema.
+    pub has_description: u32,
+    /// Records whose `description` is the fullest text the real corpus
+    /// provides (the `<Name>.MOD` record's long `DESC:` when the corpus
+    /// has one, else the base record's own `DESC:`), landed by SD-24
+    /// criterion 6.5. Always equals `total_records` today: every present
+    /// `SPELL_LIST` entry now carries that untruncated text rather than
+    /// the pre-cycle first-sentence summary.
+    pub full_text_verified: u32,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(test, derive(schemars::JsonSchema))]
+#[cfg_attr(test, schemars(rename = "crb__spell_list__SpellListEntry"))]
+pub struct SpellListEntry {
+    /// The spell's corpus identity. `cr_spells` has no `KEY:` token
+    /// for spells (unlike equipment records) -- the record's `name` field
+    /// is its identity, matching `LstSpellRecord.name`.
+    pub key: &'static str,
+    pub school: Pf1SchoolId,
+    /// The minimum spell level across the corpus's `CLASSES:` tag for
+    /// this record (e.g. `CLASSES:Bard,Ranger,Sorcerer,Wizard=1` -> 1).
+    pub level: u8,
+    pub description: &'static str,
+}
 pub fn spell_coverage_report() -> SpellFieldCoverage {
     let total = SPELL_LIST.len() as u32;
     SpellFieldCoverage {

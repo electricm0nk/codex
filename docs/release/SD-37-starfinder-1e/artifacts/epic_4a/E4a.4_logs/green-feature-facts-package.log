@@ -1,0 +1,9 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 22.89s
+     Running tests/rules_catalog_feature_facts_read_the_package.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/rules_catalog_feature_facts_read_the_package-4e42aa219ddd6ec8)
+
+running 1 test
+test the_unchained_feature_facts_follow_the_package_they_are_pointed_at ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
