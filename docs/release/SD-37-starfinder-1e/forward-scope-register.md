@@ -51,6 +51,24 @@ Only the operator moves scope between classes (`docs/governance/blocker-closure-
 | FSR-C9 | **Fix `docs/governance/workflow-instruction-template.md §11` closure order** (release notes before graphify; graphify last; PR last) | `decisions.md §13`; memory `graphify-runs-against-final-repo-state` | This package's write scope excludes `docs/governance/` | Next bundle's scoping pass, or a governance cycle the operator grants. This bundle's instance is already corrected |
 | FSR-C10 | Mark the SD-36 `PF1e-dashboard.json` `usage` block as frozen/stale in its README | `decisions.md §12.3` | Not SD-37 scope | When the next quota-rule author reads it |
 
+### 3.1 E7.3 revisit results (2026-10-07, on `476487c54d`)
+
+Each row above was checked by `bash artifacts/epic_7/E7.3_logs/fsr_checks.sh`, run from the repo
+root (output in `artifacts/epic_7/E7.3_logs/fsr_checks.txt`; receipt
+`artifacts/epic_7/E7.3_cycle_receipt.md`).
+
+| ID | Result | Condition met? |
+|---|---|---|
+| FSR-C1 | **0** of the 8 SD-34 P1s are open. 6 were FIXED by SD-36 Epic E, and 2 (R9-02, R11-02) became moot when SD-36 Epic B deleted their files. The "8 open" figure was stale (retro correction). | No |
+| FSR-C2 | `prestige_mix_computed=68`, in E7.2 `verify-full.out` and again in E7.3's own re-run (`E7.3_logs/class-census.log`) | No |
+| FSR-C3 | FS-27: the 4 Unchained refusals are pinned by `level_up_options_name_the_engines_mix_refusal_before_accept`, which is `ok` in E7.2's desktop log. FS-28: not re-counted, because SD-36 recorded no command for its 33. Its inputs are unchanged since `20bf84a3b2`: `data/sheet_rules` has 0 diff lines, and `fact_words`/`weapon_words` are untouched. | No |
+| FSR-C4 | **31** Starfinder `(kind, slug)` pairs are held in 2 SF books. The inventory and `data/starfinder-1e/sheet_rules` agree (31 = 31). **1** of them has a different `value` in each book: `equipment:needler_rifle` is core `Dice 1d6` and COM `Text`. SF builds seed by book-qualified rule id (`sf_defense.rs` `HeldSeed { rule_ids }`), not by bare slug, so the FS-7 mechanism is not on the SF seed path. But `SheetRulePackage::find` prefers only `core_rulebook:` and otherwise takes the alphabetical minimum, so a bare-slug `find` on an SF package picks `character_operations_manual` over `core`. | **Yes.** A decision waiting for the operator. Not a gate: §3 candidates are not in the DoD. |
+| FSR-C5 | E7.1 added 22 new files under `scripts/oracle_harness/` (all `A`) and changed no PF runner file | No |
+| FSR-C6 | SF ACP is `armor_check_penalty(package, build: &SfBuild)`, which is Starfinder-only | No |
+| FSR-C7 | `scripts/pcgen_residue_gate.py` is unchanged since `20bf84a3b2` (0 diff lines) | No |
+| FSR-C8–C10 | These are revisited at an operator ruling, at the next scoping pass, or by the next quota-rule author. None is checkable at E7.3. | Not checkable at E7.3 |
+| DEF-1 | The `decisions.md §17` command prints no stdout and exits 0, with the oracle at the pin | No |
+
 ## 4. Planned capability deferrals
 
 | ID | Capability | Test: was it in the DoD at scoping? | Revisit condition (a command, checked) | Accepted cost |
