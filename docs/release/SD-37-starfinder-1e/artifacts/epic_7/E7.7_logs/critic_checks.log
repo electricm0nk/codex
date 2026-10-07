@@ -1,0 +1,54 @@
+## RED: the six claims as written at 8bc1d7c47f
+43:- **Normalising.** `cargo run --locked -p codex --bin rules_tables_package -- --check` exits 1 when a file
+118:- **Narrow books** (about 35 directories): a single record family each (feats, spells, monsters, companions
+324:crates/codex-ingest/src/ | wc -l` — currently 25, since the same call is also
+9:> (`["codex", "codex-ingest"]` at the workspace root) and `python3 scripts/pcgen_residue_gate.py --check --closure`.
+93:`pathfinder-1e` and `starfinder-1e`. Every place that names a data root or a book list is keyed by it, and an
+rules_tables_package --check` is the normaliser gate
+487:Manager (gated), DM Toolkit (real, see above), and the seven catalog browsers.
+## The tree's actual values (same at 8bc1d7c47f and after; no source changed)
+narrow books / one-family:
+32 10
+python twin: 32 10
+pi-screen call files (python twin): 27
+pi-screen call files (grep):
+27
+cargo metadata:
+['codex-ingest', 'codex']
+CORPUS_ROOT literal users:
+(grep -rnw 'CORPUS_ROOT' src/rules_core/settled_corpus.rs crates/codex-ingest/src --include=*.rs, comment lines dropped)
+src/rules_core/settled_corpus.rs:91:pub const CORPUS_ROOT: &str = "data/corpus";
+crates/codex-ingest/src/pcgen_import/corpus_settled_bundle.rs:278:        for book_dir in codex::rules_core::settled_corpus::corpus_book_dirs(&crate::repo_root().join(codex::rules_core::settled_corpus::CORPUS_ROOT)) {
+crates/codex-ingest/src/pcgen_import/corpus_settled_bundle.rs:309:        for book_dir in codex::rules_core::settled_corpus::corpus_book_dirs(&crate::repo_root().join(codex::rules_core::settled_corpus::CORPUS_ROOT)) {
+crates/codex-ingest/src/pcgen_import/corpus_settled_bundle.rs:336:        for book_dir in codex::rules_core::settled_corpus::corpus_book_dirs(&crate::repo_root().join(codex::rules_core::settled_corpus::CORPUS_ROOT)) {
+crates/codex-ingest/src/bin/gen_settled_corpus.rs:60:use codex::rules_core::settled_corpus::{corpus_book_dirs, CORPUS_ROOT};
+crates/codex-ingest/src/bin/gen_settled_corpus.rs:75:    let mut roots = corpus_book_dirs(Path::new(CORPUS_ROOT));
+crates/codex-ingest/src/bin/gen_settled_corpus.rs:99:        eprintln!("gen_settled_corpus: no corpus roots under {CORPUS_ROOT}; run from the repo root");
+verify.sh mentions of rules_tables_package:
+0
+landing chips available true/false:
+2 4
+## GREEN: the edited docs
+45:  owned by a table; `--write` rewrites every file and deletes unowned ones. `scripts/verify.sh` does not
+122:- **The other books** (**32** directories; **10** of them hold exactly one record family, the rest two or
+333:crates/codex-ingest/src/ | awk 'END{print NR}'` — 27 on 2026-10-07 at `tranche/17`, a Python
+9:> (prints `['codex-ingest', 'codex']`: two packages at the workspace root) and `python3 scripts/pcgen_residue_gate.py --check --closure`.
+95:and an unknown id is an error, never a fallback to a default system. Not every root is: Pathfinder-only tools still
+verify.sh` does not run the `rules_tables_package --check` binary
+487:**Landing** (`LandingScreen.tsx`) offers six rule-set chips, of which two are selectable (`available: true`:
+## README one-liners (print nothing = pass)
+(end one-liners)
+## Release-notes figures
+PLANT wrong value: REJECTED (1 problems)
+PLANT dropped command: REJECTED (1 problems)
+PLANT unregistered figure: REJECTED (1 problems)
+RESULT PASS 20 figures
+## Residue gate
+live_files=0 live_hits=0 verdict=PASS
+## Dual audit (§6 step 4), 8bc1d7c47f...HEAD
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+non-docs paths changed: 0

@@ -6,7 +6,7 @@
 > second game system on the same engine (§"Two game systems, one engine"); the Pathfinder rules tables are a bundled data
 > package read through `src/rules_core/rules_catalog/`, not compiled source. Workspace shape re-derived with
 > `cargo metadata --no-deps --format-version=1 | python3 -c "import json,sys; print([p['name'] for p in json.load(sys.stdin)['packages']])"`
-> (`["codex", "codex-ingest"]` at the workspace root) and `python3 scripts/pcgen_residue_gate.py --check --closure`.
+> (prints `['codex-ingest', 'codex']`: two packages at the workspace root) and `python3 scripts/pcgen_residue_gate.py --check --closure`.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## What Codex is
@@ -90,8 +90,11 @@ developer's commit to a player's update.*
 ## Two game systems, one engine
 
 `src/rules_core/game_system.rs` defines `GameSystem` (`Pathfinder1e`, `Starfinder1e`), whose wire ids are
-`pathfinder-1e` and `starfinder-1e`. Every place that names a data root or a book list is keyed by it, and an
-unknown id is an error, never a fallback to a default system. Pathfinder's paths are unchanged
+`pathfinder-1e` and `starfinder-1e`. The package roots (`GameSystem::package_roots`), the converter's book
+registries (`crates/codex-ingest/src/pcgen_import/system_books.rs`) and `sheet_rule_convert --system` are keyed by it,
+and an unknown id is an error, never a fallback to a default system. Not every root is: Pathfinder-only tools still
+name the Pathfinder corpus directly (`settled_corpus::CORPUS_ROOT` = `"data/corpus"`, read by
+`crates/codex-ingest/src/bin/gen_settled_corpus.rs` and `pcgen_import/corpus_settled_bundle.rs`). Pathfinder's paths are unchanged
 (`data/sheet_rules/`, `data/corpus/`); Starfinder's live under `data/starfinder-1e/` (`sheet_rules/` and
 `corpus/`, eight converted books). The saved-character envelope carries a `game_system` field, and the desktop
 routes a command to one of two `RuleSystemAdapter`s (see [desktop-app.md](./desktop-app.md) §"Rule-system adapter

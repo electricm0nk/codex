@@ -42,7 +42,11 @@ the engine's compute functions read by key.
   list-file extension; `tests/rules_tables_citation_burn_down.rs` fails a package row that carries one.
 - **Normalising.** `cargo run --locked -p codex --bin rules_tables_package -- --check` exits 1 when a file
   is missing, does not load as its row type, is not in canonical form (layout or stale stamp) or is not
-  owned by a table; `--write` rewrites every file and deletes unowned ones. The table list
+  owned by a table; `--write` rewrites every file and deletes unowned ones. `scripts/verify.sh` does not
+  run this binary (`grep -c rules_tables_package scripts/verify.sh` → `0`); the same checks run in its
+  `root-lib` stage as `rules_data_package::tests::every_table_round_trips_through_the_loader` (loads as its
+  row type, canonical form, stamp) and `table_ids_are_unique_and_the_package_holds_exactly_them` (missing or
+  unowned file). The table list
   (`TABLE_IDS`) is closed by two source-scanning tests in `rules_data_package.rs`
   (`every_file_level_table_is_a_package_table_and_no_array_is_compiled`,
   `every_collection_function_is_a_table_or_a_named_view`): a new table that is not registered fails.
@@ -115,8 +119,13 @@ cross-book modules `archetype_swap.rs` and `feats_all.rs` (its `class_spell_leve
   `class_chassis_resolve`.
 - **`beastiary1/`**: the 46 hand-modelled Bestiary 1 stat blocks (`monster_resolve`).
 - **`pathfinder_unchained/`**: class chassis, barbarian/monk/rogue features, feats, equipment, monster data.
-- **Narrow books** (about 35 directories): a single record family each (feats, spells, monsters, companions
-  or race traits), under their own `RuleSetId`.
+- **The other books** (**32** directories; **10** of them hold exactly one record family, the rest two or
+  more): spell lists, monster data, companions, feats, equipment and archetypes, under their own `RuleSetId`.
+  Ultimate Combat also carries three class chassis (`class_gunslinger`, `class_ninja`, `class_samurai`) and
+  Ultimate Psionics nine per-class feature tables. Re-derive (43 entries less the five books above and the six
+  cross-book groups; families = first-level subdirectories):
+  `for d in $(ls data/rules_tables | awk '!/^(crb|apg|acg|beastiary1|pathfinder_unchained|class_spell_levels|companion_chassis|equipment_gap_tables|feat_gap_tables|monster_chassis|simple_kind_tables)$/'); do find data/rules_tables/$d -mindepth 1 -maxdepth 1 -type d | awk 'END{print NR}'; done | awk '{n++; if($1==1) o++} END{print n, o}'`
+  → `32 10` (a Python `os.listdir` twin gives the same).
 - **Cross-book tables.** `feats_all.rs` joins every book's feat table (`BookFeatTable { rule_set, entries }`);
   `class_spell_levels.rs` dispatches the hub's `class:<id>` vocabulary to the per-class spell tables;
   `monster_chassis.rs` holds `MONSTER_BOOKS`, the registry every monster-bearing book joins.
@@ -321,7 +330,8 @@ commit `f7c709a9`); a differential regeneration round-trip test now guards
 against the same class of loss:
 `tests/pi_screening_regeneration_round_trip.rs`. Every corpus-writing binary
 added since (`grep -rln 'pi_screening::classify_field\|classify_optional_field'
-crates/codex-ingest/src/ | wc -l` — currently 25, since the same call is also
+crates/codex-ingest/src/ | awk 'END{print NR}'` — 27 on 2026-10-07 at `tranche/17`, a Python
+`os.walk` substring twin agreeing; it was 25 at the prior pass — since the same call is also
 used by later audit/repair binaries, not just corpus writers) has picked up
 the call from the start rather than needing a retrofit.
 

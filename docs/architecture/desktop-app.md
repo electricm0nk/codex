@@ -3,8 +3,9 @@
 > Scope: How the Tauri desktop shell is built, how it talks to the Rust backend, and how its frontend surfaces are organized.
 > Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for the command inventory (86
 > registered), the rule-system adapter seam (Pathfinder and Starfinder adapters), §"Starfinder 1e surface", the bundled
-> resources and the frontend map. Sections not named here (the Mode machine, boundary layer, persistence-facing commands,
-> ui_probe, character flow) were last verified 2026-09-28 against `tranche/16` (`b021509e23`) and not re-derived this pass.
+> resources and the frontend map; the E7.7 claims critic (2026-10-07) also re-derived the **Landing** paragraph of
+> §"Character flow" (rule-set chips, per-system catalog links). Sections not named here (the Mode machine, boundary layer,
+> persistence-facing commands, ui_probe, the rest of character flow) were last verified 2026-09-28 against `tranche/16` (`b021509e23`) and not re-derived this pass.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Corrections since the last pass
@@ -483,8 +484,12 @@ fallback — `boundary/loadCreateCharacter.ts` throws outside a Tauri runtime, s
 
 ## Character flow
 
-**Landing** (`LandingScreen.tsx`) offers action banners: New Character, Load Character, Campaign
-Manager (gated), DM Toolkit (real, see above), and the seven catalog browsers.
+**Landing** (`LandingScreen.tsx`) offers six rule-set chips, of which two are selectable (`available: true`:
+Pathfinder 1e and Starfinder 1e; Solarus Arcanum, Traveller MGT 2e, Cyberpunk Red and World of Darkness are shown disabled;
+`awk '/available: true/{t++} /available: false/{f++} END{print t, f}' apps/desktop/src/characterHub/LandingScreen.tsx` → `2 4`),
+and action banners: New Character, Load Character, Campaign Manager (gated), DM Toolkit (real, see above), and the
+catalog browsers of the selected system: the seven Pathfinder browsers, or the six Starfinder catalogs
+(§"Starfinder 1e surface").
 
 **Create** (`CreateCharacterForm.tsx`) drives the DI chain in the sequence diagram above.
 The class picker reads the engine's class roster: `list_class_creation_roster`

@@ -29,3 +29,20 @@ taken immediately before the run.
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: truth-up touched 14 doc(s) in 4abf95c122 (edited by hand before the script ran; Opus claims critic follows). The script's own lines said "docs touched none, no architecture impact": its README index parser needs a leading "||" per row and matches 0 of the 14 linked rows, so it maps no path to any doc (retro correction 1791397812938-sd37-e7-7-7cf9ac in docs/retro/events/sd37-e7-7.jsonl). The script's two verification one-liners ran and passed on 4abf95c122; the README's two one-liners (which include the crates/ and data/ roots the script's cited-path grep omits) were also run and print nothing. Before the edits the README one-liners printed 12 MISSING lines (artifacts/epic_7/E7.7_logs/base_miss.txt). Starfinder figures in the docs are release-notes R-n figures (`python3 docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.6_check.py --plant`).
+
+- cycle_id: 2026-10-07T18:43:34Z
+  row_or_kind: architecture:claims_critic
+  bundle: SD-37
+  branch: tranche/17
+  base: 8bc1d7c47f
+  model: opus
+  scope: the 14 docs in 4abf95c122 (docs/architecture/*.md) and docs/release/SD-37-starfinder-1e/release-notes.md
+  findings: 6
+  fixed: 6
+  blockers_left: 0
+  docs_edited: [desktop-app.md, overview.md, rules-data-tables.md, status.md]
+  cited_path_check: pass
+  relative_link_check: pass
+  release_notes_check: "python3 docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.6_check.py --plant -> RESULT PASS 20 figures, 3 plants REJECTED"
+  log: docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.7_logs/critic_checks.log
+  receipt: docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.7_cycle_receipt.md (section "Second half")
