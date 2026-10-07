@@ -37,6 +37,7 @@ import {
 } from './update/controllerAdapter';
 import type { UpdateControllerDeps } from './update/updateModel';
 import { SettingsModal, type SettingsTab } from './settings/SettingsModal';
+import { APP_SHELL_STYLE } from './layout/screenLayout';
 import { AppearancePanel } from './settings/AppearancePanel';
 import { GoogleDrivePanel } from './settings/GoogleDrivePanel';
 import { applyThemeMode, getStoredThemeMode, type ThemeMode } from './settings/themeMode';
@@ -842,7 +843,7 @@ export default function App() {
   }, []);
 
   return (
-    <main style={{ fontFamily: 'Inter, system-ui, sans-serif', margin: '0 auto', maxWidth: 1100, padding: '3rem 1.5rem' }}>
+    <main style={APP_SHELL_STYLE}>
       {/* Settings gear — fixed to the viewport top-right on every screen. */}
       <button
         type="button"
@@ -857,13 +858,13 @@ export default function App() {
           color: 'var(--color-text-secondary)',
           cursor: 'pointer',
           display: 'flex',
-          fontSize: '1.2rem',
-          height: 38,
+          fontSize: '1.6rem',
+          height: 48,
           justifyContent: 'center',
           position: 'fixed',
-          right: 14,
-          top: 8,
-          width: 38,
+          right: 18,
+          top: 10,
+          width: 48,
           zIndex: 950,
         }}
       >

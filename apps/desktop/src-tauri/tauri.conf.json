@@ -16,7 +16,8 @@
         "title": "Codex",
         "width": 1920,
         "height": 1200,
-        "resizable": true
+        "resizable": true,
+        "maximized": true
       }
     ]
   },

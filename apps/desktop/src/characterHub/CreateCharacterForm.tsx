@@ -694,7 +694,7 @@ function CreateCharacterFields(props: {
     <form onSubmit={handleSubmit} style={{ border: '1px solid var(--color-border)', borderRadius: 12, padding: '1.25rem' }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem' }}>
         {/* Left column: identity + rule-set fields */}
-        <div style={{ flex: '1 1 360px', minWidth: 0 }}>
+        <div style={{ flex: '3 1 520px', minWidth: 0 }}>
           {/* Character name + Player name on one line */}
           <div style={ROW_STYLE}>
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -1200,7 +1200,8 @@ function CreateCharacterFields(props: {
             backgroundColor: 'var(--color-surface)',
             border: '1px solid var(--color-border)',
             borderRadius: 10,
-            flex: '0 0 320px',
+            flex: '1 1 360px',
+            maxWidth: 560,
             padding: '1rem',
           }}
         >

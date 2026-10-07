@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useLayoutEffect } from 'react';
 import { loadCharacterHubListSurfaceRuntime } from './characterHubRuntime';
 import {
   replaceRowInSurface,
@@ -25,6 +25,7 @@ import { computeCampaignManagerAccessGate } from '../campaign/campaignManagerAcc
 import { CampaignManagerScreen } from '../campaign/CampaignManagerScreen';
 import { CreateCampaignScreen } from '../campaign/CreateCampaignScreen';
 import { EditCampaignScreen } from '../campaign/EditCampaignScreen';
+import { hubFrameStyle } from '../layout/screenLayout';
 import { CampaignSheet } from '../campaign/CampaignSheet';
 
 type Mode =
@@ -46,8 +47,25 @@ type Mode =
   | 'campaign-edit'
   | 'campaign-sheet';
 
+/**
+ * The hub inside its frame. Create a character uses the whole window; every other screen keeps the
+ * centered reading width it was designed for (see `layout/screenLayout.ts`).
+ */
 export function CharacterHubPage() {
+  const [wide, setWide] = useState(false);
+  return (
+    <div style={hubFrameStyle(wide)}>
+      <CharacterHubScreens onWideChange={setWide} />
+    </div>
+  );
+}
+
+function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) => void }) {
   const [mode, setMode] = useState<Mode>('landing');
+  // Layout effect, not a plain effect: the frame must widen before the Create form paints.
+  useLayoutEffect(() => {
+    onWideChange(mode === 'create');
+  }, [mode, onWideChange]);
   const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
   const [sheet, setSheet] = useState<{ row: CharacterHubListRowSurface; detail: LoadSavedCharacterResponse | null } | null>(null);
   // Where the ✕ on the character sheet should return to — Load Character
