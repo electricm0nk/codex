@@ -117,6 +117,10 @@ sub-step fires regardless of diff content:
      placeholder).
    - **The notes are real.** `python3 scripts/tranche/validate-tranche-notes.py --release-notes-path <notes_path>` passes and no
      closure-placeholder text remains.
+   - **The package carries what the engine reads.** Any new runtime data read goes through `repo_root()`, has a
+     `bundle.resources` entry in `tauri.conf.json`, and is asserted in `apps/desktop/src-tauri/tests/packaged_resources.rs`;
+     `cargo test --test packaged_resources` (in `apps/desktop/src-tauri`) and `cargo test --test no_baked_manifest_dir_in_production`
+     (repo root) pass. These are the controls for the class-roster defect, where an installed app read the CI runner's checkout path.
    - **The release tooling's own tests pass.** `python3 -m pytest tools/release -q` (CI: `release-tooling-tests.yml`).
    - **Fresh-install acceptance.** Before closure, install each shipped artifact (the .deb **and** the AppImage on
      Linux) on a clean profile, open Settings → Update and press Check. Nothing may read "unknown": the Installed panel

@@ -169,6 +169,13 @@ checklist is `docs/release/template/template.md §6 step 1a`; the points a bundl
   first launch with no `installed-state.json`: Settings → Update → Check shows no "unknown" and offers Install when
   a newer release exists. A criterion phrased only as "tests pass" does not cover this; it is the narrow-proof trap
   (`AGENTS.md` rule 7).
+- **Everything the shipped engine reads at runtime must be in the package.** Production code reads data
+  through `support::paths::repo_root()` (never `env!("CARGO_MANIFEST_DIR")`, which is the build machine's
+  checkout), the app redirects that root with `set_data_root`, and each file or directory read is a
+  `bundle.resources` entry in `apps/desktop/src-tauri/tauri.conf.json` *and* an assertion in
+  `apps/desktop/src-tauri/tests/packaged_resources.rs`. A bundle that adds a runtime data read lists all
+  three in `FILES YOU OWN`. This is how the 2026-10 class-roster defect shipped: every test ran from a
+  checkout, so none could see the packaged app had no data to read.
 - **Changing a manifest field changes three places**: `schemas/update/update-manifest.schema.json`, the writer
   (`scripts/release/write_release_manifest.py`) and the app's parser/eligibility code. A bundle that adds an
   artifact kind lists all three in `FILES YOU OWN`.

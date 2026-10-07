@@ -48,6 +48,14 @@ earlier on `PATH`), you silently build with the wrong compiler version or lints 
 own tooling exports `PATH="$HOME/.cargo/bin:$PATH"` defensively for exactly this reason — do the
 same in your own shell profile or CI step rather than trusting an inherited `PATH`.
 
+**The installed-deb gotcha (desktop tests).** On a machine where the Codex `.deb` is installed,
+`authoring_workbench::codex_repo_root()` prefers `/usr/lib/Codex` (it carries `data/corpus`) over
+your checkout, so about thirty `apps/desktop/src-tauri` tests resolve fixtures there and fail with
+`package root does not exist … (resolved to /usr/lib/Codex/…)`. They are environment failures, not
+regressions: run `CODEX_REPO_ROOT=<your checkout> cargo test --no-fail-fast` in
+`apps/desktop/src-tauri` (and confirm the failing suites by name, per `AGENTS.md`, before excusing
+any failure). For example, one run had 33 failures unpinned and 667 passed / 0 failed pinned (`cargo test --no-fail-fast`).
+
 ### 3. Node.js LTS
 
 Install via your normal machine bootstrap path, then:
@@ -330,7 +338,7 @@ operating under one.
 - `docs/release/<bundle>/` — one folder per bundle: `scope-draft.md`, `decisions.md`,
   `epic-breakdown.md` (acceptance commands per criterion), `workflow-instruction.md` (dispatch
   procedure for that bundle), `progress.md`, `receipts.md`, `release-notes.md` (a
-  regex-locked CI/schema contract — see [release-pipeline.md](./release-pipeline.md)). This is
+  regex-locked CI/schema contract; which bundle's notes ship is set by `docs/release/current-release.json` — see [release-pipeline.md](./release-pipeline.md)). This is
   planning/execution narrative, not architecture — [overview.md](./overview.md) and its siblings
   describe what the code does *now*, independent of which bundle built it.
 
