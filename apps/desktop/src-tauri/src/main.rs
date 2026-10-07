@@ -27,6 +27,8 @@ mod feat_catalog;
 mod authoring_workbench;
 #[cfg(test)]
 mod corpus_bundle_parity_test;
+#[cfg(test)]
+mod pf_catalog_dump_hash;
 mod companion_catalog;
 mod companion_pool_catalog;
 mod intelligent_item_catalog;

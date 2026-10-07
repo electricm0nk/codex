@@ -32,6 +32,8 @@ mod control_tests;
 #[cfg(test)]
 mod equivalence_tests;
 #[cfg(test)]
+mod golden_tests;
+#[cfg(test)]
 mod override_tests;
 
 use std::ops::Deref;

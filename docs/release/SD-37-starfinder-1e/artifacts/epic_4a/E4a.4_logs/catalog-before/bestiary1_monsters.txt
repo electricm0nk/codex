@@ -1,0 +1,1 @@
+beastiary1_keys=46 book_b1=326 all=1243 (before: harness line 'bestiary1_monsters=46 monster_entries=1243'; book_b1 from python3 over list_monster_catalog.json, Counter(book)['B1'])
