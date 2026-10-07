@@ -40,6 +40,7 @@ import { buildAcBySourceRows, describeEncumbrance, effectiveMaxDexCap } from './
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { purchaseEquipment } from '../boundary/purchaseEquipment';
 import { PriceModeControl } from './PriceModeControl';
+import { buildPrintCss, printableTabs } from './printLayout';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
 import { addSpellSelection } from '../boundary/addSpellSelection';
@@ -685,7 +686,7 @@ function SkillsPanel(props: {
           class-skill bonus is applied for {withoutClassSkills.length === 1 ? 'it' : 'them'}.
         </p>
       ) : null}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
+      <div className="skill-rows" style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
         {SKILLS.map((skill) => {
           const classSkill = isClassSkill(props.classSkills, skill.name);
           const ranks = props.allocation[skill.name] ?? 0;
@@ -874,7 +875,7 @@ function DetailsPanel(props: {
         <CalculatedBioField label="Vision" value={props.vision} />
         <CalculatedBioField label="Size" value={props.size} />
       </div>
-      <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.6rem 0 0' }}>
+      <p className="no-print" style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.6rem 0 0' }}>
         Vision and Size are calculated from race and aren't editable — a race this build has no profile for
         reads "Unknown" rather than a guessed value. The other fields save automatically when you leave the
         field.
@@ -915,6 +916,7 @@ function WeaponsTab(props: {
   weaponDamage: readonly WeaponDamageDto[];
   corpusDerived: CorpusDerivedDto | null;
   onAddWeapon: () => void;
+  onPrint: () => void;
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   /**
@@ -987,7 +989,7 @@ function WeaponsTab(props: {
         <button type="button" onClick={props.onAddWeapon} style={addItemButtonStyle}>
           Add Weapon
         </button>
-        <button type="button" onClick={() => window.print()} style={addItemButtonStyle}>
+        <button type="button" onClick={props.onPrint} style={addItemButtonStyle}>
           Print
         </button>
       </div>
@@ -2990,6 +2992,34 @@ export function CharacterSheet(props: {
     };
   }, [props.row.classSummary]);
   const [leftCollapsed, setLeftCollapsed] = useState(false);
+  // Print mode: expands the progression rail and renders every tab after page 1 (see printLayout.ts).
+  const [printing, setPrinting] = useState(false);
+  const railCollapsed = leftCollapsed && !printing;
+  function handlePrint() {
+    setPrinting(true);
+  }
+  useEffect(() => {
+    if (!printing) {
+      return undefined;
+    }
+    const done = () => setPrinting(false);
+    window.addEventListener('afterprint', done);
+    // Not every webview fires `afterprint`; the print media query turning off is the second signal.
+    const printQuery = window.matchMedia('print');
+    const onQueryChange = (event: MediaQueryListEvent) => {
+      if (!event.matches) {
+        done();
+      }
+    };
+    printQuery.addEventListener('change', onQueryChange);
+    // Let the print-mode render commit and paint before the system print dialog takes over.
+    const frame = window.requestAnimationFrame(() => window.requestAnimationFrame(() => window.print()));
+    return () => {
+      window.removeEventListener('afterprint', done);
+      printQuery.removeEventListener('change', onQueryChange);
+      window.cancelAnimationFrame(frame);
+    };
+  }, [printing]);
   const [levelUpOpen, setLevelUpOpen] = useState(false);
   // Covers every saved-character mutation this sheet can trigger (level-up,
   // add-equipment, add-spell) — one error slot, not three near-duplicates,
@@ -4233,7 +4263,7 @@ export function CharacterSheet(props: {
     { label: recomputing ? 'Recomputing…' : 'Recompute', onSelect: () => void handleRecompute() },
     { label: cloning ? 'Cloning…' : 'Clone', onSelect: () => void handleClone() },
     { label: exporting ? 'Exporting…' : 'Export', onSelect: () => void handleExport() },
-    { label: 'Print', onSelect: () => window.print() },
+    { label: 'Print', onSelect: handlePrint },
   ];
 
   // One generic `ItemPickerModal` backs all four "Add …" affordances — see
@@ -4283,6 +4313,88 @@ export function CharacterSheet(props: {
     : pendingModifierAttachment
       ? `Attach Modifier — ${pendingModifierAttachment.equipmentRecordName}`
       : itemPickerConfig?.title ?? '';
+
+  /** The content of one sheet tab; used by the on-screen tab panel and by every printed tab section. */
+  function renderTabContent(name: Tab): ReactNode {
+    return (
+                name === 'Weapons' ? (
+                  <WeaponsTab
+                    proficiency={weaponProficiency}
+                    factsNotice={classFactsNotice(classFacts)}
+                    factsLoading={classFacts.kind === 'loading'}
+                    weaponDamage={engineRecords.weaponDamage}
+                    corpusDerived={props.detail?.corpusDerived ?? null}
+                    onAddWeapon={() => setItemPickerOpen('weapon')}
+                    onPrint={handlePrint}
+                    priceMode={priceMode}
+                    onPriceModeChange={setPriceMode}
+                    onRemoveWeapon={(itemId) => void handleRemoveEquipment(itemId)}
+                  />
+                ) : name === 'Defense' ? (
+                  <DefenseTab
+                    baseSaves={recomputed?.baseSaves ?? snapshot?.baseSaves}
+                    totalSaves={recomputed?.totalSaves ?? snapshot?.totalSaves}
+                    damageReduction={snapshot?.damageReduction}
+                    equipmentEffects={props.detail?.corpusDerived?.equipmentEffects}
+                    encumbrance={props.detail?.corpusDerived?.encumbrance}
+                    durability={durability}
+                    durabilityBusy={durabilityBusy}
+                    durabilityError={durabilityError}
+                    onAdjustHp={(deltaHp) => void handleAdjustHp(deltaHp, 0)}
+                  />
+                ) : name === 'Spells' ? (
+                  <SpellsTab
+                    spellsSelected={props.detail?.spellsSelected ?? []}
+                    corpusDerived={props.detail?.corpusDerived}
+                    snapshot={props.detail?.snapshot}
+                    explanations={engineRecords.explanations}
+                    routedClass={spellRoutedClass}
+                    onAddSpell={() => setItemPickerOpen('spell')}
+                    onRemoveSpell={(spellId, sourceClassId) =>
+                      void handleRemoveSpell(spellId, sourceClassId)
+                    }
+                  />
+                ) : name === 'Gear' ? (
+                  <GearTab
+                    corpusDerived={props.detail?.corpusDerived}
+                    onAddArmor={() => setItemPickerOpen('armor')}
+                    onAddGear={() => setItemPickerOpen('gear')}
+                    priceMode={priceMode}
+                    onPriceModeChange={setPriceMode}
+                    onAttachModifier={handleAttachModifier}
+                    onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
+                    onSetActiveState={(itemId, activeState) => void handleSetEquipmentActiveState(itemId, activeState)}
+                    money={money}
+                    moneyBusy={moneyBusy}
+                    moneyError={moneyError}
+                    onAdjustMoney={(gpAmount) => void handleAdjustMoney(gpAmount)}
+                  />
+                ) : name === 'Feats' ? (
+                  <FeatsTab
+              selectedFeats={props.detail?.selectedFeats ?? []}
+              selectedTraits={props.detail?.selectedTraits ?? []}
+              chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
+              onAddFeat={() => setItemPickerOpen('feat')}
+              onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
+              onAddTrait={(traitId, skillChoice) => void handleAddTrait(traitId, skillChoice)}
+              onRemoveTrait={(traitId) => void handleRemoveTrait(traitId)}
+            />
+                ) : name === 'Pets' ? (
+                  <PetsTab snapshot={snapshot} />
+                ) : (
+                  <ActionsTab
+                    levelEntries={currentBenefits}
+                    explanations={engineRecords.explanations}
+                    heldClasses={heldClasses}
+                    racialTraits={racialTraits}
+                    raceLabel={props.row.raceLabel}
+                    selectedFeats={props.detail?.selectedFeats ?? []}
+                    sheetLines={engineRecords.sheetLines}
+                    sheetRulesUnavailableReason={engineRecords.sheetRulesUnavailableReason}
+                  />
+    )
+    );
+  }
 
   return (
     <div style={{ marginLeft: 'calc(50% - 50vw)', marginTop: '-3rem', width: '100vw' }}>
@@ -4363,18 +4475,33 @@ export function CharacterSheet(props: {
         </span>
       </div>
 
+      <style>{buildPrintCss()}</style>
+      {printing ? (
+        <div
+          className="no-print"
+          role="status"
+          style={{ alignItems: 'center', backgroundColor: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 8, display: 'flex', gap: '0.75rem', margin: '0.5rem 1.5rem', padding: '0.5rem 0.9rem' }}
+        >
+          <span style={{ flex: 1 }}>Print layout is showing. Finish or cancel the print dialog; this returns to the sheet afterwards.</span>
+          <button type="button" onClick={() => setPrinting(false)}>
+            Back to the sheet
+          </button>
+        </div>
+      ) : null}
+
       {/* Body: collapsible progression | stats + weapons | details + skills */}
-      <div style={{ display: 'flex', gap: '0.75rem', padding: '1rem 1.5rem' }}>
+      <div className="sheet-cols" style={{ display: 'flex', gap: '0.75rem', padding: '1rem 1.5rem' }}>
         {/* LEFT: collapsible level progression, separated by a vertical line */}
         <div
+          className="sheet-left"
           style={{
             borderRight: '1px solid var(--color-border)',
-            flex: leftCollapsed ? '0 0 34px' : '0 0 240px',
+            flex: railCollapsed ? '0 0 34px' : '0 0 240px',
             paddingRight: '0.75rem',
           }}
         >
-          <div style={{ alignItems: 'center', display: 'flex', justifyContent: leftCollapsed ? 'center' : 'space-between', marginBottom: '0.6rem' }}>
-            {!leftCollapsed ? (
+          <div style={{ alignItems: 'center', display: 'flex', justifyContent: railCollapsed ? 'center' : 'space-between', marginBottom: '0.6rem' }}>
+            {!railCollapsed ? (
               <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                 Progression
               </span>
@@ -4382,14 +4509,14 @@ export function CharacterSheet(props: {
             <button
               type="button"
               onClick={() => setLeftCollapsed((collapsed) => !collapsed)}
-              title={leftCollapsed ? 'Expand progression' : 'Collapse progression'}
+              title={railCollapsed ? 'Expand progression' : 'Collapse progression'}
               style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-text-secondary)', cursor: 'pointer', padding: '0.1rem 0.4rem' }}
             >
-              {leftCollapsed ? '»' : '«'}
+              {railCollapsed ? '»' : '«'}
             </button>
           </div>
 
-          {!leftCollapsed ? (
+          {!railCollapsed ? (
             <>
               <div style={{ marginBottom: '0.75rem' }}>
                 <PortraitUpload characterId={props.row.characterId} />
@@ -4565,7 +4692,8 @@ export function CharacterSheet(props: {
             </div>
           </div>
 
-          {/* Weapons / Defense / Gear — bottom, spanning the middle */}
+          {/* Weapons / Defense / Gear — bottom, spanning the middle. Printing renders every tab after page 1 instead. */}
+          {printing ? null : (
           <div style={{ marginTop: '0.4rem' }}>
             <div style={{ borderBottom: '1px solid var(--color-border)', display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '1rem' }}>
               {SHEET_TABS.map((name) => {
@@ -4593,88 +4721,18 @@ export function CharacterSheet(props: {
             </div>
 
             <div style={{ ...panel, minHeight: 200, padding: '1.25rem' }}>
-              {tab === 'Weapons' ? (
-                <WeaponsTab
-                  proficiency={weaponProficiency}
-                  factsNotice={classFactsNotice(classFacts)}
-                  factsLoading={classFacts.kind === 'loading'}
-                  weaponDamage={engineRecords.weaponDamage}
-                  corpusDerived={props.detail?.corpusDerived ?? null}
-                  onAddWeapon={() => setItemPickerOpen('weapon')}
-                  priceMode={priceMode}
-                  onPriceModeChange={setPriceMode}
-                  onRemoveWeapon={(itemId) => void handleRemoveEquipment(itemId)}
-                />
-              ) : tab === 'Defense' ? (
-                <DefenseTab
-                  baseSaves={recomputed?.baseSaves ?? snapshot?.baseSaves}
-                  totalSaves={recomputed?.totalSaves ?? snapshot?.totalSaves}
-                  damageReduction={snapshot?.damageReduction}
-                  equipmentEffects={props.detail?.corpusDerived?.equipmentEffects}
-                  encumbrance={props.detail?.corpusDerived?.encumbrance}
-                  durability={durability}
-                  durabilityBusy={durabilityBusy}
-                  durabilityError={durabilityError}
-                  onAdjustHp={(deltaHp) => void handleAdjustHp(deltaHp, 0)}
-                />
-              ) : tab === 'Spells' ? (
-                <SpellsTab
-                  spellsSelected={props.detail?.spellsSelected ?? []}
-                  corpusDerived={props.detail?.corpusDerived}
-                  snapshot={props.detail?.snapshot}
-                  explanations={engineRecords.explanations}
-                  routedClass={spellRoutedClass}
-                  onAddSpell={() => setItemPickerOpen('spell')}
-                  onRemoveSpell={(spellId, sourceClassId) =>
-                    void handleRemoveSpell(spellId, sourceClassId)
-                  }
-                />
-              ) : tab === 'Gear' ? (
-                <GearTab
-                  corpusDerived={props.detail?.corpusDerived}
-                  onAddArmor={() => setItemPickerOpen('armor')}
-                  onAddGear={() => setItemPickerOpen('gear')}
-                  priceMode={priceMode}
-                  onPriceModeChange={setPriceMode}
-                  onAttachModifier={handleAttachModifier}
-                  onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
-                  onSetActiveState={(itemId, activeState) => void handleSetEquipmentActiveState(itemId, activeState)}
-                  money={money}
-                  moneyBusy={moneyBusy}
-                  moneyError={moneyError}
-                  onAdjustMoney={(gpAmount) => void handleAdjustMoney(gpAmount)}
-                />
-              ) : tab === 'Feats' ? (
-                <FeatsTab
-            selectedFeats={props.detail?.selectedFeats ?? []}
-            selectedTraits={props.detail?.selectedTraits ?? []}
-            chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
-            onAddFeat={() => setItemPickerOpen('feat')}
-            onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
-            onAddTrait={(traitId, skillChoice) => void handleAddTrait(traitId, skillChoice)}
-            onRemoveTrait={(traitId) => void handleRemoveTrait(traitId)}
-          />
-              ) : tab === 'Pets' ? (
-                <PetsTab snapshot={snapshot} />
-              ) : (
-                <ActionsTab
-                  levelEntries={currentBenefits}
-                  explanations={engineRecords.explanations}
-                  heldClasses={heldClasses}
-                  racialTraits={racialTraits}
-                  raceLabel={props.row.raceLabel}
-                  selectedFeats={props.detail?.selectedFeats ?? []}
-                  sheetLines={engineRecords.sheetLines}
-                  sheetRulesUnavailableReason={engineRecords.sheetRulesUnavailableReason}
-                />
-              )}
+              {renderTabContent(tab)}
             </div>
           </div>
+          )}
         </div>
 
         {/* RIGHT: character details, then skills beneath */}
-        <div style={{ flex: '0 0 300px', minWidth: 0 }}>
-          <DetailsPanel vision={vision} size={size} bio={bio} onBioChange={updateBio} onBioBlur={() => void handleBioBlur()} />
+        <div className="sheet-right" style={{ flex: '0 0 300px', minWidth: 0 }}>
+          <div className="print-details">
+            <DetailsPanel vision={vision} size={size} bio={bio} onBioChange={updateBio} onBioBlur={() => void handleBioBlur()} />
+          </div>
+          <div className="print-skills">
           <SkillsPanel
             abilities={abilities}
             heldClasses={heldClasses}
@@ -4686,8 +4744,18 @@ export function CharacterSheet(props: {
             featSkillBonuses={engineRecords.featSkillBonuses}
             onOpenDialog={() => setSkillDialogOpen(true)}
           />
+          </div>
         </div>
       </div>
+
+      {printing
+        ? printableTabs({ hasPets: buildPetsTabView(snapshot).kind === 'Companion' }).map((name, index) => (
+            <section key={name} className={index === 0 ? 'print-tab print-tab-first' : 'print-tab'}>
+              <h2>{name}</h2>
+              {renderTabContent(name)}
+            </section>
+          ))
+        : null}
 
       <SkillAllocationDialog
         open={skillDialogOpen}

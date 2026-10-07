@@ -9,6 +9,7 @@ export function PriceModeControl(props: { value: PriceMode; onChange: (mode: Pri
   return (
     <fieldset
       aria-label="Equipment pricing"
+      className="no-print"
       style={{ border: '1px solid var(--color-border)', borderRadius: 8, margin: '0 0 1rem', padding: '0.5rem 0.9rem' }}
     >
       <legend style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', padding: '0 0.4rem', textTransform: 'uppercase' }}>Pricing</legend>
