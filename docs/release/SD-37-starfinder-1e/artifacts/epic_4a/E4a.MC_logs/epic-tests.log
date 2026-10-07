@@ -1,0 +1,32 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 20.12s
+     Running tests/pi_table_sweep.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/pi_table_sweep-eabe37a70a77e9c2)
+
+running 8 tests
+test baseline_parses_disposition_rows_and_ignores_comments ... ok
+test reconcile_flags_a_baseline_row_the_tree_no_longer_carries ... ok
+test sweep_text_is_clean_on_ordinary_mechanical_prose ... ok
+test reconcile_flags_a_hit_the_baseline_does_not_account_for ... ok
+test sweep_text_reports_a_blacklist_term_with_its_line_and_context ... ok
+test screen_generated_table_refuses_real_class_feature_content_carrying_a_known_pi_term ... ok
+test screen_generated_table_is_clean_on_real_class_feature_content_without_a_pi_term ... ok
+test rules_tables_carry_no_unbaselined_product_identity_hits ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.07s
+
+     Running tests/rules_catalog_feature_facts_read_the_package.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/rules_catalog_feature_facts_read_the_package-4e42aa219ddd6ec8)
+
+running 1 test
+test the_unchained_feature_facts_follow_the_package_they_are_pointed_at ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/rules_tables_citation_burn_down.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/rules_tables_citation_burn_down-34d755b2c78952df)
+
+running 3 tests
+test the_compiled_tables_hold_no_citation_literal ... ok
+test the_scan_counts_a_planted_citation ... ok
+test the_shipped_data_package_holds_no_citation_literal ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.28s
+
