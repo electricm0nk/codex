@@ -31,17 +31,17 @@
 //! family's sake — so the round's cost is a data module, a `MONSTER_BOOKS` row,
 //! a `MonsterBookSpec`, two reach claims, a wire code and two diagnostic keys.
 //!
-//! Both `.lst` files sit at the book **root** (`up_races.lst`,
-//! `up_abilities_race.lst`), so round 9's `resolve_book_file` widening
+//! Both source file files sit at the book **root** (`up_races`,
+//! `up_abilities_race`), so round 9's `resolve_book_file` widening
 //! (`decisions.md §62.2`) resolves each in one hop and is explicitly **not**
-//! load-bearing here. `up_races_apg.lst` also exists in the book directory and
+//! load-bearing here. `up_races_apg` also exists in the book directory and
 //! contributes **zero** `monster` units; the transcriber takes its unit set
 //! from `docs/work-inventory.json`, never from a file glob, so the third file
 //! cannot leak in.
 //!
 //! # Zero Product Identity rows, and the predicate that predicts it
 //!
-//! `grep -c NAMEISPI:YES up_races.lst up_abilities_race.lst` → `0 0`, and the
+//! `grep -c NAMEISPI:YES up_races up_abilities_race` → `0 0`, and the
 //! classifier's own Product Identity screen returns 0 as well. That is what
 //! `ogl-pi-blacklist.md` §2.1's **per-record** predicate predicts for this
 //! book: its creatures are generic psionic species (Blue, Dromite, Elan,
@@ -155,21 +155,21 @@ mod monster_tests {
         assert_eq!(monster_abilities().len(), 191);
     }
 
-    /// Every record cites one of this book's two `.lst` files, asserted on the
+    /// Every record cites one of this book's two source file files, asserted on the
     /// records rather than on the spec — a spec naming a file no record cites
     /// would pass a spec-shaped test while shipping nothing.
     #[test]
     fn every_record_cites_one_of_this_books_files() {
         for monster in monsters() {
             assert_eq!(
-                monster.source_file, "up_races.lst",
+                monster.source_file, "up_races",
                 "{} cites {}, which is not this book's races file",
                 monster.key, monster.source_file
             );
         }
         for ability in monster_abilities() {
             assert_eq!(
-                ability.source_file, "up_abilities_race.lst",
+                ability.source_file, "up_abilities_race",
                 "{} cites {}, which is not this book's abilities file",
                 ability.key, ability.source_file
             );

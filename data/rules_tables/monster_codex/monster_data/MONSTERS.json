@@ -64,7 +64,7 @@
         "Seru ~ Spit Venom"
       ],
       "external_ability_refs": [],
-      "source_file": "mc_races.lst",
+      "source_file": "mc_races",
       "source_line": 5
     },
     {
@@ -121,7 +121,7 @@
         "Bat (Sootwing) ~ Disease"
       ],
       "external_ability_refs": [],
-      "source_file": "mc_races.lst",
+      "source_file": "mc_races",
       "source_line": 6
     }
   ]

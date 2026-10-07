@@ -8,8 +8,8 @@
 //! **The only table in this program whose subject is not a class.**
 //! All 30 records are `Companion`- or `Familiar`-subject archetypes
 //! (`Companion Archetype ~ <Name>` ×16, `Familiar Archetype ~ <Name>`
-//! ×14) -- confirmed structurally in `uw_abilities_companion.lst`, a
-//! separate file from this book's own `uw_abilities_class.lst` (which
+//! ×14) -- confirmed structurally in `uw_abilities_companion`, a
+//! separate file from this book's own `uw_abilities_class` (which
 //! carries this book's class-feature content, none of it
 //! archetype-shaped). This is the live proof that this mechanism's
 //! subject-generic design (`subject: &'static str`, not a
@@ -59,7 +59,7 @@
 //!
 //! Every field below is copied verbatim from the real corpus row (source:
 //! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
-//! ultimate_wilderness/uw_abilities_companion.lst`), generated
+//! ultimate_wilderness/uw_abilities_companion`), generated
 //! programmatically by a one-off extraction script, not hand-transcribed.
 
 use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
@@ -71,7 +71,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     static TABLE: std::sync::OnceLock<Vec<ArchetypeSwapEntry>> = std::sync::OnceLock::new();
     TABLE.get_or_init(|| {
         vec![
-        // Companion Archetype ~ Aberrant Companion -- uw_abilities_companion.lst:415
+        // Companion Archetype ~ Aberrant Companion -- uw_abilities_companion:415
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Aberrant Companion",
             subject: "Companion",
@@ -87,7 +87,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Aberrant Companion ~ Fluid Bones", at_level: 1, description: Some("An aberrant companion gains compression as per the universal monster rule, though it can use the ability while carrying a rider only if the rider has compression."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Ambusher -- uw_abilities_companion.lst:416
+        // Companion Archetype ~ Ambusher -- uw_abilities_companion:416
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Ambusher",
             subject: "Companion",
@@ -100,7 +100,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Ambusher ~ Cunning Ambusher", at_level: 1, description: Some("An ambusher gains uncanny dodge."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Augmented Companion -- uw_abilities_companion.lst:417
+        // Companion Archetype ~ Augmented Companion -- uw_abilities_companion:417
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Augmented Companion",
             subject: "Companion",
@@ -115,7 +115,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Augmented Companion ~ Constructed Form", at_level: 1, description: Some("An augmented companion gains a +4 morale bonus on Fortitude saves against effects that could not normally affect objects or constructs, and it takes only half damage from bleed effects. However, it can be affected by attacks that specifically target constructs."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Auspice -- uw_abilities_companion.lst:418
+        // Companion Archetype ~ Auspice -- uw_abilities_companion:418
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Auspice",
             subject: "Companion",
@@ -129,7 +129,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Auspice ~ Aligned Strike", at_level: 1, description: Some("An auspice's attacks count as chaotic, evil, good, or lawful (whichever matches its alignment) for the purpose of overcoming damage reduction, unless the auspice is true neutral."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Bodyguard -- uw_abilities_companion.lst:419
+        // Companion Archetype ~ Bodyguard -- uw_abilities_companion:419
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Bodyguard",
             subject: "Companion",
@@ -145,7 +145,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Bodyguard ~ Greater Tenacity", at_level: 1, description: Some("A bodyguard with fewer than 0 hit points gains a +4 morale bonus on attack rolls, saving throws, and skill checks; immunity to fear effects; and temporary hit points equal to its master's class level (maximum 20). It dies only if its hit points reach a negative total equal to twice its Constitution score + its master's class level."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Bully -- uw_abilities_companion.lst:420
+        // Companion Archetype ~ Bully -- uw_abilities_companion:420
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Bully",
             subject: "Companion",
@@ -158,7 +158,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Bully ~ Bullying Thrill", at_level: 1, description: Some("Whenever a bully succeeds at a bull rush, overrun, reposition, or trip combat maneuver check, after fully resolving the combat maneuver, it gains a +2 morale bonus on attack and damage rolls until the end of its next turn."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Daredevil -- uw_abilities_companion.lst:421
+        // Companion Archetype ~ Daredevil -- uw_abilities_companion:421
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Daredevil",
             subject: "Companion",
@@ -172,7 +172,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Daredevil ~ Devil May Care", at_level: 1, description: Some("A daredevil can't be flanked."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Deathtouched Companion -- uw_abilities_companion.lst:422
+        // Companion Archetype ~ Deathtouched Companion -- uw_abilities_companion:422
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Deathtouched Companion",
             subject: "Companion",
@@ -188,7 +188,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Deathtouched Companion ~ One Foot in the Grave", at_level: 1, description: Some("A deathtouched companion gains a +4 morale bonus on Fortitude saves against effects that could not normally affect objects or undead, and it takes only half damage from bleed effects. However, it can be affected by attacks that specifically target undead, such as halt undead."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Draconic Companion -- uw_abilities_companion.lst:423
+        // Companion Archetype ~ Draconic Companion -- uw_abilities_companion:423
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Draconic Companion",
             subject: "Companion",
@@ -205,7 +205,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Draconic Companion ~ Breath Weapon Choice", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Companion Archetype ~ Feytouched Companion -- uw_abilities_companion.lst:424
+        // Companion Archetype ~ Feytouched Companion -- uw_abilities_companion:424
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Feytouched Companion",
             subject: "Companion",
@@ -220,7 +220,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Feytouched Companion ~ Iron Bane", at_level: 1, description: Some("A feytouched companion gains damage reduction %1/cold iron. Any creature holding or wearing an item made out of cold iron takes a -10 penalty on Handle Animal checks to handle the feytouched companion.|FeytouchedCompanionDR"), benefit: None },
             ],
         },
-        // Companion Archetype ~ Precocious Companion -- uw_abilities_companion.lst:425
+        // Companion Archetype ~ Precocious Companion -- uw_abilities_companion:425
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Precocious Companion",
             subject: "Companion",
@@ -232,7 +232,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Precocious Companion ~ Expanded Tricks", at_level: 1, description: Some("A precocious companion gains twice as many bonus tricks as normal for an animal companion. A hunter's animal companion can't use the additional bonus tricks to learn hunter's tricks."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Racer -- uw_abilities_companion.lst:426
+        // Companion Archetype ~ Racer -- uw_abilities_companion:426
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Racer",
             subject: "Companion",
@@ -246,7 +246,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Racer ~ Sprint", at_level: 1, description: Some("Once per hour a racer can move at 10 times its normal speed when it makes a charge or uses the run action."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Totem Guide -- uw_abilities_companion.lst:427
+        // Companion Archetype ~ Totem Guide -- uw_abilities_companion:427
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Totem Guide",
             subject: "Companion",
@@ -261,7 +261,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Totem Guide ~ Ghost Guardian", at_level: 1, description: Some("A totem guide's natural weapons deal full damage to incorporeal creatures and its natural armor bonus applies against incorporeal touch attacks. A totem guide can never be raised or animated as an undead creature."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Tracker -- uw_abilities_companion.lst:428
+        // Companion Archetype ~ Tracker -- uw_abilities_companion:428
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Tracker",
             subject: "Companion",
@@ -274,7 +274,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Tracker ~ Expert Tracker", at_level: 1, description: Some("A tracker gains a competence bonus on Survival checks to track via scent equal to half its total Hit Dice."), benefit: None },
             ],
         },
-        // Companion Archetype ~ Verdant Companion -- uw_abilities_companion.lst:429
+        // Companion Archetype ~ Verdant Companion -- uw_abilities_companion:429
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Verdant Companion",
             subject: "Companion",
@@ -288,7 +288,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Verdant Companion ~ Verdant Resistance", at_level: 1, description: Some("A verdant companion gains a +%1 racial bonus on saving throws against mind-affecting effects, paralysis, poison, polymorph, sleep effects, and stunning.|VerdantCompanionResistanceBonus"), benefit: None },
             ],
         },
-        // Companion Archetype ~ Wrecker -- uw_abilities_companion.lst:430
+        // Companion Archetype ~ Wrecker -- uw_abilities_companion:430
         ArchetypeSwapEntry {
             key: "Companion Archetype ~ Wrecker",
             subject: "Companion",
@@ -301,7 +301,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Wrecker ~ Destructive Wrecker", at_level: 1, description: Some("A wrecker's natural attacks ignore an inanimate object's first 5 points of hardness."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Ambassador -- uw_abilities_companion.lst:533
+        // Familiar Archetype ~ Ambassador -- uw_abilities_companion:533
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Ambassador",
             subject: "Familiar",
@@ -315,7 +315,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Ambassador ~ Enhanced Personality", at_level: 1, description: Some("An ambassador gains a Charisma score equal to the typical Intelligence score of a familiar of its level, if that would be higher than its normal Charisma score. The familiar's Intelligence score remains 6 (or its normal starting Intelligence for an improved familiar) and doesn't increase by level."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Animal Exemplar -- uw_abilities_companion.lst:534
+        // Familiar Archetype ~ Animal Exemplar -- uw_abilities_companion:534
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Animal Exemplar",
             subject: "Familiar",
@@ -329,7 +329,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Animal Exemplar ~ Influence Animals", at_level: 1, description: Some("An animal exemplar gains the ability to influence animals of its kind, as per the wild empathy ability of a druid of its master's level with a +4 racial bonus on the check, but only for animals of its kind."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Egotist -- uw_abilities_companion.lst:535
+        // Familiar Archetype ~ Egotist -- uw_abilities_companion:535
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Egotist",
             subject: "Familiar",
@@ -345,7 +345,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Egotist ~ Scry on Master", at_level: 1, description: Some("An egotist can scry on its master (as if casting the scrying spell) once per day."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Emissary -- uw_abilities_companion.lst:536
+        // Familiar Archetype ~ Emissary -- uw_abilities_companion:536
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Emissary",
             subject: "Familiar",
@@ -360,7 +360,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Emissary ~ Domain Influence", at_level: 1, description: Some("The emissary gains a spark of divine power from the deity its master worships. Choose one of that deity's domains that grants a 1st-level domain power usable a number of times per day equal to 3 + the user's Wisdom modifier. The emissary can use that power once per day. [NOTE:Not fully restricted. Check domain power before choosing!]"), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Figment -- uw_abilities_companion.lst:537
+        // Familiar Archetype ~ Figment -- uw_abilities_companion:537
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Figment",
             subject: "Familiar",
@@ -373,7 +373,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Figment ~ Manifest Dreams", at_level: 1, description: Some("A figment is shaped by its master's dreams. Each time the master awakens from a full night's rest, he can apply to the figment %1 evolution points' worth of eidolon evolutions that don't have a base form requirement.|FigmentEvolutionPoints"), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Infiltrator -- uw_abilities_companion.lst:538
+        // Familiar Archetype ~ Infiltrator -- uw_abilities_companion:538
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Infiltrator",
             subject: "Familiar",
@@ -390,7 +390,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Infiltrator ~ Telepathic Bond", at_level: 1, description: Some("An infiltrator gains a permanent telepathic bond with its master. This bond has no range limit as long as the familiar and its master are on the same plane."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Mascot -- uw_abilities_companion.lst:539
+        // Familiar Archetype ~ Mascot -- uw_abilities_companion:539
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Mascot",
             subject: "Familiar",
@@ -411,7 +411,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mascot ~ Heart of the Team", at_level: 1, description: Some("Once per day at as a full-round action, a mascot can designate any member of its team as its master for the purpose of calculating its base attack bonus, Hit Dice, hit points, saving throws, and skill ranks."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Mauler -- uw_abilities_companion.lst:540
+        // Familiar Archetype ~ Mauler -- uw_abilities_companion:540
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Mauler",
             subject: "Familiar",
@@ -427,7 +427,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mauler ~ Damage Reduction", at_level: 1, description: Some("A mauler gains DR 5/magic."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Pilferer -- uw_abilities_companion.lst:541
+        // Familiar Archetype ~ Pilferer -- uw_abilities_companion:541
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Pilferer",
             subject: "Familiar",
@@ -443,7 +443,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Pilferer ~ Greater Steal", at_level: 1, description: Some("A pilferer gains Greater Steal as a bonus feat."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Prankster -- uw_abilities_companion.lst:542
+        // Familiar Archetype ~ Prankster -- uw_abilities_companion:542
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Prankster",
             subject: "Familiar",
@@ -463,7 +463,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Prankster ~ Unreliable Narrator", at_level: 1, description: Some("Whenever its master uses scry on familiar, a prankster can use false vision to fool that ability; this doesn't affect any other divination (scrying) effects in the area, only its master's scry on familiar ability. This alters scry on familiar."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Protector -- uw_abilities_companion.lst:543
+        // Familiar Archetype ~ Protector -- uw_abilities_companion:543
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Protector",
             subject: "Familiar",
@@ -477,7 +477,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Protector ~ Able Defender", at_level: 1, description: Some("A protector gains In Harm's Way as a bonus feat. In addition, the familiar's hit points are now equal to its master's total hit points (not including temporary hit points), regardless of its actual Hit Dice."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Sage -- uw_abilities_companion.lst:544
+        // Familiar Archetype ~ Sage -- uw_abilities_companion:544
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Sage",
             subject: "Familiar",
@@ -491,7 +491,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sage ~ Sage's Knowledge", at_level: 1, description: Some("A sage stores information on every topic and is happy to lecture its master on the finer points of a subject. A sage can attempt all Knowledge checks untrained and gains a bonus on Knowledge checks equal to half its master's class level. [SKILL RANK CHANGES NOT IMPLEMENTED] Additionally, a sage gains 2 skill ranks each time its master gains a class level. Its maximum number of ranks in any given skill is equal to its master's class level. This replaces the familiar's ability to share its master's skill ranks."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Soulbound Familiar -- uw_abilities_companion.lst:545
+        // Familiar Archetype ~ Soulbound Familiar -- uw_abilities_companion:545
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Soulbound Familiar",
             subject: "Familiar",
@@ -504,7 +504,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Soulbound Familiar ~ Alignment Variation", at_level: 1, description: Some("A soulbound familiar's alignment is always at least partially neutral, although it can also be chaotic, evil, good, or lawful, depending on the creature whose soul provided the fragment rather than on the master's alignment (unless the master donates a fragment of her own soul)."), benefit: None },
             ],
         },
-        // Familiar Archetype ~ Valet -- uw_abilities_companion.lst:546
+        // Familiar Archetype ~ Valet -- uw_abilities_companion:546
         ArchetypeSwapEntry {
             key: "Familiar Archetype ~ Valet",
             subject: "Familiar",

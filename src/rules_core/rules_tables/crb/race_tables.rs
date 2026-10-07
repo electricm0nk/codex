@@ -29,7 +29,7 @@
 //! Intelligence` an out-of-scope "alternate variant", which is wrong about
 //! the rule rather than merely incomplete. All four are now the real
 //! three-stat adjustment, re-derived from the source rows themselves
-//! (`core_essentials/races/<race>/<race>_abilities_race.lst:18`) rather
+//! (`core_essentials/races/<race>/<race>_abilities_race:18`) rather
 //! than from the seams — the same reason the `race_size` correction below
 //! gives: a transcription is what this table exists to check, so it must
 //! not be checked against another transcription. `pilot_compute.rs`'s own
@@ -85,31 +85,31 @@ pub(crate) const RACE_TRAITS: &[RaceTraitEntry] = &[
         race_id: RaceId::Human,
         trait_name: "Ability Bonus",
         value: 0,
-        detail: "Player-chosen +2 to any one ability score (cr_races.lst race:human, choice:human_ability_bonus). Player choice, not a fixed pair.",
+        detail: "Player-chosen +2 to any one ability score (cr_races race:human, choice:human_ability_bonus). Player choice, not a fixed pair.",
     },
     RaceTraitEntry {
         race_id: RaceId::Human,
         trait_name: "Bonus Feat",
         value: 0,
-        detail: "One bonus feat at 1st level, selected from any feat whose prerequisites are met (cr_races.lst race:human, choice:human_bonus_feat). Player choice.",
+        detail: "One bonus feat at 1st level, selected from any feat whose prerequisites are met (cr_races race:human, choice:human_bonus_feat). Player choice.",
     },
     RaceTraitEntry {
         race_id: RaceId::Human,
         trait_name: "Size",
         value: 0,
-        detail: "Medium size (cr_races.lst race:human SIZE:MEDIUM).",
+        detail: "Medium size (cr_races race:human SIZE:MEDIUM).",
     },
     RaceTraitEntry {
         race_id: RaceId::Human,
         trait_name: "Speed",
         value: 30,
-        detail: "30 ft base land speed (cr_races.lst race:human GAIT:WALK|30).",
+        detail: "30 ft base land speed (cr_races race:human GAIT:WALK|30).",
     },
     RaceTraitEntry {
         race_id: RaceId::Human,
         trait_name: "Senses",
         value: 0,
-        detail: "No special senses (cr_races.lst race:human carries no SENSE tag).",
+        detail: "No special senses (cr_races race:human carries no SENSE tag).",
     },
     RaceTraitEntry {
         race_id: RaceId::Human,
@@ -118,7 +118,7 @@ pub(crate) const RACE_TRAITS: &[RaceTraitEntry] = &[
         // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
         //   BONUS:SKILL
         detail: "4 extra skill points at 1st level, +1 extra skill rank per level thereafter \
-         (cr_races.lst race:human).",
+         (cr_races race:human).",
     },
     // ----- Dwarf (9) -----
     RaceTraitEntry {
@@ -128,55 +128,55 @@ pub(crate) const RACE_TRAITS: &[RaceTraitEntry] = &[
         // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
         //   BONUS:STAT|CON,WIS|2|TYPE=Racial, BONUS:STAT|CHA|-2|TYPE=Racial
         detail: "+2 Constitution, +2 Wisdom, -2 Charisma \
-         (core_essentials/races/dwarf/dwarf_abilities_race.lst:18, \"Dwarf ~ Ability Scores\").",
+         (core_essentials/races/dwarf/dwarf_abilities_race:18, \"Dwarf ~ Ability Scores\").",
     },
     RaceTraitEntry {
         race_id: RaceId::Dwarf,
         trait_name: "Size",
         value: 0,
-        detail: "Medium size (cr_races.lst race:dwarf SIZE:MEDIUM).",
+        detail: "Medium size (cr_races race:dwarf SIZE:MEDIUM).",
     },
     RaceTraitEntry {
         race_id: RaceId::Dwarf,
         trait_name: "Speed",
         value: 20,
-        detail: "20 ft base land speed, never reduced by armor or encumbrance (cr_races.lst race:dwarf GAIT:WALK|20).",
+        detail: "20 ft base land speed, never reduced by armor or encumbrance (cr_races race:dwarf GAIT:WALK|20).",
     },
     RaceTraitEntry {
         race_id: RaceId::Dwarf,
         trait_name: "Senses",
         value: 60,
-        detail: "Darkvision 60 ft (cr_races.lst race:dwarf SENSE:Darkvision (60 ft)).",
+        detail: "Darkvision 60 ft (cr_races race:dwarf SENSE:Darkvision (60 ft)).",
     },
     RaceTraitEntry {
         race_id: RaceId::Dwarf,
         trait_name: "Stonecunning",
         value: 2,
-        detail: "+2 Perception to potentially notice unusual stonework, such as traps and hidden doors (dwarf_abilities_race.lst).",
+        detail: "+2 Perception to potentially notice unusual stonework, such as traps and hidden doors (dwarf_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Dwarf,
         trait_name: "Greed",
         value: 2,
-        detail: "+2 Appraise checks to determine the price of nonmagical goods containing precious metals or gemstones (dwarf_abilities_race.lst).",
+        detail: "+2 Appraise checks to determine the price of nonmagical goods containing precious metals or gemstones (dwarf_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Dwarf,
         trait_name: "Hardy",
         value: 2,
-        detail: "+2 saving throws against poison, and +2 against spells and spell-like abilities (dwarf_abilities_race.lst).",
+        detail: "+2 saving throws against poison, and +2 against spells and spell-like abilities (dwarf_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Dwarf,
         trait_name: "Stability",
         value: 4,
-        detail: "+4 Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground (dwarf_abilities_race.lst).",
+        detail: "+4 Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground (dwarf_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Dwarf,
         trait_name: "Defensive Training",
         value: 4,
-        detail: "+4 dodge bonus to Armor Class against monsters of the giant subtype (dwarf_abilities_race.lst).",
+        detail: "+4 dodge bonus to Armor Class against monsters of the giant subtype (dwarf_abilities_race).",
     },
     // ----- Elf (7) -----
     RaceTraitEntry {
@@ -186,43 +186,43 @@ pub(crate) const RACE_TRAITS: &[RaceTraitEntry] = &[
         // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
         //   BONUS:STAT|DEX,INT|2|TYPE=Racial, BONUS:STAT|CON|-2|TYPE=Racial
         detail: "+2 Dexterity, +2 Intelligence, -2 Constitution \
-         (core_essentials/races/elf/elf_abilities_race.lst:18, \"Elf ~ Ability Scores\").",
+         (core_essentials/races/elf/elf_abilities_race:18, \"Elf ~ Ability Scores\").",
     },
     RaceTraitEntry {
         race_id: RaceId::Elf,
         trait_name: "Size",
         value: 0,
-        detail: "Medium size (cr_races.lst race:elf SIZE:MEDIUM).",
+        detail: "Medium size (cr_races race:elf SIZE:MEDIUM).",
     },
     RaceTraitEntry {
         race_id: RaceId::Elf,
         trait_name: "Speed",
         value: 30,
-        detail: "30 ft base land speed (cr_races.lst race:elf GAIT:WALK|30).",
+        detail: "30 ft base land speed (cr_races race:elf GAIT:WALK|30).",
     },
     RaceTraitEntry {
         race_id: RaceId::Elf,
         trait_name: "Senses",
         value: 0,
-        detail: "Low-Light Vision (cr_races.lst race:elf SENSE:Low-Light Vision).",
+        detail: "Low-Light Vision (cr_races race:elf SENSE:Low-Light Vision).",
     },
     RaceTraitEntry {
         race_id: RaceId::Elf,
         trait_name: "Keen Senses",
         value: 2,
-        detail: "+2 Perception skill checks (elf_abilities_race.lst).",
+        detail: "+2 Perception skill checks (elf_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Elf,
         trait_name: "Elven Immunities",
         value: 2,
-        detail: "Immune to magic sleep effects; +2 saving throws against enchantment spells and effects (elf_abilities_race.lst).",
+        detail: "Immune to magic sleep effects; +2 saving throws against enchantment spells and effects (elf_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Elf,
         trait_name: "Elven Magic",
         value: 2,
-        detail: "+2 caster level checks to overcome spell resistance; +2 Spellcraft checks to identify magic item properties (elf_abilities_race.lst).",
+        detail: "+2 caster level checks to overcome spell resistance; +2 Spellcraft checks to identify magic item properties (elf_abilities_race).",
     },
     // ----- Gnome (8) -----
     RaceTraitEntry {
@@ -232,49 +232,49 @@ pub(crate) const RACE_TRAITS: &[RaceTraitEntry] = &[
         // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
         //   BONUS:STAT|CON,CHA|2|TYPE=Racial, BONUS:STAT|STR|-2|TYPE=Racial
         detail: "+2 Constitution, +2 Charisma, -2 Strength \
-         (core_essentials/races/gnome/gnome_abilities_race.lst:18, \"Gnome ~ Ability Scores\").",
+         (core_essentials/races/gnome/gnome_abilities_race:18, \"Gnome ~ Ability Scores\").",
     },
     RaceTraitEntry {
         race_id: RaceId::Gnome,
         trait_name: "Size",
         value: 0,
-        detail: "Small size (cr_races.lst race:gnome SIZE:SMALL).",
+        detail: "Small size (cr_races race:gnome SIZE:SMALL).",
     },
     RaceTraitEntry {
         race_id: RaceId::Gnome,
         trait_name: "Speed",
         value: 20,
-        detail: "20 ft base land speed (cr_races.lst race:gnome GAIT:WALK|20).",
+        detail: "20 ft base land speed (cr_races race:gnome GAIT:WALK|20).",
     },
     RaceTraitEntry {
         race_id: RaceId::Gnome,
         trait_name: "Senses",
         value: 0,
-        detail: "Low-Light Vision (cr_races.lst race:gnome SENSE:Low-Light Vision).",
+        detail: "Low-Light Vision (cr_races race:gnome SENSE:Low-Light Vision).",
     },
     RaceTraitEntry {
         race_id: RaceId::Gnome,
         trait_name: "Keen Senses",
         value: 2,
-        detail: "+2 Perception skill checks (gnome_abilities_race.lst).",
+        detail: "+2 Perception skill checks (gnome_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Gnome,
         trait_name: "Illusion Resistance",
         value: 2,
-        detail: "+2 saving throws against illusion spells and effects (gnome_abilities_race.lst).",
+        detail: "+2 saving throws against illusion spells and effects (gnome_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Gnome,
         trait_name: "Defensive Training",
         value: 4,
-        detail: "+4 dodge bonus to Armor Class against monsters of the giant subtype (gnome_abilities_race.lst).",
+        detail: "+4 dodge bonus to Armor Class against monsters of the giant subtype (gnome_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Gnome,
         trait_name: "Hatred",
         value: 1,
-        detail: "+1 attack rolls against humanoid creatures of the reptilian and goblinoid subtypes (gnome_abilities_race.lst).",
+        detail: "+1 attack rolls against humanoid creatures of the reptilian and goblinoid subtypes (gnome_abilities_race).",
     },
     // ----- Half-Elf (6) -----
     RaceTraitEntry {
@@ -287,31 +287,31 @@ pub(crate) const RACE_TRAITS: &[RaceTraitEntry] = &[
         race_id: RaceId::HalfElf,
         trait_name: "Size",
         value: 0,
-        detail: "Medium size (cr_races.lst race:half-elf SIZE:MEDIUM).",
+        detail: "Medium size (cr_races race:half-elf SIZE:MEDIUM).",
     },
     RaceTraitEntry {
         race_id: RaceId::HalfElf,
         trait_name: "Speed",
         value: 30,
-        detail: "30 ft base land speed (cr_races.lst race:half-elf GAIT:WALK|30).",
+        detail: "30 ft base land speed (cr_races race:half-elf GAIT:WALK|30).",
     },
     RaceTraitEntry {
         race_id: RaceId::HalfElf,
         trait_name: "Senses",
         value: 0,
-        detail: "Low-Light Vision (cr_races.lst race:half-elf SENSE:Low-Light Vision).",
+        detail: "Low-Light Vision (cr_races race:half-elf SENSE:Low-Light Vision).",
     },
     RaceTraitEntry {
         race_id: RaceId::HalfElf,
         trait_name: "Keen Senses",
         value: 2,
-        detail: "+2 Perception skill checks (halfelf_abilities_race.lst).",
+        detail: "+2 Perception skill checks (halfelf_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::HalfElf,
         trait_name: "Elven Immunities",
         value: 2,
-        detail: "Immune to magic sleep effects; +2 saving throws against enchantment spells and effects (halfelf_abilities_race.lst).",
+        detail: "Immune to magic sleep effects; +2 saving throws against enchantment spells and effects (halfelf_abilities_race).",
     },
     // ----- Half-Orc (5) -----
     RaceTraitEntry {
@@ -324,25 +324,25 @@ pub(crate) const RACE_TRAITS: &[RaceTraitEntry] = &[
         race_id: RaceId::HalfOrc,
         trait_name: "Size",
         value: 0,
-        detail: "Medium size (cr_races.lst race:half-orc SIZE:MEDIUM).",
+        detail: "Medium size (cr_races race:half-orc SIZE:MEDIUM).",
     },
     RaceTraitEntry {
         race_id: RaceId::HalfOrc,
         trait_name: "Speed",
         value: 30,
-        detail: "30 ft base land speed (cr_races.lst race:half-orc GAIT:WALK|30).",
+        detail: "30 ft base land speed (cr_races race:half-orc GAIT:WALK|30).",
     },
     RaceTraitEntry {
         race_id: RaceId::HalfOrc,
         trait_name: "Senses",
         value: 60,
-        detail: "Darkvision 60 ft (cr_races.lst race:half-orc SENSE:Darkvision (60 ft)).",
+        detail: "Darkvision 60 ft (cr_races race:half-orc SENSE:Darkvision (60 ft)).",
     },
     RaceTraitEntry {
         race_id: RaceId::HalfOrc,
         trait_name: "Intimidating",
         value: 2,
-        detail: "+2 Intimidate skill checks (halforc_abilities_race.lst).",
+        detail: "+2 Intimidate skill checks (halforc_abilities_race).",
     },
     // ----- Halfling (8) -----
     RaceTraitEntry {
@@ -352,50 +352,50 @@ pub(crate) const RACE_TRAITS: &[RaceTraitEntry] = &[
         // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
         //   BONUS:STAT|DEX,CHA|2|TYPE=Racial, BONUS:STAT|STR|-2|TYPE=Racial
         detail: "+2 Dexterity, +2 Charisma, -2 Strength \
-         (core_essentials/races/halfling/halfling_abilities_race.lst:18, \"Halfling ~ Ability \
+         (core_essentials/races/halfling/halfling_abilities_race:18, \"Halfling ~ Ability \
          Scores\").",
     },
     RaceTraitEntry {
         race_id: RaceId::Halfling,
         trait_name: "Size",
         value: 0,
-        detail: "Small size (cr_races.lst race:halfling SIZE:SMALL).",
+        detail: "Small size (cr_races race:halfling SIZE:SMALL).",
     },
     RaceTraitEntry {
         race_id: RaceId::Halfling,
         trait_name: "Speed",
         value: 20,
-        detail: "20 ft base land speed (cr_races.lst race:halfling GAIT:WALK|20).",
+        detail: "20 ft base land speed (cr_races race:halfling GAIT:WALK|20).",
     },
     RaceTraitEntry {
         race_id: RaceId::Halfling,
         trait_name: "Senses",
         value: 0,
-        detail: "No special senses (cr_races.lst race:halfling carries no SENSE tag).",
+        detail: "No special senses (cr_races race:halfling carries no SENSE tag).",
     },
     RaceTraitEntry {
         race_id: RaceId::Halfling,
         trait_name: "Keen Senses",
         value: 2,
-        detail: "+2 Perception skill checks (halfling_abilities_race.lst).",
+        detail: "+2 Perception skill checks (halfling_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Halfling,
         trait_name: "Sure-Footed",
         value: 2,
-        detail: "+2 Acrobatics and Climb skill checks (halfling_abilities_race.lst).",
+        detail: "+2 Acrobatics and Climb skill checks (halfling_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Halfling,
         trait_name: "Fearless",
         value: 2,
-        detail: "+2 saving throws against fear (halfling_abilities_race.lst).",
+        detail: "+2 saving throws against fear (halfling_abilities_race).",
     },
     RaceTraitEntry {
         race_id: RaceId::Halfling,
         trait_name: "Halfling Luck",
         value: 1,
-        detail: "+1 on all saving throws; stacks with Fearless per the corpus DESC text (halfling_abilities_race.lst).",
+        detail: "+1 on all saving throws; stacks with Fearless per the corpus DESC text (halfling_abilities_race).",
     },
 ];
 
@@ -408,26 +408,26 @@ pub fn race_traits() -> &'static [RaceTraitEntry] {
 ///
 /// # Where these come from
 ///
-/// The authoritative record is each race's `<race>_races.lst` in the PCGen
+/// The authoritative record is each race's `<race>_races` in the PCGen
 /// checkout the ingested corpus is built from:
 /// `data/pathfinder/paizo/roleplaying_game/core_essentials/races/<race>/`,
 /// line 6 of each file.
 ///
 /// ```text
-/// human_races.lst:6     Human     ... FACT:BaseSize|M ...
-/// dwarf_races.lst:6     Dwarf     ... FACT:BaseSize|M ...
-/// elf_races.lst:6       Elf       ... FACT:BaseSize|M ...
-/// gnome_races.lst:6     Gnome     ... FACT:BaseSize|S ...
-/// halfelf_races.lst:6   Half-Elf  ... FACT:BaseSize|M ...
-/// halforc_races.lst:6   Half-Orc  ... FACT:BaseSize|M ...
-/// halfling_races.lst:6  Halfling  ... FACT:BaseSize|S ...
+/// human_races:6     Human     ... FACT:BaseSize|M ...
+/// dwarf_races:6     Dwarf     ... FACT:BaseSize|M ...
+/// elf_races:6       Elf       ... FACT:BaseSize|M ...
+/// gnome_races:6     Gnome     ... FACT:BaseSize|S ...
+/// halfelf_races:6   Half-Elf  ... FACT:BaseSize|M ...
+/// halforc_races:6   Half-Orc  ... FACT:BaseSize|M ...
+/// halfling_races:6  Halfling  ... FACT:BaseSize|S ...
 /// ```
 ///
 /// # A citation correction
 ///
 /// The `Size` rows in `RACE_TRAITS` above cite
-/// `cr_races.lst race:human SIZE:MEDIUM`. Their **values are right**, but
-/// that citation is not: `cr_races.lst` carries only `.MOD` records with
+/// `cr_races race:human SIZE:MEDIUM`. Their **values are right**, but
+/// that citation is not: `cr_races` carries only `.MOD` records with
 /// `SOURCEPAGE:` (which is what led `encumbrance.rs` to conclude size was
 /// un-ingestable), and the token is spelled `FACT:BaseSize|M`, not
 /// `SIZE:MEDIUM`. The real base race records live in the

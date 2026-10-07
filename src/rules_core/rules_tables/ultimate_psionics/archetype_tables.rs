@@ -37,7 +37,7 @@
 //!   "include everything":** `<Class> Class Feature` and `Special
 //!   Ability` (same `<Archetype> ~ <Feature>` naming, same real
 //!   content) -- **included**. `Internal` -- **excluded**: checked one
-//!   directly (`Armor Aptitude 7th Level`, `up_abilities_class.lst:2502`,
+//!   directly (`Armor Aptitude 7th Level`, `up_abilities_class:2502`,
 //!   `CATEGORY:Internal|UNENCUMBEREDMOVE:HeavyArmor`) and confirmed it
 //!   is engine bookkeeping with no player-facing text, the same shape a
 //!   feat catalog's own auto-grant-wrapper exclusion already covers, not
@@ -91,7 +91,7 @@
 //! **The `§46`/`§48`/`§49` text-shape triad, run against this book's own
 //! archetype `.MOD` rows before trusting any description as complete.**
 //! `CATEGORY=Archetype|Barbarian Archetype ~ Raging Beast.MOD`
-//! (`up_abilities_class.lst:2406`) carries **no `DESC:`/`BENEFIT:` at
+//! (`up_abilities_class:2406`) carries **no `DESC:`/`BENEFIT:` at
 //! all** -- it is a pure `FACT:<ClassName>_CF_<Slot>|true` flag-setter
 //! row, the mechanism the base class's own feature code is expected to
 //! check to know it has been swapped out (this is very likely the real
@@ -109,7 +109,7 @@
 //!
 //! Every field below is copied verbatim from the real corpus row (source:
 //! `~/workspace/repos/pcgen/data/pathfinder/dreamscarred_press/
-//! ultimate_psionics/up_abilities_class.lst`), generated programmatically
+//! ultimate_psionics/up_abilities_class`), generated programmatically
 //! by a one-off extraction script, not hand-transcribed.
 
 use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
@@ -121,7 +121,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     static TABLE: std::sync::OnceLock<Vec<ArchetypeSwapEntry>> = std::sync::OnceLock::new();
     TABLE.get_or_init(|| {
         vec![
-        // Barbarian Archetype ~ Raging Beast -- up_abilities_class.lst:2403
+        // Barbarian Archetype ~ Raging Beast -- up_abilities_class:2403
         ArchetypeSwapEntry {
             key: "Barbarian Archetype ~ Raging Beast",
             subject: "Barbarian",
@@ -137,7 +137,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Raging Beast ~ Toughened Rager", at_level: 9, description: Some("You gain a +%1 enhancement bonus to your natural armor as long as you are raging.|ToughenedRagerBonus"), benefit: None },
             ],
         },
-        // Bard Archetype ~ Thoughtsinger -- up_abilities_class.lst:2424
+        // Bard Archetype ~ Thoughtsinger -- up_abilities_class:2424
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Thoughtsinger",
             subject: "Bard",
@@ -156,7 +156,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Thoughtsinger ~ The Becoming", at_level: 20, description: Some("While mindlinked to a target, as a full-round action, you can expend one round of thoughtsong to manifest mind seed (ML %1, Will DC %2) as a psi-like ability with a range of 30 feet.|TheBecomingML|TheBecomingDC"), benefit: None },
             ],
         },
-        // Druid Archetype ~ Gaean -- up_abilities_class.lst:2455
+        // Druid Archetype ~ Gaean -- up_abilities_class:2455
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Gaean",
             subject: "Druid",
@@ -170,7 +170,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Gaean ~ Gaean Revivification", at_level: 13, description: Some("If you are maintaining focus when reduced to 0 or fewer hit points and are in physical contact with nature, you can choose as a free action to submerge into nature.  While submerged, you cannot be targeted by attacks or effects, you immediately stop bleeding and gain fast healing 5.  You are ejected once you return to positive hit points, although you can choose to stay submerged by expending spell slots; one extra round per spell level."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Serpent Lord -- up_abilities_class.lst:2457
+        // Druid Archetype ~ Serpent Lord -- up_abilities_class:2457
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Serpent Lord",
             subject: "Druid",
@@ -188,7 +188,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Serpent Lord ~ Poisonous Nature", at_level: 9, description: Some("Whenever you have a bite attack, you can choose to have it apply the following poison to any successful bite atatck: [frequency 1 round (6), effect 1 Con damage, cure 1 save, DC %1]. If you already have this poison, increase the damage to 1d3 Con damage and increase the DC by +2.  This poison can be used on %2 attacks per day.|PoisonousNaturePoisonDC|PoisonousNatureTimes"), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Ironborn -- up_abilities_class.lst:2483
+        // Fighter Archetype ~ Ironborn -- up_abilities_class:2483
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Ironborn",
             subject: "Fighter",
@@ -205,7 +205,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Ironborn ~ Shatterproof", at_level: 19, description: Some("Any time your armor is targeted by a sunder attempt or would otherwise take damage, the damage is instead transferred to you.  Any applicable hardness of the armor is applied before determine what (if any) damage is transferred to you."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Psionic Fighter -- up_abilities_class.lst:2479
+        // Fighter Archetype ~ Psionic Fighter -- up_abilities_class:2479
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Psionic Fighter",
             subject: "Fighter",
@@ -221,7 +221,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Psionic Fighter ~ Double Imbue", at_level: 13, description: Some("You gain the ability to trigger two effects that require expending psionic focus on a single attack by expending only one psionic focus.  This ability cannot be used with additional sources of psionic focus, nor can it be used to trigger the same effect twice on the same attack."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Disciple of the Raging Sea -- up_abilities_class.lst:2516
+        // Monk Archetype ~ Disciple of the Raging Sea -- up_abilities_class:2516
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Disciple of the Raging Sea",
             subject: "Monk",
@@ -235,7 +235,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Disciple of the Raging Sea ~ Raging Ki", at_level: 4, description: Some("You can spend ki to extend a use of your outburst racial ability as with power points, but one ki point is considered equal to two power points."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Enlightened Monk -- up_abilities_class.lst:2514
+        // Monk Archetype ~ Enlightened Monk -- up_abilities_class:2514
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Enlightened Monk",
             subject: "Monk",
@@ -250,7 +250,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Enlightened Monk ~ Augmented Stunning Fist", at_level: 6, description: Some("You can channel power points into your Stunning Fist attacks to make them more devastating.  When you use your Stunning Fist attack, you may choose to spend up to %1 power points on the attack.  If you do, you gain an insight bonus to the damage if the attack is successful equal to the number of power points spent.  For every two power points spent adding damage, the save DC of the Stunning Fist attack increases by 1.|AugmentedStunningFistPP"), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Purifier -- up_abilities_class.lst:2535
+        // Paladin Archetype ~ Purifier -- up_abilities_class:2535
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Purifier",
             subject: "Paladin",
@@ -269,7 +269,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Psionic", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Paladin Archetype ~ Sleeper's Guardian -- up_abilities_class.lst:2537
+        // Paladin Archetype ~ Sleeper's Guardian -- up_abilities_class:2537
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Sleeper's Guardian",
             subject: "Paladin",
@@ -288,7 +288,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Psionic", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Ranger Archetype ~ Kinslayer -- up_abilities_class.lst:2567
+        // Ranger Archetype ~ Kinslayer -- up_abilities_class:2567
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Kinslayer",
             subject: "Ranger",
@@ -304,7 +304,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Pack Leader ~ No Spellcasting", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Ranger Archetype ~ Pack Leader -- up_abilities_class.lst:2565
+        // Ranger Archetype ~ Pack Leader -- up_abilities_class:2565
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Pack Leader",
             subject: "Ranger",
@@ -319,7 +319,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Pack Leader ~ No Spellcasting", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Rogue Archetype ~ Cerebral Infiltrator -- up_abilities_class.lst:2596
+        // Rogue Archetype ~ Cerebral Infiltrator -- up_abilities_class:2596
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Cerebral Infiltrator",
             subject: "Rogue",
@@ -332,7 +332,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Cerebral Infiltrator ~ Cripple Senses", at_level: 3, description: Some("You gain the ability when making a sneak attack to blind and deafen the struck creature for %1 rounds %2/day.|CrippleSensesDuration|CrippleSensesTimes"), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Menteur -- up_abilities_class.lst:2598
+        // Rogue Archetype ~ Menteur -- up_abilities_class:2598
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Menteur",
             subject: "Rogue",
@@ -346,7 +346,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Menteur ~ Safe Exit", at_level: 6, description: Some("You can set a location as a full-round action that provokes attacks of opportunity when standing in the location.  As long as you are within 400 feet of the location, you can teleport to it as a standard action.  You can bring along %1 additional creatures of the same size or smaller than yourself that you are physically touching, although if the creature or creatures touched are unwilling, a Will save (DC %2) leaves that creature behind.  Using this ability to teleport can only be done 1/day.|SafeExitExtraTargets|SafeExitDC"), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Reaving Raider -- up_abilities_class.lst:2599
+        // Rogue Archetype ~ Reaving Raider -- up_abilities_class:2599
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Reaving Raider",
             subject: "Rogue",

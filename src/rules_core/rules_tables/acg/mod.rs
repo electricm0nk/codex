@@ -7,11 +7,11 @@
 //! **Roster correction (this cycle, mirrors the APG Gunslinger/Magus
 //! correction in `apg/mod.rs`):** `corpus-source-inventory.md §2.1`'s
 //! row 1, "Alchemist (ACG-side)", names a class with **no real
-//! `CLASS:Alchemist` record anywhere in `acg_classes.lst`** — confirmed
+//! `CLASS:Alchemist` record anywhere in `acg_classes`** — confirmed
 //! by direct grep of the real corpus (`grep -c "^CLASS:Alchemist"
-//! acg_classes.lst` → 0). Alchemist is APG-only content; ACG never
+//! acg_classes` → 0). Alchemist is APG-only content; ACG never
 //! republishes a distinct Alchemist chassis. The real, complete 10-class
-//! `CLASS:` roster in `acg_classes.lst` is: Arcanist, Bloodrager,
+//! `CLASS:` roster in `acg_classes` is: Arcanist, Bloodrager,
 //! Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler,
 //! Warpriest (plus an internal `Ex-Warpriest` `VISIBLE:NO` variant,
 //! correctly excluded from the player-facing roster). `decisions.md
@@ -135,7 +135,7 @@ impl AcgClassId {
 }
 
 /// The real per-class hit die (`HD:` token on each class's real
-/// `CLASS:` record in `acg_classes.lst`). Mirrors
+/// `CLASS:` record in `acg_classes`). Mirrors
 /// `rules_tables::apg::hit_die_for` exactly.
 pub fn hit_die_for(class_id: AcgClassId) -> u8 {
     match class_id {
@@ -210,10 +210,10 @@ pub struct AcgClassCoverage {
     /// Levels 1 through `chassis_rows_expected` this class's `class_table()`
     /// actually returns a base-attack-bonus/save row for. Real ACG classes
     /// all cap at `MAXLEVEL:20` (see each per-class module's own doc
-    /// comment, cross-checked against `acg_classes.lst`), so this equals
+    /// comment, cross-checked against `acg_classes`), so this equals
     /// `chassis_rows_expected` for every class today.
     pub chassis_rows_wired: u8,
-    /// The class's real `MAXLEVEL` ceiling (`acg_classes.lst`).
+    /// The class's real `MAXLEVEL` ceiling (`acg_classes`).
     pub chassis_rows_expected: u8,
     /// Count of distinct named/narrative class-feature records (Arcane
     /// Exploit, Bloodline, Martial Flexibility, Hunter's Trick, Studied
@@ -243,7 +243,7 @@ pub struct AcgClassCoverage {
     /// 0", describing the SD-22 Epic 4 state where the ingest was scoped
     /// to the BAB/save chassis only. That is no longer true of any ACG
     /// class -- the per-class closures ingested
-    /// `acg_abilities_class.lst`'s feature blocks for all ten. Corrected
+    /// `acg_abilities_class`'s feature blocks for all ten. Corrected
     /// 2026-07-27, the same sweep that caught the identical stale
     /// sentence in `apg/mod.rs`: a count change has to sweep the prose
     /// derived from the old counts, and no test asserts a doc comment,
@@ -452,10 +452,10 @@ pub struct AcgClassCoverage {
     pub named_features_wired: u32,
     /// Count of distinct named class-feature records tagged
     /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
-    /// `advanced_class_guide/acg_abilities_class.lst` (SD-24 Epic 4 audit
+    /// `advanced_class_guide/acg_abilities_class` (SD-24 Epic 4 audit
     /// count, PCGen corpus commit
     /// `7f818006e371188e5717fd18d74d18a420747fc6`, 2026-06-17; reproduce
-    /// with `grep -oE "KEY:<Class> ~ [^\t]+" acg_abilities_class.lst |
+    /// with `grep -oE "KEY:<Class> ~ [^\t]+" acg_abilities_class |
     /// sort -u | wc -l`). Mirrors `ApgClassCoverage::named_features_expected`'s
     /// own "floor, not ceiling" caveat — sub-selectable-list layers (e.g.
     /// individual Discoveries an Investigator can pick) may live under a
@@ -598,7 +598,7 @@ pub fn class_coverage(class_id: AcgClassId) -> AcgClassCoverage {
     // deferred concern) are each their own separate `KEY:Skald ~ ...`
     // record with independently-implemented formula logic. All five
     // level-gate self-consistently with the real corpus's own per-level
-    // `ABILITY:...AUTOMATIC` grant rows in `acg_classes.lst`. Rage
+    // `ABILITY:...AUTOMATIC` grant rows in `acg_classes`. Rage
     // Powers' own pool-size record is additive with #54's Raging
     // Climber/Swimmer grounding, not a duplicate of it -- the pool-size
     // formula answers "how many rage powers does this skald know," while

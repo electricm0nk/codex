@@ -5,9 +5,9 @@
 //! cost `epic-13-calibration` paid for `ultimate_campaign`
 //! (`docs/release/SD-28-ultimate-book-content-ingestion/artifacts/e13-cost-calibration.md`).
 //!
-//! **Full corpus coverage.** `ui_feats.lst` has exactly 104 top-level
+//! **Full corpus coverage.** `ui_feats` has exactly 104 top-level
 //! `CATEGORY:FEAT` records (re-derived: `grep -c 'CATEGORY:FEAT'
-//! ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst`
+//! ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats`
 //! -> 104). Every one carries a real `DESC:`, `BENEFIT:` and `TYPE:` token
 //! -- no `[Not Implemented]`-only records and no upstream splice/truncation
 //! defects found (checked: every record's `DESC:`/`BENEFIT:` text is a
@@ -16,7 +16,7 @@
 //! **text-complete**, none `deferred-with-reason`.
 //!
 //! **No `KEY:` token on any record** (`grep -c 'KEY:'
-//! .../ui_feats.lst` -> 0), so `key == name` for every entry, mirroring
+//! .../ui_feats` -> 0), so `key == name` for every entry, mirroring
 //! `ultimate_campaign::feat_tables::StoryFeatEntry.key`'s own documented
 //! fallback.
 //!
@@ -42,7 +42,7 @@
 //!
 //! Every field below is copied verbatim from the real corpus row (source:
 //! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
-//! ultimate_intrigue/ui_feats.lst`), generated programmatically by a
+//! ultimate_intrigue/ui_feats`), generated programmatically by a
 //! one-off extraction script (not hand-transcribed) at this catalog's
 //! scale (104 records), then spot-checked against the raw file for the
 //! first, last and five random records. Each entry's doc comment below
@@ -80,7 +80,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
     static TABLE: std::sync::OnceLock<Vec<UiFeatEntry>> = std::sync::OnceLock::new();
     TABLE.get_or_init(|| {
         vec![
-            // Acrobatic Spellcaster -- ui_feats.lst:12
+            // Acrobatic Spellcaster -- ui_feats:12
             UiFeatEntry {
                 key: "Acrobatic Spellcaster",
                 category: FeatCategory::Combat,
@@ -90,7 +90,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.75"),
                 benefit: Some("When you succeed at an Acrobatics check to move through a threatened square without provoking attacks of opportunity or to move through an enemy's space, creatures denied attacks of opportunity by your Acrobatics check also cannot make attacks of opportunity against you when you cast spells for the remainder of your turn. [Normal] Casting a spell within an enemy's reach provokes attacks of opportunity even after you succeed at an Acrobatics check to move through a threatened square."),
             },
-            // Agent of Fear -- ui_feats.lst:13
+            // Agent of Fear -- ui_feats:13
             UiFeatEntry {
                 key: "Agent of Fear",
                 category: FeatCategory::General,
@@ -100,7 +100,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.75"),
                 benefit: Some("When you target a creature with your frightening appearance or stunning appearance class feature, it does not become immune to the effects of those features for 24 hours, but does gain a +2 bonus on the saving throws against those class features for 24 hours. This bonus stacks with itself if you use those abilities against the same creature multiple times in the same 24-hour period. Because these abilities alert the creature to your presence, you still can't use them on the creature again until after the end of that specific combat. [Normal] A creature targeted by frightening appearance or stunning appearance becomes immune to the feature's effect for 24 hours."),
             },
-            // Betrayal Sense -- ui_feats.lst:14
+            // Betrayal Sense -- ui_feats:14
             UiFeatEntry {
                 key: "Betrayal Sense",
                 category: FeatCategory::Combat,
@@ -110,7 +110,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.75"),
                 benefit: Some("You gain a bonus on Perception checks to pierce another creature's disguise and Sense Motive checks to avoid being surprised by an attack. These bonuses are equal to the bonus you gain from trap sense."),
             },
-            // Blustering Bluff -- ui_feats.lst:15
+            // Blustering Bluff -- ui_feats:15
             UiFeatEntry {
                 key: "Blustering Bluff",
                 category: FeatCategory::General,
@@ -120,7 +120,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.75"),
                 benefit: Some("When using Bluff to fool a foe, you can bully that person to reduce the penalty for telling an unlikely or far-fetched lie by 5. If you do so and your check would not have succeeded otherwise, after 1d6x10 minutes, the person you fooled realizes you bullied him into believing a lie, treats you as unfriendly, and might report you or take other actions against you. [Normal] The penalty for telling unlikely lies is -5, and the penalty for telling far-fetched lies is -10."),
             },
-            // Brilliant Planner -- ui_feats.lst:16
+            // Brilliant Planner -- ui_feats:16
             UiFeatEntry {
                 key: "Brilliant Planner",
                 category: FeatCategory::General,
@@ -130,7 +130,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.75"),
                 benefit: Some("You can prepare for future contingencies without defining what those preparations are until they are relevant. As a part of this preparation, while in a settlement for at least 24 hours, you can take 8 hours and spend up to %1 gp, which becomes your brilliant plan fund. While you have a brilliant plan pending, you are always treated as carrying 20 additional pounds of weight, even before you define your brilliant plan. Once per day, you can take 10 minutes to enact a brilliant plan, withdrawing an item that would have been available in a settlement you visited or procuring a mundane service that your character planned ahead of time. Once you enact the plan, subtract the price of the item or service from this feat's fund. Any item procured must weigh 10 pounds or less. Likewise, the GM must approve any nonmagical service you gain by using this feat as being appropriate for the location selected. Once you have spent all the money in your brilliant plan fund or procured 20 pounds of objects with this feat, you cannot use the feat again until you replenish your brilliant plan fund.|TL*50"),
             },
-            // Brilliant Spell Preparation -- ui_feats.lst:17
+            // Brilliant Spell Preparation -- ui_feats:17
             UiFeatEntry {
                 key: "Brilliant Spell Preparation",
                 category: FeatCategory::General,
@@ -140,7 +140,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.79"),
                 benefit: Some("Select one class for which you prepare spells of 3rd level or higher. Once you select a class, it can't be changed. When you prepare spells for that class, you can leave one spell slot open as a special slot. The slot must be at least 2 levels lower than the highest-level spell you can cast. You can then prepare a spell in this special open slot as a standard action instead of it taking 15 minutes. [Special] You can take this feat multiple times. Each time you do, you can leave an additional special slot open."),
             },
-            // But a Scratch -- ui_feats.lst:18
+            // But a Scratch -- ui_feats:18
             UiFeatEntry {
                 key: "But a Scratch",
                 category: FeatCategory::Combat,
@@ -150,7 +150,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.79"),
                 benefit: Some("When an opponent confirms a critical hit against you with a melee weapon, you can attempt a special Bluff check against that opponent as an immediate action. The DC of this check is the same as the DC to demoralize the opponent with the Intimidate skill. If you are successful, the attacking opponent is shaken for 1 round as if you had successfully demoralized it with Intimidate. Exceeding the DC by 5 or more does not add to the shaken condition's duration. If you fail the special Bluff check granted by this feat, you can attempt it against opponents who saw you attempt the earlier check and fail, but you take a -2 cumulative penalty on that Bluff check and any subsequent Bluff checks attempted in conjunction with this feat against those opponents for 24 hours."),
             },
-            // Call Truce -- ui_feats.lst:19
+            // Call Truce -- ui_feats:19
             UiFeatEntry {
                 key: "Call Truce",
                 category: FeatCategory::General,
@@ -160,7 +160,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.79"),
                 benefit: Some("While in combat, as a 1-round action (as if it were a spell with a 1-round casting time), you can call for a truce with any creatures that have an Intelligence score of 4 or greater and can understand you. When doing so, you can't be wielding a weapon or threatening implement, such as a charged spell, wand, or anything else the creatures you are entreating might consider threatening. You must also be in plain sight of most of the creatures you are entreating. Once you've called for a truce, if any of your allies attack or take any threatening action against those you are entreating before the start of your next turn, your call is unsuccessful. At the start of your next turn, attempt a single Diplomacy check (DC = 30 + the Charisma modifier of the creature with the highest Charisma modifier in the opposing group). If you are successful, combat ceases for 1 minute, or until any creature in the opposing group is threatened or attacked. If you fail the check by 5 or more, you cannot use Diplomacy again with any creature you attempted to entreat for 1d4 hours. If anyone in your group instead plans to use the parley to gain a combat advantage, the opponents can attempt a Sense Motive check against each such member of your group to get a hunch, with a DC equal to either 20 or the result of that character's Bluff check, whichever is higher. [Special] If the parley would inherently result in the opponents surrendering or losing, if the opponents are mind-controlled or fanatics, or if there are other appropriate circumstances at the GM's discretion, you might not be able to use this feat. For instance, if the opponents' main advantage over your group comes from a short-duration spell that would end during a parley (see Calling for a Cease-Fire on page 186), you cannot use this feat. Circumstances could potentially increase the check's DC by 5, 10, or even up to 20."),
             },
-            // Careful Flyer -- ui_feats.lst:20
+            // Careful Flyer -- ui_feats:20
             UiFeatEntry {
                 key: "Careful Flyer",
                 category: FeatCategory::General,
@@ -170,7 +170,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.79"),
                 benefit: Some("As long as you take a move action to fly, even when moving less than half your speed, you do not need to succeed at a Fly check to continue flying. When moving less than half your speed in a round, you also gain a +2 bonus on Acrobatics checks to avoid attacks of opportunity and a +2 bonus to your AC against attacks of opportunity you provoke because of movement. [Normal] You must succeed at a Fly check to continue flying unless you move at least half your speed."),
             },
-            // Careful Sneak -- ui_feats.lst:21
+            // Careful Sneak -- ui_feats:21
             UiFeatEntry {
                 key: "Careful Sneak",
                 category: FeatCategory::General,
@@ -180,7 +180,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.79"),
                 benefit: Some("You do not apply the armor check penalty for light and medium armor on Stealth skill checks as long as you move half your speed or less. You still cannot run or charge while using Stealth in this way."),
             },
-            // Cartogramancer -- ui_feats.lst:22
+            // Cartogramancer -- ui_feats:22
             UiFeatEntry {
                 key: "Cartogramancer",
                 category: FeatCategory::General,
@@ -190,7 +190,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.79"),
                 benefit: Some("If you cast greater teleport-or similar teleportation effects that require a reliable description of the location-but do not have a reliable description of the destination, you can attempt a DC 25 Knowledge (geography) check prior to casting the spell to gain a reliable description of some location within 100 miles of the destination. If you exceed the DC by 10, you gain a description of some location within 50 miles, and if you succeed the DC by 20, you gain a description of some location within 25 miles. Once you have attempted such a check for a specific location, you cannot attempt it again, and if you attempt to use greater teleport elsewhere in the same general area, the result is the same. For instance, if you don't know the location of the villain's castle, you also don't know a location within 100 miles of the stables next to the villain's castle, or within 100 miles of the town half a mile away from the villain's castle."),
             },
-            // Cat and Mouse -- ui_feats.lst:23
+            // Cat and Mouse -- ui_feats:23
             UiFeatEntry {
                 key: "Cat and Mouse",
                 category: FeatCategory::Combat,
@@ -200,7 +200,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.80"),
                 benefit: Some("When you use the opportune parry and riposte deed to successfully parry an opponent's attack, if you have your immediate action available and choose not to attempt a riposte, you gain a +1 dodge bonus to your AC and a +2 bonus on all combat maneuver checks against the opponent you successfully parried for 1 round."),
             },
-            // Cat's Fall -- ui_feats.lst:24
+            // Cat's Fall -- ui_feats:24
             UiFeatEntry {
                 key: "Cat's Fall",
                 category: FeatCategory::General,
@@ -210,7 +210,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.80"),
                 benefit: Some("When you succeed at a DC 15 Acrobatics skill check to soften a fall, you ignore the first 20 feet of that fall and convert the damage from the next 10 feet of the fall to nonlethal damage. You land on your feet as long as you take less than 20 points of damage from the fall. [Normal] A successful DC 15 Acrobatics check allows you to ignore the first 10 feet fallen, and you fall prone if you take any falling damage."),
             },
-            // Circuitous Shot -- ui_feats.lst:25
+            // Circuitous Shot -- ui_feats:25
             UiFeatEntry {
                 key: "Circuitous Shot",
                 category: FeatCategory::Combat,
@@ -220,7 +220,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.80"),
                 benefit: Some("You can choose to take a -2 penalty on a ranged weapon attack to ricochet it off a stone or metal surface and resolve the attack as if it originated from the chosen ricochet point for the purpose of determining cover (but not for determining concealment). Add the entire distance the weapon or ammunition traveled to determine range penalties for the attack. Bouncing a shot this way can potentially enable you to make ranged attacks against foes who have total cover against you by going around obstacles, but such a foe still has total concealment against your attack."),
             },
-            // City Sprinter -- ui_feats.lst:26
+            // City Sprinter -- ui_feats:26
             UiFeatEntry {
                 key: "City Sprinter",
                 category: FeatCategory::General,
@@ -230,7 +230,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.80"),
                 benefit: Some("You do not treat crowds as difficult terrain. You also gain an additional +2 bonus on Acrobatics checks to move along rooftops and on slippery sections of city streets and sewers."),
             },
-            // Clambering Escape -- ui_feats.lst:27
+            // Clambering Escape -- ui_feats:27
             UiFeatEntry {
                 key: "Clambering Escape",
                 category: FeatCategory::Combat,
@@ -240,7 +240,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.80"),
                 benefit: Some("When you successfully use your evasion class feature to avoid taking damage from an effect that allows a Reflex saving throw, you can attempt a special reposition combat maneuver check against any one foe within reach as an immediate action. If successful, you switch positions with the target of your combat maneuver. If your foe was not initially within range of the effect that you evaded, it must save against the effect as if it had been within the area of effect."),
             },
-            // Conceal Spell -- ui_feats.lst:28
+            // Conceal Spell -- ui_feats:28
             UiFeatEntry {
                 key: "Conceal Spell",
                 category: FeatCategory::General,
@@ -250,7 +250,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.80"),
                 benefit: Some("When you cast a spell or use a spell-like ability, you can attempt to conceal verbal and somatic components among other speech and gestures, and to conceal the manifestation of casting the spell, so others don't realize you're casting a spell or using a spell-like ability until it is too late. The attempt to hide the spell slows your casting slightly, such that spells that normally take a standard action to cast now take a full-round action, and spells that normally take longer than a standard action take twice as long. (Swift action spells still take a swift action.) To discover your ruse, a creature must succeed at a Perception, Sense Motive, or Spellcraft check (the creature receives an automatic check with whichever of those skills has the highest bonus) against a DC %1; the creature gains a bonus on its check equal to the level of the spell or spell-like ability you are concealing. If your spell has a somatic component, any creature that can see you receives a Perception or Spellcraft check (whichever has the highest bonus) against a DC %2; the creature gains a bonus on its check equal to the level of the spell or spell-like ability you are concealing. Since you are concealing the spell's manifestation through other actions, others observing you realize you're doing something, even if they don't realize you're casting a spell. If there is a verbal component, they still hear your loud, clear voice but don't notice the spell woven within. If an opponent fails its check, your casting also does not provoke attacks of opportunity, and an opponent that fails its check can't use readied actions that depend on realizing that you're casting a spell or using a spell-like ability, or readied actions such as counterspelling that require identifying the spell you're casting. Spells such as fireball that create an additional obvious effect (aside from the manifestation of casting that all spells and spell-like abilities share) still create that effect, though it might not be obvious who cast the spell unless it emanates from you. If a character interacts with you long enough to attempt a Sense Motive check without realizing you have been casting spells, that character can use Sense Motive to gain a hunch that you're behaving unusually.|15+max(skillinfo(\"TOTALRANK\", \"Bluff\"),skillinfo(\"TOTALRANK\", \"Disguise\"))+CHA|15+skillinfo(\"TOTALRANK\", \"Sleight of Hand\")+DEX"),
             },
-            // Confabulist -- ui_feats.lst:29
+            // Confabulist -- ui_feats:29
             UiFeatEntry {
                 key: "Confabulist",
                 category: FeatCategory::General,
@@ -260,7 +260,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.81"),
                 benefit: Some("When you fail to deceive someone with a Bluff check, you can immediately attempt another version of the same basic deception against that creature at a -5 penalty by downplaying the failed Bluff and quickly moving on to another one. You cannot use this ability if the first Bluff was so egregious that further checks would have been impossible (as per the Bluff skill). If you fail the second attempt, you cannot retry the Bluff check and all further attempts to perpetrate that particular deception are impossible. [Normal] When you fail a Bluff check against a creature, that creature is innately suspicious. You take a -10 penalty on future attempts to deceive that creature, or at the GM's discretion, such attempts may be impossible."),
             },
-            // Cooperative Disabling -- ui_feats.lst:30
+            // Cooperative Disabling -- ui_feats:30
             UiFeatEntry {
                 key: "Cooperative Disabling",
                 category: FeatCategory::Teamwork,
@@ -270,7 +270,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.81"),
                 benefit: Some("When you use the Disable Device skill and fail the check against a trap, a single adjacent ally with this feat who is also within reach of the trap can attempt a Disable Device check against the same device as an immediate action. The ally must have remained adjacent throughout the process of disabling the device and must have either aided your Disable Device check or taken no other action. If your ally succeeds at the check, your attempt is considered to be successful. If your ally fails, your attempt is considered to have failed by 5 or more, even if the original check failed by 4 or less."),
             },
-            // Criminal Reputation -- ui_feats.lst:31
+            // Criminal Reputation -- ui_feats:31
             UiFeatEntry {
                 key: "Criminal Reputation",
                 category: FeatCategory::General,
@@ -280,7 +280,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.81"),
                 benefit: Some("You gain a +2 bonus on any influence check against criminals, not just Diplomacy or Intimidate checks, whether they're individual thieves and cutpurses or criminal organizations. If you have 10 or more ranks in the skill used, the bonus increases to +4 for that skill. These bonuses do not stack with those granted by Persuasive, but this feat counts as Persuasive for the purposes of feats and other rules elements with Persuasive as a prerequisite. You also need 1 fewer influence per rank to reach a new influence threshold with a criminal organization (either positive or negative)."),
             },
-            // Cunning Intuition -- ui_feats.lst:32
+            // Cunning Intuition -- ui_feats:32
             UiFeatEntry {
                 key: "Cunning Intuition",
                 category: FeatCategory::Combat,
@@ -290,7 +290,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.81"),
                 benefit: Some("When you ready an action, you do not need to declare what action you will take, only the trigger for that action and an action type (either standard, move, swift, or free). If you choose the standard action type, you can take a move action instead when your readied action triggers. When the condition triggers, you can choose a specific action of the appropriate type to take."),
             },
-            // Cutting Humiliation -- ui_feats.lst:33
+            // Cutting Humiliation -- ui_feats:33
             UiFeatEntry {
                 key: "Cutting Humiliation",
                 category: FeatCategory::General,
@@ -300,7 +300,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.81"),
                 benefit: Some("When you successfully demoralize a target by using a verbal Intimidate check in a social situation (rather than an Intimidate check you can make via an ability such as Dazzling Display or Enforcer), you can instead humiliate the target, causing it to take a -2 penalty on Charisma-based skill checks and Charisma ability checks for 1 hour + 1 additional hour for every 5 by which the result of your check exceeds the DC. The target can remove the effect early by taking 10 minutes to compose herself. If you fail this check, any creature who witnessed the failure is immune to your humiliation from this feat for 24 hours. If you fail by 5 or more, you become humiliated for 1 hour instead of your target."),
             },
-            // Darkness Trick -- ui_feats.lst:34
+            // Darkness Trick -- ui_feats:34
             UiFeatEntry {
                 key: "Darkness Trick",
                 category: FeatCategory::General,
@@ -310,7 +310,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.81"),
                 benefit: Some("When wielding a magic weapon that sheds light or that features a luminescent quality, such as a flaming or brilliant energy weapon, you can deactivate that illumination as a swift action. You can reignite the illumination at any time as a free action. Any intrinsic magic properties that would force the weapon to shed light, such as the extra damage of a flaming weapon, do not function while the illumination is deactivated, and the \"significant portion\" of a brilliant energy weapon that is normally made of light ceases to exist. If a weapon affected by this ability ever leaves your possession (for instance, if you drop the weapon or pass it to another creature), its illumination and related abilities instantly return."),
             },
-            // Deft Catcher -- ui_feats.lst:35
+            // Deft Catcher -- ui_feats:35
             UiFeatEntry {
                 key: "Deft Catcher",
                 category: FeatCategory::General,
@@ -320,7 +320,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.82"),
                 benefit: Some("Whenever you drop or are forced to drop an item you possess (other than by an effect that disarms or steals the item), you can attempt a DC 20 Sleight of Hand check as an immediate action to catch the item before it falls away. If you are targeted by an effect that would disarm or steal an item you're holding, such as a disarm or steal combat maneuver or the effects of a spell like telekinesis, you can also attempt a Sleight of Hand check as an immediate action to maintain possession of the errant item (DC = 10 + the combat maneuver check result if there was a combat maneuver check, or 20 + the DC of the spell if there was no combat maneuver check). In either case, if you fail the Sleight of Hand check by 10 or more, you fall prone."),
             },
-            // Drunkard's Recovery -- ui_feats.lst:36
+            // Drunkard's Recovery -- ui_feats:36
             UiFeatEntry {
                 key: "Drunkard's Recovery",
                 category: FeatCategory::General,
@@ -330,7 +330,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.82"),
                 benefit: Some("If you are dying and a creature gives you at least a sip of alcohol (a standard action for an adjacent creature), you immediately stabilize."),
             },
-            // Enrage Opponent -- ui_feats.lst:37
+            // Enrage Opponent -- ui_feats:37
             UiFeatEntry {
                 key: "Enrage Opponent",
                 category: FeatCategory::Combat,
@@ -340,7 +340,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.82"),
                 benefit: Some("As a swift action, you can spend 1 panache point to enrage a creature with an Intelligence of 4 or more within 60 feet that can see or hear you. Attempt an Intimidate check as if to demoralize the creature. If you succeed, the creature takes a -2 penalty to its AC until it has made at least one attack against you (including area effects that include you) or until it can no longer see or hear you. You can have only one opponent enraged at you with this feat at a time, and once you've enraged a creature, you can't enrage it again for 24 hours."),
             },
-            // Entreating Critical -- ui_feats.lst:38
+            // Entreating Critical -- ui_feats:38
             UiFeatEntry {
                 key: "Entreating Critical",
                 category: FeatCategory::Combat,
@@ -350,7 +350,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.82"),
                 benefit: Some("Whenever you confirm a critical hit, the shock of the attack momentarily opens an opportunity to end hostilities with a quick entreaty. As an immediate action immediately after confirming the critical hit, you can attempt a Diplomacy check to improve the target's attitude as though you had spent 1 full round using the Call Truce feat. All other conditions and limitations of the Call Truce feat apply."),
             },
-            // Expeditious Sleuth -- ui_feats.lst:39
+            // Expeditious Sleuth -- ui_feats:39
             UiFeatEntry {
                 key: "Expeditious Sleuth",
                 category: FeatCategory::General,
@@ -360,7 +360,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.82"),
                 benefit: Some("You can take 20 on a Perception check in only 10 times the usual amount of time, and gain a +2 bonus on Perception checks when you take 20. [Normal] It takes 20 times as long to take 20 on a skill check."),
             },
-            // Exquisite Sneak -- ui_feats.lst:40
+            // Exquisite Sneak -- ui_feats:40
             UiFeatEntry {
                 key: "Exquisite Sneak",
                 category: FeatCategory::General,
@@ -370,7 +370,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.82"),
                 benefit: Some("You do not apply the armor check penalty for light and medium armor on Stealth skill checks no matter how fast you move. You still cannot use Stealth while running or charging."),
             },
-            // Extra Contingency -- ui_feats.lst:41
+            // Extra Contingency -- ui_feats:41
             UiFeatEntry {
                 key: "Extra Contingency",
                 category: FeatCategory::General,
@@ -380,7 +380,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.82"),
                 benefit: Some("You can have two contingency effects active at one time. If they would both trigger on the same round, one (chosen randomly) does not trigger until 1 round later. [Normal] You can benefit from only a single contingency active at a time."),
             },
-            // Eye for Ingredients -- ui_feats.lst:42
+            // Eye for Ingredients -- ui_feats:42
             UiFeatEntry {
                 key: "Eye for Ingredients",
                 category: FeatCategory::General,
@@ -390,7 +390,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.82"),
                 benefit: Some("When in a large city or larger settlement, you can search the markets carefully for 4 hours in order to purchase material components for your spells at a 10%% discount. You can purchase up to 1,000 gp worth of material components (which costs you 900 gp) each day. These cheaper components work perfectly well for their spells, but their resale value is also 10%% less."),
             },
-            // Feign Curse -- ui_feats.lst:43
+            // Feign Curse -- ui_feats:43
             UiFeatEntry {
                 key: "Feign Curse",
                 category: FeatCategory::General,
@@ -400,7 +400,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.82"),
                 benefit: Some("As a standard action, you can feign placing a curse on a target. The target must attempt a Sense Motive or Spellcraft check (whichever skill that target has a higher bonus with) against a DC %1, with a bonus on his skill check equal to any conditional bonus he has on saving throws against hexes or curses (like from the spell hex ward). If he fails, he becomes plagued by self-doubt and second-guesses himself. For his next %2 attack rolls, saving throws, skill checks, or ability checks, he rolls twice and takes the lower result. This is a mind-affecting effect, and it doesn't work if the target is immune to curses. Once you attempt to feign putting a curse on a creature, you cannot do so again against the same creature for 24 hours, and if the target succeeds at detecting your ruse, he gains a +10 bonus against future attempts. Only creatues with an intelligecne score of 3 or higher can be affected by Feign Curse.|15+skillinfo(\"TOTALRANK\", \"Bluff\")+CHA|2+((skillinfo(\"TOTALRANK\", \"Bluff\"))-5)/5"),
             },
-            // Fencing Grace -- ui_feats.lst:44
+            // Fencing Grace -- ui_feats:44
             UiFeatEntry {
                 key: "Fencing Grace",
                 category: FeatCategory::Combat,
@@ -410,7 +410,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.83"),
                 benefit: Some("When wielding a rapier one-handed, you can add your Dexterity modifier instead of your Strength modifier to that weapon's damage. The rapier must be one appropriate for your size. You do not gain this benefit while fighting with two weapons or using flurry of blows, or anytime another hand is otherwise occupied. In addition, if you have the panache class feature, you gain a +2 bonus to your CMD against attempts to disarm you of your rapier while you have at least 1 panache point."),
             },
-            // Fey Spell Lore -- ui_feats.lst:45
+            // Fey Spell Lore -- ui_feats:45
             UiFeatEntry {
                 key: "Fey Spell Lore",
                 category: FeatCategory::General,
@@ -420,7 +420,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.83"),
                 benefit: Some("Add the following spells to your druid spell list at the indicated levels: 0-Dancing Lights, 1st-lesser confusion, 2nd-charm person, 3rd-invisibility, 4th-bestow curse, 5th-charm monster, 6th-major curse, 7th-cloak of dreams, 8th-insanity, 9th-irresistible dance."),
             },
-            // Fey Spell Versatility -- ui_feats.lst:46
+            // Fey Spell Versatility -- ui_feats:46
             UiFeatEntry {
                 key: "Fey Spell Versatility",
                 category: FeatCategory::General,
@@ -430,7 +430,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.83"),
                 benefit: Some("[NOT IMPLEMENTED] Choose a 1st-level spell, a 2nd-level spell, a 3rd-level spell, and a 4th-level spell from the bard, sorcerer/wizard, or witch spell list that is either from the enchantment or illusion school or a spell with the curse descriptor. Add those spells to your ranger spell list. Once chosen, these spells cannot be changed."),
             },
-            // Fleeting Spell -- ui_feats.lst:47
+            // Fleeting Spell -- ui_feats:47
             UiFeatEntry {
                 key: "Fleeting Spell",
                 category: FeatCategory::Metamagic,
@@ -440,7 +440,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.83"),
                 benefit: Some("A fleeting spell's duration becomes dismissible, if it is not already. You can dismiss your own fleeting spell as a swift action. When you dismiss a fleeting spell, its lingering aura cannot be detected by magic unless the caster succeeds at a caster level check against a DC equal to 11 + your caster level. The DC of dispel checks to counter a fleeting spell is reduced by 2, and once active, dispel magic removes a fleeting spell without a caster level check. A fleeting spell has half its normal duration (with an extended fleeting spell, these duration adjustments cancel out). Only spells with a duration of at least 2 rounds can be made fleeting, and instantaneous or permanent spells cannot be fleeting spells. A fleeting spell does not use up a higher-level spell slot than the spell's actual level. [Normal] It is a standard action to dismiss a dismissible spell, and only spells whose Duration entry is marked with a D are dismissible."),
             },
-            // Fool Magic -- ui_feats.lst:48
+            // Fool Magic -- ui_feats:48
             UiFeatEntry {
                 key: "Fool Magic",
                 category: FeatCategory::General,
@@ -450,7 +450,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.83"),
                 benefit: Some("When you are in disguise as a member of a particular race or a person of a particular alignment, you can use your Disguise bonus instead of your Use Magic Device bonus to emulate that race and alignment for the purpose of attempting to activate a magic item."),
             },
-            // Fox Insight -- ui_feats.lst:49
+            // Fox Insight -- ui_feats:49
             UiFeatEntry {
                 key: "Fox Insight",
                 category: FeatCategory::Combat,
@@ -460,7 +460,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.84"),
                 benefit: Some("While using Fox Style, you can use your base attack bonus in place of your ranks in Sense Motive to determine your Sense Motive skill bonus when foes attempt to feint against you, and creatures attempting to demoralize you don't gain a bonus for being bigger than you (though they still take a penalty for being smaller). If your Intelligence score is at least 19, the DC to demoralize or feint you increases by 4."),
             },
-            // Fox Style -- ui_feats.lst:50
+            // Fox Style -- ui_feats:50
             UiFeatEntry {
                 key: "Fox Style",
                 category: FeatCategory::Combat,
@@ -470,7 +470,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.84"),
                 benefit: Some("While using this style, you can use your base attack bonus in place of your ranks in Bluff on Bluff checks to feint in combat and to create a distraction to hide. If your Intelligence is at least 19, you gain a +4 bonus on such Bluff checks when adding your Charisma modifier."),
             },
-            // Fox Trickery -- ui_feats.lst:51
+            // Fox Trickery -- ui_feats:51
             UiFeatEntry {
                 key: "Fox Trickery",
                 category: FeatCategory::Combat,
@@ -480,7 +480,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.84"),
                 benefit: Some("While using Fox Style, you can perform dirty trick combat maneuvers as attacks of opportunity. If your Intelligence is at least 19, you gain a +4 bonus on dirty trick combat maneuver checks."),
             },
-            // Graceful Steal -- ui_feats.lst:52
+            // Graceful Steal -- ui_feats:52
             UiFeatEntry {
                 key: "Graceful Steal",
                 category: FeatCategory::Combat,
@@ -490,7 +490,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.84"),
                 benefit: Some("When attempting Sleight of Hand checks to lift or palm objects, you can use your Combat Maneuver Bonus for a steal combat maneuver in place of your Sleight of Hand modifier, though if you do so, you must use your Dexterity modifier and not your Strength modifier. You can steal items with the steal combat maneuver even if they are hidden in a bag or pack (provided you can reach the item within), but the opponent gains at least a +5 bonus to its CMD (as for a fastened object) in this case."),
             },
-            // Improved Bravery -- ui_feats.lst:53
+            // Improved Bravery -- ui_feats:53
             UiFeatEntry {
                 key: "Improved Bravery",
                 category: FeatCategory::Combat,
@@ -500,7 +500,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.84"),
                 benefit: Some("Add your bravery bonus against all mind-affecting effects instead of just against fear."),
             },
-            // Improved Conceal Spell -- ui_feats.lst:54
+            // Improved Conceal Spell -- ui_feats:54
             UiFeatEntry {
                 key: "Improved Conceal Spell",
                 category: FeatCategory::General,
@@ -510,7 +510,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.84"),
                 benefit: Some("When you use Conceal Spell, creatures no longer gain a bonus equal to the level of the spell or spell-like ability on their checks to notice the hidden spell. [Normal] Creatures attempting to notice a spell hidden with Conceal Spell gain a bonus equal to the level of the spell or spell-like ability on their Perception, Sense Motive, and Spellcraft checks"),
             },
-            // Improved Sabotaging Sunder -- ui_feats.lst:55
+            // Improved Sabotaging Sunder -- ui_feats:55
             UiFeatEntry {
                 key: "Improved Sabotaging Sunder",
                 category: FeatCategory::Combat,
@@ -520,7 +520,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.85"),
                 benefit: Some("You do not provoke an attack of opportunity when performing the special sunder combat maneuver from the Sabotaging Sunder feat. In addition, you can attempt to use that maneuver on items held by the target, but you still cannot do so against items hidden in a bag, a pack, or another container."),
             },
-            // Incite Paranoia -- ui_feats.lst:56
+            // Incite Paranoia -- ui_feats:56
             UiFeatEntry {
                 key: "Incite Paranoia",
                 category: FeatCategory::Combat,
@@ -530,7 +530,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.85"),
                 benefit: Some("When you successfully feint in combat, if you succeed by 5 or more, the target no longer provides flanking to its allies and no longer gains or grants the benefits of teamwork feats until the beginning of your next turn. In addition, when you attempt a Bluff check to lie and the lie implies that one or more of the target's allies have betrayed her or are secretly against her, your lie is one step more believable than normal, from far-fetched to unlikely and from unlikely to believable (if the lie was already less believable than far-fetched, this feat has no effect)."),
             },
-            // Insightful Advice -- ui_feats.lst:57
+            // Insightful Advice -- ui_feats:57
             UiFeatEntry {
                 key: "Insightful Advice",
                 category: FeatCategory::General,
@@ -540,7 +540,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.85"),
                 benefit: Some("You can attempt a skill check to aid an ally within 30 feet with a skill in which you are trained. This takes 1 minute, and during that time, you need only speak and be heard by your chosen ally to offer this aid. The bonus you grant is +2, regardless of any other effects that would alter your aid another bonus. This bonus applies to all checks the ally attempts with that skill for 1 day and does not stack with any other aid another bonus. Whether you succeed at or fail the skill check to aid another, you can attempt to use this ability only once per day for each ally."),
             },
-            // Inspiring Bravery -- ui_feats.lst:58
+            // Inspiring Bravery -- ui_feats:58
             UiFeatEntry {
                 key: "Inspiring Bravery",
                 category: FeatCategory::Combat,
@@ -550,7 +550,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.85"),
                 benefit: Some("As long as you are conscious and not stunned, dazed, or confused, allies within 30 feet who can see and hear you gain your bravery bonus on saving throws against fear. If you have Improved Bravery, they gain your bravery bonus on saving throws against all mind-affecting effects. If you have Social Bravery, your bravery bonus is added to the DC of checks to demoralize them, feint against them, change their attitude, or convince them to perform a request."),
             },
-            // Inspiring Mentor -- ui_feats.lst:59
+            // Inspiring Mentor -- ui_feats:59
             UiFeatEntry {
                 key: "Inspiring Mentor",
                 category: FeatCategory::General,
@@ -560,7 +560,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.85"),
                 benefit: Some("Inspire competence now affects all allies within 30 feet who can hear your performance, as long as they are attempting the skill you've selected. [Normal] Inspire competence only affects one ally."),
             },
-            // Intoxicating Flattery -- ui_feats.lst:60
+            // Intoxicating Flattery -- ui_feats:60
             UiFeatEntry {
                 key: "Intoxicating Flattery",
                 category: FeatCategory::General,
@@ -570,7 +570,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.85"),
                 benefit: Some("You can flatter a creature in a protracted interaction (taking at least 1 minute) to bestow in them an inflated sense of self worth that muddles their judgment. At the end of the tirade of flattery, attempt a Bluff check against a DC equal to 10 + the creature's HD + the creature's Wisdom modifier or equal to 10 + the creature's Sense Motive modifier, whichever is higher. If you succeed, the target takes a -2 penalty on Will saving throws, Wisdom-based skill checks, and Wisdom ability checks for 1 hour plus an additional hour for every 5 by which your result exceeds the DC. The target can remove the effect early by taking 10 minutes to compose herself. If you fail this check, any creature who witnesses the failure is immune to your flattery from this feat for 24 hours. If you fail by 5 or more, the target's attitude toward you decreases by 1 step."),
             },
-            // Ironclad Logic -- ui_feats.lst:61
+            // Ironclad Logic -- ui_feats:61
             UiFeatEntry {
                 key: "Ironclad Logic",
                 category: FeatCategory::General,
@@ -580,7 +580,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.85"),
                 benefit: Some("[NOT FULLY IMPLEMENTED] You gain a +4 bonus on Diplomacy checks whenever you add your Charisma modifier on those checks. If you have at least 10 ranks in Diplomacy and an Intelligence score of 27 or more, this bonus increases to +8. This bonus doesn't stack with the bonus from Skill Focus (Diplomacy), but this feat counts as Skill Focus (Diplomacy) for the purpose of feats and other elements with Skill Focus (Diplomacy) as a prerequisite. In verbal duels, when using tactics to which you assigned an Intelligence-based skill, you can add your Intelligence modifier instead of your Charisma modifier to the associated skill check."),
             },
-            // Lightning Draw -- ui_feats.lst:62
+            // Lightning Draw -- ui_feats:62
             UiFeatEntry {
                 key: "Lightning Draw",
                 category: FeatCategory::Combat,
@@ -590,7 +590,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.86"),
                 benefit: Some("You can spend 1 panache point to draw one or more light or one-handed piercing weapons, whether hidden or not, when you roll initiative, even at the start of a surprise round in which you can't act. Drawing these weapons does not take an action. If you have the instant unveil deed, it doesn't cost any panache to use the ability as described as long as you have at least 1 point of panache, and you can spend 1 panache point to draw a single light or one-handed piercing weapon, hidden or not, as an immediate action whenever a creature attacks you."),
             },
-            // Manipulative Agility -- ui_feats.lst:63
+            // Manipulative Agility -- ui_feats:63
             UiFeatEntry {
                 key: "Manipulative Agility",
                 category: FeatCategory::General,
@@ -600,7 +600,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.86"),
                 benefit: Some("You can use Sleight of Hand in place of Bluff for checks to feint in combat, as well as for checks to pass secret messages without being noticed (by using gestures and body language). In both cases, the effects become visual and don't work if the target or recipient is blind or cannot see you. In the case of secret messages, the limitations of hand gestures and body language might impact what sorts of messages you can pass, at the GM's discretion."),
             },
-            // Martial Dominance -- ui_feats.lst:64
+            // Martial Dominance -- ui_feats:64
             UiFeatEntry {
                 key: "Martial Dominance",
                 category: FeatCategory::Combat,
@@ -610,7 +610,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.86"),
                 benefit: Some("You can use your base attack bonus in place of your ranks in Intimidate to determine your Intimidate skill bonus. When you confirm a critical hit against a creature, you can attempt an Intimidate check to demoralize that creature as an immediate action."),
             },
-            // Measure Foe -- ui_feats.lst:65
+            // Measure Foe -- ui_feats:65
             UiFeatEntry {
                 key: "Measure Foe",
                 category: FeatCategory::Combat,
@@ -620,7 +620,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.86"),
                 benefit: Some("You can attempt a Sense Motive check as a free action to deduce a foe's martial training after observing the foe's movements for at least 1 minute or observing the foe's attacks for at least 2 rounds. You take a -10 penalty on your check if you are observing movements, rather than attacks. The DC equals 20 + the creature's base attack bonus or 10 + the creature's Bluff or Disguise modifier, whichever is higher. If you succeed, you learn the foe's base attack bonus and one combat feat it has, and you learn an additional combat feat it has for every 5 points by which you exceed the DC. You also gain a +1 insight bonus on attack rolls against that foe and to your AC against that foe until the foe gains a level or otherwise improves its abilities. If you fail this check against a particular foe, you can't try again against that foe until you gain more ranks in Sense Motive."),
             },
-            // Misdirection Attack -- ui_feats.lst:66
+            // Misdirection Attack -- ui_feats:66
             UiFeatEntry {
                 key: "Misdirection Attack",
                 category: FeatCategory::Combat,
@@ -630,7 +630,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: Some("When you successfully use the Misdirection Tactics feat to negate a melee weapon attack, the opponent whose attack you negated provokes an attack of opportunity from you, even though you normally can't take attacks of opportunity while using the total defense action. This effect is in addition to the effect gained from Misdirection Redirection."),
             },
-            // Misdirection Redirection -- ui_feats.lst:67
+            // Misdirection Redirection -- ui_feats:67
             UiFeatEntry {
                 key: "Misdirection Redirection",
                 category: FeatCategory::Combat,
@@ -640,7 +640,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: Some("When you successfully use the Misdirection Tactics feat to negate a melee weapon attack, you redirect your foe's attack and trick your foe into striking another creature of your choice within the foe's melee reach. To resolve this attack, your foe must make a new attack roll against the new target."),
             },
-            // Misdirection Tactics -- ui_feats.lst:68
+            // Misdirection Tactics -- ui_feats:68
             UiFeatEntry {
                 key: "Misdirection Tactics",
                 category: FeatCategory::Combat,
@@ -650,7 +650,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: Some("While you are using the total defense action, if a melee attack would still hit your AC, you can attempt a Bluff check with a DC equal to the foe's attack roll as an immediate action. If you succeed at the check, you negate the attack (treat it as a miss). If the attack still hits, you cannot use this feat against the same opponent for 24 hours."),
             },
-            // My Blade Is Yours -- ui_feats.lst:69
+            // My Blade Is Yours -- ui_feats:69
             UiFeatEntry {
                 key: "My Blade Is Yours",
                 category: FeatCategory::Combat,
@@ -660,7 +660,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: Some("When adjacent to an ally with this feat who is wielding a weapon with the blocking, disarm, distracting, or trip weapon special feature, you can treat your own weapon as if it also had that feature. If your ally's weapon has more than one of those features, you choose one feature to emulate at the start of your turn."),
             },
-            // Nerve-Racking Negotiator -- ui_feats.lst:70
+            // Nerve-Racking Negotiator -- ui_feats:70
             UiFeatEntry {
                 key: "Nerve-Racking Negotiator",
                 category: FeatCategory::General,
@@ -670,7 +670,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: Some("When you successfully use the Intimidate skill to force an opponent to act friendly toward you, the target must attempt a Will save (DC %1)once the intimidation wears off. If the target fails this save, after the intimidation period expires, the target counts as having the same attitude toward you as it initially did (usually indifferent) and will not report you to the authorities for intimidating it. [Normal] The target of a successful Intimidate check is unfriendly to you and potentially reports you to the authorities after the duration ends.|10+skillinfo(\"TOTALRANK\", \"Intimidate\")"),
             },
-            // Notorious Vigilante -- ui_feats.lst:71
+            // Notorious Vigilante -- ui_feats:71
             UiFeatEntry {
                 key: "Notorious Vigilante",
                 category: FeatCategory::Combat,
@@ -680,7 +680,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: Some("Your presence can act as a fast and effective Dazzling Display. As a standard action, you use the benefit of Dazzling Display even when you are not wielding a weapon in which you have Weapon Focus. If you are wielding such a weapon, you gain a +2 bonus on the Intimidate check."),
             },
-            // Omnipresent Mentor -- ui_feats.lst:72
+            // Omnipresent Mentor -- ui_feats:72
             UiFeatEntry {
                 key: "Omnipresent Mentor",
                 category: FeatCategory::General,
@@ -690,7 +690,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: Some("By expending 4 rounds of your bardic performance at the start of the day, you can instill one ally with your inspiring words. Select one skill in which you possess ranks. Your ally gains the benefits of your inspire competence bardic performance, regardless of distance, until the next time you replenish rounds of bardic performance. This doesn't count as an active performance, so the effects don't end if you start another performance. Only one ally can be affected by this ability at a time; if you use this ability again before the duration expires, the ally currently affected loses the bonuses from this feat."),
             },
-            // Ostentatious Rager -- ui_feats.lst:73
+            // Ostentatious Rager -- ui_feats:73
             UiFeatEntry {
                 key: "Ostentatious Rager",
                 category: FeatCategory::Combat,
@@ -700,7 +700,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: Some("You can earn money with Intimidate by performing feats of strength and intimidation, exactly as if you were doing so with the Perform skill. Additionally, while you're raging, if a foe would be demoralized by your Intimidate skill and the foe is not currently shaken by your intimidation, you can instead distract that foe until the beginning of your next turn. During that time, the foe takes a -5 penalty on Perception checks that don't involve you and takes a -2 penalty to its AC against any creature other than you. These effects end early if a creature other than you attacks the foe or if you demoralize the foe and apply the shaken condition."),
             },
-            // Owl Dive -- ui_feats.lst:74
+            // Owl Dive -- ui_feats:74
             UiFeatEntry {
                 key: "Owl Dive",
                 category: FeatCategory::Combat,
@@ -710,7 +710,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.88"),
                 benefit: Some("While using Owl Style, you can use your base attack bonus in place of your ranks in Fly to determine your Fly skill bonus. You can charge through other creatures' spaces, but you must make a successful Acrobatics check to move through enemy spaces, as normal. If you fail an Acrobatics check to move through an enemy's space during a charge, your charge stops just before you enter that enemy's space; if you threaten that foe, you can make your charge attack against that foe."),
             },
-            // Owl Style -- ui_feats.lst:75
+            // Owl Style -- ui_feats:75
             UiFeatEntry {
                 key: "Owl Style",
                 category: FeatCategory::Combat,
@@ -720,7 +720,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.88"),
                 benefit: Some("While using this style, you can use your base attack bonus in place of your ranks in Stealth to determine your Stealth skill modifier (as usual, this does not replace your ranks for other purposes, such as determining the effects of Skill Focus). While in this stance and using Stealth, you can charge at a -10 penalty beyond the penalty you take for using Stealth at full speed (which is typically -5). Foes that fail their Perception checks and don't otherwise notice you (for instance, with an ability like blindsight) are denied their Dexterity bonuses to AC against all attacks you make against them during or at the end of that charge instead of just against the first attack."),
             },
-            // Owl Swoop -- ui_feats.lst:76
+            // Owl Swoop -- ui_feats:76
             UiFeatEntry {
                 key: "Owl Swoop",
                 category: FeatCategory::Combat,
@@ -730,7 +730,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.88"),
                 benefit: Some("While using Owl Style, you can use your base attack bonus in place of your ranks in Acrobatics to determine your Acrobatics skill bonus. You can attempt Acrobatics checks to move on narrow or slick surfaces and to avoid attacks of opportunity while charging, incurring the same penalties and increased DCs that you usually would apply for moving at full speed."),
             },
-            // Persuasive Bribery -- ui_feats.lst:77
+            // Persuasive Bribery -- ui_feats:77
             UiFeatEntry {
                 key: "Persuasive Bribery",
                 category: FeatCategory::General,
@@ -740,7 +740,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.88"),
                 benefit: Some("You gain a +2 bonus on Diplomacy checks when attempting to bribe someone and on Diplomacy or Charisma checks to bargain with a conjured creature (such as with planar ally or planar binding), in addition to any bonus granted by the bribe itself. The first time someone refuses a bribe you offer, that person's attitude toward you doesn't worsen, even if the offer would normally offend the person."),
             },
-            // Piercing Grapple -- ui_feats.lst:78
+            // Piercing Grapple -- ui_feats:78
             UiFeatEntry {
                 key: "Piercing Grapple",
                 category: FeatCategory::Combat,
@@ -750,7 +750,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.88"),
                 benefit: Some("You can draw a light or one-handed piercing weapon and stab your opponent with it when you initiate a grapple. You take a -2 penalty on your combat maneuver check to initiate the grapple, but since you pull the weapon out as part of the grapple, you don't take the usual -4 penalty. If you succeed, you grapple your opponent as normal, and the weapon doesn't count as being in your hand either for the purposes of the -4 penalty or for dealing damage while maintaining a grapple. If your opponent successfully breaks the grapple, it takes an amount of damage equal to the base weapon damage of the weapon you used to initiate the grapple plus an additional 1d4 points of bleed damage. A successful DC 15 Heal check or any magical healing ends the bleed effect. If you choose to end the grapple, you can opt to not deal the bleed damage, but either way, your opponent still takes the base weapon damage. While maintaining this grapple, you gain a +2 circumstance bonus on all Intimidate checks made against your opponent."),
             },
-            // Planar Wanderer -- ui_feats.lst:79
+            // Planar Wanderer -- ui_feats:79
             UiFeatEntry {
                 key: "Planar Wanderer",
                 category: FeatCategory::General,
@@ -760,7 +760,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.88"),
                 benefit: Some("When researching a plane to which you intend to plane shift, you can attempt a DC 25 Knowledge (planes) check as you cast the spell. If you succeed at the check, you're able to more precisely target your planar transport, allowing you to arrive 5d20 miles away from your intended destination instead of 5d%% miles away. If you exceed the DC by 10 or more, you arrive 5d10 miles away instead, and if you exceed the DC by 20 or more, you arrive 5d6 miles away."),
             },
-            // Play to the Crowd -- ui_feats.lst:80
+            // Play to the Crowd -- ui_feats:80
             UiFeatEntry {
                 key: "Play to the Crowd",
                 category: FeatCategory::General,
@@ -770,7 +770,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.88"),
                 benefit: Some("When you use Diplomacy to change the attitude of a character, you can first attempt a Sense Motive check against that NPC to get a hunch to determine whether the character is under the influence of an enchantment, to use Sense Assumptions, or to determine biases for a verbal duel. If you succeed at the Sense Motive check, you gain a +2 bonus on the Diplomacy check, and if you learned any biases for a verbal duel, you learn one additional bias of your choice. You do not worsen an NPC's attitude if you fail a Diplomacy check by 5 or more."),
             },
-            // Quick Favor -- ui_feats.lst:81
+            // Quick Favor -- ui_feats:81
             UiFeatEntry {
                 key: "Quick Favor",
                 category: FeatCategory::General,
@@ -780,7 +780,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.89"),
                 benefit: Some("Once per day, you can decrease the time required for a Diplomacy check to gather information to 4d10 minutes when you use Diplomacy to gather information again just after you previously gathered information there (whether or not the previous attempt was successful). [Normal] You must spend 1d4 hours to gather information using Diplomacy."),
             },
-            // Quick Study -- ui_feats.lst:82
+            // Quick Study -- ui_feats:82
             UiFeatEntry {
                 key: "Quick Study",
                 category: FeatCategory::Combat,
@@ -790,7 +790,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.89"),
                 benefit: Some("Once per day, you can train with someone who has a combat feat you do not possess to gain that feat. You must train with that person for 8 hours and must meet the feat's prerequisites to gain it this way. You gain this feat until you learn another one using this feat."),
             },
-            // Quiet Death -- ui_feats.lst:83
+            // Quiet Death -- ui_feats:83
             UiFeatEntry {
                 key: "Quiet Death",
                 category: FeatCategory::Combat,
@@ -800,7 +800,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.89"),
                 benefit: Some("When you ambush an enemy or enemies that are unaware of your presence, you can roll a Stealth check with a -5 penalty. The result indicates the Perception DC to hear your attacks (rather than the normal DC of -10 to hear pitched combat) until an opponent's first action, when the DC returns to -10. Other enemies present can still see the attack; Quiet Death only prevents the sounds of battle from alerting further enemies."),
             },
-            // Ranged Disable -- ui_feats.lst:84
+            // Ranged Disable -- ui_feats:84
             UiFeatEntry {
                 key: "Ranged Disable",
                 category: FeatCategory::General,
@@ -810,7 +810,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.89"),
                 benefit: Some("As a full-round action, you can attempt a Disable Device check with a ranged weapon you have chosen with Weapon Focus. You can use this ability against only a simple device (one that would normally take a full-round action to disable), and you can't use it if the device has any cover or concealment. This use of the ranged weapon deals no damage to the device, but it allows you to attempt a Disable Device check instead. You treat the ranged attack as if you were using tools inappropriate for the job, taking a -4 penalty on your Disable Device check. You also apply any range penalty for the weapon to the Disable Device check, but you do not gain any bonuses that would normally apply on attack rolls on the Disable Device check."),
             },
-            // Ranged Feint -- ui_feats.lst:85
+            // Ranged Feint -- ui_feats:85
             UiFeatEntry {
                 key: "Ranged Feint",
                 category: FeatCategory::Combat,
@@ -820,7 +820,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.89"),
                 benefit: Some("You can feint with a ranged weapon by throwing a thrown weapon or firing one arrow, bolt, bullet, or other piece of ammunition; this feint takes the same action as normal to feint, but depending on your weapon, you might have to reload or draw another weapon afterward. When you successfully use a ranged feint, you deny that enemy its Dexterity bonus to AC against your ranged attacks as well as your melee attacks for the same duration as normal. If your feints normally deny a foe its Dexterity bonus to AC against attacks other than your own, this applies only against others' melee attacks. [Normal] You can feint only with a melee weapon, and only against a creature you threaten with that weapon."),
             },
-            // Read Spell Traces -- ui_feats.lst:86
+            // Read Spell Traces -- ui_feats:86
             UiFeatEntry {
                 key: "Read Spell Traces",
                 category: FeatCategory::General,
@@ -830,7 +830,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.90"),
                 benefit: Some("When using identify or any spell of a higher level that normally allows you to detect the school and aura strength of an active spell, if you exceed the DC by 10 or more, you also learn the exact spell. If the spell you are using would already allow you to learn the exact spell from its aura, you can attempt to identify the spell from the traces in a lingering aura, though you take a -10 penalty on such an attempt. When using greater detect magic to attempt to identify unique magical signatures, you receive a +2 bonus on your Knowledge (arcana) checks. In addition, you gain a +2 bonus on saving throws against magic aura and other spells and effects that conceal a spell's true aura unless you succeed at a saving throw."),
             },
-            // Ready for Anything -- ui_feats.lst:87
+            // Ready for Anything -- ui_feats:87
             UiFeatEntry {
                 key: "Ready for Anything",
                 category: FeatCategory::Combat,
@@ -840,7 +840,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.90"),
                 benefit: Some("You can always act in the surprise round even if you fail a Perception check to notice foes, but you are still considered flat-footed until you take an action."),
             },
-            // Sabotage Magic Item -- ui_feats.lst:88
+            // Sabotage Magic Item -- ui_feats:88
             UiFeatEntry {
                 key: "Sabotage Magic Item",
                 category: FeatCategory::General,
@@ -850,7 +850,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.90"),
                 benefit: Some("You can attempt a Use Magic Device check to sabotage a magic item rather than to activate it, with the same DC as activating it blindly. If you succeed at the check, you define a condition under which the magic item will suffer a mishap, either dealing 2d6 points of damage to the creature attempting to use the magic item and failing to perform its desired function or else affecting the wrong target. The condition must be either an audible or a visual trigger, as defined by the magic mouth spell. If you fail the check, you suffer a mishap instead, just as if you had failed to activate the item blindly by 10 or more."),
             },
-            // Sabotage Specialist -- ui_feats.lst:89
+            // Sabotage Specialist -- ui_feats:89
             UiFeatEntry {
                 key: "Sabotage Specialist",
                 category: FeatCategory::General,
@@ -860,7 +860,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.90"),
                 benefit: Some("When you use the Disable Device skill to rig simple or tricky devices (such as a saddle or wagon wheel) to work normally for a while and then fail or fall off some time later, you can designate the time the device will fail, up to 60 minutes after you successfully sabotaged it. The device fails 1d6-3 rounds after the designated time (a result of -1 or -2 means it fails 1 round or 2 rounds before the designated time). [Normal] You can use the Disable Device skill to rig simple devices such as saddles or wagon wheels to work normally for a while and then fail or fall off some time later (usually after 1d4 rounds or minutes of use)."),
             },
-            // Sabotaging Sunder -- ui_feats.lst:90
+            // Sabotaging Sunder -- ui_feats:90
             UiFeatEntry {
                 key: "Sabotaging Sunder",
                 category: FeatCategory::Combat,
@@ -870,7 +870,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.90"),
                 benefit: Some("As a standard action, you can sabotage an item worn by a foe with a special sunder combat maneuver. You use this maneuver in melee to sabotage an item that is neither held nor hidden in a bag, pack, or other container. You must have at least one hand free to perform this combat maneuver, and doing so provokes an attack of opportunity from the creature against whom you are performing the maneuver, even though you have the Improved Sunder feat. When attempting the combat maneuver check, use your ranks in Disable Device in place of your base attack bonus and your Dexterity modifier in place of your Strength modifier. Any bonuses on combat maneuver checks specifically to sunder (such as the bonus granted by Improved Sunder) also apply to this maneuver, and any bonuses your target gains to CMD against sundering attempts also protect her from this maneuver. If you succeed at the check, instead of dealing damage, you sabotage the chosen item, causing it to gain the broken condition. If the item was already broken, you instead destroy the item or cause it to fall off. Items immune to sunder are also immune to this special combat maneuver, and this still can't destroy or remove an item such as an artifact that can normally be destroyed or removed only by specific means. [Normal] A successful sunder attempt deals weapon damage to the sundered item."),
             },
-            // Sense Assumptions -- ui_feats.lst:91
+            // Sense Assumptions -- ui_feats:91
             UiFeatEntry {
                 key: "Sense Assumptions",
                 category: FeatCategory::General,
@@ -880,7 +880,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.91"),
                 benefit: Some("You can attempt a Sense Motive check to intuit some of another person's assumptions after 1 minute of conversation. The DC equals 20, or 10 + the target's Bluff modifier, whichever is higher. If you succeed, you learn whether or not a falsehood of your choice related to the topic of conversation would impose a penalty on Bluff checks to convince the target of that falsehood's truth. If you fail by 4 or less, you learn nothing. If you fail by 5 or more, the target realizes you are trying to glean information from it. You can retry this check, but the DC increases by 5 for each previous failure on this check against that target."),
             },
-            // Sense Relationships -- ui_feats.lst:92
+            // Sense Relationships -- ui_feats:92
             UiFeatEntry {
                 key: "Sense Relationships",
                 category: FeatCategory::General,
@@ -890,7 +890,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.91"),
                 benefit: Some("After 1 minute or more of interaction or observation, you can attempt a DC 20 Sense Motive check to get a hunch in order to intuit the relationship between any two creatures interacting with one another. If you don't understand the language they are speaking, you take a -5 penalty on the check, and if the creatures are a different type than you, you take an additional -5 penalty on the check. If you succeed at this check by 5 or more, for the next hour, you gain a +2 bonus on Bluff checks to lie about one of the creatures to the other and on Diplomacy checks to request that one act against the other. If you fail the check, you cannot attempt this ability on the same creatures again until you gain an additional rank in Sense Motive."),
             },
-            // Shadows of Fear -- ui_feats.lst:93
+            // Shadows of Fear -- ui_feats:93
             UiFeatEntry {
                 key: "Shadows of Fear",
                 category: FeatCategory::Combat,
@@ -900,7 +900,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.91"),
                 benefit: Some("The first time each round that you hit a creature suffering from a fear effect, you can deal hidden strike or sneak attack damage as if you were flanking that creature (improved uncanny dodge and other effects that prevent flanking also prevent a hidden strike or sneak attack from this feat)."),
             },
-            // Sliding Dash -- ui_feats.lst:94
+            // Sliding Dash -- ui_feats:94
             UiFeatEntry {
                 key: "Sliding Dash",
                 category: FeatCategory::Combat,
@@ -910,7 +910,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.91"),
                 benefit: Some("When charging, instead of moving to the closest space from which you can attack your target, you can move to the space adjacent to your target and on the other side of it, as long as you move through the closest space from which you can attack the target and through the target's space to get there. When you move through the target's space, you must attempt an Acrobatics check with a DC equal to 10 + your opponent's CMD. Success allows you to move through the target's space without provoking an attack of opportunity from that target, and when you arrive in the destination space and make your attack, the target is considered flanked for that attack (or the first attack if you have more than one attack on a charge). On a failed check, you instead provoke an attack of opportunity and complete the charge as normal. Whether or not you succeed at the Acrobatics check, you take a -4 penalty to your AC until the start of your turn, instead of the normal -2 penalty. [Normal] When charging, you must end the movement part of a charge in the closest space in which you can attack your target."),
             },
-            // Social Bravery -- ui_feats.lst:95
+            // Social Bravery -- ui_feats:95
             UiFeatEntry {
                 key: "Social Bravery",
                 category: FeatCategory::Combat,
@@ -920,7 +920,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.92"),
                 benefit: Some("In social situations, your bravado protects you and makes you harder to read. Add your bravery bonus to the DCs of checks to demoralize you, feint against you, change your attitude, or convince you to perform a request (this also applies against Cutting Humiliation and Intoxicating Flattery). Additionally, add a morale bonus equal to your bravery bonus on Bluff and Intimidate checks."),
             },
-            // Starry Grace -- ui_feats.lst:96
+            // Starry Grace -- ui_feats:96
             UiFeatEntry {
                 key: "Starry Grace",
                 category: FeatCategory::Combat,
@@ -930,7 +930,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.92"),
                 benefit: Some("When wielding a starknife, you can add your Dexterity modifier instead of your Strength modifier to that weapon's damage. The starknife must be one appropriate for your size. You do not gain this benefit while fighting with two weapons or using flurry of blows, or any time another hand is otherwise occupied. In addition, if you have the panache class feature, as long as you have at least 1 panache point, you gain a +5 bonus to your movement speed on your move action after taking an attack action with a starknife or on your Spring Attack or charge with a starknife."),
             },
-            // Startling Getaway -- ui_feats.lst:97
+            // Startling Getaway -- ui_feats:97
             UiFeatEntry {
                 key: "Startling Getaway",
                 category: FeatCategory::Combat,
@@ -940,7 +940,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.92"),
                 benefit: Some("During a surprise round, after taking an attack action to attack a creature unaware of your presence, you can take a move action to move. If you are already capable of taking both a standard and a move action in the surprise round, this feat does not grant you any additional actions. [Normal] You can take only a single standard or move action during a surprise round."),
             },
-            // Street Carnage -- ui_feats.lst:98
+            // Street Carnage -- ui_feats:98
             UiFeatEntry {
                 key: "Street Carnage",
                 category: FeatCategory::Combat,
@@ -950,7 +950,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.92"),
                 benefit: Some("While using Street Style, the critical multiplier of your unarmed strikes becomes x3, instead of x2."),
             },
-            // Street Smarts -- ui_feats.lst:99
+            // Street Smarts -- ui_feats:99
             UiFeatEntry {
                 key: "Street Smarts",
                 category: FeatCategory::General,
@@ -960,7 +960,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.92"),
                 benefit: Some("You get a +2 bonus on Knowledge (local) and Sense Motive checks, and Knowledge (local) is always a class skill for you. If you have 10 or more ranks in one of these skills, the bonus increases to +4 for that skill. The bonus on Sense Motive checks doesn't stack with Alertness."),
             },
-            // Street Style -- ui_feats.lst:100
+            // Street Style -- ui_feats:100
             UiFeatEntry {
                 key: "Street Style",
                 category: FeatCategory::Combat,
@@ -970,7 +970,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.92"),
                 benefit: Some("While using this style, once per round as a swift action when you hit a target with an unarmed strike, you can deal an extra 1d6 points of damage and attempt a bull rush combat maneuver against that target. [Special] You can enter the style stance for street style only while in urban terrain, and the stance ends immediately if you cease to be in urban terrain."),
             },
-            // Street Sweep -- ui_feats.lst:101
+            // Street Sweep -- ui_feats:101
             UiFeatEntry {
                 key: "Street Sweep",
                 category: FeatCategory::Combat,
@@ -980,7 +980,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.92"),
                 benefit: Some("While using Street Style, the first time each round that you deal damage with an unarmed strike to a foe that you bull rushed with Street Style since the beginning of your last turn, that foe must succeed at a Fortitude save (DC %1) or be knocked prone and staggered for 1 round.|10+BASEAB"),
             },
-            // Structural Strike -- ui_feats.lst:102
+            // Structural Strike -- ui_feats:102
             UiFeatEntry {
                 key: "Structural Strike",
                 category: FeatCategory::Combat,
@@ -990,7 +990,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.92"),
                 benefit: Some("When using the duelist's or swashbuckler's precise strike, you can make a single strike as a standard action against an opponent that would be otherwise immune to your precise strike damage. If you hit, you deal your precise strike damage as normal against this enemy. When using the swashbuckler's precise strike deed, you can spend 1 panache point as a swift action to deal your regular precise strike damage on a single attack against an opponent that would typically be immune. If you have both class features, you can use either option in order to apply the full damage from both versions of precise strike. Additionally, against opponents with a chance of immunity to your precise strike (such as an opponent wearing armor with the fortification special ability), this feat reduces their chance of negating your precise strikes by 10%%."),
             },
-            // Studied Spell -- ui_feats.lst:103
+            // Studied Spell -- ui_feats:103
             UiFeatEntry {
                 key: "Studied Spell",
                 category: FeatCategory::Metamagic,
@@ -1000,7 +1000,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.93"),
                 benefit: Some("When casting a studied spell, designate one target affected by the spell. Attempt an appropriate Knowledge check based on that target's creature type as you cast the spell. The DC for this check is equal to 20 + the creature's CR based on its race and not including any class levels or template (a creature that is defined by class levels has an effective CR of 0 for this ability). If you succeed, your studied spell ignores any energy resistance or damage reduction the target has because of its race as well as any bonuses on saving throws against the spell granted by the target's race (such as the bonus from a dwarf's hardy ability or a halfling's halfling luck ability). Your studied spell doesn't ignore energy resistance, damage reduction, or saving throw bonuses granted by other spells and effects. If you fail the Knowledge check, the spell still has its normal effects. A studied spell uses up a spell slot 2 levels higher than the spell's actual level."),
             },
-            // Stylized Spell -- ui_feats.lst:104
+            // Stylized Spell -- ui_feats:104
             UiFeatEntry {
                 key: "Stylized Spell",
                 category: FeatCategory::Metamagic,
@@ -1010,7 +1010,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.93"),
                 benefit: Some("A stylized spell has slightly different verbal and somatic components than normal, and the spell effect appears noticeably different. The Spellcraft DC to identify a stylized spell as it is being cast is 10 higher than normal. The Knowledge (arcana) DC to identify a stylized spell, its effects, or the materials it creates is 10 higher than normal, as is the DC to recognize your magical signature with greater detect magic. When you apply this feat to a spell, you can attempt to disguise your stylized spell as another spell of the same school and subschool with the same descriptors. The other spell must be either the same spell level as the stylized spell (before applying the metamagic adjustment) or 1 spell level higher. If you do so, the stylized spell gains the ruse descriptor and takes on some superficial aspects of the other spell. As usual for a spell with the ruse descriptor, identification attempts that fail by 10 or less mistakenly identify it as the chosen spell (those that fail by more can't identify it at all). A stylized spell uses up a spell slot 1 level higher than the spell's actual level."),
             },
-            // Subtle Enchantments -- ui_feats.lst:105
+            // Subtle Enchantments -- ui_feats:105
             UiFeatEntry {
                 key: "Subtle Enchantments",
                 category: FeatCategory::General,
@@ -1020,7 +1020,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.93"),
                 benefit: Some("When you cast an enchantment spell or use an enchantment spell-like ability to influence a creature's successful Will save, she has a 50%% chance not to notice that she just succeeded at a saving throw (she still can attempt to identify your spell or spell-like ability as normal). If the foe fails the saving throw or is otherwise affected by the spell, the Sense Motive DC to notice she is under the effects of an enchantment increases by 5. [Normal] Anyone who successfully saves against a spell notices the mental intrusion automatically."),
             },
-            // Superior Scryer -- ui_feats.lst:106
+            // Superior Scryer -- ui_feats:106
             UiFeatEntry {
                 key: "Superior Scryer",
                 category: FeatCategory::General,
@@ -1030,7 +1030,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: Some("When casting a scrying spell, you see through the spell's sensor with darkvision 60 feet, whether or not you possess darkvision normally and whether or not the spell normally allows you to see with darkvision. If the spell sends back sensory information only within 10 feet of the sensor (such as with scrying and greater scrying), this feat doesn't increase that range. You receive a +2 bonus on Perception checks to notice things through a scrying sensor, and your prying eyes and insect spies also receive a +2 bonus on Perception checks. When you use the scrying or greater scrying spell, you have a 10%% increase to the chance of using spells through the sensor."),
             },
-            // Swipe and Stash -- ui_feats.lst:107
+            // Swipe and Stash -- ui_feats:107
             UiFeatEntry {
                 key: "Swipe and Stash",
                 category: FeatCategory::Combat,
@@ -1040,7 +1040,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: Some("As a standard action, you can attempt a DC 20 Sleight of Hand check to plant a small object on a creature. The target is entitled to a Perception check opposed by your Sleight of Hand check to notice you planting the item. This does not force the creature to wear, wield, or otherwise use the item; you simply plant it on the creature's person. The DC increases to 30 if the target is not wearing clothing, armor, tack and harness (if an animal or similar creature), or some other equivalent accoutrements in which you can hide the item. In combat, you must succeed at a steal combat maneuver in order to plant an item on a creature while attempting a Sleight of Hand check opposed by the target's Perception check to do so without the target noticing. You are automatically unnoticed if you succeed and have the Greater Steal feat. If you steal an object with a successful Sleight of Hand check or steal combat maneuver check, you can use this feat as a swift action to plant it on another creature within reach before the end of your turn. {Special} If you have Walking Sleight, you can take either or both of your actions with Swipe and Stash at any point during your movement in the same round, moving both before and after both snatching and planting the object if you wish to do so and have enough movement."),
             },
-            // Telepathy Tap -- ui_feats.lst:108
+            // Telepathy Tap -- ui_feats:108
             UiFeatEntry {
                 key: "Telepathy Tap",
                 category: FeatCategory::General,
@@ -1050,7 +1050,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: Some("When a creature within range of your telepathy (or within 60 feet if you are using detect thoughts) uses telepathy to communicate, including when that creature sends or receives a magical message such as dream or sending, you can notice the attempt with a successful DC 30 Sense Motive check. At this point, you can either use your telepathy ability or spend a use or casting of detect thoughts as an immediate action. If you do so, for every 5 points by which your check exceeds the DC, you glean one fragment of information about the communication, such as the identity of its source; its general nature; the emotional state of the sender or the recipient; or a specific person, place, or thing mentioned in the message. In addition, the creature must attempt a saving throw (with a DC equal to that of the spell if you spent a use of detect thoughts or are using telepathy, or 10 + 1/2 your racial HD + your Charisma modifier if you are using a racial telepathy ability). If the target fails its save, you can listen to both sides of the telepathic or magical communication as long as you continue to concentrate each round as a standard action."),
             },
-            // Tenacious Spell -- ui_feats.lst:109
+            // Tenacious Spell -- ui_feats:109
             UiFeatEntry {
                 key: "Tenacious Spell",
                 category: FeatCategory::Metamagic,
@@ -1060,7 +1060,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: Some("Increase the DC of caster level checks to counter or dispel a tenacious spell by 2. If a tenacious spell is dispelled or dismissed, it lasts for 1d4 further rounds (to a maximum of the spell's normal duration) before ending (this does not occur if antimagic field or a similar spell or effect suppresses or ends the spell's effect without dispelling or dismissing it). The lingering auras of tenacious spells detectable with detect magic last for twice as long as usual after the spells end. A tenacious spell uses up a spell slot 1 level higher than the spell's actual level."),
             },
-            // Threatening Negotiator -- ui_feats.lst:110
+            // Threatening Negotiator -- ui_feats:110
             UiFeatEntry {
                 key: "Threatening Negotiator",
                 category: FeatCategory::General,
@@ -1070,7 +1070,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: Some("When you successfully use the Intimidate skill to force an opponent to act friendly toward you, the duration of the attitude change lasts 2d6 hours. [Normal] Changing an opponent's attitude with Intimidate normally changes the foe's attitude to friendly for 1d6x10 minutes."),
             },
-            // Timely Coordination -- ui_feats.lst:111
+            // Timely Coordination -- ui_feats:111
             UiFeatEntry {
                 key: "Timely Coordination",
                 category: FeatCategory::Teamwork,
@@ -1080,7 +1080,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: Some("You gain a +1 bonus on attack rolls and skill checks made as part of readied actions triggered by one of your allies who also has this feat. When you and an ally who also has this feat are attempting to overcome separate simultaneous obstacles as part of a heist or infiltration, you also gain this +1 bonus on attack rolls and skill checks."),
             },
-            // True Deception -- ui_feats.lst:112
+            // True Deception -- ui_feats:112
             UiFeatEntry {
                 key: "True Deception",
                 category: FeatCategory::General,
@@ -1090,7 +1090,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.95"),
                 benefit: Some("When using the master disguise master ninja trick or master of disguise advanced rogue talent to take on the appearance of a specific individual, you can fool divination magic and effects designed to locate the subject of your disguise as per the vigilante's any guise social talent. In addition, you gain a +10 bonus on Bluff checks to act like that individual."),
             },
-            // Unimpeachable Honor -- ui_feats.lst:113
+            // Unimpeachable Honor -- ui_feats:113
             UiFeatEntry {
                 key: "Unimpeachable Honor",
                 category: FeatCategory::General,
@@ -1100,7 +1100,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.95"),
                 benefit: Some("Whenever you are under the effects of a charm or compulsion effect and would be compelled to take an action that violates your fundamental nature, explicitly violates the strictures of your religion, or would be an act of an alignment that directly opposes your own (for instance, a chaotic or evil act if you are lawful good), you gain a +4 bonus on any saving throw or opposed Charisma check to resist that command or break free from the effect. Whenever you are compelled to attack an ally, you take a -4 penalty on your attack rolls and damage rolls."),
             },
-            // Walking Sleight -- ui_feats.lst:114
+            // Walking Sleight -- ui_feats:114
             UiFeatEntry {
                 key: "Walking Sleight",
                 category: FeatCategory::General,
@@ -1110,7 +1110,7 @@ pub fn feat_tables() -> &'static [UiFeatEntry] {
                 source_page: Some("p.95"),
                 benefit: Some("You no longer take the -20 penalty for attempting a Sleight of Hand check as a move action. You can attempt a Sleight of Hand check as a standard action in the middle of your move action. [Normal] You can attempt a Sleight of Hand check as a move action only by taking a -20 penalty on the check."),
             },
-            // Willing Accomplice -- ui_feats.lst:115
+            // Willing Accomplice -- ui_feats:115
             UiFeatEntry {
                 key: "Willing Accomplice",
                 category: FeatCategory::General,

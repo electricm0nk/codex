@@ -19,18 +19,18 @@
 //! `src/bin/gen_book_cache.rs`'s `#[path]` include.
 //!
 //! **Scope, confirmed against the real corpus this cycle (not taken on
-//! faith):** `pu_equipmods.lst` (42 real records, `equipment_tables`)
-//! and `pu_feats.lst` (17 real, distinct feat records out of 18
+//! faith):** `pu_equipmods` (42 real records, `equipment_tables`)
+//! and `pu_feats` (17 real, distinct feat records out of 18
 //! non-comment rows -- the 18th is a `.MOD` modifier of an existing APG
 //! feat, not a new feat; see `feat_tables`'s own doc comment). Real,
-//! independently re-verified: `pu_spells.lst` is 224 lines, every single
+//! independently re-verified: `pu_spells` is 224 lines, every single
 //! one a `#`-commented-out row (0 active records) -- this book adds no
 //! new spells of its own, it only re-lists existing Summoner spells
-//! behind a fully commented-out block. `pu_abilities_class.lst` (1,344
+//! behind a fully commented-out block. `pu_abilities_class` (1,344
 //! real lines; the low-level ability/BONUS/DEFINE/PREREQ formula-engine
 //! content ARG's own module and CRB's own `class_tables.rs` both
-//! deliberately stop short of full-tree ingestion for), `pu_skills.lst`
-//! (120 lines) and `pu_templates.lst` (17 lines) are out of this cycle's
+//! deliberately stop short of full-tree ingestion for), `pu_skills`
+//! (120 lines) and `pu_templates` (17 lines) are out of this cycle's
 //! bounded scope -- no book in this codebase has ever represented
 //! skill-content or template-content as a Shape B content-kind, and this
 //! book's own ability-tree content shares CRB/ARG's already-documented

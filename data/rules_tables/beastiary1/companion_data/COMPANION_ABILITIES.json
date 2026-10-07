@@ -26,7 +26,7 @@
         "Companion (Bat (Dire))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 6
     },
     {
@@ -46,7 +46,7 @@
         "Companion (Dinosaur (Ankylosaurus))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 7
     },
     {
@@ -66,7 +66,7 @@
         "Companion (Dinosaur (Brachiosaurus))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 8
     },
     {
@@ -86,7 +86,7 @@
         "Companion (Dinosaur (Elasmosaurus))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 9
     },
     {
@@ -106,7 +106,7 @@
         "Companion (Dinosaur (Pteranodon))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 10
     },
     {
@@ -126,7 +126,7 @@
         "Companion (Dinosaur (Stegosaurus))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 11
     },
     {
@@ -146,7 +146,7 @@
         "Companion (Dinosaur (Triceratops))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 12
     },
     {
@@ -166,7 +166,7 @@
         "Companion (Dinosaur (Tyrannosaurus))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 13
     },
     {
@@ -199,7 +199,7 @@
         "Companion (Dolphin)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 14
     },
     {
@@ -219,7 +219,7 @@
         "Companion (Dolphin (Orca))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 15
     },
     {
@@ -248,7 +248,7 @@
         "Companion (Frog (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 16
     },
     {
@@ -277,7 +277,7 @@
         "Companion (Eel (Electric))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 17
     },
     {
@@ -297,7 +297,7 @@
         "Companion (Eel (Giant Moray))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 18
     },
     {
@@ -318,7 +318,7 @@
         "Companion (Elephant)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 19
     },
     {
@@ -343,7 +343,7 @@
         "Companion (Goblin Dog)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 20
     },
     {
@@ -364,7 +364,7 @@
         "Companion (Herd Animal (Bison))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 21
     },
     {
@@ -384,7 +384,7 @@
         "Companion (Hyena)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 22
     },
     {
@@ -409,7 +409,7 @@
         "Companion (Lizard (Monitor))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 23
     },
     {
@@ -438,7 +438,7 @@
         "Companion (Octopus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 24
     },
     {
@@ -458,7 +458,7 @@
         "Companion (Rhinoceros)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 25
     },
     {
@@ -478,7 +478,7 @@
         "Companion (Roc)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 26
     },
     {
@@ -507,7 +507,7 @@
         "Companion (Squid)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 27
     },
     {
@@ -530,7 +530,7 @@
         "Companion (Dinosaur (Ankylosaurus))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 31
     },
     {
@@ -554,7 +554,7 @@
         "Companion (Dolphin (Orca))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 32
     },
     {
@@ -577,7 +577,7 @@
         "Companion (Eel (Electric))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 33
     },
     {
@@ -598,7 +598,7 @@
         "Companion (Frog (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 34
     },
     {
@@ -622,7 +622,7 @@
         "Companion (Eel (Giant Moray))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 35
     },
     {
@@ -645,7 +645,7 @@
         "Companion (Goblin Dog)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 36
     },
     {
@@ -668,7 +668,7 @@
         "Companion (Lizard (Monitor))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 37
     },
     {
@@ -690,7 +690,7 @@
         "Companion (Octopus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 38
     },
     {
@@ -712,7 +712,7 @@
         "Companion (Octopus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 39
     },
     {
@@ -733,7 +733,7 @@
         "Companion (Octopus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 40
     },
     {
@@ -757,7 +757,7 @@
         "Companion (Squid)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 41
     },
     {
@@ -778,7 +778,7 @@
         "Companion (Squid)"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 42
     },
     {
@@ -799,7 +799,7 @@
         "Companion (Dinosaur (Tyrannosaurus))"
       ],
       "cross_book_owners": [],
-      "source_file": "b1_abilities_companion.lst",
+      "source_file": "b1_abilities_companion",
       "source_line": 43
     },
     {
@@ -821,7 +821,7 @@
         "Weasel"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 76
     },
     {
@@ -844,7 +844,7 @@
         "Elemental (Air/Small)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 97
     },
     {
@@ -867,7 +867,7 @@
         "Elemental (Earth/Small)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 105
     },
     {
@@ -890,7 +890,7 @@
         "Elemental (Earth/Small)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 106
     },
     {
@@ -915,7 +915,7 @@
         "Elemental (Water/Small)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 121
     },
     {
@@ -939,7 +939,7 @@
         "Elemental (Water/Small)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 122
     },
     {
@@ -962,7 +962,7 @@
         "Elemental (Water/Small)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 123
     },
     {
@@ -984,7 +984,7 @@
         "Stirge"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 130
     },
     {
@@ -1007,7 +1007,7 @@
         "Stirge"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 131
     },
     {
@@ -1030,7 +1030,7 @@
         "Stirge"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 132
     },
     {
@@ -1053,7 +1053,7 @@
         "Homunculus"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 139
     },
     {
@@ -1075,7 +1075,7 @@
         "Mephit (Earth)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 173
     },
     {
@@ -1098,7 +1098,7 @@
         "Mephit (Magma)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 174
     },
     {
@@ -1121,7 +1121,7 @@
         "Mephit (Salt)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 175
     },
     {
@@ -1144,7 +1144,7 @@
         "Mephit (Steam)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 176
     },
     {
@@ -1168,7 +1168,7 @@
         "Mephit (Air)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 178
     },
     {
@@ -1192,7 +1192,7 @@
         "Mephit (Dust)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 179
     },
     {
@@ -1216,7 +1216,7 @@
         "Mephit (Earth)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 180
     },
     {
@@ -1240,7 +1240,7 @@
         "Mephit (Fire)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 181
     },
     {
@@ -1264,7 +1264,7 @@
         "Mephit (Ice)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 182
     },
     {
@@ -1288,7 +1288,7 @@
         "Mephit (Magma)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 183
     },
     {
@@ -1312,7 +1312,7 @@
         "Mephit (Ooze)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 184
     },
     {
@@ -1336,7 +1336,7 @@
         "Mephit (Salt)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 185
     },
     {
@@ -1360,7 +1360,7 @@
         "Mephit (Steam)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 186
     },
     {
@@ -1384,7 +1384,7 @@
         "Mephit (Water)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 187
     },
     {
@@ -1405,7 +1405,7 @@
         "Mephit (Air)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 199
     },
     {
@@ -1426,7 +1426,7 @@
         "Mephit (Dust)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 200
     },
     {
@@ -1447,7 +1447,7 @@
         "Mephit (Earth)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 201
     },
     {
@@ -1468,7 +1468,7 @@
         "Mephit (Fire)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 202
     },
     {
@@ -1489,7 +1489,7 @@
         "Mephit (Ice)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 203
     },
     {
@@ -1510,7 +1510,7 @@
         "Mephit (Magma)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 204
     },
     {
@@ -1531,7 +1531,7 @@
         "Mephit (Ooze)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 205
     },
     {
@@ -1552,7 +1552,7 @@
         "Mephit (Salt)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 206
     },
     {
@@ -1573,7 +1573,7 @@
         "Mephit (Steam)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 207
     },
     {
@@ -1594,7 +1594,7 @@
         "Mephit (Water)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 208
     },
     {
@@ -1616,7 +1616,7 @@
         "Demon (Quasit)"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_cr.lst",
+      "source_file": "ce_abilities_familiar_race_cr",
       "source_line": 225
     }
   ]

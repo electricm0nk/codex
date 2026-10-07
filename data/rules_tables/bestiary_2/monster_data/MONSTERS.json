@@ -63,7 +63,7 @@
         "Achaierai ~ Black Cloud"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 14
     },
     {
@@ -186,7 +186,7 @@
         "Fast Healing",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 16
     },
     {
@@ -323,7 +323,7 @@
         "Fast Healing",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 20
     },
     {
@@ -408,7 +408,7 @@
         "Can't Be Tripped",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 23
     },
     {
@@ -616,7 +616,7 @@
         "Fast Healing",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 33
     },
     {
@@ -778,7 +778,7 @@
         "Can't Be Tripped",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 35
     },
     {
@@ -945,7 +945,7 @@
         "Fear ~ Aura",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 36
     },
     {
@@ -1143,7 +1143,7 @@
         "Immunity to Cold",
         "Regeneration ~ Evil"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 37
     },
     {
@@ -1383,7 +1383,7 @@
         "Flight Maneuverability",
         "Regeneration ~ Evil"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 44
     },
     {
@@ -1515,7 +1515,7 @@
         "Pounce",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 48
     },
     {
@@ -1624,7 +1624,7 @@
         "Flight Maneuverability",
         "Pounce"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 54
     },
     {
@@ -1755,7 +1755,7 @@
         "Pounce",
         "Vulpinal ~ Calm Emotions Aura"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 59
     },
     {
@@ -1826,7 +1826,7 @@
         "Resistance to Fire",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 63
     },
     {
@@ -1892,7 +1892,7 @@
         "Can't Be Tripped",
         "Constrict"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 66
     },
     {
@@ -1952,7 +1952,7 @@
         "No Combat Maneuvers",
         "Swarm Traits"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 71
     },
     {
@@ -2024,7 +2024,7 @@
         "Resistance to Cold",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 76
     },
     {
@@ -2102,7 +2102,7 @@
         "Cassisian ~ Lesser Protective Aura",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 79
     },
     {
@@ -2302,7 +2302,7 @@
         "Immunity to Energy Drain",
         "Immunity to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 81
     },
     {
@@ -2479,7 +2479,7 @@
         "Movanic Deva ~ Nature's Pacifism",
         "Movanic Deva ~ Protected Life Force"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 84
     },
     {
@@ -2581,7 +2581,7 @@
         "Flight Maneuverability",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 86
     },
     {
@@ -2641,7 +2641,7 @@
       "external_ability_refs": [
         "Web"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 89
     },
     {
@@ -2751,7 +2751,7 @@
         "Flight Maneuverability",
         "Magic Circle against Evil ~ Constant"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 94
     },
     {
@@ -2892,7 +2892,7 @@
         "Regeneration ~ Evil",
         "Star Archon ~ Explosive Rebirth"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 102
     },
     {
@@ -2957,7 +2957,7 @@
         "Resistance to Cold",
         "Rock Throwing"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 108
     },
     {
@@ -3016,7 +3016,7 @@
         "Attic Whisperer ~ Steal Voice"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 110
     },
     {
@@ -3083,7 +3083,7 @@
         "Resistance to Fire",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 111
     },
     {
@@ -3213,7 +3213,7 @@
         "Resistance to Cold",
         "Resistance to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 114
     },
     {
@@ -3416,7 +3416,7 @@
         "Resistance to Cold",
         "Trample"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 119
     },
     {
@@ -3550,7 +3550,7 @@
         "Resistance to Cold",
         "Resistance to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 123
     },
     {
@@ -3602,7 +3602,7 @@
         "Heat"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 125
     },
     {
@@ -3665,7 +3665,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 129
     },
     {
@@ -3733,7 +3733,7 @@
         "Ferocity",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 130
     },
     {
@@ -3788,7 +3788,7 @@
         "Flight Maneuverability",
         "Sunlight Powerlessness"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 131
     },
     {
@@ -3852,7 +3852,7 @@
         "Cannot Speak",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 132
     },
     {
@@ -3913,7 +3913,7 @@
         "Flight Maneuverability",
         "Skaveling ~ Paralysis"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 136
     },
     {
@@ -3969,7 +3969,7 @@
         "Flight Maneuverability",
         "Giant Bee ~ Vulnerable to Smoke"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 138
     },
     {
@@ -4025,7 +4025,7 @@
         "Flight Maneuverability",
         "Giant Bee ~ Vulnerable to Smoke"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 139
     },
     {
@@ -4081,7 +4081,7 @@
         "Flight Maneuverability",
         "Giant Bee ~ Vulnerable to Smoke"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 140
     },
     {
@@ -4131,7 +4131,7 @@
         "Flight Maneuverability",
         "Trample"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 141
     },
     {
@@ -4183,7 +4183,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 142
     },
     {
@@ -4248,7 +4248,7 @@
         "Can't Be Tripped",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 143
     },
     {
@@ -4319,7 +4319,7 @@
       "external_ability_refs": [
         "Immunity to Blindness"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 144
     },
     {
@@ -4379,7 +4379,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 145
     },
     {
@@ -4437,7 +4437,7 @@
         "Resistance to Acid",
         "Resistance to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 146
     },
     {
@@ -4546,7 +4546,7 @@
       "external_ability_refs": [
         "Brownie ~ Bonus vs Illusions"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 150
     },
     {
@@ -4608,7 +4608,7 @@
         "Bleed",
         "Keen Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 153
     },
     {
@@ -4676,7 +4676,7 @@
         "Resistance to Fire",
         "Vulnerability to Cold"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 160
     },
     {
@@ -4744,7 +4744,7 @@
         "Stench",
         "Trample"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 164
     },
     {
@@ -4797,7 +4797,7 @@
         "Amorphous",
         "Can't Be Tripped"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 175
     },
     {
@@ -4866,7 +4866,7 @@
         "Immunity to Cold",
         "Immunity to Poison"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 176
     },
     {
@@ -4940,7 +4940,7 @@
         "Resistance to Cold",
         "Swallow Whole"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 177
     },
     {
@@ -5005,7 +5005,7 @@
         "Cannot Speak",
         "Pounce"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 178
     },
     {
@@ -5061,7 +5061,7 @@
         "Flight Maneuverability",
         "Light Sensitivity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 180
     },
     {
@@ -5121,7 +5121,7 @@
         "Flight Maneuverability",
         "Light Sensitivity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 181
     },
     {
@@ -5181,7 +5181,7 @@
         "Flight Maneuverability",
         "Light Sensitivity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 182
     },
     {
@@ -5241,7 +5241,7 @@
         "Flight Maneuverability",
         "Light Sensitivity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 183
     },
     {
@@ -5301,7 +5301,7 @@
         "Flight Maneuverability",
         "Light Sensitivity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 184
     },
     {
@@ -5361,7 +5361,7 @@
         "Flight Maneuverability",
         "Light Sensitivity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 185
     },
     {
@@ -5424,7 +5424,7 @@
         "No Combat Maneuvers",
         "Swarm Traits"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 189
     },
     {
@@ -5478,7 +5478,7 @@
       "external_ability_refs": [
         "Cannot Speak"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 191
     },
     {
@@ -5535,7 +5535,7 @@
       "external_ability_refs": [
         "Cannot Speak"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 192
     },
     {
@@ -5600,7 +5600,7 @@
         "Aura ~ Crypt Thing ~ Fear",
         "Channel Resistance"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 195
     },
     {
@@ -5723,7 +5723,7 @@
         "Immunity to Fire",
         "Resistance to Electricity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 199
     },
     {
@@ -5873,7 +5873,7 @@
         "Energy Drain",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 207
     },
     {
@@ -5962,7 +5962,7 @@
         "Fast Healing",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 209
     },
     {
@@ -6069,7 +6069,7 @@
         "Immunity to Polymorph Effects",
         "Immunity to Sleep"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 210
     },
     {
@@ -6176,7 +6176,7 @@
         "Immunity to Polymorph Effects",
         "Immunity to Sleep"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 211
     },
     {
@@ -6283,7 +6283,7 @@
         "Immunity to Polymorph Effects",
         "Immunity to Sleep"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 212
     },
     {
@@ -6395,7 +6395,7 @@
         "Derghodaemon ~ Feeblemind Aura",
         "Derghodaemon ~ Rend"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 216
     },
     {
@@ -6526,7 +6526,7 @@
         "Hydrodaemon ~ Sleep Spittle",
         "Immunity to Waters of the River Styx"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 221
     },
     {
@@ -6638,7 +6638,7 @@
         "Flight Maneuverability",
         "Leukodaemon ~ Infectious Aura"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 225
     },
     {
@@ -6773,7 +6773,7 @@
         "Immunity to Sneak Attacks",
         "Meladaemon ~ Consumptive Aura"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 238
     },
     {
@@ -6923,7 +6923,7 @@
       "external_ability_refs": [
         "Trample"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 242
     },
     {
@@ -7038,7 +7038,7 @@
         "Bleed",
         "Constrict"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 245
     },
     {
@@ -7141,7 +7141,7 @@
       "external_ability_refs": [
         "Fear ~ Aura"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 251
     },
     {
@@ -7253,7 +7253,7 @@
       "external_ability_refs": [
         "Energy Drain"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 253
     },
     {
@@ -7362,7 +7362,7 @@
         "Light Blindness",
         "Sneak Attack"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 256
     },
     {
@@ -7427,7 +7427,7 @@
         "Immunity to Electricity",
         "Immunity to Poison"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 260
     },
     {
@@ -7498,7 +7498,7 @@
         "Constrict",
         "Decapus ~ Sound Mimicry"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 264
     },
     {
@@ -7639,7 +7639,7 @@
       "external_ability_refs": [
         "Powerful Charge"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 266
     },
     {
@@ -7793,7 +7793,7 @@
         "Omox ~ Liquid Leap",
         "Omox ~ Slime"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 267
     },
     {
@@ -7934,7 +7934,7 @@
         "Rend",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 268
     },
     {
@@ -8099,7 +8099,7 @@
         "Flight Maneuverability",
         "Immunity to Death Effects"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 269
     },
     {
@@ -8218,7 +8218,7 @@
         "Resistance to Electricity",
         "Sneak Attack"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 270
     },
     {
@@ -8287,7 +8287,7 @@
         "Immunity to Visual Effects",
         "Resistance to Sonic"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 271
     },
     {
@@ -8397,7 +8397,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 272
     },
     {
@@ -8590,7 +8590,7 @@
         "Constrict",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 273
     },
     {
@@ -8723,7 +8723,7 @@
       "external_ability_refs": [
         "Can't Be Tripped"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 278
     },
     {
@@ -8867,7 +8867,7 @@
         "Flight Maneuverability",
         "Regeneration ~ Good"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 280
     },
     {
@@ -8937,7 +8937,7 @@
         "Resistance to Cold",
         "See in Darkness"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 281
     },
     {
@@ -8998,7 +8998,7 @@
         "Pounce",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 284
     },
     {
@@ -9057,7 +9057,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 285
     },
     {
@@ -9111,7 +9111,7 @@
         "Scent",
         "Trample"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 290
     },
     {
@@ -9174,7 +9174,7 @@
       "external_ability_refs": [
         "Swallow Whole"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 294
     },
     {
@@ -9242,7 +9242,7 @@
         "Flight Maneuverability",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 296
     },
     {
@@ -9302,7 +9302,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 297
     },
     {
@@ -9359,7 +9359,7 @@
         "Giant Dragonfly Nymph ~ Extending Jaw"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 301
     },
     {
@@ -9425,7 +9425,7 @@
         "Flight Maneuverability",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 303
     },
     {
@@ -9496,7 +9496,7 @@
         "Immunity to Acid",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 304
     },
     {
@@ -9569,7 +9569,7 @@
         "Frost Drake ~ Snow Vision",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 305
     },
     {
@@ -9642,7 +9642,7 @@
         "Immunity to Electricity",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 306
     },
     {
@@ -9697,7 +9697,7 @@
         "Brine Dragon ~ Painful Strikes"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 308
     },
     {
@@ -9755,7 +9755,7 @@
         "Cloud Dragon ~ Thundering Bite"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 309
     },
     {
@@ -9816,7 +9816,7 @@
         "Crystal Dragon ~ Razor Sharp"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 310
     },
     {
@@ -9866,7 +9866,7 @@
         "Magma Dragon ~ Superheated"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 311
     },
     {
@@ -9923,7 +9923,7 @@
         "Umbral Dragon ~ Ghost Bane"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 312
     },
     {
@@ -9976,7 +9976,7 @@
         "Cannot Speak",
         "Resistance to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 322
     },
     {
@@ -10036,7 +10036,7 @@
       "external_ability_refs": [
         "Resistance to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 323
     },
     {
@@ -10090,7 +10090,7 @@
         "Fast Healing",
         "Frightful Presence"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 327
     },
     {
@@ -10144,7 +10144,7 @@
         "Fast Healing",
         "Frightful Presence"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 328
     },
     {
@@ -10200,7 +10200,7 @@
       "external_ability_refs": [
         "Swallow Whole"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 330
     },
     {
@@ -10270,7 +10270,7 @@
       "external_ability_refs": [
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 331
     },
     {
@@ -10330,7 +10330,7 @@
         "Ice Elemental ~ Burrow",
         "Ice Elemental ~ Snow Vision"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 335
     },
     {
@@ -10386,7 +10386,7 @@
         "Ice Elemental ~ Burrow",
         "Ice Elemental ~ Snow Vision"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 336
     },
     {
@@ -10446,7 +10446,7 @@
         "Ice Elemental ~ Burrow",
         "Ice Elemental ~ Snow Vision"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 337
     },
     {
@@ -10506,7 +10506,7 @@
         "Ice Elemental ~ Burrow",
         "Ice Elemental ~ Snow Vision"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 338
     },
     {
@@ -10566,7 +10566,7 @@
         "Ice Elemental ~ Burrow",
         "Ice Elemental ~ Snow Vision"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 339
     },
     {
@@ -10622,7 +10622,7 @@
         "Ice Elemental ~ Burrow",
         "Ice Elemental ~ Snow Vision"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 340
     },
     {
@@ -10668,7 +10668,7 @@
         "Flight Maneuverability",
         "Immunity to Electricity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 341
     },
     {
@@ -10722,7 +10722,7 @@
         "Flight Maneuverability",
         "Immunity to Electricity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 342
     },
     {
@@ -10776,7 +10776,7 @@
         "Flight Maneuverability",
         "Immunity to Electricity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 343
     },
     {
@@ -10830,7 +10830,7 @@
         "Flight Maneuverability",
         "Immunity to Electricity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 344
     },
     {
@@ -10884,7 +10884,7 @@
         "Flight Maneuverability",
         "Immunity to Electricity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 345
     },
     {
@@ -10934,7 +10934,7 @@
         "Flight Maneuverability",
         "Immunity to Electricity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 346
     },
     {
@@ -10982,7 +10982,7 @@
         "Burn",
         "Magma Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 347
     },
     {
@@ -11038,7 +11038,7 @@
         "Burn",
         "Magma Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 348
     },
     {
@@ -11094,7 +11094,7 @@
         "Burn",
         "Magma Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 349
     },
     {
@@ -11150,7 +11150,7 @@
         "Burn",
         "Magma Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 350
     },
     {
@@ -11206,7 +11206,7 @@
         "Burn",
         "Magma Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 354
     },
     {
@@ -11258,7 +11258,7 @@
         "Burn",
         "Magma Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 356
     },
     {
@@ -11318,7 +11318,7 @@
         "Immunity to Acid",
         "Mud Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 357
     },
     {
@@ -11374,7 +11374,7 @@
         "Immunity to Acid",
         "Mud Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 358
     },
     {
@@ -11434,7 +11434,7 @@
         "Immunity to Acid",
         "Mud Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 359
     },
     {
@@ -11494,7 +11494,7 @@
         "Immunity to Acid",
         "Mud Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 360
     },
     {
@@ -11554,7 +11554,7 @@
         "Immunity to Acid",
         "Mud Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 361
     },
     {
@@ -11610,7 +11610,7 @@
         "Immunity to Acid",
         "Mud Elemental ~ Earth Glide"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 362
     },
     {
@@ -11674,7 +11674,7 @@
       "external_ability_refs": [
         "Sneak Attack"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 366
     },
     {
@@ -11738,7 +11738,7 @@
         "Flight Maneuverability",
         "Immunity to Disease"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 369
     },
     {
@@ -11794,7 +11794,7 @@
         "Can't Be Tripped",
         "Immunity to Disease"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 371
     },
     {
@@ -11851,7 +11851,7 @@
         "Forlarren ~ Remorse"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 372
     },
     {
@@ -11914,7 +11914,7 @@
       "external_ability_refs": [
         "Can't Be Tripped"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 373
     },
     {
@@ -11981,7 +11981,7 @@
         "Fungal Crawler ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 379
     },
     {
@@ -12040,7 +12040,7 @@
       "external_ability_refs": [
         "Can't Be Tripped"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 386
     },
     {
@@ -12096,7 +12096,7 @@
         "Can't Be Tripped",
         "Swallow Whole"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 388
     },
     {
@@ -12183,7 +12183,7 @@
         "Rock Catching",
         "Rock Throwing"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 394
     },
     {
@@ -12296,7 +12296,7 @@
         "Rock Throwing",
         "Speak with Animals ~ Constant"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 395
     },
     {
@@ -12405,7 +12405,7 @@
         "Immunity to Electricity",
         "Immunity to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 397
     },
     {
@@ -12465,7 +12465,7 @@
         "Rock Catching",
         "Rock Throwing"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 406
     },
     {
@@ -12566,7 +12566,7 @@
         "Rock Catching",
         "Speak with Animals ~ Constant"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 410
     },
     {
@@ -12631,7 +12631,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 413
     },
     {
@@ -12681,7 +12681,7 @@
         "Fast Healing",
         "Trample"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 415
     },
     {
@@ -12730,7 +12730,7 @@
       "external_ability_refs": [
         "Alchemical Golem ~ Immunity to Magic"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 419
     },
     {
@@ -12778,7 +12778,7 @@
         "Carrion Golem ~ Foul Stench",
         "Carrion Golem ~ Immunity to Magic"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 421
     },
     {
@@ -12828,7 +12828,7 @@
       "external_ability_refs": [
         "Clockwork Golem ~ Immunity to Magic"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 422
     },
     {
@@ -12877,7 +12877,7 @@
         "Glass Golem ~ Immunity to Magic",
         "Glass Golem ~ Reflect Spells"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 423
     },
     {
@@ -12926,7 +12926,7 @@
         "Evasion",
         "Mithral Golem ~ Immunity to Magic"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 427
     },
     {
@@ -12991,7 +12991,7 @@
         "Rend",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 429
     },
     {
@@ -13063,7 +13063,7 @@
       "external_ability_refs": [
         "Sneak Attack"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 430
     },
     {
@@ -13163,7 +13163,7 @@
         "Trip ~ Claw"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 431
     },
     {
@@ -13232,7 +13232,7 @@
       "external_ability_refs": [
         "Pugwampi ~ Unluck Aura"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 432
     },
     {
@@ -13315,7 +13315,7 @@
         "Vexgit ~ Wrecking Crew"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 435
     },
     {
@@ -13382,7 +13382,7 @@
         "Cannot Speak",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 437
     },
     {
@@ -13469,7 +13469,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 443
     },
     {
@@ -13529,7 +13529,7 @@
         "Amphibious",
         "Jet"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 447
     },
     {
@@ -13593,7 +13593,7 @@
         "Flight Maneuverability",
         "Gryph ~ Grab"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 449
     },
     {
@@ -13654,7 +13654,7 @@
         "Immunity to Poison",
         "Rend"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 453
     },
     {
@@ -13715,7 +13715,7 @@
         "Swallow Whole",
         "Vulnerability to Electricity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 459
     },
     {
@@ -13776,7 +13776,7 @@
         "Scent",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 460
     },
     {
@@ -13834,7 +13834,7 @@
         "Camel ~ Spit",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 466
     },
     {
@@ -13892,7 +13892,7 @@
         "Powerful Charge",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 468
     },
     {
@@ -13955,7 +13955,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 469
     },
     {
@@ -14018,7 +14018,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 473
     },
     {
@@ -14084,7 +14084,7 @@
         "Flight Maneuverability",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 478
     },
     {
@@ -14142,7 +14142,7 @@
         "Scent",
         "Trample"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 490
     },
     {
@@ -14205,7 +14205,7 @@
         "Scent",
         "Trample"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 492
     },
     {
@@ -14337,7 +14337,7 @@
         "Immunity to Mind-Affecting Effects",
         "Immunity to Poison"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 497
     },
     {
@@ -14399,7 +14399,7 @@
       "external_ability_refs": [
         "Cannot Speak"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 499
     },
     {
@@ -14481,7 +14481,7 @@
         "Arbiter ~ Constant Vigilance",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 504
     },
     {
@@ -14637,7 +14637,7 @@
       ],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 512
     },
     {
@@ -14803,7 +14803,7 @@
         "Lhaksharut ~ Immunity to Energy Spells",
         "Shield of Law ~ Constant"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 516
     },
     {
@@ -14967,7 +14967,7 @@
         "True Seeing ~ Constant"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 518
     },
     {
@@ -15100,7 +15100,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 519
     },
     {
@@ -15192,7 +15192,7 @@
         "Resistance to Sonic",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 528
     },
     {
@@ -15284,7 +15284,7 @@
         "Resistance to Sonic",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 529
     },
     {
@@ -15337,7 +15337,7 @@
         "Amorphous",
         "Can't Be Tripped"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 531
     },
     {
@@ -15390,7 +15390,7 @@
         "Amorphous",
         "Can't Be Tripped"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 532
     },
     {
@@ -15443,7 +15443,7 @@
         "Amorphous",
         "Can't Be Tripped"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 535
     },
     {
@@ -15496,7 +15496,7 @@
         "Amorphous",
         "Can't Be Tripped"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 537
     },
     {
@@ -15549,7 +15549,7 @@
         "Amorphous",
         "Can't Be Tripped"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 538
     },
     {
@@ -15602,7 +15602,7 @@
         "Amorphous",
         "Can't Be Tripped"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 539
     },
     {
@@ -15651,7 +15651,7 @@
         "No Combat Maneuvers",
         "Swarm Traits"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 544
     },
     {
@@ -15793,7 +15793,7 @@
         "Resistance to Fire",
         "Resistance to Sonic"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 546
     },
     {
@@ -15860,7 +15860,7 @@
         "Resistance to Fire",
         "Telepathy ~ Kelpie"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 550
     },
     {
@@ -15949,7 +15949,7 @@
       "external_ability_refs": [
         "Rock Throwing"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 554
     },
     {
@@ -16009,7 +16009,7 @@
         "Cannot Speak",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 556
     },
     {
@@ -16137,7 +16137,7 @@
         "Change Shape ~ Lama Matriarch",
         "Immunity to Mind-Affecting Effects"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 569
     },
     {
@@ -16282,7 +16282,7 @@
         "Immunity to Sonic",
         "Web"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 576
     },
     {
@@ -16416,7 +16416,7 @@
         "Shillelagh ~ Constant"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 579
     },
     {
@@ -16483,7 +16483,7 @@
         "Scent",
         "Sound Mimicry ~ Leucrotta"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 581
     },
     {
@@ -16541,7 +16541,7 @@
         "Scent",
         "Trip"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 582
     },
     {
@@ -16585,7 +16585,7 @@
       "external_ability_refs": [
         "Amphibious"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 583
     },
     {
@@ -16711,7 +16711,7 @@
         "Immunity to Blindness",
         "Sneak Attack"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 587
     },
     {
@@ -16777,7 +16777,7 @@
         "Immunity to Fire",
         "Split ~ Magma Ooze"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 591
     },
     {
@@ -16850,7 +16850,7 @@
         "Resistance to Cold",
         "Resistance to Electricity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 595
     },
     {
@@ -16905,7 +16905,7 @@
         "Scent",
         "Trample"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 596
     },
     {
@@ -16954,7 +16954,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 597
     },
     {
@@ -17016,7 +17016,7 @@
         "Powerful Charge",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 601
     },
     {
@@ -17075,7 +17075,7 @@
         "Scent",
         "Trip"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 603
     },
     {
@@ -17154,7 +17154,7 @@
       "external_ability_refs": [
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 604
     },
     {
@@ -17213,7 +17213,7 @@
       "external_ability_refs": [
         "Amphibious"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 605
     },
     {
@@ -17272,7 +17272,7 @@
       "external_ability_refs": [
         "Amphibious"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 610
     },
     {
@@ -17341,7 +17341,7 @@
         "Flight Maneuverability",
         "Immunity to Electricity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 612
     },
     {
@@ -17394,7 +17394,7 @@
       "external_ability_refs": [
         "Sound Mimicry ~ Mongrelman"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 613
     },
     {
@@ -17461,7 +17461,7 @@
         "Telepathy ~ Moonflower",
         "Vulnerability to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 614
     },
     {
@@ -17524,7 +17524,7 @@
         "Flight Maneuverability",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 615
     },
     {
@@ -17583,7 +17583,7 @@
         "No Combat Maneuvers",
         "Swarm Traits"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 619
     },
     {
@@ -17771,7 +17771,7 @@
         "Flight Maneuverability",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 621
     },
     {
@@ -17846,7 +17846,7 @@
         "Resistance to Acid",
         "Swallow Whole"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 622
     },
     {
@@ -17894,7 +17894,7 @@
       "external_ability_refs": [
         "Can't Be Tripped"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 626
     },
     {
@@ -17967,7 +17967,7 @@
         "Rend",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 632
     },
     {
@@ -18062,7 +18062,7 @@
         "Immunity to Cold",
         "Immunity to Poison"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 639
     },
     {
@@ -18235,7 +18235,7 @@
         "Swallow Whole",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 642
     },
     {
@@ -18401,7 +18401,7 @@
         "Immunity to Cold",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 644
     },
     {
@@ -18583,7 +18583,7 @@
         "Swallow Whole",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 648
     },
     {
@@ -18744,7 +18744,7 @@
         "Immunity to Cold",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 650
     },
     {
@@ -18818,7 +18818,7 @@
         "Immunity to Petrification",
         "Light Blindness"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 660
     },
     {
@@ -18882,7 +18882,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 662
     },
     {
@@ -18911,7 +18911,7 @@
       "external_ability_refs": [
         "Immunity to Mind-Affecting Effects"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 670
     },
     {
@@ -18960,7 +18960,7 @@
         "Can't Be Tripped",
         "Immunity to Acid"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 673
     },
     {
@@ -19011,7 +19011,7 @@
         "Natural Invisibility ~ Ex",
         "No Combat Maneuvers"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 678
     },
     {
@@ -19066,7 +19066,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 680
     },
     {
@@ -19127,7 +19127,7 @@
         "No Combat Maneuvers",
         "Swarm Traits"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 687
     },
     {
@@ -19305,7 +19305,7 @@
         "Flight Maneuverability",
         "Sneak Attack"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 694
     },
     {
@@ -19501,7 +19501,7 @@
         "Keketar ~ Spatial Riptide",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 699
     },
     {
@@ -19617,7 +19617,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 703
     },
     {
@@ -19733,7 +19733,7 @@
         "Fast Healing",
         "Flight Maneuverability"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 705
     },
     {
@@ -19833,7 +19833,7 @@
         "Flight Maneuverability",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 710
     },
     {
@@ -19963,7 +19963,7 @@
         "Chernobue ~ Light Vulnerability",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 711
     },
     {
@@ -20042,7 +20042,7 @@
         "Telepathy ~ Touch"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 712
     },
     {
@@ -20234,7 +20234,7 @@
         "Iathavos ~ Ichor",
         "Iathavos ~ Stench"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 716
     },
     {
@@ -20346,7 +20346,7 @@
         "Immunity to Acid",
         "Nyogoth ~ Acid Spray"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 724
     },
     {
@@ -20446,7 +20446,7 @@
         "Constrict",
         "Uncanny Dodge"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 726
     },
     {
@@ -20605,7 +20605,7 @@
         "Fast Healing",
         "Immunity to Acid"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 736
     },
     {
@@ -20664,7 +20664,7 @@
         "Sneak Attack",
         "Uncanny Dodge"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 738
     },
     {
@@ -20733,7 +20733,7 @@
         "Immunity to Fire",
         "Pull ~ Quickwood"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 739
     },
     {
@@ -20805,7 +20805,7 @@
         "Flight Maneuverability",
         "Immunity to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 743
     },
     {
@@ -20860,7 +20860,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 744
     },
     {
@@ -20913,7 +20913,7 @@
         "Stingray ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 745
     },
     {
@@ -20973,7 +20973,7 @@
         "Redcap ~ Red Cap"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 746
     },
     {
@@ -21039,7 +21039,7 @@
         "Ferocity",
         "Resistance to Cold"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 747
     },
     {
@@ -21099,7 +21099,7 @@
         "Constrict",
         "Immunity to Cold"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 748
     },
     {
@@ -21153,7 +21153,7 @@
       "external_ability_refs": [
         "Amorphous"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 753
     },
     {
@@ -21293,7 +21293,7 @@
         "Resistance to Fire",
         "Vulnerability to Sonic"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 756
     },
     {
@@ -21339,7 +21339,7 @@
         "Immunity to Cold",
         "Vulnerability to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 758
     },
     {
@@ -21518,7 +21518,7 @@
         "Resistance to Electricity",
         "Resistance to Sonic"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 759
     },
     {
@@ -21721,7 +21721,7 @@
         "Resistance to Acid",
         "Resistance to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 774
     },
     {
@@ -21857,7 +21857,7 @@
         "Scent",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 776
     },
     {
@@ -21920,7 +21920,7 @@
         "Scent",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 777
     },
     {
@@ -22045,7 +22045,7 @@
         "Immunity to Poison",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 781
     },
     {
@@ -22114,7 +22114,7 @@
         "Immunity to Cold",
         "Immunity to Disease"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 783
     },
     {
@@ -22279,7 +22279,7 @@
         "Resistance to Sonic",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 787
     },
     {
@@ -22340,7 +22340,7 @@
         "Immunity to Mind-Affecting Effects",
         "Wrathspawn ~ Sin-Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 789
     },
     {
@@ -22397,7 +22397,7 @@
         "Envyspawn ~ Sin-Scent",
         "Immunity to Mind-Affecting Effects"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 790
     },
     {
@@ -22454,7 +22454,7 @@
         "Gluttonspawn ~ Sin-Scent",
         "Immunity to Mind-Affecting Effects"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 791
     },
     {
@@ -22511,7 +22511,7 @@
         "Greedspawn ~ Sin-Scent",
         "Immunity to Mind-Affecting Effects"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 792
     },
     {
@@ -22568,7 +22568,7 @@
         "Immunity to Mind-Affecting Effects",
         "Lustspawn ~ Sin-Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 793
     },
     {
@@ -22625,7 +22625,7 @@
         "Immunity to Mind-Affecting Effects",
         "Pridespawn ~ Sin-Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 794
     },
     {
@@ -22682,7 +22682,7 @@
         "Immunity to Mind-Affecting Effects",
         "Slothspawn ~ Sin-Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 795
     },
     {
@@ -22777,7 +22777,7 @@
         "Immunity to Mind-Affecting Effects",
         "Sneak Attack"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 801
     },
     {
@@ -22824,7 +22824,7 @@
       "external_ability_refs": [
         "Sneak Attack"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 803
     },
     {
@@ -22882,7 +22882,7 @@
         "Can't Be Tripped",
         "Resistance to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 804
     },
     {
@@ -22943,7 +22943,7 @@
         "Immunity to Mind-Affecting Effects",
         "Ooze Traits ~ Not Blind"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 805
     },
     {
@@ -23004,7 +23004,7 @@
       "external_ability_refs": [
         "Cannot Speak"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 809
     },
     {
@@ -23072,7 +23072,7 @@
         "Can't Be Tripped",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 811
     },
     {
@@ -23141,7 +23141,7 @@
         "Constrict",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 812
     },
     {
@@ -23198,7 +23198,7 @@
       "external_ability_refs": [
         "Rend"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 813
     },
     {
@@ -23256,7 +23256,7 @@
         "Pounce",
         "Rend"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 819
     },
     {
@@ -23321,7 +23321,7 @@
         "Immunity to Sleep",
         "Immunity to Stunning"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 821
     },
     {
@@ -23404,7 +23404,7 @@
         "Soulbound Doll ~ Susceptible to Mind-Affecting Effects"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 822
     },
     {
@@ -23460,7 +23460,7 @@
       "external_ability_refs": [
         "Web"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 823
     },
     {
@@ -23533,7 +23533,7 @@
       "external_ability_refs": [
         "Sneak Attack"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 827
     },
     {
@@ -23601,7 +23601,7 @@
         "Immunity to Acid",
         "Swallow Whole"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 831
     },
     {
@@ -23663,7 +23663,7 @@
         "Can't Be Tripped",
         "Immunity to Acid"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 835
     },
     {
@@ -23733,7 +23733,7 @@
         "Can't Be Tripped",
         "Constrict"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 837
     },
     {
@@ -23795,7 +23795,7 @@
         "Cannot Speak",
         "Immunity to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 838
     },
     {
@@ -23884,7 +23884,7 @@
         "Regeneration ~ Acid/Cold",
         "Resistance to Electricity"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 839
     },
     {
@@ -23969,7 +23969,7 @@
         "Immunity to Electricity",
         "Immunity to Sonic"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 840
     },
     {
@@ -24019,7 +24019,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 841
     },
     {
@@ -24079,7 +24079,7 @@
         "Scent",
         "Swarm Traits"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 845
     },
     {
@@ -24235,7 +24235,7 @@
         "Telepathy",
         "Trample"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 847
     },
     {
@@ -24405,7 +24405,7 @@
         "Telepathy",
         "Trample"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 853
     },
     {
@@ -24470,7 +24470,7 @@
         "Scent",
         "Swallow Whole"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 857
     },
     {
@@ -24533,7 +24533,7 @@
         "Immunity to Cold",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 863
     },
     {
@@ -24596,7 +24596,7 @@
       "external_ability_refs": [
         "Resistance to Cold"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 867
     },
     {
@@ -24651,7 +24651,7 @@
       ],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 869
     },
     {
@@ -24710,7 +24710,7 @@
         "Regeneration ~ Acid/Fire",
         "Rend"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 873
     },
     {
@@ -24775,7 +24775,7 @@
         "Rock Troll ~ Sunlight Petrification",
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 875
     },
     {
@@ -24839,7 +24839,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 876
     },
     {
@@ -24906,7 +24906,7 @@
         "Scent",
         "Swallow Whole"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 877
     },
     {
@@ -24964,7 +24964,7 @@
         "Vulnerability to Fire",
         "Woodland Stride"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 880
     },
     {
@@ -25063,7 +25063,7 @@
         "Negative Energy Affinity",
         "Resistance to Acid"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 887
     },
     {
@@ -25123,7 +25123,7 @@
         "No Combat Maneuvers",
         "Vulnerability to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 891
     },
     {
@@ -25207,7 +25207,7 @@
         "Immunity to Poison",
         "Resistance to Sonic"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 892
     },
     {
@@ -25270,7 +25270,7 @@
         "Constrict",
         "Immunity to Acid"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 893
     },
     {
@@ -25338,7 +25338,7 @@
         "Resistance to Fire",
         "Swallow Whole"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 897
     },
     {
@@ -25430,7 +25430,7 @@
         "Immunity to Fear",
         "Vulnerability to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 901
     },
     {
@@ -25479,7 +25479,7 @@
         "Whale ~ Capsize"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 904
     },
     {
@@ -25538,7 +25538,7 @@
         "Whale ~ Capsize"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 906
     },
     {
@@ -25655,7 +25655,7 @@
         "Rend",
         "Vulnerability to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 907
     },
     {
@@ -25769,7 +25769,7 @@
         "Flight Maneuverability",
         "Immunity to Fire"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 908
     },
     {
@@ -25875,7 +25875,7 @@
         "Witchwyrd ~ Force Bolt"
       ],
       "external_ability_refs": [],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 909
     },
     {
@@ -26045,7 +26045,7 @@
         "Scent",
         "Telepathy"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 913
     },
     {
@@ -26099,7 +26099,7 @@
         "Can't Be Tripped",
         "Immunity to Acid"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 915
     },
     {
@@ -26172,7 +26172,7 @@
         "Flight Maneuverability",
         "Immunity to Sonic"
       ],
-      "source_file": "b2_races.lst",
+      "source_file": "b2_races",
       "source_line": 920
     }
   ]

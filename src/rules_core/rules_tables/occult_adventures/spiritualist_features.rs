@@ -1,10 +1,10 @@
 //! SD-32 card 11 (T12), cycle 4 — real per-feature compute functions for
 //! the Spiritualist, one of the six `occult_adventures` classes sharing
-//! `oa_abilities_class.lst`. Every formula below is transcribed from the
+//! `oa_abilities_class`. Every formula below is transcribed from the
 //! corpus's own already-ingested tokens
 //! (`data/corpus/occult_adventures/class_feature/spiritualist/*.json`).
 
-/// `oa_abilities_class.lst:148`, `Phantom`:
+/// `oa_abilities_class:148`, `Phantom`:
 /// `BONUS:VAR|PhantomMasterLVL|SpiritualistLVL` — the phantom's master
 /// level tracks the Spiritualist's own class level directly.
 pub fn phantom_master_level(level: u8) -> Option<i16> {
@@ -14,7 +14,7 @@ pub fn phantom_master_level(level: u8) -> Option<i16> {
     Some(i16::from(level))
 }
 
-/// `oa_abilities_class.lst:149`, `Shared Consciousness`:
+/// `oa_abilities_class:149`, `Shared Consciousness`:
 /// `BONUS:ABILITYPOOL|Phantom Emotional Focus|1` — a flat single choice.
 pub fn shared_consciousness_focus_pool(level: u8) -> Option<i16> {
     if level < 1 {
@@ -23,7 +23,7 @@ pub fn shared_consciousness_focus_pool(level: u8) -> Option<i16> {
     Some(1)
 }
 
-/// `oa_abilities_class.lst:158`, `Calm Spirit`: no `BONUS:` token exists,
+/// `oa_abilities_class:158`, `Calm Spirit`: no `BONUS:` token exists,
 /// but the record's own DESC states the real cadence unambiguously ("once
 /// per day... At 11th level and every 4 levels thereafter, the
 /// spiritualist can use this ability an additional time per day (to a

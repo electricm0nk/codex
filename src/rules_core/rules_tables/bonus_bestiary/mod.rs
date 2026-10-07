@@ -96,8 +96,8 @@ mod tests {
     use super::*;
 
     /// Both counts are the ones re-derived from the corpus this cycle:
-    /// `awk -F'\t' '!/^#/ && !/^SOURCELONG/ && NF>0' bb_races.lst | wc -l` -> 14
-    /// and the same over `bb_abilities_race.lst` -> 17.
+    /// `awk -F'\t' '!/^#/ && !/^SOURCELONG/ && NF>0' bb_races | wc -l` -> 14
+    /// and the same over `bb_abilities_race` -> 17.
     #[test]
     fn the_book_defines_fourteen_monsters_and_seventeen_abilities() {
         assert_eq!(monsters().len(), 14);
@@ -128,7 +128,7 @@ mod tests {
             .iter()
             .filter(|a| a.key != a.name)
             .collect();
-        assert_eq!(namespaced.len(), 6, "bb_abilities_race.lst carries 6 `KEY:` tokens");
+        assert_eq!(namespaced.len(), 6, "bb_abilities_race carries 6 `KEY:` tokens");
 
         let immunity = monster_ability_resolve("Caryatid Column ~ Immunity to Magic")
             .expect("the namespaced key resolves");
@@ -181,8 +181,8 @@ mod tests {
         }
     }
 
-    /// Verbatim spot-checks against `bb_abilities_race.lst:6` and
-    /// `bb_races.lst:6` — the transcription is checkable against the named
+    /// Verbatim spot-checks against `bb_abilities_race:6` and
+    /// `bb_races:6` — the transcription is checkable against the named
     /// line, not merely self-consistent.
     #[test]
     fn allip_and_its_babble_ability_match_their_corpus_rows() {

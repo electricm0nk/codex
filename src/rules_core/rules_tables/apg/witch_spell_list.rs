@@ -3,10 +3,10 @@
 //!
 //! Source: every record whose `CLASSES:` token names Witch in any of
 //! its comma-separated class groups, across the books this repo ingests:
-//! `apg_spells.lst` (252) and `acg_spells.lst` (74). **326 unique
+//! `apg_spells` (252) and `acg_spells` (74). **326 unique
 //! spells**, levels 0-9, split
 //! **16 / 37 / 58 / 49 / 43 / 31 / 29 / 25 / 23 / 15**.
-//! `cr_spells.lst` names Witch zero times (the class postdates the CRB).
+//! `cr_spells` names Witch zero times (the class postdates the CRB).
 //!
 //! **Corpus reachability: 326 of 326.** Every entry resolves against
 //! this repo's ingested `data/corpus/` spell records.

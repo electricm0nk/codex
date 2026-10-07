@@ -1,7 +1,7 @@
 //! PF1 Core Rulebook weapon stat blocks — the ingestion half of the
 //! weapon pillar (task #72, stage 1).
 //!
-//! Source: every record in `core_rulebook/cr_equip_arms_armor.lst` whose
+//! Source: every record in `core_rulebook/cr_equip_arms_armor` whose
 //! `TYPE:` facet contains `Weapon` and which carries both `DAMAGE:` and
 //! `CRITMULT:` — **106 records**, transcribed verbatim from the corpus's
 //! own tokens. Not hand-authored; regenerate if the corpus changes.
@@ -230,7 +230,7 @@ pub const WEAPON_TABLE: &[WeaponTableEntry] = &[
 ///     `Sun Blade` is not in `WEAPON_TABLE`, so the 27 corpus records fold
 ///     to these 26 keys, each verified present above.
 ///
-/// Source: `core_rulebook/cr_equip_arms_armor.lst`, every record whose
+/// Source: `core_rulebook/cr_equip_arms_armor`, every record whose
 /// `TYPE:` facet contains `Finesseable`.
 pub const FINESSEABLE_WEAPON_KEYS: &[&str] = &[
     "Dagger",
@@ -480,7 +480,7 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     // SD-36 Epic F1c (2026-09-23, D5): corrected FROM the pinned oracle rows the converted-record
     // reader test cites (`crates/codex-ingest/tests/class_weapon_proficiency_via_converter.rs`),
     // never from prose. The Monk's `Weapon and Armor Proficiency ~ Monk` names Flurry of Blows
-    // (cr_abilities_class.lst:2794,2817) and apg_abilities_class.lst:41 `.MOD` adds Sword (Temple).
+    // (cr_abilities_class:2794,2817) and apg_abilities_class:41 `.MOD` adds Sword (Temple).
     ClassWeaponProficiency { class_id: "class:monk", tiers: &[], named: &["Club", "Crossbow (Light)", "Crossbow (Heavy)", "Dagger", "Handaxe", "Javelin", "Kama", "Nunchaku", "Quarterstaff", "Sai", "Shortspear", "Sword (Short)", "Shuriken", "Siangham", "Sling", "Spear", "Unarmed Strike", "Flurry of Blows", "Sword (Temple)"], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:oracle", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:paladin", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
@@ -538,16 +538,16 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     ClassWeaponProficiency { class_id: "class:unchained_barbarian", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
     // SD-36 Epic F1c (2026-09-23, D5): the Unchained Monk is taken on the Monk's class line
     // (F1c-3), whose `Monk` class ability grants Weapon and Armor Proficiency ~ Monk under
-    // PREVAREQ:Monk_CF_Proficiencies,0 (cr_abilities_globalvar.lst:581) -- a variable the
-    // Unchained selection does not set -- so Flurry of Blows (cr_abilities_class.lst:2817) and
-    // the apg_abilities_class.lst:41 `.MOD` Sword (Temple) are granted, as for the Monk. Its
+    // PREVAREQ:Monk_CF_Proficiencies,0 (cr_abilities_globalvar:581) -- a variable the
+    // Unchained selection does not set -- so Flurry of Blows (cr_abilities_class:2817) and
+    // the apg_abilities_class:41 `.MOD` Sword (Temple) are granted, as for the Monk. Its
     // Unarmed Strike comes through that record's `Weapon Prof ~ Auto` set (TYPE=Auto), which
     // this table does not list for any class but the CRB Monk.
     ClassWeaponProficiency { class_id: "class:unchained_monk", tiers: &[], named: &["Club", "Crossbow (Light)", "Crossbow (Heavy)", "Dagger", "Handaxe", "Javelin", "Kama", "Nunchaku", "Quarterstaff", "Sai", "Sword (Short)", "Shortspear", "Shuriken", "Siangham", "Sling", "Spear", "Flurry of Blows", "Sword (Temple)"], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:unchained_rogue", tiers: &[WeaponProficiency::Simple], named: &["Crossbow (Hand)", "Rapier", "Sap", "Shortbow", "Sword (Short)"], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:unchained_summoner", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
     // SD-31 wave 20 (chassis-coverage lane): Ultimate Combat's Gunslinger
-    // (`uc_abilities_class.lst`, `KEY:Gunslinger ~ Proficiencies`) grants
+    // (`uc_abilities_class`, `KEY:Gunslinger ~ Proficiencies`) grants
     // `ABILITY:Internal|AUTOMATIC|TYPE=WeaponProfMartial|TYPE=ArmorProfLight`
     // plus a second `ABILITY:Internal|AUTOMATIC|Weapon Prof ~ Auto|Weapon
     // Prof ~ Simple|...` indirection -- the same convention-2 shape Fighter
@@ -626,16 +626,16 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     // SD-36 Epic F1c (2026-09-23, D5): Occultist and Vigilante corrected FROM the oracle. Their
     // token `ABILITY:Internal|AUTOMATIC|TYPE=WeaponProfMartial` grants every Internal ability
     // tagged WeaponProfMartial, and `Weapon Prof ~ Simple` carries TYPE:WeaponProfSimple.
-    // WeaponProfMartial (cr_abilities_class.lst:2800), so the token itself grants Simple -- the
+    // WeaponProfMartial (cr_abilities_class:2800), so the token itself grants Simple -- the
     // "transcribe the token, not the prose" boundary above read the selector as Martial only.
     ClassWeaponProficiency { class_id: "class:occultist", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:vigilante", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:psychic", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:spiritualist", tiers: &[WeaponProficiency::Simple], named: &["Kukri", "Sap", "Scythe"], weapon_groups: &[] },
     // SD-36 Epic F1c (2026-09-23, D5): Psion corrected FROM the oracle: its class row grants
-    // `All Automatic Proficiencies` (up_classes.lst:258), which is AUTO:WEAPONPROF|Unarmed
-    // Strike|Spells (Ray)|Spells (Touch) (cr_abilities_class.lst:2785) plus Splash Weapon
-    // (ue_abilities.lst:21 `.MOD`).
+    // `All Automatic Proficiencies` (up_classes:258), which is AUTO:WEAPONPROF|Unarmed
+    // Strike|Spells (Ray)|Spells (Touch) (cr_abilities_class:2785) plus Splash Weapon
+    // (ue_abilities:21 `.MOD`).
     ClassWeaponProficiency { class_id: "class:psion", tiers: &[], named: &["Club", "Dagger", "Crossbow (Heavy)", "Crossbow (Light)", "Quarterstaff", "Shortspear", "Unarmed Strike", "Spells (Ray)", "Spells (Touch)", "Splash Weapon"], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:shifter", tiers: &[], named: &["Club", "Dagger", "Dart", "Quarterstaff", "Scimitar", "Scythe", "Sickle", "Shortspear", "Sling", "Spear"], weapon_groups: &[] },
     // SD-34 wave 34 lane C: this cycle's own re-derive of wave 33 lane C's
@@ -698,9 +698,9 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     //    name.
     //
     // SD-36 Epic F1c (2026-09-23, D5): Ninja corrected FROM the oracle. Its class row
-    // (uc_abilities_globalvar.lst:178) also grants `ABILITY:FEAT|AUTOMATIC|Simple Weapon
-    // Proficiency` (the Simple tier) and `All Automatic Proficiencies` (cr_abilities_class.lst:2785
-    // plus the ue_abilities.lst:21 `.MOD`), both under the same PREVAREQ:Ninja_CF_WeaponProficiencies,0
+    // (uc_abilities_globalvar:178) also grants `ABILITY:FEAT|AUTOMATIC|Simple Weapon
+    // Proficiency` (the Simple tier) and `All Automatic Proficiencies` (cr_abilities_class:2785
+    // plus the ue_abilities:21 `.MOD`), both under the same PREVAREQ:Ninja_CF_WeaponProficiencies,0
     // gate as the named list -- so the "no Simple token on this record" reading above was a record-
     // level view of a class-level grant.
     ClassWeaponProficiency { class_id: "class:ninja", tiers: &[WeaponProficiency::Simple], named: &["Shortbow", "Sword (Short)", "Kama", "Kusarigama (Sickle and Chain)", "Nunchaku", "Sai", "Shuriken", "Siangham", "Wakizashi", "Unarmed Strike", "Spells (Ray)", "Spells (Touch)", "Splash Weapon"], weapon_groups: &[] },
@@ -749,7 +749,7 @@ pub fn class_is_proficient_with(
 /// mechanical-grant possession-tracking sub-cause cycle 5's own next-cycle
 /// plan named). One class's armor/shield proficiency, read the same way
 /// [`ClassWeaponProficiency`] is: each field transcribed from that class's
-/// own `cr_abilities_class.lst` `"Weapon and Armor Proficiency ~ <Class>"`
+/// own `cr_abilities_class` `"Weapon and Armor Proficiency ~ <Class>"`
 /// record's literal `ABILITY:Internal|AUTOMATIC|Armor Prof ~ <Tier>` /
 /// `Shield Prof` / `Shield Prof ~ Tower` indirection targets -- never a
 /// shape guess. PF1 armor proficiency has no per-item exotic-armor
@@ -989,7 +989,7 @@ mod class_weapon_proficiency_tests {
 
     /// SD-31 wave 20 (chassis-coverage lane): Ultimate Combat's Gunslinger
     /// carries a real corpus proficiency record
-    /// (`uc_abilities_class.lst`, `KEY:Gunslinger ~ Proficiencies`) --
+    /// (`uc_abilities_class`, `KEY:Gunslinger ~ Proficiencies`) --
     /// `ABILITY:Internal|AUTOMATIC|TYPE=WeaponProfMartial|TYPE=ArmorProfLight`
     /// plus a second indirection through `Weapon Prof ~ Auto`/`Weapon Prof
     /// ~ Simple` -- the same convention-2 indirection shape Fighter and
@@ -1016,12 +1016,12 @@ mod class_weapon_proficiency_tests {
     /// combat/class_feature/ninja/ninja_weapon_proficiencies.json`) --
     /// nine named weapons, transcribed verbatim. SD-36 Epic F1c (D5) added
     /// the Simple tier and the automatic proficiencies its class row grants
-    /// (uc_abilities_globalvar.lst:178).
+    /// (uc_abilities_globalvar:178).
     #[test]
     fn ninja_has_its_real_named_weapon_list_and_the_simple_tier() {
         let ninja = prof("class:ninja");
         // SD-36 Epic F1c (D5): the class row grants the Simple Weapon Proficiency feat
-        // (uc_abilities_globalvar.lst:178) -- the Simple tier, and nothing Martial.
+        // (uc_abilities_globalvar:178) -- the Simple tier, and nothing Martial.
         assert_eq!(ninja.tiers, &[WeaponProficiency::Simple]);
         assert!(ninja.weapon_groups.is_empty());
         for granted in ["Shortbow", "Short Sword", "Kama", "Nunchaku", "Sai", "Shuriken", "Siangham"] {

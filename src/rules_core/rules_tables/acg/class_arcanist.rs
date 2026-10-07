@@ -1,6 +1,6 @@
 //! ACG Arcanist class chassis table — one row per level.
 //!
-//! Source: PCGen `acg_classes.lst`, `CLASS:Arcanist` record (line 11 of
+//! Source: PCGen `acg_classes`, `CLASS:Arcanist` record (line 11 of
 //! the SD-22 Epic 4 corpus checkout), parsed via
 //! `pcgen_import::lst_parser::spellcasting_class` (SD-22 Epic 4 widened
 //! `SPELLCASTING_CLASS_NAMES` to recognize it — see that module's doc
@@ -25,7 +25,7 @@
 //! Spell Specialist, ...) and the arcanist spell-per-day table are out
 //! of scope for this cycle — transcribing them without going back
 //! through the LST's per-level feature blocks
-//! (`acg_abilities_class.lst`) in a dedicated ingest slice would be
+//! (`acg_abilities_class`) in a dedicated ingest slice would be
 //! exactly the fabricated-data risk `class_tables.rs`'s own doc comment
 //! and `AGENTS.md` rule out.
 
@@ -58,5 +58,5 @@ pub fn class_table() -> Vec<ClassTableRow> {
 }
 
 /// `HD:6` on the real `CLASS:Arcanist` record (Arcanist HD:6 in
-/// `advanced_class_guide/acg_classes.lst`).
+/// `advanced_class_guide/acg_classes`).
 pub const HIT_DIE: u8 = 6;

@@ -26,7 +26,7 @@
 //!
 //! **Widened 2026-07-27 (task #31) from CRB-only to all ingested books**
 //! (`risks-and-open-questions.md` item 53). Per-file: **236 from
-//! `cr_spells.lst` + 34 from `apg_spells.lst` + 31 from `acg_spells.lst`
+//! `cr_spells` + 34 from `apg_spells` + 31 from `acg_spells`
 //! = 301**, all names distinct, no `.MOD` record assigns Cleric.
 //!
 //! **Four records carry an optional-rule gate on the level** -- more than

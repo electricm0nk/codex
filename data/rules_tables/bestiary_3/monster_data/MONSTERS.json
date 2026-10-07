@@ -66,7 +66,7 @@
         "Adaro ~ Speak with Sharks"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 9
     },
     {
@@ -127,7 +127,7 @@
         "Adherer ~ Adhesive"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 10
     },
     {
@@ -186,7 +186,7 @@
         "Adlet ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 11
     },
     {
@@ -252,7 +252,7 @@
         "Ahuizotl ~ Voice Mimicry"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 12
     },
     {
@@ -319,7 +319,7 @@
         "Akhlut ~ Change Shape"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 14
     },
     {
@@ -364,7 +364,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 15
     },
     {
@@ -423,7 +423,7 @@
         "Alraune ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 16
     },
     {
@@ -484,7 +484,7 @@
         "Annis Hag ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 17
     },
     {
@@ -545,7 +545,7 @@
         "Ant Lion (Giant) ~ Sand Trap"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 18
     },
     {
@@ -606,7 +606,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 19
     },
     {
@@ -666,7 +666,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 21
     },
     {
@@ -724,7 +724,7 @@
         "Ascomoid ~ Spores"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 22
     },
     {
@@ -783,7 +783,7 @@
         "Adhukait ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 23
     },
     {
@@ -847,7 +847,7 @@
         "Aghasura ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 24
     },
     {
@@ -924,7 +924,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 25
     },
     {
@@ -979,7 +979,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 26
     },
     {
@@ -1034,7 +1034,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 27
     },
     {
@@ -1092,7 +1092,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 28
     },
     {
@@ -1147,7 +1147,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 29
     },
     {
@@ -1202,7 +1202,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 30
     },
     {
@@ -1261,7 +1261,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 31
     },
     {
@@ -1332,7 +1332,7 @@
         "Azruverda ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 32
     },
     {
@@ -1402,7 +1402,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 33
     },
     {
@@ -1486,7 +1486,7 @@
         "Bandersnatch ~ Rend"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 34
     },
     {
@@ -1558,7 +1558,7 @@
         "Baregara ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 35
     },
     {
@@ -1623,7 +1623,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 36
     },
     {
@@ -1696,7 +1696,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 37
     },
     {
@@ -1767,7 +1767,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 38
     },
     {
@@ -1834,7 +1834,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 39
     },
     {
@@ -1906,7 +1906,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 40
     },
     {
@@ -1959,7 +1959,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 41
     },
     {
@@ -2019,7 +2019,7 @@
         "Bogeyman ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 42
     },
     {
@@ -2085,7 +2085,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 43
     },
     {
@@ -2150,7 +2150,7 @@
         "Carnivorous Crystal ~ Split"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 45
     },
     {
@@ -2204,7 +2204,7 @@
         "Caryatid Column ~ Statue"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 46
     },
     {
@@ -2270,7 +2270,7 @@
         "Caulborn ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 48
     },
     {
@@ -2336,7 +2336,7 @@
         "Cecaelia ~ Tentacle Sense"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 49
     },
     {
@@ -2399,7 +2399,7 @@
         "Ceratioidi ~ Primitive Amphibian"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 50
     },
     {
@@ -2457,7 +2457,7 @@
         "Cerberi ~ Soul Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 51
     },
     {
@@ -2522,7 +2522,7 @@
         "Cerebric Fungus ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 52
     },
     {
@@ -2577,7 +2577,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 53
     },
     {
@@ -2640,7 +2640,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 54
     },
     {
@@ -2695,7 +2695,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 55
     },
     {
@@ -2745,7 +2745,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 56
     },
     {
@@ -2806,7 +2806,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 57
     },
     {
@@ -2866,7 +2866,7 @@
         "Cold Rider ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 58
     },
     {
@@ -2925,7 +2925,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 59
     },
     {
@@ -2984,7 +2984,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 60
     },
     {
@@ -3043,7 +3043,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 61
     },
     {
@@ -3093,7 +3093,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 62
     },
     {
@@ -3148,7 +3148,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 63
     },
     {
@@ -3210,7 +3210,7 @@
         "Deathtrap Ooze ~ Trap Form"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 64
     },
     {
@@ -3272,7 +3272,7 @@
         "Deathweb ~ Infestation"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 65
     },
     {
@@ -3334,7 +3334,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 66
     },
     {
@@ -3401,7 +3401,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 67
     },
     {
@@ -3466,7 +3466,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 68
     },
     {
@@ -3527,7 +3527,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 69
     },
     {
@@ -3592,7 +3592,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 70
     },
     {
@@ -3653,7 +3653,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 71
     },
     {
@@ -3708,7 +3708,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 72
     },
     {
@@ -3777,7 +3777,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 73
     },
     {
@@ -3832,7 +3832,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 74
     },
     {
@@ -3887,7 +3887,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 75
     },
     {
@@ -3942,7 +3942,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 76
     },
     {
@@ -3997,7 +3997,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 77
     },
     {
@@ -4060,7 +4060,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 78
     },
     {
@@ -4121,7 +4121,7 @@
         "Dire Corby ~ Leap"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 79
     },
     {
@@ -4185,7 +4185,7 @@
         "Disenchanter ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 80
     },
     {
@@ -4240,7 +4240,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 81
     },
     {
@@ -4309,7 +4309,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 82
     },
     {
@@ -4378,7 +4378,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 83
     },
     {
@@ -4445,7 +4445,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 85
     },
     {
@@ -4506,7 +4506,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 86
     },
     {
@@ -4561,7 +4561,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 87
     },
     {
@@ -4620,7 +4620,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 88
     },
     {
@@ -4673,7 +4673,7 @@
         "Forest Dragon ~ Stony Death"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 91
     },
     {
@@ -4733,7 +4733,7 @@
         "Sea Dragon ~ Unfettered Swimmer"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 92
     },
     {
@@ -4790,7 +4790,7 @@
         "Sky Dragon ~ Primal Lightning"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 93
     },
     {
@@ -4846,7 +4846,7 @@
         "Sovereign Dragon ~ Violent Retort"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 94
     },
     {
@@ -4894,7 +4894,7 @@
         "Underworld Dragon ~ Underworld Burrower"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 95
     },
     {
@@ -4961,7 +4961,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 97
     },
     {
@@ -5030,7 +5030,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 98
     },
     {
@@ -5097,7 +5097,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 99
     },
     {
@@ -5166,7 +5166,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 100
     },
     {
@@ -5220,7 +5220,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 101
     },
     {
@@ -5275,7 +5275,7 @@
         "Ecorche ~ Bleed"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 102
     },
     {
@@ -5352,7 +5352,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 103
     },
     {
@@ -5377,7 +5377,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 104
     },
     {
@@ -5438,7 +5438,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 105
     },
     {
@@ -5493,7 +5493,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 106
     },
     {
@@ -5548,7 +5548,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 107
     },
     {
@@ -5607,7 +5607,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 108
     },
     {
@@ -5662,7 +5662,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 109
     },
     {
@@ -5721,7 +5721,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 110
     },
     {
@@ -5774,7 +5774,7 @@
         "Faun ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 111
     },
     {
@@ -5832,7 +5832,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 112
     },
     {
@@ -5900,7 +5900,7 @@
         "Scent",
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 113
     },
     {
@@ -5967,7 +5967,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 114
     },
     {
@@ -6031,7 +6031,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 115
     },
     {
@@ -6088,7 +6088,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 116
     },
     {
@@ -6149,7 +6149,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 117
     },
     {
@@ -6212,7 +6212,7 @@
         "Garden Ooze ~ Stink"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 118
     },
     {
@@ -6290,7 +6290,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 119
     },
     {
@@ -6371,7 +6371,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 120
     },
     {
@@ -6433,7 +6433,7 @@
         "Ghul ~ Genie-kin"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 121
     },
     {
@@ -6488,7 +6488,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 123
     },
     {
@@ -6543,7 +6543,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 124
     },
     {
@@ -6598,7 +6598,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 125
     },
     {
@@ -6653,7 +6653,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 126
     },
     {
@@ -6716,7 +6716,7 @@
         "Girtablilu ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 127
     },
     {
@@ -6779,7 +6779,7 @@
         "Globster ~ Nausea"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 128
     },
     {
@@ -6845,7 +6845,7 @@
         "Goblin Snake ~ Snake Empathy"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 129
     },
     {
@@ -6892,7 +6892,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 130
     },
     {
@@ -6935,7 +6935,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 131
     },
     {
@@ -6982,7 +6982,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 132
     },
     {
@@ -7037,7 +7037,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 133
     },
     {
@@ -7110,7 +7110,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 134
     },
     {
@@ -7170,7 +7170,7 @@
         "Graveknight ~ Special Attacks"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 135
     },
     {
@@ -7229,7 +7229,7 @@
         "Graven Guardian ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 136
     },
     {
@@ -7292,7 +7292,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 137
     },
     {
@@ -7364,7 +7364,7 @@
         "Grodair ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 138
     },
     {
@@ -7435,7 +7435,7 @@
         "Grootslang ~ Thunderous Stomp"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 139
     },
     {
@@ -7502,7 +7502,7 @@
         "Guecubu ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 140
     },
     {
@@ -7566,7 +7566,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 141
     },
     {
@@ -7621,7 +7621,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 142
     },
     {
@@ -7680,7 +7680,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 143
     },
     {
@@ -7753,7 +7753,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 144
     },
     {
@@ -7815,7 +7815,7 @@
         "Hollow Serpent ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 145
     },
     {
@@ -7874,7 +7874,7 @@
         "Huecuva ~ False Humanity"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 146
     },
     {
@@ -7932,7 +7932,7 @@
         "Humbaba ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 147
     },
     {
@@ -7995,7 +7995,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 148
     },
     {
@@ -8061,7 +8061,7 @@
         "Iku-Turso ~ Light Lure"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 149
     },
     {
@@ -8121,7 +8121,7 @@
         "Jackalwere ~ Weapon Intuition"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 150
     },
     {
@@ -8178,7 +8178,7 @@
         "Death's Head Jellyfish ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 151
     },
     {
@@ -8229,7 +8229,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 152
     },
     {
@@ -8302,7 +8302,7 @@
         "Jorogumo ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 153
     },
     {
@@ -8372,7 +8372,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 155
     },
     {
@@ -8440,7 +8440,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 157
     },
     {
@@ -8503,7 +8503,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 158
     },
     {
@@ -8566,7 +8566,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 159
     },
     {
@@ -8621,7 +8621,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 160
     },
     {
@@ -8671,7 +8671,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 161
     },
     {
@@ -8731,7 +8731,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 162
     },
     {
@@ -8783,7 +8783,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 163
     },
     {
@@ -8844,7 +8844,7 @@
         "Kappa ~ Head Bowl"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 164
     },
     {
@@ -8909,7 +8909,7 @@
         "Kech ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 165
     },
     {
@@ -8978,7 +8978,7 @@
         "Scent",
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 166
     },
     {
@@ -9054,7 +9054,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 167
     },
     {
@@ -9123,7 +9123,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 169
     },
     {
@@ -9178,7 +9178,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 170
     },
     {
@@ -9246,7 +9246,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 171
     },
     {
@@ -9309,7 +9309,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 172
     },
     {
@@ -9368,7 +9368,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 173
     },
     {
@@ -9433,7 +9433,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 174
     },
     {
@@ -9496,7 +9496,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 175
     },
     {
@@ -9570,7 +9570,7 @@
         "Scent",
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 176
     },
     {
@@ -9644,7 +9644,7 @@
         "Scent",
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 177
     },
     {
@@ -9718,7 +9718,7 @@
         "Scent",
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 178
     },
     {
@@ -9796,7 +9796,7 @@
         "Scent",
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 179
     },
     {
@@ -9855,7 +9855,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 180
     },
     {
@@ -9918,7 +9918,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 181
     },
     {
@@ -9980,7 +9980,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 182
     },
     {
@@ -10041,7 +10041,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 183
     },
     {
@@ -10103,7 +10103,7 @@
         "Magmin ~ Searing Aura"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 184
     },
     {
@@ -10172,7 +10172,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 185
     },
     {
@@ -10229,7 +10229,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 186
     },
     {
@@ -10284,7 +10284,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 187
     },
     {
@@ -10345,7 +10345,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 188
     },
     {
@@ -10402,7 +10402,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 189
     },
     {
@@ -10461,7 +10461,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 190
     },
     {
@@ -10522,7 +10522,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 191
     },
     {
@@ -10600,7 +10600,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 193
     },
     {
@@ -10671,7 +10671,7 @@
         "Moon-Beast ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 194
     },
     {
@@ -10733,7 +10733,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 195
     },
     {
@@ -10788,7 +10788,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 196
     },
     {
@@ -10843,7 +10843,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 197
     },
     {
@@ -10906,7 +10906,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 198
     },
     {
@@ -10965,7 +10965,7 @@
         "Nephilim ~ Soul of Sorrow"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 199
     },
     {
@@ -11022,7 +11022,7 @@
         "Nixie ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 200
     },
     {
@@ -11078,7 +11078,7 @@
         "Norn ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 202
     },
     {
@@ -11145,7 +11145,7 @@
         "Nuckelavee ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 203
     },
     {
@@ -11208,7 +11208,7 @@
         "Nue ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 204
     },
     {
@@ -11269,7 +11269,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 205
     },
     {
@@ -11334,7 +11334,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 207
     },
     {
@@ -11389,7 +11389,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 208
     },
     {
@@ -11450,7 +11450,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 211
     },
     {
@@ -11515,7 +11515,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 213
     },
     {
@@ -11576,7 +11576,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 214
     },
     {
@@ -11637,7 +11637,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 215
     },
     {
@@ -11691,7 +11691,7 @@
         "Pale Stranger ~ Stranger's Shot"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 216
     },
     {
@@ -11746,7 +11746,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 217
     },
     {
@@ -11801,7 +11801,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 218
     },
     {
@@ -11867,7 +11867,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 219
     },
     {
@@ -11928,7 +11928,7 @@
         "Phantom Fungus ~ Phantom Flesh"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 220
     },
     {
@@ -11994,7 +11994,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 221
     },
     {
@@ -12073,7 +12073,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 222
     },
     {
@@ -12130,7 +12130,7 @@
         "Porcupine ~ Quills"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 223
     },
     {
@@ -12185,7 +12185,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 224
     },
     {
@@ -12249,7 +12249,7 @@
         "Pukwudgie ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 225
     },
     {
@@ -12312,7 +12312,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 226
     },
     {
@@ -12373,7 +12373,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 227
     },
     {
@@ -12432,7 +12432,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 228
     },
     {
@@ -12493,7 +12493,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 230
     },
     {
@@ -12561,7 +12561,7 @@
         "Rusalka ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 231
     },
     {
@@ -12630,7 +12630,7 @@
         "Scent",
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 232
     },
     {
@@ -12699,7 +12699,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 233
     },
     {
@@ -12765,7 +12765,7 @@
         "Sargassum Fiend ~ Mirage"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 234
     },
     {
@@ -12825,7 +12825,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 235
     },
     {
@@ -12884,7 +12884,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 236
     },
     {
@@ -12943,7 +12943,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 237
     },
     {
@@ -12998,7 +12998,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 238
     },
     {
@@ -13053,7 +13053,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 240
     },
     {
@@ -13108,7 +13108,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 241
     },
     {
@@ -13163,7 +13163,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 242
     },
     {
@@ -13218,7 +13218,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 243
     },
     {
@@ -13273,7 +13273,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 244
     },
     {
@@ -13328,7 +13328,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 245
     },
     {
@@ -13389,7 +13389,7 @@
         "Sea Bonze ~ Dooming Gaze"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 246
     },
     {
@@ -13456,7 +13456,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 247
     },
     {
@@ -13518,7 +13518,7 @@
         "Shadow Mastiff ~ Shadow Blend"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 248
     },
     {
@@ -13577,7 +13577,7 @@
         "Shae ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 249
     },
     {
@@ -13649,7 +13649,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 250
     },
     {
@@ -13713,7 +13713,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 251
     },
     {
@@ -13792,7 +13792,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 252
     },
     {
@@ -13864,7 +13864,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 254
     },
     {
@@ -13931,7 +13931,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 255
     },
     {
@@ -13994,7 +13994,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 256
     },
     {
@@ -14060,7 +14060,7 @@
         "Sleipnir ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 257
     },
     {
@@ -14123,7 +14123,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 258
     },
     {
@@ -14186,7 +14186,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 259
     },
     {
@@ -14247,7 +14247,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 260
     },
     {
@@ -14312,7 +14312,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 261
     },
     {
@@ -14377,7 +14377,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 262
     },
     {
@@ -14436,7 +14436,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 264
     },
     {
@@ -14495,7 +14495,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 265
     },
     {
@@ -14568,7 +14568,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 266
     },
     {
@@ -14644,7 +14644,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 268
     },
     {
@@ -14702,7 +14702,7 @@
         "Tanuki ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 271
     },
     {
@@ -14763,7 +14763,7 @@
         "Taotieh ~ Swallow Whole"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 272
     },
     {
@@ -14824,7 +14824,7 @@
         "Tatzlwyrm ~ Poison Gasp"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 273
     },
     {
@@ -14882,7 +14882,7 @@
         "Terra-Cotta Soldier ~ Rank Fighting"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 274
     },
     {
@@ -14943,7 +14943,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 275
     },
     {
@@ -15004,7 +15004,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 276
     },
     {
@@ -15065,7 +15065,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 277
     },
     {
@@ -15124,7 +15124,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 278
     },
     {
@@ -15189,7 +15189,7 @@
         "Tojanida ~ Ink Cloud"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 279
     },
     {
@@ -15251,7 +15251,7 @@
         "Tophet ~ Swallow Whole"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 280
     },
     {
@@ -15310,7 +15310,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 281
     },
     {
@@ -15373,7 +15373,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 282
     },
     {
@@ -15430,7 +15430,7 @@
         "Trollhound ~ Disease"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 283
     },
     {
@@ -15498,7 +15498,7 @@
         "Tupilaq ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 284
     },
     {
@@ -15572,7 +15572,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 288
     },
     {
@@ -15633,7 +15633,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 289
     },
     {
@@ -15695,7 +15695,7 @@
         "Vodyanoi ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 295
     },
     {
@@ -15760,7 +15760,7 @@
         "Voonith ~ Blood-Freezing Howl"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 296
     },
     {
@@ -15821,7 +15821,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 297
     },
     {
@@ -15882,7 +15882,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 298
     },
     {
@@ -15949,7 +15949,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 299
     },
     {
@@ -16014,7 +16014,7 @@
         "Yithian ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 300
     },
     {
@@ -16077,7 +16077,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 301
     },
     {
@@ -16135,7 +16135,7 @@
         "Zuvembie ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "b3_races.lst",
+      "source_file": "b3_races",
       "source_line": 303
     }
   ]

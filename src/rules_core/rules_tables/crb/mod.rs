@@ -33,13 +33,13 @@
 //!   near-misses: they are the generic `Animal Companion ~ …`,
 //!   `Animal Companion Feat ~ …`, `Animal Trick ~ …` and `Animal Training ~ …`
 //!   rows, which hang off the *Animal Companion class* rather than off any
-//!   individual creature. No creature row in `cr_races_companion.lst` names one,
+//!   individual creature. No creature row in `cr_races_companion` names one,
 //!   and none carries a `PRERACE:` back to a creature, because they apply to
 //!   every animal companion equally. Reaching them needs the class-progression
 //!   record type this chassis does not model -- see the next group, which is the
 //!   same finding from the other side.
 //!
-//! * **2 `*_classes_companion.lst` CLASS rows** -- `Companion` and
+//! * **2 `*_classes_companion` CLASS rows** -- `Companion` and
 //!   `Shadow Companion` (`decisions.md §65.1`). A PCGen monster class is a
 //!   hit-dice progression, not a creature and not an ability. Until this round
 //!   the transcriber *refused outright* on any book carrying the shape; round 8
@@ -73,7 +73,7 @@ pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
     companion_data::COMPANION_ABILITIES
 }
 
-/// Every `*_classes_companion.lst` row this book defines, in corpus row
+/// Every `*_classes_companion` row this book defines, in corpus row
 /// order. See `companion_chassis::CompanionClassRecord`.
 pub const fn companion_classes_static() -> &'static [CompanionClassRecord] {
     companion_data::COMPANION_CLASSES

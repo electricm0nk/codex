@@ -1,7 +1,7 @@
 //! PF1 CRB equipment tables — full corpus coverage.
 //!
 //! Record coverage: every real, active (non-`.MOD`) record across all four
-//! `core_rulebook/cr_equip_*.lst` / `cr_equipmods.lst` categories (2977
+//! `core_rulebook/cr_equip_*` / `cr_equipmods` categories (2977
 //! total; see `EquipmentFieldCoverage` below), copied verbatim (`KEY:`/
 //! name, `COST:`) from the real PCGen corpus since a SD-17 `KEY:`-merge-
 //! dedup pass. SD-24 Epic 6 criteria 6.3/6.4 additionally populated
@@ -34,10 +34,10 @@ impl EquipmentCategory {
     /// Which `core_rulebook` corpus file this category's records live in.
     pub fn corpus_file_name(self) -> &'static str {
         match self {
-            EquipmentCategory::ArmsArmor => "cr_equip_arms_armor.lst",
-            EquipmentCategory::General => "cr_equip_general.lst",
-            EquipmentCategory::MagicItems => "cr_equip_magic_items.lst",
-            EquipmentCategory::Equipmods => "cr_equipmods.lst",
+            EquipmentCategory::ArmsArmor => "cr_equip_arms_armor",
+            EquipmentCategory::General => "cr_equip_general",
+            EquipmentCategory::MagicItems => "cr_equip_magic_items",
+            EquipmentCategory::Equipmods => "cr_equipmods",
         }
     }
 }
@@ -64,7 +64,7 @@ pub struct EquipmentTableEntry {
     pub cost_gp: Option<f64>,
     /// Weight in pounds from the corpus `WT:` token (SD-24 criterion
     /// 6.3). `None` when the corpus genuinely carries no `WT:` token for
-    /// this record -- true for every `cr_equipmods.lst` record (equipment
+    /// this record -- true for every `cr_equipmods` record (equipment
     /// *modifiers* have no independent physical weight of their own; they
     /// modify the base item's weight/cost, matching the same "where
     /// applicable" carve-out `decisions.md §5` grants cost) and for a
@@ -76,7 +76,7 @@ pub struct EquipmentTableEntry {
     /// `&lbracket;`/`&rbracket;` -> `[`/`]`, `&pipe;` -> `|`), sourced from
     /// one of three places, each traceable and none fabricated:
     /// 1. The record's own corpus `DESC:` token (the original SD-24
-    ///    source; includes 67 `cr_equip_arms_armor.lst` records using the
+    ///    source; includes 67 `cr_equip_arms_armor` records using the
     ///    corpus's `DESC:.CLEAR`-then-`DESC:<real text>` convention -- SD-25
     ///    criterion 7.N fixed an SD-24 codegen bug that had captured only
     ///    the `.CLEAR` sentinel and dropped the real text after it).
@@ -87,15 +87,15 @@ pub struct EquipmentTableEntry {
     ///    declared data-inheritance convention (117 records: 98 in
     ///    `arms_armor.rs`, 19 in `general.rs`).
     /// 3. A cited d20pfsrd.com second source (SD-25 criterion 7.N; 83
-    ///    `cr_equipmods.lst` records for confidently identity-matched named
+    ///    `cr_equipmods` records for confidently identity-matched named
     ///    special materials/special abilities the corpus's `EQUIPMOD` rows
     ///    never carried a `DESC:` token for at all) -- see the cycle
     ///    receipt for the per-entry source URL.
     ///
     /// `None` when none of the above apply -- this is common for
-    /// `cr_equip_general.lst`/`cr_equip_arms_armor.lst` template rows whose
+    /// `cr_equip_general`/`cr_equip_arms_armor` template rows whose
     /// own base record also has no description to inherit, and for
-    /// `cr_equipmods.lst`'s generic bookkeeping categories (body-slot
+    /// `cr_equipmods`'s generic bookkeeping categories (body-slot
     /// markers, per-value cost-formula rows) that name no real rules
     /// concept a second source could describe. No description is ever
     /// fabricated to fill this gap; the residual `None` rate is the honest
@@ -120,8 +120,8 @@ pub struct EquipmentFieldCoverage {
     /// Records currently in `equipment_tables()`.
     pub total_records: u32,
     /// Real, active (non-`.MOD`) record count across
-    /// `cr_equip_arms_armor.lst` (310) + `cr_equip_general.lst` (453) +
-    /// `cr_equip_magic_items.lst` (1556) + `cr_equipmods.lst` (658),
+    /// `cr_equip_arms_armor` (310) + `cr_equip_general` (453) +
+    /// `cr_equip_magic_items` (1556) + `cr_equipmods` (658),
     /// post SD-17's `KEY:`-based merge-dedup fix -- each per-category
     /// module under `equipment_data/` already documents its own count in
     /// its module doc comment; this is their sum.
@@ -133,7 +133,7 @@ pub struct EquipmentFieldCoverage {
     /// Records with `weight_lbs.is_some()` (SD-24 criterion 6.3, landed
     /// this cycle). A real per-row count, not a judgment call: every
     /// `None` here is a genuine corpus `WT:`-token absence (all of
-    /// `cr_equipmods.lst`, plus a smaller number of `(Base)`-template
+    /// `cr_equipmods`, plus a smaller number of `(Base)`-template
     /// rows in the other three categories) -- see `weight_lbs`'s own doc
     /// comment for the honest ceiling.
     pub has_weight: u32,

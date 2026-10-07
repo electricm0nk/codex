@@ -1,6 +1,6 @@
 //! APG Alchemist class chassis table — one row per level.
 //!
-//! Source: PCGen `apg_classes.lst`, `CLASS:Alchemist` record (line 11 of
+//! Source: PCGen `apg_classes`, `CLASS:Alchemist` record (line 11 of
 //! the SD-22 Epic 3 corpus checkout), parsed via
 //! `pcgen_import::lst_parser::spellcasting_class` (SD-22 Epic 3 widened
 //! `SPELLCASTING_CLASS_NAMES` to recognize it — see that module's doc
@@ -23,7 +23,7 @@
 //! (Bombs, Discoveries, Mutagen, Brew Potion, ...) and the extract
 //! spell-per-day table are out of scope for this cycle — transcribing
 //! them without going back through the LST's per-level feature blocks
-//! (`apg_abilities_class.lst`) in a dedicated ingest slice would be
+//! (`apg_abilities_class`) in a dedicated ingest slice would be
 //! exactly the fabricated-data risk `class_tables.rs`'s own doc comment
 //! and `AGENTS.md` rule out.
 
@@ -33,7 +33,7 @@ use super::ClassTableRow;
 pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 
 /// `HD:8` on the real `CLASS:Alchemist` record (v0.6 alpha swarm, risks
-/// item 8), verified directly against `apg_classes.lst` line 11 (the same
+/// item 8), verified directly against `apg_classes` line 11 (the same
 /// real line this file's own module doc comment already cites for the
 /// BAB/save tokens).
 pub const HIT_DIE: u8 = 8;

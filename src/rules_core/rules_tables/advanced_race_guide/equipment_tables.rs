@@ -1,9 +1,9 @@
 //! ARG shared equipment tables -- full in-scope corpus coverage.
 //!
 //! Record coverage: every real, active (non-`.MOD`) record across
-//! `arg_equip_arms_armor.lst`, `arg_equip_general.lst`,
-//! `arg_equip_magic_items.lst`, and `arg_equipmods.lst` -- disambiguated by
-//! source file (unlike ACG's single combined `acg_equip.lst`, ARG carries
+//! `arg_equip_arms_armor`, `arg_equip_general`,
+//! `arg_equip_magic_items`, and `arg_equipmods` -- disambiguated by
+//! source file (unlike ACG's single combined `acg_equip`, ARG carries
 //! ArmsArmor/General/MagicItems in 3 separate files, the same shape CRB's
 //! own 4-file split already establishes).
 //!
@@ -13,11 +13,11 @@
 //! 78, Equipmods 15 -- 200 total. A small
 //! number of genuine corpus defects were resolved during extraction (never
 //! fabricated around): one byte-for-byte duplicate `Bonebreaker Gauntlets`
-//! row in `arg_equip_magic_items.lst` (kept the first occurrence), one
+//! row in `arg_equip_magic_items` (kept the first occurrence), one
 //! redundant `Claw Blades (Catfolk).COPY=Rending Claw Blades` row in
-//! `arg_equip_arms_armor.lst` that duplicates an already-fully-specified
+//! `arg_equip_arms_armor` that duplicates an already-fully-specified
 //! `Claw Blades (Catfolk)` row under the same display name (kept the richer
-//! row), and `arg_equipmods.lst`'s own trailing `# Old KEYs`
+//! row), and `arg_equipmods`'s own trailing `# Old KEYs`
 //! `VISIBLE:NO`-alias block (14 rows, excluded -- see
 //! `equipment_data/equipmods.rs`'s own doc comment).
 //!
@@ -50,7 +50,7 @@ impl EquipmentCategory {
 #[cfg_attr(test, derive(schemars::JsonSchema))]
 #[cfg_attr(test, schemars(rename = "advanced_race_guide__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
-    /// Equipment records carry their `name` (or, for `arg_equipmods.lst`,
+    /// Equipment records carry their `name` (or, for `arg_equipmods`,
     /// the explicit `KEY:` token when present) as the corpus identity.
     pub key: &'static str,
     pub category: EquipmentCategory,
@@ -62,7 +62,7 @@ pub struct EquipmentTableEntry {
     pub cost_gp: Option<f64>,
     /// Weight in pounds from the corpus `WT:` token. `None` when the corpus
     /// genuinely carries no `WT:` token for this record (true for every
-    /// `arg_equipmods.lst` record, matching CRB's/ACG's own established
+    /// `arg_equipmods` record, matching CRB's/ACG's own established
     /// finding that equipment *modifiers* carry no independent weight).
     pub weight_lbs: Option<f64>,
     /// Descriptive text, sourced from the corpus `SPROP:` token -- see this

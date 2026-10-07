@@ -1,0 +1,25 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running tests/rules_tables_citation_burn_down.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/rules_tables_citation_burn_down-34d755b2c78952df)
+
+running 3 tests
+test the_scan_counts_a_planted_citation ... ok
+test the_compiled_tables_hold_no_citation_literal ... ok
+test the_shipped_data_package_holds_no_citation_literal ... FAILED
+
+failures:
+
+---- the_shipped_data_package_holds_no_citation_literal stdout ----
+
+thread 'the_shipped_data_package_holds_no_citation_literal' (336199) panicked at tests/rules_tables_citation_burn_down.rs:75:5:
+assertion `left == right` failed: the data package still cites the list-file extension
+  left: 1
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    the_shipped_data_package_holds_no_citation_literal
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s
+
+error: test failed, to rerun pass `--test rules_tables_citation_burn_down`

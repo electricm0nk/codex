@@ -7,10 +7,10 @@
 //! Every formula below is transcribed from the corpus's own already-
 //! ingested tokens (`data/corpus/ultimate_psionics/class_feature/
 //! soulknife/*.json`, each record's own ingest token array, sourced from
-//! `up_abilities_class.lst` — the roster's own `source_file` for every
+//! `up_abilities_class` — the roster's own `source_file` for every
 //! Soulknife record).
 
-/// `up_abilities_class.lst:728`, `Form Mind Blade`: this row's own `DESC:`
+/// `up_abilities_class:728`, `Form Mind Blade`: this row's own `DESC:`
 /// carries no numeric substitution — the mind blade's only magnitude
 /// output is `BONUS:VAR|MndBladeLVL|SoulknifeLVL`, the tracked level fed
 /// to `enhanced_mind_blade_max_enhancement_bonus` below. `None` below
@@ -22,7 +22,7 @@ pub fn form_mind_blade_level(level: u8) -> Option<i16> {
     Some(i16::from(level))
 }
 
-/// `up_abilities_class.lst:738`, `Enhanced Mind Blade`:
+/// `up_abilities_class:738`, `Enhanced Mind Blade`:
 /// `BONUS:VAR|MndBladeMxEnhancement|min((EnhancedMndBladeLVL/3),5)`,
 /// `EnhancedMndBladeLVL = MndBladeLVL = SoulknifeLVL` — the maximum
 /// enhancement bonus a mind blade can carry. `None` below level 1 (the
@@ -35,7 +35,7 @@ pub fn enhanced_mind_blade_max_enhancement_bonus(level: u8) -> Option<i16> {
     Some((i16::from(level) / 3).min(5))
 }
 
-/// `up_abilities_class.lst:739`, `Psychic Strike`:
+/// `up_abilities_class:739`, `Psychic Strike`:
 /// `BONUS:VAR|PsychicStrikeDieType|8` — a flat d8 die size, not
 /// level-scaled (the dice *count*, `PsychicStrikeDice =
 /// (SoulknifeLVL+1)/4`, is this row's other token but not the roster's
@@ -48,7 +48,7 @@ pub fn psychic_strike_die_size(level: u8) -> Option<i16> {
     Some(8)
 }
 
-/// `up_abilities_class.lst:740`, `Quick Draw`:
+/// `up_abilities_class:740`, `Quick Draw`:
 /// `BONUS:VAR|QuickDrawTimes|1` — a flat one manifestation per round, not
 /// level-scaled. `None` below level 5 (the roster's own `min_level` for
 /// this key).

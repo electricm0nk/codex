@@ -9,7 +9,7 @@
 //! `.MOD` virtual ability (shape 1) or a `CLASS:` level-table row whose
 //! `ABILITY:<ClassName> Class Feature|AUTOMATIC|<ClassName> ~ <Feature>`
 //! field repeats the class's own display name as the target's group
-//! prefix (shape 2). `psion`'s own `CLASS:Psion` block in `up_classes.lst`
+//! prefix (shape 2). `psion`'s own `CLASS:Psion` block in `up_classes`
 //! (line 264, re-derived against the pinned oracle,
 //! `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`) instead
 //! carries `ABILITY:Psion Class Feature|AUTOMATIC|Psion Manifesting` --
@@ -21,8 +21,8 @@
 //! This was checked against the precedent that closed 6 of the "7 classes
 //! need a third shape" false lead (a one-line `CATEGORY=Class` vs
 //! `CATEGORY=CLASS` case bug) before being trusted: `grep -c "Psion ~ "
-//! up_classes.lst up_abilities_class.lst` returns 0 and 7 respectively, and
-//! every one of those 7 `up_abilities_class.lst` hits is a false-positive
+//! up_classes up_abilities_class` returns 0 and 7 respectively, and
+//! every one of those 7 `up_abilities_class` hits is a false-positive
 //! substring match inside a DIFFERENT class's own group name (e.g.
 //! `Ascendant Psion ~ Hide Mind` contains the substring `Psion ~ ` without
 //! being a `psion`-owned grant at all). There is no casing bug here and no

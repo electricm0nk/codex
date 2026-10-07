@@ -7,12 +7,12 @@
 //! Every formula below is transcribed from the corpus's own already-
 //! ingested `BONUS:VAR` tokens (`data/corpus/ultimate_psionics/
 //! class_feature/cryptic/*.json`, each record's own ingest token array, sourced
-//! from `up_abilities_class.lst` — the roster's own `source_file` for every
+//! from `up_abilities_class` — the roster's own `source_file` for every
 //! Cryptic record), not from memory of the printed rulebook text. None of
 //! Cryptic's six magnitude-bearing records reads `CrypticPrimeStat`
-//! (`up_classes.lst:55`, `INT`), so no ability modifier is threaded here.
+//! (`up_classes:55`, `INT`), so no ability modifier is threaded here.
 
-/// `up_abilities_class.lst:170`, `Altered Defense`: the "Absorb" option's DR
+/// `up_abilities_class:170`, `Altered Defense`: the "Absorb" option's DR
 /// (`AlteredDefenseDR = AlteredDefenseBonus = floor((AlteredDefenseLVL+3)/4)`,
 /// `AlteredDefenseLVL = CrypticLVL`). `None` below level 1 (the roster's own
 /// `min_level` for this key).
@@ -23,7 +23,7 @@ pub fn altered_defense_damage_reduction(level: u8) -> Option<i16> {
     Some((i16::from(level) + 3) / 4)
 }
 
-/// `up_abilities_class.lst:172`, `Disrupt Pattern`:
+/// `up_abilities_class:172`, `Disrupt Pattern`:
 /// `BONUS:VAR|DisruptPatternRange|30` — a flat 30-foot range, not
 /// level-scaled. `None` below level 1.
 pub fn disrupt_pattern_range_feet(level: u8) -> Option<i16> {
@@ -33,7 +33,7 @@ pub fn disrupt_pattern_range_feet(level: u8) -> Option<i16> {
     Some(30)
 }
 
-/// `up_abilities_class.lst:175`, `Enhanced Disruption`:
+/// `up_abilities_class:175`, `Enhanced Disruption`:
 /// `BONUS:VAR|EnhancedDisruptionDice|floor((CrypticLVL-1)/2)` — bonus
 /// damage dice added to Disrupt Pattern. `None` below level 3 (the
 /// roster's own `min_level` for this key).
@@ -44,7 +44,7 @@ pub fn enhanced_disruption_bonus_dice(level: u8) -> Option<i16> {
     Some((i16::from(level) - 1) / 2)
 }
 
-/// `up_abilities_class.lst:174`, `Hidden Pattern`:
+/// `up_abilities_class:174`, `Hidden Pattern`:
 /// `BONUS:VAR|HiddenPatternBonus|2*min(3,floor((CrypticLVL+1)/3))` — a
 /// competence bonus on Stealth. `None` below level 2 (the roster's own
 /// `min_level` for this key).
@@ -55,7 +55,7 @@ pub fn hidden_pattern_stealth_bonus(level: u8) -> Option<i16> {
     Some(2 * (3.min((i16::from(level) + 1) / 3)))
 }
 
-/// `up_abilities_class.lst:173`, `Trapmaker`:
+/// `up_abilities_class:173`, `Trapmaker`:
 /// `BONUS:VAR|TrapmakerBonus|CrypticLVL` — a competence bonus on Craft
 /// (traps) equal to class level. `None` below level 1.
 pub fn trapmaker_bonus(level: u8) -> Option<i16> {
@@ -65,7 +65,7 @@ pub fn trapmaker_bonus(level: u8) -> Option<i16> {
     Some(i16::from(level))
 }
 
-/// `up_abilities_class.lst:181`, `Unchanging Pattern`:
+/// `up_abilities_class:181`, `Unchanging Pattern`:
 /// `BONUS:VAR|UnchangingPatternPR|12+CrypticLVL` — power resistance.
 /// `None` below level 18 (the roster's own `min_level` for this key).
 pub fn unchanging_pattern_power_resistance(level: u8) -> Option<i16> {

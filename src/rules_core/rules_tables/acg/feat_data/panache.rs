@@ -1,4 +1,4 @@
-//! Generated from the real PCGen corpus file `acg_feats.lst` (Advanced Class Guide):
+//! Generated from the real PCGen corpus file `acg_feats` (Advanced Class Guide):
 //! every non-comment, non-`.MOD` record whose `TYPE:` facet resolves to
 //! `Panache` under the rule `acg::feats` documents. 4 records,
 //! transcribed verbatim (`KEY:`/name, `TYPE:`, `DESC:`, `BONUS:`, and

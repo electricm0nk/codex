@@ -141,7 +141,7 @@
       "weight_lbs": 0.0,
       "description": "+1 bonus on all saving throws. Once per day, you can use it to give yourself the benefit of a false life spell (1d10+5 temporary hit points).",
       "name_pi_citation": [
-        "bbox_equip_magic_items.lst",
+        "bbox_equip_magic_items",
         16
       ]
     },

@@ -1,5 +1,5 @@
 //! ARG magic items equipment -- generated from the real
-//! `arg_equip_magic_items.lst` corpus (SD-27 Cycle E2.1/E2.2 per-book pre-build). Not
+//! `arg_equip_magic_items` corpus (SD-27 Cycle E2.1/E2.2 per-book pre-build). Not
 //! hand-authored -- see `equipment_tables.rs`'s own doc comment for the
 //! generation method and per-category record count.
 //! See `equipment_tables.rs` for record-count/defect notes.

@@ -1,15 +1,15 @@
 //! monster_codex monster + monster-ability tables, transcribed verbatim
-//! from the book's own PCGen `.lst` rows.
+//! from the book's own PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_monster_tables.py monster_codex`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst` (which counts `.MOD`/`.COPY` overlays the
+//! line count over the source file (which counts `.MOD`/`.COPY` overlays the
 //! inventory correctly excludes).
 //!
 //! Sources, with the line each record was read from carried per row:
-//!   * `mc_races.lst` -- 2 monster rows
-//!   * `mc_abilities_race.lst` -- 3 monster-ability rows
+//!   * `mc_races` -- 2 monster rows
+//!   * `mc_abilities_race` -- 3 monster-ability rows
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -32,7 +32,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "mc_races.lst",
+        source_file: "mc_races",
         source_line: 5,
     },
     MonsterStatBlock {
@@ -52,7 +52,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "mc_races.lst",
+        source_file: "mc_races",
         source_line: 6,
     },
 ];
@@ -69,7 +69,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Bat (Sootwing)"],
-        source_file: "mc_abilities_race.lst",
+        source_file: "mc_abilities_race",
         source_line: 71,
         codex_generated_name: false,
         rename_reason: None,
@@ -85,7 +85,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Seru"],
-        source_file: "mc_abilities_race.lst",
+        source_file: "mc_abilities_race",
         source_line: 85,
         codex_generated_name: false,
         rename_reason: None,
@@ -101,7 +101,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Seru"],
-        source_file: "mc_abilities_race.lst",
+        source_file: "mc_abilities_race",
         source_line: 86,
         codex_generated_name: false,
         rename_reason: None,

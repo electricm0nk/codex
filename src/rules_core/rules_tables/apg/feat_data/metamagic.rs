@@ -1,4 +1,4 @@
-//! Generated from the real PCGen corpus file `apg_feats.lst` (Advanced Player's Guide):
+//! Generated from the real PCGen corpus file `apg_feats` (Advanced Player's Guide):
 //! every non-comment, non-`.MOD` record whose `TYPE:` facet resolves to
 //! `Metamagic` under the rule `apg::feats` documents. 19 records,
 //! transcribed verbatim (`KEY:`/name, `TYPE:`, `DESC:`, `BONUS:`, and

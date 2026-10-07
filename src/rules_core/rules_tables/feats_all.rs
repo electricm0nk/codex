@@ -22,7 +22,7 @@
 //!
 //! * **ARG cannot honestly fill `prerequisites`.** `crb::feats::FeatTableEntry`
 //!   documents `prerequisites: None` as "the corpus record carries no
-//!   `PRE`-family token". Every single one of `arg_feats.lst`'s 187
+//!   `PRE`-family token". Every single one of `arg_feats`'s 187
 //!   `CATEGORY:FEAT` records carries at least one (counted directly off
 //!   the corpus file). ARG's ingest never gathered them, so reusing the
 //!   shared type would force `None` onto 187 records for which that
@@ -31,7 +31,7 @@
 //!   "`Some(&[])` never occurs" rules exist to prevent.
 //! * **PU's categories are not `TYPE:`-facet categories at all.**
 //!   `crb::feats::FeatCategory`'s six variants are documented as derived
-//!   from the corpus `TYPE:` facet. `pu_feats.lst` has no usable one: 9
+//!   from the corpus `TYPE:` facet. `pu_feats` has no usable one: 9
 //!   of its 17 real records (the "Champion of ..." alignment feats)
 //!   carry no `TYPE:` token whatsoever, so `pathfinder_unchained` derives
 //!   its categories from the file's own `###Block:` markers instead
@@ -106,8 +106,8 @@
 //! # Key collisions
 //!
 //! Feat keys were globally unique across CRB/APG/ACG. **They are not
-//! unique once PU is included:** `Endurance` is in both `cr_feats.lst`
-//! and `pu_feats.lst`. Checked against both corpus rows rather than
+//! unique once PU is included:** `Endurance` is in both `cr_feats`
+//! and `pu_feats`. Checked against both corpus rows rather than
 //! assumed: PU's is the Core Rulebook feat *re-listed* under Pathfinder
 //! Unchained's Wound Threshold rules, not a second feat that happens to
 //! share a name. The two rows carry the same name and the same `DESC:`
@@ -614,7 +614,7 @@ pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
             // straight to it via `source_book`, never through CRB's
             // shared-library-host fallback. An empty hand-authored slice here
             // is what lets `feat_gap_rows_for(RuleSetId::Ce)`'s rows (all of
-            // `ce_feats.lst`) actually get joined on by `all_feat_tables()`
+            // `ce_feats`) actually get joined on by `all_feat_tables()`
             // below, which only appends gap rows to a `RuleSetId` already
             // present in this list (`SD31-E6-F8-001`).
             BookFeatTable { rule_set: RuleSetId::Ce, entries: &[] },
@@ -626,7 +626,7 @@ pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
             // `feat_key_absent_from_catalog` (a started book with no feat
             // table), never `no_compiled_rule_set_for_book` (an un-started
             // book) -- `SD31-E6-F8-002`. Empty hand-authored slices here are
-            // what let `feat_gap_rows_for` join each book's real `*_feats.lst`
+            // what let `feat_gap_rows_for` join each book's real `*_feats`
             // rows on via `all_feat_tables()` below.
             BookFeatTable { rule_set: RuleSetId::Ha, entries: &[] },
             BookFeatTable { rule_set: RuleSetId::Isr, entries: &[] },
@@ -637,7 +637,7 @@ pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
             // of any kind. Same shape as the five books immediately above:
             // no hand-authored table, an empty slice here so
             // `feat_gap_rows_for(RuleSetId::Mythic)`'s rows (all of
-            // `ma_feats.lst`'s non-`.MOD` declarations) join on below.
+            // `ma_feats`'s non-`.MOD` declarations) join on below.
             BookFeatTable { rule_set: RuleSetId::Mythic, entries: &[] },
             // `SD31-E6-F8-003` -- two more books already compiled into
             // `COMPILED_RULE_SETS` for another kind (`Isi`: familiars +
@@ -652,7 +652,7 @@ pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
             // first compiled rule set of any kind. Same shape as `Mythic`
             // above: no hand-authored table, an empty slice here so
             // `feat_gap_rows_for(RuleSetId::InnerSeaTaverns)`'s rows (all
-            // of `istav_feats.lst`'s non-`.MOD` declarations) join on
+            // of `istav_feats`'s non-`.MOD` declarations) join on
             // below.
             BookFeatTable { rule_set: RuleSetId::InnerSeaTaverns, entries: &[] },
             // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off.
@@ -662,8 +662,8 @@ pub fn hand_authored_feat_tables() -> &'static [BookFeatTable] {
             // as `Ha`/`Isr`/`Oa`/`Iswg`/`MonsterCodex` above. Empty
             // hand-authored slices here are what let
             // `feat_gap_rows_for(RuleSetId::Isc/Isg)`'s rows (every real
-            // `CATEGORY:FEAT` row in `isc_abilities_feat.lst`/
-            // `isg_abilities_feat.lst` -- verified NOT the `.MOD`/
+            // `CATEGORY:FEAT` row in `isc_abilities_feat`/
+            // `isg_abilities_feat` -- verified NOT the `.MOD`/
             // `VISIBLE:EXPORT` continuation shape found blocking
             // `horror_adventures`/`mythic_adventures`, see this cycle's own
             // receipt) join on below.
@@ -752,7 +752,7 @@ mod tests {
         assert_eq!(books[11].entries.len(), 0);
         // `SD31-E6-F8-002` -- five more books, each already compiled for
         // another kind, given an empty hand-authored feat slice so their real
-        // `*_feats.lst` rows can join via `feat_gap_rows_for` below.
+        // `*_feats` rows can join via `feat_gap_rows_for` below.
         assert_eq!(books[12].rule_set, RuleSetId::Ha);
         assert_eq!(books[12].entries.len(), 0);
         assert_eq!(books[13].rule_set, RuleSetId::Isr);
@@ -769,7 +769,7 @@ mod tests {
         assert_eq!(books[17].entries.len(), 0);
         // `SD31-E6-F8-003` -- two more books, each already compiled for
         // another kind, given an empty hand-authored feat slice so their
-        // real `*_feats.lst` rows can join via `feat_gap_rows_for` below.
+        // real `*_feats` rows can join via `feat_gap_rows_for` below.
         assert_eq!(books[18].rule_set, RuleSetId::Isi);
         assert_eq!(books[18].entries.len(), 0);
         assert_eq!(books[19].rule_set, RuleSetId::Botd2);
@@ -777,14 +777,14 @@ mod tests {
         // SD-32 Gate 0 book-onboarding precondition (`gate-0-book-
         // onboarding-precondition`, AT-32-G0-003) -- Inner Sea Taverns'
         // first compiled rule set of any kind, given an empty
-        // hand-authored feat slice so its real `istav_feats.lst` rows can
+        // hand-authored feat slice so its real `istav_feats` rows can
         // join via `feat_gap_rows_for` below.
         assert_eq!(books[20].rule_set, RuleSetId::InnerSeaTaverns);
         assert_eq!(books[20].entries.len(), 0);
         // SD-32 T9 onboarding (card 11), `decisions.md §19` PI sign-off --
         // `Isc`/`Isg` already compiled for equipment/monster content, given
         // an empty hand-authored feat slice so their real
-        // `isc_abilities_feat.lst`/`isg_abilities_feat.lst` rows can join
+        // `isc_abilities_feat`/`isg_abilities_feat` rows can join
         // via `feat_gap_rows_for` below.
         assert_eq!(books[21].rule_set, RuleSetId::Isc);
         assert_eq!(books[21].entries.len(), 0);
@@ -824,16 +824,16 @@ mod tests {
              (SD31-E6-F8-001's 83: 1 CRB, 15 core_essentials, 48 ARG, 12 UM, 3 UI, \
              2 UC, 1 UPsi, 1 UW; SD31-E6-F8-002's 242: 61 Ha, 50 Isr, 68 Oa, 31 Iswg, \
              32 MonsterCodex) + 199 more from Mythic Adventures' first-ever compiled \
-             rule set (SD31-E6-F2-007, `ma_feats.lst`'s non-`.MOD` declarations -- \
+             rule set (SD31-E6-F2-007, `ma_feats`'s non-`.MOD` declarations -- \
              SD31-W10-INTEGRATE-001 excluded 159 VISIBLE:EXPORT display-plumbing \
              twins from the original 358) + 7 more from two more already-compiled \
              books (SD31-E6-F8-003: inner_sea_intrigue 6 + book_of_the_damned_volume_2 1) \
              + 9 more from Inner Sea Taverns' first-ever compiled rule set \
              (SD-32 Gate 0 book-onboarding precondition, `gate-0-book-onboarding-\
-             precondition`, AT-32-G0-003, `istav_feats.lst`'s non-`.MOD` declarations) \
+             precondition`, AT-32-G0-003, `istav_feats`'s non-`.MOD` declarations) \
              + 109 more from T9 onboarding (card 11, `decisions.md §19` PI sign-off): \
-             `Isc` 23 (inner_sea_combat, isc_abilities_feat.lst, 1 NAMEISPI:YES record \
-             dropped) + `Isg` 86 (inner_sea_gods, isg_abilities_feat.lst, deity-name \
+             `Isc` 23 (inner_sea_combat, isc_abilities_feat, 1 NAMEISPI:YES record \
+             dropped) + `Isg` 86 (inner_sea_gods, isg_abilities_feat, deity-name \
              prerequisites redacted per the book's existing blacklist screen, not dropped)"
         );
     }

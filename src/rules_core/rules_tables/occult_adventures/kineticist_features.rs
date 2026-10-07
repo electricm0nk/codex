@@ -1,11 +1,11 @@
 //! SD-32 card 11 (T12), cycle 4 — real per-feature compute functions for
 //! the Kineticist, one of the six `occult_adventures` classes sharing
-//! `oa_abilities_class.lst`. Every formula below is transcribed from the
+//! `oa_abilities_class`. Every formula below is transcribed from the
 //! corpus's own already-ingested tokens
 //! (`data/corpus/occult_adventures/class_feature/kineticist/*.json`), not
 //! from memory of the printed rulebook.
 
-/// `oa_abilities_class.lst:542`, `Burn`: no machine `BONUS:` token exists
+/// `oa_abilities_class:542`, `Burn`: no machine `BONUS:` token exists
 /// for the burn cap (PCGen leaves it to the player to track), but the
 /// record's own prose states the real formula unambiguously: "a kineticist
 /// can't choose to accept burn if it would put her total number of points
@@ -18,7 +18,7 @@ pub fn burn_max_points(level: u8, con: i16) -> Option<i16> {
     Some(3 + con)
 }
 
-/// `oa_abilities_class.lst:540`, `Elemental Focus`: two independent
+/// `oa_abilities_class:540`, `Elemental Focus`: two independent
 /// `BONUS:VAR` tokens on this record target different variables
 /// (`Pool_KineticistElementalFocus|1`, a trivial flat pool grant, and
 /// `KineticistLVL_Base|max(1,KineticistLVL/2)`, the class's own effective
@@ -31,7 +31,7 @@ pub fn elemental_focus_level_base(level: u8) -> Option<i16> {
     Some(std::cmp::max(1, i16::from(level) / 2))
 }
 
-/// `oa_abilities_class.lst:545`, `Infusion`:
+/// `oa_abilities_class:545`, `Infusion`:
 /// `BONUS:VAR|Pool_KineticistInfusion|1+(KineticistLVL>=3)+(KineticistLVL>=5)+(KineticistLVL>=9)+(KineticistLVL>=11)+(KineticistLVL>=13)+(KineticistLVL>=17)+(KineticistLVL>=19)` —
 /// a level-scaled step count, one additional infusion known per named
 /// threshold.
@@ -49,7 +49,7 @@ pub fn infusion_pool(level: u8) -> Option<i16> {
     Some(n)
 }
 
-/// `oa_abilities_class.lst:543`, `Kinetic Blast`: no `BONUS:` token at all
+/// `oa_abilities_class:543`, `Kinetic Blast`: no `BONUS:` token at all
 /// — the DESC states the flat literal directly ("unleash a kinetic blast
 /// at a single target up to a range of 30 feet").
 pub fn kinetic_blast_range_feet(level: u8) -> Option<i16> {
@@ -59,7 +59,7 @@ pub fn kinetic_blast_range_feet(level: u8) -> Option<i16> {
     Some(30)
 }
 
-/// `oa_abilities_class.lst:541`, `Wild Talents`: the roster's own tracked
+/// `oa_abilities_class:541`, `Wild Talents`: the roster's own tracked
 /// DC formula, `BONUS:VAR|WildTalentsDC|10+(KineticistLVL/2)` combined with
 /// `BONUS:VAR|WildTalentsDC|WildTalentDCStat` and
 /// `BONUS:VAR|WildTalentDCStat|CON` — the standard `10 + level/2 +
@@ -72,7 +72,7 @@ pub fn wild_talents_dc(level: u8, con: i16) -> Option<i16> {
     Some(10 + i16::from(level) / 2 + con)
 }
 
-/// `oa_abilities_class.lst:551`, `Expanded Element`:
+/// `oa_abilities_class:551`, `Expanded Element`:
 /// `BONUS:VAR|Pool_KineticistExpandedElement|1+(KineticistLVL>=15)`. `None`
 /// below level 7 (the roster's own `min_level`).
 pub fn expanded_element_pool(level: u8) -> Option<i16> {

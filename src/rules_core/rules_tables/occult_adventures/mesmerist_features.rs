@@ -1,6 +1,6 @@
 //! SD-32 card 11 (T12), cycle 4 — real per-feature compute functions for
 //! the Mesmerist, one of the six `occult_adventures` classes sharing
-//! `oa_abilities_class.lst`. Every formula below is transcribed from the
+//! `oa_abilities_class`. Every formula below is transcribed from the
 //! corpus's own already-ingested tokens
 //! (`data/corpus/occult_adventures/class_feature/mesmerist/*.json`).
 //!
@@ -12,7 +12,7 @@
 //! bonus into that feature) rather than fabricating an FCB score. This
 //! omission is documented on each affected function, not silently dropped.
 
-/// `oa_abilities_class.lst:85`, `Consummate Liar`:
+/// `oa_abilities_class:85`, `Consummate Liar`:
 /// `BONUS:VAR|ConsummateLiarBonus|max(MesmeristLVL/2,1)`.
 pub fn consummate_liar_bonus(level: u8) -> Option<i16> {
     if level < 1 {
@@ -21,7 +21,7 @@ pub fn consummate_liar_bonus(level: u8) -> Option<i16> {
     Some(std::cmp::max(i16::from(level) / 2, 1))
 }
 
-/// `oa_abilities_class.lst:86`, `Hypnotic Stare`:
+/// `oa_abilities_class:86`, `Hypnotic Stare`:
 /// `BONUS:VAR|HypnoticStarePenalty|2` then overridden to `1` at level 8+
 /// (`PREVARGTEQ:MesmeristLVL,8`).
 pub fn hypnotic_stare_penalty(level: u8) -> Option<i16> {
@@ -31,7 +31,7 @@ pub fn hypnotic_stare_penalty(level: u8) -> Option<i16> {
     Some(if level >= 8 { 1 } else { 2 })
 }
 
-/// `oa_abilities_class.lst:88`, `Mesmerist Tricks`:
+/// `oa_abilities_class:88`, `Mesmerist Tricks`:
 /// `BONUS:VAR|MesmeristTricksUses|max(MesmeristLVL/2,1)+max(CHA,0)+
 /// MesmeristTrickFCB/3` (FCB term dropped, see module doc).
 pub fn mesmerist_tricks_uses(level: u8, cha: i16) -> Option<i16> {
@@ -41,7 +41,7 @@ pub fn mesmerist_tricks_uses(level: u8, cha: i16) -> Option<i16> {
     Some(std::cmp::max(i16::from(level) / 2, 1) + std::cmp::max(cha, 0))
 }
 
-/// `oa_abilities_class.lst:88`, `Mesmerist Tricks`:
+/// `oa_abilities_class:88`, `Mesmerist Tricks`:
 /// `BONUS:VAR|MesmeristTrickRange|100+(MesmeristLVL*10)`.
 pub fn mesmerist_trick_range_feet(level: u8) -> Option<i16> {
     if level < 1 {
@@ -50,7 +50,7 @@ pub fn mesmerist_trick_range_feet(level: u8) -> Option<i16> {
     Some(100 + i16::from(level) * 10)
 }
 
-/// `oa_abilities_class.lst:88`, `Mesmerist Tricks`:
+/// `oa_abilities_class:88`, `Mesmerist Tricks`:
 /// `BONUS:VAR|MesmeristTrickDC|10+MesmeristLVL/2+CHA`.
 pub fn mesmerist_trick_dc(level: u8, cha: i16) -> Option<i16> {
     if level < 1 {
@@ -59,7 +59,7 @@ pub fn mesmerist_trick_dc(level: u8, cha: i16) -> Option<i16> {
     Some(10 + i16::from(level) / 2 + cha)
 }
 
-/// `oa_abilities_class.lst:88`, `Mesmerist Tricks`:
+/// `oa_abilities_class:88`, `Mesmerist Tricks`:
 /// `BONUS:VAR|MesmeristTricksKnown|MesmeristLVL/2+1`.
 pub fn mesmerist_tricks_known(level: u8) -> Option<i16> {
     if level < 1 {
@@ -68,7 +68,7 @@ pub fn mesmerist_tricks_known(level: u8) -> Option<i16> {
     Some(i16::from(level) / 2 + 1)
 }
 
-/// `oa_abilities_class.lst:89`, `Painful Stare`:
+/// `oa_abilities_class:89`, `Painful Stare`:
 /// `BONUS:VAR|PainfulStareDam|max(MesmeristLVL/2,1)+PainfulStareDamFCB/4`
 /// (FCB term dropped, see module doc).
 pub fn painful_stare_damage(level: u8) -> Option<i16> {
@@ -78,7 +78,7 @@ pub fn painful_stare_damage(level: u8) -> Option<i16> {
     Some(std::cmp::max(i16::from(level) / 2, 1))
 }
 
-/// `oa_abilities_class.lst:89`, `Painful Stare`:
+/// `oa_abilities_class:89`, `Painful Stare`:
 /// `BONUS:VAR|PainfulStareBonusDice|MesmeristLVL/3`.
 pub fn painful_stare_bonus_dice(level: u8) -> Option<i16> {
     if level < 1 {
@@ -87,7 +87,7 @@ pub fn painful_stare_bonus_dice(level: u8) -> Option<i16> {
     Some(i16::from(level) / 3)
 }
 
-/// `oa_abilities_class.lst:90`, `Towering Ego`:
+/// `oa_abilities_class:90`, `Towering Ego`:
 /// `BONUS:VAR|ToweringEgoBonus|max(CHA,0)+min(ToweringEgoFCB/3,2)` (FCB
 /// term dropped, see module doc).
 pub fn towering_ego_bonus(level: u8, cha: i16) -> Option<i16> {
@@ -97,7 +97,7 @@ pub fn towering_ego_bonus(level: u8, cha: i16) -> Option<i16> {
     Some(std::cmp::max(cha, 0))
 }
 
-/// `oa_abilities_class.lst:91`, `Bold Stare`:
+/// `oa_abilities_class:91`, `Bold Stare`:
 /// `BONUS:VAR|BoldStaresKnown|(MesmeristLVL+1)/4`.
 pub fn bold_stares_known(level: u8) -> Option<i16> {
     if level < 3 {
@@ -106,7 +106,7 @@ pub fn bold_stares_known(level: u8) -> Option<i16> {
     Some((i16::from(level) + 1) / 4)
 }
 
-/// `oa_abilities_class.lst:92`, `Touch Treatment`:
+/// `oa_abilities_class:92`, `Touch Treatment`:
 /// `BONUS:VAR|TouchTreatmentsUses|3+CHA`.
 pub fn touch_treatment_uses(level: u8, cha: i16) -> Option<i16> {
     if level < 3 {
@@ -115,7 +115,7 @@ pub fn touch_treatment_uses(level: u8, cha: i16) -> Option<i16> {
     Some(3 + cha)
 }
 
-/// `oa_abilities_class.lst:93`, `Manifold Tricks`:
+/// `oa_abilities_class:93`, `Manifold Tricks`:
 /// `BONUS:VAR|ManifoldTricksCount|2+(MesmeristLVL-5)/4`.
 pub fn manifold_tricks_count(level: u8) -> Option<i16> {
     if level < 5 {
@@ -124,7 +124,7 @@ pub fn manifold_tricks_count(level: u8) -> Option<i16> {
     Some(2 + (i16::from(level) - 5) / 4)
 }
 
-/// `oa_abilities_class.lst:94`, `Mental Potency`:
+/// `oa_abilities_class:94`, `Mental Potency`:
 /// `BONUS:VAR|MentalPotencyBonus|min(MesmeristLVL/5,4)`.
 pub fn mental_potency_bonus(level: u8) -> Option<i16> {
     if level < 5 {
@@ -133,7 +133,7 @@ pub fn mental_potency_bonus(level: u8) -> Option<i16> {
     Some(std::cmp::min(i16::from(level) / 5, 4))
 }
 
-/// `oa_abilities_class.lst:95`, `Glib Lie`:
+/// `oa_abilities_class:95`, `Glib Lie`:
 /// `BONUS:VAR|GlibLieDC|15+MesmeristLVL`.
 pub fn glib_lie_dc(level: u8) -> Option<i16> {
     if level < 11 {

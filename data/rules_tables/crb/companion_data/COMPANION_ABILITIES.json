@@ -71,7 +71,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 37
     },
     {
@@ -136,7 +136,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 38
     },
     {
@@ -197,7 +197,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 50
     },
     {
@@ -257,7 +257,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 51
     },
     {
@@ -317,7 +317,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 52
     },
     {
@@ -377,7 +377,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 53
     },
     {
@@ -437,7 +437,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 54
     },
     {
@@ -496,7 +496,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 55
     },
     {
@@ -556,7 +556,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 56
     },
     {
@@ -616,7 +616,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 57
     },
     {
@@ -677,7 +677,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 58
     },
     {
@@ -738,7 +738,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 59
     },
     {
@@ -803,7 +803,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 59
     },
     {
@@ -864,7 +864,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 60
     },
     {
@@ -929,7 +929,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 60
     },
     {
@@ -995,7 +995,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 61
     },
     {
@@ -1062,7 +1062,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 62
     },
     {
@@ -1129,7 +1129,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 63
     },
     {
@@ -1196,7 +1196,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 64
     },
     {
@@ -1263,7 +1263,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 65
     },
     {
@@ -1330,7 +1330,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 66
     },
     {
@@ -1397,7 +1397,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 67
     },
     {
@@ -1463,7 +1463,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 68
     },
     {
@@ -1530,7 +1530,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 69
     },
     {
@@ -1596,7 +1596,7 @@
           "Weasel"
         ]
       ],
-      "source_file": "ce_abilities_familiar_cr.lst",
+      "source_file": "ce_abilities_familiar_cr",
       "source_line": 70
     },
     {
@@ -1653,7 +1653,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 86
     },
     {
@@ -1719,7 +1719,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 95
     },
     {
@@ -1776,7 +1776,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 97
     },
     {
@@ -1796,7 +1796,7 @@
         "Companion (Ape)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 99
     },
     {
@@ -1816,7 +1816,7 @@
         "Companion (Badger (Wolverine))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 100
     },
     {
@@ -1836,7 +1836,7 @@
         "Companion (Bear)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 101
     },
     {
@@ -1867,7 +1867,7 @@
         "Companion (Bird (Owl))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 102
     },
     {
@@ -1887,7 +1887,7 @@
         "Companion (Boar)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 103
     },
     {
@@ -1916,7 +1916,7 @@
         "Companion (Camel)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 104
     },
     {
@@ -1936,7 +1936,7 @@
         "Companion (Cat (Small (Cheetah)))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 105
     },
     {
@@ -1956,7 +1956,7 @@
         "Companion (Cat (Small (Leopard)))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 106
     },
     {
@@ -1976,7 +1976,7 @@
         "Companion (Crocodile (Alligator))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 107
     },
     {
@@ -1996,7 +1996,7 @@
         "Companion (Dog)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 108
     },
     {
@@ -2025,7 +2025,7 @@
         "Companion (Horse)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 109
     },
     {
@@ -2054,7 +2054,7 @@
         "Companion (Pony)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 110
     },
     {
@@ -2074,7 +2074,7 @@
         "Companion (Shark)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 111
     },
     {
@@ -2094,7 +2094,7 @@
         "Companion (Snake (Constrictor))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 112
     },
     {
@@ -2114,7 +2114,7 @@
         "Companion (Snake (Viper))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 113
     },
     {
@@ -2143,7 +2143,7 @@
         "Companion (Dire Rat)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 114
     },
     {
@@ -2163,7 +2163,7 @@
         "Companion (Cat (Big (Lion)))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 117
     },
     {
@@ -2183,7 +2183,7 @@
         "Companion (Cat (Big (Tiger)))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 118
     },
     {
@@ -2203,7 +2203,7 @@
         "Companion (Dinosaur (Deinonychus))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 119
     },
     {
@@ -2223,7 +2223,7 @@
         "Companion (Dinosaur (Velociraptor))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 120
     },
     {
@@ -2243,7 +2243,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 121
     },
     {
@@ -2263,7 +2263,7 @@
         "Companion (Shadow)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 126
     },
     {
@@ -2283,7 +2283,7 @@
         "Companion (Shadow)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 127
     },
     {
@@ -2304,7 +2304,7 @@
         "Companion (Shadow)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 128
     },
     {
@@ -2392,7 +2392,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 132
     },
     {
@@ -2449,7 +2449,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 133
     },
     {
@@ -2506,7 +2506,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 134
     },
     {
@@ -2563,7 +2563,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 135
     },
     {
@@ -2620,7 +2620,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 136
     },
     {
@@ -2677,7 +2677,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 137
     },
     {
@@ -2734,7 +2734,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 138
     },
     {
@@ -2791,7 +2791,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 139
     },
     {
@@ -2848,7 +2848,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 140
     },
     {
@@ -2905,7 +2905,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 141
     },
     {
@@ -2962,7 +2962,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 142
     },
     {
@@ -3019,7 +3019,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 143
     },
     {
@@ -3076,7 +3076,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 144
     },
     {
@@ -3133,7 +3133,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 148
     },
     {
@@ -3193,7 +3193,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 152
     },
     {
@@ -3253,7 +3253,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 153
     },
     {
@@ -3313,7 +3313,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 154
     },
     {
@@ -3373,7 +3373,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 155
     },
     {
@@ -3433,7 +3433,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 156
     },
     {
@@ -3493,7 +3493,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 157
     },
     {
@@ -3553,7 +3553,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 158
     },
     {
@@ -3615,7 +3615,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 163
     },
     {
@@ -3677,7 +3677,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 164
     },
     {
@@ -3739,7 +3739,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 165
     },
     {
@@ -3801,7 +3801,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 166
     },
     {
@@ -3863,7 +3863,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 167
     },
     {
@@ -3925,7 +3925,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 168
     },
     {
@@ -3945,7 +3945,7 @@
         "Companion (Snake (Viper))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 179
     },
     {
@@ -3965,7 +3965,7 @@
         "Companion (Camel)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 180
     },
     {
@@ -3988,7 +3988,7 @@
         "Companion (Dire Rat)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 184
     },
     {
@@ -4011,7 +4011,7 @@
         "Companion (Crocodile (Alligator))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 188
     },
     {
@@ -4037,7 +4037,7 @@
         "Companion (Turtle (Giant Snapping))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 189
     },
     {
@@ -4060,7 +4060,7 @@
         "Companion (Crocodile (Alligator))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 190
     },
     {
@@ -4082,7 +4082,7 @@
         "Companion (Crocodile (Alligator))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 191
     },
     {
@@ -4105,7 +4105,7 @@
         "Companion (Cat (Small (Leopard)))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 194
     },
     {
@@ -4125,7 +4125,7 @@
         "Companion (Dinosaur (Allosaurus))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 203
     },
     {
@@ -4145,7 +4145,7 @@
         "Companion (Dinosaur (Parasaurolophus))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 204
     },
     {
@@ -4165,7 +4165,7 @@
         "Companion (Dinosaur (Tylosaurus))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 205
     },
     {
@@ -4185,7 +4185,7 @@
         "Companion (Gar)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 206
     },
     {
@@ -4205,7 +4205,7 @@
         "Companion (Herd Animal (Ram))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 207
     },
     {
@@ -4225,7 +4225,7 @@
         "Companion (Hippopotamus)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 208
     },
     {
@@ -4245,7 +4245,7 @@
         "Companion (Megafauna (Arsinoitherium))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 209
     },
     {
@@ -4265,7 +4265,7 @@
         "Companion (Megafauna (Gylptodon))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 210
     },
     {
@@ -4285,7 +4285,7 @@
         "Companion (Megafauna (Megaloceros))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 211
     },
     {
@@ -4305,7 +4305,7 @@
         "Companion (Megafauna (Megatherium))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 212
     },
     {
@@ -4334,7 +4334,7 @@
         "Companion (Primate (Baboon))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 213
     },
     {
@@ -4354,7 +4354,7 @@
         "Companion (Ray (Manta))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 214
     },
     {
@@ -4374,7 +4374,7 @@
         "Companion (Ray (Stingray))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 215
     },
     {
@@ -4394,7 +4394,7 @@
         "Companion (Turtle (Giant Snapping))"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 216
     },
     {
@@ -4451,7 +4451,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 227
     },
     {
@@ -4508,7 +4508,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 228
     },
     {
@@ -4565,7 +4565,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 229
     },
     {
@@ -4622,7 +4622,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 230
     },
     {
@@ -4679,7 +4679,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 231
     },
     {
@@ -4736,7 +4736,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 232
     },
     {
@@ -4793,7 +4793,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 233
     },
     {
@@ -4852,7 +4852,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 234
     },
     {
@@ -4909,7 +4909,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 235
     },
     {
@@ -4966,7 +4966,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 236
     },
     {
@@ -5023,7 +5023,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 237
     },
     {
@@ -5080,7 +5080,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 238
     },
     {
@@ -5137,7 +5137,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 239
     },
     {
@@ -5194,7 +5194,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 240
     },
     {
@@ -5251,7 +5251,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 241
     },
     {
@@ -5308,7 +5308,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 242
     },
     {
@@ -5365,7 +5365,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 243
     },
     {
@@ -5422,7 +5422,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 244
     },
     {
@@ -5479,7 +5479,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 245
     },
     {
@@ -5536,7 +5536,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 246
     },
     {
@@ -5593,7 +5593,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 247
     },
     {
@@ -5653,7 +5653,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 248
     },
     {
@@ -5710,7 +5710,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 249
     },
     {
@@ -5767,7 +5767,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 250
     },
     {
@@ -5824,7 +5824,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 251
     },
     {
@@ -5881,7 +5881,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 252
     },
     {
@@ -5965,7 +5965,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 253
     },
     {
@@ -6022,7 +6022,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 254
     },
     {
@@ -6079,7 +6079,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 255
     },
     {
@@ -6136,7 +6136,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 256
     },
     {
@@ -6193,7 +6193,7 @@
         "Companion (Wolf)"
       ],
       "cross_book_owners": [],
-      "source_file": "cr_abilities_companion.lst",
+      "source_file": "cr_abilities_companion",
       "source_line": 257
     }
   ]

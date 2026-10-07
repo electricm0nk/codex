@@ -35,7 +35,7 @@
         "Companion (Cave Salamander)"
       ],
       "cross_book_owners": [],
-      "source_file": "mc_abilities_companion.lst",
+      "source_file": "mc_abilities_companion",
       "source_line": 5
     },
     {
@@ -55,7 +55,7 @@
         "Companion (Gorthek)"
       ],
       "cross_book_owners": [],
-      "source_file": "mc_abilities_companion.lst",
+      "source_file": "mc_abilities_companion",
       "source_line": 6
     },
     {
@@ -84,7 +84,7 @@
         "Companion (Python (Riding))"
       ],
       "cross_book_owners": [],
-      "source_file": "mc_abilities_companion.lst",
+      "source_file": "mc_abilities_companion",
       "source_line": 7
     },
     {
@@ -104,7 +104,7 @@
         "Companion (Yzobu)"
       ],
       "cross_book_owners": [],
-      "source_file": "mc_abilities_companion.lst",
+      "source_file": "mc_abilities_companion",
       "source_line": 8
     },
     {
@@ -133,7 +133,7 @@
         "Companion (Rat (Riding))"
       ],
       "cross_book_owners": [],
-      "source_file": "mc_abilities_companion.lst",
+      "source_file": "mc_abilities_companion",
       "source_line": 9
     },
     {
@@ -154,7 +154,7 @@
         "Companion (Yzobu)"
       ],
       "cross_book_owners": [],
-      "source_file": "mc_abilities_companion.lst",
+      "source_file": "mc_abilities_companion",
       "source_line": 11
     },
     {
@@ -174,7 +174,7 @@
         "Companion (Giant Vulture)"
       ],
       "cross_book_owners": [],
-      "source_file": "mc_abilities_companion.lst",
+      "source_file": "mc_abilities_companion",
       "source_line": 14
     }
   ]

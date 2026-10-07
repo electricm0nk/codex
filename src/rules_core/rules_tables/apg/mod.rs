@@ -9,8 +9,8 @@
 //! APG content and are permanently excluded from this roster (corrected
 //! 2026-07-19, `corpus-source-inventory.md §1`) — the real PCGen corpus
 //! has no `CLASS:Gunslinger` or `CLASS:Magus` record anywhere under
-//! `advanced_players_guide/`; both live in `ultimate_combat/uc_classes.lst`
-//! and `ultimate_magic/um_classes.lst` respectively, books
+//! `advanced_players_guide/`; both live in `ultimate_combat/uc_classes`
+//! and `ultimate_magic/um_classes` respectively, books
 //! `decisions.md §1` explicitly excludes from SD-22.
 
 //!
@@ -28,11 +28,11 @@
 //!
 //! **4 -> 17 by `SD31-CE-COMPANION-001` (2026-08-18), and only 8 of the 13 are
 //! new rows.** `decisions.md §9` retired the `core_essentials` book id, and
-//! `ce_races_familiar_apg.lst` -- which declares `SOURCELONG:Advanced Player's
+//! `ce_races_familiar_apg` -- which declares `SOURCELONG:Advanced Player's
 //! Guide` in its own header -- brought this book 8 familiar creature rows that
 //! had been served out of a `core_essentials` table while their corpus records
 //! sat, unreachable, in this book's own `data/corpus/` directory. Adding those
-//! 8 owners then gave FIVE previously-orphan `apg_abilities_companion.lst`
+//! 8 owners then gave FIVE previously-orphan `apg_abilities_companion`
 //! rows an owner for the first time, which is the other half of the move: an
 //! ability row's shippability is a fact about whether a shipped creature
 //! reaches it, so importing owners can un-orphan rows nothing else touched.
@@ -200,7 +200,7 @@ pub fn class_chassis_resolve(
 
 /// `class_id`'s real hit-die size (v0.6 alpha swarm, risks item 8), each
 /// per-class module's own `HIT_DIE` constant -- verified directly against
-/// its real `apg_classes.lst` `HD:` token, same as
+/// its real `apg_classes` `HD:` token, same as
 /// `rules_tables::crb::class_tables::hit_die_for`'s precedent. Unlike
 /// `class_chassis_resolve`, this is not `RuleSetId`-gated -- hit-die size
 /// has no per-book collision risk the way a class *name* could.
@@ -225,10 +225,10 @@ pub struct ApgClassCoverage {
     /// Levels 1 through `chassis_rows_expected` this class's `class_table()`
     /// actually returns a base-attack-bonus/save row for. Real APG classes
     /// all cap at `MAXLEVEL:20` (see each per-class module's own doc
-    /// comment, cross-checked against `apg_classes.lst`), so this equals
+    /// comment, cross-checked against `apg_classes`), so this equals
     /// `chassis_rows_expected` for every class today.
     pub chassis_rows_wired: u8,
-    /// The class's real `MAXLEVEL` ceiling (`apg_classes.lst`).
+    /// The class's real `MAXLEVEL` ceiling (`apg_classes`).
     pub chassis_rows_expected: u8,
     /// Count of distinct named/narrative class-feature records (Bombs,
     /// Discoveries, Mutagen, Hex, Judgment, Mystery Revelation, Eidolon,
@@ -355,15 +355,15 @@ pub struct ApgClassCoverage {
     pub named_features_wired: u32,
     /// Count of distinct named class-feature records tagged
     /// `KEY:<Class> ~ ...` for this class in the real PCGen corpus's
-    /// `advanced_players_guide/apg_abilities_class.lst` (SD-24 Epic 4
+    /// `advanced_players_guide/apg_abilities_class` (SD-24 Epic 4
     /// audit count, PCGen corpus commit `7f818006e371188e5717fd18d74d18a420747fc6`,
     /// 2026-06-17; reproduce with
-    /// `grep -oE "KEY:<Class> ~ [^\t]+" apg_abilities_class.lst | sort -u | wc -l`).
+    /// `grep -oE "KEY:<Class> ~ [^\t]+" apg_abilities_class | sort -u | wc -l`).
     /// This counts mechanical class-feature *slots* (Bomb, Mutagen, Hex,
     /// Judgment, ...), not each slot's own selectable sub-options (e.g. the
     /// ~20 individual hexes a Witch can pick from live under a separate,
     /// not-yet-audited `CATEGORY:Special Ability` chooser list in
-    /// `apg_abilities.lst`, not this file) — so this number is a floor on
+    /// `apg_abilities`, not this file) — so this number is a floor on
     /// the real per-class feature surface, not a ceiling.
     pub named_features_expected: u32,
     /// Whether `pilot_compute.rs`'s live `compute_class_chassis` dispatch

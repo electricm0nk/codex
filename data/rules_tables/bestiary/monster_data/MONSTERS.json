@@ -134,7 +134,7 @@
         "Can't Be Tripped"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 7
     },
     {
@@ -345,7 +345,7 @@
         "Flight Maneuverability",
         "Uncanny Dodge"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 8
     },
     {
@@ -560,7 +560,7 @@
         "Flight Maneuverability",
         "True Seeing ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 9
     },
     {
@@ -872,7 +872,7 @@
         "Flight Maneuverability",
         "True Seeing ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 10
     },
     {
@@ -922,7 +922,7 @@
         "Construction Points"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 11
     },
     {
@@ -968,7 +968,7 @@
         "Construction Points"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 12
     },
     {
@@ -1014,7 +1014,7 @@
         "Construction Points"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 13
     },
     {
@@ -1064,7 +1064,7 @@
         "Construction Points"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 14
     },
     {
@@ -1114,7 +1114,7 @@
         "Construction Points"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 15
     },
     {
@@ -1164,7 +1164,7 @@
         "Construction Points"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 16
     },
     {
@@ -1214,7 +1214,7 @@
         "Construction Points"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 17
     },
     {
@@ -1269,7 +1269,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 19
     },
     {
@@ -1318,7 +1318,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 20
     },
     {
@@ -1387,7 +1387,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 21
     },
     {
@@ -1446,7 +1446,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 22
     },
     {
@@ -1497,7 +1497,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 23
     },
     {
@@ -1558,7 +1558,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 24
     },
     {
@@ -1624,7 +1624,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 25
     },
     {
@@ -1711,7 +1711,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 26
     },
     {
@@ -1794,7 +1794,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 27
     },
     {
@@ -1896,7 +1896,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 28
     },
     {
@@ -2014,7 +2014,7 @@
         "Resistance to Cold",
         "Resistance to Fire"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 30
     },
     {
@@ -2206,7 +2206,7 @@
         "Holy Aura ~ Constant",
         "See Invisibility ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 31
     },
     {
@@ -2331,7 +2331,7 @@
         "Resistance to Cold",
         "Resistance to Fire"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 32
     },
     {
@@ -2443,7 +2443,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 36
     },
     {
@@ -2578,7 +2578,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 37
     },
     {
@@ -2629,7 +2629,7 @@
         "Basidirond ~ Spores"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 38
     },
     {
@@ -2682,7 +2682,7 @@
         "Basilisk ~ Gaze"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 39
     },
     {
@@ -2745,7 +2745,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 40
     },
     {
@@ -2807,7 +2807,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 42
     },
     {
@@ -2865,7 +2865,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 43
     },
     {
@@ -2942,7 +2942,7 @@
       "external_ability_refs": [
         "Cannot Speak"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 44
     },
     {
@@ -2986,7 +2986,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 45
     },
     {
@@ -3037,7 +3037,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 46
     },
     {
@@ -3104,7 +3104,7 @@
         "Swallow Whole"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 47
     },
     {
@@ -3166,7 +3166,7 @@
         "Constrict"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 48
     },
     {
@@ -3220,7 +3220,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 50
     },
     {
@@ -3287,7 +3287,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 53
     },
     {
@@ -3350,7 +3350,7 @@
         "Trip"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 57
     },
     {
@@ -3418,7 +3418,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 58
     },
     {
@@ -3468,7 +3468,7 @@
         "Giant Centipede ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 61
     },
     {
@@ -3518,7 +3518,7 @@
         "Giant Centipede ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 62
     },
     {
@@ -3572,7 +3572,7 @@
         "Giant Centipede ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 63
     },
     {
@@ -3626,7 +3626,7 @@
         "Giant Centipede ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 64
     },
     {
@@ -3676,7 +3676,7 @@
         "Giant Centipede ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 65
     },
     {
@@ -3726,7 +3726,7 @@
         "Giant Centipede ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 66
     },
     {
@@ -3776,7 +3776,7 @@
         "Giant Centipede ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 67
     },
     {
@@ -3830,7 +3830,7 @@
         "Distraction ~ Swarm"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 68
     },
     {
@@ -3897,7 +3897,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 69
     },
     {
@@ -3957,7 +3957,7 @@
         "Immunity to Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 71
     },
     {
@@ -4027,7 +4027,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 72
     },
     {
@@ -4131,7 +4131,7 @@
         "Detect Law ~ Constant",
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 74
     },
     {
@@ -4186,7 +4186,7 @@
         "Grab"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 75
     },
     {
@@ -4241,7 +4241,7 @@
         "Grab"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 76
     },
     {
@@ -4296,7 +4296,7 @@
         "Grab"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 77
     },
     {
@@ -4351,7 +4351,7 @@
         "Grab"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 78
     },
     {
@@ -4406,7 +4406,7 @@
         "Grab"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 79
     },
     {
@@ -4461,7 +4461,7 @@
         "Grab"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 80
     },
     {
@@ -4516,7 +4516,7 @@
         "Grab"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 81
     },
     {
@@ -4567,7 +4567,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 82
     },
     {
@@ -4634,7 +4634,7 @@
         "Crocodile ~ Hold Breath",
         "Crocodile ~ Sprint"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 84
     },
     {
@@ -4683,7 +4683,7 @@
         "Ferocity"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 85
     },
     {
@@ -4761,7 +4761,7 @@
       "external_ability_refs": [
         "Sneak Attack"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 90
     },
     {
@@ -4862,7 +4862,7 @@
         "See Invisibility ~ Constant",
         "Sneak Attack"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 92
     },
     {
@@ -5013,7 +5013,7 @@
         "True Seeing ~ Constant",
         "Unholy Aura ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 93
     },
     {
@@ -5096,7 +5096,7 @@
         "Resistance to Cold",
         "Resistance to Fire"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 94
     },
     {
@@ -5238,7 +5238,7 @@
       "external_ability_refs": [
         "True Seeing ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 95
     },
     {
@@ -5351,7 +5351,7 @@
         "Stench"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 96
     },
     {
@@ -5469,7 +5469,7 @@
         "True Seeing ~ Constant",
         "Unholy Aura ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 97
     },
     {
@@ -5613,7 +5613,7 @@
         "Flight Maneuverability",
         "Sneak Attack"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 98
     },
     {
@@ -5731,7 +5731,7 @@
         "True Seeing ~ Constant",
         "Unholy Aura ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 99
     },
     {
@@ -5860,7 +5860,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 101
     },
     {
@@ -5993,7 +5993,7 @@
         "Flight Maneuverability",
         "Tongues ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 102
     },
     {
@@ -6107,7 +6107,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 103
     },
     {
@@ -6240,7 +6240,7 @@
         "Barbed Devil ~ Impale"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 105
     },
     {
@@ -6311,7 +6311,7 @@
         "Bearded Devil ~ Infernal Wound"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 106
     },
     {
@@ -6436,7 +6436,7 @@
       "external_ability_refs": [
         "Fly ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 107
     },
     {
@@ -6536,7 +6536,7 @@
         "Flight Maneuverability",
         "True Seeing ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 108
     },
     {
@@ -6675,7 +6675,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 109
     },
     {
@@ -6793,7 +6793,7 @@
       "external_ability_refs": [
         "Fly ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 110
     },
     {
@@ -6841,7 +6841,7 @@
         "Resistance to Acid",
         "Resistance to Cold"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 112
     },
     {
@@ -7074,7 +7074,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 113
     },
     {
@@ -7241,7 +7241,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 114
     },
     {
@@ -7296,7 +7296,7 @@
       "external_ability_refs": [
         "Ankylosaurus ~ Stun"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 115
     },
     {
@@ -7346,7 +7346,7 @@
         "Trample"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 116
     },
     {
@@ -7412,7 +7412,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 117
     },
     {
@@ -7473,7 +7473,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 118
     },
     {
@@ -7536,7 +7536,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 119
     },
     {
@@ -7590,7 +7590,7 @@
         "Trip"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 120
     },
     {
@@ -7649,7 +7649,7 @@
         "Trample"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 121
     },
     {
@@ -7706,7 +7706,7 @@
       "external_ability_refs": [
         "Tyrannosaurus ~ Powerful Bite"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 122
     },
     {
@@ -7756,7 +7756,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 123
     },
     {
@@ -7814,7 +7814,7 @@
         "Trip"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 124
     },
     {
@@ -7871,7 +7871,7 @@
       "external_ability_refs": [
         "Dolphin ~ Hold Breath"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 125
     },
     {
@@ -7928,7 +7928,7 @@
       "external_ability_refs": [
         "Dolphin ~ Hold Breath"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 126
     },
     {
@@ -7984,7 +7984,7 @@
         "Black Dragon ~ Charm Reptiles"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 128
     },
     {
@@ -8035,7 +8035,7 @@
         "Blue Dragon ~ Sandstorm"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 129
     },
     {
@@ -8086,7 +8086,7 @@
         "Green Dragon ~ Awaken Treants"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 130
     },
     {
@@ -8131,7 +8131,7 @@
         "Red Dragon ~ Melt Stone"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 131
     },
     {
@@ -8194,7 +8194,7 @@
         "White Dragon ~ Blizzard"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 132
     },
     {
@@ -8240,7 +8240,7 @@
         "Brass Dragon ~ Summon Djinni"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 133
     },
     {
@@ -8304,7 +8304,7 @@
         "Bronze Dragon ~ Wave Mastery"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 134
     },
     {
@@ -8360,7 +8360,7 @@
         "Copper Dragon ~ Uncanny Dodge"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 135
     },
     {
@@ -8423,7 +8423,7 @@
         "Gold Dragon ~ Luck"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 136
     },
     {
@@ -8484,7 +8484,7 @@
         "Silver Dragon ~ True Courage"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 137
     },
     {
@@ -8550,7 +8550,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 138
     },
     {
@@ -8682,7 +8682,7 @@
         "Detect Law ~ Constant",
         "Detect Magic ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 139
     },
     {
@@ -8743,7 +8743,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 145
     },
     {
@@ -8804,7 +8804,7 @@
         "Evasion",
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 146
     },
     {
@@ -8868,7 +8868,7 @@
         "Electric Eel ~ Electricity",
         "Resistance to Electricity"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 147
     },
     {
@@ -8929,7 +8929,7 @@
       "external_ability_refs": [
         "Giant Moray Eel ~ Gnaw"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 148
     },
     {
@@ -8981,7 +8981,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 150
     },
     {
@@ -9033,7 +9033,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 151
     },
     {
@@ -9085,7 +9085,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 152
     },
     {
@@ -9137,7 +9137,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 153
     },
     {
@@ -9185,7 +9185,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 154
     },
     {
@@ -9239,7 +9239,7 @@
         "Earth Elemental ~ Earth Mastery"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 156
     },
     {
@@ -9293,7 +9293,7 @@
         "Earth Elemental ~ Earth Mastery"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 157
     },
     {
@@ -9347,7 +9347,7 @@
         "Earth Elemental ~ Earth Mastery"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 158
     },
     {
@@ -9401,7 +9401,7 @@
         "Earth Elemental ~ Earth Mastery"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 159
     },
     {
@@ -9451,7 +9451,7 @@
         "Earth Elemental ~ Earth Mastery"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 160
     },
     {
@@ -9500,7 +9500,7 @@
         "Burn"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 162
     },
     {
@@ -9549,7 +9549,7 @@
         "Burn"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 163
     },
     {
@@ -9598,7 +9598,7 @@
         "Burn"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 164
     },
     {
@@ -9647,7 +9647,7 @@
         "Burn"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 165
     },
     {
@@ -9692,7 +9692,7 @@
         "Burn"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 166
     },
     {
@@ -9747,7 +9747,7 @@
         "Water Elemental ~ Water Mastery"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 168
     },
     {
@@ -9802,7 +9802,7 @@
         "Water Elemental ~ Water Mastery"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 169
     },
     {
@@ -9857,7 +9857,7 @@
         "Water Elemental ~ Water Mastery"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 170
     },
     {
@@ -9912,7 +9912,7 @@
         "Water Elemental ~ Water Mastery"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 171
     },
     {
@@ -9963,7 +9963,7 @@
         "Water Elemental ~ Water Mastery"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 172
     },
     {
@@ -10021,7 +10021,7 @@
         "Trample"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 173
     },
     {
@@ -10083,7 +10083,7 @@
         "Trample"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 174
     },
     {
@@ -10127,7 +10127,7 @@
         "Ettin ~ Superior Two-Weapon Fighting"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 176
     },
     {
@@ -10188,7 +10188,7 @@
       "external_ability_refs": [
         "Resistance to Acid"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 180
     },
     {
@@ -10258,7 +10258,7 @@
       "external_ability_refs": [
         "Giant Frog ~ Tongue"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 181
     },
     {
@@ -10311,7 +10311,7 @@
         "Frog ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 182
     },
     {
@@ -10383,7 +10383,7 @@
       "external_ability_refs": [
         "Resistance to Fire"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 183
     },
     {
@@ -10450,7 +10450,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 187
     },
     {
@@ -10515,7 +10515,7 @@
         "Gargoyle ~ Freeze"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 188
     },
     {
@@ -10645,7 +10645,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 190
     },
     {
@@ -10776,7 +10776,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 191
     },
     {
@@ -10933,7 +10933,7 @@
         "Detect Magic ~ Constant",
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 192
     },
     {
@@ -11122,7 +11122,7 @@
         "Detect Magic ~ Constant",
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 193
     },
     {
@@ -11224,7 +11224,7 @@
         "Flight Maneuverability",
         "Resistance to Fire"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 194
     },
     {
@@ -11350,7 +11350,7 @@
         "Flight Maneuverability",
         "Resistance to Fire"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 195
     },
     {
@@ -11517,7 +11517,7 @@
         "Detect Magic ~ Constant",
         "Water Walk ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 196
     },
     {
@@ -11708,7 +11708,7 @@
         "Detect Magic ~ Constant",
         "Water Walk ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 197
     },
     {
@@ -11874,7 +11874,7 @@
         "Shaitan ~ Stone Glide"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 198
     },
     {
@@ -12048,7 +12048,7 @@
         "Shaitan ~ Stone Glide"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 199
     },
     {
@@ -12108,7 +12108,7 @@
         "Ghoul ~ Paralysis"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 201
     },
     {
@@ -12171,7 +12171,7 @@
         "Ghoul ~ Paralysis"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 202
     },
     {
@@ -12256,7 +12256,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 203
     },
     {
@@ -12309,7 +12309,7 @@
         "Vulnerability to Cold"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 205
     },
     {
@@ -12362,7 +12362,7 @@
         "Vulnerability to Fire"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 206
     },
     {
@@ -12416,7 +12416,7 @@
         "Rock Throwing"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 207
     },
     {
@@ -12466,7 +12466,7 @@
         "Stone Giant ~ Improved Rock Catching"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 208
     },
     {
@@ -12571,7 +12571,7 @@
         "Storm Giant ~ Water Breathing"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 209
     },
     {
@@ -12637,7 +12637,7 @@
         "Immunity to Precision Damage"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 210
     },
     {
@@ -12703,7 +12703,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 211
     },
     {
@@ -12751,7 +12751,7 @@
         "Clay Golem ~ Immunity to Magic"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 214
     },
     {
@@ -12797,7 +12797,7 @@
         "Flesh Golem ~ Immunity to Magic"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 215
     },
     {
@@ -12847,7 +12847,7 @@
         "Vulnerability to Fire"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 216
     },
     {
@@ -12894,7 +12894,7 @@
         "Iron Golem ~ Powerful Blows"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 217
     },
     {
@@ -12940,7 +12940,7 @@
         "Stone Golem ~ Slow"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 218
     },
     {
@@ -12995,7 +12995,7 @@
         "Wood Golem ~ Splintering"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 219
     },
     {
@@ -13054,7 +13054,7 @@
         "Trample"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 220
     },
     {
@@ -13113,7 +13113,7 @@
         "Gray Ooze ~ Paralytic Toxin"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 221
     },
     {
@@ -13171,7 +13171,7 @@
         "Immunity to Fire"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 222
     },
     {
@@ -13243,7 +13243,7 @@
         "Immunity to Fire"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 223
     },
     {
@@ -13386,7 +13386,7 @@
         "Green Hag ~ Weakness"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 224
     },
     {
@@ -13455,7 +13455,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 225
     },
     {
@@ -13514,7 +13514,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 229
     },
     {
@@ -13573,7 +13573,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 231
     },
     {
@@ -13624,7 +13624,7 @@
         "Trample"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 232
     },
     {
@@ -13675,7 +13675,7 @@
         "Trample"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 233
     },
     {
@@ -13729,7 +13729,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 236
     },
     {
@@ -13791,7 +13791,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 237
     },
     {
@@ -13849,7 +13849,7 @@
         "Trip"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 243
     },
     {
@@ -13971,7 +13971,7 @@
         "Resistance to Sonic",
         "Sneak Attack"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 247
     },
     {
@@ -14032,7 +14032,7 @@
         "Elemental Traits",
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 248
     },
     {
@@ -14143,7 +14143,7 @@
         "Kraken ~ Tenacious Grapple"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 261
     },
     {
@@ -14199,7 +14199,7 @@
         "Regeneration ~ Good/Silver"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 262
     },
     {
@@ -14318,7 +14318,7 @@
         "Lamia ~ Wisdom Drain"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 266
     },
     {
@@ -14372,7 +14372,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 267
     },
     {
@@ -14428,7 +14428,7 @@
         "Leech Swarm ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 268
     },
     {
@@ -14518,7 +14518,7 @@
         "Flight Maneuverability",
         "True Seeing ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 269
     },
     {
@@ -14612,7 +14612,7 @@
         "Flight Maneuverability",
         "True Seeing ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 270
     },
     {
@@ -14702,7 +14702,7 @@
         "Flight Maneuverability",
         "True Seeing ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 271
     },
     {
@@ -14762,7 +14762,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 273
     },
     {
@@ -14826,7 +14826,7 @@
       "external_ability_refs": [
         "Lizard Monitor ~ Poison"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 274
     },
     {
@@ -14888,7 +14888,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 275
     },
     {
@@ -14960,7 +14960,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 280
     },
     {
@@ -15027,7 +15027,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 281
     },
     {
@@ -15082,7 +15082,7 @@
         "Medusa ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 282
     },
     {
@@ -15134,7 +15134,7 @@
         "Mimic ~ Mimic Object"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 293
     },
     {
@@ -15188,7 +15188,7 @@
         "Powerful Charge"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 294
     },
     {
@@ -15260,7 +15260,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 295
     },
     {
@@ -15311,7 +15311,7 @@
         "Mohrg ~ Paralysis"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 296
     },
     {
@@ -15364,7 +15364,7 @@
       "external_ability_refs": [
         "Undead Traits"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 298
     },
     {
@@ -15430,7 +15430,7 @@
       "external_ability_refs": [
         "Detect Thoughts ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 302
     },
     {
@@ -15493,7 +15493,7 @@
         "Guardian Naga ~ Spit"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 303
     },
     {
@@ -15556,7 +15556,7 @@
         "Spirit Naga ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 304
     },
     {
@@ -15690,7 +15690,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 305
     },
     {
@@ -15814,7 +15814,7 @@
         "Detect Law ~ Constant",
         "Detect Magic ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 306
     },
     {
@@ -15891,7 +15891,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 307
     },
     {
@@ -15976,7 +15976,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 308
     },
     {
@@ -16042,7 +16042,7 @@
       "external_ability_refs": [
         "Wild Empathy"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 309
     },
     {
@@ -16105,7 +16105,7 @@
         "Ochre Jelly ~ Constrict"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 313
     },
     {
@@ -16176,7 +16176,7 @@
         "Octopus ~ Ink Cloud",
         "Octopus ~ Jet"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 315
     },
     {
@@ -16277,7 +16277,7 @@
       "external_ability_refs": [
         "Fly ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 317
     },
     {
@@ -16339,7 +16339,7 @@
         "Otyugh ~ Disease"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 318
     },
     {
@@ -16397,7 +16397,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 319
     },
     {
@@ -16457,7 +16457,7 @@
         "Phase Spider ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 324
     },
     {
@@ -16612,7 +16612,7 @@
         "Flight Maneuverability",
         "See Invisibility ~ Constant"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 325
     },
     {
@@ -16735,7 +16735,7 @@
         "Detect Law ~ Constant",
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 326
     },
     {
@@ -16807,7 +16807,7 @@
         "Swallow Whole"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 328
     },
     {
@@ -16877,7 +16877,7 @@
         "Rakshasa ~ Detect Thoughts"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 332
     },
     {
@@ -16939,7 +16939,7 @@
         "Remorhaz ~ Swallow Whole"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 335
     },
     {
@@ -17005,7 +17005,7 @@
       "external_ability_refs": [
         "Cannot Speak"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 336
     },
     {
@@ -17059,7 +17059,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 337
     },
     {
@@ -17114,7 +17114,7 @@
         "Trample"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 338
     },
     {
@@ -17177,7 +17177,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 339
     },
     {
@@ -17244,7 +17244,7 @@
       "external_ability_refs": [
         "Resistance to Cold"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 340
     },
     {
@@ -17306,7 +17306,7 @@
         "Vulnerability to Cold"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 346
     },
     {
@@ -17420,7 +17420,7 @@
         "Satyr ~ Pipes"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 347
     },
     {
@@ -17475,7 +17475,7 @@
         "Scorpion ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 348
     },
     {
@@ -17530,7 +17530,7 @@
         "Scorpion ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 349
     },
     {
@@ -17581,7 +17581,7 @@
         "Scorpion ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 350
     },
     {
@@ -17632,7 +17632,7 @@
         "Scorpion ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 351
     },
     {
@@ -17687,7 +17687,7 @@
         "Scorpion ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 352
     },
     {
@@ -17742,7 +17742,7 @@
         "Scorpion ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 353
     },
     {
@@ -17797,7 +17797,7 @@
         "Scorpion ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 354
     },
     {
@@ -17860,7 +17860,7 @@
         "Sea Hag ~ Horrific Appearance"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 355
     },
     {
@@ -17925,7 +17925,7 @@
       "external_ability_refs": [
         "Resistance to Fire"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 356
     },
     {
@@ -17978,7 +17978,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 358
     },
     {
@@ -18036,7 +18036,7 @@
       "external_ability_refs": [
         "Resistance to Fire"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 359
     },
     {
@@ -18092,7 +18092,7 @@
         "Animal Traits Output"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 361
     },
     {
@@ -18184,7 +18184,7 @@
         "Resistance to Electricity",
         "Resistance to Fire"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 363
     },
     {
@@ -18218,7 +18218,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 364
     },
     {
@@ -18252,7 +18252,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 365
     },
     {
@@ -18312,7 +18312,7 @@
       "external_ability_refs": [
         "Giant Slug ~ Susceptible to Salt"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 367
     },
     {
@@ -18380,7 +18380,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 368
     },
     {
@@ -18447,7 +18447,7 @@
         "Venomous Snake ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 369
     },
     {
@@ -18503,7 +18503,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 370
     },
     {
@@ -18640,7 +18640,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 371
     },
     {
@@ -18689,7 +18689,7 @@
         "Giant Spider ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 372
     },
     {
@@ -18738,7 +18738,7 @@
         "Giant Spider ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 373
     },
     {
@@ -18787,7 +18787,7 @@
         "Giant Spider ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 374
     },
     {
@@ -18840,7 +18840,7 @@
         "Giant Spider ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 375
     },
     {
@@ -18893,7 +18893,7 @@
         "Giant Spider ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 377
     },
     {
@@ -18946,7 +18946,7 @@
         "Giant Spider ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 378
     },
     {
@@ -19019,7 +19019,7 @@
         "Squid ~ Ink Cloud",
         "Squid ~ Jet"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 381
     },
     {
@@ -19115,7 +19115,7 @@
       "external_ability_refs": [
         "Cannot Speak"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 386
     },
     {
@@ -19179,7 +19179,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 387
     },
     {
@@ -19239,7 +19239,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 388
     },
     {
@@ -19301,7 +19301,7 @@
         "Treant ~ Treespeech"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 389
     },
     {
@@ -19364,7 +19364,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 391
     },
     {
@@ -19432,7 +19432,7 @@
         "Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 392
     },
     {
@@ -19548,7 +19548,7 @@
         "Unicorn Deflection",
         "Unicorn Resistance"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 396
     },
     {
@@ -19609,7 +19609,7 @@
         "Resistance to Cold",
         "Resistance to Electricity"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 400
     },
     {
@@ -19654,7 +19654,7 @@
       "external_ability_refs": [
         "Cannot Speak"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 402
     },
     {
@@ -19703,7 +19703,7 @@
         "Violet Fungus ~ Rot"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 403
     },
     {
@@ -19758,7 +19758,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 407
     },
     {
@@ -19813,7 +19813,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 408
     },
     {
@@ -19864,7 +19864,7 @@
         "Wight ~ Resurrection Vulnerability"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 409
     },
     {
@@ -19916,7 +19916,7 @@
       "external_ability_refs": [
         "Giant Creature (Proper Rules)"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 410
     },
     {
@@ -19967,7 +19967,7 @@
         "Wight ~ Resurrection Vulnerability"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 411
     },
     {
@@ -20018,7 +20018,7 @@
         "Wight ~ Resurrection Vulnerability"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 412
     },
     {
@@ -20075,7 +20075,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 413
     },
     {
@@ -20133,7 +20133,7 @@
         "Trip"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 415
     },
     {
@@ -20195,7 +20195,7 @@
         "Wolverine ~ Rage"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 417
     },
     {
@@ -20250,7 +20250,7 @@
         "Trip"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 419
     },
     {
@@ -20306,7 +20306,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 420
     },
     {
@@ -20380,7 +20380,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 421
     },
     {
@@ -20441,7 +20441,7 @@
         "Xill ~ Planewalk"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 425
     },
     {
@@ -20496,7 +20496,7 @@
       "external_ability_refs": [
         "Resistance to Electricity"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 426
     },
     {
@@ -20560,7 +20560,7 @@
         "Cannot Speak",
         "Flight Maneuverability"
       ],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 431
     },
     {
@@ -20620,7 +20620,7 @@
         "Yeti ~ Frightful Gaze"
       ],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 432
     },
     {
@@ -20645,7 +20645,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b1_races.lst",
+      "source_file": "b1_races",
       "source_line": 436
     }
   ]

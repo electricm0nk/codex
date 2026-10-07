@@ -171,7 +171,7 @@
       "weight_lbs": 1000.0,
       "description": "This altar is a stone vault with an intricate, stylized lock decorated with golden keys, coins, and examples of flawless craftsmanship. Praying at the altar grants a +2 competence bonus on Diplomacy, perception, profession, and Sense Motive checks, as well as a Sanctuary effect (DC 13).",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         13
       ]
     },
@@ -184,7 +184,7 @@
       "weight_lbs": 750.0,
       "description": "This altar is an elaborate nine-tiered iron frame built over a shallow nine-tiered pit and features many trappings of prisons and slavery. Praying at the altar grants the ability to cast Hold Person (DC 13) as a spell-like ability once in the next 24 hours.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         14
       ]
     },
@@ -197,7 +197,7 @@
       "weight_lbs": 500.0,
       "description": "This altar is a silver or brass platform built around a mirror and decorated with elegant filigree. Praying at the altar grants a +3 luck bonus on attack rolls, weapon damage rolls, saving throws, and skill checks against one creature the worshiper names. The named creature must have harmed the worshiper in the past 24 hours.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         15
       ]
     },
@@ -210,7 +210,7 @@
       "weight_lbs": 150.0,
       "description": "This altar is usually a heavy wooden box, often incorporated into the bar of a tavern or another social resting place for adventurers or revelers, and contains large stores of alcohol and the god's holy text. Praying at the altar grants a +2 resistance bonus on saving throws against fear and poison.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         16
       ]
     },
@@ -223,7 +223,7 @@
       "weight_lbs": 1000.0,
       "description": "[redacted PI]",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         17
       ]
     },
@@ -236,7 +236,7 @@
       "weight_lbs": 1000.0,
       "description": "[redacted PI]",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         18
       ]
     },
@@ -249,7 +249,7 @@
       "weight_lbs": 750.0,
       "description": "This altar is an iron platform and frame designed to support a heavy suit of spiked armor and weapons, typically mounted in the shape of a massively imposing, 8-foot-tall warrior. Praying at the altar grants a +4 morale bonus on saves against fear effects, and any non-masterwork iron or steel weapon the worshiper wields is treated as if it were masterwork.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         19
       ]
     },
@@ -262,7 +262,7 @@
       "weight_lbs": 1000.0,
       "description": "This altar is made of rough-hewn stone, weathered whale bone, or ancient wood, usually standing over or next to a body of natural water and featuring carvings of gozreh in one or both aspects. Unlike with most altars, its magic circle effect is aligned against one alignment component appropriate to the interests of the temple. Praying at the altar grants a +4 resistance bonus on saving throws against weather effects and a +2 circumstance bonus on Fly, Profession (Sailor), and Swim checks.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         20
       ]
     },
@@ -275,7 +275,7 @@
       "weight_lbs": 1000.0,
       "description": "[redacted PI]",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         21
       ]
     },
@@ -288,7 +288,7 @@
       "weight_lbs": 150.0,
       "description": "[redacted PI]",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         22
       ]
     },
@@ -301,7 +301,7 @@
       "weight_lbs": 500.0,
       "description": "This altar is a flat rock covered in images of ferocious monsters such as gnolls and adorned with a venerable beast's skull, especially that of a jackal or hyena. Praying at the altar grants the creature the effects of Magic Fang on one of its natural weapons (a worshiper with a familiar, animal companion, eidolon, or similar companion creature may instead pass this blessing on to that creature).",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         23
       ]
     },
@@ -314,7 +314,7 @@
       "weight_lbs": 500.0,
       "description": "This altar is a deceptively complex, many-chambered scroll rack or bookshelf capable of securing dozens of documents. Unlike most altars, its Magic Circle effects are aligned against one or two alignment components (such as only good or both evil and law) appropriate to the interests of the temple. Praying at the altar grants a +2 circumstance bonus on Knowledge (arcana), Perception, Spellcraft, and Use Magic Device checks; in addition, the worshiper selects one spell or spell-like ability it can cast and treats its caster level as 1 higher than normal when casting that spell.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         24
       ]
     },
@@ -327,7 +327,7 @@
       "weight_lbs": 250.0,
       "description": "This altar is a lead-lined chest covered in dark fabric and a false cover, usually built into the floor or wall so that it can be easily concealed when not in use. Praying at the altar grants a +2 circumstance bonus on Bluff, Disguise, Sleight of Hand, and Stealth checks. The creature can choose to expend this blessing before the duration expires to cast False Alibi (DC 14), but the spell's DC decreases by 1 for every 4 hours that have passed since praying at the altar.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         25
       ]
     },
@@ -340,7 +340,7 @@
       "weight_lbs": 1000.0,
       "description": "This altar is an ornate marble memorial to the dead and unborn, featuring abstract sculptures of the Lady of graves in each of her aspects as midwife, prophet, and judge of souls. Instead of a Magic Circle, it is warded by a Hallow effect. Praying at the altar grants a +2 circumstance bonus on Heal and Knowledge (religion) checks, as well as the undead-bane magic weapon special ability to one weapon carried or wielded by the worshiper; this effect is suppressed if the weapon leaves the worshiper's grasp but resumes if the weapon is returned to the worshiper.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         26
       ]
     },
@@ -353,7 +353,7 @@
       "weight_lbs": 150.0,
       "description": "This altar is usually built around the lip of a pit that resembles a linked ring of claws and fangs made from copper. praying at the altar grants a +1 bonus on damage rolls and a +2 bonus on attack rolls to confirm critical threats.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         27
       ]
     },
@@ -366,7 +366,7 @@
       "weight_lbs": 750.0,
       "description": "[redacted PI]",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         28
       ]
     },
@@ -379,7 +379,7 @@
       "weight_lbs": 150.0,
       "description": "This altar is a wooden frame or display case for showing art or musical instruments. Praying at the altar grants a +2 circumstance bonus on Craft, Diplomacy, and perform checks, and a +1 morale bonus on Will saving throws.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         29
       ]
     },
@@ -392,7 +392,7 @@
       "weight_lbs": 500.0,
       "description": "[redacted PI]",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         30
       ]
     },
@@ -405,7 +405,7 @@
       "weight_lbs": 500.0,
       "description": "This altar is a large sculpted table or slab for ceremonial feasts. Praying at the altar grants a +2 circumstance bonus on saving throws against death effects, disease, energy drain, and negative energy effects; an undead worshiper instead gains 5 temporary hit points.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         31
       ]
     },
@@ -418,7 +418,7 @@
       "weight_lbs": 150.0,
       "description": "This altar is a veiled box of thick steel designed to house ritual implements of torture and self-mutilation in perfect darkness. Praying at the altar grants the worshiper a +2 competence bonus on attack rolls, weapon damage rolls, and saving throws for 1 minute whenever the worshiper takes damage or is the target of a pain effect during the next 24 hours after praying at the altar. Multiple sources of damage or pain reset this duration rather than stack.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         32
       ]
     },
@@ -971,7 +971,7 @@
       "weight_lbs": 0.0,
       "description": "This gold ring is misshapen and uncomfortable to wear for long periods of time; inscribed on it is a crude symbol of a fire burning under an arch. Once per day, the wearer may use charm person. If Droskar is the wearer's patron deity, any time the wearer crafts a magic item, she may choose to pay half of the item's construction cost instead of the full cost. The wearer spends time working on the item normally, but at the time of completion there is a 50% chance that the item turns out nonmagical and worthless. For example, if creating a magic bracer that normally costs 1,000 gp to craft, the wearer may craft it for only 500 gp, but there is a 50% chance the wearer's shortcuts and cheap materials result in a valueless, nonfunctional item.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         156
       ]
     },
@@ -1024,7 +1024,7 @@
       "weight_lbs": 0.0,
       "description": "[redacted PI]",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         161
       ]
     },
@@ -1107,7 +1107,7 @@
       "weight_lbs": 1.0,
       "description": "[redacted PI]",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         172
       ]
     },
@@ -1540,7 +1540,7 @@
       "weight_lbs": 5.0,
       "description": "This strange leather-bound book contains erratic handwriting; the words within it appear to have been translated from Gnome into Common (and perhaps some other language before Gnome). It contains notations of strange cult practices, disturbing rants about ancient godlike beings, and confusing diagrams resembling summoning circles, with many parts crossed out or obliterated with ink or fire. The bearer of Preklikin's Book of Cults gains a +1 resistance bonus on Will saving throws while carrying the book. If the bearer's patron is one of the great Old Ones, the bearer can hold the book in one hand to use it as a lesser extend metamagic rod, but only for conjuration spells that summon or call an evil outsider.",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         215
       ]
     },
@@ -1613,7 +1613,7 @@
       "weight_lbs": 5.0,
       "description": "[redacted PI]",
       "name_pi_citation": [
-        "isg_equip.lst",
+        "isg_equip",
         222
       ]
     },

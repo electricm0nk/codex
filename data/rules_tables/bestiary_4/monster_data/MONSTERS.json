@@ -74,7 +74,7 @@
         "Abaia ~ Spell Resistance"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 6
     },
     {
@@ -129,7 +129,7 @@
         "Alpluachra ~ Vulnerable to Salt"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 8
     },
     {
@@ -195,7 +195,7 @@
         "Ankou ~ Shadow Doubles"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 9
     },
     {
@@ -248,7 +248,7 @@
         "Aoandon ~ Touch of Madness"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 10
     },
     {
@@ -308,7 +308,7 @@
         "Apocalypse Locust ~ Sting"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 11
     },
     {
@@ -372,7 +372,7 @@
         "Immunity to Dazzled"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 12
     },
     {
@@ -438,7 +438,7 @@
         "Astral Leviathan ~ Gulping Tide"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 13
     },
     {
@@ -494,7 +494,7 @@
         "Bakekujira ~ Undead Parasites"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 15
     },
     {
@@ -549,7 +549,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 16
     },
     {
@@ -616,7 +616,7 @@
         "Bhole ~ Overwhelming Strength"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 18
     },
     {
@@ -683,7 +683,7 @@
         "Blood Hag ~ Mask Evil"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 19
     },
     {
@@ -748,7 +748,7 @@
         "Bodythief ~ Vexing Vines"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 20
     },
     {
@@ -814,7 +814,7 @@
         "Boilborn ~ Cackle Fever"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 21
     },
     {
@@ -869,7 +869,7 @@
         "Brethedan ~ Engulf"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 22
     },
     {
@@ -936,7 +936,7 @@
         "Buggane ~ Smash and Bash"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 23
     },
     {
@@ -988,7 +988,7 @@
         "Cephalophore ~ Statue Form"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 25
     },
     {
@@ -1049,7 +1049,7 @@
         "Chaneque ~ Steal Soul"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 26
     },
     {
@@ -1125,7 +1125,7 @@
         "Clockwork Dragon ~ Sleep Gas Breath"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 27
     },
     {
@@ -1174,7 +1174,7 @@
         "Clockwork Mage ~ Wand Magic"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 28
     },
     {
@@ -1224,7 +1224,7 @@
         "Clockwork Steed ~ Clockwork Charger"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 29
     },
     {
@@ -1275,7 +1275,7 @@
         "Unnatural Aura"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 30
     },
     {
@@ -1332,7 +1332,7 @@
         "Colossus (Iron) ~ Siege Tower"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 31
     },
     {
@@ -1389,7 +1389,7 @@
         "Colossus (Stone) ~ Siege Tower"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 32
     },
     {
@@ -1444,7 +1444,7 @@
         "Colour Out of Space ~ Susceptiblity"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 33
     },
     {
@@ -1494,7 +1494,7 @@
         "Comozant Wyrd ~ Plasma Form"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 34
     },
     {
@@ -1556,7 +1556,7 @@
         "Read Magic ~ Constant"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 35
     },
     {
@@ -1609,7 +1609,7 @@
         "Dark Caller ~ Shadow Ritual"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 37
     },
     {
@@ -1655,7 +1655,7 @@
         "Dark Dancer ~ Death Throes"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 38
     },
     {
@@ -1712,7 +1712,7 @@
         "Death Dog ~ Disease"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 39
     },
     {
@@ -1783,7 +1783,7 @@
         "Devil (Drowning) ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 43
     },
     {
@@ -1839,7 +1839,7 @@
         "Devil (Host) ~ Shared Senses"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 44
     },
     {
@@ -1915,7 +1915,7 @@
         "Devil (Nemesis) ~ Infernal Wound"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 45
     },
     {
@@ -1976,7 +1976,7 @@
         "Dinosaur (Dimorphodon) ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 46
     },
     {
@@ -2029,7 +2029,7 @@
         "Dinosaur (Diplodocus) ~ Tail Lash"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 47
     },
     {
@@ -2086,7 +2086,7 @@
         "Dinosaur (Styracosaurus) ~ Reflexive Strike"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 48
     },
     {
@@ -2147,7 +2147,7 @@
         "Dinosaur (Velociraptor) ~ Leaping Charge"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 49
     },
     {
@@ -2209,7 +2209,7 @@
         "Dorvae ~ Writhing Snakes"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 50
     },
     {
@@ -2269,7 +2269,7 @@
         "Dossenus ~ Swarming"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 51
     },
     {
@@ -2332,7 +2332,7 @@
         "Dragon ~ Starflight"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 52
     },
     {
@@ -2385,7 +2385,7 @@
         "Dragon ~ Starflight"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 53
     },
     {
@@ -2444,7 +2444,7 @@
         "Breath Weapon ~ Cone of Electricity"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 54
     },
     {
@@ -2497,7 +2497,7 @@
         "Dragon ~ Starflight"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 55
     },
     {
@@ -2554,7 +2554,7 @@
         "Dragon ~ Starflight"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 56
     },
     {
@@ -2635,7 +2635,7 @@
         "Regeneration ~ Negative Energy"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 57
     },
     {
@@ -2703,7 +2703,7 @@
         "Drake (Lava) ~ Speed Surge"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 58
     },
     {
@@ -2767,7 +2767,7 @@
         "Drake (Mist) ~ Speed Surge"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 59
     },
     {
@@ -2830,7 +2830,7 @@
         "Drake (Spire) ~ Speed Surge"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 61
     },
     {
@@ -2876,7 +2876,7 @@
         "Einherji ~ Thirst for Battle"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 63
     },
     {
@@ -2942,7 +2942,7 @@
         "Elder Thing ~ Limited Starflight"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 64
     },
     {
@@ -3010,7 +3010,7 @@
         "Fortification"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 65
     },
     {
@@ -3071,7 +3071,7 @@
         "Protection from Law ~ Constant"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 69
     },
     {
@@ -3129,7 +3129,7 @@
         "Fachen ~ Incredible Balance"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 71
     },
     {
@@ -3188,7 +3188,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 72
     },
     {
@@ -3239,7 +3239,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 73
     },
     {
@@ -3294,7 +3294,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 74
     },
     {
@@ -3353,7 +3353,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 75
     },
     {
@@ -3408,7 +3408,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 76
     },
     {
@@ -3460,7 +3460,7 @@
         "Festering Spirit ~ Trample"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 77
     },
     {
@@ -3507,7 +3507,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 78
     },
     {
@@ -3556,7 +3556,7 @@
         "Flea (Mammoth) ~ Disease"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 79
     },
     {
@@ -3616,7 +3616,7 @@
         "Fleshdreg ~ Sin-Scent"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 80
     },
     {
@@ -3684,7 +3684,7 @@
         "Fleshwarp (Ghonhatine) ~ Regurgitate"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 81
     },
     {
@@ -3743,7 +3743,7 @@
         "Fleshwarp (Grothlut) ~ Piteous Moan"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 82
     },
     {
@@ -3797,7 +3797,7 @@
         "Fleshwarp (Halsora) ~ Spores"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 83
     },
     {
@@ -3859,7 +3859,7 @@
         "Fleshwarp (Irnakurse) ~ Soul Scream"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 84
     },
     {
@@ -3923,7 +3923,7 @@
         "Flying Polyp ~ Wind Blast"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 85
     },
     {
@@ -3989,7 +3989,7 @@
         "Formian Myrmarch ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 86
     },
     {
@@ -4047,7 +4047,7 @@
         "Formian Queen ~ Telepathic Feedback"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 87
     },
     {
@@ -4109,7 +4109,7 @@
         "Formian Taskmaster ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 88
     },
     {
@@ -4164,7 +4164,7 @@
         "Formian Warrior ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 89
     },
     {
@@ -4214,7 +4214,7 @@
         "Formian Worker ~ Peerless Bearer"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 90
     },
     {
@@ -4275,7 +4275,7 @@
         "Water Walk ~ Constant"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 91
     },
     {
@@ -4334,7 +4334,7 @@
         "Freezing Flow ~ Numbing Touch"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 92
     },
     {
@@ -4397,7 +4397,7 @@
         "Gaki ~ Compulsive Hunger"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 94
     },
     {
@@ -4447,7 +4447,7 @@
         "Gallowdead ~ Chains of the Dead"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 95
     },
     {
@@ -4514,7 +4514,7 @@
         "Galvo ~ Varied Attack"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 96
     },
     {
@@ -4569,7 +4569,7 @@
         "Gashadokuro ~ Starvation Aura"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 97
     },
     {
@@ -4624,7 +4624,7 @@
         "Gearghost ~ Resetter"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 98
     },
     {
@@ -4674,7 +4674,7 @@
         "Geist ~ Terrifying Laugh"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 99
     },
     {
@@ -4724,7 +4724,7 @@
         "Gholdako ~ Disease"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 100
     },
     {
@@ -4781,7 +4781,7 @@
         "Giant (Cliff) ~ Earth Attunement"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 101
     },
     {
@@ -4838,7 +4838,7 @@
         "Giant (Ocean) ~ Conch Focus"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 102
     },
     {
@@ -4885,7 +4885,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 103
     },
     {
@@ -4929,7 +4929,7 @@
         "Giant (Slag) ~ Shattering Blow"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 104
     },
     {
@@ -4981,7 +4981,7 @@
         "Golem (Blood) ~ Vulnerable to Bleed"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 105
     },
     {
@@ -5024,7 +5024,7 @@
         "Powerful Blows (Slam)"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 106
     },
     {
@@ -5072,7 +5072,7 @@
         "Golem (Junk) ~ Junk Repair"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 107
     },
     {
@@ -5113,7 +5113,7 @@
         "Golem (Wax) ~ Immunity to Magic"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 108
     },
     {
@@ -5177,7 +5177,7 @@
         "Graeae ~ Luck Ripple"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 109
     },
     {
@@ -5235,7 +5235,7 @@
         "Gremlin (Grimple) ~ Putrid Vomit"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 113
     },
     {
@@ -5296,7 +5296,7 @@
         "Gremlin (Haniver) ~ Misplacement"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 114
     },
     {
@@ -5354,7 +5354,7 @@
         "Gremlin (Monaciello) ~ Stymie Channeling"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 115
     },
     {
@@ -5418,7 +5418,7 @@
         "Regeneration ~ Unarmed Strikes or Natural Weapons"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 116
     },
     {
@@ -5510,7 +5510,7 @@
         "Grab ~ Bite/Tail Slap"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 117
     },
     {
@@ -5564,7 +5564,7 @@
         "Hamadryad ~ Woodcraft"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 119
     },
     {
@@ -5622,7 +5622,7 @@
         "Harionago ~ Infectious Laughter"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 120
     },
     {
@@ -5681,7 +5681,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 121
     },
     {
@@ -5740,7 +5740,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 122
     },
     {
@@ -5803,7 +5803,7 @@
         "Endure Elements ~ Constant"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 123
     },
     {
@@ -5863,7 +5863,7 @@
         "Hungry Flesh ~ Slime Trail"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 124
     },
     {
@@ -5923,7 +5923,7 @@
         "Hyakume ~ Transfer Memories"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 125
     },
     {
@@ -5982,7 +5982,7 @@
         "Hypnalis ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 126
     },
     {
@@ -6048,7 +6048,7 @@
         "Ijiraq ~ Hide in Plain Sight"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 128
     },
     {
@@ -6109,7 +6109,7 @@
         "Immortal Ichor ~ Corrupt Ally"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 129
     },
     {
@@ -6170,7 +6170,7 @@
         "Incutilis ~ Puppetmaster"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 130
     },
     {
@@ -6228,7 +6228,7 @@
         "Irminsul ~ See Alignment"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 131
     },
     {
@@ -6296,7 +6296,7 @@
         "Jack-o'-Lantern ~ Strangling Ensnare"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 134
     },
     {
@@ -6355,7 +6355,7 @@
         "Jinmenju ~ Unsettling Drone"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 135
     },
     {
@@ -6437,7 +6437,7 @@
         "Juggernaut ~ Weathermaker"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 136
     },
     {
@@ -6511,7 +6511,7 @@
         "Julunggali ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 137
     },
     {
@@ -6569,7 +6569,7 @@
         "Kapre ~ Tree Meld"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 142
     },
     {
@@ -6627,7 +6627,7 @@
         "Karkinoi ~ Water Dependency"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 143
     },
     {
@@ -6683,7 +6683,7 @@
         "Shield ~ Constant"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 144
     },
     {
@@ -6741,7 +6741,7 @@
         "Kyton (Sacristan) ~ Unnerving Gaze"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 145
     },
     {
@@ -6792,7 +6792,7 @@
         "Lampad ~ Weep"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 147
     },
     {
@@ -6856,7 +6856,7 @@
         "Leaf Ray ~ Winter Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 148
     },
     {
@@ -6916,7 +6916,7 @@
         "Leanan Sidhe ~ Unearthly Grace"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 149
     },
     {
@@ -6972,7 +6972,7 @@
         "Living Topiary ~ Sculpt Shape"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 150
     },
     {
@@ -7014,7 +7014,7 @@
         "Living Wall ~ Push"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 151
     },
     {
@@ -7077,7 +7077,7 @@
         "Locust (Giant) ~ Voracious"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 152
     },
     {
@@ -7131,7 +7131,7 @@
         "Locust (Giant) ~ Voracious"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 153
     },
     {
@@ -7194,7 +7194,7 @@
         "Lorelei ~ Vortex"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 154
     },
     {
@@ -7258,7 +7258,7 @@
         "Lunarma ~ Telepathy"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 155
     },
     {
@@ -7317,7 +7317,7 @@
         "Executioner's Hood ~ Susceptible to Alcohol"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 156
     },
     {
@@ -7382,7 +7382,7 @@
         "Lurking Ray ~ Smother"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 157
     },
     {
@@ -7443,7 +7443,7 @@
         "Lurking Ray ~ Smother"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 158
     },
     {
@@ -7507,7 +7507,7 @@
         "Immunity to Calm Emotions"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 160
     },
     {
@@ -7567,7 +7567,7 @@
         "Greater Invisibility ~ Constant"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 161
     },
     {
@@ -7631,7 +7631,7 @@
         "Mi-Go ~ Starflight"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 162
     },
     {
@@ -7696,7 +7696,7 @@
         "Mindslaver Mold ~ Spores"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 163
     },
     {
@@ -7760,7 +7760,7 @@
         "Smother"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 164
     },
     {
@@ -7826,7 +7826,7 @@
         "Myrmecoleon ~ Scalding Spray"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 165
     },
     {
@@ -7892,7 +7892,7 @@
         "Nependis ~ Roar"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 167
     },
     {
@@ -7953,7 +7953,7 @@
         "Immunity to Scent-Based Attacks"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 168
     },
     {
@@ -8018,7 +8018,7 @@
         "Ningyo ~ Swarming"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 169
     },
     {
@@ -8088,7 +8088,7 @@
         "Oceanid ~ Waveglide"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 172
     },
     {
@@ -8151,7 +8151,7 @@
         "Oma ~ Starflight"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 173
     },
     {
@@ -8213,7 +8213,7 @@
         "Owb ~ Curse of Darkness"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 174
     },
     {
@@ -8271,7 +8271,7 @@
         "Pard ~ Phasing Attack"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 176
     },
     {
@@ -8343,7 +8343,7 @@
         "Peluda ~ Vulnerable Tail"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 177
     },
     {
@@ -8386,7 +8386,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 178
     },
     {
@@ -8424,7 +8424,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 179
     },
     {
@@ -8480,7 +8480,7 @@
         "Pickled Punk ~ Opportune"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 180
     },
     {
@@ -8530,7 +8530,7 @@
         "Psychopomp (Catrina) ~ Kiss of Death"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 183
     },
     {
@@ -8596,7 +8596,7 @@
         "Psychopomp (Morrigna) ~ Wrappings"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 184
     },
     {
@@ -8658,7 +8658,7 @@
         "Psychopomp (Vanth) ~ Reaper's Scythe"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 186
     },
     {
@@ -8738,7 +8738,7 @@
         "Psychopomp (Yamaraj) ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 187
     },
     {
@@ -8804,7 +8804,7 @@
         "Qallupilluk ~ Curse of Scales"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 189
     },
     {
@@ -8868,7 +8868,7 @@
         "Immunity to Effects Targeting Specific Numbers of Creatures"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 191
     },
     {
@@ -8932,7 +8932,7 @@
         "Rokurokubi ~ Rokurokubi's Curse"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 193
     },
     {
@@ -8993,7 +8993,7 @@
         "Rukh ~ Swallow Whole"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 194
     },
     {
@@ -9052,7 +9052,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 195
     },
     {
@@ -9107,7 +9107,7 @@
         "Saguaroi ~ Produce Water"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 197
     },
     {
@@ -9164,7 +9164,7 @@
         "Sayona ~ Staggering Gaze"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 198
     },
     {
@@ -9226,7 +9226,7 @@
         "Scorpion (Giant Emperor) ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 199
     },
     {
@@ -9285,7 +9285,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 200
     },
     {
@@ -9342,7 +9342,7 @@
         "Seahorse (Giant) ~ Anchor"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 201
     },
     {
@@ -9403,7 +9403,7 @@
         "Seahorse (Giant) ~ Anchor"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 202
     },
     {
@@ -9468,7 +9468,7 @@
         "Seaweed Siren ~ Water Dependency"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 203
     },
     {
@@ -9531,7 +9531,7 @@
         "Powerful Blows (Bite)"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 204
     },
     {
@@ -9582,7 +9582,7 @@
         "Seps ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 205
     },
     {
@@ -9641,7 +9641,7 @@
         "Seps ~ Liquefaction"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 206
     },
     {
@@ -9702,7 +9702,7 @@
         "Shard Slag ~ Vulnerable to Water"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 207
     },
     {
@@ -9757,7 +9757,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 208
     },
     {
@@ -9812,7 +9812,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 209
     },
     {
@@ -9854,7 +9854,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 210
     },
     {
@@ -9906,7 +9906,7 @@
         "Detect Undead ~ Constant"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 211
     },
     {
@@ -9973,7 +9973,7 @@
         "Shriezyx ~ Slowing Toxin"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 212
     },
     {
@@ -10027,7 +10027,7 @@
         "Shulsaga ~ Sense Rift"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 213
     },
     {
@@ -10069,7 +10069,7 @@
         "Skinstitch ~ Repair"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 214
     },
     {
@@ -10139,7 +10139,7 @@
         "Snallygaster ~ Sucking Tentacles"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 215
     },
     {
@@ -10187,7 +10187,7 @@
         "Soulbound Mannequin ~ Susceptible"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 216
     },
     {
@@ -10234,7 +10234,7 @@
         "Soulbound Shell ~ Susceptible"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 217
     },
     {
@@ -10289,7 +10289,7 @@
         "Soulsliver ~ Perfect Copy"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 218
     },
     {
@@ -10343,7 +10343,7 @@
         "Spider (Goliath) ~ Poisoned Web"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 220
     },
     {
@@ -10390,7 +10390,7 @@
         "Feather Fall ~ Constant"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 221
     },
     {
@@ -10443,7 +10443,7 @@
         "Svartalfar ~ Quickened Spell Strike"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 223
     },
     {
@@ -10496,7 +10496,7 @@
         "Swan Maiden ~ Transformation Ritual"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 224
     },
     {
@@ -10555,7 +10555,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 225
     },
     {
@@ -10621,7 +10621,7 @@
         "Taniniver ~ Disease"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 227
     },
     {
@@ -10664,7 +10664,7 @@
         "Tiberolith ~ Spell Trap"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 228
     },
     {
@@ -10726,7 +10726,7 @@
         "Powerful Blows (Hoof)"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 229
     },
     {
@@ -10785,7 +10785,7 @@
         "Regeneration ~ Good Artifacts/Effects/Spells"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 230
     },
     {
@@ -10848,7 +10848,7 @@
         "Tooth Fairy ~ Tricky Thief"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 231
     },
     {
@@ -10907,7 +10907,7 @@
         "Tortoise (Giant) ~ Slow and Steady"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 232
     },
     {
@@ -10962,7 +10962,7 @@
         "Tortoise (Giant) ~ Slow and Steady"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 233
     },
     {
@@ -11032,7 +11032,7 @@
         "Tunche ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 234
     },
     {
@@ -11097,7 +11097,7 @@
         "Tyrant Jelly ~ Vermin Empathy"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 235
     },
     {
@@ -11148,7 +11148,7 @@
         "Udaeus ~ Infuse Arms and Armor"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 237
     },
     {
@@ -11218,7 +11218,7 @@
         "Vouivre ~ Unwavering Mind"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 239
     },
     {
@@ -11273,7 +11273,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 241
     },
     {
@@ -11332,7 +11332,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 242
     },
     {
@@ -11391,7 +11391,7 @@
         "Warsworn ~ Scrap Ball"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 243
     },
     {
@@ -11449,7 +11449,7 @@
         "Water Strider (Giant) ~ Water Skating"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 244
     },
     {
@@ -11503,7 +11503,7 @@
         "Water Strider (Giant) ~ Water Skating"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 245
     },
     {
@@ -11556,7 +11556,7 @@
         "Weasel (Dire) ~ Blood Drain"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 246
     },
     {
@@ -11603,7 +11603,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 247
     },
     {
@@ -11656,7 +11656,7 @@
         "Weedwhip ~ Poisonous"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 248
     },
     {
@@ -11709,7 +11709,7 @@
         "Wickerman ~ Wicker Cage"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 249
     },
     {
@@ -11761,7 +11761,7 @@
         "Wikkawak ~ Thuggery"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 250
     },
     {
@@ -11822,7 +11822,7 @@
         "Winter Hag ~ Coven"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 251
     },
     {
@@ -11887,7 +11887,7 @@
         "Xanthos ~ Exploit Stellar Conjunction"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 253
     },
     {
@@ -11953,7 +11953,7 @@
         "Xenopterid ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 254
     },
     {
@@ -12020,7 +12020,7 @@
         "Immunity to Sickened"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 256
     },
     {
@@ -12084,7 +12084,7 @@
         "Ypotryll ~ Unstoppable Force"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 257
     },
     {
@@ -12154,7 +12154,7 @@
         "Zomok ~ Forest Step"
       ],
       "external_ability_refs": [],
-      "source_file": "b4_races.lst",
+      "source_file": "b4_races",
       "source_line": 259
     }
   ]

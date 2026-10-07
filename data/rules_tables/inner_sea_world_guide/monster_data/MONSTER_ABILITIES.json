@@ -28,7 +28,7 @@
       "owners": [
         "Aluum"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 7,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -48,7 +48,7 @@
       "owners": [
         "Aluum"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 8,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -68,7 +68,7 @@
       "owners": [
         "Aluum"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 9,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -90,7 +90,7 @@
       "owners": [
         "Calikang"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 12,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -108,7 +108,7 @@
       "owners": [
         "Calikang"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 13,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -126,7 +126,7 @@
       "owners": [
         "Calikang"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 14,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -150,7 +150,7 @@
       "owners": [
         "Calikang"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 15,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -168,7 +168,7 @@
       "owners": [
         "Calikang"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 16,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -186,7 +186,7 @@
       "owners": [
         "Charau-ka"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 19,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -204,7 +204,7 @@
       "owners": [
         "Charau-ka"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 20,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -222,11 +222,11 @@
       ],
       "source_page": "p.310",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 24,
       "codex_generated_name": true,
       "rename_reason": "name_pi_blocked",
-      "rename_coordinate": "inner_sea_world_guide:iswg_abilities_race.lst:24"
+      "rename_coordinate": "inner_sea_world_guide:iswg_abilities_race:24"
     },
     {
       "key": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25)",
@@ -238,11 +238,11 @@
       "description_variables": [],
       "source_page": "p.310",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 25,
       "codex_generated_name": true,
       "rename_reason": "name_pi_blocked",
-      "rename_coordinate": "inner_sea_world_guide:iswg_abilities_race.lst:25"
+      "rename_coordinate": "inner_sea_world_guide:iswg_abilities_race:25"
     },
     {
       "key": "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27)",
@@ -254,11 +254,11 @@
       "description_variables": [],
       "source_page": "p.310",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 27,
       "codex_generated_name": true,
       "rename_reason": "name_pi_blocked",
-      "rename_coordinate": "inner_sea_world_guide:iswg_abilities_race.lst:27"
+      "rename_coordinate": "inner_sea_world_guide:iswg_abilities_race:27"
     },
     {
       "key": "Sandpoint Devil ~ Bay",
@@ -272,7 +272,7 @@
       ],
       "source_page": "p.312",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 50,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -291,7 +291,7 @@
       ],
       "source_page": "p.312",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 51,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -307,7 +307,7 @@
       "description_variables": [],
       "source_page": "p.312",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 52,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -329,7 +329,7 @@
       "owners": [
         "Dragon (Spine)"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 55,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -347,7 +347,7 @@
       "owners": [
         "Dragon (Spine)"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 56,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -368,7 +368,7 @@
       "owners": [
         "Dragon (Spine)"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 57,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -388,7 +388,7 @@
       ],
       "source_page": "p.315",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 81,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -409,7 +409,7 @@
       ],
       "source_page": "p.315",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 82,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -428,7 +428,7 @@
       ],
       "source_page": "p.315",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 83,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -444,7 +444,7 @@
       "description_variables": [],
       "source_page": "p.315",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 86,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -460,7 +460,7 @@
       "description_variables": [],
       "source_page": "p.315",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 87,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -478,7 +478,7 @@
       "description_variables": [],
       "source_page": "p.265",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 90,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -496,7 +496,7 @@
       "owners": [
         "Calikang"
       ],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 91,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -512,7 +512,7 @@
       "description_variables": [],
       "source_page": "p.368",
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 92,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -528,7 +528,7 @@
       "description_variables": [],
       "source_page": null,
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 96,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -544,7 +544,7 @@
       "description_variables": [],
       "source_page": null,
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 97,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -560,7 +560,7 @@
       "description_variables": [],
       "source_page": null,
       "owners": [],
-      "source_file": "iswg_abilities_race.lst",
+      "source_file": "iswg_abilities_race",
       "source_line": 98,
       "codex_generated_name": false,
       "rename_reason": null,

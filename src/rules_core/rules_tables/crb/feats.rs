@@ -1,7 +1,7 @@
 //! PF1 CRB feat catalog.
 //!
 //! Full corpus coverage: every real corpus record from
-//! `core_rulebook/cr_feats.lst` that carries an explicit `TYPE:` facet
+//! `core_rulebook/cr_feats` that carries an explicit `TYPE:` facet
 //! matching one of the four Chapter 5 feat categories the corpus itself
 //! encodes (185 total: General 50, Combat 110, Item Creation 8,
 //! Metamagic 17). Generated programmatically from the live corpus -- see
@@ -10,8 +10,8 @@
 //! scale; regenerate if the corpus changes).
 //!
 //! Category is derived from the `TYPE:` facet, not the corpus's own
-//! `###Block:` markers. Unlike `cr_equip_*.lst` (one corpus *file* per
-//! equipment category), `cr_feats.lst` has a single `###Block: General
+//! `###Block:` markers. Unlike `cr_equip_*` (one corpus *file* per
+//! equipment category), `cr_feats` has a single `###Block: General
 //! Feats` section holding every feat; the real category signal is the
 //! per-record `TYPE:` tag (e.g. `TYPE:Combat.Critical` carries both a
 //! `Combat` facet and a `Critical` subtype facet). A record is included
@@ -50,9 +50,9 @@
 
 /// A feat category, derived from the corpus record's own `TYPE:` facet.
 ///
-/// The first four variants are the Chapter 5 categories `cr_feats.lst`
+/// The first four variants are the Chapter 5 categories `cr_feats`
 /// encodes and are the only ones a CRB record ever carries. `Teamwork`
-/// and `Panache` exist because `apg_feats.lst` and `acg_feats.lst`
+/// and `Panache` exist because `apg_feats` and `acg_feats`
 /// encode them as standalone `TYPE:` facets on records that carry no
 /// `Combat`/`General` facet at all -- 3 APG records (`TYPE:Teamwork`)
 /// and 8 ACG records (4 `TYPE:Teamwork`, 4 `TYPE:Panache`). Under the
@@ -79,7 +79,7 @@ pub enum FeatCategory {
 
 impl FeatCategory {
     /// Every variant. Note this spans all three ingested books: `CRB_ONLY`
-    /// is the subset any `cr_feats.lst` record can actually carry.
+    /// is the subset any `cr_feats` record can actually carry.
     pub const ALL: &'static [FeatCategory] = &[
         FeatCategory::General,
         FeatCategory::Combat,
@@ -89,7 +89,7 @@ impl FeatCategory {
         FeatCategory::Panache,
     ];
 
-    /// The four categories `cr_feats.lst` itself encodes. `feat_tables()`
+    /// The four categories `cr_feats` itself encodes. `feat_tables()`
     /// (this module's CRB-only catalog) never yields any other variant.
     pub const CRB_ONLY: &'static [FeatCategory] = &[
         FeatCategory::General,
@@ -99,12 +99,12 @@ impl FeatCategory {
     ];
 
     /// This catalog's single corpus source file -- all 4 categories are
-    /// drawn from the same `core_rulebook/cr_feats.lst`, unlike
+    /// drawn from the same `core_rulebook/cr_feats`, unlike
     /// `EquipmentCategory::corpus_file_name` where each category has its
     /// own file. See this module's own doc comment for the `TYPE:`-facet
     /// derivation rule that replaces the file-per-category split.
     pub fn corpus_file_name(self) -> &'static str {
-        "cr_feats.lst"
+        "cr_feats"
     }
 }
 
@@ -114,7 +114,7 @@ impl FeatCategory {
 pub struct FeatTableEntry {
     /// The corpus `KEY:` token, falling back to the record's `name` when
     /// no `KEY:` token is present -- the same fallback
-    /// `EquipmentTableEntry.key` documents. Almost no `cr_feats.lst`
+    /// `EquipmentTableEntry.key` documents. Almost no `cr_feats`
     /// record in this catalog's 4 categories carries an explicit `KEY:`
     /// token (the one corpus record that does, "Cleave (Granted by
     /// Sylvan Scimitar)", is excluded -- see this file's module doc
@@ -138,7 +138,7 @@ pub struct FeatTableEntry {
     /// convention it already follows.
     ///
     /// Deliberately not collapsed into one flat numeric field the way
-    /// `EquipmentStatEffect.armor_class_bonus` is. Real `cr_feats.lst`
+    /// `EquipmentStatEffect.armor_class_bonus` is. Real `cr_feats`
     /// `BONUS:` tokens are frequently PCGen formula expressions over
     /// runtime state -- e.g. Power Attack's damage bonus is
     /// `BONUS:VAR|PowerAttackDamageModifier|PowerAttackDamageBase*floor(PowerAttackModifier)`,

@@ -19,7 +19,7 @@
 //!
 //! **Widened 2026-07-27 (task #30) from CRB-only to all ingested books**
 //! (`risks-and-open-questions.md` item 53). Per-file: **394 from
-//! `cr_spells.lst` + 95 from `apg_spells.lst` + 89 from `acg_spells.lst`
+//! `cr_spells` + 95 from `apg_spells` + 89 from `acg_spells`
 //! = 578**, all names distinct, no `.MOD` record assigns Sorcerer.
 //!
 //! **Sorcerer is the extreme case of the mid-group shape.** It is almost

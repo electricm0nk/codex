@@ -1,9 +1,9 @@
 //! Ultimate Magic — Words of Power example combined spells
-//! (`SOURCESHORT:UM`, `um_spells_wordsofpower.lst`).
+//! (`SOURCESHORT:UM`, `um_spells_wordsofpower`).
 //!
 //! SD-32 `decisions.md §20`, `no_record`-to-zero wave: a distinct, small
-//! `.lst` file the main `ultimate_magic` module's `BookInput`
-//! (`um_spells.lst`) never covers — three worked examples from the Words
+//! source file file the main `ultimate_magic` module's `BookInput`
+//! (`um_spells`) never covers — three worked examples from the Words
 //! of Power variant casting subsystem's own "Example Word Spells"
 //! sidebar, each a normal base spell declaration (`TYPE:`/`CLASSES:`/
 //! `SCHOOL:`/`DESC:` tokens) rather than the reusable "word" building

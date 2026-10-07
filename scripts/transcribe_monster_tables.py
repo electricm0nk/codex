@@ -2712,12 +2712,19 @@ def write_book(book: str) -> str:
     never a partial write, on every platform this repo runs on.
     """
     path = f"src/rules_core/rules_tables/{book}/monster_data.rs"
-    content = transcribe(book)
+    content = strip_citation_extension(transcribe(book))
     tmp_path = f"{path}.tmp"
     with open(tmp_path, "w", encoding="utf-8") as handle:
         handle.write(content)
     os.replace(tmp_path, path)
     return path
+
+
+def strip_citation_extension(text: str) -> str:
+    """SD-37 E4a.3: the compiled tables cite a source file by its stem, never with the list-file
+    extension. The corpus is still read with the real file names; only the emitted citation
+    changes, so this runs on the finished text, once, at the point it is written."""
+    return re.sub(r"(?<=[A-Za-z0-9_])\.lst\b", "", text)
 
 
 def main() -> None:

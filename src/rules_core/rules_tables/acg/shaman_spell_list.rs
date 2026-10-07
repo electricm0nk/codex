@@ -11,15 +11,15 @@
 //! Cleric's), the class block carries **no `SPELLLIST:` reuse token at
 //! all**, so this table has no existing list to delegate to.
 //!
-//! **All 304 come from `acg_spells.lst`.** `cr_spells.lst` and
-//! `apg_spells.lst` name Shaman zero times — the class postdates both
+//! **All 304 come from `acg_spells`.** `cr_spells` and
+//! `apg_spells` name Shaman zero times — the class postdates both
 //! books, and nothing back-grafts Shaman onto their records. Of the 304,
 //! **267 are `.MOD` grafts** onto spells first printed in an earlier book
 //! and only **37 are new ACG spells named on their own line**, which is
 //! why the whole list lives in one file despite drawing most of its
 //! contents from CRB/APG spells.
 //!
-//! Per-file ceiling check: `grep -c Shaman acg_spells.lst` returns 306
+//! Per-file ceiling check: `grep -c Shaman acg_spells` returns 306
 //! against a parse of 304. Both extra lines are `#`-commented and neither
 //! is a dropped record: the `###Block: Shaman Spells` section header, and
 //! `#Commune With Birds.MOD`. That second one is a deliberate corpus

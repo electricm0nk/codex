@@ -1,11 +1,11 @@
 //! Bestiary 1 monster-block subset 05 — continued CR-2 breadth,
 //! alphabetically after subset 04's "Morlock".
 //!
-//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst`,
+//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races`,
 //! parsed via `pcgen_import::lst_parser::monster_stat_block` (the same
 //! bare-tab-delimited monster parser subset 01 introduced — no widening
 //! was needed for this subset either). Every field below is transcribed
-//! directly from the cited real `.lst` line's tokens — see each
+//! directly from the cited real source file line's tokens — see each
 //! function's doc comment for the exact line number and tokens.
 //!
 //! **Roster derivation (not a roster correction — subset 5 had no
@@ -13,7 +13,7 @@
 //! correct, only a placeholder `...` row):** before writing any GREEN
 //! code, this cycle independently re-enumerated every real,
 //! non-`#`-commented, non-`.MOD`/`.COPY=` CR:2 monster stat-block row in
-//! `b1_races.lst` directly (34 total rows carry a `CR:2` token).
+//! `b1_races` directly (34 total rows carry a `CR:2` token).
 //! Excluding parenthetical sub-variant names (e.g. "Ant (Giant)", "Cat
 //! (Cheetah)", "Demon (Dretch)") — the same exclusion rule subsets 01-04
 //! all already established — leaves 19 clean CR:2 species names.
@@ -33,11 +33,11 @@
 //! CRB precedent rule out, so they are deferred to a future ingest
 //! slice.
 //!
-//! **New shape this subset introduces:** Shark's real row (`b1_races.lst:360`)
+//! **New shape this subset introduces:** Shark's real row (`b1_races:360`)
 //! carries `MOVE:Swim,60` with no `Walk,<N>` pair at all — every prior
 //! subset's monsters had a Walk pair. The parser's `parse_walk_speed`
 //! returns `None` for a `MOVE:` value with no `Walk` component
-//! (confirmed directly: `sed -n '360p' b1_races.lst` shows only
+//! (confirmed directly: `sed -n '360p' b1_races` shows only
 //! `MOVE:Swim,60`, no `Walk`). This is transcribed here as `speed_ft: 0`
 //! — not an invented value, but the literal fact the real row records no
 //! land-movement token, which matches the real, published Shark stat
@@ -50,7 +50,7 @@
 
 use super::{MonsterStatBlock, NaturalAttack};
 
-/// Source: `b1_races.lst:334`, `CR:2`. Real row tokens: `SIZE:T`,
+/// Source: `b1_races:334`, `CR:2`. Real row tokens: `SIZE:T`,
 /// `MOVE:Walk,15,Climb,15,Swim,15` (walk speed transcribed; climb/swim
 /// speeds out of scope per this module's field-coverage boundary),
 /// `NATURALATTACKS:Swarm,Weapon.Natural...,*1,1d6`, `RACETYPE:Animal`,
@@ -71,7 +71,7 @@ pub fn rat_swarm() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:345`, `CR:2`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:345`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,30,Swim,60` (walk speed transcribed; swim speed out of
 /// scope), two `NATURALATTACKS:` tab fields —
 /// `NATURALATTACKS:Claws,Weapon.Natural...,*2,1d4` and
@@ -105,7 +105,7 @@ pub fn sahuagin() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:360`, `CR:2`. Real row tokens: `SIZE:L`,
+/// Source: `b1_races:360`, `CR:2`. Real row tokens: `SIZE:L`,
 /// `MOVE:Swim,60` — **no `Walk` pair on this row at all** (see this
 /// module's header doc comment); transcribed as `speed_ft: 0`, matching
 /// the real Shark's published "Speed 0 ft., swim 60 ft." stat line.
@@ -127,7 +127,7 @@ pub fn shark() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:362`, `CR:2`. Real row tokens: `SIZE:S`,
+/// Source: `b1_races:362`, `CR:2`. Real row tokens: `SIZE:S`,
 /// `MOVE:Walk,40,Climb,20,Swim,20` (walk speed transcribed; climb/swim
 /// speeds out of scope), `NATURALATTACKS:Bite,Weapon.Natural...,*1,1d4`,
 /// `RACETYPE:Magical Beast`, `CR:2`, `SOURCEPAGE:p.248`. No
@@ -148,7 +148,7 @@ pub fn shocker_lizard() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:366`, `CR:2`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:366`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,20,Swim,40` (walk speed transcribed; swim speed out of
 /// scope), two `NATURALATTACKS:` tab fields —
 /// `NATURALATTACKS:Bite (w/o weapon),Weapon.Natural...,*1,1d6|Bite

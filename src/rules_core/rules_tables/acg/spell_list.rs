@@ -1,6 +1,6 @@
 //! ACG shared spell list — full corpus coverage.
 //!
-//! Source: the real `acg_spells.lst` corpus. Record coverage: every real,
+//! Source: the real `acg_spells` corpus. Record coverage: every real,
 //! active (non-`.MOD`, non-`.COPY=`) level-and-school-bearing spell
 //! record — 134 naming a `CLASSES:` group, 9 `Naturalist Summon Nature's
 //! Ally I`-`IX` variants (level taken from the roman-numeral name suffix,
@@ -15,7 +15,7 @@
 //! 144, corrected here.
 //!
 //! **Full text, not truncated (SD-24 criterion 6.5, ACG scope):** unlike
-//! CRB's `cr_spells.lst`, ACG's `acg_spells.lst` carries the *full*
+//! CRB's `cr_spells`, ACG's `acg_spells` carries the *full*
 //! multi-sentence spell text directly on the base (non-`.MOD`) record's
 //! `DESC:` token (tagged `|PRERULE:1,DisplayFullSpell`); the `.MOD`
 //! record instead carries the *short* one-line summary (tagged
@@ -40,7 +40,7 @@ use crate::rules_core::rules_tables::RuleSetId;
 
 /// The full 9-school PF1 spell-school enum (SD-24 criterion 6.2 widened
 /// this from the 4-school bootstrap subset — `Universal` does not appear
-/// in `acg_spells.lst` today but is included for parity with
+/// in `acg_spells` today but is included for parity with
 /// `rules_tables::crb::spell_list::Pf1SchoolId`, which this mirrors).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(test, derive(schemars::JsonSchema))]
@@ -91,12 +91,12 @@ impl Pf1SchoolId {
 #[cfg_attr(test, derive(schemars::JsonSchema))]
 #[cfg_attr(test, schemars(rename = "acg__spell_list__SpellListEntry"))]
 pub struct SpellListEntry {
-    /// The record's identity in `acg_spells.lst`: its `KEY:` token when
+    /// The record's identity in `acg_spells`: its `KEY:` token when
     /// the row carries one, else its display name (no `KEY:` token on
     /// `CLASSES:`-bearing spell rows).
     ///
     /// Exactly 9 rows in this file carry a `KEY:` token — the Naturalist
-    /// archetype's summon spells (`acg_spells.lst:785`+), whose KEY is
+    /// archetype's summon spells (`acg_spells:785`+), whose KEY is
     /// archetype-qualified: `KEY:Naturalist Summon Nature's Ally I` for
     /// the row displayed as `Summon Nature's Ally I`. Those are genuinely
     /// different records from CRB's own `Summon Nature's Ally I` (they
@@ -279,7 +279,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
 pub struct SpellFieldCoverage {
     /// Records currently in `SPELL_LIST`.
     pub total_records: u32,
-    /// Real, level-and-school-bearing record count in `acg_spells.lst`
+    /// Real, level-and-school-bearing record count in `acg_spells`
     /// (144 -- see this module's doc comment for the correction of
     /// criterion 6.1's original "145" figure, which double-counted the
     /// file's own `SOURCELONG:` header line as a spell).
@@ -306,8 +306,8 @@ pub fn spell_coverage_report() -> SpellFieldCoverage {
 }
 
 /// The `(KEY:` token, display name`)` pair for each of the 9
-/// `acg_spells.lst` rows whose two name columns differ — read verbatim
-/// from the rows themselves (`acg_spells.lst:785`-`793`), e.g. `:787` is
+/// `acg_spells` rows whose two name columns differ — read verbatim
+/// from the rows themselves (`acg_spells:785`-`793`), e.g. `:787` is
 /// `Summon Nature's Ally III<TAB>KEY:Naturalist Summon Nature's Ally III`.
 /// Every other ingested ACG row carries no `KEY:` token at all, so its
 /// display name *is* its key and it needs no entry here.

@@ -103,7 +103,7 @@ mod tests {
         assert_eq!(bare.len(), 2, "found {bare:?}");
     }
 
-    /// Verbatim spot-check against `b6_races_companion.lst`. The Amargasaurus is
+    /// Verbatim spot-check against `b6_races_companion`. The Amargasaurus is
     /// the row that proves `type_segments` is transcribed as the corpus states
     /// it and never defaulted: this row carries no `TYPE:` token at all, so the
     /// honest value is an EMPTY list, not the `["Companion", …]` every other

@@ -3,12 +3,12 @@
 //!
 //! Source: every record whose `CLASSES:` token names Inquisitor in any of
 //! its comma-separated class groups, across the books this repo ingests:
-//! `apg_spells.lst` (199 raw records) and `acg_spells.lst` (21 raw
-//! records). `cr_spells.lst` names Inquisitor zero times (the class
+//! `apg_spells` (199 raw records) and `acg_spells` (21 raw
+//! records). `cr_spells` names Inquisitor zero times (the class
 //! postdates the CRB, the same shape as Witch/Alchemist). Unlike Hunter
 //! (`ACG_HUNTER...` reuses Ranger's own list) and Oracle
 //! (`SPELLLIST:2|Cleric|Oracle` reuses Cleric's), the real
-//! `CLASS:Inquisitor` record in `apg_classes.lst` carries no `SPELLLIST:`
+//! `CLASS:Inquisitor` record in `apg_classes` carries no `SPELLLIST:`
 //! token at all — Inquisitor has its own, independently-tagged spell
 //! list, so no existing list module can be reused here; this one had to
 //! be built from a fresh corpus parse.
@@ -51,7 +51,7 @@
 //! known-spell lookup against it, since nothing else in this codebase
 //! ever spells a spell's name with a trailing `.MOD`.
 //!
-//! Regenerate by parsing `CLASSES:` in `apg_spells.lst`/`acg_spells.lst`
+//! Regenerate by parsing `CLASSES:` in `apg_spells`/`acg_spells`
 //! — split the body on `|`, `rsplit` each group on `=`, strip a trailing
 //! `[...]` gate from the level, membership-test the comma-separated name
 //! list against `Inquisitor`, and strip a trailing `.MOD` from the
@@ -334,7 +334,7 @@ mod tests {
         assert_eq!(inquisitor_spell_level("Cure Light Wounds.MOD"), None);
     }
 
-    /// Inquisitor is a 0-6 caster (verified against `apg_classes.lst`'s
+    /// Inquisitor is a 0-6 caster (verified against `apg_classes`'s
     /// own `CAST:0,5,5,5,5,5,5` level-20 row, seven columns).
     #[test]
     fn inquisitor_tops_out_at_sixth_level_spells() {

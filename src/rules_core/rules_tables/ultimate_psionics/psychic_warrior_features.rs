@@ -7,12 +7,12 @@
 //! Every formula below is transcribed from the corpus's own already-
 //! ingested tokens (`data/corpus/ultimate_psionics/class_feature/
 //! psychic_warrior/*.json`, each record's own ingest token array, sourced from
-//! `up_classes.lst`/`up_abilities_class.lst`).
+//! `up_classes`/`up_abilities_class`).
 
-/// `up_classes.lst:319`, `BONUS:VAR|WarriorPathLVL|CL` (unconditional for a
+/// `up_classes:319`, `BONUS:VAR|WarriorPathLVL|CL` (unconditional for a
 /// non-archetype Psychic Warrior): `Warrior's Path`'s own tracked level,
 /// equal to class level — no separate `DEFINE`d magnitude exists on this
-/// row itself (`up_abilities_class.lst:536`), the choice-of-path grant's
+/// row itself (`up_abilities_class:536`), the choice-of-path grant's
 /// only numeric output is the level it tracks for downstream path-power
 /// features. `None` below level 1 (the roster's own `min_level` for this
 /// key).
@@ -23,9 +23,9 @@ pub fn warriors_path_level(level: u8) -> Option<i16> {
     Some(i16::from(level))
 }
 
-/// `up_abilities_class.lst:540`, `Pathweaving`:
+/// `up_abilities_class:540`, `Pathweaving`:
 /// `BONUS:VAR|PathweavingTimes|(PathweavingLVL-12)/3`, and
-/// `PathweavingLVL = CL` (`up_classes.lst:331`) — uses per day. `None`
+/// `PathweavingLVL = CL` (`up_classes:331`) — uses per day. `None`
 /// below level 15 (the roster's own `min_level` for this key).
 pub fn pathweaving_uses_per_day(level: u8) -> Option<i16> {
     if level < 15 {
@@ -34,7 +34,7 @@ pub fn pathweaving_uses_per_day(level: u8) -> Option<i16> {
     Some((i16::from(level) - 12) / 3)
 }
 
-/// `up_abilities_class.lst:541`, `Eternal Warrior`: `ASPECT:CheckCount|1`
+/// `up_abilities_class:541`, `Eternal Warrior`: `ASPECT:CheckCount|1`
 /// — a flat 1/day capstone, not level-scaled. `None` below level 20 (the
 /// roster's own `min_level` for this key, and PF1's own capstone level).
 pub fn eternal_warrior_uses_per_day(level: u8) -> Option<i16> {

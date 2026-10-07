@@ -93,7 +93,7 @@ mod tests {
         assert_eq!(companion_abilities().len(), 1);
     }
 
-    /// Verbatim spot-check against `ha_races_companion.lst:3`, including the
+    /// Verbatim spot-check against `ha_races_companion:3`, including the
     /// `Climb` speed — a mode a land-speed-only reader would have dropped.
     #[test]
     fn the_devolved_humanoid_matches_its_corpus_row() {
@@ -159,7 +159,7 @@ mod tests {
     /// The `ABILITY:Internal|AUTOMATIC|` bundle token, read for its ATTACK
     /// segments on a monster row that carries them.
     ///
-    /// `ha_races.lst:4` states Hive Queen's attacks in two places: a
+    /// `ha_races:4` states Hive Queen's attacks in two places: a
     /// `NATURALATTACKS:Claw,...,*2,1d10` token, and
     /// `ABILITY:Internal|AUTOMATIC|Race Traits ~ Hive Queen|Bite|Tail Slap`,
     /// whose trailing segments are two further attacks the corpus prices

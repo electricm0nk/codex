@@ -1,6 +1,6 @@
 //! APG Cavalier class chassis table — one row per level.
 //!
-//! Source: PCGen `apg_classes.lst`, `CLASS:Cavalier` record (line 42 of
+//! Source: PCGen `apg_classes`, `CLASS:Cavalier` record (line 42 of
 //! the SD-22 Epic 3 corpus checkout), parsed via
 //! `pcgen_import::lst_parser::class` (SD-22 Epic 3 widened
 //! `MARTIAL_CLASS_NAMES` to recognize it — see that module's doc
@@ -23,7 +23,7 @@
 //! (Order, Challenge, Tactician, Banner, Expert Trainer, ...) are out
 //! of scope for this cycle — transcribing them without going back
 //! through the LST's per-level feature blocks
-//! (`apg_abilities_class.lst`) in a dedicated ingest slice would be
+//! (`apg_abilities_class`) in a dedicated ingest slice would be
 //! exactly the fabricated-data risk `class_alchemist.rs`'s own doc
 //! comment and `AGENTS.md` rule out.
 
@@ -33,7 +33,7 @@ use super::ClassTableRow;
 pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 
 /// `HD:10` on the real `CLASS:Cavalier` record (v0.6 alpha swarm, risks
-/// item 8), verified directly against `apg_classes.lst` line 42.
+/// item 8), verified directly against `apg_classes` line 42.
 pub const HIT_DIE: u8 = 10;
 
 fn base_attack_bonus(level: u8) -> i16 {

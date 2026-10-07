@@ -33,7 +33,7 @@
 //! half-fix").
 //!
 //! Every row below is transcribed verbatim from that class's own
-//! `cr_abilities_class.lst` `CSKILL:` token (piped list, `TYPE=X` entries
+//! `cr_abilities_class` `CSKILL:` token (piped list, `TYPE=X` entries
 //! kept literal, never expanded) and verified byte-for-byte against the
 //! live corpus JSON in `class_skill_lists_match_their_own_corpus_records`
 //! below — never a shape guess.

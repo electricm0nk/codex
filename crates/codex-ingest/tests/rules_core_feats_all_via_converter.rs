@@ -46,7 +46,7 @@ mod tests {
                 "{key}'s joined description must carry the deferral diagnostic, not just flavor text"
             );
             assert!(
-                desc.contains("uca_feats.lst:"),
+                desc.contains("uca_feats:"),
                 "{key}'s deferral diagnostic must cite a file:line, not a vague reason"
             );
         }

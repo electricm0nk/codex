@@ -1,14 +1,14 @@
 //! horror_adventures companion tables, transcribed verbatim from the book's own
-//! PCGen `.lst` rows.
+//! PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_companion_tables.py horror_adventures`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst`.
+//! line count over the source file.
 //!
 //! Sources, with the file AND line each record was read from carried per row:
-//!   * `ha_races_companion.lst` -- 1 companion creature rows
-//!   * `ha_abilities_companion.lst` -- 1 companion ability rows
+//!   * `ha_races_companion` -- 1 companion creature rows
+//!   * `ha_abilities_companion` -- 1 companion ability rows
 
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, Speed, StatAdjustment};
 
@@ -33,7 +33,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Devolved Humanoid"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "ha_races_companion.lst",
+        source_file: "ha_races_companion",
         source_line: 3,
     },
 ];
@@ -53,7 +53,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Devolved Humanoid)"],
         cross_book_owners: &[],
-        source_file: "ha_abilities_companion.lst",
+        source_file: "ha_abilities_companion",
         source_line: 3,
     },
 ];

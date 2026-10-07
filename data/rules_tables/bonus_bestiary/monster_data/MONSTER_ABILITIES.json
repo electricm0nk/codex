@@ -25,7 +25,7 @@
       "owners": [
         "Allip"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 6,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -43,7 +43,7 @@
       "owners": [
         "Allip"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 7,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -61,7 +61,7 @@
       "owners": [
         "Allip"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 8,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -79,7 +79,7 @@
       "owners": [
         "Ant Lion (Giant)"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 12,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -99,7 +99,7 @@
       "owners": [
         "Ascomoid"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 16,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -117,7 +117,7 @@
       "owners": [
         "Axe Beak"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 20,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -137,7 +137,7 @@
       "owners": [
         "Caryatid Column"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 24,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -155,7 +155,7 @@
       "owners": [
         "Caryatid Column"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 25,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -173,7 +173,7 @@
       "owners": [
         "Caryatid Column"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 26,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -193,7 +193,7 @@
       "owners": [
         "Dragon (Faerie)"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 30,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -213,7 +213,7 @@
       "owners": [
         "Dragonne"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 34,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -233,7 +233,7 @@
       "owners": [
         "Huecuva"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 38,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -253,7 +253,7 @@
       "owners": [
         "Huecuva"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 39,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -271,7 +271,7 @@
       "owners": [
         "Lammasu"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 43,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -291,7 +291,7 @@
       "owners": [
         "Naga (Water)"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 47,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -311,7 +311,7 @@
       "owners": [
         "Shadow Mastiff"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 51,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -329,7 +329,7 @@
       "owners": [
         "Shadow Mastiff"
       ],
-      "source_file": "bb_abilities_race.lst",
+      "source_file": "bb_abilities_race",
       "source_line": 52,
       "codex_generated_name": false,
       "rename_reason": null,

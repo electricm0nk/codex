@@ -8,11 +8,11 @@
 //! Every formula below is transcribed from the corpus's own already-
 //! ingested `BONUS:VAR` tokens (`data/corpus/ultimate_psionics/
 //! class_feature/dread/*.json`, each record's own ingest token array, sourced
-//! from `up_abilities_class.lst` — the roster's own `source_file` for every
-//! Dread record). `DreadPrimeStat` is `CHA` (`up_classes.lst:115`,
+//! from `up_abilities_class` — the roster's own `source_file` for every
+//! Dread record). `DreadPrimeStat` is `CHA` (`up_classes:115`,
 //! `BONUS:VAR|DreadPrimeStat|CHA`), threaded here as `charisma_modifier`.
 
-/// `up_abilities_class.lst:266`, `Devastating Touch`:
+/// `up_abilities_class:266`, `Devastating Touch`:
 /// `BONUS:VAR|DevastatingTouchBonusDamage|DevastatingTouchLVL`, and
 /// `DevastatingTouchLVL = DreadLVL` (level 266 two lines below) — the bonus
 /// damage on the melee touch attack equals class level (added to the flat
@@ -25,7 +25,7 @@ pub fn devastating_touch_bonus_damage(level: u8) -> Option<i16> {
     Some(i16::from(level))
 }
 
-/// `up_abilities_class.lst:265`, `Fearsome Insight`:
+/// `up_abilities_class:265`, `Fearsome Insight`:
 /// `BONUS:VAR|FearsomeInsightBonus|max(1,floor(DreadLVL/2))` — an insight
 /// bonus to Intimidate. `None` below level 1.
 pub fn fearsome_insight_bonus(level: u8) -> Option<i16> {
@@ -35,7 +35,7 @@ pub fn fearsome_insight_bonus(level: u8) -> Option<i16> {
     Some((i16::from(level) / 2).max(1))
 }
 
-/// `up_abilities_class.lst:267`, `Terror`:
+/// `up_abilities_class:267`, `Terror`:
 /// `BONUS:VAR|TerrorTimes|TerrorLVL+DreadPrimeStat`, `TerrorLVL = DreadLVL`
 /// — uses per day of a terror. `None` below level 2 (the roster's own
 /// `min_level` for this key).
@@ -46,7 +46,7 @@ pub fn terror_uses_per_day(level: u8, charisma_modifier: i16) -> Option<i16> {
     Some(i16::from(level) + charisma_modifier)
 }
 
-/// `up_abilities_class.lst:268`, `Aura of Fear`:
+/// `up_abilities_class:268`, `Aura of Fear`:
 /// `BONUS:VAR|AuraOfFearPenalty|-4` — a flat penalty on saves against
 /// fear for nearby enemies, not level-scaled. `None` below level 3 (the
 /// roster's own `min_level` for this key).
@@ -57,7 +57,7 @@ pub fn aura_of_fear_penalty(level: u8) -> Option<i16> {
     Some(-4)
 }
 
-/// `up_abilities_class.lst:272`, `Shadow Twin`:
+/// `up_abilities_class:272`, `Shadow Twin`:
 /// `BONUS:VAR|ShadowTwinTimes|DreadPrimeStat` — uses per day, Charisma
 /// modifier only (no level term, unlike `terror_uses_per_day`). `None`
 /// below level 11 (the roster's own `min_level` for this key).
@@ -68,7 +68,7 @@ pub fn shadow_twin_uses_per_day(level: u8, charisma_modifier: i16) -> Option<i16
     Some(charisma_modifier)
 }
 
-/// `up_abilities_class.lst:274`, `Fear Incarnate`: `DR:10/psionic` — a flat
+/// `up_abilities_class:274`, `Fear Incarnate`: `DR:10/psionic` — a flat
 /// capstone magnitude, no `BONUS:VAR` token (same shape as Antipaladin's
 /// `aura_of_depravity_damage_reduction`). `None` below level 20 (the
 /// roster's own `min_level` for this key, and PF1's own capstone level).

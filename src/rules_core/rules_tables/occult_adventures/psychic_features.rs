@@ -1,10 +1,10 @@
 //! SD-32 card 11 (T12), cycle 4 — real per-feature compute functions for
 //! the Psychic, one of the six `occult_adventures` classes sharing
-//! `oa_abilities_class.lst`. Every formula below is transcribed from the
+//! `oa_abilities_class`. Every formula below is transcribed from the
 //! corpus's own already-ingested tokens
 //! (`data/corpus/occult_adventures/class_feature/psychic/*.json`).
 
-/// `oa_abilities_class.lst:128`, `Phrenic Amplifications`:
+/// `oa_abilities_class:128`, `Phrenic Amplifications`:
 /// `BONUS:ABILITYPOOL|Phrenic Amplification|1+((PsychicLVL-1)/4)`.
 pub fn phrenic_amplifications_count(level: u8) -> Option<i16> {
     if level < 1 {
@@ -13,10 +13,10 @@ pub fn phrenic_amplifications_count(level: u8) -> Option<i16> {
     Some(1 + (i16::from(level) - 1) / 4)
 }
 
-/// `oa_abilities_class.lst:127`, `Phrenic Pool`:
+/// `oa_abilities_class:127`, `Phrenic Pool`:
 /// `BONUS:VAR|PhrenicPool|(PsychicLVL/2)+PhrenicPoolAbility`.
 /// `PhrenicPoolAbility` is set by the player's *chosen* Psychic Discipline
-/// (`oa_abilities_class.lst:1188`-`1196`): Abomination/Dream/Pain/Rapport
+/// (`oa_abilities_class:1188`-`1196`): Abomination/Dream/Pain/Rapport
 /// use Charisma, Faith/Lore/Psychedelia/Self-Perfection/Tranquility use
 /// Wisdom. This engine does not (yet) track which discipline a Psychic has
 /// chosen, so the caller supplies whichever of the character's two mental
@@ -29,7 +29,7 @@ pub fn phrenic_pool(level: u8, phrenic_pool_ability_modifier: i16) -> Option<i16
     Some(i16::from(level) / 2 + phrenic_pool_ability_modifier)
 }
 
-/// `oa_abilities_class.lst:129`, `Psychic Discipline`:
+/// `oa_abilities_class:129`, `Psychic Discipline`:
 /// `BONUS:ABILITYPOOL|Psychic Discipline|1` — a flat single choice, made
 /// once at 1st level.
 pub fn psychic_discipline_pool(level: u8) -> Option<i16> {
@@ -39,7 +39,7 @@ pub fn psychic_discipline_pool(level: u8) -> Option<i16> {
     Some(1)
 }
 
-/// `oa_abilities_class.lst:132`, `Major Amplifications`: no `BONUS:` token
+/// `oa_abilities_class:132`, `Major Amplifications`: no `BONUS:` token
 /// exists, but the record's own DESC states the real cadence unambiguously
 /// ("At 11th level and every 4 levels thereafter, a psychic can choose one
 /// of the following major amplifications") — the same count shape as

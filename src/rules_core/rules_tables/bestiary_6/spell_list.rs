@@ -1,6 +1,6 @@
 //! Bestiary 6 (B6) shared spell list.
 //!
-//! Transcribed directly from the pinned oracle's `b6_spells.lst` (SD-31 wave
+//! Transcribed directly from the pinned oracle's `b6_spells` (SD-31 wave
 //! 24, `bestiary_6` book-auditor lane). Record coverage: both of the book's
 //! two base spell declarations -- `Animal Growth (Reptiles Only)` and
 //! `Animal Shapes (Reptiles Only)`, the reptile-only Scalykind subdomain
@@ -11,7 +11,7 @@
 //!
 //! Both rows are also reprinted verbatim (same `DESC:`, same
 //! `SOURCEPAGE:p.240`/`p.241` citing THIS book's own pages) inside Ultimate
-//! Wilderness's `uw_spells.lst`, already registered as
+//! Wilderness's `uw_spells`, already registered as
 //! `rules_tables::ultimate_wilderness::spell_list::SPELL_LIST` -- Ultimate
 //! Wilderness's own Scalykind-subdomain content needs the spell text on hand
 //! without requiring Bestiary 6 to be loaded too. That is a second book
@@ -113,7 +113,7 @@ mod tests {
         assert_eq!(SPELL_LIST.len(), 2);
     }
 
-    /// Verbatim spot-check against `b6_spells.lst`: neither row carries a
+    /// Verbatim spot-check against `b6_spells`: neither row carries a
     /// `CLASSES:` token, so `level` must come from the record's own
     /// `DOMAINS:Scalykind=N` token, never a guessed or copied value.
     #[test]

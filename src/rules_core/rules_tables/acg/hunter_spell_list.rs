@@ -1,7 +1,7 @@
 //! ACG Hunter spell list — the union of the Druid and Ranger general spell
 //! lists, filtered to Hunter's own level-6 spells-known ceiling.
 //!
-//! Source: PCGen `advanced_class_guide/acg_classes.lst`'s `CLASS:Hunter`
+//! Source: PCGen `advanced_class_guide/acg_classes`'s `CLASS:Hunter`
 //! record carries `SPELLLIST:2|Druid|Ranger` — Hunter's spell list is not a
 //! freshly-ingested list of its own, but the union of the already-ingested,
 //! already-verified Druid (`druid_spell_list::DRUID_SPELL_LIST`, 271

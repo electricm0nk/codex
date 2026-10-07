@@ -28,7 +28,7 @@
       "weight_lbs": 10.0,
       "description": "fire shield (warm) 1/day, redirect ranged/melee attack on adj ally 1/rnd as immed, benefits to allies within 100 ft.",
       "name_pi_citation": [
-        "iswg_equip_arms_armor.lst",
+        "iswg_equip_arms_armor",
         8
       ]
     },
@@ -101,7 +101,7 @@
       "weight_lbs": 3.0,
       "description": null,
       "name_pi_citation": [
-        "iswg_equip_arms_armor.lst",
+        "iswg_equip_arms_armor",
         15
       ]
     },
@@ -144,7 +144,7 @@
       "weight_lbs": 2.0,
       "description": null,
       "name_pi_citation": [
-        "iswg_equip_arms_armor.lst",
+        "iswg_equip_arms_armor",
         19
       ]
     },
@@ -177,7 +177,7 @@
       "weight_lbs": 50.0,
       "description": null,
       "name_pi_citation": [
-        "iswg_equip_arms_armor.lst",
+        "iswg_equip_arms_armor",
         22
       ]
     },
@@ -290,7 +290,7 @@
       "weight_lbs": 0.0,
       "description": "Ingested; Addiction major, Fort DC 18; Effect 1 hour, +2 alchemical bonus to Constitution, -2 penalty on Wisdom-based skill checks; Damage 1d2 Con damage",
       "name_pi_citation": [
-        "iswg_equip_general.lst",
+        "iswg_equip_general",
         5
       ]
     },
@@ -313,7 +313,7 @@
       "weight_lbs": 0.0,
       "description": null,
       "name_pi_citation": [
-        "iswg_equip_general.lst",
+        "iswg_equip_general",
         7
       ]
     },
@@ -336,7 +336,7 @@
       "weight_lbs": 1.0,
       "description": null,
       "name_pi_citation": [
-        "iswg_equip_general.lst",
+        "iswg_equip_general",
         9
       ]
     },

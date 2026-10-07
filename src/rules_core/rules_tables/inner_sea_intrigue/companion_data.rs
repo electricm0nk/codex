@@ -1,14 +1,14 @@
 //! inner_sea_intrigue companion tables, transcribed verbatim from the book's own
-//! PCGen `.lst` rows.
+//! PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_companion_tables.py inner_sea_intrigue`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst`.
+//! line count over the source file.
 //!
 //! Sources, with the file AND line each record was read from carried per row:
-//!   * `isi_races_companion.lst` -- 2 companion creature rows
-//!   * `isi_abilities_race_companion.lst` -- 9 companion ability rows
+//!   * `isi_races_companion` -- 2 companion creature rows
+//!   * `isi_abilities_race_companion` -- 9 companion ability rows
 
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
@@ -33,7 +33,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Clockwork Spy ~ Record Audio", "Clockwork Spy ~ Self-Destruct", "Clockwork Spy ~ Tinkering"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "isi_races_companion.lst",
+        source_file: "isi_races_companion",
         source_line: 8,
     },
     CompanionRecord {
@@ -55,7 +55,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Clockwork Familiar ~ Electricity", "Clockwork Familiar ~ Item Installation", "Clockwork Familiar ~ Tinkering", "Clockwork Familiar ~ Potion Installation", "Clockwork Familiar ~ Scroll Installation", "Clockwork Familiar ~ Wand Installation"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "isi_races_companion.lst",
+        source_file: "isi_races_companion",
         source_line: 9,
     },
 ];
@@ -75,7 +75,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Familiar (Clockwork Spy)"],
         cross_book_owners: &[],
-        source_file: "isi_abilities_race_companion.lst",
+        source_file: "isi_abilities_race_companion",
         source_line: 11,
     },
     CompanionAbilityRecord {
@@ -91,7 +91,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Familiar (Clockwork Spy)"],
         cross_book_owners: &[],
-        source_file: "isi_abilities_race_companion.lst",
+        source_file: "isi_abilities_race_companion",
         source_line: 12,
     },
     CompanionAbilityRecord {
@@ -107,7 +107,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Familiar (Clockwork Spy)"],
         cross_book_owners: &[],
-        source_file: "isi_abilities_race_companion.lst",
+        source_file: "isi_abilities_race_companion",
         source_line: 13,
     },
     CompanionAbilityRecord {
@@ -123,7 +123,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
         cross_book_owners: &[],
-        source_file: "isi_abilities_race_companion.lst",
+        source_file: "isi_abilities_race_companion",
         source_line: 26,
     },
     CompanionAbilityRecord {
@@ -139,7 +139,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
         cross_book_owners: &[],
-        source_file: "isi_abilities_race_companion.lst",
+        source_file: "isi_abilities_race_companion",
         source_line: 27,
     },
     CompanionAbilityRecord {
@@ -155,7 +155,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
         cross_book_owners: &[],
-        source_file: "isi_abilities_race_companion.lst",
+        source_file: "isi_abilities_race_companion",
         source_line: 28,
     },
     CompanionAbilityRecord {
@@ -171,7 +171,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
         cross_book_owners: &[],
-        source_file: "isi_abilities_race_companion.lst",
+        source_file: "isi_abilities_race_companion",
         source_line: 30,
     },
     CompanionAbilityRecord {
@@ -187,7 +187,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
         cross_book_owners: &[],
-        source_file: "isi_abilities_race_companion.lst",
+        source_file: "isi_abilities_race_companion",
         source_line: 31,
     },
     CompanionAbilityRecord {
@@ -203,7 +203,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
         cross_book_owners: &[],
-        source_file: "isi_abilities_race_companion.lst",
+        source_file: "isi_abilities_race_companion",
         source_line: 32,
     },
 ];

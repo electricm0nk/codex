@@ -1,16 +1,16 @@
 //! inner_sea_world_guide monster + monster-ability tables, transcribed verbatim
-//! from the book's own PCGen `.lst` rows.
+//! from the book's own PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_monster_tables.py inner_sea_world_guide`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst` (which counts `.MOD`/`.COPY` overlays the
+//! line count over the source file (which counts `.MOD`/`.COPY` overlays the
 //! inventory correctly excludes).
 //!
 //! Sources, with the line each record was read from carried per row:
-//!   * `iswg_races_bestiary.lst` -- 5 monster rows
-//!   * `iswg_races.lst` -- 4 monster rows
-//!   * `iswg_abilities_race.lst` -- 30 monster-ability rows
+//!   * `iswg_races_bestiary` -- 5 monster rows
+//!   * `iswg_races` -- 4 monster rows
+//!   * `iswg_abilities_race` -- 30 monster-ability rows
 //!
 //! 5 monster row(s) and 0 ability row(s) of this
 //! book are Product Identity and are NOT transcribed -- either because the corpus
@@ -22,11 +22,11 @@
 //! Reclassifying is `docs/governance/ogl-pi-blacklist.md` §3's per-book override,
 //! an operator
 //! decision, not a transcriber's:
-//!   * `iswg_races_bestiary.lst:13` (monster row, NAMEISPI:YES)
-//!   * `iswg_races.lst:13` (monster row, NAMEISPI:YES)
-//!   * `iswg_races_bestiary.lst:14` (monster row, NAMEISPI:YES)
-//!   * `iswg_races.lst:14` (monster row, NAMEISPI:YES)
-//!   * `iswg_races.lst:16` (monster row, NAMEISPI:YES)
+//!   * `iswg_races_bestiary:13` (monster row, NAMEISPI:YES)
+//!   * `iswg_races:13` (monster row, NAMEISPI:YES)
+//!   * `iswg_races_bestiary:14` (monster row, NAMEISPI:YES)
+//!   * `iswg_races:14` (monster row, NAMEISPI:YES)
+//!   * `iswg_races:16` (monster row, NAMEISPI:YES)
 //!
 //! 3 ability row(s) of this book have their OWN name/key match
 //! a `pi_screening::PI_BLACKLIST_TERMS` term -- `decisions.md §24`'s "the name
@@ -35,9 +35,9 @@
 //! original name, not even transformed -- `scripts/codex_neutral_name.py`. Per
 //! `§24b`-4, the divergence record below stops at the coordinate and the reason;
 //! the original string is never written here:
-//!   * `iswg_abilities_race.lst:24` -> Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24) (name_pi_blocked)
-//!   * `iswg_abilities_race.lst:25` -> Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25) (name_pi_blocked)
-//!   * `iswg_abilities_race.lst:27` -> Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27) (name_pi_blocked)
+//!   * `iswg_abilities_race:24` -> Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_24) (name_pi_blocked)
+//!   * `iswg_abilities_race:25` -> Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25) (name_pi_blocked)
+//!   * `iswg_abilities_race:27` -> Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27) (name_pi_blocked)
 //!
 //! 1 ability row(s) of this book carry Product Identity in
 //! their `description` field ONLY (declared `DESCISPI:YES`, or an undeclared
@@ -47,7 +47,7 @@
 //! and the record still works. Reclassifying is
 //! `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator
 //! decision, not a transcriber's:
-//!   * `iswg_abilities_race.lst:27` (Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27))
+//!   * `iswg_abilities_race:27` (Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27))
 //!
 //! 16 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they SHIP with `owners: &[]` rather than being
@@ -57,22 +57,22 @@
 //! reaches no screen -- reachability is NOT claimed for these, and each key is
 //! pinned as a named, provable non-reach in `reach_gate.rs::
 //! UNREACHED_RECORD_FINDINGS`, never silently assumed reachable:
-//!   * `iswg_abilities_race.lst:24`
-//!   * `iswg_abilities_race.lst:25`
-//!   * `iswg_abilities_race.lst:27`
-//!   * `iswg_abilities_race.lst:50`
-//!   * `iswg_abilities_race.lst:51`
-//!   * `iswg_abilities_race.lst:52`
-//!   * `iswg_abilities_race.lst:81`
-//!   * `iswg_abilities_race.lst:82`
-//!   * `iswg_abilities_race.lst:83`
-//!   * `iswg_abilities_race.lst:86`
-//!   * `iswg_abilities_race.lst:87`
-//!   * `iswg_abilities_race.lst:90`
-//!   * `iswg_abilities_race.lst:92`
-//!   * `iswg_abilities_race.lst:96`
-//!   * `iswg_abilities_race.lst:97`
-//!   * `iswg_abilities_race.lst:98`
+//!   * `iswg_abilities_race:24`
+//!   * `iswg_abilities_race:25`
+//!   * `iswg_abilities_race:27`
+//!   * `iswg_abilities_race:50`
+//!   * `iswg_abilities_race:51`
+//!   * `iswg_abilities_race:52`
+//!   * `iswg_abilities_race:81`
+//!   * `iswg_abilities_race:82`
+//!   * `iswg_abilities_race:83`
+//!   * `iswg_abilities_race:86`
+//!   * `iswg_abilities_race:87`
+//!   * `iswg_abilities_race:90`
+//!   * `iswg_abilities_race:92`
+//!   * `iswg_abilities_race:96`
+//!   * `iswg_abilities_race:97`
+//!   * `iswg_abilities_race:98`
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -95,7 +95,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "iswg_races_bestiary.lst",
+        source_file: "iswg_races_bestiary",
         source_line: 8,
     },
     MonsterStatBlock {
@@ -115,7 +115,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "iswg_races_bestiary.lst",
+        source_file: "iswg_races_bestiary",
         source_line: 9,
     },
     MonsterStatBlock {
@@ -135,7 +135,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "iswg_races.lst",
+        source_file: "iswg_races",
         source_line: 10,
     },
     MonsterStatBlock {
@@ -155,7 +155,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "iswg_races_bestiary.lst",
+        source_file: "iswg_races_bestiary",
         source_line: 10,
     },
     MonsterStatBlock {
@@ -175,7 +175,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: true,
         sla_cl_token: Some("(max(TL,1))"),
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Lightning Bolt", save_dc_token: Some("13+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Chain Lightning", save_dc_token: Some("16+CHA") }],
-        source_file: "iswg_races.lst",
+        source_file: "iswg_races",
         source_line: 11,
     },
     MonsterStatBlock {
@@ -195,7 +195,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "iswg_races_bestiary.lst",
+        source_file: "iswg_races_bestiary",
         source_line: 11,
     },
     MonsterStatBlock {
@@ -215,7 +215,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "iswg_races.lst",
+        source_file: "iswg_races",
         source_line: 12,
     },
     MonsterStatBlock {
@@ -235,7 +235,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "iswg_races_bestiary.lst",
+        source_file: "iswg_races_bestiary",
         source_line: 12,
     },
     MonsterStatBlock {
@@ -255,7 +255,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Spike Growth", save_dc_token: Some("13+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Spike Stones", save_dc_token: Some("14+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Telekinesis", save_dc_token: Some("15+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Telekinetic Sphere", save_dc_token: Some("18+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("(max(TL,1))"), spell: "Wall of Force", save_dc_token: None }],
-        source_file: "iswg_races.lst",
+        source_file: "iswg_races",
         source_line: 15,
     },
 ];
@@ -272,7 +272,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.307"),
         owners: &["Aluum"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 7,
         codex_generated_name: false,
         rename_reason: None,
@@ -288,7 +288,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["10+TL/2+CON"],
         source_page: Some("p.307"),
         owners: &["Aluum"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 8,
         codex_generated_name: false,
         rename_reason: None,
@@ -304,7 +304,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["8+TL/2+CON"],
         source_page: Some("p.307"),
         owners: &["Aluum"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 9,
         codex_generated_name: false,
         rename_reason: None,
@@ -320,7 +320,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["FastHealingRate"],
         source_page: Some("p.308"),
         owners: &["Calikang"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 12,
         codex_generated_name: false,
         rename_reason: None,
@@ -336,7 +336,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.308"),
         owners: &["Calikang"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 13,
         codex_generated_name: false,
         rename_reason: None,
@@ -352,7 +352,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.308"),
         owners: &["Calikang"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 14,
         codex_generated_name: false,
         rename_reason: None,
@@ -368,7 +368,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BreathWeaponLine", "BreathWeaponDice", "BreathWeaponDC", "BreathWeaponTimes", "HD"],
         source_page: Some("p.308"),
         owners: &["Calikang"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 15,
         codex_generated_name: false,
         rename_reason: None,
@@ -384,7 +384,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.308"),
         owners: &["Calikang"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 16,
         codex_generated_name: false,
         rename_reason: None,
@@ -400,7 +400,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.309"),
         owners: &["Charau-ka"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 19,
         codex_generated_name: false,
         rename_reason: None,
@@ -416,7 +416,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.309"),
         owners: &["Charau-ka"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 20,
         codex_generated_name: false,
         rename_reason: None,
@@ -432,11 +432,11 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DoUDiseaseDC"],
         source_page: Some("p.310"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 24,
         codex_generated_name: true,
         rename_reason: Some("name_pi_blocked"),
-        rename_coordinate: Some("inner_sea_world_guide:iswg_abilities_race.lst:24"),
+        rename_coordinate: Some("inner_sea_world_guide:iswg_abilities_race:24"),
     },
     MonsterAbilityRecord {
         key: "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_25)",
@@ -448,11 +448,11 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.310"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 25,
         codex_generated_name: true,
         rename_reason: Some("name_pi_blocked"),
-        rename_coordinate: Some("inner_sea_world_guide:iswg_abilities_race.lst:25"),
+        rename_coordinate: Some("inner_sea_world_guide:iswg_abilities_race:25"),
     },
     MonsterAbilityRecord {
         key: "Codex-Named Unit (monster_ability_inner_sea_world_guide_iswg_abilities_race_lst_27)",
@@ -464,11 +464,11 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.310"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 27,
         codex_generated_name: true,
         rename_reason: Some("name_pi_blocked"),
-        rename_coordinate: Some("inner_sea_world_guide:iswg_abilities_race.lst:27"),
+        rename_coordinate: Some("inner_sea_world_guide:iswg_abilities_race:27"),
     },
     MonsterAbilityRecord {
         key: "Sandpoint Devil ~ Bay",
@@ -480,7 +480,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["10+(HD/2)+CHA"],
         source_page: Some("p.312"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 50,
         codex_generated_name: false,
         rename_reason: None,
@@ -496,7 +496,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["10+(HD/2)+CON", "HD"],
         source_page: Some("p.312"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 51,
         codex_generated_name: false,
         rename_reason: None,
@@ -512,7 +512,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.312"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 52,
         codex_generated_name: false,
         rename_reason: None,
@@ -528,7 +528,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BreathWeaponCone", "BreathWeaponDice", "BreathWeaponDC"],
         source_page: Some("p.313"),
         owners: &["Dragon (Spine)"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 55,
         codex_generated_name: false,
         rename_reason: None,
@@ -544,7 +544,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.313"),
         owners: &["Dragon (Spine)"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 56,
         codex_generated_name: false,
         rename_reason: None,
@@ -560,7 +560,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["10+(HD/2)+DEX", "STR"],
         source_page: Some("p.313"),
         owners: &["Dragon (Spine)"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 57,
         codex_generated_name: false,
         rename_reason: None,
@@ -576,7 +576,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["RegenerationRate"],
         source_page: Some("p.315"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 81,
         codex_generated_name: false,
         rename_reason: None,
@@ -592,7 +592,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["10+(HD/2)+CON", "Base"],
         source_page: Some("p.315"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 82,
         codex_generated_name: false,
         rename_reason: None,
@@ -608,7 +608,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["10+(HD/2)+CON", "Base"],
         source_page: Some("p.315"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 83,
         codex_generated_name: false,
         rename_reason: None,
@@ -624,7 +624,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.315"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 86,
         codex_generated_name: false,
         rename_reason: None,
@@ -640,7 +640,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.315"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 87,
         codex_generated_name: false,
         rename_reason: None,
@@ -656,7 +656,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.265"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 90,
         codex_generated_name: false,
         rename_reason: None,
@@ -672,7 +672,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.310"),
         owners: &["Calikang"],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 91,
         codex_generated_name: false,
         rename_reason: None,
@@ -688,7 +688,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.368"),
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 92,
         codex_generated_name: false,
         rename_reason: None,
@@ -704,7 +704,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 96,
         codex_generated_name: false,
         rename_reason: None,
@@ -720,7 +720,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 97,
         codex_generated_name: false,
         rename_reason: None,
@@ -736,7 +736,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "iswg_abilities_race.lst",
+        source_file: "iswg_abilities_race",
         source_line: 98,
         codex_generated_name: false,
         rename_reason: None,

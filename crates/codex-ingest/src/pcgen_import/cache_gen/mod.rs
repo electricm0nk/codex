@@ -48,6 +48,33 @@ use crate::pcgen_import::wiring_class::{
 // helper that happens to share a name, not a duplicate of this family.
 // ---------------------------------------------------------------------
 
+/// The compiled tables cite a source file by its stem (`b1_races`), never with the list-file
+/// extension (SD-37 E4a.3). The corpus, which these generators read and write, still names the
+/// real file with its extension, so every place that joins a table citation to a corpus file goes
+/// through these three functions: the extension is spelled here and nowhere else.
+const CITED_EXTENSION: &str = ".lst";
+
+/// The stem a table cites, from either spelling (a stem is returned unchanged).
+pub fn cited_stem(name: &str) -> &str {
+    name.strip_suffix(CITED_EXTENSION).unwrap_or(name)
+}
+
+/// The corpus file name a table citation names, from either spelling.
+pub fn cited_file(name: &str) -> String {
+    format!("{}{CITED_EXTENSION}", cited_stem(name))
+}
+
+/// A `book:stem:line` coordinate in the corpus's own spelling, `book:file:line`.
+pub fn cited_coordinate(coordinate: &str) -> String {
+    match coordinate.rsplit_once(':') {
+        Some((head, line)) => match head.rsplit_once(':') {
+            Some((book, file)) => format!("{book}:{}:{line}", cited_file(file)),
+            None => coordinate.to_string(),
+        },
+        None => coordinate.to_string(),
+    }
+}
+
 /// Real sha256 of `path`'s current on-disk content, via the system
 /// `sha256sum` tool (no `sha2` crate dependency exists in this
 /// workspace). Byte-identical across every per-book generator that had

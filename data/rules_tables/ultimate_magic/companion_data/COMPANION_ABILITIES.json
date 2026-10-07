@@ -28,7 +28,7 @@
         "Blue-Ringed Octopus"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_um.lst",
+      "source_file": "ce_abilities_familiar_race_um",
       "source_line": 10
     },
     {
@@ -50,7 +50,7 @@
         "Blue-Ringed Octopus"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_um.lst",
+      "source_file": "ce_abilities_familiar_race_um",
       "source_line": 11
     },
     {
@@ -74,7 +74,7 @@
         "Blue-Ringed Octopus"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_um.lst",
+      "source_file": "ce_abilities_familiar_race_um",
       "source_line": 12
     },
     {
@@ -96,7 +96,7 @@
         "Hedgehog"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_um.lst",
+      "source_file": "ce_abilities_familiar_race_um",
       "source_line": 20
     },
     {
@@ -119,7 +119,7 @@
         "Companion (Slug (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 21
     },
     {
@@ -142,7 +142,7 @@
         "Companion (Ant (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 22
     },
     {
@@ -165,7 +165,7 @@
         "House Centipede"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_um.lst",
+      "source_file": "ce_abilities_familiar_race_um",
       "source_line": 24
     },
     {
@@ -188,7 +188,7 @@
         "Companion (Centipede (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 25
     },
     {
@@ -212,7 +212,7 @@
         "Companion (Crab (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 26
     },
     {
@@ -289,7 +289,7 @@
         "Companion (Leech (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 28
     },
     {
@@ -312,7 +312,7 @@
         "King Crab"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_um.lst",
+      "source_file": "ce_abilities_familiar_race_um",
       "source_line": 28
     },
     {
@@ -333,7 +333,7 @@
         "Companion (Mantis (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 30
     },
     {
@@ -354,7 +354,7 @@
         "Companion (Mantis (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 31
     },
     {
@@ -375,7 +375,7 @@
         "Companion (Mantis (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 32
     },
     {
@@ -398,7 +398,7 @@
         "Scarlet Spider"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_um.lst",
+      "source_file": "ce_abilities_familiar_race_um",
       "source_line": 32
     },
     {
@@ -479,7 +479,7 @@
         "Companion (Scorpion (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 33
     },
     {
@@ -551,7 +551,7 @@
         "Companion (Slug (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 35
     },
     {
@@ -574,7 +574,7 @@
         "Companion (Slug (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 36
     },
     {
@@ -596,7 +596,7 @@
         "Turtle"
       ],
       "cross_book_owners": [],
-      "source_file": "ce_abilities_familiar_race_um.lst",
+      "source_file": "ce_abilities_familiar_race_um",
       "source_line": 36
     },
     {
@@ -619,7 +619,7 @@
         "Companion (Wasp (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 40
     },
     {
@@ -639,7 +639,7 @@
         "Companion (Ant (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 44
     },
     {
@@ -659,7 +659,7 @@
         "Companion (Beetle (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 45
     },
     {
@@ -679,7 +679,7 @@
         "Companion (Centipede (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 46
     },
     {
@@ -704,7 +704,7 @@
         "Companion (Crab (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 48
     },
     {
@@ -729,7 +729,7 @@
         "Companion (Leech (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 50
     },
     {
@@ -749,7 +749,7 @@
         "Companion (Mantis (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 51
     },
     {
@@ -769,7 +769,7 @@
         "Companion (Scorpion (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 52
     },
     {
@@ -798,7 +798,7 @@
         "Companion (Slug (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 54
     },
     {
@@ -818,7 +818,7 @@
         "Companion (Spider (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 55
     },
     {
@@ -838,7 +838,7 @@
         "Companion (Wasp (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "um_abilities_companion.lst",
+      "source_file": "um_abilities_companion",
       "source_line": 56
     }
   ]

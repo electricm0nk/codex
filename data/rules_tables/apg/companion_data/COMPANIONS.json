@@ -71,7 +71,7 @@
         "Giant Centipede Companion ~ Poison"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_apg.lst",
+      "source_file": "ce_races_familiar_apg",
       "source_line": 6
     },
     {
@@ -111,7 +111,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "apg_races_companion.lst",
+      "source_file": "apg_races_companion",
       "source_line": 7
     },
     {
@@ -177,7 +177,7 @@
         "Crab Companion ~ Water Dependency"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_apg.lst",
+      "source_file": "ce_races_familiar_apg",
       "source_line": 7
     },
     {
@@ -246,7 +246,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_apg.lst",
+      "source_file": "ce_races_familiar_apg",
       "source_line": 8
     },
     {
@@ -321,7 +321,7 @@
         "Octopus Companion ~ Poison"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_apg.lst",
+      "source_file": "ce_races_familiar_apg",
       "source_line": 9
     },
     {
@@ -375,7 +375,7 @@
         "Greensting Scorpion Companion ~ Poison"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_apg.lst",
+      "source_file": "ce_races_familiar_apg",
       "source_line": 10
     },
     {
@@ -439,7 +439,7 @@
         "Giant Spider Companion ~ Poison"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_apg.lst",
+      "source_file": "ce_races_familiar_apg",
       "source_line": 11
     },
     {
@@ -519,7 +519,7 @@
         "Flight Maneuverability"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_apg.lst",
+      "source_file": "ce_races_familiar_apg",
       "source_line": 14
     },
     {
@@ -598,7 +598,7 @@
         "Flight Maneuverability"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_apg.lst",
+      "source_file": "ce_races_familiar_apg",
       "source_line": 17
     }
   ]

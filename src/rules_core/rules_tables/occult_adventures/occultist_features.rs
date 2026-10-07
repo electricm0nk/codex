@@ -1,6 +1,6 @@
 //! SD-32 card 11 (T12), cycle 4 — real per-feature compute functions for
 //! the Occultist, one of the six `occult_adventures` classes sharing
-//! `oa_abilities_class.lst`. Every formula below is transcribed from the
+//! `oa_abilities_class`. Every formula below is transcribed from the
 //! corpus's own already-ingested tokens
 //! (`data/corpus/occult_adventures/class_feature/occultist/*.json`).
 //!
@@ -10,7 +10,7 @@
 //! omission documented in `mesmerist_features`'s module doc); grounded here
 //! is the FCB-less base value.
 
-/// `oa_abilities_class.lst:107`, `Focus Powers`:
+/// `oa_abilities_class:107`, `Focus Powers`:
 /// `BONUS:VAR|OccultistFocusPower|(OccultistLVL+1)/2`.
 pub fn focus_powers_count(level: u8) -> Option<i16> {
     if level < 1 {
@@ -19,7 +19,7 @@ pub fn focus_powers_count(level: u8) -> Option<i16> {
     Some((i16::from(level) + 1) / 2)
 }
 
-/// `oa_abilities_class.lst:107`, `Focus Powers`:
+/// `oa_abilities_class:107`, `Focus Powers`:
 /// `BONUS:VAR|OccultistFocusPowerDC|10+OccultistLVL/2+INT`.
 pub fn focus_powers_dc(level: u8, int: i16) -> Option<i16> {
     if level < 1 {
@@ -28,7 +28,7 @@ pub fn focus_powers_dc(level: u8, int: i16) -> Option<i16> {
     Some(10 + i16::from(level) / 2 + int)
 }
 
-/// `oa_abilities_class.lst:108`, `Implements`:
+/// `oa_abilities_class:108`, `Implements`:
 /// `BONUS:VAR|OccultistImplementSchool|2+((OccultistLVL+2)/4)`.
 pub fn implements_school_count(level: u8) -> Option<i16> {
     if level < 1 {
@@ -37,7 +37,7 @@ pub fn implements_school_count(level: u8) -> Option<i16> {
     Some(2 + (i16::from(level) + 2) / 4)
 }
 
-/// `oa_abilities_class.lst:110`, `Mental Focus`:
+/// `oa_abilities_class:110`, `Mental Focus`:
 /// `BONUS:VAR|OccultistMentalFocus|OccultistLVL+INT+if(...FCB...)` (FCB
 /// term dropped, see module doc).
 pub fn mental_focus(level: u8, int: i16) -> Option<i16> {
@@ -47,7 +47,7 @@ pub fn mental_focus(level: u8, int: i16) -> Option<i16> {
     Some(i16::from(level) + int)
 }
 
-/// `oa_abilities_class.lst:111`, `Magic Item Skill`:
+/// `oa_abilities_class:111`, `Magic Item Skill`:
 /// `BONUS:SKILL|Use Magic Device|OccultistLVL/2`.
 pub fn magic_item_skill_bonus(level: u8) -> Option<i16> {
     if level < 2 {
@@ -56,7 +56,7 @@ pub fn magic_item_skill_bonus(level: u8) -> Option<i16> {
     Some(i16::from(level) / 2)
 }
 
-/// `oa_abilities_class.lst:116`, `Outside Contact`:
+/// `oa_abilities_class:116`, `Outside Contact`:
 /// `BONUS:VAR|OccultistOutsiderNum|1+(OccultistLVL-8)/4`.
 pub fn outside_contact_count(level: u8) -> Option<i16> {
     if level < 8 {
@@ -65,7 +65,7 @@ pub fn outside_contact_count(level: u8) -> Option<i16> {
     Some(1 + (i16::from(level) - 8) / 4)
 }
 
-/// `oa_abilities_class.lst:117`, `Binding Circles`:
+/// `oa_abilities_class:117`, `Binding Circles`:
 /// `BONUS:VAR|OccultistCircleDC|10+OccultistLVL/2+INT`.
 pub fn binding_circles_dc(level: u8, int: i16) -> Option<i16> {
     if level < 12 {

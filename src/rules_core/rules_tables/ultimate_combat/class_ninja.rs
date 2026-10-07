@@ -5,19 +5,19 @@
 //! **the `named_raw: 0` figure is corrected by this cycle, not merely
 //! inherited**: the clearance table's own `grep -oE
 //! 'Ninja_Archetype_[A-Za-z0-9]+'` evidence method searched
-//! `uc_abilities_class.lst` only and found nothing, but Ninja's one real
+//! `uc_abilities_class` only and found nothing, but Ninja's one real
 //! archetype (`Ninja Archetype ~ Scout`) lives in a NESTED subdirectory
-//! (`ultimate_combat/support/uc_abilities_class_apg.lst`) the same
+//! (`ultimate_combat/support/uc_abilities_class_apg`) the same
 //! single-level-join gap `OPEN-ISSUES.md` row 1 already names for
 //! `wiring_class::CorpusLines::line()` -- the grep never reached the file.
 //! Confirmed against `docs/work-inventory.json`'s own already-ingested
 //! `corpus_key: "Ninja Archetype ~ Scout"` record, then verified against
-//! the raw `.lst` row directly (`class_ninja.rs`'s sibling
+//! the raw source file row directly (`class_ninja.rs`'s sibling
 //! `archetype_tables.rs` addition carries the full citation).
 //!
-//! Source: PCGen `uc_classes.lst`, `CLASS:Ninja` record
+//! Source: PCGen `uc_classes`, `CLASS:Ninja` record
 //! (`~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
-//! ultimate_combat/uc_classes.lst:19`), read directly rather than
+//! ultimate_combat/uc_classes:19`), read directly rather than
 //! table-transcribed:
 //!
 //! - `BONUS:COMBAT|BASEAB|classlevel("APPLIEDAS=NONEPIC")*3/4|TYPE=Base.REPLACE`

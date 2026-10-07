@@ -2,16 +2,16 @@
 //! E2.2 per-book pre-build (`docs/release/SD-27-future-state-book-
 //! content-ingestion/loop-instruction.md §3.3.3`).
 //!
-//! **Full corpus coverage.** `pu_equipmods.lst` has exactly 42 real,
+//! **Full corpus coverage.** `pu_equipmods` has exactly 42 real,
 //! `KEY:`-bearing records -- all 42 are the Automatic Bonus Progression
 //! (ABP) variant "equipment modifiers" that back PU's optional ABP
 //! subsystem (p.156-157): a per-slot (Weapon/Ammunition/Armor/Shield)
 //! ladder of `+0`..`+5` "Enhancement" modifiers plus a matching
 //! `+0`..`+5` "Attunement" modifier ladder for Weapon/Armor/Shield. There
-//! is no `pu_equip.lst`-style General/ArmsArmor/MagicItems split for this
-//! book's own new content -- `pu_equip.lst` exists in the real corpus but
+//! is no `pu_equip`-style General/ArmsArmor/MagicItems split for this
+//! book's own new content -- `pu_equip` exists in the real corpus but
 //! carries mundane inherited-book crossover rows, not new PU equipment,
-//! so this catalog covers `pu_equipmods.lst` only, matching this cycle's
+//! so this catalog covers `pu_equipmods` only, matching this cycle's
 //! scoped brief.
 //!
 //! **No `COST:`/`WT:` token anywhere in this file** (confirmed by direct
@@ -19,7 +19,7 @@
 //! signal is instead an `ITEMCOST`-formula `BONUS:` token (a runtime
 //! formula over the target item's own state, not a flat gp number) and
 //! there is no `WT:` token at all, mirroring `rules_tables::acg`'s own
-//! documented finding for `acg_equipmods.lst` ("equipment *modifiers*
+//! documented finding for `acg_equipmods` ("equipment *modifiers*
 //! have no independent physical weight of their own"). `cost_gp` and
 //! `weight_lbs` are therefore always `None` here -- an honest corpus gap,
 //! never fabricated.
@@ -40,7 +40,7 @@
 #[cfg_attr(test, schemars(rename = "pathfinder_unchained__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
     /// The real corpus `KEY:` token -- every one of the 42 real
-    /// `pu_equipmods.lst` records carries one (unlike
+    /// `pu_equipmods` records carries one (unlike
     /// `rules_tables::crb`/`rules_tables::acg`'s own equipment catalogs,
     /// where `key == name` fallback is common).
     pub key: &'static str,
@@ -66,7 +66,7 @@ const ATTUNE_BASE_DESC: &str =
     "Attunement for equipment that has magic abilities, powering the ability rather than granting bonuses.";
 const ATTUNE_PLUS_DESC: &str = "Adds enhancement bonus to attuned equipment.";
 
-/// Full PU equipment-modifier catalog: all 42 real `pu_equipmods.lst`
+/// Full PU equipment-modifier catalog: all 42 real `pu_equipmods`
 /// records, in source order (matches this module's own generation
 /// citation lookup, which scans the live corpus top-to-bottom).
 pub fn equipment_tables() -> &'static [EquipmentTableEntry] {

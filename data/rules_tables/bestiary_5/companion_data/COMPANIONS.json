@@ -75,7 +75,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion_oa.lst",
+      "source_file": "b5_races_companion_oa",
       "source_line": 5
     },
     {
@@ -145,7 +145,7 @@
         "Grab"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 6
     },
     {
@@ -222,7 +222,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion_oa.lst",
+      "source_file": "b5_races_companion_oa",
       "source_line": 6
     },
     {
@@ -278,7 +278,7 @@
         "Trip"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 7
     },
     {
@@ -343,7 +343,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 8
     },
     {
@@ -409,7 +409,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 9
     },
     {
@@ -478,7 +478,7 @@
         "Giant Frog ~ Tongue"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 10
     },
     {
@@ -547,7 +547,7 @@
         "Giant Frog ~ Tongue"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 11
     },
     {
@@ -610,7 +610,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 12
     },
     {
@@ -675,7 +675,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 13
     },
     {
@@ -730,7 +730,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 14
     },
     {
@@ -789,7 +789,7 @@
         "Narwhal ~ Hold Breath"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 15
     },
     {
@@ -861,7 +861,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 16
     },
     {
@@ -926,7 +926,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 17
     },
     {
@@ -991,7 +991,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 18
     },
     {
@@ -1045,7 +1045,7 @@
         "Therizinosaurus ~ Sprint"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 19
     },
     {
@@ -1107,7 +1107,7 @@
         "Troodon ~ Easily Trained"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 20
     },
     {
@@ -1166,7 +1166,7 @@
         "Blue Whale ~ Hold Breath"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 21
     },
     {
@@ -1233,7 +1233,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 22
     },
     {
@@ -1296,7 +1296,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 23
     },
     {
@@ -1373,7 +1373,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 26
     },
     {
@@ -1454,7 +1454,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 27
     },
     {
@@ -1531,7 +1531,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 28
     },
     {
@@ -1606,7 +1606,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 29
     },
     {
@@ -1669,7 +1669,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 30
     },
     {
@@ -1746,7 +1746,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 31
     },
     {
@@ -1819,7 +1819,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 34
     },
     {
@@ -1887,7 +1887,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 35
     },
     {
@@ -1956,7 +1956,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 36
     },
     {
@@ -2017,7 +2017,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 37
     },
     {
@@ -2078,7 +2078,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 38
     },
     {
@@ -2147,7 +2147,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 39
     },
     {
@@ -2212,7 +2212,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 40
     },
     {
@@ -2281,7 +2281,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 41
     },
     {
@@ -2354,7 +2354,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b5_races_companion.lst",
+      "source_file": "b5_races_companion",
       "source_line": 42
     }
   ]

@@ -35,7 +35,7 @@
         "Companion (Dinosaur (Dimorphodon))"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 7
     },
     {
@@ -57,7 +57,7 @@
         "Pipefox"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_race_ce_companion.lst",
+      "source_file": "b4_abilities_race_ce_companion",
       "source_line": 7
     },
     {
@@ -86,7 +86,7 @@
         "Companion (Dinosaur (Diplodocus))"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 8
     },
     {
@@ -108,7 +108,7 @@
         "Ratling"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_race_ce_companion.lst",
+      "source_file": "b4_abilities_race_ce_companion",
       "source_line": 8
     },
     {
@@ -128,7 +128,7 @@
         "Companion (Dinosaur (Styracosaurus))"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 9
     },
     {
@@ -150,7 +150,7 @@
         "Ratling"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_race_ce_companion.lst",
+      "source_file": "b4_abilities_race_ce_companion",
       "source_line": 9
     },
     {
@@ -175,7 +175,7 @@
         "Companion (Giraffe)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 10
     },
     {
@@ -200,7 +200,7 @@
         "Companion (Stag)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 11
     },
     {
@@ -229,7 +229,7 @@
         "Companion (Seahorse)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 12
     },
     {
@@ -251,7 +251,7 @@
         "Companion (Weasel (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_race_ce_companion.lst",
+      "source_file": "b4_abilities_race_ce_companion",
       "source_line": 12
     },
     {
@@ -280,7 +280,7 @@
         "Companion (Tortoise)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 13
     },
     {
@@ -309,7 +309,7 @@
         "Companion (Trumpeter Swan)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 14
     },
     {
@@ -329,7 +329,7 @@
         "Companion (Weasel (Giant))"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 15
     },
     {
@@ -349,7 +349,7 @@
         "Companion (Walrus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 16
     },
     {
@@ -372,7 +372,7 @@
         "Companion (Dinosaur (Dimorphodon))"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 19
     },
     {
@@ -393,7 +393,7 @@
         "Companion (Dinosaur (Diplodocus))"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 21
     },
     {
@@ -414,7 +414,7 @@
         "Companion (Dinosaur (Styracosaurus))"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 23
     },
     {
@@ -435,7 +435,7 @@
         "Companion (Giraffe)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 25
     },
     {
@@ -456,7 +456,7 @@
         "Companion (Seahorse)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 27
     },
     {
@@ -477,7 +477,7 @@
         "Familiar (Archaeopteryx)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 37
     },
     {
@@ -499,7 +499,7 @@
         "Familiar (Platypus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 40
     },
     {
@@ -520,7 +520,7 @@
         "Familiar (Platypus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 41
     },
     {
@@ -541,7 +541,7 @@
         "Familiar (Platypus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 42
     },
     {
@@ -563,7 +563,7 @@
         "Almiraj"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 67
     },
     {
@@ -585,7 +585,7 @@
         "Almiraj"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 68
     },
     {
@@ -606,7 +606,7 @@
         "Beheaded"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 71
     },
     {
@@ -628,7 +628,7 @@
         "Beheaded"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 72
     },
     {
@@ -650,7 +650,7 @@
         "Beheaded"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 73
     },
     {
@@ -672,7 +672,7 @@
         "Beheaded"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 74
     },
     {
@@ -694,7 +694,7 @@
         "Beheaded"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 75
     },
     {
@@ -716,7 +716,7 @@
         "Beheaded"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 76
     },
     {
@@ -738,7 +738,7 @@
         "Familiar (Shadow Drake)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 79
     },
     {
@@ -760,7 +760,7 @@
         "Familiar (Shadow Drake)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 80
     },
     {
@@ -784,7 +784,7 @@
         "Familiar (Shadow Drake)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 81
     },
     {
@@ -807,7 +807,7 @@
         "Familiar (Giant Flea)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 84
     },
     {
@@ -828,7 +828,7 @@
         "Familiar (Giant Flea)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 85
     },
     {
@@ -852,7 +852,7 @@
         "Isitoq"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 88
     },
     {
@@ -876,7 +876,7 @@
         "Isitoq"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 89
     },
     {
@@ -898,7 +898,7 @@
         "Isitoq"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 90
     },
     {
@@ -920,7 +920,7 @@
         "Nycar"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 93
     },
     {
@@ -942,7 +942,7 @@
         "Nycar"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 94
     },
     {
@@ -964,7 +964,7 @@
         "Pooka"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 100
     },
     {
@@ -988,7 +988,7 @@
         "Familiar (Nosoi)"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 104
     },
     {
@@ -1010,7 +1010,7 @@
         "Ratling"
       ],
       "cross_book_owners": [],
-      "source_file": "b4_abilities_companion.lst",
+      "source_file": "b4_abilities_companion",
       "source_line": 107
     }
   ]

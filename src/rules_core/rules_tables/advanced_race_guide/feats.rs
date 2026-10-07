@@ -1,14 +1,14 @@
 //! ARG feat catalog.
 //!
 //! Full in-scope corpus coverage: every real corpus record from
-//! `arg_feats.lst` carrying `CATEGORY:FEAT` and a classifiable `TYPE:`
+//! `arg_feats` carrying `CATEGORY:FEAT` and a classifiable `TYPE:`
 //! facet -- 187 total (132 General,
 //! 52 Combat, 3 Teamwork). Generated
 //! programmatically from the live corpus -- see `feat_data/`'s own doc
 //! comment for the generation method (not hand-authored).
 //!
 //! **Real, re-verified count differs from the scoping brief's rough
-//! estimate of 239.** `arg_feats.lst` carries 239 real non-comment,
+//! estimate of 239.** `arg_feats` carries 239 real non-comment,
 //! non-block-header, non-`SOURCELONG:`-header lines total, but only 187 of
 //! those are actual player-selectable feats (`CATEGORY:FEAT`). The other
 //! 52 are excluded, for two distinct, verified reasons, never silently
@@ -37,7 +37,7 @@
 //! category for a single misspelled facet.
 //!
 //! Every record here has a real `DESC:` token (100% coverage, unlike CRB's
-//! partial description coverage) -- `arg_feats.lst` never omits `DESC:` on a
+//! partial description coverage) -- `arg_feats` never omits `DESC:` on a
 //! real `CATEGORY:FEAT` row.
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
@@ -53,10 +53,10 @@ impl FeatCategory {
     pub const ALL: &'static [FeatCategory] = &[FeatCategory::General, FeatCategory::Combat, FeatCategory::Teamwork];
 
     /// This catalog's single corpus source file -- all 3 categories are
-    /// drawn from the same `arg_feats.lst` (mirrors
+    /// drawn from the same `arg_feats` (mirrors
     /// `rules_tables::crb::feats::FeatCategory::corpus_file_name`).
     pub fn corpus_file_name(self) -> &'static str {
-        "arg_feats.lst"
+        "arg_feats"
     }
 }
 
@@ -65,7 +65,7 @@ impl FeatCategory {
 #[cfg_attr(test, schemars(rename = "advanced_race_guide__feats__FeatTableEntry"))]
 pub struct FeatTableEntry {
     /// The corpus `KEY:` token, falling back to the record's `name` when no
-    /// `KEY:` token is present (no in-scope `arg_feats.lst` record carries
+    /// `KEY:` token is present (no in-scope `arg_feats` record carries
     /// one, so `key == name` for every entry here today).
     pub key: &'static str,
     pub category: FeatCategory,

@@ -30,7 +30,7 @@
 //! grant hazard `ultimate_psionics::archetype_tables`'s own doc comment
 //! names.** Its `Druid Domain` grant is not on its own master row at
 //! all -- it lives on `CATEGORY=Archetype|Nature's Bond ~ Druid
-//! Domain.MOD` (`apg_abilities_class.lst:1950`), a `.MOD` row modifying
+//! Domain.MOD` (`apg_abilities_class:1950`), a `.MOD` row modifying
 //! an unrelated, pre-existing feature, gated by `PREABILITY:1,
 //! CATEGORY=Archetype,Druid Archetype ~ Cave Druid`. This table's own
 //! `grants` field does **not** include this grant -- it is invisible to
@@ -44,7 +44,7 @@
 //! **9 of this book's 12 Rogue archetype master records have no `DESC:`
 //! at all -- a whole-subfamily gap, confirmed genuine on the raw corpus
 //! rows, not an extraction bug.** `Rogue Archetype ~ Burglar`
-//! (`apg_abilities_class.lst:2942`, spot-checked directly) carries
+//! (`apg_abilities_class:2942`, spot-checked directly) carries
 //! `CATEGORY:Archetype`, `TYPE:`, `PRECLASS:`, and its own
 //! `ABILITY:...AUTOMATIC` grants -- but no `DESC:` or `BENEFIT:` token
 //! anywhere on the row, and the same is true of `Cutpurse`,
@@ -69,7 +69,7 @@
 //!
 //! Every field below is copied verbatim from the real corpus row (source:
 //! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
-//! advanced_players_guide/apg_abilities_class.lst`), generated
+//! advanced_players_guide/apg_abilities_class`), generated
 //! programmatically by a one-off extraction script, not hand-transcribed.
 
 use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
@@ -80,7 +80,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     static TABLE: std::sync::OnceLock<Vec<ArchetypeSwapEntry>> = std::sync::OnceLock::new();
     TABLE.get_or_init(|| {
         vec![
-        // Barbarian Archetype ~ Breaker -- apg_abilities_class.lst:1541
+        // Barbarian Archetype ~ Breaker -- apg_abilities_class:1541
         ArchetypeSwapEntry {
             key: "Barbarian Archetype ~ Breaker",
             subject: "Barbarian",
@@ -93,7 +93,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Breaker ~ Battle Scavenger", at_level: 3, description: Some("At 3rd level, the breaker barbarian suffers no penalty on attack rolls when using an improvised weapon or a weapon with the broken condition. In addition, she gains a +%1 bonus on damage rolls with improvised or broken weapons for every three levels beyond 3rd. This ability replaces trap sense.|BattleScavengerDamage"), benefit: None },
             ],
         },
-        // Barbarian Archetype ~ Brutal Pugilist -- apg_abilities_class.lst:1542
+        // Barbarian Archetype ~ Brutal Pugilist -- apg_abilities_class:1542
         ArchetypeSwapEntry {
             key: "Barbarian Archetype ~ Brutal Pugilist",
             subject: "Barbarian",
@@ -107,7 +107,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Brutal Pugilist ~ Improved Savage Grapple", at_level: 5, description: Some("At 5th level, the brutal pugilist takes no penalties to Dexterity, attack rolls, and combat maneuver checks when she has the grappled condition. She also is treated as one size larger than her actual size when determining whether she can grapple or be grappled by another creature. This ability replaces improved uncanny dodge."), benefit: None },
             ],
         },
-        // Barbarian Archetype ~ Drunken Brute -- apg_abilities_class.lst:1543
+        // Barbarian Archetype ~ Drunken Brute -- apg_abilities_class:1543
         ArchetypeSwapEntry {
             key: "Barbarian Archetype ~ Drunken Brute",
             subject: "Barbarian",
@@ -119,7 +119,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Drunken Brute ~ Raging Drunk", at_level: 1, description: Some("While raging, the drunken brute can drink a potion, or a tankard of ale or similar quantity of alcohol, as a move action that does not provoke attacks of opportunity. A potion has its normal effect, while an alcoholic drink allows the barbarian to maintain her rage that round without expending a round of rage for the day (instead of the alcohol's normal effects). For each alcoholic drink consumed while raging, the barbarian is nauseated for 1 round when her rage expires, in addition the normal fatigue that follows a rage. Tireless rage does not negate this nauseated condition but the internal fortitude rage power does. This ability replaces fast movement."), benefit: None },
             ],
         },
-        // Barbarian Archetype ~ Elemental Kin -- apg_abilities_class.lst:1544
+        // Barbarian Archetype ~ Elemental Kin -- apg_abilities_class:1544
         ArchetypeSwapEntry {
             key: "Barbarian Archetype ~ Elemental Kin",
             subject: "Barbarian",
@@ -131,7 +131,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Elemental Kin ~ Elemental Fury", at_level: 3, description: Some("At 3rd level, whenever the elemental kin takes an amount of energy damage equal to or greater than her barbarian level while raging, she adds 1 to the total number of rounds that she can rage that day. At 6th level, and every three levels thereafter, the number of extra rounds per energy attack increases by +1, to a maximum of +6 rounds per energy attack at 18th level. This ability replaces trap sense."), benefit: None },
             ],
         },
-        // Barbarian Archetype ~ Hurler -- apg_abilities_class.lst:1545
+        // Barbarian Archetype ~ Hurler -- apg_abilities_class:1545
         ArchetypeSwapEntry {
             key: "Barbarian Archetype ~ Hurler",
             subject: "Barbarian",
@@ -143,7 +143,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Hurler ~ Skilled Thrower", at_level: 1, description: Some("The hurler is skilled at throwing objects in combat. Increase the range increment of any thrown weapon or object by 10 feet. This ability replaces fast movement."), benefit: None },
             ],
         },
-        // Barbarian Archetype ~ Invulnerable Rager -- apg_abilities_class.lst:1546
+        // Barbarian Archetype ~ Invulnerable Rager -- apg_abilities_class:1546
         ArchetypeSwapEntry {
             key: "Barbarian Archetype ~ Invulnerable Rager",
             subject: "Barbarian",
@@ -156,7 +156,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Invulnerable Rager ~ Extreme Endurance", at_level: 3, description: Some("At 3rd level, the invulnerable rager is inured to either hot or cold climate effects (choose one) as if using endure elements. In addition, the barbarian gains 1 point of fire or cold resistance for every three levels beyond 3rd. This ability replaces trap sense."), benefit: None },
             ],
         },
-        // Barbarian Archetype ~ Mounted Fury -- apg_abilities_class.lst:1547
+        // Barbarian Archetype ~ Mounted Fury -- apg_abilities_class:1547
         ArchetypeSwapEntry {
             key: "Barbarian Archetype ~ Mounted Fury",
             subject: "Barbarian",
@@ -169,7 +169,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mounted Fury ~ Bestial Mount", at_level: 5, description: Some("At 5th level, the mounted fury gains the service of a feral mount. This ability functions as a druid's animal companion, using the barbarian's level -4 as her effective druid level. This companion must be one that she is capable of riding and is suitable as a mount. A Medium barbarian can select a camel or a horse. A Small barbarian can select a pony or a wolf, but can also select a boar or a dog if she is at least 8th level. Whenever a barbarian is raging while mounted on her bestial mount, the mount gains a +2 morale bonus to its Strength. This ability replaces uncanny dodge and improved uncanny dodge."), benefit: None },
             ],
         },
-        // Barbarian Archetype ~ Savage Barbarian -- apg_abilities_class.lst:1548
+        // Barbarian Archetype ~ Savage Barbarian -- apg_abilities_class:1548
         ArchetypeSwapEntry {
             key: "Barbarian Archetype ~ Savage Barbarian",
             subject: "Barbarian",
@@ -182,7 +182,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Savage Barbarian ~ Natural Toughness", at_level: 7, description: Some("At 7th level, the savage barbarian gains a +%1 natural armor bonus to AC when wearing no armor (shields are allowed). This bonus increases by +1 for every three levels beyond 7th. This ability replaces damage reduction.|NaturalToughness"), benefit: None },
             ],
         },
-        // Barbarian Archetype ~ Superstitious -- apg_abilities_class.lst:1549
+        // Barbarian Archetype ~ Superstitious -- apg_abilities_class:1549
         ArchetypeSwapEntry {
             key: "Barbarian Archetype ~ Superstitious",
             subject: "Barbarian",
@@ -195,7 +195,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Superstitious ~ Keen Senses", at_level: 7, description: Some("At 7th level, the superstitious barbarian gains low-light vision (triple normal vision range in dim light if she already has low-light vision). At 10th level, she gains darkvision 60 feet (or adds 60 feet to the range of any darkvision already possessed). At 13th level, she gains scent. At 16th level, she gains blindsense 30 feet. At 19th level, she gains blindsight 30 feet. This ability replaces damage reduction."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Arcane Duelist -- apg_abilities_class.lst:1618
+        // Bard Archetype ~ Arcane Duelist -- apg_abilities_class:1618
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Arcane Duelist",
             subject: "Bard",
@@ -213,7 +213,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Arcane Duelist ~ Arcane Armor", at_level: 10, description: Some("At 10th level, an arcane duelist gains Medium Armor Proficiency and can cast bard spells in medium armor with no chance of arcane spell failure. At 16th level, he gains Heavy Armor Proficiency and can cast bard spells in heavy armor with no arcane spell failure. This ability replaces jack of all trades."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Archivist -- apg_abilities_class.lst:1619
+        // Bard Archetype ~ Archivist -- apg_abilities_class:1619
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Archivist",
             subject: "Bard",
@@ -231,7 +231,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Archivist ~ Probable Path", at_level: 10, description: Some("At 10th level, an archivist can calculate the action likely to bring success with the least risk. %1/day, he can take 10 on any d20 roll. He may use this ability one additional time per day for every three levels after 10th. This ability replaces jack of all trades.|(BardLVL-7)/3"), benefit: None },
             ],
         },
-        // Bard Archetype ~ Court Bard -- apg_abilities_class.lst:1620
+        // Bard Archetype ~ Court Bard -- apg_abilities_class:1620
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Court Bard",
             subject: "Bard",
@@ -248,7 +248,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Court Bard ~ Wide Audience", at_level: 5, description: Some("At 5th level, a court bard can choose to affect a %1-foot [60-foot] cone instead of a %2 [30-foot] radius with bardic performances that affect an area. In addition, for every five levels beyond 5th, the area of such powers is increased by 10 feet (radius) or 20 feet (cone). If the power instead affects multiple creatures, it affects one additional creature than normal for every five levels beyond 5th. This does not affect powers that affect only a single creature. This ability replaces lore master and jack of all trades.|WideAudienceCone|WideAudienceRadius"), benefit: None },
             ],
         },
-        // Bard Archetype ~ Detective -- apg_abilities_class.lst:1621
+        // Bard Archetype ~ Detective -- apg_abilities_class:1621
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Detective",
             subject: "Bard",
@@ -265,7 +265,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Detective ~ Arcane Investigation", at_level: 1, description: Some("In addition, a detective's class spell list includes the following: 1st-detect chaos/evil/law/ good; 2nd-zone of truth; 3rd-arcane eye, speak with dead, speak with plants; 4th-discern lies; 5th-prying eyes, stone tell; 6th-discern location, find the path, greater prying eyes, moment of prescience. A detective may add one of these spells or any divination spell on the bard spell list to his list of spells known at 2nd level and every four levels thereafter. This ability replaces versatile performance."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Magician -- apg_abilities_class.lst:1622
+        // Bard Archetype ~ Magician -- apg_abilities_class:1622
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Magician",
             subject: "Bard",
@@ -285,7 +285,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Magician ~ Wand Mastery", at_level: 10, description: Some("At 10th level, when a magician uses a wand containing a spell on his spell list, he uses his Charisma bonus to set the wand's save DC. At 16th level, when using such a wand, he uses his caster level in place of the wand's caster level. This ability replaces jack of all trades."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Sandman -- apg_abilities_class.lst:1623
+        // Bard Archetype ~ Sandman -- apg_abilities_class:1623
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Sandman",
             subject: "Bard",
@@ -306,7 +306,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sandman ~ Sneak Attack", at_level: 5, description: Some("At 5th level, a sandman inflicts +%1d6 points of damage against targets within 30 feet that he flanks or that are denied their Dex bonus to AC against him. This damage increases by +1d6 every five levels after 5th. This ability replaces lore master.|(BardLVL/5)+1"), benefit: None },
             ],
         },
-        // Bard Archetype ~ Savage Skald -- apg_abilities_class.lst:1624
+        // Bard Archetype ~ Savage Skald -- apg_abilities_class:1624
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Savage Skald",
             subject: "Bard",
@@ -322,7 +322,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Savage Skald ~ Battle Song", at_level: 18, description: Some("At 18th level, a savage skald can affect all allies within 30 feet when using performance to incite rage. This performance replaces mass suggestion."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Sea Singer -- apg_abilities_class.lst:1625
+        // Bard Archetype ~ Sea Singer -- apg_abilities_class:1625
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Sea Singer",
             subject: "Bard",
@@ -340,7 +340,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sea Singer ~ Sea Legs", at_level: 2, description: Some("At 2nd level, a sea singer gains a +4 bonus on saving throws against air and water effects and effects that would cause the sea singer to slip, trip, or otherwise be knocked prone. He gains a +2 bonus to CMD against grapple, overrun, and trip. This ability replaces well-versed."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Street Performer -- apg_abilities_class.lst:1626
+        // Bard Archetype ~ Street Performer -- apg_abilities_class:1626
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Street Performer",
             subject: "Bard",
@@ -358,7 +358,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Street Performer ~ Quick Change", at_level: 5, description: Some("At 5th level, a street performer can don a disguise as a standard action by taking a -5 penalty on his check. He can take 10 on Bluff and Disguise checks and use Bluff to create a diversion to hide as a swift action. He can take 20 on a Bluff or Disguise check once per day, plus one time per six levels beyond 5th. This ability replaces lore master."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Aquatic Druid -- apg_abilities_class.lst:1889
+        // Druid Archetype ~ Aquatic Druid -- apg_abilities_class:1889
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Aquatic Druid",
             subject: "Druid",
@@ -376,7 +376,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Aquatic Druid ~ Deep Diver", at_level: 13, description: Some("At 13th level, an aquatic druid gains DR/slashing or piercing equal to 1/2 her level. This damage reduction also applies against spells and spell-like abilities that inflict damage by grappling or crushing (e.g., black tentacles, crushing hand). She never takes pressure damage from deep water. This ability replaces a thousand faces."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Arctic Druid -- apg_abilities_class.lst:1890
+        // Druid Archetype ~ Arctic Druid -- apg_abilities_class:1890
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Arctic Druid",
             subject: "Druid",
@@ -393,7 +393,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Arctic Druid ~ Flurry Form", at_level: 13, description: Some("At 13th level, an arctic druid can assume the form of a swirling column of snow equivalent to gaseous form at will. While in this form, she gains a circumstance bonus on Stealth checks made in cold terrain equal to her druid level. This ability replaces a thousand faces."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Bear Shaman -- apg_abilities_class.lst:1900
+        // Druid Archetype ~ Bear Shaman -- apg_abilities_class:1900
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Bear Shaman",
             subject: "Druid",
@@ -415,7 +415,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Shaman Wild Shape", at_level: 6, description: None, benefit: None },
             ],
         },
-        // Druid Archetype ~ Blight Druid -- apg_abilities_class.lst:1891
+        // Druid Archetype ~ Blight Druid -- apg_abilities_class:1891
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Blight Druid",
             subject: "Druid",
@@ -431,7 +431,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Blight Druid ~ Plaguebearer", at_level: 13, description: Some("Starting at 13th level, any creature that strikes a blight druid with a touch attack, unarmed strike, or natural weapon must succeed at a Fortitude save with a DC of 10 + 1/2 the druid's level + the druid's Wisdom modifier or contract a disease, as the contagion spell. If the creature makes its save, it is immune to this effect for 24 hours."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Cave Druid -- apg_abilities_class.lst:1892
+        // Druid Archetype ~ Cave Druid -- apg_abilities_class:1892
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Cave Druid",
             subject: "Druid",
@@ -449,7 +449,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Cave Druid ~ Wild Shape", at_level: 6, description: Some("A cave druid gains this ability at 6th level, except that her effective druid level for this ability is equal to her druid level - 2. She cannot use wild shape to adopt a plant form. At 10th level, the cave druid can assume the form of a Small or Medium ooze as if using beast shape III, and at 12th level that of a Tiny or Large ooze as if using beast shape IV (treating the ooze as if it were a magical beast without a natural armor bonus). When in ooze form, the cave druid has no discernible anatomy and is immune to poison, sneak attacks, and critical hits."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Desert Druid -- apg_abilities_class.lst:1893
+        // Druid Archetype ~ Desert Druid -- apg_abilities_class:1893
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Desert Druid",
             subject: "Druid",
@@ -466,7 +466,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Desert Druid ~ Dunemeld", at_level: 13, description: Some("At 13th level, a desert druid can assume the form of a swirling mass of sand at will. This is equivalent to gaseous form, but the druid gains a land and burrow speed of 10 feet rather than a fly speed. While in this form, the druid gains a circumstance bonus on Stealth checks made in desert terrain equal to her druid level. This ability replaces a thousand faces."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Eagle Shaman -- apg_abilities_class.lst:1901
+        // Druid Archetype ~ Eagle Shaman -- apg_abilities_class:1901
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Eagle Shaman",
             subject: "Druid",
@@ -488,7 +488,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Shaman Wild Shape", at_level: 6, description: None, benefit: None },
             ],
         },
-        // Druid Archetype ~ Jungle Druid -- apg_abilities_class.lst:1894
+        // Druid Archetype ~ Jungle Druid -- apg_abilities_class:1894
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Jungle Druid",
             subject: "Druid",
@@ -504,7 +504,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Jungle Druid ~ Verdant Sentinel", at_level: 13, description: Some("At 13th level, a jungle druid can cast tree shape at will. This ability replaces a thousand faces."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Lion Shaman -- apg_abilities_class.lst:1902
+        // Druid Archetype ~ Lion Shaman -- apg_abilities_class:1902
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Lion Shaman",
             subject: "Druid",
@@ -526,7 +526,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Shaman Wild Shape", at_level: 6, description: None, benefit: None },
             ],
         },
-        // Druid Archetype ~ Mountain Druid -- apg_abilities_class.lst:1895
+        // Druid Archetype ~ Mountain Druid -- apg_abilities_class:1895
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Mountain Druid",
             subject: "Druid",
@@ -543,7 +543,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mountain Druid ~ Mountain Stone", at_level: 13, description: Some("At 13th level, a mountain druid can transform her body into a weathered stone outcrop and back at will. This effect functions as statue. This ability replaces a thousand faces."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Plains Druid -- apg_abilities_class.lst:1896
+        // Druid Archetype ~ Plains Druid -- apg_abilities_class:1896
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Plains Druid",
             subject: "Druid",
@@ -560,7 +560,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Plains Druid ~ Evasion", at_level: 13, description: Some("At 13th level, a plains druid gains evasion when wearing light or no armor and carrying a light load. This functions as the rogue ability of the same name. This ability replaces a thousand faces."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Serpent Shaman -- apg_abilities_class.lst:1903
+        // Druid Archetype ~ Serpent Shaman -- apg_abilities_class:1903
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Serpent Shaman",
             subject: "Druid",
@@ -582,7 +582,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Shaman Wild Shape", at_level: 6, description: None, benefit: None },
             ],
         },
-        // Druid Archetype ~ Swamp Druid -- apg_abilities_class.lst:1897
+        // Druid Archetype ~ Swamp Druid -- apg_abilities_class:1897
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Swamp Druid",
             subject: "Druid",
@@ -598,7 +598,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Swamp Druid ~ Slippery", at_level: 13, description: Some("At 13th level, a swamp druid gains continuous freedom of movement. This ability replaces a thousand faces."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Urban Druid -- apg_abilities_class.lst:1898
+        // Druid Archetype ~ Urban Druid -- apg_abilities_class:1898
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Urban Druid",
             subject: "Druid",
@@ -616,7 +616,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Urban Druid ~ Mental Strength", at_level: 9, description: Some("At 9th level, an urban druid gains immunity to charm and compulsion effects. This ability replaces venom immunity."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Wolf Shaman -- apg_abilities_class.lst:1904
+        // Druid Archetype ~ Wolf Shaman -- apg_abilities_class:1904
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Wolf Shaman",
             subject: "Druid",
@@ -638,7 +638,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Shaman Wild Shape", at_level: 6, description: None, benefit: None },
             ],
         },
-        // Fighter Archetype ~ Archer -- apg_abilities_class.lst:2102
+        // Fighter Archetype ~ Archer -- apg_abilities_class:2102
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Archer",
             subject: "Fighter",
@@ -657,7 +657,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Fighter Archer ~ Weapon Mastery", at_level: 1, description: Some("An archer must choose a type of bow."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Crossbowman -- apg_abilities_class.lst:2103
+        // Fighter Archetype ~ Crossbowman -- apg_abilities_class:2103
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Crossbowman",
             subject: "Fighter",
@@ -678,7 +678,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Fighter Crossbowman ~ Pinpoint Targeting", at_level: 15, description: Some("At 15th level, a crossbowman gains Pinpoint Targeting as a bonus feat. This ability replaces armor training 4."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Free Hand Fighter -- apg_abilities_class.lst:2104
+        // Fighter Archetype ~ Free Hand Fighter -- apg_abilities_class:2104
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Free Hand Fighter",
             subject: "Fighter",
@@ -695,7 +695,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Free Hand Fighter ~ Reversal", at_level: 19, description: Some("At 19th level, a free hand fighter can make a disarm combat maneuver against a creature he threatens as an immediate action when he is the target of a melee attack from another creature. If successful, the attack changes to target the target of the free hand fighter's maneuver instead of the free hand fighter himself. This ability replaces armor mastery."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Mobile Fighter -- apg_abilities_class.lst:2105
+        // Fighter Archetype ~ Mobile Fighter -- apg_abilities_class:2105
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Mobile Fighter",
             subject: "Fighter",
@@ -711,7 +711,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mobile Fighter ~ Whirlwind Blitz", at_level: 20, description: Some("At 20th level, a mobile fighter can make a full-attack action as a standard action. He may also use the Whirlwind Attack feat as a standard action. This ability replaces weapon mastery."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Phalanx Soldier -- apg_abilities_class.lst:2106
+        // Fighter Archetype ~ Phalanx Soldier -- apg_abilities_class:2106
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Phalanx Soldier",
             subject: "Fighter",
@@ -729,7 +729,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Fighter Phalanx Soldier ~ Shielded Fortress", at_level: 20, description: Some("At 20th level, a phalanx fighter's shield cannot be disarmed or sundered. He gains evasion (as a rogue) when using a shield (improved evasion when using a tower shield). As a move action, a phalanx fighter can provide evasion to all adjacent allies until the beginning of his next turn. As an immediate action, he can provide improved evasion to an adjacent ally against one attack. This ability replaces weapon mastery."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Polearm Master -- apg_abilities_class.lst:2107
+        // Fighter Archetype ~ Polearm Master -- apg_abilities_class:2107
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Polearm Master",
             subject: "Fighter",
@@ -748,7 +748,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Fighter Polearm Master ~ Weapon Mastery", at_level: 1, description: Some("A polearm master must choose a spear or polearm."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Roughrider -- apg_abilities_class.lst:2108
+        // Fighter Archetype ~ Roughrider -- apg_abilities_class:2108
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Roughrider",
             subject: "Fighter",
@@ -767,7 +767,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Fighter Roughrider ~ Indomitable Steed", at_level: 19, description: Some("At 19th level, a roughrider and his steed gain DR 5/- when mounted. This ability replaces armor mastery."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Savage Warrior -- apg_abilities_class.lst:2109
+        // Fighter Archetype ~ Savage Warrior -- apg_abilities_class:2109
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Savage Warrior",
             subject: "Fighter",
@@ -784,7 +784,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Fighter Savage Warrior ~ Natural Weapon Mastery", at_level: 20, description: Some("At 20th level, a savage warrior must choose one natural weapon. This ability replaces weapon mastery."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Shielded Fighter -- apg_abilities_class.lst:2110
+        // Fighter Archetype ~ Shielded Fighter -- apg_abilities_class:2110
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Shielded Fighter",
             subject: "Fighter",
@@ -801,7 +801,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Fighter Shielded Fighter ~ Shield Ward", at_level: 20, description: Some("At 20th level, a shielded fighter gains evasion (as a rogue) while wielding a shield, and adds his shield bonus to his AC (not including enhancement bonuses) on Reflex saves and to his touch AC. In addition, his shield cannot be disarmed or sundered. This ability replaces weapon mastery."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Two-Handed Fighter -- apg_abilities_class.lst:2111
+        // Fighter Archetype ~ Two-Handed Fighter -- apg_abilities_class:2111
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Two-Handed Fighter",
             subject: "Fighter",
@@ -819,7 +819,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Fighter Two-Handed Fighter ~ Devastating Blow", at_level: 19, description: Some("At 19th level, as a standard action, a two-handed fighter may make a single melee attack with a two-handed weapon at a -5 penalty. If the attack hits, it is treated as a critical threat. Special weapon abilities that activate only on a critical hit do not activate if this critical hit is confirmed. This ability replaces armor mastery."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Two-Weapon Warrior -- apg_abilities_class.lst:2112
+        // Fighter Archetype ~ Two-Weapon Warrior -- apg_abilities_class:2112
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Two-Weapon Warrior",
             subject: "Fighter",
@@ -838,7 +838,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Fighter Two-Weapon Warrior ~ Deadly Defense", at_level: 19, description: Some("At 19th level, when a two-weapon warrior makes a full attack with both weapons, every creature that hits him with a melee attack before the beginning of his next turn provokes an attack of opportunity from the warrior. This ability replaces armor mastery."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Weapon Master -- apg_abilities_class.lst:2113
+        // Fighter Archetype ~ Weapon Master -- apg_abilities_class:2113
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Weapon Master",
             subject: "Fighter",
@@ -856,7 +856,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Fighter Weapon Master ~ Unstoppable Strike", at_level: 19, description: Some("You can take a standard action to make one attack with your chosen weapon as a touch attack that ignores damage reduction (or hardness, if attacking an object). This ability replaces armor mastery."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Drunken Master -- apg_abilities_class.lst:2290
+        // Monk Archetype ~ Drunken Master -- apg_abilities_class:2290
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Drunken Master",
             subject: "Monk",
@@ -872,7 +872,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Drunken Master ~ Firewater Breath", at_level: 19, description: Some("At 19th level, a drunken master can take a drink and expel a gout of alcohol-fueled fire in a 30-foot cone. Creatures within the cone take 20d6 points of fire damage. A successful Reflex saving throw DC %1 (DC 10 + 1/2 the monk's level + the monk's Wis modifier) halves the damage. Using this ability is a standard action that consumes 4 ki points from the monk's ki pool. The monk must have at least 1 drunken ki point to use this ability. This ability replaces empty body.|10+CHA+(MonkLVL/2)"), benefit: None },
             ],
         },
-        // Monk Archetype ~ Hungry Ghost Monk -- apg_abilities_class.lst:2291
+        // Monk Archetype ~ Hungry Ghost Monk -- apg_abilities_class:2291
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Hungry Ghost Monk",
             subject: "Monk",
@@ -888,7 +888,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Hungry Ghost Monk ~ Sipping Demon", at_level: 13, description: Some("A 13th level, a hungry ghost monk gains 1 temporary hit point each time he hits an enemy with a melee attack. The monk gains a number of temporary hit points equal to his Wisdom modifier when he scores a critical hit. The maximum number of temporary hit points the monk can have is equal to his monk level. The temporary hit points disappear 1 hour later. The monk can only use this ability when he has at least 1 ki point in his ki pool. This ability is a proscribed manipulation of ki considered by many good monks to be a corruption. The ability replaces diamond soul."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Ki Mystic -- apg_abilities_class.lst:2292
+        // Monk Archetype ~ Ki Mystic -- apg_abilities_class:2292
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Ki Mystic",
             subject: "Monk",
@@ -904,7 +904,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Ki Mystic ~ Mystic Persistence", at_level: 19, description: Some("At 19th level, a ki mystic can create an aura once per day as a swift action at the cost of at least 2 points of ki. The aura emanates out to a 20-foot radius. The monk and all allies within the aura can roll two dice when making an attack roll or a saving throw and take the better result. The aura lasts for 1 round, plus an additional round for every 2 ki points spent when the monk created the aura. The monk can dismiss the aura at any time as a free action, but the ki points for the full duration of the aura are lost. This ability replaces empty body."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Monk of the Empty Hand -- apg_abilities_class.lst:2293
+        // Monk Archetype ~ Monk of the Empty Hand -- apg_abilities_class:2293
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Monk of the Empty Hand",
             subject: "Monk",
@@ -921,7 +921,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Monk of the Empty Hand ~ Ki Weapons", at_level: 5, description: Some("At 5th level, a monk of the empty hand may spend 1 point from his ki pool as a swift action to deal damage equal to his unarmed strike damage with an improvised weapon for 1 round. At 11th level, the monk may spend ki to grant an enhancement bonus or magical weapon abilities to an improvised weapon for 1 round, at the rate of 1 point of ki per +1 bonus or its equivalent. The monk may not spend more than 3 points of ki at one time for this purpose. For example, a monk can spend 2 points of ki to give his improvised weapon a +1 enhancement bonus and the ki focus quality, or just the flaming burst quality. At 15th level, the limit increases to 5 ki per round. The monk may use this ability to add magical weapon qualities to improvised weapons that could not normally have such a quality, such as adding the disruption quality to a slashing weapon, or the vorpal quality to a bludgeoning weapon. This ability replaces purity of body and diamond body."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Monk of the Four Winds -- apg_abilities_class.lst:2294
+        // Monk Archetype ~ Monk of the Four Winds -- apg_abilities_class:2294
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Monk of the Four Winds",
             subject: "Monk",
@@ -936,7 +936,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Monk of the Four Winds ~ Immortality", at_level: 20, description: Some("At 20th level, a monk of the four winds no longer ages. He remains in his current age category forever. Even if the monk comes to a violent end, he spontaneously reincarnates (as the spell) 24 hours later in a place of his choosing within 20 miles of the place he died. The monk must have visited the place in which he returns back to life at least once. This ability replaces perfect self."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Monk of the Healing Hand -- apg_abilities_class.lst:2295
+        // Monk Archetype ~ Monk of the Healing Hand -- apg_abilities_class:2295
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Monk of the Healing Hand",
             subject: "Monk",
@@ -950,7 +950,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Monk of the Healing Hand ~ True Sacrifice", at_level: 20, description: Some("At 20th level, in a final selfless act, a monk of the healing hand can draw in his entire ki, which then explodes outward in a 50-foot-radius emanation. All dead allies within the emanation are brought back to life, as if they were the subject of a true resurrection spell with a caster level equal to the monk's level. When the monk does this, he is truly and utterly destroyed. A monk destroyed in this way can never come back to life, not even by way of a wish or miracle spell or by the power of a deity. Furthermore, the monk's name can never be spoken or written down again. All written mentions of his name become nothing more than a blank space. This ability replaces perfect self."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Monk of the Lotus -- apg_abilities_class.lst:2296
+        // Monk Archetype ~ Monk of the Lotus -- apg_abilities_class:2296
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Monk of the Lotus",
             subject: "Monk",
@@ -965,7 +965,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Monk of the Lotus ~ Learned Master", at_level: 17, description: Some("At 17th level, a monk of the lotus gains all Knowledge skills and the Linguistics skill as class skills. The monk uses Wisdom instead of Intelligence as the key ability for these skills. This ability replaces tongue of the sun and the moon."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Monk of the Sacred Mountain -- apg_abilities_class.lst:2297
+        // Monk Archetype ~ Monk of the Sacred Mountain -- apg_abilities_class:2297
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Monk of the Sacred Mountain",
             subject: "Monk",
@@ -981,7 +981,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Monk of the Sacred Mountain ~ Vow of Silence", at_level: 17, description: Some("At 17th level, a monk of the sacred mountain becomes as impassive as stone, making a vow of silence in exchange for greater abilities. The monk gains a +2 insight bonus to AC and CMD and a +4 bonus on Sense Motive, Stealth, and Perception checks. The monk does not lose the capacity for speech, but if he ever speaks, he loses this feature for 24 hours. This ability replaces tongue of the sun and the moon."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Weapon Adept -- apg_abilities_class.lst:2298
+        // Monk Archetype ~ Weapon Adept -- apg_abilities_class:2298
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Weapon Adept",
             subject: "Monk",
@@ -997,7 +997,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Weapon Adept ~ Pure Power", at_level: 20, description: Some("At 20th level, a weapon adept forsakes the ideals of the perfect self to become a bastion of the physical and mental virtues monks hold dear. The monk gains a +2 bonus to Strength, Dexterity, and Wisdom. This ability replaces perfect self."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Divine Defender -- apg_abilities_class.lst:2471
+        // Paladin Archetype ~ Divine Defender -- apg_abilities_class:2471
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Divine Defender",
             subject: "Paladin",
@@ -1010,7 +1010,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Divine Defender ~ Divine Bond", at_level: 5, description: Some("At 5th level, instead of forming a divine bond with her weapon or a mount, a divine defender can form a bond with her armor. As a standard action, a divine defender can enhance her armor by calling upon the aid of a celestial spirit. This bond lasts for 1 minute per paladin level. When called, the spirit causes the armor to shed light like a torch. At 5th level, the spirit grants the armor a +1 enhancement bonus. For every three levels beyond 5th, the armor gains another +1 enhancement bonus, to a maximum of +6 at 20th level. These bonuses can be added to the armor, stacking with existing armor bonuses to a maximum of +3, or they can be used to add any of the following armor properties (asterisks note new armor properties found in Chapter 7): champion*, ghost touch, heavy fortification, invulnerability, light fortification, moderate fortification, spell resistance (13, 15, 17, or 19). Adding these properties consumes an amount of bonus equal to the property's cost (see Table 15-4 of the Core Rulebook). In addition, the bonuses can be consumed at the listed amount to add any of the following armor properties: energy resistance for +3 bonus, improved energy resistance for +5 bonus, or righteous* for +4 bonus. These bonuses are added to any properties the armor already has, but duplicate abilities do not stack. If the armor is not magical, at least a +1 enhancement bonus must be added before any other properties can be added. The bonus and properties granted by the spirit are determined when the spirit is called and cannot be changed until the spirit is called again. The celestial spirit imparts no bonuses if the armor is worn by anyone other than the divine defender, but it resumes giving bonuses if the divine defender dons the armor again. A divine defender can use this ability once per day at 5th level, and one additional time per day for every four levels beyond 5th, to a total of four times per day at 17th level. If a suit of armor with a celestial spirit is destroyed, the divine defender loses the use of this ability for 30 days, or until she gains a level, whichever comes first. During this 30-day period, the divine defender takes a -1 penalty on attack and weapon damage rolls."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Hospitaler -- apg_abilities_class.lst:2472
+        // Paladin Archetype ~ Hospitaler -- apg_abilities_class:2472
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Hospitaler",
             subject: "Paladin",
@@ -1024,7 +1024,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Hospitaler ~ Aura of Healing", at_level: 11, description: Some("At 11th level, a hospitaler can expend one use of her channel positive energy ability to emit a 30-foot aura of healing for a number of rounds equal to her paladin level. Allies in this aura (including the hospitaler) automatically stabilize if below 0 hit points and are immune to bleed damage. In addition, allies (including the paladin) that spend at least 1 full round inside the aura are healed an amount of damage equal to their total number of Hit Dice and may make a saving throw against any afflictions they are suffering from, such as a curse, disease, or poison. This saving throw only counts toward curing the affliction and does not impose any penalty on a failed save. Allies can only be healed once by a use of this ability and they can only attempt additional saving throws once per day, even if they are exposed to this aura multiple times. This ability replaces aura of justice."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Sacred Servant -- apg_abilities_class.lst:2473
+        // Paladin Archetype ~ Sacred Servant -- apg_abilities_class:2473
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Sacred Servant",
             subject: "Paladin",
@@ -1039,7 +1039,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sacred Servant ~ Call Celestial Ally", at_level: 8, description: Some("At 8th level, a sacred servant can call upon her deity for aid, in the form of a powerful servant. This allows the sacred servant to cast lesser planar ally once per week as a spell-like ability without having to pay the material component cost or the servant (for reasonable tasks). At 12th level, this improves to planar ally and at 16th level, this improves to greater planar ally. The sacred servant's caster level for this effect is equal to her paladin level. This ability replaces aura of resolve."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Shining Knight -- apg_abilities_class.lst:2474
+        // Paladin Archetype ~ Shining Knight -- apg_abilities_class:2474
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Shining Knight",
             subject: "Paladin",
@@ -1053,7 +1053,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Shining Knight ~ Knight's Charge", at_level: 11, description: Some("At 11th level, whenever a mounted shining knight charges a foe, her movement does not provoke attacks of opportunity, for either her or her mount. In addition, if her target is also the target of her smite evil ability and the charge attack hits, the target must make a Will save DC %1 or be panicked for a number of rounds equal to %2 [1/2 the shining knight's level]. The DC of this save is equal to 10 + 1/2 the shining knight's level + the shining knight's Charisma modifier. This ability replaces aura of justice.|ShiningKnightDC|ShiningKnightDuration"), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Undead Scourge -- apg_abilities_class.lst:2475
+        // Paladin Archetype ~ Undead Scourge -- apg_abilities_class:2475
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Undead Scourge",
             subject: "Paladin",
@@ -1067,7 +1067,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Undead Scourge ~ Undead Annihilation", at_level: 11, description: Some("At 11th level, an undead scourge can expend one use of her smite evil ability as a standard action and make a single melee attack against an undead creature. If this attack hits, the undead creature must make a Will save DC %1 or be destroyed. The save DC is equal to 10 + 1/2 the undead scourge's level + the undead scourge's Charisma modifier. Undead with twice as many Hit Dice as the undead scourge are unaffected by this ability. If the attack misses, the smite evil is wasted without effect. This ability replaces aura of justice.|10+(PaladinLVL/2)+CHA"), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Warrior of the Holy Light -- apg_abilities_class.lst:2476
+        // Paladin Archetype ~ Warrior of the Holy Light -- apg_abilities_class:2476
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Warrior of the Holy Light",
             subject: "Paladin",
@@ -1081,7 +1081,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "No Spellcasting ~ Paladin", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Ranger Archetype ~ Beast Master -- apg_abilities_class.lst:2664
+        // Ranger Archetype ~ Beast Master -- apg_abilities_class:2664
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Beast Master",
             subject: "Ranger",
@@ -1096,7 +1096,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Beast Master ~ Strong Bond", at_level: 12, description: Some("At 12th level, the ranger strengthens his bond with his animal companions. The ranger's effective druid level for his animal companions is now equal to his ranger level; he may immediately allocate these additional levels to his companions as he sees fit. This ability replaces camouflage."), benefit: None },
             ],
         },
-        // Ranger Archetype ~ Guide -- apg_abilities_class.lst:2665
+        // Ranger Archetype ~ Guide -- apg_abilities_class:2665
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Guide",
             subject: "Ranger",
@@ -1112,7 +1112,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Guide ~ Improved Ranger's Luck", at_level: 16, description: Some("Upon reaching 16th level, the ranger's luck increases. He gains a +4 bonus on his rerolls made with the ranger's luck ability, or if he forces an enemy to reroll an attack, that enemy takes a -4 penalty on the roll. This bonus or penalty is also applied on any roll to confirm critical hits. This ability replaces improved evasion."), benefit: None },
             ],
         },
-        // Ranger Archetype ~ Horse Lord -- apg_abilities_class.lst:2666
+        // Ranger Archetype ~ Horse Lord -- apg_abilities_class:2666
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Horse Lord",
             subject: "Ranger",
@@ -1127,7 +1127,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Horse Lord ~ Spiritual Bond", at_level: 17, description: Some("At 17th level, the horse lord can grant his animal companion temporary hit points equal to his ranger level once per day. While these temporary hit points last, when his mount is within 30 feet of the him, he can choose to share the damage taken by his mount as if using shield other. This ability replaces hide in plain sight."), benefit: None },
             ],
         },
-        // Ranger Archetype ~ Infiltrator -- apg_abilities_class.lst:2667
+        // Ranger Archetype ~ Infiltrator -- apg_abilities_class:2667
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Infiltrator",
             subject: "Ranger",
@@ -1139,7 +1139,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Infiltrator ~ Adaptation", at_level: 3, description: Some("At 3rd level, an infiltrator learns how to copy the unusual abilities of his prey. He chooses one type of creature he has selected as a favored enemy, such as aberrations. The ranger selects one ability or feat from the adaptation list for that type (see below). A ranger can use adaptations for 10 minutes per day per ranger level he possesses. This duration does not need to be consecutive, but it must be used in 10-minute increments. If the adaptation requires the ranger to make a more specific choice (such as what skill to use with Skill Focus), this choice is permanent and cannot be changed. At 8th, 13th, and 15th-level, the ranger chooses another one of his favored enemy types and selects one adaptation from that type's list, as well as an additional adaptation from any one list of a creature type he's selected (including the one just chosen, if so desired). The infiltrator can only use one adaptation at a time. This class ability replaces favored terrain."), benefit: None },
             ],
         },
-        // Ranger Archetype ~ Shapeshifter -- apg_abilities_class.lst:2668
+        // Ranger Archetype ~ Shapeshifter -- apg_abilities_class:2668
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Shapeshifter",
             subject: "Ranger",
@@ -1154,7 +1154,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Shapeshifter ~ Master Shifter", at_level: 20, description: Some("At 20th level, the ranger's shifter's blessing forms improve, and he can take on true forms of beasts. The ranger can use dual form shifter with this ability, although he cannot use more than one polymorph effect at any one time. This ability replaces master hunter. The ranger's forms from shifter's blessing improve to the following."), benefit: None },
             ],
         },
-        // Ranger Archetype ~ Skirmisher -- apg_abilities_class.lst:2669
+        // Ranger Archetype ~ Skirmisher -- apg_abilities_class:2669
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Skirmisher",
             subject: "Ranger",
@@ -1167,7 +1167,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Skirmisher ~ Hunter's Tricks", at_level: 5, description: Some("A skirmisher ranger learns the use of %1 hunter's tricks, which typically grant a boon or bonus to the ranger or a nearby ally. A ranger can use these tricks %2 times per day. Tricks are usually swift actions, but sometimes move or free actions that modify a standard action, usually an attack action. Once a trick is chosen, it can't be retrained. A ranger cannot select an individual trick more than once. This ability replaces the ranger's spells class feature. Skirmishers do not gain any spells or spellcasting ability, do not have a caster level, and cannot use spell trigger and spell completion magic items.|SkirmisherTricks|SkirmisherTrickTimes"), benefit: None },
             ],
         },
-        // Ranger Archetype ~ Spirit Ranger -- apg_abilities_class.lst:2670
+        // Ranger Archetype ~ Spirit Ranger -- apg_abilities_class:2670
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Spirit Ranger",
             subject: "Ranger",
@@ -1180,7 +1180,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Spirit Ranger ~ Wisdom of the Spirits", at_level: 12, description: Some("At 12th level, the spirit ranger can use his augury spell-like ability even when he is not in one of his favored terrains. If he is within one of his favored terrains, the ranger can cast divination (Pathfinder RPG Core Rulebook 273) instead. Like augury, the caster level of the divination is equal to the ranger's level. This ability replaces camouflage."), benefit: None },
             ],
         },
-        // Ranger Archetype ~ Urban Ranger -- apg_abilities_class.lst:2671
+        // Ranger Archetype ~ Urban Ranger -- apg_abilities_class:2671
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Urban Ranger",
             subject: "Ranger",
@@ -1197,7 +1197,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Urban Ranger ~ Invisibility Trick", at_level: 17, description: Some("At 17th level, the urban ranger can cast improved invisibility on himself as a wizard of his ranger level as a swift action. He can use this spell-like ability a number of times per day equal to his Wisdom modifier (minimum 1). This ability replaces hide in plain sight."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Acrobat -- apg_abilities_class.lst:2941
+        // Rogue Archetype ~ Acrobat -- apg_abilities_class:2941
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Acrobat",
             subject: "Rogue",
@@ -1210,7 +1210,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Acrobat ~ Second Chance", at_level: 3, description: Some("At 3rd level, an acrobat can reroll any Acrobatics, Climb, or Fly skill check she has just made. This reroll is made at a -5 penalty. She must take the second result, even if it is worse. An acrobat can use this ability only once on any given skill check. She can use this ability once per day at 3rd level, plus one additional time per day for every 3 levels beyond 3rd. This ability replaces trap sense."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Burglar -- apg_abilities_class.lst:2942
+        // Rogue Archetype ~ Burglar -- apg_abilities_class:2942
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Burglar",
             subject: "Rogue",
@@ -1223,7 +1223,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Burglar ~ Distraction", at_level: 8, description: Some("At 8th level, whenever a burglar is detected while using Stealth, she can immediately attempt a Bluff skill check opposed by the Sense Motive skill of the creature that spotted her. If this check succeeds, the target assumes that the noise was something innocent and disregards the detection. This only functions if the creature cannot see the rogue. This ability can only be used once during a given Stealth attempt. If the same creature detects the rogue's presence again, the ability has no effect. This ability replaces improved uncanny dodge."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Cutpurse -- apg_abilities_class.lst:2943
+        // Rogue Archetype ~ Cutpurse -- apg_abilities_class:2943
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Cutpurse",
             subject: "Rogue",
@@ -1236,7 +1236,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Cutpurse ~ Stab and Grab", at_level: 3, description: Some("At 3rd level, as a full-round action, a cutpurse can make an attack and also make a Sleight of Hand check to steal something from the target of the attack. If the attack deals sneak attack damage, the rogue can use Sleight of Hand to take an item from the creature during combat; otherwise this ability can only be used in a surprise round before the target has acted. If the attack is successful, the target takes a -5 penalty on the Perception check to notice the theft. This ability replaces trap sense."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Investigator -- apg_abilities_class.lst:2944
+        // Rogue Archetype ~ Investigator -- apg_abilities_class:2944
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Investigator",
             subject: "Rogue",
@@ -1248,7 +1248,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Investigator ~ Follow Up", at_level: 1, description: Some("An investigator can roll twice on any Diplomacy check made to gather information, and receives the information for both results. This takes the same amount of time as one check. If the lesser of the two checks reveals false information, the rogue is aware of it. False information is not revealed in this way if the people she questioned do not know it to be false. This ability replaces trapfinding."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Poisoner -- apg_abilities_class.lst:2945
+        // Rogue Archetype ~ Poisoner -- apg_abilities_class:2945
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Poisoner",
             subject: "Rogue",
@@ -1261,7 +1261,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Poisoner ~ Master Poisoner", at_level: 3, description: Some("At 3rd level, a poisoner can use Craft (alchemy) to change the type of a poison. This requires 1 hour of work with an alchemist's lab and a Craft (alchemy) skill check with a DC equal to the poison's DC. If successful, the poison's type changes to contact, ingested, inhaled, or injury. If the check fails, the poison is ruined. The poisoner also receives a bonus on Craft (alchemy) skill checks when working with poison equal to 1/2 her rogue level. This ability replaces trap sense."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Rake -- apg_abilities_class.lst:2946
+        // Rogue Archetype ~ Rake -- apg_abilities_class:2946
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Rake",
             subject: "Rogue",
@@ -1274,7 +1274,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Rake ~ Rake's Smile", at_level: 3, description: Some("At 3rd level, a rake gains a +1 morale bonus on Bluff and Diplomacy checks. This bonus increases by +1 for every 3 levels beyond 3rd. This ability replaces trap sense."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Scout -- apg_abilities_class.lst:2947
+        // Rogue Archetype ~ Scout -- apg_abilities_class:2947
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Scout",
             subject: "Rogue",
@@ -1287,7 +1287,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Scout ~ Skirmisher", at_level: 8, description: Some("Whenever you move more than 10 feet in a round and make an attack action, the attack deals sneak attack damage as if the target was flat-footed. If you make more than one attack this turn, this ability only applies to the first attack."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Sniper -- apg_abilities_class.lst:2948
+        // Rogue Archetype ~ Sniper -- apg_abilities_class:2948
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Sniper",
             subject: "Rogue",
@@ -1300,7 +1300,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sniper ~ Deadly Range", at_level: 3, description: Some("At 3rd level, a sniper increases the range at which she can apply her sneak attack damage by 10 feet. This range increases by 10 feet for every 3 levels after 3rd. This ability replaces trap sense."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Spy -- apg_abilities_class.lst:2949
+        // Rogue Archetype ~ Spy -- apg_abilities_class:2949
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Spy",
             subject: "Rogue",
@@ -1313,7 +1313,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Rogue ~ Poison Use", at_level: 3, description: Some("You are trained in the use of poison and cannot accidentally poison yourself when applying poison to a blade. This ability replaces trap sense."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Swashbuckler -- apg_abilities_class.lst:2950
+        // Rogue Archetype ~ Swashbuckler -- apg_abilities_class:2950
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Swashbuckler",
             subject: "Rogue",
@@ -1326,7 +1326,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Swashbuckler ~ Daring", at_level: 3, description: Some("You gain a +%1 morale bonus on Acrobatics checks and saving throws against fear.|SwashbucklerDaringBonus"), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Thug -- apg_abilities_class.lst:2951
+        // Rogue Archetype ~ Thug -- apg_abilities_class:2951
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Thug",
             subject: "Rogue",
@@ -1339,7 +1339,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Thug ~ Brutal Beating", at_level: 3, description: Some("At 3rd level, whenever a thug deals sneak attack damage, she can choose to forgo 1d6 points of sneak attack damage to make the target sickened for a number of rounds equal to 1/2 her rogue level. This ability does not stack with itself - only the most recent duration applies. This ability replaces trap sense."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Trapsmith -- apg_abilities_class.lst:2952
+        // Rogue Archetype ~ Trapsmith -- apg_abilities_class:2952
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Trapsmith",
             subject: "Rogue",

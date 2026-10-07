@@ -35,7 +35,7 @@
         "Companion (Cameroceras)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 6
     },
     {
@@ -55,7 +55,7 @@
         "Companion (Ceratosaurus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 7
     },
     {
@@ -75,7 +75,7 @@
         "Companion (Chalicotherium)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 8
     },
     {
@@ -95,7 +95,7 @@
         "Companion (Digmaul)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 9
     },
     {
@@ -124,7 +124,7 @@
         "Companion (Frog Father)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 10
     },
     {
@@ -153,7 +153,7 @@
         "Companion (Frog (Goliath))"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 11
     },
     {
@@ -178,7 +178,7 @@
         "Companion (Kaprosuchus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 12
     },
     {
@@ -198,7 +198,7 @@
         "Companion (Megaprimatus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 13
     },
     {
@@ -231,7 +231,7 @@
         "Companion (Moa)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 14
     },
     {
@@ -251,7 +251,7 @@
         "Companion (Narwhal)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 15
     },
     {
@@ -271,7 +271,7 @@
         "Companion (Plesiosaurus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 16
     },
     {
@@ -291,7 +291,7 @@
         "Companion (Polar Bear)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 17
     },
     {
@@ -311,7 +311,7 @@
         "Companion (Polar Bear (Dire))"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 18
     },
     {
@@ -331,7 +331,7 @@
         "Companion (Therizinosaurus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 19
     },
     {
@@ -356,7 +356,7 @@
         "Companion (Troodon)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 20
     },
     {
@@ -376,7 +376,7 @@
         "Companion (Whale (Blue))"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 21
     },
     {
@@ -396,7 +396,7 @@
         "Companion (Uintatherium)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 22
     },
     {
@@ -421,7 +421,7 @@
         "Companion (Wolliped)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 23
     },
     {
@@ -443,7 +443,7 @@
         "Familiar (Chicken)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 43
     },
     {
@@ -465,7 +465,7 @@
         "Familiar (Flying Fox)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 46
     },
     {
@@ -487,7 +487,7 @@
         "Familiar (Penguin)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 49
     },
     {
@@ -509,7 +509,7 @@
         "Familiar (Trilobite)"
       ],
       "cross_book_owners": [],
-      "source_file": "b5_abilities_companion.lst",
+      "source_file": "b5_abilities_companion",
       "source_line": 52
     }
   ]

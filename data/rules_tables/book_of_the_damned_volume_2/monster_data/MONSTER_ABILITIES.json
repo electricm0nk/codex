@@ -23,7 +23,7 @@
       "owners": [
         "Demon (Brimorak)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 7,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -44,7 +44,7 @@
       "owners": [
         "Demon (Brimorak)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 8,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -62,7 +62,7 @@
       "owners": [
         "Demon (Brimorak)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 9,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -80,7 +80,7 @@
       "owners": [
         "Demon (Brimorak)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 10,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -103,7 +103,7 @@
       "owners": [
         "Demon (Brimorak)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 11,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -123,7 +123,7 @@
       "owners": [
         "Demon (Seraptis)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 15,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -141,7 +141,7 @@
       "owners": [
         "Demon (Seraptis)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 16,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -164,7 +164,7 @@
       "owners": [
         "Demon (Seraptis)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 17,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -182,7 +182,7 @@
       "owners": [
         "Demon (Seraptis)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 18,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -200,7 +200,7 @@
       "owners": [
         "Demon (Seraptis)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 19,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -221,7 +221,7 @@
       "owners": [
         "Demon (Vavakia)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 23,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -241,7 +241,7 @@
       "owners": [
         "Demon (Vavakia)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 24,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -261,7 +261,7 @@
       "owners": [
         "Demon (Vavakia)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 25,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -281,7 +281,7 @@
       "owners": [
         "Demon (Vermlek)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 29,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -301,7 +301,7 @@
       "owners": [
         "Demon (Vermlek)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 30,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -319,7 +319,7 @@
       "owners": [
         "Demon (Vermlek)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 31,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -339,7 +339,7 @@
       "owners": [
         "Demon (Vermlek)"
       ],
-      "source_file": "botd2_abilities_race.lst",
+      "source_file": "botd2_abilities_race",
       "source_line": 32,
       "codex_generated_name": false,
       "rename_reason": null,

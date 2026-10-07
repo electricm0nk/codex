@@ -96,7 +96,7 @@
         "Grab"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 6
     },
     {
@@ -159,7 +159,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 7
     },
     {
@@ -217,7 +217,7 @@
         "Grab"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "um_races_companion.lst",
+      "source_file": "um_races_companion",
       "source_line": 9
     },
     {
@@ -280,7 +280,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 9
     },
     {
@@ -341,7 +341,7 @@
         "Flight Maneuverability"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "um_races_companion.lst",
+      "source_file": "um_races_companion",
       "source_line": 10
     },
     {
@@ -399,7 +399,7 @@
         "Can't Be Tripped"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "um_races_companion.lst",
+      "source_file": "um_races_companion",
       "source_line": 11
     },
     {
@@ -461,7 +461,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 11
     },
     {
@@ -524,7 +524,7 @@
         "Grab"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "um_races_companion.lst",
+      "source_file": "um_races_companion",
       "source_line": 12
     },
     {
@@ -593,7 +593,7 @@
         "Can't Be Tripped"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "um_races_companion.lst",
+      "source_file": "um_races_companion",
       "source_line": 13
     },
     {
@@ -658,7 +658,7 @@
         "Grab"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "um_races_companion.lst",
+      "source_file": "um_races_companion",
       "source_line": 14
     },
     {
@@ -721,7 +721,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 14
     },
     {
@@ -779,7 +779,7 @@
         "Grab"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "um_races_companion.lst",
+      "source_file": "um_races_companion",
       "source_line": 15
     },
     {
@@ -843,7 +843,7 @@
         "Can't Be Tripped"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "um_races_companion.lst",
+      "source_file": "um_races_companion",
       "source_line": 16
     },
     {
@@ -920,7 +920,7 @@
         "Flight Maneuverability"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 16
     },
     {
@@ -977,7 +977,7 @@
         "Giant Spider Companion ~ Poison"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "um_races_companion.lst",
+      "source_file": "um_races_companion",
       "source_line": 17
     },
     {
@@ -1054,7 +1054,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 17
     },
     {
@@ -1112,7 +1112,7 @@
         "Flight Maneuverability"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "um_races_companion.lst",
+      "source_file": "um_races_companion",
       "source_line": 18
     },
     {
@@ -1202,7 +1202,7 @@
         "Grab"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 20
     },
     {
@@ -1265,7 +1265,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 21
     },
     {
@@ -1336,7 +1336,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 22
     },
     {
@@ -1399,7 +1399,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 23
     },
     {
@@ -1466,7 +1466,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 24
     },
     {
@@ -1528,7 +1528,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 25
     },
     {
@@ -1603,7 +1603,7 @@
         "Can't Be Tripped"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 26
     },
     {
@@ -1676,7 +1676,7 @@
         "Grab"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 27
     },
     {
@@ -1739,7 +1739,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 28
     },
     {
@@ -1816,7 +1816,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 29
     },
     {
@@ -1893,7 +1893,7 @@
         "Flight Maneuverability"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 30
     },
     {
@@ -1970,7 +1970,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_um.lst",
+      "source_file": "ce_races_familiar_um",
       "source_line": 31
     }
   ]

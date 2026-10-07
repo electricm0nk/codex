@@ -11,8 +11,8 @@
 //! after Core Rulebook.
 //!
 //! **32 -> 59 by `SD31-CE-COMPANION-001` (2026-08-18).** `decisions.md §9`
-//! retired the `core_essentials` book id; `ce_races_familiar_um.lst` and
-//! `ce_abilities_familiar_race_um.lst` both declare `SOURCELONG:Ultimate
+//! retired the `core_essentials` book id; `ce_races_familiar_um` and
+//! `ce_abilities_familiar_race_um` both declare `SOURCELONG:Ultimate
 //! Magic` in their own headers, so their 19 creature rows and 8 ability rows
 //! are this book's. Their corpus records were already sitting in
 //! `data/corpus/ultimate_magic/companion/` and reaching no player surface,
@@ -40,11 +40,11 @@
 //!   the `Evolution ~ …` / `Temp Evolution ~ …` eidolon evolution pool plus the
 //!   `Black Blade ~ …` magus records, and both hang off a CLASS feature -- the
 //!   summoner's eidolon and the bladebound magus's black blade -- rather than
-//!   off any creature row of `um_races_companion.lst`. No creature row names
+//!   off any creature row of `um_races_companion`. No creature row names
 //!   one and none carries a `PRERACE:` back to a creature, because they apply
 //!   to an eidolon a player builds rather than to a species the book defines.
 //!
-//! * **3 `*_classes_companion.lst` CLASS rows** -- `1`, `Black Blade` and
+//! * **3 `*_classes_companion` CLASS rows** -- `1`, `Black Blade` and
 //!   `Vermin Companion` (`decisions.md §65.1`). A PCGen monster class is a
 //!   hit-dice progression, not a creature and not an ability; the chassis used
 //!   to drop and name them rather than emit a card whose every modelled field
@@ -75,7 +75,7 @@ pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
     companion_data::COMPANION_ABILITIES
 }
 
-/// Every `*_classes_companion.lst` row this book defines, in corpus row
+/// Every `*_classes_companion` row this book defines, in corpus row
 /// order. See `companion_chassis::CompanionClassRecord`.
 pub const fn companion_classes_static() -> &'static [CompanionClassRecord] {
     companion_data::COMPANION_CLASSES

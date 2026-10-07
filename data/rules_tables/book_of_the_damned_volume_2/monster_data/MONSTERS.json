@@ -109,7 +109,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "botd2_races.lst",
+      "source_file": "botd2_races",
       "source_line": 7
     },
     {
@@ -227,7 +227,7 @@
         "Brimorak ~ Smoke Breath"
       ],
       "external_ability_refs": [],
-      "source_file": "botd2_races.lst",
+      "source_file": "botd2_races",
       "source_line": 8
     },
     {
@@ -385,7 +385,7 @@
         "True Seeing ~ Constant",
         "Unholy Aura ~ Constant"
       ],
-      "source_file": "botd2_races.lst",
+      "source_file": "botd2_races",
       "source_line": 9
     },
     {
@@ -527,7 +527,7 @@
         "True Seeing ~ Constant",
         "Unholy Aura ~ Constant"
       ],
-      "source_file": "botd2_races.lst",
+      "source_file": "botd2_races",
       "source_line": 10
     }
   ]

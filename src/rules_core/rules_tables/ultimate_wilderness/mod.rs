@@ -6,7 +6,7 @@
 //!
 //! SD-29 Epic 7 round 6 added this book's `companion` family, documented at the
 //! bottom of this file. It shares nothing with the feats above but a
-//! `RuleSetId`: different `.lst` file, different chassis, different screen.
+//! `RuleSetId`: different source file file, different chassis, different screen.
 
 pub mod archetype_tables;
 pub(crate) mod companion_data;

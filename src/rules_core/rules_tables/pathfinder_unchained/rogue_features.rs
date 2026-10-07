@@ -8,7 +8,7 @@
 //! formula here is a failing test, not a plausible number nobody checks.
 //!
 //! Source file for every citation in this module:
-//! `pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst`
+//! `pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class`
 //! (sha256 `2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725`,
 //! the same digest `data/corpus/pathfinder_unchained/class_feature/
 //! rogue_unchained_class/*.json` records). Cross-book citations name their own
@@ -21,11 +21,11 @@
 //! corpus, not invented here (the same posture `decisions.md §26` records for
 //! the ARG replace-flag protocol):
 //!
-//! - `core_rulebook/cr_abilitycategories.lst:255` declares
+//! - `core_rulebook/cr_abilitycategories:255` declares
 //!   `ABILITYCATEGORY:Rogue Class Selection ... POOL:Pool_Rogue_Class_Selection`.
-//! - `core_rulebook/cr_abilities_class.lst:131` puts the CRB rogue in that pool
+//! - `core_rulebook/cr_abilities_class:131` puts the CRB rogue in that pool
 //!   as `KEY:Empty Selection ~ Standard Rogue  TYPE:Rogue Class Selection`.
-//! - `pu_abilities_class.lst:116` puts this one in the same pool as
+//! - `pu_abilities_class:116` puts this one in the same pool as
 //!   `KEY:Rogue ~ Unchained Class  TYPE:Rogue Class Selection.AltRogueChoice
 //!   COST:1`, and `:108` (`CATEGORY=Class|Rogue.MOD`) seeds the pool with
 //!   `BONUS:VAR|Pool_Rogue_Class_Selection|1|TYPE=Base` — one point, one pick.
@@ -42,7 +42,7 @@
 //! file overwrites, shadows, or mutates a CRB table.
 //!
 //! **What actually differs mechanically** (verified against
-//! `core_rulebook/cr_abilities_class.lst`, not assumed):
+//! `core_rulebook/cr_abilities_class`, not assumed):
 //!
 //! | | CRB Rogue | Unchained Rogue |
 //! |---|---|---|
@@ -72,18 +72,18 @@
 //!
 //! `MAX_SUPPORTED_LEVEL` is the **base** class's cap: PU declares no `CLASS:`
 //! record of its own (the whole book declares zero), so the chassis is
-//! `core_rulebook/cr_classes.lst:237`'s `CLASS:Rogue ... HD:8 MAXLEVEL:20`, and
+//! `core_rulebook/cr_classes:237`'s `CLASS:Rogue ... HD:8 MAXLEVEL:20`, and
 //! `data/corpus/pathfinder_unchained/class/rogue_unchained_class.json` leaves
 //! every chassis field `null` because PU overrides none of them.
 
 /// `MAXLEVEL:20` on the base `CLASS:Rogue` record
-/// (`core_rulebook/cr_classes.lst:237`). PU overrides no chassis field for the
+/// (`core_rulebook/cr_classes:237`). PU overrides no chassis field for the
 /// rogue, so the variant inherits this cap unchanged.
 pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 
 /// `BONUS:VAR|SneakAttackDieSize|6|TYPE=Base` on the shared
-/// `KEY:Sneak Attack` record (`core_rulebook/cr_abilities_class.lst:2868`),
-/// which `pu_abilities_class.lst:602` re-`TYPE`s into
+/// `KEY:Sneak Attack` record (`core_rulebook/cr_abilities_class:2868`),
+/// which `pu_abilities_class:602` re-`TYPE`s into
 /// `Unchained Rogue Class Feature` rather than redefining. d6, unchanged by PU.
 pub const SNEAK_ATTACK_DIE_SIZE: u8 = 6;
 
@@ -111,7 +111,7 @@ pub enum UnchainedRogueFeature {
 }
 
 impl UnchainedRogueFeature {
-    /// Source order of the declaring rows (`pu_abilities_class.lst:579..594`).
+    /// Source order of the declaring rows (`pu_abilities_class:579..594`).
     pub const ALL: &'static [UnchainedRogueFeature] = &[
         UnchainedRogueFeature::Skills,
         UnchainedRogueFeature::WeaponProficiency,
@@ -176,7 +176,7 @@ impl UnchainedRogueFeature {
     }
 
     /// 1-based line of the row that *declares* this feature in
-    /// `pu_abilities_class.lst`.
+    /// `pu_abilities_class`.
     pub fn declaring_line(self) -> u32 {
         match self {
             UnchainedRogueFeature::Skills => 579,
@@ -198,7 +198,7 @@ impl UnchainedRogueFeature {
     }
 
     /// The `PREVARGTEQ:Rogue_CFP_Level,N` on this feature's progression row
-    /// (`pu_abilities_class.lst:217..229`), i.e. the class level it is first
+    /// (`pu_abilities_class:217..229`), i.e. the class level it is first
     /// granted at.
     ///
     /// `None` for `UncannyDodge` and `ImprovedUncannyDodge`: **no progression
@@ -301,7 +301,7 @@ pub fn class_skills(
 /// Two rows, both quoted verbatim:
 /// - `:589` `BONUS:VAR|RogueSneakAttackLVL|RogueLVL` — the Unchained Rogue's own
 ///   row sets the driving var to the class level, 1:1.
-/// - `core_rulebook/cr_abilities_class.lst:2868`
+/// - `core_rulebook/cr_abilities_class:2868`
 ///   `BONUS:VAR|SneakAttackDice|(RogueSneakAttackLVL+1)/2` on the shared
 ///   `KEY:Sneak Attack` record that `:589`'s
 ///   `ABILITY:Unchained Rogue Class Feature|AUTOMATIC|Sneak Attack` grants.
@@ -523,12 +523,12 @@ mod tests {
         let lines: Vec<u32> = UnchainedRogueFeature::ALL.iter().map(|f| f.declaring_line()).collect();
         let mut sorted = lines.clone();
         sorted.sort_unstable();
-        assert_eq!(lines, sorted, "ALL should list features in pu_abilities_class.lst order");
+        assert_eq!(lines, sorted, "ALL should list features in pu_abilities_class order");
     }
 
     #[test]
     fn min_levels_match_the_thirteen_progression_rows() {
-        // pu_abilities_class.lst:217..229 — 13 rows, transcribed as pairs.
+        // pu_abilities_class:217..229 — 13 rows, transcribed as pairs.
         let expected: &[(UnchainedRogueFeature, u8)] = &[
             (UnchainedRogueFeature::ArmorProficiency, 1),
             (UnchainedRogueFeature::FinesseTraining, 1),

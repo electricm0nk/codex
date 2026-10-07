@@ -1,6 +1,6 @@
 //! Advanced Race Guide (ARG) shared spell list.
 //!
-//! Source: the real `arg_spells.lst` corpus (SD-27 Cycle E2.1/E2.2 per-book
+//! Source: the real `arg_spells` corpus (SD-27 Cycle E2.1/E2.2 per-book
 //! pre-build). Record coverage: every real, active (non-`.MOD`,
 //! non-`.COPY=`) `SCHOOL:`+`CLASSES:`-bearing spell record -- 92 total,
 //! plus 1 `.COPY=` racial spell-like-ability variant ingested under SD31
@@ -22,7 +22,7 @@
 //! `DOMAINS:`-only record exists in this corpus, unlike ACG's one domain-only
 //! variant).
 //!
-//! Full text, not truncated: `arg_spells.lst` carries the complete
+//! Full text, not truncated: `arg_spells` carries the complete
 //! multi-sentence spell text directly on the base record's own `DESC:`
 //! token, with no PCGen HTML-entity encoding present anywhere in this
 //! corpus file (confirmed by direct grep: zero `&[a-z]+;` hits) -- only the
@@ -31,7 +31,7 @@
 
 /// The full 9-school PF1 spell-school enum, mirroring
 /// `rules_tables::acg::spell_list::Pf1SchoolId` exactly. `Universal` does
-/// not appear in `arg_spells.lst` today but is included for cross-book
+/// not appear in `arg_spells` today but is included for cross-book
 /// schema parity.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(test, derive(schemars::JsonSchema))]
@@ -82,7 +82,7 @@ impl Pf1SchoolId {
 #[cfg_attr(test, derive(schemars::JsonSchema))]
 #[cfg_attr(test, schemars(rename = "advanced_race_guide__spell_list__SpellListEntry"))]
 pub struct SpellListEntry {
-    /// The spell's `name` is its identity in `arg_spells.lst` (no `KEY:`
+    /// The spell's `name` is its identity in `arg_spells` (no `KEY:`
     /// token on any in-scope record).
     pub key: &'static str,
     pub school: Pf1SchoolId,
@@ -123,7 +123,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
     SpellListEntry { key: "Fins to Feet", school: Pf1SchoolId::Transmutation, level: 3, description: "You transform the target's fins, flippers, or tail into legs and feet, allowing it to walk on land. The target loses its swim speed but gains a base speed appropriate for a humanoid of its size (speed 30 if a Medium or larger creature, speed 20 if Small). If the creature is immersed in water for 1 round, the transformation reverts, allowing it to swim normally. One round after leaving the water, the transformation occurs again, allowing it to walk. This spell only works on merfolk, tritons, seals, fish, and other creatures whose bodies or limbs are used mainly for swimming and are not suitable for walking. It does not give the target the ability to breathe air." },
     // `.COPY=` racial spell-like ability variant (SD31 decisions.md §15, 2026-08-17): a
     // `CLASSES:.CLEARALL` record with no class list of its own, granted instead by a racial
-    // special ability that states its own caster level in plain text (`arg_spells.lst:230`).
+    // special ability that states its own caster level in plain text (`arg_spells:230`).
     // Withdraws this file's own former exclusion (see this module's doc comment, now updated) --
     // school/level/description inherit from the parent record above.
     SpellListEntry { key: "Fins to Feet (self only)", school: Pf1SchoolId::Transmutation, level: 3, description: "You transform the target's fins, flippers, or tail into legs and feet, allowing it to walk on land. The target loses its swim speed but gains a base speed appropriate for a humanoid of its size (speed 30 if a Medium or larger creature, speed 20 if Small). If the creature is immersed in water for 1 round, the transformation reverts, allowing it to swim normally. One round after leaving the water, the transformation occurs again, allowing it to walk. This spell only works on merfolk, tritons, seals, fish, and other creatures whose bodies or limbs are used mainly for swimming and are not suitable for walking. It does not give the target the ability to breathe air." },

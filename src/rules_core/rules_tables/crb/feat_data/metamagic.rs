@@ -1,4 +1,4 @@
-//! Generated from the real PCGen corpus file `cr_feats.lst` (`TYPE:` facet
+//! Generated from the real PCGen corpus file `cr_feats` (`TYPE:` facet
 //! containing `Metamagic`). 17 records, transcribed verbatim
 //! (`KEY:`/name, `TYPE:`, `DESC:`, `BONUS:`) from the corpus's `###Block:
 //! General Feats` section -- see `feats.rs`'s own doc comment for why

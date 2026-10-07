@@ -60,7 +60,7 @@
         "Hive Larva Swarm ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "ha_races.lst",
+      "source_file": "ha_races",
       "source_line": 3
     },
     {
@@ -130,7 +130,7 @@
         "Hive Queen ~ Telepathy"
       ],
       "external_ability_refs": [],
-      "source_file": "ha_races.lst",
+      "source_file": "ha_races",
       "source_line": 4
     },
     {
@@ -200,7 +200,7 @@
         "Hive Warrior ~ Rending Mandibles"
       ],
       "external_ability_refs": [],
-      "source_file": "ha_races.lst",
+      "source_file": "ha_races",
       "source_line": 5
     }
   ]

@@ -39,7 +39,7 @@
         "Companion (Antelope)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 8
     },
     {
@@ -59,7 +59,7 @@
         "Companion (Archelon)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 9
     },
     {
@@ -79,7 +79,7 @@
         "Companion (Axe Beak)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 10
     },
     {
@@ -99,7 +99,7 @@
         "Companion (Baluchitherium)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 11
     },
     {
@@ -119,7 +119,7 @@
         "Companion (Basilosaurus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 12
     },
     {
@@ -139,7 +139,7 @@
         "Companion (Dimetrodon)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 13
     },
     {
@@ -159,7 +159,7 @@
         "Companion (Elk)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 14
     },
     {
@@ -179,7 +179,7 @@
         "Companion (Giant Chameleon)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 15
     },
     {
@@ -199,7 +199,7 @@
         "Companion (Giant Gecko)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 16
     },
     {
@@ -219,7 +219,7 @@
         "Companion (Giant Vulture)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 17
     },
     {
@@ -239,7 +239,7 @@
         "Companion (Iguanodon)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 18
     },
     {
@@ -259,7 +259,7 @@
         "Companion (Kangaroo)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 19
     },
     {
@@ -279,7 +279,7 @@
         "Companion (Megalania)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 20
     },
     {
@@ -299,7 +299,7 @@
         "Companion (Pachycephalosaurus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 21
     },
     {
@@ -319,7 +319,7 @@
         "Companion (Spinosaurus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 22
     },
     {
@@ -339,7 +339,7 @@
         "Companion (Thylacine)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 23
     },
     {
@@ -361,7 +361,7 @@
         "Companion (Axe Beak)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 29
     },
     {
@@ -383,7 +383,7 @@
         "Companion (Dimetrodon)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 32
     },
     {
@@ -405,7 +405,7 @@
         "Companion (Iguanodon)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 35
     },
     {
@@ -427,7 +427,7 @@
         "Familiar (Flying Squirrel)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 38
     },
     {
@@ -449,7 +449,7 @@
         "Companion (Pachycephalosaurus)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 38
     },
     {
@@ -471,7 +471,7 @@
         "Companion (Giant Gecko)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 41
     },
     {
@@ -492,7 +492,7 @@
         "Archon (Harbinger)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 41
     },
     {
@@ -513,7 +513,7 @@
         "Archon (Harbinger)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 42
     },
     {
@@ -534,7 +534,7 @@
         "Archon (Harbinger)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 43
     },
     {
@@ -556,7 +556,7 @@
         "Companion (Giant Chameleon)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 44
     },
     {
@@ -577,7 +577,7 @@
         "Archon (Harbinger)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 44
     },
     {
@@ -598,7 +598,7 @@
         "Archon (Harbinger)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 45
     },
     {
@@ -620,7 +620,7 @@
         "Companion (Thylacine)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 47
     },
     {
@@ -642,7 +642,7 @@
         "Carbuncle"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 48
     },
     {
@@ -664,7 +664,7 @@
         "Carbuncle"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 49
     },
     {
@@ -686,7 +686,7 @@
         "Carbuncle"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 50
     },
     {
@@ -708,7 +708,7 @@
         "Companion (Megalania)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_companion.lst",
+      "source_file": "b3_abilities_companion",
       "source_line": 50
     },
     {
@@ -730,7 +730,7 @@
         "Carbuncle"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 51
     },
     {
@@ -752,7 +752,7 @@
         "Carbuncle"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 52
     },
     {
@@ -774,7 +774,7 @@
         "Div (Doru)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 55
     },
     {
@@ -796,7 +796,7 @@
         "Div (Doru)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 56
     },
     {
@@ -818,7 +818,7 @@
         "Dragon (Faerie)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 59
     },
     {
@@ -839,7 +839,7 @@
         "Dragon (Faerie)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 60
     },
     {
@@ -861,7 +861,7 @@
         "Dragon (Faerie)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 61
     },
     {
@@ -883,7 +883,7 @@
         "Kyton (Augur)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 64
     },
     {
@@ -905,7 +905,7 @@
         "Kyton (Augur)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 65
     },
     {
@@ -927,7 +927,7 @@
         "Oni (Spirit)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 68
     },
     {
@@ -949,7 +949,7 @@
         "Oni (Spirit)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 69
     },
     {
@@ -971,7 +971,7 @@
         "Oni (Spirit)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 70
     },
     {
@@ -993,7 +993,7 @@
         "Rakshasa (Raktavarna)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 73
     },
     {
@@ -1015,7 +1015,7 @@
         "Rakshasa (Raktavarna)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 74
     },
     {
@@ -1037,7 +1037,7 @@
         "Rakshasa (Raktavarna)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 75
     },
     {
@@ -1059,7 +1059,7 @@
         "Rakshasa (Raktavarna)"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 76
     },
     {
@@ -1081,7 +1081,7 @@
         "Sprite"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 79
     },
     {
@@ -1103,7 +1103,7 @@
         "Sprite"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 80
     },
     {
@@ -1125,7 +1125,7 @@
         "Zoog"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 83
     },
     {
@@ -1147,7 +1147,7 @@
         "Zoog"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 84
     },
     {
@@ -1169,7 +1169,7 @@
         "Zoog"
       ],
       "cross_book_owners": [],
-      "source_file": "b3_abilities_familiar.lst",
+      "source_file": "b3_abilities_familiar",
       "source_line": 85
     }
   ]

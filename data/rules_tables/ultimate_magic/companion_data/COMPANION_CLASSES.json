@@ -71,7 +71,7 @@
         }
       ],
       "fact_class_type": "Companion",
-      "source_file": "um_classes_companion.lst",
+      "source_file": "um_classes_companion",
       "source_line": 9
     },
     {
@@ -91,7 +91,7 @@
         }
       ],
       "fact_class_type": null,
-      "source_file": "um_classes_companion.lst",
+      "source_file": "um_classes_companion",
       "source_line": 13
     },
     {
@@ -107,7 +107,7 @@
       "source_page": "p.47",
       "ability_grants": [],
       "fact_class_type": "Companion",
-      "source_file": "um_classes_companion.lst",
+      "source_file": "um_classes_companion",
       "source_line": 16
     }
   ]

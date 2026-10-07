@@ -4,7 +4,7 @@
 //! already exists on disk from an earlier cache-gen lane, but no
 //! `RuleSetId` existed to unlock the book-level gate for it -- see
 //! `RuleSetId::InnerSeaMagic`'s own doc comment). First slice: the base
-//! spell declarations in `ism_spells.lst`. See `spell_list`'s own module
+//! spell declarations in `ism_spells`. See `spell_list`'s own module
 //! doc comment and `src/bin/ingest_inner_sea_setting_spells.rs` for the
 //! ingest path.
 

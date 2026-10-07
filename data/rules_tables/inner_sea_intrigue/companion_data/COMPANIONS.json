@@ -85,7 +85,7 @@
         "Flight Maneuverability"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "isi_races_companion.lst",
+      "source_file": "isi_races_companion",
       "source_line": 8
     },
     {
@@ -167,7 +167,7 @@
         "Flight Maneuverability"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "isi_races_companion.lst",
+      "source_file": "isi_races_companion",
       "source_line": 9
     }
   ]

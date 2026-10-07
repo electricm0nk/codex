@@ -13,8 +13,8 @@
 //! table topping out at 4th-level spells).
 //!
 //! **Widened 2026-07-27 (task #27) from CRB-only to all ingested books.**
-//! Per-file: **45 from `cr_spells.lst` + 38 from `apg_spells.lst` + 13
-//! from `acg_spells.lst`**, which is 96 raw matches collapsing to **95**
+//! Per-file: **45 from `cr_spells` + 38 from `apg_spells` + 13
+//! from `acg_spells`**, which is 96 raw matches collapsing to **95**
 //! distinct spells -- see the `Resounding Blow` note below. Per-file
 //! ceiling check: `grep -c Paladin` returns 45 / 41 / 13; the APG ceiling
 //! exceeds the parse by 3 because two lines name only `Antipaladin`'s own
@@ -23,7 +23,7 @@
 //!
 //! **This module did NOT have the `CLASSES:` substring bug.** Its original
 //! 45 CRB entries are byte-identical to a correct token-split re-parse of
-//! `cr_spells.lst`, including all 18 records where Paladin sits mid-group.
+//! `cr_spells`, including all 18 records where Paladin sits mid-group.
 //! Two separate defects were real here: book scope, and one record lost to
 //! a bracketed level (below).
 //!

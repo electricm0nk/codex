@@ -1562,6 +1562,13 @@ def module_dir(book: str) -> str:
     return MODULE_DIR.get(book, book)
 
 
+def strip_citation_extension(text: str) -> str:
+    """SD-37 E4a.3: the compiled tables cite a source file by its stem, never with the list-file
+    extension. The corpus is still read with the real file names; only the emitted citation
+    changes, so this runs on the finished text, once, at the point it is written."""
+    return re.sub(r"(?<=[A-Za-z0-9_])\.lst\b", "", text)
+
+
 def main() -> None:
     if len(sys.argv) != 2:
         raise SystemExit(f"usage: {sys.argv[0]} <book>")
@@ -1584,7 +1591,7 @@ def main() -> None:
     # SD31-W9-INTEGRATE-001 fix for the identical shape.
     tmp_path = f"{path}.tmp"
     with open(tmp_path, "w", encoding="utf-8") as handle:
-        handle.write(contents)
+        handle.write(strip_citation_extension(contents))
     os.replace(tmp_path, path)
     print(f"wrote {path}")
 

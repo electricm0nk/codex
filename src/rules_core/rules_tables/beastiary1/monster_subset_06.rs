@@ -3,18 +3,18 @@
 //! unused CR-2 monsters in one landing so subset 07 can start CR 3
 //! cleanly.
 //!
-//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst`,
+//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races`,
 //! parsed via `pcgen_import::lst_parser::monster_stat_block` (the same
 //! bare-tab-delimited monster parser subset 01 introduced — no widening
 //! was needed for this subset either). Every field below is transcribed
-//! directly from the cited real `.lst` line's tokens — see each
+//! directly from the cited real source file line's tokens — see each
 //! function's doc comment for the exact line number and tokens.
 //!
 //! **Roster derivation (band-exhaustion cleanup, not a straight CR-band
 //! continuation):** before writing any GREEN code, this cycle
 //! independently re-enumerated every real, non-`#`-commented,
 //! non-`.MOD`/`.COPY=` CR:1 and CR:2 monster stat-block row in
-//! `b1_races.lst` directly against the live corpus file (not from any
+//! `b1_races` directly against the live corpus file (not from any
 //! prior cycle's summary):
 //!
 //! - CR:1 — 27 rows carry a `CR:1` token; excluding parenthetical
@@ -48,12 +48,12 @@
 //! slice.
 //!
 //! **Shapes this subset exercises (both already have precedent, not new
-//! parser surface):** Squid's real row (`b1_races.lst:380`) carries
+//! parser surface):** Squid's real row (`b1_races:380`) carries
 //! `MOVE:Swim,60,Jet,240` with no `Walk` pair — same "no Walk token"
 //! shape subset 05's Shark already proved; transcribed here as
 //! `speed_ft: 0`, the literal fact of the token's absence. Vargouille's
-//! row (`b1_races.lst:401`) carries `MOVE:Fly,30`, also no `Walk` pair —
-//! same shape, also `speed_ft: 0`. Troglodyte's row (`b1_races.lst:390`)
+//! row (`b1_races:401`) carries `MOVE:Fly,30`, also no `Walk` pair —
+//! same shape, also `speed_ft: 0`. Troglodyte's row (`b1_races:390`)
 //! carries two separate `NATURALATTACKS:` tab fields, each
 //! pipe-separated, accumulating into four entries — same shape subset
 //! 05's Sahuagin/Skum already proved. Vargouille, Wolverine, and Worg's
@@ -63,7 +63,7 @@
 
 use super::{MonsterStatBlock, NaturalAttack};
 
-/// Source: `b1_races.lst:380`, `CR:1`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:380`, `CR:1`. Real row tokens: `SIZE:M`,
 /// `MOVE:Swim,60,Jet,240` (no `Walk` pair on this row; transcribed as
 /// `speed_ft: 0`), `NATURALATTACKS:Bite,Weapon.Natural...,*1,1d3|Tentacles,
 /// Weapon.Natural...,*1,1d4` (pipe-separated, two entries),
@@ -84,7 +84,7 @@ pub fn squid() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:390`, `CR:1`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:390`, `CR:1`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,30` (walk speed transcribed), two `NATURALATTACKS:` tab
 /// fields — `NATURALATTACKS:Claw,Weapon.Natural...,*2,1d4|Claw (with
 /// weapon attack),Weapon.Natural...,*1,1d4` and
@@ -110,7 +110,7 @@ pub fn troglodyte() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:401`, `CR:2`. Real row tokens: `SIZE:S`,
+/// Source: `b1_races:401`, `CR:2`. Real row tokens: `SIZE:S`,
 /// `MOVE:Fly,30` (no `Walk` pair on this row; transcribed as
 /// `speed_ft: 0`), no `NATURALATTACKS:` token on this row,
 /// `RACETYPE:Outsider`, `RACESUBTYPE:Evil|Extraplanar`, `CR:2`,
@@ -137,7 +137,7 @@ pub fn vargouille() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:416`, `CR:2`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:416`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,30,Burrow,10,Climb,10` (walk speed transcribed;
 /// burrow/climb speeds out of scope), no `NATURALATTACKS:` token on this
 /// row, `RACETYPE:Animal`, no `RACESUBTYPE:` token, `CR:2`,
@@ -167,7 +167,7 @@ pub fn wolverine() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:418`, `CR:2`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:418`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,50` (walk speed transcribed), no `NATURALATTACKS:` token on
 /// this row, `RACETYPE:Magical Beast`, no `RACESUBTYPE:` token, `CR:2`,
 /// `SOURCEPAGE:p.280`.
@@ -190,7 +190,7 @@ pub fn worg() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:430`, `CR:2`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:430`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,5` (walk speed transcribed), `NATURALATTACKS:Tendril,
 /// Weapon.Natural...,*1,1d4` (single entry), `RACETYPE:Plant`, no
 /// `RACESUBTYPE:` token, `CR:2`, `SOURCEPAGE:p.285`.

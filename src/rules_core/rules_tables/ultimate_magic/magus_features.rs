@@ -1,6 +1,6 @@
 //! SD-32 card 11 (T12), cycle 4 — real per-feature compute functions for
 //! the Magus, `ultimate_magic`'s single magnitude-bearing class (its own
-//! `_classes.lst`/`_abilities_class.lst` pair, not shared with any other
+//! `_classes`/`_abilities_class` pair, not shared with any other
 //! class). Every formula below is transcribed from the corpus's own
 //! already-ingested tokens
 //! (`data/corpus/ultimate_magic/class_feature/magus/*.json`).

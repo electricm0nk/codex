@@ -1,14 +1,14 @@
 //! pathfinder_unchained monster + monster-ability tables, transcribed verbatim
-//! from the book's own PCGen `.lst` rows.
+//! from the book's own PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_monster_tables.py pathfinder_unchained`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst` (which counts `.MOD`/`.COPY` overlays the
+//! line count over the source file (which counts `.MOD`/`.COPY` overlays the
 //! inventory correctly excludes).
 //!
 //! Sources, with the line each record was read from carried per row:
-//!   * `pu_abilities_race.lst` -- 72 monster-ability rows
+//!   * `pu_abilities_race` -- 72 monster-ability rows
 //!
 //! 72 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they SHIP with `owners: &[]` rather than being
@@ -18,78 +18,78 @@
 //! reaches no screen -- reachability is NOT claimed for these, and each key is
 //! pinned as a named, provable non-reach in `reach_gate.rs::
 //! UNREACHED_RECORD_FINDINGS`, never silently assumed reachable:
-//!   * `pu_abilities_race.lst:98`
-//!   * `pu_abilities_race.lst:99`
-//!   * `pu_abilities_race.lst:100`
-//!   * `pu_abilities_race.lst:101`
-//!   * `pu_abilities_race.lst:102`
-//!   * `pu_abilities_race.lst:103`
-//!   * `pu_abilities_race.lst:105`
-//!   * `pu_abilities_race.lst:106`
-//!   * `pu_abilities_race.lst:107`
-//!   * `pu_abilities_race.lst:108`
-//!   * `pu_abilities_race.lst:109`
-//!   * `pu_abilities_race.lst:110`
-//!   * `pu_abilities_race.lst:112`
-//!   * `pu_abilities_race.lst:113`
-//!   * `pu_abilities_race.lst:114`
-//!   * `pu_abilities_race.lst:115`
-//!   * `pu_abilities_race.lst:116`
-//!   * `pu_abilities_race.lst:117`
-//!   * `pu_abilities_race.lst:119`
-//!   * `pu_abilities_race.lst:120`
-//!   * `pu_abilities_race.lst:121`
-//!   * `pu_abilities_race.lst:122`
-//!   * `pu_abilities_race.lst:123`
-//!   * `pu_abilities_race.lst:124`
-//!   * `pu_abilities_race.lst:126`
-//!   * `pu_abilities_race.lst:127`
-//!   * `pu_abilities_race.lst:128`
-//!   * `pu_abilities_race.lst:129`
-//!   * `pu_abilities_race.lst:130`
-//!   * `pu_abilities_race.lst:131`
-//!   * `pu_abilities_race.lst:133`
-//!   * `pu_abilities_race.lst:134`
-//!   * `pu_abilities_race.lst:135`
-//!   * `pu_abilities_race.lst:136`
-//!   * `pu_abilities_race.lst:137`
-//!   * `pu_abilities_race.lst:138`
-//!   * `pu_abilities_race.lst:140`
-//!   * `pu_abilities_race.lst:141`
-//!   * `pu_abilities_race.lst:142`
-//!   * `pu_abilities_race.lst:143`
-//!   * `pu_abilities_race.lst:144`
-//!   * `pu_abilities_race.lst:145`
-//!   * `pu_abilities_race.lst:147`
-//!   * `pu_abilities_race.lst:148`
-//!   * `pu_abilities_race.lst:149`
-//!   * `pu_abilities_race.lst:150`
-//!   * `pu_abilities_race.lst:151`
-//!   * `pu_abilities_race.lst:152`
-//!   * `pu_abilities_race.lst:154`
-//!   * `pu_abilities_race.lst:155`
-//!   * `pu_abilities_race.lst:156`
-//!   * `pu_abilities_race.lst:157`
-//!   * `pu_abilities_race.lst:158`
-//!   * `pu_abilities_race.lst:159`
-//!   * `pu_abilities_race.lst:161`
-//!   * `pu_abilities_race.lst:162`
-//!   * `pu_abilities_race.lst:163`
-//!   * `pu_abilities_race.lst:164`
-//!   * `pu_abilities_race.lst:165`
-//!   * `pu_abilities_race.lst:166`
-//!   * `pu_abilities_race.lst:168`
-//!   * `pu_abilities_race.lst:169`
-//!   * `pu_abilities_race.lst:170`
-//!   * `pu_abilities_race.lst:171`
-//!   * `pu_abilities_race.lst:172`
-//!   * `pu_abilities_race.lst:173`
-//!   * `pu_abilities_race.lst:175`
-//!   * `pu_abilities_race.lst:176`
-//!   * `pu_abilities_race.lst:177`
-//!   * `pu_abilities_race.lst:178`
-//!   * `pu_abilities_race.lst:179`
-//!   * `pu_abilities_race.lst:180`
+//!   * `pu_abilities_race:98`
+//!   * `pu_abilities_race:99`
+//!   * `pu_abilities_race:100`
+//!   * `pu_abilities_race:101`
+//!   * `pu_abilities_race:102`
+//!   * `pu_abilities_race:103`
+//!   * `pu_abilities_race:105`
+//!   * `pu_abilities_race:106`
+//!   * `pu_abilities_race:107`
+//!   * `pu_abilities_race:108`
+//!   * `pu_abilities_race:109`
+//!   * `pu_abilities_race:110`
+//!   * `pu_abilities_race:112`
+//!   * `pu_abilities_race:113`
+//!   * `pu_abilities_race:114`
+//!   * `pu_abilities_race:115`
+//!   * `pu_abilities_race:116`
+//!   * `pu_abilities_race:117`
+//!   * `pu_abilities_race:119`
+//!   * `pu_abilities_race:120`
+//!   * `pu_abilities_race:121`
+//!   * `pu_abilities_race:122`
+//!   * `pu_abilities_race:123`
+//!   * `pu_abilities_race:124`
+//!   * `pu_abilities_race:126`
+//!   * `pu_abilities_race:127`
+//!   * `pu_abilities_race:128`
+//!   * `pu_abilities_race:129`
+//!   * `pu_abilities_race:130`
+//!   * `pu_abilities_race:131`
+//!   * `pu_abilities_race:133`
+//!   * `pu_abilities_race:134`
+//!   * `pu_abilities_race:135`
+//!   * `pu_abilities_race:136`
+//!   * `pu_abilities_race:137`
+//!   * `pu_abilities_race:138`
+//!   * `pu_abilities_race:140`
+//!   * `pu_abilities_race:141`
+//!   * `pu_abilities_race:142`
+//!   * `pu_abilities_race:143`
+//!   * `pu_abilities_race:144`
+//!   * `pu_abilities_race:145`
+//!   * `pu_abilities_race:147`
+//!   * `pu_abilities_race:148`
+//!   * `pu_abilities_race:149`
+//!   * `pu_abilities_race:150`
+//!   * `pu_abilities_race:151`
+//!   * `pu_abilities_race:152`
+//!   * `pu_abilities_race:154`
+//!   * `pu_abilities_race:155`
+//!   * `pu_abilities_race:156`
+//!   * `pu_abilities_race:157`
+//!   * `pu_abilities_race:158`
+//!   * `pu_abilities_race:159`
+//!   * `pu_abilities_race:161`
+//!   * `pu_abilities_race:162`
+//!   * `pu_abilities_race:163`
+//!   * `pu_abilities_race:164`
+//!   * `pu_abilities_race:165`
+//!   * `pu_abilities_race:166`
+//!   * `pu_abilities_race:168`
+//!   * `pu_abilities_race:169`
+//!   * `pu_abilities_race:170`
+//!   * `pu_abilities_race:171`
+//!   * `pu_abilities_race:172`
+//!   * `pu_abilities_race:173`
+//!   * `pu_abilities_race:175`
+//!   * `pu_abilities_race:176`
+//!   * `pu_abilities_race:177`
+//!   * `pu_abilities_race:178`
+//!   * `pu_abilities_race:179`
+//!   * `pu_abilities_race:180`
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
@@ -109,7 +109,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 98,
         codex_generated_name: false,
         rename_reason: None,
@@ -125,7 +125,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 99,
         codex_generated_name: false,
         rename_reason: None,
@@ -141,7 +141,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 100,
         codex_generated_name: false,
         rename_reason: None,
@@ -157,7 +157,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 101,
         codex_generated_name: false,
         rename_reason: None,
@@ -173,7 +173,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 102,
         codex_generated_name: false,
         rename_reason: None,
@@ -189,7 +189,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 103,
         codex_generated_name: false,
         rename_reason: None,
@@ -205,7 +205,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 105,
         codex_generated_name: false,
         rename_reason: None,
@@ -221,7 +221,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 106,
         codex_generated_name: false,
         rename_reason: None,
@@ -237,7 +237,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 107,
         codex_generated_name: false,
         rename_reason: None,
@@ -253,7 +253,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 108,
         codex_generated_name: false,
         rename_reason: None,
@@ -269,7 +269,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 109,
         codex_generated_name: false,
         rename_reason: None,
@@ -285,7 +285,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 110,
         codex_generated_name: false,
         rename_reason: None,
@@ -301,7 +301,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 112,
         codex_generated_name: false,
         rename_reason: None,
@@ -317,7 +317,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 113,
         codex_generated_name: false,
         rename_reason: None,
@@ -333,7 +333,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 114,
         codex_generated_name: false,
         rename_reason: None,
@@ -349,7 +349,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 115,
         codex_generated_name: false,
         rename_reason: None,
@@ -365,7 +365,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 116,
         codex_generated_name: false,
         rename_reason: None,
@@ -381,7 +381,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 117,
         codex_generated_name: false,
         rename_reason: None,
@@ -397,7 +397,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 119,
         codex_generated_name: false,
         rename_reason: None,
@@ -413,7 +413,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 120,
         codex_generated_name: false,
         rename_reason: None,
@@ -429,7 +429,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 121,
         codex_generated_name: false,
         rename_reason: None,
@@ -445,7 +445,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 122,
         codex_generated_name: false,
         rename_reason: None,
@@ -461,7 +461,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 123,
         codex_generated_name: false,
         rename_reason: None,
@@ -477,7 +477,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 124,
         codex_generated_name: false,
         rename_reason: None,
@@ -493,7 +493,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 126,
         codex_generated_name: false,
         rename_reason: None,
@@ -509,7 +509,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 127,
         codex_generated_name: false,
         rename_reason: None,
@@ -525,7 +525,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 128,
         codex_generated_name: false,
         rename_reason: None,
@@ -541,7 +541,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 129,
         codex_generated_name: false,
         rename_reason: None,
@@ -557,7 +557,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 130,
         codex_generated_name: false,
         rename_reason: None,
@@ -573,7 +573,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 131,
         codex_generated_name: false,
         rename_reason: None,
@@ -589,7 +589,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 133,
         codex_generated_name: false,
         rename_reason: None,
@@ -605,7 +605,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 134,
         codex_generated_name: false,
         rename_reason: None,
@@ -621,7 +621,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 135,
         codex_generated_name: false,
         rename_reason: None,
@@ -637,7 +637,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 136,
         codex_generated_name: false,
         rename_reason: None,
@@ -653,7 +653,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 137,
         codex_generated_name: false,
         rename_reason: None,
@@ -669,7 +669,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 138,
         codex_generated_name: false,
         rename_reason: None,
@@ -685,7 +685,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 140,
         codex_generated_name: false,
         rename_reason: None,
@@ -701,7 +701,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 141,
         codex_generated_name: false,
         rename_reason: None,
@@ -717,7 +717,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 142,
         codex_generated_name: false,
         rename_reason: None,
@@ -733,7 +733,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 143,
         codex_generated_name: false,
         rename_reason: None,
@@ -749,7 +749,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 144,
         codex_generated_name: false,
         rename_reason: None,
@@ -765,7 +765,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 145,
         codex_generated_name: false,
         rename_reason: None,
@@ -781,7 +781,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 147,
         codex_generated_name: false,
         rename_reason: None,
@@ -797,7 +797,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 148,
         codex_generated_name: false,
         rename_reason: None,
@@ -813,7 +813,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 149,
         codex_generated_name: false,
         rename_reason: None,
@@ -829,7 +829,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 150,
         codex_generated_name: false,
         rename_reason: None,
@@ -845,7 +845,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 151,
         codex_generated_name: false,
         rename_reason: None,
@@ -861,7 +861,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 152,
         codex_generated_name: false,
         rename_reason: None,
@@ -877,7 +877,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 154,
         codex_generated_name: false,
         rename_reason: None,
@@ -893,7 +893,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 155,
         codex_generated_name: false,
         rename_reason: None,
@@ -909,7 +909,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 156,
         codex_generated_name: false,
         rename_reason: None,
@@ -925,7 +925,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 157,
         codex_generated_name: false,
         rename_reason: None,
@@ -941,7 +941,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 158,
         codex_generated_name: false,
         rename_reason: None,
@@ -957,7 +957,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 159,
         codex_generated_name: false,
         rename_reason: None,
@@ -973,7 +973,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 161,
         codex_generated_name: false,
         rename_reason: None,
@@ -989,7 +989,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 162,
         codex_generated_name: false,
         rename_reason: None,
@@ -1005,7 +1005,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 163,
         codex_generated_name: false,
         rename_reason: None,
@@ -1021,7 +1021,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 164,
         codex_generated_name: false,
         rename_reason: None,
@@ -1037,7 +1037,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 165,
         codex_generated_name: false,
         rename_reason: None,
@@ -1053,7 +1053,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 166,
         codex_generated_name: false,
         rename_reason: None,
@@ -1069,7 +1069,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 168,
         codex_generated_name: false,
         rename_reason: None,
@@ -1085,7 +1085,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 169,
         codex_generated_name: false,
         rename_reason: None,
@@ -1101,7 +1101,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 170,
         codex_generated_name: false,
         rename_reason: None,
@@ -1117,7 +1117,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 171,
         codex_generated_name: false,
         rename_reason: None,
@@ -1133,7 +1133,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 172,
         codex_generated_name: false,
         rename_reason: None,
@@ -1149,7 +1149,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 173,
         codex_generated_name: false,
         rename_reason: None,
@@ -1165,7 +1165,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 175,
         codex_generated_name: false,
         rename_reason: None,
@@ -1181,7 +1181,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 176,
         codex_generated_name: false,
         rename_reason: None,
@@ -1197,7 +1197,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 177,
         codex_generated_name: false,
         rename_reason: None,
@@ -1213,7 +1213,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 178,
         codex_generated_name: false,
         rename_reason: None,
@@ -1229,7 +1229,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 179,
         codex_generated_name: false,
         rename_reason: None,
@@ -1245,7 +1245,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "pu_abilities_race.lst",
+        source_file: "pu_abilities_race",
         source_line: 180,
         codex_generated_name: false,
         rename_reason: None,

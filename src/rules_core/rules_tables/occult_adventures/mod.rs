@@ -4,7 +4,7 @@
 //! cycle).
 //!
 //! `decisions.md §27b` — EVERYTHING: this book's second family,
-//! `monster_ability` (plus the one `monster` row that owns the `.lst`
+//! `monster_ability` (plus the one `monster` row that owns the source file
 //! generator's own auto-included Kami (Shikigami)), overturns the
 //! repeatedly-reconfirmed "correctly out of scope" disposition for this
 //! book's 5 `monster_ability` units. That disposition was a *reachability*
@@ -20,7 +20,7 @@ pub mod spell_list;
 pub(crate) mod monster_data;
 
 // SD-32 card 11 (T12), cycle 4: real per-feature compute functions for the
-// six classes sharing `oa_abilities_class.lst`.
+// six classes sharing `oa_abilities_class`.
 pub mod kineticist_features;
 pub mod medium_features;
 pub mod mesmerist_features;

@@ -1,14 +1,14 @@
 //! ultimate_intrigue monster + monster-ability tables, transcribed verbatim
-//! from the book's own PCGen `.lst` rows.
+//! from the book's own PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_monster_tables.py ultimate_intrigue`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst` (which counts `.MOD`/`.COPY` overlays the
+//! line count over the source file (which counts `.MOD`/`.COPY` overlays the
 //! inventory correctly excludes).
 //!
 //! Sources, with the line each record was read from carried per row:
-//!   * `ui_abilities_race_pu.lst` -- 6 monster-ability rows
+//!   * `ui_abilities_race_pu` -- 6 monster-ability rows
 //!
 //! 6 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they SHIP with `owners: &[]` rather than being
@@ -18,12 +18,12 @@
 //! reaches no screen -- reachability is NOT claimed for these, and each key is
 //! pinned as a named, provable non-reach in `reach_gate.rs::
 //! UNREACHED_RECORD_FINDINGS`, never silently assumed reachable:
-//!   * `ui_abilities_race_pu.lst:13`
-//!   * `ui_abilities_race_pu.lst:14`
-//!   * `ui_abilities_race_pu.lst:15`
-//!   * `ui_abilities_race_pu.lst:16`
-//!   * `ui_abilities_race_pu.lst:17`
-//!   * `ui_abilities_race_pu.lst:18`
+//!   * `ui_abilities_race_pu:13`
+//!   * `ui_abilities_race_pu:14`
+//!   * `ui_abilities_race_pu:15`
+//!   * `ui_abilities_race_pu:16`
+//!   * `ui_abilities_race_pu:17`
+//!   * `ui_abilities_race_pu:18`
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
@@ -43,7 +43,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "ui_abilities_race_pu.lst",
+        source_file: "ui_abilities_race_pu",
         source_line: 13,
         codex_generated_name: false,
         rename_reason: None,
@@ -59,7 +59,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "ui_abilities_race_pu.lst",
+        source_file: "ui_abilities_race_pu",
         source_line: 14,
         codex_generated_name: false,
         rename_reason: None,
@@ -75,7 +75,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "ui_abilities_race_pu.lst",
+        source_file: "ui_abilities_race_pu",
         source_line: 15,
         codex_generated_name: false,
         rename_reason: None,
@@ -91,7 +91,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "ui_abilities_race_pu.lst",
+        source_file: "ui_abilities_race_pu",
         source_line: 16,
         codex_generated_name: false,
         rename_reason: None,
@@ -107,7 +107,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "ui_abilities_race_pu.lst",
+        source_file: "ui_abilities_race_pu",
         source_line: 17,
         codex_generated_name: false,
         rename_reason: None,
@@ -123,7 +123,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "ui_abilities_race_pu.lst",
+        source_file: "ui_abilities_race_pu",
         source_line: 18,
         codex_generated_name: false,
         rename_reason: None,

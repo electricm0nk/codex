@@ -1,14 +1,14 @@
 //! bestiary_6 companion tables, transcribed verbatim from the book's own
-//! PCGen `.lst` rows.
+//! PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_companion_tables.py bestiary_6`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst`.
+//! line count over the source file.
 //!
 //! Sources, with the file AND line each record was read from carried per row:
-//!   * `b6_races_companion.lst` -- 14 companion creature rows
-//!   * `b6_abilities_companion.lst` -- 12 companion ability rows
+//!   * `b6_races_companion` -- 14 companion creature rows
+//!   * `b6_abilities_companion` -- 12 companion ability rows
 
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, ConditionItem, EffectCondition, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
@@ -33,7 +33,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Amargasaurus"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 4,
     },
     CompanionRecord {
@@ -55,7 +55,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Brontotherium"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 5,
     },
     CompanionRecord {
@@ -77,7 +77,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Deinotherium"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 6,
     },
     CompanionRecord {
@@ -99,7 +99,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Devil Monkey"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 7,
     },
     CompanionRecord {
@@ -121,7 +121,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dunkleosteus"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 8,
     },
     CompanionRecord {
@@ -143,7 +143,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Elasmotherium"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 9,
     },
     CompanionRecord {
@@ -165,7 +165,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Giganotosaurus"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 10,
     },
     CompanionRecord {
@@ -187,7 +187,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Kentrosaurus"],
         external_ability_refs: &["Kentrosaurus ~ Impaling Strike"],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 11,
     },
     CompanionRecord {
@@ -209,7 +209,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Mokele-Mbembe"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 12,
     },
     CompanionRecord {
@@ -231,7 +231,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Quetzalcoatlus"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 13,
     },
     CompanionRecord {
@@ -253,7 +253,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Raven (Giant)"],
         external_ability_refs: &["Giant Raven ~ Scavenger"],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 14,
     },
     CompanionRecord {
@@ -275,7 +275,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Titanoboa"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 15,
     },
     CompanionRecord {
@@ -297,7 +297,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &["Amphibious"],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 18,
     },
     CompanionRecord {
@@ -319,7 +319,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b6_races_companion.lst",
+        source_file: "b6_races_companion",
         source_line: 19,
     },
 ];
@@ -339,7 +339,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Amargasaurus)"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 4,
     },
     CompanionAbilityRecord {
@@ -355,7 +355,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Brontotherium)"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 5,
     },
     CompanionAbilityRecord {
@@ -371,7 +371,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Deinotherium)"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 6,
     },
     CompanionAbilityRecord {
@@ -387,7 +387,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Devil Monkey)"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 7,
     },
     CompanionAbilityRecord {
@@ -403,7 +403,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dunkleosteus)"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 8,
     },
     CompanionAbilityRecord {
@@ -419,7 +419,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Elasmotherium)"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 9,
     },
     CompanionAbilityRecord {
@@ -435,7 +435,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Giganotosaurus)"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 10,
     },
     CompanionAbilityRecord {
@@ -451,7 +451,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Kentrosaurus)"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 11,
     },
     CompanionAbilityRecord {
@@ -467,7 +467,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Mokele-Mbembe)"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 12,
     },
     CompanionAbilityRecord {
@@ -483,7 +483,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Quetzalcoatlus)"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 13,
     },
     CompanionAbilityRecord {
@@ -499,7 +499,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Raven (Giant))"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 14,
     },
     CompanionAbilityRecord {
@@ -515,7 +515,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Titanoboa)"],
         cross_book_owners: &[],
-        source_file: "b6_abilities_companion.lst",
+        source_file: "b6_abilities_companion",
         source_line: 15,
     },
 ];

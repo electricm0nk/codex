@@ -4,11 +4,11 @@
 //! already-ingested `BONUS:VAR`/`BONUS:ABILITYPOOL` tokens
 //! (`data/corpus/ultimate_psionics/class_feature/tactician/*.json`), not
 //! from memory of the printed rulebook. Tactician's prime stat
-//! (`TacticianPrimeStat`, `up_classes.lst:406`) is Intelligence; its
-//! secondary stat (`TacticianSecondaryStat`, `up_classes.lst:407`) is
+//! (`TacticianPrimeStat`, `up_classes:406`) is Intelligence; its
+//! secondary stat (`TacticianSecondaryStat`, `up_classes:407`) is
 //! Charisma.
 
-/// `up_abilities_class.lst:912`, `Collective`: the roster's own tracked
+/// `up_abilities_class:912`, `Collective`: the roster's own tracked
 /// "var" field for this record is actually a `PREABILITY` gate clause
 /// picked up by the census script's last-`|`-segment heuristic (the same
 /// class of quirk the prior cycle documented for Cryptic's Enhanced
@@ -25,7 +25,7 @@ pub fn collective_minds(level: u8, intelligence: i16) -> Option<i16> {
     Some(intelligence.max(i16::from(level) / 2))
 }
 
-/// `up_abilities_class.lst:913`, `Coordinated Strike`: the roster's own
+/// `up_abilities_class:913`, `Coordinated Strike`: the roster's own
 /// tracked var is `TacticianCoordinatedStrikeTimes`
 /// (`BONUS:VAR|TacticianCoordinatedStrikeTimes|3+TacticianPrimeStat`) — a
 /// sibling `TacticianCoordinatedStrikeBonus` token exists on the same
@@ -37,7 +37,7 @@ pub fn coordinated_strike_times_per_day(level: u8, intelligence: i16) -> Option<
     Some(3 + intelligence)
 }
 
-/// `up_abilities_class.lst:916`, `Strategy`:
+/// `up_abilities_class:916`, `Strategy`:
 /// `BONUS:VAR|StrategyTimes|3+TacticianSecondaryStat` — reads the
 /// *secondary* stat (Charisma), not the prime stat. `None` below level 4
 /// (the roster's own `min_level`).
@@ -48,7 +48,7 @@ pub fn strategy_times_per_day(level: u8, charisma: i16) -> Option<i16> {
     Some(3 + charisma)
 }
 
-/// `up_abilities_class.lst:917`, `Improved Share`:
+/// `up_abilities_class:917`, `Improved Share`:
 /// `BONUS:VAR|ImprovedSharePowers|1+floor((TacticianLVL+1)/6)`. `None`
 /// below level 5 (the roster's own `min_level`).
 pub fn improved_share_powers(level: u8) -> Option<i16> {
@@ -58,7 +58,7 @@ pub fn improved_share_powers(level: u8) -> Option<i16> {
     Some(1 + (i16::from(level) + 1) / 6)
 }
 
-/// `up_abilities_class.lst:919`, `Teamwork Feats`: no `DEFINE`/plain
+/// `up_abilities_class:919`, `Teamwork Feats`: no `DEFINE`/plain
 /// `BONUS:VAR` on this record at all — the record's real magnitude is the
 /// `BONUS:ABILITYPOOL|Tactician Bonus Teamwork Feat|TacticianLVL/6` pool
 /// size (the roster's own `var` field is `None` for this record, same as
@@ -71,7 +71,7 @@ pub fn teamwork_feats_bonus_pool(level: u8) -> Option<i16> {
     Some(i16::from(level) / 6)
 }
 
-/// `up_abilities_class.lst:924`, `Master Strategist`:
+/// `up_abilities_class:924`, `Master Strategist`:
 /// `BONUS:VAR|MasterStrategistBonus|TacticianPrimeStat` — a pure
 /// Intelligence-modifier value with no level term. `None` below level 20
 /// (the roster's own `min_level`).

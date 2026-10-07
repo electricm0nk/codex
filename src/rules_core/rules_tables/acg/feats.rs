@@ -1,6 +1,6 @@
 //! PF1 ACG (Advanced Class Guide) feat catalog.
 //!
-//! Full corpus coverage of `advanced_class_guide/acg_feats.lst`,
+//! Full corpus coverage of `advanced_class_guide/acg_feats`,
 //! mirroring `crb::feats` exactly -- same `FeatTableEntry` type, same
 //! `TYPE:`-facet category-derivation rule, same
 //! generated-from-the-live-corpus method (see `feat_data/`'s own doc
@@ -10,7 +10,7 @@
 //! Warpriest could not take a single feat from that class's own book --
 //! including the Panache deed feats the Swashbuckler is built around.
 //!
-//! **The arithmetic, from the raw file.** `acg_feats.lst` holds 173
+//! **The arithmetic, from the raw file.** `acg_feats` holds 173
 //! non-comment lines. 39 are `NAME.MOD` records, which modify an
 //! already-declared record rather than declaring one, and are excluded.
 //! That leaves 134 real declarations, of which **129** carry a `TYPE:`
@@ -65,7 +65,7 @@
 use super::super::crb::feats::FeatTableEntry;
 
 /// Full ACG feat catalog: every classifiable record from
-/// `acg_feats.lst`, generated from the live corpus. Built once and
+/// `acg_feats`, generated from the live corpus. Built once and
 /// cached for the process lifetime -- mirrors `crb::feats::feat_tables`.
 pub fn feat_tables() -> &'static [FeatTableEntry] {
     static TABLES: std::sync::OnceLock<Vec<FeatTableEntry>> = std::sync::OnceLock::new();

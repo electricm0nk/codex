@@ -21,7 +21,7 @@
       "owners": [
         "Bat (Sootwing)"
       ],
-      "source_file": "mc_abilities_race.lst",
+      "source_file": "mc_abilities_race",
       "source_line": 71,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -39,7 +39,7 @@
       "owners": [
         "Seru"
       ],
-      "source_file": "mc_abilities_race.lst",
+      "source_file": "mc_abilities_race",
       "source_line": 85,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -57,7 +57,7 @@
       "owners": [
         "Seru"
       ],
-      "source_file": "mc_abilities_race.lst",
+      "source_file": "mc_abilities_race",
       "source_line": 86,
       "codex_generated_name": false,
       "rename_reason": null,

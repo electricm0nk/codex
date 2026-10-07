@@ -1,4 +1,4 @@
-//! Generated from the real PCGen corpus file `cr_equipmods.lst`.
+//! Generated from the real PCGen corpus file `cr_equipmods`.
 //! 658 records, one per distinct item after the SD-17 KEY:-based merge fix
 //! (see `src/pcgen_import/lst_parser/equipment.rs`'s `open_record`).
 //! Not hand-authored -- do not hand-edit; regenerate if the corpus changes.

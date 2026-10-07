@@ -19,7 +19,7 @@
 //! exactly one real archetype in the 23-book scope, `Ninja Archetype ~
 //! Scout`, missed by the clearance table's grep because the record lives
 //! in a nested subdirectory (`ultimate_combat/support/
-//! uc_abilities_class_apg.lst`) the clearance evidence method's
+//! uc_abilities_class_apg`) the clearance evidence method's
 //! single-file grep never reached (the same nested-directory gap
 //! `OPEN-ISSUES.md` row 1 already names). See `class_ninja.rs`'s own doc
 //! comment for the full citation trail.

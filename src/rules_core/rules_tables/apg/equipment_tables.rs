@@ -2,8 +2,8 @@
 //! criteria 6.2/6.3/6.4).
 //!
 //! Source: every real, active PCGen corpus record from
-//! `apg_equip_general.lst`, `apg_equip_arms_armor.lst`, and
-//! `apg_equip_magic_items.lst` (Advanced Player's Guide) — 338 total, in
+//! `apg_equip_general`, `apg_equip_arms_armor`, and
+//! `apg_equip_magic_items` (Advanced Player's Guide) — 338 total, in
 //! `equipment_data::EQUIPMENT_RECORDS` (see that module's doc comment for
 //! full sourcing methodology and the 341 -> 338 audit correction).
 //! Supersedes the SD-22 Epic 3 bootstrap (one representative item per
@@ -12,17 +12,17 @@
 //! `docs/release/SD-24-beta-readiness-and-multiclass/epic-breakdown.md`
 //! criterion 6.2.
 //!
-//! - `Iron Spike` — `apg_equip_general.lst`, `COST:0.05 WT:1`.
-//! - `Arrow (Blunt)` — `apg_equip_arms_armor.lst`, `COST:0.1 WT:0.15`.
-//! - `Knucklebone of Fickle Fortune` — `apg_equip_magic_items.lst`, `COST:0 WT:0.01`.
+//! - `Iron Spike` — `apg_equip_general`, `COST:0.05 WT:1`.
+//! - `Arrow (Blunt)` — `apg_equip_arms_armor`, `COST:0.1 WT:0.15`.
+//! - `Knucklebone of Fickle Fortune` — `apg_equip_magic_items`, `COST:0 WT:0.01`.
 //!
 //! (the three records above are the original SD-22 bootstrap sample,
 //! still present and unchanged among the full 338.)
 //!
 //! **Correction to the prior "no Bomb record" claim.** An earlier
 //! version of this doc comment asserted no `Bomb`/`Acid Bomb` record
-//! exists in any `apg_equip_*.lst` file. The full-corpus ingest finds
-//! this to be only half true: `apg_equip_arms_armor.lst` does carry one
+//! exists in any `apg_equip_*` file. The full-corpus ingest finds
+//! this to be only half true: `apg_equip_arms_armor` does carry one
 //! real `Bomb` record (`PROFICIENCY:WEAPON|Bomb`,
 //! `TYPE:Weapon.Exotic.Ranged.Standard.Thrown.Splash.Fire...`) — not a
 //! purchasable consumable, but a `BONUS:WEAPON|TOHIT|4|...` to-hit
@@ -94,8 +94,8 @@ pub struct EquipmentFieldCoverage {
     /// Records currently in `EQUIPMENT_TABLE`.
     pub total_records: u32,
     /// Real, active, deduplicated-by-name record count across
-    /// `apg_equip_general.lst` (93) + `apg_equip_arms_armor.lst` (75) +
-    /// `apg_equip_magic_items.lst` (170) = 338. Corrected from the
+    /// `apg_equip_general` (93) + `apg_equip_arms_armor` (75) +
+    /// `apg_equip_magic_items` (170) = 338. Corrected from the
     /// criterion 6.1 audit's originally-documented 341 (94+76+171) — see
     /// `equipment_data`'s module doc comment for the off-by-one-per-file
     /// `SOURCELONG:` header-line miscount this corrects.

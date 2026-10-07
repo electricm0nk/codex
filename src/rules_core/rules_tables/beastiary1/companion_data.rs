@@ -1,16 +1,16 @@
 //! bestiary companion tables, transcribed verbatim from the book's own
-//! PCGen `.lst` rows.
+//! PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_companion_tables.py bestiary`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst`.
+//! line count over the source file.
 //!
 //! Sources, with the file AND line each record was read from carried per row:
-//!   * `b1_races_companion.lst` -- 24 companion creature rows
-//!   * `ce_races_familiar_cr.lst` -- 31 companion creature rows
-//!   * `b1_abilities_companion.lst` -- 35 companion ability rows
-//!   * `ce_abilities_familiar_race_cr.lst` -- 36 companion ability rows
+//!   * `b1_races_companion` -- 24 companion creature rows
+//!   * `ce_races_familiar_cr` -- 31 companion creature rows
+//!   * `b1_abilities_companion` -- 35 companion ability rows
+//!   * `ce_abilities_familiar_race_cr` -- 36 companion ability rows
 //!
 //! NOT transcribed -- ability rows no creature row of this book owns, so
 //! nothing could ever reach them on screen. Dropped rather than emitted
@@ -91,7 +91,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Bat (Dire)"],
         external_ability_refs: &["Flight Maneuverability", "Animal Traits Output"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 7,
     },
     CompanionRecord {
@@ -113,7 +113,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Ankylosaurus)", "Ankylosaurus ~ Stun"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 8,
     },
     CompanionRecord {
@@ -135,7 +135,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Brachiosaurus)"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 9,
     },
     CompanionRecord {
@@ -157,7 +157,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Elasmosaurus)"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 10,
     },
     CompanionRecord {
@@ -179,7 +179,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Pteranodon)"],
         external_ability_refs: &["Flight Maneuverability", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 11,
     },
     CompanionRecord {
@@ -201,7 +201,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Stegosaurus)"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 12,
     },
     CompanionRecord {
@@ -223,7 +223,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Triceratops)"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 13,
     },
     CompanionRecord {
@@ -245,7 +245,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 14,
     },
     CompanionRecord {
@@ -267,7 +267,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Tyrannosaurus)", "Tyrannosaurus ~ Powerful Bite"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 14,
     },
     CompanionRecord {
@@ -289,7 +289,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 15,
     },
     CompanionRecord {
@@ -311,7 +311,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Dolphin ~ Hold Breath", "Companion Advancement ~ Dolphin"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 15,
     },
     CompanionRecord {
@@ -333,7 +333,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Dolphin ~ Hold Breath", "Companion Advancement ~ Dolphin (Orca)"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 16,
     },
     CompanionRecord {
@@ -355,7 +355,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 16,
     },
     CompanionRecord {
@@ -377,7 +377,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Giant Frog ~ Tongue", "Companion Advancement ~ Frog (Giant)"],
         external_ability_refs: &["Grab", "Pull", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 17,
     },
     CompanionRecord {
@@ -399,7 +399,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 17,
     },
     CompanionRecord {
@@ -421,7 +421,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Eel (Electric)", "Electric Eel ~ Electricity"],
         external_ability_refs: &["Amphibious", "Can't Be Tripped"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 18,
     },
     CompanionRecord {
@@ -443,7 +443,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 18,
     },
     CompanionRecord {
@@ -465,7 +465,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Eel (Giant Moray)", "Giant Moray Eel ~ Gnaw"],
         external_ability_refs: &["Grab", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 19,
     },
     CompanionRecord {
@@ -487,7 +487,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 19,
     },
     CompanionRecord {
@@ -509,7 +509,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Elephant (Mastodon)"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 20,
     },
     CompanionRecord {
@@ -531,7 +531,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 20,
     },
     CompanionRecord {
@@ -553,7 +553,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Elephant (Mastodon)"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 21,
     },
     CompanionRecord {
@@ -575,7 +575,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 21,
     },
     CompanionRecord {
@@ -597,7 +597,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Goblin Dog ~ Allergic Reaction", "Companion Advancement ~ Goblin Dog"],
         external_ability_refs: &["Immunity to Disease"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 22,
     },
     CompanionRecord {
@@ -619,7 +619,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 22,
     },
     CompanionRecord {
@@ -641,7 +641,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Herd Animal (Aurochs)"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 23,
     },
     CompanionRecord {
@@ -663,7 +663,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 23,
     },
     CompanionRecord {
@@ -685,7 +685,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Herd Animal (Aurochs)"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 24,
     },
     CompanionRecord {
@@ -707,7 +707,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Weasel ~ Attach"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 24,
     },
     CompanionRecord {
@@ -729,7 +729,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Hyena"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 25,
     },
     CompanionRecord {
@@ -751,7 +751,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Monitor Lizard", "Lizard Monitor ~ Poison"],
         external_ability_refs: &["Grab", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 26,
     },
     CompanionRecord {
@@ -773,7 +773,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Octopus ~ Ink Cloud", "Octopus ~ Jet", "Companion Advancement ~ Octopus", "Octopus ~ Poison"],
         external_ability_refs: &["Can't Be Tripped", "Grab"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 27,
     },
     CompanionRecord {
@@ -795,7 +795,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Rhinoceros"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 28,
     },
     CompanionRecord {
@@ -817,7 +817,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Roc"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 29,
     },
     CompanionRecord {
@@ -839,7 +839,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Squid ~ Ink Cloud", "Squid ~ Jet", "Companion Advancement ~ Squid"],
         external_ability_refs: &["Grab"],
         external_ability_ref_conditions: &[],
-        source_file: "b1_races_companion.lst",
+        source_file: "b1_races_companion",
         source_line: 30,
     },
     CompanionRecord {
@@ -861,7 +861,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 61,
     },
     CompanionRecord {
@@ -883,7 +883,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Air Elemental ~ Air Mastery"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 66,
     },
     CompanionRecord {
@@ -905,7 +905,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Earth Elemental ~ Earth Glide", "Earth Elemental ~ Earth Mastery"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 67,
     },
     CompanionRecord {
@@ -927,7 +927,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 68,
     },
     CompanionRecord {
@@ -949,7 +949,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Water Elemental ~ Drench", "Water Elemental ~ Vortex", "Water Elemental ~ Water Mastery"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 69,
     },
     CompanionRecord {
@@ -971,7 +971,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Stirge ~ Attach", "Stirge ~ Blood Drain", "Stirge ~ Diseased"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 70,
     },
     CompanionRecord {
@@ -993,7 +993,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Homunculus ~ Telepathic Link"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 75,
     },
     CompanionRecord {
@@ -1015,7 +1015,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 76,
     },
     CompanionRecord {
@@ -1037,7 +1037,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Air Mephit ~ Breath Weapon", "Air Mephit ~ Fast Healing"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 77,
     },
     CompanionRecord {
@@ -1059,7 +1059,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Dust Mephit ~ Breath Weapon", "Dust Mephit ~ Fast Healing"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 78,
     },
     CompanionRecord {
@@ -1081,7 +1081,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Earth Mephit ~ Change Size", "Earth Mephit ~ Breath Weapon", "Earth Mephit ~ Fast Healing"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 79,
     },
     CompanionRecord {
@@ -1103,7 +1103,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Fire Mephit ~ Breath Weapon", "Fire Mephit ~ Fast Healing"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 80,
     },
     CompanionRecord {
@@ -1125,7 +1125,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Ice Mephit ~ Breath Weapon", "Ice Mephit ~ Fast Healing"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 81,
     },
     CompanionRecord {
@@ -1147,7 +1147,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Magma Mephit ~ Magma Form", "Magma Mephit ~ Breath Weapon", "Magma Mephit ~ Fast Healing"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 82,
     },
     CompanionRecord {
@@ -1169,7 +1169,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Ooze Mephit ~ Breath Weapon", "Ooze Mephit ~ Fast Healing"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 83,
     },
     CompanionRecord {
@@ -1191,7 +1191,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Salt Mephit ~ Dehydrate", "Salt Mephit ~ Breath Weapon", "Salt Mephit ~ Fast Healing"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 84,
     },
     CompanionRecord {
@@ -1213,7 +1213,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Steam Mephit ~ Boiling Rain", "Steam Mephit ~ Breath Weapon", "Steam Mephit ~ Fast Healing"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 85,
     },
     CompanionRecord {
@@ -1235,7 +1235,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Water Mephit ~ Breath Weapon", "Water Mephit ~ Fast Healing"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 86,
     },
     CompanionRecord {
@@ -1257,7 +1257,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 87,
     },
     CompanionRecord {
@@ -1279,7 +1279,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Quasit ~ Telepathy"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "ce_races_familiar_cr.lst",
+        source_file: "ce_races_familiar_cr",
         source_line: 88,
     },
 ];
@@ -1299,7 +1299,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Bat (Dire))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 6,
     },
     CompanionAbilityRecord {
@@ -1315,7 +1315,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Ankylosaurus))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 7,
     },
     CompanionAbilityRecord {
@@ -1331,7 +1331,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Brachiosaurus))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 8,
     },
     CompanionAbilityRecord {
@@ -1347,7 +1347,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Elasmosaurus))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 9,
     },
     CompanionAbilityRecord {
@@ -1363,7 +1363,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Pteranodon))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 10,
     },
     CompanionAbilityRecord {
@@ -1379,7 +1379,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Stegosaurus))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 11,
     },
     CompanionAbilityRecord {
@@ -1395,7 +1395,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Triceratops))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 12,
     },
     CompanionAbilityRecord {
@@ -1411,7 +1411,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Tyrannosaurus))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 13,
     },
     CompanionAbilityRecord {
@@ -1427,7 +1427,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dolphin)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 14,
     },
     CompanionAbilityRecord {
@@ -1443,7 +1443,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dolphin (Orca))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 15,
     },
     CompanionAbilityRecord {
@@ -1459,7 +1459,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Frog (Giant))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 16,
     },
     CompanionAbilityRecord {
@@ -1475,7 +1475,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Eel (Electric))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 17,
     },
     CompanionAbilityRecord {
@@ -1491,7 +1491,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Eel (Giant Moray))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 18,
     },
     CompanionAbilityRecord {
@@ -1507,7 +1507,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Elephant (Mastodon))", "Companion (Elephant)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 19,
     },
     CompanionAbilityRecord {
@@ -1523,7 +1523,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Goblin Dog)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 20,
     },
     CompanionAbilityRecord {
@@ -1539,7 +1539,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Herd Animal (Aurochs))", "Companion (Herd Animal (Bison))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 21,
     },
     CompanionAbilityRecord {
@@ -1555,7 +1555,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Hyena)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 22,
     },
     CompanionAbilityRecord {
@@ -1571,7 +1571,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Lizard (Monitor))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 23,
     },
     CompanionAbilityRecord {
@@ -1587,7 +1587,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Octopus)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 24,
     },
     CompanionAbilityRecord {
@@ -1603,7 +1603,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Rhinoceros)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 25,
     },
     CompanionAbilityRecord {
@@ -1619,7 +1619,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Roc)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 26,
     },
     CompanionAbilityRecord {
@@ -1635,7 +1635,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Squid)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 27,
     },
     CompanionAbilityRecord {
@@ -1651,7 +1651,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &["Companion (Dinosaur (Ankylosaurus))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 31,
     },
     CompanionAbilityRecord {
@@ -1667,7 +1667,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.88"),
         owners: &["Companion (Dolphin)", "Companion (Dolphin (Orca))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 32,
     },
     CompanionAbilityRecord {
@@ -1683,7 +1683,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.119"),
         owners: &["Companion (Eel (Electric))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 33,
     },
     CompanionAbilityRecord {
@@ -1699,7 +1699,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.135"),
         owners: &["Companion (Frog (Giant))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 34,
     },
     CompanionAbilityRecord {
@@ -1715,7 +1715,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.119"),
         owners: &["Companion (Eel (Giant Moray))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 35,
     },
     CompanionAbilityRecord {
@@ -1731,7 +1731,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.157"),
         owners: &["Companion (Goblin Dog)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 36,
     },
     CompanionAbilityRecord {
@@ -1747,7 +1747,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.194"),
         owners: &["Companion (Lizard (Monitor))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 37,
     },
     CompanionAbilityRecord {
@@ -1763,7 +1763,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.219"),
         owners: &["Companion (Octopus)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 38,
     },
     CompanionAbilityRecord {
@@ -1779,7 +1779,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.219"),
         owners: &["Companion (Octopus)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 39,
     },
     CompanionAbilityRecord {
@@ -1795,7 +1795,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.219"),
         owners: &["Companion (Octopus)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 40,
     },
     CompanionAbilityRecord {
@@ -1811,7 +1811,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.259"),
         owners: &["Companion (Squid)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 41,
     },
     CompanionAbilityRecord {
@@ -1827,7 +1827,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Squid)"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 42,
     },
     CompanionAbilityRecord {
@@ -1843,7 +1843,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.86"),
         owners: &["Companion (Dinosaur (Tyrannosaurus))"],
         cross_book_owners: &[],
-        source_file: "b1_abilities_companion.lst",
+        source_file: "b1_abilities_companion",
         source_line: 43,
     },
     CompanionAbilityRecord {
@@ -1859,7 +1859,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.133"),
         owners: &["Weasel"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 76,
     },
     CompanionAbilityRecord {
@@ -1875,7 +1875,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.120"),
         owners: &["Elemental (Air/Small)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 97,
     },
     CompanionAbilityRecord {
@@ -1891,7 +1891,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.122"),
         owners: &["Elemental (Earth/Small)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 105,
     },
     CompanionAbilityRecord {
@@ -1907,7 +1907,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.122"),
         owners: &["Elemental (Earth/Small)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 106,
     },
     CompanionAbilityRecord {
@@ -1923,7 +1923,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.126"),
         owners: &["Elemental (Water/Small)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 121,
     },
     CompanionAbilityRecord {
@@ -1939,7 +1939,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.126"),
         owners: &["Elemental (Water/Small)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 122,
     },
     CompanionAbilityRecord {
@@ -1955,7 +1955,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.126"),
         owners: &["Elemental (Water/Small)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 123,
     },
     CompanionAbilityRecord {
@@ -1971,7 +1971,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.260"),
         owners: &["Stirge"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 130,
     },
     CompanionAbilityRecord {
@@ -1987,7 +1987,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.260"),
         owners: &["Stirge"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 131,
     },
     CompanionAbilityRecord {
@@ -2003,7 +2003,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.260"),
         owners: &["Stirge"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 132,
     },
     CompanionAbilityRecord {
@@ -2019,7 +2019,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.176"),
         owners: &["Homunculus"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 139,
     },
     CompanionAbilityRecord {
@@ -2035,7 +2035,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Earth)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 173,
     },
     CompanionAbilityRecord {
@@ -2051,7 +2051,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Magma)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 174,
     },
     CompanionAbilityRecord {
@@ -2067,7 +2067,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.203"),
         owners: &["Mephit (Salt)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 175,
     },
     CompanionAbilityRecord {
@@ -2083,7 +2083,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.203"),
         owners: &["Mephit (Steam)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 176,
     },
     CompanionAbilityRecord {
@@ -2099,7 +2099,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Air)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 178,
     },
     CompanionAbilityRecord {
@@ -2115,7 +2115,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Dust)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 179,
     },
     CompanionAbilityRecord {
@@ -2131,7 +2131,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Earth)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 180,
     },
     CompanionAbilityRecord {
@@ -2147,7 +2147,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Fire)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 181,
     },
     CompanionAbilityRecord {
@@ -2163,7 +2163,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Ice)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 182,
     },
     CompanionAbilityRecord {
@@ -2179,7 +2179,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Magma)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 183,
     },
     CompanionAbilityRecord {
@@ -2195,7 +2195,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Ooze)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 184,
     },
     CompanionAbilityRecord {
@@ -2211,7 +2211,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Salt)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 185,
     },
     CompanionAbilityRecord {
@@ -2227,7 +2227,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Steam)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 186,
     },
     CompanionAbilityRecord {
@@ -2243,7 +2243,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Water)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 187,
     },
     CompanionAbilityRecord {
@@ -2259,7 +2259,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Air)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 199,
     },
     CompanionAbilityRecord {
@@ -2275,7 +2275,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Dust)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 200,
     },
     CompanionAbilityRecord {
@@ -2291,7 +2291,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Earth)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 201,
     },
     CompanionAbilityRecord {
@@ -2307,7 +2307,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Fire)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 202,
     },
     CompanionAbilityRecord {
@@ -2323,7 +2323,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Ice)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 203,
     },
     CompanionAbilityRecord {
@@ -2339,7 +2339,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Magma)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 204,
     },
     CompanionAbilityRecord {
@@ -2355,7 +2355,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Ooze)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 205,
     },
     CompanionAbilityRecord {
@@ -2371,7 +2371,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Salt)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 206,
     },
     CompanionAbilityRecord {
@@ -2387,7 +2387,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Steam)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 207,
     },
     CompanionAbilityRecord {
@@ -2403,7 +2403,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.202"),
         owners: &["Mephit (Water)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 208,
     },
     CompanionAbilityRecord {
@@ -2419,7 +2419,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.305"),
         owners: &["Demon (Quasit)"],
         cross_book_owners: &[],
-        source_file: "ce_abilities_familiar_race_cr.lst",
+        source_file: "ce_abilities_familiar_race_cr",
         source_line: 225,
     },
 ];

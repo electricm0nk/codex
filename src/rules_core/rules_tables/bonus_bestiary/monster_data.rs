@@ -1,15 +1,15 @@
 //! bonus_bestiary monster + monster-ability tables, transcribed verbatim
-//! from the book's own PCGen `.lst` rows.
+//! from the book's own PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_monster_tables.py bonus_bestiary`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst` (which counts `.MOD`/`.COPY` overlays the
+//! line count over the source file (which counts `.MOD`/`.COPY` overlays the
 //! inventory correctly excludes).
 //!
 //! Sources, with the line each record was read from carried per row:
-//!   * `bb_races.lst` -- 14 monster rows
-//!   * `bb_abilities_race.lst` -- 17 monster-ability rows
+//!   * `bb_races` -- 14 monster rows
+//!   * `bb_abilities_race` -- 17 monster-ability rows
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -32,7 +32,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 6,
     },
     MonsterStatBlock {
@@ -52,7 +52,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 7,
     },
     MonsterStatBlock {
@@ -72,7 +72,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 8,
     },
     MonsterStatBlock {
@@ -92,7 +92,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 9,
     },
     MonsterStatBlock {
@@ -112,7 +112,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 10,
     },
     MonsterStatBlock {
@@ -132,7 +132,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 11,
     },
     MonsterStatBlock {
@@ -152,7 +152,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("3"), spell: "Invisibility (Greater/self only)", save_dc_token: None }],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 12,
     },
     MonsterStatBlock {
@@ -172,7 +172,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 13,
     },
     MonsterStatBlock {
@@ -192,7 +192,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("7"), spell: "Disguise Self", save_dc_token: Some("11+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("7"), spell: "Fog Cloud", save_dc_token: Some("12+CHA") }],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 14,
     },
     MonsterStatBlock {
@@ -212,7 +212,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("3"), spell: "Disguise Self", save_dc_token: Some("11+CHA") }],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 15,
     },
     MonsterStatBlock {
@@ -232,7 +232,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("9"), spell: "Dimension Door", save_dc_token: Some("14+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("2"), time_unit: None, caster_level_token: Some("9"), spell: "Invisibility (Greater/self only)", save_dc_token: None }],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 16,
     },
     MonsterStatBlock {
@@ -252,7 +252,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 17,
     },
     MonsterStatBlock {
@@ -272,7 +272,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("12"), spell: "Water Breathing", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("12"), spell: "Charm Person", save_dc_token: Some("11+CHA") }],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 18,
     },
     MonsterStatBlock {
@@ -292,7 +292,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: false,
         sla_cl_token: None,
         spell_like_abilities: &[],
-        source_file: "bb_races.lst",
+        source_file: "bb_races",
         source_line: 19,
     },
 ];
@@ -309,7 +309,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BabbleDC"],
         source_page: Some("p.4"),
         owners: &["Allip"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 6,
         codex_generated_name: false,
         rename_reason: None,
@@ -325,7 +325,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.4"),
         owners: &["Allip"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 7,
         codex_generated_name: false,
         rename_reason: None,
@@ -341,7 +341,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.4"),
         owners: &["Allip"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 8,
         codex_generated_name: false,
         rename_reason: None,
@@ -357,7 +357,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.5"),
         owners: &["Ant Lion (Giant)"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 12,
         codex_generated_name: false,
         rename_reason: None,
@@ -373,7 +373,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SporesDC"],
         source_page: Some("p.6"),
         owners: &["Ascomoid"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 16,
         codex_generated_name: false,
         rename_reason: None,
@@ -389,7 +389,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.7"),
         owners: &["Axe Beak"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 20,
         codex_generated_name: false,
         rename_reason: None,
@@ -405,7 +405,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.8"),
         owners: &["Caryatid Column"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 24,
         codex_generated_name: false,
         rename_reason: None,
@@ -421,7 +421,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.8"),
         owners: &["Caryatid Column"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 25,
         codex_generated_name: false,
         rename_reason: None,
@@ -437,7 +437,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.8"),
         owners: &["Caryatid Column"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 26,
         codex_generated_name: false,
         rename_reason: None,
@@ -453,7 +453,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BreathWeaponDC"],
         source_page: Some("p.9"),
         owners: &["Dragon (Faerie)"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 30,
         codex_generated_name: false,
         rename_reason: None,
@@ -469,7 +469,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["RoarDC"],
         source_page: Some("p.10"),
         owners: &["Dragonne"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 34,
         codex_generated_name: false,
         rename_reason: None,
@@ -485,7 +485,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["HuecuvaDiseaseDC"],
         source_page: Some("p.12"),
         owners: &["Huecuva"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 38,
         codex_generated_name: false,
         rename_reason: None,
@@ -501,7 +501,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.12"),
         owners: &["Huecuva"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 39,
         codex_generated_name: false,
         rename_reason: None,
@@ -517,7 +517,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Lammasu"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 43,
         codex_generated_name: false,
         rename_reason: None,
@@ -533,7 +533,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["WaterNagaPoisonDC"],
         source_page: Some("p.14"),
         owners: &["Naga (Water)"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 47,
         codex_generated_name: false,
         rename_reason: None,
@@ -549,7 +549,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BayDC"],
         source_page: Some("p.16"),
         owners: &["Shadow Mastiff"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 51,
         codex_generated_name: false,
         rename_reason: None,
@@ -565,7 +565,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.16"),
         owners: &["Shadow Mastiff"],
-        source_file: "bb_abilities_race.lst",
+        source_file: "bb_abilities_race",
         source_line: 52,
         codex_generated_name: false,
         rename_reason: None,

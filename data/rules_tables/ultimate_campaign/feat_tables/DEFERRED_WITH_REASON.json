@@ -11,11 +11,11 @@
   "rows": [
     [
       "Fearless Zeal",
-      "uca_feats.lst:66 -- .MOD BENEFIT: row reads correctly through \"...but\" then splices verbatim into Damned's own BENEFIT: row (uca_feats.lst:37) starting at \"before the DC of spells and spell-like abilities...\"; upstream corpus defect, not repaired by inventing text."
+      "uca_feats:66 -- .MOD BENEFIT: row reads correctly through \"...but\" then splices verbatim into Damned's own BENEFIT: row (uca_feats:37) starting at \"before the DC of spells and spell-like abilities...\"; upstream corpus defect, not repaired by inventing text."
     ],
     [
       "Magnum Opus",
-      "uca_feats.lst:74 -- .MOD BENEFIT: row's own sentence is grammatically truncated (\"...or win the artistic Completion Benefit:...\", no object after \"artistic\"); the Goal: clause's real ending is not recoverable from the corpus; upstream corpus defect, not repaired by inventing text."
+      "uca_feats:74 -- .MOD BENEFIT: row's own sentence is grammatically truncated (\"...or win the artistic Completion Benefit:...\", no object after \"artistic\"); the Goal: clause's real ending is not recoverable from the corpus; upstream corpus defect, not repaired by inventing text."
     ]
   ]
 }

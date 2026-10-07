@@ -48,7 +48,7 @@
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
-        "ma_equip.lst",
+        "ma_equip",
         12
       ]
     },
@@ -351,7 +351,7 @@
       "weight_lbs": 1.0,
       "description": null,
       "name_pi_citation": [
-        "ma_equip.lst",
+        "ma_equip",
         70
       ]
     },
@@ -964,7 +964,7 @@
       "weight_lbs": 1.0,
       "description": null,
       "name_pi_citation": [
-        "ma_equip.lst",
+        "ma_equip",
         137
       ]
     },

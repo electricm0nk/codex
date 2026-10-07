@@ -1,6 +1,6 @@
 //! Per-attack provenance for the Bestiary 1 natural attacks that are
 //! **not** transcribed from a `NATURALATTACKS:` token on the monster's
-//! own `b1_races.lst` row.
+//! own `b1_races` row.
 //!
 //! # Why this module exists
 //!
@@ -12,14 +12,14 @@
 //! ## The corpus genuinely cannot supply these damage dice
 //!
 //! Monsters whose attacks were already present carry their dice inline
-//! on their own row, e.g. Ghoul (`b1_races.lst:200`):
+//! on their own row, e.g. Ghoul (`b1_races:200`):
 //!
 //! ```text
 //! NATURALATTACKS:Claw,Weapon.Natural...Finesseable.Piercing.Slashing,*2,1d6
 //! ```
 //!
 //! The twelve monsters this module covers carry only a **cross-reference**
-//! on their row instead, e.g. Ankheg (`b1_races.lst:18`):
+//! on their row instead, e.g. Ankheg (`b1_races:18`):
 //!
 //! ```text
 //! ABILITY:Internal|AUTOMATIC|Bite
@@ -28,7 +28,7 @@
 //! That reference **does** resolve — a prior investigation concluded the
 //! target row was simply missing from Bestiary 1, but that conclusion was
 //! too narrow. The rows exist in
-//! `pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race.lst`
+//! `pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_race`
 //! (`Bite` at line 249, `Gore` 250, `Claw` 251, `Slam` 252, `Tail Slap`
 //! 258, `Hoof` 259, `Tentacle` 260), not under `bestiary/` — which is why
 //! a bestiary-only grep found nothing.
@@ -96,7 +96,7 @@
 #[cfg_attr(test, derive(schemars::JsonSchema))]
 pub enum AttackSource {
     /// A real, checkable `NATURALATTACKS:` token in the live PCGen
-    /// corpus — just not on the monster's own `b1_races.lst` row.
+    /// corpus — just not on the monster's own `b1_races` row.
     LstToken {
         /// Corpus-root-relative path of the file carrying the token.
         path: &'static str,
@@ -124,7 +124,7 @@ pub enum AttackSource {
 }
 
 /// One natural attack whose `damage_dice` is not transcribed from the
-/// monster's own `b1_races.lst` row.
+/// monster's own `b1_races` row.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct GroundedAttack {
@@ -265,7 +265,7 @@ pub const GROUNDED_NATURAL_ATTACKS: &[GroundedAttack] = &[
         monster_key: "beastiary1:monster:crocodile",
         attack_name: "Bite",
         damage_dice: "1d8",
-        corpus_name_token: "ABILITY:Internal|AUTOMATIC|Racial Traits ~ Crocodile -> ABILITY:Internal|AUTOMATIC|Bite (b1_abilities_race.lst:244)",
+        corpus_name_token: "ABILITY:Internal|AUTOMATIC|Racial Traits ~ Crocodile -> ABILITY:Internal|AUTOMATIC|Bite (b1_abilities_race:244)",
         published_melee_text: "bite +5 (1d8+4 plus grab) and tail slap +0 (1d12+2)",
         source: AttackSource::WebSecondSource {
             urls: &[
@@ -278,7 +278,7 @@ pub const GROUNDED_NATURAL_ATTACKS: &[GroundedAttack] = &[
     },
     // The one genuine corpus recovery in this table. Crocodile's row
     // reaches its attacks through `Racial Traits ~ Crocodile`
-    // (`b1_abilities_race.lst:244`), whose own
+    // (`b1_abilities_race:244`), whose own
     // `ABILITY:Internal|AUTOMATIC|Bite|Crocodile ~ Tail Slap` names both.
     // Unlike the generic `Bite` marker, `Crocodile ~ Tail Slap` carries a
     // real inline `NATURALATTACKS:` token WITH dice:
@@ -297,7 +297,7 @@ pub const GROUNDED_NATURAL_ATTACKS: &[GroundedAttack] = &[
         corpus_name_token: "ABILITY:Internal|AUTOMATIC|Racial Traits ~ Crocodile -> ABILITY:Internal|AUTOMATIC|Crocodile ~ Tail Slap",
         published_melee_text: "bite +5 (1d8+4 plus grab) and tail slap +0 (1d12+2)",
         source: AttackSource::LstToken {
-            path: "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+            path: "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race",
             line: 248,
             record_key: "Crocodile ~ Tail Slap",
         },

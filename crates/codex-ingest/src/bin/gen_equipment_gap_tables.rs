@@ -42,6 +42,7 @@ use std::path::{Path, PathBuf};
 
 use codex::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPMENT_BOOK_ACG, EQUIPMENT_BOOK_APG, EQUIPMENT_BOOK_ARG, EQUIPMENT_BOOK_B1, EQUIPMENT_BOOK_CRB, EQUIPMENT_BOOK_UC, EQUIPMENT_BOOK_UE, EQUIPMENT_BOOK_UI, EQUIPMENT_BOOK_UM, EQUIPMENT_BOOK_UPSI, EQUIPMENT_BOOK_UW};
+use codex_ingest::pcgen_import::cache_gen::cited_stem;
 use codex_ingest::pcgen_import::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc, RenderedPcgenDesc};
 use codex::rules_core::pi_screening::{declared_product_identity, DeclaredProductIdentity, PI_BLACKLIST_TERMS};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
@@ -1246,7 +1247,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     None => "None".to_string(),
                 },
                 match &row.name_pi_citation {
-                    Some((file, line)) => format!("Some(({}, {line}))", rust_string(file)),
+                    Some((file, line)) => format!("Some(({}, {line}))", rust_string(cited_stem(file))),
                     None => "None".to_string(),
                 }
             )?;

@@ -14,7 +14,7 @@
 //! `pilot_compute`'s prepared-spell level gate silently accepted every one
 //! of them at every caster level.
 //!
-//! Source: `pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst`, 92 spell records (base rows plus
+//! Source: `pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells`, 92 spell records (base rows plus
 //! the file's own `.MOD` class grafts folded into the record they name;
 //! `.COPY=` variant rows excluded, matching `spell_list.rs`), yielding
 //! 389 (class, spell, level) rows across 13 classes. The

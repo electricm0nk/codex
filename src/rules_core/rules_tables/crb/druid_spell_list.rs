@@ -16,7 +16,7 @@
 //!
 //! **Widened 2026-07-27 (task #29) from CRB-only to all ingested books**
 //! (`risks-and-open-questions.md` item 53). Per-file: **169 from
-//! `cr_spells.lst` + 70 from `apg_spells.lst` + 32 from `acg_spells.lst`
+//! `cr_spells` + 70 from `apg_spells` + 32 from `acg_spells`
 //! = 271**, all names distinct, no `.MOD` record assigns Druid.
 //!
 //! Per-file ceiling check: `grep -c Druid` returns 170 / 70 / 32 -- exact
@@ -26,7 +26,7 @@
 //!
 //! **This module did NOT have the `CLASSES:` substring bug.** Its
 //! original 169 CRB entries are byte-identical to a correct token-split
-//! re-parse of `cr_spells.lst`, including all 69 records where Druid sits
+//! re-parse of `cr_spells`, including all 69 records where Druid sits
 //! mid-group. The only defect was book scope. No bracketed-level record
 //! names Druid.
 //!

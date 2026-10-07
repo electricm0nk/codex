@@ -10,19 +10,19 @@
 //! and `ground_horse_companion_stat_block`) whose values are Rust constants, not
 //! corpus reads.
 //!
-//! `v06_work_inventory::file_kind` types three structurally different `.lst`
+//! `v06_work_inventory::file_kind` types three structurally different source file
 //! shapes as `companion`, and conflating them is the first way this lane can go
 //! wrong:
 //!
-//! * **creature** rows — `*_races_companion.lst`, `*_races_familiar.lst`. A
+//! * **creature** rows — `*_races_companion`, `*_races_familiar`. A
 //!   companion or familiar creature. This is the chassis: `SIZE:`/`FACT:BaseSize`,
 //!   `MOVE:`, `RACETYPE:`, `MONSTERCLASS:`, natural attacks, `BONUS:STAT`.
-//! * **ability** rows — `*_abilities_companion.lst`, `*_abilities_familiar.lst`,
-//!   `*_abilities_race_*companion*.lst`. A special quality, special attack or
+//! * **ability** rows — `*_abilities_companion`, `*_abilities_familiar`,
+//!   `*_abilities_race_*companion*`. A special quality, special attack or
 //!   level-advancement package that reaches a player **only underneath the
 //!   creature that owns it**, exactly as `monster_ability` does underneath
 //!   `monster` (`docs/release/corpus-work-channels.md §9.2`).
-//! * **class** rows — `*_classes_companion.lst`. The PCGen `Companion` /
+//! * **class** rows — `*_classes_companion`. The PCGen `Companion` /
 //!   `Familiar` monster *classes* that a creature row's `MONSTERCLASS:` token
 //!   names. Hit-dice progressions, neither creature nor ability — modelled as
 //!   [`CompanionClassRecord`] (`AT-34-E3-001`, `decisions.md §17`), the third
@@ -71,7 +71,7 @@
 //! 6. **relay** (`decisions.md §59.1`) — the owner is stated across a corpus row
 //!    that is not an inventory unit at all. Bestiary 4's `Familiar (Giant Flea)`
 //!    names `Racial Traits ~ Flea (Giant)`, a `CATEGORY:Internal` row of
-//!    `b4_abilities_companion.lst`, and THAT row names `Flea (Giant) ~ Disease`.
+//!    `b4_abilities_companion`, and THAT row names `Flea (Giant) ~ Disease`.
 //!    Shape 4 walks unit-to-unit and cannot see the hop. The first reference is
 //!    also read under ANY `ABILITY:<Category>|AUTOMATIC|` category, because the
 //!    creature's own token here is `Internal`, not `Special Ability`.
@@ -191,7 +191,7 @@ pub struct CompanionAbilityGrant {
 /// **`attack` is the token's own selector, and it is NOT guaranteed to name one
 /// of [`CompanionRecord::natural_attacks`].** Re-derived corpus-wide 2026-08-19
 /// over all 927 ingested companion records: `advanced_players_guide:companion:
-/// parrot` (`ce_races_familiar_apg.lst:17`) states
+/// parrot` (`ce_races_familiar_apg:17`) states
 /// `BONUS:WEAPONPROF=Claw|DAMAGE|max(0,(STR/2))` while its only natural attack
 /// is `Bite`. Carried as the row states it rather than joined-and-dropped —
 /// inventing the join would hide a real corpus fact.
@@ -388,10 +388,10 @@ pub struct CompanionAbilityRecord {
     /// occur among currently-registered books.
     #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub cross_book_owners: &'static [(&'static str, &'static str)],
-    /// The abilities-`.lst` basename this record was read from. Carried per row
+    /// The abilities source-file basename this record was read from. Carried per row
     /// because [`source_line`](Self::source_line) is only meaningful together
     /// with its file: Bestiary 3 is the first book whose ability rows come from
-    /// TWO files (`b3_abilities_companion.lst` and `b3_abilities_familiar.lst`),
+    /// TWO files (`b3_abilities_companion` and `b3_abilities_familiar`),
     /// and line 40 means a different row in each. Same discipline as
     /// `MonsterBookSpec::races_lsts`.
     pub source_file: &'static str,
@@ -464,21 +464,21 @@ pub struct CompanionRecord {
     /// `grep -rn external_ability_refs --include=*.rs src/ | grep -E '!?PRE[A-Z]+:'`.
     #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub external_ability_ref_conditions: &'static [ExternalAbilityRefCondition],
-    /// The races-`.lst` basename this record was read from. Carried per row for
+    /// The races source-file basename this record was read from. Carried per row for
     /// the same reason as [`CompanionAbilityRecord::source_file`]: Bestiary 3
-    /// draws creature rows from both `b3_races_companion.lst` and
-    /// `b3_races_familiar.lst`.
+    /// draws creature rows from both `b3_races_companion` and
+    /// `b3_races_familiar`.
     pub source_file: &'static str,
     /// The 1-based line, within [`source_file`](Self::source_file), that this
     /// record was read from.
     pub source_line: u32,
 }
 
-/// One `*_classes_companion.lst` row (`AT-34-E3-001`'s
+/// One `*_classes_companion` row (`AT-34-E3-001`'s
 /// `companion_absent_from_<book>_companion_tables` mechanism, `decisions.md
 /// §17`): the PCGen monster CLASS a creature row's `MONSTERCLASS:` token
 /// names, or (for the bare-numbered `###Block: Level Advancement` lines this
-/// same file also carries, e.g. `um_classes_companion.lst:13`) a single
+/// same file also carries, e.g. `um_classes_companion:13`) a single
 /// per-level ability grant this chassis's own tokenizer treats as its own
 /// row — `v06_work_inventory::enumerate_file`'s directive screen only skips a
 /// first field shaped `TOKEN:` (all-caps/digits before a colon); a bare `1`
@@ -528,7 +528,7 @@ pub struct CompanionClassRecord {
     #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub ability_grants: &'static [CompanionAbilityGrant],
     pub fact_class_type: Option<&'static str>,
-    /// The classes-`.lst` basename this record was read from.
+    /// The classes source-file basename this record was read from.
     pub source_file: &'static str,
     /// The 1-based line, within [`source_file`](Self::source_file), that this
     /// record was read from.
@@ -544,7 +544,7 @@ pub struct CompanionBook {
     pub corpus_book: &'static str,
     pub companions: &'static [CompanionRecord],
     pub companion_abilities: &'static [CompanionAbilityRecord],
-    /// `*_classes_companion.lst` rows this book defines — see
+    /// `*_classes_companion` rows this book defines — see
     /// [`CompanionClassRecord`]. Empty for every book that carries none
     /// (every registered book but the three named on that type's own doc).
     pub companion_classes: &'static [CompanionClassRecord],
@@ -737,10 +737,10 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
     // 156 of its 184 rows ship — 38 creature rows, 118 ability rows — and the
     // 28 that do not are THREE named remainders (`AT-34-E3-001`, `decisions.md
     // §66`): 12 zero-content `Base Companion ~ …` / `Companion ~ …` internal
-    // plumbing rows (see below), 2 `cr_classes_companion.lst` rows
+    // plumbing rows (see below), 2 `cr_classes_companion` rows
     // (`Companion`, `Shadow Companion`, PCGen monster classes — modelling them
     // is a new record type, not a wider predicate on this one), and 14
-    // `ce_abilities_familiar_cr.lst` rows reattributed here (the master-side
+    // `ce_abilities_familiar_cr` rows reattributed here (the master-side
     // familiar special-ability pool — no familiar CREATURE is registered
     // under this book for them to hang from; familiars are drawn from OTHER
     // books' chassis tables).
@@ -750,7 +750,7 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
     // …` / `Animal Training ~ …` / `Companion Stat ~ …` records, orphaned
     // because the corpus states them exactly ONCE for the whole
     // `CLASS:Companion` chassis every one of this book's 38 creatures shares
-    // (`cr_classes_companion.lst`'s single `Companion` class), rather than
+    // (`cr_classes_companion`'s single `Companion` class), rather than
     // per-creature. Shape 7, book-wide grant (`scripts/transcribe_
     // companion_tables.py`), attributes each to ALL 38 creatures — a real,
     // corpus-backed fact (PF1's own Animal Companion rules, CRB p.52-55, grant
@@ -1228,9 +1228,9 @@ mod tests {
         //
         // They used to sit under a `core_essentials` registration.
         // `decisions.md §9` is why they no longer do, and the split is stated by
-        // the corpus rather than chosen: `ce_abilities_familiar_race_cr.lst`
+        // the corpus rather than chosen: `ce_abilities_familiar_race_cr`
         // declares `SOURCELONG:Bestiary` in its own header and
-        // `ce_abilities_familiar_race_um.lst` declares `SOURCELONG:Ultimate
+        // `ce_abilities_familiar_race_um` declares `SOURCELONG:Ultimate
         // Magic`. The two counts are pinned separately, so a re-attribution
         // that moved rows between the two books could not be absorbed by the
         // total.
@@ -1275,7 +1275,7 @@ mod tests {
         }
         // Core Rulebook's one row, round 8 (`decisions.md §65.2`) -- the SIXTH
         // unmodelled-facet shape and the first that is neither a category name,
-        // a typo, nor a spell-like delivery. `cr_abilities_companion.lst:191`
+        // a typo, nor a spell-like delivery. `cr_abilities_companion:191`
         // reads `TYPE:NaturalAttack.NaturalAttackSecondary.Secondary`: the row
         // is a natural ATTACK, a shape `CompanionAbilityFacet` does not model
         // at all (it models `CompanionAdvancement`, `SpecialQuality` and
@@ -1385,7 +1385,7 @@ mod tests {
             "8 from Ultimate Wilderness plus round 9's 3 from Ultimate Magic plus \
              `AT-34-E3-001`'s 2 from Core Rulebook (`Animal Trick ~ Attack`, `Animal \
              Companion Feat ~ Toughness` -- both book-wide-granted, `decisions.md §66`). \
-             UW's `.lst` has 22 multi-DESC rows and ships 8, because the other 14 are \
+             UW's source file has 22 multi-DESC rows and ships 8, because the other 14 are \
              archetype rows this chassis drops as orphans. The two numbers answering \
              different questions is the point -- a test pinned to 22 would be asserting a \
              fact about a file, not about the table"
@@ -1619,8 +1619,8 @@ mod tests {
         for book in COMPANION_BOOKS {
             for companion in book.companions {
                 assert!(
-                    companion.source_file.ends_with(".lst"),
-                    "{}: {} source_file {:?} is not a .lst basename",
+                    !companion.source_file.is_empty() && !companion.source_file.contains('.'),
+                    "{}: {} source_file {:?} is not a source-file stem",
                     book.corpus_book,
                     companion.key,
                     companion.source_file
@@ -1628,8 +1628,8 @@ mod tests {
             }
             for ability in book.companion_abilities {
                 assert!(
-                    ability.source_file.ends_with(".lst"),
-                    "{}: {} source_file {:?} is not a .lst basename",
+                    !ability.source_file.is_empty() && !ability.source_file.contains('.'),
+                    "{}: {} source_file {:?} is not a source-file stem",
                     book.corpus_book,
                     ability.key,
                     ability.source_file
@@ -1651,7 +1651,7 @@ mod tests {
         creature_files.dedup();
         assert_eq!(
             creature_files,
-            vec!["b3_races_companion.lst", "b3_races_familiar.lst"]
+            vec!["b3_races_companion", "b3_races_familiar"]
         );
 
         let mut ability_files: Vec<&str> =
@@ -1660,7 +1660,7 @@ mod tests {
         ability_files.dedup();
         assert_eq!(
             ability_files,
-            vec!["b3_abilities_companion.lst", "b3_abilities_familiar.lst"]
+            vec!["b3_abilities_companion", "b3_abilities_familiar"]
         );
     }
 
@@ -1669,7 +1669,7 @@ mod tests {
     /// §63.1`).
     ///
     /// `every_registered_creature_states_its_monster_class_token_verbatim`
-    /// above is what caught them — `ce_races_familiar_cr.lst:33` reads
+    /// above is what caught them — `ce_races_familiar_cr:33` reads
     /// `Bat.COPY=Bat (Celestial)` and carries no `MONSTERCLASS:` at all, so
     /// registering the book before the screen was widened turned that test red
     /// on all 22 at once. This test pins the fix from the other side: it names
@@ -1683,7 +1683,7 @@ mod tests {
     /// drops no creature this book actually defines.
     #[test]
     fn the_reattributed_familiar_file_ships_no_copy_delta_creature_row() {
-        // `ce_races_familiar_cr.lst` / `ce_abilities_familiar_race_cr.lst` both
+        // `ce_races_familiar_cr` / `ce_abilities_familiar_race_cr` both
         // declare `SOURCELONG:Bestiary`, so `decisions.md §9` re-attribution
         // files their rows under Bestiary 1 and there is no longer a
         // `core_essentials` registration to ask (`SD31-CE-COMPANION-001`). The
@@ -1789,7 +1789,7 @@ mod tests {
     /// Four prior cycles ran this mechanism (100 -> 28, 28 -> 28, 28 -> 14,
     /// 14 -> 2, all four receipts READ not repeated:
     /// `AT-34-E3-001_companion_absent_cycle_receipt.md` .. `_4.md`) and named
-    /// the 2-unit remainder's single sub-cause: two `cr_classes_companion.lst`
+    /// the 2-unit remainder's single sub-cause: two `cr_classes_companion`
     /// monster-CLASS rows this chassis had no record type for. This cycle
     /// built that type (`CompanionClassRecord`) and re-derives, from the live
     /// `docs/work-inventory.json`, that the mechanism now reaches ZERO --
@@ -1827,7 +1827,7 @@ mod tests {
         let companion = book.companion_class_resolve("Companion").expect("Companion class row");
         assert_eq!(companion.hit_dice, Some(8));
         assert_eq!(companion.max_level, Some("20"));
-        assert_eq!(companion.source_file, "cr_classes_companion.lst");
+        assert_eq!(companion.source_file, "cr_classes_companion");
         assert_eq!(companion.source_line, 6);
         let shadow = book
             .companion_class_resolve("Shadow Companion")

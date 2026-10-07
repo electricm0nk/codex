@@ -65,7 +65,7 @@
         "Lawgiver ~ Change Shape"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 6
     },
     {
@@ -124,7 +124,7 @@
         "First Blade ~ Ironsense"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races_b4.lst",
+      "source_file": "isg_races_b4",
       "source_line": 6
     },
     {
@@ -179,7 +179,7 @@
         "Orsheval ~ Truespeech"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 7
     },
     {
@@ -246,7 +246,7 @@
         "Basileus ~ Veil of Forms"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 10
     },
     {
@@ -312,7 +312,7 @@
         "Skein Steward ~ Tugging Strands"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races_b4.lst",
+      "source_file": "isg_races_b4",
       "source_line": 10
     },
     {
@@ -371,7 +371,7 @@
         "Hesperian ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 11
     },
     {
@@ -417,7 +417,7 @@
         "Ahmuuth ~ Ectoplasmic Focus"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races_b4.lst",
+      "source_file": "isg_races_b4",
       "source_line": 11
     },
     {
@@ -494,7 +494,7 @@
         "Menotherian ~ Change Shape"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 14
     },
     {
@@ -551,7 +551,7 @@
         "Vendenopterix ~ Enchantment Resistance"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 15
     },
     {
@@ -611,7 +611,7 @@
         "Thais ~ Change Shape"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 18
     },
     {
@@ -675,7 +675,7 @@
         "Ataxian ~ Ray"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 19
     },
     {
@@ -745,7 +745,7 @@
         "Night Monarch ~ Languages"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 22
     },
     {
@@ -816,7 +816,7 @@
         "Thyrlien ~ Detect Magic"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 23
     },
     {
@@ -880,7 +880,7 @@
         "Grim White Stag ~ Poison Resistance"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 27
     },
     {
@@ -925,7 +925,7 @@
         "Stag Archon ~ Change Shape"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 28
     },
     {
@@ -979,7 +979,7 @@
         "Zentragt ~ Eat Metal"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 32
     },
     {
@@ -1046,7 +1046,7 @@
         "Personification of Fury ~ Energy Ray"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 35
     },
     {
@@ -1101,7 +1101,7 @@
         "Xocothian ~ Speak with Animals"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 36
     },
     {
@@ -1158,7 +1158,7 @@
         "Hand of the Inheritor ~ Divine Trigger"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 39
     },
     {
@@ -1209,7 +1209,7 @@
         "Iophanite Angel ~ Protection from Evil"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 40
     },
     {
@@ -1270,7 +1270,7 @@
         "The Old Man ~ Monk Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 43
     },
     {
@@ -1324,7 +1324,7 @@
         "Pavbagha ~ Fade"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 45
     },
     {
@@ -1389,7 +1389,7 @@
         "Yethazmari ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 49
     },
     {
@@ -1444,7 +1444,7 @@
         "Swaithe ~ Witchcraft"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 50
     },
     {
@@ -1509,7 +1509,7 @@
         "Arcanotheign ~ Constant Spells"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 53
     },
     {
@@ -1554,7 +1554,7 @@
         "Burleev ~ Frostfire Spirit"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 54
     },
     {
@@ -1615,7 +1615,7 @@
         "Stabbing Beast ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 57
     },
     {
@@ -1676,7 +1676,7 @@
         "Karumzek ~ Negate Aroma"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 58
     },
     {
@@ -1739,7 +1739,7 @@
         "Thognorok ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 65
     },
     {
@@ -1799,7 +1799,7 @@
         "Thalachos ~ Uncanny Dodge"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 68
     },
     {
@@ -1858,7 +1858,7 @@
         "Yhohm ~ Shroud of Flame"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 69
     },
     {
@@ -1920,7 +1920,7 @@
         "Adoration Spirit ~ Change Shape"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 72
     },
     {
@@ -1977,7 +1977,7 @@
         "Dapsara ~ Change Shape"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 73
     },
     {
@@ -2028,7 +2028,7 @@
         "Grand Defender ~ Hammer Storm"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 76
     },
     {
@@ -2075,7 +2075,7 @@
         "Chalkost ~ Shock Cestus"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 77
     },
     {
@@ -2138,7 +2138,7 @@
         "Mother's Maw ~ Swallow Whole"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 80
     },
     {
@@ -2200,7 +2200,7 @@
         "Sarcovalt ~ Disease Swarm"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 81
     },
     {
@@ -2269,7 +2269,7 @@
         "Prince in Chains ~ Unnerving Gaze"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 85
     },
     {
@@ -2321,7 +2321,7 @@
         "Lampadarius ~ Unnerving Gaze"
       ],
       "external_ability_refs": [],
-      "source_file": "isg_races.lst",
+      "source_file": "isg_races",
       "source_line": 86
     }
   ]

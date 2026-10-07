@@ -77,7 +77,7 @@
         "Flight Maneuverability",
         "Regeneration"
       ],
-      "source_file": "botd1_races.lst",
+      "source_file": "botd1_races",
       "source_line": 9
     },
     {
@@ -151,7 +151,7 @@
         "Fast Healing",
         "Flight Maneuverability"
       ],
-      "source_file": "botd1_races.lst",
+      "source_file": "botd1_races",
       "source_line": 10
     },
     {
@@ -214,7 +214,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "botd1_races.lst",
+      "source_file": "botd1_races",
       "source_line": 11
     },
     {
@@ -275,7 +275,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "botd1_races.lst",
+      "source_file": "botd1_races",
       "source_line": 12
     },
     {
@@ -349,7 +349,7 @@
       "external_ability_refs": [
         "Warmonger Devil ~ Trample"
       ],
-      "source_file": "botd1_races.lst",
+      "source_file": "botd1_races",
       "source_line": 13
     }
   ]

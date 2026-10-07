@@ -1,6 +1,6 @@
 //! ACG Warpriest class chassis table — one row per level.
 //!
-//! Source: PCGen `acg_classes.lst`, `CLASS:Warpriest` record (line 364
+//! Source: PCGen `acg_classes`, `CLASS:Warpriest` record (line 364
 //! of the SD-22 Epic 4 corpus checkout), parsed via
 //! `pcgen_import::lst_parser::spellcasting_class` (SD-22 Epic 4 widened
 //! `SPELLCASTING_CLASS_NAMES` to recognize it — see that module's doc
@@ -30,7 +30,7 @@
 //! (Sacred Weapon, Blessings, Fervor, Channel Energy, ...) and the
 //! Warpriest's spell-per-day table are out of scope for this cycle —
 //! transcribing them without going back through the LST's per-level
-//! feature blocks (`acg_abilities_class.lst`) in a dedicated ingest
+//! feature blocks (`acg_abilities_class`) in a dedicated ingest
 //! slice would be exactly the fabricated-data risk `class_tables.rs`'s
 //! own doc comment and `AGENTS.md` rule out.
 //!
@@ -71,5 +71,5 @@ pub fn class_table() -> Vec<ClassTableRow> {
 }
 
 /// `HD:8` on the real `CLASS:Warpriest` record (Warpriest HD:8 in
-/// `advanced_class_guide/acg_classes.lst`).
+/// `advanced_class_guide/acg_classes`).
 pub const HIT_DIE: u8 = 8;

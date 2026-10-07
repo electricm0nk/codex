@@ -67,7 +67,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "iswg_races_bestiary.lst",
+      "source_file": "iswg_races_bestiary",
       "source_line": 8
     },
     {
@@ -116,7 +116,7 @@
       "external_ability_refs": [
         "Giant Spider ~ Poison"
       ],
-      "source_file": "iswg_races_bestiary.lst",
+      "source_file": "iswg_races_bestiary",
       "source_line": 9
     },
     {
@@ -163,7 +163,7 @@
         "Aluum ~ Soul Shriek"
       ],
       "external_ability_refs": [],
-      "source_file": "iswg_races.lst",
+      "source_file": "iswg_races",
       "source_line": 10
     },
     {
@@ -220,7 +220,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "iswg_races_bestiary.lst",
+      "source_file": "iswg_races_bestiary",
       "source_line": 10
     },
     {
@@ -323,7 +323,7 @@
         "True Seeing ~ Constant",
         "Water Walk ~ Constant"
       ],
-      "source_file": "iswg_races.lst",
+      "source_file": "iswg_races",
       "source_line": 11
     },
     {
@@ -385,7 +385,7 @@
         "Grab",
         "Scent"
       ],
-      "source_file": "iswg_races_bestiary.lst",
+      "source_file": "iswg_races_bestiary",
       "source_line": 11
     },
     {
@@ -449,7 +449,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "iswg_races.lst",
+      "source_file": "iswg_races",
       "source_line": 12
     },
     {
@@ -506,7 +506,7 @@
       "external_ability_refs": [
         "Shark ~ Keen Scent"
       ],
-      "source_file": "iswg_races_bestiary.lst",
+      "source_file": "iswg_races_bestiary",
       "source_line": 12
     },
     {
@@ -623,7 +623,7 @@
         "Resistance to Electricity",
         "Resistance to Fire"
       ],
-      "source_file": "iswg_races.lst",
+      "source_file": "iswg_races",
       "source_line": 15
     }
   ]

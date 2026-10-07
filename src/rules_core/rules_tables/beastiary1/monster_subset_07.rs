@@ -1,16 +1,16 @@
 //! Bestiary 1 monster-block subset 07 — CR-band move to CR 3 (CR 1 and
 //! CR 2 both fully exhausted after subset 06).
 //!
-//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst`,
+//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races`,
 //! parsed via `pcgen_import::lst_parser::monster_stat_block` (the same
 //! bare-tab-delimited monster parser subset 01 introduced — no widening
 //! was needed for this subset either). Every field below is transcribed
-//! directly from the cited real `.lst` line's tokens — see each
+//! directly from the cited real source file line's tokens — see each
 //! function's doc comment for the exact line number and tokens.
 //!
 //! **Roster derivation (CR-band move):** before writing any GREEN code,
 //! this cycle independently re-enumerated every real, non-`#`-commented,
-//! non-`.MOD`/`.COPY=` CR:3 monster stat-block row in `b1_races.lst`
+//! non-`.MOD`/`.COPY=` CR:3 monster stat-block row in `b1_races`
 //! directly against the live corpus file (not from any prior cycle's
 //! summary): 44 rows carry a `CR:3` token; excluding parenthetical
 //! sub-variant names (e.g. `Ant (Drone)`, `Ape (Dire)`, `Dragon
@@ -45,7 +45,7 @@
 
 use super::{MonsterStatBlock, NaturalAttack};
 
-/// Source: `b1_races.lst:18`, `CR:3`. Real row tokens: `SIZE:L`,
+/// Source: `b1_races:18`, `CR:3`. Real row tokens: `SIZE:L`,
 /// `MOVE:Walk,30,Burrow,20` (walk speed transcribed; burrow speed out of
 /// scope), no `NATURALATTACKS:` token, `RACETYPE:Magical Beast`, no
 /// `RACESUBTYPE:` token, `CR:3`, `SOURCEPAGE:p.15`.
@@ -69,7 +69,7 @@ pub fn ankheg() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:29`, `CR:3`. Real row tokens: `SIZE:L`,
+/// Source: `b1_races:29`, `CR:3`. Real row tokens: `SIZE:L`,
 /// `MOVE:Walk,5`, no `NATURALATTACKS:` token, `RACETYPE:Plant`, no
 /// `RACESUBTYPE:` token, `CR:3`, `SOURCEPAGE:p.22`.
 ///
@@ -91,7 +91,7 @@ pub fn assassin_vine() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:60`, `CR:3`. Real row tokens: `SIZE:L`,
+/// Source: `b1_races:60`, `CR:3`. Real row tokens: `SIZE:L`,
 /// `MOVE:Walk,50`, no `NATURALATTACKS:` token, `RACETYPE:Monstrous
 /// Humanoid`, no `RACESUBTYPE:` token, `CR:3`, `SOURCEPAGE:p.42`.
 ///
@@ -116,7 +116,7 @@ pub fn centaur() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:73`, `CR:3`. Real row tokens: `SIZE:S`,
+/// Source: `b1_races:73`, `CR:3`. Real row tokens: `SIZE:S`,
 /// `MOVE:Walk,20,Fly,60` (walk speed transcribed; fly speed out of
 /// scope), no `NATURALATTACKS:` token, `RACETYPE:Magical Beast`, no
 /// `RACESUBTYPE:` token, `CR:3`, `SOURCEPAGE:p.48`.
@@ -140,7 +140,7 @@ pub fn cockatrice() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:104`, `CR:3`. Real row tokens: `SIZE:S`,
+/// Source: `b1_races:104`, `CR:3`. Real row tokens: `SIZE:S`,
 /// `MOVE:Walk,20`, no `NATURALATTACKS:` token (fights with weapons —
 /// `AUTO:WEAPONPROF|Crossbow (Repeating Light)|...` — instead;
 /// transcribed as an empty list), `RACETYPE:Humanoid`,

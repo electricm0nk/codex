@@ -165,7 +165,7 @@ fn crocodile_tail_slap_is_recovered_from_a_real_corpus_token_not_the_web() {
         .expect("Crocodile Tail Slap provenance row must exist");
     match row.source {
         AttackSource::LstToken { path, line, record_key } => {
-            assert_eq!(path, "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst");
+            assert_eq!(path, "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race");
             assert_eq!(line, 248);
             assert_eq!(record_key, "Crocodile ~ Tail Slap");
         }

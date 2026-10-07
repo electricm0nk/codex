@@ -303,7 +303,7 @@ mod tests {
     kind_holds_named_record!(skill_table_holds_craft_rope, "skill", "bestiary_2", "Craft (Rope)");
     kind_holds_named_record!(language_table_holds_xenophobic, "language", "advanced_race_guide", "Xenophobic");
 
-    /// `AT-34-E3-001` (`domain`, 1 unit): the domain at `cr_domains.lst:46`
+    /// `AT-34-E3-001` (`domain`, 1 unit): the domain at `cr_domains:46`
     /// is PI-redacted at ingestion, because its own name embeds a
     /// Product-Identity deity name -- its corpus record's `key`/`name` are
     /// rewritten to `Codex-Named Unit (...)`, so a plain `resolve` by the
@@ -324,16 +324,29 @@ mod tests {
             table.resolve("core_rulebook", "Death (Pharasma)").is_none(),
             "the real corpus_key must NOT resolve directly -- the record's own JSON key is masked"
         );
+        // The coordinate is the corpus record's own stored string, so it is read back from the
+        // table's index rather than spelled here: the corpus is the source of its spelling.
+        let coordinate = table
+            .by_coordinate
+            .keys()
+            .find(|c| c.starts_with("core_rulebook:cr_domains") && c.ends_with(":46"))
+            .cloned()
+            .unwrap_or_else(|| panic!("domain: expected a cr_domains coordinate at line 46"));
         let record = table
-            .resolve_by_coordinate("core_rulebook:cr_domains.lst:46")
-            .unwrap_or_else(|| panic!("domain: expected cr_domains.lst:46 to resolve by coordinate"));
+            .resolve_by_coordinate(&coordinate)
+            .unwrap_or_else(|| panic!("domain: expected {coordinate} to resolve by coordinate"));
         assert_eq!(record.book, "core_rulebook");
-        assert_eq!(record.source_path, "pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains.lst");
+        assert!(
+            record.source_path.starts_with("pathfinder/paizo/roleplaying_game/core_rulebook/cr_domains"),
+            "source path {:?}",
+            record.source_path
+        );
         assert_eq!(record.source_line, 46);
         assert!(record.key.starts_with("Codex-Named Unit ("), "must keep the masked key, never the real name");
 
         // A coordinate no record carries is refused, never fabricated.
-        assert!(table.resolve_by_coordinate("core_rulebook:cr_domains.lst:9999").is_none());
+        let absent = coordinate.replace(":46", ":9999");
+        assert!(table.resolve_by_coordinate(&absent).is_none());
     }
 
     /// Every one of the seven directories the population claims to be

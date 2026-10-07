@@ -20,7 +20,7 @@
 //! `decisions.md §50.1` found that PCGen declares per-record Product Identity
 //! with `NAMEISPI:YES` and that nothing in this repo had ever read it. This
 //! book carries the marker on **no** row —
-//! `grep -c 'NAMEISPI:YES' b2_races.lst b2_abilities_race.lst` → `0` and `0` —
+//! `grep -c 'NAMEISPI:YES' b2_races b2_abilities_race` → `0` and `0` —
 //! and the term-list screen finds nothing either. `ogl-pi-blacklist.md` §2
 //! predicts exactly that shape: the Product Identity in a Pathfinder book is
 //! its setting-specific proper nouns, which live in the `campaign_setting/`
@@ -34,7 +34,7 @@
 //!
 //! ## The `.COPY=` rows, and the only two in the corpus
 //!
-//! `b2_races.lst:454` and `:594` are `<Base>.COPY=<Variant>` rows: PCGen copies
+//! `b2_races:454` and `:594` are `<Base>.COPY=<Variant>` rows: PCGen copies
 //! the base record whole and applies the few tokens the copy row carries. They
 //! are the ONLY two `monster`/`monster_ability` units of `origin: copy` in the
 //! entire corpus —
@@ -55,7 +55,7 @@
 //! the stale-citation defect that gate exists to catch. A chassis that models
 //! inheritance needs a second citation and a deliberate widening; two records
 //! is not a reason to slip one into an ingest round. Dropping
-//! `b2_races.lst:594` cascades to its one ability, which becomes the 65th
+//! `b2_races:594` cascades to its one ability, which becomes the 65th
 //! orphan.
 //!
 //! ## 65 orphan ability rows, and the three shapes they take
@@ -64,7 +64,7 @@
 //! row of this book claims would load and never be shown — the
 //! record-that-is-never-seen class `decisions.md §44.2` is about. The 65 are
 //! left `engine-does-not-hold`, which is their honest status, and are cited by line in
-//! `monster_data.rs`'s generated header. They namespace to `b2_templates.lst`
+//! `monster_data.rs`'s generated header. They namespace to `b2_templates`
 //! templates (the `Draconal` family), to monsters defined in other books, and
 //! to rows this book only `.MOD`s. A template surface would close the first
 //! group; nothing in this chassis can.
@@ -79,8 +79,8 @@
 //! also wants
 //!
 //! Every companion book registered before this one contributes
-//! `*_races_companion.lst` rows. B2's 16 companion units are
-//! `*_races_familiar.lst` and `*_abilities_familiar_race.lst` — the same kind by
+//! `*_races_companion` rows. B2's 16 companion units are
+//! `*_races_familiar` and `*_abilities_familiar_race` — the same kind by
 //! `v06_work_inventory::file_kind`, and the same two structural shapes, but the
 //! creature rows are `TYPE:Companion.Familiar.Animal` wizard/witch familiars
 //! rather than druid animal companions.
@@ -178,7 +178,7 @@ mod tests {
 
     /// Every creature row in this book is a FAMILIAR, not an animal companion —
     /// the property that makes this the first book of its shape in the lane, and
-    /// the one a `*_races_companion.lst`-shaped reader would have quietly got
+    /// the one a `*_races_companion`-shaped reader would have quietly got
     /// wrong.
     #[test]
     fn every_creature_row_is_a_familiar() {
@@ -196,7 +196,7 @@ mod tests {
         }
     }
 
-    /// Verbatim spot-check against `b2_abilities_familiar_race.lst:6` and the
+    /// Verbatim spot-check against `b2_abilities_familiar_race:6` and the
     /// creature row that names it. The link closes in both directions on the
     /// book's only ability.
     #[test]
@@ -234,12 +234,12 @@ mod tests {
     // section for the derivation.
 
     /// The corpus unit counts are `docs/work-inventory.json`'s own, never a
-    /// line count over the `.lst`:
+    /// line count over the source file:
     /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
     /// print(sum(1 for u in d['units'] if u['book']=='bestiary_2'
     /// and u['kind']=='monster'))"` → 316, `monster_ability` → 466.
     ///
-    /// The trap report reads 322 DECLARES on `b2_races.lst` — six more than the
+    /// The trap report reads 322 DECLARES on `b2_races` — six more than the
     /// inventory's 316. The difference is `.COPY=` rows the inventory's own trap
     /// filters drop; the two that survive as units are the two this table
     /// withholds, for the reason the module doc gives.
@@ -295,7 +295,7 @@ mod tests {
         // 580/665 -> 582/667 (`decisions.md §27b` round 9, +2 owned): the
         // multi-DESC: `PREVAREQ`/`PREVARGT`-gated parse-refusal group closes
         // via `parse_desc`'s new generalised sixth branch -- `Telepathy ~
-        // Miles` and `Voidworm ~ Change Shape` (`ce_abilities_race.lst:1955`/
+        // Miles` and `Voidworm ~ Change Shape` (`ce_abilities_race:1955`/
         // `:2043`, round 6's own named 2-row `bestiary_2` share) both
         // resolve a real owner through the existing prefix pass, so both
         // land in `owned`, none in the owner-less pin below.
@@ -372,7 +372,7 @@ mod tests {
     /// This book declares no Product Identity, and the assertion is made
     /// against the LIVE list rather than against a grep that returned 0 today.
     ///
-    /// `grep -c 'NAMEISPI:YES' b2_races.lst b2_abilities_race.lst` → `0` and
+    /// `grep -c 'NAMEISPI:YES' b2_races b2_abilities_race` → `0` and
     /// `0`, so the upstream marker `decisions.md §50.1` found is absent here;
     /// this covers the other signal, and fails if a per-book override ever adds
     /// a term one of these 715 records matches.
@@ -435,22 +435,22 @@ mod tests {
     }
 
     /// Verbatim spot-check of both halves of one link against the corpus rows
-    /// they were read from — `b2_races.lst:14` and `b2_abilities_race.lst:6`.
+    /// they were read from — `b2_races:14` and `b2_abilities_race:6`.
     ///
     /// Every asserted value is a substring of its row: the transcriber computes
     /// nothing, and this is the check that says so for a record a reader can
-    /// open the `.lst` and confirm.
+    /// open the source file and confirm.
     #[test]
     fn the_achaierai_matches_its_corpus_row_and_its_one_ability() {
         let monster = monsters()
             .iter()
             .find(|m| m.key == "Achaierai")
-            .expect("b2_races.lst:14");
+            .expect("b2_races:14");
         assert_eq!(monster.size, Some("L"));
         assert_eq!(monster.race_type, Some("Outsider"));
         assert_eq!(monster.challenge_rating, Some("5"));
         assert_eq!(monster.source_page, Some("p.7"));
-        assert_eq!(monster.source_file, "b2_races.lst");
+        assert_eq!(monster.source_file, "b2_races");
         assert_eq!(monster.source_line, 14);
         assert_eq!(monster.speeds.len(), 1);
         assert_eq!(monster.speeds[0].mode, "Walk");
@@ -460,7 +460,7 @@ mod tests {
         let ability = monster_abilities()
             .iter()
             .find(|a| a.key == "Achaierai ~ Black Cloud")
-            .expect("b2_abilities_race.lst:6");
+            .expect("b2_abilities_race:6");
         assert_eq!(ability.name, "Black Cloud");
         assert_eq!(ability.facet, MonsterAbilityFacet::SpecialAttack);
         assert_eq!(ability.delivery, Some(MonsterAbilityDelivery::Supernatural));
@@ -485,7 +485,7 @@ mod tests {
     }
 
     /// **Superseded `decisions.md §20`.** The 805-line row (cascaded from the
-    /// dropped `.COPY=` variant at `b2_races.lst:594`) now ships as an
+    /// dropped `.COPY=` variant at `b2_races:594`) now ships as an
     /// owner-less record instead of being excluded — it is one of the 85
     /// pinned by `every_owner_less_ability_is_a_named_and_pinned_non_reach`
     /// above. Confirmed present, not merely absent-from-exclusion.
@@ -494,11 +494,11 @@ mod tests {
         let ability = monster_abilities()
             .iter()
             .find(|a| a.source_line == 805)
-            .expect("b2_abilities_race.lst:805 ships for shape measurement (decisions.md §20)");
+            .expect("b2_abilities_race:805 ships for shape measurement (decisions.md §20)");
         assert!(
             ability.owners.is_empty(),
             "{} was expected owner-less (its only owner is the un-transcribed `.COPY=` row at \
-             b2_races.lst:594)",
+             b2_races:594)",
             ability.key
         );
     }

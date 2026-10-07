@@ -8,14 +8,14 @@
 //! classes use: a small pure function whose formula is verified
 //! byte-exact against the corpus row, plus a test. Every function below
 //! names the exact source token it transcribes and the exact
-//! `pu_abilities_class.lst` line it came from. Nothing here parses a
+//! `pu_abilities_class` line it came from. Nothing here parses a
 //! formula at runtime.
 //!
 //! # What "Unchained Barbarian" actually is in PCGen
 //!
 //! Pathfinder Unchained declares **zero `CLASS:` objects**. `Barbarian ~
 //! Unchained Class` is a `CATEGORY:CLASS` *selection ability* layered
-//! over Core Rulebook's real `CLASS:Barbarian` (`cr_classes.lst:7`,
+//! over Core Rulebook's real `CLASS:Barbarian` (`cr_classes:7`,
 //! `MAXLEVEL:20` — the origin of [`MAX_SUPPORTED_LEVEL`]). The variant
 //! record overrides **no** chassis field: its `hit_die`, `bab` and all
 //! three save columns are `null` in
@@ -57,7 +57,7 @@
 //! **not** write it under `class_feature/` — it is one of the 140 option
 //! rows that cycle reported as deliberately unwritten. Consequently the
 //! four rage magnitudes below cannot be pinned against
-//! `data/corpus/**.json`; they are pinned against the raw `.lst` instead,
+//! `data/corpus/**.json`; they are pinned against the raw source file instead,
 //! by `rage_magnitudes_are_byte_exact_against_the_real_lst_row`
 //! (`#[ignore]`d, opt-in via `PCGEN_CORPUS_ROOT`, exactly as
 //! `tests/sd17_b1_martial_class.rs` does). Everything else in this module
@@ -66,7 +66,7 @@
 //! # Grant levels
 //!
 //! Read off `PREVARGTEQ:Barbarian_CFP_Level,N` on the progression rows
-//! (`pu_abilities_class.lst:131-141`, the `Barbarian ~ Unchained Class
+//! (`pu_abilities_class:131-141`, the `Barbarian ~ Unchained Class
 //! Full.MOD` block). A second, shorter block (`Barbarian ~ Unchained
 //! Ex-Class.MOD`, lines 145-150) grants a 6-feature subset and **disagrees
 //! on one row**: Ex-Class line 145 states `PREVARGTEQ:Barbarian_CFP_Level,1`
@@ -80,7 +80,7 @@
 /// The roster is exactly the 14 records under
 /// `data/corpus/pathfinder_unchained/class_feature/barbarian_unchained_class/`
 /// — no more (nothing invented) and no fewer (nothing quietly dropped).
-/// `corpus_line` is the 1-based line in `pu_abilities_class.lst`.
+/// `corpus_line` is the 1-based line in `pu_abilities_class`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(test, derive(schemars::JsonSchema))]
 pub struct UnchainedBarbarianFeature {
@@ -96,53 +96,53 @@ pub struct UnchainedBarbarianFeature {
     /// are declared but never granted — a real corpus fact, kept rather
     /// than dropped.
     pub is_granted: bool,
-    /// 1-based line in `pu_abilities_class.lst`.
+    /// 1-based line in `pu_abilities_class`.
     pub corpus_line: u32,
 }
 
 /// `MAXLEVEL:20` on the base `CLASS:Barbarian` record
-/// (`core_rulebook/cr_classes.lst:7`). PU adds no levels.
+/// (`core_rulebook/cr_classes:7`). PU adds no levels.
 pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 
-/// `pu_abilities_class.lst:132` — `PREVARGTEQ:Barbarian_CFP_Level,1`.
+/// `pu_abilities_class:132` — `PREVARGTEQ:Barbarian_CFP_Level,1`.
 pub const RAGE_LEVEL: u8 = 1;
-/// `pu_abilities_class.lst:133` — `PREVARGTEQ:Barbarian_CFP_Level,1`.
+/// `pu_abilities_class:133` — `PREVARGTEQ:Barbarian_CFP_Level,1`.
 pub const FAST_MOVEMENT_LEVEL: u8 = 1;
-/// `pu_abilities_class.lst:134` — `PREVARGTEQ:Barbarian_CFP_Level,2`.
+/// `pu_abilities_class:134` — `PREVARGTEQ:Barbarian_CFP_Level,2`.
 pub const RAGE_POWERS_LEVEL: u8 = 2;
-/// `pu_abilities_class.lst:301` — `PREVARGTEQ:BarbarianLVL,2` on the
+/// `pu_abilities_class:301` — `PREVARGTEQ:BarbarianLVL,2` on the
 /// Uncanny Dodge Tracker's first `BONUS:VAR|UncannyDodgeLVL|1` chain.
 pub const UNCANNY_DODGE_LEVEL: u8 = 2;
-/// `pu_abilities_class.lst:136` — `PREVARGTEQ:Barbarian_CFP_Level,3`.
+/// `pu_abilities_class:136` — `PREVARGTEQ:Barbarian_CFP_Level,3`.
 pub const DANGER_SENSE_LEVEL: u8 = 3;
-/// `pu_abilities_class.lst:301` — `PREVARGTEQ:BarbarianLVL,5` on the
+/// `pu_abilities_class:301` — `PREVARGTEQ:BarbarianLVL,5` on the
 /// Uncanny Dodge Tracker's second `BONUS:VAR|UncannyDodgeLVL|1` chain.
 pub const IMPROVED_UNCANNY_DODGE_LEVEL: u8 = 5;
-/// `pu_abilities_class.lst:137` — `PREVARGTEQ:Barbarian_CFP_Level,7`.
+/// `pu_abilities_class:137` — `PREVARGTEQ:Barbarian_CFP_Level,7`.
 pub const DAMAGE_REDUCTION_LEVEL: u8 = 7;
-/// `pu_abilities_class.lst:138` — `PREVARGTEQ:Barbarian_CFP_Level,11`.
+/// `pu_abilities_class:138` — `PREVARGTEQ:Barbarian_CFP_Level,11`.
 pub const GREATER_RAGE_LEVEL: u8 = 11;
-/// `pu_abilities_class.lst:139` — `PREVARGTEQ:Barbarian_CFP_Level,14`.
+/// `pu_abilities_class:139` — `PREVARGTEQ:Barbarian_CFP_Level,14`.
 pub const INDOMITABLE_WILL_LEVEL: u8 = 14;
-/// `pu_abilities_class.lst:140` — `PREVARGTEQ:Barbarian_CFP_Level,17`.
+/// `pu_abilities_class:140` — `PREVARGTEQ:Barbarian_CFP_Level,17`.
 pub const TIRELESS_RAGE_LEVEL: u8 = 17;
-/// `pu_abilities_class.lst:141` — `PREVARGTEQ:Barbarian_CFP_Level,20`.
+/// `pu_abilities_class:141` — `PREVARGTEQ:Barbarian_CFP_Level,20`.
 pub const MIGHTY_RAGE_LEVEL: u8 = 20;
 
-/// `BONUS:VAR|RageACPenalty|-2` (`pu_abilities_class.lst:306`). Flat at
+/// `BONUS:VAR|RageACPenalty|-2` (`pu_abilities_class:306`). Flat at
 /// every tier — Greater Rage and Mighty Rage add to `RageBonus` and
 /// `RageBonusHP` only, never to this, so there is no level argument to
 /// take. Matches CRB Barbarian's own unchanging `-2`.
 pub const RAGE_ARMOR_CLASS_PENALTY: i16 = -2;
 
 /// `BONUS:MOVEADD|TYPE=Walk|10|PREVARLT:ENCUMBERANCE,2,...`
-/// (`pu_abilities_class.lst:289`). A flat literal, not a progression —
+/// (`pu_abilities_class:289`). A flat literal, not a progression —
 /// unlike the Unchained Monk's own Fast Movement, which scales
 /// (`super::monk_features::fast_movement_bonus_feet`).
 pub const FAST_MOVEMENT_BONUS_FEET: i16 = 10;
 
 /// `ASPECT:SaveBonus|+4 bonus to Will saves vs. Enchantment spells while
-/// raging` (`pu_abilities_class.lst:297`). PCGen carries no `BONUS:SAVE`
+/// raging` (`pu_abilities_class:297`). PCGen carries no `BONUS:SAVE`
 /// token for this — the condition ("while raging", "vs. enchantment") is
 /// not expressible as an unconditional save bonus — so the magnitude is
 /// read off the same row's own structured `ASPECT:` token, which is
@@ -150,7 +150,7 @@ pub const FAST_MOVEMENT_BONUS_FEET: i16 = 10;
 pub const INDOMITABLE_WILL_SAVE_BONUS: i16 = 4;
 
 /// The 14 ingested Unchained Barbarian `class_feature` records, in
-/// `pu_abilities_class.lst` line order.
+/// `pu_abilities_class` line order.
 ///
 /// `Uncanny Dodge` (298), `Improved Uncanny Dodge` (299) and `Unchained
 /// Rage` (303) carry `is_granted: false`: no progression row names them.
@@ -272,12 +272,12 @@ pub fn feature(key: &str) -> Option<&'static UnchainedBarbarianFeature> {
 /// Rage rounds per day: `2 + Constitution modifier + 2 × barbarian level`.
 ///
 /// Two tokens, both transcribed byte-exact:
-/// - `pu_abilities_class.lst:306` (`KEY:Standard Unchained Rage`) —
+/// - `pu_abilities_class:306` (`KEY:Standard Unchained Rage`) —
 ///   `BONUS:VAR|RageDuration|2+var("STAT.2.MOD.NOTEMP")+(2*RageLVL)`
-/// - `pu_abilities_class.lst:290` (`KEY:Unchained Barbarian ~ Rage`) —
+/// - `pu_abilities_class:290` (`KEY:Unchained Barbarian ~ Rage`) —
 ///   `BONUS:VAR|RageLVL|BarbarianLVL`
 ///
-/// `STAT.2` is Constitution: `core_rulebook/cr__stats.lst` lists the six
+/// `STAT.2` is Constitution: `core_rulebook/cr__stats` lists the six
 /// stats with `SORTKEY:1`–`SORTKEY:6` in the order Str, Dex, **Con**, Int,
 /// Wis, Cha, and PCGen's `STAT.<n>` index is 0-based. That is the one
 /// substitution this function makes and it is checked, not assumed —
@@ -388,7 +388,7 @@ pub fn rage_temporary_hit_point_multiplier(barbarian_level: u8) -> Option<i16> {
 ///
 /// # Why this is not the same row as [`rage_morale_bonus`]
 ///
-/// `pu_abilities_class.lst:294` is its own ingested `class_feature` record
+/// `pu_abilities_class:294` is its own ingested `class_feature` record
 /// (`Unchained Barbarian ~ Greater Rage`) and its whole content is two
 /// tokens — `BONUS:VAR|RageBonus|1` and `BONUS:VAR|RageBonusHP|TL`. Before
 /// this function existed the record computed nothing a player could see: the
@@ -410,7 +410,7 @@ pub fn greater_rage_morale_bonus(level: u8) -> Option<i16> {
 /// The rage morale bonus a barbarian who has reached [`MIGHTY_RAGE_LEVEL`]
 /// has: `+4`. `None` below 20.
 ///
-/// `pu_abilities_class.lst:296` (`Unchained Barbarian ~ Mighty Rage`) carries
+/// `pu_abilities_class:296` (`Unchained Barbarian ~ Mighty Rage`) carries
 /// the identical two tokens as Greater Rage — `BONUS:VAR|RageBonus|1` and
 /// `BONUS:VAR|RageBonusHP|TL` — stacking a second time. Same reasoning as
 /// [`greater_rage_morale_bonus`].
@@ -423,7 +423,7 @@ pub fn mighty_rage_morale_bonus(level: u8) -> Option<i16> {
 
 /// Rage powers known: `barbarian level / 2` (integer division).
 ///
-/// `pu_abilities_class.lst:291` —
+/// `pu_abilities_class:291` —
 /// `BONUS:ABILITYPOOL|Unchained Rage Power|RagePowersLVL/2` with the same
 /// row's `BONUS:VAR|RagePowersLVL|BarbarianLVL`. `None` below
 /// [`RAGE_POWERS_LEVEL`].
@@ -443,7 +443,7 @@ pub fn rage_powers_known(level: u8) -> Option<i16> {
 /// Danger Sense's bonus on Reflex saves against traps and on Perception
 /// checks to notice them: `barbarian level / 3`.
 ///
-/// `pu_abilities_class.lst:292` —
+/// `pu_abilities_class:292` —
 /// `BONUS:VAR|TrapSenseBonus|BarbarianTrapSenseLVL/3` with the same row's
 /// `BONUS:VAR|BarbarianTrapSenseLVL|BarbarianLVL`. `None` below
 /// [`DANGER_SENSE_LEVEL`].
@@ -463,7 +463,7 @@ pub fn danger_sense_bonus(level: u8) -> Option<i16> {
 
 /// Damage reduction `X/—`: `(barbarian level - 4) / 3`.
 ///
-/// `pu_abilities_class.lst:293` — `BONUS:VAR|BarbarianDR|(BarbarianDRLVL-4)/3`
+/// `pu_abilities_class:293` — `BONUS:VAR|BarbarianDR|(BarbarianDRLVL-4)/3`
 /// with the same row's `BONUS:VAR|BarbarianDRLVL|BarbarianLVL`, applied by
 /// the same row's `DR:BarbarianDR/-`. `None` below
 /// [`DAMAGE_REDUCTION_LEVEL`], which is also what keeps the subtraction off
@@ -503,7 +503,7 @@ pub fn indomitable_will_save_bonus(level: u8) -> Option<i16> {
 /// The class level Uncanny Dodge counts as for the "can a rogue of level
 /// N flank me" comparison: the barbarian's own level.
 ///
-/// `pu_abilities_class.lst:301` (Uncanny Dodge Tracker) —
+/// `pu_abilities_class:301` (Uncanny Dodge Tracker) —
 /// `BONUS:VAR|UncannyDodgeFlankingLevel|BarbarianLVL|TYPE=EachClass.REPLACE|
 /// PREVARGTEQ:BarbarianLVL,2|PREVAREQ:Barbarian_CF_UncannyDodge,0`. The
 /// same variable is set identically by line 298. `None` below
@@ -518,7 +518,7 @@ pub fn uncanny_dodge_flanking_level(level: u8) -> Option<i16> {
 /// `UncannyDodgeLVL`: `0` before level 2, `1` at levels 2-4 (Uncanny
 /// Dodge), `2` from level 5 (Improved Uncanny Dodge).
 ///
-/// `pu_abilities_class.lst:301` carries two independent `+1` chains on one
+/// `pu_abilities_class:301` carries two independent `+1` chains on one
 /// variable —
 /// `BONUS:VAR|UncannyDodgeLVL|1|PREVARGTEQ:BarbarianLVL,2|PREVAREQ:Barbarian_CF_UncannyDodge,0`
 /// and
@@ -562,7 +562,7 @@ pub mod prose_derived {
     /// How long after a rage ends an Unchained Barbarian gets **no**
     /// temporary hit points from raging again: 10 rounds.
     ///
-    /// From `pu_abilities_class.lst:295`, verbatim: "If you enters a rage
+    /// From `pu_abilities_class:295`, verbatim: "If you enters a rage
     /// again within 1 minute of ending a rage, you don't gain any temporary
     /// hit points from your rage." (The subject/verb disagreement is the
     /// corpus's own; it is quoted, not corrected.)
@@ -716,9 +716,9 @@ mod tests {
                 .expect("PCGEN_CORPUS_ROOT must point at a local pcgen/data checkout"),
         );
         let text = std::fs::read_to_string(
-            root.join("pathfinder/paizo/roleplaying_game/core_rulebook/cr__stats.lst"),
+            root.join("pathfinder/paizo/roleplaying_game/core_rulebook/cr__stats"),
         )
-        .expect("cr__stats.lst must be readable");
+        .expect("cr__stats must be readable");
         let names: Vec<&str> = text
             .lines()
             .filter(|l| !l.trim_start().starts_with('#') && l.contains("STATMOD:"))
@@ -731,7 +731,7 @@ mod tests {
     /// The four Rage magnitudes live on `KEY:Standard Unchained Rage`, a
     /// selectable-option row the ingestion cycle deliberately did not write
     /// under `class_feature/`. They can only be pinned against the raw
-    /// `.lst`, so this test is opt-in — but the tokens ARE checked, not
+    /// source file, so this test is opt-in — but the tokens ARE checked, not
     /// assumed, whenever the corpus is available.
     #[test]
     #[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
@@ -741,9 +741,9 @@ mod tests {
                 .expect("PCGEN_CORPUS_ROOT must point at a local pcgen/data checkout"),
         );
         let text = std::fs::read_to_string(root.join(
-            "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+            "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class",
         ))
-        .expect("pu_abilities_class.lst must be readable");
+        .expect("pu_abilities_class must be readable");
         let lines: Vec<&str> = text.lines().collect();
 
         let line_306 = lines[305];

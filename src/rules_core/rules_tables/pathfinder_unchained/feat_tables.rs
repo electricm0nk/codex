@@ -2,7 +2,7 @@
 //! pre-build (`docs/release/SD-27-future-state-book-content-ingestion/
 //! loop-instruction.md §3.3.3`).
 //!
-//! **Full corpus coverage, honestly bounded.** `pu_feats.lst` has 18
+//! **Full corpus coverage, honestly bounded.** `pu_feats` has 18
 //! non-comment, non-blank rows. 17 of them are real, distinct feat
 //! definitions -- every one is represented below. The 18th
 //! (`CATEGORY=FEAT|Extra Rogue Talent.MOD`) is a `.MOD` record that
@@ -15,9 +15,9 @@
 //! defining a new one").
 //!
 //! **Category is corpus-block-derived, not `TYPE:`-derived.** Unlike
-//! CRB's `cr_feats.lst` (which carries a consistent `TYPE:General|Combat|
+//! CRB's `cr_feats` (which carries a consistent `TYPE:General|Combat|
 //! ItemCreation|Metamagic` facet on every record CRB's own catalog
-//! includes), `pu_feats.lst`'s real `TYPE:` tokens are sparse and
+//! includes), `pu_feats`'s real `TYPE:` tokens are sparse and
 //! inconsistent -- the 9 "Champion of ..." alignment feats carry NO
 //! `TYPE:` token at all on their own record (their only relationship to
 //! "Alignment" is a same-named facet buried inside a `PREABILITY:`
@@ -76,7 +76,7 @@ impl FeatCategory {
 
     /// This catalog's single corpus source file.
     pub fn corpus_file_name(self) -> &'static str {
-        "pu_feats.lst"
+        "pu_feats"
     }
 }
 

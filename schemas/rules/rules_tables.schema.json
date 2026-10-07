@@ -92,7 +92,7 @@
       "oneOf": [
         {
           "additionalProperties": false,
-          "description": "A real, checkable `NATURALATTACKS:` token in the live PCGen corpus — just not on the monster's own `b1_races.lst` row.",
+          "description": "A real, checkable `NATURALATTACKS:` token in the live PCGen corpus — just not on the monster's own `b1_races` row.",
           "properties": {
             "LstToken": {
               "properties": {
@@ -187,7 +187,7 @@
       "type": "object"
     },
     "ClassArmorProficiency": {
-      "description": "`AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 6, armor/shield-flavored slice of the proficiency/ mechanical-grant possession-tracking sub-cause cycle 5's own next-cycle plan named). One class's armor/shield proficiency, read the same way [`ClassWeaponProficiency`] is: each field transcribed from that class's own `cr_abilities_class.lst` `\"Weapon and Armor Proficiency ~ <Class>\"` record's literal `ABILITY:Internal|AUTOMATIC|Armor Prof ~ <Tier>` / `Shield Prof` / `Shield Prof ~ Tower` indirection targets -- never a shape guess. PF1 armor proficiency has no per-item exotic-armor analogue to a weapon's named list, so a class's whole grant is exactly these five booleans.",
+      "description": "`AT-34-E3-001` (`class_feature_option_pool_record_not_held_by_engine` mechanism, cycle 6, armor/shield-flavored slice of the proficiency/ mechanical-grant possession-tracking sub-cause cycle 5's own next-cycle plan named). One class's armor/shield proficiency, read the same way [`ClassWeaponProficiency`] is: each field transcribed from that class's own `cr_abilities_class` `\"Weapon and Armor Proficiency ~ <Class>\"` record's literal `ABILITY:Internal|AUTOMATIC|Armor Prof ~ <Tier>` / `Shield Prof` / `Shield Prof ~ Tower` indirection targets -- never a shape guess. PF1 armor proficiency has no per-item exotic-armor analogue to a weapon's named list, so a class's whole grant is exactly these five booleans.",
       "properties": {
         "class_id": {
           "description": "The engine's class id, e.g. `\"class:fighter\"`.",
@@ -248,7 +248,7 @@
           "$ref": "#/definitions/GoodSaves"
         },
         "hit_die": {
-          "description": "Hit die size (SD-13/v0.6 alpha swarm durability calc), from the same `cr_classes.lst` `HD:` token every other field in this table already cites -- e.g. `CLASS:Fighter HD:10` at line 139 (the same line this table's own save-formula doc comments already cite for Fighter).\n\n**One row is deliberately NOT a transcription of its `HD:` token:** Monk is `8` here against the corpus's `HD:10`, per the operator's 2026-07-29 ruling (risks item 91). See the comment block on the Monk row below before changing it -- it is a documented corpus-defect override, not an uncorrected drift.",
+          "description": "Hit die size (SD-13/v0.6 alpha swarm durability calc), from the same `cr_classes` `HD:` token every other field in this table already cites -- e.g. `CLASS:Fighter HD:10` at line 139 (the same line this table's own save-formula doc comments already cite for Fighter).\n\n**One row is deliberately NOT a transcription of its `HD:` token:** Monk is `8` here against the corpus's `HD:10`, per the operator's 2026-07-29 ruling (risks item 91). See the comment block on the Monk row below before changing it -- it is a documented corpus-defect override, not an uncorrected drift.",
           "format": "uint8",
           "minimum": 0.0,
           "type": "integer"
@@ -520,7 +520,7 @@
           "type": "array"
         },
         "source_file": {
-          "description": "The abilities-`.lst` basename this record was read from. Carried per row because [`source_line`](Self::source_line) is only meaningful together with its file: Bestiary 3 is the first book whose ability rows come from TWO files (`b3_abilities_companion.lst` and `b3_abilities_familiar.lst`), and line 40 means a different row in each. Same discipline as `MonsterBookSpec::races_lsts`.",
+          "description": "The abilities source-file basename this record was read from. Carried per row because [`source_line`](Self::source_line) is only meaningful together with its file: Bestiary 3 is the first book whose ability rows come from TWO files (`b3_abilities_companion` and `b3_abilities_familiar`), and line 40 means a different row in each. Same discipline as `MonsterBookSpec::races_lsts`.",
           "type": "string"
         },
         "source_line": {
@@ -589,7 +589,7 @@
       "type": "object"
     },
     "CompanionClassRecord": {
-      "description": "One `*_classes_companion.lst` row (`AT-34-E3-001`'s `companion_absent_from_<book>_companion_tables` mechanism, `decisions.md §17`): the PCGen monster CLASS a creature row's `MONSTERCLASS:` token names, or (for the bare-numbered `###Block: Level Advancement` lines this same file also carries, e.g. `um_classes_companion.lst:13`) a single per-level ability grant this chassis's own tokenizer treats as its own row — `v06_work_inventory::enumerate_file`'s directive screen only skips a first field shaped `TOKEN:` (all-caps/digits before a colon); a bare `1` has no colon, so it is never a directive and becomes a record in its own right rather than folding into the `CLASS:` row above it.\n\nA hit-dice progression: not a creature (no `SIZE:`/`MOVE:`/natural attacks) and not an ability (no `DESC:`) — distinct from both [`CompanionRecord`] and [`CompanionAbilityRecord`], and deliberately not squeezed into either. `scripts/transcribe_companion_tables.py`'s own `decisions.md §65.1` screen named this shape and DROPPED it for three rounds precisely because forcing it into `CompanionRecord` would emit a card whose every modelled field is empty — this is that declared, later new record type, built and verified against its own three real corpus-wide consumers (`core_rulebook` 2, `ultimate_magic` 3, `book_of_the_damned_ volume_1` 2 — 7 rows, all seven now held). Registering it computes nothing: `hit_dice`/`max_level` are carried verbatim, never fed into a BAB, save or hit-point formula, the same discipline `CompanionRecord:: monster_class`'s own doc states for the creature side of this identical PCGen shape. It only proves the engine HOLDS the row — bucket B to bucket M/D/V is a different mechanism's job (`decisions.md §2a`).",
+      "description": "One `*_classes_companion` row (`AT-34-E3-001`'s `companion_absent_from_<book>_companion_tables` mechanism, `decisions.md §17`): the PCGen monster CLASS a creature row's `MONSTERCLASS:` token names, or (for the bare-numbered `###Block: Level Advancement` lines this same file also carries, e.g. `um_classes_companion:13`) a single per-level ability grant this chassis's own tokenizer treats as its own row — `v06_work_inventory::enumerate_file`'s directive screen only skips a first field shaped `TOKEN:` (all-caps/digits before a colon); a bare `1` has no colon, so it is never a directive and becomes a record in its own right rather than folding into the `CLASS:` row above it.\n\nA hit-dice progression: not a creature (no `SIZE:`/`MOVE:`/natural attacks) and not an ability (no `DESC:`) — distinct from both [`CompanionRecord`] and [`CompanionAbilityRecord`], and deliberately not squeezed into either. `scripts/transcribe_companion_tables.py`'s own `decisions.md §65.1` screen named this shape and DROPPED it for three rounds precisely because forcing it into `CompanionRecord` would emit a card whose every modelled field is empty — this is that declared, later new record type, built and verified against its own three real corpus-wide consumers (`core_rulebook` 2, `ultimate_magic` 3, `book_of_the_damned_ volume_1` 2 — 7 rows, all seven now held). Registering it computes nothing: `hit_dice`/`max_level` are carried verbatim, never fed into a BAB, save or hit-point formula, the same discipline `CompanionRecord:: monster_class`'s own doc states for the creature side of this identical PCGen shape. It only proves the engine HOLDS the row — bucket B to bucket M/D/V is a different mechanism's job (`decisions.md §2a`).",
       "properties": {
         "ability_grants": {
           "description": "Every `ABILITY:` token's payload, in row order -- the same discipline [`CompanionAbilityRecord::type_segments`] states for an unmodelled shape: visible rather than lost. A bare level-advancement row (key `\"1\"`) carries exactly one of these and nothing else.\n\nSplit into [`CompanionAbilityGrant`]'s fields by SD-35 `AT-35-E6-003-SWEEP` cycle 9; the payload was a pipe-joined string, and three rows appended an ingest guard to it.",
@@ -629,7 +629,7 @@
           ]
         },
         "source_file": {
-          "description": "The classes-`.lst` basename this record was read from.",
+          "description": "The classes source-file basename this record was read from.",
           "type": "string"
         },
         "source_line": {
@@ -788,7 +788,7 @@
           "type": "array"
         },
         "source_file": {
-          "description": "The races-`.lst` basename this record was read from. Carried per row for the same reason as [`CompanionAbilityRecord::source_file`]: Bestiary 3 draws creature rows from both `b3_races_companion.lst` and `b3_races_familiar.lst`.",
+          "description": "The races source-file basename this record was read from. Carried per row for the same reason as [`CompanionAbilityRecord::source_file`]: Bestiary 3 draws creature rows from both `b3_races_companion` and `b3_races_familiar`.",
           "type": "string"
         },
         "source_line": {
@@ -1071,7 +1071,7 @@
       "type": "object"
     },
     "GroundedAttack": {
-      "description": "One natural attack whose `damage_dice` is not transcribed from the monster's own `b1_races.lst` row.",
+      "description": "One natural attack whose `damage_dice` is not transcribed from the monster's own `b1_races` row.",
       "properties": {
         "attack_name": {
           "description": "Must equal the shipped `NaturalAttack::name`.",
@@ -1264,7 +1264,7 @@
           ]
         },
         "source_file": {
-          "description": "The abilities-`.lst` file this record was read from, as a bare file name relative to the book directory.\n\nThe exact counterpart of [`MonsterStatBlock::source_file`], and added for the same reason one book later: a book is not guaranteed one abilities file either. Inner Sea Gods splits its 161 ability rows 145/16 across `isg_abilities_races.lst` and `support/isg_abilities_races_b4.lst` — so `source_line` alone does not identify a row, and the generator that re-reads the cited line to verify it must be told which file to open.\n\nUntil this field existed the generator took the abilities file from a single per-book spec string (`MonsterBookSpec::abilities_lst`), which is correct only for a one-file book; the nine books registered before it were all one-file, so the singular spelling was right by coincidence rather than by rule.",
+          "description": "The abilities source-file file this record was read from, as a bare file name relative to the book directory.\n\nThe exact counterpart of [`MonsterStatBlock::source_file`], and added for the same reason one book later: a book is not guaranteed one abilities file either. Inner Sea Gods splits its 161 ability rows 145/16 across `isg_abilities_races` and `support/isg_abilities_races_b4` — so `source_line` alone does not identify a row, and the generator that re-reads the cited line to verify it must be told which file to open.\n\nUntil this field existed the generator took the abilities file from a single per-book spec string (`MonsterBookSpec::abilities_lst`), which is correct only for a one-file book; the nine books registered before it were all one-file, so the singular spelling was right by coincidence rather than by rule.",
           "type": "string"
         },
         "source_line": {
@@ -1426,7 +1426,7 @@
       "type": "object"
     },
     "NaturalAttackDamageBonus": {
-      "description": "**`attack` is the token's own selector, and it is NOT guaranteed to name one of [`CompanionRecord::natural_attacks`].** Re-derived corpus-wide 2026-08-19 over all 927 ingested companion records: `advanced_players_guide:companion: parrot` (`ce_races_familiar_apg.lst:17`) states `BONUS:WEAPONPROF=Claw|DAMAGE|max(0,(STR/2))` while its only natural attack is `Bite`. Carried as the row states it rather than joined-and-dropped — inventing the join would hide a real corpus fact.",
+      "description": "**`attack` is the token's own selector, and it is NOT guaranteed to name one of [`CompanionRecord::natural_attacks`].** Re-derived corpus-wide 2026-08-19 over all 927 ingested companion records: `advanced_players_guide:companion: parrot` (`ce_races_familiar_apg:17`) states `BONUS:WEAPONPROF=Claw|DAMAGE|max(0,(STR/2))` while its only natural attack is `Bite`. Carried as the row states it rather than joined-and-dropped — inventing the join would hide a real corpus fact.",
       "properties": {
         "attack": {
           "description": "The `WEAPONPROF=` selector verbatim: `\"Bite\"`, `\"Claw\"`, `\"Slam\"`, …",
@@ -1807,10 +1807,10 @@
       "type": "object"
     },
     "UnchainedBarbarianFeature": {
-      "description": "One ingested `class_feature` record for the Unchained Barbarian.\n\nThe roster is exactly the 14 records under `data/corpus/pathfinder_unchained/class_feature/barbarian_unchained_class/` — no more (nothing invented) and no fewer (nothing quietly dropped). `corpus_line` is the 1-based line in `pu_abilities_class.lst`.",
+      "description": "One ingested `class_feature` record for the Unchained Barbarian.\n\nThe roster is exactly the 14 records under `data/corpus/pathfinder_unchained/class_feature/barbarian_unchained_class/` — no more (nothing invented) and no fewer (nothing quietly dropped). `corpus_line` is the 1-based line in `pu_abilities_class`.",
       "properties": {
         "corpus_line": {
-          "description": "1-based line in `pu_abilities_class.lst`.",
+          "description": "1-based line in `pu_abilities_class`.",
           "format": "uint32",
           "minimum": 0.0,
           "type": "integer"
@@ -1862,10 +1862,10 @@
       "type": "object"
     },
     "UnchainedMonkFeature": {
-      "description": "One ingested `class_feature` record for the Unchained Monk.\n\nThe roster is exactly the 18 records under `data/corpus/pathfinder_unchained/class_feature/monk_unchained_class/`. Unlike the Barbarian's, every one of them is granted by the single `Monk ~ Unchained Class.MOD` progression block (`pu_abilities_class.lst:154-171`), so there is no Full/Ex-Class split and no ungranted record.",
+      "description": "One ingested `class_feature` record for the Unchained Monk.\n\nThe roster is exactly the 18 records under `data/corpus/pathfinder_unchained/class_feature/monk_unchained_class/`. Unlike the Barbarian's, every one of them is granted by the single `Monk ~ Unchained Class.MOD` progression block (`pu_abilities_class:154-171`), so there is no Full/Ex-Class split and no ungranted record.",
       "properties": {
         "corpus_line": {
-          "description": "1-based line in `pu_abilities_class.lst`.",
+          "description": "1-based line in `pu_abilities_class`.",
           "format": "uint32",
           "minimum": 0.0,
           "type": "integer"
@@ -2228,21 +2228,21 @@
           ]
         },
         "description": {
-          "description": "Descriptive text for this record (SD-24 criterion 6.4, ACG scope). Sourced from the corpus `SPROP:` (\"Special Property\") token — `acg_equip.lst`/`acg_equipmods.lst` carry no `DESC:` token anywhere, unlike CRB's equipment files, so `SPROP:` is the closest real per-item prose ACG's corpus provides. When a record has more than one `SPROP:` entry they are joined with `\"; \"`. A trailing `|<conditional-tag>` qualifier (e.g. `|PRECLASS:1,Slayer=1`) is stripped before storage — verified by inspection that every real `|`-suffixed `SPROP:` in this corpus follows the `<prose>|<directive>` shape, never real item text after the pipe. `None` only when the corpus record has no `SPROP:` token at all (rare — see `EquipmentFieldCoverage`'s per-category ceiling). Never fabricated.",
+          "description": "Descriptive text for this record (SD-24 criterion 6.4, ACG scope). Sourced from the corpus `SPROP:` (\"Special Property\") token — `acg_equip`/`acg_equipmods` carry no `DESC:` token anywhere, unlike CRB's equipment files, so `SPROP:` is the closest real per-item prose ACG's corpus provides. When a record has more than one `SPROP:` entry they are joined with `\"; \"`. A trailing `|<conditional-tag>` qualifier (e.g. `|PRECLASS:1,Slayer=1`) is stripped before storage — verified by inspection that every real `|`-suffixed `SPROP:` in this corpus follows the `<prose>|<directive>` shape, never real item text after the pipe. `None` only when the corpus record has no `SPROP:` token at all (rare — see `EquipmentFieldCoverage`'s per-category ceiling). Never fabricated.",
           "type": [
             "string",
             "null"
           ]
         },
         "key": {
-          "description": "Equipment records carry their `name` (or, for `acg_equipmods.lst`, the explicit `KEY:` token) as the corpus identity. `acg_equip.lst` rows have no distinct `KEY:` token, so `key == name` for General/ ArmsArmor/MagicItems (same fallback `rules_tables::apg::equipment_tables` documents for its own `key` field); Equipmods rows use the real `KEY:` token, which can differ from the display name (e.g. `Special Ability ~ Amorphous ~ Armor` vs. display name `Amorphous`).",
+          "description": "Equipment records carry their `name` (or, for `acg_equipmods`, the explicit `KEY:` token) as the corpus identity. `acg_equip` rows have no distinct `KEY:` token, so `key == name` for General/ ArmsArmor/MagicItems (same fallback `rules_tables::apg::equipment_tables` documents for its own `key` field); Equipmods rows use the real `KEY:` token, which can differ from the display name (e.g. `Special Ability ~ Amorphous ~ Armor` vs. display name `Amorphous`).",
           "type": "string"
         },
         "name": {
           "type": "string"
         },
         "weight_lbs": {
-          "description": "Weight in pounds from the corpus `WT:` token (SD-24 criterion 6.3, ACG scope). `None` when the corpus genuinely carries no `WT:` token for this record — true for every `acg_equipmods.lst` record (equipment *modifiers* have no independent physical weight of their own, matching the same finding CRB's own `Equipmods` category already established) and for a smaller number of General/Magic Items rows. Never a fabricated value.",
+          "description": "Weight in pounds from the corpus `WT:` token (SD-24 criterion 6.3, ACG scope). `None` when the corpus genuinely carries no `WT:` token for this record — true for every `acg_equipmods` record (equipment *modifiers* have no independent physical weight of their own, matching the same finding CRB's own `Equipmods` category already established) and for a smaller number of General/Magic Items rows. Never a fabricated value.",
           "format": "double",
           "type": [
             "number",
@@ -2258,7 +2258,7 @@
       "type": "object"
     },
     "acg__spell_list__Pf1SchoolId": {
-      "description": "The full 9-school PF1 spell-school enum (SD-24 criterion 6.2 widened this from the 4-school bootstrap subset — `Universal` does not appear in `acg_spells.lst` today but is included for parity with `rules_tables::crb::spell_list::Pf1SchoolId`, which this mirrors).",
+      "description": "The full 9-school PF1 spell-school enum (SD-24 criterion 6.2 widened this from the 4-school bootstrap subset — `Universal` does not appear in `acg_spells` today but is included for parity with `rules_tables::crb::spell_list::Pf1SchoolId`, which this mirrors).",
       "enum": [
         "Abjuration",
         "Conjuration",
@@ -2279,7 +2279,7 @@
           "type": "string"
         },
         "key": {
-          "description": "The record's identity in `acg_spells.lst`: its `KEY:` token when the row carries one, else its display name (no `KEY:` token on `CLASSES:`-bearing spell rows).\n\nExactly 9 rows in this file carry a `KEY:` token — the Naturalist archetype's summon spells (`acg_spells.lst:785`+), whose KEY is archetype-qualified: `KEY:Naturalist Summon Nature's Ally I` for the row displayed as `Summon Nature's Ally I`. Those are genuinely different records from CRB's own `Summon Nature's Ally I` (they carry their own `DURATION:` formula keyed to `ConjurationNaturalistsCharmBonus`), so storing the display name here — as this table originally did — collided all 9 with the CRB record and made a selection carrying that name unresolvable between the two. The `KEY:` token is stored instead; see `tests/spell_cross_book_identity.rs`.\n\nThis field is the record's *identity*, not its lookup surface: those 9 rows are still reachable by their display name through [`spell_resolve`], which consults [`ARCHETYPE_QUALIFIED_KEYS`]. Do not read a qualified `key` as \"this record can only be found under its archetype name\".",
+          "description": "The record's identity in `acg_spells`: its `KEY:` token when the row carries one, else its display name (no `KEY:` token on `CLASSES:`-bearing spell rows).\n\nExactly 9 rows in this file carry a `KEY:` token — the Naturalist archetype's summon spells (`acg_spells:785`+), whose KEY is archetype-qualified: `KEY:Naturalist Summon Nature's Ally I` for the row displayed as `Summon Nature's Ally I`. Those are genuinely different records from CRB's own `Summon Nature's Ally I` (they carry their own `DURATION:` formula keyed to `ConjurationNaturalistsCharmBonus`), so storing the display name here — as this table originally did — collided all 9 with the CRB record and made a selection carrying that name unresolvable between the two. The `KEY:` token is stored instead; see `tests/spell_cross_book_identity.rs`.\n\nThis field is the record's *identity*, not its lookup surface: those 9 rows are still reachable by their display name through [`spell_resolve`], which consults [`ARCHETYPE_QUALIFIED_KEYS`]. Do not read a qualified `key` as \"this record can only be found under its archetype name\".",
           "type": "string"
         },
         "level": {
@@ -2330,14 +2330,14 @@
           ]
         },
         "key": {
-          "description": "Equipment records carry their `name` (or, for `arg_equipmods.lst`, the explicit `KEY:` token when present) as the corpus identity.",
+          "description": "Equipment records carry their `name` (or, for `arg_equipmods`, the explicit `KEY:` token when present) as the corpus identity.",
           "type": "string"
         },
         "name": {
           "type": "string"
         },
         "weight_lbs": {
-          "description": "Weight in pounds from the corpus `WT:` token. `None` when the corpus genuinely carries no `WT:` token for this record (true for every `arg_equipmods.lst` record, matching CRB's/ACG's own established finding that equipment *modifiers* carry no independent weight).",
+          "description": "Weight in pounds from the corpus `WT:` token. `None` when the corpus genuinely carries no `WT:` token for this record (true for every `arg_equipmods` record, matching CRB's/ACG's own established finding that equipment *modifiers* carry no independent weight).",
           "format": "double",
           "type": [
             "number",
@@ -2424,7 +2424,7 @@
           ]
         },
         "key": {
-          "description": "The corpus `KEY:` token, falling back to the record's `name` when no `KEY:` token is present (no in-scope `arg_feats.lst` record carries one, so `key == name` for every entry here today).",
+          "description": "The corpus `KEY:` token, falling back to the record's `name` when no `KEY:` token is present (no in-scope `arg_feats` record carries one, so `key == name` for every entry here today).",
           "type": "string"
         },
         "name": {
@@ -2439,7 +2439,7 @@
       "type": "object"
     },
     "advanced_race_guide__spell_list__Pf1SchoolId": {
-      "description": "The full 9-school PF1 spell-school enum, mirroring `rules_tables::acg::spell_list::Pf1SchoolId` exactly. `Universal` does not appear in `arg_spells.lst` today but is included for cross-book schema parity.",
+      "description": "The full 9-school PF1 spell-school enum, mirroring `rules_tables::acg::spell_list::Pf1SchoolId` exactly. `Universal` does not appear in `arg_spells` today but is included for cross-book schema parity.",
       "enum": [
         "Abjuration",
         "Conjuration",
@@ -2460,7 +2460,7 @@
           "type": "string"
         },
         "key": {
-          "description": "The spell's `name` is its identity in `arg_spells.lst` (no `KEY:` token on any in-scope record).",
+          "description": "The spell's `name` is its identity in `arg_spells` (no `KEY:` token on any in-scope record).",
           "type": "string"
         },
         "level": {
@@ -2626,7 +2626,7 @@
       "type": "object"
     },
     "apg__spell_list__Pf1SchoolId": {
-      "description": "The 8 canonical PF1 arcane/divine spell schools that appear in the real `apg_spells.lst` corpus (widened from the SD-22 bootstrap's 3-school subset to the full set actually present — see `rules_tables::crb::spell_list::Pf1SchoolId` for CRB's own, separately maintained copy of this enum).",
+      "description": "The 8 canonical PF1 arcane/divine spell schools that appear in the real `apg_spells` corpus (widened from the SD-22 bootstrap's 3-school subset to the full set actually present — see `rules_tables::crb::spell_list::Pf1SchoolId` for CRB's own, separately maintained copy of this enum).",
       "enum": [
         "Abjuration",
         "Conjuration",
@@ -2653,7 +2653,7 @@
           "type": "boolean"
         },
         "key": {
-          "description": "The record's identity in `apg_spells.lst`: its `KEY:` token when the row carries one, else its display name (most rows carry no `KEY:`), or — for a `.COPY=` variant record — the variant's own display name (see this module's doc comment).\n\nExactly 9 rows in this file carry a `KEY:` token, all of them the Summoner-archetype summon spells (`apg_spells.lst:649`+), whose KEY is archetype-qualified — `KEY:Summoner Summon Monster I` for the row displayed as `Summon Monster I`. Those are genuinely different records from CRB's own `Summon Monster I` (they carry their own `DURATION:` formula keyed to `ConjurationSummonersCharmBonus`), so storing the display name here — as this table originally did — collided all 9 with the CRB record and made a selection carrying that name unresolvable between the two. The `KEY:` token is stored instead; see `tests/spell_cross_book_identity.rs`.\n\nThis field is the record's *identity*, not its lookup surface: those 9 rows are still reachable by their display name through [`spell_resolve`], which consults [`ARCHETYPE_QUALIFIED_KEYS`]. Do not read a qualified `key` as \"this record can only be found under its archetype name\".",
+          "description": "The record's identity in `apg_spells`: its `KEY:` token when the row carries one, else its display name (most rows carry no `KEY:`), or — for a `.COPY=` variant record — the variant's own display name (see this module's doc comment).\n\nExactly 9 rows in this file carry a `KEY:` token, all of them the Summoner-archetype summon spells (`apg_spells:649`+), whose KEY is archetype-qualified — `KEY:Summoner Summon Monster I` for the row displayed as `Summon Monster I`. Those are genuinely different records from CRB's own `Summon Monster I` (they carry their own `DURATION:` formula keyed to `ConjurationSummonersCharmBonus`), so storing the display name here — as this table originally did — collided all 9 with the CRB record and made a selection carrying that name unresolvable between the two. The `KEY:` token is stored instead; see `tests/spell_cross_book_identity.rs`.\n\nThis field is the record's *identity*, not its lookup surface: those 9 rows are still reachable by their display name through [`spell_resolve`], which consults [`ARCHETYPE_QUALIFIED_KEYS`]. Do not read a qualified `key` as \"this record can only be found under its archetype name\".",
           "type": "string"
         },
         "level": {
@@ -2732,7 +2732,7 @@
       "type": "object"
     },
     "beastiary1__NaturalAttack": {
-      "description": "A single natural-weapon attack.\n\nUsually transcribed from a `NATURALATTACKS:` token on the monster's real `.lst` row. Twelve Bestiary 1 monsters instead carry only an `ABILITY:Internal|AUTOMATIC|<Name>` cross-reference, which names the attack but supplies no dice at any hop — for those, `damage_dice` is grounded from published values and every one is documented, with its sources, in [`natural_attack_provenance`]. **Read that module before changing any `natural_attacks` list back to empty.**\n\n`damage_dice` is the die expression only, with no Strength modifier (`\"1d6\"`, not `\"1d6+1\"`). `\"0\"` means a real attack that deals no damage — e.g. Cave Fisher's Filament, whose own corpus token ends `,*1,0`. The per-attack `*N` count on a `NATURALATTACKS:` token is deliberately **not** modelled: this struct records distinct attack types, so a Ghoul's `Claw,...,*2,1d6` yields one `Claw` entry.",
+      "description": "A single natural-weapon attack.\n\nUsually transcribed from a `NATURALATTACKS:` token on the monster's real source file row. Twelve Bestiary 1 monsters instead carry only an `ABILITY:Internal|AUTOMATIC|<Name>` cross-reference, which names the attack but supplies no dice at any hop — for those, `damage_dice` is grounded from published values and every one is documented, with its sources, in [`natural_attack_provenance`]. **Read that module before changing any `natural_attacks` list back to empty.**\n\n`damage_dice` is the die expression only, with no Strength modifier (`\"1d6\"`, not `\"1d6+1\"`). `\"0\"` means a real attack that deals no damage — e.g. Cave Fisher's Filament, whose own corpus token ends `,*1,0`. The per-attack `*N` count on a `NATURALATTACKS:` token is deliberately **not** modelled: this struct records distinct attack types, so a Ghoul's `Claw,...,*2,1d6` yields one `Claw` entry.",
       "properties": {
         "damage_dice": {
           "type": "string"
@@ -3153,7 +3153,7 @@
           ]
         },
         "description": {
-          "description": "Full description (SD-24 criterion 6.4; ceiling raised by SD-25 criterion 7.N), PCGen entity-decoded (`&nl;` -> newline, `&lbracket;`/`&rbracket;` -> `[`/`]`, `&pipe;` -> `|`), sourced from one of three places, each traceable and none fabricated: 1. The record's own corpus `DESC:` token (the original SD-24 source; includes 67 `cr_equip_arms_armor.lst` records using the corpus's `DESC:.CLEAR`-then-`DESC:<real text>` convention -- SD-25 criterion 7.N fixed an SD-24 codegen bug that had captured only the `.CLEAR` sentinel and dropped the real text after it). 2. A same-table `.COPY=` inheritance (SD-25 criterion 7.N, register A11): a record with no `DESC:` token of its own whose corpus row is a `.COPY=`-derived variant of another already-ingested record inherits that record's description, matching the LST's own declared data-inheritance convention (117 records: 98 in `arms_armor.rs`, 19 in `general.rs`). 3. A cited d20pfsrd.com second source (SD-25 criterion 7.N; 83 `cr_equipmods.lst` records for confidently identity-matched named special materials/special abilities the corpus's `EQUIPMOD` rows never carried a `DESC:` token for at all) -- see the cycle receipt for the per-entry source URL.\n\n`None` when none of the above apply -- this is common for `cr_equip_general.lst`/`cr_equip_arms_armor.lst` template rows whose own base record also has no description to inherit, and for `cr_equipmods.lst`'s generic bookkeeping categories (body-slot markers, per-value cost-formula rows) that name no real rules concept a second source could describe. No description is ever fabricated to fill this gap; the residual `None` rate is the honest ceiling documented in `EquipmentFieldCoverage` and `equipment-coverage-matrix.md`.",
+          "description": "Full description (SD-24 criterion 6.4; ceiling raised by SD-25 criterion 7.N), PCGen entity-decoded (`&nl;` -> newline, `&lbracket;`/`&rbracket;` -> `[`/`]`, `&pipe;` -> `|`), sourced from one of three places, each traceable and none fabricated: 1. The record's own corpus `DESC:` token (the original SD-24 source; includes 67 `cr_equip_arms_armor` records using the corpus's `DESC:.CLEAR`-then-`DESC:<real text>` convention -- SD-25 criterion 7.N fixed an SD-24 codegen bug that had captured only the `.CLEAR` sentinel and dropped the real text after it). 2. A same-table `.COPY=` inheritance (SD-25 criterion 7.N, register A11): a record with no `DESC:` token of its own whose corpus row is a `.COPY=`-derived variant of another already-ingested record inherits that record's description, matching the LST's own declared data-inheritance convention (117 records: 98 in `arms_armor.rs`, 19 in `general.rs`). 3. A cited d20pfsrd.com second source (SD-25 criterion 7.N; 83 `cr_equipmods` records for confidently identity-matched named special materials/special abilities the corpus's `EQUIPMOD` rows never carried a `DESC:` token for at all) -- see the cycle receipt for the per-entry source URL.\n\n`None` when none of the above apply -- this is common for `cr_equip_general`/`cr_equip_arms_armor` template rows whose own base record also has no description to inherit, and for `cr_equipmods`'s generic bookkeeping categories (body-slot markers, per-value cost-formula rows) that name no real rules concept a second source could describe. No description is ever fabricated to fill this gap; the residual `None` rate is the honest ceiling documented in `EquipmentFieldCoverage` and `equipment-coverage-matrix.md`.",
           "type": [
             "string",
             "null"
@@ -3167,7 +3167,7 @@
           "type": "string"
         },
         "weight_lbs": {
-          "description": "Weight in pounds from the corpus `WT:` token (SD-24 criterion 6.3). `None` when the corpus genuinely carries no `WT:` token for this record -- true for every `cr_equipmods.lst` record (equipment *modifiers* have no independent physical weight of their own; they modify the base item's weight/cost, matching the same \"where applicable\" carve-out `decisions.md §5` grants cost) and for a smaller number of `(Base)`-template rows in the other three categories. Never a fabricated value.",
+          "description": "Weight in pounds from the corpus `WT:` token (SD-24 criterion 6.3). `None` when the corpus genuinely carries no `WT:` token for this record -- true for every `cr_equipmods` record (equipment *modifiers* have no independent physical weight of their own; they modify the base item's weight/cost, matching the same \"where applicable\" carve-out `decisions.md §5` grants cost) and for a smaller number of `(Base)`-template rows in the other three categories. Never a fabricated value.",
           "format": "double",
           "type": [
             "number",
@@ -3183,7 +3183,7 @@
       "type": "object"
     },
     "crb__feats__FeatCategory": {
-      "description": "A feat category, derived from the corpus record's own `TYPE:` facet.\n\nThe first four variants are the Chapter 5 categories `cr_feats.lst` encodes and are the only ones a CRB record ever carries. `Teamwork` and `Panache` exist because `apg_feats.lst` and `acg_feats.lst` encode them as standalone `TYPE:` facets on records that carry no `Combat`/`General` facet at all -- 3 APG records (`TYPE:Teamwork`) and 8 ACG records (4 `TYPE:Teamwork`, 4 `TYPE:Panache`). Under the four-category rule those 11 real, player-facing feats would have been silently dropped, so the enum widened to what the corpus actually says rather than the catalog quietly losing them. Records whose `TYPE:` carries *both* facets (e.g. `TYPE:Combat.Teamwork`, 8 in APG and 5 in ACG) resolve to `Combat`, exactly as CRB already resolves `TYPE:Combat.AttackOption.ModifyAC` to `Combat` and drops the subtypes.",
+      "description": "A feat category, derived from the corpus record's own `TYPE:` facet.\n\nThe first four variants are the Chapter 5 categories `cr_feats` encodes and are the only ones a CRB record ever carries. `Teamwork` and `Panache` exist because `apg_feats` and `acg_feats` encode them as standalone `TYPE:` facets on records that carry no `Combat`/`General` facet at all -- 3 APG records (`TYPE:Teamwork`) and 8 ACG records (4 `TYPE:Teamwork`, 4 `TYPE:Panache`). Under the four-category rule those 11 real, player-facing feats would have been silently dropped, so the enum widened to what the corpus actually says rather than the catalog quietly losing them. Records whose `TYPE:` carries *both* facets (e.g. `TYPE:Combat.Teamwork`, 8 in APG and 5 in ACG) resolve to `Combat`, exactly as CRB already resolves `TYPE:Combat.AttackOption.ModifyAC` to `Combat` and drops the subtypes.",
       "oneOf": [
         {
           "enum": [
@@ -3265,7 +3265,7 @@
           ]
         },
         "effect": {
-          "description": "Every `BONUS:` token the corpus record carries, verbatim, in source order. `None` when the record has no `BONUS:` token at all (104 of this catalog's 185 records -- e.g. every `ItemCreation` feat, whose real mechanical effect is a crafting-rule paragraph, not a numeric bonus). `Some(&[])` never occurs: an empty slice would be indistinguishable from \"no data gathered yet\", so absence is always `None`, mirroring `description`'s own `None`-when-absent rule and `EquipmentTableEntry.cost_gp`'s convention it already follows.\n\nDeliberately not collapsed into one flat numeric field the way `EquipmentStatEffect.armor_class_bonus` is. Real `cr_feats.lst` `BONUS:` tokens are frequently PCGen formula expressions over runtime state -- e.g. Power Attack's damage bonus is `BONUS:VAR|PowerAttackDamageModifier|PowerAttackDamageBase*floor(PowerAttackModifier)`, which depends on `BAB` (base attack bonus) -- not a static literal the way an equipment item's `BONUS:COMBAT|AC|2|TYPE=Armor` is. Forcing every feat's effect into a single resolved integer here would fabricate a number the corpus does not give as a constant; resolving these formulas against real character state is a future cycle's job (SD-20 Epic 6's `feat_effect` damage-class criterion), not this table's.",
+          "description": "Every `BONUS:` token the corpus record carries, verbatim, in source order. `None` when the record has no `BONUS:` token at all (104 of this catalog's 185 records -- e.g. every `ItemCreation` feat, whose real mechanical effect is a crafting-rule paragraph, not a numeric bonus). `Some(&[])` never occurs: an empty slice would be indistinguishable from \"no data gathered yet\", so absence is always `None`, mirroring `description`'s own `None`-when-absent rule and `EquipmentTableEntry.cost_gp`'s convention it already follows.\n\nDeliberately not collapsed into one flat numeric field the way `EquipmentStatEffect.armor_class_bonus` is. Real `cr_feats` `BONUS:` tokens are frequently PCGen formula expressions over runtime state -- e.g. Power Attack's damage bonus is `BONUS:VAR|PowerAttackDamageModifier|PowerAttackDamageBase*floor(PowerAttackModifier)`, which depends on `BAB` (base attack bonus) -- not a static literal the way an equipment item's `BONUS:COMBAT|AC|2|TYPE=Armor` is. Forcing every feat's effect into a single resolved integer here would fabricate a number the corpus does not give as a constant; resolving these formulas against real character state is a future cycle's job (SD-20 Epic 6's `feat_effect` damage-class criterion), not this table's.",
           "items": {
             "$ref": "#/definitions/crb__feats__FeatEffectBonus"
           },
@@ -3275,7 +3275,7 @@
           ]
         },
         "key": {
-          "description": "The corpus `KEY:` token, falling back to the record's `name` when no `KEY:` token is present -- the same fallback `EquipmentTableEntry.key` documents. Almost no `cr_feats.lst` record in this catalog's 4 categories carries an explicit `KEY:` token (the one corpus record that does, \"Cleave (Granted by Sylvan Scimitar)\", is excluded -- see this file's module doc comment), so `key` equals `name` for every entry here today.",
+          "description": "The corpus `KEY:` token, falling back to the record's `name` when no `KEY:` token is present -- the same fallback `EquipmentTableEntry.key` documents. Almost no `cr_feats` record in this catalog's 4 categories carries an explicit `KEY:` token (the one corpus record that does, \"Cleave (Granted by Sylvan Scimitar)\", is excluded -- see this file's module doc comment), so `key` equals `name` for every entry here today.",
           "type": "string"
         },
         "name": {
@@ -3309,7 +3309,7 @@
           "type": "string"
         },
         "key": {
-          "description": "The spell's corpus identity. `cr_spells.lst` has no `KEY:` token for spells (unlike equipment records) -- the record's `name` field is its identity, matching `LstSpellRecord.name`.",
+          "description": "The spell's corpus identity. `cr_spells` has no `KEY:` token for spells (unlike equipment records) -- the record's `name` field is its identity, matching `LstSpellRecord.name`.",
           "type": "string"
         },
         "level": {
@@ -3827,7 +3827,7 @@
           "type": "array"
         },
         "has_spell_like_abilities": {
-          "description": "Whether the row carries a `BONUS:VAR|SLA_CL|<...>` token — PCGen's encoding of PF1's Spell-Like Abilities universal monster rule (caster level = Hit Dice, or an arithmetic wrapper of it).\n\n**Not** the more general `SPELLS:` token, deliberately: Linnorm (Crag) (`b1_races.lst:269`) carries `BONUS:VAR|SLA_CL|HD` and its spell-like effects (`True Seeing ~ Constant`) reach the row only through an `ABILITY:` cross-reference, with no `SPELLS:` token anywhere on the line — gating on `SPELLS:` answered `false` for one of this seam's own already-committed fixtures (TDD red/green anchor, `run_monster_bar_check_clears_every_committed_monster_fixture`).\n\nA presence check only — never a count or a list of the spells themselves, which this ingest does not capture. Exists so a consumer can tell a monster with no spell-like abilities at all from one whose `SLA_CL` token simply was not parsed into anything else on this struct, which is the same \"absence must be honest\" reasoning `external_ability_refs` already carries for named abilities this book does not define. `spell_like_ability_caster_level` in `derived_evaluator_fixture_check` reads this field before applying PF1's Spell-Like Abilities universal monster rule, so a monster with no spell-like abilities at all is never served a caster level it has no use for (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44).",
+          "description": "Whether the row carries a `BONUS:VAR|SLA_CL|<...>` token — PCGen's encoding of PF1's Spell-Like Abilities universal monster rule (caster level = Hit Dice, or an arithmetic wrapper of it).\n\n**Not** the more general `SPELLS:` token, deliberately: Linnorm (Crag) (`b1_races:269`) carries `BONUS:VAR|SLA_CL|HD` and its spell-like effects (`True Seeing ~ Constant`) reach the row only through an `ABILITY:` cross-reference, with no `SPELLS:` token anywhere on the line — gating on `SPELLS:` answered `false` for one of this seam's own already-committed fixtures (TDD red/green anchor, `run_monster_bar_check_clears_every_committed_monster_fixture`).\n\nA presence check only — never a count or a list of the spells themselves, which this ingest does not capture. Exists so a consumer can tell a monster with no spell-like abilities at all from one whose `SLA_CL` token simply was not parsed into anything else on this struct, which is the same \"absence must be honest\" reasoning `external_ability_refs` already carries for named abilities this book does not define. `spell_like_ability_caster_level` in `derived_evaluator_fixture_check` reads this field before applying PF1's Spell-Like Abilities universal monster rule, so a monster with no spell-like abilities at all is never served a caster level it has no use for (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44).",
           "type": "boolean"
         },
         "key": {
@@ -3868,14 +3868,14 @@
           ]
         },
         "sla_cl_token": {
-          "description": "The row's `BONUS:VAR|SLA_CL|<value>` trailing value, verbatim, when [`Self::has_spell_like_abilities`] is `true`; `None` otherwise.\n\n**Load-bearing, not decorative** (SD31-E6-F9-003, `OPEN-ISSUES.md` row 44's own follow-on, already forecast in `progress.md`'s `SD31-E6-F11-002` receipt as \"a follow-on within THIS seam\"). PF1's Universal Monster Rule states a spell-like ability's caster level \"equal[s] its Hit Dice\" **unless otherwise noted**, and the corpus routinely notes otherwise: `BONUS:VAR|SLA_CL|HD` and `BONUS:VAR|SLA_CL|max(TL,1)` (PCGen's own two equivalent spellings of \"apply the generic rule\") coexist, record by record, with a bare literal override — Couatl (`b1_races.lst:74`) carries `BONUS:VAR|SLA_CL|9` while its own `MONSTERCLASS:Couatl Outsider:12` states 12 Hit Dice; Demon (Glabrezu) (`b1_races.lst:95`) carries `BONUS:VAR|SLA_CL|14` against 12 HD. Neither is a defect — both are the corpus correctly stating the printed stat block's actual SLA caster level, which sometimes differs from HD exactly as the rule's own \"unless otherwise noted\" clause anticipates. Before this field existed, `spell_like_ability_caster_level` had no way to see the override and always applied the generic HD rule, which is silently WRONG for every monster whose row carries one (re-derived corpus-wide this cycle: the majority of the registry's own already-shipped, `has_spell_like_abilities`-true monsters carry an override, not the bare `HD`/`max(TL,1)` spelling — verified sampling every derived- grounded `monster` unit's own corpus row, not assumed from the shape of the 7 already-committed fixtures, all of which happen to be the bare-`HD` case and so never surfaced the gap).",
+          "description": "The row's `BONUS:VAR|SLA_CL|<value>` trailing value, verbatim, when [`Self::has_spell_like_abilities`] is `true`; `None` otherwise.\n\n**Load-bearing, not decorative** (SD31-E6-F9-003, `OPEN-ISSUES.md` row 44's own follow-on, already forecast in `progress.md`'s `SD31-E6-F11-002` receipt as \"a follow-on within THIS seam\"). PF1's Universal Monster Rule states a spell-like ability's caster level \"equal[s] its Hit Dice\" **unless otherwise noted**, and the corpus routinely notes otherwise: `BONUS:VAR|SLA_CL|HD` and `BONUS:VAR|SLA_CL|max(TL,1)` (PCGen's own two equivalent spellings of \"apply the generic rule\") coexist, record by record, with a bare literal override — Couatl (`b1_races:74`) carries `BONUS:VAR|SLA_CL|9` while its own `MONSTERCLASS:Couatl Outsider:12` states 12 Hit Dice; Demon (Glabrezu) (`b1_races:95`) carries `BONUS:VAR|SLA_CL|14` against 12 HD. Neither is a defect — both are the corpus correctly stating the printed stat block's actual SLA caster level, which sometimes differs from HD exactly as the rule's own \"unless otherwise noted\" clause anticipates. Before this field existed, `spell_like_ability_caster_level` had no way to see the override and always applied the generic HD rule, which is silently WRONG for every monster whose row carries one (re-derived corpus-wide this cycle: the majority of the registry's own already-shipped, `has_spell_like_abilities`-true monsters carry an override, not the bare `HD`/`max(TL,1)` spelling — verified sampling every derived- grounded `monster` unit's own corpus row, not assumed from the shape of the 7 already-committed fixtures, all of which happen to be the bare-`HD` case and so never surfaced the gap).",
           "type": [
             "string",
             "null"
           ]
         },
         "source_file": {
-          "description": "The races-`.lst` file this record was read from, relative to the book directory.\n\nA book is not guaranteed one monster file. Inner Sea World Guide splits its 14 monsters 7/7 across `iswg_races.lst` and `iswg_races_bestiary.lst` — so `source_line` alone does not identify a row, and the generator that re-reads the cited line to verify it must be told which file to open. Before this field existed the generator took the file from a single per-book spec string, which is correct only for a one-file book.",
+          "description": "The races source-file file this record was read from, relative to the book directory.\n\nA book is not guaranteed one monster file. Inner Sea World Guide splits its 14 monsters 7/7 across `iswg_races` and `iswg_races_bestiary` — so `source_line` alone does not identify a row, and the generator that re-reads the cited line to verify it must be told which file to open. Before this field existed the generator took the file from a single per-book spec string, which is correct only for a one-file book.",
           "type": "string"
         },
         "source_line": {
@@ -3897,7 +3897,7 @@
           "type": "array"
         },
         "spell_like_abilities": {
-          "description": "Every spell this row grants as a spell-like ability, one record per spell, read from the row's `SPELLS:` tokens ([`MonsterSpellLikeAbility`]).\n\nDistinct from [`Self::has_spell_like_abilities`]/[`Self::sla_cl_token`], which are about the row's `BONUS:VAR|SLA_CL|` token — the two encode different halves of PF1's Spell-Like Abilities universal monster rule and a row may carry either without the other. Linnorm (Crag) (`b1_races.lst:269`) carries `BONUS:VAR|SLA_CL|HD` and **no** `SPELLS:` token at all; Aboleth (`b1_races.lst:7`) carries `SPELLS:` grants and **no** `BONUS:VAR|SLA_CL|` token. Neither field may be derived from the other.",
+          "description": "Every spell this row grants as a spell-like ability, one record per spell, read from the row's `SPELLS:` tokens ([`MonsterSpellLikeAbility`]).\n\nDistinct from [`Self::has_spell_like_abilities`]/[`Self::sla_cl_token`], which are about the row's `BONUS:VAR|SLA_CL|` token — the two encode different halves of PF1's Spell-Like Abilities universal monster rule and a row may carry either without the other. Linnorm (Crag) (`b1_races:269`) carries `BONUS:VAR|SLA_CL|HD` and **no** `SPELLS:` token at all; Aboleth (`b1_races:7`) carries `SPELLS:` grants and **no** `BONUS:VAR|SLA_CL|` token. Neither field may be derived from the other.",
           "items": {
             "$ref": "#/definitions/MonsterSpellLikeAbility"
           },
@@ -4169,7 +4169,7 @@
           "type": "string"
         },
         "key": {
-          "description": "The real corpus `KEY:` token -- every one of the 42 real `pu_equipmods.lst` records carries one (unlike `rules_tables::crb`/`rules_tables::acg`'s own equipment catalogs, where `key == name` fallback is common).",
+          "description": "The real corpus `KEY:` token -- every one of the 42 real `pu_equipmods` records carries one (unlike `rules_tables::crb`/`rules_tables::acg`'s own equipment catalogs, where `key == name` fallback is common).",
           "type": "string"
         },
         "name": {
@@ -4489,7 +4489,7 @@
           "type": "string"
         },
         "weight_lbs": {
-          "description": "Weight in pounds from the corpus `WT:` token. `None` when the corpus record carries no `WT:` token (true for every `ue_equipmods.lst` record -- equipment *modifiers* carry no independent weight, matching every other book's own established finding).",
+          "description": "Weight in pounds from the corpus `WT:` token. `None` when the corpus record carries no `WT:` token (true for every `ue_equipmods` record -- equipment *modifiers* carry no independent weight, matching every other book's own established finding).",
           "format": "double",
           "type": [
             "number",
@@ -4599,7 +4599,7 @@
           "type": "string"
         },
         "weight_lbs": {
-          "description": "Weight in pounds from the corpus `WT:` token. `None` when the corpus record carries no `WT:` token (true for every `ui_equipmods.lst` record -- equipment *modifiers* carry no independent weight, matching CRB's/ACG's/ARG's own established finding).",
+          "description": "Weight in pounds from the corpus `WT:` token. `None` when the corpus record carries no `WT:` token (true for every `ui_equipmods` record -- equipment *modifiers* carry no independent weight, matching CRB's/ACG's/ARG's own established finding).",
           "format": "double",
           "type": [
             "number",
@@ -4636,7 +4636,7 @@
           "type": "string"
         },
         "key": {
-          "description": "The spell's `name` is its identity in `ui_spells.lst` (no `KEY:` token on any in-scope record).",
+          "description": "The spell's `name` is its identity in `ui_spells` (no `KEY:` token on any in-scope record).",
           "type": "string"
         },
         "level": {

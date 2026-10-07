@@ -18,7 +18,7 @@
       "weight_lbs": 3.0,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_arms_armor.lst",
+        "ag_equip_arms_armor",
         1
       ]
     },
@@ -61,7 +61,7 @@
       "weight_lbs": 50.0,
       "description": "This metal suit includes gauntlets, heavy leather boots, a visored helmet, and a thick layer of padding that is worn underneath the armor. Each suit of Gray Maiden plate must be individually fitted to its owner by a master armorsmith, although a captured suit can be resized to fit a new owner at a cost of 200 to 800 (2d4 x 100) gold pieces.",
       "name_pi_citation": [
-        "ag_equip_arms_armor.lst",
+        "ag_equip_arms_armor",
         6
       ]
     },
@@ -74,7 +74,7 @@
       "weight_lbs": 50.0,
       "description": "This metal suit includes gauntlets, heavy leather boots, a visored helmet, and a thick layer of padding that is worn underneath the armor. Each suit of Gray Maiden plate must be individually fitted to its owner by a master armorsmith, although a captured suit can be resized to fit a new owner at a cost of 200 to 800 (2d4 x 100) gold pieces.",
       "name_pi_citation": [
-        "ag_equip_arms_armor.lst",
+        "ag_equip_arms_armor",
         7
       ]
     },
@@ -87,7 +87,7 @@
       "weight_lbs": 50.0,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_arms_armor.lst",
+        "ag_equip_arms_armor",
         9
       ]
     },
@@ -100,7 +100,7 @@
       "weight_lbs": 25.0,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_arms_armor.lst",
+        "ag_equip_arms_armor",
         10
       ]
     },
@@ -113,7 +113,7 @@
       "weight_lbs": 50.0,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_arms_armor.lst",
+        "ag_equip_arms_armor",
         11
       ]
     },
@@ -156,7 +156,7 @@
       "weight_lbs": 3.0,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_arms_armor.lst",
+        "ag_equip_arms_armor",
         17
       ]
     },
@@ -179,7 +179,7 @@
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_arms_armor.lst",
+        "ag_equip_arms_armor",
         19
       ]
     },
@@ -192,7 +192,7 @@
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_arms_armor.lst",
+        "ag_equip_arms_armor",
         20
       ]
     },
@@ -265,7 +265,7 @@
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_arms_armor.lst",
+        "ag_equip_arms_armor",
         28
       ]
     },
@@ -578,7 +578,7 @@
       "weight_lbs": null,
       "description": "Inhaled; Fort DC 21; Freq 1 min (6); Effect 1d4 bleed/1d3 Con dmg (see text); Cure 2 consecutive saves",
       "name_pi_citation": [
-        "ag_equip_general.lst",
+        "ag_equip_general",
         27
       ]
     },
@@ -601,7 +601,7 @@
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_magic_items.lst",
+        "ag_equip_magic_items",
         2
       ]
     },
@@ -834,7 +834,7 @@
       "weight_lbs": 1.0,
       "description": "see through obscuring vapor or silt, resist wind, breath water 1 hr/day",
       "name_pi_citation": [
-        "ag_equip_magic_items.lst",
+        "ag_equip_magic_items",
         25
       ]
     },
@@ -1017,7 +1017,7 @@
       "weight_lbs": 1.0,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_magic_items.lst",
+        "ag_equip_magic_items",
         43
       ]
     },
@@ -1030,7 +1030,7 @@
       "weight_lbs": 1.0,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_magic_items.lst",
+        "ag_equip_magic_items",
         44
       ]
     },
@@ -1043,7 +1043,7 @@
       "weight_lbs": 1.0,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_magic_items.lst",
+        "ag_equip_magic_items",
         45
       ]
     },
@@ -1056,7 +1056,7 @@
       "weight_lbs": 1.0,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_magic_items.lst",
+        "ag_equip_magic_items",
         46
       ]
     },
@@ -1069,7 +1069,7 @@
       "weight_lbs": 1.0,
       "description": null,
       "name_pi_citation": [
-        "ag_equip_magic_items.lst",
+        "ag_equip_magic_items",
         47
       ]
     },

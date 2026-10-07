@@ -1,18 +1,18 @@
 //! ACG shared equipment tables — full corpus coverage.
 //!
 //! Record coverage: every real, active (non-`.MOD`) record across
-//! `acg_equip.lst` (General + Arms/Armor + Magic Items, disambiguated by
+//! `acg_equip` (General + Arms/Armor + Magic Items, disambiguated by
 //! the `TYPE:` token — `Goods.*`, `Weapon.*`/`Armor.*`/`Shield.*`,
 //! `Magic.*` — since ACG carries all three in one file, unlike APG's
-//! three separate files) plus `acg_equipmods.lst` (Equipmods), 269 total;
+//! three separate files) plus `acg_equipmods` (Equipmods), 269 total;
 //! see `EquipmentFieldCoverage` below. Copied verbatim (`KEY:`/name,
 //! `COST:`) from the real PCGen corpus. SD-24 Epic 6 criteria 6.2-6.4
 //! (ACG scope) additionally: (a) completed record coverage from the
 //! original 3-item bootstrap sample to the full corpus, (b) added
 //! `weight_lbs` (`WT:`) and `description` per record, to the honest
 //! ceiling the corpus itself supports (never fabricated). ACG's LST
-//! corpus carries no `DESC:` token anywhere in `acg_equip.lst`/
-//! `acg_equipmods.lst` (confirmed: zero hits) — `description` is instead
+//! corpus carries no `DESC:` token anywhere in `acg_equip`/
+//! `acg_equipmods` (confirmed: zero hits) — `description` is instead
 //! sourced from the corpus's `SPROP:` ("Special Property") token, the
 //! closest real per-item prose this book's corpus provides. See
 //! `equipment_data/*.rs`'s own doc comments for the full sourcing
@@ -47,8 +47,8 @@ impl EquipmentCategory {
 #[cfg_attr(test, derive(schemars::JsonSchema))]
 #[cfg_attr(test, schemars(rename = "acg__equipment_tables__EquipmentTableEntry"))]
 pub struct EquipmentTableEntry {
-    /// Equipment records carry their `name` (or, for `acg_equipmods.lst`,
-    /// the explicit `KEY:` token) as the corpus identity. `acg_equip.lst`
+    /// Equipment records carry their `name` (or, for `acg_equipmods`,
+    /// the explicit `KEY:` token) as the corpus identity. `acg_equip`
     /// rows have no distinct `KEY:` token, so `key == name` for General/
     /// ArmsArmor/MagicItems (same fallback `rules_tables::apg::equipment_tables`
     /// documents for its own `key` field); Equipmods rows use the real
@@ -65,7 +65,7 @@ pub struct EquipmentTableEntry {
     pub cost_gp: Option<f64>,
     /// Weight in pounds from the corpus `WT:` token (SD-24 criterion 6.3,
     /// ACG scope). `None` when the corpus genuinely carries no `WT:`
-    /// token for this record — true for every `acg_equipmods.lst` record
+    /// token for this record — true for every `acg_equipmods` record
     /// (equipment *modifiers* have no independent physical weight of
     /// their own, matching the same finding CRB's own `Equipmods`
     /// category already established) and for a smaller number of
@@ -73,7 +73,7 @@ pub struct EquipmentTableEntry {
     pub weight_lbs: Option<f64>,
     /// Descriptive text for this record (SD-24 criterion 6.4, ACG scope).
     /// Sourced from the corpus `SPROP:` ("Special Property") token —
-    /// `acg_equip.lst`/`acg_equipmods.lst` carry no `DESC:` token
+    /// `acg_equip`/`acg_equipmods` carry no `DESC:` token
     /// anywhere, unlike CRB's equipment files, so `SPROP:` is the closest
     /// real per-item prose ACG's corpus provides. When a record has more
     /// than one `SPROP:` entry they are joined with `"; "`. A trailing
@@ -97,12 +97,12 @@ pub struct EquipmentTableEntry {
 pub struct EquipmentFieldCoverage {
     /// Records currently in `equipment_tables()`.
     pub total_records: u32,
-    /// Real, active (non-`.MOD`) record count: `acg_equip.lst` (221:
+    /// Real, active (non-`.MOD`) record count: `acg_equip` (221:
     /// 60 General + 20 Arms/Armor + 141 Magic Items, `TYPE:`-disambiguated)
-    /// \+ `acg_equipmods.lst` (48 `KEY:`-bearing modifier records,
+    /// \+ `acg_equipmods` (48 `KEY:`-bearing modifier records,
     /// excluding the file's own trailing "Old KEYs" `.COPY=`-only block).
     /// SD-24 criterion 6.1 originally cited 221 for equipment (not
-    /// counting `acg_equipmods.lst` at all, unlike CRB's four-category
+    /// counting `acg_equipmods` at all, unlike CRB's four-category
     /// scope) — this cycle widens the scope to match CRB's own four-file
     /// treatment; see `progress.md`'s `## DISCOVERED` for the correction.
     pub records_expected: u32,
@@ -131,8 +131,8 @@ pub fn field_coverage_report() -> EquipmentFieldCoverage {
 }
 
 /// Full ACG equipment table store: every real corpus record across
-/// `acg_equip.lst`'s three `TYPE:`-disambiguated categories plus
-/// `acg_equipmods.lst`, generated from the live corpus (see
+/// `acg_equip`'s three `TYPE:`-disambiguated categories plus
+/// `acg_equipmods`, generated from the live corpus (see
 /// `equipment_data/`'s own doc comment for the generation method — not
 /// hand-authored, so there is no fabrication/transcription risk at this
 /// scale). Built once and cached for the process lifetime.

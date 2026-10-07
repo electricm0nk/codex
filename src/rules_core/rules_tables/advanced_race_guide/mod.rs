@@ -7,17 +7,17 @@
 //! **Scope (per this cycle's execution brief).** In scope: the 5 LST files
 //! that follow the established simple-record pattern
 //! `class_tables`/`spell_list`/`equipment_tables.rs` already handle across
-//! every ingested book — `arg_spells.lst` (spells), `arg_equip_arms_armor.lst`
-//! / `arg_equip_general.lst` / `arg_equip_magic_items.lst` / `arg_equipmods.lst`
-//! (equipment), and `arg_feats.lst` (feats). See `spell_list.rs`,
+//! every ingested book — `arg_spells` (spells), `arg_equip_arms_armor`
+//! / `arg_equip_general` / `arg_equip_magic_items` / `arg_equipmods`
+//! (equipment), and `arg_feats` (feats). See `spell_list.rs`,
 //! `equipment_tables.rs`, and `feats.rs` for each content kind's own
 //! doc comment, including the real, independently re-verified record
 //! counts (which differ from the cycle's scoping-brief rough estimates —
 //! documented plainly in each module rather than silently reconciled).
 //!
-//! **Deliberately out of scope, this cycle:** `arg_abilities_class.lst`
-//! (792 records), `arg_abilities_race.lst` / `arg_abilities_builder.lst` /
-//! `arg_races.lst` / `arg_races_companion.lst` / `arg_templates.lst`
+//! **Deliberately out of scope, this cycle:** `arg_abilities_class`
+//! (792 records), `arg_abilities_race` / `arg_abilities_builder` /
+//! `arg_races` / `arg_races_companion` / `arg_templates`
 //! (racial trait + race-builder content). This content uses PCGen's
 //! low-level ability/`BONUS:`/`DEFINE:`/`PREREQ:` formula-engine syntax —
 //! no book in this codebase, including CRB itself, has ever represented
@@ -57,7 +57,7 @@
 //! same finding as Ultimate Magic's and Core Rulebook's: the
 //! `<Archetype> Eidolon ~ …` and `WCEvolution ~ …` records hang off the
 //! summoner's eidolon CLASS feature rather than off any creature row of
-//! `arg_races_companion.lst`. Carried per `decisions.md §50`, named row by row
+//! `arg_races_companion`. Carried per `decisions.md §50`, named row by row
 //! in `companion_data`'s module doc, and keeping their honest `engine-does-not-hold`
 //! status in `docs/work-inventory.json`.
 //!

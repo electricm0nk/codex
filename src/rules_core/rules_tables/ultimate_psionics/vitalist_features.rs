@@ -4,10 +4,10 @@
 //! already-ingested `BONUS:VAR` tokens
 //! (`data/corpus/ultimate_psionics/class_feature/vitalist/*.json`), not
 //! from memory of the printed rulebook. Vitalist's prime stat
-//! (`VitalistPrimeStat`, `up_classes.lst:464`) is Wisdom for every record
+//! (`VitalistPrimeStat`, `up_classes:464`) is Wisdom for every record
 //! below that reads an ability score.
 
-/// `up_abilities_class.lst:953`, `Collective`:
+/// `up_abilities_class:953`, `Collective`:
 /// `BONUS:VAR|CollectiveMinds|max(CollectiveLVL/2,VitalistPrimeStat)`,
 /// `CollectiveLVL = VitalistLVL` for a base Vitalist — the same
 /// greater-of-level-or-stat shape as Tactician's Collective. `None` below
@@ -19,7 +19,7 @@ pub fn collective_minds(level: u8, wisdom: i16) -> Option<i16> {
     Some((i16::from(level) / 2).max(wisdom))
 }
 
-/// `up_abilities_class.lst:957`, `Transfer Wounds`: the roster's own
+/// `up_abilities_class:957`, `Transfer Wounds`: the roster's own
 /// tracked var is `TransferWoundsTimes`
 /// (`BONUS:VAR|TransferWoundsTimes|(3+VitalistPrimeStat)`) — a pure
 /// Wisdom-modifier value, no level term. `None` below level 1.
@@ -30,7 +30,7 @@ pub fn transfer_wounds_times_per_day(level: u8, wisdom: i16) -> Option<i16> {
     Some(3 + wisdom)
 }
 
-/// `up_abilities_class.lst:958`, `Health Sense`: no roster-tracked var
+/// `up_abilities_class:958`, `Health Sense`: no roster-tracked var
 /// (`text_only` is still `false` — a real `BONUS:VAR|HealthSenseLVL|
 /// VitalistLVL` token exists, just no `%N`-substituted `DESC` to name it),
 /// equal to class level with no ability term. `None` below level 2 (the
@@ -42,7 +42,7 @@ pub fn health_sense_level(level: u8) -> Option<i16> {
     Some(i16::from(level))
 }
 
-/// `up_abilities_class.lst:960`, `Steal Health`: the roster's own tracked
+/// `up_abilities_class:960`, `Steal Health`: the roster's own tracked
 /// "var" field is the literal formula text `StealHealthLVL+
 /// VitalistPrimeStat` (the census picked up the `DESC`'s substitution
 /// expression itself rather than a bare token name) — `StealHealthLVL =
@@ -56,7 +56,7 @@ pub fn steal_health_damage(level: u8, wisdom: i16) -> Option<i16> {
     Some(i16::from(level) + wisdom)
 }
 
-/// `up_abilities_class.lst:962`, `Request Aid`: the roster's own tracked
+/// `up_abilities_class:962`, `Request Aid`: the roster's own tracked
 /// var is `RequestAidTimes` (`BONUS:VAR|RequestAidTimes|
 /// (3+VitalistPrimeStat)`) — a sibling `RequestAidAmount` token (a flat 3)
 /// exists on the same record but is not the roster's tracked var. `None`
@@ -68,7 +68,7 @@ pub fn request_aid_times_per_day(level: u8, wisdom: i16) -> Option<i16> {
     Some(3 + wisdom)
 }
 
-/// `up_abilities_class.lst:963`, `Steal Life`:
+/// `up_abilities_class:963`, `Steal Life`:
 /// `BONUS:VAR|StealLifeDC|10+VitalistPrimeStat+StealLifeLVL/2`,
 /// `StealLifeLVL = VitalistLVL` — matches Antipaladin's `cruelty_dc`/
 /// `channel_negative_energy_dc` and Marksman's `cover_fire_dc` shape

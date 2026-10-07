@@ -76,7 +76,7 @@ pub(crate) struct ClassMeta {
     pub(crate) bab: BabProgression,
     pub(crate) good_saves: GoodSaves,
     /// Hit die size (SD-13/v0.6 alpha swarm durability calc), from the same
-    /// `cr_classes.lst` `HD:` token every other field in this table already
+    /// `cr_classes` `HD:` token every other field in this table already
     /// cites -- e.g. `CLASS:Fighter HD:10` at line 139 (the same line this
     /// table's own save-formula doc comments already cite for Fighter).
     ///
@@ -97,13 +97,13 @@ pub(crate) const CLASS_META: &[ClassMeta] = &[
     // Druid widened 15 -> 20 (v0.6, 2026-07-29), the last CRB class still
     // short of the cap. `CLASS:Druid` carries `MAXLEVEL:20` and its BAB and
     // save formulas are byte-for-byte identical to `CLASS:Cleric`'s
-    // (`cr_classes.lst` lines 93 and 55), which already ran to 20 here.
+    // (`cr_classes` lines 93 and 55), which already ran to 20 here.
     ClassMeta { class_id: ClassId::Druid, max_supported_level: 20, bab: BabProgression::ThreeQuarter, good_saves: GoodSaves { fortitude: true, reflex: false, will: true }, hit_die: 8 },
     ClassMeta { class_id: ClassId::Fighter, max_supported_level: 20, bab: BabProgression::Full, good_saves: GoodSaves { fortitude: true, reflex: false, will: false }, hit_die: 10 },
     // MONK HIT DIE: DELIBERATE, OPERATOR-RULED OVERRIDE OF A CORPUS DEFECT.
     // DO NOT "correct" this 8 back to 10 to match the corpus.
     //
-    // The PCGen corpus says 10: `cr_classes.lst:147` reads
+    // The PCGen corpus says 10: `cr_classes:147` reads
     // `CLASS:Monk  HD:10  ... SOURCEPAGE:p.56`. Every other `hit_die` in
     // this table is a faithful transcription of its own `HD:` token. This
     // one is not, and that is intentional.

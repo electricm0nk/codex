@@ -62,7 +62,7 @@
         "Energy Drain",
         "Incorporeal"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 9
     },
     {
@@ -129,7 +129,7 @@
         "Immunity to Mind-Affecting Effects",
         "Immunity to Paralysis"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 13
     },
     {
@@ -192,7 +192,7 @@
       "external_ability_refs": [
         "Immunity to Mind-Affecting Effects"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 14
     },
     {
@@ -254,7 +254,7 @@
       "external_ability_refs": [
         "Scent"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 18
     },
     {
@@ -334,7 +334,7 @@
         "Resistance to Acid",
         "Resistance to Electricity"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 19
     },
     {
@@ -407,7 +407,7 @@
         "Immunity to Precision Damage",
         "Pull"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 20
     },
     {
@@ -480,7 +480,7 @@
         "Resistance to Cold",
         "Telepathy"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 25
     },
     {
@@ -538,7 +538,7 @@
         "Rock Catching",
         "Rock Throwing"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 30
     },
     {
@@ -590,7 +590,7 @@
         "Marrowstone Golem ~ Negative Energy"
       ],
       "external_ability_refs": [],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 32
     },
     {
@@ -647,7 +647,7 @@
         "Noqual Golem ~ Spell Sunder"
       ],
       "external_ability_refs": [],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 33
     },
     {
@@ -698,7 +698,7 @@
         "Quantium Golem ~ Urban Defender"
       ],
       "external_ability_refs": [],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 34
     },
     {
@@ -763,7 +763,7 @@
         "Resistance to Fire",
         "Trample"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 38
     },
     {
@@ -808,7 +808,7 @@
         "Khaei ~ Spell-Like Abilities"
       ],
       "external_ability_refs": [],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 39
     },
     {
@@ -893,7 +893,7 @@
         "Rake",
         "Scent"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 40
     },
     {
@@ -969,7 +969,7 @@
         "Immunity to Cold",
         "Telepathy"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 41
     },
     {
@@ -1032,7 +1032,7 @@
         "Lorthact ~ Temporal Anomaly"
       ],
       "external_ability_refs": [],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 46
     },
     {
@@ -1093,7 +1093,7 @@
         "Grab",
         "Immunity to Mind-Affecting Effects"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 50
     },
     {
@@ -1165,7 +1165,7 @@
       "external_ability_refs": [
         "Maneuverability (Good)"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 51
     },
     {
@@ -1243,7 +1243,7 @@
         "Resistance to Cold",
         "Resistance to Fire"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 52
     },
     {
@@ -1312,7 +1312,7 @@
       "external_ability_refs": [
         "Sneak Attack"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 56
     },
     {
@@ -1376,7 +1376,7 @@
         "Ferocity",
         "Light Sensitivity"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 60
     },
     {
@@ -1436,7 +1436,7 @@
       "external_ability_refs": [
         "Channel Resistance"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 64
     },
     {
@@ -1634,7 +1634,7 @@
         "Change Shape",
         "Immunity to Acid"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 65
     },
     {
@@ -1695,7 +1695,7 @@
         "Immunity to Fear",
         "Immunity to Sleep"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 66
     },
     {
@@ -1753,7 +1753,7 @@
       "external_ability_refs": [
         "Immunity to Mind-Affecting Effects"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 67
     },
     {
@@ -1826,7 +1826,7 @@
         "Resistance to Electricity",
         "Resistance to Fire"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 71
     },
     {
@@ -1884,7 +1884,7 @@
         "Robot ~ Intelligent"
       ],
       "external_ability_refs": [],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 72
     },
     {
@@ -1959,7 +1959,7 @@
         "Constrict",
         "Immunity to Cold"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 73
     },
     {
@@ -2019,7 +2019,7 @@
         "Spellscar Fext ~ Vulnerable to Glass"
       ],
       "external_ability_refs": [],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 80
     },
     {
@@ -2091,7 +2091,7 @@
         "Rake",
         "Telepathy"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 81
     },
     {
@@ -2156,7 +2156,7 @@
         "Compression",
         "Immunity to Poison"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 86
     },
     {
@@ -2218,7 +2218,7 @@
         "Light Sensitivity",
         "Maneuverability (Perfect)"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 90
     },
     {
@@ -2302,7 +2302,7 @@
         "Resistance to Cold",
         "Telepathy"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 94
     },
     {
@@ -2374,7 +2374,7 @@
         "No Breath",
         "Telepathy"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 95
     },
     {
@@ -2443,7 +2443,7 @@
         "Blood Drain",
         "Rend"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 99
     },
     {
@@ -2511,7 +2511,7 @@
         "Immunity to Fire",
         "Maneuverability (Perfect)"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 100
     },
     {
@@ -2605,7 +2605,7 @@
         "Immunity to Visual Effects",
         "Maneuverability (Average)"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 101
     },
     {
@@ -2682,7 +2682,7 @@
         "Rake",
         "Scent"
       ],
-      "source_file": "isb_races.lst",
+      "source_file": "isb_races",
       "source_line": 105
     }
   ]

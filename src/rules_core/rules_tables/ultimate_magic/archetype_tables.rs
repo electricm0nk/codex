@@ -45,7 +45,7 @@
 //!
 //! Every field below is copied verbatim from the real corpus row (source:
 //! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
-//! ultimate_magic/um_abilities_class.lst`), generated programmatically
+//! ultimate_magic/um_abilities_class`), generated programmatically
 //! by a one-off extraction script, not hand-transcribed.
 
 use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
@@ -56,7 +56,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     static TABLE: std::sync::OnceLock<Vec<ArchetypeSwapEntry>> = std::sync::OnceLock::new();
     TABLE.get_or_init(|| {
         vec![
-        // Alchemist Archetype ~ Chirurgeon -- um_abilities_class.lst:838
+        // Alchemist Archetype ~ Chirurgeon -- um_abilities_class:838
         ArchetypeSwapEntry {
             key: "Alchemist Archetype ~ Chirurgeon",
             subject: "Alchemist",
@@ -70,7 +70,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Chirurgeon ~ Power Over Death", at_level: 10, description: Some("You add Breath of Life to your formula book as a 4th-level extract. Your infused curative ability applies to this extract."), benefit: None },
             ],
         },
-        // Alchemist Archetype ~ Clone Master -- um_abilities_class.lst:840
+        // Alchemist Archetype ~ Clone Master -- um_abilities_class:840
         ArchetypeSwapEntry {
             key: "Alchemist Archetype ~ Clone Master",
             subject: "Alchemist",
@@ -85,7 +85,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Clone Master ~ Clone", at_level: 16, description: Some("You add Clone to your formula book as a 6th-level extract."), benefit: None },
             ],
         },
-        // Alchemist Archetype ~ Internal Alchemist -- um_abilities_class.lst:841
+        // Alchemist Archetype ~ Internal Alchemist -- um_abilities_class:841
         ArchetypeSwapEntry {
             key: "Alchemist Archetype ~ Internal Alchemist",
             subject: "Alchemist",
@@ -99,7 +99,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Internal Alchemist ~ Uncanny Dodge", at_level: 6, description: None, benefit: None },
             ],
         },
-        // Alchemist Archetype ~ Mindchemist -- um_abilities_class.lst:842
+        // Alchemist Archetype ~ Mindchemist -- um_abilities_class:842
         ArchetypeSwapEntry {
             key: "Alchemist Archetype ~ Mindchemist",
             subject: "Alchemist",
@@ -112,7 +112,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mindchemist ~ Perfect Recall", at_level: 2, description: Some("You have honed your memory. When making a Knowledge check, you may add +%1 on the check. You can also use this ability when making an Intelligence check to remember something.|MindchemistPerfectRecallBonus"), benefit: None },
             ],
         },
-        // Alchemist Archetype ~ Preservationist -- um_abilities_class.lst:843
+        // Alchemist Archetype ~ Preservationist -- um_abilities_class:843
         ArchetypeSwapEntry {
             key: "Alchemist Archetype ~ Preservationist",
             subject: "Alchemist",
@@ -129,7 +129,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Preservationist ~ Bottled Ally VI", at_level: 18, description: Some("You add Summon Nature's Ally IX to your formula book as a 6th-level extract."), benefit: None },
             ],
         },
-        // Alchemist Archetype ~ Psychonaut -- um_abilities_class.lst:844
+        // Alchemist Archetype ~ Psychonaut -- um_abilities_class:844
         ArchetypeSwapEntry {
             key: "Alchemist Archetype ~ Psychonaut",
             subject: "Alchemist",
@@ -145,7 +145,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Psychonaut ~ Master Precognition", at_level: 17, description: Some("You add Foresight to your formula book as a 6th-level extract."), benefit: None },
             ],
         },
-        // Alchemist Archetype ~ Reanimator -- um_abilities_class.lst:845
+        // Alchemist Archetype ~ Reanimator -- um_abilities_class:845
         ArchetypeSwapEntry {
             key: "Alchemist Archetype ~ Reanimator",
             subject: "Alchemist",
@@ -159,7 +159,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Reanimator ~ Create Greater Undead", at_level: 15, description: Some("You add Create Greater Undead to your formula book as a 5th-level extract.  This otherwise acts similarly to a Create Undead extract."), benefit: None },
             ],
         },
-        // Alchemist Archetype ~ Vivisectionist -- um_abilities_class.lst:846
+        // Alchemist Archetype ~ Vivisectionist -- um_abilities_class:846
         ArchetypeSwapEntry {
             key: "Alchemist Archetype ~ Vivisectionist",
             subject: "Alchemist",
@@ -174,7 +174,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Vivisectionist ~ Torturous Transformation", at_level: 7, description: Some("You add Anthropomorphic Animal to your formula book as a 2nd-level extract.  When you use this extract, you inject it into an animal as part of a 2-hour surgical procedure.  By using multiple doses of this extract as part of the surgery, you multiply the duration by the number of extracts used."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Animal Speaker -- um_abilities_class.lst:932
+        // Bard Archetype ~ Animal Speaker -- um_abilities_class:932
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Animal Speaker",
             subject: "Bard",
@@ -190,7 +190,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Animal Speaker ~ Summon Nature's Ally", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Bard Archetype ~ Celebrity -- um_abilities_class.lst:933
+        // Bard Archetype ~ Celebrity -- um_abilities_class:933
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Celebrity",
             subject: "Bard",
@@ -204,7 +204,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Celebrity ~ Shining Star", at_level: 8, description: Some("You have learned how to focus attention on yourself so thoroughly that even the presence of danger does not distract your adoring crowd. When using fascinate, a target making a save to break the effect because of a potential threat takes a -4 penalty on that save, and even obvious threats require a save rather than automatically breaking the effect. Creatures affected by the bard's fascinate ability ignore the shaken condition."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Demagogue -- um_abilities_class.lst:934
+        // Bard Archetype ~ Demagogue -- um_abilities_class:934
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Demagogue",
             subject: "Bard",
@@ -219,7 +219,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Demagogue ~ Righteous Cause", at_level: 18, description: Some("You can lift a crowd's emotions and turn them toward a common purpose. First, you must fascinate the crowd, and then use incite violence without designating a target, at which point you can use righteous cause. Instead of driving the crowd with anger, you fill them with purpose. Fascinated creatures must make Will saves (DC %1) to resist. Those who fail are affected by mass suggestion of a plausible idea that lingers with them for one day. Typical uses of this ability are to spark rebellion, overthrow a king, build a beneficial structure such as an orphanage, or donate money to a cause.|RighteousCauseDC"), benefit: None },
             ],
         },
-        // Bard Archetype ~ Dirge Bard -- um_abilities_class.lst:935
+        // Bard Archetype ~ Dirge Bard -- um_abilities_class:935
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Dirge Bard",
             subject: "Bard",
@@ -234,7 +234,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Dirge Bard ~ Haunting Refrain", at_level: 5, description: Some("You are able to stir primal terrors in the hearts of listeners. You can use a Perform (keyboard) or Perform (percussion) check in place of an Intimidate check to demoralize an opponent, with a +%1 bonus. In addition, saving throws against any fear effect you create are made with a -%2 penalty.|HauntingRefrainBonus|HauntingRefrainPenalty"), benefit: None },
             ],
         },
-        // Bard Archetype ~ Geisha -- um_abilities_class.lst:936
+        // Bard Archetype ~ Geisha -- um_abilities_class:936
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Geisha",
             subject: "Bard",
@@ -247,7 +247,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Geisha ~ Tea Ceremony", at_level: 1, description: Some("By spending 10 minutes preparing an elaborate tea ceremony, you may affect your allies with inspire courage, inspire competence, inspire greatness, or inspire heroics. The ceremony's effects last 10 minutes. You must spend 4 rounds of bardic performance for each creature to be affected."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Songhealer -- um_abilities_class.lst:937
+        // Bard Archetype ~ Songhealer -- um_abilities_class:937
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Songhealer",
             subject: "Bard",
@@ -261,7 +261,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Songhealer ~ Funereal Ballad", at_level: 20, description: Some("You can use your performance to create an effect equivalent to resurrection on a dead creature, using your level as the caster level. Using this ability requires 20 rounds of continuous performance, and the target must be within 10 feet of you for the entire performance. Funereal ballad relies on audible and visual components."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Sound Striker -- um_abilities_class.lst:938
+        // Bard Archetype ~ Sound Striker -- um_abilities_class:938
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Sound Striker",
             subject: "Bard",
@@ -274,7 +274,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sound Striker ~ Weird Words", at_level: 6, description: Some("You can start a performance as a standard action, lashing out with %1 potent sounds, each sound affecting one target within 30 feet. These are ranged touch attacks. Each weird word deals 1d8+%2 points of damage (Fortitude DC %3 half), and the bard chooses whether it deals bludgeoning, piercing, or slashing damage for each word.|WeirdWordsAMount|WeirdWordsBonusDamage|WeirdWordsDC"), benefit: None },
             ],
         },
-        // Cleric Archetype ~ Cloistered Cleric -- um_abilities_class.lst:1001
+        // Cleric Archetype ~ Cloistered Cleric -- um_abilities_class:1001
         ArchetypeSwapEntry {
             key: "Cleric Archetype ~ Cloistered Cleric",
             subject: "Cleric",
@@ -290,7 +290,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Cloistered Cleric ~ Verbal Instruction", at_level: 3, description: Some("You can use the aid another action to assist %1 allies within 30 feet on a skill or ability check. The ally must be able to hear and understand your instructions. If all allies are not engaged in the same task, using this ability is a full-round action rather than a standard action.|VerbalInstructionAllies"), benefit: None },
             ],
         },
-        // Cleric Archetype ~ Separatist -- um_abilities_class.lst:1002
+        // Cleric Archetype ~ Separatist -- um_abilities_class:1002
         ArchetypeSwapEntry {
             key: "Cleric Archetype ~ Separatist",
             subject: "Cleric",
@@ -302,7 +302,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Separatist ~ Forbidden Rites", at_level: 1, description: Some("You select one domain from your deity's domain list, and a second domain that is not on your deity's domain list. This second domain cannot be an alignment domain that doesn't match your or your deity's alignment. For example, a lawful good separatist cleric of a neutral good deity cannot choose the Chaos or Evil domain with this ability, but can select the Lawful domain even though her deity isn't lawful. Granted powers from your second domain function as if your level, Wisdom, and Charisma were 2 lower than normal (minimum level 1) in terms of effect, DC, and uses per day. This also means you don't gain the domain's higher-level ability until 2 levels later than normal. If the second domain grants additional class skills, you gain these as normal."), benefit: None },
             ],
         },
-        // Cleric Archetype ~ Theologian -- um_abilities_class.lst:1003
+        // Cleric Archetype ~ Theologian -- um_abilities_class:1003
         ArchetypeSwapEntry {
             key: "Cleric Archetype ~ Theologian",
             subject: "Cleric",
@@ -315,7 +315,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Theologian ~ Domain Secret", at_level: 5, description: Some("You choose %1 domain spells. Those spells becomes permanently modified with one of the following metamagic feats: Bouncing Spell, Disruptive Spell, Ectoplasmic Spell, Enlarge Spell, Extend Spell, Focused Spell, Intensified Spell, Silent Spell, Still Spell. This metamagic feat does not increase the level of the spell. Once chosen, this modification cannot be changed. You need not have the metamagic feat to apply it to a spell using this ability. You cannot modify the same spell more than once.|DomainSecrets"), benefit: None },
             ],
         },
-        // Cleric Archetype ~ Undead Lord -- um_abilities_class.lst:1005
+        // Cleric Archetype ~ Undead Lord -- um_abilities_class:1005
         ArchetypeSwapEntry {
             key: "Cleric Archetype ~ Undead Lord",
             subject: "Cleric",
@@ -329,7 +329,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Undead Lord ~ Unlife Healer", at_level: 8, description: Some("Your spells, spell-like abilities, and supernatural abilities used to heal undead are Empowered."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Dragon Shaman -- um_abilities_class.lst:1088
+        // Druid Archetype ~ Dragon Shaman -- um_abilities_class:1088
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Dragon Shaman",
             subject: "Druid",
@@ -351,7 +351,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Shaman Wild Shape", at_level: 6, description: None, benefit: None },
             ],
         },
-        // Druid Archetype ~ Menhir Savant -- um_abilities_class.lst:1089
+        // Druid Archetype ~ Menhir Savant -- um_abilities_class:1089
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Menhir Savant",
             subject: "Druid",
@@ -366,7 +366,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Menhir Savant ~ Empty Body", at_level: 13, description: Some("You can become ethereal as a standard action, as if using ethereal jaunt. You can remain ethereal for %1 rounds per day. These rounds do not need to be consecutive.|EmptyBodyRounds"), benefit: None },
             ],
         },
-        // Druid Archetype ~ Mooncaller -- um_abilities_class.lst:1090
+        // Druid Archetype ~ Mooncaller -- um_abilities_class:1090
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Mooncaller",
             subject: "Druid",
@@ -380,7 +380,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mooncaller ~ Wolfsbane", at_level: 13, description: Some("You gain DR %1/silver.|MooncallerWolfsbaneDR"), benefit: None },
             ],
         },
-        // Druid Archetype ~ Pack Lord -- um_abilities_class.lst:1091
+        // Druid Archetype ~ Pack Lord -- um_abilities_class:1091
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Pack Lord",
             subject: "Druid",
@@ -393,7 +393,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Pack Lord ~ Improved Empathic Link", at_level: 6, description: Some("You gain an empathic link with all of your animal companions. This functions like an empathic link with a familiar. In addition, as a swift action you can shift your perception to one of your companions, allowing you to experience what it sees, hears, and so on. You can maintain this connection as long as you like (as long as the companion is within 1 mile) and end it as a free action. You can only use this ability on one companion at a time, and cannot see, hear, or smell with your own body while maintaining this connection."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Reincarnated Druid -- um_abilities_class.lst:1092
+        // Druid Archetype ~ Reincarnated Druid -- um_abilities_class:1092
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Reincarnated Druid",
             subject: "Druid",
@@ -409,7 +409,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Reincarnated Druid ~ Tongue of the Sun and Moon", at_level: 15, description: Some("You can speak with any living creature."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Saurian Shaman -- um_abilities_class.lst:1093
+        // Druid Archetype ~ Saurian Shaman -- um_abilities_class:1093
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Saurian Shaman",
             subject: "Druid",
@@ -430,7 +430,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Saurian Shaman ~ Nature Bond", at_level: 1, description: Some("If you choose an animal companion, you must select a dinosaur. If you choose a domain, you must choose from the Animal, Destruction, Strength, and War domains."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Shark Shaman -- um_abilities_class.lst:1094
+        // Druid Archetype ~ Shark Shaman -- um_abilities_class:1094
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Shark Shaman",
             subject: "Druid",
@@ -451,7 +451,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Shark Shaman ~ Nature Bond", at_level: 1, description: Some("If you choose an animal companion, you must select a shark. If you choose a domain, you must choose from the Animal, Death, War, and Water domains."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Storm Druid -- um_abilities_class.lst:1095
+        // Druid Archetype ~ Storm Druid -- um_abilities_class:1095
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Storm Druid",
             subject: "Druid",
@@ -469,7 +469,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Storm Druid ~ Storm Lord", at_level: 13, description: Some("You are unaffected by natural and magical wind effects. You also become immune to deafness and gain +2 bonus on saving throws against sonic effects."), benefit: None },
             ],
         },
-        // Inquisitor Archetype ~ Exorcist -- um_abilities_class.lst:1247
+        // Inquisitor Archetype ~ Exorcist -- um_abilities_class:1247
         ArchetypeSwapEntry {
             key: "Inquisitor Archetype ~ Exorcist",
             subject: "Inquisitor",
@@ -484,7 +484,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Exorcist ~ Verdict of Anathema", at_level: 20, description: Some("While using judgment, you can unleash the verdict of anathema on your enemies. When you do, your judgment ends, and all enemy creatures within 10 feet are affected by your verdict of exorcism."), benefit: None },
             ],
         },
-        // Inquisitor Archetype ~ Heretic -- um_abilities_class.lst:1248
+        // Inquisitor Archetype ~ Heretic -- um_abilities_class:1248
         ArchetypeSwapEntry {
             key: "Inquisitor Archetype ~ Heretic",
             subject: "Inquisitor",
@@ -498,7 +498,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Heretic ~ Hide Tracks", at_level: 1, description: Some("You are adept at hiding your tracks.  Creatures attempting to track you take a -5 penalty on rolls to find or follow your tracks."), benefit: None },
             ],
         },
-        // Inquisitor Archetype ~ Infiltrator -- um_abilities_class.lst:1249
+        // Inquisitor Archetype ~ Infiltrator -- um_abilities_class:1249
         ArchetypeSwapEntry {
             key: "Inquisitor Archetype ~ Infiltrator",
             subject: "Inquisitor",
@@ -513,7 +513,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Infiltrator ~ Necessary Lies", at_level: 1, description: Some("You add +%1 on saving throws against abilities that detect lies or reveal or force the truth, such as detect lies and zone of truth.|NecessaryLiesBonus"), benefit: None },
             ],
         },
-        // Inquisitor Archetype ~ Preacher -- um_abilities_class.lst:1250
+        // Inquisitor Archetype ~ Preacher -- um_abilities_class:1250
         ArchetypeSwapEntry {
             key: "Inquisitor Archetype ~ Preacher",
             subject: "Inquisitor",
@@ -525,7 +525,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Preacher ~ Determination", at_level: 3, description: Some("You are a person of few words on the battlefield, but those words hold great power and authority. You can use this ability to create one of the following effects %1/day. Each is a free action to use. Aggression: You may reroll an attack roll that you just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll.  Defense: When you would be hit by a melee or ranged attack, as an immediate action you may add a +4 insight bonus to your Armor Class against that attack, and if this makes your AC higher than the opponent's attack roll, the attack misses.  Warning: When your ally within line of sight would be hit by a melee or ranged attack, you may call out a warning to that ally, and the attacker must reroll the attack and use the results of the second roll. The ally must be able to hear you and must not be helpless for this ability to have any effect.  Whenever you could select a bonus teamwork feat (at 3rd, 6th, 9th, 12th, 15th, and 18th level), you can instead choose to increase your number of uses per day of this ability by one.|DeterminationTimes"), benefit: None },
             ],
         },
-        // Inquisitor Archetype ~ Sin Eater -- um_abilities_class.lst:1251
+        // Inquisitor Archetype ~ Sin Eater -- um_abilities_class:1251
         ArchetypeSwapEntry {
             key: "Inquisitor Archetype ~ Sin Eater",
             subject: "Inquisitor",
@@ -539,7 +539,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sin Eater ~ Burden of Sin", at_level: 14, description: Some("You may spend a full-round action to transfer one harmful affliction, condition, or spell effect from another creature to yourself (this includes curses, possessions, and permanent effects such as petrification, or any condition that break enchantment can end or reverse). The effect to be transferred is chosen by you and affects you as if you were the original target, continuing its duration (if any) and preventing any further effect on the original bearer. For example, you could transfer a lethal disease to yourself, or petrify yourself to restore a petrified comrade. You can use this ability as often as desired, even using it multiple times on the same creature."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Qinggong Monk Abundant Step -- um_abilities_class.lst:1342
+        // Monk Archetype ~ Qinggong Monk Abundant Step -- um_abilities_class:1342
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Qinggong Monk Abundant Step",
             subject: "Monk",
@@ -549,7 +549,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkAbundantStep"]),
             grants: &[],
         },
-        // Monk Archetype ~ Qinggong Monk Diamond Body -- um_abilities_class.lst:1341
+        // Monk Archetype ~ Qinggong Monk Diamond Body -- um_abilities_class:1341
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Qinggong Monk Diamond Body",
             subject: "Monk",
@@ -559,7 +559,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkDiamondBody"]),
             grants: &[],
         },
-        // Monk Archetype ~ Qinggong Monk Diamond Soul -- um_abilities_class.lst:1343
+        // Monk Archetype ~ Qinggong Monk Diamond Soul -- um_abilities_class:1343
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Qinggong Monk Diamond Soul",
             subject: "Monk",
@@ -569,7 +569,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkDiamondSoul"]),
             grants: &[],
         },
-        // Monk Archetype ~ Qinggong Monk Empty Body -- um_abilities_class.lst:1347
+        // Monk Archetype ~ Qinggong Monk Empty Body -- um_abilities_class:1347
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Qinggong Monk Empty Body",
             subject: "Monk",
@@ -579,7 +579,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkEmptyBody"]),
             grants: &[],
         },
-        // Monk Archetype ~ Qinggong Monk High Jump -- um_abilities_class.lst:1339
+        // Monk Archetype ~ Qinggong Monk High Jump -- um_abilities_class:1339
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Qinggong Monk High Jump",
             subject: "Monk",
@@ -589,7 +589,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkHighJump"]),
             grants: &[],
         },
-        // Monk Archetype ~ Qinggong Monk Perfect Self -- um_abilities_class.lst:1348
+        // Monk Archetype ~ Qinggong Monk Perfect Self -- um_abilities_class:1348
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Qinggong Monk Perfect Self",
             subject: "Monk",
@@ -599,7 +599,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkPerfectSelf"]),
             grants: &[],
         },
-        // Monk Archetype ~ Qinggong Monk Quivering Palm -- um_abilities_class.lst:1344
+        // Monk Archetype ~ Qinggong Monk Quivering Palm -- um_abilities_class:1344
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Qinggong Monk Quivering Palm",
             subject: "Monk",
@@ -609,7 +609,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkQuiveringPalm"]),
             grants: &[],
         },
-        // Monk Archetype ~ Qinggong Monk Slow Fall -- um_abilities_class.lst:1338
+        // Monk Archetype ~ Qinggong Monk Slow Fall -- um_abilities_class:1338
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Qinggong Monk Slow Fall",
             subject: "Monk",
@@ -619,7 +619,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkSlowFall"]),
             grants: &[],
         },
-        // Monk Archetype ~ Qinggong Monk Timeless Body -- um_abilities_class.lst:1345
+        // Monk Archetype ~ Qinggong Monk Timeless Body -- um_abilities_class:1345
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Qinggong Monk Timeless Body",
             subject: "Monk",
@@ -629,7 +629,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkTimelessBody"]),
             grants: &[],
         },
-        // Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon -- um_abilities_class.lst:1346
+        // Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon -- um_abilities_class:1346
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon",
             subject: "Monk",
@@ -639,7 +639,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkTongueOfTheSunAndMoon"]),
             grants: &[],
         },
-        // Monk Archetype ~ Qinggong Monk Wholeness of Body -- um_abilities_class.lst:1340
+        // Monk Archetype ~ Qinggong Monk Wholeness of Body -- um_abilities_class:1340
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Qinggong Monk Wholeness of Body",
             subject: "Monk",
@@ -649,7 +649,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkWholenessOfBody"]),
             grants: &[],
         },
-        // Monk Archetype ~ Vow Monk -- um_abilities_class.lst:427
+        // Monk Archetype ~ Vow Monk -- um_abilities_class:427
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Vow Monk",
             subject: "Monk",
@@ -659,7 +659,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["MonkStillMind"]),
             grants: &[],
         },
-        // Oracle Archetype ~ Dual-Cursed Oracle -- um_abilities_class.lst:1454
+        // Oracle Archetype ~ Dual-Cursed Oracle -- um_abilities_class:1454
         ArchetypeSwapEntry {
             key: "Oracle Archetype ~ Dual-Cursed Oracle",
             subject: "Oracle",
@@ -672,7 +672,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Dual-Cursed Oracle ~ Extra Revelations", at_level: 5, description: Some("You gain a new revelation at 5th level and 13th level."), benefit: None },
             ],
         },
-        // Oracle Archetype ~ Enlightened Philosopher -- um_abilities_class.lst:1455
+        // Oracle Archetype ~ Enlightened Philosopher -- um_abilities_class:1455
         ArchetypeSwapEntry {
             key: "Oracle Archetype ~ Enlightened Philosopher",
             subject: "Oracle",
@@ -685,7 +685,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Enlightened Philosopher ~ Final Revelation", at_level: 20, description: Some("You achieve true enlightenment and become one with the universe. You receive a +%1 bonus on all saving throws. You become immune to confusion, exhaustion, fatigue, nausea, and sickened effects. You can take 20 on all Knowledge skill checks. Should you die, you are reborn 3 days later as a living example of the summoning of your chosen philosophy (treat as the reincarnate spell).|EnlightenedPhilosopherFinalRevelationBonus"), benefit: None },
             ],
         },
-        // Oracle Archetype ~ Planar Oracle -- um_abilities_class.lst:1456
+        // Oracle Archetype ~ Planar Oracle -- um_abilities_class:1456
         ArchetypeSwapEntry {
             key: "Oracle Archetype ~ Planar Oracle",
             subject: "Oracle",
@@ -698,7 +698,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Planar Oracle ~ Final Revelation", at_level: 20, description: Some("You become an extraplanar creature. Choose one outer plane, such as Heaven or the Abyss. You gain superficial physical characteristics as appropriate to natives of your chosen outer plane (see the Pathfinder RPG Bestiary). For example, if your chosen plane is Heaven, you gain angelic features such as a halo and metallic skin. This change does not alter your Hit Dice, hit points, saving throws, skill points, class skills, or proficiencies. Your type changes to \"outsider (extraplanar),\" except on your associated plane, where your type is \"outsider (native).\" In addition, you gain immunity to your associated energy type and gain damage reduction 10/magic. Unlike other outsiders, you can still be brought back from the dead as if you were a member of your previous creature type."), benefit: None },
             ],
         },
-        // Oracle Archetype ~ Possessed Oracle -- um_abilities_class.lst:1457
+        // Oracle Archetype ~ Possessed Oracle -- um_abilities_class:1457
         ArchetypeSwapEntry {
             key: "Oracle Archetype ~ Possessed Oracle",
             subject: "Oracle",
@@ -710,7 +710,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Possessed Oracle ~ Two Minds", at_level: 1, description: Some("You gain a +2 bonus on Will saves against enchantment spells or effects."), benefit: None },
             ],
         },
-        // Oracle Archetype ~ Seer -- um_abilities_class.lst:1458
+        // Oracle Archetype ~ Seer -- um_abilities_class:1458
         ArchetypeSwapEntry {
             key: "Oracle Archetype ~ Seer",
             subject: "Oracle",
@@ -723,7 +723,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Seer ~ Gift of Prophecy", at_level: 3, description: Some("Once per day, you can enter a trance to gain a glimpse of the future. This trance lasts for 1 minute, which must be uninterrupted and during which you can take no other actions."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Oath against Corruption -- um_abilities_class.lst:1521
+        // Paladin Archetype ~ Oath against Corruption -- um_abilities_class:1521
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Oath against Corruption",
             subject: "Paladin",
@@ -738,7 +738,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Oath against Corruption ~ Code of Conduct", at_level: 1, description: Some("Hunt aberrations and do not allow them to roam freely or harm others. Destroy them if you can, or banish them if you cannot."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Oath against Fiends -- um_abilities_class.lst:1522
+        // Paladin Archetype ~ Oath against Fiends -- um_abilities_class:1522
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Oath against Fiends",
             subject: "Paladin",
@@ -752,7 +752,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Oath against Fiends ~ Code of Conduct", at_level: 1, description: Some("Never suffer an evil outsider to live if it is in your power to destroy it. Banish fiends you cannot kill. Purge the evil from those possessed by fiends."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Oath against Savagery -- um_abilities_class.lst:1523
+        // Paladin Archetype ~ Oath against Savagery -- um_abilities_class:1523
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Oath against Savagery",
             subject: "Paladin",
@@ -766,7 +766,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Oath against Savagery ~ Code of Conduct", at_level: 1, description: Some("Always heed the call of a community in danger from savages. Be the first in line to defend a settlement and the last to retreat."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Oath against Undeath -- um_abilities_class.lst:1524
+        // Paladin Archetype ~ Oath against Undeath -- um_abilities_class:1524
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Oath against Undeath",
             subject: "Paladin",
@@ -782,7 +782,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Oath against Undeath ~ Code of Conduct", at_level: 1, description: Some("Destroy all undead. Put to rest the poor souls turned against their will. Prevent the taint of undeath from spreading to the newly dead, blessing or burning the corpses as necessary."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Oath against the Wyrm -- um_abilities_class.lst:1525
+        // Paladin Archetype ~ Oath against the Wyrm -- um_abilities_class:1525
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Oath against the Wyrm",
             subject: "Paladin",
@@ -797,7 +797,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Oath against the Wyrm ~ Code of Conduct", at_level: 1, description: Some("Slay evil dragons, as well as other dangerous dragons whether or not they are evil. Prevent the bloodlines of other creatures from being corrupted with draconic power. Protect the innocent against the predation of dragons."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Oath of Charity -- um_abilities_class.lst:1526
+        // Paladin Archetype ~ Oath of Charity -- um_abilities_class:1526
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Oath of Charity",
             subject: "Paladin",
@@ -811,7 +811,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Oath of Charity ~ Code of Conduct", at_level: 1, description: Some("Always offer help to good creatures who need it. Always offer help to the poor and destitute. (In settlements, this help is often handled by donating to charitable religious organizations, rather than the paladin being required to dole out coppers to every beggar in the street.)"), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Oath of Chastity -- um_abilities_class.lst:1527
+        // Paladin Archetype ~ Oath of Chastity -- um_abilities_class:1527
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Oath of Chastity",
             subject: "Paladin",
@@ -825,7 +825,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Oath of Chastity ~ Code of Conduct", at_level: 1, description: Some("Never engage in a romantic relationship or a sexual act."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Oath of Loyalty -- um_abilities_class.lst:1528
+        // Paladin Archetype ~ Oath of Loyalty -- um_abilities_class:1528
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Oath of Loyalty",
             subject: "Paladin",
@@ -839,7 +839,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Oath of Loyalty ~ Code of Conduct", at_level: 1, description: Some("Keep all promises. Never make an oath or promise lightly. Never go back on an oath."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Oath of Vengeance -- um_abilities_class.lst:1529
+        // Paladin Archetype ~ Oath of Vengeance -- um_abilities_class:1529
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Oath of Vengeance",
             subject: "Paladin",
@@ -853,7 +853,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Oath of Vengeance ~ Code of Conduct", at_level: 1, description: Some("Never let lesser evils distract you from your pursuit of just vengeance."), benefit: None },
             ],
         },
-        // Ranger Archetype ~ Trapper -- um_abilities_class.lst:1604
+        // Ranger Archetype ~ Trapper -- um_abilities_class:1604
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Trapper",
             subject: "Ranger",
@@ -868,7 +868,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "No Spellcasting ~ Ranger", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Summoner Archetype ~ Broodmaster -- um_abilities_class.lst:1814
+        // Summoner Archetype ~ Broodmaster -- um_abilities_class:1814
         ArchetypeSwapEntry {
             key: "Summoner Archetype ~ Broodmaster",
             subject: "Summoner",
@@ -884,7 +884,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Broodmaster ~ Merge Forms", at_level: 16, description: Some("You can only merge with one eidolon in the brood at a time."), benefit: None },
             ],
         },
-        // Summoner Archetype ~ Evolutionist -- um_abilities_class.lst:1815
+        // Summoner Archetype ~ Evolutionist -- um_abilities_class:1815
         ArchetypeSwapEntry {
             key: "Summoner Archetype ~ Evolutionist",
             subject: "Summoner",
@@ -898,7 +898,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Evolutionist ~ Transmogrify", at_level: 12, description: Some("You can cast transmogrify as a spell-like ability once per day without the need for a material component. This ability has a casting time of 1 minute."), benefit: None },
             ],
         },
-        // Summoner Archetype ~ Master Summoner -- um_abilities_class.lst:1816
+        // Summoner Archetype ~ Master Summoner -- um_abilities_class:1816
         ArchetypeSwapEntry {
             key: "Summoner Archetype ~ Master Summoner",
             subject: "Summoner",
@@ -912,7 +912,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Summoner ~ Shield Ally", at_level: 12, description: None, benefit: None },
             ],
         },
-        // Witch Archetype ~ Beast-Bonded -- um_abilities_class.lst:1986
+        // Witch Archetype ~ Beast-Bonded -- um_abilities_class:1986
         ArchetypeSwapEntry {
             key: "Witch Archetype ~ Beast-Bonded",
             subject: "Witch",
@@ -927,7 +927,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Beast-Bonded ~ Twin Soul", at_level: 10, description: Some("If you or your familiar is gravely injured or about to die, the soul of the dying one immediately transfers to the other's body. The two souls share the surviving body peaceably, can communicate freely, and both retain their ability to think and reason. The host may allow the guest soul to take over the body temporarily or reclaim it as a move action. They can persist in this state indefinitely, or the guest can return to its own body (if available) by touch, transfer into a suitable vessel (such as a clone), or take over another body as if using magic jar (with no receptacle)."), benefit: None },
             ],
         },
-        // Witch Archetype ~ Gravewalker -- um_abilities_class.lst:1987
+        // Witch Archetype ~ Gravewalker -- um_abilities_class:1987
         ArchetypeSwapEntry {
             key: "Witch Archetype ~ Gravewalker",
             subject: "Witch",
@@ -944,7 +944,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Gravewalker ~ Possess Undead", at_level: 8, description: Some("You may take direct control of one of your undead minions within your aura of desecration, as if using magic jar; your poppet acts as the soul receptacle for this ability. The minion gets no saving throw against this ability."), benefit: None },
             ],
         },
-        // Witch Archetype ~ Hedge Witch -- um_abilities_class.lst:1988
+        // Witch Archetype ~ Hedge Witch -- um_abilities_class:1988
         ArchetypeSwapEntry {
             key: "Witch Archetype ~ Hedge Witch",
             subject: "Witch",
@@ -957,7 +957,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Hedge Witch ~ Empathic Healing", at_level: 8, description: Some("You can minister to a diseased or poisoned target, redirecting the affliction into yourself. For a poisoned target, you must tend to him as a standard action; he makes his next saving throw against the poison as normal, but you suffer the effects of the failed save instead of the poisoned creature. For a diseased target, you must tend to the sick person for an hour; he makes his next saving throw against the disease as normal, but you suffer the effects of the failed save instead of the diseased creature. You do not actually become poisoned or diseased (and are not contagious and do not need to be cured), but suffer the effects of the affliction as if you had been. You normally use this ability to extend the life of someone near death, giving him time to recover. This ability has no effect if you are immune to disease or poison."), benefit: None },
             ],
         },
-        // Witch Archetype ~ Sea Witch -- um_abilities_class.lst:1989
+        // Witch Archetype ~ Sea Witch -- um_abilities_class:1989
         ArchetypeSwapEntry {
             key: "Witch Archetype ~ Sea Witch",
             subject: "Witch",
@@ -971,7 +971,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sea Witch Bonus Spells", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Wizard Archetype ~ Scrollmaster -- um_abilities_class.lst:2027
+        // Wizard Archetype ~ Scrollmaster -- um_abilities_class:2027
         ArchetypeSwapEntry {
             key: "Wizard Archetype ~ Scrollmaster",
             subject: "Wizard",

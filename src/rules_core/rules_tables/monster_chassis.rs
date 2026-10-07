@@ -8,7 +8,7 @@
 //! carried them. `../../../docs/release/corpus-work-channels.md §9.2` rules
 //! `monster` the chassis kind and `monster_ability` the features kind attached
 //! to it, and that is a property of the *corpus*, not of Bonus Bestiary: every
-//! monster-bearing book carries the same two `.lst` shapes. Leaving the types
+//! monster-bearing book carries the same two source file shapes. Leaving the types
 //! under one book's module would have made the second book import
 //! `bonus_bestiary::MonsterStatBlock` to describe Monster Codex rows.
 //!
@@ -232,13 +232,13 @@ pub struct MonsterAbilityRecord {
     /// `<Monster> ~ <Ability>` key) claims this ability.
     #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub owners: &'static [&'static str],
-    /// The abilities-`.lst` file this record was read from, as a bare file
+    /// The abilities source-file file this record was read from, as a bare file
     /// name relative to the book directory.
     ///
     /// The exact counterpart of [`MonsterStatBlock::source_file`], and added
     /// for the same reason one book later: a book is not guaranteed one
     /// abilities file either. Inner Sea Gods splits its 161 ability rows 145/16
-    /// across `isg_abilities_races.lst` and `support/isg_abilities_races_b4.lst`
+    /// across `isg_abilities_races` and `support/isg_abilities_races_b4`
     /// — so `source_line` alone does not identify a row, and the generator that
     /// re-reads the cited line to verify it must be told which file to open.
     ///
@@ -307,7 +307,7 @@ pub struct MonsterStatBlock {
     /// level = Hit Dice, or an arithmetic wrapper of it).
     ///
     /// **Not** the more general `SPELLS:` token, deliberately: Linnorm
-    /// (Crag) (`b1_races.lst:269`) carries `BONUS:VAR|SLA_CL|HD` and its
+    /// (Crag) (`b1_races:269`) carries `BONUS:VAR|SLA_CL|HD` and its
     /// spell-like effects (`True Seeing ~ Constant`) reach the row only
     /// through an `ABILITY:` cross-reference, with no `SPELLS:` token
     /// anywhere on the line — gating on `SPELLS:` answered `false` for one
@@ -337,9 +337,9 @@ pub struct MonsterStatBlock {
     /// routinely notes otherwise: `BONUS:VAR|SLA_CL|HD` and
     /// `BONUS:VAR|SLA_CL|max(TL,1)` (PCGen's own two equivalent spellings of
     /// "apply the generic rule") coexist, record by record, with a bare
-    /// literal override — Couatl (`b1_races.lst:74`) carries
+    /// literal override — Couatl (`b1_races:74`) carries
     /// `BONUS:VAR|SLA_CL|9` while its own `MONSTERCLASS:Couatl Outsider:12`
-    /// states 12 Hit Dice; Demon (Glabrezu) (`b1_races.lst:95`) carries
+    /// states 12 Hit Dice; Demon (Glabrezu) (`b1_races:95`) carries
     /// `BONUS:VAR|SLA_CL|14` against 12 HD. Neither is a defect — both are
     /// the corpus correctly stating the printed stat block's actual SLA
     /// caster level, which sometimes differs from HD exactly as the rule's
@@ -362,8 +362,8 @@ pub struct MonsterStatBlock {
     /// which are about the row's `BONUS:VAR|SLA_CL|` token — the two encode
     /// different halves of PF1's Spell-Like Abilities universal monster rule
     /// and a row may carry either without the other. Linnorm (Crag)
-    /// (`b1_races.lst:269`) carries `BONUS:VAR|SLA_CL|HD` and **no** `SPELLS:`
-    /// token at all; Aboleth (`b1_races.lst:7`) carries `SPELLS:` grants and
+    /// (`b1_races:269`) carries `BONUS:VAR|SLA_CL|HD` and **no** `SPELLS:`
+    /// token at all; Aboleth (`b1_races:7`) carries `SPELLS:` grants and
     /// **no** `BONUS:VAR|SLA_CL|` token. Neither field may be derived from the
     /// other.
     #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
@@ -374,11 +374,11 @@ pub struct MonsterStatBlock {
     /// Ability names this row cites that this book does not define.
     #[serde(deserialize_with = "crate::rules_core::rules_data_package::leak_slice")]
     pub external_ability_refs: &'static [&'static str],
-    /// The races-`.lst` file this record was read from, relative to the book
+    /// The races source-file file this record was read from, relative to the book
     /// directory.
     ///
     /// A book is not guaranteed one monster file. Inner Sea World Guide splits
-    /// its 14 monsters 7/7 across `iswg_races.lst` and `iswg_races_bestiary.lst`
+    /// its 14 monsters 7/7 across `iswg_races` and `iswg_races_bestiary`
     /// — so `source_line` alone does not identify a row, and the generator that
     /// re-reads the cited line to verify it must be told which file to open.
     /// Before this field existed the generator took the file from a single
@@ -391,7 +391,7 @@ pub struct MonsterStatBlock {
 /// One ingested monster book: its corpus directory id and its two tables.
 ///
 /// Every field is *data*, never behaviour — the resolve/link rules below are
-/// identical across books because they are properties of PCGen's `.lst` format.
+/// identical across books because they are properties of PCGen's source file format.
 /// That is what makes a row here the whole cost of registering a book.
 #[derive(Debug, Clone, Copy)]
 pub struct MonsterBook {
@@ -548,7 +548,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
     // SD-29 Epic 5 extend, round 9. Inner Sea Gods -- 39 monsters and 77 owned
     // abilities. The first book in this registry whose corpus rows do not all
     // live in the book's root directory: 3 monster rows come from
-    // `support/isg_races_b4.lst`, which is why both the transcriber and the
+    // `support/isg_races_b4`, which is why both the transcriber and the
     // generator now RESOLVE a `source_file` basename against the book tree
     // instead of joining it onto the root. Its module header records the
     // 16-row `Race Traits ~` bundle finding -- abilities with a real owner that
@@ -587,7 +587,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
     // archetypes since SD-28 E29, so registering its monsters added no rule set,
     // no corpus directory and no work-inventory book entry.
     //
-    // Both `.lst` files sit at the book root, so `resolve_book_file` is not
+    // Both source file files sit at the book root, so `resolve_book_file` is not
     // load-bearing here. Its module header records this book's share of the
     // `Racial Traits ~` bundle class (`decisions.md §62.4`, measured
     // corpus-wide in `§64.1`): 2 of its 66 orphans are owned in the corpus
@@ -609,7 +609,7 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
     //
     // It is the first book in this registry whose monster rows state part of
     // their ATTACK list through the `ABILITY:Internal|AUTOMATIC|` bundle token
-    // rather than through `NATURALATTACKS:` -- `ha_races.lst:4` prices one Claw
+    // rather than through `NATURALATTACKS:` -- `ha_races:4` prices one Claw
     // attack and names Bite and Tail Slap only in the bundle. That is the same
     // token `decisions.md §64.1` measures corpus-wide for OWNERSHIP; here it is
     // read for its attack segments, and the two uses are independent.
@@ -889,15 +889,15 @@ mod tests {
             format!("{}/workspace/repos/pcgen/data", std::env::var("HOME").expect("HOME is set"))
         });
         let path = std::path::Path::new(&root)
-            .join("pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst");
+            .join("pathfinder/paizo/roleplaying_game/bestiary/b1_races");
         let Ok(text) = std::fs::read_to_string(&path) else {
             eprintln!("skip: pinned oracle not present at {path:?}");
             return;
         };
-        let line = text.lines().nth(92).expect("b1_races.lst has at least 93 lines"); // 1-based line 93
+        let line = text.lines().nth(92).expect("b1_races has at least 93 lines"); // 1-based line 93
         assert!(
             line.starts_with("Demon (Balor)"),
-            "b1_races.lst:93 is no longer Demon (Balor) — the oracle moved: {line:?}"
+            "b1_races:93 is no longer Demon (Balor) — the oracle moved: {line:?}"
         );
 
         // The SAME parse `parse_stat_adjustments` in
@@ -960,7 +960,7 @@ mod tests {
             .expect("Linnorm (Crag) is a registered monster in the bestiary chassis");
         assert!(
             linnorm.has_spell_like_abilities,
-            "Linnorm (Crag)'s row (b1_races.lst:269) carries BONUS:VAR|SLA_CL|HD but no \
+            "Linnorm (Crag)'s row (b1_races:269) carries BONUS:VAR|SLA_CL|HD but no \
              SPELLS: token at all"
         );
 
@@ -969,7 +969,7 @@ mod tests {
             .expect("Animated Object (Medium) is a registered monster in the bestiary chassis");
         assert!(
             !animated_object.has_spell_like_abilities,
-            "Animated Object (Medium)'s row (b1_races.lst:13) carries no SLA_CL token — it \
+            "Animated Object (Medium)'s row (b1_races:13) carries no SLA_CL token — it \
              has no spell-like abilities"
         );
     }

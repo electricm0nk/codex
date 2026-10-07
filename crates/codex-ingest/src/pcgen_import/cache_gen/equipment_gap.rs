@@ -728,7 +728,7 @@ pub fn generate(
         // no longer contains `entry.key`/`entry.name` (it now reads
         // "Codex-Named Unit (...)").
         let (rel_path, line) = match entry.name_pi_citation {
-            Some((file, ln)) => (PathBuf::from(file), ln),
+            Some((file, ln)) => (PathBuf::from(super::cited_file(file)), ln),
             None => {
                 let Some(found) = find_citation(&book_dir, entry.key, entry.name) else {
                     report.unresolved_citations.push(format!("{book_id}:{}", entry.key));

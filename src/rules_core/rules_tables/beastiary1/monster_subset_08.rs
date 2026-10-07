@@ -2,17 +2,17 @@
 //! first five CR-3 monsters alphabetically; this subset ships the next
 //! five).
 //!
-//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst`,
+//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races`,
 //! parsed via `pcgen_import::lst_parser::monster_stat_block` (the same
 //! bare-tab-delimited monster parser subset 01 introduced — no widening
 //! was needed for this subset either). Every field below is transcribed
-//! directly from the cited real `.lst` line's tokens — see each
+//! directly from the cited real source file line's tokens — see each
 //! function's doc comment for the exact line number and tokens.
 //!
 //! **Roster derivation (CR-band continuation):** before writing any
 //! GREEN code, this cycle independently re-enumerated every real,
 //! non-`#`-commented, non-`.MOD`/`.COPY=` CR:3 monster stat-block row in
-//! `b1_races.lst` directly against the live corpus file: 20 clean,
+//! `b1_races` directly against the live corpus file: 20 clean,
 //! standalone CR:3 species names exist total (same count subset 07's
 //! cycle found). Subset 07 shipped the first five alphabetically
 //! (Ankheg, Assassin Vine, Centaur, Cockatrice, Derro); this subset
@@ -49,7 +49,7 @@
 
 use super::{MonsterStatBlock, NaturalAttack};
 
-/// Source: `b1_races.lst:127`, `CR:3`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:127`, `CR:3`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,30`, `NATURALATTACKS:Claw,...,*2,1d8` (transcribed as one
 /// `Claw`/`1d8` entry), `RACETYPE:Monstrous Humanoid`,
 /// `RACESUBTYPE:Shapechanger`, `CR:3`, `SOURCEPAGE:p.89`.
@@ -66,7 +66,7 @@ pub fn doppelganger() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:141`, `CR:3`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:141`, `CR:3`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,30`, no `NATURALATTACKS:` token (fights via
 /// `ABILITY:Special Ability` cross-references and innate spells
 /// instead — transcribed as an empty list), `RACETYPE:Fey`, no
@@ -84,7 +84,7 @@ pub fn dryad() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:175`, `CR:3`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:175`, `CR:3`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,30,Climb,30` (walk speed transcribed; climb speed out of
 /// scope), two `NATURALATTACKS:` tokens on the row —
 /// `Bite,...,*1,1d6` and `Claw,...,*2,1d4` (transcribed as two
@@ -106,7 +106,7 @@ pub fn ettercap() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:189`, `CR:3`. Real row tokens: `SIZE:L`,
+/// Source: `b1_races:189`, `CR:3`. Real row tokens: `SIZE:L`,
 /// `MOVE:Walk,15`, `NATURALATTACKS:Slam,...,*1,1d6` (transcribed as one
 /// `Slam`/`1d6` entry), `RACETYPE:Ooze`, no `RACESUBTYPE:` token,
 /// `CR:3`, `SOURCEPAGE:p.138`.
@@ -123,7 +123,7 @@ pub fn gelatinous_cube() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:230`, `CR:3`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:230`, `CR:3`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,40`, `NATURALATTACKS:Bite,...,*1,1d8` (transcribed as one
 /// `Bite`/`1d8` entry), `RACETYPE:Outsider`,
 /// `RACESUBTYPE:Evil|Extraplanar|Fire|Lawful` (transcribed verbatim as

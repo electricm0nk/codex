@@ -42,7 +42,7 @@
       "owners": [
         "The First Blade"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 14,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -64,7 +64,7 @@
       "owners": [
         "The First Blade"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 15,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -82,7 +82,7 @@
       "owners": [
         "The First Blade"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 16,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -102,7 +102,7 @@
       "owners": [
         "The First Blade"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 17,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -120,7 +120,7 @@
       "owners": [
         "The First Blade"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 19,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -140,7 +140,7 @@
       "owners": [
         "The First Blade"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 20,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -162,7 +162,7 @@
       "owners": [
         "The First Blade"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 21,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -182,7 +182,7 @@
       "owners": [
         "Steward of the Skein"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 24,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -204,7 +204,7 @@
       "owners": [
         "Steward of the Skein"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 25,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -224,7 +224,7 @@
       "owners": [
         "Steward of the Skein"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 26,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -242,7 +242,7 @@
       "owners": [
         "Steward of the Skein"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 27,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -260,7 +260,7 @@
       "owners": [
         "Steward of the Skein"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 28,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -278,7 +278,7 @@
       "owners": [
         "Steward of the Skein"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 29,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -296,7 +296,7 @@
       "owners": [
         "Psychopomp (Ahmuuth)"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 32,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -314,7 +314,7 @@
       "owners": [
         "Psychopomp (Ahmuuth)"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 33,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -332,7 +332,7 @@
       "owners": [
         "Psychopomp (Ahmuuth)"
       ],
-      "source_file": "isg_abilities_races_b4.lst",
+      "source_file": "isg_abilities_races_b4",
       "source_line": 34,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -348,7 +348,7 @@
       "description_variables": [],
       "source_page": null,
       "owners": [],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 38,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -364,7 +364,7 @@
       "description_variables": [],
       "source_page": null,
       "owners": [],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 39,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -380,11 +380,11 @@
       "description_variables": [],
       "source_page": null,
       "owners": [],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 43,
       "codex_generated_name": true,
       "rename_reason": "name_pi_blocked",
-      "rename_coordinate": "inner_sea_gods:isg_abilities_races.lst:43"
+      "rename_coordinate": "inner_sea_gods:isg_abilities_races:43"
     },
     {
       "key": "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_44)",
@@ -398,11 +398,11 @@
       "description_variables": [],
       "source_page": null,
       "owners": [],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 44,
       "codex_generated_name": true,
       "rename_reason": "name_pi_blocked",
-      "rename_coordinate": "inner_sea_gods:isg_abilities_races.lst:44"
+      "rename_coordinate": "inner_sea_gods:isg_abilities_races:44"
     },
     {
       "key": "Codex-Named Unit (monster_ability_inner_sea_gods_isg_abilities_races_lst_45)",
@@ -414,11 +414,11 @@
       "description_variables": [],
       "source_page": null,
       "owners": [],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 45,
       "codex_generated_name": true,
       "rename_reason": "name_pi_blocked",
-      "rename_coordinate": "inner_sea_gods:isg_abilities_races.lst:45"
+      "rename_coordinate": "inner_sea_gods:isg_abilities_races:45"
     },
     {
       "key": "Lawgiver ~ Immunity to Rust",
@@ -434,7 +434,7 @@
       "owners": [
         "Lawgiver"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 88,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -452,7 +452,7 @@
       "owners": [
         "Lawgiver"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 89,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -470,7 +470,7 @@
       "owners": [
         "Lawgiver"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 90,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -488,7 +488,7 @@
       "owners": [
         "Orsheval"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 93,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -508,7 +508,7 @@
       "owners": [
         "Orsheval"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 94,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -526,7 +526,7 @@
       "owners": [
         "Orsheval"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 95,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -546,7 +546,7 @@
       "owners": [
         "Basileus"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 98,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -564,7 +564,7 @@
       "owners": [
         "Basileus"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 99,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -582,7 +582,7 @@
       "owners": [
         "Basileus"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 100,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -602,7 +602,7 @@
       "owners": [
         "Devil (Accomplice)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 103,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -620,7 +620,7 @@
       "owners": [
         "Devil (Accomplice)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 104,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -640,7 +640,7 @@
       "owners": [
         "Devil (Accomplice)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 105,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -662,7 +662,7 @@
       "owners": [
         "The Menotherian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 108,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -682,7 +682,7 @@
       "owners": [
         "The Menotherian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 109,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -702,7 +702,7 @@
       "owners": [
         "The Menotherian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 110,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -722,7 +722,7 @@
       "owners": [
         "The Menotherian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 111,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -740,7 +740,7 @@
       "owners": [
         "The Menotherian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 112,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -762,7 +762,7 @@
       "owners": [
         "Vendenopterix"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 115,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -782,7 +782,7 @@
       "owners": [
         "Vendenopterix"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 116,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -800,7 +800,7 @@
       "owners": [
         "Vendenopterix"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 117,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -818,7 +818,7 @@
       "owners": [
         "Vendenopterix"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 118,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -836,7 +836,7 @@
       "owners": [
         "Vendenopterix"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 119,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -856,7 +856,7 @@
       "owners": [
         "Thais"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 122,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -876,7 +876,7 @@
       "owners": [
         "Thais"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 123,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -894,7 +894,7 @@
       "owners": [
         "Thais"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 124,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -914,7 +914,7 @@
       "owners": [
         "Thais"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 125,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -932,7 +932,7 @@
       "owners": [
         "Thais"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 126,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -954,7 +954,7 @@
       "owners": [
         "Ataxian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 129,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -974,7 +974,7 @@
       "owners": [
         "Ataxian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 130,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -992,7 +992,7 @@
       "owners": [
         "Ataxian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 131,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1012,7 +1012,7 @@
       "owners": [
         "Ataxian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 132,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1030,7 +1030,7 @@
       "owners": [
         "Night Monarch"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 135,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1050,7 +1050,7 @@
       "owners": [
         "Night Monarch"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 136,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1072,7 +1072,7 @@
       "owners": [
         "Night Monarch"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 137,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1090,7 +1090,7 @@
       "owners": [
         "Night Monarch"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 138,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1112,7 +1112,7 @@
       "owners": [
         "Night Monarch"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 139,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1132,7 +1132,7 @@
       "owners": [
         "Night Monarch"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 140,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1152,7 +1152,7 @@
       "owners": [
         "Azata (Thyrlien)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 144,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1172,7 +1172,7 @@
       "owners": [
         "Azata (Thyrlien)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 145,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1192,7 +1192,7 @@
       "owners": [
         "Azata (Thyrlien)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 146,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1210,7 +1210,7 @@
       "owners": [
         "Azata (Thyrlien)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 147,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1228,7 +1228,7 @@
       "owners": [
         "Azata (Thyrlien)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 148,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1248,7 +1248,7 @@
       "owners": [
         "Azata (Thyrlien)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 149,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1268,7 +1268,7 @@
       "owners": [
         "Azata (Thyrlien)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 150,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1286,7 +1286,7 @@
       "owners": [
         "The Grim White Stag"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 154,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1304,7 +1304,7 @@
       "owners": [
         "The Grim White Stag"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 155,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1324,7 +1324,7 @@
       "owners": [
         "The Grim White Stag"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 156,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1342,7 +1342,7 @@
       "owners": [
         "The Grim White Stag"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 157,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1360,7 +1360,7 @@
       "owners": [
         "The Grim White Stag"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 158,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1384,7 +1384,7 @@
       "owners": [
         "The Grim White Stag"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 159,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1404,7 +1404,7 @@
       "owners": [
         "The Grim White Stag"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 160,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1424,7 +1424,7 @@
       "owners": [
         "The Grim White Stag"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 161,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1442,7 +1442,7 @@
       "owners": [
         "Archon (Stag)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 165,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1460,7 +1460,7 @@
       "owners": [
         "Zentragt"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 168,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1478,7 +1478,7 @@
       "owners": [
         "Zentragt"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 169,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1496,7 +1496,7 @@
       "owners": [
         "Personification of Fury"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 172,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1514,7 +1514,7 @@
       "owners": [
         "Personification of Fury"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 173,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1534,7 +1534,7 @@
       "owners": [
         "Personification of Fury"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 174,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1552,7 +1552,7 @@
       "owners": [
         "Xocothian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 177,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1572,7 +1572,7 @@
       "owners": [
         "Xocothian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 178,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1592,7 +1592,7 @@
       "owners": [
         "Xocothian"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 179,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1616,7 +1616,7 @@
       "owners": [
         "Hand of the Inheritor"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 182,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1634,7 +1634,7 @@
       "owners": [
         "Hand of the Inheritor"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 183,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1654,7 +1654,7 @@
       "owners": [
         "Angel (Iophanite)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 186,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1672,7 +1672,7 @@
       "owners": [
         "Angel (Iophanite)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 187,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1690,7 +1690,7 @@
       "owners": [
         "Angel (Iophanite)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 188,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1712,7 +1712,7 @@
       "owners": [
         "The Old Man"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 191,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1730,7 +1730,7 @@
       "owners": [
         "The Old Man"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 192,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1751,7 +1751,7 @@
       "owners": [
         "Pavbagha"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 195,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1769,7 +1769,7 @@
       "owners": [
         "Pavbagha"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 196,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1795,7 +1795,7 @@
       "owners": [
         "Yethazmari"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 199,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1817,7 +1817,7 @@
       "owners": [
         "Yethazmari"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 200,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1837,7 +1837,7 @@
       "owners": [
         "Yethazmari"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 201,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1855,7 +1855,7 @@
       "owners": [
         "Yethazmari"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 202,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1875,7 +1875,7 @@
       "owners": [
         "Yethazmari"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 203,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1895,7 +1895,7 @@
       "owners": [
         "Demon (Swaithe)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 206,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1915,7 +1915,7 @@
       "owners": [
         "Demon (Swaithe)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 207,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1933,7 +1933,7 @@
       "owners": [
         "Demon (Swaithe)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 208,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1953,7 +1953,7 @@
       "owners": [
         "Arcanotheign"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 211,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1971,7 +1971,7 @@
       "owners": [
         "Arcanotheign"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 212,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -1993,7 +1993,7 @@
       "owners": [
         "Arcanotheign"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 213,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2015,7 +2015,7 @@
       "owners": [
         "Arcanotheign"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 214,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2033,7 +2033,7 @@
       "owners": [
         "Arcanotheign"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 215,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2051,7 +2051,7 @@
       "owners": [
         "Burleev"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 218,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2069,7 +2069,7 @@
       "owners": [
         "The Stabbing Beast"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 221,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2087,7 +2087,7 @@
       "owners": [
         "The Stabbing Beast"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 222,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2107,7 +2107,7 @@
       "owners": [
         "The Stabbing Beast"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 223,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2125,7 +2125,7 @@
       "owners": [
         "The Stabbing Beast"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 224,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2143,7 +2143,7 @@
       "owners": [
         "The Stabbing Beast"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 225,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2161,7 +2161,7 @@
       "owners": [
         "Karumzek"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 228,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2179,7 +2179,7 @@
       "owners": [
         "Karumzek"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 229,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2199,7 +2199,7 @@
       "owners": [
         "Karumzek"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 230,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2217,7 +2217,7 @@
       "owners": [
         "Karumzek"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 231,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2235,7 +2235,7 @@
       "owners": [
         "Karumzek"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 232,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2255,7 +2255,7 @@
       "owners": [
         "Qlippoth (Thognorok)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 235,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2275,7 +2275,7 @@
       "owners": [
         "Qlippoth (Thognorok)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 236,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2295,7 +2295,7 @@
       "owners": [
         "Qlippoth (Thognorok)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 237,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2313,7 +2313,7 @@
       "owners": [
         "Sunlord Thalachos"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 240,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2331,7 +2331,7 @@
       "owners": [
         "Sunlord Thalachos"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 241,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2353,7 +2353,7 @@
       "owners": [
         "Sunlord Thalachos"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 242,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2373,7 +2373,7 @@
       "owners": [
         "Sunlord Thalachos"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 243,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2391,7 +2391,7 @@
       "owners": [
         "Sunlord Thalachos"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 244,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2409,7 +2409,7 @@
       "owners": [
         "Yhohm"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 247,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2427,7 +2427,7 @@
       "owners": [
         "Yhohm"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 248,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2449,7 +2449,7 @@
       "owners": [
         "Yhohm"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 249,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2467,7 +2467,7 @@
       "owners": [
         "The Spirit of Adoration"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 252,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2487,7 +2487,7 @@
       "owners": [
         "The Spirit of Adoration"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 253,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2505,7 +2505,7 @@
       "owners": [
         "The Spirit of Adoration"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 254,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2527,7 +2527,7 @@
       "owners": [
         "The Spirit of Adoration"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 255,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2545,7 +2545,7 @@
       "owners": [
         "The Spirit of Adoration"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 256,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2567,7 +2567,7 @@
       "owners": [
         "The Spirit of Adoration"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 257,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2585,7 +2585,7 @@
       "owners": [
         "The Spirit of Adoration"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 258,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2603,7 +2603,7 @@
       "owners": [
         "Dapsara"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 261,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2621,7 +2621,7 @@
       "owners": [
         "Dapsara"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 262,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2639,7 +2639,7 @@
       "owners": [
         "Dapsara"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 263,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2657,7 +2657,7 @@
       "owners": [
         "Dapsara"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 264,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2675,7 +2675,7 @@
       "owners": [
         "Dapsara"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 265,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2693,7 +2693,7 @@
       "owners": [
         "The Grand Defender"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 268,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2713,7 +2713,7 @@
       "owners": [
         "The Grand Defender"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 269,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2731,7 +2731,7 @@
       "owners": [
         "The Grand Defender"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 270,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2751,7 +2751,7 @@
       "owners": [
         "The Grand Defender"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 271,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2771,7 +2771,7 @@
       "owners": [
         "Chalkost"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 274,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2789,7 +2789,7 @@
       "owners": [
         "Chalkost"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 275,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2807,7 +2807,7 @@
       "owners": [
         "Chalkost"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 276,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2827,7 +2827,7 @@
       "owners": [
         "Chalkost"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 277,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2845,7 +2845,7 @@
       "owners": [
         "Mother's Maw"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 280,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2865,7 +2865,7 @@
       "owners": [
         "Mother's Maw"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 281,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2885,7 +2885,7 @@
       "owners": [
         "Mother's Maw"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 282,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2903,7 +2903,7 @@
       "owners": [
         "Mother's Maw"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 283,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2923,7 +2923,7 @@
       "owners": [
         "Mother's Maw"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 284,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2941,7 +2941,7 @@
       "owners": [
         "Mother's Maw"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 285,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2964,7 +2964,7 @@
       "owners": [
         "Mother's Maw"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 286,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -2982,7 +2982,7 @@
       "owners": [
         "Sarcovalt"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 289,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -3000,7 +3000,7 @@
       "owners": [
         "Sarcovalt"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 290,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -3022,7 +3022,7 @@
       "owners": [
         "The Prince in Chains"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 293,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -3040,7 +3040,7 @@
       "owners": [
         "The Prince in Chains"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 294,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -3060,7 +3060,7 @@
       "owners": [
         "The Prince in Chains"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 295,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -3078,7 +3078,7 @@
       "owners": [
         "The Prince in Chains"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 296,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -3096,7 +3096,7 @@
       "owners": [
         "The Prince in Chains"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 297,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -3118,7 +3118,7 @@
       "owners": [
         "Kyton (Lampadarius)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 300,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -3136,7 +3136,7 @@
       "owners": [
         "Kyton (Lampadarius)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 301,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -3156,7 +3156,7 @@
       "owners": [
         "Kyton (Lampadarius)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 302,
       "codex_generated_name": false,
       "rename_reason": null,
@@ -3174,7 +3174,7 @@
       "owners": [
         "Kyton (Lampadarius)"
       ],
-      "source_file": "isg_abilities_races.lst",
+      "source_file": "isg_abilities_races",
       "source_line": 303,
       "codex_generated_name": false,
       "rename_reason": null,

@@ -18,15 +18,15 @@
 //! spells-per-day table topping out at 4th-level spells).
 //!
 //! **Widened 2026-07-27 (task #26) from CRB-only to all ingested books.**
-//! Per-file: **51 from `cr_spells.lst` + 46 from `apg_spells.lst` + 17
-//! from `acg_spells.lst` = 114**, all names distinct (no `.MOD` records
+//! Per-file: **51 from `cr_spells` + 46 from `apg_spells` + 17
+//! from `acg_spells` = 114**, all names distinct (no `.MOD` records
 //! name Ranger at all, so there is nothing to graft or dedupe).
 //! Per-file ceiling check: `grep -c Ranger` returns exactly 51 / 46 / 17,
 //! matching the parse line-for-line in every file.
 //!
 //! **This module did NOT have the `CLASSES:` substring bug.** Its
 //! original 51 CRB entries are byte-identical to a correct token-split
-//! re-parse of `cr_spells.lst`, including all 7 records where Ranger sits
+//! re-parse of `cr_spells`, including all 7 records where Ranger sits
 //! mid-group (e.g. `CLASSES:Bard,Ranger,Sorcerer,Wizard=1`). The only
 //! defect was book scope: PF1 does not scope a class's spell list by
 //! sourcebook, so the APG and ACG ranger spells belonged here all along.

@@ -29,7 +29,7 @@
         }
       ],
       "fact_class_type": "Companion",
-      "source_file": "cr_classes_companion.lst",
+      "source_file": "cr_classes_companion",
       "source_line": 6
     },
     {
@@ -74,7 +74,7 @@
         }
       ],
       "fact_class_type": "Companion",
-      "source_file": "cr_classes_companion.lst",
+      "source_file": "cr_classes_companion",
       "source_line": 15
     }
   ]

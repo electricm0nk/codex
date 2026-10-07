@@ -3,9 +3,9 @@
 //! get a real BAB/save chassis, chosen off `SD31-E3-F1-001`'s clearance
 //! table (measured `wired_able: 0`, `named_raw: 17` before this cycle).
 //!
-//! Source: PCGen `uc_classes.lst`, `CLASS:Gunslinger` record
+//! Source: PCGen `uc_classes`, `CLASS:Gunslinger` record
 //! (`~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
-//! ultimate_combat/uc_classes.lst:10`), read directly rather than
+//! ultimate_combat/uc_classes:10`), read directly rather than
 //! table-transcribed, because the real record states its progression as
 //! plain formulas rather than a `Base.PC` alias into a shared table:
 //!

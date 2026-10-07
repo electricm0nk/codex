@@ -8,15 +8,15 @@
 //! an earlier draft claimed a full-oracle-tree `grep -rn "Samurai
 //! Archetype"` returned "exactly two hits, both structural." That does
 //! not reproduce -- the real full-tree count is **17 hits across 7
-//! files**: `uc_abilities_globalvar.lst`'s automatic-ability grant and
-//! `uc_abilitycategories.lst`'s category definition (structural, as
+//! files**: `uc_abilities_globalvar`'s automatic-ability grant and
+//! `uc_abilitycategories`'s category definition (structural, as
 //! claimed) PLUS **5 real swappable `CATEGORY:Archetype
 //! TYPE:Archetype.SamuraiArchetype PRECLASS:1,Samurai=1` records** --
 //! `Samurai Archetype ~ Sword Saint` (`dragon_empires_primer`), `~
 //! Yojimbo` (`armor_masters_handbook`), `~ Ward Speaker`
 //! (`disciples_doctrine`, which sets `FACT:Samurai_CF_Resolve|true` /
 //! `FACT:Samurai_CF_GreaterResolve|true` / `FACT:Samurai_CF_TrueResolve
-//! |true` -- exactly the flags `uc_abilities_globalvar.lst:32`'s
+//! |true` -- exactly the flags `uc_abilities_globalvar:32`'s
 //! `PREVAREQ:Samurai_CF_Resolve,0` guard uses to suppress the base
 //! Resolve grant, i.e. a real supersession mechanism), `~ Brawling
 //! Blademaster` (`martial_arts_handbook`) and `~ Sovereign Blade`
@@ -35,9 +35,9 @@
 //! `disciples_doctrine`'s Ward Speaker is the one row that actually
 //! exercises the `PREVAREQ:Samurai_CF_Resolve,0` guard.
 //!
-//! Source: PCGen `uc_classes.lst`, `CLASS:Samurai` record
+//! Source: PCGen `uc_classes`, `CLASS:Samurai` record
 //! (`~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
-//! ultimate_combat/uc_classes.lst:34`), read directly rather than
+//! ultimate_combat/uc_classes:34`), read directly rather than
 //! table-transcribed:
 //!
 //! - `BONUS:COMBAT|BASEAB|classlevel("APPLIEDAS=NONEPIC")|TYPE=Base.REPLACE`

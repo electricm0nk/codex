@@ -1,6 +1,6 @@
 //! APG Witch class chassis table — one row per level.
 //!
-//! Source: PCGen `apg_classes.lst`, `CLASS:Witch` record (line 172 of
+//! Source: PCGen `apg_classes`, `CLASS:Witch` record (line 172 of
 //! the SD-22 Epic 3 corpus checkout), parsed via
 //! `pcgen_import::lst_parser::spellcasting_class` (SD-22 Epic 3 widened
 //! `SPELLCASTING_CLASS_NAMES` to recognize it — see that module's doc
@@ -23,7 +23,7 @@
 //! BAB/save chassis is transcribed here. Named per-level features
 //! (Hexes, Patron, familiar rules) and the spell-per-day table are out
 //! of scope for this cycle — transcribing them without going back
-//! through the LST's per-level feature blocks (`apg_abilities_class.lst`)
+//! through the LST's per-level feature blocks (`apg_abilities_class`)
 //! in a dedicated ingest slice would be exactly the fabricated-data risk
 //! `class_alchemist.rs`'s own doc comment and `AGENTS.md` rule out.
 
@@ -33,7 +33,7 @@ use super::ClassTableRow;
 pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 
 /// `HD:6` on the real `CLASS:Witch` record (v0.6 alpha swarm, risks item
-/// 8), verified directly against `apg_classes.lst` line 172.
+/// 8), verified directly against `apg_classes` line 172.
 pub const HIT_DIE: u8 = 6;
 
 fn base_attack_bonus(level: u8) -> i16 {

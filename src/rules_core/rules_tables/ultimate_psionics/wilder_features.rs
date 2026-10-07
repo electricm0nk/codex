@@ -7,12 +7,12 @@
 //! ingested `BONUS:VAR` tokens
 //! (`data/corpus/ultimate_psionics/class_feature/wilder/*.json`), not from
 //! memory of the printed rulebook. None of Wilder's five magnitude-bearing
-//! records reads `WilderPrimeStat` (`up_classes.lst` — Charisma), so no
+//! records reads `WilderPrimeStat` (`up_classes` — Charisma), so no
 //! ability modifier is threaded here; `WilderML`
-//! (`up_abilities_class.lst:1033`) resolves to plain class level for a
+//! (`up_abilities_class:1033`) resolves to plain class level for a
 //! base (non-archetype) Wilder.
 
-/// `up_abilities_class.lst:1038`, `Psychic Enervation`:
+/// `up_abilities_class:1038`, `Psychic Enervation`:
 /// `BONUS:VAR|PsychicEnervationPercent|15` — a flat 15% chance, not
 /// level-scaled. `None` below level 1 (the roster's own `min_level`).
 pub fn psychic_enervation_percent(level: u8) -> Option<i16> {
@@ -22,7 +22,7 @@ pub fn psychic_enervation_percent(level: u8) -> Option<i16> {
     Some(15)
 }
 
-/// `up_abilities_class.lst:1039`, `Surge Blast`:
+/// `up_abilities_class:1039`, `Surge Blast`:
 /// `BONUS:VAR|SurgeBlastRange|30` — a flat 30-foot range, not
 /// level-scaled. `None` below level 1.
 pub fn surge_blast_range_feet(level: u8) -> Option<i16> {
@@ -32,7 +32,7 @@ pub fn surge_blast_range_feet(level: u8) -> Option<i16> {
     Some(30)
 }
 
-/// `up_abilities_class.lst:1037`, `Wild Surge`:
+/// `up_abilities_class:1037`, `Wild Surge`:
 /// `BONUS:VAR|WildSurge|1+floor((SurgeLVL+1)/4)`, `SurgeLVL = WilderML =
 /// WilderLVL` for a base Wilder. `None` below level 1.
 pub fn wild_surge_bonus(level: u8) -> Option<i16> {
@@ -42,7 +42,7 @@ pub fn wild_surge_bonus(level: u8) -> Option<i16> {
     Some(1 + (i16::from(level) + 1) / 4)
 }
 
-/// `up_abilities_class.lst:1040`, `Elude Attack`:
+/// `up_abilities_class:1040`, `Elude Attack`:
 /// `BONUS:VAR|EludeAttack|floor((WilderLVL+2)/4)`. `None` below level 2
 /// (the roster's own `min_level`).
 pub fn elude_attack_ac_bonus(level: u8) -> Option<i16> {
@@ -52,7 +52,7 @@ pub fn elude_attack_ac_bonus(level: u8) -> Option<i16> {
     Some((i16::from(level) + 2) / 4)
 }
 
-/// `up_abilities_class.lst:1041`, `Surging Euphoria`: the roster's own
+/// `up_abilities_class:1041`, `Surging Euphoria`: the roster's own
 /// tracked var is `SurgingEuphoriaDuration`
 /// (`BONUS:VAR|SurgingEuphoriaDuration|WildSurge`) — the duration in
 /// rounds equals the character's own current Wild Surge bonus, so this

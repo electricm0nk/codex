@@ -14,8 +14,8 @@
 //!
 //! Pathfinder Unchained declares **zero `CLASS:` objects**. `Monk ~
 //! Unchained Class` is a `CATEGORY:CLASS` selection ability
-//! (`pu_abilities_class.lst:115`) layered over Core Rulebook's real
-//! `CLASS:Monk` (`cr_classes.lst:147`, `MAXLEVEL:20`). A campaign chooses
+//! (`pu_abilities_class:115`) layered over Core Rulebook's real
+//! `CLASS:Monk` (`cr_classes:147`, `MAXLEVEL:20`). A campaign chooses
 //! one or the other; a character never has both.
 //!
 //! **How the two are kept distinct in this repo:**
@@ -41,7 +41,7 @@
 //! | good saves | Fort, Ref, Will | Fort, Ref — **Will is poor** ([`will_save`]) |
 //! | flurry | 4 attacks by level 15 | up to **6** attacks ([`flurry_attack_count`]) |
 //!
-//! The chassis tokens, all on `pu_abilities_class.lst:115`:
+//! The chassis tokens, all on `pu_abilities_class:115`:
 //! - `BONUS:COMBAT|BASEAB|classlevel("Monk","APPLIEDAS=NONEPIC")|TYPE=Base.REPLACE|PREVAREQ:UseAlternateBABProgression,0`
 //! - `BONUS:SAVE|BASE.Fortitude,BASE.Reflex|classlevel("Monk","APPLIEDAS=NONEPIC")/2+2|PREVAREQ:UseAlternateSaveProgression,0`
 //! - `BONUS:SAVE|BASE.Will|classlevel("Monk","APPLIEDAS=NONEPIC")/3|PREVAREQ:UseAlternateSaveProgression,0`
@@ -54,7 +54,7 @@
 //!
 //! PU's AC Bonus row grants `ABILITY:Internal|AUTOMATIC|Monk AC Tracker`
 //! and its Ki Pool row grants `ABILITY:Internal|AUTOMATIC|Ki Pool Tracker`
-//! — both defined in `core_rulebook/cr_abilities_class.lst` (lines 1090 and
+//! — both defined in `core_rulebook/cr_abilities_class` (lines 1090 and
 //! 1175/1179). PU sets the level variables those trackers read
 //! (`MonkACLVL`, `KiPoolLVL`) and modifies nothing else, so the Unchained
 //! Monk's AC bonus and ki pool are genuinely the CRB formulas driven by an
@@ -90,7 +90,7 @@
 //!   carries exactly one token, `BONUS:VAR|StunningFistMonkLVL|MonkLVL`
 //!   ([`stunning_fist_monk_level`]). The DC (`10+(TL/2)+WIS`) and uses
 //!   (`MonkLVL+floor((TL-MonkLVL)/4)`) live on the shared CRB *feat*
-//!   (`cr_feats.lst:171`) and are already grounded in
+//!   (`cr_feats:171`) and are already grounded in
 //!   `rules_core::feat_effects`. Feat-lane content stays in the feat lane —
 //!   the same boundary `warpriest_fervor_uses_per_day` draws for Extra
 //!   Channel.
@@ -128,7 +128,7 @@
 /// `data/corpus/pathfinder_unchained/class_feature/monk_unchained_class/`.
 /// Unlike the Barbarian's, every one of them is granted by the single
 /// `Monk ~ Unchained Class.MOD` progression block
-/// (`pu_abilities_class.lst:154-171`), so there is no Full/Ex-Class split
+/// (`pu_abilities_class:154-171`), so there is no Full/Ex-Class split
 /// and no ungranted record.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(test, derive(schemars::JsonSchema))]
@@ -139,16 +139,16 @@ pub struct UnchainedMonkFeature {
     pub name: &'static str,
     /// Grant level from `PREVARGTEQ:Monk_CFP_Level,N`.
     pub min_level: u8,
-    /// 1-based line in `pu_abilities_class.lst`.
+    /// 1-based line in `pu_abilities_class`.
     pub corpus_line: u32,
 }
 
 /// `MAXLEVEL:20` on the base `CLASS:Monk` record
-/// (`core_rulebook/cr_classes.lst:147`). PU adds no levels.
+/// (`core_rulebook/cr_classes:147`). PU adds no levels.
 pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 
-/// `d10` — `pu_templates.lst:5`, `Monk ~ Unchained HD  HITDIE:10|CLASS=Monk`,
-/// applied by `pu_abilities_class.lst:115`'s
+/// `d10` — `pu_templates:5`, `Monk ~ Unchained HD  HITDIE:10|CLASS=Monk`,
+/// applied by `pu_abilities_class:115`'s
 /// `TEMPLATE:Monk ~ Unchained HD`.
 ///
 /// This is the one place the Unchained Monk's hit die and the CRB Monk's
@@ -160,52 +160,52 @@ pub const MAX_SUPPORTED_LEVEL: u8 = 20;
 /// than reused.
 pub const HIT_DIE: u8 = 10;
 
-/// `pu_abilities_class.lst:154` — `PREVARGTEQ:Monk_CFP_Level,1`.
+/// `pu_abilities_class:154` — `PREVARGTEQ:Monk_CFP_Level,1`.
 pub const WEAPON_AND_ARMOR_PROFICIENCY_LEVEL: u8 = 1;
-/// `pu_abilities_class.lst:155` — `PREVARGTEQ:Monk_CFP_Level,1`.
+/// `pu_abilities_class:155` — `PREVARGTEQ:Monk_CFP_Level,1`.
 pub const AC_BONUS_LEVEL: u8 = 1;
-/// `pu_abilities_class.lst:156` — `PREVARGTEQ:Monk_CFP_Level,1`.
+/// `pu_abilities_class:156` — `PREVARGTEQ:Monk_CFP_Level,1`.
 pub const BONUS_FEAT_LEVEL: u8 = 1;
-/// `pu_abilities_class.lst:157` — `PREVARGTEQ:Monk_CFP_Level,1`.
+/// `pu_abilities_class:157` — `PREVARGTEQ:Monk_CFP_Level,1`.
 pub const FLURRY_OF_BLOWS_LEVEL: u8 = 1;
-/// `pu_abilities_class.lst:158` — `PREVARGTEQ:Monk_CFP_Level,1`.
+/// `pu_abilities_class:158` — `PREVARGTEQ:Monk_CFP_Level,1`.
 pub const STUNNING_FIST_LEVEL: u8 = 1;
-/// `pu_abilities_class.lst:159` — `PREVARGTEQ:Monk_CFP_Level,1`.
+/// `pu_abilities_class:159` — `PREVARGTEQ:Monk_CFP_Level,1`.
 pub const UNARMED_STRIKE_LEVEL: u8 = 1;
-/// `pu_abilities_class.lst:160` — `PREVARGTEQ:Monk_CFP_Level,2`.
+/// `pu_abilities_class:160` — `PREVARGTEQ:Monk_CFP_Level,2`.
 pub const EVASION_LEVEL: u8 = 2;
-/// `pu_abilities_class.lst:161` — `PREVARGTEQ:Monk_CFP_Level,3`.
+/// `pu_abilities_class:161` — `PREVARGTEQ:Monk_CFP_Level,3`.
 pub const FAST_MOVEMENT_LEVEL: u8 = 3;
-/// `pu_abilities_class.lst:162` — `PREVARGTEQ:Monk_CFP_Level,3`.
+/// `pu_abilities_class:162` — `PREVARGTEQ:Monk_CFP_Level,3`.
 pub const KI_POOL_LEVEL: u8 = 3;
-/// `pu_abilities_class.lst:163` — `PREVARGTEQ:Monk_CFP_Level,4`.
+/// `pu_abilities_class:163` — `PREVARGTEQ:Monk_CFP_Level,4`.
 pub const KI_POWERS_LEVEL: u8 = 4;
-/// `pu_abilities_class.lst:164` — `PREVARGTEQ:Monk_CFP_Level,4`.
+/// `pu_abilities_class:164` — `PREVARGTEQ:Monk_CFP_Level,4`.
 pub const STILL_MIND_LEVEL: u8 = 4;
-/// `pu_abilities_class.lst:165` — `PREVARGTEQ:Monk_CFP_Level,5`.
+/// `pu_abilities_class:165` — `PREVARGTEQ:Monk_CFP_Level,5`.
 pub const PURITY_OF_BODY_LEVEL: u8 = 5;
-/// `pu_abilities_class.lst:166` — `PREVARGTEQ:Monk_CFP_Level,5`.
+/// `pu_abilities_class:166` — `PREVARGTEQ:Monk_CFP_Level,5`.
 pub const STYLE_STRIKE_LEVEL: u8 = 5;
-/// `pu_abilities_class.lst:167` — `PREVARGTEQ:Monk_CFP_Level,9`.
+/// `pu_abilities_class:167` — `PREVARGTEQ:Monk_CFP_Level,9`.
 pub const IMPROVED_EVASION_LEVEL: u8 = 9;
-/// `pu_abilities_class.lst:168` — `PREVARGTEQ:Monk_CFP_Level,13`.
+/// `pu_abilities_class:168` — `PREVARGTEQ:Monk_CFP_Level,13`.
 pub const TONGUE_OF_THE_SUN_AND_MOON_LEVEL: u8 = 13;
-/// `pu_abilities_class.lst:169` — `PREVARGTEQ:Monk_CFP_Level,17`.
+/// `pu_abilities_class:169` — `PREVARGTEQ:Monk_CFP_Level,17`.
 pub const TIMELESS_BODY_LEVEL: u8 = 17;
-/// `pu_abilities_class.lst:170` — `PREVARGTEQ:Monk_CFP_Level,19`.
+/// `pu_abilities_class:170` — `PREVARGTEQ:Monk_CFP_Level,19`.
 pub const FLAWLESS_MIND_LEVEL: u8 = 19;
-/// `pu_abilities_class.lst:171` — `PREVARGTEQ:Monk_CFP_Level,20`.
+/// `pu_abilities_class:171` — `PREVARGTEQ:Monk_CFP_Level,20`.
 pub const PERFECT_SELF_LEVEL: u8 = 20;
 
 /// The cap on the level component of the monk's AC bonus:
-/// `min((MonkACLVL)/4,5)` (`core_rulebook/cr_abilities_class.lst:1090`).
+/// `min((MonkACLVL)/4,5)` (`core_rulebook/cr_abilities_class:1090`).
 pub const AC_BONUS_LEVEL_COMPONENT_CAP: i16 = 5;
 
 /// Still Mind's bonus on saving throws against enchantment spells and
 /// effects.
 ///
 /// **Read off the row's own `DESC:` prose**, not a `BONUS:` token
-/// (`pu_abilities_class.lst:469`: "At 4th level, a monk gains a +2 bonus on
+/// (`pu_abilities_class:469`: "At 4th level, a monk gains a +2 bonus on
 /// saving throws against enchantment spells and effects"). PCGen carries no
 /// mechanical token for it because the condition — "against enchantment" —
 /// is not expressible as an unconditional save bonus, so the feature is
@@ -214,7 +214,7 @@ pub const AC_BONUS_LEVEL_COMPONENT_CAP: i16 = 5;
 pub const STILL_MIND_SAVE_BONUS: i16 = 2;
 
 /// Perfect Self's damage reduction, `10/chaotic`
-/// (`pu_abilities_class.lst:476` `DESC:`). Prose-derived for the same
+/// (`pu_abilities_class:476` `DESC:`). Prose-derived for the same
 /// reason as [`STILL_MIND_SAVE_BONUS`]: the `/chaotic` bypass condition has
 /// no PCGen token on this row. The bypass type is deliberately not encoded
 /// as data here — this repo has no damage-type bypass engine, and inventing
@@ -222,7 +222,7 @@ pub const STILL_MIND_SAVE_BONUS: i16 = 2;
 pub const PERFECT_SELF_DAMAGE_REDUCTION: i16 = 10;
 
 /// The 18 ingested Unchained Monk `class_feature` records, in
-/// `pu_abilities_class.lst` line order.
+/// `pu_abilities_class` line order.
 pub(crate) const FEATURES: &[UnchainedMonkFeature] = &[
     UnchainedMonkFeature {
         key: "Unchained Monk ~ Weapon and Armor Proficiency",
@@ -347,7 +347,7 @@ pub fn feature(key: &str) -> Option<&'static UnchainedMonkFeature> {
 /// Full base attack bonus — `level`, replacing the base Monk column
 /// entirely (`TYPE=Base.REPLACE`).
 ///
-/// `pu_abilities_class.lst:115` —
+/// `pu_abilities_class:115` —
 /// `BONUS:COMBAT|BASEAB|classlevel("Monk","APPLIEDAS=NONEPIC")|TYPE=Base.REPLACE`.
 pub fn base_attack_bonus(level: u8) -> i16 {
     i16::from(level)
@@ -355,7 +355,7 @@ pub fn base_attack_bonus(level: u8) -> i16 {
 
 /// Good Fortitude save — `level/2+2`.
 ///
-/// `pu_abilities_class.lst:115` —
+/// `pu_abilities_class:115` —
 /// `BONUS:SAVE|BASE.Fortitude,BASE.Reflex|classlevel("Monk","APPLIEDAS=NONEPIC")/2+2`.
 /// Fortitude and Reflex share that one token, which is why they share a
 /// formula here.
@@ -372,7 +372,7 @@ pub fn ref_save(level: u8) -> i16 {
 /// chassis concession and the sharpest divergence from the CRB Monk, which
 /// has a good Will save.
 ///
-/// `pu_abilities_class.lst:115` —
+/// `pu_abilities_class:115` —
 /// `BONUS:SAVE|BASE.Will|classlevel("Monk","APPLIEDAS=NONEPIC")/3`.
 pub fn will_save(level: u8) -> i16 {
     i16::from(level) / 3
@@ -382,8 +382,8 @@ pub fn will_save(level: u8) -> i16 {
 /// `min(level / 4, 5)`.
 ///
 /// Two tokens:
-/// - `pu_abilities_class.lst:460` — `BONUS:VAR|MonkACLVL|MonkLVL|TYPE=Level`
-/// - `core_rulebook/cr_abilities_class.lst:1090` (`Monk AC Tracker`, the
+/// - `pu_abilities_class:460` — `BONUS:VAR|MonkACLVL|MonkLVL|TYPE=Level`
+/// - `core_rulebook/cr_abilities_class:1090` (`Monk AC Tracker`, the
 ///   shared internal record PU's row grants) —
 ///   `BONUS:VAR|MonkACBonus|min((MonkACLVL)/4,5)|TYPE=level`
 ///
@@ -398,9 +398,9 @@ pub fn armor_class_bonus_from_level(level: u8) -> i16 {
 /// The monk's full AC and CMD bonus when unarmored and unencumbered:
 /// [`armor_class_bonus_from_level`] plus `max(Wisdom modifier, 0)`.
 ///
-/// `core_rulebook/cr_abilities_class.lst:1090` —
+/// `core_rulebook/cr_abilities_class:1090` —
 /// `BONUS:VAR|MonkACStatBonus|max(WIS,0)|TYPE=Class|PREVARGTEQ:IsMonk,1`,
-/// with `pu_abilities_class.lst:115`'s `BONUS:VAR|IsMonk|1|TYPE=Boolean`
+/// with `pu_abilities_class:115`'s `BONUS:VAR|IsMonk|1|TYPE=Boolean`
 /// satisfying that gate for the Unchained Monk.
 ///
 /// The `max(…,0)` is load-bearing: a negative Wisdom modifier does **not**
@@ -413,7 +413,7 @@ pub fn armor_class_bonus(level: u8, wisdom_modifier: i16) -> i16 {
 
 /// Bonus feats available: `1 + max((level + 2) / 4, 0)`.
 ///
-/// `pu_abilities_class.lst:461` —
+/// `pu_abilities_class:461` —
 /// `BONUS:ABILITYPOOL|Unchained Monk Bonus Feat|1+max((MonkBonusFeatLVL+2)/4,0)`
 /// with the same row's `BONUS:VAR|MonkBonusFeatLVL|MonkLVL`.
 ///
@@ -431,7 +431,7 @@ pub fn bonus_feats_known(level: u8) -> Option<i16> {
 /// attack bonus** (not level):
 /// `2 + (bab>=6) + 2*(bab>=11) + (bab>=16)`.
 ///
-/// `pu_abilities_class.lst:495` —
+/// `pu_abilities_class:495` —
 /// `BONUS:VAR|FlurryAttacks|2+(Total_BAB>=6)+if(Total_BAB>=11,2,0)+(Total_BAB>=16)`
 /// with `:494`'s `BONUS:VAR|Total_BAB|BAB`. PCGen's comparison operators
 /// yield 1/0, which is what makes the sum a count.
@@ -473,7 +473,7 @@ pub fn flurry_attack_count_at_monk_level(level: u8) -> i16 {
 /// the monk's highest attack bonus. `None` when that attack does not exist
 /// at the given `attack_count`.
 ///
-/// Transcribed from the `FAB_n` ladder, `pu_abilities_class.lst:497-502`:
+/// Transcribed from the `FAB_n` ladder, `pu_abilities_class:497-502`:
 ///
 /// | token | line | penalty |
 /// |---|---|---|
@@ -509,7 +509,7 @@ pub fn flurry_iterative_attack_penalty(index: u8, attack_count: i16) -> Option<i
 
 /// Fast Movement's enhancement bonus to land speed: `10 * (level / 3)` feet.
 ///
-/// `pu_abilities_class.lst:466` —
+/// `pu_abilities_class:466` —
 /// `BONUS:VAR|MonkFastMovementBonus|10*floor(MonkFastMovementLVL/3)` with
 /// the same row's `BONUS:VAR|MonkFastMovementLVL|MonkLVL`. `None` below
 /// [`FAST_MOVEMENT_LEVEL`].
@@ -533,11 +533,11 @@ pub fn fast_movement_bonus_feet(level: u8) -> Option<i16> {
 /// Ki pool size: `level / 2 + ki-stat modifier`.
 ///
 /// Three tokens:
-/// - `pu_abilities_class.lst:467` — `BONUS:VAR|KiPoolLVL|MonkLVL`
-/// - `core_rulebook/cr_abilities_class.lst:1175` (`Ki Pool Tracker`, the
+/// - `pu_abilities_class:467` — `BONUS:VAR|KiPoolLVL|MonkLVL`
+/// - `core_rulebook/cr_abilities_class:1175` (`Ki Pool Tracker`, the
 ///   shared internal record PU's row grants) —
 ///   `BONUS:VAR|KiPoints|KiPoolLVL/2`
-/// - `core_rulebook/cr_abilities_class.lst:1179`
+/// - `core_rulebook/cr_abilities_class:1179`
 ///   (`Ki Stat Choice ~ Wisdom`) — `BONUS:VAR|KiPoints|WIS`
 ///
 /// The row's own `DESC:` states the same rule ("equal to 1/2 his monk level
@@ -557,7 +557,7 @@ pub fn ki_points(level: u8, ki_stat_modifier: i16) -> Option<i16> {
 
 /// Ki powers known: `(level - 2) / 2`.
 ///
-/// `pu_abilities_class.lst:468` —
+/// `pu_abilities_class:468` —
 /// `BONUS:VAR|Pool_Unchained_Ki_Power|(MonkLVL-2)/2`. `None` below
 /// [`KI_POWERS_LEVEL`], which also keeps the subtraction off the negative
 /// branch. Reproduces "4th level and every 2 levels thereafter": 1 at 4th
@@ -571,7 +571,7 @@ pub fn ki_powers_known(level: u8) -> Option<i16> {
 
 /// Style strikes known: `(level - 1) / 4`.
 ///
-/// `pu_abilities_class.lst:471` —
+/// `pu_abilities_class:471` —
 /// `BONUS:VAR|Pool_Unchained_Style_Strike|(MonkLVL-1)/4`. `None` below
 /// [`STYLE_STRIKE_LEVEL`]. Reproduces "one at 5th, an additional one at 9th
 /// and every 4 levels thereafter": 1/2/3/4 at 5th/9th/13th/17th, and it does
@@ -607,7 +607,7 @@ pub fn perfect_self_damage_reduction(level: u8) -> Option<i16> {
 }
 
 /// `StunningFistMonkLVL` — the monk's own level, the single token PU's
-/// Stunning Fist row authors (`pu_abilities_class.lst:463`,
+/// Stunning Fist row authors (`pu_abilities_class:463`,
 /// `BONUS:VAR|StunningFistMonkLVL|MonkLVL`). `None` below
 /// [`STUNNING_FIST_LEVEL`].
 ///
@@ -642,7 +642,7 @@ pub mod prose_derived {
     /// Reflex save against an attack that normally deals half damage on a
     /// save: `0`.
     ///
-    /// From `pu_abilities_class.lst:465`, verbatim: "If a monk succeeds at a
+    /// From `pu_abilities_class:465`, verbatim: "If a monk succeeds at a
     /// Reflex saving throw against an attack that normally deals half damage
     /// on a successful save, he instead takes no damage."
     ///
@@ -658,7 +658,7 @@ pub mod prose_derived {
     /// The percentage of damage an Unchained Monk takes on a **failed**
     /// Reflex save once Improved Evasion is online: `50`.
     ///
-    /// From `pu_abilities_class.lst:472`, verbatim: "He still takes no damage
+    /// From `pu_abilities_class:472`, verbatim: "He still takes no damage
     /// on successful Ref lex saving throws against attacks, but henceforth he
     /// takes only half damage on failed saves." (The broken "Ref lex" is the
     /// corpus's own line-break artefact; it is quoted, not corrected.)
@@ -685,7 +685,7 @@ pub mod prose_derived {
     /// How many d20s an Unchained Monk of [`FLAWLESS_MIND_LEVEL`] rolls for a
     /// Will save, keeping the better: `2`.
     ///
-    /// From `pu_abilities_class.lst:475`, verbatim: "Whenever he attempts a
+    /// From `pu_abilities_class:475`, verbatim: "Whenever he attempts a
     /// Will save, he can roll twice and take the better result."
     ///
     /// "Roll twice" is the number. The row's second clause — a fresh save at
@@ -702,7 +702,7 @@ pub mod prose_derived {
     /// The ability-score penalty an Unchained Monk of [`TIMELESS_BODY_LEVEL`]
     /// takes for aging: `0`.
     ///
-    /// From `pu_abilities_class.lst:474`, verbatim: "a monk no longer takes
+    /// From `pu_abilities_class:474`, verbatim: "a monk no longer takes
     /// penalties to his ability scores for aging and cannot be magically
     /// aged."
     ///
@@ -841,7 +841,7 @@ mod tests {
         // operator's 2026-07-29 ruling (risks item 91). That override is a
         // repo decision about the CRB row and does not reach here: the
         // Unchained Monk's d10 comes from a different token in a different
-        // file (`pu_templates.lst:5`). Asserted as the Unchained fact only;
+        // file (`pu_templates:5`). Asserted as the Unchained fact only;
         // the CRB override is not re-litigated by this module.
         assert_eq!(HIT_DIE, 10);
     }
@@ -1045,7 +1045,7 @@ mod tests {
 
     /// The magnitudes that live outside the ingested records — the flurry
     /// `.MOD` block, the chassis row, and the two shared Core Rulebook
-    /// internal trackers — can only be pinned against the raw `.lst`. Opt-in
+    /// internal trackers — can only be pinned against the raw source file. Opt-in
     /// via `PCGEN_CORPUS_ROOT`, but genuinely checked when it is set.
     #[test]
     #[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
@@ -1053,9 +1053,9 @@ mod tests {
         let root = pcgen_root();
 
         let pu = std::fs::read_to_string(root.join(
-            "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+            "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class",
         ))
-        .expect("pu_abilities_class.lst must be readable");
+        .expect("pu_abilities_class must be readable");
         let pu_lines: Vec<&str> = pu.lines().collect();
 
         // Chassis row.
@@ -1094,9 +1094,9 @@ mod tests {
 
         // Hit die template.
         let templates = std::fs::read_to_string(
-            root.join("pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_templates.lst"),
+            root.join("pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_templates"),
         )
-        .expect("pu_templates.lst must be readable");
+        .expect("pu_templates must be readable");
         assert!(
             templates.lines().any(|l| l.starts_with("Monk ~ Unchained HD")
                 && l.contains("HITDIE:10|CLASS=Monk")),
@@ -1105,9 +1105,9 @@ mod tests {
 
         // The two shared Core Rulebook internal trackers.
         let crb = std::fs::read_to_string(
-            root.join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst"),
+            root.join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class"),
         )
-        .expect("cr_abilities_class.lst must be readable");
+        .expect("cr_abilities_class must be readable");
         let crb_lines: Vec<&str> = crb.lines().collect();
 
         let ac_tracker = crb_lines[1089];

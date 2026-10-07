@@ -4,7 +4,7 @@
 //! `pathfinder_unchained::feat_tables`'s established shape for a book whose
 //! own feat table does not reuse `crb::feats::FeatTableEntry`.
 //!
-//! **Full corpus coverage, honestly bounded.** `uca_feats.lst` has exactly
+//! **Full corpus coverage, honestly bounded.** `uca_feats` has exactly
 //! 23 top-level `CATEGORY:FEAT` records -- every one is a "Story Feat"
 //! (`TYPE:Story`), Ultimate Campaign's signature feat family: each ties a
 //! narrow mechanical benefit to a long-term roleplaying goal, and every
@@ -19,19 +19,19 @@
 //!
 //! **Two of the 23 are `deferred-with-reason`, not text-complete --
 //! upstream corpus splices, re-derived and confirmed against the live
-//! `.lst`, not the brief's own transcription.** `Fearless Zeal` was
+//! source file, not the brief's own transcription.** `Fearless Zeal` was
 //! flagged going into this cycle; `Magnum Opus` was found independently
 //! while re-deriving every field (`decisions.md`, dated entries for
 //! SD28-E13, record the corrections against the cycle brief, which named
 //! only `Fearless Zeal`, and against this module's own first pass, which
 //! over-deferred a third record, `Stronghold` -- see below):
 //!
-//! * **`Fearless Zeal`** (`uca_feats.lst:66`) -- the `.MOD BENEFIT:` row
+//! * **`Fearless Zeal`** (`uca_feats:66`) -- the `.MOD BENEFIT:` row
 //!   reads correctly through "...you can add a +2 bonus on any single
 //!   attack roll, caster level check, saving throw, or skill check. You
 //!   must choose to add this bonus after the die has been rolled and
 //!   success or failure determined, but" and then splices verbatim into
-//!   `Damned`'s own `BENEFIT:` row (`uca_feats.lst:37`) starting at "...
+//!   `Damned`'s own `BENEFIT:` row (`uca_feats:37`) starting at "...
 //!   before the DC of spells and spell-like abilities you use against such
 //!   creatures." -- confirmed byte-for-byte against `Damned`'s row, not
 //!   merely similar phrasing. `Damned`'s own row is otherwise real and
@@ -42,7 +42,7 @@
 //!   corrupted because `Fearless Zeal`'s own sentence changes subject
 //!   mid-clause into `Damned`'s unrelated topic, not merely because the
 //!   text repeats.
-//! * **`Magnum Opus`** (`uca_feats.lst:74`) -- the row's own sentence is
+//! * **`Magnum Opus`** (`uca_feats:74`) -- the row's own sentence is
 //!   grammatically truncated in its own right, independent of any
 //!   cross-row comparison: "...or win the artistic Completion
 //!   Benefit:..." has no object after "artistic" -- a clause cut off
@@ -51,7 +51,7 @@
 //!   whatever `Completion Benefit:` genuinely follows it can be displayed
 //!   honestly.
 //!
-//! **`Stronghold` (`uca_feats.lst:76`) is NOT deferred -- corrected after
+//! **`Stronghold` (`uca_feats:76`) is NOT deferred -- corrected after
 //! independent review found the first pass over-deferred it.** This
 //! module's first version deferred `Stronghold` because its row carries a
 //! second "Completion Benefit:" sentence, byte-for-byte identical to the
@@ -139,7 +139,7 @@
 //!
 //! Every field below is copied verbatim from the real corpus row (source:
 //! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
-//! ultimate_campaign/uca_feats.lst`), including the corpus's own kerning
+//! ultimate_campaign/uca_feats`), including the corpus's own kerning
 //! artifacts (e.g. "Benef it", "conf lict", "Ref lex") -- not hand-
 //! corrected, mirroring `pathfinder_unchained::feat_tables`'s own
 //! "verbatim from the real corpus row" discipline and `crb`'s documented
@@ -180,11 +180,11 @@ pub struct StoryFeatEntry {
 pub const DEFERRED_WITH_REASON: &[(&str, &str)] = &[
     (
         "Fearless Zeal",
-        "uca_feats.lst:66 -- .MOD BENEFIT: row reads correctly through \"...but\" then splices verbatim into Damned's own BENEFIT: row (uca_feats.lst:37) starting at \"before the DC of spells and spell-like abilities...\"; upstream corpus defect, not repaired by inventing text.",
+        "uca_feats:66 -- .MOD BENEFIT: row reads correctly through \"...but\" then splices verbatim into Damned's own BENEFIT: row (uca_feats:37) starting at \"before the DC of spells and spell-like abilities...\"; upstream corpus defect, not repaired by inventing text.",
     ),
     (
         "Magnum Opus",
-        "uca_feats.lst:74 -- .MOD BENEFIT: row's own sentence is grammatically truncated (\"...or win the artistic Completion Benefit:...\", no object after \"artistic\"); the Goal: clause's real ending is not recoverable from the corpus; upstream corpus defect, not repaired by inventing text.",
+        "uca_feats:74 -- .MOD BENEFIT: row's own sentence is grammatically truncated (\"...or win the artistic Completion Benefit:...\", no object after \"artistic\"); the Goal: clause's real ending is not recoverable from the corpus; upstream corpus defect, not repaired by inventing text.",
     ),
 ];
 
@@ -343,7 +343,7 @@ pub fn feat_tables() -> &'static [StoryFeatEntry] {
                 // Opus's row) is excluded rather than attributed here.
                 // Nothing after this point is added, guessed, or
                 // paraphrased -- every word up to the trim point is
-                // verbatim uca_feats.lst:76.
+                // verbatim uca_feats:76.
                 benefit: Some("You can spend a move action to give battle orders to your troops, granting creatures under your command within 60 feet your choice of a +1 morale bonus on attack rolls, a +1 dodge bonus to AC, or a +1 bonus on a single type of saving throw. All creatures must receive the same benefit. You can't use this benefit on allies not under your command. This is a language-dependent, mind-affecting effect. Goal:Build or capture a stronghold capable of housing a force of at least 200 troops, and staff it with at least 100 combat-capable soldiers (or the equivalent) under your command. You must also provide food and water sufficient to survive at least a 6-month siege and a gold reserve sufficient for at least 6 months of wages if your troops require pay. Completion Benefit:Your battle order bonuses improve to +2, and the range of your orders increases to 120 feet. In addition, you can give two different orders to your troops. For example, you could grant your archers +2 on attack rolls while your front line gains a +2 bonus to AC."),
             },
             StoryFeatEntry {
@@ -450,7 +450,7 @@ mod tests {
         let catalog_keys: std::collections::BTreeSet<&str> = feat_tables().iter().map(|e| e.key).collect();
         for (key, reason) in DEFERRED_WITH_REASON {
             assert!(catalog_keys.contains(key), "{key} not in catalog");
-            assert!(reason.contains("uca_feats.lst:"), "{key} reason has no file:line citation");
+            assert!(reason.contains("uca_feats:"), "{key} reason has no file:line citation");
         }
     }
 }

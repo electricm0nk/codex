@@ -21,7 +21,7 @@
 //! `CLASS:Arcanist ... SPELLLIST:1|Wizard`,
 //! `CLASS:Investigator ... SPELLLIST:1|Alchemist`,
 //! `CLASS:Skald ... SPELLLIST:1|Bard`,
-//! `CLASS:Warpriest ... SPELLLIST:1|Cleric` (all in `acg_classes.lst`).
+//! `CLASS:Warpriest ... SPELLLIST:1|Cleric` (all in `acg_classes`).
 //! Those are relationships the corpus asserts, not overlaps this module
 //! inferred from the data.
 //!
@@ -86,7 +86,7 @@ const HUNTER_CLASS_ID: &str = "class:hunter";
 ///
 /// **Why it is a supplement rather than another entry in
 /// [`STATIC_CLASS_SPELL_LISTS`].** Those twelve tables were each generated
-/// from `cr_spells.lst` + `apg_spells.lst` + `acg_spells.lst` before ARG
+/// from `cr_spells` + `apg_spells` + `acg_spells` before ARG
 /// was ingested, so every one of them is missing ARG's rows. Rather than
 /// regenerate twelve hand-verified tables, ARG's `CLASSES:` token was
 /// ingested once into
@@ -263,7 +263,7 @@ mod tests {
     /// More spells that sit at genuinely different levels for different
     /// classes — each one a row the old record-level rendering got wrong
     /// for at least one class. Raw `CLASSES:` tags, read off
-    /// `cr_spells.lst` (not recalled):
+    /// `cr_spells` (not recalled):
     /// `Cure Light Wounds` -> `Bard,Cleric,Druid,Paladin=1|Ranger=2`,
     /// `Animal Growth` -> `Ranger=4|Druid,Sorcerer,Wizard=5`,
     /// `Cure Moderate Wounds` -> `Bard,Cleric=2|Druid,Paladin,Ranger=3`,
@@ -398,8 +398,8 @@ mod tests {
 
     /// **The two layers are the same corpus token read by the same rules,
     /// so they must never contradict each other.** The static tables were
-    /// generated from `cr_spells.lst` + `apg_spells.lst` + `acg_spells.lst`;
-    /// the ARG supplement from `arg_spells.lst`. A key present in both at
+    /// generated from `cr_spells` + `apg_spells` + `acg_spells`;
+    /// the ARG supplement from `arg_spells`. A key present in both at
     /// different levels would mean one of the two ingests misread the
     /// corpus, and [`class_spell_level`]'s static-wins precedence would
     /// quietly hide it. Pinned so it cannot.

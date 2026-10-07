@@ -22,7 +22,7 @@
       "source_page": "p.44",
       "ability_grants": [],
       "fact_class_type": "Monster",
-      "source_file": "botd1_classes_companion.lst",
+      "source_file": "botd1_classes_companion",
       "source_line": 5
     },
     {
@@ -42,7 +42,7 @@
         }
       ],
       "fact_class_type": null,
-      "source_file": "botd1_classes_companion.lst",
+      "source_file": "botd1_classes_companion",
       "source_line": 8
     }
   ]

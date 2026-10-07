@@ -1,14 +1,14 @@
 //! advanced_race_guide companion tables, transcribed verbatim from the book's own
-//! PCGen `.lst` rows.
+//! PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_companion_tables.py advanced_race_guide`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst`.
+//! line count over the source file.
 //!
 //! Sources, with the file AND line each record was read from carried per row:
-//!   * `arg_races_companion.lst` -- 7 companion creature rows
-//!   * `arg_abilities_companion.lst` -- 7 companion ability rows
+//!   * `arg_races_companion` -- 7 companion creature rows
+//!   * `arg_abilities_companion` -- 7 companion ability rows
 //!
 //! NOT transcribed -- ability rows no creature row of this book owns, so
 //! nothing could ever reach them on screen. Dropped rather than emitted
@@ -59,7 +59,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "arg_races_companion.lst",
+        source_file: "arg_races_companion",
         source_line: 9,
     },
     CompanionRecord {
@@ -81,7 +81,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Carnivorous Flower"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "arg_races_companion.lst",
+        source_file: "arg_races_companion",
         source_line: 14,
     },
     CompanionRecord {
@@ -103,7 +103,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Crawling Vine", "Crawling Vine ~ Constrict"],
         external_ability_refs: &["Grab", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "arg_races_companion.lst",
+        source_file: "arg_races_companion",
         source_line: 15,
     },
     CompanionRecord {
@@ -125,7 +125,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Puffball ~ Poison", "Companion Advancement ~ Puffball"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "arg_races_companion.lst",
+        source_file: "arg_races_companion",
         source_line: 16,
     },
     CompanionRecord {
@@ -147,7 +147,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Sapling Treant", "Sapling Treant ~ Double Damage"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "arg_races_companion.lst",
+        source_file: "arg_races_companion",
         source_line: 17,
     },
     CompanionRecord {
@@ -169,7 +169,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &["Camel ~ Spit", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "arg_races_companion.lst",
+        source_file: "arg_races_companion",
         source_line: 29,
     },
     CompanionRecord {
@@ -191,7 +191,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "arg_races_companion.lst",
+        source_file: "arg_races_companion",
         source_line: 30,
     },
 ];
@@ -211,7 +211,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Puffball)"],
         cross_book_owners: &[],
-        source_file: "arg_abilities_companion.lst",
+        source_file: "arg_abilities_companion",
         source_line: 9,
     },
     CompanionAbilityRecord {
@@ -227,7 +227,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Sapling Treant)"],
         cross_book_owners: &[],
-        source_file: "arg_abilities_companion.lst",
+        source_file: "arg_abilities_companion",
         source_line: 10,
     },
     CompanionAbilityRecord {
@@ -243,7 +243,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Crawling Vine)"],
         cross_book_owners: &[],
-        source_file: "arg_abilities_companion.lst",
+        source_file: "arg_abilities_companion",
         source_line: 11,
     },
     CompanionAbilityRecord {
@@ -259,7 +259,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Carnivorous Flower)"],
         cross_book_owners: &[],
-        source_file: "arg_abilities_companion.lst",
+        source_file: "arg_abilities_companion",
         source_line: 56,
     },
     CompanionAbilityRecord {
@@ -275,7 +275,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Crawling Vine)"],
         cross_book_owners: &[],
-        source_file: "arg_abilities_companion.lst",
+        source_file: "arg_abilities_companion",
         source_line: 57,
     },
     CompanionAbilityRecord {
@@ -291,7 +291,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Puffball)"],
         cross_book_owners: &[],
-        source_file: "arg_abilities_companion.lst",
+        source_file: "arg_abilities_companion",
         source_line: 58,
     },
     CompanionAbilityRecord {
@@ -307,7 +307,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Sapling Treant)"],
         cross_book_owners: &[],
-        source_file: "arg_abilities_companion.lst",
+        source_file: "arg_abilities_companion",
         source_line: 59,
     },
 ];

@@ -14,7 +14,7 @@
 //!
 //! **Widened 2026-07-27 (task #28) from CRB-only to all ingested books**
 //! (`risks-and-open-questions.md` item 53). Per-file: **164 from
-//! `cr_spells.lst` + 62 from `apg_spells.lst` + 38 from `acg_spells.lst`
+//! `cr_spells` + 62 from `apg_spells` + 38 from `acg_spells`
 //! = 264**, all names distinct, no `.MOD` record assigns Bard.
 //!
 //! Per-file ceiling check: `grep -c Bard` returns 166 / 63 / 38. The two
@@ -26,7 +26,7 @@
 //!
 //! **This module did NOT have the `CLASSES:` substring bug.** Its
 //! original 164 CRB entries are byte-identical to a correct token-split
-//! re-parse of `cr_spells.lst`, including all 125 records where Bard sits
+//! re-parse of `cr_spells`, including all 125 records where Bard sits
 //! mid-group. The only defect was book scope.
 //!
 //! **Corpus reachability: all 264 resolve** against the union of the

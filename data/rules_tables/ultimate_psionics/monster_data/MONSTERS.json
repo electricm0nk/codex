@@ -60,7 +60,7 @@
       "external_ability_refs": [
         "Psionic"
       ],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 14
     },
     {
@@ -112,7 +112,7 @@
       "external_ability_refs": [
         "Psionic"
       ],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 15
     },
     {
@@ -156,7 +156,7 @@
         "Light Sensitivity",
         "Psionic"
       ],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 16
     },
     {
@@ -221,7 +221,7 @@
       "external_ability_refs": [
         "Psionic"
       ],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 17
     },
     {
@@ -274,7 +274,7 @@
       "external_ability_refs": [
         "Psionic"
       ],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 18
     },
     {
@@ -326,7 +326,7 @@
       "external_ability_refs": [
         "Psionic"
       ],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 19
     },
     {
@@ -367,7 +367,7 @@
       "external_ability_refs": [
         "Psionic"
       ],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 20
     },
     {
@@ -420,7 +420,7 @@
       "external_ability_refs": [
         "Psionic"
       ],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 21
     },
     {
@@ -472,7 +472,7 @@
       "external_ability_refs": [
         "Psionic"
       ],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 22
     },
     {
@@ -523,7 +523,7 @@
       "external_ability_refs": [
         "Psionic"
       ],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 23
     },
     {
@@ -562,7 +562,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 33
     },
     {
@@ -601,7 +601,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 34
     },
     {
@@ -640,7 +640,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 35
     },
     {
@@ -679,7 +679,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 36
     },
     {
@@ -718,7 +718,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 37
     },
     {
@@ -757,7 +757,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 38
     },
     {
@@ -796,7 +796,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 39
     },
     {
@@ -835,7 +835,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 40
     },
     {
@@ -870,7 +870,7 @@
       "spell_like_abilities": [],
       "ability_keys": [],
       "external_ability_refs": [],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 41
     },
     {
@@ -915,7 +915,7 @@
         "No Combat Maneuvers",
         "Swarm Traits"
       ],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 44
     },
     {
@@ -970,7 +970,7 @@
         "Psicrystal ~ Sighted"
       ],
       "external_ability_refs": [],
-      "source_file": "up_races.lst",
+      "source_file": "up_races",
       "source_line": 47
     }
   ]

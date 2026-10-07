@@ -1,4 +1,4 @@
-//! ARG General feats -- generated from the real `arg_feats.lst`
+//! ARG General feats -- generated from the real `arg_feats`
 //! corpus (SD-27 Cycle E2.1/E2.2 per-book pre-build). Not hand-authored --
 //! see `feats.rs`'s own doc comment for the generation method.
 //! See `feats.rs` for the full corpus-coverage/exclusion accounting.

@@ -30,11 +30,11 @@
 //! writing any code that no spell-list concept exists for Bestiary 1 in
 //! the real PCGen corpus at
 //! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary/`
-//! — there is no `b1_spells.lst` (or any `*spell*` file) in that
+//! — there is no `b1_spells` (or any `*spell*` file) in that
 //! directory at all, unlike CRB/APG which each carry a dedicated
-//! `<book>_spells.lst`. `SPELLS:`/`CLASSSPELL`-shaped tokens do appear,
-//! but only inline on `b1_abilities_race.lst`/`b1_races.lst`/
-//! `b1_templates.lst`/`b1_kits_race.lst` rows as innate spell-like
+//! `<book>_spells`. `SPELLS:`/`CLASSSPELL`-shaped tokens do appear,
+//! but only inline on `b1_abilities_race`/`b1_races`/
+//! `b1_templates`/`b1_kits_race` rows as innate spell-like
 //! ability grants on individual monster stat blocks (e.g. a monster's
 //! "Spell-Like Abilities" special quality) — the same kind of
 //! monster-intrinsic ability data `beastiary1::MonsterStatBlock`'s own
@@ -63,13 +63,13 @@ impl EquipmentCategory {
 
     /// Which `bestiary` corpus file this category's records live in.
     /// (The on-disk directory/filename prefix is `b1_`, matching the
-    /// corpus's own naming; there is no `b1_equipmods.lst` file at all —
+    /// corpus's own naming; there is no `b1_equipmods` file at all —
     /// Bestiary 1 introduces no equipment *modifiers*, only base items.)
     pub fn corpus_file_name(self) -> &'static str {
         match self {
-            EquipmentCategory::General => "b1_equip_general.lst",
-            EquipmentCategory::ArmsArmor => "b1_equip_arms_armor.lst",
-            EquipmentCategory::MagicItems => "b1_equip_magic_items.lst",
+            EquipmentCategory::General => "b1_equip_general",
+            EquipmentCategory::ArmsArmor => "b1_equip_arms_armor",
+            EquipmentCategory::MagicItems => "b1_equip_magic_items",
         }
     }
 }
@@ -125,8 +125,8 @@ pub struct EquipmentFieldCoverage {
     /// Records currently in `EQUIPMENT_TABLE`.
     pub total_records: u32,
     /// Real, active (non-`.MOD`, non-`.COPY=`, non-`SOURCELONG`-header,
-    /// non-comment, non-blank) record count across `b1_equip_general.lst`
-    /// (1) + `b1_equip_arms_armor.lst` (2) + `b1_equip_magic_items.lst`
+    /// non-comment, non-blank) record count across `b1_equip_general`
+    /// (1) + `b1_equip_arms_armor` (2) + `b1_equip_magic_items`
     /// (1) = 4. Verified directly (no `.MOD`/`.COPY=` rows exist in any
     /// of the 3 files; each carries exactly one `SOURCELONG:` header line
     /// excluded from this count per the same off-by-one-per-file

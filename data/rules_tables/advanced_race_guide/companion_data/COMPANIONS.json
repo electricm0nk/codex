@@ -86,7 +86,7 @@
         "Flight Maneuverability"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "arg_races_companion.lst",
+      "source_file": "arg_races_companion",
       "source_line": 9
     },
     {
@@ -129,7 +129,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "arg_races_companion.lst",
+      "source_file": "arg_races_companion",
       "source_line": 14
     },
     {
@@ -174,7 +174,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "arg_races_companion.lst",
+      "source_file": "arg_races_companion",
       "source_line": 15
     },
     {
@@ -218,7 +218,7 @@
         "Flight Maneuverability"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "arg_races_companion.lst",
+      "source_file": "arg_races_companion",
       "source_line": 16
     },
     {
@@ -260,7 +260,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "arg_races_companion.lst",
+      "source_file": "arg_races_companion",
       "source_line": 17
     },
     {
@@ -319,7 +319,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "arg_races_companion.lst",
+      "source_file": "arg_races_companion",
       "source_line": 29
     },
     {
@@ -381,7 +381,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "arg_races_companion.lst",
+      "source_file": "arg_races_companion",
       "source_line": 30
     }
   ]

@@ -132,7 +132,7 @@
       "monster_key": "beastiary1:monster:crocodile",
       "attack_name": "Bite",
       "damage_dice": "1d8",
-      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Racial Traits ~ Crocodile -> ABILITY:Internal|AUTOMATIC|Bite (b1_abilities_race.lst:244)",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Racial Traits ~ Crocodile -> ABILITY:Internal|AUTOMATIC|Bite (b1_abilities_race:244)",
       "published_melee_text": "bite +5 (1d8+4 plus grab) and tail slap +0 (1d12+2)",
       "source": {
         "WebSecondSource": {
@@ -153,7 +153,7 @@
       "published_melee_text": "bite +5 (1d8+4 plus grab) and tail slap +0 (1d12+2)",
       "source": {
         "LstToken": {
-          "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+          "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race",
           "line": 248,
           "record_key": "Crocodile ~ Tail Slap"
         }

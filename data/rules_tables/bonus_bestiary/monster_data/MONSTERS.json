@@ -52,7 +52,7 @@
         "Channel Resistance",
         "Flight Maneuverability"
       ],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 6
     },
     {
@@ -99,7 +99,7 @@
       "external_ability_refs": [
         "Grab"
       ],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 7
     },
     {
@@ -148,7 +148,7 @@
       "external_ability_refs": [
         "Flight Maneuverability"
       ],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 8
     },
     {
@@ -201,7 +201,7 @@
         "Resistance to Fire",
         "Trample"
       ],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 9
     },
     {
@@ -250,7 +250,7 @@
         "Sudden Charge"
       ],
       "external_ability_refs": [],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 10
     },
     {
@@ -292,7 +292,7 @@
         "Statue"
       ],
       "external_ability_refs": [],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 11
     },
     {
@@ -370,7 +370,7 @@
         "Immunity to Paralysis",
         "Immunity to Sleep"
       ],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 12
     },
     {
@@ -439,7 +439,7 @@
         "Pounce",
         "Scent"
       ],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 13
     },
     {
@@ -514,7 +514,7 @@
         "Grab",
         "Rend"
       ],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 14
     },
     {
@@ -577,7 +577,7 @@
         "Huecuva ~ Disease"
       ],
       "external_ability_refs": [],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 15
     },
     {
@@ -659,7 +659,7 @@
         "Pounce",
         "Rake"
       ],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 16
     },
     {
@@ -716,7 +716,7 @@
         "Water Naga ~ Poison"
       ],
       "external_ability_refs": [],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 17
     },
     {
@@ -789,7 +789,7 @@
       "external_ability_refs": [
         "Wild Empathy"
       ],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 18
     },
     {
@@ -850,7 +850,7 @@
         "Scent",
         "Trip"
       ],
-      "source_file": "bb_races.lst",
+      "source_file": "bb_races",
       "source_line": 19
     }
   ]

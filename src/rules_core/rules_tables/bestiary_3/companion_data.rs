@@ -1,16 +1,16 @@
 //! bestiary_3 companion tables, transcribed verbatim from the book's own
-//! PCGen `.lst` rows.
+//! PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_companion_tables.py bestiary_3`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst`.
+//! line count over the source file.
 //!
 //! Sources, with the file AND line each record was read from carried per row:
-//!   * `b3_races_companion.lst` -- 16 companion creature rows
-//!   * `b3_races_familiar.lst` -- 15 companion creature rows
-//!   * `b3_abilities_companion.lst` -- 24 companion ability rows
-//!   * `b3_abilities_familiar.lst` -- 30 companion ability rows
+//!   * `b3_races_companion` -- 16 companion creature rows
+//!   * `b3_races_familiar` -- 15 companion creature rows
+//!   * `b3_abilities_companion` -- 24 companion ability rows
+//!   * `b3_abilities_familiar` -- 30 companion ability rows
 
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, Speed, StatAdjustment};
 
@@ -35,7 +35,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Flying Squirrel ~ Glide"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 5,
     },
     CompanionRecord {
@@ -57,7 +57,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Antelope"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 6,
     },
     CompanionRecord {
@@ -79,7 +79,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 6,
     },
     CompanionRecord {
@@ -101,7 +101,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Archelon"],
         external_ability_refs: &["Hold Breath", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 7,
     },
     CompanionRecord {
@@ -123,7 +123,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 7,
     },
     CompanionRecord {
@@ -145,7 +145,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Axe Beak", "Axe Beak ~ Sudden Charge"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 8,
     },
     CompanionRecord {
@@ -167,7 +167,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 8,
     },
     CompanionRecord {
@@ -189,7 +189,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Baluchitherium"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 9,
     },
     CompanionRecord {
@@ -211,7 +211,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 9,
     },
     CompanionRecord {
@@ -233,7 +233,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Basilosaurus"],
         external_ability_refs: &["Hold Breath"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 10,
     },
     CompanionRecord {
@@ -255,7 +255,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &[],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 10,
     },
     CompanionRecord {
@@ -277,7 +277,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Dimetrodon ~ Tearing Bite", "Companion Advancement ~ Dimetrodon"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 11,
     },
     CompanionRecord {
@@ -299,7 +299,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Elk"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 12,
     },
     CompanionRecord {
@@ -321,7 +321,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Giant Chameleon", "Giant Chameleon ~ Tongue"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 13,
     },
     CompanionRecord {
@@ -343,7 +343,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Harbinger Archon ~ Blades", "Harbinger Archon ~ Disassemble", "Harbinger Archon ~ Minor Archon", "Harbinger Archon ~ Wrath", "Harbinger Archon ~ Spell-Like Abilities"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 14,
     },
     CompanionRecord {
@@ -365,7 +365,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Giant Gecko ~ Expert Climber", "Companion Advancement ~ Giant Gecko"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 14,
     },
     CompanionRecord {
@@ -387,7 +387,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Carbuncle ~ Empath", "Carbuncle ~ Fatal Faker", "Carbuncle ~ Specious Suggestion", "Carbuncle ~ Vulnerability to Suggestion", "Carbuncle ~ Spell-Like Abilities"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 15,
     },
     CompanionRecord {
@@ -409,7 +409,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Giant Vulture"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 15,
     },
     CompanionRecord {
@@ -431,7 +431,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Iguanodon", "Iguanodon ~ Thumb Spikes"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 16,
     },
     CompanionRecord {
@@ -453,7 +453,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Doru ~ Poison", "Doru ~ Spell-Like Abilities"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 16,
     },
     CompanionRecord {
@@ -475,7 +475,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Kangaroo"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 17,
     },
     CompanionRecord {
@@ -497,7 +497,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Faerie Dragon ~ Breath Weapon", "Faerie Dragon ~ Spells", "Faerie Dragon ~ Spell-Like Abilities"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 17,
     },
     CompanionRecord {
@@ -519,7 +519,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Megalania", "Megalania ~ Poison"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 18,
     },
     CompanionRecord {
@@ -541,7 +541,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Augur ~ Unnerving Gaze", "Augur ~ Spell-Like Abilities"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 18,
     },
     CompanionRecord {
@@ -563,7 +563,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Pachycephalosaurus", "Pachycephalosaurus ~ Clobbering Charge"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 19,
     },
     CompanionRecord {
@@ -585,7 +585,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Spirit Oni ~ Mask Symbiosis", "Spirit Oni ~ Poison", "Spirit Oni ~ Spell-Like Abilities"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 19,
     },
     CompanionRecord {
@@ -607,7 +607,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Spinosaurus"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 20,
     },
     CompanionRecord {
@@ -629,7 +629,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Raktavarna ~ Change Shape", "Raktavarna ~ Master's Eyes", "Raktavarna ~ Poison", "Raktavarna ~ Spell-Like Abilities"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 20,
     },
     CompanionRecord {
@@ -651,7 +651,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Thylacine ~ Powerful Jaws", "Companion Advancement ~ Thylacine"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_companion.lst",
+        source_file: "b3_races_companion",
         source_line: 21,
     },
     CompanionRecord {
@@ -673,7 +673,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Sprite ~ Luminous", "Sprite ~ Spell-Like Abilities"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 21,
     },
     CompanionRecord {
@@ -695,7 +695,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Zoog ~ Otherworldly Touch", "Zoog ~ Spell Sight", "Zoog ~ Spell-Like Abilities"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "b3_races_familiar.lst",
+        source_file: "b3_races_familiar",
         source_line: 22,
     },
 ];
@@ -715,7 +715,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Antelope)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 8,
     },
     CompanionAbilityRecord {
@@ -731,7 +731,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Archelon)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 9,
     },
     CompanionAbilityRecord {
@@ -747,7 +747,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Axe Beak)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 10,
     },
     CompanionAbilityRecord {
@@ -763,7 +763,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Baluchitherium)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 11,
     },
     CompanionAbilityRecord {
@@ -779,7 +779,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Basilosaurus)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 12,
     },
     CompanionAbilityRecord {
@@ -795,7 +795,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dimetrodon)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 13,
     },
     CompanionAbilityRecord {
@@ -811,7 +811,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Elk)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 14,
     },
     CompanionAbilityRecord {
@@ -827,7 +827,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Giant Chameleon)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 15,
     },
     CompanionAbilityRecord {
@@ -843,7 +843,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Giant Gecko)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 16,
     },
     CompanionAbilityRecord {
@@ -859,7 +859,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Giant Vulture)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 17,
     },
     CompanionAbilityRecord {
@@ -875,7 +875,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Iguanodon)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 18,
     },
     CompanionAbilityRecord {
@@ -891,7 +891,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Kangaroo)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 19,
     },
     CompanionAbilityRecord {
@@ -907,7 +907,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Megalania)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 20,
     },
     CompanionAbilityRecord {
@@ -923,7 +923,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Pachycephalosaurus)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 21,
     },
     CompanionAbilityRecord {
@@ -939,7 +939,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Spinosaurus)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 22,
     },
     CompanionAbilityRecord {
@@ -955,7 +955,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Thylacine)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 23,
     },
     CompanionAbilityRecord {
@@ -971,7 +971,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.29"),
         owners: &["Companion (Axe Beak)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 29,
     },
     CompanionAbilityRecord {
@@ -987,7 +987,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.78"),
         owners: &["Companion (Dimetrodon)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 32,
     },
     CompanionAbilityRecord {
@@ -1003,7 +1003,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.78"),
         owners: &["Companion (Iguanodon)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 35,
     },
     CompanionAbilityRecord {
@@ -1019,7 +1019,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.112"),
         owners: &["Familiar (Flying Squirrel)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 38,
     },
     CompanionAbilityRecord {
@@ -1035,7 +1035,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.79"),
         owners: &["Companion (Pachycephalosaurus)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 38,
     },
     CompanionAbilityRecord {
@@ -1051,7 +1051,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.186"),
         owners: &["Companion (Giant Gecko)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 41,
     },
     CompanionAbilityRecord {
@@ -1067,7 +1067,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.18"),
         owners: &["Archon (Harbinger)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 41,
     },
     CompanionAbilityRecord {
@@ -1083,7 +1083,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.18"),
         owners: &["Archon (Harbinger)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 42,
     },
     CompanionAbilityRecord {
@@ -1099,7 +1099,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.18"),
         owners: &["Archon (Harbinger)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 43,
     },
     CompanionAbilityRecord {
@@ -1115,7 +1115,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.186"),
         owners: &["Companion (Giant Chameleon)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 44,
     },
     CompanionAbilityRecord {
@@ -1131,7 +1131,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.18"),
         owners: &["Archon (Harbinger)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 44,
     },
     CompanionAbilityRecord {
@@ -1147,7 +1147,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Archon (Harbinger)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 45,
     },
     CompanionAbilityRecord {
@@ -1163,7 +1163,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.191"),
         owners: &["Companion (Thylacine)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 47,
     },
     CompanionAbilityRecord {
@@ -1179,7 +1179,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.44"),
         owners: &["Carbuncle"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 48,
     },
     CompanionAbilityRecord {
@@ -1195,7 +1195,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.44"),
         owners: &["Carbuncle"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 49,
     },
     CompanionAbilityRecord {
@@ -1211,7 +1211,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.44"),
         owners: &["Carbuncle"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 50,
     },
     CompanionAbilityRecord {
@@ -1227,7 +1227,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.193"),
         owners: &["Companion (Megalania)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_companion.lst",
+        source_file: "b3_abilities_companion",
         source_line: 50,
     },
     CompanionAbilityRecord {
@@ -1243,7 +1243,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.44"),
         owners: &["Carbuncle"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 51,
     },
     CompanionAbilityRecord {
@@ -1259,7 +1259,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Carbuncle"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 52,
     },
     CompanionAbilityRecord {
@@ -1275,7 +1275,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.86"),
         owners: &["Div (Doru)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 55,
     },
     CompanionAbilityRecord {
@@ -1291,7 +1291,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Div (Doru)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 56,
     },
     CompanionAbilityRecord {
@@ -1307,7 +1307,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.91"),
         owners: &["Dragon (Faerie)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 59,
     },
     CompanionAbilityRecord {
@@ -1323,7 +1323,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.91"),
         owners: &["Dragon (Faerie)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 60,
     },
     CompanionAbilityRecord {
@@ -1339,7 +1339,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Dragon (Faerie)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 61,
     },
     CompanionAbilityRecord {
@@ -1355,7 +1355,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.171"),
         owners: &["Kyton (Augur)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 64,
     },
     CompanionAbilityRecord {
@@ -1371,7 +1371,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Kyton (Augur)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 65,
     },
     CompanionAbilityRecord {
@@ -1387,7 +1387,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.209"),
         owners: &["Oni (Spirit)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 68,
     },
     CompanionAbilityRecord {
@@ -1403,7 +1403,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.209"),
         owners: &["Oni (Spirit)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 69,
     },
     CompanionAbilityRecord {
@@ -1419,7 +1419,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Oni (Spirit)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 70,
     },
     CompanionAbilityRecord {
@@ -1435,7 +1435,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.229"),
         owners: &["Rakshasa (Raktavarna)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 73,
     },
     CompanionAbilityRecord {
@@ -1451,7 +1451,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.229"),
         owners: &["Rakshasa (Raktavarna)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 74,
     },
     CompanionAbilityRecord {
@@ -1467,7 +1467,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.229"),
         owners: &["Rakshasa (Raktavarna)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 75,
     },
     CompanionAbilityRecord {
@@ -1483,7 +1483,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Rakshasa (Raktavarna)"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 76,
     },
     CompanionAbilityRecord {
@@ -1499,7 +1499,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.256"),
         owners: &["Sprite"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 79,
     },
     CompanionAbilityRecord {
@@ -1515,7 +1515,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Sprite"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 80,
     },
     CompanionAbilityRecord {
@@ -1531,7 +1531,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.288"),
         owners: &["Zoog"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 83,
     },
     CompanionAbilityRecord {
@@ -1547,7 +1547,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.288"),
         owners: &["Zoog"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 84,
     },
     CompanionAbilityRecord {
@@ -1563,7 +1563,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Zoog"],
         cross_book_owners: &[],
-        source_file: "b3_abilities_familiar.lst",
+        source_file: "b3_abilities_familiar",
         source_line: 85,
     },
 ];

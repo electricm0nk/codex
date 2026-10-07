@@ -1,6 +1,6 @@
 //! ACG Swashbuckler class chassis table — one row per level.
 //!
-//! Source: PCGen `acg_classes.lst`, `CLASS:Swashbuckler` record (line 347
+//! Source: PCGen `acg_classes`, `CLASS:Swashbuckler` record (line 347
 //! of the SD-22 Epic 4 corpus checkout), parsed via
 //! `pcgen_import::lst_parser::class` (SD-22 Epic 4 widened
 //! `MARTIAL_CLASS_NAMES` to recognize it — see that module's doc
@@ -24,7 +24,7 @@
 //! (Panache, Swashbuckler's Finesse, Dodging Panache, Derring-Do,
 //! Opportune Parry and Riposte, Swashbuckler Weapon Training, ...) are
 //! out of scope for this cycle — transcribing them without going back
-//! through the LST's per-level feature blocks (`acg_abilities_class.lst`)
+//! through the LST's per-level feature blocks (`acg_abilities_class`)
 //! in a dedicated ingest slice would be exactly the fabricated-data risk
 //! `class_tables.rs`'s own doc comment and `AGENTS.md` rule out.
 
@@ -61,5 +61,5 @@ pub fn class_table() -> Vec<ClassTableRow> {
 }
 
 /// `HD:10` on the real `CLASS:Swashbuckler` record (Swashbuckler HD:10 in
-/// `advanced_class_guide/acg_classes.lst`).
+/// `advanced_class_guide/acg_classes`).
 pub const HIT_DIE: u8 = 10;

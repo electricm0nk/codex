@@ -4,9 +4,9 @@
 //! was not built for a 4-record book) from the real PCGen corpus files
 //! at
 //! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary/`:
-//! `b1_equip_general.lst` (1 record), `b1_equip_arms_armor.lst` (2
+//! `b1_equip_general` (1 record), `b1_equip_arms_armor` (2
 //! records: one `###BLOCK: Armor` row, one `###BLOCK: Weapons` row), and
-//! `b1_equip_magic_items.lst` (1 record) — 4 total.
+//! `b1_equip_magic_items` (1 record) — 4 total.
 //!
 //! **Register A11 (`SOURCELONG:`-header exclusion / `.COPY=`-merge /
 //! full-category sweep):** each of the 3 corpus files carries exactly one
@@ -31,7 +31,7 @@
 //! below.
 //!
 //! **Web second-source record (operator directive 2026-07-21):**
-//! `Rag Armor (Dark Creeper)` (`b1_equip_arms_armor.lst`, `###BLOCK:
+//! `Rag Armor (Dark Creeper)` (`b1_equip_arms_armor`, `###BLOCK:
 //! Armor`, `COST:0 WT:15 SOURCEPAGE:p.53 PRERACE:1,Dark Creeper`) has no
 //! `DESC:`/`SPROP:` token in the LST corpus. Identity-matched (name +
 //! category [armor] + the `PRERACE:...,Dark Creeper` qualifier + Bestiary
@@ -53,14 +53,14 @@ use super::equipment_tables::{EquipmentCategory, EquipmentTableEntry};
 /// Every real Bestiary 1 equipment record across all three corpus files
 /// (4 total). See this module's doc comment for sourcing methodology.
 pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
-    // b1_equip_general.lst
+    // b1_equip_general
     EquipmentTableEntry {
         key: "Poison (Black Smear)",
         category: EquipmentCategory::General,
         name: "Poison (Black Smear)",
         // `cost_gp: None`, corrected `SD31-E6-F5-004` (`OPEN-ISSUES.md`
         // row 91's typed-field cross-check caught this the first time it
-        // ran): the real corpus row (`b1_equip_general.lst:7`) carries no
+        // ran): the real corpus row (`b1_equip_general:7`) carries no
         // `COST:` token at all -- `Some(0.0)` was a transcription error
         // (0 gp is a stated price, not "unstated"), not this book's
         // genuine `Rag Armor (Dark Creeper)` `COST:0` shape, which DOES
@@ -71,7 +71,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
             "Injury; save Fort DC 15; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save",
         ),
     },
-    // b1_equip_arms_armor.lst -- ###BLOCK: Armor
+    // b1_equip_arms_armor -- ###BLOCK: Armor
     EquipmentTableEntry {
         key: "Rag Armor (Dark Creeper)",
         category: EquipmentCategory::ArmsArmor,
@@ -83,7 +83,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
              worn by one of their kind.",
         ),
     },
-    // b1_equip_arms_armor.lst -- ###BLOCK: Weapons
+    // b1_equip_arms_armor -- ###BLOCK: Weapons
     EquipmentTableEntry {
         key: "Aklys",
         category: EquipmentCategory::ArmsArmor,
@@ -95,7 +95,7 @@ pub const EQUIPMENT_RECORDS: &[EquipmentTableEntry] = &[
              move equivalent action after it has been thrown.",
         ),
     },
-    // b1_equip_magic_items.lst
+    // b1_equip_magic_items
     EquipmentTableEntry {
         key: "Heartstone (Night Hag)",
         category: EquipmentCategory::MagicItems,

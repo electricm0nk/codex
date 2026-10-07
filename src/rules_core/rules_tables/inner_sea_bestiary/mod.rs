@@ -57,7 +57,7 @@
 //! this round and now joins them in row order; the predicate is narrow — every
 //! token must carry no pipe entry at all — so the three rows of this same file
 //! that state *alternatives* under `%N` variables
-//! (`isb_abilities_race.lst:203`, `:204`, `:206`) are still refused rather than
+//! (`isb_abilities_race:203`, `:204`, `:206`) are still refused rather than
 //! silently joined. See that function's doc comment for the derivation.
 //!
 //! # Provenance
@@ -259,7 +259,7 @@ mod tests {
         for line in [78u32, 79] {
             assert!(
                 !monsters().iter().any(|m| m.source_line == line),
-                "isb_races.lst:{line} is Product Identity and must not ship"
+                "isb_races:{line} is Product Identity and must not ship"
             );
         }
     }
@@ -284,11 +284,11 @@ mod tests {
                 .iter()
                 .find(|a| a.source_line == line)
                 .unwrap_or_else(|| {
-                    panic!("isb_abilities_race.lst:{line} must ship (renamed, not dropped)")
+                    panic!("isb_abilities_race:{line} must ship (renamed, not dropped)")
                 });
             assert!(
                 record.codex_generated_name,
-                "isb_abilities_race.lst:{line} shipped but was not marked \
+                "isb_abilities_race:{line} shipped but was not marked \
                  `codex_generated_name` -- a renamed record must be visibly renamed \
                  (`decisions.md §24b`-3)"
             );
@@ -352,7 +352,7 @@ mod tests {
         let record = monster_abilities()
             .iter()
             .find(|a| a.source_line == 227)
-            .expect("isb_abilities_race.lst:227 ships");
+            .expect("isb_abilities_race:227 ships");
         let text = record.description.expect("the row carries DESC: text");
         assert!(
             text.contains("blood and pus spews forth from the wound.")

@@ -9,7 +9,7 @@
 //! `corpus-source-inventory.md` §3.1's illustrative subset-01 sample
 //! list ("Goblin, Kobold, Orc, Skeleton, Zombie") does not correspond to
 //! real, standalone CR-1 monster stat-block rows in the real corpus file
-//! `pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst` — Goblin,
+//! `pathfinder/paizo/roleplaying_game/bestiary/b1_races` — Goblin,
 //! Kobold, and Orc are `.MOD` overrides onto their playable-race base
 //! (no independent Bestiary 1 stat block), and Skeleton (Human) / Zombie
 //! (Human) are CR 1/3 and CR 1/2, not CR 1. Subset 01 ships the real
@@ -32,7 +32,7 @@
 //! Gnoll and Lizardfolk were already ingested in subset 01; Hobgoblin has
 //! no standalone stat-block row in the real corpus at all (a `.MOD`-only
 //! override, same shape as subset 01's Goblin/Kobold/Orc); Rat Swarm does
-//! have a real standalone row (`b1_races.lst:334`) but its real CR is 2,
+//! have a real standalone row (`b1_races:334`) but its real CR is 2,
 //! not 1. Subset 02 ships the real, unused, unambiguous CR-1 monsters
 //! this cycle verified directly: Darkmantle, Horse, Hyena, Octopus,
 //! Spider Swarm (alphabetical, excluding parenthetical sub-variant names
@@ -98,12 +98,12 @@
 //! an `ABILITY:Internal|AUTOMATIC|<Name>` cross-reference instead of an
 //! inline `NATURALATTACKS:` token, and **no hop of that reference
 //! carries damage dice** (the target rows live in
-//! `core_essentials/ce_abilities_race.lst`, not under `bestiary/`, and
+//! `core_essentials/ce_abilities_race`, not under `bestiary/`, and
 //! are dice-less mechanical markers — PCGen supplies the dice at runtime
 //! from size tables). All 12 are now grounded from published values with
 //! at least two agreeing allowed-domain sources; the single exception is
 //! Crocodile's Tail Slap, genuinely recovered from a real cross-file
-//! corpus token (`b1_abilities_race.lst:248`, `...,*1,1d12`). Full
+//! corpus token (`b1_abilities_race:248`, `...,*1,1d12`). Full
 //! per-value citations live in `natural_attack_provenance`, pinned by
 //! `tests/v06_beastiary1_natural_attack_grounding.rs`. Five other
 //! monsters (Bugbear, Dark Creeper, Derro, Dryad, Gnoll) keep empty
@@ -120,13 +120,13 @@
 //! A13 finding that no spell-list concept exists for this book.
 
 //! **Companion tables (SD-29 Epic 7 round 3, companion lane extend):**
-//! `companion_data` holds Bestiary 1's 24 `b1_races_companion.lst`
-//! creature rows and its 35 `b1_abilities_companion.lst` ability rows,
+//! `companion_data` holds Bestiary 1's 24 `b1_races_companion`
+//! creature rows and its 35 `b1_abilities_companion` ability rows,
 //! transcribed by `scripts/transcribe_companion_tables.py`.
 //!
 //! **Plus 67 more since `SD31-CE-COMPANION-001` (2026-08-18): 31 creature
-//! rows from `ce_races_familiar_cr.lst` and 36 ability rows from
-//! `ce_abilities_familiar_race_cr.lst`.** Both files live under PCGen's
+//! rows from `ce_races_familiar_cr` and 36 ability rows from
+//! `ce_abilities_familiar_race_cr`.** Both files live under PCGen's
 //! `core_essentials/` packaging directory and both declare
 //! `SOURCELONG:Bestiary` in their own headers, so `decisions.md §9`
 //! re-attribution files their rows here. **The `_cr` suffix is not a book
@@ -164,7 +164,7 @@ use crate::rules_core::rules_tables::RuleSetId;
 /// A single natural-weapon attack.
 ///
 /// Usually transcribed from a `NATURALATTACKS:` token on the monster's
-/// real `.lst` row. Twelve Bestiary 1 monsters instead carry only an
+/// real source file row. Twelve Bestiary 1 monsters instead carry only an
 /// `ABILITY:Internal|AUTOMATIC|<Name>` cross-reference, which names the
 /// attack but supplies no dice at any hop — for those, `damage_dice` is
 /// grounded from published values and every one is documented, with its
@@ -455,15 +455,15 @@ mod companion_tests {
 
     /// From `docs/work-inventory.json`'s own units for this book: 154 companion
     /// units, of which 55 creature rows and 71 ability rows ship, none gated
-    /// and none a `*_classes_companion.lst` class row.
+    /// and none a `*_classes_companion` class row.
     ///
     /// **The two halves are pinned by SOURCE FILE, not only in total.** This
     /// book's companion table draws from two places, and they fail
     /// independently:
     ///
-    /// * `b1_races_companion.lst` / `b1_abilities_companion.lst` -- 24 + 35,
+    /// * `b1_races_companion` / `b1_abilities_companion` -- 24 + 35,
     ///   the book's own directory, unchanged since SD-29 Epic 7 round 3.
-    /// * `ce_races_familiar_cr.lst` / `ce_abilities_familiar_race_cr.lst` --
+    /// * `ce_races_familiar_cr` / `ce_abilities_familiar_race_cr` --
     ///   31 + 36. Both files sit under PCGen's `core_essentials/` packaging
     ///   directory and both declare `SOURCELONG:Bestiary` in their own headers,
     ///   so `decisions.md §9` re-attribution files their rows here. The `_cr`
@@ -530,7 +530,7 @@ mod companion_tests {
         }
     }
 
-    /// Verbatim spot-check against `b1_races_companion.lst:7`.
+    /// Verbatim spot-check against `b1_races_companion:7`.
     #[test]
     fn the_dire_bat_companion_matches_its_corpus_row() {
         let companion = companions()

@@ -23,10 +23,10 @@
 //!
 //! ```text
 //! find ~/workspace/repos/pcgen/data -ipath '*inner_sea_gods*' -name '*races*'
-//!   isg_races.lst
-//!   isg_abilities_races.lst
-//!   support/isg_races_b4.lst
-//!   support/isg_abilities_races_b4.lst
+//!   isg_races
+//!   isg_abilities_races
+//!   support/isg_races_b4
+//!   support/isg_abilities_races_b4
 //! ```
 //!
 //! `v06_work_inventory` records every unit's `source_file` as a **bare
@@ -42,7 +42,7 @@
 //! two cases rather than resolving them: a basename found nowhere, and a
 //! basename found in more than one place. No book in the corpus trips the
 //! second — verified over all fourteen books this lane has considered, every one
-//! of which has zero duplicate `.lst` basenames — so the check is what makes the
+//! of which has zero duplicate source file basenames — so the check is what makes the
 //! first one that does fail loudly instead of shipping the wrong rules text.
 //!
 //! **The `support/` pair is neither unconditionally loaded nor out of scope.**
@@ -50,14 +50,14 @@
 //! `PRECAMPAIGN:1,INCLUDES=Bestiary 4`, and round 6 registered `bestiary_4`, so
 //! this repo satisfies the gate. That is the `PRECAMPAIGN` hazard
 //! `loop-instruction.md`'s corpus shape notes describe, read from the **pcc load
-//! line** rather than from inside the `.lst`: `grep PRECAMPAIGN` over the two
-//! `.lst` files themselves returns 0, so a lane that checks the file for its own
+//! line** rather than from inside the source file: `grep PRECAMPAIGN` over the two
+//! source file files themselves returns 0, so a lane that checks the file for its own
 //! gate concludes, wrongly, that it is ungated.
 //!
 //! # The `Race Traits ~` bundle rows: RESOLVED (`SD31-W21-MONSTER-001`)
 //!
 //! **This section used to explain why zero of the sixteen
-//! `support/isg_abilities_races_b4.lst` ability rows shipped. All sixteen now
+//! `support/isg_abilities_races_b4` ability rows shipped. All sixteen now
 //! ship, along with 61 more of this book's abilities reached the same way —
 //! the mechanism this section names is wired, not merely recorded.**
 //!
@@ -66,9 +66,9 @@
 //! `<Monster> ~ <Ability>` namespace prefix can see:
 //!
 //! ```text
-//! support/isg_races_b4.lst:6    The First Blade
+//! support/isg_races_b4:6    The First Blade
 //!     ABILITY:Internal|AUTOMATIC|Race Traits ~ First Blade
-//! support/isg_abilities_races_b4.lst:8   Race Traits ~ First Blade
+//! support/isg_abilities_races_b4:8   Race Traits ~ First Blade
 //!     CATEGORY:Internal
 //!     ABILITY:Special Ability|AUTOMATIC|…|First Blade ~ Powerful Blows (Slam)
 //!         |First Blade ~ Regeneration|First Blade ~ Bladed Slam|…
@@ -102,9 +102,9 @@
 //!
 //! `_inner_sea_gods.pcc:17` declares `ISOGL:YES`; the pcc carries 18 `COPYRIGHT`
 //! lines and a real 9,547-byte `OGL.txt` sits beside it. **Zero** rows of any of
-//! the four `.lst` files declare `NAMEISPI:YES`
-//! (`grep -c NAMEISPI:YES isg_races.lst isg_abilities_races.lst
-//! support/isg_races_b4.lst support/isg_abilities_races_b4.lst` → `0 0 0 0`).
+//! the four source file files declare `NAMEISPI:YES`
+//! (`grep -c NAMEISPI:YES isg_races isg_abilities_races
+//! support/isg_races_b4 support/isg_abilities_races_b4` → `0 0 0 0`).
 //! The 5 ability rows the transcriber's screen drops are dropped for a
 //! blacklisted deity name in an emitted value, which is exactly what
 //! `ogl-pi-blacklist.md` §2.1's per-record predicate predicts for a
@@ -156,8 +156,8 @@ mod tests {
     /// find_internal_bundle_ability_refs`) resolved 77 of this book's 79
     /// bundle-reachable orphans — this is the book the hop mechanism's own
     /// docstring example (`ABILITY:Internal|AUTOMATIC|Race Traits ~ First
-    /// Blade`, `support/isg_races_b4.lst:6` / `support/
-    /// isg_abilities_races_b4.lst:8`) is drawn from. 5 more were newly-reached
+    /// Blade`, `support/isg_races_b4:6` / `support/
+    /// isg_abilities_races_b4:8`) is drawn from. 5 more were newly-reached
     /// abilities the pre-existing Product Identity screen correctly drops (a
     /// named-deity term in an emitted value; see the Provenance section
     /// below), and 2 remain genuinely orphaned (`Herald ~ Always Armed`/
@@ -182,7 +182,7 @@ mod tests {
         // `Thyrlien ~ Starlight Blast` — clean names, the "2
         // description-only PI" group T9 round 6 named). 2 owner-less -> 5
         // owner-less (+3): three ability rows at
-        // `isg_abilities_races.lst:43/44/45`, whose own KEY namespace
+        // `isg_abilities_races:43/44/45`, whose own KEY namespace
         // matched the blacklist, now ship under a Codex-generated neutral
         // key instead of being dropped; all three are orphans here (no
         // monster row of this book claims them), pinned below. 158 -> 163
@@ -209,18 +209,18 @@ mod tests {
     fn the_support_directory_monsters_ship() {
         let from_support: Vec<&str> = monsters()
             .iter()
-            .filter(|m| m.source_file == "isg_races_b4.lst")
+            .filter(|m| m.source_file == "isg_races_b4")
             .map(|m| m.key)
             .collect();
         assert_eq!(
             from_support.len(),
             3,
-            "3 monster rows come from support/isg_races_b4.lst, got {from_support:?}"
+            "3 monster rows come from support/isg_races_b4, got {from_support:?}"
         );
         for key in ["The First Blade", "Steward of the Skein", "Psychopomp (Ahmuuth)"] {
             assert!(
                 from_support.contains(&key),
-                "{key} is a support/isg_races_b4.lst row and must ship: {from_support:?}"
+                "{key} is a support/isg_races_b4 row and must ship: {from_support:?}"
             );
         }
     }
@@ -234,9 +234,9 @@ mod tests {
     /// regenerated.
     #[test]
     fn every_record_cites_one_of_this_books_files() {
-        let races: HashSet<&str> = ["isg_races.lst", "isg_races_b4.lst"].into_iter().collect();
+        let races: HashSet<&str> = ["isg_races", "isg_races_b4"].into_iter().collect();
         let abilities: HashSet<&str> =
-            ["isg_abilities_races.lst", "isg_abilities_races_b4.lst"].into_iter().collect();
+            ["isg_abilities_races", "isg_abilities_races_b4"].into_iter().collect();
         for monster in monsters() {
             assert!(
                 races.contains(monster.source_file),
@@ -329,7 +329,7 @@ mod tests {
     }
 
     /// The `Race Traits ~` bundle finding, RESOLVED (`SD31-W21-MONSTER-001`):
-    /// all sixteen `support/isg_abilities_races_b4.lst` ability rows now ship,
+    /// all sixteen `support/isg_abilities_races_b4` ability rows now ship,
     /// owned by their real monster through the `CATEGORY:Internal` bundle-row
     /// hop the module header describes. Was `no_support_directory_ability_
     /// ships_yet`, asserting the PRE-hop emptiness; now asserts the sixteen
@@ -340,7 +340,7 @@ mod tests {
     fn the_support_directory_bundle_abilities_ship() {
         let shipped: std::collections::BTreeSet<&str> = monster_abilities()
             .iter()
-            .filter(|a| a.source_file == "isg_abilities_races_b4.lst")
+            .filter(|a| a.source_file == "isg_abilities_races_b4")
             .map(|a| a.key)
             .collect();
         let expected: std::collections::BTreeSet<&str> = [
@@ -365,7 +365,7 @@ mod tests {
         .collect();
         assert_eq!(
             shipped, expected,
-            "support/isg_abilities_races_b4.lst's shipped set no longer matches the sixteen \
+            "support/isg_abilities_races_b4's shipped set no longer matches the sixteen \
              bundle-reached rows the module header names"
         );
     }

@@ -1,14 +1,14 @@
 //! ACG Bloodrager spell list — one `(spell name, Bloodrager spell level)`
 //! entry per real corpus record.
 //!
-//! Source: PCGen `advanced_class_guide/acg_spells.lst`, every record whose
+//! Source: PCGen `advanced_class_guide/acg_spells`, every record whose
 //! `CLASSES:` token names Bloodrager in any pipe-separated group.
 //! Independently re-derived for task #1 and corrected under task #24
 //! (2026-07-27): **200 records — 183 `.MOD` grafts onto an existing
 //! spell, plus 17 non-`.MOD` new ACG spells.** The real spell name is
 //! the base name with `.MOD` stripped, and the level is read directly
 //! off that same line's own `CLASSES:` token. Per-file ceiling check:
-//! `grep -c Bloodrager acg_spells.lst` is 202 against 201 matched lines
+//! `grep -c Bloodrager acg_spells` is 202 against 201 matched lines
 //! (200 unique names), so the parse is not over-counted.
 //!
 //! Level breakdown, verified: **55 / 49 / 54 / 42** across spell levels
@@ -33,7 +33,7 @@
 //! silently dropped from the class's list. Ruling on accepting that gap:
 //! team lead, 2026-07-27.
 //!
-//! Deliberately scoped to `acg_spells.lst` alone, matching the
+//! Deliberately scoped to `acg_spells` alone, matching the
 //! single-book-source discipline every other spell list here already
 //! uses. A tree-wide count returns 220, which sweeps in `monster_codex`,
 //! `inner_sea_races`, `adventurers_guide`, and `aquatic_adventures` —

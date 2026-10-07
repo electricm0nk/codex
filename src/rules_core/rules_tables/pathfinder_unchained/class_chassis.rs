@@ -104,7 +104,7 @@ pub enum PuClassId {
 
 impl PuClassId {
     /// The full four-class roster, in corpus declaration order
-    /// (`pu_abilities_class.lst:114..117`).
+    /// (`pu_abilities_class:114..117`).
     pub const ALL: [PuClassId; 4] = [
         PuClassId::UnchainedBarbarian,
         PuClassId::UnchainedMonk,
@@ -264,7 +264,7 @@ pub fn class_chassis_resolve(
             })
         }
         // The one class with its own chassis. Every cell is the feature
-        // module's own transcription of `pu_abilities_class.lst:115`'s three
+        // module's own transcription of `pu_abilities_class:115`'s three
         // `BONUS:` tokens; nothing is recomputed here.
         PuClassId::UnchainedMonk => Some(ClassTableRow {
             level,

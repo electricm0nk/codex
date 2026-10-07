@@ -1,4 +1,4 @@
-//! ARG equipment modifiers -- generated from the real `arg_equipmods.lst`
+//! ARG equipment modifiers -- generated from the real `arg_equipmods`
 //! corpus (SD-27 Cycle E2.1/E2.2 per-book pre-build). Not hand-authored --
 //! see `equipment_tables.rs`'s own doc comment for the generation method.
 //!
@@ -7,7 +7,7 @@
 //! `KEY:` token of their own, referencing legacy short-form key names that
 //! resolve nowhere else in this file) -- the same documented exclusion
 //! `rules_tables::crb::equipment_data::equipmods` already establishes for
-//! `cr_equipmods.lst`'s own identical trailing block.
+//! `cr_equipmods`'s own identical trailing block.
 
 use super::super::equipment_tables::{EquipmentCategory, EquipmentTableEntry};
 

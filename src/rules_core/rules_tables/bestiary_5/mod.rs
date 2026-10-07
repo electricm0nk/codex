@@ -12,16 +12,16 @@
 //! python3 scripts/classify_companion_rows.py bestiary_5
 //! book                              crea  abil  clas  named  prerace  prefix  ORPHAN
 //! bestiary_5                          33    22     0     18       18       4       0
-//!     GATED  Familiar (Brain Mole) — b5_races_companion_oa.lst loaded under PRECAMPAIGN:1,Occult Adventures
-//!     GATED  Familiar (Chuspiki) — b5_races_companion_oa.lst loaded under PRECAMPAIGN:1,Occult Adventures
+//!     GATED  Familiar (Brain Mole) — b5_races_companion_oa loaded under PRECAMPAIGN:1,Occult Adventures
+//!     GATED  Familiar (Chuspiki) — b5_races_companion_oa loaded under PRECAMPAIGN:1,Occult Adventures
 //! ```
 //!
 //! # All 57 of the book's companion units are here (row-19 update, 2026-08-24)
 //!
 //! `docs/work-inventory.json` counts 57 `companion` units for this book. Two of
 //! them — `Familiar (Brain Mole)` and `Familiar (Chuspiki)` — live in
-//! `support/b5_races_companion_oa.lst`, which `_bestiary_5.pcc:69` loads as
-//! `RACE:support/b5_races_companion_oa.lst|PRECAMPAIGN:1,Occult Adventures`.
+//! `support/b5_races_companion_oa`, which `_bestiary_5.pcc:69` loads as
+//! `RACE:support/b5_races_companion_oa|PRECAMPAIGN:1,Occult Adventures`.
 //! They were excluded through 2026-08-23 on the premise that Occult
 //! Adventures was not an ingested book (`decisions.md §47.2`, applied here
 //! the same way it was to Horror Adventures' Occult-Adventures-gated
@@ -38,7 +38,7 @@
 //! The gate that used to exclude them is derived, never hardcoded:
 //! `classify_companion_rows`'s `precampaign_gates` reads the pcc load line,
 //! because the gate is on the pcc line and a `grep PRECAMPAIGN` over the
-//! `.lst` itself returns nothing.
+//! source file itself returns nothing.
 
 pub(crate) mod companion_data;
 pub(crate) mod monster_data;
@@ -128,7 +128,7 @@ mod tests {
         }
     }
 
-    /// Verbatim spot-check against `b5_races_companion.lst`, on the row that
+    /// Verbatim spot-check against `b5_races_companion`, on the row that
     /// exercises the most reader paths at once: three speed modes including one
     /// (`Jet`) no other registered book carries, and a `RACESUBTYPE` beside a
     /// `RACETYPE`.

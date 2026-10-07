@@ -63,7 +63,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 4
     },
     {
@@ -130,7 +130,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 5
     },
     {
@@ -191,7 +191,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 6
     },
     {
@@ -252,7 +252,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 7
     },
     {
@@ -313,7 +313,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 8
     },
     {
@@ -380,7 +380,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 9
     },
     {
@@ -433,7 +433,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 10
     },
     {
@@ -488,7 +488,7 @@
         "Kentrosaurus ~ Impaling Strike"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 11
     },
     {
@@ -545,7 +545,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 12
     },
     {
@@ -628,7 +628,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 13
     },
     {
@@ -695,7 +695,7 @@
         "Giant Raven ~ Scavenger"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 14
     },
     {
@@ -766,7 +766,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 15
     },
     {
@@ -855,7 +855,7 @@
         "Amphibious"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 18
     },
     {
@@ -928,7 +928,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b6_races_companion.lst",
+      "source_file": "b6_races_companion",
       "source_line": 19
     }
   ]

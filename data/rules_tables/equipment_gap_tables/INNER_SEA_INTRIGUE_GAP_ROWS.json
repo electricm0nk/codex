@@ -28,7 +28,7 @@
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
-        "isi_equip_general.lst",
+        "isi_equip_general",
         13
       ]
     },
@@ -91,7 +91,7 @@
       "weight_lbs": 0.0,
       "description": "Injury; Fort DC 14; Freq 1 rnd (4); Effect Muteness 1 rnd; Cure 1 save",
       "name_pi_citation": [
-        "isi_equip_general.lst",
+        "isi_equip_general",
         29
       ]
     },
@@ -114,7 +114,7 @@
       "weight_lbs": 0.0,
       "description": "Ingested; Fort DC 16; Onset Drinking alcohol; Freq 1 min (6); Effect 1d2 Dex dmg; Cure 2 saves",
       "name_pi_citation": [
-        "isi_equip_general.lst",
+        "isi_equip_general",
         31
       ]
     },
@@ -127,7 +127,7 @@
       "weight_lbs": 0.0,
       "description": "Ingested; Fort DC 23; Onset 1 min.; Freq 1 min (2); Effect Deathlike trance 1 min./deathlike trance 8 hrs; Cure 1 save",
       "name_pi_citation": [
-        "isi_equip_general.lst",
+        "isi_equip_general",
         32
       ]
     },
@@ -210,7 +210,7 @@
       "weight_lbs": 1.0,
       "description": null,
       "name_pi_citation": [
-        "isi_equip_magic_items.lst",
+        "isi_equip_magic_items",
         16
       ]
     },
@@ -243,7 +243,7 @@
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
-        "isi_equip_magic_items.lst",
+        "isi_equip_magic_items",
         19
       ]
     },
@@ -276,7 +276,7 @@
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
-        "isi_equip_magic_items.lst",
+        "isi_equip_magic_items",
         22
       ]
     },
@@ -289,7 +289,7 @@
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
-        "isi_equip_magic_items.lst",
+        "isi_equip_magic_items",
         23
       ]
     },

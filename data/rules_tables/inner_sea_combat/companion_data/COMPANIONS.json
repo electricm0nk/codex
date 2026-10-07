@@ -72,7 +72,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "isc_races_companion.lst",
+      "source_file": "isc_races_companion",
       "source_line": 5
     },
     {
@@ -138,7 +138,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "isc_races_companion.lst",
+      "source_file": "isc_races_companion",
       "source_line": 6
     },
     {
@@ -207,7 +207,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "isc_races_companion.lst",
+      "source_file": "isc_races_companion",
       "source_line": 7
     },
     {
@@ -265,7 +265,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "isc_races_companion.lst",
+      "source_file": "isc_races_companion",
       "source_line": 8
     }
   ]

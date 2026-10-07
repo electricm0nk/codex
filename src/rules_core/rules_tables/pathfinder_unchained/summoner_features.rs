@@ -6,7 +6,7 @@
 //! read byte-for-byte off one named corpus row, and pinned by a test.
 //!
 //! Source file for every unqualified citation:
-//! `pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst`
+//! `pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class`
 //! (sha256 `2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725`).
 //! Cross-book citations name their own file. Lines are 1-based.
 //!
@@ -15,16 +15,16 @@
 //! Two mechanisms, both declared by the corpus rather than designed here.
 //!
 //! **1. One single-slot selection pool**, as for the rogue.
-//! `advanced_players_guide/apg_abilities_class.lst:741` puts the APG summoner in
+//! `advanced_players_guide/apg_abilities_class:741` puts the APG summoner in
 //! it (`KEY:Summoner ~ Standard Class  TYPE:Summoner Class Selection  COST:1`);
 //! `:117` of this book puts this one in the same pool
 //! (`KEY:Summoner ~ Unchained Class  TYPE:Summoner Class Selection.SummonerAlternative
-//! COST:1`); `apg_abilities_class.lst:739` seeds it with
+//! COST:1`); `apg_abilities_class:739` seeds it with
 //! `BONUS:VAR|Pool_Summoner_Class_Selection|1|TYPE=Base`.
 //!
 //! **2. A `StandardSummoner` flag that swaps the entire spell list.** This is
 //! the part worth being precise about, because it is easy to get backwards.
-//! `apg_abilities_class.lst:739` carries:
+//! `apg_abilities_class:739` carries:
 //!
 //! ```text
 //! BONUS:VAR|StandardSummoner|1|TYPE=Base|!PREABILITY:1,CATEGORY=Class,TYPE.Summoner Class Selection
@@ -54,7 +54,7 @@
 //! silence; see this cycle's report.
 //!
 //! **What differs mechanically** (verified against
-//! `advanced_players_guide/apg_abilities_class.lst`, not assumed):
+//! `advanced_players_guide/apg_abilities_class`, not assumed):
 //!
 //! | | APG Summoner | Unchained Summoner |
 //! |---|---|---|
@@ -77,14 +77,14 @@
 //! row's `PREVARGTEQ:Summoner_CFP_Level,N`.
 //!
 //! `Summoner_CFP_Level` is not a PU concept, and two APG rows set it to the same
-//! thing: `apg_abilities_globalvar.lst:9`
+//! thing: `apg_abilities_globalvar:9`
 //! (`BONUS:VAR|Summoner_CFP_Level|SummonerLVL|TYPE=Base`) and
-//! `apg_abilities_class.lst:739`
+//! `apg_abilities_class:739`
 //! (`BONUS:VAR|Summoner_CFP_Level|classlevel("Summoner")`). Both are the class
 //! level, 1:1, so every `Summoner_CFP_Level` below is just "summoner level".
 
 /// `MAXLEVEL:20` on the base `CLASS:Summoner` record
-/// (`advanced_players_guide/apg_classes.lst:139`, the same record
+/// (`advanced_players_guide/apg_classes:139`, the same record
 /// `rules_tables::apg::class_summoner` transcribes). PU overrides no chassis
 /// field for the summoner — `data/corpus/pathfinder_unchained/class/
 /// summoner_unchained_class.json` leaves `hit_die`, `bab` and all three saves
@@ -223,7 +223,7 @@ impl UnchainedSummonerFeature {
     ///
     /// The asymmetry worth knowing is the other direction — APG's progression
     /// has an **18th** entry, `Summoner ~ Gate` at 19th
-    /// (`advanced_players_guide/apg_abilities_class.lst:761`), and PU declares
+    /// (`advanced_players_guide/apg_abilities_class:761`), and PU declares
     /// no counterpart. The Unchained Summon Monster row's own `DESC:` promises
     /// "At 19th level, this ability can be used as gate or summon monster IX",
     /// so the corpus under-implements its own prose. Recorded, not patched:
@@ -336,7 +336,7 @@ pub fn eidolon_companion_level(level: u8) -> Option<u8> {
 /// the pool pauses on every 4th, 8th, 12th, 16th and 20th level.
 ///
 /// **This is the sharpest divergence from the APG summoner.**
-/// `advanced_players_guide/apg_abilities_class.lst:813` is the same shape with a
+/// `advanced_players_guide/apg_abilities_class:813` is the same shape with a
 /// base of **3** and `if(...,2,0)` double steps, so the chained eidolon starts
 /// three times as customisable. Getting these two confused would silently
 /// mis-build every eidolon; they are separate functions in separate modules on
@@ -384,7 +384,7 @@ pub fn eidolon_subtypes() -> &'static [&'static str] {
 /// Which `summon monster` spell the SLA casts:
 /// `BONUS:VAR|SummonerSummonMonsterLVL|min((Summoner_CFP_Level+1)/2,9)` on
 /// `:733`, with `Summoner_CFP_Level = SummonerLVL`
-/// (`advanced_players_guide/apg_abilities_globalvar.lst:9`).
+/// (`advanced_players_guide/apg_abilities_globalvar:9`).
 ///
 /// I at 1st, II at 3rd, ..., IX from 17th — matching the row's own `DESC:` ("to
 /// a maximum of summon monster IX at 17th level") and the nine
@@ -677,12 +677,12 @@ mod tests {
         let lines: Vec<u32> = UnchainedSummonerFeature::ALL.iter().map(|f| f.declaring_line()).collect();
         let mut sorted = lines.clone();
         sorted.sort_unstable();
-        assert_eq!(lines, sorted, "ALL should list features in pu_abilities_class.lst order");
+        assert_eq!(lines, sorted, "ALL should list features in pu_abilities_class order");
     }
 
     #[test]
     fn min_levels_match_the_seventeen_progression_rows() {
-        // pu_abilities_class.lst:250..266 — 17 rows, transcribed as pairs.
+        // pu_abilities_class:250..266 — 17 rows, transcribed as pairs.
         let expected: &[(UnchainedSummonerFeature, u8)] = &[
             (UnchainedSummonerFeature::Skills, 1),
             (UnchainedSummonerFeature::WeaponAndArmorProficiency, 1),
@@ -777,7 +777,7 @@ mod tests {
 
     #[test]
     fn unchained_eidolon_pool_starts_at_one_where_the_apg_one_starts_at_three() {
-        // apg_abilities_class.lst:813 writes `3+...`; this book's :746 writes `1+...`.
+        // apg_abilities_class:813 writes `3+...`; this book's :746 writes `1+...`.
         assert_eq!(eidolon_evolution_pool(1), Some(1), "the whole point of the unchained eidolon");
         assert_ne!(eidolon_evolution_pool(1), Some(3), "must never resolve to the APG summoner's base");
     }

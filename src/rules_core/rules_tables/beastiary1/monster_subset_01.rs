@@ -1,9 +1,9 @@
 //! Bestiary 1 monster-block subset 01 — corrected CR-1 roster.
 //!
-//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst`,
+//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races`,
 //! parsed via `pcgen_import::lst_parser::monster_stat_block` (SD-22 Epic 5's
 //! new bare-tab-delimited monster parser). Every field below is
-//! transcribed directly from the cited real `.lst` line's tokens — see
+//! transcribed directly from the cited real source file line's tokens — see
 //! each function's doc comment for the exact line number and tokens.
 //!
 //! **Roster correction** (see `super`'s module doc comment for the full
@@ -13,12 +13,12 @@
 //! real corpus file:
 //! - `Goblin`, `Kobold`, `Orc` exist in Bestiary 1's data only as
 //!   `Goblin.MOD` / `Kobold.MOD` / `Orc.MOD` overrides in the separate
-//!   `b1_races_pc.lst` file, layered onto their *playable-race* base
+//!   `b1_races_pc` file, layered onto their *playable-race* base
 //!   defined under `core_essentials/races/<race>/` — there is no
 //!   independent Bestiary 1 monster stat block for them in this corpus.
-//! - `Skeleton (Human)` (`b1_races.lst:364`) is CR 1/3, not CR 1.
-//! - `Zombie (Human)` (`b1_races.lst:436`) is CR 1/2, not CR 1.
-//! - The bare `Skeleton` / `Zombie` rows (`b1_races.lst:439-440`) carry
+//! - `Skeleton (Human)` (`b1_races:364`) is CR 1/3, not CR 1.
+//! - `Zombie (Human)` (`b1_races:436`) is CR 1/2, not CR 1.
+//! - The bare `Skeleton` / `Zombie` rows (`b1_races:439-440`) carry
 //!   no `CR:` token at all — they are template-application shims, not
 //!   monster stat blocks.
 //!
@@ -39,7 +39,7 @@
 
 use super::{MonsterStatBlock, NaturalAttack};
 
-/// Source: `b1_races.lst:200`, `CR:1`. Real row tokens:
+/// Source: `b1_races:200`, `CR:1`. Real row tokens:
 /// `SIZE:M`, `MOVE:Walk,30`, `NATURALATTACKS:Claw,...,*2,1d6`,
 /// `NATURALATTACKS:Bite,...,*1,1d6`, `RACETYPE:Undead`, `CR:1`,
 /// `SOURCEPAGE:p.146`.
@@ -59,7 +59,7 @@ pub fn ghoul() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:212`, `CR:1`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:212`, `CR:1`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,30`, `RACETYPE:Humanoid`, `RACESUBTYPE:Gnoll`, `CR:1`,
 /// `SOURCEPAGE:p.155`. The real row carries no `NATURALATTACKS:` token
 /// (Gnoll fights with a manufactured Longspear per `AUTO:WEAPONPROF`,
@@ -77,7 +77,7 @@ pub fn gnoll() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:213`, `CR:1`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:213`, `CR:1`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,50`, `NATURALATTACKS:Bite,...,*1,1d6`, `RACETYPE:Animal`,
 /// `CR:1`, `SOURCEPAGE:p.157`.
 pub fn goblin_dog() -> MonsterStatBlock {
@@ -96,7 +96,7 @@ pub fn goblin_dog() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:276`, `CR:1`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:276`, `CR:1`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,30,Swim,15` (walk speed transcribed; swim speed out of
 /// scope per this module's field-coverage boundary),
 /// `NATURALATTACKS:Claw,...,*1,1d4|Bite,...,*1,1d4`,
@@ -118,13 +118,13 @@ pub fn lizardfolk() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:414`, `CR:1`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:414`, `CR:1`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,50`, `RACETYPE:Animal`, `CR:1`, `SOURCEPAGE:p.278`. The
 /// real row carries no `NATURALATTACKS:` token.
 ///
 /// **Bite dice are grounded, not transcribed.** The row names the attack
 /// via `ABILITY:Internal|AUTOMATIC|Bite`, but resolving that reference
-/// (to `core_essentials/ce_abilities_race.lst:249`) yields a mechanical
+/// (to `core_essentials/ce_abilities_race:249`) yields a mechanical
 /// marker with no dice. `1d6` is corroborated by aonprd + d20pfsrd (both
 /// "bite +2 (1d6+1 plus trip)"), for the plain Bestiary 1 wolf — not the
 /// dire wolf and not the wolf animal companion. Full citation in

@@ -81,7 +81,7 @@
         "Animal Traits Output"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 7
     },
     {
@@ -148,7 +148,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 8
     },
     {
@@ -210,7 +210,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 9
     },
     {
@@ -280,7 +280,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 10
     },
     {
@@ -351,7 +351,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 11
     },
     {
@@ -409,7 +409,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 12
     },
     {
@@ -471,7 +471,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 13
     },
     {
@@ -529,7 +529,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 14
     },
     {
@@ -586,7 +586,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 14
     },
     {
@@ -640,7 +640,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 15
     },
     {
@@ -709,7 +709,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 15
     },
     {
@@ -770,7 +770,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 16
     },
     {
@@ -824,7 +824,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 16
     },
     {
@@ -905,7 +905,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 17
     },
     {
@@ -963,7 +963,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 17
     },
     {
@@ -1029,7 +1029,7 @@
         "Can't Be Tripped"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 18
     },
     {
@@ -1083,7 +1083,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 18
     },
     {
@@ -1155,7 +1155,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 19
     },
     {
@@ -1209,7 +1209,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 19
     },
     {
@@ -1277,7 +1277,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 20
     },
     {
@@ -1335,7 +1335,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 20
     },
     {
@@ -1403,7 +1403,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 21
     },
     {
@@ -1461,7 +1461,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 21
     },
     {
@@ -1524,7 +1524,7 @@
         "Immunity to Disease"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 22
     },
     {
@@ -1578,7 +1578,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 22
     },
     {
@@ -1644,7 +1644,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 23
     },
     {
@@ -1706,7 +1706,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 23
     },
     {
@@ -1772,7 +1772,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 24
     },
     {
@@ -1828,7 +1828,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 24
     },
     {
@@ -1894,7 +1894,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 25
     },
     {
@@ -1970,7 +1970,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 26
     },
     {
@@ -2052,7 +2052,7 @@
         "Grab"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 27
     },
     {
@@ -2122,7 +2122,7 @@
         "Scent"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 28
     },
     {
@@ -2190,7 +2190,7 @@
         "Flight Maneuverability"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 29
     },
     {
@@ -2260,7 +2260,7 @@
         "Grab"
       ],
       "external_ability_ref_conditions": [],
-      "source_file": "b1_races_companion.lst",
+      "source_file": "b1_races_companion",
       "source_line": 30
     },
     {
@@ -2326,7 +2326,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 61
     },
     {
@@ -2374,7 +2374,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 66
     },
     {
@@ -2427,7 +2427,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 67
     },
     {
@@ -2465,7 +2465,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 68
     },
     {
@@ -2515,7 +2515,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 69
     },
     {
@@ -2578,7 +2578,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 70
     },
     {
@@ -2630,7 +2630,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 75
     },
     {
@@ -2680,7 +2680,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 76
     },
     {
@@ -2737,7 +2737,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 77
     },
     {
@@ -2794,7 +2794,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 78
     },
     {
@@ -2852,7 +2852,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 79
     },
     {
@@ -2909,7 +2909,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 80
     },
     {
@@ -2966,7 +2966,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 81
     },
     {
@@ -3024,7 +3024,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 82
     },
     {
@@ -3085,7 +3085,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 83
     },
     {
@@ -3143,7 +3143,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 84
     },
     {
@@ -3201,7 +3201,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 85
     },
     {
@@ -3262,7 +3262,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 86
     },
     {
@@ -3312,7 +3312,7 @@
       "ability_keys": [],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 87
     },
     {
@@ -3360,7 +3360,7 @@
       ],
       "external_ability_refs": [],
       "external_ability_ref_conditions": [],
-      "source_file": "ce_races_familiar_cr.lst",
+      "source_file": "ce_races_familiar_cr",
       "source_line": 88
     }
   ]

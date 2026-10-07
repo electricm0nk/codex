@@ -58,7 +58,7 @@ use std::path::{Path, PathBuf};
 use sha2::{Digest, Sha256};
 
 use codex_ingest::pcgen_import::companion_pcgen_guards::{rebuild_condition, rebuild_external_ability_refs};
-use codex_ingest::pcgen_import::cache_gen::WiringClassIndex;
+use codex_ingest::pcgen_import::cache_gen::{cited_coordinate, cited_file, cited_stem, WiringClassIndex};
 use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
 
@@ -328,6 +328,8 @@ fn load_corpus_file_rel_with_fallback(
     corpus_data_root: Option<&Path>,
     file_name: &str,
 ) -> CorpusFile {
+    let file_name = cited_file(file_name);
+    let file_name = file_name.as_str();
     let (used_root, used_book_relative, resolved) = match try_resolve_book_file(root, file_name) {
         Some(found) => (root.to_path_buf(), book_relative.to_string(), found),
         None => {
@@ -1453,7 +1455,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
         .iter()
         .map(|name| {
             (
-                *name,
+                cited_stem(name),
                 load_corpus_file_rel_with_fallback(
                     &root,
                     spec.book_relative,
@@ -1470,7 +1472,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
         .iter()
         .map(|name| {
             (
-                *name,
+                cited_stem(name),
                 load_corpus_file_rel_with_fallback(
                     &root,
                     spec.book_relative,
@@ -1619,7 +1621,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             "rename": if ability.codex_generated_name {
                 serde_json::json!({
                     "reason": ability.rename_reason,
-                    "coordinate": ability.rename_coordinate,
+                    "coordinate": ability.rename_coordinate.map(cited_coordinate),
                 })
             } else {
                 serde_json::Value::Null
@@ -1813,7 +1815,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
         .iter()
         .map(|name| {
             (
-                *name,
+                cited_stem(name),
                 load_corpus_file_rel_with_fallback(
                     &root,
                     spec.book_relative,
@@ -1828,7 +1830,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
         .iter()
         .map(|name| {
             (
-                *name,
+                cited_stem(name),
                 load_corpus_file_rel_with_fallback(
                     &root,
                     spec.book_relative,

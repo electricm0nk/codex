@@ -1,14 +1,14 @@
 //! inner_sea_combat companion tables, transcribed verbatim from the book's own
-//! PCGen `.lst` rows.
+//! PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_companion_tables.py inner_sea_combat`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst`.
+//! line count over the source file.
 //!
 //! Sources, with the file AND line each record was read from carried per row:
-//!   * `isc_races_companion.lst` -- 4 companion creature rows
-//!   * `isc_abilities_companion.lst` -- 6 companion ability rows
+//!   * `isc_races_companion` -- 4 companion creature rows
+//!   * `isc_abilities_companion` -- 6 companion ability rows
 
 use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, Speed, StatAdjustment};
 
@@ -33,7 +33,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Unable to carry a rider while flying", "Companion Advancement ~ Griffon"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "isc_races_companion.lst",
+        source_file: "isc_races_companion",
         source_line: 5,
     },
     CompanionRecord {
@@ -55,7 +55,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Hippocampus"],
         external_ability_refs: &["Hippocampus ~ Water Dependency", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "isc_races_companion.lst",
+        source_file: "isc_races_companion",
         source_line: 6,
     },
     CompanionRecord {
@@ -77,7 +77,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Hippogriff", "Unable to carry a rider while flying"],
         external_ability_refs: &["Flight Maneuverability", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "isc_races_companion.lst",
+        source_file: "isc_races_companion",
         source_line: 7,
     },
     CompanionRecord {
@@ -99,7 +99,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Worg", "Worg ~ Mastery"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "isc_races_companion.lst",
+        source_file: "isc_races_companion",
         source_line: 8,
     },
 ];
@@ -119,7 +119,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Griffon)"],
         cross_book_owners: &[],
-        source_file: "isc_abilities_companion.lst",
+        source_file: "isc_abilities_companion",
         source_line: 5,
     },
     CompanionAbilityRecord {
@@ -135,7 +135,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Hippocampus)"],
         cross_book_owners: &[],
-        source_file: "isc_abilities_companion.lst",
+        source_file: "isc_abilities_companion",
         source_line: 6,
     },
     CompanionAbilityRecord {
@@ -151,7 +151,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Hippogriff)"],
         cross_book_owners: &[],
-        source_file: "isc_abilities_companion.lst",
+        source_file: "isc_abilities_companion",
         source_line: 7,
     },
     CompanionAbilityRecord {
@@ -167,7 +167,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Worg)"],
         cross_book_owners: &[],
-        source_file: "isc_abilities_companion.lst",
+        source_file: "isc_abilities_companion",
         source_line: 8,
     },
     CompanionAbilityRecord {
@@ -183,7 +183,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Griffon)", "Companion (Hippogriff)"],
         cross_book_owners: &[],
-        source_file: "isc_abilities_companion.lst",
+        source_file: "isc_abilities_companion",
         source_line: 9,
     },
     CompanionAbilityRecord {
@@ -199,7 +199,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Worg)"],
         cross_book_owners: &[],
-        source_file: "isc_abilities_companion.lst",
+        source_file: "isc_abilities_companion",
         source_line: 10,
     },
 ];

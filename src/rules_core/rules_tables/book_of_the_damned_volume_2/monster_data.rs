@@ -1,15 +1,15 @@
 //! book_of_the_damned_volume_2 monster + monster-ability tables, transcribed verbatim
-//! from the book's own PCGen `.lst` rows.
+//! from the book's own PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_monster_tables.py book_of_the_damned_volume_2`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst` (which counts `.MOD`/`.COPY` overlays the
+//! line count over the source file (which counts `.MOD`/`.COPY` overlays the
 //! inventory correctly excludes).
 //!
 //! Sources, with the line each record was read from carried per row:
-//!   * `botd2_races.lst` -- 4 monster rows
-//!   * `botd2_abilities_race.lst` -- 17 monster-ability rows
+//!   * `botd2_races` -- 4 monster rows
+//!   * `botd2_abilities_race` -- 17 monster-ability rows
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterSpellLikeAbility, MonsterStatBlock, NaturalAttack, Speed, StatAdjustment};
 
@@ -32,7 +32,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: true,
         sla_cl_token: Some("3"),
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Inflict Light Wounds (Mass)", save_dc_token: Some("15+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Spider Climb", save_dc_token: Some("12+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Gentle Repose", save_dc_token: Some("13+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Summon Monster II (Vermlek)", save_dc_token: Some("12+CHA") }],
-        source_file: "botd2_races.lst",
+        source_file: "botd2_races",
         source_line: 7,
     },
     MonsterStatBlock {
@@ -52,7 +52,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: true,
         sla_cl_token: Some("HD"),
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Dispel Magic", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Heat Metal", save_dc_token: Some("12+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Produce Flame", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Air Walk", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Fireball", save_dc_token: Some("13+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Summon Monster III (Brimorak)", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Teleport (Greater/self plus objects)", save_dc_token: None }],
-        source_file: "botd2_races.lst",
+        source_file: "botd2_races",
         source_line: 8,
     },
     MonsterStatBlock {
@@ -72,7 +72,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: true,
         sla_cl_token: Some("HD"),
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("ATWILL"), time_unit: None, caster_level_token: Some("TL"), spell: "Crushing Despair", save_dc_token: Some("13+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("ATWILL"), time_unit: None, caster_level_token: Some("TL"), spell: "Dispel Magic", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("ATWILL"), time_unit: None, caster_level_token: Some("TL"), spell: "Telekinesis", save_dc_token: Some("15+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("ATWILL"), time_unit: None, caster_level_token: Some("TL"), spell: "Teleport (Greater/self plus objects)", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Confusion", save_dc_token: Some("14+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Demand", save_dc_token: Some("18+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Dominate Person", save_dc_token: Some("14+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Fly", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Summon Monster V (Seraptis)", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Symbol of Insanity", save_dc_token: Some("18+CHA") }],
-        source_file: "botd2_races.lst",
+        source_file: "botd2_races",
         source_line: 9,
     },
     MonsterStatBlock {
@@ -92,7 +92,7 @@ pub(crate) static MONSTERS: &[MonsterStatBlock] = &[
         has_spell_like_abilities: true,
         sla_cl_token: Some("HD"),
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("ATWILL"), time_unit: None, caster_level_token: Some("TL"), spell: "Enervation", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("ATWILL"), time_unit: None, caster_level_token: Some("TL"), spell: "Telekinesis", save_dc_token: Some("15+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("ATWILL"), time_unit: None, caster_level_token: Some("TL"), spell: "Teleport (Greater/self plus objects)", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Blasphemy", save_dc_token: Some("17+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Power Word Stun", save_dc_token: Some("18+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Quickened Enervation", save_dc_token: None }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Earthquake", save_dc_token: Some("18+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Summon Monster VI (Vavakia)", save_dc_token: None }],
-        source_file: "botd2_races.lst",
+        source_file: "botd2_races",
         source_line: 10,
     },
 ];
@@ -109,7 +109,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &["Demon (Brimorak)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 7,
         codex_generated_name: false,
         rename_reason: None,
@@ -125,7 +125,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BreathWeaponDice", "BreathWeaponDC"],
         source_page: Some("p.56"),
         owners: &["Demon (Brimorak)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 8,
         codex_generated_name: false,
         rename_reason: None,
@@ -141,7 +141,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &["Demon (Brimorak)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 9,
         codex_generated_name: false,
         rename_reason: None,
@@ -157,7 +157,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &["Demon (Brimorak)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 10,
         codex_generated_name: false,
         rename_reason: None,
@@ -173,7 +173,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SmokeAuraRange", "SmokeAuraDC"],
         source_page: Some("p.56"),
         owners: &["Demon (Brimorak)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 11,
         codex_generated_name: false,
         rename_reason: None,
@@ -189,7 +189,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.58"),
         owners: &["Demon (Seraptis)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 15,
         codex_generated_name: false,
         rename_reason: None,
@@ -205,7 +205,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.58"),
         owners: &["Demon (Seraptis)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 16,
         codex_generated_name: false,
         rename_reason: None,
@@ -221,7 +221,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GazeAuraRange", "GazeAuraDC"],
         source_page: Some("p.58"),
         owners: &["Demon (Seraptis)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 17,
         codex_generated_name: false,
         rename_reason: None,
@@ -237,7 +237,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.58"),
         owners: &["Demon (Seraptis)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 18,
         codex_generated_name: false,
         rename_reason: None,
@@ -253,7 +253,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.58"),
         owners: &["Demon (Seraptis)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 19,
         codex_generated_name: false,
         rename_reason: None,
@@ -269,7 +269,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BreathWeaponDice", "BreathWeaponDC"],
         source_page: Some("p.60"),
         owners: &["Demon (Vavakia)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 23,
         codex_generated_name: false,
         rename_reason: None,
@@ -285,7 +285,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["VavakiaWoundDC"],
         source_page: Some("p.60"),
         owners: &["Demon (Vavakia)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 24,
         codex_generated_name: false,
         rename_reason: None,
@@ -301,7 +301,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["VavakiaStunDC"],
         source_page: Some("p.60"),
         owners: &["Demon (Vavakia)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 25,
         codex_generated_name: false,
         rename_reason: None,
@@ -317,7 +317,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.54"),
         owners: &["Demon (Vermlek)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 29,
         codex_generated_name: false,
         rename_reason: None,
@@ -333,7 +333,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.54"),
         owners: &["Demon (Vermlek)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 30,
         codex_generated_name: false,
         rename_reason: None,
@@ -349,7 +349,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.54"),
         owners: &["Demon (Vermlek)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 31,
         codex_generated_name: false,
         rename_reason: None,
@@ -365,7 +365,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.54"),
         owners: &["Demon (Vermlek)"],
-        source_file: "botd2_abilities_race.lst",
+        source_file: "botd2_abilities_race",
         source_line: 32,
         codex_generated_name: false,
         rename_reason: None,

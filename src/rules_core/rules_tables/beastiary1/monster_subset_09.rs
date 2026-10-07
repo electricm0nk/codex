@@ -2,17 +2,17 @@
 //! shipped the first ten of 20 CR:3 monsters alphabetically; this subset
 //! ships the next five).
 //!
-//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst`,
+//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races`,
 //! parsed via `pcgen_import::lst_parser::monster_stat_block` (the same
 //! bare-tab-delimited monster parser subset 01 introduced — no widening
 //! was needed for this subset either). Every field below is transcribed
-//! directly from the cited real `.lst` line's tokens.
+//! directly from the cited real source file line's tokens.
 //!
 //! **Roster derivation (CR-band continuation), re-derived directly
 //! against the live corpus rather than transcribed from subset 08's own
 //! doc comment (`loop-instruction.md` step 1b):** `grep`-equivalent scan
 //! of every real, non-`#`-commented, non-`.MOD` `CR:3` row in
-//! `b1_races.lst`, excluding parenthetical sub-variants, confirms **20**
+//! `b1_races`, excluding parenthetical sub-variants, confirms **20**
 //! clean CR:3 species names, matching subsets 07/08's own count.
 //! Subsets 07-08 shipped the first ten alphabetically (Ankheg, Assassin
 //! Vine, Centaur, Cockatrice, Derro, Doppelganger, Dryad, Ettercap,
@@ -47,7 +47,7 @@
 
 use super::{MonsterStatBlock, NaturalAttack};
 
-/// Source: `b1_races.lst:272`, `CR:3`. Real row tokens: `SIZE:L`,
+/// Source: `b1_races:272`, `CR:3`. Real row tokens: `SIZE:L`,
 /// `MOVE:Walk,40`, two `NATURALATTACKS:` tokens (`Bite,...,*1,1d8` and
 /// `Claw,...,*2,1d4`, each transcribed as one name/damage-dice entry per
 /// subset 08's Ettercap precedent for multi-token rows), `RACETYPE:Animal`,
@@ -68,7 +68,7 @@ pub fn lion() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:316`, `CR:3`. Real row tokens: `SIZE:L`,
+/// Source: `b1_races:316`, `CR:3`. Real row tokens: `SIZE:L`,
 /// `MOVE:Walk,40`, no `NATURALATTACKS:` token (fights with weapons --
 /// `AUTO:WEAPONPROF:Greatclub|Javelin` -- rather than natural attacks,
 /// same shape subset 08's Dryad already proved), `RACETYPE:Humanoid`,
@@ -86,7 +86,7 @@ pub fn ogre() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:323`, `CR:3`. Real row tokens: `SIZE:L`,
+/// Source: `b1_races:323`, `CR:3`. Real row tokens: `SIZE:L`,
 /// `MOVE:Walk,60,Fly,120` (Walk transcribed; Fly out of scope, same rule
 /// subset 08's Cockatrice already proved), one pipe-separated
 /// `NATURALATTACKS:` token (`Bite,...,*1,1d3|Hoof,...,*2,1d6`,
@@ -109,7 +109,7 @@ pub fn pegasus() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:341`, `CR:3`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:341`, `CR:3`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,40,Climb,10` (Walk transcribed; Climb out of scope, same
 /// rule subset 08's Ettercap already proved), one pipe-separated
 /// `NATURALATTACKS:` token (`Bite,...,*1,1d3|Antennae,...,*1,0` --
@@ -133,7 +133,7 @@ pub fn rust_monster() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:357`, `CR:3`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:357`, `CR:3`. Real row tokens: `SIZE:M`,
 /// `MOVE:Fly,40` -- no `Walk` component at all, this subset's new shape
 /// (see module doc comment); `speed_ft` is `0` rather than a guessed
 /// value, and the real `Fly,40` token is out of scope for the same

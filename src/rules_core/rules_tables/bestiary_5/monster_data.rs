@@ -1,16 +1,16 @@
 //! bestiary_5 monster + monster-ability tables, transcribed verbatim
-//! from the book's own PCGen `.lst` rows.
+//! from the book's own PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_monster_tables.py bestiary_5`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst` (which counts `.MOD`/`.COPY` overlays the
+//! line count over the source file (which counts `.MOD`/`.COPY` overlays the
 //! inventory correctly excludes).
 //!
 //! Sources, with the line each record was read from carried per row:
-//!   * `b5_abilities_race_oa.lst` -- 9 monster-ability rows
-//!   * `b5_abilities_race.lst` -- 30 monster-ability rows
-//!   * `ce_abilities_race.lst` -- 1 monster-ability rows
+//!   * `b5_abilities_race_oa` -- 9 monster-ability rows
+//!   * `b5_abilities_race` -- 30 monster-ability rows
+//!   * `ce_abilities_race` -- 1 monster-ability rows
 //!
 //! 40 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they SHIP with `owners: &[]` rather than being
@@ -20,46 +20,46 @@
 //! reaches no screen -- reachability is NOT claimed for these, and each key is
 //! pinned as a named, provable non-reach in `reach_gate.rs::
 //! UNREACHED_RECORD_FINDINGS`, never silently assumed reachable:
-//!   * `b5_abilities_race_oa.lst:9`
-//!   * `b5_abilities_race_oa.lst:10`
-//!   * `b5_abilities_race_oa.lst:11`
-//!   * `b5_abilities_race_oa.lst:12`
-//!   * `b5_abilities_race_oa.lst:15`
-//!   * `b5_abilities_race_oa.lst:16`
-//!   * `b5_abilities_race_oa.lst:17`
-//!   * `b5_abilities_race_oa.lst:18`
-//!   * `b5_abilities_race_oa.lst:19`
-//!   * `b5_abilities_race.lst:22`
-//!   * `b5_abilities_race.lst:33`
-//!   * `b5_abilities_race.lst:36`
-//!   * `b5_abilities_race.lst:39`
-//!   * `b5_abilities_race.lst:40`
-//!   * `b5_abilities_race.lst:43`
-//!   * `b5_abilities_race.lst:46`
-//!   * `b5_abilities_race.lst:49`
-//!   * `b5_abilities_race.lst:50`
-//!   * `b5_abilities_race.lst:51`
-//!   * `b5_abilities_race.lst:54`
-//!   * `b5_abilities_race.lst:55`
-//!   * `b5_abilities_race.lst:56`
-//!   * `b5_abilities_race.lst:60`
-//!   * `b5_abilities_race.lst:61`
-//!   * `b5_abilities_race.lst:64`
-//!   * `b5_abilities_race.lst:67`
-//!   * `b5_abilities_race.lst:70`
-//!   * `b5_abilities_race.lst:71`
-//!   * `b5_abilities_race.lst:72`
-//!   * `b5_abilities_race.lst:75`
-//!   * `b5_abilities_race.lst:78`
-//!   * `b5_abilities_race.lst:81`
-//!   * `b5_abilities_race.lst:85`
-//!   * `b5_abilities_race.lst:96`
-//!   * `b5_abilities_race.lst:98`
-//!   * `b5_abilities_race.lst:99`
-//!   * `b5_abilities_race.lst:100`
-//!   * `b5_abilities_race.lst:101`
-//!   * `b5_abilities_race.lst:102`
-//!   * `ce_abilities_race.lst:2439`
+//!   * `b5_abilities_race_oa:9`
+//!   * `b5_abilities_race_oa:10`
+//!   * `b5_abilities_race_oa:11`
+//!   * `b5_abilities_race_oa:12`
+//!   * `b5_abilities_race_oa:15`
+//!   * `b5_abilities_race_oa:16`
+//!   * `b5_abilities_race_oa:17`
+//!   * `b5_abilities_race_oa:18`
+//!   * `b5_abilities_race_oa:19`
+//!   * `b5_abilities_race:22`
+//!   * `b5_abilities_race:33`
+//!   * `b5_abilities_race:36`
+//!   * `b5_abilities_race:39`
+//!   * `b5_abilities_race:40`
+//!   * `b5_abilities_race:43`
+//!   * `b5_abilities_race:46`
+//!   * `b5_abilities_race:49`
+//!   * `b5_abilities_race:50`
+//!   * `b5_abilities_race:51`
+//!   * `b5_abilities_race:54`
+//!   * `b5_abilities_race:55`
+//!   * `b5_abilities_race:56`
+//!   * `b5_abilities_race:60`
+//!   * `b5_abilities_race:61`
+//!   * `b5_abilities_race:64`
+//!   * `b5_abilities_race:67`
+//!   * `b5_abilities_race:70`
+//!   * `b5_abilities_race:71`
+//!   * `b5_abilities_race:72`
+//!   * `b5_abilities_race:75`
+//!   * `b5_abilities_race:78`
+//!   * `b5_abilities_race:81`
+//!   * `b5_abilities_race:85`
+//!   * `b5_abilities_race:96`
+//!   * `b5_abilities_race:98`
+//!   * `b5_abilities_race:99`
+//!   * `b5_abilities_race:100`
+//!   * `b5_abilities_race:101`
+//!   * `b5_abilities_race:102`
+//!   * `ce_abilities_race:2439`
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock};
 
@@ -79,7 +79,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.46"),
         owners: &[],
-        source_file: "b5_abilities_race_oa.lst",
+        source_file: "b5_abilities_race_oa",
         source_line: 9,
         codex_generated_name: false,
         rename_reason: None,
@@ -95,7 +95,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.46"),
         owners: &[],
-        source_file: "b5_abilities_race_oa.lst",
+        source_file: "b5_abilities_race_oa",
         source_line: 10,
         codex_generated_name: false,
         rename_reason: None,
@@ -111,7 +111,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.46"),
         owners: &[],
-        source_file: "b5_abilities_race_oa.lst",
+        source_file: "b5_abilities_race_oa",
         source_line: 11,
         codex_generated_name: false,
         rename_reason: None,
@@ -127,7 +127,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race_oa.lst",
+        source_file: "b5_abilities_race_oa",
         source_line: 12,
         codex_generated_name: false,
         rename_reason: None,
@@ -143,7 +143,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &[],
-        source_file: "b5_abilities_race_oa.lst",
+        source_file: "b5_abilities_race_oa",
         source_line: 15,
         codex_generated_name: false,
         rename_reason: None,
@@ -159,7 +159,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &[],
-        source_file: "b5_abilities_race_oa.lst",
+        source_file: "b5_abilities_race_oa",
         source_line: 16,
         codex_generated_name: false,
         rename_reason: None,
@@ -175,7 +175,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &[],
-        source_file: "b5_abilities_race_oa.lst",
+        source_file: "b5_abilities_race_oa",
         source_line: 17,
         codex_generated_name: false,
         rename_reason: None,
@@ -191,7 +191,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &[],
-        source_file: "b5_abilities_race_oa.lst",
+        source_file: "b5_abilities_race_oa",
         source_line: 18,
         codex_generated_name: false,
         rename_reason: None,
@@ -207,7 +207,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race_oa.lst",
+        source_file: "b5_abilities_race_oa",
         source_line: 19,
         codex_generated_name: false,
         rename_reason: None,
@@ -223,7 +223,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.49"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 22,
         codex_generated_name: false,
         rename_reason: None,
@@ -239,7 +239,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.82"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 33,
         codex_generated_name: false,
         rename_reason: None,
@@ -255,7 +255,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.83"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 36,
         codex_generated_name: false,
         rename_reason: None,
@@ -271,7 +271,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.84"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 39,
         codex_generated_name: false,
         rename_reason: None,
@@ -287,7 +287,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.84"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 40,
         codex_generated_name: false,
         rename_reason: None,
@@ -303,7 +303,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.84"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 43,
         codex_generated_name: false,
         rename_reason: None,
@@ -319,7 +319,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.170"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 46,
         codex_generated_name: false,
         rename_reason: None,
@@ -335,7 +335,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.158"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 49,
         codex_generated_name: false,
         rename_reason: None,
@@ -351,7 +351,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.158"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 50,
         codex_generated_name: false,
         rename_reason: None,
@@ -367,7 +367,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 51,
         codex_generated_name: false,
         rename_reason: None,
@@ -383,7 +383,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.213"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 54,
         codex_generated_name: false,
         rename_reason: None,
@@ -399,7 +399,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.213"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 55,
         codex_generated_name: false,
         rename_reason: None,
@@ -415,7 +415,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 56,
         codex_generated_name: false,
         rename_reason: None,
@@ -431,7 +431,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["2*CONSCORE"],
         source_page: Some("p.276"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 60,
         codex_generated_name: false,
         rename_reason: None,
@@ -447,7 +447,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.276"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 61,
         codex_generated_name: false,
         rename_reason: None,
@@ -463,7 +463,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["10*CONSCORE"],
         source_page: Some("p.276"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 64,
         codex_generated_name: false,
         rename_reason: None,
@@ -479,7 +479,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["12+CHA"],
         source_page: Some("p.279"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 67,
         codex_generated_name: false,
         rename_reason: None,
@@ -495,7 +495,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.282"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 70,
         codex_generated_name: false,
         rename_reason: None,
@@ -511,7 +511,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.282"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 71,
         codex_generated_name: false,
         rename_reason: None,
@@ -527,7 +527,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.282"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 72,
         codex_generated_name: false,
         rename_reason: None,
@@ -543,7 +543,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.282"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 75,
         codex_generated_name: false,
         rename_reason: None,
@@ -559,7 +559,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.283"),
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 78,
         codex_generated_name: false,
         rename_reason: None,
@@ -575,7 +575,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 81,
         codex_generated_name: false,
         rename_reason: None,
@@ -591,7 +591,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 85,
         codex_generated_name: false,
         rename_reason: None,
@@ -607,7 +607,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["max(2,HD-4)", "HD/2", "SR+5"],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 96,
         codex_generated_name: false,
         rename_reason: None,
@@ -623,7 +623,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 98,
         codex_generated_name: false,
         rename_reason: None,
@@ -639,7 +639,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 99,
         codex_generated_name: false,
         rename_reason: None,
@@ -655,7 +655,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 100,
         codex_generated_name: false,
         rename_reason: None,
@@ -671,7 +671,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 101,
         codex_generated_name: false,
         rename_reason: None,
@@ -687,7 +687,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &[],
-        source_file: "b5_abilities_race.lst",
+        source_file: "b5_abilities_race",
         source_line: 102,
         codex_generated_name: false,
         rename_reason: None,
@@ -703,7 +703,7 @@ pub(crate) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["UMR_UnnaturalAura_DC"],
         source_page: Some("p.301"),
         owners: &[],
-        source_file: "ce_abilities_race.lst",
+        source_file: "ce_abilities_race",
         source_line: 2439,
         codex_generated_name: false,
         rename_reason: None,

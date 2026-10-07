@@ -1,15 +1,15 @@
 //! book_of_the_damned_volume_1 companion tables, transcribed verbatim from the book's own
-//! PCGen `.lst` rows.
+//! PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_companion_tables.py book_of_the_damned_volume_1`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst`.
+//! line count over the source file.
 //!
 //! Sources, with the file AND line each record was read from carried per row:
-//!   * `botd1_races_companion.lst` -- 1 companion creature rows
-//!   * `botd1_abilities_companion.lst` -- 1 companion ability rows
-//!   * `botd1_classes_companion.lst` -- 2 companion class rows
+//!   * `botd1_races_companion` -- 1 companion creature rows
+//!   * `botd1_abilities_companion` -- 1 companion ability rows
+//!   * `botd1_classes_companion` -- 2 companion class rows
 //!
 //! NOT transcribed -- ability rows no creature row of this book owns, so
 //! nothing could ever reach them on screen. Dropped rather than emitted
@@ -46,7 +46,7 @@
 //!   * `Imp Companion ~ Share Spells`
 //!   * `Imp Companion ~ Starting Shape Change`
 //!
-//! `*_classes_companion.lst` CLASS rows, transcribed as `CompanionClassRecord`
+//! `*_classes_companion` CLASS rows, transcribed as `CompanionClassRecord`
 //! (`AT-34-E3-001`, `decisions.md §17`) rather than dropped. A PCGen monster
 //! class is the hit-dice progression a creature row's `MONSTERCLASS:` token
 //! names -- it states no `SIZE:`, no `MOVE:` and no natural attacks, so it is
@@ -78,7 +78,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Imp Companion ~ Poison"],
         external_ability_refs: &["Detect Good ~ Constant", "Detect Magic ~ Constant", "Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "botd1_races_companion.lst",
+        source_file: "botd1_races_companion",
         source_line: 6,
     },
 ];
@@ -98,12 +98,12 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.78"),
         owners: &["Companion (Imp)"],
         cross_book_owners: &[],
-        source_file: "botd1_abilities_companion.lst",
+        source_file: "botd1_abilities_companion",
         source_line: 8,
     },
 ];
 
-/// Every book_of_the_damned_volume_1 `*_classes_companion.lst` row (2 rows).
+/// Every book_of_the_damned_volume_1 `*_classes_companion` row (2 rows).
 pub(crate) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
     CompanionClassRecord {
         key: "Imp Companion",
@@ -115,7 +115,7 @@ pub(crate) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
         source_page: Some("p.44"),
         ability_grants: &[],
         fact_class_type: Some("Monster"),
-        source_file: "botd1_classes_companion.lst",
+        source_file: "botd1_classes_companion",
         source_line: 5,
     },
     CompanionClassRecord {
@@ -128,7 +128,7 @@ pub(crate) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
         source_page: None,
         ability_grants: &[CompanionAbilityGrant { kind: "FEAT", mode: "AUTOMATIC", name: "CMB Output", conditions: &[] }],
         fact_class_type: None,
-        source_file: "botd1_classes_companion.lst",
+        source_file: "botd1_classes_companion",
         source_line: 8,
     },
 ];

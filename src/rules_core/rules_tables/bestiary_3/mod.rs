@@ -1,7 +1,7 @@
 //! Bestiary 3 (`SOURCESHORT:B3`) — `monster` + `monster_ability` + `companion`.
 //!
 //! The `companion` family was added by SD-29 Epic 7 round 4 and is documented
-//! above this file's test module; it draws on four `.lst` files none of the
+//! above this file's test module; it draws on four source file files none of the
 //! monster text below mentions. The two families share only a `RuleSetId`.
 //!
 //! **261 of this book's 261 monster rows and 36 of its 40 ability rows ship.**
@@ -23,14 +23,14 @@
 //! not what ships now.
 //!
 //! Corpus unit counts are the inventory's own, never a line count over the
-//! `.lst`:
+//! source file:
 //! `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
 //! print(sum(1 for u in d['units'] if u['book']=='bestiary_3'
 //! and u['kind']=='monster'))"` → 261, `monster_ability` → 40.
 //!
 //! # Zero Product Identity rows
 //!
-//! `grep -c 'NAMEISPI:YES' b3_races.lst b3_abilities_race.lst` → `0` and `0`,
+//! `grep -c 'NAMEISPI:YES' b3_races b3_abilities_race` → `0` and `0`,
 //! and the term-list screen finds nothing either. `ogl-pi-blacklist.md` §2
 //! predicts exactly that for a `roleplaying_game/` bestiary, and Bestiary 2
 //! (`decisions.md §52`) read the same way. The absence is held by a test against
@@ -49,23 +49,23 @@
 //! `every_shipped_ability_is_reached_by_its_namespaced_key` below now excludes
 //! them by name rather than silently widening what it asserts.
 //!
-//! That 0 is not an absence of the token. `b3_races.lst` carries **100**
+//! That 0 is not an absence of the token. `b3_races` carries **100**
 //! `ABILITY:Special Ability|AUTOMATIC|` tokens
-//! (`grep -c 'ABILITY:Special Ability|AUTOMATIC|' b3_races.lst` → 100). They
-//! name real ability rows in `b3_abilities_race.lst`. None of them is in this
+//! (`grep -c 'ABILITY:Special Ability|AUTOMATIC|' b3_races` → 100). They
+//! name real ability rows in `b3_abilities_race`. None of them is in this
 //! book's `monster_ability` key set, because of the following.
 //!
 //! # The scope finding: 341 of this book's `race_trait` units are monster
 //! abilities
 //!
-//! `b3_abilities_race.lst` holds **838** inventory units, and the inventory
+//! `b3_abilities_race` holds **838** inventory units, and the inventory
 //! splits them **798 `race_trait` / 40 `monster_ability`**. The split is made by
 //! `v06_work_inventory::file_kind`, which reads only the **first** `TYPE:`
 //! segment:
 //!
 //! ```text
-//! b3_abilities_race.lst:289  TYPE:SpecialQuality.Extraordinary.AdaroRacial      -> monster_ability
-//! b3_abilities_race.lst:703  TYPE:AghashRacialAbility.SpecialQuality.Supernatural -> race_trait
+//! b3_abilities_race:289  TYPE:SpecialQuality.Extraordinary.AdaroRacial      -> monster_ability
+//! b3_abilities_race:703  TYPE:AghashRacialAbility.SpecialQuality.Supernatural -> race_trait
 //! ```
 //!
 //! Both rows are a monster's special quality, namespaced to a monster of this
@@ -75,7 +75,7 @@
 //!
 //! | measure | count |
 //! |---|---|
-//! | `race_trait` units in `b3_abilities_race.lst` | 798 |
+//! | `race_trait` units in `b3_abilities_race` | 798 |
 //! | …whose `KEY:` is namespaced `<X> ~ <Y>` | 778 |
 //! | …whose `<X>` is a **bestiary_3 monster** | **341** |
 //! | …and which also carry `SpecialQuality`/`SpecialAttack` in a later `TYPE:` segment | 340 |
@@ -109,7 +109,7 @@
 //! `monster_data.rs`'s generated header.
 //!
 //! One of them is worth naming because it changed the transcriber.
-//! `b3_abilities_race.lst:1663` (`Jiang-Shi Vampire`) carries **11** `DESC:`
+//! `b3_abilities_race:1663` (`Jiang-Shi Vampire`) carries **11** `DESC:`
 //! tokens, none gated on `DisplayFullAbility` — an acquired template written as
 //! 11 sections. `parse_desc` refuses to pick one by position, and until this
 //! book that refusal was a `SystemExit` raised from inside the Product Identity
@@ -118,7 +118,7 @@
 //! transcription of a whole book. The refusal is now deferred: unscreenable rows
 //! are collected, and the transcription stops only if one **survives** to be
 //! emitted. Nothing is waived — the base creature row this one templates is
-//! commented out at `b3_races.lst:293`, so it has no owner and is dropped by the
+//! commented out at `b3_races:293`, so it has no owner and is dropped by the
 //! pass that actually applies to it.
 
 pub(crate) mod companion_data;
@@ -154,14 +154,14 @@ pub fn monster_abilities() -> &'static [MonsterAbilityRecord] {
 // SD-29 Epic 7 round 4 (`SD29-E7-F2-005`) — this book's `companion` family.
 //
 // The second family Bestiary 3 contributes, and it shares nothing with the
-// monsters above but a `RuleSetId`: different `.lst` files, different chassis,
+// monsters above but a `RuleSetId`: different source file files, different chassis,
 // different catalog screen. `decisions.md §51.5` rules that two lanes
 // registering families of one book is the designed path, and the monster lane
 // having already compiled `RuleSetId::B3` in `9595bd82` is what made this
 // registration free of any scope flip.
 //
 // **All 85 companion units ship** — 31 creature rows and all 54 ability rows,
-// with no `OPEN_FINDINGS` shortfall, drawn from four `.lst` files.
+// with no `OPEN_FINDINGS` shortfall, drawn from four source file files.
 //
 // The round expected 19 orphans here and found none. Six creature rows of this
 // book carry an `OUTPUTNAME:` that differs from their `KEY:`
@@ -337,7 +337,7 @@ mod tests {
     /// each one is**, so a regeneration that quietly pulls one back in fails
     /// here naming the line that returned.
     ///
-    /// `b3_abilities_race.lst:1663` is in this list and is also the row that
+    /// `b3_abilities_race:1663` is in this list and is also the row that
     /// made the transcriber defer its `DESC:` refusal — see this module's
     /// header. If a future widening teaches `parse_desc` that shape, this test
     /// still holds: the row is excluded because nothing owns it, not because it
@@ -365,7 +365,7 @@ mod tests {
                 .find(|a| a.source_line == line)
                 .unwrap_or_else(|| {
                     panic!(
-                        "b3_abilities_race.lst:{line} ships for shape measurement \
+                        "b3_abilities_race:{line} ships for shape measurement \
                          (decisions.md §20)"
                     )
                 });
@@ -375,7 +375,7 @@ mod tests {
                 ability.key
             );
         }
-        // **Round 9 update (`decisions.md §27b`):** `b3_abilities_race.lst:1663`
+        // **Round 9 update (`decisions.md §27b`):** `b3_abilities_race:1663`
         // (Jiang-Shi Vampire) used to be excluded by the multi-DESC: screen.
         // `parse_desc`'s new generalised sixth branch (`_concat_desc_variants`)
         // now resolves it -- an `&nl;`-marker continuation shape, same
@@ -386,7 +386,7 @@ mod tests {
             .find(|a| a.source_line == 1663)
             .unwrap_or_else(|| {
                 panic!(
-                    "b3_abilities_race.lst:1663 ships for shape measurement \
+                    "b3_abilities_race:1663 ships for shape measurement \
                      (decisions.md §27b round 9)"
                 )
             });
@@ -404,7 +404,7 @@ mod tests {
     /// `key: "Archon (Legion)", name: "Legion Archon"` is namespaced by its
     /// SHORT display name, not its parenthesised corpus key). This was the
     /// first book in the lane where the property held for the WHOLE shipped
-    /// set (`row-named` reads 0 against `b3_races.lst`'s 100
+    /// set (`row-named` reads 0 against `b3_races`'s 100
     /// `ABILITY:Special Ability|AUTOMATIC|` tokens, which name rows the
     /// inventory files under `race_trait` — `file_kind` reads only the first
     /// `TYPE:` segment; see this module's header for the 341-unit scope

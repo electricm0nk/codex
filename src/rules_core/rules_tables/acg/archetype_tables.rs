@@ -32,7 +32,7 @@
 //!
 //! Every field below is copied verbatim from the real corpus row (source:
 //! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
-//! advanced_class_guide/acg_abilities_class.lst`), generated
+//! advanced_class_guide/acg_abilities_class`), generated
 //! programmatically by a one-off extraction script, not hand-transcribed.
 
 use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
@@ -47,7 +47,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     static TABLE: std::sync::OnceLock<Vec<ArchetypeSwapEntry>> = std::sync::OnceLock::new();
     TABLE.get_or_init(|| {
         vec![
-        // Alchemist Archetype ~ Inspired Chemist -- acg_abilities_class.lst:2315
+        // Alchemist Archetype ~ Inspired Chemist -- acg_abilities_class:2315
         ArchetypeSwapEntry {
             key: "Alchemist Archetype ~ Inspired Chemist",
             subject: "Alchemist",
@@ -62,7 +62,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Inspired Chemist ~ Bonus Languages", at_level: 1, description: Some("An inspired chemist can learn three languages in place of a discovery."), benefit: None },
             ],
         },
-        // Arcanist Archetype ~ Blade Adept -- acg_abilities_class.lst:2373
+        // Arcanist Archetype ~ Blade Adept -- acg_abilities_class:2373
         ArchetypeSwapEntry {
             key: "Arcanist Archetype ~ Blade Adept",
             subject: "Arcanist",
@@ -76,7 +76,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Blade Adept ~ Adept Exploits", at_level: 1, description: Some("A blade adept can select from the following additional exploits. Eldritch Blade, Magus Arcana, Spell Strike, Student of the Blade, and Weapon Specialization."), benefit: None },
             ],
         },
-        // Arcanist Archetype ~ Blood Arcanist -- acg_abilities_class.lst:2374
+        // Arcanist Archetype ~ Blood Arcanist -- acg_abilities_class:2374
         ArchetypeSwapEntry {
             key: "Arcanist Archetype ~ Blood Arcanist",
             subject: "Arcanist",
@@ -88,7 +88,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Blood Arcanist ~ Bloodline", at_level: 1, description: Some("A blood arcanist selects one bloodline from those available through the sorcerer bloodline Class Feature.Arcanist Class Feature. The blood arcanist gains the bloodline arcana and bloodline powers of that bloodline, treating her arcanist level as her sorcerer level. The blood arcanist does not gain the class skill, bonus feats, or bonus spells from her bloodline. If the blood arcanist takes levels in another class that grants a bloodline, the bloodlines must be the same type, even if that means that the bloodline of one of her classes must change. Subject to GM discretion, the blood arcanist can change her former bloodline to make them conform. This ability replaces the arcanist exploits gained at 1st, 3rd, 9th, and 15th levels, as well as magical supremacy. A blood arcanist cannot select the bloodline development arcanist exploit."), benefit: None },
             ],
         },
-        // Arcanist Archetype ~ Brown-Fur Transmuter -- acg_abilities_class.lst:2375
+        // Arcanist Archetype ~ Brown-Fur Transmuter -- acg_abilities_class:2375
         ArchetypeSwapEntry {
             key: "Arcanist Archetype ~ Brown-Fur Transmuter",
             subject: "Arcanist",
@@ -102,7 +102,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Brown-Fur Transmuter ~ Transmutation Supremacy", at_level: 20, description: Some("At 20th level, the brown-fur transmuter learns to fully master the power of transmutation. Whenever she casts a transmutation spell, it is treated as it were affected by the Extend Spell feat without altering the casting time or slot used. (She cannot then alter its duration again with the Extend Spell feat). Whenever she uses her powerful change ability, the bonus increases by 4 instead of 2. Her share transmutation ability can now target a willing creature within 30 feet. This ability replaces magical supremacy."), benefit: None },
             ],
         },
-        // Arcanist Archetype ~ Eldritch Font -- acg_abilities_class.lst:2376
+        // Arcanist Archetype ~ Eldritch Font -- acg_abilities_class:2376
         ArchetypeSwapEntry {
             key: "Arcanist Archetype ~ Eldritch Font",
             subject: "Arcanist",
@@ -118,7 +118,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Eldritch Font ~ Bottomless Well", at_level: 20, description: Some("An eldritch font can spend 1 hour studying her spellbook to refuel herself. Doing so allows her to prepare new spells and regain upto %1 points of arcane reservoir. She can use this ability multiple times per day, however she still only regains spell slots once per day.|floor(ArcanistLVL/2)"), benefit: None },
             ],
         },
-        // Arcanist Archetype ~ Elemental Master -- acg_abilities_class.lst:2377
+        // Arcanist Archetype ~ Elemental Master -- acg_abilities_class:2377
         ArchetypeSwapEntry {
             key: "Arcanist Archetype ~ Elemental Master",
             subject: "Arcanist",
@@ -128,7 +128,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["ArcanistExploit1", "ArcanistExploit3", "ArcanistExploit9", "ArcanistExploit11", "ArcanistExploit15"]),
             grants: &[],
         },
-        // Arcanist Archetype ~ Occultist -- acg_abilities_class.lst:2378
+        // Arcanist Archetype ~ Occultist -- acg_abilities_class:2378
         ArchetypeSwapEntry {
             key: "Arcanist Archetype ~ Occultist",
             subject: "Arcanist",
@@ -143,7 +143,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Occultist ~ Perfect Summoner", at_level: 20, description: Some("An occultist can use her conjurer's focus without spending points from her arcane reservoir, and the creatures summoned last until dismissed."), benefit: None },
             ],
         },
-        // Arcanist Archetype ~ School Savant -- acg_abilities_class.lst:2379
+        // Arcanist Archetype ~ School Savant -- acg_abilities_class:2379
         ArchetypeSwapEntry {
             key: "Arcanist Archetype ~ School Savant",
             subject: "Arcanist",
@@ -153,7 +153,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["ArcanistExploit1", "ArcanistExploit3", "ArcanistExploit7"]),
             grants: &[],
         },
-        // Arcanist Archetype ~ Spell Specialist -- acg_abilities_class.lst:2380
+        // Arcanist Archetype ~ Spell Specialist -- acg_abilities_class:2380
         ArchetypeSwapEntry {
             key: "Arcanist Archetype ~ Spell Specialist",
             subject: "Arcanist",
@@ -168,7 +168,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Spell Specialist ~ Spellwarp", at_level: 1, description: Some("A spell specialist can reduce the radius of a spread or burst effect or shorten the length of a cone. All changes must occur in 5-foot increments, to a minimum of 5 feet. Alternatively, the spell specialist can change the area of effect of a cone spell to a line with a length equal to the spell's range. This ability replaces the arcanist exploits gained at 1st, 7th, 13th, and 19th levels."), benefit: None },
             ],
         },
-        // Arcanist Archetype ~ White Mage -- acg_abilities_class.lst:2382
+        // Arcanist Archetype ~ White Mage -- acg_abilities_class:2382
         ArchetypeSwapEntry {
             key: "Arcanist Archetype ~ White Mage",
             subject: "Arcanist",
@@ -180,7 +180,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "White Mage ~ Spontaneous Healing", at_level: 1, description: Some("A white mage can expend 1 point from her arcane reservoir to use one of her spell slots to cast a cure spell (any spell with \"cure\" in its name) from the cleric spell list as if it were on her spell list and prepared. The spell must be of a level the arcanist can cast. At 10th level, the white mage can expend 5 points from her arcane reservoir and a spell slot of at least 5th level to cast breath of life."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Flame Dancer -- acg_abilities_class.lst:2684
+        // Bard Archetype ~ Flame Dancer -- acg_abilities_class:2684
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Flame Dancer",
             subject: "Bard",
@@ -195,7 +195,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Flame Dancer ~ Fan the Flames", at_level: 8, description: Some("A fire dancer adds burning hands, flaming sphere, and fireball to his list of bard spells known (as 1st-, 2nd-, and 3rd-level spells, respectively)."), benefit: None },
             ],
         },
-        // Bard Archetype ~ Voice of the Wild -- acg_abilities_class.lst:2685
+        // Bard Archetype ~ Voice of the Wild -- acg_abilities_class:2685
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Voice of the Wild",
             subject: "Bard",
@@ -209,7 +209,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Voice of the Wild ~ Song of the Wild", at_level: 3, description: Some("The voice of the wild can use bardic performance to grant an animal aspect to an ally, as if using the hunter's animal focus class feature. The ally must be able to hear or see the performance. The voice of the wild uses his bard level as his hunter level for determining the effect of the animal aspect. The bard can affect a second ally with this performance at 10th level and a third at 17th level."), benefit: None },
             ],
         },
-        // Bloodrager Archetype ~ Blood Conduit -- acg_abilities_class.lst:2702
+        // Bloodrager Archetype ~ Blood Conduit -- acg_abilities_class:2702
         ArchetypeSwapEntry {
             key: "Bloodrager Archetype ~ Blood Conduit",
             subject: "Bloodrager",
@@ -223,7 +223,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Blood Conduit ~ Reflexive Conduit", at_level: 14, description: Some("At 14th level, a blood conduit can discharge his power into foes that attempt bodily contact with him. While wearing light or no armor, when the blood conduit is subject to a combat maneuver check made to bull rush, grapple, pin, reposition, or trip him, as an immediate action he can target his attacker with a bloodrager spell that has a range of touch. If the spell would normally require a touch attack, a blood conduit can attempt a combat maneuver check for this attack instead."), benefit: None },
             ],
         },
-        // Bloodrager Archetype ~ Bloodrider -- acg_abilities_class.lst:2703
+        // Bloodrager Archetype ~ Bloodrider -- acg_abilities_class:2703
         ArchetypeSwapEntry {
             key: "Bloodrager Archetype ~ Bloodrider",
             subject: "Bloodrager",
@@ -237,7 +237,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Bloodrider ~ Blood Bond", at_level: 9, description: Some("At 9th level, the bloodrider and his feral mount gain a closer bond that allows the bloodrider to augment his mount based on his bloodline. While the bloodrider is bloodraging and on his feral mount, he grants the mount all the immunities and resistances he gains from bloodline powers. Furthermore, whenever the bloodrager is affected by a spell or spell-like ability with the range of personal while on the feral mount, the feral mount also gains the benef it of that spell. This ability replaces the bloodline feat gained at 9th level."), benefit: None },
             ],
         },
-        // Bloodrager Archetype ~ Greenrager -- acg_abilities_class.lst:2704
+        // Bloodrager Archetype ~ Greenrager -- acg_abilities_class:2704
         ArchetypeSwapEntry {
             key: "Bloodrager Archetype ~ Greenrager",
             subject: "Bloodrager",
@@ -251,7 +251,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Greenrager ~ Furious Summoning", at_level: 9, description: Some("Creatures summoned by the bloodrager's summon nature's ally spell gain a +%1 morale bonus to Strength and Constitution and gain the druid's woodland stride ability.|min(8,(floor((CASTERLEVEL-2)/9)+2)*2)"), benefit: None },
             ],
         },
-        // Bloodrager Archetype ~ Metamagic Rager -- acg_abilities_class.lst:2705
+        // Bloodrager Archetype ~ Metamagic Rager -- acg_abilities_class:2705
         ArchetypeSwapEntry {
             key: "Bloodrager Archetype ~ Metamagic Rager",
             subject: "Bloodrager",
@@ -263,7 +263,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Metamagic Rager ~ Meta-Rage", at_level: 5, description: Some("[NOT IMPLEMENTED] A metamagic rager can sacrifice additional rounds of bloodrage to apply a metamagic feat he knows to a bloodrager spell. This costs a number of rounds of bloodrage equal to twice what the spell's adjusted level would normally be with the metamagic feat applied (minimum 2 rounds). The metamagic rager does not have to be bloodraging to use this ability. The metamagic effect is applied without increasing the level of the spell slot expended, though the casting time is increased as normal. The metamagic rager can apply only one metamagic feat he knows in this manner with each casting. Additionally, when the metamagic rager takes a bloodline feat, he can choose to take a metamagic feat instead."), benefit: None },
             ],
         },
-        // Bloodrager Archetype ~ Rageshaper -- acg_abilities_class.lst:2707
+        // Bloodrager Archetype ~ Rageshaper -- acg_abilities_class:2707
         ArchetypeSwapEntry {
             key: "Bloodrager Archetype ~ Rageshaper",
             subject: "Bloodrager",
@@ -276,7 +276,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Rageshaper ~ Furious Transformation", at_level: 5, description: Some("A rageshaper can attempt to bolster any transmutation spell from the bloodrager spell list with the polymorph subschool while bloodraging. The rageshaper must succeed at a concentration check as if casting defensively to modify the spell; otherwise, the spell is wasted. If he succeeds, the spell is treated as if the rageshaper had the Extend Spell metamagic feat. The rageshaper must be the spell's intended target or cast a spell with a range of personal to gain this effect. If the rageshaper casts a spell that is linked to the rageshaper's own bloodline, such as a rageshaper with the elemental bloodline who casts elemental body I, the spell is automatically extended without forcing the concentration check, so long as the rageshaper casts it while in a bloodrage."), benefit: None },
             ],
         },
-        // Bloodrager Archetype ~ Spelleater -- acg_abilities_class.lst:2708
+        // Bloodrager Archetype ~ Spelleater -- acg_abilities_class:2708
         ArchetypeSwapEntry {
             key: "Bloodrager Archetype ~ Spelleater",
             subject: "Bloodrager",
@@ -289,7 +289,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Spelleater ~ Spell Eating", at_level: 5, description: Some("A spelleater can consume spell slots for an extra dose of healing. As a swift action, the spelleater can consume one unused bloodrager spell slot to heal 1d8 damage for each level of the spell slot consumed."), benefit: None },
             ],
         },
-        // Bloodrager Archetype ~ Steelblood -- acg_abilities_class.lst:2709
+        // Bloodrager Archetype ~ Steelblood -- acg_abilities_class:2709
         ArchetypeSwapEntry {
             key: "Bloodrager Archetype ~ Steelblood",
             subject: "Bloodrager",
@@ -305,7 +305,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Steelblood ~ Blood Deflection", at_level: 7, description: Some("As an immediate action a steelblood can sacrifice a bloodrager spell slot to gain a deflection bonus to AC equal to the level of the spell sacrificed. The deflection bonus lasts until the start of his next turn. This ability can be applied after an attack roll is made against the steelblood, allowing the steelblood to convert a hit into a miss if the deflection bonus is high enough."), benefit: None },
             ],
         },
-        // Brawler Archetype ~ Exemplar -- acg_abilities_class.lst:2845
+        // Brawler Archetype ~ Exemplar -- acg_abilities_class:2845
         ArchetypeSwapEntry {
             key: "Brawler Archetype ~ Exemplar",
             subject: "Brawler",
@@ -319,7 +319,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Exemplar Brawler ~ Field Instruction", at_level: 5, description: Some("%1 times per day, as a standard action, an exemplar can grant a teamwork feat to all allies within 30 feet who can see and hear her. This teamwork feat must be one the exemplar knows or has gained with the martial flexibility ability. Allies retain the use of this teamwork feat for %2 rounds. If the granted teamwork feat is one gained from martial flexibility, this duration ends immediately if the exemplar loses access to that feat. Allies don't need to meet the prerequisites of this teamwork feat. This ability otherwise counts as the cavalier's tactician class feature; feats and other effects which affect tactician (such as Practiced Tactician) apply to it.|FieldTrainingTimes|FieldTrainingDuration"), benefit: None },
             ],
         },
-        // Brawler Archetype ~ Mutagenic Mauler -- acg_abilities_class.lst:2846
+        // Brawler Archetype ~ Mutagenic Mauler -- acg_abilities_class:2846
         ArchetypeSwapEntry {
             key: "Brawler Archetype ~ Mutagenic Mauler",
             subject: "Brawler",
@@ -334,7 +334,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mutagenic Mauler Brawler ~ Greater Mutagen", at_level: 12, description: Some("The mutagenic mauler's mutagen now grants a +4 natural armor bonus, a +6 alchemical bonus to one physical ability score (Strength, Dexterity, or Constitution), and a +4 alchemical bonus to a second physical ability score. The mutagenic mauler takes a -2 penalty on both associated mental ability scores as long as the mutagen persists."), benefit: None },
             ],
         },
-        // Brawler Archetype ~ Shield Champion -- acg_abilities_class.lst:2847
+        // Brawler Archetype ~ Shield Champion -- acg_abilities_class:2847
         ArchetypeSwapEntry {
             key: "Brawler Archetype ~ Shield Champion",
             subject: "Brawler",
@@ -349,7 +349,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Shield Champion Brawler ~ Returning Shield", at_level: 5, description: Some("A shield champion can throw a shield so it ricochets off her target (and possibly other solid objects) to return to her at the end of her turn. This ability functions whether or not the shield champion hits her opponent or moves on her turn. The shield deals no damage to targets it bounces off other than the original target of the shield champion's attack. Other circumstances can prevent the shield from returning to the shield champion, such as an opponent using a readied action to catch the shield, or the shield sticking to a mimic's adhesive. The shield champion can opt to not have a thrown shield return to her, in which case it falls to the ground as it normally would. If the shield has the returning weapon special ability, she can use either that or this ability. If a shield champion has additional attacks from a high base attack bonus, these additional attacks can be ricochets off an earlier target. The distance to each additional target adds to the total range of the shield, and range penalties apply, but there are no additional penalties for attacking in this manner. Because ricocheting attacks are treated as separate attacks, effects and modifiers that only apply to one attack roll (such as true strike) only apply to the first attack and not to the others. A shield champion can throw a shield as part of a brawler's flurry."), benefit: None },
             ],
         },
-        // Brawler Archetype ~ Snakebite Striker -- acg_abilities_class.lst:2848
+        // Brawler Archetype ~ Snakebite Striker -- acg_abilities_class:2848
         ArchetypeSwapEntry {
             key: "Brawler Archetype ~ Snakebite Striker",
             subject: "Brawler",
@@ -365,7 +365,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Snakebite Striker Brawler ~ Maneuver Training", at_level: 15, description: None, benefit: None },
             ],
         },
-        // Brawler Archetype ~ Steel-Breaker -- acg_abilities_class.lst:2849
+        // Brawler Archetype ~ Steel-Breaker -- acg_abilities_class:2849
         ArchetypeSwapEntry {
             key: "Brawler Archetype ~ Steel-Breaker",
             subject: "Brawler",
@@ -379,7 +379,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Steel-Breaker Brawler ~ Exploit Weakness", at_level: 5, description: Some("As a swift action a steel-breaker can observe a creature or object to find its weak point by succeeding at a Wisdom check, adding her brawler level against a DC of 10 + the object's hardness or the target's CR. If it succeeds, the steel-breaker gains a +2 bonus on attack rolls until the end of her turn, and any attacks she makes until the end of her turn ignore the creature or object's DR or hardness. A steel-breaker can instead use this ability as a swift action to analyze the movements and expressions of one creature within 30 feet, granting a bonus on Sense Motive checks and Reflex saving throws, as well as a dodge bonus to AC against that opponent equal to %1 until the start of her next turn.|BrawlerLVL/2"), benefit: None },
             ],
         },
-        // Brawler Archetype ~ Strangler -- acg_abilities_class.lst:2850
+        // Brawler Archetype ~ Strangler -- acg_abilities_class:2850
         ArchetypeSwapEntry {
             key: "Brawler Archetype ~ Strangler",
             subject: "Brawler",
@@ -395,7 +395,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Strangler Brawler ~ Neckbreaker", at_level: 16, description: Some("A strangler can attempt to instantly kill a pinned opponent. This works like the sleeper hold ability, but imposes a -5 penalty on her grapple combat maneuver check. If the opponent succeeds at its Fortitude save, the strangler deals damage as if she had attempted the grapple check to damage her opponent; if the opponent fails its Fortitude save, it dies. Creatures that are immune to critical hits are immune to this ability."), benefit: None },
             ],
         },
-        // Brawler Archetype ~ Wild Child -- acg_abilities_class.lst:2851
+        // Brawler Archetype ~ Wild Child -- acg_abilities_class:2851
         ArchetypeSwapEntry {
             key: "Brawler Archetype ~ Wild Child",
             subject: "Brawler",
@@ -411,7 +411,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Wild Child Brawler ~ Wild Tricks", at_level: 5, description: Some("The wild child has learned a number of tricks to aid his allies and his animal companion, as well as to hinder his opponents. He cannot choose any tricks that rely on ranged attacks. The wild child can use these tricks %1 times per day. This ability otherwise follows the rules of the hunter's tricks ability, including all action costs.|WildTricksTimes"), benefit: None },
             ],
         },
-        // Cavalier Archetype ~ Daring Champion -- acg_abilities_class.lst:2974
+        // Cavalier Archetype ~ Daring Champion -- acg_abilities_class:2974
         ArchetypeSwapEntry {
             key: "Cavalier Archetype ~ Daring Champion",
             subject: "Cavalier",
@@ -428,7 +428,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Daring Champion ~ Champion's Weapon Mastery", at_level: 20, description: Some("When a daring champion threatens a critical hit with a light or onehanded piercing melee weapon, that critical is automatically confirmed. Furthermore, the critical modifier of those weapons increases by 1 (x2 becomes x3, for example)."), benefit: None },
             ],
         },
-        // Cleric Archetype ~ Ecclesitheurge -- acg_abilities_class.lst:3008
+        // Cleric Archetype ~ Ecclesitheurge -- acg_abilities_class:3008
         ArchetypeSwapEntry {
             key: "Cleric Archetype ~ Ecclesitheurge",
             subject: "Cleric",
@@ -443,7 +443,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Ecclesitheurge ~ Bonded Holy Symbol", at_level: 3, description: Some("An ecclesitheurge forms a powerful bond with a holy symbol of his deity, which functions identically to a wizard's bonded object except it can be used to cast cleric and domain spells (instead of wizard spells) and the ecclesitheurge can grant his bonded holy symbol only magic abilities appropriate for a holy symbol or a neck slot item. As with a wizard's bonded item, an ecclesitheurge can add additional magic abilities to his bonded holy symbol as if he had the required item creation feat (typically Craft Wondrous Item), provided he meets the feat's level prerequisites. For example, an ecclesitheurge with a bonded holy symbol who wants to add a wondrous amulet ability, like amulet of natural armor, to his bonded holy symbol must be at least 3rd level to do so. The magic properties of a bonded holy symbol, including any magic abilities the ecclesitheurge added to the object, function for only the ecclesitheurge. If a bonded holy symbol's owner dies or the item is replaced, the object loses all enhancements the ecclesitheurge added using this ability. This ability replaces the increase to channel energy gained at 3rd level."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Feral Shifter -- acg_abilities_class.lst:3021
+        // Druid Archetype ~ Feral Shifter -- acg_abilities_class:3021
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Feral Shifter",
             subject: "Druid",
@@ -456,7 +456,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Feral Shifter ~ Second Animal Focus", at_level: 9, description: Some("When a feral shifter uses her animal focus ability, she selects two different animal aspects for herself instead of one."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Nature Fang -- acg_abilities_class.lst:3022
+        // Druid Archetype ~ Nature Fang -- acg_abilities_class:3022
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Nature Fang",
             subject: "Druid",
@@ -471,7 +471,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Nature Fang ~ Swift Studied Target", at_level: 9, description: Some("A nature fang can study an opponent as a move or swift action."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Wild Whisperer -- acg_abilities_class.lst:3023
+        // Druid Archetype ~ Wild Whisperer -- acg_abilities_class:3023
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Wild Whisperer",
             subject: "Druid",
@@ -486,7 +486,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Wild Whisperer ~ Investigator Talent", at_level: 8, description: Some("A wild whisperer selects an investigator talent (see page 32)."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Martial Master -- acg_abilities_class.lst:3044
+        // Fighter Archetype ~ Martial Master -- acg_abilities_class:3044
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Martial Master",
             subject: "Fighter",
@@ -498,7 +498,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Martial Master ~ Martial Flexibility", at_level: 5, description: Some("The martial master can use a move action to gain the benefit of a combat feat he doesn't possess. The martial master must otherwise meet all the feat's prerequisites."), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Mutation Warrior -- acg_abilities_class.lst:3045
+        // Fighter Archetype ~ Mutation Warrior -- acg_abilities_class:3045
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Mutation Warrior",
             subject: "Fighter",
@@ -511,7 +511,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mutation Warrior ~ Mutagen Discovery", at_level: 7, description: Some("At 7th level and every 4 levels thereafter, the mutation warrior can choose one of the following alchemist discoveries to augment his abilities: feral mutagen, grand mutagen, greater mutagen, infuse mutagen, nauseating flesh, preserve organs, rag doll mutagen, spontaneous healing, tentacle, vestigial arm, wings. The mutagen warrior uses his fighter level as his effective alchemist level for the purpose of whether he qualifies for these discoveries."), benefit: None },
             ],
         },
-        // Hunter Archetype ~ Divine Hunter -- acg_abilities_class.lst:3138
+        // Hunter Archetype ~ Divine Hunter -- acg_abilities_class:3138
         ArchetypeSwapEntry {
             key: "Hunter Archetype ~ Divine Hunter",
             subject: "Hunter",
@@ -524,7 +524,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Divine Hunter ~ Otherworldly Companion", at_level: 3, description: Some("A hunter's companion takes on otherworldly features. If the divine hunter is good (or worships a good deity), the animal companion gains the celestial template. If the hunter is evil (or worships an evil deity), the animal companion gains the fiendish template. If the hunter is neutral and worships a neutral deity, she must choose either the celestial or fiendish template; once this choice is made, it cannot be changed. The companion's CR is considered to be equal to its Hit Dice for the purpose of the celestial or fiendish template."), benefit: None },
             ],
         },
-        // Hunter Archetype ~ Feral Hunter -- acg_abilities_class.lst:3139
+        // Hunter Archetype ~ Feral Hunter -- acg_abilities_class:3139
         ArchetypeSwapEntry {
             key: "Hunter Archetype ~ Feral Hunter",
             subject: "Hunter",
@@ -540,7 +540,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Feral Hunter ~ Summon Pack", at_level: 6, description: Some("Whenever a feral hunter casts a summon nature's ally spell to summon one or more animals, she summons one additional animal of the same type. The summoned creature or creatures must be animals and must be of the same type as the hunter's current aspect or of a similar type (bears for bear aspect, dogs or wolves for wolf aspect, great cats for the tiger aspect, and so on). The additional creature immediately vanishes if the hunter chooses a different aspect or ends his feral focus ability. She can increase the duration of any one summon nature's ally spell afected by this ability to 1 minute per level. She can have only one spell with a duration increased by this ability active at a time."), benefit: None },
             ],
         },
-        // Hunter Archetype ~ Packmaster -- acg_abilities_class.lst:3140
+        // Hunter Archetype ~ Packmaster -- acg_abilities_class:3140
         ArchetypeSwapEntry {
             key: "Hunter Archetype ~ Packmaster",
             subject: "Hunter",
@@ -556,7 +556,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Packmaster ~ Master Of The Pack", at_level: 20, description: Some("At 20th level, a packmaster and her animal companions can always move at full speed while using Survival to follow tracks without penalty. Each day when a packmaster gains new spells for the day, she chooses one animal focus to be active on herself or one of her animal companions for the entire day (if all of her animal companions are dead, she instead chooses two animal foci to be active on herself for the entire day). This focus is in addition to her pack focus class ability. This ability replaces master hunter."), benefit: None },
             ],
         },
-        // Hunter Archetype ~ Primal Companion Hunter -- acg_abilities_class.lst:3141
+        // Hunter Archetype ~ Primal Companion Hunter -- acg_abilities_class:3141
         ArchetypeSwapEntry {
             key: "Hunter Archetype ~ Primal Companion Hunter",
             subject: "Hunter",
@@ -570,7 +570,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Primal Companion Hunter ~ Primal Master", at_level: 20, description: Some("(NOT IMPLEMENTED) At 20th level, a primal companion hunter becomes in tune with his primal nature. He can activate his companion's primal aspect as a free action. When using primal surge, he can grant his companion two evolutions instead of one (each costing up to 4 evolution points). This ability replaces master hunter."), benefit: None },
             ],
         },
-        // Hunter Archetype ~ Verminous Hunter -- acg_abilities_class.lst:3142
+        // Hunter Archetype ~ Verminous Hunter -- acg_abilities_class:3142
         ArchetypeSwapEntry {
             key: "Hunter Archetype ~ Verminous Hunter",
             subject: "Hunter",
@@ -587,7 +587,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Verminous Hunter ~ Master Hunter", at_level: 20, description: Some("A verminous hunter becomes a master verminous hunter. She can always move at full speed while using Survival to follow tracks without penalty. Each day when the hunter regains her spell slots, she chooses one vermin focus to be active on herself for the entire day. This focus is in addition to using her vermin focus class ability."), benefit: None },
             ],
         },
-        // Inquisitor Archetype ~ Sacred Huntsmaster -- acg_abilities_class.lst:3285
+        // Inquisitor Archetype ~ Sacred Huntsmaster -- acg_abilities_class:3285
         ArchetypeSwapEntry {
             key: "Inquisitor Archetype ~ Sacred Huntsmaster",
             subject: "Inquisitor",
@@ -605,7 +605,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sacred Huntsmaster ~ Greater Empathic Link", at_level: 20, description: Some("The range of a sacred huntsmaster's empathic link with her animal companion increases to 10 miles. If the animal companion is within 1 mile, it and the sacred huntsmaster can communicate telepathically."), benefit: None },
             ],
         },
-        // Inquisitor Archetype ~ Sanctified Slayer -- acg_abilities_class.lst:3286
+        // Inquisitor Archetype ~ Sanctified Slayer -- acg_abilities_class:3286
         ArchetypeSwapEntry {
             key: "Inquisitor Archetype ~ Sanctified Slayer",
             subject: "Inquisitor",
@@ -619,7 +619,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sanctified Slayer ~ Talented Slayer", at_level: 8, description: Some("At 8th, 16th, 17th, and 20th levels, a sanctified slayer can gain a single slayer talent, including those from the list of rogue talents that a slayer can take, but not an advanced slayer talent."), benefit: None },
             ],
         },
-        // Investigator Archetype ~ Empiricist -- acg_abilities_class.lst:3305
+        // Investigator Archetype ~ Empiricist -- acg_abilities_class:3305
         ArchetypeSwapEntry {
             key: "Investigator Archetype ~ Empiricist",
             subject: "Investigator",
@@ -633,7 +633,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Empiricist ~ Master Intellect", at_level: 20, description: Some("An empiricist's powers of reason and deduction become almost superhuman, and he is able to use them in nearly all aspects of life. At 20th level, an empiricist can use inspiration on all skills (even ones he is not trained in) and all ability checks (including initiative checks) without spending inspiration. This ability replaces true inspiration."), benefit: None },
             ],
         },
-        // Investigator Archetype ~ Infiltrator -- acg_abilities_class.lst:3306
+        // Investigator Archetype ~ Infiltrator -- acg_abilities_class:3306
         ArchetypeSwapEntry {
             key: "Investigator Archetype ~ Infiltrator",
             subject: "Investigator",
@@ -647,7 +647,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Infiltrator ~ Mimic Mastery", at_level: 2, description: Some("At 2nd level, when an infiltrator uses disguise self or any polymorph extracts on himself, he is treated as 2 investigator levels higher for the purpose of determining the duration of that extract's effect. He can use these extracts to take the appearance of specific individuals of the type of form he chooses, gaining a +10 to Disguise checks even if that extract does not typically grant such a bonus. Furthermore, these extracts grant the infiltrator a +10 bonus to Disguise checks made as part of his voice mimicry ability. This ability replaces poison resistance."), benefit: None },
             ],
         },
-        // Investigator Archetype ~ Mastermind -- acg_abilities_class.lst:3307
+        // Investigator Archetype ~ Mastermind -- acg_abilities_class:3307
         ArchetypeSwapEntry {
             key: "Investigator Archetype ~ Mastermind",
             subject: "Investigator",
@@ -662,7 +662,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mastermind ~ Impregnable Mind", at_level: 9, description: Some("At 9th level, a mastermind's secrecy, obscurity, and mental conditioning reach superhuman levels. He becomes immune to any divination spell, spell-like ability, or effect that allows a saving throw (though he can still allow a divination effect to affect him if he wishes). Even divination effects that do not allow a saving throw have difficulty piercing a mastermind's barriers, as a mastermind can now choose to think in any language he speaks. Unless the opponent reading a mastermind's thoughts speaks all of the mastermind's languages, attempts at thought reading automatically fail. This ability replaces the investigator talent gained at 9th level."), benefit: None },
             ],
         },
-        // Investigator Archetype ~ Sleuth -- acg_abilities_class.lst:3308
+        // Investigator Archetype ~ Sleuth -- acg_abilities_class:3308
         ArchetypeSwapEntry {
             key: "Investigator Archetype ~ Sleuth",
             subject: "Investigator",
@@ -681,7 +681,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sleuth ~ Second Chance", at_level: 4, description: Some("At 4th level, when a sleuth rolls an inspiration die or uses daring deed, he can spend 1 luck point to reroll either the inspiration or the daring deed die. If he rolls a 6 or higher on this reroll, he does not regain a luck point, and no matter what he rolls on either roll, he must keep the reroll result, even if it is lower."), benefit: None },
             ],
         },
-        // Investigator Archetype ~ Spiritualist -- acg_abilities_class.lst:3309
+        // Investigator Archetype ~ Spiritualist -- acg_abilities_class:3309
         ArchetypeSwapEntry {
             key: "Investigator Archetype ~ Spiritualist",
             subject: "Investigator",
@@ -698,7 +698,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Spiritualist ~ Touched by the Beyond", at_level: 11, description: Some("The spiritualist's ability to touch the beyond grants him further protection against the dangers of death and negative energy. The spiritualist becomes immune to death effects, and he takes half damage from negative energy."), benefit: None },
             ],
         },
-        // Investigator Archetype ~ Steel Hound -- acg_abilities_class.lst:3310
+        // Investigator Archetype ~ Steel Hound -- acg_abilities_class:3310
         ArchetypeSwapEntry {
             key: "Investigator Archetype ~ Steel Hound",
             subject: "Investigator",
@@ -715,7 +715,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Steel Hound ~ Talented Shot", at_level: 11, description: Some("At 11th level, a steel hound can select a gunslinger deed in place of an investigator talent. He can select from any deed available to a gunslinger of his investigator level - 4."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Kata Master -- acg_abilities_class.lst:3436
+        // Monk Archetype ~ Kata Master -- acg_abilities_class:3436
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Kata Master",
             subject: "Monk",
@@ -731,7 +731,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Kata Master ~ Dizzying Defense", at_level: 15, description: Some("A kata master gains the dizzying defense swashbuckler deed."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Wildcat -- acg_abilities_class.lst:3437
+        // Monk Archetype ~ Wildcat -- acg_abilities_class:3437
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Wildcat",
             subject: "Monk",
@@ -749,7 +749,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Wildcat ~ Dirty Blow", at_level: 19, description: Some("When a wildcat succeeds at a dirty trick combat maneuver, he can deal his unarmed strike damage to that opponent."), benefit: None },
             ],
         },
-        // Oracle Archetype ~ Psychic Searcher -- acg_abilities_class.lst:3493
+        // Oracle Archetype ~ Psychic Searcher -- acg_abilities_class:3493
         ArchetypeSwapEntry {
             key: "Oracle Archetype ~ Psychic Searcher",
             subject: "Oracle",
@@ -763,7 +763,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Psychic Searcher ~ Psychic Talent", at_level: 3, description: Some("[NOT IMPLEMENTED] A psychic searcher's mastery of her supernatural insight grows, granting her a new investigator talent from the following list: amazing inspiration, eidetic recollection, empathy, inspired alertness, item lore, perceptive tracking (except using Sense Motive instead of Perception or Survival), rogue talent (only for hard to fool), and tenacious inspiration. Whenever a psychic searcher can select a new revelation, she can instead select an investigator or rogue talent from the above list."), benefit: None },
             ],
         },
-        // Oracle Archetype ~ Spirit Guide -- acg_abilities_class.lst:3494
+        // Oracle Archetype ~ Spirit Guide -- acg_abilities_class:3494
         ArchetypeSwapEntry {
             key: "Oracle Archetype ~ Spirit Guide",
             subject: "Oracle",
@@ -776,7 +776,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Spirit Guide ~ Bonded Spirit", at_level: 3, description: Some("[NOT IMPLEMENTED] A spirit guide can form a temporary bond with a spirit, as the shaman's wandering spirit class feature (see page 37). She must make this selection each day when she refreshes her spells. A spirit guide cannot bond with a spirit that is incompatible with her alignment, ethos, or mystery (GM's discretion). A spirit guide gains one hex of her choice from the list of hexes available from that spirit. She uses her oracle level as her shaman level, and she switches Wisdom for Charisma and vice versa for the purpose of determining the hex's effects. At 4th level, she adds the bonded spirit's spirit magic spells to her oracle spells known for that day, but only of spell levels she can cast. At 7th level, she gains the spirit ability of her current bonded spirit. At 15th level, she gains the greater spirit ability of her current bonded spirit. This ability replaces the revelations gained at 3rd, 7th, and 15th levels."), benefit: None },
             ],
         },
-        // Oracle Archetype ~ Warsighted -- acg_abilities_class.lst:3495
+        // Oracle Archetype ~ Warsighted -- acg_abilities_class:3495
         ArchetypeSwapEntry {
             key: "Oracle Archetype ~ Warsighted",
             subject: "Oracle",
@@ -788,7 +788,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Warsighted ~ Martial Flexibility", at_level: 1, description: Some("The warsighted can use a move action to gain the benefit of a combat feat he doesn't possess. The warsighted must otherwise meet all the feat's prerequisites."), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Holy Guide -- acg_abilities_class.lst:3513
+        // Paladin Archetype ~ Holy Guide -- acg_abilities_class:3513
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Holy Guide",
             subject: "Paladin",
@@ -802,7 +802,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Holy Guide ~ Teamwork Feat", at_level: 6, description: Some("A holy guide gains a teamwork feat as a bonus feat. He must meet the prerequisites for this feat. As a standard action, He can expend one use of smite evil to grant this feat to all allies within 30 feet who can see and hear him. Allies retain the use of this bonus feat for %1 rounds. Allies do not need to meet the prerequisites of this bonus feat. Evil creatures do not gain the benefit of this teamwork feat, even if the paladin considers them allies.|3+floor(PaladinLVL/2)"), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Temple Champion -- acg_abilities_class.lst:3514
+        // Paladin Archetype ~ Temple Champion -- acg_abilities_class:3514
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Temple Champion",
             subject: "Paladin",
@@ -816,7 +816,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Temple Champion ~ Blessing", at_level: 5, description: Some("At 5th level, a temple champion gains the minor blessing (as the warpriest class feature) of the domain she selected at 4st level. She uses her paladin level as her warpriest level for determining the effects of that blessing. Any Wisdom-based aspects of that blessing instead use the temple champion's Charisma. At 11th level, she gains the major blessing of her chosen domain. This ability replaces divine bond and aura of justice."), benefit: None },
             ],
         },
-        // Ranger Archetype ~ Divine Tracker -- acg_abilities_class.lst:3533
+        // Ranger Archetype ~ Divine Tracker -- acg_abilities_class:3533
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Divine Tracker",
             subject: "Ranger",
@@ -830,7 +830,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Divine Tracker ~ Blessings", at_level: 4, description: Some("A divine tracker forms a close bond with his deity's ethos. He selects two warpriest domains from among the domains granted by his deity, and gains the minor blessings of those domains. A divine tracker can select an alignment domain (Chaos, Evil, Good, or Law) only if his alignment matches that domain. If a divine tracker isn't devoted to a particular deity, he still selects two blessings to represent his spiritual inclinations and abilities, subject to GM approval. The restriction on alignment domains still applies. A divine tracker uses his ranger level as his warpriest level to determine the effect of the blessing. At 13th level, a divine tracker gains the major blessing from both of his domains. This ability replaces hunter's bond."), benefit: None },
             ],
         },
-        // Ranger Archetype ~ Hooded Champion -- acg_abilities_class.lst:3534
+        // Ranger Archetype ~ Hooded Champion -- acg_abilities_class:3534
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Hooded Champion",
             subject: "Ranger",
@@ -846,7 +846,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Hooded Champion ~ Combat Style", at_level: 2, description: Some("The hooded champion must select the archery combat style."), benefit: None },
             ],
         },
-        // Ranger Archetype ~ Wild Hunter -- acg_abilities_class.lst:3535
+        // Ranger Archetype ~ Wild Hunter -- acg_abilities_class:3535
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Wild Hunter",
             subject: "Ranger",
@@ -859,7 +859,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Wild Hunter ~ Shared Focus", at_level: 7, description: Some("[NOT IMPLEMENTED] A wild hunter can share his current animal focus with one creature appropriate to his hunter's bond. If the wild hunter's bond is with an animal companion, the companion automatically gains the benefits of the wild hunter's current animal focus. If the wild hunter's bond is with his companions, as a swift action he can select one bonded ally to gain the benefits of the hunter's current animal focus; this lasts until the hunter's bond ends, the animal focus ends for the wild hunter, or the wild hunter selects a different companion."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Counterfeit Mage -- acg_abilities_class.lst:3558
+        // Rogue Archetype ~ Counterfeit Mage -- acg_abilities_class:3558
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Counterfeit Mage",
             subject: "Rogue",
@@ -873,7 +873,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Counterfeit Mage ~ Wand Adept", at_level: 1, description: Some("A counterfeit mage can use his Dexterity modifier in place of his Charisma modifier when attempting Use Magic Device checks to activate wands."), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Underground Chemist -- acg_abilities_class.lst:3559
+        // Rogue Archetype ~ Underground Chemist -- acg_abilities_class:3559
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Underground Chemist",
             subject: "Rogue",
@@ -887,7 +887,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Underground Chemist ~ Discovery", at_level: 1, description: Some("An underground chemist can select one of the following alchemist discoveries (APG p.28) in place of a rogue talent: concentrate poison, dilution, enhance potion, extend potion, mummification, nauseating flesh, poison conversion, preserve organs, spontaneous healing, or sticky poison. She uses her rogue level as her alchemist level for determining the effects of her discoveries and whether she is able to select one."), benefit: None },
             ],
         },
-        // Shaman Archetype ~ Animist -- acg_abilities_class.lst:3586
+        // Shaman Archetype ~ Animist -- acg_abilities_class:3586
         ArchetypeSwapEntry {
             key: "Shaman Archetype ~ Animist",
             subject: "Shaman",
@@ -905,7 +905,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Animist ~ Spirit Shaman", at_level: 20, description: Some("The animist can use ethereal jaunt as at will as a spell-like ability, and cast astral projection once per day as a spell-like ability."), benefit: None },
             ],
         },
-        // Shaman Archetype ~ Possessed Shaman -- acg_abilities_class.lst:3587
+        // Shaman Archetype ~ Possessed Shaman -- acg_abilities_class:3587
         ArchetypeSwapEntry {
             key: "Shaman Archetype ~ Possessed Shaman",
             subject: "Shaman",
@@ -919,7 +919,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Possessed Shaman ~ Wandering Skills", at_level: 6, description: Some("[NOT IMPLEMENTED] At 6th level, a possessed shaman is able to make room for another spirit. When choosing her wandering spirit for the day, the possessed shaman chooses one skill. The possessed shaman treats this skill as if she had a number of ranks in it equal to her shaman level, and uses her Wisdom modifier in place of the ability modifier the skill would normally use. If the skill is a class skill, she receives the usual +3 bonus on skill checks for having ranks in that skill. Each time the possessed shaman changes her wandering spirit, she can also change the skill gained through this ability. These ranks do not stack with her other skill ranks (only the higher number of ranks applies). This ability replaces the wandering hex gained at 6th level."), benefit: None },
             ],
         },
-        // Shaman Archetype ~ Speaker for the Past -- acg_abilities_class.lst:3588
+        // Shaman Archetype ~ Speaker for the Past -- acg_abilities_class:3588
         ArchetypeSwapEntry {
             key: "Shaman Archetype ~ Speaker for the Past",
             subject: "Shaman",
@@ -932,7 +932,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Speaker for the Past ~ Revelations of the Past", at_level: 4, description: Some("At 4th, 6th, 12th, 14th, and 20th levels, the speaker for the past can select a revelation from the ancestor or time mysteries. She uses her shaman level as her oracle level for these revelations, and uses her Wisdom modifier in place of her Charisma modifier for the purposes of the revelation. This ability replaces wandering spirit and wandering hex."), benefit: None },
             ],
         },
-        // Shaman Archetype ~ Spirit Warden -- acg_abilities_class.lst:3589
+        // Shaman Archetype ~ Spirit Warden -- acg_abilities_class:3589
         ArchetypeSwapEntry {
             key: "Shaman Archetype ~ Spirit Warden",
             subject: "Shaman",
@@ -947,7 +947,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Spirit Warden ~ Laugh at Death", at_level: 10, description: Some("The spirit warden's familiarity with the dead has filled her with contempt for death itself. She gains a +4 insight bonus on saving throws against death effects and to avoid or remove negative levels."), benefit: None },
             ],
         },
-        // Shaman Archetype ~ Unsworn Shaman -- acg_abilities_class.lst:3590
+        // Shaman Archetype ~ Unsworn Shaman -- acg_abilities_class:3590
         ArchetypeSwapEntry {
             key: "Shaman Archetype ~ Unsworn Shaman",
             subject: "Shaman",
@@ -962,7 +962,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Unsworn Shaman ~ Spirit Magic", at_level: 2, description: Some("The unsworn shaman gains this ability at 2nd level rather than at 1st. This ability alters spirit magic."), benefit: None },
             ],
         },
-        // Shaman Archetype ~ Visionary -- acg_abilities_class.lst:3591
+        // Shaman Archetype ~ Visionary -- acg_abilities_class:3591
         ArchetypeSwapEntry {
             key: "Shaman Archetype ~ Visionary",
             subject: "Shaman",
@@ -978,7 +978,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Visionary ~ Wandering Spirit", at_level: 12, description: Some("The visionary forms a temporary bond with another spirit (other than the one she selected using her spirit class feature). This is identical to the 4th-level shaman class feature. This adds the wandering spirit magic spells to the list of spells she can cast using spirit magic, along with vision spirit magic and her original spirit. At 20th level, she gains the abilities listed in the greater version of her wandering spirit. This ability replaces the greater version of wandering spirit gained at 12th level and true version of wandering spirit gained at 20th level."), benefit: None },
             ],
         },
-        // Shaman Archetype ~ Witch Doctor -- acg_abilities_class.lst:3592
+        // Shaman Archetype ~ Witch Doctor -- acg_abilities_class:3592
         ArchetypeSwapEntry {
             key: "Shaman Archetype ~ Witch Doctor",
             subject: "Shaman",
@@ -993,7 +993,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Witch Doctor ~ Countering Hex", at_level: 10, description: Some("The witch doctor can use her hex magic to counterspell as a readied action as dispel magic instead. She must succeed at a dispel check (1d20 + her shaman level) with a DC equal to 11 + the spell's caster level. If countering hex succeeds, the spell fizzles away and is lost. Failure means the spell is not countered. In either case, the witch doctor cannot attempt to use this hex against any of that caster's spells again for 24 hours. The witch doctor cannot use countering hex on an ongoing effect, a magic item, or a hex."), benefit: None },
             ],
         },
-        // Skald Archetype ~ Fated Champion -- acg_abilities_class.lst:3675
+        // Skald Archetype ~ Fated Champion -- acg_abilities_class:3675
         ArchetypeSwapEntry {
             key: "Skald Archetype ~ Fated Champion",
             subject: "Skald",
@@ -1008,7 +1008,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Fated Champion ~ Not This Day", at_level: 20, description: Some("The fated champion gains the ability to reweave the strands of fate. As an immediate action, he can expend 10 rounds of raging song to either reroll a saving throw or force an opponent to reroll an attack roll. The decision to use this ability must be made before the results of the initial roll are revealed, and the champion or his opponent must take the result of the reroll."), benefit: None },
             ],
         },
-        // Skald Archetype ~ Herald of the Horn -- acg_abilities_class.lst:3676
+        // Skald Archetype ~ Herald of the Horn -- acg_abilities_class:3676
         ArchetypeSwapEntry {
             key: "Skald Archetype ~ Herald of the Horn",
             subject: "Skald",
@@ -1023,7 +1023,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Herald of the Horn ~ Crumbling Blast", at_level: 11, description: Some("A herald of the horn can use his horn to create a devastating shock wave of energy. Once per day, he can sound a note on the horn that functions like a horn of blasting"), benefit: None },
             ],
         },
-        // Skald Archetype ~ Spell Warrior -- acg_abilities_class.lst:3677
+        // Skald Archetype ~ Spell Warrior -- acg_abilities_class:3677
         ArchetypeSwapEntry {
             key: "Skald Archetype ~ Spell Warrior",
             subject: "Skald",
@@ -1039,7 +1039,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Spell Warrior ~ Spell Tamper", at_level: 20, description: Some("When a spell warrior successfully counterspells an opponent's spell, the opponent suffers a backlash of magical energy and takes 1d6 points of damage per spell level of the countered spell. If the opponent succeeds at a Will saving throw (DC %1), the damage is reduced by half. This damage is magical and is not subject to damage reduction or energy resistance.|10+floor(SkaldLVL/2)+CHA"), benefit: None },
             ],
         },
-        // Skald Archetype ~ Totemic Skald -- acg_abilities_class.lst:3678
+        // Skald Archetype ~ Totemic Skald -- acg_abilities_class:3678
         ArchetypeSwapEntry {
             key: "Skald Archetype ~ Totemic Skald",
             subject: "Skald",
@@ -1054,7 +1054,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Totemic Skald ~ Wild Shape", at_level: 5, description: Some("A totemic skald gains the ability to wild shape into the form of a Small or Medium version of his totem animal, as the druid class feature. His effective druid level for this ability is equal to his skald level - 1. He can use this ability %1 times per day. This doesn't allow the skald to assume other forms, such as elementals, plants, or other kinds of animals. When in animal form, the skald is treated as able to speak normally for the purpose of using raging song, but not for using other abilities that require speech (such as spellcasting). The skald uses his class level as his druid level for the purpose of qualifying for feats that affect wild shape (such as Wild Speech).|min(3,floor((SkaldLVL+1)/6))"), benefit: None },
             ],
         },
-        // Slayer Archetype ~ Bounty Hunter -- acg_abilities_class.lst:3724.
+        // Slayer Archetype ~ Bounty Hunter -- acg_abilities_class:3724.
         // SD31-E4-F1-001 addition (2026-08-16): Slayer's own archetype block
         // was absent from this table entirely -- Slayer post-dates Decision
         // 64's original 25-class extraction pass (SD31-E3-F1-001 found it
@@ -1085,7 +1085,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Bounty Hunter ~ Incapacitate", at_level: 10, description: Some("A bounty hunter can incapacitate a studied target. This functions like the assassinate slayer talent, except instead of killing the target, the bounty hunter's successful attack knocks the target unconscious for 1d6 rounds unless it succeeds at its saving throw. If the target does succeed at its saving throw, it still takes the sneak attack damage as normal, but the damage is nonlethal, and the target is immune to that slayer's incapacitate ability for 24 hours."), benefit: None },
             ],
         },
-        // Slayer Archetype ~ Deliverer -- acg_abilities_class.lst:3727. Its
+        // Slayer Archetype ~ Deliverer -- acg_abilities_class:3727. Its
         // own PREMULT clause tests the GENERIC `Slayer_Archetype_Proficiencies`
         // fact (not the split Weapon/Armor pair Bounty Hunter's clause
         // tests), even though this row's own FACT-set still declares both
@@ -1106,7 +1106,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Deliverer ~ Divine Anathema", at_level: 10, description: Some("As a free action a deliverer can declare a studied target to be his divine anathema. The studied target's alignment must be at least two steps away from that of the deliverer. Against this target, the deliverer's attacks deal an additional 2d6 points of damage; this damage is directly from divine power and does not stack with the bonus damage from a holy or unholy weapon, or a weapon with a similar weapon special ability or effect. A deliverer can have only one divine anathema at a time."), benefit: None },
             ],
         },
-        // Slayer Archetype ~ Stygian Slayer -- acg_abilities_class.lst:3730.
+        // Slayer Archetype ~ Stygian Slayer -- acg_abilities_class:3730.
         // Same generic-`Proficiencies`-fact PREMULT shape as Deliverer.
         ArchetypeSwapEntry {
             key: "Slayer Archetype ~ Stygian Slayer",
@@ -1122,7 +1122,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Stygian Slayer ~ Shadowy Mist Form", at_level: 10, description: Some("A stygian slayer can transform into an inky black cloud of mist. This functions as gaseous form, except it also obscures vision as fog cloud. The slayer can use this ability for %1 minutes per day. These minutes need not be consecutive, but must be used in 1-minute increments.|SlayerLVL"), benefit: None },
             ],
         },
-        // Sorcerer Archetype ~ Eldritch Scrapper -- acg_abilities_class.lst:3794
+        // Sorcerer Archetype ~ Eldritch Scrapper -- acg_abilities_class:3794
         ArchetypeSwapEntry {
             key: "Sorcerer Archetype ~ Eldritch Scrapper",
             subject: "Sorcerer",
@@ -1135,7 +1135,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Eldritch Scrapper ~ Bloodline Weapons", at_level: 1, description: Some("[NOT IMPLEMENTED] If an eldritch scrapper's 1st-level bloodline power would normally grant her natural attacks (such as bite or claws), at 3rd level she can select that 1st-level bloodline power in place of her 3rd-level bloodline power."), benefit: None },
             ],
         },
-        // Sorcerer Archetype ~ Mongrel Mage -- acg_abilities_class.lst:3795
+        // Sorcerer Archetype ~ Mongrel Mage -- acg_abilities_class:3795
         ArchetypeSwapEntry {
             key: "Sorcerer Archetype ~ Mongrel Mage",
             subject: "Sorcerer",
@@ -1148,7 +1148,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mongrel Mage ~ Bloodline Spells", at_level: 7, description: Some("Each day when she selects her bloodline, a mongrel mage adds the 1st-, 2nd-, and 3rd-level spells from her selected bloodline to her current list of spells known."), benefit: None },
             ],
         },
-        // Summoner Archetype ~ Naturalist -- acg_abilities_class.lst:3809
+        // Summoner Archetype ~ Naturalist -- acg_abilities_class:3809
         ArchetypeSwapEntry {
             key: "Summoner Archetype ~ Naturalist",
             subject: "Summoner",
@@ -1164,7 +1164,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Naturalist ~ Third Animal Focus", at_level: 18, description: Some("Whenever a naturalist uses his animal focus ability, he can apply three different animal aspects to his eidolon (one of which lasts until he decides to change it)."), benefit: None },
             ],
         },
-        // Swashbuckler Archetype ~ Daring Infiltrator -- acg_abilities_class.lst:3840
+        // Swashbuckler Archetype ~ Daring Infiltrator -- acg_abilities_class:3840
         ArchetypeSwapEntry {
             key: "Swashbuckler Archetype ~ Daring Infiltrator",
             subject: "Swashbuckler",
@@ -1182,7 +1182,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Deed ~ Authoritative Bluff", at_level: 11, description: Some("A daring infiltrator can spend 1 panache point to reroll a Bluff check after the roll is made but before the results are revealed. She must take the result of the second roll, even if it is lower. Additionally, a daring infiltrator with at least 1 panache point gains a +5 bonus on Bluff checks to pretend to be someone's superior (socially or in the military). If she succeeds at the check, the target obeys any reasonable orders she gives as it would those of an actual superior in the situation. This deed replaces bleeding wound."), benefit: None },
             ],
         },
-        // Swashbuckler Archetype ~ Flying Blade -- acg_abilities_class.lst:3841
+        // Swashbuckler Archetype ~ Flying Blade -- acg_abilities_class:3841
         ArchetypeSwapEntry {
             key: "Swashbuckler Archetype ~ Flying Blade",
             subject: "Swashbuckler",
@@ -1197,7 +1197,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Flying Blade ~ Flying Blade Mastery", at_level: 20, description: Some("When an attack that a flying blade makes with a dagger or starknife threatens a critical hit, that critical hit is automatically confirmed. Furthermore, the critical modifiers of daggers and starknives increase by 1 (x2 becomes x3, and so on)."), benefit: None },
             ],
         },
-        // Swashbuckler Archetype ~ Inspired Blade -- acg_abilities_class.lst:3842
+        // Swashbuckler Archetype ~ Inspired Blade -- acg_abilities_class:3842
         ArchetypeSwapEntry {
             key: "Swashbuckler Archetype ~ Inspired Blade",
             subject: "Swashbuckler",
@@ -1213,7 +1213,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Inspired Blade ~ Rapier Weapon Mastery", at_level: 20, description: Some("When an inspired blade threatens a critical hit with a rapier, that critical hit is automatically confirmed. Furthermore, the critical threat range increases by 1 (this increase to the critical threat range stacks with the increase from rapier training, to a total threat range of 14-20), and the critical modifier of the weapon increases by 1 (x2 becomes x3, for example). This ability replaces swashbuckler weapon mastery."), benefit: None },
             ],
         },
-        // Swashbuckler Archetype ~ Mouser -- acg_abilities_class.lst:3843
+        // Swashbuckler Archetype ~ Mouser -- acg_abilities_class:3843
         ArchetypeSwapEntry {
             key: "Swashbuckler Archetype ~ Mouser",
             subject: "Swashbuckler",
@@ -1229,7 +1229,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mouser ~ Cat's Charge", at_level: 11, description: Some("As long as a mouser has at least 1 panache point, when she charges a foe whose size is larger than her own, the mouser can end her charge in any space she can reach, not just the closest space. All other requirements of the charge must still be satisfied. This deed replaces bleeding wound."), benefit: None },
             ],
         },
-        // Swashbuckler Archetype ~ Musketeer -- acg_abilities_class.lst:3844
+        // Swashbuckler Archetype ~ Musketeer -- acg_abilities_class:3844
         ArchetypeSwapEntry {
             key: "Swashbuckler Archetype ~ Musketeer",
             subject: "Swashbuckler",
@@ -1243,7 +1243,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Musketeer ~ Quick Clear", at_level: 1, description: Some("As a standard action the musketeer can spend 1 panache point to remove the broken condition from a single firearm he is currently wielding, as long as the firearm gained that condition through a misfire. This deed replaces dodging panache."), benefit: None },
             ],
         },
-        // Swashbuckler Archetype ~ Mysterious Avenger -- acg_abilities_class.lst:3845
+        // Swashbuckler Archetype ~ Mysterious Avenger -- acg_abilities_class:3845
         ArchetypeSwapEntry {
             key: "Swashbuckler Archetype ~ Mysterious Avenger",
             subject: "Swashbuckler",
@@ -1261,7 +1261,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Mysterious Avenger ~ Avenger's Target", at_level: 5, description: Some("A mysterious avenger gains a +%1 bonus on attack and damage rolls with light or one-handed piercing melee weapons and whips. Furthermore, a mysterious avenger can study an opponent she can see as a move action. The mysterious avenger then gains a +%1 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against that opponent, a +%1 bonus on weapon attack and damage rolls against it, and a +%1 bonus to DCs of any deeds used against that opponent. A mysterious avenger can maintain these bonuses against %1 opponents at a time; these bonuses remain in effect until either the opponent is dead or the mysterious avenger studies a new target. A mysterious avenger can discard this connection to a studied target as a free action, allowing her to study another target in its place. At 10th level, a mysterious avenger can study an opponent as a move or swift action.|AvengerTargetBonus"), benefit: None },
             ],
         },
-        // Swashbuckler Archetype ~ Picaroon -- acg_abilities_class.lst:3846
+        // Swashbuckler Archetype ~ Picaroon -- acg_abilities_class:3846
         ArchetypeSwapEntry {
             key: "Swashbuckler Archetype ~ Picaroon",
             subject: "Swashbuckler",
@@ -1280,7 +1280,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Picaroon ~ Two-Weapon Finesse", at_level: 1, description: Some("A picaroon gains the benefits of the Weapon Finesse feat with light or onehanded piercing melee weapons. She also gains the effects of the Two-Weapon Fighting feat as long as she is wielding a light or one-handed piercing melee weapon in one hand and one-handed firearm in the other hand. This ability counts as having both the Weapon Finesse and Two-Weapon Fighting feats for the purposes of meeting feat requirements."), benefit: None },
             ],
         },
-        // Warpriest Archetype ~ Champion of the Faith -- acg_abilities_class.lst:3930
+        // Warpriest Archetype ~ Champion of the Faith -- acg_abilities_class:3930
         ArchetypeSwapEntry {
             key: "Warpriest Archetype ~ Champion of the Faith",
             subject: "Warpriest",
@@ -1295,7 +1295,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Champion of the Faith ~ Smite", at_level: 4, description: Some("A champion of the faith can focus his powers against his chosen foes. As a swift action, the champion of the faith chooses one target within sight to smite. If this target is"), benefit: None },
             ],
         },
-        // Warpriest Archetype ~ Cult Leader -- acg_abilities_class.lst:3931
+        // Warpriest Archetype ~ Cult Leader -- acg_abilities_class:3931
         ArchetypeSwapEntry {
             key: "Warpriest Archetype ~ Cult Leader",
             subject: "Warpriest",
@@ -1312,7 +1312,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Cult Leader ~ Hide in Plain Sight", at_level: 12, description: Some("A cult leader can use the Stealth skill even while being observed. As long as he is within 10 feet of an area of dim light, a cult leader can hide himself from view in the open without anything to actually hide behind. He cannot, however, hide in his own shadow."), benefit: None },
             ],
         },
-        // Warpriest Archetype ~ Disenchanter -- acg_abilities_class.lst:3932
+        // Warpriest Archetype ~ Disenchanter -- acg_abilities_class:3932
         ArchetypeSwapEntry {
             key: "Warpriest Archetype ~ Disenchanter",
             subject: "Warpriest",
@@ -1326,7 +1326,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Disenchanter ~ Banish Enchantment", at_level: 6, description: Some("A disenchanter learns to focus his mystic interference. As a standard action, he can consume two uses of his fervor ability to target a single creature within 30 feet with a targeted dispel magic."), benefit: None },
             ],
         },
-        // Warpriest Archetype ~ Divine Commander -- acg_abilities_class.lst:3933
+        // Warpriest Archetype ~ Divine Commander -- acg_abilities_class:3933
         ArchetypeSwapEntry {
             key: "Warpriest Archetype ~ Divine Commander",
             subject: "Warpriest",
@@ -1342,7 +1342,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Divine Commander ~ Bless Army", at_level: 15, description: Some("A divine commander can raise her holy symbol high and give a blessing to the army she is leading. The divine commander's army gains a +1 bonus to the army's OM and DV (Ultimate Campaign 235). This is a sacred bonus if the warpriest is good-aligned or able to spontaneously cast cure spells, and it is a profane bonus if the warpriest is evil-aligned or able to spontaneously cast inflict spells. Using this ability requires the divine commander to expend two uses of her fervor ability. This bonus lasts for 1 battle, and it must be performed during the tactics phase of the battle. If this is performed when a mass combat is not imminent, the fervor is spent without granting any bonus."), benefit: None },
             ],
         },
-        // Warpriest Archetype ~ Forgepriest -- acg_abilities_class.lst:3934
+        // Warpriest Archetype ~ Forgepriest -- acg_abilities_class:3934
         ArchetypeSwapEntry {
             key: "Warpriest Archetype ~ Forgepriest",
             subject: "Warpriest",
@@ -1360,7 +1360,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Forgepriest ~ Heat of the Forge", at_level: 6, description: Some("A forgepriest gains fire resistance %1.|ForgepriestFireResistance"), benefit: None },
             ],
         },
-        // Warpriest Archetype ~ Sacred Fist -- acg_abilities_class.lst:3935
+        // Warpriest Archetype ~ Sacred Fist -- acg_abilities_class:3935
         ArchetypeSwapEntry {
             key: "Warpriest Archetype ~ Sacred Fist",
             subject: "Warpriest",
@@ -1380,7 +1380,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sacred Fist ~ Miraculous Fortitude", at_level: 9, description: Some("The sacred fist's blessed fortitude ability improves. He still takes no damage or negative effect when he succeeds at a Fortitude save, but now when he fails a Fortitude saving throw against a spell or effect that deals damage (including ability damage and drain), he takes only half the amount of damage. A helpless sacred fist does not gain the benefit of miraculous fortitude."), benefit: None },
             ],
         },
-        // Witch Archetype ~ Hex Channeler -- acg_abilities_class.lst:4016
+        // Witch Archetype ~ Hex Channeler -- acg_abilities_class:4016
         ArchetypeSwapEntry {
             key: "Witch Archetype ~ Hex Channeler",
             subject: "Witch",
@@ -1392,7 +1392,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Hex Channeler ~ Channel Energy", at_level: 2, description: Some("At 2nd level, a hex channeler can call upon her patron to release a wave of energy from herself or her familiar. A good witch channels positive energy (like a good cleric), and an evil witch channels negative energy (like an evil cleric). A witch who is neither good nor evil must choose whether she channels positive or negative energy; once this choice is made, it cannot be reversed. Channeling energy causes a burst that affects all creatures of one type (either undead or living) in a 30-foot radius centered on the witch. The witch can channel energy a number of times per day equal to 3 + her Charisma modifier (minimum 1). This otherwise functions as a cleric using channel energy, except the witch does not require a holy symbol to use this ability. The hex channeler uses her witch level as her cleric level for all other effects dependent upon channel energy (except increasing the amount of damage healed or dealt). The hex channeler can choose whether or not to include herself or her familiar in this effect. This burst heals or deals 1d6 points of damage. Every time the hex channeler is able to learn a new hex (including major or grand hexes, but not hexes gained through the Extra Hex feat), she can instead increase her channel energy amount by 1d6. This ability replaces the hex gained at 2nd level."), benefit: None },
             ],
         },
-        // Witch Archetype ~ Mountain Witch -- acg_abilities_class.lst:4017
+        // Witch Archetype ~ Mountain Witch -- acg_abilities_class:4017
         ArchetypeSwapEntry {
             key: "Witch Archetype ~ Mountain Witch",
             subject: "Witch",

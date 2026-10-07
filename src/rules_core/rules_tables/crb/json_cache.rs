@@ -47,7 +47,7 @@ pub enum Completeness {
 /// module-level doc comment on `equipment_tables.rs::EquipmentTableEntry::description`
 /// for the 3 real provenance kinds CRB actually exercises
 /// (`LstToken`, `LstInheritedCopy`, `LstCorrectedIngest`, plus
-/// `WebSecondSource` for the `cr_equipmods.lst` d20pfsrd pass).
+/// `WebSecondSource` for the `cr_equipmods` d20pfsrd pass).
 /// `SameBookFallback` is defined for full-schema parity with the other 3
 /// books' cycles (per `decisions.md §11.2`'s table, CRB does not itself
 /// exercise this kind) but is included here so the type is a complete,
@@ -79,7 +79,7 @@ pub enum CorpusSource {
     },
     /// A real corpus `DESC:` token that a prior codegen pass mis-captured
     /// (e.g. the `DESC:.CLEAR`-then-real-`DESC:` same-line convention
-    /// SD-25 fixed for 67 `cr_equip_arms_armor.lst` rows) -- the field's
+    /// SD-25 fixed for 67 `cr_equip_arms_armor` rows) -- the field's
     /// current value is corrected/re-derived from the same real LST line,
     /// not fabricated.
     LstCorrectedIngest {
@@ -91,7 +91,7 @@ pub enum CorpusSource {
     },
     /// A cited d20pfsrd.com/aonprd.com second source for a corpus record
     /// that carries no `DESC:` token at all (SD-25 criterion 7.N; 83
-    /// `cr_equipmods.lst` records, `decisions.md §11.5`'s methodology).
+    /// `cr_equipmods` records, `decisions.md §11.5`'s methodology).
     WebSecondSource {
         url: String,
         fetched_at: String,

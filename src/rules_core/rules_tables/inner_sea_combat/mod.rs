@@ -70,7 +70,7 @@ mod tests {
     use super::*;
 
     /// Both counts come from `docs/work-inventory.json`'s units for this book,
-    /// never a line count over the `.lst`:
+    /// never a line count over the source file:
     /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
     /// print(sum(1 for u in d['units'] if u['book']=='inner_sea_combat' and
     /// u['kind']=='companion'))"` -> 10, split 4 creature / 6 ability by
@@ -81,7 +81,7 @@ mod tests {
         assert_eq!(companion_abilities().len(), 6);
     }
 
-    /// Verbatim spot-check against `isc_races_companion.lst:5`.
+    /// Verbatim spot-check against `isc_races_companion:5`.
     #[test]
     fn the_griffon_matches_its_corpus_row() {
         let griffon = companions()

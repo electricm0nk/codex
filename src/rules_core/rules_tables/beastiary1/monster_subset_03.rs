@@ -1,17 +1,17 @@
 //! Bestiary 1 monster-block subset 03 — CR-band move from CR 1 to CR 2.
 //!
-//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst`,
+//! Source: PCGen `pathfinder/paizo/roleplaying_game/bestiary/b1_races`,
 //! parsed via `pcgen_import::lst_parser::monster_stat_block` (the same
 //! bare-tab-delimited monster parser subset 01 introduced — no widening
 //! was needed for this subset either). Every field below is transcribed
-//! directly from the cited real `.lst` line's tokens — see each
+//! directly from the cited real source file line's tokens — see each
 //! function's doc comment for the exact line number and tokens.
 //!
 //! **CR-band move (not a roster correction — subset 3 had no
 //! illustrative sample row in `corpus-source-inventory.md` §3.1 to
 //! correct, only a placeholder `...` row):** before writing any GREEN
 //! code, this cycle enumerated every real, non-`#`-commented,
-//! non-`.MOD`/`.COPY=` CR:1 monster stat-block row in `b1_races.lst`
+//! non-`.MOD`/`.COPY=` CR:1 monster stat-block row in `b1_races`
 //! directly. Excluding parenthetical sub-variant names (e.g. "Ghoul
 //! (Ghast)", "Ant (Worker)", "Frog (Giant)") — the same exclusion rule
 //! subset 01 and subset 02 both already established, since those name a
@@ -40,7 +40,7 @@
 
 use super::{MonsterStatBlock, NaturalAttack};
 
-/// Source: `b1_races.lst:41`, `CR:2`. Real row tokens: `SIZE:D`,
+/// Source: `b1_races:41`, `CR:2`. Real row tokens: `SIZE:D`,
 /// `MOVE:Walk,5,Fly,40` (walk speed transcribed; fly speed out of scope
 /// per this module's field-coverage boundary),
 /// `NATURALATTACKS:Swarm,Weapon.Natural...,*1,1d6`, `RACETYPE:Animal`,
@@ -61,13 +61,13 @@ pub fn bat_swarm() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:49`, `CR:2`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:49`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,40`, `RACETYPE:Animal`, `CR:2`, `SOURCEPAGE:p.36`. The real
 /// row carries no `NATURALATTACKS:` token.
 ///
 /// **Gore dice are grounded, not transcribed.** The row names the attack
 /// via `ABILITY:Internal|AUTOMATIC|Gore`, but resolving that reference
-/// (to `core_essentials/ce_abilities_race.lst:250`) yields a mechanical
+/// (to `core_essentials/ce_abilities_race:250`) yields a mechanical
 /// marker with no dice. `1d8` is corroborated by legacy.aonprd +
 /// d20pfsrd (both "gore +4 (1d8+4)"). Full citation in
 /// `super::natural_attack_provenance` — **read it before reverting this
@@ -85,7 +85,7 @@ pub fn boar() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:51`, `CR:2`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:51`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,20,Swim,30` (walk speed transcribed; swim speed out of
 /// scope per this module's field-coverage boundary),
 /// `NATURALATTACKS:Tongue,Weapon.Natural...,*1,0`, `RACETYPE:Humanoid`,
@@ -106,7 +106,7 @@ pub fn boggard() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:52`, `CR:2`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:52`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,30`, `RACETYPE:Humanoid`, `RACESUBTYPE:Goblinoid`, `CR:2`,
 /// `SOURCEPAGE:p.38`. The real row carries no `NATURALATTACKS:` token
 /// (Bugbear fights with manufactured Morningstar/Javelin per
@@ -124,7 +124,7 @@ pub fn bugbear() -> MonsterStatBlock {
     }
 }
 
-/// Source: `b1_races.lst:59`, `CR:2`. Real row tokens: `SIZE:M`,
+/// Source: `b1_races:59`, `CR:2`. Real row tokens: `SIZE:M`,
 /// `MOVE:Walk,20,Climb,20` (walk speed transcribed; climb speed out of
 /// scope per this module's field-coverage boundary),
 /// `NATURALATTACKS:Filament,Weapon.Natural...,*1,0`, `RACETYPE:Vermin`,
@@ -135,7 +135,7 @@ pub fn bugbear() -> MonsterStatBlock {
 /// `NATURALATTACKS:` token above (including its literal `0` damage —
 /// a real attack that deals none) and is unchanged. The row separately
 /// names a Claw via `ABILITY:Internal|AUTOMATIC|Claw`, whose target
-/// (`core_essentials/ce_abilities_race.lst:251`) carries no dice; `1d4`
+/// (`core_essentials/ce_abilities_race:251`) carries no dice; `1d4`
 /// is corroborated by legacy.aonprd + d20pfsrd (both "2 claws +5
 /// (1d4+3)"). Both sources also place Filament on the **Ranged** line,
 /// independently matching the real token's own `...Ranged...` type

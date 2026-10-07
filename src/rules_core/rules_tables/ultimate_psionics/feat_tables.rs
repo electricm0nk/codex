@@ -12,30 +12,30 @@
 //! promise the disk does not keep. No licensing anomaly found; recorded
 //! as checked, not assumed.
 //!
-//! **Corpus coverage, honestly bounded.** `up_feats.lst` has 223
+//! **Corpus coverage, honestly bounded.** `up_feats` has 223
 //! top-level `CATEGORY:FEAT` records (re-derived: `grep -c $'\tCATEGORY:
-//! FEAT\t' up_feats.lst` -- the naive line-anchored
+//! FEAT\t' up_feats` -- the naive line-anchored
 //! `grep -c '^CATEGORY:FEAT'` returns 0, the same not-line-anchored trap
 //! `decisions.md §46`/`§49` already documented for UC/UM, recurring a
-//! third time). A sibling file, `up_feats_apg.lst`, carries only three
+//! third time). A sibling file, `up_feats_apg`, carries only three
 //! `CATEGORY=FEAT|<Name>.MOD` rows tagging existing APG feats into a
 //! psionic archetype's bonus-feat pool (`TYPE:MarksmanBonus` etc.) --
 //! not new declarations, the same facet-tagging shape `decisions.md §48`
 //! catalogued for 19 of APG's own no-prose `.MOD` rows.
 //!
 //! **One record is source-disabled by the data team itself, not by this
-//! ingest.** `#Network Power` (`up_feats.lst:217`) carries a literal `#`
+//! ingest.** `#Network Power` (`up_feats:217`) carries a literal `#`
 //! prefix on its own name field -- PCGen's own convention for hiding a
 //! record from the UI without deleting it -- and the preceding line
 //! carries the PCGen data team's own comment: `# COMMENT: I believe
-//! Network Power was removed on purpose.` (`up_feats.lst:216`). Excluded
+//! Network Power was removed on purpose.` (`up_feats:216`). Excluded
 //! on the strength of the source's own annotation, a fourth kind of
 //! "this row is not real content" case this bundle has hit, distinct
 //! from UC's textless stubs, UM's auto-grant wrappers, or a cross-book
 //! collision.
 //!
 //! **One cross-book collision: `Feral Combat Training` is a verbatim
-//! republish of `ultimate_combat`'s own record** (`uc_feats.lst:117`) --
+//! republish of `ultimate_combat`'s own record** (`uc_feats:117`) --
 //! same description, same `BENEFIT:`, same `SOURCEPAGE:p.101`, same
 //! prerequisite token. Confirmed at runtime against every other book's
 //! real feat key set (a scratch `#[test]` dump of
@@ -81,7 +81,7 @@
 //! streak. Checked directly, not assumed from the streak.
 //!
 //! **One corpus typo, corrected with the correction documented, not
-//! silently absorbed.** `Thundering Power` (`up_feats.lst:329`) declares
+//! silently absorbed.** `Thundering Power` (`up_feats:329`) declares
 //! `TYPE:Metasionic` -- every one of its 34 sibling metapsionic feats
 //! (`Chain Power`, `Burning Power`, etc., all named `<Word> Power`, all
 //! in the same page range) declares `TYPE:Metapsionic`. Folded into
@@ -103,7 +103,7 @@
 //!
 //! Every field below is copied verbatim from the real corpus row (source:
 //! `~/workspace/repos/pcgen/data/pathfinder/dreamscarred_press/
-//! ultimate_psionics/up_feats.lst`), generated programmatically by a
+//! ultimate_psionics/up_feats`), generated programmatically by a
 //! one-off extraction script, not hand-transcribed.
 
 use super::super::crb::feats::FeatCategory as SharedFeatCategory;
@@ -168,7 +168,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
     static TABLE: std::sync::OnceLock<Vec<UpsiFeatEntry>> = std::sync::OnceLock::new();
     TABLE.get_or_init(|| {
         vec![
-            // Access Psionic Talent -- up_feats.lst:18
+            // Access Psionic Talent -- up_feats:18
             UpsiFeatEntry {
                 key: "Access Psionic Talent",
                 category: FeatCategory::Psionic,
@@ -178,7 +178,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.86"),
                 benefit: None,
             },
-            // Additional Terror -- up_feats.lst:19
+            // Additional Terror -- up_feats:19
             UpsiFeatEntry {
                 key: "Additional Terror",
                 category: FeatCategory::Psionic,
@@ -188,7 +188,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.86"),
                 benefit: None,
             },
-            // Advanced Archer Path -- up_feats.lst:20
+            // Advanced Archer Path -- up_feats:20
             UpsiFeatEntry {
                 key: "Advanced Archer Path",
                 category: FeatCategory::Psionic,
@@ -198,7 +198,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.86"),
                 benefit: None,
             },
-            // Advanced Ascetic Path -- up_feats.lst:21
+            // Advanced Ascetic Path -- up_feats:21
             UpsiFeatEntry {
                 key: "Advanced Ascetic Path",
                 category: FeatCategory::Psionic,
@@ -208,7 +208,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.86"),
                 benefit: None,
             },
-            // Advanced Assassin Path -- up_feats.lst:22
+            // Advanced Assassin Path -- up_feats:22
             UpsiFeatEntry {
                 key: "Advanced Assassin Path",
                 category: FeatCategory::Psionic,
@@ -218,7 +218,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: None,
             },
-            // Advanced Brawling Path -- up_feats.lst:23
+            // Advanced Brawling Path -- up_feats:23
             UpsiFeatEntry {
                 key: "Advanced Brawling Path",
                 category: FeatCategory::Psionic,
@@ -228,7 +228,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: None,
             },
-            // Advanced Constructs -- up_feats.lst:24
+            // Advanced Constructs -- up_feats:24
             UpsiFeatEntry {
                 key: "Advanced Constructs",
                 category: FeatCategory::Psionic,
@@ -238,7 +238,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: None,
             },
-            // Advanced Dervish Path -- up_feats.lst:25
+            // Advanced Dervish Path -- up_feats:25
             UpsiFeatEntry {
                 key: "Advanced Dervish Path",
                 category: FeatCategory::Psionic,
@@ -248,7 +248,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: None,
             },
-            // Advanced Feral Path -- up_feats.lst:26
+            // Advanced Feral Path -- up_feats:26
             UpsiFeatEntry {
                 key: "Advanced Feral Path",
                 category: FeatCategory::Psionic,
@@ -258,7 +258,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.87"),
                 benefit: None,
             },
-            // Advanced Infiltrator Path -- up_feats.lst:27
+            // Advanced Infiltrator Path -- up_feats:27
             UpsiFeatEntry {
                 key: "Advanced Infiltrator Path",
                 category: FeatCategory::Psionic,
@@ -268,7 +268,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Advanced Interceptor Path -- up_feats.lst:28
+            // Advanced Interceptor Path -- up_feats:28
             UpsiFeatEntry {
                 key: "Advanced Interceptor Path",
                 category: FeatCategory::Psionic,
@@ -278,7 +278,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Advanced Mind Knight Path -- up_feats.lst:29
+            // Advanced Mind Knight Path -- up_feats:29
             UpsiFeatEntry {
                 key: "Advanced Mind Knight Path",
                 category: FeatCategory::Psionic,
@@ -288,7 +288,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Advanced Survivor Path -- up_feats.lst:30
+            // Advanced Survivor Path -- up_feats:30
             UpsiFeatEntry {
                 key: "Advanced Survivor Path",
                 category: FeatCategory::Psionic,
@@ -298,7 +298,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Advanced Weaponmaster Path -- up_feats.lst:31
+            // Advanced Weaponmaster Path -- up_feats:31
             UpsiFeatEntry {
                 key: "Advanced Weaponmaster Path",
                 category: FeatCategory::Psionic,
@@ -308,7 +308,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Aligned Attack (Chaos) -- up_feats.lst:32
+            // Aligned Attack (Chaos) -- up_feats:32
             UpsiFeatEntry {
                 key: "Aligned Attack (Chaos)",
                 category: FeatCategory::Psionic,
@@ -318,7 +318,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Aligned Attack (Evil) -- up_feats.lst:33
+            // Aligned Attack (Evil) -- up_feats:33
             UpsiFeatEntry {
                 key: "Aligned Attack (Evil)",
                 category: FeatCategory::Psionic,
@@ -328,7 +328,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Aligned Attack (Good) -- up_feats.lst:34
+            // Aligned Attack (Good) -- up_feats:34
             UpsiFeatEntry {
                 key: "Aligned Attack (Good)",
                 category: FeatCategory::Psionic,
@@ -338,7 +338,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Aligned Attack (Law) -- up_feats.lst:35
+            // Aligned Attack (Law) -- up_feats:35
             UpsiFeatEntry {
                 key: "Aligned Attack (Law)",
                 category: FeatCategory::Psionic,
@@ -348,7 +348,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Assassin's Shot -- up_feats.lst:36
+            // Assassin's Shot -- up_feats:36
             UpsiFeatEntry {
                 key: "Assassin's Shot",
                 category: FeatCategory::Combat,
@@ -358,7 +358,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Assassin's Venom -- up_feats.lst:37
+            // Assassin's Venom -- up_feats:37
             UpsiFeatEntry {
                 key: "Assassin's Venom",
                 category: FeatCategory::Psionic,
@@ -368,7 +368,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Autonomous -- up_feats.lst:38
+            // Autonomous -- up_feats:38
             UpsiFeatEntry {
                 key: "Autonomous",
                 category: FeatCategory::General,
@@ -378,7 +378,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.94"),
                 benefit: None,
             },
-            // Body Fuel -- up_feats.lst:43
+            // Body Fuel -- up_feats:43
             UpsiFeatEntry {
                 key: "Body Fuel",
                 category: FeatCategory::Psionic,
@@ -388,7 +388,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.95"),
                 benefit: None,
             },
-            // Boost Construct -- up_feats.lst:44
+            // Boost Construct -- up_feats:44
             UpsiFeatEntry {
                 key: "Boost Construct",
                 category: FeatCategory::Psionic,
@@ -398,7 +398,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.95"),
                 benefit: None,
             },
-            // Broken Dreams Style -- up_feats.lst:45
+            // Broken Dreams Style -- up_feats:45
             UpsiFeatEntry {
                 key: "Broken Dreams Style",
                 category: FeatCategory::Psionic,
@@ -408,7 +408,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.95"),
                 benefit: None,
             },
-            // Burning Power -- up_feats.lst:46
+            // Burning Power -- up_feats:46
             UpsiFeatEntry {
                 key: "Burning Power",
                 category: FeatCategory::Metapsionic,
@@ -418,7 +418,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.95"),
                 benefit: None,
             },
-            // Burrowing Power -- up_feats.lst:47
+            // Burrowing Power -- up_feats:47
             UpsiFeatEntry {
                 key: "Burrowing Power",
                 category: FeatCategory::Metapsionic,
@@ -428,7 +428,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.95"),
                 benefit: None,
             },
-            // Chain Power -- up_feats.lst:52
+            // Chain Power -- up_feats:52
             UpsiFeatEntry {
                 key: "Chain Power",
                 category: FeatCategory::Metapsionic,
@@ -438,7 +438,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.95"),
                 benefit: None,
             },
-            // Channel Rage -- up_feats.lst:53
+            // Channel Rage -- up_feats:53
             UpsiFeatEntry {
                 key: "Channel Rage",
                 category: FeatCategory::Psionic,
@@ -448,7 +448,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.96"),
                 benefit: None,
             },
-            // Cloak Dance -- up_feats.lst:54
+            // Cloak Dance -- up_feats:54
             UpsiFeatEntry {
                 key: "Cloak Dance",
                 category: FeatCategory::General,
@@ -458,7 +458,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.96"),
                 benefit: None,
             },
-            // Combat Manifestation -- up_feats.lst:55
+            // Combat Manifestation -- up_feats:55
             UpsiFeatEntry {
                 key: "Combat Manifestation",
                 category: FeatCategory::Psionic,
@@ -468,7 +468,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.96"),
                 benefit: None,
             },
-            // Concussive Power -- up_feats.lst:56
+            // Concussive Power -- up_feats:56
             UpsiFeatEntry {
                 key: "Concussive Power",
                 category: FeatCategory::Metapsionic,
@@ -478,7 +478,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.96"),
                 benefit: None,
             },
-            // Craft Crystalline Focus -- up_feats.lst:57
+            // Craft Crystalline Focus -- up_feats:57
             UpsiFeatEntry {
                 key: "Craft Crystalline Focus",
                 category: FeatCategory::ItemCreation,
@@ -488,7 +488,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.96"),
                 benefit: None,
             },
-            // Craft Cognizance Crystal -- up_feats.lst:58
+            // Craft Cognizance Crystal -- up_feats:58
             UpsiFeatEntry {
                 key: "Craft Cognizance Crystal",
                 category: FeatCategory::ItemCreation,
@@ -498,7 +498,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.96"),
                 benefit: None,
             },
-            // Crippling Assault -- up_feats.lst:59
+            // Crippling Assault -- up_feats:59
             UpsiFeatEntry {
                 key: "Crippling Assault",
                 category: FeatCategory::Psionic,
@@ -508,7 +508,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.96"),
                 benefit: None,
             },
-            // Critical Refocus -- up_feats.lst:60
+            // Critical Refocus -- up_feats:60
             UpsiFeatEntry {
                 key: "Critical Refocus",
                 category: FeatCategory::Combat,
@@ -518,7 +518,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.96"),
                 benefit: None,
             },
-            // Cushion the Blow -- up_feats.lst:61
+            // Cushion the Blow -- up_feats:61
             UpsiFeatEntry {
                 key: "Cushion the Blow",
                 category: FeatCategory::Psionic,
@@ -528,7 +528,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.96"),
                 benefit: None,
             },
-            // Dazing Power -- up_feats.lst:66
+            // Dazing Power -- up_feats:66
             UpsiFeatEntry {
                 key: "Dazing Power",
                 category: FeatCategory::Metapsionic,
@@ -538,7 +538,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.96"),
                 benefit: None,
             },
-            // Deadly Throw -- up_feats.lst:68
+            // Deadly Throw -- up_feats:68
             UpsiFeatEntry {
                 key: "Deadly Throw",
                 category: FeatCategory::Psionic,
@@ -548,7 +548,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.97"),
                 benefit: None,
             },
-            // Deep Focus -- up_feats.lst:69
+            // Deep Focus -- up_feats:69
             UpsiFeatEntry {
                 key: "Deep Focus",
                 category: FeatCategory::Psionic,
@@ -558,7 +558,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.97"),
                 benefit: None,
             },
-            // Deep Impact -- up_feats.lst:70
+            // Deep Impact -- up_feats:70
             UpsiFeatEntry {
                 key: "Deep Impact",
                 category: FeatCategory::Psionic,
@@ -568,7 +568,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.97"),
                 benefit: None,
             },
-            // Defensive Tactics -- up_feats.lst:72
+            // Defensive Tactics -- up_feats:72
             UpsiFeatEntry {
                 key: "Defensive Tactics",
                 category: FeatCategory::General,
@@ -578,7 +578,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.97"),
                 benefit: None,
             },
-            // Delay Power -- up_feats.lst:73
+            // Delay Power -- up_feats:73
             UpsiFeatEntry {
                 key: "Delay Power",
                 category: FeatCategory::Metapsionic,
@@ -588,7 +588,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.97"),
                 benefit: None,
             },
-            // Disciple of Fear -- up_feats.lst:74
+            // Disciple of Fear -- up_feats:74
             UpsiFeatEntry {
                 key: "Disciple of Fear",
                 category: FeatCategory::Psionic,
@@ -598,7 +598,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.97"),
                 benefit: None,
             },
-            // Dispelling Static -- up_feats.lst:75
+            // Dispelling Static -- up_feats:75
             UpsiFeatEntry {
                 key: "Dispelling Static",
                 category: FeatCategory::Psionic,
@@ -608,7 +608,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.98"),
                 benefit: None,
             },
-            // Echoing Power -- up_feats.lst:80
+            // Echoing Power -- up_feats:80
             UpsiFeatEntry {
                 key: "Echoing Power",
                 category: FeatCategory::Metapsionic,
@@ -618,7 +618,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.98"),
                 benefit: None,
             },
-            // Ectoplasmic Power -- up_feats.lst:81
+            // Ectoplasmic Power -- up_feats:81
             UpsiFeatEntry {
                 key: "Ectoplasmic Power",
                 category: FeatCategory::Metapsionic,
@@ -628,7 +628,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.98"),
                 benefit: None,
             },
-            // Efficient Aid -- up_feats.lst:82
+            // Efficient Aid -- up_feats:82
             UpsiFeatEntry {
                 key: "Efficient Aid",
                 category: FeatCategory::Psionic,
@@ -638,7 +638,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.98"),
                 benefit: None,
             },
-            // Elemental Blast -- up_feats.lst:83
+            // Elemental Blast -- up_feats:83
             UpsiFeatEntry {
                 key: "Elemental Blast",
                 category: FeatCategory::Psionic,
@@ -648,7 +648,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.98"),
                 benefit: None,
             },
-            // Empower Power -- up_feats.lst:84
+            // Empower Power -- up_feats:84
             UpsiFeatEntry {
                 key: "Empower Power",
                 category: FeatCategory::Metapsionic,
@@ -658,7 +658,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.98"),
                 benefit: None,
             },
-            // Empowered Shot -- up_feats.lst:85
+            // Empowered Shot -- up_feats:85
             UpsiFeatEntry {
                 key: "Empowered Shot",
                 category: FeatCategory::Psionic,
@@ -668,7 +668,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.98"),
                 benefit: None,
             },
-            // Endowed Mind -- up_feats.lst:86
+            // Endowed Mind -- up_feats:86
             UpsiFeatEntry {
                 key: "Endowed Mind",
                 category: FeatCategory::Metapsionic,
@@ -678,7 +678,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.98"),
                 benefit: None,
             },
-            // Enervation Fortitude -- up_feats.lst:87
+            // Enervation Fortitude -- up_feats:87
             UpsiFeatEntry {
                 key: "Enervation Fortitude",
                 category: FeatCategory::Psionic,
@@ -688,7 +688,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.98"),
                 benefit: None,
             },
-            // Enhanced Steal Life -- up_feats.lst:88
+            // Enhanced Steal Life -- up_feats:88
             UpsiFeatEntry {
                 key: "Enhanced Steal Life",
                 category: FeatCategory::Psionic,
@@ -698,7 +698,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.98"),
                 benefit: None,
             },
-            // Enlarge Power -- up_feats.lst:89
+            // Enlarge Power -- up_feats:89
             UpsiFeatEntry {
                 key: "Enlarge Power",
                 category: FeatCategory::Metapsionic,
@@ -708,7 +708,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.99"),
                 benefit: None,
             },
-            // Enlarged Collective -- up_feats.lst:90
+            // Enlarged Collective -- up_feats:90
             UpsiFeatEntry {
                 key: "Enlarged Collective",
                 category: FeatCategory::Psionic,
@@ -718,7 +718,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.99"),
                 benefit: None,
             },
-            // Expanded Collective -- up_feats.lst:92
+            // Expanded Collective -- up_feats:92
             UpsiFeatEntry {
                 key: "Expanded Collective",
                 category: FeatCategory::Psionic,
@@ -728,7 +728,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.99"),
                 benefit: None,
             },
-            // Expanded Favored Weapon -- up_feats.lst:93
+            // Expanded Favored Weapon -- up_feats:93
             UpsiFeatEntry {
                 key: "Expanded Favored Weapon",
                 category: FeatCategory::Psionic,
@@ -738,7 +738,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.99"),
                 benefit: None,
             },
-            // Expanded Knowledge -- up_feats.lst:96
+            // Expanded Knowledge -- up_feats:96
             UpsiFeatEntry {
                 key: "Expanded Knowledge",
                 category: FeatCategory::Psionic,
@@ -748,7 +748,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.99"),
                 benefit: None,
             },
-            // Expanded Martial Power -- up_feats.lst:97
+            // Expanded Martial Power -- up_feats:97
             UpsiFeatEntry {
                 key: "Expanded Martial Power",
                 category: FeatCategory::Psionic,
@@ -758,7 +758,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.99"),
                 benefit: None,
             },
-            // Expanded Strategies -- up_feats.lst:98
+            // Expanded Strategies -- up_feats:98
             UpsiFeatEntry {
                 key: "Expanded Strategies",
                 category: FeatCategory::Psionic,
@@ -768,7 +768,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.99"),
                 benefit: None,
             },
-            // Expansive Collective -- up_feats.lst:99
+            // Expansive Collective -- up_feats:99
             UpsiFeatEntry {
                 key: "Expansive Collective",
                 category: FeatCategory::Psionic,
@@ -778,7 +778,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.99"),
                 benefit: None,
             },
-            // Explosive Power -- up_feats.lst:100
+            // Explosive Power -- up_feats:100
             UpsiFeatEntry {
                 key: "Explosive Power",
                 category: FeatCategory::Metapsionic,
@@ -788,7 +788,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.99"),
                 benefit: None,
             },
-            // Extra Blade Skill -- up_feats.lst:101
+            // Extra Blade Skill -- up_feats:101
             UpsiFeatEntry {
                 key: "Extra Blade Skill",
                 category: FeatCategory::Psionic,
@@ -798,7 +798,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Extend Power -- up_feats.lst:102
+            // Extend Power -- up_feats:102
             UpsiFeatEntry {
                 key: "Extend Power",
                 category: FeatCategory::Metapsionic,
@@ -808,7 +808,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Extended Blast -- up_feats.lst:103
+            // Extended Blast -- up_feats:103
             UpsiFeatEntry {
                 key: "Extended Blast",
                 category: FeatCategory::Psionic,
@@ -818,7 +818,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Extra Customization -- up_feats.lst:104
+            // Extra Customization -- up_feats:104
             UpsiFeatEntry {
                 key: "Extra Customization",
                 category: FeatCategory::Psionic,
@@ -828,7 +828,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Extra Disruption Type -- up_feats.lst:105
+            // Extra Disruption Type -- up_feats:105
             UpsiFeatEntry {
                 key: "Extra Disruption Type",
                 category: FeatCategory::Psionic,
@@ -838,7 +838,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Extra Insight -- up_feats.lst:106
+            // Extra Insight -- up_feats:106
             UpsiFeatEntry {
                 key: "Extra Insight",
                 category: FeatCategory::Psionic,
@@ -848,7 +848,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Extra Power Known -- up_feats.lst:107
+            // Extra Power Known -- up_feats:107
             UpsiFeatEntry {
                 key: "Extra Power Known",
                 category: FeatCategory::Psionic,
@@ -858,7 +858,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Extra Reconfiguration -- up_feats.lst:108
+            // Extra Reconfiguration -- up_feats:108
             UpsiFeatEntry {
                 key: "Extra Reconfiguration",
                 category: FeatCategory::Psionic,
@@ -868,7 +868,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Extra Strategy -- up_feats.lst:109
+            // Extra Strategy -- up_feats:109
             UpsiFeatEntry {
                 key: "Extra Strategy",
                 category: FeatCategory::Psionic,
@@ -878,7 +878,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Extra Terrors -- up_feats.lst:110
+            // Extra Terrors -- up_feats:110
             UpsiFeatEntry {
                 key: "Extra Terrors",
                 category: FeatCategory::Psionic,
@@ -888,7 +888,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Extra Transfer -- up_feats.lst:111
+            // Extra Transfer -- up_feats:111
             UpsiFeatEntry {
                 key: "Extra Transfer",
                 category: FeatCategory::Psionic,
@@ -898,7 +898,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Fast Aid -- up_feats.lst:116
+            // Fast Aid -- up_feats:116
             UpsiFeatEntry {
                 key: "Fast Aid",
                 category: FeatCategory::Psionic,
@@ -908,7 +908,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.100"),
                 benefit: None,
             },
-            // Fast Step -- up_feats.lst:117
+            // Fast Step -- up_feats:117
             UpsiFeatEntry {
                 key: "Fast Step",
                 category: FeatCategory::Psionic,
@@ -918,7 +918,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Favored Energy (Cold) -- up_feats.lst:121
+            // Favored Energy (Cold) -- up_feats:121
             UpsiFeatEntry {
                 key: "Favored Energy (Cold)",
                 category: FeatCategory::Psionic,
@@ -928,7 +928,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Favored Energy (Electricity) -- up_feats.lst:122
+            // Favored Energy (Electricity) -- up_feats:122
             UpsiFeatEntry {
                 key: "Favored Energy (Electricity)",
                 category: FeatCategory::Psionic,
@@ -938,7 +938,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Favored Energy (Fire) -- up_feats.lst:123
+            // Favored Energy (Fire) -- up_feats:123
             UpsiFeatEntry {
                 key: "Favored Energy (Fire)",
                 category: FeatCategory::Psionic,
@@ -948,7 +948,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Favored Energy (Sonic) -- up_feats.lst:124
+            // Favored Energy (Sonic) -- up_feats:124
             UpsiFeatEntry {
                 key: "Favored Energy (Sonic)",
                 category: FeatCategory::Psionic,
@@ -958,7 +958,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Fear Mastery -- up_feats.lst:125
+            // Fear Mastery -- up_feats:125
             UpsiFeatEntry {
                 key: "Fear Mastery",
                 category: FeatCategory::Psionic,
@@ -968,7 +968,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Fear's Reach -- up_feats.lst:126
+            // Fear's Reach -- up_feats:126
             UpsiFeatEntry {
                 key: "Fear's Reach",
                 category: FeatCategory::Psionic,
@@ -978,7 +978,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Fell Shot -- up_feats.lst:127
+            // Fell Shot -- up_feats:127
             UpsiFeatEntry {
                 key: "Fell Shot",
                 category: FeatCategory::Psionic,
@@ -988,7 +988,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Flaring Power -- up_feats.lst:129
+            // Flaring Power -- up_feats:129
             UpsiFeatEntry {
                 key: "Flaring Power",
                 category: FeatCategory::Metapsionic,
@@ -998,7 +998,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Fighter's Blade -- up_feats.lst:130
+            // Fighter's Blade -- up_feats:130
             UpsiFeatEntry {
                 key: "Fighter's Blade",
                 category: FeatCategory::General,
@@ -1008,7 +1008,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Focused Power -- up_feats.lst:131
+            // Focused Power -- up_feats:131
             UpsiFeatEntry {
                 key: "Focused Power",
                 category: FeatCategory::Metapsionic,
@@ -1018,7 +1018,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Focused Precision -- up_feats.lst:134
+            // Focused Precision -- up_feats:134
             UpsiFeatEntry {
                 key: "Focused Precision",
                 category: FeatCategory::Combat,
@@ -1028,7 +1028,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.101"),
                 benefit: None,
             },
-            // Focused Sunder -- up_feats.lst:135
+            // Focused Sunder -- up_feats:135
             UpsiFeatEntry {
                 key: "Focused Sunder",
                 category: FeatCategory::Psionic,
@@ -1038,7 +1038,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.102"),
                 benefit: None,
             },
-            // Ghost Attack -- up_feats.lst:140
+            // Ghost Attack -- up_feats:140
             UpsiFeatEntry {
                 key: "Ghost Attack",
                 category: FeatCategory::Psionic,
@@ -1048,7 +1048,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.102"),
                 benefit: None,
             },
-            // Gravitic Stability -- up_feats.lst:141
+            // Gravitic Stability -- up_feats:141
             UpsiFeatEntry {
                 key: "Gravitic Stability",
                 category: FeatCategory::Psionic,
@@ -1058,7 +1058,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.102"),
                 benefit: None,
             },
-            // Greater Cushion the Blow -- up_feats.lst:142
+            // Greater Cushion the Blow -- up_feats:142
             UpsiFeatEntry {
                 key: "Greater Cushion the Blow",
                 category: FeatCategory::Psionic,
@@ -1068,7 +1068,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.102"),
                 benefit: None,
             },
-            // Greater Intuitive Shot -- up_feats.lst:143
+            // Greater Intuitive Shot -- up_feats:143
             UpsiFeatEntry {
                 key: "Greater Intuitive Shot",
                 category: FeatCategory::Psionic,
@@ -1078,7 +1078,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.102"),
                 benefit: None,
             },
-            // Greater Power Penetration -- up_feats.lst:144
+            // Greater Power Penetration -- up_feats:144
             UpsiFeatEntry {
                 key: "Greater Power Penetration",
                 category: FeatCategory::Psionic,
@@ -1088,7 +1088,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.102"),
                 benefit: None,
             },
-            // Greater Power Specialization -- up_feats.lst:145
+            // Greater Power Specialization -- up_feats:145
             UpsiFeatEntry {
                 key: "Greater Power Specialization",
                 category: FeatCategory::Psionic,
@@ -1098,7 +1098,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.102"),
                 benefit: None,
             },
-            // Greater Psionic Endowment -- up_feats.lst:146
+            // Greater Psionic Endowment -- up_feats:146
             UpsiFeatEntry {
                 key: "Greater Psionic Endowment",
                 category: FeatCategory::Psionic,
@@ -1108,7 +1108,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.102"),
                 benefit: None,
             },
-            // Greater Psionic Fist -- up_feats.lst:148
+            // Greater Psionic Fist -- up_feats:148
             UpsiFeatEntry {
                 key: "Greater Psionic Fist",
                 category: FeatCategory::Psionic,
@@ -1118,7 +1118,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.102"),
                 benefit: None,
             },
-            // Greater Psionic Shot -- up_feats.lst:150
+            // Greater Psionic Shot -- up_feats:150
             UpsiFeatEntry {
                 key: "Greater Psionic Shot",
                 category: FeatCategory::Psionic,
@@ -1128,7 +1128,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.102"),
                 benefit: None,
             },
-            // Greater Psionic Weapon -- up_feats.lst:152
+            // Greater Psionic Weapon -- up_feats:152
             UpsiFeatEntry {
                 key: "Greater Psionic Weapon",
                 category: FeatCategory::Psionic,
@@ -1138,7 +1138,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.103"),
                 benefit: None,
             },
-            // Harmonic Resonance -- up_feats.lst:159
+            // Harmonic Resonance -- up_feats:159
             UpsiFeatEntry {
                 key: "Harmonic Resonance",
                 category: FeatCategory::Psionic,
@@ -1148,7 +1148,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.103"),
                 benefit: None,
             },
-            // Hawkeye -- up_feats.lst:160
+            // Hawkeye -- up_feats:160
             UpsiFeatEntry {
                 key: "Hawkeye",
                 category: FeatCategory::Combat,
@@ -1158,7 +1158,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.103"),
                 benefit: None,
             },
-            // Hustle Power -- up_feats.lst:161
+            // Hustle Power -- up_feats:161
             UpsiFeatEntry {
                 key: "Hustle Power",
                 category: FeatCategory::Metapsionic,
@@ -1168,7 +1168,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.103"),
                 benefit: None,
             },
-            // Improved Cover Fire -- up_feats.lst:166
+            // Improved Cover Fire -- up_feats:166
             UpsiFeatEntry {
                 key: "Improved Cover Fire",
                 category: FeatCategory::Combat,
@@ -1178,7 +1178,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.103"),
                 benefit: None,
             },
-            // Improved Cushion the Blow -- up_feats.lst:167
+            // Improved Cushion the Blow -- up_feats:167
             UpsiFeatEntry {
                 key: "Improved Cushion the Blow",
                 category: FeatCategory::Psionic,
@@ -1188,7 +1188,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.103"),
                 benefit: None,
             },
-            // Improved Disengage -- up_feats.lst:168
+            // Improved Disengage -- up_feats:168
             UpsiFeatEntry {
                 key: "Improved Disengage",
                 category: FeatCategory::Combat,
@@ -1198,7 +1198,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.103"),
                 benefit: None,
             },
-            // Improved Disruption -- up_feats.lst:169
+            // Improved Disruption -- up_feats:169
             UpsiFeatEntry {
                 key: "Improved Disruption",
                 category: FeatCategory::Psionic,
@@ -1208,7 +1208,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.103"),
                 benefit: None,
             },
-            // Improved Metamorphosis -- up_feats.lst:170
+            // Improved Metamorphosis -- up_feats:170
             UpsiFeatEntry {
                 key: "Improved Metamorphosis",
                 category: FeatCategory::Psionic,
@@ -1218,7 +1218,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.103"),
                 benefit: None,
             },
-            // Improved Psi-Like Ability -- up_feats.lst:175
+            // Improved Psi-Like Ability -- up_feats:175
             UpsiFeatEntry {
                 key: "Improved Psi-Like Ability",
                 category: FeatCategory::Psionic,
@@ -1228,7 +1228,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.104"),
                 benefit: None,
             },
-            // Improved Psicrystal -- up_feats.lst:176
+            // Improved Psicrystal -- up_feats:176
             UpsiFeatEntry {
                 key: "Improved Psicrystal",
                 category: FeatCategory::Psionic,
@@ -1238,7 +1238,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.104"),
                 benefit: None,
             },
-            // Inquisitor -- up_feats.lst:177
+            // Inquisitor -- up_feats:177
             UpsiFeatEntry {
                 key: "Inquisitor",
                 category: FeatCategory::Psionic,
@@ -1248,7 +1248,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.104"),
                 benefit: None,
             },
-            // Insightful Terror -- up_feats.lst:178
+            // Insightful Terror -- up_feats:178
             UpsiFeatEntry {
                 key: "Insightful Terror",
                 category: FeatCategory::Psionic,
@@ -1258,7 +1258,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.104"),
                 benefit: None,
             },
-            // Intimidating Shot -- up_feats.lst:179
+            // Intimidating Shot -- up_feats:179
             UpsiFeatEntry {
                 key: "Intimidating Shot",
                 category: FeatCategory::Psionic,
@@ -1268,7 +1268,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.104"),
                 benefit: None,
             },
-            // Intuitive Fighting -- up_feats.lst:180
+            // Intuitive Fighting -- up_feats:180
             UpsiFeatEntry {
                 key: "Intuitive Fighting",
                 category: FeatCategory::Psionic,
@@ -1278,7 +1278,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.104"),
                 benefit: None,
             },
-            // Intuitive Shot -- up_feats.lst:181
+            // Intuitive Shot -- up_feats:181
             UpsiFeatEntry {
                 key: "Intuitive Shot",
                 category: FeatCategory::Psionic,
@@ -1288,7 +1288,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.104"),
                 benefit: None,
             },
-            // Killer's Vitality -- up_feats.lst:186
+            // Killer's Vitality -- up_feats:186
             UpsiFeatEntry {
                 key: "Killer's Vitality",
                 category: FeatCategory::General,
@@ -1298,7 +1298,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.104"),
                 benefit: None,
             },
-            // Knightmare -- up_feats.lst:188
+            // Knightmare -- up_feats:188
             UpsiFeatEntry {
                 key: "Knightmare",
                 category: FeatCategory::General,
@@ -1308,7 +1308,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.104"),
                 benefit: None,
             },
-            // Knockdown Shot -- up_feats.lst:189
+            // Knockdown Shot -- up_feats:189
             UpsiFeatEntry {
                 key: "Knockdown Shot",
                 category: FeatCategory::Psionic,
@@ -1318,7 +1318,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.104"),
                 benefit: None,
             },
-            // Levitative Transport -- up_feats.lst:194
+            // Levitative Transport -- up_feats:194
             UpsiFeatEntry {
                 key: "Levitative Transport",
                 category: FeatCategory::Psionic,
@@ -1328,7 +1328,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.105"),
                 benefit: None,
             },
-            // Lingering Power -- up_feats.lst:195
+            // Lingering Power -- up_feats:195
             UpsiFeatEntry {
                 key: "Lingering Power",
                 category: FeatCategory::Metapsionic,
@@ -1338,7 +1338,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.105"),
                 benefit: None,
             },
-            // Malleable Power -- up_feats.lst:200
+            // Malleable Power -- up_feats:200
             UpsiFeatEntry {
                 key: "Malleable Power",
                 category: FeatCategory::Metapsionic,
@@ -1348,7 +1348,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.105"),
                 benefit: None,
             },
-            // Master of All Forms -- up_feats.lst:201
+            // Master of All Forms -- up_feats:201
             UpsiFeatEntry {
                 key: "Master of All Forms",
                 category: FeatCategory::Psionic,
@@ -1358,7 +1358,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.105"),
                 benefit: None,
             },
-            // Master's Refuge -- up_feats.lst:202
+            // Master's Refuge -- up_feats:202
             UpsiFeatEntry {
                 key: "Master's Refuge",
                 category: FeatCategory::Psionic,
@@ -1368,7 +1368,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.106"),
                 benefit: None,
             },
-            // Master's Voice -- up_feats.lst:203
+            // Master's Voice -- up_feats:203
             UpsiFeatEntry {
                 key: "Master's Voice",
                 category: FeatCategory::Psionic,
@@ -1378,7 +1378,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.106"),
                 benefit: None,
             },
-            // Maximize Power -- up_feats.lst:204
+            // Maximize Power -- up_feats:204
             UpsiFeatEntry {
                 key: "Maximize Power",
                 category: FeatCategory::Metapsionic,
@@ -1388,7 +1388,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.106"),
                 benefit: None,
             },
-            // Mental Leap -- up_feats.lst:205
+            // Mental Leap -- up_feats:205
             UpsiFeatEntry {
                 key: "Mental Leap",
                 category: FeatCategory::Psionic,
@@ -1398,7 +1398,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.106"),
                 benefit: None,
             },
-            // Merciful Power -- up_feats.lst:206
+            // Merciful Power -- up_feats:206
             UpsiFeatEntry {
                 key: "Merciful Power",
                 category: FeatCategory::Metapsionic,
@@ -1408,7 +1408,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.106"),
                 benefit: None,
             },
-            // Merge Designs -- up_feats.lst:207
+            // Merge Designs -- up_feats:207
             UpsiFeatEntry {
                 key: "Merge Designs",
                 category: FeatCategory::Psionic,
@@ -1418,7 +1418,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.106"),
                 benefit: None,
             },
-            // Metapsionic Mastery -- up_feats.lst:208
+            // Metapsionic Mastery -- up_feats:208
             UpsiFeatEntry {
                 key: "Metapsionic Mastery",
                 category: FeatCategory::Psionic,
@@ -1428,7 +1428,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.106"),
                 benefit: None,
             },
-            // Mind Blade Knight -- up_feats.lst:210
+            // Mind Blade Knight -- up_feats:210
             UpsiFeatEntry {
                 key: "Mind Blade Knight",
                 category: FeatCategory::Psionic,
@@ -1438,7 +1438,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.106"),
                 benefit: None,
             },
-            // Mind Knight's Arsenal -- up_feats.lst:211
+            // Mind Knight's Arsenal -- up_feats:211
             UpsiFeatEntry {
                 key: "Mind Knight's Arsenal",
                 category: FeatCategory::Psionic,
@@ -1448,7 +1448,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.107"),
                 benefit: None,
             },
-            // Mind Over Body -- up_feats.lst:212
+            // Mind Over Body -- up_feats:212
             UpsiFeatEntry {
                 key: "Mind Over Body",
                 category: FeatCategory::General,
@@ -1458,7 +1458,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.107"),
                 benefit: None,
             },
-            // Mixed Combat -- up_feats.lst:213
+            // Mixed Combat -- up_feats:213
             UpsiFeatEntry {
                 key: "Mixed Combat",
                 category: FeatCategory::Combat,
@@ -1468,7 +1468,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.107"),
                 benefit: None,
             },
-            // Modified Blast -- up_feats.lst:214
+            // Modified Blast -- up_feats:214
             UpsiFeatEntry {
                 key: "Modified Blast",
                 category: FeatCategory::Psionic,
@@ -1478,7 +1478,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.107"),
                 benefit: None,
             },
-            // Multiple Connections -- up_feats.lst:215
+            // Multiple Connections -- up_feats:215
             UpsiFeatEntry {
                 key: "Multiple Connections",
                 category: FeatCategory::Psionic,
@@ -1488,7 +1488,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.107"),
                 benefit: None,
             },
-            // Nightmare Veil -- up_feats.lst:222
+            // Nightmare Veil -- up_feats:222
             UpsiFeatEntry {
                 key: "Nightmare Veil",
                 category: FeatCategory::Psionic,
@@ -1498,7 +1498,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.107"),
                 benefit: None,
             },
-            // Nomad's Jump -- up_feats.lst:223
+            // Nomad's Jump -- up_feats:223
             UpsiFeatEntry {
                 key: "Nomad's Jump",
                 category: FeatCategory::Psionic,
@@ -1508,7 +1508,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.107"),
                 benefit: None,
             },
-            // One Pattern -- up_feats.lst:228
+            // One Pattern -- up_feats:228
             UpsiFeatEntry {
                 key: "One Pattern",
                 category: FeatCategory::Psionic,
@@ -1518,7 +1518,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.108"),
                 benefit: None,
             },
-            // Open Door -- up_feats.lst:229
+            // Open Door -- up_feats:229
             UpsiFeatEntry {
                 key: "Open Door",
                 category: FeatCategory::Psionic,
@@ -1528,7 +1528,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.108"),
                 benefit: None,
             },
-            // Open Minded -- up_feats.lst:230
+            // Open Minded -- up_feats:230
             UpsiFeatEntry {
                 key: "Open Minded",
                 category: FeatCategory::General,
@@ -1538,7 +1538,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.108"),
                 benefit: None,
             },
-            // Opportunity Power -- up_feats.lst:231
+            // Opportunity Power -- up_feats:231
             UpsiFeatEntry {
                 key: "Opportunity Power",
                 category: FeatCategory::Metapsionic,
@@ -1548,7 +1548,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.108"),
                 benefit: None,
             },
-            // Overchannel -- up_feats.lst:232
+            // Overchannel -- up_feats:232
             UpsiFeatEntry {
                 key: "Overchannel",
                 category: FeatCategory::Psionic,
@@ -1558,7 +1558,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.108"),
                 benefit: None,
             },
-            // Penetrating Fear -- up_feats.lst:237
+            // Penetrating Fear -- up_feats:237
             UpsiFeatEntry {
                 key: "Penetrating Fear",
                 category: FeatCategory::Psionic,
@@ -1568,7 +1568,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.108"),
                 benefit: None,
             },
-            // Persistent Focus -- up_feats.lst:238
+            // Persistent Focus -- up_feats:238
             UpsiFeatEntry {
                 key: "Persistent Focus",
                 category: FeatCategory::Psionic,
@@ -1578,7 +1578,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.108"),
                 benefit: None,
             },
-            // Persistent Power -- up_feats.lst:239
+            // Persistent Power -- up_feats:239
             UpsiFeatEntry {
                 key: "Persistent Power",
                 category: FeatCategory::Metapsionic,
@@ -1588,7 +1588,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.108"),
                 benefit: None,
             },
-            // Piercing Power -- up_feats.lst:240
+            // Piercing Power -- up_feats:240
             UpsiFeatEntry {
                 key: "Piercing Power",
                 category: FeatCategory::Metapsionic,
@@ -1598,7 +1598,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.108"),
                 benefit: None,
             },
-            // Piranha Strike -- up_feats.lst:241
+            // Piranha Strike -- up_feats:241
             UpsiFeatEntry {
                 key: "Piranha Strike",
                 category: FeatCategory::Combat,
@@ -1608,7 +1608,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.109"),
                 benefit: Some("When wielding a light weapon, you can choose to take a -%1 penalty on all melee attack rolls and combat maneuver checks to gain a +%2 bonus on all melee damage rolls.  This bonus damage is halved (-50%%) if you are making an attack with an off-hand weapon or secondary natural weapon.  You must choose to use this feat before the attack roll, and its effects last until your next turn.  The bonus damage does not apply to touch attacks or effects that do not deal hit point damage.  This feat cannot be used in conjunction with the Power Attack feat.|PiranhaStrikeAttackPenalty|PiranhaStrikeBonusDamage"),
             },
-            // Power Channeler -- up_feats.lst:242
+            // Power Channeler -- up_feats:242
             UpsiFeatEntry {
                 key: "Power Channeler",
                 category: FeatCategory::Psionic,
@@ -1618,7 +1618,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.109"),
                 benefit: None,
             },
-            // Power Penetration -- up_feats.lst:243
+            // Power Penetration -- up_feats:243
             UpsiFeatEntry {
                 key: "Power Penetration",
                 category: FeatCategory::Psionic,
@@ -1628,7 +1628,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.109"),
                 benefit: None,
             },
-            // Power Perfection -- up_feats.lst:245
+            // Power Perfection -- up_feats:245
             UpsiFeatEntry {
                 key: "Power Perfection",
                 category: FeatCategory::Psionic,
@@ -1638,7 +1638,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.109"),
                 benefit: None,
             },
-            // Power Specialization -- up_feats.lst:246
+            // Power Specialization -- up_feats:246
             UpsiFeatEntry {
                 key: "Power Specialization",
                 category: FeatCategory::Psionic,
@@ -1648,7 +1648,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.109"),
                 benefit: None,
             },
-            // Psicrystal Affinity -- up_feats.lst:247
+            // Psicrystal Affinity -- up_feats:247
             UpsiFeatEntry {
                 key: "Psicrystal Affinity",
                 category: FeatCategory::Psionic,
@@ -1658,7 +1658,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.109"),
                 benefit: None,
             },
-            // Psicrystal Containment -- up_feats.lst:248
+            // Psicrystal Containment -- up_feats:248
             UpsiFeatEntry {
                 key: "Psicrystal Containment",
                 category: FeatCategory::Psionic,
@@ -1668,7 +1668,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.111"),
                 benefit: None,
             },
-            // Psionic Body -- up_feats.lst:249
+            // Psionic Body -- up_feats:249
             UpsiFeatEntry {
                 key: "Psionic Body",
                 category: FeatCategory::Psionic,
@@ -1678,7 +1678,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.111"),
                 benefit: None,
             },
-            // Psionic Bull Rush -- up_feats.lst:250
+            // Psionic Bull Rush -- up_feats:250
             UpsiFeatEntry {
                 key: "Psionic Bull Rush",
                 category: FeatCategory::Psionic,
@@ -1688,7 +1688,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.111"),
                 benefit: None,
             },
-            // Psionic Charge -- up_feats.lst:251
+            // Psionic Charge -- up_feats:251
             UpsiFeatEntry {
                 key: "Psionic Charge",
                 category: FeatCategory::Psionic,
@@ -1698,7 +1698,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.111"),
                 benefit: None,
             },
-            // Psionic Critical -- up_feats.lst:252
+            // Psionic Critical -- up_feats:252
             UpsiFeatEntry {
                 key: "Psionic Critical",
                 category: FeatCategory::Psionic,
@@ -1708,7 +1708,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.112"),
                 benefit: None,
             },
-            // Psionic Disarm -- up_feats.lst:253
+            // Psionic Disarm -- up_feats:253
             UpsiFeatEntry {
                 key: "Psionic Disarm",
                 category: FeatCategory::Psionic,
@@ -1718,7 +1718,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.112"),
                 benefit: None,
             },
-            // Psionic Dodge -- up_feats.lst:254
+            // Psionic Dodge -- up_feats:254
             UpsiFeatEntry {
                 key: "Psionic Dodge",
                 category: FeatCategory::Psionic,
@@ -1728,7 +1728,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.112"),
                 benefit: None,
             },
-            // Psionic Endowment -- up_feats.lst:255
+            // Psionic Endowment -- up_feats:255
             UpsiFeatEntry {
                 key: "Psionic Endowment",
                 category: FeatCategory::Psionic,
@@ -1738,7 +1738,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.112"),
                 benefit: None,
             },
-            // Psionic Fist -- up_feats.lst:257
+            // Psionic Fist -- up_feats:257
             UpsiFeatEntry {
                 key: "Psionic Fist",
                 category: FeatCategory::Psionic,
@@ -1748,7 +1748,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.112"),
                 benefit: None,
             },
-            // Psionic Meditation -- up_feats.lst:258
+            // Psionic Meditation -- up_feats:258
             UpsiFeatEntry {
                 key: "Psionic Meditation",
                 category: FeatCategory::Psionic,
@@ -1758,7 +1758,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.112"),
                 benefit: None,
             },
-            // Psionic Overrun -- up_feats.lst:259
+            // Psionic Overrun -- up_feats:259
             UpsiFeatEntry {
                 key: "Psionic Overrun",
                 category: FeatCategory::Psionic,
@@ -1768,7 +1768,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.112"),
                 benefit: None,
             },
-            // Psionic Precise Shot -- up_feats.lst:260
+            // Psionic Precise Shot -- up_feats:260
             UpsiFeatEntry {
                 key: "Psionic Precise Shot",
                 category: FeatCategory::Psionic,
@@ -1778,7 +1778,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.112"),
                 benefit: None,
             },
-            // Psionic Shield Bash -- up_feats.lst:261
+            // Psionic Shield Bash -- up_feats:261
             UpsiFeatEntry {
                 key: "Psionic Shield Bash",
                 category: FeatCategory::Psionic,
@@ -1788,7 +1788,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.112"),
                 benefit: None,
             },
-            // Psionic Shot -- up_feats.lst:263
+            // Psionic Shot -- up_feats:263
             UpsiFeatEntry {
                 key: "Psionic Shot",
                 category: FeatCategory::Psionic,
@@ -1798,7 +1798,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.112"),
                 benefit: Some("While you maintain psionic focus, your attacks with a ranged weapon deal an extra 1 point of damage. Additionally, if you expend your psionic focus as part of an attack with a ranged weapon, that attack instead deals an extra 2d6 points of damage. You must decide whether or not to use this feat prior to making an attack. If your attack misses, you still expend your psionic focus."),
             },
-            // Psionic Stamina -- up_feats.lst:264
+            // Psionic Stamina -- up_feats:264
             UpsiFeatEntry {
                 key: "Psionic Stamina",
                 category: FeatCategory::Psionic,
@@ -1808,7 +1808,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.113"),
                 benefit: None,
             },
-            // Psionic Sunder -- up_feats.lst:265
+            // Psionic Sunder -- up_feats:265
             UpsiFeatEntry {
                 key: "Psionic Sunder",
                 category: FeatCategory::Psionic,
@@ -1818,7 +1818,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.113"),
                 benefit: None,
             },
-            // Psionic Talent -- up_feats.lst:266
+            // Psionic Talent -- up_feats:266
             UpsiFeatEntry {
                 key: "Psionic Talent",
                 category: FeatCategory::Psionic,
@@ -1828,7 +1828,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.113"),
                 benefit: Some("You gain %1 power points.|COUNT[FEATNAME=Psionic Talent]+1"),
             },
-            // Psionic Trip -- up_feats.lst:267
+            // Psionic Trip -- up_feats:267
             UpsiFeatEntry {
                 key: "Psionic Trip",
                 category: FeatCategory::Psionic,
@@ -1838,7 +1838,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.113"),
                 benefit: None,
             },
-            // Psionic Unarmed Strike -- up_feats.lst:268
+            // Psionic Unarmed Strike -- up_feats:268
             UpsiFeatEntry {
                 key: "Psionic Unarmed Strike",
                 category: FeatCategory::Psionic,
@@ -1848,7 +1848,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.113"),
                 benefit: None,
             },
-            // Psionic Weapon -- up_feats.lst:270
+            // Psionic Weapon -- up_feats:270
             UpsiFeatEntry {
                 key: "Psionic Weapon",
                 category: FeatCategory::Psionic,
@@ -1858,7 +1858,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.113"),
                 benefit: None,
             },
-            // Psychoportive Pathfinder -- up_feats.lst:271
+            // Psychoportive Pathfinder -- up_feats:271
             UpsiFeatEntry {
                 key: "Psychoportive Pathfinder",
                 category: FeatCategory::Psionic,
@@ -1868,7 +1868,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.113"),
                 benefit: None,
             },
-            // Pyromaniac -- up_feats.lst:273
+            // Pyromaniac -- up_feats:273
             UpsiFeatEntry {
                 key: "Pyromaniac",
                 category: FeatCategory::General,
@@ -1878,7 +1878,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.113"),
                 benefit: None,
             },
-            // Quick Suit -- up_feats.lst:278
+            // Quick Suit -- up_feats:278
             UpsiFeatEntry {
                 key: "Quick Suit",
                 category: FeatCategory::Psionic,
@@ -1888,7 +1888,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.114"),
                 benefit: None,
             },
-            // Quicken Power -- up_feats.lst:279
+            // Quicken Power -- up_feats:279
             UpsiFeatEntry {
                 key: "Quicken Power",
                 category: FeatCategory::Metapsionic,
@@ -1898,7 +1898,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.114"),
                 benefit: None,
             },
-            // Raging Hulk -- up_feats.lst:284
+            // Raging Hulk -- up_feats:284
             UpsiFeatEntry {
                 key: "Raging Hulk",
                 category: FeatCategory::General,
@@ -1908,7 +1908,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.114"),
                 benefit: None,
             },
-            // Rapid Augmentation -- up_feats.lst:285
+            // Rapid Augmentation -- up_feats:285
             UpsiFeatEntry {
                 key: "Rapid Augmentation",
                 category: FeatCategory::Psionic,
@@ -1918,7 +1918,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.114"),
                 benefit: None,
             },
-            // Rapid Draw -- up_feats.lst:286
+            // Rapid Draw -- up_feats:286
             UpsiFeatEntry {
                 key: "Rapid Draw",
                 category: FeatCategory::Psionic,
@@ -1928,7 +1928,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.114"),
                 benefit: None,
             },
-            // Rapid Metabolism -- up_feats.lst:287
+            // Rapid Metabolism -- up_feats:287
             UpsiFeatEntry {
                 key: "Rapid Metabolism",
                 category: FeatCategory::General,
@@ -1938,7 +1938,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.114"),
                 benefit: None,
             },
-            // Ready Response -- up_feats.lst:288
+            // Ready Response -- up_feats:288
             UpsiFeatEntry {
                 key: "Ready Response",
                 category: FeatCategory::Psionic,
@@ -1948,7 +1948,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.114"),
                 benefit: None,
             },
-            // Rebounding Throw -- up_feats.lst:289
+            // Rebounding Throw -- up_feats:289
             UpsiFeatEntry {
                 key: "Rebounding Throw",
                 category: FeatCategory::Psionic,
@@ -1958,7 +1958,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.114"),
                 benefit: None,
             },
-            // Reckless Offense -- up_feats.lst:290
+            // Reckless Offense -- up_feats:290
             UpsiFeatEntry {
                 key: "Reckless Offense",
                 category: FeatCategory::General,
@@ -1968,7 +1968,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.115"),
                 benefit: None,
             },
-            // Redirect Power -- up_feats.lst:291
+            // Redirect Power -- up_feats:291
             UpsiFeatEntry {
                 key: "Redirect Power",
                 category: FeatCategory::Metapsionic,
@@ -1978,7 +1978,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.115"),
                 benefit: None,
             },
-            // Resonance Mastery -- up_feats.lst:292
+            // Resonance Mastery -- up_feats:292
             UpsiFeatEntry {
                 key: "Resonance Mastery",
                 category: FeatCategory::Psionic,
@@ -1988,7 +1988,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.115"),
                 benefit: None,
             },
-            // Return Shot -- up_feats.lst:293
+            // Return Shot -- up_feats:293
             UpsiFeatEntry {
                 key: "Return Shot",
                 category: FeatCategory::Psionic,
@@ -1998,7 +1998,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.115"),
                 benefit: None,
             },
-            // Returning Throw -- up_feats.lst:294
+            // Returning Throw -- up_feats:294
             UpsiFeatEntry {
                 key: "Returning Throw",
                 category: FeatCategory::Psionic,
@@ -2008,7 +2008,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.115"),
                 benefit: None,
             },
-            // Ricochet -- up_feats.lst:295
+            // Ricochet -- up_feats:295
             UpsiFeatEntry {
                 key: "Ricochet",
                 category: FeatCategory::Psionic,
@@ -2018,7 +2018,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.115"),
                 benefit: None,
             },
-            // Rime Power -- up_feats.lst:296
+            // Rime Power -- up_feats:296
             UpsiFeatEntry {
                 key: "Rime Power",
                 category: FeatCategory::Metapsionic,
@@ -2028,7 +2028,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.115"),
                 benefit: None,
             },
-            // Scholarly Discipline -- up_feats.lst:302
+            // Scholarly Discipline -- up_feats:302
             UpsiFeatEntry {
                 key: "Scholarly Discipline",
                 category: FeatCategory::General,
@@ -2038,7 +2038,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.116"),
                 benefit: None,
             },
-            // Scribe Tattoo -- up_feats.lst:303
+            // Scribe Tattoo -- up_feats:303
             UpsiFeatEntry {
                 key: "Scribe Tattoo",
                 category: FeatCategory::ItemCreation,
@@ -2048,7 +2048,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.116"),
                 benefit: None,
             },
-            // Selective Power -- up_feats.lst:306
+            // Selective Power -- up_feats:306
             UpsiFeatEntry {
                 key: "Selective Power",
                 category: FeatCategory::Metapsionic,
@@ -2058,7 +2058,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.116"),
                 benefit: None,
             },
-            // Shared Power -- up_feats.lst:307
+            // Shared Power -- up_feats:307
             UpsiFeatEntry {
                 key: "Shared Power",
                 category: FeatCategory::Metapsionic,
@@ -2068,7 +2068,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.116"),
                 benefit: None,
             },
-            // Shattered Dream Strike -- up_feats.lst:308
+            // Shattered Dream Strike -- up_feats:308
             UpsiFeatEntry {
                 key: "Shattered Dream Strike",
                 category: FeatCategory::Psionic,
@@ -2078,7 +2078,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.116"),
                 benefit: None,
             },
-            // Sickening Power -- up_feats.lst:309
+            // Sickening Power -- up_feats:309
             UpsiFeatEntry {
                 key: "Sickening Power",
                 category: FeatCategory::Metapsionic,
@@ -2088,7 +2088,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.116"),
                 benefit: None,
             },
-            // Sidestep Charge -- up_feats.lst:310
+            // Sidestep Charge -- up_feats:310
             UpsiFeatEntry {
                 key: "Sidestep Charge",
                 category: FeatCategory::General,
@@ -2098,7 +2098,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.116"),
                 benefit: None,
             },
-            // Soul Warrior -- up_feats.lst:313
+            // Soul Warrior -- up_feats:313
             UpsiFeatEntry {
                 key: "Soul Warrior",
                 category: FeatCategory::General,
@@ -2108,7 +2108,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.116"),
                 benefit: None,
             },
-            // Speed of Thought -- up_feats.lst:314
+            // Speed of Thought -- up_feats:314
             UpsiFeatEntry {
                 key: "Speed of Thought",
                 category: FeatCategory::Psionic,
@@ -2118,7 +2118,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.117"),
                 benefit: None,
             },
-            // Split Headed Lash -- up_feats.lst:315
+            // Split Headed Lash -- up_feats:315
             UpsiFeatEntry {
                 key: "Split Headed Lash",
                 category: FeatCategory::Psionic,
@@ -2128,7 +2128,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.117"),
                 benefit: None,
             },
-            // Split Psionic Ray -- up_feats.lst:316
+            // Split Psionic Ray -- up_feats:316
             UpsiFeatEntry {
                 key: "Split Psionic Ray",
                 category: FeatCategory::Metapsionic,
@@ -2138,7 +2138,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.117"),
                 benefit: None,
             },
-            // Staggering Shot -- up_feats.lst:317
+            // Staggering Shot -- up_feats:317
             UpsiFeatEntry {
                 key: "Staggering Shot",
                 category: FeatCategory::Psionic,
@@ -2148,7 +2148,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.117"),
                 benefit: None,
             },
-            // Student of the Astral Suit -- up_feats.lst:319
+            // Student of the Astral Suit -- up_feats:319
             UpsiFeatEntry {
                 key: "Student of the Astral Suit",
                 category: FeatCategory::General,
@@ -2158,7 +2158,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.117"),
                 benefit: None,
             },
-            // Surging Aura -- up_feats.lst:320
+            // Surging Aura -- up_feats:320
             UpsiFeatEntry {
                 key: "Surging Aura",
                 category: FeatCategory::Psionic,
@@ -2168,7 +2168,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.117"),
                 benefit: None,
             },
-            // Swift Shapeshifter -- up_feats.lst:321
+            // Swift Shapeshifter -- up_feats:321
             UpsiFeatEntry {
                 key: "Swift Shapeshifter",
                 category: FeatCategory::Psionic,
@@ -2178,7 +2178,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.117"),
                 benefit: None,
             },
-            // Talented -- up_feats.lst:326
+            // Talented -- up_feats:326
             UpsiFeatEntry {
                 key: "Talented",
                 category: FeatCategory::Psionic,
@@ -2188,7 +2188,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.117"),
                 benefit: None,
             },
-            // Telepathic Link -- up_feats.lst:327
+            // Telepathic Link -- up_feats:327
             UpsiFeatEntry {
                 key: "Telepathic Link",
                 category: FeatCategory::Psionic,
@@ -2198,7 +2198,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.117"),
                 benefit: None,
             },
-            // Terror Mastery -- up_feats.lst:328
+            // Terror Mastery -- up_feats:328
             UpsiFeatEntry {
                 key: "Terror Mastery",
                 category: FeatCategory::Psionic,
@@ -2208,7 +2208,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.118"),
                 benefit: None,
             },
-            // Thundering Power -- up_feats.lst:329
+            // Thundering Power -- up_feats:329
             UpsiFeatEntry {
                 key: "Thundering Power",
                 category: FeatCategory::Metapsionic,
@@ -2218,7 +2218,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.118"),
                 benefit: None,
             },
-            // Tomb Raider -- up_feats.lst:331
+            // Tomb Raider -- up_feats:331
             UpsiFeatEntry {
                 key: "Tomb Raider",
                 category: FeatCategory::General,
@@ -2228,7 +2228,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.118"),
                 benefit: None,
             },
-            // Toppling Power -- up_feats.lst:332
+            // Toppling Power -- up_feats:332
             UpsiFeatEntry {
                 key: "Toppling Power",
                 category: FeatCategory::Metapsionic,
@@ -2238,7 +2238,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.118"),
                 benefit: None,
             },
-            // Touch of Terror -- up_feats.lst:333
+            // Touch of Terror -- up_feats:333
             UpsiFeatEntry {
                 key: "Touch of Terror",
                 category: FeatCategory::Psionic,
@@ -2248,7 +2248,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.118"),
                 benefit: None,
             },
-            // Toughened Suit -- up_feats.lst:334
+            // Toughened Suit -- up_feats:334
             UpsiFeatEntry {
                 key: "Toughened Suit",
                 category: FeatCategory::Psionic,
@@ -2258,7 +2258,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.118"),
                 benefit: None,
             },
-            // Twin Power -- up_feats.lst:335
+            // Twin Power -- up_feats:335
             UpsiFeatEntry {
                 key: "Twin Power",
                 category: FeatCategory::Metapsionic,
@@ -2268,7 +2268,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.118"),
                 benefit: None,
             },
-            // Twin Throw -- up_feats.lst:336
+            // Twin Throw -- up_feats:336
             UpsiFeatEntry {
                 key: "Twin Throw",
                 category: FeatCategory::Combat,
@@ -2278,7 +2278,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.118"),
                 benefit: None,
             },
-            // Unavoidable Strike -- up_feats.lst:341
+            // Unavoidable Strike -- up_feats:341
             UpsiFeatEntry {
                 key: "Unavoidable Strike",
                 category: FeatCategory::Psionic,
@@ -2288,7 +2288,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.118"),
                 benefit: None,
             },
-            // Unconditional Power -- up_feats.lst:342
+            // Unconditional Power -- up_feats:342
             UpsiFeatEntry {
                 key: "Unconditional Power",
                 category: FeatCategory::Metapsionic,
@@ -2298,7 +2298,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.119"),
                 benefit: None,
             },
-            // Unlocked Talent -- up_feats.lst:345
+            // Unlocked Talent -- up_feats:345
             UpsiFeatEntry {
                 key: "Unlocked Talent",
                 category: FeatCategory::General,
@@ -2308,7 +2308,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.119"),
                 benefit: None,
             },
-            // Unwilling Participant -- up_feats.lst:346
+            // Unwilling Participant -- up_feats:346
             UpsiFeatEntry {
                 key: "Unwilling Participant",
                 category: FeatCategory::Psionic,
@@ -2318,7 +2318,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.119"),
                 benefit: Some("You may attempt to force a living creature into your collective.  The target may attempt a Will save (DC %1) to resist.  If the target fails the save, it may attempt another Will save at the same DC every 24 hours thereafter, but is otherwise unable to leave the collective unless you allow it.  Special: Creatures forced into your collective using Unwilling Participant are considered willing members for any collective-related effects unless they succeed on another Will save at the same DC to resist being forced into the collective.  A successful save means the creature resisted the speciifc effect but is still a member of the collective.|UnwillingParticipantDC"),
             },
-            // Up the Walls -- up_feats.lst:347
+            // Up the Walls -- up_feats:347
             UpsiFeatEntry {
                 key: "Up the Walls",
                 category: FeatCategory::Psionic,
@@ -2328,7 +2328,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.120"),
                 benefit: None,
             },
-            // Urban Tracking -- up_feats.lst:348
+            // Urban Tracking -- up_feats:348
             UpsiFeatEntry {
                 key: "Urban Tracking",
                 category: FeatCategory::General,
@@ -2338,7 +2338,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.120"),
                 benefit: Some("To find the trail of an individual or to follow it for 1 hour requires a Diplomacy check to gather information. You must make another Diplomacy check every hour of the search, as well as each time the trail becomes difficult to follow, such as when it moves to a different area of town. The DC of the check, and the number of checks required to track down your quarry, depends on the community size and the conditions. If you fail a Diplomacy check, you can retry after 1 hour of questioning. The game master should roll the number of checks required secretly, so that the player doesn't know exactly how long the task will require.&nl; Normal: A character without this feat can use Diplomacy to find out information about a particular individual, but each check takes 1d4+1 hours and doesn't allow effective tailing."),
             },
-            // Widen Power -- up_feats.lst:353
+            // Widen Power -- up_feats:353
             UpsiFeatEntry {
                 key: "Widen Power",
                 category: FeatCategory::Metapsionic,
@@ -2348,7 +2348,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.120"),
                 benefit: None,
             },
-            // Wildblood Mage -- up_feats.lst:356
+            // Wildblood Mage -- up_feats:356
             UpsiFeatEntry {
                 key: "Wildblood Mage",
                 category: FeatCategory::General,
@@ -2358,7 +2358,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.120"),
                 benefit: None,
             },
-            // Wild Talent -- up_feats.lst:357
+            // Wild Talent -- up_feats:357
             UpsiFeatEntry {
                 key: "Wild Talent",
                 category: FeatCategory::General,
@@ -2368,7 +2368,7 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 source_page: Some("p.120"),
                 benefit: None,
             },
-            // Wounding Attack -- up_feats.lst:358
+            // Wounding Attack -- up_feats:358
             UpsiFeatEntry {
                 key: "Wounding Attack",
                 category: FeatCategory::Psionic,

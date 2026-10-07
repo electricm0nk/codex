@@ -58,7 +58,7 @@
       "weight_lbs": 12.0,
       "description": "Misfire 1; Only functions on low-gravity worlds.",
       "name_pi_citation": [
-        "b4_equip_arms_armor.lst",
+        "b4_equip_arms_armor",
         10
       ]
     },
@@ -71,7 +71,7 @@
       "weight_lbs": 2.0,
       "description": null,
       "name_pi_citation": [
-        "b4_equip_magic_items.lst",
+        "b4_equip_magic_items",
         6
       ]
     },
@@ -84,7 +84,7 @@
       "weight_lbs": 4.0,
       "description": "Functions as a rod of enemy detection (unlimited uses), rod of cancellation 1/day, can panic creatures within 30 ft. for 1d6 rounds (DC 23 Will negates), Pazuzu can call to hand across planar boundaries, trandforms into a +5 anarchic keen unholy longsword.",
       "name_pi_citation": [
-        "b4_equip_magic_items.lst",
+        "b4_equip_magic_items",
         8
       ]
     },

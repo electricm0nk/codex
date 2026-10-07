@@ -1,16 +1,16 @@
 //! core_rulebook companion tables, transcribed verbatim from the book's own
-//! PCGen `.lst` rows.
+//! PCGen source file rows.
 //!
 //! GENERATED FILE -- do not hand-edit. Regenerate with
 //! `python3 scripts/transcribe_companion_tables.py core_rulebook`, whose unit set is
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
-//! line count over the `.lst`.
+//! line count over the source file.
 //!
 //! Sources, with the file AND line each record was read from carried per row:
-//!   * `cr_races_companion.lst` -- 38 companion creature rows
-//!   * `ce_abilities_familiar_cr.lst` -- 14 companion ability rows
-//!   * `cr_abilities_companion.lst` -- 118 companion ability rows
-//!   * `cr_classes_companion.lst` -- 2 companion class rows
+//!   * `cr_races_companion` -- 38 companion creature rows
+//!   * `ce_abilities_familiar_cr` -- 14 companion ability rows
+//!   * `cr_abilities_companion` -- 118 companion ability rows
+//!   * `cr_classes_companion` -- 2 companion class rows
 //!
 //! NOT transcribed -- OWNED rows that state nothing this chassis models
 //! (`decisions.md §63.3`). The row carries no `TYPE:`, no `DESC:` and no
@@ -31,7 +31,7 @@
 //!   * `Companion ~ Spell Resistance (AC)`
 //!   * `Companion ~ Spell Resistance (SM)`
 //!
-//! `*_classes_companion.lst` CLASS rows, transcribed as `CompanionClassRecord`
+//! `*_classes_companion` CLASS rows, transcribed as `CompanionClassRecord`
 //! (`AT-34-E3-001`, `decisions.md §17`) rather than dropped. A PCGen monster
 //! class is the hit-dice progression a creature row's `MONSTERCLASS:` token
 //! names -- it states no `SIZE:`, no `MOVE:` and no natural attacks, so it is
@@ -63,7 +63,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Ape", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 9,
     },
     CompanionRecord {
@@ -85,7 +85,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Wolverine", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Rage", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 10,
     },
     CompanionRecord {
@@ -107,7 +107,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Bear", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 11,
     },
     CompanionRecord {
@@ -129,7 +129,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Bird", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 12,
     },
     CompanionRecord {
@@ -151,7 +151,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Bird", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 13,
     },
     CompanionRecord {
@@ -173,7 +173,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Bird", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 14,
     },
     CompanionRecord {
@@ -195,7 +195,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Boar", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 15,
     },
     CompanionRecord {
@@ -217,7 +217,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Camel ~ Spit", "Companion Advancement ~ Camel", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 16,
     },
     CompanionRecord {
@@ -239,7 +239,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Cheetah", "Cat ~ Sprint", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent", "Trip"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 17,
     },
     CompanionRecord {
@@ -261,7 +261,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Leopard", "Cat ~ Sprint", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent", "Trip"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 18,
     },
     CompanionRecord {
@@ -283,7 +283,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Crocodile ~ Hold Breath", "Companion Advancement ~ Alligator", "Crocodile ~ Death Roll", "Crocodile ~ Sprint", "Crocodile ~ Tail Slap", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &[],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 19,
     },
     CompanionRecord {
@@ -305,7 +305,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dog", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 20,
     },
     CompanionRecord {
@@ -327,7 +327,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Horse", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 21,
     },
     CompanionRecord {
@@ -349,7 +349,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Pony", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 22,
     },
     CompanionRecord {
@@ -371,7 +371,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Shark", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 23,
     },
     CompanionRecord {
@@ -393,7 +393,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Snake (Constrictor)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 24,
     },
     CompanionRecord {
@@ -415,7 +415,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Poison", "Companion Advancement ~ Snake (Viper)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 25,
     },
     CompanionRecord {
@@ -437,7 +437,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Lion", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Rake", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 28,
     },
     CompanionRecord {
@@ -459,7 +459,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Tiger", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Rake", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 29,
     },
     CompanionRecord {
@@ -481,7 +481,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Deinonychus)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 30,
     },
     CompanionRecord {
@@ -503,7 +503,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Velociraptor)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 31,
     },
     CompanionRecord {
@@ -525,7 +525,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Wolf", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent", "Trip"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 32,
     },
     CompanionRecord {
@@ -547,7 +547,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dire Rat", "Dire Rat ~ Disease", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 36,
     },
     CompanionRecord {
@@ -569,7 +569,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Shadow Companion Resistance", "Shadow Companion Saves", "Strength Damage", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Channel Resistance", "Flight Maneuverability"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 42,
     },
     CompanionRecord {
@@ -591,7 +591,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Allosaurus)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 53,
     },
     CompanionRecord {
@@ -613,7 +613,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Parasaurolophus)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 54,
     },
     CompanionRecord {
@@ -635,7 +635,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Dinosaur (Tylosaurus)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 55,
     },
     CompanionRecord {
@@ -657,7 +657,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Gar", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output", "Can't Be Tripped", "Grab ~ Bite"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 56,
     },
     CompanionRecord {
@@ -679,7 +679,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Herd Animal (Ram)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 57,
     },
     CompanionRecord {
@@ -701,7 +701,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Hippopotamus", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output", "Hippopotamus ~ Sweat", "Scent", "Hippopotamus Companion Natural Attack"],
         external_ability_ref_conditions: &[ExternalAbilityRefCondition { ability: "Hippopotamus Companion Natural Attack", conditions: &[EffectCondition { negated: true, family: "TEMPLATE", items: &[ConditionItem { facet: None, value: "1" }, ConditionItem { facet: None, value: "Hippopotamus Companion Advancement" }], alternatives: &[] }] }],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 58,
     },
     CompanionRecord {
@@ -723,7 +723,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Megafauna (Arsinoitherium)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output", "Scent", "Arsinoitherium Companion Natural Attack"],
         external_ability_ref_conditions: &[ExternalAbilityRefCondition { ability: "Arsinoitherium Companion Natural Attack", conditions: &[EffectCondition { negated: true, family: "TEMPLATE", items: &[ConditionItem { facet: None, value: "1" }, ConditionItem { facet: None, value: "Arsinoitherium Companion Advancement" }], alternatives: &[] }] }],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 59,
     },
     CompanionRecord {
@@ -745,7 +745,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Megafauna (Gylptodon)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output", "Scent", "Gylptodon Companion Natural Attack"],
         external_ability_ref_conditions: &[ExternalAbilityRefCondition { ability: "Gylptodon Companion Natural Attack", conditions: &[EffectCondition { negated: true, family: "TEMPLATE", items: &[ConditionItem { facet: None, value: "1" }, ConditionItem { facet: None, value: "Gylptodon Companion Advancement" }], alternatives: &[] }] }],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 60,
     },
     CompanionRecord {
@@ -767,7 +767,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Megafauna (Megaloceros)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 61,
     },
     CompanionRecord {
@@ -789,7 +789,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Megafauna (Megatherium)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output", "Scent"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 62,
     },
     CompanionRecord {
@@ -811,7 +811,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Primate (Baboon)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 63,
     },
     CompanionRecord {
@@ -833,7 +833,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Ray (Manta)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 64,
     },
     CompanionRecord {
@@ -855,7 +855,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Companion Advancement ~ Ray (Stingray)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Animal Traits Output", "Stingray ~ Poison"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 65,
     },
     CompanionRecord {
@@ -877,7 +877,7 @@ pub(crate) static COMPANIONS: &[CompanionRecord] = &[
         ability_keys: &["Crocodile ~ Hold Breath", "Companion Advancement ~ Turtle (Giant Snapping)", "+2 to Dexterity and Constitution", "Animal Companion Feat ~ Acrobatic", "Animal Companion Feat ~ Agile Maneuvers", "Animal Companion Feat ~ Armor Proficiency (Heavy)", "Animal Companion Feat ~ Armor Proficiency (Light)", "Animal Companion Feat ~ Armor Proficiency (Medium)", "Animal Companion Feat ~ Athletic", "Animal Companion Feat ~ Blind-Fight", "Animal Companion Feat ~ Combat Reflexes", "Animal Companion Feat ~ Diehard", "Animal Companion Feat ~ Dodge", "Animal Companion Feat ~ Endurance", "Animal Companion Feat ~ Feat", "Animal Companion Feat ~ GM Feat", "Animal Companion Feat ~ Great Fortitude", "Animal Companion Feat ~ Improved Bull Rush", "Animal Companion Feat ~ Improved Initiative", "Animal Companion Feat ~ Improved Natural Armor", "Animal Companion Feat ~ Improved Natural Attack", "Animal Companion Feat ~ Improved Overrun", "Animal Companion Feat ~ Intimidating Prowess", "Animal Companion Feat ~ Iron Will", "Animal Companion Feat ~ Lightning Reflexes", "Animal Companion Feat ~ Mobility", "Animal Companion Feat ~ Power Attack", "Animal Companion Feat ~ Run", "Animal Companion Feat ~ Skill Focus", "Animal Companion Feat ~ Spring Attack", "Animal Companion Feat ~ Stealthy", "Animal Companion Feat ~ Toughness", "Animal Companion Feat ~ Weapon Finesse", "Animal Companion Feat ~ Weapon Focus", "Animal Companion ~ AC Bonus", "Animal Companion ~ Ability Score Increase", "Animal Companion ~ Bonus Tricks", "Animal Companion ~ Devotion", "Animal Companion ~ Evasion", "Animal Companion ~ Improved Evasion", "Animal Companion ~ Link", "Animal Companion ~ Multiattack", "Animal Companion ~ Share Spells", "Animal Companion ~ Spell Resistance", "Animal Companion ~ Stat Bonus", "Animal Training ~ Combat Training", "Animal Training ~ Fighting", "Animal Training ~ Guarding", "Animal Training ~ Heavy Labor", "Animal Training ~ Hunting", "Animal Training ~ Performance", "Animal Training ~ Riding", "Animal Trick ~ Air Walk", "Animal Trick ~ Attack", "Animal Trick ~ Attack II", "Animal Trick ~ Come", "Animal Trick ~ Defend", "Animal Trick ~ Down", "Animal Trick ~ Fetch", "Animal Trick ~ Guard", "Animal Trick ~ Heel", "Animal Trick ~ Perform", "Animal Trick ~ Seek", "Animal Trick ~ Stay", "Animal Trick ~ Track", "Animal Trick ~ Work", "Companion Advancement", "Companion Skills", "Companion Stat ~ CHA", "Companion Stat ~ CON", "Companion Stat ~ DEX", "Companion Stat ~ INT", "Companion Stat ~ STR", "Companion Stat ~ WIS"],
         external_ability_refs: &["Scent", "Animal Traits Output"],
         external_ability_ref_conditions: &[],
-        source_file: "cr_races_companion.lst",
+        source_file: "cr_races_companion",
         source_line: 66,
     },
 ];
@@ -897,7 +897,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 37,
     },
     CompanionAbilityRecord {
@@ -913,7 +913,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 38,
     },
     CompanionAbilityRecord {
@@ -929,7 +929,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.52"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 50,
     },
     CompanionAbilityRecord {
@@ -945,7 +945,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.52"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 51,
     },
     CompanionAbilityRecord {
@@ -961,7 +961,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.52"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 52,
     },
     CompanionAbilityRecord {
@@ -977,7 +977,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.53"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 53,
     },
     CompanionAbilityRecord {
@@ -993,7 +993,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.53"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 54,
     },
     CompanionAbilityRecord {
@@ -1009,7 +1009,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.53"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 55,
     },
     CompanionAbilityRecord {
@@ -1025,7 +1025,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.53"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 56,
     },
     CompanionAbilityRecord {
@@ -1041,7 +1041,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.53"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 57,
     },
     CompanionAbilityRecord {
@@ -1057,7 +1057,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 58,
     },
     CompanionAbilityRecord {
@@ -1073,7 +1073,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 59,
     },
     CompanionAbilityRecord {
@@ -1089,7 +1089,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 59,
     },
     CompanionAbilityRecord {
@@ -1105,7 +1105,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 60,
     },
     CompanionAbilityRecord {
@@ -1121,7 +1121,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 60,
     },
     CompanionAbilityRecord {
@@ -1137,7 +1137,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 61,
     },
     CompanionAbilityRecord {
@@ -1153,7 +1153,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 62,
     },
     CompanionAbilityRecord {
@@ -1169,7 +1169,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 63,
     },
     CompanionAbilityRecord {
@@ -1185,7 +1185,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 64,
     },
     CompanionAbilityRecord {
@@ -1201,7 +1201,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 65,
     },
     CompanionAbilityRecord {
@@ -1217,7 +1217,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 66,
     },
     CompanionAbilityRecord {
@@ -1233,7 +1233,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 67,
     },
     CompanionAbilityRecord {
@@ -1249,7 +1249,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 68,
     },
     CompanionAbilityRecord {
@@ -1265,7 +1265,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.83"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 69,
     },
     CompanionAbilityRecord {
@@ -1281,7 +1281,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.82"),
         owners: &[],
         cross_book_owners: &[("beastiary", "Bat"), ("beastiary", "Cat"), ("beastiary", "Hawk"), ("beastiary", "Lizard"), ("beastiary", "Monkey"), ("beastiary", "Owl"), ("beastiary", "Rat"), ("beastiary", "Raven"), ("beastiary", "Toad"), ("beastiary", "Viper"), ("beastiary", "Weasel")],
-        source_file: "ce_abilities_familiar_cr.lst",
+        source_file: "ce_abilities_familiar_cr",
         source_line: 70,
     },
     CompanionAbilityRecord {
@@ -1297,7 +1297,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 86,
     },
     CompanionAbilityRecord {
@@ -1313,7 +1313,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 95,
     },
     CompanionAbilityRecord {
@@ -1329,7 +1329,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 97,
     },
     CompanionAbilityRecord {
@@ -1345,7 +1345,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 99,
     },
     CompanionAbilityRecord {
@@ -1361,7 +1361,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Badger (Wolverine))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 100,
     },
     CompanionAbilityRecord {
@@ -1377,7 +1377,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Bear)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 101,
     },
     CompanionAbilityRecord {
@@ -1393,7 +1393,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 102,
     },
     CompanionAbilityRecord {
@@ -1409,7 +1409,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Boar)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 103,
     },
     CompanionAbilityRecord {
@@ -1425,7 +1425,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Camel)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 104,
     },
     CompanionAbilityRecord {
@@ -1441,7 +1441,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Cat (Small (Cheetah)))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 105,
     },
     CompanionAbilityRecord {
@@ -1457,7 +1457,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Cat (Small (Leopard)))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 106,
     },
     CompanionAbilityRecord {
@@ -1473,7 +1473,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Crocodile (Alligator))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 107,
     },
     CompanionAbilityRecord {
@@ -1489,7 +1489,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dog)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 108,
     },
     CompanionAbilityRecord {
@@ -1505,7 +1505,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Horse)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 109,
     },
     CompanionAbilityRecord {
@@ -1521,7 +1521,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Pony)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 110,
     },
     CompanionAbilityRecord {
@@ -1537,7 +1537,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Shark)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 111,
     },
     CompanionAbilityRecord {
@@ -1553,7 +1553,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Snake (Constrictor))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 112,
     },
     CompanionAbilityRecord {
@@ -1569,7 +1569,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Snake (Viper))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 113,
     },
     CompanionAbilityRecord {
@@ -1585,7 +1585,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dire Rat)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 114,
     },
     CompanionAbilityRecord {
@@ -1601,7 +1601,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Cat (Big (Lion)))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 117,
     },
     CompanionAbilityRecord {
@@ -1617,7 +1617,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Cat (Big (Tiger)))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 118,
     },
     CompanionAbilityRecord {
@@ -1633,7 +1633,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Deinonychus))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 119,
     },
     CompanionAbilityRecord {
@@ -1649,7 +1649,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Velociraptor))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 120,
     },
     CompanionAbilityRecord {
@@ -1665,7 +1665,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 121,
     },
     CompanionAbilityRecord {
@@ -1681,7 +1681,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Shadow)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 126,
     },
     CompanionAbilityRecord {
@@ -1697,7 +1697,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Shadow)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 127,
     },
     CompanionAbilityRecord {
@@ -1713,7 +1713,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Shadow)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 128,
     },
     CompanionAbilityRecord {
@@ -1729,7 +1729,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 132,
     },
     CompanionAbilityRecord {
@@ -1745,7 +1745,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 133,
     },
     CompanionAbilityRecord {
@@ -1761,7 +1761,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 134,
     },
     CompanionAbilityRecord {
@@ -1777,7 +1777,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 135,
     },
     CompanionAbilityRecord {
@@ -1793,7 +1793,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 136,
     },
     CompanionAbilityRecord {
@@ -1809,7 +1809,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 137,
     },
     CompanionAbilityRecord {
@@ -1825,7 +1825,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 138,
     },
     CompanionAbilityRecord {
@@ -1841,7 +1841,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 139,
     },
     CompanionAbilityRecord {
@@ -1857,7 +1857,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 140,
     },
     CompanionAbilityRecord {
@@ -1873,7 +1873,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 141,
     },
     CompanionAbilityRecord {
@@ -1889,7 +1889,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 142,
     },
     CompanionAbilityRecord {
@@ -1905,7 +1905,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 143,
     },
     CompanionAbilityRecord {
@@ -1921,7 +1921,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.97"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 144,
     },
     CompanionAbilityRecord {
@@ -1937,7 +1937,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.240"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 148,
     },
     CompanionAbilityRecord {
@@ -1953,7 +1953,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.98"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 152,
     },
     CompanionAbilityRecord {
@@ -1969,7 +1969,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.98"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 153,
     },
     CompanionAbilityRecord {
@@ -1985,7 +1985,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.98"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 154,
     },
     CompanionAbilityRecord {
@@ -2001,7 +2001,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.98"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 155,
     },
     CompanionAbilityRecord {
@@ -2017,7 +2017,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.98"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 156,
     },
     CompanionAbilityRecord {
@@ -2033,7 +2033,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.98"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 157,
     },
     CompanionAbilityRecord {
@@ -2049,7 +2049,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.98"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 158,
     },
     CompanionAbilityRecord {
@@ -2065,7 +2065,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 163,
     },
     CompanionAbilityRecord {
@@ -2081,7 +2081,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 164,
     },
     CompanionAbilityRecord {
@@ -2097,7 +2097,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 165,
     },
     CompanionAbilityRecord {
@@ -2113,7 +2113,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 166,
     },
     CompanionAbilityRecord {
@@ -2129,7 +2129,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 167,
     },
     CompanionAbilityRecord {
@@ -2145,7 +2145,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 168,
     },
     CompanionAbilityRecord {
@@ -2161,7 +2161,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Snake (Viper))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 179,
     },
     CompanionAbilityRecord {
@@ -2177,7 +2177,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Camel)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 180,
     },
     CompanionAbilityRecord {
@@ -2193,7 +2193,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.232"),
         owners: &["Companion (Dire Rat)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 184,
     },
     CompanionAbilityRecord {
@@ -2209,7 +2209,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.51"),
         owners: &["Companion (Crocodile (Alligator))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 188,
     },
     CompanionAbilityRecord {
@@ -2225,7 +2225,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.51"),
         owners: &["Companion (Crocodile (Alligator))", "Companion (Turtle (Giant Snapping))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 189,
     },
     CompanionAbilityRecord {
@@ -2241,7 +2241,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.51"),
         owners: &["Companion (Crocodile (Alligator))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 190,
     },
     CompanionAbilityRecord {
@@ -2257,7 +2257,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.301"),
         owners: &["Companion (Crocodile (Alligator))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 191,
     },
     CompanionAbilityRecord {
@@ -2273,7 +2273,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.40"),
         owners: &["Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 194,
     },
     CompanionAbilityRecord {
@@ -2289,7 +2289,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Allosaurus))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 203,
     },
     CompanionAbilityRecord {
@@ -2305,7 +2305,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Parasaurolophus))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 204,
     },
     CompanionAbilityRecord {
@@ -2321,7 +2321,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Dinosaur (Tylosaurus))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 205,
     },
     CompanionAbilityRecord {
@@ -2337,7 +2337,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Gar)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 206,
     },
     CompanionAbilityRecord {
@@ -2353,7 +2353,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Herd Animal (Ram))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 207,
     },
     CompanionAbilityRecord {
@@ -2369,7 +2369,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Hippopotamus)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 208,
     },
     CompanionAbilityRecord {
@@ -2385,7 +2385,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Megafauna (Arsinoitherium))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 209,
     },
     CompanionAbilityRecord {
@@ -2401,7 +2401,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Megafauna (Gylptodon))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 210,
     },
     CompanionAbilityRecord {
@@ -2417,7 +2417,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Megafauna (Megaloceros))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 211,
     },
     CompanionAbilityRecord {
@@ -2433,7 +2433,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Megafauna (Megatherium))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 212,
     },
     CompanionAbilityRecord {
@@ -2449,7 +2449,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Primate (Baboon))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 213,
     },
     CompanionAbilityRecord {
@@ -2465,7 +2465,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ray (Manta))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 214,
     },
     CompanionAbilityRecord {
@@ -2481,7 +2481,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ray (Stingray))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 215,
     },
     CompanionAbilityRecord {
@@ -2497,7 +2497,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Turtle (Giant Snapping))"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 216,
     },
     CompanionAbilityRecord {
@@ -2513,7 +2513,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.113"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 227,
     },
     CompanionAbilityRecord {
@@ -2529,7 +2529,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.117"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 228,
     },
     CompanionAbilityRecord {
@@ -2545,7 +2545,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.118"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 229,
     },
     CompanionAbilityRecord {
@@ -2561,7 +2561,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.118"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 230,
     },
     CompanionAbilityRecord {
@@ -2577,7 +2577,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.118"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 231,
     },
     CompanionAbilityRecord {
@@ -2593,7 +2593,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.118"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 232,
     },
     CompanionAbilityRecord {
@@ -2609,7 +2609,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.118"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 233,
     },
     CompanionAbilityRecord {
@@ -2625,7 +2625,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.119"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 234,
     },
     CompanionAbilityRecord {
@@ -2641,7 +2641,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.121"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 235,
     },
     CompanionAbilityRecord {
@@ -2657,7 +2657,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.122"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 236,
     },
     CompanionAbilityRecord {
@@ -2673,7 +2673,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.112"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 237,
     },
     CompanionAbilityRecord {
@@ -2689,7 +2689,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.124"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 238,
     },
     CompanionAbilityRecord {
@@ -2705,7 +2705,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.126"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 239,
     },
     CompanionAbilityRecord {
@@ -2721,7 +2721,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.127"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 240,
     },
     CompanionAbilityRecord {
@@ -2737,7 +2737,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.315"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 241,
     },
     CompanionAbilityRecord {
@@ -2753,7 +2753,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.315"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 242,
     },
     CompanionAbilityRecord {
@@ -2769,7 +2769,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.127"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 243,
     },
     CompanionAbilityRecord {
@@ -2785,7 +2785,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.128"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 244,
     },
     CompanionAbilityRecord {
@@ -2801,7 +2801,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.129"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 245,
     },
     CompanionAbilityRecord {
@@ -2817,7 +2817,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.130"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 246,
     },
     CompanionAbilityRecord {
@@ -2833,7 +2833,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.130"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 247,
     },
     CompanionAbilityRecord {
@@ -2849,7 +2849,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.131"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 248,
     },
     CompanionAbilityRecord {
@@ -2865,7 +2865,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.132"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 249,
     },
     CompanionAbilityRecord {
@@ -2881,7 +2881,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.134"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 250,
     },
     CompanionAbilityRecord {
@@ -2897,7 +2897,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.134"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 251,
     },
     CompanionAbilityRecord {
@@ -2913,7 +2913,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.135"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 252,
     },
     CompanionAbilityRecord {
@@ -2929,7 +2929,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.135"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 253,
     },
     CompanionAbilityRecord {
@@ -2945,7 +2945,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: Some("p.136"),
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 254,
     },
     CompanionAbilityRecord {
@@ -2961,7 +2961,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 255,
     },
     CompanionAbilityRecord {
@@ -2977,7 +2977,7 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 256,
     },
     CompanionAbilityRecord {
@@ -2993,12 +2993,12 @@ pub(crate) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         source_page: None,
         owners: &["Companion (Ape)", "Companion (Badger (Wolverine))", "Companion (Bear)", "Companion (Bird (Eagle))", "Companion (Bird (Hawk))", "Companion (Bird (Owl))", "Companion (Boar)", "Companion (Camel)", "Companion (Cat (Big (Lion)))", "Companion (Cat (Big (Tiger)))", "Companion (Cat (Small (Cheetah)))", "Companion (Cat (Small (Leopard)))", "Companion (Crocodile (Alligator))", "Companion (Dinosaur (Allosaurus))", "Companion (Dinosaur (Deinonychus))", "Companion (Dinosaur (Parasaurolophus))", "Companion (Dinosaur (Tylosaurus))", "Companion (Dinosaur (Velociraptor))", "Companion (Dire Rat)", "Companion (Dog)", "Companion (Gar)", "Companion (Herd Animal (Ram))", "Companion (Hippopotamus)", "Companion (Horse)", "Companion (Megafauna (Arsinoitherium))", "Companion (Megafauna (Gylptodon))", "Companion (Megafauna (Megaloceros))", "Companion (Megafauna (Megatherium))", "Companion (Pony)", "Companion (Primate (Baboon))", "Companion (Ray (Manta))", "Companion (Ray (Stingray))", "Companion (Shadow)", "Companion (Shark)", "Companion (Snake (Constrictor))", "Companion (Snake (Viper))", "Companion (Turtle (Giant Snapping))", "Companion (Wolf)"],
         cross_book_owners: &[],
-        source_file: "cr_abilities_companion.lst",
+        source_file: "cr_abilities_companion",
         source_line: 257,
     },
 ];
 
-/// Every core_rulebook `*_classes_companion.lst` row (2 rows).
+/// Every core_rulebook `*_classes_companion` row (2 rows).
 pub(crate) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
     CompanionClassRecord {
         key: "Companion",
@@ -3010,7 +3010,7 @@ pub(crate) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
         source_page: Some("p.52"),
         ability_grants: &[CompanionAbilityGrant { kind: "FEAT", mode: "AUTOMATIC", name: "CMB Output", conditions: &[] }],
         fact_class_type: Some("Companion"),
-        source_file: "cr_classes_companion.lst",
+        source_file: "cr_classes_companion",
         source_line: 6,
     },
     CompanionClassRecord {
@@ -3023,7 +3023,7 @@ pub(crate) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
         source_page: Some("p.309"),
         ability_grants: &[CompanionAbilityGrant { kind: "Special Ability", mode: "AUTOMATIC", name: "Undead Traits", conditions: &[EffectCondition { negated: false, family: "VAREQ", items: &[ConditionItem { facet: None, value: "NoTypeTraits" }, ConditionItem { facet: None, value: "0" }], alternatives: &[] }] }, CompanionAbilityGrant { kind: "FEAT", mode: "AUTOMATIC", name: "CMB Output", conditions: &[] }],
         fact_class_type: Some("Companion"),
-        source_file: "cr_classes_companion.lst",
+        source_file: "cr_classes_companion",
         source_line: 15,
     },
 ];

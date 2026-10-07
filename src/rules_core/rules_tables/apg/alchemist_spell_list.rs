@@ -1,7 +1,7 @@
 //! PF1 Alchemist formula spell list (deepening 2026-07-26, task #8:
 //! Investigator spellcasting subsystem).
 //!
-//! Real PF1 rule text (`acg_abilities_class.lst`'s own Investigator
+//! Real PF1 rule text (`acg_abilities_class`'s own Investigator
 //! Alchemy DESC): "An investigator uses the alchemist formula list
 //! (Pathfinder RPG Advanced Player's Guide 32) to determine the extracts
 //! he can know" -- Investigator's `SPELLLIST:1|Alchemist` corpus token
@@ -19,14 +19,14 @@
 //!   Rulebook spell's `CLASSES:` token (e.g. `Cure Light Wounds.MOD`).
 //!   The real spell name is the base name with `.MOD` stripped; the
 //!   level here is read directly off that same `.MOD` line's own
-//!   `CLASSES:` token -- no cross-file lookup into `cr_spells.lst` is
+//!   `CLASSES:` token -- no cross-file lookup into `cr_spells` is
 //!   needed for level purposes (only for school/description metadata,
 //!   which this `(name, level)`-only shape doesn't carry, mirroring
 //!   `CLERIC_SPELL_LIST`/`BARD_SPELL_LIST`'s own minimal shape).
 //!
 //! **Widened 2026-07-27 (task #32) from APG-only to all ingested books.**
-//! Per-file: **121 from `apg_spells.lst` + 26 from `acg_spells.lst` =
-//! 147**, all names distinct; `cr_spells.lst` names Alchemist zero times
+//! Per-file: **121 from `apg_spells` + 26 from `acg_spells` =
+//! 147**, all names distinct; `cr_spells` names Alchemist zero times
 //! (the class postdates the CRB). All 26 ACG additions are non-`.MOD` new
 //! spells.
 //!
@@ -51,8 +51,8 @@
 //! ingested `data/corpus/` spell records (1,075 keys) -- unlike
 //! `BLOODRAGER_SPELL_LIST`, this list has no unreachable entries.
 //!
-//! Regenerate by parsing the `CLASSES:` token in `apg_spells.lst` and
-//! `acg_spells.lst` -- split the body on `|`, `rpartition` each group on
+//! Regenerate by parsing the `CLASSES:` token in `apg_spells` and
+//! `acg_spells` -- split the body on `|`, `rpartition` each group on
 //! `=`, strip any trailing `[...]` gate from the level, then
 //! membership-test the comma-separated name list -- and strip a trailing
 //! `.MOD` from the record's own name column. Never substring-match

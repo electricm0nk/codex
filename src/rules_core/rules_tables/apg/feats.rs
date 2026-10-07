@@ -1,6 +1,6 @@
 //! PF1 APG (Advanced Player's Guide) feat catalog.
 //!
-//! Full corpus coverage of `advanced_players_guide/apg_feats.lst`,
+//! Full corpus coverage of `advanced_players_guide/apg_feats`,
 //! mirroring `crb::feats` exactly -- same `FeatTableEntry` type, same
 //! `TYPE:`-facet category-derivation rule, same
 //! generated-from-the-live-corpus method (see `feat_data/`'s own doc
@@ -9,7 +9,7 @@
 //! Oracle, Summoner or Witch could not take a single feat from that
 //! class's own book.
 //!
-//! **The arithmetic, from the raw file.** `apg_feats.lst` holds 221
+//! **The arithmetic, from the raw file.** `apg_feats` holds 221
 //! non-comment lines. 37 are `NAME.MOD` records, which modify an
 //! already-declared record rather than declaring one, and are excluded
 //! -- ingesting a `.MOD` line as a feat would invent a feat the book
@@ -81,7 +81,7 @@
 use super::super::crb::feats::FeatTableEntry;
 
 /// Full APG feat catalog: every classifiable record from
-/// `apg_feats.lst`, generated from the live corpus. Built once and
+/// `apg_feats`, generated from the live corpus. Built once and
 /// cached for the process lifetime -- mirrors `crb::feats::feat_tables`.
 pub fn feat_tables() -> &'static [FeatTableEntry] {
     static TABLES: std::sync::OnceLock<Vec<FeatTableEntry>> = std::sync::OnceLock::new();

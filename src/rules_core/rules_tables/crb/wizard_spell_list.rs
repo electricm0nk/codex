@@ -15,11 +15,11 @@
 //! lists are very nearly the same data -- 578 keys in common at *identical*
 //! levels, no key on Sorcerer's list absent from Wizard's, and exactly two
 //! Wizard-only records (`Mage's Lucubration` 6th and `Mnemonic Enhancer`
-//! 4th, both `cr_spells.lst`). It is therefore tempting to derive Wizard
+//! 4th, both `cr_spells`). It is therefore tempting to derive Wizard
 //! from Sorcerer the way `acg::hunter_spell_list` derives Hunter from Druid
 //! and Ranger. That was deliberately NOT done: Hunter's derivation is
 //! grounded in a corpus token that *states* the relationship
-//! (`acg_classes.lst`'s `CLASS:Hunter ... SPELLLIST:2|Druid|Ranger`),
+//! (`acg_classes`'s `CLASS:Hunter ... SPELLLIST:2|Druid|Ranger`),
 //! whereas the corpus states nothing of the kind about Wizard -- `CLASS:
 //! Wizard` carries no `SPELLLIST:` token, and every one of these 580
 //! records names `Wizard` in its own `CLASSES:` tag independently. The
@@ -29,8 +29,8 @@
 //! used as a generation shortcut. If a future corpus revision splits the
 //! two lists, this table stays correct and that test reports the change.
 //!
-//! Per-file: **396 from `cr_spells.lst` + 95 from `apg_spells.lst` + 89
-//! from `acg_spells.lst` = 580**, all names distinct, no `.MOD` and no
+//! Per-file: **396 from `cr_spells` + 95 from `apg_spells` + 89
+//! from `acg_spells` = 580**, all names distinct, no `.MOD` and no
 //! `.COPY=` record assigns Wizard.
 //!
 //! **Wizard is always the LAST name in its `CLASSES:` comma group** (all
@@ -673,7 +673,7 @@ pub fn wizard_spell_level(spell_key: &str) -> Option<u8> {
 /// spell-school fact could drift out of sync with either source table.
 /// Sorted for a deterministic, easily-diffed return value.
 ///
-/// **Why this exists.** `cr_abilities_class.lst`'s own `"<School> Wizard
+/// **Why this exists.** `cr_abilities_class`'s own `"<School> Wizard
 /// Spells"` internal chassis records (`CATEGORY:Internal`,
 /// `SPELLKNOWN:CLASS|Wizard=0|<spells>`) partition every 0th-level Wizard
 /// spell by school -- the corpus's own encoding of which cantrips belong

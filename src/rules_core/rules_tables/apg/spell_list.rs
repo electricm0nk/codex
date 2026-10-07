@@ -2,18 +2,18 @@
 //! 6.2/6.5).
 //!
 //! Source: every real, active (non-`.MOD`, non-comment,
-//! non-`SOURCELONG`-header) base spell record in PCGen's `apg_spells.lst`
+//! non-`SOURCELONG`-header) base spell record in PCGen's `apg_spells`
 //! (Advanced Player's Guide), 297 total after deduplication (see the
 //! `## DISCOVERED` correction note below). Not hand-authored; generated
 //! by a one-off ingestion script against
-//! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst`
+//! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells`
 //! (reachable from this environment) — do not hand-edit, regenerate if
 //! the corpus changes.
 //!
 //! **Correction to the SD-24 criterion 6.1 audit's documented count**:
-//! the audit recorded 298 real, active `apg_spells.lst` records. The
+//! the audit recorded 298 real, active `apg_spells` records. The
 //! real corpus has exactly one genuine duplicate base record — two full
-//! `Resounding Blow` lines (`apg_spells.lst:10` and `:196`, the second an
+//! `Resounding Blow` lines (`apg_spells:10` and `:196`, the second an
 //! errata-reprint with an expanded `CLASSES:` token merging in
 //! `Resounding Blow.MOD`'s Paladin/Inquisitor grant) — that the audit's
 //! `sort -u`-on-name-column methodology should have deduplicated, and did
@@ -48,7 +48,7 @@
 //!   record's own fields when the variant line itself doesn't carry them.
 //!   A handful of these variants' bases (e.g. the `Planar Binding`/
 //!   `Planar Ally`/`Summon Monster` family) are themselves core-rulebook
-//!   spells living in `cr_spells.lst`, not `apg_spells.lst`.
+//!   spells living in `cr_spells`, not `apg_spells`.
 //!
 //!   **That cross-book boundary is now resolved (SD-27, 2026-07-31), and
 //!   it used to say "future work".** It cost a player eleven blank rows:
@@ -69,7 +69,7 @@
 //!   `Summon Monster` variants that had a school and text but no level,
 //!   and `Call Lightning Storm (Starsoul)`, which had neither).
 //!   `Call Lightning Storm (Starsoul)` keeps its own `description`: its
-//!   `.MOD` record at `apg_spells.lst:1075` overrides `DESC:` outright,
+//!   `.MOD` record at `apg_spells:1075` overrides `DESC:` outright,
 //!   which is PCGen's layering — `.COPY=` takes the base, then a `.MOD`
 //!   replaces individual fields — so inheriting school and level while
 //!   keeping the overridden text is the faithful reading, not an
@@ -97,7 +97,7 @@
 //! fabrication, not ingestion.
 //!
 //! **Summoner's own "Summoner Spells - APG" block
-//! (`apg_spells.lst:471` onward) is still entirely `#`-commented out** in
+//! (`apg_spells:471` onward) is still entirely `#`-commented out** in
 //! the real corpus — this module's ingest correctly excludes it (comment
 //! lines are skipped), same finding the prior bootstrap-era doc comment
 //! already recorded.
@@ -112,10 +112,10 @@
 //! two distinct reasons, both corrected this cycle:
 //!
 //! 1. **A same-line-concatenation ingest miss (13 records; no web fetch
-//!    needed, entirely corpus-native).** `apg_spells.lst` contains three
+//!    needed, entirely corpus-native).** `apg_spells` contains three
 //!    physical lines where two `.MOD` stanzas were concatenated onto a
-//!    single line with no line break (`apg_spells.lst:1945`,
-//!    `Fester (Mass).MOD ... Fiery Body.MOD ...`; `apg_spells.lst:2094`,
+//!    single line with no line break (`apg_spells:1945`,
+//!    `Fester (Mass).MOD ... Fiery Body.MOD ...`; `apg_spells:2094`,
 //!    `Transmogrify.MOD ... Transmute Potion to Poison.MOD ...`). The
 //!    prior ingest attributed the line's *last* `DESC:` token to the
 //!    line's *first*-named record, silently swapping two unrelated
@@ -127,7 +127,7 @@
 //!    state to its own correct short-only `false`; `Fiery Body` and
 //!    `Transmute Potion to Poison` gain their real, corpus-native full
 //!    text). Separately, `Summon Monster I`'s own base line
-//!    (`apg_spells.lst:649`) carries two back-to-back `DESC:` tokens (a
+//!    (`apg_spells:649`) carries two back-to-back `DESC:` tokens (a
 //!    short summary, then the full SRD paragraph) with no separate `.MOD`
 //!    involved at all; the full paragraph was already captured as
 //!    `description` pre-cycle but `full_text` was left `false` because
@@ -152,12 +152,12 @@
 //!    mechanic), which was rejected as a cross-book/edition-cousin false
 //!    match per this cycle's identity-match rule before falling back to
 //!    the correct `legacy.aonprd.com` APG-original page. `Call Lightning
-//!    Storm (Starsoul)`'s own `.MOD` record (`apg_spells.lst:1075`)
+//!    Storm (Starsoul)`'s own `.MOD` record (`apg_spells:1075`)
 //!    supplies a full override `DESC:`, corpus-native.
 //!
 //! Remaining `full_text: false`/`description: None` records (13/12 of
 //! 297) are the documented cross-book `.COPY=` variants whose base spell
-//! lives outside `apg_spells.lst` (`Planar Binding` ×6, `Planar Ally` ×3,
+//! lives outside `apg_spells` (`Planar Binding` ×6, `Planar Ally` ×3,
 //! `Beast Shape I (Animals Only)`, `Blindness/Deafness (Only Cause
 //! Blindness)`, `Meteor Swarm (Dealing Cold Damage)`) plus the corpus-typo
 //! `Wall of Thorms` — all deliberately left `None` per this module's
@@ -172,7 +172,7 @@
 use crate::rules_core::rules_tables::RuleSetId;
 
 /// The 8 canonical PF1 arcane/divine spell schools that appear in the
-/// real `apg_spells.lst` corpus (widened from the SD-22 bootstrap's
+/// real `apg_spells` corpus (widened from the SD-22 bootstrap's
 /// 3-school subset to the full set actually present — see
 /// `rules_tables::crb::spell_list::Pf1SchoolId` for CRB's own, separately
 /// maintained copy of this enum).
@@ -214,13 +214,13 @@ impl Pf1SchoolId {
 #[cfg_attr(test, derive(schemars::JsonSchema))]
 #[cfg_attr(test, schemars(rename = "apg__spell_list__SpellListEntry"))]
 pub struct SpellListEntry {
-    /// The record's identity in `apg_spells.lst`: its `KEY:` token when
+    /// The record's identity in `apg_spells`: its `KEY:` token when
     /// the row carries one, else its display name (most rows carry no
     /// `KEY:`), or — for a `.COPY=` variant record — the variant's own
     /// display name (see this module's doc comment).
     ///
     /// Exactly 9 rows in this file carry a `KEY:` token, all of them the
-    /// Summoner-archetype summon spells (`apg_spells.lst:649`+), whose
+    /// Summoner-archetype summon spells (`apg_spells:649`+), whose
     /// KEY is archetype-qualified — `KEY:Summoner Summon Monster I` for
     /// the row displayed as `Summon Monster I`. Those are genuinely
     /// different records from CRB's own `Summon Monster I` (they carry
@@ -926,7 +926,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         school: Some(Pf1SchoolId::Necromancy),
         level: Some(2),
         // Web second-source pass (SD-25 criterion 7.N, "apg-spell-text"):
-        // no `.MOD` full-text record exists anywhere in `apg_spells.lst`
+        // no `.MOD` full-text record exists anywhere in `apg_spells`
         // for this base record (verified: the only other `Fester.MOD`
         // token in the corpus is a corrupted/mismatched stanza describing
         // Feather Step's terrain mechanic, not Fester's SR effect -- see
@@ -942,13 +942,13 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         school: Some(Pf1SchoolId::Necromancy),
         level: Some(6),
         // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
-        // `apg_spells.lst:1945` concatenates two `.MOD` stanzas onto one
+        // `apg_spells:1945` concatenates two `.MOD` stanzas onto one
         // physical line with no line break (`Fester (Mass).MOD ... Fiery
         // Body.MOD ...`); the prior ingest took the line's *last* `DESC:`
         // token as this record's full text, which actually belongs to the
         // unrelated `Fiery Body` record further down the same line. This
         // record's own, correctly-attributed short `DESC:` (from
-        // `apg_spells.lst:111`) is restored here; no genuine full-text
+        // `apg_spells:111`) is restored here; no genuine full-text
         // record exists for `Fester (Mass)` itself anywhere in the corpus.
         description: Some("This spell functions as fester, except that it affects multiple foes."),
         full_text: false,
@@ -959,7 +959,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         level: Some(9),
         // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
         // this spell's real full-text `.MOD` record was present all along
-        // at `apg_spells.lst:1945`, concatenated onto the same physical
+        // at `apg_spells:1945`, concatenated onto the same physical
         // line as `Fester (Mass).MOD` (see that record's note above) --
         // the prior ingest attributed it to `Fester (Mass)` instead.
         // Recovered directly from the corpus, no web fetch needed.
@@ -1909,7 +1909,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         school: Some(Pf1SchoolId::Transmutation),
         level: None,
         // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
-        // `apg_spells.lst:2094` concatenates two `.MOD` stanzas onto one
+        // `apg_spells:2094` concatenates two `.MOD` stanzas onto one
         // physical line with no line break (`Transmogrify.MOD ...
         // Transmute Potion to Poison.MOD ...`); the prior ingest took the
         // line's *last* `DESC:` token as this record's full text, which
@@ -1917,7 +1917,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         // record further down the same line. This record's own correctly
         // co-located first `DESC:` token is restored here. `level` stays
         // `None`: the only `CLASSES:`-granting `.MOD` for Transmogrify
-        // (`apg_spells.lst:492`) is itself `#`-commented out in the real
+        // (`apg_spells:492`) is itself `#`-commented out in the real
         // corpus, a genuine gap, not part of this correction.
         description: Some("Your eidolon's form shifts and transforms. This spell allows you to change any of the eidolon's evolutions by allocating its evolution pool on new evolutions. If you have the aspect or greater aspect ability, this spell also allows you to change the evolution points spent to modify you, including removing or adding points as allowed by those abilities.  Your eidolon cannot benefit from this spell more than once per day. This spell does not allow you to change your eidolon's base form."),
         full_text: true,
@@ -1928,7 +1928,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         level: Some(2),
         // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
         // this spell's real full-text `.MOD` record was present all along
-        // at `apg_spells.lst:2094`, concatenated onto the same physical
+        // at `apg_spells:2094`, concatenated onto the same physical
         // line as `Transmogrify.MOD` (see that record's note above) -- the
         // prior ingest attributed it to `Transmogrify` instead. Recovered
         // directly from the corpus, no web fetch needed.
@@ -2166,7 +2166,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
     },
     SpellListEntry {
         // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
-        // this base record's own line (`apg_spells.lst:649`) carries *two*
+        // this base record's own line (`apg_spells:649`) carries *two*
         // `DESC:` tokens back-to-back (a short `!PRERULE:1,DisplayFullSpell`
         // summary, then a full `PRERULE:1,DisplayFullSpell` SRD paragraph
         // matching `crb::spell_list`'s own "Summon Monster I" text
@@ -2177,7 +2177,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         // record" rule didn't recognize the same-line double-`DESC:`
         // pattern as a full-text source). Corrected here to `true`; no
         // content change, no web fetch needed. Same finding applies to
-        // Summon Monster II-IX below (`apg_spells.lst:650-657`) and their
+        // Summon Monster II-IX below (`apg_spells:650-657`) and their
         // `.COPY=` variants (Reptiles Only / Summons 1d3 Shadows), which
         // inherit this now-corrected `full_text: true` via the base's
         // fields per this module's own `.COPY=` fallback rule.
@@ -2362,7 +2362,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
     SpellListEntry {
         // Corpus-parsing correction (SD-25 criterion 7.N, "apg-spell-text"):
         // this `.COPY=Call Lightning Storm` variant has its own `.MOD`
-        // record (`apg_spells.lst:1075`) that overrides `DESC:` with a
+        // record (`apg_spells:1075`) that overrides `DESC:` with a
         // full, self-contained `PRERULE:1,DisplayFullSpell` paragraph --
         // corpus-native, no web fetch needed. `school`/`level` stay `None`:
         // the base `Call Lightning Storm` spell itself is not present in
@@ -2384,7 +2384,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         full_text: true,
     },
     SpellListEntry {
-        // **Upstream typo, preserved verbatim.** `apg_spells.lst:1555` reads
+        // **Upstream typo, preserved verbatim.** `apg_spells:1555` reads
         // `Wall of Thorms<TAB>DOMAINS:Blood Subdomain=5<TAB>SOURCELINK:...
         // /spells/wallOfThorns.html#_wall-of-thorns`. It is meant to be
         // `Wall of Thorns.MOD`, and the same file proves it: `:1431` is
@@ -2412,7 +2412,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
     },
     SpellListEntry {
         // Web second-source pass (SD-25 criterion 7.N, "apg-spell-text"):
-        // no `.MOD` full-text record exists in `apg_spells.lst` for any of
+        // no `.MOD` full-text record exists in `apg_spells` for any of
         // this and the following 4 "hero point" spells (their only
         // `.MOD` stanzas are `#`-commented-out `ITEM:Potion` lines).
         // Identity-matched (name + School + exact Level/CLASSES set, all
@@ -2474,7 +2474,7 @@ pub struct SpellFieldCoverage {
     /// Records currently in `SPELL_LIST`.
     pub total_records: u32,
     /// Real, active (non-`.MOD`, non-comment), deduplicated-by-name
-    /// record count in `apg_spells.lst` (297 — see this module's doc
+    /// record count in `apg_spells` (297 — see this module's doc
     /// comment for the 298 -> 297 audit correction).
     pub records_expected: u32,
     /// Records with `description.is_some()` -- a real per-row count
@@ -2499,8 +2499,8 @@ pub fn spell_coverage_report() -> SpellFieldCoverage {
 }
 
 /// The `(KEY:` token, display name`)` pair for each of the 9
-/// `apg_spells.lst` rows whose two name columns differ — read verbatim
-/// from the rows themselves (`apg_spells.lst:649`-`657`), e.g. `:651` is
+/// `apg_spells` rows whose two name columns differ — read verbatim
+/// from the rows themselves (`apg_spells:649`-`657`), e.g. `:651` is
 /// `Summon Monster III<TAB>KEY:Summoner Summon Monster III`. Every other
 /// ingested APG row carries no `KEY:` token at all, so its display name
 /// *is* its key and it needs no entry here.
