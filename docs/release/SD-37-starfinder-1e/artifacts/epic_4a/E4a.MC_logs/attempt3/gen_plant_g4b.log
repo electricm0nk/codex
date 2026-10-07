@@ -1,0 +1,4 @@
+ M data/rules_tables/ultimate_magic/spell_list/SPELL_LIST.json
+ingest_spells rc=0
+G4b-spells data/rules_tables/ultimate_magic/spell_list/SPELL_LIST.json 6118c98115fe -> aec931c005d4 -> 6118c98115fe status=[]
+data_status_lines=0
