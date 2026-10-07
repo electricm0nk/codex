@@ -22,6 +22,7 @@
 pub mod bar_check;
 pub mod oracle_validation;
 pub mod pcgen_import;
+pub mod rules_package_out;
 
 /// The repository root, two directories up from this crate's manifest.
 ///

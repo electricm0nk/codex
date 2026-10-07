@@ -42,30 +42,43 @@
 //! PCGEN_CORPUS_ROOT="$HOME/workspace/repos/pcgen/data" \
 //!   cargo run --locked --bin gen_feat_gap_tables
 //! ```
+//!
+//! It writes one `rules_tables` data-package table per book,
+//! `data/rules_tables/feat_gap_tables/<SLUG>_FEAT_GAP_ROWS.json` (SD-37
+//! E4a.4a), plus the converter-side prerequisite file below.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write as _;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use codex_ingest::pcgen_import::pcgen_desc;
 use codex::rules_core::pi_screening::{self, declared_product_identity};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
+use codex::rules_core::rules_catalog::feats_all::FeatCatalogRecord;
+use codex_ingest::repo_root;
+use codex_ingest::rules_package_out::{leak, package_dir, screen_table, write_table};
 use codex::rules_core::rules_catalog::feats_all::hand_authored_feat_tables;
 use codex::rules_core::rules_catalog::RuleSetId;
 use codex::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
 
-/// Where the generated table lands, relative to the crate root.
-const OUTPUT_RELATIVE_PATH: &str = "src/rules_core/rules_tables/feat_gap_tables.rs";
+/// Each book's gap rows land in the `rules_tables` data package as table
+/// `feat_gap_tables/<SLUG>_FEAT_GAP_ROWS` (`data/rules_tables/feat_gap_tables/
+/// <SLUG>_FEAT_GAP_ROWS.json`), the table `rules_catalog::feat_gap_tables`
+/// reads. SD-37 E4a.4 removed the compiled module this generator used to
+/// write; E4a.4a points it at the package.
+fn table_id(slug: &str) -> String {
+    format!("feat_gap_tables/{}_FEAT_GAP_ROWS", slug.to_uppercase())
+}
 
 /// The converter-side companion: the gap rows' `PRE`-family prerequisite
-/// tokens. Written in the same pass as `OUTPUT_RELATIVE_PATH` and off the same
+/// tokens. Written in the same pass as the package tables and off the same
 /// parsed records, so the two can never drift. The tokens live on this side of
 /// the boundary because nothing on the live side may read a PCGen token
 /// (`decisions.md` §11, SD-35 `AT-35-E6-003-SWEEP` cycle 3).
-const PREREQ_OUTPUT_RELATIVE_PATH: &str = "src/pcgen_import/feat_gap_prereq_tokens.rs";
+const PREREQ_OUTPUT_RELATIVE_PATH: &str = "crates/codex-ingest/src/pcgen_import/feat_gap_prereq_tokens.rs";
 
 /// The module doc and imports of `PREREQ_OUTPUT_RELATIVE_PATH`, verbatim.
-const PREREQ_FILE_HEADER: &str = concat!("\
+const PREREQ_FILE_HEADER: &str = "\
 //! The `PRE`-family prerequisite tokens the corpus **feat gap rows** carry,\n\
 //! relocated off the live side — SD-35 `AT-35-E6-003-SWEEP` cycle 3,\n\
 //! enforcing `decisions.md` §11. See\n\
@@ -73,18 +86,17 @@ const PREREQ_FILE_HEADER: &str = concat!("\
 //! is addressed, and every lookup and gate over them.\n\
 //!\n\
 //! **Generated — do not hand-edit.** `cargo run --bin gen_feat_gap_tables`\n\
-//! writes this file and `rules_tables", "::feat_gap_tables.rs` together, off the\n\
+//! writes this file and `rules_catalog::feat_gap_tables.rs` together, off the\n\
 //! same pass over the live corpus, so the two can never drift apart.\n\
 \n\
 use crate::pcgen_import::feat_prereq_tokens::FeatPrereqRow;\n\
-use crate::rules_core::rules_tables", "::RuleSetId;\n");
+use codex::rules_core::rules_catalog::RuleSetId;\n";
 
 /// One book's gap-lane inputs: the `RuleSetId` the joined catalog files its
-/// records under, the `RuleSetId` variant name to emit in generated source,
-/// and each `.lst` path relative to the corpus root.
+/// records under, the slug that names its package table, and each `.lst` path
+/// relative to the corpus root.
 struct BookInput {
     rule_set: RuleSetId,
-    variant: &'static str,
     slug: &'static str,
     files: &'static [&'static str],
 }
@@ -98,13 +110,11 @@ struct BookInput {
 const BOOK_INPUTS: &[BookInput] = &[
     BookInput {
         rule_set: RuleSetId::Crb,
-        variant: "Crb",
         slug: "core_rulebook",
         files: &["pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst"],
     },
     BookInput {
         rule_set: RuleSetId::Ce,
-        variant: "Ce",
         slug: "core_essentials",
         // **Corrected `SD31-E6-F8-001`** — this was previously filed under
         // `RuleSetId::Crb` on the theory that `core_rulebook.pcc`'s
@@ -124,19 +134,16 @@ const BOOK_INPUTS: &[BookInput] = &[
     },
     BookInput {
         rule_set: RuleSetId::Arg,
-        variant: "Arg",
         slug: "advanced_race_guide",
         files: &["pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst"],
     },
     BookInput {
         rule_set: RuleSetId::Uc,
-        variant: "Uc",
         slug: "ultimate_combat",
         files: &["pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst"],
     },
     BookInput {
         rule_set: RuleSetId::Ui,
-        variant: "Ui",
         slug: "ultimate_intrigue",
         // `support/ui_feats_oa.lst` is loaded by `ultimate_intrigue.pcc`
         // behind `PRECAMPAIGN:1,Occult Adventures` — the gate is on the pcc
@@ -153,7 +160,6 @@ const BOOK_INPUTS: &[BookInput] = &[
     },
     BookInput {
         rule_set: RuleSetId::Um,
-        variant: "Um",
         slug: "ultimate_magic",
         files: &[
             "pathfinder/paizo/roleplaying_game/ultimate_magic/um_feats.lst",
@@ -162,13 +168,11 @@ const BOOK_INPUTS: &[BookInput] = &[
     },
     BookInput {
         rule_set: RuleSetId::Upsi,
-        variant: "Upsi",
         slug: "ultimate_psionics",
         files: &["pathfinder/dreamscarred_press/ultimate_psionics/up_feats.lst"],
     },
     BookInput {
         rule_set: RuleSetId::Uw,
-        variant: "Uw",
         slug: "ultimate_wilderness",
         files: &["pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst"],
     },
@@ -184,31 +188,26 @@ const BOOK_INPUTS: &[BookInput] = &[
     // (`feats_all.rs`) so `all_feat_tables()` joins them.
     BookInput {
         rule_set: RuleSetId::Ha,
-        variant: "Ha",
         slug: "horror_adventures",
         files: &["pathfinder/paizo/roleplaying_game/horror_adventures/ha_feats.lst"],
     },
     BookInput {
         rule_set: RuleSetId::Isr,
-        variant: "Isr",
         slug: "inner_sea_races",
         files: &["pathfinder/paizo/campaign_setting/inner_sea_races/isr_feats.lst"],
     },
     BookInput {
         rule_set: RuleSetId::Oa,
-        variant: "Oa",
         slug: "occult_adventures",
         files: &["pathfinder/paizo/roleplaying_game/occult_adventures/oa_feats.lst"],
     },
     BookInput {
         rule_set: RuleSetId::Iswg,
-        variant: "Iswg",
         slug: "inner_sea_world_guide",
         files: &["pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_feats.lst"],
     },
     BookInput {
         rule_set: RuleSetId::MonsterCodex,
-        variant: "MonsterCodex",
         slug: "monster_codex",
         files: &["pathfinder/paizo/roleplaying_game/monster_codex/mc_feats.lst"],
     },
@@ -223,7 +222,6 @@ const BOOK_INPUTS: &[BookInput] = &[
     // comment; reported, not ingested, `OPEN-ISSUES.md`).
     BookInput {
         rule_set: RuleSetId::Mythic,
-        variant: "Mythic",
         slug: "mythic_adventures",
         files: &["pathfinder/paizo/roleplaying_game/mythic_adventures/ma_feats.lst"],
     },
@@ -237,13 +235,11 @@ const BOOK_INPUTS: &[BookInput] = &[
     // by direct read of both files.
     BookInput {
         rule_set: RuleSetId::Isi,
-        variant: "Isi",
         slug: "inner_sea_intrigue",
         files: &["pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_feats.lst"],
     },
     BookInput {
         rule_set: RuleSetId::Botd2,
-        variant: "Botd2",
         slug: "book_of_the_damned_volume_2",
         files: &[
             "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_feats.lst",
@@ -258,7 +254,6 @@ const BOOK_INPUTS: &[BookInput] = &[
     // rows at all (re-derived: `grep -c '\.MOD' istav_feats.lst` -> 0).
     BookInput {
         rule_set: RuleSetId::InnerSeaTaverns,
-        variant: "InnerSeaTaverns",
         slug: "inner_sea_taverns",
         files: &["pathfinder/paizo/campaign_setting/inner_sea_taverns/istav_feats.lst"],
     },
@@ -276,7 +271,6 @@ const BOOK_INPUTS: &[BookInput] = &[
     // receipt for that finding).
     BookInput {
         rule_set: RuleSetId::Isc,
-        variant: "Isc",
         slug: "inner_sea_combat",
         files: &["pathfinder/paizo/campaign_setting/inner_sea_combat/isc_abilities_feat.lst"],
     },
@@ -286,7 +280,6 @@ const BOOK_INPUTS: &[BookInput] = &[
     // feat units carries `CATEGORY:FEAT` in the raw row.
     BookInput {
         rule_set: RuleSetId::Isg,
-        variant: "Isg",
         slug: "inner_sea_gods",
         files: &["pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_feat.lst"],
     },
@@ -547,7 +540,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    let mut body = String::new();
+    let mut tables: Vec<(String, Vec<FeatCatalogRecord>)> = Vec::new();
 
     let mut prereq_body = String::new();
 
@@ -590,14 +583,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
 
         totals.push((input.slug, rows.len()));
-        writeln!(
-            body,
-            "\n/// {} — {} record(s) the hand-authored `{}` feat table does not hold.\npub static {}_FEAT_GAP_ROWS: &[FeatCatalogRecord] = &[",
-            input.slug,
-            rows.len(),
-            input.slug,
-            input.slug.to_uppercase()
-        )?;
         let with_tokens = rows.iter().filter(|row| !row.prerequisites.is_empty()).count();
         if with_tokens > 0 {
             writeln!(
@@ -608,18 +593,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 rows.len()
             )?;
         }
+        let mut table_rows: Vec<FeatCatalogRecord> = Vec::with_capacity(rows.len());
         for (index, row) in rows.iter().enumerate() {
-            writeln!(
-                body,
-                "    FeatCatalogRecord {{ key: {}, category: {}, name: {}, description: {} }},",
-                rust_string(&row.key),
-                rust_string(&row.category),
-                rust_string(&row.name),
-                match &row.description {
-                    Some(d) => format!("Some({})", rust_string(d)),
-                    None => "None".to_string(),
-                },
-            )?;
+            table_rows.push(FeatCatalogRecord {
+                key: leak(row.key.clone()),
+                category: leak(row.category.clone()),
+                name: leak(row.name.clone()),
+                description: row.description.clone().map(leak),
+            });
             if row.prerequisites.is_empty() {
                 continue;
             }
@@ -633,60 +614,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             prereq_total += 1;
             prereq_books.insert(input.slug);
         }
-        writeln!(body, "];")?;
+        tables.push((table_id(input.slug), table_rows));
     }
 
     let total: usize = totals.iter().map(|(_, n)| *n).sum();
     if name_pi_dropped > 0 {
         eprintln!("gen_feat_gap_tables: {name_pi_dropped} record(s) dropped -- NAMEISPI:YES declared");
     }
-    let mut header = String::new();
-    writeln!(
-        header,
-        "//! Corpus `feat` records that belong to an ALREADY-COMPILED book whose\n\
-         //! hand-authored per-book feat table does not hold them — the\n\
-         //! `engine-does-not-hold` population of `docs/work-inventory.json`'s `feat` kind,\n\
-         //! closed corpus-wide.\n\
-         //!\n\
-         //! **GENERATED — do not edit by hand.** Regenerate with\n\
-         //! `PCGEN_CORPUS_ROOT=<pcgen>/data cargo run --locked --bin gen_feat_gap_tables`.\n\
-         //! The generator applies `v06_work_inventory`'s own record predicate for\n\
-         //! `Kind::Feat`, so a row here is exactly a row that inventory reported\n\
-         //! `engine-does-not-hold`.\n\
-         //!\n\
-         //! `description` is the record's `DESC:` joined with its `BENEFIT:` when\n\
-         //! both are present, and `None` when it carries neither — never a\n\
-         //! fabricated placeholder. `prerequisites` is every top-level `PRE`-family\n\
-         //! token verbatim, and `None` (never `Some(&[])`) when there are none.\n\
-         //! `category` is the corpus `TYPE:` token's first dot-segment verbatim,\n\
-         //! NOT a per-book `FeatCategory` variant name: a gap row has no per-book\n\
-         //! table to take a variant from, and mapping the corpus facet onto some\n\
-         //! book's enum would invent a classification the corpus never made.\n\
-         //!\n\
-         //! Total: {total} rows.\n"
-    )?;
-    writeln!(header, "use super::feats_all::FeatCatalogRecord;\nuse super::RuleSetId;\n")?;
-    writeln!(
-        header,
-        "/// The gap rows for one rule set, or an empty slice when that book has\n\
-         /// none. Chained AFTER the book's hand-authored records by\n\
-         /// `feats_all::all_feat_tables`, so a first-match key lookup keeps\n\
-         /// resolving to the hand-authored record.\n\
-         pub fn feat_gap_rows_for(rule_set: RuleSetId) -> &'static [FeatCatalogRecord] {{\n\
-         \x20   match rule_set {{\n\
-         {}\
-         \x20       _ => &[],\n\
-         \x20   }}\n\
-         }}",
-        BOOK_INPUTS
-            .iter()
-            .map(|b| format!(
-                "        RuleSetId::{} => {}_FEAT_GAP_ROWS,\n",
-                b.variant,
-                b.slug.to_uppercase()
-            ))
-            .collect::<String>()
-    )?;
 
     let prereq_generated = format!(
         "{}\n/// The tokens the corpus gap rows carried, addressed by each record's index\n         /// in `feat_gap_tables::feat_gap_rows_for(rule_set)`.\n///\n         /// {prereq_total} row(s) across {} book(s).\n         pub static FEAT_GAP_PREREQ_TOKENS: &[FeatPrereqRow] = &[\n{prereq_body}];\n",
@@ -694,10 +628,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         prereq_books.len(),
     );
 
-    let generated = format!("{header}{body}");
-
-    // Provenance gate (`epic-3-provenance`): screen the text BEFORE writing it.
-    let hits = screen_generated_table(OUTPUT_RELATIVE_PATH, &generated);
+    // Provenance gate (`epic-3-provenance`): screen every table and the
+    // prerequisite file BEFORE writing any of them, so one hit leaves every
+    // file untouched.
+    let mut hits = Vec::new();
+    for (id, rows) in &tables {
+        hits.extend(screen_table(id, rows));
+    }
+    hits.extend(screen_generated_table(PREREQ_OUTPUT_RELATIVE_PATH, &prereq_generated));
     if !hits.is_empty() {
         eprintln!("PI screening HARD STOP — {} hit(s), nothing written:", hits.len());
         for hit in &hits {
@@ -706,19 +644,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         std::process::exit(1);
     }
 
-    let prereq_hits = screen_generated_table(PREREQ_OUTPUT_RELATIVE_PATH, &prereq_generated);
-    if !prereq_hits.is_empty() {
-        eprintln!("PI screening HARD STOP — {} hit(s), nothing written:", prereq_hits.len());
-        for hit in &prereq_hits {
-            eprintln!("  {hit:?}");
-        }
-        std::process::exit(1);
+    let package = package_dir();
+    for (id, rows) in &tables {
+        write_table(&package, id, rows)?;
     }
-
-    std::fs::write(Path::new(OUTPUT_RELATIVE_PATH), &generated)?;
-    std::fs::write(Path::new(PREREQ_OUTPUT_RELATIVE_PATH), &prereq_generated)?;
+    std::fs::write(repo_root().join(PREREQ_OUTPUT_RELATIVE_PATH), &prereq_generated)?;
     println!("wrote {PREREQ_OUTPUT_RELATIVE_PATH}: {prereq_total} prerequisite rows");
-    println!("wrote {OUTPUT_RELATIVE_PATH}: {total} rows");
+    println!("wrote {} package tables under {}/feat_gap_tables/: {total} rows", tables.len(), package.display());
     for (slug, n) in &totals {
         println!("  {slug:28} {n:5}");
     }

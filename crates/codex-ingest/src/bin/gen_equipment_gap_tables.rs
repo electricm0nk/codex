@@ -35,9 +35,11 @@
 //! PCGEN_CORPUS_ROOT="$HOME/workspace/repos/pcgen/data" \
 //!   cargo run --locked --bin gen_equipment_gap_tables
 //! ```
+//!
+//! It writes one `rules_tables` data-package table per book,
+//! `data/rules_tables/equipment_gap_tables/<SLUG>_GAP_ROWS.json` (SD-37 E4a.4a).
 
 use std::collections::{BTreeSet, HashMap};
-use std::fmt::Write as _;
 use std::path::{Path, PathBuf};
 
 use codex::rules_core::codex_neutral_name::{neutral_key, neutral_name};
@@ -45,7 +47,8 @@ use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPM
 use codex_ingest::pcgen_import::cache_gen::cited_stem;
 use codex_ingest::pcgen_import::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc, RenderedPcgenDesc};
 use codex::rules_core::pi_screening::{declared_product_identity, DeclaredProductIdentity, PI_BLACKLIST_TERMS};
-use codex::rules_core::pi_table_sweep::screen_generated_table;
+use codex::rules_core::rules_catalog::equipment_gap_tables::EquipmentGapRow;
+use codex_ingest::rules_package_out::{leak, package_dir, screen_table, write_table};
 use codex::rules_core::shape_b_v1::REDACTED_PI_MARKER;
 
 /// `§53.5`'s declared-PI reader, applied to the real corpus line at
@@ -419,8 +422,15 @@ fn trim_dangling_connective(text: &str) -> String {
     kept
 }
 
-/// Where the generated table lands, relative to the crate root.
-const OUTPUT_RELATIVE_PATH: &str = "src/rules_core/rules_tables/equipment_gap_tables.rs";
+/// Each book's gap rows land in the `rules_tables` data package as table
+/// `equipment_gap_tables/<SLUG>_GAP_ROWS` (`data/rules_tables/
+/// equipment_gap_tables/<SLUG>_GAP_ROWS.json`), the table
+/// `rules_catalog::equipment_gap_tables` reads. SD-37 E4a.4 removed the
+/// compiled module this generator used to write; E4a.4a points it at the
+/// package.
+fn table_id(slug: &str) -> String {
+    format!("equipment_gap_tables/{}_GAP_ROWS", slug.to_uppercase())
+}
 
 /// One book's gap-lane inputs: the `EQUIPMENT_BOOK_*` code the resolver files
 /// its rows under, the `docs/work-inventory.json` book slug the classifier
@@ -1059,29 +1069,6 @@ fn parse_lst(text: &str, category: &'static str, base_fields: &HashMap<String, B
     out
 }
 
-fn rust_string(value: &str) -> String {
-    let mut out = String::from("\"");
-    for ch in value.chars() {
-        match ch {
-            '"' => out.push_str("\\\""),
-            '\\' => out.push_str("\\\\"),
-            '\n' => out.push_str("\\n"),
-            '\r' => out.push_str("\\r"),
-            '\t' => out.push_str("\\t"),
-            other => out.push(other),
-        }
-    }
-    out.push('"');
-    out
-}
-
-fn rust_f64(value: Option<f64>) -> String {
-    match value {
-        Some(v) => format!("Some({v:?})"),
-        None => "None".to_string(),
-    }
-}
-
 /// The corpus checkout, from the environment only.
 ///
 /// No default and no tilde expansion: `tests/no_foreign_home_paths.rs` treats
@@ -1123,7 +1110,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         held.entry(row.book).or_default().insert(row.key.to_string());
     }
 
-    let mut body = String::new();
+    let mut tables: Vec<(String, Vec<EquipmentGapRow>)> = Vec::new();
     let mut totals: Vec<(&str, usize)> = Vec::new();
     let mut name_pi_excluded: u32 = 0;
     let mut description_pi_redacted: u32 = 0;
@@ -1224,118 +1211,30 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
 
         totals.push((input.slug, rows.len()));
-        writeln!(
-            body,
-            "\n/// {} — {} record(s) the hand-authored `{}` table does not hold.\npub static {}_GAP_ROWS: &[EquipmentGapRow] = &[",
-            input.slug,
-            rows.len(),
-            input.slug,
-            input.slug.to_uppercase()
-        )?;
-        for row in &rows {
-            writeln!(
-                body,
-                "    EquipmentGapRow {{ book: {}, key: {}, name: {}, category: {}, cost_gp: {}, weight_lbs: {}, description: {}, name_pi_citation: {} }},",
-                rust_string(input.code),
-                rust_string(&row.key),
-                rust_string(&row.name),
-                rust_string(row.category),
-                rust_f64(row.cost_gp),
-                rust_f64(row.weight_lbs),
-                match &row.description {
-                    Some(d) => format!("Some({})", rust_string(d)),
-                    None => "None".to_string(),
-                },
-                match &row.name_pi_citation {
-                    Some((file, line)) => format!("Some(({}, {line}))", rust_string(cited_stem(file))),
-                    None => "None".to_string(),
-                }
-            )?;
-        }
-        writeln!(body, "];")?;
+        let table_rows: Vec<EquipmentGapRow> = rows
+            .iter()
+            .map(|row| EquipmentGapRow {
+                book: input.code,
+                key: leak(row.key.clone()),
+                name: leak(row.name.clone()),
+                category: row.category,
+                cost_gp: row.cost_gp,
+                weight_lbs: row.weight_lbs,
+                description: row.description.clone().map(leak),
+                name_pi_citation: row
+                    .name_pi_citation
+                    .as_ref()
+                    .map(|(file, line)| (leak(cited_stem(file).to_string()), *line)),
+            })
+            .collect();
+        tables.push((table_id(input.slug), table_rows));
     }
 
     let total: usize = totals.iter().map(|(_, n)| *n).sum();
-    let mut header = String::new();
-    writeln!(
-        header,
-        "//! Corpus equipment and equipment-modifier records that belong to an\n\
-         //! ALREADY-COMPILED book whose hand-authored per-book table does not hold\n\
-         //! them — the `engine-does-not-hold` population of `docs/work-inventory.json`'s\n\
-         //! `equipment`/`equipment_modifier` kinds, closed corpus-wide.\n\
-         //!\n\
-         //! **GENERATED — do not edit by hand.** Regenerate with\n\
-         //! `PCGEN_CORPUS_ROOT=<pcgen>/data cargo run --locked --bin gen_equipment_gap_tables`.\n\
-         //! The generator applies `v06_work_inventory`'s own record predicate, so a\n\
-         //! row here is exactly a row that inventory reported `engine-does-not-hold`.\n\
-         //!\n\
-         //! `cost_gp`/`weight_lbs` are `None` when the corpus record carries no such\n\
-         //! token, or carries a PCGen formula this table deliberately does not\n\
-         //! evaluate — never a fabricated flat number. `description` joins the\n\
-         //! record's `DESC:` and `SPROP:` tokens when both are present. A `.COPY=`\n\
-         //! row that states none of `description`/`cost_gp`/`weight_lbs` on its own\n\
-         //! line inherits them from the base record it declares itself a copy of\n\
-         //! (`SD31-E6-F6-001`, `OPEN-ISSUES.md` rows 70/103) — never fabricated,\n\
-         //! never inherited past one hop.\n\
-         //!\n\
-         //! `decisions.md §24`: a row whose real `key`/`name` is Product Identity\n\
-         //! (declared `NAMEISPI:YES` or a blacklist hit) is no longer excluded\n\
-         //! whole — it is INCLUDED under a Codex-generated neutral `key`/`name`\n\
-         //! (`name_pi_citation` is `Some` for exactly these rows).\n\
-         //!\n\
-         //! Total: {total} rows.\n"
-    )?;
-    writeln!(
-        header,
-        "/// One recovered corpus equipment row. Deliberately one flat shape for\n\
-         /// every book: unlike the hand-authored per-book tables (each with its own\n\
-         /// `EquipmentCategory` enum and field set), these rows exist to be chained\n\
-         /// into `equipment_resolver::equipment_catalog_rows()` and rendered by the\n\
-         /// desktop equipment catalog, both of which read exactly these fields.\n\
-         #[derive(Debug, Clone, Copy, PartialEq)]\n\
-         pub struct EquipmentGapRow {{\n\
-         \x20   /// One of `equipment_resolver`'s `EQUIPMENT_BOOK_*` codes.\n\
-         \x20   pub book: &'static str,\n\
-         \x20   /// The record's `KEY:` token when it carries one, else its display name.\n\
-         \x20   pub key: &'static str,\n\
-         \x20   pub name: &'static str,\n\
-         \x20   /// The catalog category, matching the `EquipmentCategory` variant names\n\
-         \x20   /// the per-book tables project onto `EquipmentCatalogEntryDto::category`.\n\
-         \x20   pub category: &'static str,\n\
-         \x20   pub cost_gp: Option<f64>,\n\
-         \x20   pub weight_lbs: Option<f64>,\n\
-         \x20   pub description: Option<&'static str>,\n\
-         \x20   /// `decisions.md §24`: `Some((source_file, source_line))`\n\
-         \x20   /// ONLY when `key`/`name` above are a Codex-generated neutral\n\
-         \x20   /// identity (the row's real name/key is Product Identity) --\n\
-         \x20   /// carries the real citation so `cache_gen::equipment_gap::\n\
-         \x20   /// generate` can resolve it directly instead of text-searching\n\
-         \x20   /// for a `key`/`name` the real corpus no longer contains.\n\
-         \x20   /// `source_file` is relative to the book's own directory.\n\
-         \x20   /// `None` for an ordinary row.\n\
-         \x20   pub name_pi_citation: Option<(&'static str, u32)>,\n\
-         }}\n"
-    )?;
-    writeln!(
-        header,
-        "/// Every recovered row, in book order. The order is load-bearing the same\n\
-         /// way `equipment_catalog_rows()`'s is: first match wins for key lookup.\n\
-         pub fn equipment_gap_rows() -> impl Iterator<Item = &'static EquipmentGapRow> {{\n\
-         \x20   [{}]\n\
-         \x20       .into_iter()\n\
-         \x20       .flat_map(|rows| rows.iter())\n\
-         }}",
-        BOOK_INPUTS
-            .iter()
-            .map(|b| format!("{}_GAP_ROWS", b.slug.to_uppercase()))
-            .collect::<Vec<_>>()
-            .join(", ")
-    )?;
 
-    let generated = format!("{header}{body}");
-
-    // Provenance gate (`epic-3-provenance`): screen the text BEFORE writing it.
-    let hits = screen_generated_table(OUTPUT_RELATIVE_PATH, &generated);
+    // Provenance gate (`epic-3-provenance`): screen every table BEFORE writing
+    // any of them, so one hit leaves every file untouched.
+    let hits: Vec<_> = tables.iter().flat_map(|(id, rows)| screen_table(id, rows)).collect();
     if !hits.is_empty() {
         eprintln!("PI screening HARD STOP — {} hit(s), nothing written:", hits.len());
         for hit in &hits {
@@ -1344,8 +1243,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         std::process::exit(1);
     }
 
-    std::fs::write(Path::new(OUTPUT_RELATIVE_PATH), &generated)?;
-    println!("wrote {OUTPUT_RELATIVE_PATH}: {total} rows");
+    let package = package_dir();
+    for (id, rows) in &tables {
+        write_table(&package, id, rows)?;
+    }
+    println!("wrote {} package tables under {}/equipment_gap_tables/: {total} rows", tables.len(), package.display());
     for (slug, n) in &totals {
         println!("  {slug:28} {n:5}");
     }

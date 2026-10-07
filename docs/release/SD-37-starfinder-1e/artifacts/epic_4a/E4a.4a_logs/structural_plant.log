@@ -1,0 +1,8 @@
+planted: removed _defects/ambiguous-parent-category-target.json
+
+removed granted_by edges: 0  (never allowed -- SS3.5 permits growth only)
+removed grants: 0  (a grant SIGNATURE lost with no replacement of the same target -- gating-wrapper and WeaponGroup/WeaponTag/WeaponAllOf/WeaponSet-tag-case changes are NOT counted here, only a genuine loss or a fabricated replacement)
+
+verdict=FAIL (removed _defects/ files: 1)
+planted_diff_exit=1
+exit=0

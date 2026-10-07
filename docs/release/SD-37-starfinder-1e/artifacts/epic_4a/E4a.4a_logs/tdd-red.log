@@ -1,0 +1,9 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+error[E0432]: unresolved import `codex_ingest::rules_package_out`
+  --> crates/codex-ingest/tests/table_generators_write_the_data_package.rs:17:19
+   |
+17 | use codex_ingest::rules_package_out::{write_screened_table, write_table, WriteRefused};
+   |                   ^^^^^^^^^^^^^^^^^ could not find `rules_package_out` in `codex_ingest`
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `codex-ingest` (test "table_generators_write_the_data_package") due to 1 previous error

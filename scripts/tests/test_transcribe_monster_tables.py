@@ -27,6 +27,7 @@ Wired as the `transcribe-monster-tables-selftest` stage in `scripts/verify.sh`.
 from __future__ import annotations
 
 import importlib.util
+import json
 import os
 import pathlib
 import tempfile
@@ -102,33 +103,39 @@ class WriteBookDoesNotTruncateOnFailure(unittest.TestCase):
     """`main()`'s `open(path, "w")` used to run BEFORE `transcribe()`, so a
     raise partway through `transcribe()` (a real, honest refusal -- an
     unmodelled `DESC:` shape, an orphan pass -- not a bug in `transcribe()`
-    itself) truncated the target `monster_data.rs` to 0 bytes. Live twice
-    this cycle (`bestiary`, `bestiary_2`), recovered only because a
-    `git`-tracked backup happened to exist. `write_book` must compute the
-    full replacement text FIRST and touch the file only on success, so an
-    existing file survives a `transcribe()` failure completely unchanged."""
+    itself) truncated the target table to 0 bytes. Live twice (`bestiary`,
+    `bestiary_2`), recovered only because a `git`-tracked backup happened to
+    exist. `write_book` must compute the full transcription FIRST and touch
+    the package only on success, so an existing file survives a
+    `transcribe()` failure completely unchanged.
+
+    SD-37 E4a.4a: the target is the `rules_tables` data package
+    (`data/rules_tables/<book>/monster_data/*.json`), never compiled source.
+    The package normaliser (`cargo run --bin rules_tables_package`) is stood
+    down here; the re-run proof against the pinned oracle exercises it."""
 
     def setUp(self) -> None:
         self._tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self._tmp.cleanup)
-        self._old_cwd = os.getcwd()
-        os.chdir(self._tmp.name)
-        self.addCleanup(os.chdir, self._old_cwd)
-        target_dir = pathlib.Path("src/rules_core/rules_tables/fake_book")
+        self.root = self._tmp.name
+        target_dir = pathlib.Path(self.root, "data/rules_tables/fake_book/monster_data")
         target_dir.mkdir(parents=True)
-        self.target = target_dir / "monster_data.rs"
-        self.original_content = "// pre-existing, real content\n"
+        self.target = target_dir / "MONSTERS.json"
+        self.original_content = '{"pre-existing": "real content"}\n'
         self.target.write_text(self.original_content)
+        old_normalise = tmt.normalise_package
+        tmt.normalise_package = lambda: None
+        self.addCleanup(setattr, tmt, "normalise_package", old_normalise)
 
     def test_a_transcribe_failure_leaves_the_existing_file_untouched(self) -> None:
-        def _boom(book: str) -> str:
+        def _boom(book: str):
             raise SystemExit(f"{book}: a deliberate, honest refusal")
 
         old_transcribe = tmt.transcribe
         tmt.transcribe = _boom
         try:
             with self.assertRaises(SystemExit):
-                tmt.write_book("fake_book")
+                tmt.write_book("fake_book", self.root)
         finally:
             tmt.transcribe = old_transcribe
         self.assertEqual(
@@ -137,15 +144,50 @@ class WriteBookDoesNotTruncateOnFailure(unittest.TestCase):
             "a failed transcribe() must not truncate the pre-existing file",
         )
 
-    def test_a_successful_transcribe_still_writes_the_new_content(self) -> None:
+    def test_a_successful_transcribe_writes_both_package_tables(self) -> None:
+        monster = {"key": "M", "source_file": "fb_races.lst", "source_line": 3}
+        ability = {"key": "M ~ A", "source_file": "fb_abilities.lst", "source_line": 4}
         old_transcribe = tmt.transcribe
-        tmt.transcribe = lambda book: f"// new content for {book}\n"
+        tmt.transcribe = lambda book: tmt.Transcription(
+            tables={"MONSTERS": [monster], "MONSTER_ABILITIES": [ability]}, notes=[]
+        )
         try:
-            path = tmt.write_book("fake_book")
+            paths = tmt.write_book("fake_book", self.root)
         finally:
             tmt.transcribe = old_transcribe
-        self.assertEqual(path, str(self.target))
-        self.assertEqual(self.target.read_text(), "// new content for fake_book\n")
+        base = pathlib.Path(self.root, "data/rules_tables/fake_book/monster_data")
+        self.assertEqual(
+            paths, [str(base / "MONSTERS.json"), str(base / "MONSTER_ABILITIES.json")]
+        )
+        written = json.loads(self.target.read_text())
+        self.assertEqual(written["format"], "codex.rules_tables/1")
+        self.assertEqual(written["table"], "fake_book/monster_data/MONSTERS")
+        # The citation is the file's stem (SD-37 E4a.3), applied to the rows.
+        self.assertEqual(written["rows"], [{"key": "M", "source_file": "fb_races", "source_line": 3}])
+        self.assertFalse(
+            pathlib.Path(self.root, "src").exists(),
+            "nothing may be written into the removed compiled-tables directory",
+        )
+
+
+def _abilities(transcription) -> list[dict]:
+    return transcription.tables["MONSTER_ABILITIES"]
+
+
+def _ability(transcription, key: str) -> dict:
+    matches = [row for row in _abilities(transcription) if row["key"] == key]
+    if len(matches) != 1:
+        raise AssertionError(f"{key!r}: {len(matches)} ability rows")
+    return matches[0]
+
+
+def _ability_keys(transcription) -> list[str]:
+    return [row["key"] for row in _abilities(transcription)]
+
+
+def _everything(transcription) -> str:
+    """Every row value and every note, as one searchable text."""
+    return json.dumps(transcription.tables, ensure_ascii=False) + "\n".join(transcription.notes)
 
 
 class InternalBundleAbilityHopIsResolved(unittest.TestCase):
@@ -272,8 +314,7 @@ class InternalBundleAbilityHopIsResolved(unittest.TestCase):
         self,
     ) -> None:
         content = tmt.transcribe("bonus_bestiary")
-        self.assertIn('key: "Special Bundle ~ Bundled Ability"', content)
-        self.assertIn('owners: &["Test Monster"]', content)
+        self.assertEqual(_ability(content, "Special Bundle ~ Bundled Ability")["owners"], ["Test Monster"])
 
     def test_an_ability_no_bundle_names_stays_an_orphan_and_is_not_shipped(
         self,
@@ -282,7 +323,14 @@ class InternalBundleAbilityHopIsResolved(unittest.TestCase):
         anyway -- proves the hop is scoped to what the bundle row actually
         names, not "every remaining orphan in the book"."""
         content = tmt.transcribe("bonus_bestiary")
-        self.assertNotIn("Unrelated Ability", content.split("MONSTER_ABILITIES")[1])
+        # An orphan still SHIPS, with no owner (`decisions.md §20`; the notes
+        # list it). What must not happen is the bundle hop crediting it to the
+        # monster. (Before SD-37 E4a.4a this asserted the row's absence from
+        # the generated text, which contradicted §20 and failed.)
+        self.assertEqual(_ability(content, "Other Monster ~ Unrelated Ability")["owners"], [])
+        self.assertNotIn(
+            "Other Monster ~ Unrelated Ability", content.tables["MONSTERS"][0]["ability_keys"]
+        )
 
 
 class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
@@ -416,17 +464,16 @@ class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
         self,
     ) -> None:
         content = tmt.transcribe("bonus_bestiary")
-        self.assertIn('key: "Test Monster ~ Fine Ability"', content)
-        self.assertIn('key: "Test Monster ~ Weird Ability"', content)
+        self.assertIn("Test Monster ~ Fine Ability", _ability_keys(content))
+        self.assertIn("Test Monster ~ Weird Ability", _ability_keys(content))
 
     def test_the_formerly_unscreenable_row_ships_with_both_texts_concatenated(
         self,
     ) -> None:
         content = tmt.transcribe("bonus_bestiary")
-        self.assertIn('key: "Test Monster ~ Weird Ability"', content)
-        self.assertIn(
-            'description: Some("First incompatible text. Second incompatible text."),',
-            content,
+        self.assertEqual(
+            _ability(content, "Test Monster ~ Weird Ability")["description"],
+            "First incompatible text. Second incompatible text.",
         )
 
     def test_neither_ability_crashes_the_book_regardless_of_abilit_order(
@@ -435,7 +482,7 @@ class UnscreenableRowIsDroppedNotFatal(unittest.TestCase):
         """Order independence: neither row's transcription depends on which
         ability the monster's `ABILITY:` token names first, and both ship."""
         content = tmt.transcribe("bonus_bestiary")
-        self.assertEqual(content.count("MonsterAbilityRecord {"), 2)
+        self.assertEqual(len(_abilities(content)), 2)
 
 
 class TypeSegmentsUpstreamDivergenceCorrection(unittest.TestCase):
@@ -638,51 +685,55 @@ class NamePiAndDescPiShipInsteadOfDropping(unittest.TestCase):
 
     def test_name_pi_ships_renamed_and_the_original_string_is_gone(self) -> None:
         content = tmt.transcribe("bonus_bestiary")
-        self.assertNotIn(self.term, content)
-        self.assertIn("codex_generated_name: true", content)
-        self.assertIn(
-            tmt.neutral_name("monster_ability", "bonus_bestiary", "bb_abilities.lst", 2),
-            content,
-        )
-        self.assertIn('rename_reason: Some("name_pi_blocked")', content)
+        self.assertNotIn(self.term, _everything(content))
+        neutral = tmt.neutral_name("monster_ability", "bonus_bestiary", "bb_abilities.lst", 2)
+        renamed = [row for row in _abilities(content) if row["codex_generated_name"]]
+        self.assertEqual([row["name"] for row in renamed], [neutral])
+        self.assertEqual(renamed[0]["rename_reason"], "name_pi_blocked")
 
     def test_owning_monsters_ability_keys_list_uses_the_neutral_key(self) -> None:
         """The monster directly names the PI ability via `ABILITY:`. Its own
-        `ability_keys` slice must cross-reference the RENAMED key -- the
+        `ability_keys` list must cross-reference the RENAMED key -- the
         original key is never emitted anywhere, including here."""
         content = tmt.transcribe("bonus_bestiary")
-        roster = content.split("MONSTER_ABILITIES")[0]
+        # In this fixture the owning monster's own `ABILITY:` token carries the
+        # term too, so the monster PI screen drops the monster row (stderr says
+        # so). What the rows prove: no shipped monster lists the original key,
+        # and the ability ships under the neutral key. (Before SD-37 E4a.4a this
+        # test searched the generated module text, where the neutral key also
+        # appears in the header's rename note -- so it held whether or not any
+        # monster cross-referenced the key.)
+        roster = json.dumps(content.tables["MONSTERS"], ensure_ascii=False)
         self.assertNotIn(self.term, roster)
         self.assertIn(
             tmt.neutral_key("monster_ability", "bonus_bestiary", "bb_abilities.lst", 2),
-            roster,
+            _ability_keys(content),
         )
 
     def test_desc_only_pi_hit_ships_with_a_clean_name_and_redacted_description(
         self,
     ) -> None:
         content = tmt.transcribe("bonus_bestiary")
-        self.assertIn('key: "Test Monster ~ Whisper"', content)
-        self.assertIn('name: "Whisper"', content)
-        self.assertNotIn(self.term, content)
-        record = content.split('key: "Test Monster ~ Whisper"')[1].split("},")[0]
-        self.assertIn(tmt.redacted_pi_marker(), record)
-        self.assertIn("codex_generated_name: false", record)
+        record = _ability(content, "Test Monster ~ Whisper")
+        self.assertEqual(record["name"], "Whisper")
+        self.assertNotIn(self.term, _everything(content))
+        self.assertEqual(record["description"], tmt.redacted_pi_marker())
+        self.assertFalse(record["codex_generated_name"])
 
     def test_a_hit_confined_to_source_page_still_drops_the_row(self) -> None:
         """Unchanged control: a blacklist hit outside the name/description
         fields is neither renameable nor redactable, so the row is still
-        dropped exactly as before this cycle."""
+        dropped exactly as before this cycle -- and the provenance notes cite
+        it by file and line."""
         content = tmt.transcribe("bonus_bestiary")
-        self.assertNotIn("Test Monster ~ Guarded", content.split("MONSTER_ABILITIES")[1])
-        self.assertIn("bb_abilities.lst:4", content)
+        self.assertNotIn("Test Monster ~ Guarded", _ability_keys(content))
+        self.assertIn("bb_abilities.lst:4", "\n".join(content.notes))
 
     def test_a_clean_ability_is_unaffected(self) -> None:
         content = tmt.transcribe("bonus_bestiary")
-        self.assertIn('key: "Test Monster ~ Clean Ability"', content)
-        record = content.split('key: "Test Monster ~ Clean Ability"')[1].split("},")[0]
-        self.assertIn("codex_generated_name: false", record)
-        self.assertIn("rename_reason: None", record)
+        record = _ability(content, "Test Monster ~ Clean Ability")
+        self.assertFalse(record["codex_generated_name"])
+        self.assertIsNone(record["rename_reason"])
 
     def test_the_neutral_name_cannot_be_influenced_by_the_original_name(self) -> None:
         """`§24b`-1's proof, applied at this integration point: two units
@@ -872,15 +923,15 @@ class ProvisionalFacetDefaultShipsInsteadOfDropping(unittest.TestCase):
         # this population/no-crash check -- `transcribe()` must not raise
         # and must return `provisional_facets` unchanged (empty) rather than
         # silently omitting real rows for a book that has none.
-        self.assertIsInstance(content, str)
+        self.assertIsInstance(content, tmt.Transcription)
         self.assertEqual(provisional, {})
 
     def test_provisional_facets_defaults_to_a_fresh_dict_when_omitted(self) -> None:
         """The optional out-param defaults to `None` -> a throwaway dict, so
-        every pre-existing `transcribe(book) -> str` call site (dozens in
-        this test module alone) keeps working unchanged."""
+        every `transcribe(book)` call site (dozens in this test module alone)
+        keeps working unchanged."""
         content = tmt.transcribe("bonus_bestiary")
-        self.assertIsInstance(content, str)
+        self.assertIsInstance(content, tmt.Transcription)
 
 
 class ConcatenatedDescClosesTheFinalRefusalGroupRound9(unittest.TestCase):

@@ -1,0 +1,9 @@
+ .../adventurers_guide/spell_list/SPELL_LIST.json   |   49 +
+ .../horror_adventures/spell_list/SPELL_LIST.json   |   28 +
+ .../inner_sea_magic/spell_list/SPELL_LIST.json     |    7 +
+ .../spell_list/SPELL_LIST.json                     |   14 +
+ .../monster_codex/spell_list/SPELL_LIST.json       |    2 +-
+ .../occult_adventures/spell_list/SPELL_LIST.json   | 2583 ++++++++++++++++++++
+ .../ultimate_magic/spell_list/SPELL_LIST.json      |  133 +
+ .../ultimate_wilderness/spell_list/SPELL_LIST.json |   63 +
+ 8 files changed, 2878 insertions(+), 1 deletion(-)
