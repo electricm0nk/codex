@@ -83,3 +83,9 @@ blocker, and SD-37 is not done without it.
 
 No card in `kanban.md` may be moved here by a cycle. A card that cannot close is
 `blocked-escalated` and waits for the operator (`workflow-instruction.md §8`).
+
+## Added at closure (2026-10-08)
+
+| ID | Class | Item | Revisit condition |
+|---|---|---|---|
+| FSR-C10 | candidate | graphify's node-count guard refuses every `cluster-only` write with net −1 (SD-36 2026-09-27, SD-37 E7.8); name the node the loader drops and make the guard a control, not a stop; then re-index SD-37 content with a semantic `--update` | the next bundle's E0: `grep -c 'graphify-node-count-guard' docs/retro/events/*.jsonl` ≥ 2 |

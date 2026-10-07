@@ -773,3 +773,30 @@ Ruling: option (2), a semantic update over the final tree — run **in the workt
 
 **Revisit if the operator disagrees:** delete the worktree copy; the main checkout's graph is
 untouched.
+
+## §23 — E7.8 closes on the node-count guard outcome (orchestrator, operator-away default, 2026-10-08)
+
+E7.8 attempt 2 ran the §11 step-6 update on a copy of the semantic graph (§22). graphify's
+node-count guard refused the write: "new graph has 648327 nodes but existing graph.json has
+648328 (net -1)", exit 1 after 1,536.8 s (`artifacts/epic_7/E7.8_cycle_receipt.md`). The same
+refusal, with the same two numbers, ended SD-36's 2026-09-27 run (log copied beside the
+receipt), and SD-36 still opened and merged its PR (#393).
+
+Ruling: option (1) of the three the card listed. The guard outcome **is** the card's recorded
+result (memory `graphify-force-update-replaces-semantic-graph`: "exit 1 on the node-count guard
+= file receipt and stop"; `workflow-instruction.md §11` step 6 says the same). E7.8 is marked
+`complete` on that outcome, with these facts in the row:
+- the graph is unchanged: 648,328 nodes, sha256 709770b4…29c7, byte-identical in the main
+  checkout and the worktree copy; nothing to promote;
+- the indexed SHA recorded in `receipts.md` is 645dcf32, but **no SD-37 content is in the graph**:
+  `cluster-only` re-clusters, it never re-extracts the tree;
+- a forced write (option 2) is rejected, as before;
+- a semantic `/graphify --update` (option 3) is the real fix and is an operator decision: it is
+  an LLM run with a cost, and the guard will need the dropped node named first. Listed under
+  `progress.md ## For the operator` and `forward-scope-register.md` as a candidate for the next
+  bundle (the guard has now fired in two bundles: a missing mechanism, AGENTS.md rule 8).
+
+E7.9 proceeds.
+
+**Revisit if the operator disagrees:** set the E7.8 row back to `blocked-escalated` and run
+option 3 in the checkout you name.
