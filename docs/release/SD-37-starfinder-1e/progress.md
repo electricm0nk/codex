@@ -13,7 +13,7 @@ it (`workflow-instruction.md §5`).
 
 | Field | Value |
 |---|---|
-| Workflow run id | in `~/.claude/projects/-home-ubuntu-workspace-repos-codex/memory/sd37-launch-state.md` (launch decision below); E7.4 copies it here |
+| Workflow run id | run 1 `wf_2bee0ad4-5fc` (2026-10-02, C1→E5.3); run 2 `wf_061eb317-457` (2026-10-04); run 3 `wf_4ce3fd1a-f99` (2026-10-05, START=E5.4); run 4 `wf_12033d99-996` (2026-10-06, START=E6.5a); run 5 `wf_72574aac-2c8` (2026-10-07, START=E4a.4a). Copied by E7.4 from `~/.claude/projects/-home-ubuntu-workspace-repos-codex/memory/sd37-launch-state.md` (`grep -o 'wf_[0-9a-f]*-[0-9a-f]*' <that file> \| sort -u \| awk 'END{print NR}'` → 5) |
 | Script path | `artifacts/cycle_0/sd37-workflow.js` (the launched script; it is also the prefix backup) |
 | Prefix backup | `artifacts/cycle_0/sd37-workflow.js` — the `CORE` constant |
 | Pinned `tranche/17` SHA for wrong-base resets | `9d03a769962c2d6fa118ef80f8cce18443a296cd` (C1 bump commit) |
@@ -34,8 +34,9 @@ it (`workflow-instruction.md §5`).
 | E7.1, E7.2 | complete | 2 of 2 | `artifacts/epic_7/E7.1_cycle_receipt.md`, `artifacts/epic_7/E7.2_cycle_receipt.md` |
 | E4a | complete | 6 of 6 (E4a.1–E4a.4, E4a.4a, E4a.MC) | serial after E7.1 (C0.2); E4a.MC receipt `artifacts/epic_4a/E4a.MC_cycle_receipt.md` (E7.3 corrected this row from "in progress, 4 of 6": `awk -F'\|' '$2 ~ /^ E4a/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 6) |
 | E7.3 | complete | 1 of 1 | `artifacts/epic_7/E7.3_cycle_receipt.md`; FSR-C4 revisit met → operator decision (`forward-scope-register.md §3.1`) |
-| E7.4–E7.9 | waiting | 0 of 6 | |
-| **Total** | | **51 of 57** | command below the table (E7.3 re-ran it after its own row: 51 complete of 57 rows) |
+| E7.4 | complete | 1 of 1 | `artifacts/epic_7/E7.4_cycle_receipt.md`; `docs/retro/sd37-retrospective.md` |
+| E7.5–E7.9 | waiting | 0 of 5 | |
+| **Total** | | **52 of 57** | command below the table (E7.4 re-ran it after its own row: 52 complete of 57 rows) |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -191,6 +192,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E4a.MC (attempt 3) | 2026-10-07 | Opus 5.5 | the `docs(sd37,e4a.mc)` attempt-3 commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_4a/E4a.MC_cycle_receipt.md`) | complete | Aldric unchanged (`1d830682…a569` = E1.4, rendered on `291484aa09`); Elowen unchanged (`8d1a711c…00f2` = E1.4; planted Wizard L5 fort 1→6 moves it to `16053a51…`, restored); Soldier / Mystic / Technomancer / Envoy rendered: printed lines byte-identical to E7.1 (51 / 72 / 63 / 42), desktop suite green (700, 1 harness failure re-run green) | `artifacts/epic_4a/E4a.MC_cycle_receipt.md` (dual audit run after the commit: no `src`, `crates` or `apps` path in this diff, all five checks print `OK_*`) |
 | E7.2 | 2026-10-07 | Sonnet 5.5 | the `docs(sd37,e7.2)` commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.2_cycle_receipt.md`) | complete | Aldric unchanged (`1d830682…a569` = E1.4); Elowen unchanged (`8d1a711c…00f2` = E1.4); SF seeds: no source change, covered by desktop 700 green, not hashed | `artifacts/epic_7/E7.2_cycle_receipt.md` |
 | E7.3 | 2026-10-07 | Opus 5.5 | the `docs(sd37,e7.3)` commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.3_cycle_receipt.md`) | complete | all six unchanged (no source change; nothing rendered; last renders = E7.2) | `artifacts/epic_7/E7.3_cycle_receipt.md`: scan prints nothing; DEF-1 clean; FSR-C4 met (31 SF `(kind, slug)` pairs in 2 books, 1 with a differing value) → operator decision, not a gate |
+| E7.4 | 2026-10-07 | Sonnet 5.5 | the `docs(sd37,e7.4)` commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.4_cycle_receipt.md`) | complete | all six unchanged (docs only; nothing rendered; last renders = E7.2) | `artifacts/epic_7/E7.4_cycle_receipt.md`: `docs/retro/sd37-retrospective.md` written and cited from `references/README.md`; Run handle table filled with the 5 workflow run ids |
 
 ## Decisions taken on safe defaults
 
