@@ -68,7 +68,10 @@ Pass 1's edits after it ran: the schema file (re-checked by the lib run and `rul
 
 ## Audits
 
-Run on `ea24b4b887...HEAD` after the closing commit (§6 step 4); output in `E4a.4_logs/audit.log`.
+Run on `ea24b4b887...63a6ff3ab0` after the closing commit (§6 step 4); output in `E4a.4_logs/audit.log`.
+
+- `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`, `OK_NO_WOULD_STRINGS`.
+- Identifier audit: 2 hits; wired-integration token audit: 5 hits. **All 7 are verbatim moves** of lines the deleted compiled module already carried (each flagged added line, stripped, is in the set of removed lines of the same diff: `flagged 7 moved 7 new 0`, Python in `audit.log`): two doc comments citing the file `tests/sd24_equipment_coverage_audit.rs`, and five anti-placeholder assertions/doc lines (`"p.xx"` must never be transcribed; "never a placeholder string"). They are not new bundle tags or stub markers; they were not reworded, because rewording would change test messages and file citations to satisfy a line filter that cannot see a move. No line this card authored trips either audit.
 
 ## Structural diff (converter cycles)
 

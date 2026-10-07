@@ -1,0 +1,21 @@
+audit range ea24b4b887...63a6ff3ab0
+7535:+/// number). See `tests/sd24_equipment_coverage_audit.rs` for the standing
+8536:+/// `tests/sd24_equipment_coverage_audit.rs` for the standing regression
+2753:+    /// missing-data placeholder.
+12752:+/// expression for it. It is never a placeholder string.
+16371:+            assert_ne!(page, "p.xx", "decisions.md §27.2 placeholder must never be transcribed as a real page");
+16648:+    /// rogue's 3-of-15 — and none is the `p.xx` placeholder `decisions.md §27.2`
+16777:+            assert_ne!(page, "p.xx", "decisions.md §27.2 placeholder must never be transcribed as a real page");
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+
+# Move check: every flagged added line, stripped, against the set of removed lines of the same diff (ea24b4b887...HEAD over src tests crates apps data schemas):
+MOVED /// number). See `tests/sd24_equipment_coverage_audit.rs` for the standing
+MOVED /// `tests/sd24_equipment_coverage_audit.rs` for the standing regression
+MOVED /// missing-data placeholder.
+MOVED /// expression for it. It is never a placeholder string.
+MOVED assert_ne!(page, "p.xx", "decisions.md §27.2 placeholder must never be transcribed as a real page");
+MOVED /// rogue's 3-of-15 — and none is the `p.xx` placeholder `decisions.md §27.2`
+MOVED assert_ne!(page, "p.xx", "decisions.md §27.2 placeholder must never be transcribed as a real page");
+flagged 7 moved 7 new 0
