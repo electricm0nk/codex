@@ -188,7 +188,7 @@ const MAIN = [
   card('E7.7', 'sonnet', P.E7, 'Architecture truth-up (first half)', 'You run the truth-up (workflow-instruction.md §11 step 5). An Opus claims critic runs after you: leave the E7.7 kanban row as `in-progress` and say so; return complete when the truth-up is pushed.'),
   card('E7.7', 'opus', P.E7, 'Architecture truth-up: claims critic (second half)', 'You are the CLAIMS CRITIC for the architecture docs and release notes that the truth-up just touched. Check capability claims against the live code and instruments, as well as paths and numbers (a floor test is not a ceiling). Fix what is wrong. 0 blockers left = set the E7.7 kanban row to complete and write the receipt.'),
   card('E7.8', 'opus', P.E7, 'Graphify LAST over the final tree', 'A first attempt returned blocked-escalated (no graph in the worktree). The ruling is decisions.md §22, read it first: (1) do NOT modify /home/ubuntu/workspace/repos/codex in any way; (2) `cp -a /home/ubuntu/workspace/repos/codex/graphify-out /home/ubuntu/workspace/worktrees/codex-sd37/graphify-out` (gitignored; verify the copied graph.json node count equals the source\'s and record both); (3) in the worktree, with unfiltered `git status --porcelain` empty and HEAD = origin/tranche/17, run the §11 step-6 update command. NEVER pass a force flag. If the node-count guard exits 1: file the receipt and return blocked-escalated. (4) Record the indexed SHA and the before/after node counts in the receipt; commit only receipts.md + the receipt + kanban/progress rows; push. The graph itself stays in the worktree (gitignored); the operator promotes it (progress.md "For the operator").'),
-  card('E7.9', 'sonnet', P.E7, 'PR tranche/17 → develop (final action) + wait for pr-tests', 'Open the PR only if every kanban row is complete (re-run the §11 step 1 scan first; if short, return partial and open nothing). End the PR body with these two lines: "🤖 Generated with [Claude Code](https://claude.com/claude-code)" and "' + SESSION + '". Do NOT merge: the operator merges. Wait for the pr-tests run inside your turn; a red run = blocked-escalated (SD-n).'),
+  card('E7.9', 'sonnet', P.E7, 'PR tranche/17 → develop (final action) + wait for pr-tests', 'E7.8 closed on the graphify guard outcome (decisions.md §23; read it, and say so in the PR body under a heading "Graph"). The PR body also lists the operator-away rulings §20–§23 and the progress.md "For the operator" items. Open the PR only if every kanban row is complete (re-run the §11 step 1 scan first; if short, return partial and open nothing). End the PR body with these two lines: "🤖 Generated with [Claude Code](https://claude.com/claude-code)" and "' + SESSION + '". Do NOT merge: the operator merges. Wait for the pr-tests run inside your turn; a red run = blocked-escalated (SD-n).'),
 ]
 
 const results = {}
@@ -252,7 +252,7 @@ const report = (stopped) => ({ stopped: stopped, results: results, handoffs: han
 // prefix; the E0/E1 lanes interleaved differently on resume, so the cache missed and complete
 // cards were re-dispatched (E0.4, E1.4, E0.2 declined them). Trim instead of resume: C, E0 and
 // E1 are skipped here. To restart later, move START to the first non-complete kanban row.
-const START = 'E7.8'
+const START = 'E7.9'
 const REMAINING = MAIN.slice(MAIN.findIndex((c) => c.id === START))
 log('starting at ' + START + ': ' + REMAINING.length + ' cards remain of ' + MAIN.length)
 
