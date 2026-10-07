@@ -1,7 +1,7 @@
 # Desktop App
 
 > Scope: How the Tauri desktop shell is built, how it talks to the Rust backend, and how its frontend surfaces are organized.
-> Last verified: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** for bundled resources, the dependency list, `load_backend_health`, the update commands, the root-resolution chain and its pitfalls; the rest of this file was last verified in the pass that follows. Earlier pass: **2026-09-28 against `tranche/16`, HEAD `b021509e23`** (SD-36 Epic F7: Abilities panel and Weapons tab read the engine's own numbers, class-skill lists hold only skills, prestige/Level-Up requirement labels, Expert/Summoner/Psion default-pick markers — no command added or removed). Earlier pass: **2026-09-27 against `tranche/16`, HEAD `08f8cb5ace`** (SD-36 Epic F6: class facts from the engine, HP source rule, Level Up blockers). Earlier pass: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
+> Last verified: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** for bundled resources, the dependency list, `load_backend_health`, the update commands, the root-resolution chain and its pitfalls, the command inventory (84) and the Create-screen section; the rest of this file was last verified in the pass that follows. Earlier pass: **2026-09-28 against `tranche/16`, HEAD `b021509e23`** (SD-36 Epic F7: Abilities panel and Weapons tab read the engine's own numbers, class-skill lists hold only skills, prestige/Level-Up requirement labels, Expert/Summoner/Psion default-pick markers — no command added or removed). Earlier pass: **2026-09-27 against `tranche/16`, HEAD `08f8cb5ace`** (SD-36 Epic F6: class facts from the engine, HP source rule, Level Up blockers). Earlier pass: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Corrections since the last pass
@@ -119,7 +119,7 @@ export function formatError(cause: unknown): string {
 
 ## The complete Tauri command inventory
 
-**77 commands are registered** (reachable via `invoke()`), re-derived by parsing every entry of
+**84 commands are registered** (reachable via `invoke()`; the same parse of `develop`'s `main.rs` gives 78, so this branch adds 6, see the Create-screen rows below), re-derived by parsing every entry of
 `tauri::generate_handler![...]` in `apps/desktop/src-tauri/src/main.rs` with comments stripped
 (`python3` one-liner splitting on `,` after a regex-stripped comment pass — a plain `grep -c ','`
 overcounts because several list entries carry inline `//` explanatory comments of their own with
@@ -137,6 +137,8 @@ Grouped by the Rust file that defines each command:
 | `browser_handoff.rs` | `handoff_defect_report_to_browser` | Builds + validates a prefilled GitHub "new issue" URL and opens it via `tauri-plugin-opener` | feedback composers ([update-and-feedback.md](./update-and-feedback.md)) |
 | `update/transaction.rs` (+ `update/seed.rs`, `update/deb_install.rs`) | `is_install_eligible`, `perform_install`, `perform_restore_previous`, `verify_relaunch_artifact` | Self-update eligibility/install/rollback/verify; `seed.rs` records the running build in `installed-state.json` at startup; `perform_install` is real for `.deb` installs (download, verify, `pkexec apt-get`) and an explicit error for AppImage | `App.tsx`'s `UpdateSection` ([update-and-feedback.md](./update-and-feedback.md)) |
 | `character_hub.rs` | `create_character`, `clone_character`, `list_saved_characters`, `load_saved_character`, `level_up_character`, `preview_level_up`, `add_equipment_selection`, `attach_equipment_modifier`, `purchase_equipment`, `add_spell_selection`, `record_and_prepare_spell_selection`, `add_feat_selection`, `list_feats_for_character`, `remove_feat_selection`, `set_equipment_active_state`, `add_trait_selection`, `remove_trait_selection`, `remove_spell_selection`, `remove_equipment_selection`, `set_skill_allocations`, `save_character_portrait`, `load_character_portrait`, `delete_character_portrait`, `export_character_json`, `update_character_bio`, `load_character_bio`, `load_character_money`, `adjust_character_money`, `load_character_durability`, `adjust_character_hp`, `delete_character`, `export_character`, `import_character`, `list_race_creation_roster`, `list_class_creation_roster`, `list_level_up_class_options` | The Character Hub's create/load/mutate/persist surface — by far the largest file in the crate (11,544 lines, `wc -l`, 2026-09-26); see "Character flow" below | `apps/desktop/src/characterHub/` |
+| `character_hub.rs` (Create-screen additions) | `list_feats_for_draft`, `draft_spell_options`, `starting_wealth_for_class`, `load_character_hit_points` | Ask the backend about a character that is **not saved yet**: the feat catalog with the draft's prerequisite verdicts; spells-per-day rows plus the race's spell-like abilities; the class's maximum starting money (or the reason there is none); the hit point results saved with a character | `CreateCharacterForm.tsx` Manage dialogs, `CharacterSheet.tsx` |
+| `character_custom.rs` | `load_character_custom`, `save_character_custom` | The GM's grants and house-rule records (`custom.json`); ability grants are applied to the saved scores | `CustomDialog.tsx`, `CustomTab.tsx`, `CreateCharacterForm.tsx` |
 | `characterHub/appendToCharacter.rs` | `append_to_character` | Batch, corpus-validated equipment append, via `RuleSystemAdapter` | none — no frontend caller (see "Rule-system adapter seam" below) |
 | `characterHub/recomputeCharacter.rs` | `recompute_character` | Load + recompute without mutating, via `RuleSystemAdapter` | `CharacterSheet.tsx`'s `☰ Menu` "Recompute" |
 | `characterHub/reSaveCharacter.rs` | `re_save_character` | Re-saves under a freshly minted `{id}.rev.N`, via `RuleSystemAdapter` | none — no frontend caller |
@@ -466,6 +468,47 @@ nothing is offered; if the command fails, the form prints `class roster unavaila
 and falls back to the compiled-in 31-row `CLASS_OPTIONS_FALLBACK` (`characterHubModel.ts:421`).
 The census sweep holds race fixed to a single Human fixture, so "every level" is proven, "every race"
 is not proven by this instrument — see [status.md](./status.md) §Posture for race-creation breadth.
+
+### The Create screen's columns and Manage dialogs
+
+The window opens maximized (`tauri.conf.json`) and the Create screen uses the whole width
+(`layout/screenLayout.ts`).
+
+- **Levels** (`LevelsPanel.tsx`, `levelsModel.ts`): classes are added one level at a time from a
+  dropdown. Level 1 takes the full hit die; each later level defaults to die/2 + 1 (rounded down) with
+  a dice button to reroll. The rolls plus the Constitution modifier fill the HP box.
+  `CreateCharacterRequest` carries `additionalLevels` (applied through `apply_level_up`) and
+  `hitPointLevels`, validated by `validate_hit_point_levels` and saved as `hit_points.json`;
+  the sheet reads them back (`load_character_hit_points`), so HP is not re-rolled on reload.
+- **Manage boxes** (`ManageBox.tsx`) open **Manage dialogs**. Pick-once options (racial traits,
+  traits, feats) use `TransferListDialog.tsx` over the pure `transferListModel.ts`: Options and
+  Selected columns with `<` `>`, a **Qualified** filter (on by default), the remaining count on top,
+  the clicked item's full description below. Spells use the same dialog with a **per-spell-level
+  quota** (`groupLimits`) and a read-only **Innate** column. Skills reuse `SkillAllocationDialog.tsx`
+  (`+`/`-` ranks, remaining points on top). Equipment uses `CreationEquipmentDialog.tsx`.
+- **Draft questions.** "Qualified" for an unsaved character is asked of the backend
+  (`list_feats_for_draft`, `draft_spell_options`) through `build_create_input`, the same builder
+  `create_character` uses, so what the dialog offers is what creation accepts.
+- **One atomic create.** Feats, skill ranks, spells and equipment ride on `CreateCharacterRequest`
+  (`selectedFeats`, `skillAllocations`, `selectedSpells`, `selectedEquipment`, `priceMode`) and are
+  applied inside `build_create_input` before the build is computed. A refusal saves nothing:
+  `create.feat_unqualified`, `create.equipment_unaffordable`, `create.equipment_no_price`.
+- **Starting money** is the class's maximum roll (`money::starting_wealth_max_gp`, 53 classes; 6
+  classes publish none and start at 0 gp with a note: `money::starting_wealth_unpublished_reason`).
+  PCGen carries no starting-wealth token; the values come from the d20pfsrd class pages.
+- **Pricing** (`priceMode.ts`, `PriceModeControl.tsx`): cashless / buy 100% sell 50% (default) /
+  character build 100/100. It is chosen on the equipment screen and **never saved** on the character.
+- **Equipment categories** (`equipmentCategories.ts`, `ItemPickerModal.tsx`): a category rail plus
+  search over `data/equipment_types.json`, which `crates/codex-ingest`'s `gen_equipment_types`
+  derives from PCGen's TYPE data.
+- **Custom** (`character_custom.rs`, `customModel.ts`, `CustomDialog.tsx`, `CustomTab.tsx`): grants
+  and house-rule records in `custom.json`. An *ability* grant is baked into the saved ability score
+  (new revision), so every derived number stays the engine's. *Hit point* and *skill point* grants
+  are added by the sheet to the HP total and the skill pool. Custom feats, equipment, spells and
+  magic devices are raw objects (name, stat lines, description) that are listed and printed; the
+  engine does not compute from them. AC, saves and attack grants are not modelled.
+- **Print** (`printLayout.ts`): File menu "Print" renders every tab on 8.5x11 letter through the OS
+  print subsystem (`@media print`, `@page`); the Custom tab prints only when it has content.
 
 Class facts come from the engine, not desktop tables (SD-36 F6a/F6b,
 `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/`): `list_class_facts`

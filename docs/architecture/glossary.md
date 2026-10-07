@@ -351,3 +351,15 @@ strict lattice, highest-bar-wins), or `Ambiguous` — determined once, corpus-wi
 - [overview.md](./overview.md) — where most of these terms are first used in context.
 - [getting-started.md](./getting-started.md) — the practical commands behind several of these terms.
 - [README.md](./README.md) — the doc set's index.
+
+## Custom
+
+The GM's grants and house-rule records for one character, saved as `custom.json` beside it. An
+ability grant is applied to the saved ability score; hit point and skill point grants are added by
+the sheet; custom feats, equipment, spells and magic devices are listed and printed but not computed
+from. See [desktop-app.md](./desktop-app.md).
+
+## Manage dialog
+
+The Create screen's modal for choosing a group of options (racial traits, traits, feats, spells) in
+Options / Selected (/ Innate) columns, with a Qualified filter and the remaining count on top.
