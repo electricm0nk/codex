@@ -73,7 +73,8 @@ This table leads the file because the Workflow script reads it (`workflow-instru
 | E4a.2 re-point all 252 importers | after E4a.1 | sonnet | Mechanical, fixed recipe. One dispatch for all 252 (batch big). May edit any importer, because nothing else runs. |
 | E4a.3 `.lst` citation burn-down | after E4a.2 | sonnet | 12,529 lines (CUI F-11). Re-derive SD-36 D6 status first. Target 0 (`decisions.md §19`). |
 | E4a.4 PF parity + Rust table removal | after E4a.3 | opus | Byte-identical renders + catalogs. Bestiary 1 count before/after. |
-| E4a.MC | after E4a.4 | opus | Adversarial. |
+| E4a.4a Six table generators write the data package (DISCOVERED by E4a.4, added 2026-10-07) | after E4a.4 | opus | `gen_feat_gap_tables`, `gen_equipment_gap_tables`, `ingest_class_spell_levels_arg`, `ingest_spells`, `scripts/transcribe_{monster,companion}_tables.py`. Each re-run proves byte-identity against the pinned oracle. |
+| E4a.MC | after E4a.4a | opus | Adversarial. |
 | E7.2 widest-scope verify (root + desktop) + baselines | after E4a.MC | sonnet | One full pass. Long-run wait. |
 | E7.3 final-acceptance scan | after E7.2 | opus | Every card `complete`. Any short = stop, no PR. |
 | E7.4 retrospective written + cited | after E7.3 | sonnet | `docs/retro/sd37-retrospective.md`. |
@@ -86,7 +87,7 @@ This table leads the file because the Workflow script reads it (`workflow-instru
 **E8 (starship)** is **not a card**. It is a planned capability deferral (`decisions.md §17`, FSR
 DEF-1).
 
-**Card count:** there are 56 cards (`kanban.md` row check; 55 at authoring, E6.5a added 2026-10-06 by discovery). This map has 54 rows, because
+**Card count:** there are 57 cards (`kanban.md` row check; 55 at authoring, E6.5a added 2026-10-06 and E4a.4a 2026-10-07 by discovery). This map has 55 rows, because
 E1.1–E1.3 are one dispatch. The criterion tables below carry all 55 IDs. `kanban.md` holds the
 `diff … && echo SAME_IDS` command that proves the two sets are identical. Re-run it after any
 edit.
@@ -189,7 +190,8 @@ the criterion unmet).
 | E4a.2 | All 252 importers (CUI F-12) re-pointed in one dispatch. | `for r in src crates apps/desktop/src-tauri tests; do grep -rlE 'rules_tables::' $r --include='*.rs' \| awk '!/src\/rules_core\/rules_tables\//' \| awk 'END{print NR}'; done` → `0 0 0 0` (today `72 92 16 72`), cross-checked by a Python `os.walk` over the same roots skipping `target`/`node_modules` | — |
 | E4a.3 | `.lst` citation burn-down. First, SD-36 D6's status is re-derived. Target 0 (`decisions.md §19`). | Receipt shows the D6 status; `test ! -e src/rules_core/rules_tables \|\| grep -rcF '.lst' src/rules_core/rules_tables \| awk -F: '{s+=$2} END{print s+0}'` → 0 or no output (12,529 before, CUI F-11) and the same predicate over every bundled data-package file → 0, each cross-checked in Python. Out of D6 scope and only reported: the 1,098 `.lst` lines elsewhere in `src/rules_core` (`grep -rcF '.lst' src/rules_core --exclude-dir=rules_tables \| awk -F: '{s+=$2} END{print s+0}'` → 1098 on 2026-10-02, Python agrees); residue gate PASS. (`pcgen_residue_gate.py` does not count `.lst` citations — it passes today — so it is not the burn-down check.) | — |
 | E4a.4 | PF parity: Aldric/Elowen byte-identical; catalog outputs byte-identical; Bestiary 1 monster count equal before/after; Rust tables removed. | Hash set equal (E1.4 harness); `test ! -e src/rules_core/rules_tables \|\| find src/rules_core/rules_tables -name '*.rs' \| awk 'END{exit NR>0}'` exits 0 (no `.rs` left) | Catalog entries not rendered by the catalog dump |
-| E4a.MC | Adversarial merge check | Opus re-runs E4a.2–E4a.4's commands on `origin/tranche/17` and plants one mutation (one table JSON row edited) that must flip a PF hash or the round-trip test | — |
+| E4a.4a | The six generators that wrote compiled `.rs` into the removed `src/rules_core/rules_tables` now write `data/rules_tables/<id>.json`. A re-run of each against the pinned oracle leaves the package byte-identical. | `grep -rnE '"src/rules_core/rules_tables/|f"src/rules_core/rules_tables/' crates/codex-ingest/src/bin scripts --include='*.rs' --include='*.py' \| awk -F: '{print $1}' \| sort -u \| awk '!/scripts\/tests\//' \| awk 'END{print NR}'` → 0 (was 6); each generator re-run → `git status --porcelain data/rules_tables` empty; golden digest test green; PF hash pair equal to E1.4 | Generators outside the six |
+| E4a.MC | Adversarial merge check | Opus re-runs E4a.2–E4a.4a's commands on `origin/tranche/17` and plants one mutation (one table JSON row edited) that must flip a PF hash or the round-trip test | — |
 
 ## Epic E5 — SF print-path content
 
@@ -234,10 +236,10 @@ the criterion unmet).
 ```bash
 cd docs/release/SD-37-starfinder-1e
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 56) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 57) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E7\.[3-9] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 ```
 
 Pass = no output. C0.2 measured the authoring form (`(C\|E)` inside the regex) printing 0 rows
 over 54 open cards on 2026-10-02 — it could never fail. The E7.3–E7.9 exemption is by ID, not by
-"the card running", and the 56-row check (55 + E6.5a) guards against a dropped row.
+"the card running", and the 57-row check (55 + E6.5a + E4a.4a) guards against a dropped row.

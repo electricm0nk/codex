@@ -85,7 +85,7 @@ card (`decisions.md §17`).
 | E7.8 | Graphify LAST | sonnet | waiting | E7.7 | |
 | E7.9 | PR `tranche/17 → develop` (final action) | sonnet | waiting | E7.8 | Operator merges. Waits for `pr-tests` (SD-n); C0.2: was haiku |
 
-**Row check (56 cards: 55 at authoring + E6.5a on 2026-10-06; C0.2 re-ran both on 2026-10-02 → 55, 55, and the diff below → `SAME_IDS`).** `awk -F'|' '$2 ~ /^ (C|E)[0-9]/{n++} END{print n}' kanban.md`
+**Row check (57 cards: 55 at authoring + E6.5a on 2026-10-06 + E4a.4a on 2026-10-07; C0.2 re-ran both on 2026-10-02 → 55, 55, and the diff below → `SAME_IDS`).** `awk -F'|' '$2 ~ /^ (C|E)[0-9]/{n++} END{print n}' kanban.md`
 printed 55, and Python `sum(1 for l in open('kanban.md') if re.match(r'^\| (C|E)[0-9]', l))` printed 55.
 The card IDs here must be exactly the criterion IDs in `epic-breakdown.md` (§0's map has 53 rows
 because it folds E1.1–E1.3 into one):

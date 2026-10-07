@@ -333,6 +333,8 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | 2026-10-07 | E4a.4 | The compiled module's oracle role passes to `rules_catalog/golden_digests.txt`: 429 digests written FROM the compiled module (`d268b87734`) before its removal; the catalog must keep matching them | keep a test-only compiled copy as the oracle | a compiled copy is `.rs` table data in the tree, which the criterion removes |
 | 2026-10-07 | E4a.4 | The six table generators that write compiled source become new card E4a.4a (E4a.MC depends on it) | port all six inside E4a.4 | not in E4a.4's criterion; each port needs its own oracle re-run proof (≈8.6k lines); a discovery is a new card (`workflow-instruction.md §7`) |
 | 2026-10-07 | E4a.4 | Moved doc comments name `rules_catalog::`; `rules_tables.schema.json` regenerated (18 description lines, path text only) | keep `rules_tables::` in moved doc comments to hold the schema bytes | they would name a module that no longer exists; the schema is not a PF render (SD-i does not apply) |
+| 2026-10-07 | launch (orchestrator) | Deleted the six stale SD-36 `codex-epic-f*-target` cargo caches (310 G, `du -sh`; build output only, no `.git`); free disk 189 G → 496 G (`df -h /`) | leave them for E7.5 | E7.2's full sweep needs ~24 G and the shared target dir is 182 G; disk-full is a recorded incident class, not a chore |
+| 2026-10-07 | launch (orchestrator) | Script control for discovered cards: a card's structured return names any card it added; the script runs it next, before that epic's merge check | keep dispatching from the authored list | `dispatch-before-discovered-dependency` fired twice (E6.6, E4a.MC); a warning is not a control |
 
 ## Open blockers
 
