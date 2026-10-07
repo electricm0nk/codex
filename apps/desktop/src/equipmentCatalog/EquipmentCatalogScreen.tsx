@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type { EquipmentCatalogEntryDto } from '../boundary/loadEquipmentCatalog';
+import { categoryTabs, equipmentCategoryFor } from '../characterHub/equipmentCategories';
 import { loadEquipmentCatalogRuntime } from './equipmentCatalogRuntime';
 
 const panel: CSSProperties = {
@@ -7,16 +8,6 @@ const panel: CSSProperties = {
   border: '1px solid var(--color-border)',
   borderRadius: 10,
 };
-
-const CATEGORY_LABELS: Record<string, string> = {
-  ArmsArmor: 'Arms & Armor',
-  General: 'General',
-  MagicItems: 'Magic Items',
-  Equipmods: 'Equipment Mods',
-};
-
-/** Categories in the same "corpus-natural order" the SD-19 loop uses. */
-export const CATEGORY_ORDER = ['ArmsArmor', 'General', 'MagicItems', 'Equipmods'] as const;
 
 const MAX_RENDERED_ROWS = 200;
 
@@ -91,13 +82,8 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
       });
   }, []);
 
-  const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    for (const entry of entries ?? []) {
-      counts[entry.category] = (counts[entry.category] ?? 0) + 1;
-    }
-    return counts;
-  }, [entries]);
+  // Kinds (Weapons, Rings, Scrolls, ...) from the PCGen type tags, only those with rows.
+  const tabs = useMemo(() => categoryTabs(entries ?? []), [entries]);
 
   const bookCounts = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -141,7 +127,7 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
     if (!entries) return [];
     const needle = query.trim().toLowerCase();
     return entries.filter((entry) => {
-      if (category !== 'All' && entry.category !== category) return false;
+      if (category !== 'All' && equipmentCategoryFor(entry) !== category) return false;
       if (book !== 'All' && entry.book !== book) return false;
       if (needle && !entry.name.toLowerCase().includes(needle)) return false;
       return true;
@@ -221,14 +207,14 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
             >
               All ({totalCount})
             </button>
-            {CATEGORY_ORDER.map((cat) => (
+            {tabs.map((tab) => (
               <button
-                key={cat}
+                key={tab.label}
                 type="button"
-                onClick={() => setCategory(cat)}
-                style={categoryButtonStyle(category === cat)}
+                onClick={() => setCategory(tab.label)}
+                style={categoryButtonStyle(category === tab.label)}
               >
-                {CATEGORY_LABELS[cat]} ({categoryCounts[cat] ?? 0})
+                {tab.label} ({tab.count})
               </button>
             ))}
           </div>
@@ -287,7 +273,7 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
                       {entry.book}
                     </span>
                     <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
-                      {CATEGORY_LABELS[entry.category] ?? entry.category}
+                      {equipmentCategoryFor(entry)}
                     </span>
                   </span>
                   <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>

@@ -2,9 +2,21 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert, assertEqual } from '../testSupport/asserts';
-import { EQUIPMENT_CATEGORY_ORDER, equipmentCategoryFor } from './equipmentCategories';
+import { EQUIPMENT_CATEGORY_ORDER, categoryTabs, equipmentCategoryFor } from './equipmentCategories';
 
 const cat = (types: string[], category = 'MagicItems') => equipmentCategoryFor({ category, types });
+
+function verifiesCategoryTabsListOnlyKindsThatHaveItemsInDisplayOrder() {
+  const entry = (category: string, types: string[]) => ({ category, types });
+  const tabs = categoryTabs([
+    entry('MagicItems', ['Magic', 'Ring']),
+    entry('ArmsArmor', ['Weapon', 'Melee']),
+    entry('ArmsArmor', ['Weapon', 'Melee']),
+    entry('Equipmods', []),
+  ]);
+  assertEqual(tabs.map((tab) => `${tab.label}:${tab.count}`).join('|'), 'Weapons:2|Rings:1|Equipment Mods:1', 'display order, counts, no empty kinds');
+  assertEqual(categoryTabs([]).length, 0, 'nothing loaded, no tabs');
+}
 
 function verifiesMagicItemKinds() {
   assertEqual(cat(['Magic', 'Scroll', 'Arcane', 'Consumable', 'Combat Gear']), 'Scrolls', 'arcane scroll');
@@ -76,6 +88,7 @@ function verifiesTheRealSidecarIsMostlyCategorised() {
   assert((counts.get('Wondrous Items') ?? 0) > 1000, 'wondrous items are the largest family');
 }
 
+verifiesCategoryTabsListOnlyKindsThatHaveItemsInDisplayOrder();
 verifiesMagicItemKinds();
 verifiesMundaneKinds();
 verifiesFallbacks();

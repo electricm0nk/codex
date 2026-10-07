@@ -102,3 +102,17 @@ export function equipmentCategoryFor(entry: { category: string; types: string[] 
   if (has('Goods')) return 'Adventuring Gear';
   return 'Other';
 }
+
+/**
+ * The category tabs for a list of catalog rows: every kind that has at least one row, in display
+ * order, with its row count. Derived from the rows themselves so a tab can never claim a count the
+ * data does not back.
+ */
+export function categoryTabs(entries: ReadonlyArray<{ category: string; types: string[] }>): Array<{ label: string; count: number }> {
+  const counts = new Map<string, number>();
+  for (const entry of entries) {
+    const label = equipmentCategoryFor(entry);
+    counts.set(label, (counts.get(label) ?? 0) + 1);
+  }
+  return EQUIPMENT_CATEGORY_ORDER.filter((label) => counts.has(label)).map((label) => ({ label, count: counts.get(label) ?? 0 }));
+}
