@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { filterItemPickerEntries, type ItemPickerEntry } from './itemPickerFilter';
+import { filterItemPickerEntriesInGroup, itemPickerGroupCounts, type ItemPickerEntry } from './itemPickerFilter';
 
 export type { ItemPickerEntry } from './itemPickerFilter';
 
@@ -24,6 +24,8 @@ export function ItemPickerModal(props: {
   title: string;
   searchPlaceholder: string;
   loadEntries: () => Promise<ItemPickerEntry[]>;
+  /** Category to open on (rows carry a `group`); omitted opens on All. */
+  initialGroup?: string;
   onClose: () => void;
   onSelect: (entry: ItemPickerEntry) => void;
 }) {
@@ -31,6 +33,8 @@ export function ItemPickerModal(props: {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  // `null` is the All category.
+  const [group, setGroup] = useState<string | null>(props.initialGroup ?? null);
 
   useEffect(() => {
     if (!props.open) {
@@ -40,6 +44,7 @@ export function ItemPickerModal(props: {
     setLoadError(null);
     setSearch('');
     setSelectedKey(null);
+    setGroup(props.initialGroup ?? null);
     props
       .loadEntries()
       .then(setEntries)
@@ -58,7 +63,12 @@ export function ItemPickerModal(props: {
     return null;
   }
 
-  const filtered = filterItemPickerEntries(entries ?? [], search);
+  // Catalogs with categories (equipment) get a category rail; others (spells, feats) are unchanged.
+  const hasGroups = (entries ?? []).some((entry) => entry.group !== undefined);
+  const groupCounts = hasGroups ? itemPickerGroupCounts(entries ?? [], search) : [];
+  const activeGroup = hasGroups ? group : null;
+  const filtered = filterItemPickerEntriesInGroup(entries ?? [], search, activeGroup);
+  const searchedTotal = groupCounts.reduce((sum, item) => sum + item.count, 0);
   // A disabled row can never become the selection, so the Add button cannot
   // fire for one even if a stale `selectedKey` survives a re-filter.
   const selected = filtered.find((entry) => entry.key === selectedKey && !entry.disabled) ?? null;
@@ -99,8 +109,8 @@ export function ItemPickerModal(props: {
           boxShadow: '0 24px 60px rgba(0, 0, 0, 0.55)',
           display: 'flex',
           flexDirection: 'column',
-          height: 'min(560px, 90vh)',
-          width: 'min(560px, 94vw)',
+          height: hasGroups ? 'min(820px, 92vh)' : 'min(560px, 90vh)',
+          width: hasGroups ? 'min(1200px, 96vw)' : 'min(560px, 94vw)',
         }}
       >
         <header
@@ -142,7 +152,7 @@ export function ItemPickerModal(props: {
           />
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.5rem 0 0' }}>
             {entries
-              ? `Showing ${filtered.length} of ${entries.length}${
+              ? `Showing ${filtered.length} of ${entries.length}${activeGroup ? ` in ${activeGroup}` : ''}${
                   unavailableCount > 0 ? ` · ${unavailableCount} unavailable (prerequisites not met)` : ''
                 }`
               : loadError
@@ -151,6 +161,46 @@ export function ItemPickerModal(props: {
           </p>
         </div>
 
+        <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
+        {hasGroups ? (
+          <nav
+            aria-label="Categories"
+            style={{ borderRight: '1px solid var(--color-border)', overflowY: 'auto', padding: '0.5rem 0', width: 240 }}
+          >
+            {[{ group: null as string | null, label: 'All', count: searchedTotal }, ...groupCounts.map((item) => ({ group: item.group as string | null, label: item.group, count: item.count }))].map((item) => {
+              const active = activeGroup === item.group;
+              return (
+                <button
+                  key={item.label}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => {
+                    setGroup(item.group);
+                    setSelectedKey(null);
+                  }}
+                  style={{
+                    alignItems: 'center',
+                    background: active ? 'var(--color-surface-2)' : 'none',
+                    border: 'none',
+                    borderLeft: active ? '3px solid var(--color-accent)' : '3px solid transparent',
+                    color: active ? 'var(--color-accent)' : 'var(--color-text)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    fontSize: '0.9rem',
+                    fontWeight: active ? 700 : 500,
+                    justifyContent: 'space-between',
+                    padding: '0.45rem 0.9rem',
+                    textAlign: 'left',
+                    width: '100%',
+                  }}
+                >
+                  <span>{item.label}</span>
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>{item.count}</span>
+                </button>
+              );
+            })}
+          </nav>
+        ) : null}
         <div style={{ flex: 1, overflowY: 'auto' }}>
           {loadError ? <p style={{ color: 'var(--color-error, #c0392b)', fontSize: '0.85rem', padding: '1rem' }}>{loadError}</p> : null}
           {!entries && !loadError ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', padding: '1rem' }}>Loading…</p> : null}
@@ -230,6 +280,7 @@ export function ItemPickerModal(props: {
               </button>
             );
           })}
+        </div>
         </div>
 
         <footer style={{ borderTop: '1px solid var(--color-border)', display: 'flex', gap: '0.6rem', justifyContent: 'flex-end', padding: '0.85rem 1.5rem' }}>

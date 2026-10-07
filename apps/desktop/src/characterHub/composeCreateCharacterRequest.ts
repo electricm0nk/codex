@@ -1,4 +1,13 @@
-import type { AbilityScoresDto, CreateCharacterRequest, TraitSkillChoiceDto } from '../boundary/loadCreateCharacter';
+import type {
+  AbilityScoresDto,
+  CreateCharacterRequest,
+  CreateEquipmentDto,
+  CreateFeatDto,
+  CreateSkillAllocationDto,
+  CreateSpellDto,
+  HitPointLevelDto,
+  TraitSkillChoiceDto,
+} from '../boundary/loadCreateCharacter';
 import type { AbilityKey } from './characterHubModel';
 
 /**
@@ -77,6 +86,16 @@ export interface CreateCharacterFormFields {
   raceId: string;
   classId: string;
   level: number;
+  /** Levels of other classes, in order (see `levelsModel.creationRequestShape`). Absent for a single class. */
+  additionalLevels?: readonly string[];
+  /** The player's hit point result for every level. Absent means "no rolls". */
+  hitPointLevels?: readonly HitPointLevelDto[];
+  /** Selections from the Manage dialogs; every one absent composes the plain single-class request. */
+  selectedFeats?: readonly CreateFeatDto[];
+  skillAllocations?: readonly CreateSkillAllocationDto[];
+  selectedSpells?: readonly CreateSpellDto[];
+  selectedEquipment?: readonly CreateEquipmentDto[];
+  priceMode?: CreateCharacterRequest['priceMode'];
   abilityScores: AbilityScoresDto;
   abilityBonusTarget: string;
   /**
@@ -124,6 +143,13 @@ export function composeCreateCharacterRequest(
     raceId: fields.raceId,
     classId: fields.classId,
     level: fields.level,
+    additionalLevels: [...(fields.additionalLevels ?? [])],
+    hitPointLevels: (fields.hitPointLevels ?? []).map((entry) => ({ ...entry })),
+    selectedFeats: (fields.selectedFeats ?? []).map((entry) => ({ ...entry })),
+    skillAllocations: (fields.skillAllocations ?? []).map((entry) => ({ ...entry })),
+    selectedSpells: (fields.selectedSpells ?? []).map((entry) => ({ ...entry })),
+    selectedEquipment: (fields.selectedEquipment ?? []).map((entry) => ({ ...entry })),
+    priceMode: fields.priceMode ?? 'standard',
     abilityScores: { ...fields.abilityScores },
     abilityBonusTarget: fields.abilityBonusTarget,
     savedAt: deps.now(),

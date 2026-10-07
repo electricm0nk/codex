@@ -102,7 +102,9 @@ export function buildCreateCharacterOutcomeSurface(
     return {
       kind: 'saved',
       headline: `${outcome.summary.displayLabel} is ready`,
-      detail: 'Your character was computed and saved.',
+      detail: outcome.startingWealthNote
+        ? `Your character was computed and saved. ${outcome.startingWealthNote}`
+        : 'Your character was computed and saved.',
       highlights: [
         { label: 'Armor Class', value: String(snapshot.baselineArmorClass) },
         { label: 'Melee Attack Bonus', value: formatSigned(snapshot.baselineMeleeAttackBonus) },

@@ -338,7 +338,7 @@
       "screen": "create",
       "steps": [{ "op": "click", "target": "New\nCharacter" }],
       "marker": "Create a character",
-      "expect": ["Character name", "Player name", "Race", "Class", "Create character"],
+      "expect": ["Character name", "Player name", "Race", "Levels", "Add level", "Create character"],
       "selectsNonEmpty": ["character-race", "character-class"],
       "notes": "This is the item-8-class check that historically catches the race-select-empty defect (see the harness spec's own precedent): the race select must carry more than zero <option>s, not merely render."
     },
@@ -353,13 +353,14 @@
         { "op": "type", "text": "UI Smoke Harness" },
         { "op": "select", "target": "Elf (CRB)", "text": "Elf (CRB)" },
         { "op": "select", "target": "Wizard", "text": "Wizard" },
+        { "op": "click", "target": "Add level" },
         { "op": "click", "target": "Create character" },
         { "op": "scroll", "ticks": 40, "direction": "up" },
         { "op": "key", "key": "Shift" }
       ],
       "marker": "Smoke Test PC is ready",
       "expect": ["Smoke Test PC is ready", "Your character was computed and saved.", "ARMOR CLASS", "FORTITUDE SAVE"],
-      "notes": "Real submit, confirmed live 2026-09-17: fills the two plain-text identity fields (DOM-addressable by id), picks Race=Elf (CRB) and Class=Wizard via the new `select` op (Wizard so the caster-only sheet-action-add-spell row downstream has a real character to load), and clicks Create character. buildCreateCharacterOutcomeSurface's real headline/detail/highlight text renders ('<name> is ready' / 'Your character was computed and saved.' / uppercase ARMOR CLASS·MELEE ATTACK BONUS·BASE ATTACK BONUS·FORTITUDE SAVE·REFLEX SAVE·WILL SAVE tiles -- uppercase per the same CSS-textTransform-vs-innerText note as landing-render). The select targets are option-text substrings unique to each select's own concatenated option list (see the select op's own $comment entry), not the selects' ids. This mints a fresh saved 'Smoke Test PC' character on every run -- by design, so load-character-select-and-open and its downstream sheet-* rows have a character whose exact name this profile's many pre-existing fixture characters cannot collide with by EXACT match (this profile carries two unrelated 'Aldric Ironhand' saves already, which made that name ambiguous for a name-matched click). The trailing scroll-up + key are both load-bearing, not cosmetic: the outcome panel pushes 'Back' to a negative on-screen y, which broke the NEXT row's resetToLanding() (raw xdotool coordinate click against the probe's cached rects) until fixed -- confirmed live 2026-09-17 that a pure xdotool scroll does NOT itself trigger a fresh probe report (uiProbe.ts's MutationObserver fires on DOM mutation, not scroll/resize), so the probe file kept serving PRE-scroll rects to the next row no matter how many ticks were scrolled; a harmless DOM-command-channel `key` step right after the scroll forces `executeCommand`'s unconditional post-command `report()` (see uiProbe.ts's startCommandChannel), which re-reads getBoundingClientRect() against the NOW-scrolled page and writes the corrected rects other rows' resetToLanding() reads."
+      "notes": "Real submit, confirmed live 2026-09-17: fills the two plain-text identity fields (DOM-addressable by id), picks Race=Elf (CRB) and Class=Wizard via the new `select` op and adds one Wizard level with the Levels panel's Add level button (the Create button stays disabled until a level exists) (Wizard so the caster-only sheet-action-add-spell row downstream has a real character to load), and clicks Create character. buildCreateCharacterOutcomeSurface's real headline/detail/highlight text renders ('<name> is ready' / 'Your character was computed and saved.' / uppercase ARMOR CLASS·MELEE ATTACK BONUS·BASE ATTACK BONUS·FORTITUDE SAVE·REFLEX SAVE·WILL SAVE tiles -- uppercase per the same CSS-textTransform-vs-innerText note as landing-render). The select targets are option-text substrings unique to each select's own concatenated option list (see the select op's own $comment entry), not the selects' ids. This mints a fresh saved 'Smoke Test PC' character on every run -- by design, so load-character-select-and-open and its downstream sheet-* rows have a character whose exact name this profile's many pre-existing fixture characters cannot collide with by EXACT match (this profile carries two unrelated 'Aldric Ironhand' saves already, which made that name ambiguous for a name-matched click). The trailing scroll-up + key are both load-bearing, not cosmetic: the outcome panel pushes 'Back' to a negative on-screen y, which broke the NEXT row's resetToLanding() (raw xdotool coordinate click against the probe's cached rects) until fixed -- confirmed live 2026-09-17 that a pure xdotool scroll does NOT itself trigger a fresh probe report (uiProbe.ts's MutationObserver fires on DOM mutation, not scroll/resize), so the probe file kept serving PRE-scroll rects to the next row no matter how many ticks were scrolled; a harmless DOM-command-channel `key` step right after the scroll forces `executeCommand`'s unconditional post-command `report()` (see uiProbe.ts's startCommandChannel), which re-reads getBoundingClientRect() against the NOW-scrolled page and writes the corrected rects other rows' resetToLanding() reads."
     },
     {
       "id": "create-character-back",
@@ -1100,6 +1101,7 @@
         { "op": "type", "text": "UI Smoke Harness" },
         { "op": "select", "target": "Elf (CRB)", "text": "Elf (CRB)" },
         { "op": "select", "target": "Wizard", "text": "Wizard" },
+        { "op": "click", "target": "Add level" },
         { "op": "click", "target": "Create character" },
         { "op": "click", "target": "Back" },
         { "op": "click", "target": "⚙" },

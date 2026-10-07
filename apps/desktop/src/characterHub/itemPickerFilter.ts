@@ -1,6 +1,7 @@
 import type { EquipmentCatalogEntryDto } from '../boundary/loadEquipmentCatalog';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import type { FeatCatalogEntryDto } from '../boundary/listFeats';
+import { EQUIPMENT_CATEGORY_ORDER, equipmentCategoryFor } from './equipmentCategories';
 
 /**
  * Pure logic backing `ItemPickerModal`: mapping the two real catalog DTOs
@@ -47,6 +48,12 @@ export interface ItemPickerEntry {
    * could not evaluate. Never a reason to disable.
    */
   unverifiedNote?: string;
+  /**
+   * Which category this row belongs to in the picker's category list (equipment kinds today).
+   * Absent for catalogs with no categories; a row with none is filed under `Uncategorized` when
+   * the picker does show categories.
+   */
+  group?: string;
 }
 
 /** Friendly labels for `EquipmentCategory` variants — mirrors `EquipmentCatalogScreen`'s own map. */
@@ -98,7 +105,12 @@ export function summariseItemDescription(
   return `${trimmed}…`;
 }
 
-export function mapEquipmentCatalogEntries(entries: EquipmentCatalogEntryDto[]): ItemPickerEntry[] {
+/**
+ * `typesError`: why the backend could not read the equipment type data, when it could not. Every row
+ * then says so, so a missing category list is stated rather than looking like "everything is
+ * uncategorized".
+ */
+export function mapEquipmentCatalogEntries(entries: EquipmentCatalogEntryDto[], typesError?: string | null): ItemPickerEntry[] {
   return entries.map((entry) => {
     // Unknown/future categories fall back to the raw variant string verbatim
     // rather than a fabricated label.
@@ -125,6 +137,8 @@ export function mapEquipmentCatalogEntries(entries: EquipmentCatalogEntryDto[]):
       key: entry.key,
       name: entry.name,
       detail: [category, cost, weight, description].filter((part): part is string => part !== null).join(' · '),
+      group: equipmentCategoryFor(entry),
+      ...(typesError ? { unverifiedNote: `Categories unavailable: ${typesError}` } : {}),
     };
   });
 }
@@ -254,4 +268,43 @@ export function filterItemPickerEntries(entries: ItemPickerEntry[], searchTerm: 
   return entries.filter(
     (entry) => entry.name.toLowerCase().includes(term) || entry.detail.toLowerCase().includes(term)
   );
+}
+
+/** Label a row is filed under in the category list; rows with no group are `Uncategorized`. */
+function groupOf(entry: ItemPickerEntry): string {
+  return entry.group ?? 'Uncategorized';
+}
+
+/** The search box narrowing, then (when `group` is not null) the category narrowing. */
+export function filterItemPickerEntriesInGroup(
+  entries: ItemPickerEntry[],
+  searchTerm: string,
+  group: string | null
+): ItemPickerEntry[] {
+  const searched = filterItemPickerEntries(entries, searchTerm);
+  return group === null ? searched : searched.filter((entry) => groupOf(entry) === group);
+}
+
+/**
+ * Categories that have at least one row matching the search, with how many. Counts follow the
+ * search so the list shows where the matches are. Known categories keep their display order;
+ * a category this list does not know comes after them, alphabetically; `Uncategorized` is last.
+ */
+export function itemPickerGroupCounts(
+  entries: ItemPickerEntry[],
+  searchTerm: string
+): Array<{ group: string; count: number }> {
+  const counts = new Map<string, number>();
+  for (const entry of filterItemPickerEntries(entries, searchTerm)) {
+    counts.set(groupOf(entry), (counts.get(groupOf(entry)) ?? 0) + 1);
+  }
+  // Known categories in display order, then any this list does not know, then Uncategorized last.
+  const rank = (group: string) => {
+    if (group === 'Uncategorized') return Number.MAX_SAFE_INTEGER;
+    const index = EQUIPMENT_CATEGORY_ORDER.indexOf(group);
+    return index === -1 ? EQUIPMENT_CATEGORY_ORDER.length : index;
+  };
+  return [...counts.entries()]
+    .map(([group, count]) => ({ group, count }))
+    .sort((a, b) => rank(a.group) - rank(b.group) || a.group.localeCompare(b.group));
 }

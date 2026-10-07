@@ -109,11 +109,24 @@ impl std::str::FromStr for GameSystem {
     }
 }
 
-/// The repo root this process reads packages from, resolved at run time: `CODEX_REPO_ROOT`
-/// when an operator or launcher sets it (the same variable the desktop's
-/// `authoring_workbench::codex_repo_root` honours), else this crate's compile-time checkout.
+/// The repo root this process reads packages from, resolved at run time: the data root a
+/// packaged app installed with [`crate::set_data_root`] (the desktop installs the root its own
+/// `authoring_workbench::codex_repo_root` resolves, which honours `CODEX_REPO_ROOT` first), else
+/// `CODEX_REPO_ROOT` when an operator or launcher sets it, else this crate's compile-time checkout.
 pub fn runtime_repo_root() -> PathBuf {
-    resolve_repo_root(std::env::var_os("CODEX_REPO_ROOT"))
+    resolve_runtime_root(
+        crate::support::paths::installed_data_root().as_deref(),
+        std::env::var_os("CODEX_REPO_ROOT"),
+    )
+}
+
+/// [`runtime_repo_root`]'s full rule as a pure function: an installed data root wins, else
+/// [`resolve_repo_root`].
+pub fn resolve_runtime_root(installed: Option<&Path>, configured: Option<std::ffi::OsString>) -> PathBuf {
+    match installed {
+        Some(root) => root.to_path_buf(),
+        None => resolve_repo_root(configured),
+    }
 }
 
 /// [`runtime_repo_root`]'s rule as a pure function of the variable's value: a non-empty value
@@ -121,7 +134,7 @@ pub fn runtime_repo_root() -> PathBuf {
 pub fn resolve_repo_root(configured: Option<std::ffi::OsString>) -> PathBuf {
     match configured {
         Some(value) if !value.is_empty() => PathBuf::from(value),
-        _ => PathBuf::from(env!("CARGO_MANIFEST_DIR")),
+        _ => crate::support::paths::build_checkout_root(),
     }
 }
 
@@ -221,6 +234,22 @@ mod tests {
         assert_eq!(resolve_repo_root(Some("/elsewhere/codex".into())), PathBuf::from("/elsewhere/codex"));
         assert_eq!(resolve_repo_root(None), compiled);
         assert_eq!(resolve_repo_root(Some("".into())), compiled);
+    }
+
+    /// A data root the packaged app installed (`crate::set_data_root`, from the desktop's
+    /// `codex_repo_root`, which itself honours `CODEX_REPO_ROOT`) wins: every system's package is
+    /// read from under it. Without one, `CODEX_REPO_ROOT`, then the compile-time checkout.
+    #[test]
+    fn game_system_root_an_installed_data_root_wins_over_codex_repo_root() {
+        let installed = PathBuf::from("/usr/lib/Codex");
+        assert_eq!(resolve_runtime_root(Some(&installed), Some("/elsewhere/codex".into())), installed);
+        assert_eq!(resolve_runtime_root(Some(&installed), None), installed);
+        assert_eq!(resolve_runtime_root(None, Some("/elsewhere/codex".into())), PathBuf::from("/elsewhere/codex"));
+        assert_eq!(resolve_runtime_root(None, None), PathBuf::from(env!("CARGO_MANIFEST_DIR")));
+        assert_eq!(
+            GameSystem::Starfinder1e.package_roots(&resolve_runtime_root(Some(&installed), None)).sheet_rules,
+            PathBuf::from("/usr/lib/Codex/data/starfinder-1e/sheet_rules")
+        );
     }
 
     /// The live Pathfinder package is the one `live_sheet_rules()` has always returned: the

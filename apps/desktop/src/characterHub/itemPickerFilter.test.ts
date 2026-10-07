@@ -19,9 +19,9 @@ import { assert, assertEqual } from '../testSupport/asserts';
  * mapping assertion — 974 of the 3830 served records are in that state.
  */
 const EQUIPMENT_ENTRIES: EquipmentCatalogEntryDto[] = [
-  { key: 'equipment:longsword', category: 'ArmsArmor', name: 'Longsword', costGp: 15, weightLbs: 4, book: 'CRB', description: 'This sword is about 3-1/2 feet in length.' },
-  { key: 'equipment:banded_mail', category: 'ArmsArmor', name: 'Banded Mail', costGp: 250, weightLbs: 35, book: 'CRB', description: null },
-  { key: 'equipment:potion_of_cure_light_wounds', category: 'MagicItems', name: 'Potion of Cure Light Wounds', costGp: 50, weightLbs: null, book: 'CRB', description: 'Cures 1d8+1 damage.' },
+  { types: [], key: 'equipment:longsword', category: 'ArmsArmor', name: 'Longsword', costGp: 15, weightLbs: 4, book: 'CRB', description: 'This sword is about 3-1/2 feet in length.' },
+  { types: [], key: 'equipment:banded_mail', category: 'ArmsArmor', name: 'Banded Mail', costGp: 250, weightLbs: 35, book: 'CRB', description: null },
+  { types: [], key: 'equipment:potion_of_cure_light_wounds', category: 'MagicItems', name: 'Potion of Cure Light Wounds', costGp: 50, weightLbs: null, book: 'CRB', description: 'Cures 1d8+1 damage.' },
 ];
 
 const SPELL_ENTRIES: SpellCatalogEntryDto[] = [
@@ -114,7 +114,7 @@ function verifiesEquipmentMappingUsesFriendlyCategoryLabel() {
 }
 
 function verifiesEquipmentMappingFallsBackToRawCategoryForUnknownVariant() {
-  const [mapped] = mapEquipmentCatalogEntries([{ key: 'equipment:mystery', category: 'SomeNewCategory', name: 'Mystery Item', costGp: null, weightLbs: null, book: 'CRB', description: null }]);
+  const [mapped] = mapEquipmentCatalogEntries([{ types: [], key: 'equipment:mystery', category: 'SomeNewCategory', name: 'Mystery Item', costGp: null, weightLbs: null, book: 'CRB', description: null }]);
   assertEqual(mapped.detail, 'SomeNewCategory', 'unmapped categories fall back to the raw variant string, never a fabricated label');
 }
 
@@ -148,7 +148,7 @@ function verifiesEquipmentMappingOmitsADescriptionTheCorpusDoesNotHave() {
 /** Blank-but-present prose is the same absence as `null`, treated the same. */
 function verifiesEquipmentMappingTreatsBlankDescriptionAsAbsent() {
   const [mapped] = mapEquipmentCatalogEntries([
-    { key: 'equipment:blank', category: 'General', name: 'Blank', costGp: 1, weightLbs: null, book: 'CRB', description: '   ' },
+    { types: [], key: 'equipment:blank', category: 'General', name: 'Blank', costGp: 1, weightLbs: null, book: 'CRB', description: '   ' },
   ]);
   assertEqual(mapped.detail, 'General · 1 gp', 'whitespace-only description is treated as no description (cost still shown)');
 }

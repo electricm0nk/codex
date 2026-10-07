@@ -259,6 +259,12 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: stamped-sources
+          # The artifact holds package.json and src-tauri/tauri.conf.json with the common parent
+          # (apps/desktop) stripped; unpacking at the repo root left the build unstamped (v0.16.140).
+          path: apps/desktop
+
+      - name: Assert version stamp reached the build tree
+        run: python3 tools/release/assert_version_stamp.py --repo-root . --version "${{ needs.stamp.outputs.version }}"
 
       - name: Install Linux build dependencies
         run: |
@@ -284,9 +290,15 @@ jobs:
         working-directory: apps/desktop
         run: npm ci
 
-      - name: Validate tranche release notes
+      # The notes path comes from docs/release/current-release.json (checked against the app's
+      # tranche and for closure placeholders), never from a literal in this workflow.
+      - name: Resolve and validate tranche release notes
+        id: notes
         run: |
-          python scripts/tranche/validate-tranche-notes.py --release-notes-path docs/release/v0.7/release-notes.md
+          set -euo pipefail
+          NOTES_PATH="$(python3 tools/release/resolve_release_notes.py --repo-root .)"
+          python scripts/tranche/validate-tranche-notes.py --release-notes-path "${NOTES_PATH}"
+          echo "path=${NOTES_PATH}" >> "$GITHUB_OUTPUT"
 
       # SD16-F-WINDOWS: the version stamp moved out of this job into the
       # top-level `stamp` job to keep the linux and windows publish jobs
@@ -361,7 +373,13 @@ jobs:
           APPIMAGE_NAME="${{ steps.stage.outputs.appimage_name }}"
           APPIMAGE_PATH="${GITHUB_WORKSPACE}/release-staging/${APPIMAGE_NAME}"
           APPIMAGE_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/${APPIMAGE_NAME}"
-          RELEASE_NOTES_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}"
+          DEB_NAME="${{ steps.stage.outputs.deb_name }}"
+          DEB_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/${DEB_NAME}"
+          NOTES_PATH="${{ steps.notes.outputs.path }}"
+          # The app hashes whatever this URL serves and compares it to release_notes_hash, so it must
+          # return the exact bytes of NOTES_PATH: the raw file pinned to this commit, not the release
+          # HTML page (v0.16.140 pointed at the page, so notes were always "unavailable").
+          RELEASE_NOTES_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/${NOTES_PATH}"
 
           python3 ../scripts/release/write_release_manifest.py \
             --repo-root "${GITHUB_WORKSPACE}" \
@@ -371,17 +389,20 @@ jobs:
             --version "${VERSION}" \
             --source-branch "${GITHUB_REF_NAME}" \
             --source-commit "${GITHUB_SHA}" \
-            --release-notes-path "docs/release/v0.7/release-notes.md" \
+            --release-notes-path "${NOTES_PATH}" \
             --appimage-name "${APPIMAGE_NAME}" \
             --appimage-path "${APPIMAGE_PATH}" \
             --appimage-url "${APPIMAGE_URL}" \
+            --linux-deb-name "${DEB_NAME}" \
+            --linux-deb-path "${GITHUB_WORKSPACE}/release-staging/${DEB_NAME}" \
+            --linux-deb-url "${DEB_URL}" \
             --workflow ".github/workflows/publish-tester-release.yml" \
             --run-id "${GITHUB_RUN_ID}" \
             --run-attempt "${GITHUB_RUN_ATTEMPT}" \
             --release-notes-url "${RELEASE_NOTES_URL}" \
             --min-supported-version "0.0.0" \
             --appimage-install "true" \
-            --required-install-kind "appimage" \
+            --required-install-kind "any" \
             --output update-manifest.json
 
           # Legacy alias for F3c's channel-index URL: F3c is merged and
@@ -416,6 +437,9 @@ jobs:
           python3 ../tools/release/check_release_manifest_against_dev_schema.py \
             update-manifest.json
 
+      - name: Verify release consistency (versions, hashes, deb metadata, notes)
+        run: python3 tools/release/verify_release_consistency.py --repo-root . --staging release-staging
+
       - name: Compute checksums
         working-directory: release-staging
         run: |
@@ -435,7 +459,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p release-staging
-          cp docs/release/v0.7/release-notes.md \
+          cp "${{ steps.notes.outputs.path }}" \
              release-staging/release-notes.md
 
       # SD16-F-WINDOWS: the platform publish jobs no longer `gh release
@@ -485,6 +509,13 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: stamped-sources
+          # The artifact holds package.json and src-tauri/tauri.conf.json with the common parent
+          # (apps/desktop) stripped; unpacking at the repo root left the build unstamped (v0.16.140).
+          path: apps/desktop
+
+      - name: Assert version stamp reached the build tree
+        shell: bash
+        run: python3 tools/release/assert_version_stamp.py --repo-root . --version "${{ needs.stamp.outputs.version }}"
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -559,6 +590,13 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: stamped-sources
+          # The artifact holds package.json and src-tauri/tauri.conf.json with the common parent
+          # (apps/desktop) stripped; unpacking at the repo root left the build unstamped (v0.16.140).
+          path: apps/desktop
+
+      - name: Assert version stamp reached the build tree
+        shell: bash
+        run: python tools/release/assert_version_stamp.py --repo-root . --version "${{ needs.stamp.outputs.version }}"
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -664,6 +702,13 @@ jobs:
           python3 -m ensurepip --upgrade || true
           python3 -m pip install --quiet --no-cache-dir jsonschema==4.21.1
 
+      # The consistency gate below compares the manifest against the stamped build files.
+      - name: Download stamped sources
+        uses: actions/download-artifact@v8
+        with:
+          name: stamped-sources
+          path: apps/desktop
+
       # Pull each platform's staging tree. Each may or may not be present
       # depending on which platform jobs succeeded; we do `continue-on-error`
       # so a single platform's missing-artifact doesn't fail the whole job.
@@ -712,10 +757,13 @@ jobs:
           APPIMAGE_NAME="$(basename "${APPIMAGE_NAME:-}" 2>/dev/null || echo '')"
           MSI_NAME="$( (find . -maxdepth 5 -name '*.msi' -type f -print -quit 2>/dev/null || true) )"
           MSI_NAME="$(basename "${MSI_NAME:-}" 2>/dev/null || echo '')"
+          NSIS_NAME="$( (find . -maxdepth 5 -name '*-setup.exe' -type f -print -quit 2>/dev/null || true) )"
+          NSIS_NAME="$(basename "${NSIS_NAME:-}" 2>/dev/null || echo '')"
           DMG_NAME="$( (find . -maxdepth 5 -name '*.dmg' -type f -print -quit 2>/dev/null || true) )"
           DMG_NAME="$(basename "${DMG_NAME:-}" 2>/dev/null || echo '')"
           echo "appimage_name=${APPIMAGE_NAME}" >> "$GITHUB_OUTPUT"
           echo "msi_name=${MSI_NAME}" >> "$GITHUB_OUTPUT"
+          echo "nsis_name=${NSIS_NAME}" >> "$GITHUB_OUTPUT"
           echo "dmg_name=${DMG_NAME}" >> "$GITHUB_OUTPUT"
 
       # Build the unified update-manifest.json in a clean staging dir.
@@ -769,6 +817,15 @@ jobs:
             EXTRA_ARGS+=(--windows-msi-path "release-staging/${MSI}")
             EXTRA_ARGS+=(--windows-msi-url "${BASE}/${MSI}")
           fi
+          # The Windows lane ships the NSIS installer only; it is what a Windows shell updates from.
+          if [ -n "${{ steps.resolve.outputs.nsis_name }}" ]; then
+            NSIS="${{ steps.resolve.outputs.nsis_name }}"
+            EXTRA_ARGS+=(--windows-nsis-name "${NSIS}")
+            EXTRA_ARGS+=(--windows-nsis-path "release-staging/${NSIS}")
+            EXTRA_ARGS+=(--windows-nsis-url "${BASE}/${NSIS}")
+          else
+            echo "::warning::no Windows NSIS installer staged: Windows installs cannot self-update from this release"
+          fi
           if [ -n "${{ steps.resolve.outputs.dmg_name }}" ]; then
             DMG="${{ steps.resolve.outputs.dmg_name }}"
             EXTRA_ARGS+=(--macos-dmg-name "${DMG}")
@@ -776,16 +833,20 @@ jobs:
             EXTRA_ARGS+=(--macos-dmg-url "${BASE}/${DMG}")
           fi
 
-          # The writer reads release-notes path from repo. We need the
-          # release-notes on disk for sha256; it was uploaded as part of
-          # platform-linux artifact.
-          if [ -f release-staging/release-notes.md ]; then
-            mkdir -p "docs/release/SD-16"
-            cp release-staging/release-notes.md \
-               "docs/release/v0.7/release-notes.md"
-          fi
+          # Same notes the linux job resolved: the repo file named by docs/release/current-release.json.
+          # The writer hashes that file; the app fetches it back from the commit-pinned raw URL and
+          # compares, so the URL must serve exactly those bytes (not the release HTML page).
+          NOTES_PATH="$(python3 tools/release/resolve_release_notes.py --repo-root .)"
+          RELEASE_NOTES_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/${NOTES_PATH}"
 
-          RELEASE_NOTES_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}"
+          DEB_NAME="$(basename "$(find release-staging -maxdepth 1 -name '*.deb' -type f -print -quit)")"
+          if [ -z "${DEB_NAME}" ] || [ "${DEB_NAME}" = "." ]; then
+            echo "::error::no .deb in release-staging: the linux publish job must produce one"
+            exit 1
+          fi
+          EXTRA_ARGS+=(--linux-deb-name "${DEB_NAME}")
+          EXTRA_ARGS+=(--linux-deb-path "release-staging/${DEB_NAME}")
+          EXTRA_ARGS+=(--linux-deb-url "${BASE}/${DEB_NAME}")
 
           python3 scripts/release/write_release_manifest.py \
             --repo-root "${{ github.workspace }}" \
@@ -795,14 +856,14 @@ jobs:
             --version "${{ needs.stamp.outputs.version }}" \
             --source-branch "${GITHUB_REF_NAME}" \
             --source-commit "${GITHUB_SHA}" \
-            --release-notes-path "docs/release/v0.7/release-notes.md" \
+            --release-notes-path "${NOTES_PATH}" \
             --workflow ".github/workflows/publish-tester-release.yml" \
             --run-id "${GITHUB_RUN_ID}" \
             --run-attempt "${GITHUB_RUN_ATTEMPT}" \
             --release-notes-url "${RELEASE_NOTES_URL}" \
             --min-supported-version "0.0.0" \
             --appimage-install "true" \
-            --required-install-kind "appimage" \
+            --required-install-kind "any" \
             "${EXTRA_ARGS[@]}" \
             --output release-staging/update-manifest.json
 
@@ -816,6 +877,11 @@ jobs:
             --schema ../schemas/update/update-manifest.schema.json
           python3 ../tools/release/check_release_manifest_against_dev_schema.py \
             update-manifest.json
+
+      # Runs before the release exists, while a failure is still cheap. --fetch-notes proves the
+      # published notes URL serves bytes that hash to release_notes_hash, which is what the app checks.
+      - name: Verify release consistency (versions, hashes, deb metadata, served notes)
+        run: python3 tools/release/verify_release_consistency.py --repo-root . --staging release-staging --fetch-notes
 
       - name: Create GitHub release with all platform assets
         env:
@@ -836,10 +902,13 @@ jobs:
           # keeps the doc copy identical across runs.
           NOTES_FILE="release-notes.md"
           if [ ! -f "$NOTES_FILE" ]; then
-            cp ../docs/release/v0.7/release-notes.md "$NOTES_FILE"
+            cp "../$(python3 ../tools/release/resolve_release_notes.py --repo-root ..)" "$NOTES_FILE"
           fi
 
           # Build the file glob: every artifact we have staged.
+          # nullglob: optional artifacts (*.msi, *.dmg) may be absent; an
+          # unmatched pattern must expand to nothing, not pass literally.
+          shopt -s nullglob
           GLOB=( *.deb *.AppImage *.msi *.exe *.dmg
                  checksums.sha256 provenance.json
                  update-manifest.json update-manifest-stub.json

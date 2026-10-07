@@ -24,6 +24,7 @@ import { hasTauriRuntime } from '../boundary/runtime';
 function buildPreviewCatalog(): EquipmentCatalogEntryDto[] {
   return [
     {
+      types: ['Weapon', 'Resizable', 'Melee', 'Martial', 'OneHanded', 'Slashing', 'Sword', 'BladeHeavy', 'Weapon Group Blades Heavy'],
       key: 'Longsword (Base)',
       category: 'ArmsArmor',
       name: 'Longsword',
@@ -33,6 +34,7 @@ function buildPreviewCatalog(): EquipmentCatalogEntryDto[] {
       description: 'This sword is about 3-1/2 feet in length.',
     },
     {
+      types: ['Armor', 'Light', 'ArmorProfLight', 'Suit'],
       key: 'Chain Shirt (Base)',
       category: 'ArmsArmor',
       name: 'Chain Shirt',
@@ -42,8 +44,9 @@ function buildPreviewCatalog(): EquipmentCatalogEntryDto[] {
       description:
         'Covering the torso, this shirt is made up of thousands of interlocking metal rings.',
     },
-    { key: 'Backpack', category: 'General', name: 'Backpack', costGp: 2, weightLbs: 2, book: 'CRB', description: null },
+    { types: ['Goods', 'Container', 'General', 'Resizable'], key: 'Backpack', category: 'General', name: 'Backpack', costGp: 2, weightLbs: 2, book: 'CRB', description: null },
     {
+      types: ['Magic', 'Potion', 'Consumable', 'Combat Gear'],
       key: 'Potion of Aid',
       category: 'MagicItems',
       name: 'Potion of Aid',
@@ -53,14 +56,19 @@ function buildPreviewCatalog(): EquipmentCatalogEntryDto[] {
       description:
         '+1 morale bonus on attack rolls and saves vs. fear, plus 1d8+1 temporary hp for 1 minute',
     },
-    { key: 'Material ~ Cloth', category: 'Equipmods', name: 'Cloth', costGp: 0, weightLbs: null, book: 'CRB', description: null },
+    { types: ['BaseMaterial', 'Mundane', 'Ammunition', 'Armor', 'Shield', 'Weapon', 'Instruments', 'Tools', 'Goods'], key: 'Material ~ Cloth', category: 'Equipmods', name: 'Cloth', costGp: 0, weightLbs: null, book: 'CRB', description: null },
   ];
 }
 
-export async function loadEquipmentCatalogRuntime(): Promise<EquipmentCatalogEntryDto[]> {
+/** The catalog plus why its type data (the category source) could not be read, when it could not. */
+export async function loadEquipmentCatalogWithNotice(): Promise<{ entries: EquipmentCatalogEntryDto[]; typesError: string | null }> {
   if (!hasTauriRuntime()) {
-    return buildPreviewCatalog();
+    return { entries: buildPreviewCatalog(), typesError: null };
   }
   const response = await loadEquipmentCatalog();
-  return response.entries;
+  return { entries: response.entries, typesError: response.typesError ?? null };
+}
+
+export async function loadEquipmentCatalogRuntime(): Promise<EquipmentCatalogEntryDto[]> {
+  return (await loadEquipmentCatalogWithNotice()).entries;
 }

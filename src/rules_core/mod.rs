@@ -26,6 +26,7 @@ pub mod encumbrance;
 pub mod equipment_effects;
 pub mod equipment_record;
 pub mod equipment_resolver;
+pub mod equipment_types;
 pub mod feat_effects;
 pub mod feat_identity;
 pub mod feat_prereqs;

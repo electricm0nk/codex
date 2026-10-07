@@ -16,7 +16,8 @@
         "title": "Codex",
         "width": 1920,
         "height": 1200,
-        "resizable": true
+        "resizable": true,
+        "maximized": true
       }
     ]
   },
@@ -39,7 +40,12 @@
       "resources/corpus_bundle/": "data/corpus/",
       "../../../data/sheet_rules/": "data/sheet_rules/",
       "../../../data/starfinder-1e/sheet_rules/": "data/starfinder-1e/sheet_rules/",
-      "../../../data/rules_tables/": "data/rules_tables/"
+      "../../../data/rules_tables/": "data/rules_tables/",
+      "../../../data/class_feature_grants/": "data/class_feature_grants/",
+      "../../../data/converted/record_vars.json": "data/converted/record_vars.json",
+      "../../../data/equipment_types.json": "data/equipment_types.json",
+      "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt": "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt",
+      "../../../tests/fixtures/rules_core/multiclass_census_panel.json": "tests/fixtures/rules_core/multiclass_census_panel.json"
     },
     "icon": [
       "icons/icon.png",

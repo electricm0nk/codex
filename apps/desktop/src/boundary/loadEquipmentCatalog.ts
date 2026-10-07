@@ -55,6 +55,12 @@ export interface EquipmentCatalogEntryDto {
   /** Which ingested book this record came from. */
   book: EquipmentBookDto;
   /**
+   * PCGen `TYPE:` tags for this record (`["Magic", "Wand", "Combat Gear"]`), from the generated
+   * `data/equipment_types.json`. Empty when the record has no entry there; the picker files such a
+   * row under Uncategorized rather than guessing.
+   */
+  types: string[];
+  /**
    * The record's corpus description prose, already rendered on the Rust side by
    * `equipment_catalog.rs`'s `serve_description` (the same
    * description treatment the spell catalog uses, which is what
@@ -78,6 +84,8 @@ export interface EquipmentCatalogEntryDto {
 
 export interface EquipmentCatalogResponse {
   entries: EquipmentCatalogEntryDto[];
+  /** Why the equipment type data could not be read, when it could not; rows are then untyped. */
+  typesError?: string | null;
 }
 
 export async function loadEquipmentCatalog(): Promise<EquipmentCatalogResponse> {

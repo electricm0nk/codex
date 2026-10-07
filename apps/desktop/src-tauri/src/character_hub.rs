@@ -503,6 +503,34 @@ pub struct CreateCharacterRequest {
     /// unchanged.
     #[serde(default)]
     pub additional_choices: Vec<SelectedChoiceDto>,
+    /// Levels of OTHER classes, in the order the player added them, on top of `class_id` taking
+    /// `level` levels of its own: `class_id` / `level` carry the first level's class and all of its
+    /// levels, and each entry here adds one level of that class (a class not yet held joins with its
+    /// canonical seeds, exactly as it does at level-up). Empty for a single-class character.
+    #[serde(default)]
+    pub additional_levels: Vec<String>,
+    /// The die result the player settled on for every character level, in order (the first is the
+    /// class's full die). Validated against the levels and dice, then saved as `hit_points.json`.
+    /// Empty means "no rolls": the sheet then uses the default rule (maximum, then average).
+    #[serde(default)]
+    pub hit_point_levels: Vec<HitPointLevelDto>,
+    /// Feats chosen in the Manage dialog, in order. Each must be one the character qualifies for
+    /// (checked against the build as it stands when that feat is added), or creation is refused.
+    #[serde(default)]
+    pub selected_feats: Vec<CreateFeatDto>,
+    /// Skill ranks from the skills dialog (the complete set, not a delta).
+    #[serde(default)]
+    pub skill_allocations: Vec<SkillAllocationDto>,
+    /// Spells chosen in the spells dialog.
+    #[serde(default)]
+    pub selected_spells: Vec<CreateSpellDto>,
+    /// Equipment chosen in the equipment dialog, carried and equipped from the start.
+    #[serde(default)]
+    pub selected_equipment: Vec<CreateEquipmentDto>,
+    /// How the equipment is paid for: `cashless` spends nothing; otherwise each item costs its catalog
+    /// price out of the class's starting money. Absent means `standard`.
+    #[serde(default)]
+    pub price_mode: PriceMode,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1031,6 +1059,10 @@ pub enum CreateCharacterResponse {
         snapshot: Box<PilotSnapshotDto>,
         #[serde(rename = "corpusDerived")]
         corpus_derived: Box<CorpusDerivedDto>,
+        /// Present only when the class has no published starting wealth (NPC classes, Shifter):
+        /// says that the character starts with 0 gp and why.
+        #[serde(rename = "startingWealthNote")]
+        starting_wealth_note: Option<String>,
     },
     Blocked {
         diagnostics: Vec<DiagnosticDto>,
@@ -1437,7 +1469,7 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
 ///
 /// v0.6 alpha swarm item 7 (risks-and-open-questions.md): once the build
 /// reaches `Computed` and saves, this also initializes the character's
-/// starting money balance via `money::starting_wealth_gp`, for any class
+/// starting money balance via `money::starting_wealth_max_gp` (the top of the class's roll), for any class
 /// that function recognizes -- today that means every character that gets
 /// this far at all, since `starting_wealth_gp` covers all 11 CRB classes
 /// and only Fighter/Wizard/Rogue currently reach `Computed` in the first
@@ -1600,17 +1632,234 @@ pub(crate) fn read_alternate_trait_keys(input: &CharacterInput) -> Vec<String> {
         .collect()
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CreateFeatDto {
+    pub feat_id: String,
+    /// The weapon, skill or school a chooser feat names, without its prefix.
+    #[serde(default)]
+    pub target: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CreateSpellDto {
+    pub spell_id: String,
+    pub source_class_id: String,
+    pub acquisition_mode: AcquisitionModeDto,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CreateEquipmentDto {
+    pub item_id: String,
+}
+
+/// Whether picking feats into a draft checks each one's prerequisites.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum FeatPolicy {
+    /// Creating: a feat the build does not qualify for refuses the creation.
+    Enforce,
+    /// Listing what a draft qualifies for: pending picks count toward each other's prerequisites.
+    Trust,
+}
+
+fn create_diagnostic(id: &str, message: String) -> DiagnosticDto {
+    DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }
+}
+
+/// The character a creation request describes, before it is computed or saved: levels, race traits,
+/// and every selection from the Manage dialogs. Returns the diagnostics that refuse it, or the input
+/// and what the chosen equipment costs in copper (0 when cashless).
+fn build_create_input(
+    request: &CreateCharacterRequest,
+    feat_policy: FeatPolicy,
+) -> Result<(CharacterInput, u64), Vec<DiagnosticDto>> {
+    if let Some(CreateCharacterResponse::Blocked { diagnostics }) = validate_hit_point_levels(request) {
+        return Err(diagnostics);
+    }
+    let mut character_input = compose_character_input(request);
+    match resolve_alternate_trait_choices(&request.race_id, &request.selected_alternate_trait_keys) {
+        Ok(choices) => character_input.chosen.selected_choices.extend(choices),
+        Err(diagnostics) => return Err(diagnostics),
+    }
+    // Levels of other classes, in the order the player added them: the same step level-up takes.
+    for class_id in &request.additional_levels {
+        crate::pf1_adapter::apply_level_up(&mut character_input, class_id);
+    }
+
+    if !request.skill_allocations.is_empty() {
+        crate::pf1_adapter::apply_set_skill_allocations(
+            &mut character_input,
+            request
+                .skill_allocations
+                .iter()
+                .map(|allocation| SkillAllocation { skill_id: allocation.skill_id.clone(), ranks: allocation.ranks })
+                .collect(),
+        );
+    }
+    for spell in &request.selected_spells {
+        crate::pf1_adapter::apply_add_spell_selection(
+            &mut character_input,
+            &spell.spell_id,
+            &spell.source_class_id,
+            spell.acquisition_mode.into(),
+        );
+    }
+
+    // Equipment is paid for out of the class's starting money unless the mode is cashless.
+    let mut equipment_cost_copper = 0_u64;
+    if request.price_mode != PriceMode::Cashless {
+        for item in &request.selected_equipment {
+            let Some(cost_gp) = catalog_cost_gp(&item.item_id) else {
+                return Err(vec![create_diagnostic(
+                    "create.equipment_no_price",
+                    format!("'{}' has no catalog price, so it cannot be bought with starting money (use cashless mode).", item.item_id),
+                )]);
+            };
+            equipment_cost_copper += money::gp_to_copper(cost_gp);
+        }
+        let starting_copper = money::starting_wealth_max_gp(&request.class_id)
+            .map_or(0, |gp| money::gp_to_copper(f64::from(gp)));
+        if equipment_cost_copper > starting_copper {
+            return Err(vec![create_diagnostic(
+                "create.equipment_unaffordable",
+                format!("The chosen equipment costs {equipment_cost_copper} cp but starting money is {starting_copper} cp."),
+            )]);
+        }
+    }
+    for item in &request.selected_equipment {
+        crate::pf1_adapter::apply_add_equipment_selection(&mut character_input, &item.item_id, ActiveState::EquippedActive);
+    }
+
+    for feat in &request.selected_feats {
+        let target_choice = crate::pf1_adapter::resolve_feat_target_choice(&feat.feat_id, feat.target.as_deref())
+            .map_err(|message| vec![create_diagnostic("create.feat_target", message)])?;
+        if feat_policy == FeatPolicy::Enforce {
+            let receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
+            let facts = prereq_facts_for(&character_input, &receipt.base)
+                .map_err(|message| vec![create_diagnostic("create.feat_prereqs_unavailable", message)])?;
+            if let Some(report) = codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites(&feat.feat_id, &facts) {
+                if let Some(reason) = report.unavailable_reason() {
+                    return Err(vec![create_diagnostic(
+                        "create.feat_unqualified",
+                        format!("'{}' cannot be taken by this character: {reason}", report.feat_key),
+                    )]);
+                }
+            }
+        }
+        crate::pf1_adapter::apply_add_feat_selection_with_target(&mut character_input, &feat.feat_id, target_choice);
+    }
+    Ok((character_input, equipment_cost_copper))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListFeatsForDraftRequest {
+    /// The character as the Create screen has it so far.
+    pub draft: CreateCharacterRequest,
+    #[serde(default)]
+    pub filter: crate::feat_catalog::FeatCatalogFilter,
+}
+
+/// The feat catalog with each feat's verdict for a character that is not saved yet: the Create
+/// screen's Qualified filter. Picks already made in the draft count toward each other's prerequisites.
+fn list_feats_for_draft_impl(
+    request: &CreateCharacterRequest,
+    filter: &crate::feat_catalog::FeatCatalogFilter,
+) -> Result<crate::feat_catalog::FeatCatalogResponse, String> {
+    let (input, _) = build_create_input(request, FeatPolicy::Trust)
+        .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
+    let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
+    let facts = prereq_facts_for(&input, &receipt.base)?;
+    Ok(crate::feat_catalog::filter_feat_catalog_with_eligibility(filter, &facts))
+}
+
+#[tauri::command]
+pub fn list_feats_for_draft(request: ListFeatsForDraftRequest) -> Result<crate::feat_catalog::FeatCatalogResponse, String> {
+    list_feats_for_draft_impl(&request.draft, &request.filter)
+}
+
+/// A class's maximum starting money for the Create screen's equipment dialog. `max_gp` is `None`
+/// (with the reason in `note`) for a class with no published starting wealth.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct StartingWealthDto {
+    pub max_gp: Option<u32>,
+    pub note: Option<String>,
+}
+
+fn starting_wealth_for_class_impl(class_id: &str) -> StartingWealthDto {
+    StartingWealthDto {
+        max_gp: money::starting_wealth_max_gp(class_id),
+        note: money::starting_wealth_unpublished_reason(class_id).map(str::to_owned),
+    }
+}
+
+#[tauri::command]
+pub fn starting_wealth_for_class(class_id: String) -> StartingWealthDto {
+    starting_wealth_for_class_impl(&class_id)
+}
+
+/// What the Create screen's spells dialog needs for a character that is not saved yet.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DraftSpellOptionsDto {
+    /// The engine's own spells-per-day rows for the draft (`class_spell.*per_day*` explanations).
+    pub per_day: Vec<ExplanationDto>,
+    /// Spell names the race grants as spell-like abilities (`ABILITY:Spell-Like Ability|AUTOMATIC|Racial SLA ~ <spell>`),
+    /// in corpus order, for the dialog's read-only Innate column. A trait the draft's alternates suppress is not listed.
+    pub innate: Vec<String>,
+}
+
+const RACIAL_SLA_PREFIX: &str = "Racial SLA ~ ";
+
+fn draft_spell_options_impl(request: &CreateCharacterRequest) -> Result<DraftSpellOptionsDto, String> {
+    let (input, _) = build_create_input(request, FeatPolicy::Trust)
+        .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
+    let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
+    let per_day = map_explanations_dto(&receipt.base.explanations)
+        .into_iter()
+        .filter(|row| row.id.contains("spells_per_day") || row.id.contains("extracts_per_day"))
+        .collect();
+
+    let corpus = crate::race_catalog::race_corpus().as_ref().map_err(Clone::clone)?;
+    let mut innate: Vec<String> = Vec::new();
+    if let Some(race_key) = corpus.resolve_key(&request.race_id) {
+        let alternates: Vec<&str> = request.selected_alternate_trait_keys.iter().map(String::as_str).collect();
+        if let Some(resolved) = corpus.resolve(race_key, &alternates) {
+            let applied: std::collections::BTreeSet<&str> = resolved.traits.iter().map(|t| t.key.as_str()).collect();
+            for record in corpus.traits_for(race_key) {
+                if !applied.contains(record.data.key.as_str()) {
+                    continue;
+                }
+                for grant in record.automatic_trait_grants() {
+                    if let Some(spell) = grant.strip_prefix(RACIAL_SLA_PREFIX) {
+                        if !innate.iter().any(|known| known == spell) {
+                            innate.push(spell.to_owned());
+                        }
+                    }
+                }
+            }
+        }
+    }
+    Ok(DraftSpellOptionsDto { per_day, innate })
+}
+
+#[tauri::command]
+pub fn draft_spell_options(request: CreateCharacterRequest) -> Result<DraftSpellOptionsDto, String> {
+    draft_spell_options_impl(&request)
+}
+
 pub(crate) fn create_character_at_root(
     root: &Path,
     request: &CreateCharacterRequest,
     app_version: String,
 ) -> Result<CreateCharacterResponse, String> {
-    let mut character_input = compose_character_input(request);
-    match resolve_alternate_trait_choices(&request.race_id, &request.selected_alternate_trait_keys) {
-        Ok(choices) => character_input.chosen.selected_choices.extend(choices),
+    let (character_input, equipment_cost_copper) = match build_create_input(request, FeatPolicy::Enforce) {
+        Ok(built) => built,
         Err(diagnostics) => return Ok(CreateCharacterResponse::Blocked { diagnostics }),
-    }
-    let character_input = character_input;
+    };
 
     let (snapshot, corpus_receipt) =
         match resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle()) {
@@ -1637,16 +1886,25 @@ pub(crate) fn create_character_at_root(
     };
 
     SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    if !request.hit_point_levels.is_empty() {
+        save_character_hit_points_at_root(root, &request.hit_point_levels)?;
+    }
 
-    if let Some(starting_wealth_gp) = money::starting_wealth_gp(&request.class_id) {
+    // New characters start with the MAXIMUM of their class's starting-wealth roll. A class with no
+    // published statline starts with 0 gp, and the response says why.
+    let mut starting_wealth_note = None;
+    if let Some(starting_wealth_gp) = money::starting_wealth_max_gp(&request.class_id) {
         let starting_copper = money::gp_to_copper(f64::from(starting_wealth_gp));
-        adjust_character_money_at_root(root, starting_copper as i64)?;
+        adjust_character_money_at_root(root, starting_copper as i64 - equipment_cost_copper as i64)?;
+    } else {
+        starting_wealth_note = money::starting_wealth_unpublished_reason(&request.class_id).map(str::to_owned);
     }
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        starting_wealth_note,
     })
 }
 
@@ -1721,6 +1979,7 @@ pub fn clone_character(
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        starting_wealth_note: None,
     })
 }
 
@@ -1813,6 +2072,13 @@ fn starter_seed_request(
         selected_traits: Vec::new(),
         trait_skill_choices: Vec::new(),
         additional_choices: Vec::new(),
+        additional_levels: Vec::new(),
+        hit_point_levels: Vec::new(),
+        selected_feats: Vec::new(),
+        skill_allocations: Vec::new(),
+        selected_spells: Vec::new(),
+        selected_equipment: Vec::new(),
+        price_mode: PriceMode::Standard,
     }
 }
 
@@ -2512,6 +2778,62 @@ pub(crate) fn purchase_equipment_at_root(
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<PurchaseEquipmentResponse, String> {
+    purchase_equipment_priced_at_root(root, item_id, active_state, saved_at, PriceMode::Standard)
+}
+
+/// How equipment moves money. A per-request choice made on the equipment screen; it is never
+/// saved on the character.
+///
+/// - `Cashless`: items are added and removed without touching the balance (no funds needed, no
+///   refund, and an item with no catalog price is fine).
+/// - `Standard`: buy at 100% of the catalog price, sell at 50% (rounded down to a copper piece).
+/// - `CharacterBuild`: buy and sell both at 100%, so adding and removing an item nets to zero.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum PriceMode {
+    Cashless,
+    #[default]
+    Standard,
+    CharacterBuild,
+}
+
+/// What selling an item back returns, in copper, for a catalog price of `cost_copper`.
+pub(crate) fn refund_copper(cost_copper: u64, mode: PriceMode) -> u64 {
+    match mode {
+        PriceMode::Cashless => 0,
+        PriceMode::Standard => cost_copper / 2,
+        PriceMode::CharacterBuild => cost_copper,
+    }
+}
+
+/// The catalog gold price of `item_id`, resolved the same way a purchase resolves it: by exact
+/// catalog key first, then the free-form resolver for legacy ids. `None` when the record carries
+/// no independent price (a `(Base)` template, a formula-priced modifier).
+fn catalog_cost_gp(item_id: &str) -> Option<f64> {
+    codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(item_id).map_or_else(
+        || codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(item_id),
+        |row| row.cost_gp,
+    )
+}
+
+/// [`purchase_equipment_at_root`] under an explicit [`PriceMode`]. `Cashless` skips the price and
+/// affordability checks entirely and charges nothing; the other two buy at 100%.
+pub(crate) fn purchase_equipment_priced_at_root(
+    root: &Path,
+    item_id: &str,
+    active_state: ActiveState,
+    saved_at: &str,
+    mode: PriceMode,
+) -> Result<PurchaseEquipmentResponse, String> {
+    if mode == PriceMode::Cashless {
+        return match add_equipment_selection_at_root(root, item_id, active_state, saved_at)? {
+            CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
+            CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
+                let money = load_character_money_at_root(root)?;
+                Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money })
+            }
+        };
+    }
     // SD-27: the Add Weapon / Add Armor picker hands this command a catalog
     // `key` straight off `build_equipment_catalog()`, so the by-key lookup
     // is tried first -- it names the exact row the user picked, including
@@ -2520,13 +2842,7 @@ pub(crate) fn purchase_equipment_at_root(
     // resolver remains the fallback for ids that are not catalog keys at
     // all, notably the legacy `"item:longsword"` fixture namespace that
     // seeded characters still carry.
-    let Some(cost_gp) =
-        codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(item_id)
-            .map_or_else(
-                || codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(item_id),
-                |row| row.cost_gp,
-            )
-    else {
+    let Some(cost_gp) = catalog_cost_gp(item_id) else {
         return Ok(PurchaseEquipmentResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
                 id: "money.equipment_purchase.unknown_cost".to_owned(),
@@ -2561,7 +2877,7 @@ pub(crate) fn purchase_equipment_at_root(
         CreateCharacterResponse::Blocked { diagnostics } => {
             Ok(PurchaseEquipmentResponse::Blocked { diagnostics })
         }
-        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived } => {
+        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
             let cost_signed = i64::try_from(cost_copper)
                 .map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
             let money = adjust_character_money_at_root(root, -cost_signed)?;
@@ -2720,7 +3036,7 @@ pub(crate) fn attach_equipment_modifier_at_root(
         CreateCharacterResponse::Blocked { diagnostics } => {
             Ok(AttachEquipmentModifierResponse::Blocked { diagnostics })
         }
-        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived } => {
+        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
             let money = if cost_copper > 0 {
                 let cost_signed = i64::try_from(cost_copper)
                     .map_err(|_| "attach cost overflows a signed 64-bit total".to_owned())?;
@@ -2766,6 +3082,9 @@ pub struct PurchaseEquipmentRequest {
     pub item_id: String,
     pub active_state: ActiveStateDto,
     pub saved_at: String,
+    /// Absent means `Standard` (buy at 100%).
+    #[serde(default)]
+    pub price_mode: PriceMode,
 }
 
 /// Atomically resolves `item_id`'s real catalog cost, verifies the
@@ -2779,11 +3098,12 @@ pub fn purchase_equipment(
     request: PurchaseEquipmentRequest,
 ) -> Result<PurchaseEquipmentResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    purchase_equipment_at_root(
+    purchase_equipment_priced_at_root(
         &root,
         &request.item_id,
         request.active_state.into(),
         &request.saved_at,
+        request.price_mode,
     )
 }
 
@@ -3377,6 +3697,28 @@ pub(crate) fn remove_equipment_selection_at_root(
     })
 }
 
+/// [`remove_equipment_selection_at_root`] that also sells the item back under `mode`: `Standard`
+/// returns 50% of its catalog price, `CharacterBuild` 100%, `Cashless` nothing. An item with no
+/// catalog price has nothing to refund and is removed all the same. The refund is applied only
+/// after the removal saved.
+pub(crate) fn remove_equipment_selection_priced_at_root(
+    root: &Path,
+    item_id: &str,
+    saved_at: &str,
+    mode: PriceMode,
+) -> Result<CreateCharacterResponse, String> {
+    let cost_copper = catalog_cost_gp(item_id).map(money::gp_to_copper);
+    let response = remove_equipment_selection_at_root(root, item_id, saved_at)?;
+    if let (CreateCharacterResponse::Saved { .. }, Some(cost_copper)) = (&response, cost_copper) {
+        let refund = refund_copper(cost_copper, mode);
+        if refund > 0 {
+            let refund_signed = i64::try_from(refund).map_err(|_| "refund overflows a signed 64-bit total".to_owned())?;
+            adjust_character_money_at_root(root, refund_signed)?;
+        }
+    }
+    Ok(response)
+}
+
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RemoveFeatSelectionRequest {
@@ -3721,19 +4063,24 @@ pub struct RemoveEquipmentSelectionRequest {
     pub character_id: String,
     pub item_id: String,
     pub saved_at: String,
+    /// What removing the item returns: `Standard` sells at 50%, `CharacterBuild` at 100%,
+    /// `Cashless` returns nothing. Absent means `Standard`.
+    #[serde(default)]
+    pub price_mode: PriceMode,
 }
 
 /// Loads the saved character, drops one carried copy of the requested item
 /// (with its applied equipmods), recomputes via the real engine, and
 /// re-saves — the inverse of `add_equipment_selection` / `purchase_equipment`.
-/// Does **not** refund the purchase; see `apply_remove_equipment_selection`.
+/// Sells the item back under the request's price mode (`Standard` 50%, `CharacterBuild` 100%,
+/// `Cashless` nothing); see `remove_equipment_selection_priced_at_root`.
 #[tauri::command]
 pub fn remove_equipment_selection(
     app: tauri::AppHandle,
     request: RemoveEquipmentSelectionRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    remove_equipment_selection_at_root(&root, &request.item_id, &request.saved_at)
+    remove_equipment_selection_priced_at_root(&root, &request.item_id, &request.saved_at, request.price_mode)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -3939,6 +4286,108 @@ pub fn delete_character_portrait(
 // `load_character_portrait`/`delete_character_portrait`'s own established
 // sidecar-file precedent (`portrait.png`) exactly -- same directory, same
 // "requires the character to already be saved" invariant, same shape.
+
+const HIT_POINTS_FILE_NAME: &str = "hit_points.json";
+
+/// One character level's hit die result (before the Constitution modifier).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HitPointLevelDto {
+    pub class_id: String,
+    pub value: u8,
+}
+
+/// The player's hit point results, one per character level in order, as saved in `hit_points.json`.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterHitPointsDto {
+    #[serde(default)]
+    pub levels: Vec<HitPointLevelDto>,
+}
+
+fn invalid_hit_points(message: String) -> CreateCharacterResponse {
+    CreateCharacterResponse::Blocked {
+        diagnostics: vec![DiagnosticDto { id: "hit_points.invalid".to_owned(), message, claim_blocking: true }],
+    }
+}
+
+/// Checks the player's hit point results against the levels the request creates: one per level, the
+/// classes agreeing with the levels asked for, every result inside its class's die, and the first
+/// level at the full die. `None` when there is nothing wrong (or nothing sent).
+fn validate_hit_point_levels(request: &CreateCharacterRequest) -> Option<CreateCharacterResponse> {
+    let sent = &request.hit_point_levels;
+    if sent.is_empty() {
+        return None;
+    }
+    let expected_total = usize::from(request.level) + request.additional_levels.len();
+    if sent.len() != expected_total {
+        return Some(invalid_hit_points(format!(
+            "{} hit point results were sent for a character with {expected_total} levels",
+            sent.len()
+        )));
+    }
+    if sent[0].class_id != request.class_id {
+        return Some(invalid_hit_points(format!(
+            "the first level's hit points are for {}, but the character's first class is {}",
+            sent[0].class_id, request.class_id
+        )));
+    }
+    let count_of = |class_id: &str, among: &mut dyn Iterator<Item = &String>| among.filter(|c| c.as_str() == class_id).count();
+    for class_id in sent.iter().map(|level| level.class_id.as_str()).collect::<std::collections::BTreeSet<_>>() {
+        let sent_count = sent.iter().filter(|level| level.class_id == class_id).count();
+        let own = if class_id == request.class_id { usize::from(request.level) } else { 0 };
+        let wanted = own + count_of(class_id, &mut request.additional_levels.iter());
+        if sent_count != wanted {
+            return Some(invalid_hit_points(format!("{sent_count} hit point results were sent for {class_id}, which has {wanted} levels")));
+        }
+    }
+    for (index, level) in sent.iter().enumerate() {
+        let Some(die) = class_hit_points_die(&level.class_id) else {
+            return Some(invalid_hit_points(format!("{} has no known hit die, so its hit points cannot be recorded", level.class_id)));
+        };
+        if level.value < 1 || level.value > die {
+            return Some(invalid_hit_points(format!("level {} of {} is {}, outside its d{die}", index + 1, level.class_id, level.value)));
+        }
+        if index == 0 && level.value != die {
+            return Some(invalid_hit_points(format!("the first level always takes the full die (d{die}), not {}", level.value)));
+        }
+    }
+    None
+}
+
+fn save_character_hit_points_at_root(root: &Path, levels: &[HitPointLevelDto]) -> Result<(), String> {
+    SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let path = root.join(HIT_POINTS_FILE_NAME);
+    let json = serde_json::to_string_pretty(&CharacterHitPointsDto { levels: levels.to_vec() })
+        .map_err(|err| format!("failed to serialize hit points: {err}"))?;
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+}
+
+/// The saved hit point results, or an empty list when the character has none (created before the
+/// Levels list, or without rolls). Never an error for the ordinary "no file" case.
+fn load_character_hit_points_at_root(root: &Path) -> Result<CharacterHitPointsDto, String> {
+    let path = root.join(HIT_POINTS_FILE_NAME);
+    if !path.exists() {
+        return Ok(CharacterHitPointsDto::default());
+    }
+    let contents = std::fs::read_to_string(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+    serde_json::from_str(&contents).map_err(|err| format!("{}: invalid hit points JSON: {err}", path.display()))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadCharacterHitPointsRequest {
+    pub character_id: String,
+}
+
+#[tauri::command]
+pub fn load_character_hit_points(
+    app: tauri::AppHandle,
+    request: LoadCharacterHitPointsRequest,
+) -> Result<CharacterHitPointsDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    load_character_hit_points_at_root(&root)
+}
 
 const BIO_FILE_NAME: &str = "bio.json";
 
@@ -4711,6 +5160,7 @@ fn import_character_from_json(
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        starting_wealth_note: None,
     })
 }
 
@@ -6243,6 +6693,13 @@ mod tests {
             selected_traits: Vec::new(),
             trait_skill_choices: Vec::new(),
             additional_choices: Vec::new(),
+            additional_levels: Vec::new(),
+            hit_point_levels: Vec::new(),
+            selected_feats: Vec::new(),
+            skill_allocations: Vec::new(),
+            selected_spells: Vec::new(),
+            selected_equipment: Vec::new(),
+            price_mode: PriceMode::Standard,
             saved_at: "2026-07-08T00:00:00Z".to_owned(),
         }
     }
@@ -7084,11 +7541,11 @@ mod tests {
 
     // ----- create_character: starting wealth (risks item 7) -----
 
-    /// A freshly created Fighter is granted the operator-cited average
-    /// starting wealth (175 gp = 17,500 cp) atomically as part of creation,
+    /// A freshly created Fighter is granted the MAXIMUM starting wealth
+    /// (5d6 x 10 at its top: 300 gp = 30,000 cp) atomically as part of creation,
     /// not as a separate call the caller has to remember to make.
     #[test]
-    fn create_character_at_root_grants_the_operator_cited_starting_wealth_for_fighter() {
+    fn create_character_at_root_grants_the_maximum_starting_wealth_for_fighter() {
         let root = tempdir("create-character-starting-wealth-fighter");
         let request = request_for("race:human", 1);
 
@@ -7104,8 +7561,8 @@ mod tests {
 
         assert_eq!(
             load_character_money_at_root(&root).unwrap().total_copper,
-            17_500,
-            "175 gp (5d6 x 10, operator-cited average) = 17,500 cp"
+            30_000,
+            "300 gp (5d6 x 10, every die at its maximum) = 30,000 cp"
         );
 
         std::fs::remove_dir_all(&root).ok();
@@ -7115,8 +7572,9 @@ mod tests {
     /// own correct, distinct starting wealth -- not a single hardcoded value
     /// applied regardless of class.
     #[test]
-    fn create_character_at_root_grants_the_operator_cited_starting_wealth_for_wizard_and_rogue() {
-        for (class_id, expected_copper) in [("class:wizard", 7_000_u64), ("class:rogue", 14_000_u64)] {
+    fn create_character_at_root_grants_the_maximum_starting_wealth_for_wizard_and_rogue() {
+        // 2d6 x 10 -> 120 gp; 4d6 x 10 -> 240 gp, each die at its maximum.
+        for (class_id, expected_copper) in [("class:wizard", 12_000_u64), ("class:rogue", 24_000_u64)] {
             let root = tempdir(&format!("create-character-starting-wealth-{class_id}"));
             let request = request_for_class("race:human", class_id, 1);
 
@@ -7325,10 +7783,372 @@ mod tests {
 
         assert_eq!(
             load_character_money_at_root(&root).unwrap().total_copper,
-            10_500,
-            "105 gp (3d6 x 10, operator-cited average for Alchemist) = 10,500 cp"
+            18_000,
+            "180 gp (3d6 x 10, every die at its maximum, Alchemist) = 18,000 cp"
         );
 
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- create: the selections made in the Manage dialogs -----
+
+    fn draft_feats(request: &CreateCharacterRequest) -> crate::feat_catalog::FeatCatalogResponse {
+        list_feats_for_draft_impl(request, &crate::feat_catalog::FeatCatalogFilter::default()).expect("draft feats list")
+    }
+
+    /// A feat the draft qualifies for / does not, read from the draft's own verdicts (no hardcoded ids).
+    fn eligible_and_ineligible_feat(request: &CreateCharacterRequest) -> (String, String) {
+        let feats = draft_feats(request);
+        let verdict = |want: bool| {
+            feats
+                .entries
+                .iter()
+                .find(|e| e.eligibility.as_ref().is_some_and(|v| v.eligible == want && (want || !v.unmet.is_empty())) && e.chooser_target_kind.is_none())
+                .map(|e| e.key.clone())
+                .unwrap_or_else(|| panic!("the draft has no feat with eligible={want}"))
+        };
+        (verdict(true), verdict(false))
+    }
+
+    #[test]
+    fn the_draft_feat_list_carries_verdicts_for_a_character_that_is_not_saved_yet() {
+        let request = request_for_class("race:human", "class:fighter", 1);
+        let feats = draft_feats(&request);
+        assert!(feats.entries.len() > 100, "the whole catalog is listed");
+        assert!(feats.entries.iter().any(|e| e.eligibility.as_ref().is_some_and(|v| v.eligible)), "some feats qualify");
+        assert!(feats.entries.iter().any(|e| e.eligibility.as_ref().is_some_and(|v| !v.eligible)), "and some do not");
+    }
+
+    // ---- Custom: GM grants and house-rule records (custom.json) -------------------------------------
+
+    use crate::character_custom::{
+        load_character_custom_at_root, save_character_custom_at_root, CharacterCustomDto, CustomGrantDto, CustomRecordDto,
+        CustomStatDto,
+    };
+
+    fn grant(id: &str, target: &str, value: i32) -> CustomGrantDto {
+        CustomGrantDto { id: id.to_owned(), label: format!("grant {id}"), target: target.to_owned(), value, reason: "a god's boon".to_owned() }
+    }
+
+    fn record(id: &str, name: &str) -> CustomRecordDto {
+        CustomRecordDto {
+            id: id.to_owned(),
+            name: name.to_owned(),
+            description: "A thing the GM allowed.".to_owned(),
+            stats: vec![CustomStatDto { label: "Damage".to_owned(), value: "1d8".to_owned() }],
+        }
+    }
+
+    fn created_character(label: &str) -> std::path::PathBuf {
+        let root = tempdir(label);
+        let response = create_character_at_root(&root, &request_for_class("race:human", "class:fighter", 1), "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        root
+    }
+
+    fn saved_scores(root: &Path) -> (i16, i16) {
+        let chosen = SavedCharacterStore::load(root).unwrap().character_input.chosen;
+        (chosen.ability_scores.wisdom, chosen.ability_scores.strength)
+    }
+
+    #[test]
+    fn a_character_with_no_custom_file_has_an_empty_custom_set() {
+        let root = created_character("custom-none");
+        assert_eq!(load_character_custom_at_root(&root).unwrap(), CharacterCustomDto::default());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn an_ability_grant_moves_the_saved_score_and_removing_it_restores_it() {
+        let root = created_character("custom-ability");
+        let (wis_before, str_before) = saved_scores(&root);
+        let mut custom = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 1)], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect("save");
+        assert_eq!(saved_scores(&root), (wis_before + 1, str_before), "+1 Wisdom, nothing else");
+        assert_eq!(load_character_custom_at_root(&root).unwrap(), custom, "the grant is listed so it can be edited");
+
+        // Changing the grant applies only the difference.
+        custom.grants = vec![grant("g1", "ability:wisdom", 3)];
+        save_character_custom_at_root(&root, &custom, "2026-07-21T02:00:00Z").expect("save");
+        assert_eq!(saved_scores(&root).0, wis_before + 3);
+
+        // Removing it puts the score back exactly where it was.
+        custom.grants.clear();
+        save_character_custom_at_root(&root, &custom, "2026-07-21T03:00:00Z").expect("save");
+        assert_eq!(saved_scores(&root), (wis_before, str_before));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn non_ability_grants_and_records_are_saved_without_touching_the_scores() {
+        let root = created_character("custom-records");
+        let before = saved_scores(&root);
+        let revision_before = SavedCharacterStore::load(&root).unwrap().revision_id;
+        let custom = CharacterCustomDto {
+            grants: vec![grant("hp", "hit_points", 5), grant("sp", "skill_points", 2)],
+            feats: vec![record("f1", "Racial Weapon Specialization")],
+            equipment: vec![record("e1", "Sunblade of the Order")],
+            spells: vec![record("s1", "Ember Step")],
+            devices: vec![record("d1", "Rod of Small Mercies")],
+        };
+        save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect("save");
+        assert_eq!(saved_scores(&root), before, "no ability grant, so no score change");
+        assert_eq!(SavedCharacterStore::load(&root).unwrap().revision_id, revision_before, "and no new revision");
+        assert_eq!(load_character_custom_at_root(&root).unwrap(), custom);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn invalid_custom_data_is_refused_whole_and_nothing_changes() {
+        let root = created_character("custom-invalid");
+        let before = saved_scores(&root);
+        let cases: Vec<(CharacterCustomDto, &str)> = vec![
+            (CharacterCustomDto { feats: vec![record("f1", "   ")], ..Default::default() }, "name"),
+            (CharacterCustomDto { grants: vec![grant("g1", "ability:luck", 1)], ..Default::default() }, "target"),
+            (CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 99)], ..Default::default() }, "value"),
+            (CharacterCustomDto { grants: vec![grant("g1", "hit_points", 1), grant("g1", "hit_points", 2)], ..Default::default() }, "duplicate"),
+            (CharacterCustomDto { equipment: vec![CustomRecordDto { stats: vec![CustomStatDto { label: String::new(), value: "x".to_owned() }], ..record("e1", "Thing") }], ..Default::default() }, "stat"),
+            (CharacterCustomDto { spells: vec![CustomRecordDto { description: "x".repeat(10_001), ..record("s1", "Long") }], ..Default::default() }, "description"),
+        ];
+        for (custom, needle) in cases {
+            let err = save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect_err("must be refused");
+            assert!(err.contains(needle), "the refusal names the problem ({needle}): {err}");
+        }
+        assert_eq!(saved_scores(&root), before, "a refused save changes nothing");
+        assert!(!root.join("custom.json").exists(), "and writes nothing");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn a_grant_that_would_push_an_ability_outside_the_playable_range_is_refused() {
+        let root = created_character("custom-range");
+        let custom = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", -12)], ..Default::default() };
+        let err = save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect_err("a score of 0 is not playable");
+        assert!(err.contains("wisdom"), "{err}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn starting_wealth_for_class_reports_the_maximum_or_the_reason_there_is_none() {
+        let fighter = starting_wealth_for_class_impl("class:fighter");
+        assert_eq!(fighter.max_gp, money::starting_wealth_max_gp("class:fighter"), "the same figure create grants");
+        assert!(fighter.max_gp.is_some_and(|gp| gp > 0), "fighter has published wealth");
+        assert!(fighter.note.is_none(), "so there is no note");
+        let commoner = starting_wealth_for_class_impl("class:commoner");
+        assert_eq!(commoner.max_gp, None, "commoner has no published figure");
+        assert!(commoner.note.as_deref().is_some_and(|n| !n.is_empty()), "and the reason is stated");
+    }
+
+    #[test]
+    fn the_draft_spell_options_state_a_quota_per_spell_level_and_the_races_innate_spells() {
+        // A level-1 cleric has a stated per-day quota for spell levels 0 and 1.
+        let cleric = draft_spell_options_impl(&request_for_class("race:human", "class:cleric", 1)).expect("options");
+        assert!(
+            cleric.per_day.iter().any(|row| row.id.contains("total_spells_per_day.spell_level_1")),
+            "level-1 slots are stated: {:?}",
+            cleric.per_day.iter().map(|row| &row.id).collect::<Vec<_>>()
+        );
+        assert!(cleric.innate.is_empty(), "a human has no racial spell-like abilities: {:?}", cleric.innate);
+
+        // A gnome's innate spell-like abilities come from the race's own trait record.
+        let gnome = draft_spell_options_impl(&request_for_class("race:gnome", "class:fighter", 1)).expect("options");
+        for spell in ["Dancing Lights", "Ghost Sound", "Prestidigitation", "Speak with Animals"] {
+            assert!(gnome.innate.iter().any(|name| name == spell), "{spell} is innate to a gnome: {:?}", gnome.innate);
+        }
+        // Choosing an alternate trait that replaces Gnome Magic removes them (suppression is the resolver's).
+        assert!(gnome.per_day.is_empty(), "a fighter has no spell quota");
+    }
+
+    #[test]
+    fn create_character_at_root_applies_the_feats_chosen_in_the_dialog() {
+        let root = tempdir("create-selected-feats");
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        let (eligible, _) = eligible_and_ineligible_feat(&request);
+        request.selected_feats = vec![CreateFeatDto { feat_id: eligible.clone(), target: None }];
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let saved = SavedCharacterStore::load(&root).unwrap();
+        assert!(saved.character_input.chosen.selected_feats.contains(&eligible), "{eligible} is on the saved character");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn create_character_at_root_refuses_a_feat_the_character_does_not_qualify_for() {
+        let root = tempdir("create-unqualified-feat");
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        let (_, ineligible) = eligible_and_ineligible_feat(&request);
+        request.selected_feats = vec![CreateFeatDto { feat_id: ineligible, target: None }];
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        let CreateCharacterResponse::Blocked { diagnostics } = response else { panic!("an unqualified feat must be refused") };
+        assert!(diagnostics.iter().any(|d| d.id == "create.feat_unqualified"), "{diagnostics:?}");
+        assert!(SavedCharacterStore::load(&root).is_err(), "nothing saved");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn create_character_at_root_applies_skill_ranks_spells_and_equipment_from_the_dialogs() {
+        let root = tempdir("create-selected-everything");
+        let mut request = request_for_class("race:human", "class:wizard", 1);
+        request.skill_allocations = vec![
+            SkillAllocationDto { skill_id: "skill:swim".to_owned(), ranks: 1 },
+            SkillAllocationDto { skill_id: "skill:intimidate".to_owned(), ranks: 1 },
+            SkillAllocationDto { skill_id: "skill:climb".to_owned(), ranks: 1 },
+        ];
+        request.selected_spells = vec![CreateSpellDto {
+            spell_id: "Mage Armor".to_owned(),
+            source_class_id: "class:wizard".to_owned(),
+            acquisition_mode: AcquisitionModeDto::Known,
+        }];
+        request.selected_equipment = vec![CreateEquipmentDto { item_id: "item:dagger".to_owned() }];
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+
+        let saved = SavedCharacterStore::load(&root).unwrap().character_input.chosen;
+        assert_eq!(saved.skill_allocations.len(), 3, "the skill ranks are saved");
+        assert!(saved.spells_selected.iter().any(|spell| spell.spell_id == "Mage Armor"), "the spell is saved");
+        assert!(saved.equipment_selections.iter().any(|item| item.item_id == "item:dagger"), "the item is saved");
+        // Wizard starts with the maximum 2d6 x 10 = 120 gp = 12,000 cp; a dagger costs 2 gp = 200 cp.
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 11_800, "the dagger was paid for");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn create_character_at_root_refuses_equipment_the_starting_money_cannot_pay_for() {
+        let costly = codex::rules_core::equipment_resolver::equipment_catalog_rows()
+            .iter()
+            .find(|row| row.cost_gp.is_some_and(|gp| gp > 5_000.0))
+            .expect("the catalog has an expensive item")
+            .key;
+        let root = tempdir("create-unaffordable-equipment");
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        request.selected_equipment = vec![CreateEquipmentDto { item_id: costly.to_owned() }];
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        let CreateCharacterResponse::Blocked { diagnostics } = response else { panic!("too expensive") };
+        assert!(diagnostics.iter().any(|d| d.id == "create.equipment_unaffordable"), "{diagnostics:?}");
+        assert!(SavedCharacterStore::load(&root).is_err(), "nothing saved");
+
+        // Cashless mode needs no money.
+        request.price_mode = PriceMode::Cashless;
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 30_000, "cashless spends nothing");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- create: several levels and the player's hit point rolls -----
+
+    fn hp_level(class_id: &str, value: u8) -> HitPointLevelDto {
+        HitPointLevelDto { class_id: class_id.to_owned(), value }
+    }
+
+    /// Levels of other classes added at creation land on the saved character, so a Fighter 2 / Wizard 1
+    /// can be created in one step instead of created and then leveled.
+    #[test]
+    fn create_character_at_root_adds_the_levels_of_other_classes() {
+        let root = tempdir("create-multiclass-levels");
+        let mut request = request_for_class("race:human", "class:fighter", 2);
+        request.additional_levels = vec!["class:wizard".to_owned()];
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        let CreateCharacterResponse::Saved { summary, .. } = response else {
+            panic!("Human Fighter 2 / Wizard 1 must reach Computed");
+        };
+        assert_eq!(summary.class_summary, "class:fighter:2,class:wizard:1");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn create_character_at_root_saves_the_players_hit_point_rolls() {
+        let root = tempdir("create-hp-rolls-saved");
+        let mut request = request_for_class("race:human", "class:fighter", 3);
+        request.hit_point_levels = vec![hp_level("class:fighter", 10), hp_level("class:fighter", 7), hp_level("class:fighter", 3)];
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+
+        let saved = load_character_hit_points_at_root(&root).expect("load");
+        assert_eq!(saved.levels, request.hit_point_levels, "every level's die result is kept, in order");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn a_character_created_without_rolls_has_no_hit_point_file_and_loads_as_empty() {
+        let root = tempdir("create-hp-rolls-none");
+        let request = request_for_class("race:human", "class:fighter", 2);
+        create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(!root.join("hit_points.json").exists(), "nothing written when the caller sent no rolls");
+        assert_eq!(load_character_hit_points_at_root(&root).unwrap().levels, Vec::new());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Rolls that cannot be right are refused before anything is saved: wrong number of levels, a
+    /// result outside the die, a first level that is not the maximum, a class that does not match.
+    #[test]
+    fn create_character_at_root_refuses_hit_point_rolls_that_do_not_fit_the_levels() {
+        let cases: Vec<(&str, Vec<HitPointLevelDto>)> = vec![
+            ("too few", vec![hp_level("class:fighter", 10)]),
+            ("outside the die", vec![hp_level("class:fighter", 10), hp_level("class:fighter", 11)]),
+            ("zero", vec![hp_level("class:fighter", 10), hp_level("class:fighter", 0)]),
+            ("level 1 not maximum", vec![hp_level("class:fighter", 9), hp_level("class:fighter", 5)]),
+            ("wrong class", vec![hp_level("class:fighter", 10), hp_level("class:wizard", 4)]),
+        ];
+        for (label, levels) in cases {
+            let root = tempdir(&format!("create-hp-rolls-refused-{}", label.replace(' ', "-")));
+            let mut request = request_for_class("race:human", "class:fighter", 2);
+            request.hit_point_levels = levels;
+
+            let response = create_character_at_root(&root, &request, "test-version".to_owned())
+                .expect("create call should not error");
+            let CreateCharacterResponse::Blocked { diagnostics } = response else {
+                panic!("{label}: invalid rolls must be refused");
+            };
+            assert!(diagnostics.iter().any(|d| d.id == "hit_points.invalid"), "{label}: {diagnostics:?}");
+            assert!(SavedCharacterStore::load(&root).is_err(), "{label}: nothing may be saved");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    #[test]
+    fn hit_points_load_with_the_camel_case_wire_shape() {
+        let root = tempdir("hp-wire-shape");
+        let mut request = request_for_class("race:human", "class:fighter", 2);
+        request.hit_point_levels = vec![hp_level("class:fighter", 10), hp_level("class:fighter", 4)];
+        create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        let raw = std::fs::read_to_string(root.join("hit_points.json")).expect("hit_points.json exists");
+        assert!(raw.contains("\"classId\""), "camelCase keys: {raw}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A class with no published starting wealth (the NPC classes, the Shifter) starts with 0 gp, and
+    /// the response says why, so the player is told rather than left to wonder where the money is.
+    #[test]
+    fn create_character_at_root_gives_an_unpublished_class_zero_gold_and_a_note() {
+        let root = tempdir("create-character-starting-wealth-unpublished-note");
+        let request = request_for_class("race:human", "class:commoner", 1);
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        let CreateCharacterResponse::Saved { starting_wealth_note, .. } = response else {
+            panic!("Human Commoner level 1 must reach Computed");
+        };
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 0, "no published wealth, no gold");
+        let note = starting_wealth_note.expect("the response states why this character has no starting gold");
+        assert!(note.contains("0 gp"), "{note}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A class that has a published statline gets no note: the note is only for the exception.
+    #[test]
+    fn create_character_at_root_gives_no_starting_wealth_note_when_the_class_has_a_value() {
+        let root = tempdir("create-character-starting-wealth-no-note");
+        let request = request_for("race:human", 1);
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        let CreateCharacterResponse::Saved { starting_wealth_note, .. } = response else {
+            panic!("Human Fighter level 1 must reach Computed");
+        };
+        assert_eq!(starting_wealth_note, None);
         std::fs::remove_dir_all(&root).ok();
     }
 
@@ -7444,6 +8264,103 @@ mod tests {
         );
         assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 800);
 
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- price modes: cashless / buy 100% sell 50% / character build (100% both ways) -----
+
+    fn fund_and_seed(label: &str, copper: i64) -> std::path::PathBuf {
+        let root = tempdir(label);
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, copper).expect("funding should succeed");
+        root
+    }
+
+    #[test]
+    fn refund_copper_follows_the_price_mode() {
+        // A dagger costs 2 gp = 200 cp.
+        assert_eq!(refund_copper(200, PriceMode::Standard), 100, "sell at 50%");
+        assert_eq!(refund_copper(200, PriceMode::CharacterBuild), 200, "character build sells at 100%");
+        assert_eq!(refund_copper(200, PriceMode::Cashless), 0, "cashless never moves money");
+        assert_eq!(refund_copper(5, PriceMode::Standard), 2, "half rounds down to a whole copper piece");
+    }
+
+    #[test]
+    fn a_cashless_purchase_adds_the_item_and_charges_nothing_even_with_no_funds() {
+        let root = fund_and_seed("price-mode-cashless-buy", 0);
+        let before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections.len();
+
+        let response = purchase_equipment_priced_at_root(
+            &root, "item:dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::Cashless,
+        )
+        .expect("purchase call should not error");
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "cashless needs no funds");
+
+        let after = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections.len();
+        assert_eq!(after, before + 1, "the item is added");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 0, "no money moved");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn a_cashless_purchase_accepts_an_item_with_no_catalog_price() {
+        let root = fund_and_seed("price-mode-cashless-unpriced", 0);
+        // "Dagger" is a (Base) template with no cost: blocked when buying with money, fine without it.
+        let response = purchase_equipment_priced_at_root(
+            &root, "Dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::Cashless,
+        )
+        .expect("purchase call should not error");
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn selling_in_the_standard_mode_returns_half_the_cost() {
+        let root = fund_and_seed("price-mode-standard-sell", 1_000);
+        purchase_equipment_priced_at_root(&root, "item:dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::Standard)
+            .expect("buy");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 800, "bought at 100%");
+
+        remove_equipment_selection_priced_at_root(&root, "item:dagger", "2026-07-23T00:00:01Z", PriceMode::Standard)
+            .expect("sell");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 900, "sold at 50% of 200 cp");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn selling_in_character_build_mode_returns_the_full_cost() {
+        let root = fund_and_seed("price-mode-build-sell", 1_000);
+        purchase_equipment_priced_at_root(&root, "item:dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::CharacterBuild)
+            .expect("buy");
+        remove_equipment_selection_priced_at_root(&root, "item:dagger", "2026-07-23T00:00:01Z", PriceMode::CharacterBuild)
+            .expect("sell");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 1_000, "buy and sell both at 100%");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn removing_an_item_in_cashless_mode_refunds_nothing() {
+        let root = fund_and_seed("price-mode-cashless-sell", 1_000);
+        purchase_equipment_priced_at_root(&root, "item:dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::Standard)
+            .expect("buy");
+        remove_equipment_selection_priced_at_root(&root, "item:dagger", "2026-07-23T00:00:01Z", PriceMode::Cashless)
+            .expect("remove");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 800, "cashless removal moves no money");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn removing_an_item_with_no_known_price_refunds_nothing_and_still_removes_it() {
+        let root = fund_and_seed("price-mode-unpriced-sell", 500);
+        purchase_equipment_priced_at_root(&root, "Dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::Cashless)
+            .expect("add the unpriced item cashless");
+        let before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections.len();
+        remove_equipment_selection_priced_at_root(&root, "Dagger", "2026-07-23T00:00:01Z", PriceMode::Standard)
+            .expect("remove");
+        let after = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections.len();
+        assert_eq!(after, before - 1, "the item is removed");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 500, "an unpriced item has nothing to refund");
         std::fs::remove_dir_all(&root).ok();
     }
 
@@ -10113,6 +11030,7 @@ mod tests {
     fn create_character_response_saved_serializes_corpus_derived_as_camel_case_without_touching_the_tag(
     ) {
         let response = CreateCharacterResponse::Saved {
+            starting_wealth_note: None,
             summary: Box::new(CharacterSummaryDto {
                 character_id: "c".to_owned(),
                 display_label: "d".to_owned(),

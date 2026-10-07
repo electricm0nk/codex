@@ -255,10 +255,11 @@ in only one namespace is invisible to whichever consumer reads the other one.
 
 ### Diagnostics and errors: loud, named, never silently empty
 
-- **A diagnostic names the exact missing piece, not a generic failure.** `perform_install`
-  (`apps/desktop/src-tauri/src/update/transaction.rs`) always returns `Err("perform_install is
-  registered but not wired: downloading the AppImage artifact requires an HTTP client this crate
-  does not carry as a dependency yet; ...")` — see the Honest stubs idiom below.
+- **A diagnostic names the exact missing piece, not a generic failure.** `perform_install`'s
+  AppImage branch (`apps/desktop/src-tauri/src/update/transaction.rs`) returns `Err("perform_install
+  is not wired for AppImage installs: the staged transaction exists but its download step has not
+  been connected to this command")`, and every `.deb` verification failure is a named `Err` too — see
+  the Honest stubs idiom below.
 - **A store/loader that hits a missing environment precondition says which one, with the fix
   command**, rather than returning an empty result that looks like "no data yet." `preflight-oracle`
   (`scripts/verify.sh`) fails RED with the exact `scripts/fetch-pcgen-oracle.sh` invocation when the
@@ -455,11 +456,12 @@ Full treatment, including non-Rust examples of the same discipline, in
 ### Honest stubs
 
 A stub must say it's a stub in its own return value or comment, not just in a doc comment nobody
-reads at runtime. The exemplar is `perform_install`
-(`apps/desktop/src-tauri/src/update/transaction.rs`): it always returns `Err("perform_install is
-registered but not wired: downloading the AppImage artifact requires an HTTP client this crate
-does not carry as a dependency yet; ...")` — the caller sees the exact missing dependency, not a
-generic failure. **When landing a deliberate stub**: make its error/return value name the specific
+reads at runtime. The exemplar is `perform_install`'s AppImage branch
+(`apps/desktop/src-tauri/src/update/transaction.rs`): it returns `Err("perform_install is not wired
+for AppImage installs: the staged transaction exists but its download step has not been connected
+to this command")` — the caller sees exactly what is missing, not a generic failure. A
+stub behind a live affordance must not look live: the Install button's handler calls the command
+and shows its error, rather than doing nothing. **When landing a deliberate stub**: make its error/return value name the specific
 missing piece, the same way. Operator-granted exceptions to the wider no-stub doctrine are tracked
 in `docs/governance/wired-integration-stubs-registry.md`, never landed silently.
 

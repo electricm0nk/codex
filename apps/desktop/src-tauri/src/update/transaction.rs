@@ -150,6 +150,8 @@ pub struct InstalledState {
 pub enum InstallKind {
     AppImage,
     Deb,
+    /// Installed by the Windows NSIS installer; updated by running the release's installer.
+    WindowsNsis,
     DevLocal,
 }
 
@@ -597,7 +599,7 @@ pub fn verify_relaunch_artifact() -> ReloadVerifyOutcome {
             };
         }
     };
-    let running_sha256 = match sha256_of_file(&exe) {
+    let running_sha256 = match sha256_of_file(&running_artifact_path(std::env::var_os("APPIMAGE").map(PathBuf::from), &exe)) {
         Ok(digest) => digest,
         Err(_) => {
             return ReloadVerifyOutcome::VerificationFailed {
@@ -612,6 +614,15 @@ pub fn verify_relaunch_artifact() -> ReloadVerifyOutcome {
     })
 }
 
+/// The file whose hash identifies the running build: the `$APPIMAGE` file for an AppImage, else the
+/// current executable.
+pub(super) fn running_artifact_path(appimage_env: Option<PathBuf>, current_exe: &Path) -> PathBuf {
+    match appimage_env {
+        Some(path) if !path.as_os_str().is_empty() => path,
+        _ => current_exe.to_path_buf(),
+    }
+}
+
 /// Resolve the config ROOT that `config_update_dir` hangs the
 /// `codex/update/` tree off.
 ///
@@ -619,7 +630,7 @@ pub fn verify_relaunch_artifact() -> ReloadVerifyOutcome {
 /// following the `CODEX_REPO_ROOT` / `CODEX_DESKTOP_RESOURCE_DIR` env idiom in
 /// `authoring_workbench.rs`. The default is `$HOME/.config`, so the pending record resolves to
 /// `~/.config/codex/update/pending-update.json`.
-fn resolve_config_root() -> PathBuf {
+pub(super) fn resolve_config_root() -> PathBuf {
     if let Ok(dir) = std::env::var("CODEX_CONFIG_DIR") {
         return PathBuf::from(dir);
     }
@@ -634,7 +645,7 @@ fn resolve_config_root() -> PathBuf {
 /// Extracted as a shared seam so the `verify_relaunch_artifact` shim and its inline test
 /// hash through the exact same code path — the test proves the seam without needing a real
 /// AppImage binary.
-fn sha256_of_file(path: &Path) -> std::io::Result<String> {
+pub(super) fn sha256_of_file(path: &Path) -> std::io::Result<String> {
     use std::io::Read;
     let mut file = fs::File::open(path)?;
     let mut hasher = Sha256::new();
@@ -741,17 +752,9 @@ fn managed_path_is_writable(managed_executable_path: &Path) -> bool {
 
 /// Tauri command shim — `perform_install`.
 ///
-/// Registration-only: the staged-transaction body
-/// (`execute_transaction`) already exists and is fully tested (see `mod
-/// tests` above) — what remains genuinely missing is the *download* step
-/// `execute_transaction`'s `download` closure needs: this crate carries no
-/// HTTP client dependency (no `reqwest`/`ureq`/etc. in `Cargo.toml`), so
-/// there is no way to fetch the AppImage artifact bytes from here without
-/// adding one. Rather than adding a new dependency as a side-effect of an
-/// Update-UI bug-fix slice (E3.13's authorized file-touch scope does not
-/// include `Cargo.toml`), this shim stays an honest deferred error naming
-/// that exact, narrower gap. `is_install_eligible` above no longer shares
-/// this limitation — E3.13 gave it a real body.
+/// Dispatches on the recorded install kind: a `.deb` install is updated through the package manager
+/// (`deb_install`), an AppImage by the staged-replace transaction (`appimage_install`), and a
+/// Windows install by running the release's NSIS installer (`windows_install`).
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PerformInstallArgs {
@@ -760,14 +763,23 @@ pub struct PerformInstallArgs {
 }
 
 #[tauri::command]
-pub fn perform_install(_args: PerformInstallArgs) -> Result<RelaunchPrompt, String> {
-    Err(
-        "perform_install is registered but not wired: downloading the AppImage artifact \
-         requires an HTTP client this crate does not carry as a dependency yet; \
-         execute_transaction itself is real and tested, but no install is performed here \
-         until a download step lands"
-            .to_string(),
-    )
+pub fn perform_install(args: PerformInstallArgs) -> Result<RelaunchPrompt, String> {
+    perform_install_impl(&resolve_config_root(), args)
+}
+
+fn perform_install_impl(config_dir: &Path, args: PerformInstallArgs) -> Result<RelaunchPrompt, String> {
+    let installed_state_path = config_update_dir(config_dir).join(INSTALLED_STATE_FILENAME);
+    let bytes = fs::read(&installed_state_path).map_err(|_| {
+        "no installed-state record yet: cannot tell how this copy was installed".to_string()
+    })?;
+    let installed: InstalledState = serde_json::from_slice(&bytes)
+        .map_err(|source| format!("installed-state.json is unreadable: {source}"))?;
+    match installed.install_kind {
+        InstallKind::Deb => super::deb_install::perform_deb_install(config_dir, &args.manifest),
+        InstallKind::AppImage => super::appimage_install::perform_appimage_install(config_dir, &args.manifest),
+        InstallKind::WindowsNsis => super::windows_install::perform_windows_install(config_dir, &args.manifest),
+        InstallKind::DevLocal => Err("dev builds are not update-eligible".to_string()),
+    }
 }
 
 /// Tauri command shim — `perform_restore_previous`.
@@ -1006,7 +1018,7 @@ fn atomic_replace(staged: &Path, managed: &Path) -> std::io::Result<()> {
     Ok(())
 }
 
-fn write_atomic_json<T: Serialize>(path: &Path, value: &T) -> std::io::Result<()> {
+pub(super) fn write_atomic_json<T: Serialize>(path: &Path, value: &T) -> std::io::Result<()> {
     let tmp = path.with_extension("json.tmp");
     {
         let mut f = fs::File::create(&tmp)?;
@@ -1027,7 +1039,7 @@ fn hex_lower(bytes: &[u8]) -> String {
     out
 }
 
-fn now_iso8601() -> String {
+pub(super) fn now_iso8601() -> String {
     // RFC 3339 / ISO-8601 UTC timestamp for the pending-update.json marker.
     // The transaction does not depend on wall-clock for any decision logic; this is only a
     // human-readable field. We avoid external crates by using the civil_from_days algorithm
@@ -1057,6 +1069,22 @@ fn now_iso8601() -> String {
         "{:04}-{:02}-{:02}T{:02}:{:02}:{:02}Z",
         year, month, day, hour, min, sec
     )
+}
+
+#[cfg(test)]
+mod running_artifact_tests {
+    use super::*;
+
+    #[test]
+    fn an_appimage_is_identified_by_the_appimage_file_not_the_binary_inside_its_mount() {
+        // `current_exe()` inside an AppImage is a file in a throwaway mount; the manifest's hash is of
+        // the `.AppImage` itself, so verifying against the mount's binary could never match.
+        let exe = PathBuf::from("/tmp/.mount_CodexAB/usr/bin/codex-desktop");
+        let appimage = PathBuf::from("/home/u/Applications/Codex.AppImage");
+        assert_eq!(running_artifact_path(Some(appimage.clone()), &exe), appimage);
+        assert_eq!(running_artifact_path(None, &exe), exe, "any other install hashes its own executable");
+        assert_eq!(running_artifact_path(Some(PathBuf::new()), &exe), exe, "an empty $APPIMAGE is not a path");
+    }
 }
 
 #[cfg(test)]
@@ -1710,13 +1738,76 @@ mod verify_relaunch_artifact_tests {
     /// mod covers the restore-previous body contract.
     #[test]
     fn perform_install_shim_errors_instead_of_fabricating_truth() {
-        assert!(
-            perform_install(PerformInstallArgs {
+        let dir = tempdir("perform-install-no-record");
+        let err = perform_install_impl(
+            &dir,
+            PerformInstallArgs {
                 manifest: serde_json::json!({}),
                 index_url: "https://example.invalid/index.json".to_string(),
-            })
-            .is_err()
-        );
+            },
+        )
+        .unwrap_err();
+        assert!(err.contains("installed-state"), "{err}");
+    }
+
+    fn write_record(dir: &Path, kind: InstallKind) {
+        let record = InstalledState {
+            managed_executable_path: PathBuf::from("/usr/bin/codex-desktop"),
+            install_kind: kind,
+            channel: "alpha".into(),
+            version: "0.1.0".into(),
+            source_commit: "c".into(),
+            release_tag: "alpha/v0.1.0".into(),
+            manifest_hash: String::new(),
+            artifact_sha256: "s".into(),
+            installed_at: "2026-10-06T00:00:00Z".into(),
+            update_eligible: true,
+            ineligible_reason: None,
+        };
+        let update_dir = config_update_dir(dir);
+        fs::create_dir_all(&update_dir).unwrap();
+        write_atomic_json(&update_dir.join(INSTALLED_STATE_FILENAME), &record).unwrap();
+    }
+
+    fn install_args() -> PerformInstallArgs {
+        PerformInstallArgs {
+            manifest: serde_json::json!({ "version": "0.2.0" }),
+            index_url: "https://example.invalid/index.json".to_string(),
+        }
+    }
+
+    #[test]
+    fn perform_install_routes_a_deb_record_to_the_deb_path() {
+        let dir = tempdir("perform-install-deb");
+        write_record(&dir, InstallKind::Deb);
+        let err = perform_install_impl(&dir, install_args()).unwrap_err();
+        assert!(err.contains("linux_deb"), "deb path must run and name the missing artifact: {err}");
+    }
+
+    #[test]
+    fn perform_install_routes_an_appimage_record_to_the_appimage_path() {
+        // Reaches the AppImage installer (no longer a "not wired" error): outside an AppImage there is
+        // no $APPIMAGE file to replace, and it says so rather than pretending to install.
+        let dir = tempdir("perform-install-appimage");
+        write_record(&dir, InstallKind::AppImage);
+        let err = perform_install_impl(&dir, install_args()).unwrap_err();
+        assert!(!err.contains("not wired"), "{err}");
+        assert!(err.contains("$APPIMAGE") || err.contains("linux_appimage"), "the AppImage path must run: {err}");
+    }
+
+    #[test]
+    fn perform_install_routes_a_windows_record_to_the_windows_path() {
+        let dir = tempdir("perform-install-windows");
+        write_record(&dir, InstallKind::WindowsNsis);
+        let err = perform_install_impl(&dir, install_args()).unwrap_err();
+        assert!(err.contains("windows_nsis"), "the Windows path must run and name the missing installer: {err}");
+    }
+
+    #[test]
+    fn perform_install_refuses_dev_builds() {
+        let dir = tempdir("perform-install-dev");
+        write_record(&dir, InstallKind::DevLocal);
+        assert!(perform_install_impl(&dir, install_args()).is_err());
     }
 
     /// E3.13 — `is_install_eligible`'s real probe body: with no

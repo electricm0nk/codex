@@ -3,11 +3,26 @@
 > Scope: testing philosophy and the full verification command set for this repo — this file
 > doubles as the "how do I verify my change" runbook and as the reference for how this repo
 > writes a test.
+> Merge pass: **2026-10-07, `tranche/17` merged with `develop` @ `fd68740f60` (PR #396)** (SD-37 E7.9a): `packaged_resources.rs` and `no_baked_manifest_dir_in_production.rs` added below; floors as recorded in `scripts/verify-baselines.env`.
 > Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §"The three crates" counts,
 > §"`scripts/verify.sh`" stage counts, the Starfinder gates and the ui-smoke spec size, each re-derived by the command beside
 > it. The test-count floors are the E7.2 full-run values recorded in `scripts/verify-baselines.env` (a full `verify.sh` run
 > was not repeated this pass; logs in `docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.2_logs/`). The SD-36 receipt
 > history in §"The ui-smoke harness" and the Epic F instruments section were last verified 2026-09-29 against `tranche/16`.
+> Also verified: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** for the release-tooling, packaged-resources and baked-path rows added to §"Standalone scripts" and the `codex-desktop` paragraph (the other counts below are as of the pass that follows). Earlier pass: **2026-09-29 against `tranche/16` (`165cc205e7`)** for §"The ui-smoke harness" (86-row
+> spec, the F6/F7 receipt dirs, and the F6d isolated-app-data-root rule; figures from
+> `stage-f6/f6d-receipt.md` and `stage-f7/merge-readiness-receipt.md`). Earlier pass: **2026-09-26
+> against `tranche/16` (`e70a8745ed`)** for §"`scripts/verify.sh`" item 10 and
+> §"The SD-36 Epic F instruments" (census, structural diff, sabotage parity, status-parity negative
+> controls, ui-smoke). Earlier pass: **2026-09-20 against `tranche/16` (`424e93e93c`)** (SD-36 Epic D truth-up +
+> this cycle's Epic C2 landed state: the `crates/codex-ingest` split (Epic A), the
+> `pilot_compute` submodule split (Epic C1), and the table-driven `tests/sd18_widening`/
+> `tests/sd13_progression` rewrite with vacuity guards and sabotage-parity proof (Epic C2.1/C2.2)
+> are all committed and reflected below — both families' `rows.rs` exist and are documented in
+> "Table-driven test families" and in their own section below; fixed a stale internal anchor link
+> to that section left over from the "Epic C2, in progress" → "Epic C2, done" heading rename.
+> Prior verification history (SD-35, SD-33, SD-31 sections) is retained only where its content is
+> still current; superseded figures were replaced, not appended to.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Testing philosophy
@@ -145,7 +160,7 @@ that it is dev-only.*
   [The corpus bundle](#the-corpus-bundle-and-its-parity-test) below), `spell_catalog.rs`,
   `race_catalog.rs`, `equipment_catalog.rs`, `character_hub.rs`, `update/transaction.rs`,
   `characterHub/appendToCharacter.rs`, `rule_system_adapter.rs`, `pf1_adapter.rs`, and
-  `corpus_ingest_diagnostic.rs`. Recorded floor: `BASELINE_DESKTOP_TESTS=700` (frontend: `BASELINE_FRONTEND_TEST_FILES=137`) (re-derive: the
+  `corpus_ingest_diagnostic.rs`, plus `update/seed.rs` and `update/deb_install.rs` (installed-state seeding and the `.deb` self-update verification, tested through injected `DebSystem`/config-dir seams). The one exception to "inline modules only" is `apps/desktop/src-tauri/tests/packaged_resources.rs`, an integration test that lays out only what `tauri.conf.json` bundles and asserts the rules engine can build the class roster from it; it must stay a single `#[test]` because the data root it installs is process-wide (see [desktop-app.md](./desktop-app.md) §How the rules crate finds its data). The root crate gained `tests/no_baked_manifest_dir_in_production.rs` for the same defect class. Recorded floor: `BASELINE_DESKTOP_TESTS=700` (frontend: `BASELINE_FRONTEND_TEST_FILES=137`) (re-derive: the
   desktop test-count line `scripts/verify.sh`'s `desktop` stage prints).
 
 ```
@@ -186,6 +201,7 @@ prints `PASS <file>` / `FAIL <file>` per file and a `<n>/<total> test files pass
 | `python3 tools/release/test_emit_channel_index.py` | `tools/release/emit_channel_index.py`. `unittest`, 3 test methods; one does a local `import jsonschema` scoped inside the test function so the module collects without `jsonschema` installed during RED. |
 | `bash scripts/release/test-promotion-gates.test.sh` | `promote-alpha-to-beta.sh`/`promote-beta-to-stable.sh` against a stubbed `gh`; asserts every gate fails/passes correctly and neither script ever calls `gh pr create`. |
 | `bash scripts/release/__tests__/test-write-release-manifest.test.sh` | `write_release_manifest.py` + `validate_manifest.py` round-trip. |
+| `python3 -m pytest tools/release -q` | The four release-gate tools plus the existing suites: `test_resolve_release_notes.py` (pointer vs app tranche, placeholder/empty/missing notes), `test_assert_version_stamp.py` (stamped files unpacked at the repo root), `test_write_release_manifest.py` (`linux_deb` block, schema 1.2.0, partial triples rejected), `test_verify_release_consistency.py` (builds real `.deb`s with `dpkg-deb`; serves notes from a local HTTP server to prove an HTML page fails the hash check). Needs `jsonschema` and `pytest` (CI installs both). Run from `release-tooling-tests.yml` on any change to the tooling, `schemas/update/**`, `docs/release/current-release.json` or the publish workflow. Not part of `scripts/verify.sh`. |
 | `python3 scripts/tranche/tests/test_validate_tranche_notes.py` | `scripts/tranche/validate-tranche-notes.py`. `unittest`, 9 test methods. |
 | `bash tools/ci/test_branch_promotion_guard.sh` | `tools/ci/branch-promotion-guard.sh`'s `verify_promotion_source` — the exact function the `allow-only-*` GitHub Actions workflows execute at PR time. **Moved here from the `sd16-e5-f1` test directory by SD-36 Epic C2.4** — update any script or CI reference still pointing at the old path. |
 | `python3 scripts/release/check_promotion_evidence.py --self-test` | The promotion-evidence gate's own built-in RED-GREEN harness; also the first step `promotion-gates.yml` runs on every PR. |

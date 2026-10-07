@@ -35,6 +35,9 @@ function main() {
   verifiesDevIneligible();
   verifiesTarballIneligible();
   verifiesNonWritablePathIneligible();
+  verifiesDebEligibleDespiteRootOwnedPath();
+  verifiesDebWithoutManifestArtifactIneligible();
+  verifiesWindowsInstallsUpdateFromTheInstallerNotByHash();
   verifiesVersionNotGreaterIneligible();
   verifiesVersionEqualIneligible();
   verifiesHashMatchIneligible();
@@ -52,6 +55,56 @@ function verifiesHappyPathEligible() {
   const decision = decideEligibility(eligibleInput());
   assertEqual(decision.result, 'eligible', 'happy path is eligible');
   assertEqual(decision.install_disabled_reason, null, 'happy path has no disabled reason');
+}
+
+function verifiesDebEligibleDespiteRootOwnedPath() {
+  const input = eligibleInput();
+  input.installedState.install_kind = 'deb';
+  input.installedState.managed_executable_path = '/usr/bin/codex-desktop';
+  input.installedState.isManagedPathWritable = false;
+  // The installed hash is the binary's, the manifest's is the .deb's; they are not comparable.
+  input.installedState.artifact_sha256 = input.manifest.artifact_sha256 as string;
+  const decision = decideEligibility(input);
+  assertEqual(decision.result, 'eligible', 'deb installs update through the package manager, not a writable path');
+}
+
+function verifiesDebWithoutManifestArtifactIneligible() {
+  const input = eligibleInput();
+  input.installedState.install_kind = 'deb';
+  input.manifest.artifact_sha256 = null;
+  const decision = decideEligibility(input);
+  assertEqual(decision.result, 'ineligible', 'no .deb in the release is ineligible');
+  assertEqual(
+    decision.install_disabled_reason,
+    'this release publishes no .deb artifact for a deb install',
+    'missing deb artifact reason string',
+  );
+}
+
+function verifiesWindowsInstallsUpdateFromTheInstallerNotByHash() {
+  const windows = (): EligibilityInput => {
+    const input = eligibleInput();
+    input.installedState.install_kind = 'windows';
+    input.installedState.managed_executable_path = 'C:\\Users\\u\\AppData\\Local\\Codex\\codex-desktop.exe';
+    return input;
+  };
+  const eligible = windows();
+  // The installed hash is the .exe's, the manifest's is the installer's; they are not comparable.
+  eligible.installedState.artifact_sha256 = eligible.manifest.artifact_sha256 as string;
+  assertEqual(decideEligibility(eligible).result, 'eligible', 'a newer release with an installer is installable');
+
+  const unwritable = windows();
+  unwritable.installedState.isManagedPathWritable = false;
+  assertEqual(decideEligibility(unwritable).install_disabled_reason, 'managed executable path is not writable', 'the installer must be able to replace the install');
+
+  const none = windows();
+  none.manifest.artifact_sha256 = null;
+  assertEqual(decideEligibility(none).result, 'ineligible', 'no installer in the release');
+  assertEqual(decideEligibility(none).install_disabled_reason, 'this release publishes no Windows installer for a Windows install', 'names the missing installer');
+
+  const same = windows();
+  same.manifest.version = same.installedState.version;
+  assertEqual(decideEligibility(same).result, 'ineligible', 'the version must be newer');
 }
 
 function verifiesDevIneligible() {

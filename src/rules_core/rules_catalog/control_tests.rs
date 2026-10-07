@@ -25,7 +25,7 @@ fn source_files(root: &Path, skip: &dyn Fn(&Path) -> bool, out: &mut Vec<PathBuf
 }
 
 fn catalog_dir() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join("src/rules_core/rules_catalog")
+    crate::support::paths::build_checkout_root().join("src/rules_core/rules_catalog")
 }
 
 /// The catalog files that are generated mirrors (not the tests that compare against the compiled
@@ -49,7 +49,7 @@ fn mirror_files() -> Vec<PathBuf> {
 /// left under its directory -- and no catalog file aliases it.
 #[test]
 fn the_compiled_tables_are_gone_and_no_catalog_file_aliases_them() {
-    let compiled = Path::new(env!("CARGO_MANIFEST_DIR")).join("src/rules_core/rules_tables");
+    let compiled = crate::support::paths::build_checkout_root().join("src/rules_core/rules_tables");
     let mut left = Vec::new();
     source_files(&compiled, &|_| false, &mut left);
     assert!(left.is_empty(), "compiled table source still present: {left:#?}");
@@ -96,7 +96,7 @@ const TYPE_TABLES: &[&str] = &[
 /// `apps/desktop/src-tauri` or `tests` names the former compiled module with a path.
 #[test]
 fn no_importer_names_the_compiled_tables() {
-    let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+    let root = crate::support::paths::build_checkout_root();
     let needle = format!("{}{}", "rules_tables", "::");
     let skip = |p: &Path| {
         let name = p.file_name().and_then(|n| n.to_str()).unwrap_or("");
@@ -111,7 +111,7 @@ fn no_importer_names_the_compiled_tables() {
         let text = std::fs::read_to_string(file).unwrap_or_default();
         if text.contains(&needle) {
             importers.push(
-                file.strip_prefix(root)
+                file.strip_prefix(&root)
                     .unwrap_or(file)
                     .display()
                     .to_string(),

@@ -35,6 +35,9 @@ function fixedController(
     releaseNotes() {
       return null;
     },
+    async install() {
+      throw new Error('fixture controller does not install');
+    },
   };
 }
 

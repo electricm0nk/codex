@@ -12,7 +12,7 @@ import { assert } from '../testSupport/asserts';
 const tabs: readonly string[] = SHEET_TABS;
 assert(!tabs.includes('Overrides'), 'no Overrides tab: nothing is wired behind it');
 assert(
-  ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions'].every((t) => tabs.includes(t)),
+  ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions', 'Custom'].every((t) => tabs.includes(t)),
   'every wired tab is still offered',
 );
 console.log('sheetTabs tests passed');

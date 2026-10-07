@@ -1,4 +1,5 @@
 import { useEffect, type ReactNode } from 'react';
+import { SETTINGS_DIALOG_SIZE } from '../layout/screenLayout';
 
 /**
  * Centered, Obsidian-style settings dialog: a left options rail plus a
@@ -71,14 +72,14 @@ export function SettingsModal(props: {
           borderRadius: 12,
           boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5)',
           display: 'flex',
-          height: 'min(620px, 85vh)',
+          height: SETTINGS_DIALOG_SIZE.height,
           maxHeight: '92vh',
           maxWidth: '96vw',
-          minHeight: 360,
-          minWidth: 480,
+          minHeight: SETTINGS_DIALOG_SIZE.minHeight,
+          minWidth: SETTINGS_DIALOG_SIZE.minWidth,
           overflow: 'auto',
           resize: 'both',
-          width: 'min(900px, 92vw)',
+          width: SETTINGS_DIALOG_SIZE.width,
         }}
       >
         {/* Options rail */}
@@ -118,9 +119,9 @@ export function SettingsModal(props: {
                   borderRadius: 8,
                   color: active ? 'var(--color-on-accent)' : 'var(--color-text-secondary)',
                   cursor: 'pointer',
-                  fontSize: '0.9rem',
+                  fontSize: '1.05rem',
                   fontWeight: active ? 700 : 500,
-                  padding: '0.5rem 0.75rem',
+                  padding: '0.7rem 0.9rem',
                   textAlign: 'left',
                 }}
               >
@@ -141,7 +142,7 @@ export function SettingsModal(props: {
               padding: '1rem 1.5rem',
             }}
           >
-            <h2 style={{ fontSize: '1.1rem', margin: 0 }}>{activeTabLabel}</h2>
+            <h2 style={{ fontSize: '1.35rem', margin: 0 }}>{activeTabLabel}</h2>
             <button
               type="button"
               aria-label="Close settings"
@@ -159,7 +160,7 @@ export function SettingsModal(props: {
               ×
             </button>
           </header>
-          <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem' }}>{props.panels[props.activeTab]}</div>
+          <div style={{ flex: 1, fontSize: '1.05rem', overflowY: 'auto', padding: '1.75rem' }}>{props.panels[props.activeTab]}</div>
         </section>
       </div>
     </div>

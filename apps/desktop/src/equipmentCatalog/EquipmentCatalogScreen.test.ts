@@ -1,5 +1,6 @@
-import { BOOK_LABELS, BOOK_ORDER, CATEGORY_ORDER, formatBookList, hasDescription } from './EquipmentCatalogScreen';
-import { loadEquipmentCatalogRuntime } from './equipmentCatalogRuntime';
+import { BOOK_LABELS, BOOK_ORDER, formatBookList, hasDescription } from './EquipmentCatalogScreen';
+import { loadEquipmentCatalogRuntime, loadEquipmentCatalogWithNotice } from './equipmentCatalogRuntime';
+import { typesWarning } from './EquipmentCatalogScreen';
 import { assert, assertEqual } from '../testSupport/asserts';
 
 /**
@@ -19,14 +20,6 @@ import { assert, assertEqual } from '../testSupport/asserts';
 /** The wire codes `EQUIPMENT_CATALOG_BOOKS` declares, in chain order. */
 const CHAINED_BOOK_CODES = ['CRB', 'APG', 'ACG', 'B1', 'ARG', 'PU'] as const;
 
-/**
- * The four `EquipmentCategory` variant names the adapter emits. Derived, not
- * assumed: `per_book_category_counts_are_pinned` pins per-book counts that sum
- * to each book's own pinned total (CRB 310+453+1556+658 = 2977, APG 75+93+170
- * = 338, ACG 20+60+141+48 = 269, B1 2+1+1 = 4, ARG 28+79+78+15 = 200, PU 42),
- * so these four categories exhaustively account for all 3830 rows.
- */
-const SERVED_CATEGORIES = ['ArmsArmor', 'General', 'MagicItems', 'Equipmods'] as const;
 
 function testBookOrderCoversEveryServedBookInChainOrder() {
   assertEqual(
@@ -59,14 +52,6 @@ function testTheNewlyReachedBooksAreLabelledWithTheirRealNames() {
   assertEqual(BOOK_LABELS.ARG, 'Advanced Race Guide', "ARG's display label");
   assertEqual(BOOK_LABELS.PU, 'Pathfinder Unchained', "PU's display label");
   assertEqual(BOOK_LABELS.B1, 'Bestiary 1', "B1's display label");
-}
-
-function testCategoryOrderCoversEveryServedCategory() {
-  assertEqual(
-    [...CATEGORY_ORDER].sort().join(','),
-    [...SERVED_CATEGORIES].sort().join(','),
-    'CATEGORY_ORDER covers exactly the categories the adapter emits'
-  );
 }
 
 function testFormatBookListReadsAsProseOverTheRealLabels() {
@@ -148,10 +133,25 @@ async function main() {
   testEveryOrderedBookHasARealDisplayLabel();
   testLabelsDefineNoBookTheCatalogDoesNotServe();
   testTheNewlyReachedBooksAreLabelledWithTheirRealNames();
-  testCategoryOrderCoversEveryServedCategory();
   testFormatBookListReadsAsProseOverTheRealLabels();
   testFormatBookListNeverInventsALabelForAnUnknownCode();
   testFormatBookListOfNothingIsEmptyRatherThanAFabricatedBook();
+  await testTheCatalogCarriesTheTypesNoticeAlongside();
+  testTypesWarningNamesTheReasonOnlyWhenThereIsOne();
+}
+
+async function testTheCatalogCarriesTheTypesNoticeAlongside() {
+  const loaded = await loadEquipmentCatalogWithNotice();
+  assert(loaded.entries.length > 0, 'the entries still load');
+  assertEqual(loaded.typesError, null, 'the preview has no type-data failure to report');
+}
+
+function testTypesWarningNamesTheReasonOnlyWhenThereIsOne() {
+  assertEqual(typesWarning(null), null, 'no failure, no warning');
+  assertEqual(typesWarning(undefined), null, 'absent is not a failure');
+  const warning = typesWarning('equipment_types.json: not found') ?? '';
+  assert(warning.includes('equipment_types.json: not found'), 'the real reason is shown');
+  assert(warning.includes('Uncategorized'), 'and what the player will see because of it');
 }
 
 main().catch((error: unknown) => {

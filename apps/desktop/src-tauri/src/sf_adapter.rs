@@ -1456,6 +1456,13 @@ pub(crate) mod tests {
             selected_traits: Vec::new(),
             trait_skill_choices: Vec::new(),
             additional_choices: Vec::new(),
+            additional_levels: Vec::new(),
+            hit_point_levels: Vec::new(),
+            selected_feats: Vec::new(),
+            skill_allocations: Vec::new(),
+            selected_spells: Vec::new(),
+            selected_equipment: Vec::new(),
+            price_mode: crate::character_hub::PriceMode::Standard,
             saved_at: "2026-10-04T00:00:00Z".to_owned(),
         });
         SavedCharacterStore::save(&envelope("pf-fighter", "pf1", pf_input), &pf_root).expect("a PF envelope saves");

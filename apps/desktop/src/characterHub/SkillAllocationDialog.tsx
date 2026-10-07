@@ -7,6 +7,7 @@ import {
   DEFAULT_PICK_MARKER,
   SKILLS,
   featSkillBonusFor,
+  skillPointsStatus,
   isClassSkill,
   type ClassSkillLookup,
   maxClassSkillRanks,
@@ -69,6 +70,7 @@ export function SkillAllocationDialog(props: {
 
   const spent = skillPointsSpent(draft);
   const remaining = props.totalPoints === null ? null : props.totalPoints - spent;
+  const pointsStatus = skillPointsStatus(props.totalPoints, remaining ?? 0);
   /** Spendable budget for the +/- controls; an Unknown total allows no spend. */
   const budget = remaining ?? 0;
 
@@ -116,6 +118,17 @@ export function SkillAllocationDialog(props: {
             <h2 style={{ fontSize: '1.1rem', margin: 0 }}>Manage skill allocation</h2>
             <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0.15rem 0 0' }}>
               Class skills cost 1 point/rank; cross-class skills cost 2 and cap at half the ranks.
+            </p>
+            <p
+              role="status"
+              style={{
+                color: pointsStatus.tone === 'ok' ? 'var(--color-accent)' : pointsStatus.tone === 'over' ? 'var(--color-error)' : 'var(--color-warn)',
+                fontSize: '0.95rem',
+                fontWeight: 700,
+                margin: '0.35rem 0 0',
+              }}
+            >
+              {pointsStatus.text}
             </p>
           </div>
           <button
@@ -182,15 +195,7 @@ export function SkillAllocationDialog(props: {
         </div>
 
         <footer style={{ alignItems: 'center', borderTop: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', padding: '0.85rem 1.5rem' }}>
-          {remaining === null ? (
-            <span style={{ color: 'var(--color-warn)', fontWeight: 700 }}>
-              Skill points Unknown: a held class states no skill ranks per level
-            </span>
-          ) : (
-            <span style={{ color: remaining >= 0 ? 'var(--color-accent)' : 'var(--color-error)', fontWeight: 700 }}>
-              {remaining} of {props.totalPoints} points remaining
-            </span>
-          )}
+          <span />
           <div style={{ display: 'flex', gap: '0.6rem' }}>
             <button
               type="button"

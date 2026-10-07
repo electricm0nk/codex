@@ -16,6 +16,7 @@
 
 // SD-35 AT-35-E6-001 (`decisions.md` §11): relocated from `src/rules_core/` -- converter and
 // oracle code that was sitting on the live side. Behaviour-identical; KEPT for Starfinder.
+pub mod equipment_types;
 pub mod archetype_swap_prereq_tokens;
 pub mod feat_gap_prereq_tokens;
 pub mod companion_pcgen_guards;

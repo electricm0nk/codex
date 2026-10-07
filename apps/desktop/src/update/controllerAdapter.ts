@@ -38,6 +38,7 @@ import {
   emptyPendingRollbackState,
   type EligibilityResult,
   type InstalledState,
+  type InstallResult,
   type PendingRollbackState,
   type UpdateChannelLabel,
   type UpdateController,
@@ -78,7 +79,7 @@ async function callInvoke<T>(
  */
 interface RustInstalledStateWire {
   managedExecutablePath: string;
-  installKind: 'app-image' | 'deb' | 'dev-local';
+  installKind: 'app-image' | 'deb' | 'windows-nsis' | 'dev-local';
   channel: string;
   version: string;
   sourceCommit: string;
@@ -90,6 +91,11 @@ interface RustInstalledStateWire {
   ineligibleReason: string | null;
 }
 
+interface PerformInstallResponseWire {
+  fromVersion: string;
+  toVersion: string;
+}
+
 interface RustInstallEligibilityProbe {
   installed: RustInstalledStateWire | null;
   isManagedPathWritable: boolean;
@@ -97,9 +103,8 @@ interface RustInstallEligibilityProbe {
 
 /**
  * Maps the Rust `InstallKind` wire enum (kebab-case) onto
- * `decideEligibility`'s `install_kind` union. `deb` has no direct TS
- * analogue — it maps onto `'tarball'`, the existing "not self-updatable via
- * the AppImage path" bucket `decideEligibility` already gates on.
+ * `decideEligibility`'s `install_kind` union. `deb` self-updates through the package
+ * manager and has its own eligibility rows.
  */
 function mapRustInstallKind(
   kind: RustInstalledStateWire['installKind'],
@@ -110,7 +115,24 @@ function mapRustInstallKind(
     case 'dev-local':
       return 'dev';
     case 'deb':
-      return 'tarball';
+      return 'deb';
+    case 'windows-nsis':
+      return 'windows';
+  }
+}
+
+/** The hash of the artifact an install of this kind downloads, from the fetched manifest. */
+function artifactShaFor(
+  kind: EligibilityInput['installedState']['install_kind'],
+  manifest: { artifactSha256: string; debArtifactSha256: string | null; windowsArtifactSha256: string | null },
+): string | null {
+  switch (kind) {
+    case 'deb':
+      return manifest.debArtifactSha256;
+    case 'windows':
+      return manifest.windowsArtifactSha256;
+    default:
+      return manifest.artifactSha256;
   }
 }
 
@@ -202,7 +224,14 @@ export function createUpdateControllerDeps(
   let hasRun = false;
   let checkedChannel: UpdateChannelLabel | null = null;
   let fetchOutcomes = emptyFetchOutcomes();
-  let lastManifest: { version: string; artifactSha256: string } | null = null;
+  let lastManifest: {
+    version: string;
+    artifactSha256: string;
+    debArtifactSha256: string | null;
+    windowsArtifactSha256: string | null;
+  } | null = null;
+  // The validated manifest exactly as fetched; the backend re-reads the artifact block from it.
+  let lastManifestRaw: unknown = null;
   let localProbe: RustInstallEligibilityProbe | null = null;
   let localProbeError: string | null = null;
 
@@ -231,13 +260,17 @@ export function createUpdateControllerDeps(
       if (!lastManifest) {
         return { result: 'unknown', reason: NO_LOCAL_PROBE_YET_REASON };
       }
+      const installKind = mapRustInstallKind(localProbe.installed.installKind);
       const decision = decideEligibility({
         selectedChannel: currentChannel,
-        manifest: { version: lastManifest.version, artifact_sha256: lastManifest.artifactSha256 },
+        manifest: {
+          version: lastManifest.version,
+          artifact_sha256: artifactShaFor(installKind, lastManifest),
+        },
         installedState: {
           version: localProbe.installed.version,
           artifact_sha256: localProbe.installed.artifactSha256,
-          install_kind: mapRustInstallKind(localProbe.installed.installKind),
+          install_kind: installKind,
           managed_executable_path: localProbe.installed.managedExecutablePath,
           isManagedPathWritable: localProbe.isManagedPathWritable,
         },
@@ -286,6 +319,7 @@ export function createUpdateControllerDeps(
       deps.lastCheck.releaseNotesStatus = 'not-loaded';
       fetchOutcomes = emptyFetchOutcomes();
       lastManifest = null;
+      lastManifestRaw = null;
       localProbe = null;
       localProbeError = null;
 
@@ -320,9 +354,12 @@ export function createUpdateControllerDeps(
 
       if (manifestResult.ok) {
         deps.lastCheck.releaseVersion = manifestResult.value.version;
+        lastManifestRaw = manifestResult.value;
         lastManifest = {
           version: manifestResult.value.version,
           artifactSha256: manifestResult.value.linux_appimage.sha256,
+          debArtifactSha256: manifestResult.value.linux_deb?.sha256 ?? null,
+          windowsArtifactSha256: manifestResult.value.windows_nsis?.sha256 ?? null,
         };
         // E3.12: the manifest names a release-notes body (`release_notes_url`
         // + `release_notes_hash`) but does not carry the prose itself — fetch
@@ -375,6 +412,31 @@ export function createUpdateControllerDeps(
     releaseNotes() {
       return deps.releaseNotes;
     },
+    async install(): Promise<InstallResult> {
+      if (lastManifestRaw === null || checkedChannel === null) {
+        throw new Error('nothing to install: run Check first');
+      }
+      const decision = computeDecision(checkedChannel);
+      if (decision.result !== 'eligible') {
+        throw new Error(`install is not available: ${decision.reason}`);
+      }
+      let response: PerformInstallResponseWire | null;
+      try {
+        response = await callInvoke<PerformInstallResponseWire>('perform_install', options.invokeImpl, {
+          manifest: lastManifestRaw,
+          indexUrl: deps.lastCheck.indexUrl,
+        });
+      } catch (cause) {
+        // Tauri rejects with the Rust `Err(String)`; keep that text, it is the actual reason.
+        throw new Error(formatError(cause));
+      }
+      if (response === null) {
+        throw new Error('install is only available in the desktop app');
+      }
+      // Windows runs its installer after Codex exits, so the app closes and reopens by itself.
+      const closesToFinish = localProbe?.installed?.installKind === 'windows-nsis';
+      return { fromVersion: response.fromVersion, toVersion: response.toVersion, ...(closesToFinish ? { closesToFinish } : {}) };
+    },
   };
 
   return deps;
@@ -411,16 +473,20 @@ export async function loadMountTimeState(
     throw new Error(`verify_relaunch_artifact failed: ${formatError(cause)}`);
   }
 
+  // The Installed panel describes what is installed, so it comes from the real
+  // `installed-state.json` (via the same probe Check uses) whatever the verifier outcome was.
+  const recorded = await readRecordedInstall(options.invokeImpl);
+
   switch (outcome.kind) {
     case 'no-pending-update':
       return {
-        installed: emptyInstalledState(),
+        installed: recorded.installed ?? unknownInstalled(recorded.error),
         pendingRollback: emptyPendingRollbackState(),
         restoreOffer: null,
       };
     case 'verification-failed':
       return {
-        installed: emptyInstalledState(),
+        installed: recorded.installed ?? unknownInstalled(recorded.error),
         pendingRollback: {
           pendingUpdateState: 'pending-relaunch',
           previousVersionAvailable: true,
@@ -436,28 +502,55 @@ export async function loadMountTimeState(
       };
     case 'promoted':
       return {
-        installed: {
+        // The verifier just wrote the record; prefer it. If it cannot be read back, fall back to
+        // the one fact the outcome carries (the version) and the one kind that path writes.
+        installed: recorded.installed ?? {
           ...emptyInstalledState(),
           version: outcome.promotedVersion,
-          // Safe, code-grounded inference, not a guess: the only Rust path
-          // that ever promotes (`verify_relaunch_artifact_impl`) always
-          // writes `InstallKind::AppImage`.
           installKind: 'appimage',
           updateEligible: false,
-          // This mount-time snapshot is synthesized client-side from the
-          // narrow `ReloadVerifyOutcome::Promoted` payload (just a version
-          // string) — it does not itself call `is_install_eligible` (that
-          // now has a real body, but this specific field is not its
-          // output). `runCheck`'s eligibility path (via `computeDecision`)
-          // does call the real probe against the freshly-written
-          // installed-state.json this promotion just wrote.
           ineligibleReason:
+            recorded.error ??
             'eligibility for a freshly-promoted install is determined by the next Check, not this mount-time snapshot',
         },
         pendingRollback: emptyPendingRollbackState(),
         restoreOffer: null,
       };
   }
+}
+
+function unknownInstalled(probeError: string | null): InstalledState {
+  const base = emptyInstalledState();
+  return probeError === null ? base : { ...base, ineligibleReason: probeError };
+}
+
+/** Read `installed-state.json` through `is_install_eligible`, mapping it onto the panel model. */
+async function readRecordedInstall(
+  invokeImpl: InvokeLike | undefined,
+): Promise<{ installed: InstalledState | null; error: string | null }> {
+  let probe: RustInstallEligibilityProbe | null;
+  try {
+    probe = await callInvoke<RustInstallEligibilityProbe>('is_install_eligible', invokeImpl);
+  } catch (cause) {
+    return { installed: null, error: `local install-state probe failed: ${formatError(cause)}` };
+  }
+  const record = probe?.installed;
+  if (!record) {
+    return { installed: null, error: null };
+  }
+  return {
+    installed: {
+      channel: record.channel as InstalledState['channel'],
+      version: record.version,
+      sourceCommit: record.sourceCommit,
+      artifactSha256: record.artifactSha256,
+      installKind: mapRustInstallKind(record.installKind),
+      managedExecutablePath: record.managedExecutablePath,
+      updateEligible: record.updateEligible,
+      ineligibleReason: record.ineligibleReason ?? null,
+    },
+    error: null,
+  };
 }
 
 // ---------- restore action: perform_restore_previous ----------

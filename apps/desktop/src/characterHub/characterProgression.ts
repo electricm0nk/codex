@@ -247,6 +247,42 @@ export function maxHitPoints(heldClasses: HeldClass[], constitutionModifier: num
 }
 
 /**
+ * Max HP when the character carries saved hit point results (the Create screen's Levels list saves
+ * the die result for every level). Each saved result counts as it was saved, plus the Constitution
+ * modifier, at least 1 per level. A level the character holds beyond its saved results (gained at
+ * level-up) takes the class die's average, and the order the classes were added in does not matter:
+ * only how many saved results each class has. Results beyond the levels held are ignored.
+ *
+ * With no saved results this is exactly `maxHitPoints`. `null` when an unsaved level belongs to a
+ * class whose hit die is not known (never a guessed die).
+ */
+export function maxHitPointsWithSavedLevels(
+  heldClasses: HeldClass[],
+  constitutionModifier: number,
+  saved: ReadonlyArray<{ classId: string; value: number }>
+): number | null {
+  if (saved.length === 0) {
+    return maxHitPoints(heldClasses, constitutionModifier);
+  }
+  let total = 0;
+  for (const held of heldClasses) {
+    const results = saved.filter((entry) => entry.classId === held.classId).slice(0, held.level);
+    for (const result of results) {
+      total += Math.max(1, result.value + constitutionModifier);
+    }
+    const unsaved = held.level - results.length;
+    if (unsaved > 0) {
+      const hitDie = classHitDie(held.classId);
+      if (hitDie === null) {
+        return null;
+      }
+      total += unsaved * Math.max(1, Math.floor(hitDie / 2) + 1 + constitutionModifier);
+    }
+  }
+  return total;
+}
+
+/**
  * Total skill ranks per level for this character: base + Int modifier (+1 for humans), floored
  * at 1. `null` when the class's base is not known.
  */

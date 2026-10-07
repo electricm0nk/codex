@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { UpdateUi, UPDATE_UI_ID } from './Ui';
 import { RESTORE_OFFER_ID } from './restoreOffer';
 import { buildUnwiredUpdateDeps } from './updateModel';
+import { InstallOutcomePanel } from './InstallControl';
 import { assert } from '../testSupport/asserts';
 
 function assertContains(actual: string, needle: string, message: string) {
@@ -69,7 +70,48 @@ function testRestoreOfferWithoutButtonWhenUnavailable() {
   );
 }
 
+function testInstallOutcomeRendersNothingBeforeAnyInstall() {
+  const html = renderToStaticMarkup(createElement(InstallOutcomePanel, { outcome: null }));
+  assertNotContains(html, 'install-outcome', 'no outcome block before an install has been attempted');
+}
+
+function testInstallOutcomeSaysToRestartAfterSuccess() {
+  const html = renderToStaticMarkup(
+    createElement(InstallOutcomePanel, {
+      outcome: { kind: 'installed', fromVersion: '0.16.140', toVersion: '0.16.141' },
+    }),
+  );
+  assertContains(html, 'id="install-outcome"', 'success must render the outcome block');
+  assertContains(html, '0.16.141', 'success names the installed version');
+  assertContains(html, 'Restart Codex', 'success tells the user how to finish');
+}
+
+function testInstallOutcomeOnWindowsSaysCodexClosesAndReopens() {
+  const html = renderToStaticMarkup(
+    createElement(InstallOutcomePanel, {
+      outcome: { kind: 'installed', fromVersion: '0.16.140', toVersion: '0.16.141', closesToFinish: true },
+    }),
+  );
+  assertContains(html, 'Close Codex', 'the Windows updater runs after Codex closes');
+  assertContains(html, 'reopen', 'and says it comes back');
+  assert(!html.includes('Restart Codex'), 'it must not ask for a manual restart that would race the installer');
+}
+
+function testInstallOutcomeShowsTheFailureReason() {
+  const html = renderToStaticMarkup(
+    createElement(InstallOutcomePanel, {
+      outcome: { kind: 'failed', message: 'installation was cancelled at the authorization prompt' },
+    }),
+  );
+  assertContains(html, 'data-outcome="failed"', 'failure is marked as such');
+  assertContains(html, 'cancelled at the authorization prompt', 'the real reason is shown, not a generic one');
+}
+
 function main() {
+  testInstallOutcomeRendersNothingBeforeAnyInstall();
+  testInstallOutcomeOnWindowsSaysCodexClosesAndReopens();
+  testInstallOutcomeSaysToRestartAfterSuccess();
+  testInstallOutcomeShowsTheFailureReason();
   testMountsWithCanonicalIdAndAllSubPanels();
   testNoRestoreOfferRenderedWhenNotSupplied();
   testRestoreOfferAndButtonRenderWhenAvailable();
