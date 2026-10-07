@@ -46,3 +46,17 @@ taken immediately before the run.
   release_notes_check: "python3 docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.6_check.py --plant -> RESULT PASS 20 figures, 3 plants REJECTED"
   log: docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.7_logs/critic_checks.log
   receipt: docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.7_cycle_receipt.md (section "Second half")
+
+- cycle_id: 2026-10-07T18:45:25Z
+  row_or_kind: graphify:update
+  bundle: SD-37
+  branch: 05f2a3252909fba8d61f05c4ad428280aaffa022
+  integration_target: develop
+  branch_tip: 05f2a325
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 0.2
+  log_path: graphify-out/.truth-up-run-2026-10-07T18:45:25Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
