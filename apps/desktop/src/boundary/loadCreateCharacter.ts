@@ -21,12 +21,23 @@ export interface AbilityScoresDto {
   charisma: number;
 }
 
+/** One character level's hit die result (before the Constitution modifier). */
+export interface HitPointLevelDto {
+  classId: string;
+  value: number;
+}
+
 export interface CreateCharacterRequest {
   characterId: string;
   displayLabel: string;
   raceId: string;
+  /** The character's first class; with `level` it carries all of that class's levels. */
   classId: string;
   level: number;
+  /** One entry per level of any OTHER class, in the order the player added them. */
+  additionalLevels: string[];
+  /** The die result for every character level, in order (the first is the full die). */
+  hitPointLevels: HitPointLevelDto[];
   abilityScores: AbilityScoresDto;
   abilityBonusTarget: string;
   savedAt: string;

@@ -502,6 +502,17 @@ pub struct CreateCharacterRequest {
     /// unchanged.
     #[serde(default)]
     pub additional_choices: Vec<SelectedChoiceDto>,
+    /// Levels of OTHER classes, in the order the player added them, on top of `class_id` taking
+    /// `level` levels of its own: `class_id` / `level` carry the first level's class and all of its
+    /// levels, and each entry here adds one level of that class (a class not yet held joins with its
+    /// canonical seeds, exactly as it does at level-up). Empty for a single-class character.
+    #[serde(default)]
+    pub additional_levels: Vec<String>,
+    /// The die result the player settled on for every character level, in order (the first is the
+    /// class's full die). Validated against the levels and dice, then saved as `hit_points.json`.
+    /// Empty means "no rolls": the sheet then uses the default rule (maximum, then average).
+    #[serde(default)]
+    pub hit_point_levels: Vec<HitPointLevelDto>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1594,10 +1605,17 @@ pub(crate) fn create_character_at_root(
     request: &CreateCharacterRequest,
     app_version: String,
 ) -> Result<CreateCharacterResponse, String> {
+    if let Some(refused) = validate_hit_point_levels(request) {
+        return Ok(refused);
+    }
     let mut character_input = compose_character_input(request);
     match resolve_alternate_trait_choices(&request.race_id, &request.selected_alternate_trait_keys) {
         Ok(choices) => character_input.chosen.selected_choices.extend(choices),
         Err(diagnostics) => return Ok(CreateCharacterResponse::Blocked { diagnostics }),
+    }
+    // Levels of other classes, in the order the player added them: the same step level-up takes.
+    for class_id in &request.additional_levels {
+        crate::pf1_adapter::apply_level_up(&mut character_input, class_id);
     }
     let character_input = character_input;
 
@@ -1626,6 +1644,9 @@ pub(crate) fn create_character_at_root(
     };
 
     SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    if !request.hit_point_levels.is_empty() {
+        save_character_hit_points_at_root(root, &request.hit_point_levels)?;
+    }
 
     // New characters start with the MAXIMUM of their class's starting-wealth roll. A class with no
     // published statline starts with 0 gp, and the response says why.
@@ -1809,6 +1830,8 @@ fn starter_seed_request(
         selected_traits: Vec::new(),
         trait_skill_choices: Vec::new(),
         additional_choices: Vec::new(),
+        additional_levels: Vec::new(),
+        hit_point_levels: Vec::new(),
     }
 }
 
@@ -4014,6 +4037,108 @@ pub fn delete_character_portrait(
 // `load_character_portrait`/`delete_character_portrait`'s own established
 // sidecar-file precedent (`portrait.png`) exactly -- same directory, same
 // "requires the character to already be saved" invariant, same shape.
+
+const HIT_POINTS_FILE_NAME: &str = "hit_points.json";
+
+/// One character level's hit die result (before the Constitution modifier).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HitPointLevelDto {
+    pub class_id: String,
+    pub value: u8,
+}
+
+/// The player's hit point results, one per character level in order, as saved in `hit_points.json`.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterHitPointsDto {
+    #[serde(default)]
+    pub levels: Vec<HitPointLevelDto>,
+}
+
+fn invalid_hit_points(message: String) -> CreateCharacterResponse {
+    CreateCharacterResponse::Blocked {
+        diagnostics: vec![DiagnosticDto { id: "hit_points.invalid".to_owned(), message, claim_blocking: true }],
+    }
+}
+
+/// Checks the player's hit point results against the levels the request creates: one per level, the
+/// classes agreeing with the levels asked for, every result inside its class's die, and the first
+/// level at the full die. `None` when there is nothing wrong (or nothing sent).
+fn validate_hit_point_levels(request: &CreateCharacterRequest) -> Option<CreateCharacterResponse> {
+    let sent = &request.hit_point_levels;
+    if sent.is_empty() {
+        return None;
+    }
+    let expected_total = usize::from(request.level) + request.additional_levels.len();
+    if sent.len() != expected_total {
+        return Some(invalid_hit_points(format!(
+            "{} hit point results were sent for a character with {expected_total} levels",
+            sent.len()
+        )));
+    }
+    if sent[0].class_id != request.class_id {
+        return Some(invalid_hit_points(format!(
+            "the first level's hit points are for {}, but the character's first class is {}",
+            sent[0].class_id, request.class_id
+        )));
+    }
+    let count_of = |class_id: &str, among: &mut dyn Iterator<Item = &String>| among.filter(|c| c.as_str() == class_id).count();
+    for class_id in sent.iter().map(|level| level.class_id.as_str()).collect::<std::collections::BTreeSet<_>>() {
+        let sent_count = sent.iter().filter(|level| level.class_id == class_id).count();
+        let own = if class_id == request.class_id { usize::from(request.level) } else { 0 };
+        let wanted = own + count_of(class_id, &mut request.additional_levels.iter());
+        if sent_count != wanted {
+            return Some(invalid_hit_points(format!("{sent_count} hit point results were sent for {class_id}, which has {wanted} levels")));
+        }
+    }
+    for (index, level) in sent.iter().enumerate() {
+        let Some(die) = class_hit_points_die(&level.class_id) else {
+            return Some(invalid_hit_points(format!("{} has no known hit die, so its hit points cannot be recorded", level.class_id)));
+        };
+        if level.value < 1 || level.value > die {
+            return Some(invalid_hit_points(format!("level {} of {} is {}, outside its d{die}", index + 1, level.class_id, level.value)));
+        }
+        if index == 0 && level.value != die {
+            return Some(invalid_hit_points(format!("the first level always takes the full die (d{die}), not {}", level.value)));
+        }
+    }
+    None
+}
+
+fn save_character_hit_points_at_root(root: &Path, levels: &[HitPointLevelDto]) -> Result<(), String> {
+    SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let path = root.join(HIT_POINTS_FILE_NAME);
+    let json = serde_json::to_string_pretty(&CharacterHitPointsDto { levels: levels.to_vec() })
+        .map_err(|err| format!("failed to serialize hit points: {err}"))?;
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+}
+
+/// The saved hit point results, or an empty list when the character has none (created before the
+/// Levels list, or without rolls). Never an error for the ordinary "no file" case.
+fn load_character_hit_points_at_root(root: &Path) -> Result<CharacterHitPointsDto, String> {
+    let path = root.join(HIT_POINTS_FILE_NAME);
+    if !path.exists() {
+        return Ok(CharacterHitPointsDto::default());
+    }
+    let contents = std::fs::read_to_string(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+    serde_json::from_str(&contents).map_err(|err| format!("{}: invalid hit points JSON: {err}", path.display()))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadCharacterHitPointsRequest {
+    pub character_id: String,
+}
+
+#[tauri::command]
+pub fn load_character_hit_points(
+    app: tauri::AppHandle,
+    request: LoadCharacterHitPointsRequest,
+) -> Result<CharacterHitPointsDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    load_character_hit_points_at_root(&root)
+}
 
 const BIO_FILE_NAME: &str = "bio.json";
 
@@ -6319,6 +6444,8 @@ mod tests {
             selected_traits: Vec::new(),
             trait_skill_choices: Vec::new(),
             additional_choices: Vec::new(),
+            additional_levels: Vec::new(),
+            hit_point_levels: Vec::new(),
             saved_at: "2026-07-08T00:00:00Z".to_owned(),
         }
     }
@@ -7406,6 +7533,92 @@ mod tests {
             "180 gp (3d6 x 10, every die at its maximum, Alchemist) = 18,000 cp"
         );
 
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- create: several levels and the player's hit point rolls -----
+
+    fn hp_level(class_id: &str, value: u8) -> HitPointLevelDto {
+        HitPointLevelDto { class_id: class_id.to_owned(), value }
+    }
+
+    /// Levels of other classes added at creation land on the saved character, so a Fighter 2 / Wizard 1
+    /// can be created in one step instead of created and then leveled.
+    #[test]
+    fn create_character_at_root_adds_the_levels_of_other_classes() {
+        let root = tempdir("create-multiclass-levels");
+        let mut request = request_for_class("race:human", "class:fighter", 2);
+        request.additional_levels = vec!["class:wizard".to_owned()];
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        let CreateCharacterResponse::Saved { summary, .. } = response else {
+            panic!("Human Fighter 2 / Wizard 1 must reach Computed");
+        };
+        assert_eq!(summary.class_summary, "class:fighter:2,class:wizard:1");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn create_character_at_root_saves_the_players_hit_point_rolls() {
+        let root = tempdir("create-hp-rolls-saved");
+        let mut request = request_for_class("race:human", "class:fighter", 3);
+        request.hit_point_levels = vec![hp_level("class:fighter", 10), hp_level("class:fighter", 7), hp_level("class:fighter", 3)];
+
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+
+        let saved = load_character_hit_points_at_root(&root).expect("load");
+        assert_eq!(saved.levels, request.hit_point_levels, "every level's die result is kept, in order");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn a_character_created_without_rolls_has_no_hit_point_file_and_loads_as_empty() {
+        let root = tempdir("create-hp-rolls-none");
+        let request = request_for_class("race:human", "class:fighter", 2);
+        create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(!root.join("hit_points.json").exists(), "nothing written when the caller sent no rolls");
+        assert_eq!(load_character_hit_points_at_root(&root).unwrap().levels, Vec::new());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Rolls that cannot be right are refused before anything is saved: wrong number of levels, a
+    /// result outside the die, a first level that is not the maximum, a class that does not match.
+    #[test]
+    fn create_character_at_root_refuses_hit_point_rolls_that_do_not_fit_the_levels() {
+        let cases: Vec<(&str, Vec<HitPointLevelDto>)> = vec![
+            ("too few", vec![hp_level("class:fighter", 10)]),
+            ("outside the die", vec![hp_level("class:fighter", 10), hp_level("class:fighter", 11)]),
+            ("zero", vec![hp_level("class:fighter", 10), hp_level("class:fighter", 0)]),
+            ("level 1 not maximum", vec![hp_level("class:fighter", 9), hp_level("class:fighter", 5)]),
+            ("wrong class", vec![hp_level("class:fighter", 10), hp_level("class:wizard", 4)]),
+        ];
+        for (label, levels) in cases {
+            let root = tempdir(&format!("create-hp-rolls-refused-{}", label.replace(' ', "-")));
+            let mut request = request_for_class("race:human", "class:fighter", 2);
+            request.hit_point_levels = levels;
+
+            let response = create_character_at_root(&root, &request, "test-version".to_owned())
+                .expect("create call should not error");
+            let CreateCharacterResponse::Blocked { diagnostics } = response else {
+                panic!("{label}: invalid rolls must be refused");
+            };
+            assert!(diagnostics.iter().any(|d| d.id == "hit_points.invalid"), "{label}: {diagnostics:?}");
+            assert!(SavedCharacterStore::load(&root).is_err(), "{label}: nothing may be saved");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    #[test]
+    fn hit_points_load_with_the_camel_case_wire_shape() {
+        let root = tempdir("hp-wire-shape");
+        let mut request = request_for_class("race:human", "class:fighter", 2);
+        request.hit_point_levels = vec![hp_level("class:fighter", 10), hp_level("class:fighter", 4)];
+        create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        let raw = std::fs::read_to_string(root.join("hit_points.json")).expect("hit_points.json exists");
+        assert!(raw.contains("\"classId\""), "camelCase keys: {raw}");
         std::fs::remove_dir_all(&root).ok();
     }
 

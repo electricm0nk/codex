@@ -6,6 +6,7 @@ import {
 import { assertEqual } from '../testSupport/asserts';
 
 async function main() {
+  verifiesLevelsAndHitPointResultsDefaultToEmptyAndPassThrough();
   verifiesRequestShapeFromFormFields();
   verifiesRacialAdjustmentsAreBakedIntoSubmittedScores();
   verifiesHumanEmptyAdjustmentsLeaveScoresUnchanged();
@@ -232,6 +233,39 @@ function verifiesHalflingAdjustmentsAreBakedIntoSubmittedScores() {
   assertEqual(adjusted.constitution, 14, 'Constitution has no Halfling adjustment and should be untouched');
   assertEqual(adjusted.intelligence, 10, 'Intelligence has no Halfling adjustment and should be untouched');
   assertEqual(adjusted.wisdom, 12, 'Wisdom has no Halfling adjustment and should be untouched');
+}
+
+// The Levels list: levels of other classes and the player's hit point results ride along; a caller
+// that sends neither composes exactly the single-class request it always did.
+function verifiesLevelsAndHitPointResultsDefaultToEmptyAndPassThrough() {
+  const base = {
+    displayLabel: 'Aldric',
+    raceId: 'race:human',
+    classId: 'class:fighter',
+    level: 2,
+    abilityScores: { strength: 16, dexterity: 14, constitution: 14, intelligence: 10, wisdom: 12, charisma: 8 },
+    abilityBonusTarget: 'dexterity',
+  };
+  const deps = { generateId: () => 'char-fixed-id', now: () => '2026-07-08T00:00:00Z' };
+  const plain = composeCreateCharacterRequest(base, deps);
+  assertEqual(plain.additionalLevels.length, 0, 'no additional levels by default');
+  assertEqual(plain.hitPointLevels.length, 0, 'no hit point results by default');
+
+  const request = composeCreateCharacterRequest(
+    {
+      ...base,
+      additionalLevels: ['class:wizard'],
+      hitPointLevels: [
+        { classId: 'class:fighter', value: 10 },
+        { classId: 'class:fighter', value: 6 },
+        { classId: 'class:wizard', value: 3 },
+      ],
+    },
+    deps
+  );
+  assertEqual(request.additionalLevels.join(','), 'class:wizard', 'additional levels pass through in order');
+  assertEqual(request.hitPointLevels.length, 3, 'every hit point result passes through');
+  assertEqual(request.hitPointLevels[2]!.value, 3, 'with its value');
 }
 
 main().catch((error: unknown) => {

@@ -40,6 +40,8 @@ import { buildAcBySourceRows, describeEncumbrance, effectiveMaxDexCap } from './
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { purchaseEquipment } from '../boundary/purchaseEquipment';
 import { PriceModeControl } from './PriceModeControl';
+import { loadCharacterHitPoints } from '../boundary/characterHitPoints';
+import type { HitPointLevelDto } from '../boundary/loadCreateCharacter';
 import { buildPrintCss, printableTabs } from './printLayout';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
@@ -103,7 +105,7 @@ import {
   buildNextEntries,
   formatHeldClasses,
   levelGrantsFeat,
-  maxHitPoints,
+  maxHitPointsWithSavedLevels,
   parseHeldClasses,
   previewLevelUp,
   totalCharacterLevel,
@@ -3097,6 +3099,27 @@ export function CharacterSheet(props: {
     };
   }, [props.row.characterId]);
 
+  // The hit point results saved at creation (one die result per level); empty when none were saved.
+  const [savedHitPoints, setSavedHitPoints] = useState<HitPointLevelDto[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    loadCharacterHitPoints(props.row.characterId)
+      .then((loaded) => {
+        if (!cancelled) {
+          setSavedHitPoints(loaded.levels);
+        }
+      })
+      .catch(() => {
+        // Unreadable file: fall back to the default rule rather than a broken sheet.
+        if (!cancelled) {
+          setSavedHitPoints([]);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [props.row.characterId]);
+
   const [money, setMoney] = useState<CharacterMoneyDto>({ totalCopper: 0, platinum: 0, gold: 0, silver: 0, copper: 0 });
   // Session-only pricing choice for the equipment screens; never saved on the character.
   const [priceMode, setPriceMode] = useState<PriceMode>(DEFAULT_PRICE_MODE);
@@ -4195,7 +4218,7 @@ export function CharacterSheet(props: {
     const held = heldClasses.find((candidate) => candidate.classId === spellRoutedClassId);
     return held ? { classId: held.classId, classLabel: held.classLabel } : null;
   })();
-  const hp = maxHitPoints(heldClasses, abilities.constitution);
+  const hp = maxHitPointsWithSavedLevels(heldClasses, abilities.constitution, savedHitPoints);
   // SD-27 `decisions.md §28` defect 1: CMB/CMD are engine values now
   // (`pilot_compute::combat_maneuver_bonus` / `combat_maneuver_defense`, called
   // by both compute paths). They were `baseAttackBonus + abilities.strength`

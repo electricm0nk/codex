@@ -1,4 +1,9 @@
-import type { AbilityScoresDto, CreateCharacterRequest, TraitSkillChoiceDto } from '../boundary/loadCreateCharacter';
+import type {
+  AbilityScoresDto,
+  CreateCharacterRequest,
+  HitPointLevelDto,
+  TraitSkillChoiceDto,
+} from '../boundary/loadCreateCharacter';
 import type { AbilityKey } from './characterHubModel';
 
 /**
@@ -77,6 +82,10 @@ export interface CreateCharacterFormFields {
   raceId: string;
   classId: string;
   level: number;
+  /** Levels of other classes, in order (see `levelsModel.creationRequestShape`). Absent for a single class. */
+  additionalLevels?: readonly string[];
+  /** The player's hit point result for every level. Absent means "no rolls". */
+  hitPointLevels?: readonly HitPointLevelDto[];
   abilityScores: AbilityScoresDto;
   abilityBonusTarget: string;
   /**
@@ -124,6 +133,8 @@ export function composeCreateCharacterRequest(
     raceId: fields.raceId,
     classId: fields.classId,
     level: fields.level,
+    additionalLevels: [...(fields.additionalLevels ?? [])],
+    hitPointLevels: (fields.hitPointLevels ?? []).map((entry) => ({ ...entry })),
     abilityScores: { ...fields.abilityScores },
     abilityBonusTarget: fields.abilityBonusTarget,
     savedAt: deps.now(),

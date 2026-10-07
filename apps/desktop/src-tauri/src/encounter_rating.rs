@@ -482,6 +482,8 @@ mod tests {
             selected_traits: Vec::new(),
             trait_skill_choices: Vec::new(),
             additional_choices: Vec::new(),
+            additional_levels: Vec::new(),
+            hit_point_levels: Vec::new(),
             saved_at: "2026-09-02T00:00:00Z".to_owned(),
         };
         let response = create_character_at_root(root, &request, "test".to_owned()).expect("create");

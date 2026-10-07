@@ -11,11 +11,8 @@ import {
   AGE_OPTIONS,
   DEFAULT_ABILITY_SCORES,
   abilityModifier,
-  clampLevelForClass,
-  classSupportLevelSuffix,
   describeClassSupportLevel,
   formatHeight,
-  getLevelOptionsForClass,
   rollDice,
   type AbilityKey,
   type AgeCategory,
@@ -30,7 +27,17 @@ import {
   composeCreateCharacterRequest,
 } from './composeCreateCharacterRequest';
 import { loadRaceRosterSurface, rosterErrorMessage, type RaceRosterSurface } from './raceRoster';
-import { ensureClassRosterLoaded, groupClassOptionsByFamily, useClassCatalog } from './classRoster';
+import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
+import { LevelsPanel } from './LevelsPanel';
+import {
+  addLevel,
+  creationRequestShape,
+  removeLevel,
+  rerollLevel,
+  totalHitPoints,
+  characterLevel,
+  type CreationLevel,
+} from './levelsModel';
 import { createCharacterRuntime } from './characterHubRuntime';
 import {
   buildAlternateTraitRows,
@@ -141,12 +148,6 @@ function stepButtonStyle(enabled: boolean): CSSProperties {
   };
 }
 
-/**
- * Every character starts at level 1 unless the player raises the Level
- * picker. This is the starting value, not a cap — the cap is per class, and
- * comes from `getLevelOptionsForClass`.
- */
-const STARTING_LEVEL = 1;
 
 type Allocation = Record<AbilityKey, number>;
 const ZERO_ALLOCATION: Allocation = {
@@ -288,8 +289,8 @@ function CreateCharacterFields(props: {
   const [displayLabel, setDisplayLabel] = useState('');
   const [playerName, setPlayerName] = useState('');
   const [raceId, setRaceId] = useState(races[0].id);
-  const [classId, setClassId] = useState(classOptions[0].id);
-  const [level, setLevel] = useState(STARTING_LEVEL);
+  // The character's levels, one entry per level in the order they were added (see levelsModel.ts).
+  const [levels, setLevels] = useState<CreationLevel[]>([]);
   const [abilityScores, setAbilityScores] = useState({ ...DEFAULT_ABILITY_SCORES });
   const [allocation, setAllocation] = useState<Allocation>({ ...ZERO_ALLOCATION });
   const [method, setMethod] = useState<AbilityScoreMethodId>('manual');
@@ -334,7 +335,9 @@ function CreateCharacterFields(props: {
   // never a first-guessed default (see that function's own doc comment).
   const [traitSkillChoices, setTraitSkillChoices] = useState<Record<string, string>>({});
 
-  const selectedClass = classOptions.find((option) => option.id === classId) ?? classOptions[0];
+  const primaryClassId = levels[0]?.classId ?? null;
+  const primaryLevels = primaryClassId === null ? 0 : levels.filter((entry) => entry.classId === primaryClassId).length;
+  const selectedClass = classOptions.find((option) => option.id === primaryClassId) ?? classOptions[0];
   const selectedRace = races.find((option) => option.id === raceId) ?? races[0];
   const body = selectedRace.body?.[sex] ?? null;
 
@@ -363,24 +366,15 @@ function CreateCharacterFields(props: {
     return rawScore(key) + (selectedRace.abilityAdjustments[key] ?? 0) + allocation[key];
   }
 
-  const levelOptions = getLevelOptionsForClass(classId);
+  // The HP box is the sum of the Levels list: each level's die result plus the Constitution modifier.
+  const maxHp = levels.length === 0 ? null : totalHitPoints(levels, abilityModifier(calculatedScore('constitution')));
 
-  // Shares `maxHitPoints` with the character sheet rather than a level-1-only
-  // shortcut, so the HP shown here matches what the sheet will show for the
-  // level actually being created (PF1: max hit die at 1st, average after).
-  const maxHp = maxHitPoints(
-    [{ classId, classLabel: selectedClass.label, level }],
-    abilityModifier(calculatedScore('constitution'))
-  );
-
-  /**
-   * Selecting a class can strand a level that class does not offer (Fighter 20
-   * → Monk, whose only offered level is 1), so the level is re-clamped here
-   * rather than left to fail at submit time.
-   */
-  function handleClassChange(nextClassId: string) {
-    setClassId(nextClassId);
-    setLevel((current) => clampLevelForClass(nextClassId, current));
+  function handleAddLevel(addedClassId: string) {
+    const option = classOptions.find((candidate) => candidate.id === addedClassId);
+    if (option === undefined || option.hitDie === null) {
+      return;
+    }
+    setLevels((current) => addLevel(current, option.id, option.hitDie as number));
   }
 
   function handleMethodChange(nextMethod: AbilityScoreMethodId) {
@@ -554,7 +548,7 @@ function CreateCharacterFields(props: {
   );
   const alternateTraitWarnings = creationSelectionWarnings(alternateResolution);
   const racialTraitsPreview = buildCreationRacialTraitsPreview(alternateResolution);
-  const classPreview = buildClassPreview(classCatalog, selectedClass, level);
+  const classPreview = buildClassPreview(classCatalog, selectedClass, Math.max(1, primaryLevels));
 
   function toggleAlternateTrait(key: string) {
     setSelectedAlternateTraitKeys((current) =>
@@ -609,6 +603,11 @@ function CreateCharacterFields(props: {
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    const levelShape = creationRequestShape(levels);
+    if (levelShape === null) {
+      setError('Add at least one level before creating the character.');
+      return;
+    }
     if (unassignedPoolSlots > 0) {
       setError(`Assign all six generated scores to abilities before creating (${unassignedPoolSlots} remaining).`);
       return;
@@ -654,8 +653,10 @@ function CreateCharacterFields(props: {
         {
           displayLabel,
           raceId,
-          classId,
-          level,
+          classId: levelShape.primaryClassId,
+          level: levelShape.primaryLevel,
+          additionalLevels: levelShape.additionalLevels,
+          hitPointLevels: levelShape.hitPointLevels,
           abilityScores: finalAbilityScores,
           abilityBonusTarget: deriveAbilityBonusTarget(),
           selectedAlternateTraitKeys,
@@ -736,75 +737,41 @@ function CreateCharacterFields(props: {
                 ))}
               </select>
             </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <label style={LABEL_STYLE} htmlFor="character-class">
-                Class
-              </label>
-              <select id="character-class" style={INPUT_STYLE} value={classId} onChange={(event) => handleClassChange(event.target.value)}>
-                {groupClassOptionsByFamily(classOptions).map((group) => {
-                  const rows = group.options.map((option) => (
-                    <option key={option.id} value={option.id}>
-                      {option.label}
-                      {classSupportLevelSuffix(option.supportLevel)}
-                    </option>
-                  ));
-                  // A fallback row carries no family: its run renders ungrouped.
-                  return group.familyLabel ? (
-                    <optgroup key={group.family} label={group.familyLabel}>
-                      {rows}
-                    </optgroup>
-                  ) : (
-                    rows
-                  );
-                })}
-              </select>
-            </div>
           </div>
           {props.classRosterNotice !== null ? (
             <p role="alert" style={{ color: 'var(--color-warn)', fontSize: '0.8rem', margin: '-0.5rem 0 0.5rem' }}>
               {props.classRosterNotice} — offering the built-in list of {classOptions.length} classes instead.
             </p>
           ) : null}
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '-0.5rem 0 0.5rem' }}>
-            {describeClassSupportLevel(selectedClass.supportLevel, selectedClass.label)}
-          </p>
+          {levels.length > 0 ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '-0.5rem 0 0.5rem' }}>
+              {describeClassSupportLevel(selectedClass.supportLevel, selectedClass.label)}
+            </p>
+          ) : null}
           {/* v0.8 F-11: what this class is mechanically at the level being
               created — the `list_class_catalog` row, verbatim. Skill points
               per level are not on that DTO, so none are shown. */}
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
-            {classCatalogError !== null
-              ? `Class preview unavailable: ${classCatalogError}`
-              : classPreview.kind === 'Loading'
-                ? 'Loading class preview…'
-                : classPreview.kind === 'Unavailable'
-                  ? classPreview.message
-                  : `${selectedClass.label} ${classPreview.level}: BAB ${classPreview.baseAttackBonus} · Fort ${classPreview.fortSave} · Ref ${classPreview.refSave} · Will ${classPreview.willSave}`}
-          </p>
+          {levels.length > 0 ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
+              {classCatalogError !== null
+                ? `Class preview unavailable: ${classCatalogError}`
+                : classPreview.kind === 'Loading'
+                  ? 'Loading class preview…'
+                  : classPreview.kind === 'Unavailable'
+                    ? classPreview.message
+                    : `${selectedClass.label} ${classPreview.level}: BAB ${classPreview.baseAttackBonus} · Fort ${classPreview.fortSave} · Ref ${classPreview.refSave} · Will ${classPreview.willSave}`}
+            </p>
+          ) : null}
 
           {/* Level + HP (computed) + Alignment + Deity */}
           <div style={ROW_STYLE}>
-            {/* Only the levels `getLevelOptionsForClass` reports for this
-                class — i.e. exactly the levels the engine dump computes.
-                A single-option select still renders (Monk), so the ceiling
-                is visible rather than silently absent. */}
-            <LabeledField label="Level" htmlFor="character-level" flex="0 0 96px">
-              <select
-                id="character-level"
-                style={INPUT_STYLE}
-                value={level}
-                onChange={(event) => setLevel(Number(event.target.value))}
-              >
-                {levelOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+            {/* The character level: how many levels are in the Levels list. */}
+            <LabeledField label="Level" flex="0 0 96px">
+              <ReadOnlyBox value={String(characterLevel(levels))} />
             </LabeledField>
             <LabeledField label="HP" flex="0 0 96px">
-              {/* `null`: the engine's hit-point fold states no hit die for this class (no chassis
-                  record), so its HP is Unknown — never a total built on a guessed die. */}
-              <ReadOnlyBox value={maxHp === null ? 'Unknown' : String(maxHp)} />
+              {/* The sum of the Levels list; a dash until the first level is added. */}
+              <ReadOnlyBox value={maxHp === null ? '—' : String(maxHp)} />
             </LabeledField>
             <LabeledField label="Alignment" htmlFor="character-alignment">
               <select id="character-alignment" style={INPUT_STYLE} value={alignment} onChange={(event) => setAlignment(event.target.value)}>
@@ -1194,6 +1161,16 @@ function CreateCharacterFields(props: {
           )}
         </div>
 
+        {/* Levels column: classes are added one level at a time; the HP and Level boxes follow this list. */}
+        <LevelsPanel
+          classOptions={classOptions}
+          levels={levels}
+          constitutionModifier={abilityModifier(calculatedScore('constitution'))}
+          onAdd={handleAddLevel}
+          onReroll={(index) => setLevels((current) => rerollLevel(current, index))}
+          onRemove={(index) => setLevels((current) => removeLevel(current, index))}
+        />
+
         {/* Right column: ability scores panel */}
         <div
           style={{
@@ -1460,7 +1437,7 @@ function CreateCharacterFields(props: {
 
       <button
         type="submit"
-        disabled={submitting}
+        disabled={submitting || levels.length === 0}
         style={{
           backgroundColor: 'var(--color-accent)',
           border: 'none',

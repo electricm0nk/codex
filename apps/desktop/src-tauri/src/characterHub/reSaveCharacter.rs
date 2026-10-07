@@ -235,6 +235,8 @@ mod tests {
             selected_traits: Vec::new(),
             trait_skill_choices: Vec::new(),
             additional_choices: Vec::new(),
+            additional_levels: Vec::new(),
+            hit_point_levels: Vec::new(),
             saved_at: TEST_SAVED_AT.to_owned(),
         };
         let character_input = compose_character_input(&request);
