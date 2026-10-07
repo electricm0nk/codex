@@ -7802,6 +7802,115 @@ mod tests {
         assert!(feats.entries.iter().any(|e| e.eligibility.as_ref().is_some_and(|v| !v.eligible)), "and some do not");
     }
 
+    // ---- Custom: GM grants and house-rule records (custom.json) -------------------------------------
+
+    use crate::character_custom::{
+        load_character_custom_at_root, save_character_custom_at_root, CharacterCustomDto, CustomGrantDto, CustomRecordDto,
+        CustomStatDto,
+    };
+
+    fn grant(id: &str, target: &str, value: i32) -> CustomGrantDto {
+        CustomGrantDto { id: id.to_owned(), label: format!("grant {id}"), target: target.to_owned(), value, reason: "a god's boon".to_owned() }
+    }
+
+    fn record(id: &str, name: &str) -> CustomRecordDto {
+        CustomRecordDto {
+            id: id.to_owned(),
+            name: name.to_owned(),
+            description: "A thing the GM allowed.".to_owned(),
+            stats: vec![CustomStatDto { label: "Damage".to_owned(), value: "1d8".to_owned() }],
+        }
+    }
+
+    fn created_character(label: &str) -> std::path::PathBuf {
+        let root = tempdir(label);
+        let response = create_character_at_root(&root, &request_for_class("race:human", "class:fighter", 1), "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        root
+    }
+
+    fn saved_scores(root: &Path) -> (i16, i16) {
+        let chosen = SavedCharacterStore::load(root).unwrap().character_input.chosen;
+        (chosen.ability_scores.wisdom, chosen.ability_scores.strength)
+    }
+
+    #[test]
+    fn a_character_with_no_custom_file_has_an_empty_custom_set() {
+        let root = created_character("custom-none");
+        assert_eq!(load_character_custom_at_root(&root).unwrap(), CharacterCustomDto::default());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn an_ability_grant_moves_the_saved_score_and_removing_it_restores_it() {
+        let root = created_character("custom-ability");
+        let (wis_before, str_before) = saved_scores(&root);
+        let mut custom = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 1)], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect("save");
+        assert_eq!(saved_scores(&root), (wis_before + 1, str_before), "+1 Wisdom, nothing else");
+        assert_eq!(load_character_custom_at_root(&root).unwrap(), custom, "the grant is listed so it can be edited");
+
+        // Changing the grant applies only the difference.
+        custom.grants = vec![grant("g1", "ability:wisdom", 3)];
+        save_character_custom_at_root(&root, &custom, "2026-07-21T02:00:00Z").expect("save");
+        assert_eq!(saved_scores(&root).0, wis_before + 3);
+
+        // Removing it puts the score back exactly where it was.
+        custom.grants.clear();
+        save_character_custom_at_root(&root, &custom, "2026-07-21T03:00:00Z").expect("save");
+        assert_eq!(saved_scores(&root), (wis_before, str_before));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn non_ability_grants_and_records_are_saved_without_touching_the_scores() {
+        let root = created_character("custom-records");
+        let before = saved_scores(&root);
+        let revision_before = SavedCharacterStore::load(&root).unwrap().revision_id;
+        let custom = CharacterCustomDto {
+            grants: vec![grant("hp", "hit_points", 5), grant("sp", "skill_points", 2)],
+            feats: vec![record("f1", "Racial Weapon Specialization")],
+            equipment: vec![record("e1", "Sunblade of the Order")],
+            spells: vec![record("s1", "Ember Step")],
+            devices: vec![record("d1", "Rod of Small Mercies")],
+        };
+        save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect("save");
+        assert_eq!(saved_scores(&root), before, "no ability grant, so no score change");
+        assert_eq!(SavedCharacterStore::load(&root).unwrap().revision_id, revision_before, "and no new revision");
+        assert_eq!(load_character_custom_at_root(&root).unwrap(), custom);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn invalid_custom_data_is_refused_whole_and_nothing_changes() {
+        let root = created_character("custom-invalid");
+        let before = saved_scores(&root);
+        let cases: Vec<(CharacterCustomDto, &str)> = vec![
+            (CharacterCustomDto { feats: vec![record("f1", "   ")], ..Default::default() }, "name"),
+            (CharacterCustomDto { grants: vec![grant("g1", "ability:luck", 1)], ..Default::default() }, "target"),
+            (CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 99)], ..Default::default() }, "value"),
+            (CharacterCustomDto { grants: vec![grant("g1", "hit_points", 1), grant("g1", "hit_points", 2)], ..Default::default() }, "duplicate"),
+            (CharacterCustomDto { equipment: vec![CustomRecordDto { stats: vec![CustomStatDto { label: String::new(), value: "x".to_owned() }], ..record("e1", "Thing") }], ..Default::default() }, "stat"),
+            (CharacterCustomDto { spells: vec![CustomRecordDto { description: "x".repeat(10_001), ..record("s1", "Long") }], ..Default::default() }, "description"),
+        ];
+        for (custom, needle) in cases {
+            let err = save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect_err("must be refused");
+            assert!(err.contains(needle), "the refusal names the problem ({needle}): {err}");
+        }
+        assert_eq!(saved_scores(&root), before, "a refused save changes nothing");
+        assert!(!root.join("custom.json").exists(), "and writes nothing");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn a_grant_that_would_push_an_ability_outside_the_playable_range_is_refused() {
+        let root = created_character("custom-range");
+        let custom = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", -12)], ..Default::default() };
+        let err = save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect_err("a score of 0 is not playable");
+        assert!(err.contains("wisdom"), "{err}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     #[test]
     fn starting_wealth_for_class_reports_the_maximum_or_the_reason_there_is_none() {
         let fighter = starting_wealth_for_class_impl("class:fighter");

@@ -15,15 +15,15 @@ export const PRINT_MARGIN_IN = 0.4;
 export const PRINT_COLUMNS_IN = { left: 1.7, right: 2.25, gap: 0.12 } as const;
 
 /** Tabs in printed order. Must list exactly the sheet's tabs (checked by `printLayout.test.ts`). */
-export const PRINT_TAB_ORDER = ['Weapons', 'Defense', 'Gear', 'Spells', 'Feats', 'Pets', 'Actions'] as const;
+export const PRINT_TAB_ORDER = ['Weapons', 'Defense', 'Gear', 'Spells', 'Feats', 'Pets', 'Actions', 'Custom'] as const;
 
 export function printContentWidthIn(): number {
   return PRINT_PAGE_IN.width - 2 * PRINT_MARGIN_IN;
 }
 
-/** The tabs to print: all of them, except an empty Pets page. */
-export function printableTabs(options: { hasPets: boolean }): Array<(typeof PRINT_TAB_ORDER)[number]> {
-  return PRINT_TAB_ORDER.filter((tab) => tab !== 'Pets' || options.hasPets);
+/** The tabs to print: all of them, except an empty Pets or Custom page. */
+export function printableTabs(options: { hasPets: boolean; hasCustom: boolean }): Array<(typeof PRINT_TAB_ORDER)[number]> {
+  return PRINT_TAB_ORDER.filter((tab) => (tab !== 'Pets' || options.hasPets) && (tab !== 'Custom' || options.hasCustom));
 }
 
 export function buildPrintCss(): string {

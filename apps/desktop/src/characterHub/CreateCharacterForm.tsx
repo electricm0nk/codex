@@ -52,6 +52,9 @@ import { CreationEquipmentDialog, type CreationEquipmentItem } from './CreationE
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { equipmentBudget } from './creationEquipmentModel';
 import { loadStartingWealth, type StartingWealthDto } from '../boundary/startingWealth';
+import { CustomDialog } from './CustomDialog';
+import { EMPTY_CUSTOM, customIsEmpty, customSummaryLines, withCustomHitPoints, withCustomSkillPoints, type CharacterCustom } from './customModel';
+import { saveCharacterCustom } from '../boundary/characterCustom';
 import { loadDraftSpellOptions } from '../boundary/draftSpellOptions';
 import { listSpells } from '../boundary/listSpells';
 import { loadClassSpellLevels } from '../boundary/loadClassSpellLevels';
@@ -391,6 +394,9 @@ function CreateCharacterFields(props: {
   const [equipmentDialogOpen, setEquipmentDialogOpen] = useState(false);
   const [wealth, setWealth] = useState<StartingWealthDto | null>(null);
   const [wealthError, setWealthError] = useState<string | null>(null);
+  // Custom: GM grants and house-rule records; saved right after the character is created.
+  const [custom, setCustom] = useState<CharacterCustom>(EMPTY_CUSTOM);
+  const [customDialogOpen, setCustomDialogOpen] = useState(false);
   // AT-34-E4-002 (second slice): the player's resolved skill choice for
   // each selected fixed-choice open-slot trait, keyed by trait id. A trait
   // with no entry here yet (just checked, choice not made) submits no
@@ -431,7 +437,7 @@ function CreateCharacterFields(props: {
   }
 
   // The HP box is the sum of the Levels list: each level's die result plus the Constitution modifier.
-  const maxHp = levels.length === 0 ? null : totalHitPoints(levels, abilityModifier(calculatedScore('constitution')));
+  const maxHp = levels.length === 0 ? null : withCustomHitPoints(totalHitPoints(levels, abilityModifier(calculatedScore('constitution'))), custom);
 
   const heldClasses: HeldClass[] = heldClassesOf(levels).map((held) => ({
     classId: held.classId,
@@ -440,7 +446,7 @@ function CreateCharacterFields(props: {
   }));
   const heldClassKey = heldClasses.map((held) => held.classId).join(',');
   const isHuman = raceId === 'race:human';
-  const skillPointsTotal = totalSkillPointsAvailable(heldClasses, abilityModifier(calculatedScore('intelligence')), isHuman);
+  const skillPointsTotal = withCustomSkillPoints(totalSkillPointsAvailable(heldClasses, abilityModifier(calculatedScore('intelligence')), isHuman), custom);
   const skillPointsLeft = (skillPointsTotal ?? 0) - skillPointsSpent(skillAllocation);
   const feats = creationFeatSlots(characterLevel(levels), raceId);
 
@@ -887,6 +893,14 @@ function CreateCharacterFields(props: {
             `Character saved, but its bio fields were not: ${cause instanceof Error ? cause.message : String(cause)}. Edit them on the sheet.`,
           );
         }
+        if (!customIsEmpty(custom)) {
+          try {
+            await saveCharacterCustom(request.characterId, custom, new Date().toISOString());
+          } catch (cause: unknown) {
+            const text = `Character saved, but its Custom data was not: ${cause instanceof Error ? cause.message : String(cause)}. Open Custom from the sheet's menu to add it again.`;
+            setBioSaveWarning((previous) => (previous ? `${previous} ${text}` : text));
+          }
+        }
         props.onCreated();
       }
     } catch (cause: unknown) {
@@ -1284,6 +1298,22 @@ function CreateCharacterFields(props: {
             chosen={chosenEquipment}
             onChange={setChosenEquipment}
             onClose={() => setEquipmentDialogOpen(false)}
+          />
+
+          {/* Custom: the GM's grants and house-rule records, available on Create and on the sheet. */}
+          <ManageBox title="Custom" summary={customSummaryLines(custom)} onManage={() => setCustomDialogOpen(true)}>
+            {custom.grants.some((grant) => grant.target.startsWith('ability:')) ? (
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>Ability grants are applied to the saved scores when the character is created.</p>
+            ) : null}
+          </ManageBox>
+          <CustomDialog
+            open={customDialogOpen}
+            value={custom}
+            onSave={(next) => {
+              setCustom(next);
+              setCustomDialogOpen(false);
+            }}
+            onCancel={() => setCustomDialogOpen(false)}
           />
         </div>
 

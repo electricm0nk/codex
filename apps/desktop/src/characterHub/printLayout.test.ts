@@ -53,9 +53,11 @@ function verifiesTabsFlowAfterPageOneInsteadOfOnePageEach() {
 
 function verifiesPrintedTabsCoverEveryTabAndSkipAnEmptyPetsPage() {
   assertEqual([...PRINT_TAB_ORDER].sort().join('|'), [...SHEET_TABS].sort().join('|'), 'the print order lists exactly the sheet\'s tabs');
-  assert(printableTabs({ hasPets: true }).includes('Pets'), 'pets print when the character has any');
-  assert(!printableTabs({ hasPets: false }).includes('Pets'), 'an empty Pets page is not printed');
-  assertEqual(printableTabs({ hasPets: true })[0], 'Weapons', 'printing starts with Weapons');
+  assert(printableTabs({ hasPets: true, hasCustom: false }).includes('Pets'), 'pets print when the character has any');
+  assert(!printableTabs({ hasPets: false, hasCustom: false }).includes('Pets'), 'an empty Pets page is not printed');
+  assert(printableTabs({ hasPets: false, hasCustom: true }).includes('Custom'), 'custom grants and records print when there are any');
+  assert(!printableTabs({ hasPets: false, hasCustom: false }).includes('Custom'), 'an empty Custom page is not printed');
+  assertEqual(printableTabs({ hasPets: true, hasCustom: true })[0], 'Weapons', 'printing starts with Weapons');
 }
 
 verifiesTheSheetIsALetterSizePage();

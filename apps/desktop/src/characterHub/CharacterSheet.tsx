@@ -43,6 +43,10 @@ import { PriceModeControl } from './PriceModeControl';
 import { loadCharacterHitPoints } from '../boundary/characterHitPoints';
 import type { HitPointLevelDto } from '../boundary/loadCreateCharacter';
 import { buildPrintCss, printableTabs } from './printLayout';
+import { CustomDialog } from './CustomDialog';
+import { CustomTab } from './CustomTab';
+import { EMPTY_CUSTOM, customIsEmpty, withCustomHitPoints, withCustomSkillPoints, type CharacterCustom } from './customModel';
+import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
 import { addSpellSelection } from '../boundary/addSpellSelection';
@@ -634,6 +638,7 @@ function SkillsPanel(props: {
    */
   featSkillBonuses: FeatSkillBonusesDto;
   onOpenDialog: () => void;
+  custom: CharacterCustom;
 }) {
   const REAL_MODIFIER_BY_SKILL: Record<string, number | undefined> = {
     Climb: props.realModifiers?.climb,
@@ -642,7 +647,7 @@ function SkillsPanel(props: {
   };
 
   const spent = skillPointsSpent(props.allocation);
-  const available = totalSkillPointsAvailable(props.heldClasses, props.abilities.intelligence, props.isHuman);
+  const available = withCustomSkillPoints(totalSkillPointsAvailable(props.heldClasses, props.abilities.intelligence, props.isHuman), props.custom);
   const remaining = available === null ? null : available - spent;
   // SD-36 F6a: a held class the engine's class-skill reader cannot answer is named with its
   // reason, not silently scored as all-cross-class.
@@ -738,7 +743,7 @@ function SkillsPanel(props: {
 // 'Overrides' was removed for the same reason (v0.8 F-5): it had no panel
 // behind it, and a visible affordance with no behavior is a stub. Every
 // tab listed here has a real panel in the switch below.
-export const SHEET_TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions'] as const;
+export const SHEET_TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions', 'Custom'] as const;
 type Tab = (typeof SHEET_TABS)[number];
 
 export interface BioFields {
@@ -3120,6 +3125,36 @@ export function CharacterSheet(props: {
     };
   }, [props.row.characterId]);
 
+  // Custom: the GM's grants and house-rule records (`custom.json`).
+  const [custom, setCustom] = useState<CharacterCustom>(EMPTY_CUSTOM);
+  const [customLoading, setCustomLoading] = useState(true);
+  const [customError, setCustomError] = useState<string | null>(null);
+  const [customDialogOpen, setCustomDialogOpen] = useState(false);
+  const [customSaving, setCustomSaving] = useState(false);
+  const [customSaveError, setCustomSaveError] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    setCustomLoading(true);
+    setCustomError(null);
+    loadCharacterCustom(props.row.characterId)
+      .then((loaded) => {
+        if (!cancelled) {
+          setCustom(loaded);
+          setCustomLoading(false);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (!cancelled) {
+          setCustom(EMPTY_CUSTOM);
+          setCustomError(cause instanceof Error ? cause.message : String(cause));
+          setCustomLoading(false);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [props.row.characterId]);
+
   const [money, setMoney] = useState<CharacterMoneyDto>({ totalCopper: 0, platinum: 0, gold: 0, silver: 0, copper: 0 });
   // Session-only pricing choice for the equipment screens; never saved on the character.
   const [priceMode, setPriceMode] = useState<PriceMode>(DEFAULT_PRICE_MODE);
@@ -4122,6 +4157,30 @@ export function CharacterSheet(props: {
    * back blocked with real diagnostics; ranks in every other skill are
    * accepted (SD-36 F7a).
    */
+  /**
+   * Saves the Custom dialog. An ability grant changes the saved ability score (a new revision), so
+   * the character is reloaded afterwards and every number on the sheet follows the engine.
+   */
+  async function handleCustomSave(next: CharacterCustom) {
+    setCustomSaving(true);
+    setCustomSaveError(null);
+    try {
+      const saved = await saveCharacterCustom(props.row.characterId, next, new Date().toISOString());
+      setCustom(saved);
+      setCustomDialogOpen(false);
+      try {
+        props.onDetailRefreshed(await loadSavedCharacterDetail({ characterId: props.row.characterId }));
+        await refreshEngineRecords();
+      } catch (cause: unknown) {
+        setMutationError(`Custom was saved, but the sheet could not be refreshed: ${cause instanceof Error ? cause.message : String(cause)}`);
+      }
+    } catch (cause: unknown) {
+      setCustomSaveError(cause instanceof Error ? cause.message : String(cause));
+    } finally {
+      setCustomSaving(false);
+    }
+  }
+
   async function handleSkillAllocationAccept(draft: Record<string, number>) {
     setMutationError(null);
     try {
@@ -4218,7 +4277,7 @@ export function CharacterSheet(props: {
     const held = heldClasses.find((candidate) => candidate.classId === spellRoutedClassId);
     return held ? { classId: held.classId, classLabel: held.classLabel } : null;
   })();
-  const hp = maxHitPointsWithSavedLevels(heldClasses, abilities.constitution, savedHitPoints);
+  const hp = withCustomHitPoints(maxHitPointsWithSavedLevels(heldClasses, abilities.constitution, savedHitPoints), custom);
   // SD-27 `decisions.md §28` defect 1: CMB/CMD are engine values now
   // (`pilot_compute::combat_maneuver_bonus` / `combat_maneuver_defense`, called
   // by both compute paths). They were `baseAttackBonus + abilities.strength`
@@ -4286,6 +4345,7 @@ export function CharacterSheet(props: {
     { label: recomputing ? 'Recomputing…' : 'Recompute', onSelect: () => void handleRecompute() },
     { label: cloning ? 'Cloning…' : 'Clone', onSelect: () => void handleClone() },
     { label: exporting ? 'Exporting…' : 'Export', onSelect: () => void handleExport() },
+    { label: 'Custom…', onSelect: () => setCustomDialogOpen(true) },
     { label: 'Print', onSelect: handlePrint },
   ];
 
@@ -4404,6 +4464,8 @@ export function CharacterSheet(props: {
             />
                 ) : name === 'Pets' ? (
                   <PetsTab snapshot={snapshot} />
+                ) : name === 'Custom' ? (
+                  <CustomTab custom={custom} loading={customLoading} error={customError} onEdit={() => setCustomDialogOpen(true)} />
                 ) : (
                   <ActionsTab
                     levelEntries={currentBenefits}
@@ -4766,13 +4828,14 @@ export function CharacterSheet(props: {
             realModifiers={snapshot?.selectedSkillModifiers}
             featSkillBonuses={engineRecords.featSkillBonuses}
             onOpenDialog={() => setSkillDialogOpen(true)}
+            custom={custom}
           />
           </div>
         </div>
       </div>
 
       {printing
-        ? printableTabs({ hasPets: buildPetsTabView(snapshot).kind === 'Companion' }).map((name, index) => (
+        ? printableTabs({ hasPets: buildPetsTabView(snapshot).kind === 'Companion', hasCustom: !customIsEmpty(custom) }).map((name, index) => (
             <section key={name} className={index === 0 ? 'print-tab print-tab-first' : 'print-tab'}>
               <h2>{name}</h2>
               {renderTabContent(name)}
@@ -4780,6 +4843,17 @@ export function CharacterSheet(props: {
           ))
         : null}
 
+      <CustomDialog
+        open={customDialogOpen}
+        value={custom}
+        saving={customSaving}
+        saveError={customSaveError}
+        onSave={(next) => void handleCustomSave(next)}
+        onCancel={() => {
+          setCustomSaveError(null);
+          setCustomDialogOpen(false);
+        }}
+      />
       <SkillAllocationDialog
         open={skillDialogOpen}
         onClose={() => setSkillDialogOpen(false)}
@@ -4787,7 +4861,7 @@ export function CharacterSheet(props: {
         classSkills={classSkills}
         characterLevel={level}
         abilities={abilities}
-        totalPoints={totalSkillPointsAvailable(heldClasses, abilities.intelligence, isHuman)}
+        totalPoints={withCustomSkillPoints(totalSkillPointsAvailable(heldClasses, abilities.intelligence, isHuman), custom)}
         allocation={skillAllocation}
         featSkillBonuses={engineRecords.featSkillBonuses}
         onAccept={(draft) => void handleSkillAllocationAccept(draft)}

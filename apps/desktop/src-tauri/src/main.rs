@@ -2,6 +2,7 @@
 
 mod browser_handoff;
 mod campaign_drive;
+mod character_custom;
 mod character_hub;
 #[allow(non_snake_case)]
 mod characterHub;
@@ -318,6 +319,8 @@ fn main() {
             list_feats_for_draft,
             draft_spell_options,
             starting_wealth_for_class,
+            character_custom::load_character_custom,
+            character_custom::save_character_custom,
             list_weapon_targets,
             list_class_catalog,
             list_class_spell_levels,
