@@ -1,0 +1,10 @@
+[truth-up] receipts.md: /home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/receipts.md
+[truth-up] repo root: /home/ubuntu/workspace/worktrees/codex-sd37
+[truth-up] working tree: clean
+[truth-up] branch: 4abf95c122d74e534f6b9b0b48d36e34a080e2b1 (4abf95c1)
+[truth-up] integration target: develop
+[truth-up] diff path count: 40296 (in arch scope: 3422, out of scope: 36874)
+[truth-up] docs touched: none — no architecture impact
+[truth-up] verification: cited-path check + relative-link check both pass
+[truth-up] appended receipt to /home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/receipts.md
+[truth-up] architecture truth-up complete

@@ -37,7 +37,8 @@ it (`workflow-instruction.md §5`).
 | E7.4 | complete | 1 of 1 | `artifacts/epic_7/E7.4_cycle_receipt.md`; `docs/retro/sd37-retrospective.md` |
 | E7.5 | complete | 1 of 1 | `artifacts/epic_7/E7.5_cycle_receipt.md`; SD-j safe default applied (worktree/branch left untouched); CARGO_TARGET_DIR deleted |
 | E7.6 | complete | 1 of 1 | `release-notes.md`; `artifacts/epic_7/E7.6_cycle_receipt.md` |
-| E7.7–E7.9 | waiting | 0 of 3 | |
+| E7.7 | in-progress | 0 of 1 | truth-up pushed (`artifacts/epic_7/E7.7_cycle_receipt.md`, `receipts.md`); the Opus claims critic is still to run |
+| E7.8–E7.9 | waiting | 0 of 2 | |
 | **Total** | | **54 of 57** | command below the table (E7.6 re-ran it after its own row: 54 complete of 57 rows) |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
@@ -197,6 +198,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E7.4 | 2026-10-07 | Sonnet 5.5 | the `docs(sd37,e7.4)` commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.4_cycle_receipt.md`) | complete | all six unchanged (docs only; nothing rendered; last renders = E7.2) | `artifacts/epic_7/E7.4_cycle_receipt.md`: `docs/retro/sd37-retrospective.md` written and cited from `references/README.md`; Run handle table filled with the 5 workflow run ids |
 | E7.5 | 2026-10-07 | Haiku 4.5 | 1335bb7248 | complete | all six unchanged (no source change; nothing rendered; last renders = E7.2) | `artifacts/epic_7/E7.5_cycle_receipt.md`: worktree sweep; codex-sd37-c0-1 and sd37/c0-1 branch left per SD-j safe default; CARGO_TARGET_DIR sd37-codex-sd37 deleted |
 | E7.6 | 2026-10-07 | Sonnet 5.5 | the `docs(sd37,e7.6)` commit | complete | all six unchanged (no source change; nothing rendered; last renders = E7.2) | `artifacts/epic_7/E7.6_cycle_receipt.md`: `release-notes.md` with 20 figures R-1..R-20, each with a shell command and an independent Python twin that agree; `E7.6_check.py --plant` PASS, 3 of 3 planted corruptions rejected; moved the E7.5 receipt from the repo root into the package (retro correction) |
+| E7.7 | 2026-10-07 | Sonnet 5.5 | `4abf95c122` (docs) + the closing `docs(sd37,e7.7)` commit | in-progress (truth-up done; Opus claims critic pending) | all six unchanged (no source change; nothing rendered; last renders = E7.2) | `artifacts/epic_7/E7.7_cycle_receipt.md`: 14 architecture docs edited to the SD-37 tree (Starfinder 1e as a second game system, the `sf_*` readers, the Starfinder converter and adapter, the rules-table data package replacing the removed compiled module, 86 commands, 53 verify stages, `0.17`, NSIS-only Windows job); README verification one-liners 12 MISSING → 0; `receipts.md` carries the `architecture:truth_up` block. The script (outside the repo) maps no path to any doc: retro correction `1791397812938-sd37-e7-7-7cf9ac`; the receipt block was corrected by hand |
 
 ## Decisions taken on safe defaults
 

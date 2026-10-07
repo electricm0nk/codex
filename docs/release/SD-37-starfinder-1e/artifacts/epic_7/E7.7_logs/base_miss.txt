@@ -1,0 +1,12 @@
+MISSING: src/rules_core/rules_tables/
+MISSING: src/rules_core/rules_tables/apg/class_witch.rs
+MISSING: src/rules_core/rules_tables/apg/mod.rs
+MISSING: src/rules_core/rules_tables/beastiary1/
+MISSING: src/rules_core/rules_tables/beastiary1/monster_subset_01.rs
+MISSING: src/rules_core/rules_tables/crb/json_cache.rs
+MISSING: src/rules_core/rules_tables/feats_all.rs
+MISSING: src/rules_core/rules_tables/mod.rs
+MISSING: src/rules_core/rules_tables/monster_chassis.rs
+MISSING: src/rules_tables/pathfinder_unchained/class_chassis.rs
+MISSING: tests/sd16-e5-f1/
+MISSING: tests/zz_class_census.rs
