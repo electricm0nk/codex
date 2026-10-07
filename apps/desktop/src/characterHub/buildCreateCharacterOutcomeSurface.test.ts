@@ -1,3 +1,4 @@
+import type { CreateCharacterOutcome } from '../boundary/loadCreateCharacter';
 import { buildCreateCharacterOutcomeSurface } from './buildCreateCharacterOutcomeSurface';
 import { makeCharacterSummary } from '../testSupport/makeCharacterSummary';
 import { assert, assertEqual } from '../testSupport/asserts';
@@ -23,8 +24,37 @@ const WIZARD_DWARF_CONTEXT = {
 };
 const ROGUE_CONTEXT = { raceId: 'race:human', classId: 'class:rogue', classLabel: 'Rogue', supportLevel: 'none' as const };
 
+// A class with no published starting wealth is saved with 0 gp; the result says so instead of
+// leaving the player to wonder where the money went.
+function verifiesSavedOutcomeStatesWhyAClassHasNoStartingGold() {
+  const saved = (startingWealthNote?: string | null) =>
+    ({
+      kind: 'Saved',
+      summary: makeCharacterSummary({ displayLabel: 'Bob' }),
+      snapshot: {
+        baseAttackBonus: 0,
+        baselineMeleeAttackBonus: 0,
+        baselineArmorClass: 10,
+        totalSaves: { fortitude: 0, reflex: 0, will: 0 },
+      },
+      corpusDerived: {},
+      startingWealthNote,
+    }) as unknown as CreateCharacterOutcome;
+  const note = 'The Commoner is an NPC class with no published starting wealth: this character starts with 0 gp.';
+  assert(
+    buildCreateCharacterOutcomeSurface(saved(note), FIGHTER_CONTEXT).detail.includes(note),
+    'the saved result carries the starting-wealth note'
+  );
+  assertEqual(
+    buildCreateCharacterOutcomeSurface(saved(null), FIGHTER_CONTEXT).detail,
+    'Your character was computed and saved.',
+    'no note means the detail is unchanged'
+  );
+}
+
 async function main() {
   verifiesSavedOutcome();
+  verifiesSavedOutcomeStatesWhyAClassHasNoStartingGold();
   verifiesBlockedOutcomeGroupsNamedDiagnostics();
   verifiesBlockedOutcomeForUnsupportedClassShowsHonestSentence();
   verifiesBlockedOutcomeForWrongRaceOnGenuinelyPartialClassShowsHumanOnlySentence();

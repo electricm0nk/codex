@@ -355,6 +355,11 @@ export type CreateCharacterOutcome =
       summary: CharacterSummaryDto;
       snapshot: PilotSnapshotDto;
       corpusDerived: CorpusDerivedDto;
+      /**
+       * Present only when the class has no published starting wealth (NPC classes, Shifter):
+       * says the character starts with 0 gp and why.
+       */
+      startingWealthNote?: string | null;
     }
   | { kind: 'Blocked'; diagnostics: DiagnosticDto[] };
 

@@ -1059,6 +1059,7 @@ pub(crate) fn mutate_saved_character_at_root(
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        starting_wealth_note: None,
     })
 }
 

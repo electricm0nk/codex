@@ -207,6 +207,109 @@ pub fn starting_wealth_gp(class_id: &str) -> Option<u32> {
     }
 }
 
+/// Starting-wealth dice: `count`d`sides` x 10 gp.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct StartingWealthDice {
+    pub count: u32,
+    pub sides: u32,
+}
+
+/// Starting-wealth dice by class id: `count`d`sides` x 10 gp.
+///
+/// Source: each class's own page on d20pfsrd.com, the "Starting Wealth" line of its stat block
+/// (the character-creation page's table covers the first 21 classes, whose values this
+/// agrees with exactly; the rest come from the class pages: Advanced Class Guide, Occult
+/// Adventures, Antipaladin, Vigilante and Psionics Unleashed). PCGen carries no starting-wealth
+/// token for any class, so this is not derivable from the oracle. The four Unchained classes take
+/// their base class's statline (the book changes what the class does, not what it starts with).
+/// `the_dice_agree_with_the_printed_average_column_for_every_class` pins every row against its printed average.
+const STARTING_WEALTH_DICE: &[(&str, u32, u32)] = &[
+    ("class:alchemist", 3, 6),
+    ("class:barbarian", 3, 6),
+    ("class:bard", 3, 6),
+    ("class:cavalier", 5, 6),
+    ("class:cleric", 4, 6),
+    ("class:druid", 2, 6),
+    ("class:fighter", 5, 6),
+    ("class:gunslinger", 5, 6),
+    ("class:inquisitor", 4, 6),
+    ("class:magus", 4, 6),
+    ("class:monk", 1, 6),
+    ("class:ninja", 4, 6),
+    ("class:oracle", 3, 6),
+    ("class:paladin", 5, 6),
+    ("class:ranger", 5, 6),
+    ("class:rogue", 4, 6),
+    ("class:samurai", 3, 6),
+    ("class:sorcerer", 2, 6),
+    ("class:summoner", 2, 6),
+    ("class:witch", 3, 6),
+    ("class:wizard", 2, 6),
+    ("class:arcanist", 2, 6),
+    ("class:bloodrager", 3, 6),
+    ("class:brawler", 3, 6),
+    ("class:hunter", 4, 6),
+    ("class:investigator", 3, 6),
+    ("class:shaman", 3, 6),
+    ("class:skald", 3, 6),
+    ("class:slayer", 5, 6),
+    ("class:swashbuckler", 5, 6),
+    ("class:warpriest", 5, 6),
+    ("class:kineticist", 1, 6),
+    ("class:medium", 4, 6),
+    ("class:mesmerist", 3, 6),
+    ("class:occultist", 4, 6),
+    ("class:psychic", 2, 6),
+    ("class:spiritualist", 2, 6),
+    ("class:antipaladin", 5, 6),
+    ("class:vigilante", 5, 6),
+    ("class:psion", 3, 6),
+    ("class:tactician", 4, 6),
+    ("class:wilder", 4, 4),
+    ("class:psychic_warrior", 5, 6),
+    ("class:aegis", 2, 6),
+    ("class:cryptic", 3, 6),
+    ("class:dread", 3, 6),
+    ("class:marksman", 5, 6),
+    ("class:soulknife", 5, 6),
+    ("class:vitalist", 4, 4),
+    ("class:unchained_barbarian", 3, 6),
+    ("class:unchained_monk", 1, 6),
+    ("class:unchained_rogue", 4, 6),
+    ("class:unchained_summoner", 2, 6),
+];
+
+/// Classes with no published starting wealth anywhere reachable: the five NPC classes (their pages
+/// state none; NPC gear is set by CR, not by a class wealth roll) and the Shifter (Psionics
+/// Expanded / Ultimate Psionics; no authoritative page found). Each starts with 0 gp and says why.
+const UNPUBLISHED_STARTING_WEALTH: &[(&str, &str)] = &[
+    ("class:adept", "The Adept is an NPC class with no published starting wealth: this character starts with 0 gp."),
+    ("class:aristocrat", "The Aristocrat is an NPC class with no published starting wealth: this character starts with 0 gp."),
+    ("class:commoner", "The Commoner is an NPC class with no published starting wealth: this character starts with 0 gp."),
+    ("class:expert", "The Expert is an NPC class with no published starting wealth: this character starts with 0 gp."),
+    ("class:warrior", "The Warrior is an NPC class with no published starting wealth: this character starts with 0 gp."),
+    ("class:shifter", "No authoritative starting wealth was found for the Shifter: this character starts with 0 gp."),
+];
+
+pub fn starting_wealth_dice(class_id: &str) -> Option<StartingWealthDice> {
+    STARTING_WEALTH_DICE
+        .iter()
+        .find(|(id, ..)| *id == class_id)
+        .map(|&(_, count, sides)| StartingWealthDice { count, sides })
+}
+
+/// The top of the starting-wealth roll in gold pieces: every die at its maximum, times 10.
+/// New characters start with this; PF1's own rule is to roll, which this crate does not do.
+pub fn starting_wealth_max_gp(class_id: &str) -> Option<u32> {
+    starting_wealth_dice(class_id).map(|dice| dice.count * dice.sides * 10)
+}
+
+/// Why a class with no published starting wealth starts with 0 gp, for display; `None` for a class
+/// that has a value or is not recognised at all.
+pub fn starting_wealth_unpublished_reason(class_id: &str) -> Option<&'static str> {
+    UNPUBLISHED_STARTING_WEALTH.iter().find(|(id, _)| *id == class_id).map(|&(_, reason)| reason)
+}
+
 #[cfg(test)]
 mod starting_wealth_tests {
     use super::*;
@@ -385,5 +488,84 @@ mod tests {
         assert_eq!(gp_to_copper(1.0), 100);
         assert_eq!(gp_to_copper(0.05), 5, "an arrow's real corpus cost_gp value");
         assert_eq!(gp_to_copper(2.5), 250);
+    }
+}
+
+#[cfg(test)]
+mod starting_wealth_max_tests {
+    use super::*;
+
+    /// Every roster class a published statline exists for, with the dice as printed on its class
+    /// page (d20pfsrd "Starting Wealth: NdS x 10 gp (average A gp)").
+    const PUBLISHED: &[(&str, u32, u32, u32)] = &[
+        // (class id, dice count, sides, printed average gp)
+        ("class:alchemist", 3, 6, 105), ("class:barbarian", 3, 6, 105), ("class:bard", 3, 6, 105),
+        ("class:cavalier", 5, 6, 175), ("class:cleric", 4, 6, 140), ("class:druid", 2, 6, 70),
+        ("class:fighter", 5, 6, 175), ("class:gunslinger", 5, 6, 175), ("class:inquisitor", 4, 6, 140),
+        ("class:magus", 4, 6, 140), ("class:monk", 1, 6, 35), ("class:ninja", 4, 6, 140),
+        ("class:oracle", 3, 6, 105), ("class:paladin", 5, 6, 175), ("class:ranger", 5, 6, 175),
+        ("class:rogue", 4, 6, 140), ("class:samurai", 3, 6, 105), ("class:sorcerer", 2, 6, 70),
+        ("class:summoner", 2, 6, 70), ("class:witch", 3, 6, 105), ("class:wizard", 2, 6, 70),
+        ("class:arcanist", 2, 6, 70), ("class:bloodrager", 3, 6, 105), ("class:brawler", 3, 6, 105),
+        ("class:hunter", 4, 6, 140), ("class:investigator", 3, 6, 105), ("class:shaman", 3, 6, 105),
+        ("class:skald", 3, 6, 105), ("class:slayer", 5, 6, 175), ("class:swashbuckler", 5, 6, 175),
+        ("class:warpriest", 5, 6, 175), ("class:kineticist", 1, 6, 35), ("class:medium", 4, 6, 140),
+        ("class:mesmerist", 3, 6, 105), ("class:occultist", 4, 6, 140), ("class:psychic", 2, 6, 70),
+        ("class:spiritualist", 2, 6, 70), ("class:antipaladin", 5, 6, 175), ("class:vigilante", 5, 6, 175),
+        ("class:psion", 3, 6, 105), ("class:tactician", 4, 6, 140), ("class:wilder", 4, 4, 100),
+        ("class:psychic_warrior", 5, 6, 175), ("class:aegis", 2, 6, 70), ("class:cryptic", 3, 6, 105),
+        ("class:dread", 3, 6, 105), ("class:marksman", 5, 6, 175), ("class:soulknife", 5, 6, 175),
+        ("class:vitalist", 4, 4, 100),
+        // Pathfinder Unchained: each takes its base class's statline.
+        ("class:unchained_barbarian", 3, 6, 105), ("class:unchained_monk", 1, 6, 35),
+        ("class:unchained_rogue", 4, 6, 140), ("class:unchained_summoner", 2, 6, 70),
+    ];
+
+    #[test]
+    fn every_published_class_has_its_printed_dice_and_the_maximum_is_the_dice_at_their_top() {
+        for &(class_id, count, sides, _) in PUBLISHED {
+            assert_eq!(
+                starting_wealth_dice(class_id),
+                Some(StartingWealthDice { count, sides }),
+                "{class_id} dice"
+            );
+            assert_eq!(starting_wealth_max_gp(class_id), Some(count * sides * 10), "{class_id} maximum");
+        }
+        assert_eq!(starting_wealth_max_gp("class:fighter"), Some(300));
+        assert_eq!(starting_wealth_max_gp("class:monk"), Some(60));
+        assert_eq!(starting_wealth_max_gp("class:wilder"), Some(160));
+    }
+
+    #[test]
+    fn the_dice_agree_with_the_printed_average_column_for_every_class() {
+        for &(class_id, count, sides, printed_average) in PUBLISHED {
+            // average of NdS x 10 = N * (S + 1) / 2 * 10 = N * (S + 1) * 5
+            assert_eq!(count * (sides + 1) * 5, printed_average, "{class_id}: printed average disagrees with its dice");
+        }
+    }
+
+    #[test]
+    fn the_dice_agree_with_the_average_table_that_was_already_in_use() {
+        for &(class_id, ..) in PUBLISHED {
+            if let Some(average) = starting_wealth_gp(class_id) {
+                let dice = starting_wealth_dice(class_id).expect("a class with an average has dice");
+                assert_eq!(dice.count * (dice.sides + 1) * 5, average, "{class_id}: two tables disagree");
+            }
+        }
+    }
+
+    #[test]
+    fn classes_with_no_published_statline_have_no_maximum_and_say_why() {
+        for class_id in ["class:adept", "class:aristocrat", "class:commoner", "class:expert", "class:warrior", "class:shifter"] {
+            assert_eq!(starting_wealth_max_gp(class_id), None, "{class_id}");
+            let reason = starting_wealth_unpublished_reason(class_id).unwrap_or_else(|| panic!("{class_id} needs a stated reason"));
+            assert!(reason.contains("0 gp"), "{class_id}: the note says what the character starts with: {reason}");
+        }
+    }
+
+    #[test]
+    fn an_unrecognised_class_is_neither_published_nor_a_known_gap() {
+        assert_eq!(starting_wealth_max_gp("class:not_a_class"), None);
+        assert_eq!(starting_wealth_unpublished_reason("class:not_a_class"), None);
     }
 }

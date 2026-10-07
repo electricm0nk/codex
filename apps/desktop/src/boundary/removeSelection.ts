@@ -1,4 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
+import type { PriceMode } from '../characterHub/priceMode';
 import { formatError, hasTauriRuntime } from './runtime';
 import type { CreateCharacterOutcome } from './loadCreateCharacter';
 
@@ -74,6 +75,8 @@ export interface RemoveEquipmentSelectionRequest {
   characterId: string;
   itemId: string;
   savedAt: string;
+  /** What removing the item returns: `standard` 50%, `characterBuild` 100%, `cashless` nothing. Absent means `standard`. */
+  priceMode?: PriceMode;
 }
 
 export async function removeEquipmentSelection(

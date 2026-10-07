@@ -125,6 +125,7 @@ pub fn append_to_character_at_root(
             summary,
             snapshot,
             corpus_derived,
+            ..
         } => AppendToCharacterResponse {
             success: true,
             character: Some(AppendedCharacterDto {

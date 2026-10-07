@@ -39,6 +39,8 @@ import type {
 import { buildAcBySourceRows, describeEncumbrance, effectiveMaxDexCap } from './encumbranceTabModel';
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { purchaseEquipment } from '../boundary/purchaseEquipment';
+import { PriceModeControl } from './PriceModeControl';
+import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
 import { addSpellSelection } from '../boundary/addSpellSelection';
 import { recordAndPrepareSpellSelection } from '../boundary/recordAndPrepareSpellSelection';
@@ -913,6 +915,8 @@ function WeaponsTab(props: {
   weaponDamage: readonly WeaponDamageDto[];
   corpusDerived: CorpusDerivedDto | null;
   onAddWeapon: () => void;
+  priceMode: PriceMode;
+  onPriceModeChange: (mode: PriceMode) => void;
   /**
    * Drops one carried copy of the item, with any equipmods attached to it.
    * Does **not** refund the purchase — see
@@ -978,6 +982,7 @@ function WeaponsTab(props: {
         Proficiency granted by class (read from the engine); exotic weapons require the Exotic Weapon Proficiency feat.
       </p>
 
+      <PriceModeControl value={props.priceMode} onChange={props.onPriceModeChange} />
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
         <button type="button" onClick={props.onAddWeapon} style={addItemButtonStyle}>
           Add Weapon
@@ -1789,6 +1794,8 @@ function GearTab(props: {
   onAddArmor: () => void;
   /** v0.8 F-6: opens the `gear` picker (General + MagicItems). */
   onAddGear: () => void;
+  priceMode: PriceMode;
+  onPriceModeChange: (mode: PriceMode) => void;
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
   /** See `WeaponsTab.onRemoveWeapon` — the same command, no refund. */
   onRemoveItem: (itemId: string) => void;
@@ -1813,6 +1820,7 @@ function GearTab(props: {
         Corpus-derived equipment — each item resolves against the real PF1 corpus, and its weight
         and price are that record's own corpus values.
       </p>
+      <PriceModeControl value={props.priceMode} onChange={props.onPriceModeChange} />
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
         <button type="button" onClick={props.onAddArmor} style={addItemButtonStyle}>
           Add Armor
@@ -3060,6 +3068,8 @@ export function CharacterSheet(props: {
   }, [props.row.characterId]);
 
   const [money, setMoney] = useState<CharacterMoneyDto>({ totalCopper: 0, platinum: 0, gold: 0, silver: 0, copper: 0 });
+  // Session-only pricing choice for the equipment screens; never saved on the character.
+  const [priceMode, setPriceMode] = useState<PriceMode>(DEFAULT_PRICE_MODE);
   const [moneyBusy, setMoneyBusy] = useState(false);
   const [moneyError, setMoneyError] = useState<string | null>(null);
   // Loads the real persisted balance (or zero for a character that has
@@ -3371,6 +3381,7 @@ export function CharacterSheet(props: {
         itemId: entry.key,
         activeState: 'EquippedActive',
         savedAt: new Date().toISOString(),
+        priceMode,
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
@@ -3842,10 +3853,9 @@ export function CharacterSheet(props: {
   }
 
   /**
-   * Drops one carried copy of an item, with its equipmods. The money
-   * balance is deliberately left alone (see
-   * `apply_remove_equipment_selection`), so unlike `handleAddEquipment`
-   * this does not call `setMoney` — there is no new balance to show.
+   * Drops one carried copy of an item, with its equipmods, and sells it back under the current
+   * price mode (50% by default, 100% in character-build mode, nothing when cashless). The balance
+   * is reloaded afterwards because a sale can change it.
    */
   async function handleRemoveEquipment(itemId: string) {
     setMutationError(null);
@@ -3854,6 +3864,7 @@ export function CharacterSheet(props: {
         characterId: props.row.characterId,
         itemId,
         savedAt: new Date().toISOString(),
+        priceMode,
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
@@ -3861,6 +3872,8 @@ export function CharacterSheet(props: {
       }
       await republishFromDisk();
       await refreshEngineRecords();
+      // Selling an item back can return money (50% or 100% by price mode), so show the new balance.
+      setMoney(await loadCharacterMoney(props.row.characterId));
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -4588,6 +4601,8 @@ export function CharacterSheet(props: {
                   weaponDamage={engineRecords.weaponDamage}
                   corpusDerived={props.detail?.corpusDerived ?? null}
                   onAddWeapon={() => setItemPickerOpen('weapon')}
+                  priceMode={priceMode}
+                  onPriceModeChange={setPriceMode}
                   onRemoveWeapon={(itemId) => void handleRemoveEquipment(itemId)}
                 />
               ) : tab === 'Defense' ? (
@@ -4619,6 +4634,8 @@ export function CharacterSheet(props: {
                   corpusDerived={props.detail?.corpusDerived}
                   onAddArmor={() => setItemPickerOpen('armor')}
                   onAddGear={() => setItemPickerOpen('gear')}
+                  priceMode={priceMode}
+                  onPriceModeChange={setPriceMode}
                   onAttachModifier={handleAttachModifier}
                   onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
                   onSetActiveState={(itemId, activeState) => void handleSetEquipmentActiveState(itemId, activeState)}

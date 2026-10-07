@@ -1016,6 +1016,10 @@ pub enum CreateCharacterResponse {
         snapshot: Box<PilotSnapshotDto>,
         #[serde(rename = "corpusDerived")]
         corpus_derived: Box<CorpusDerivedDto>,
+        /// Present only when the class has no published starting wealth (NPC classes, Shifter):
+        /// says that the character starts with 0 gp and why.
+        #[serde(rename = "startingWealthNote")]
+        starting_wealth_note: Option<String>,
     },
     Blocked {
         diagnostics: Vec<DiagnosticDto>,
@@ -1422,7 +1426,7 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
 ///
 /// v0.6 alpha swarm item 7 (risks-and-open-questions.md): once the build
 /// reaches `Computed` and saves, this also initializes the character's
-/// starting money balance via `money::starting_wealth_gp`, for any class
+/// starting money balance via `money::starting_wealth_max_gp` (the top of the class's roll), for any class
 /// that function recognizes -- today that means every character that gets
 /// this far at all, since `starting_wealth_gp` covers all 11 CRB classes
 /// and only Fighter/Wizard/Rogue currently reach `Computed` in the first
@@ -1623,15 +1627,21 @@ pub(crate) fn create_character_at_root(
 
     SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
 
-    if let Some(starting_wealth_gp) = money::starting_wealth_gp(&request.class_id) {
+    // New characters start with the MAXIMUM of their class's starting-wealth roll. A class with no
+    // published statline starts with 0 gp, and the response says why.
+    let mut starting_wealth_note = None;
+    if let Some(starting_wealth_gp) = money::starting_wealth_max_gp(&request.class_id) {
         let starting_copper = money::gp_to_copper(f64::from(starting_wealth_gp));
         adjust_character_money_at_root(root, starting_copper as i64)?;
+    } else {
+        starting_wealth_note = money::starting_wealth_unpublished_reason(&request.class_id).map(str::to_owned);
     }
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        starting_wealth_note,
     })
 }
 
@@ -1706,6 +1716,7 @@ pub fn clone_character(
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        starting_wealth_note: None,
     })
 }
 
@@ -2495,6 +2506,62 @@ pub(crate) fn purchase_equipment_at_root(
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<PurchaseEquipmentResponse, String> {
+    purchase_equipment_priced_at_root(root, item_id, active_state, saved_at, PriceMode::Standard)
+}
+
+/// How equipment moves money. A per-request choice made on the equipment screen; it is never
+/// saved on the character.
+///
+/// - `Cashless`: items are added and removed without touching the balance (no funds needed, no
+///   refund, and an item with no catalog price is fine).
+/// - `Standard`: buy at 100% of the catalog price, sell at 50% (rounded down to a copper piece).
+/// - `CharacterBuild`: buy and sell both at 100%, so adding and removing an item nets to zero.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum PriceMode {
+    Cashless,
+    #[default]
+    Standard,
+    CharacterBuild,
+}
+
+/// What selling an item back returns, in copper, for a catalog price of `cost_copper`.
+pub(crate) fn refund_copper(cost_copper: u64, mode: PriceMode) -> u64 {
+    match mode {
+        PriceMode::Cashless => 0,
+        PriceMode::Standard => cost_copper / 2,
+        PriceMode::CharacterBuild => cost_copper,
+    }
+}
+
+/// The catalog gold price of `item_id`, resolved the same way a purchase resolves it: by exact
+/// catalog key first, then the free-form resolver for legacy ids. `None` when the record carries
+/// no independent price (a `(Base)` template, a formula-priced modifier).
+fn catalog_cost_gp(item_id: &str) -> Option<f64> {
+    codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(item_id).map_or_else(
+        || codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(item_id),
+        |row| row.cost_gp,
+    )
+}
+
+/// [`purchase_equipment_at_root`] under an explicit [`PriceMode`]. `Cashless` skips the price and
+/// affordability checks entirely and charges nothing; the other two buy at 100%.
+pub(crate) fn purchase_equipment_priced_at_root(
+    root: &Path,
+    item_id: &str,
+    active_state: ActiveState,
+    saved_at: &str,
+    mode: PriceMode,
+) -> Result<PurchaseEquipmentResponse, String> {
+    if mode == PriceMode::Cashless {
+        return match add_equipment_selection_at_root(root, item_id, active_state, saved_at)? {
+            CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
+            CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
+                let money = load_character_money_at_root(root)?;
+                Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money })
+            }
+        };
+    }
     // SD-27: the Add Weapon / Add Armor picker hands this command a catalog
     // `key` straight off `build_equipment_catalog()`, so the by-key lookup
     // is tried first -- it names the exact row the user picked, including
@@ -2503,13 +2570,7 @@ pub(crate) fn purchase_equipment_at_root(
     // resolver remains the fallback for ids that are not catalog keys at
     // all, notably the legacy `"item:longsword"` fixture namespace that
     // seeded characters still carry.
-    let Some(cost_gp) =
-        codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(item_id)
-            .map_or_else(
-                || codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(item_id),
-                |row| row.cost_gp,
-            )
-    else {
+    let Some(cost_gp) = catalog_cost_gp(item_id) else {
         return Ok(PurchaseEquipmentResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
                 id: "money.equipment_purchase.unknown_cost".to_owned(),
@@ -2544,7 +2605,7 @@ pub(crate) fn purchase_equipment_at_root(
         CreateCharacterResponse::Blocked { diagnostics } => {
             Ok(PurchaseEquipmentResponse::Blocked { diagnostics })
         }
-        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived } => {
+        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
             let cost_signed = i64::try_from(cost_copper)
                 .map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
             let money = adjust_character_money_at_root(root, -cost_signed)?;
@@ -2703,7 +2764,7 @@ pub(crate) fn attach_equipment_modifier_at_root(
         CreateCharacterResponse::Blocked { diagnostics } => {
             Ok(AttachEquipmentModifierResponse::Blocked { diagnostics })
         }
-        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived } => {
+        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
             let money = if cost_copper > 0 {
                 let cost_signed = i64::try_from(cost_copper)
                     .map_err(|_| "attach cost overflows a signed 64-bit total".to_owned())?;
@@ -2749,6 +2810,9 @@ pub struct PurchaseEquipmentRequest {
     pub item_id: String,
     pub active_state: ActiveStateDto,
     pub saved_at: String,
+    /// Absent means `Standard` (buy at 100%).
+    #[serde(default)]
+    pub price_mode: PriceMode,
 }
 
 /// Atomically resolves `item_id`'s real catalog cost, verifies the
@@ -2762,11 +2826,12 @@ pub fn purchase_equipment(
     request: PurchaseEquipmentRequest,
 ) -> Result<PurchaseEquipmentResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    purchase_equipment_at_root(
+    purchase_equipment_priced_at_root(
         &root,
         &request.item_id,
         request.active_state.into(),
         &request.saved_at,
+        request.price_mode,
     )
 }
 
@@ -3360,6 +3425,28 @@ pub(crate) fn remove_equipment_selection_at_root(
     })
 }
 
+/// [`remove_equipment_selection_at_root`] that also sells the item back under `mode`: `Standard`
+/// returns 50% of its catalog price, `CharacterBuild` 100%, `Cashless` nothing. An item with no
+/// catalog price has nothing to refund and is removed all the same. The refund is applied only
+/// after the removal saved.
+pub(crate) fn remove_equipment_selection_priced_at_root(
+    root: &Path,
+    item_id: &str,
+    saved_at: &str,
+    mode: PriceMode,
+) -> Result<CreateCharacterResponse, String> {
+    let cost_copper = catalog_cost_gp(item_id).map(money::gp_to_copper);
+    let response = remove_equipment_selection_at_root(root, item_id, saved_at)?;
+    if let (CreateCharacterResponse::Saved { .. }, Some(cost_copper)) = (&response, cost_copper) {
+        let refund = refund_copper(cost_copper, mode);
+        if refund > 0 {
+            let refund_signed = i64::try_from(refund).map_err(|_| "refund overflows a signed 64-bit total".to_owned())?;
+            adjust_character_money_at_root(root, refund_signed)?;
+        }
+    }
+    Ok(response)
+}
+
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RemoveFeatSelectionRequest {
@@ -3704,19 +3791,24 @@ pub struct RemoveEquipmentSelectionRequest {
     pub character_id: String,
     pub item_id: String,
     pub saved_at: String,
+    /// What removing the item returns: `Standard` sells at 50%, `CharacterBuild` at 100%,
+    /// `Cashless` returns nothing. Absent means `Standard`.
+    #[serde(default)]
+    pub price_mode: PriceMode,
 }
 
 /// Loads the saved character, drops one carried copy of the requested item
 /// (with its applied equipmods), recomputes via the real engine, and
 /// re-saves — the inverse of `add_equipment_selection` / `purchase_equipment`.
-/// Does **not** refund the purchase; see `apply_remove_equipment_selection`.
+/// Sells the item back under the request's price mode (`Standard` 50%, `CharacterBuild` 100%,
+/// `Cashless` nothing); see `remove_equipment_selection_priced_at_root`.
 #[tauri::command]
 pub fn remove_equipment_selection(
     app: tauri::AppHandle,
     request: RemoveEquipmentSelectionRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    remove_equipment_selection_at_root(&root, &request.item_id, &request.saved_at)
+    remove_equipment_selection_priced_at_root(&root, &request.item_id, &request.saved_at, request.price_mode)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -4694,6 +4786,7 @@ fn import_character_from_json(
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        starting_wealth_note: None,
     })
 }
 
@@ -7067,11 +7160,11 @@ mod tests {
 
     // ----- create_character: starting wealth (risks item 7) -----
 
-    /// A freshly created Fighter is granted the operator-cited average
-    /// starting wealth (175 gp = 17,500 cp) atomically as part of creation,
+    /// A freshly created Fighter is granted the MAXIMUM starting wealth
+    /// (5d6 x 10 at its top: 300 gp = 30,000 cp) atomically as part of creation,
     /// not as a separate call the caller has to remember to make.
     #[test]
-    fn create_character_at_root_grants_the_operator_cited_starting_wealth_for_fighter() {
+    fn create_character_at_root_grants_the_maximum_starting_wealth_for_fighter() {
         let root = tempdir("create-character-starting-wealth-fighter");
         let request = request_for("race:human", 1);
 
@@ -7087,8 +7180,8 @@ mod tests {
 
         assert_eq!(
             load_character_money_at_root(&root).unwrap().total_copper,
-            17_500,
-            "175 gp (5d6 x 10, operator-cited average) = 17,500 cp"
+            30_000,
+            "300 gp (5d6 x 10, every die at its maximum) = 30,000 cp"
         );
 
         std::fs::remove_dir_all(&root).ok();
@@ -7098,8 +7191,9 @@ mod tests {
     /// own correct, distinct starting wealth -- not a single hardcoded value
     /// applied regardless of class.
     #[test]
-    fn create_character_at_root_grants_the_operator_cited_starting_wealth_for_wizard_and_rogue() {
-        for (class_id, expected_copper) in [("class:wizard", 7_000_u64), ("class:rogue", 14_000_u64)] {
+    fn create_character_at_root_grants_the_maximum_starting_wealth_for_wizard_and_rogue() {
+        // 2d6 x 10 -> 120 gp; 4d6 x 10 -> 240 gp, each die at its maximum.
+        for (class_id, expected_copper) in [("class:wizard", 12_000_u64), ("class:rogue", 24_000_u64)] {
             let root = tempdir(&format!("create-character-starting-wealth-{class_id}"));
             let request = request_for_class("race:human", class_id, 1);
 
@@ -7308,10 +7402,41 @@ mod tests {
 
         assert_eq!(
             load_character_money_at_root(&root).unwrap().total_copper,
-            10_500,
-            "105 gp (3d6 x 10, operator-cited average for Alchemist) = 10,500 cp"
+            18_000,
+            "180 gp (3d6 x 10, every die at its maximum, Alchemist) = 18,000 cp"
         );
 
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A class with no published starting wealth (the NPC classes, the Shifter) starts with 0 gp, and
+    /// the response says why, so the player is told rather than left to wonder where the money is.
+    #[test]
+    fn create_character_at_root_gives_an_unpublished_class_zero_gold_and_a_note() {
+        let root = tempdir("create-character-starting-wealth-unpublished-note");
+        let request = request_for_class("race:human", "class:commoner", 1);
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        let CreateCharacterResponse::Saved { starting_wealth_note, .. } = response else {
+            panic!("Human Commoner level 1 must reach Computed");
+        };
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 0, "no published wealth, no gold");
+        let note = starting_wealth_note.expect("the response states why this character has no starting gold");
+        assert!(note.contains("0 gp"), "{note}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A class that has a published statline gets no note: the note is only for the exception.
+    #[test]
+    fn create_character_at_root_gives_no_starting_wealth_note_when_the_class_has_a_value() {
+        let root = tempdir("create-character-starting-wealth-no-note");
+        let request = request_for("race:human", 1);
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        let CreateCharacterResponse::Saved { starting_wealth_note, .. } = response else {
+            panic!("Human Fighter level 1 must reach Computed");
+        };
+        assert_eq!(starting_wealth_note, None);
         std::fs::remove_dir_all(&root).ok();
     }
 
@@ -7427,6 +7552,103 @@ mod tests {
         );
         assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 800);
 
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- price modes: cashless / buy 100% sell 50% / character build (100% both ways) -----
+
+    fn fund_and_seed(label: &str, copper: i64) -> std::path::PathBuf {
+        let root = tempdir(label);
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, copper).expect("funding should succeed");
+        root
+    }
+
+    #[test]
+    fn refund_copper_follows_the_price_mode() {
+        // A dagger costs 2 gp = 200 cp.
+        assert_eq!(refund_copper(200, PriceMode::Standard), 100, "sell at 50%");
+        assert_eq!(refund_copper(200, PriceMode::CharacterBuild), 200, "character build sells at 100%");
+        assert_eq!(refund_copper(200, PriceMode::Cashless), 0, "cashless never moves money");
+        assert_eq!(refund_copper(5, PriceMode::Standard), 2, "half rounds down to a whole copper piece");
+    }
+
+    #[test]
+    fn a_cashless_purchase_adds_the_item_and_charges_nothing_even_with_no_funds() {
+        let root = fund_and_seed("price-mode-cashless-buy", 0);
+        let before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections.len();
+
+        let response = purchase_equipment_priced_at_root(
+            &root, "item:dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::Cashless,
+        )
+        .expect("purchase call should not error");
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "cashless needs no funds");
+
+        let after = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections.len();
+        assert_eq!(after, before + 1, "the item is added");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 0, "no money moved");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn a_cashless_purchase_accepts_an_item_with_no_catalog_price() {
+        let root = fund_and_seed("price-mode-cashless-unpriced", 0);
+        // "Dagger" is a (Base) template with no cost: blocked when buying with money, fine without it.
+        let response = purchase_equipment_priced_at_root(
+            &root, "Dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::Cashless,
+        )
+        .expect("purchase call should not error");
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn selling_in_the_standard_mode_returns_half_the_cost() {
+        let root = fund_and_seed("price-mode-standard-sell", 1_000);
+        purchase_equipment_priced_at_root(&root, "item:dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::Standard)
+            .expect("buy");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 800, "bought at 100%");
+
+        remove_equipment_selection_priced_at_root(&root, "item:dagger", "2026-07-23T00:00:01Z", PriceMode::Standard)
+            .expect("sell");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 900, "sold at 50% of 200 cp");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn selling_in_character_build_mode_returns_the_full_cost() {
+        let root = fund_and_seed("price-mode-build-sell", 1_000);
+        purchase_equipment_priced_at_root(&root, "item:dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::CharacterBuild)
+            .expect("buy");
+        remove_equipment_selection_priced_at_root(&root, "item:dagger", "2026-07-23T00:00:01Z", PriceMode::CharacterBuild)
+            .expect("sell");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 1_000, "buy and sell both at 100%");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn removing_an_item_in_cashless_mode_refunds_nothing() {
+        let root = fund_and_seed("price-mode-cashless-sell", 1_000);
+        purchase_equipment_priced_at_root(&root, "item:dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::Standard)
+            .expect("buy");
+        remove_equipment_selection_priced_at_root(&root, "item:dagger", "2026-07-23T00:00:01Z", PriceMode::Cashless)
+            .expect("remove");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 800, "cashless removal moves no money");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn removing_an_item_with_no_known_price_refunds_nothing_and_still_removes_it() {
+        let root = fund_and_seed("price-mode-unpriced-sell", 500);
+        purchase_equipment_priced_at_root(&root, "Dagger", ActiveState::EquippedActive, "2026-07-23T00:00:00Z", PriceMode::Cashless)
+            .expect("add the unpriced item cashless");
+        let before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections.len();
+        remove_equipment_selection_priced_at_root(&root, "Dagger", "2026-07-23T00:00:01Z", PriceMode::Standard)
+            .expect("remove");
+        let after = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections.len();
+        assert_eq!(after, before - 1, "the item is removed");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 500, "an unpriced item has nothing to refund");
         std::fs::remove_dir_all(&root).ok();
     }
 
@@ -10096,6 +10318,7 @@ mod tests {
     fn create_character_response_saved_serializes_corpus_derived_as_camel_case_without_touching_the_tag(
     ) {
         let response = CreateCharacterResponse::Saved {
+            starting_wealth_note: None,
             summary: Box::new(CharacterSummaryDto {
                 character_id: "c".to_owned(),
                 display_label: "d".to_owned(),
