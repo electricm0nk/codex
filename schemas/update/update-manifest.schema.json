@@ -24,11 +24,13 @@
   "properties": {
     "schema_version": {
       "type": "string",
-      "description": "Semantic version of this manifest contract. Bump on any field-list or cross-field-rule change (F1 closure schema-version discipline). Bumped 1.0.0 -> 1.1.0 in SD16-F-WINDOWS to admit two new optional platform-identity blocks paralleling linux_appimage: windows_msi and macos_dmg. The AppImage block remains required so prior publishers stay conformant. The schema remains closed-world: unknown top-level fields are still rejected. Both '1.0.0' and '1.1.0' are accepted here so that v1.0.0 manifests already deployed on the update-index branch continue to validate against the new closed-world rules — the 1.1.0 release only ADDS optional blocks, so the additive change is backwards-compatible and we explicitly do NOT reject pre-1.1.0 manifests. Future additive bumps that are non-breaking continue this pattern; non-additive breaks require a separate breaking-bump workflow.",
+      "description": "Semantic version of this manifest contract. Bump on any field-list or cross-field-rule change (F1 closure schema-version discipline). Bumped 1.0.0 -> 1.1.0 in SD16-F-WINDOWS to admit two new optional platform-identity blocks paralleling linux_appimage: windows_msi and macos_dmg. The AppImage block remains required so prior publishers stay conformant. The schema remains closed-world: unknown top-level fields are still rejected. Bumped 1.2.0 -> 1.3.0 to admit the optional windows_nsis installer block and eligibility.windows_install, so a Windows shell can self-update from the NSIS installer the Windows lane ships; additive, so older manifests still validate. Bumped 1.1.0 -> 1.2.0 to admit the optional linux_deb artifact block and eligibility.deb_install, so a package-installed (.deb) shell can self-update; additive, so '1.0.0' and '1.1.0' manifests still validate. '1.0.0', '1.1.0' and '1.2.0' are accepted here so that v1.0.0 manifests already deployed on the update-index branch continue to validate against the new closed-world rules — the 1.1.0 release only ADDS optional blocks, so the additive change is backwards-compatible and we explicitly do NOT reject pre-1.1.0 manifests. Future additive bumps that are non-breaking continue this pattern; non-additive breaks require a separate breaking-bump workflow.",
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
       "oneOf": [
         { "const": "1.0.0" },
-        { "const": "1.1.0" }
+        { "const": "1.1.0" },
+        { "const": "1.2.0" },
+        { "const": "1.3.0" }
       ]
     },
     "channel": {
@@ -104,6 +106,30 @@
           "description": "Size of the AppImage artifact in bytes.",
           "minimum": 1
         }
+      }
+    },
+    "linux_deb": {
+      "type": "object",
+      "description": "Linux .deb artifact identity (name, URL, hash, size). Optional; set by schema 1.2.0 publishers. The self-update target for installs whose install_kind is deb (installed through the package manager rather than run as an AppImage).",
+      "additionalProperties": false,
+      "required": ["name", "url", "sha256", "size_bytes"],
+      "properties": {
+        "name": { "type": "string", "description": "File name of the .deb artifact.", "minLength": 1 },
+        "url": { "type": "string", "format": "uri", "description": "Canonical URL where the .deb artifact can be fetched." },
+        "sha256": { "type": "string", "description": "SHA-256 hex digest of the .deb artifact.", "pattern": "^[0-9a-f]{64}$" },
+        "size_bytes": { "type": "integer", "description": "Size of the .deb artifact in bytes.", "minimum": 1 }
+      }
+    },
+    "windows_nsis": {
+      "type": "object",
+      "description": "Windows NSIS installer identity (name, URL, hash, size). Optional; set by schema 1.3.0 publishers. The self-update target for Windows installs: the installer is downloaded, verified against this block, and run silently.",
+      "additionalProperties": false,
+      "required": ["name", "url", "sha256", "size_bytes"],
+      "properties": {
+        "name": { "type": "string", "description": "File name of the NSIS installer (.exe).", "minLength": 1 },
+        "url": { "type": "string", "format": "uri", "description": "Canonical URL where the NSIS installer can be fetched." },
+        "sha256": { "type": "string", "description": "SHA-256 hex digest of the NSIS installer.", "pattern": "^[0-9a-f]{64}$" },
+        "size_bytes": { "type": "integer", "description": "Size of the NSIS installer in bytes.", "minimum": 1 }
       }
     },
     "windows_msi": {
@@ -201,6 +227,14 @@
         "appimage_install": {
           "type": "boolean",
           "description": "If true, this release supports AppImage-based self-update."
+        },
+        "deb_install": {
+          "type": "boolean",
+          "description": "If true, this release supports .deb-based self-update (requires linux_deb). Optional so 1.0.0/1.1.0 manifests stay valid."
+        },
+        "windows_install": {
+          "type": "boolean",
+          "description": "If true, this release supports Windows self-update (requires windows_nsis). Optional so 1.0.0-1.2.0 manifests stay valid."
         },
         "required_install_kind": {
           "type": "string",

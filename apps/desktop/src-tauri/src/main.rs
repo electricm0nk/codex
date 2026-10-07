@@ -2,6 +2,7 @@
 
 mod browser_handoff;
 mod campaign_drive;
+mod character_custom;
 mod character_hub;
 #[allow(non_snake_case)]
 mod characterHub;
@@ -54,8 +55,9 @@ use character_hub::{
     delete_character, delete_character_portrait, export_character, export_character_json,
     import_character, level_up_character, list_feats_for_character, list_saved_characters,
     load_character_bio,
+    load_character_hit_points,
     load_character_durability, load_character_money, load_character_portrait,
-    list_class_creation_roster, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
+    list_class_creation_roster, draft_spell_options, list_feats_for_draft, starting_wealth_for_class, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
     add_trait_selection, remove_trait_selection, set_equipment_active_state,
     remove_spell_selection,
@@ -141,11 +143,30 @@ struct BackendHealthSnapshot {
     git_commit: String,
 }
 
-#[tauri::command]
-fn load_backend_health() -> BackendHealthSnapshot {
+/// `version` is the packaged app version (Tauri's `package_info`), which the release stamp sets.
+/// `CARGO_PKG_VERSION` is not stamped, so using it showed `v0.16.0` on every 0.16.x build.
+fn backend_health_snapshot(version: &str, git_commit: &str) -> BackendHealthSnapshot {
     BackendHealthSnapshot {
-        version: env!("CARGO_PKG_VERSION").to_string(),
-        git_commit: env!("CODEX_GIT_SHA").to_string(),
+        version: version.to_string(),
+        git_commit: git_commit.to_string(),
+    }
+}
+
+#[tauri::command]
+fn load_backend_health(app: tauri::AppHandle) -> BackendHealthSnapshot {
+    backend_health_snapshot(&app.package_info().version.to_string(), env!("CODEX_GIT_SHA"))
+}
+
+#[cfg(test)]
+mod backend_health_tests {
+    use super::backend_health_snapshot;
+
+    #[test]
+    fn reports_the_packaged_app_version_not_the_crate_version() {
+        let snapshot = backend_health_snapshot("0.16.141", "157873a67e80");
+        assert_eq!(snapshot.version, "0.16.141");
+        assert_ne!(snapshot.version, env!("CARGO_PKG_VERSION"));
+        assert_eq!(snapshot.git_commit, "157873a67e80");
     }
 }
 
@@ -162,6 +183,26 @@ fn main() {
             use tauri::Manager;
             if let Ok(resource_dir) = app.path().resource_dir() {
                 authoring_workbench::set_app_resource_dir(resource_dir);
+            }
+
+            // The rules crate reads its own data (sheet rules, class grants, the roster fixture)
+            // through a root baked in at compile time -- the CI runner's checkout, which a user's
+            // machine does not have. Hand it the directory the bundled `data/` really lives under.
+            // Must run before anything touches the engine (the roster sweep below does).
+            match authoring_workbench::codex_repo_root() {
+                Ok(root) => {
+                    if !codex::set_data_root(root.clone()) {
+                        eprintln!("Rules data root already set to a different directory; ignoring {}", root.display());
+                    }
+                }
+                Err(err) => eprintln!("Cannot resolve the rules data root: {err}"),
+            }
+
+            // Record the running build's real identity so the Update panel never has to say
+            // "unknown". Failure is reported, not hidden: the panel then states the probe error.
+            let version = app.package_info().version.to_string();
+            if let Err(err) = update::seed::seed_installed_state_for_running_build(&version) {
+                eprintln!("Failed to record installed-state: {err}");
             }
 
             if let Err(err) = character_hub::seed_default_character_if_needed(app.handle()) {
@@ -215,6 +256,7 @@ fn main() {
             delete_character_portrait,
             update_character_bio,
             load_character_bio,
+            load_character_hit_points,
             load_character_money,
             adjust_character_money,
             load_character_durability,
@@ -274,6 +316,11 @@ fn main() {
             // verdict for a specific saved character, so the picker can grey
             // out what that character cannot take and say why.
             list_feats_for_character,
+            list_feats_for_draft,
+            draft_spell_options,
+            starting_wealth_for_class,
+            character_custom::load_character_custom,
+            character_custom::save_character_custom,
             list_weapon_targets,
             list_class_catalog,
             list_class_spell_levels,

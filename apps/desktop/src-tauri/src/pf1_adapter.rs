@@ -1059,6 +1059,7 @@ pub(crate) fn mutate_saved_character_at_root(
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        starting_wealth_note: None,
     })
 }
 
@@ -1449,6 +1450,13 @@ mod tests {
             selected_traits: Vec::new(),
             trait_skill_choices: Vec::new(),
             additional_choices: Vec::new(),
+            additional_levels: Vec::new(),
+            hit_point_levels: Vec::new(),
+            selected_feats: Vec::new(),
+            skill_allocations: Vec::new(),
+            selected_spells: Vec::new(),
+            selected_equipment: Vec::new(),
+            price_mode: crate::character_hub::PriceMode::Standard,
             saved_at: TEST_SAVED_AT.to_owned(),
         }
     }

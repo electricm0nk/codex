@@ -35,6 +35,7 @@ async function main() {
   verifiesWeaponAndArmorHaveDistinctTitles();
   verifiesModifierKindNarrowsEquipmentToEquipmodsAndWiresModifierHandler();
   verifiesGearKindLoadsGeneralAndMagicItemsAndWiresEquipmentHandler();
+  verifiesEquipmentPickersOpenOnTheCategoryTheUserAskedFor();
 }
 
 function makeDeps() {
@@ -203,4 +204,14 @@ function verifiesGearKindLoadsGeneralAndMagicItemsAndWiresEquipmentHandler() {
     assertEqual([...loadEquipmentCalls].sort().join(','), 'General,MagicItems', 'gear queries General and MagicItems, never ArmsArmor');
     assertEqual(entries.length, 2, 'entries from every queried category are offered together');
   });
+}
+
+// "Add Weapon" lists arms & armor; it should open on Weapons, not make the user find them in the
+// whole catalog. Every other picker opens on All.
+function verifiesEquipmentPickersOpenOnTheCategoryTheUserAskedFor() {
+  const { deps } = makeDeps();
+  assertEqual(buildItemPickerConfig('weapon', deps)?.initialGroup, 'Weapons', 'Add Weapon opens on Weapons');
+  assertEqual(buildItemPickerConfig('armor', deps)?.initialGroup, 'Armor', 'Add Armor opens on Armor');
+  assertEqual(buildItemPickerConfig('gear', deps)?.initialGroup, undefined, 'Add Gear opens on All');
+  assertEqual(buildItemPickerConfig('spell', deps)?.initialGroup, undefined, 'Add Spell has no categories');
 }

@@ -1,5 +1,6 @@
 import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from './runtime';
+import type { CreateCharacterRequest } from './loadCreateCharacter';
 
 /**
  * Read-only desktop boundary over the filtered feat catalog.
@@ -114,6 +115,26 @@ export async function listFeats(filter: FeatCatalogFilter): Promise<FeatCatalogR
  * *visibly* unavailable with its reason, not missing from the list: dropping
  * the rows would hide the rules from the player instead of teaching them.
  */
+/**
+ * The feat catalog with the prerequisite verdicts of a character that is not saved yet: the Create
+ * screen's draft (`list_feats_for_draft`). Picks already made in the draft count toward each
+ * other's prerequisites.
+ */
+export async function listFeatsForDraft(
+  draft: CreateCharacterRequest,
+  filter: FeatCatalogFilter
+): Promise<FeatCatalogResponse> {
+  if (!hasTauriRuntime()) {
+    throw new Error('Tauri runtime not available for listing feats');
+  }
+
+  try {
+    return await invoke<FeatCatalogResponse>('list_feats_for_draft', { request: { draft, filter } });
+  } catch (cause: unknown) {
+    throw new Error(`Failed to list feats for this draft character: ${formatError(cause)}`);
+  }
+}
+
 export async function listFeatsForCharacter(
   characterId: string,
   filter: FeatCatalogFilter

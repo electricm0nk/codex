@@ -2,7 +2,7 @@
 
 > Scope: every project-specific term a newcomer meets in this codebase or its docs, each with a
 > short definition and a link to the doc that treats it in full.
-> Last verified: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for the SD-36 Epic F terms (carrier mix,
+> Last verified: **2026-10-07 against branch `tranche-16-ui`** for the four terms added this pass (data root, installed state, release-notes pointer, version stamp). Earlier: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for the SD-36 Epic F terms (carrier mix,
 > class census, closure-complete attestation, class roster, mechanism, sabotage parity, status parity,
 > structural diff). Earlier: **2026-09-20 against `tranche/16` (`b22ea9e113`, SD-36 Epic D)**. New this pass
 > (`docs/architecture/glossary.md` did not exist before SD-36 Epic D).
@@ -119,6 +119,10 @@ stage and by content via the residue gate (next entry). See [overview.md](./over
 One dispatched unit of work inside a bundle's epic, closed by a **cycle receipt** (see Receipt)
 following the schema in `docs/governance/workflow-instruction-template.md §7`.
 
+## Data root
+
+The directory the rules crate joins every runtime data path onto (`data/sheet_rules`, `data/class_feature_grants`, the roster fixture, …): `support::paths::repo_root()`. It is the repo checkout (Cargo's compile-time `CARGO_MANIFEST_DIR`) by default, and the packaged app's resource directory once the shell calls `codex::set_data_root` at startup. Reading the compile-time path in production is a defect, because an installed app does not have the build machine's checkout; `packaged_resources.rs` is the control. See [desktop-app.md](./desktop-app.md) §How the rules crate finds its data.
+
 ## Denominator gate
 
 `scripts/denominator_gate.py --check` (`verify.sh` stage `denominator-gate`) — fails a bundle's
@@ -161,6 +165,10 @@ See `AGENTS.md` rule 9 and [testing.md](./testing.md).
 An older naming lineage predating the `SD-NN` convention, still visible as a file-name prefix
 (`ge06_*`, `ge08_*` test files) — a proper noun naming provenance, not a live organizing unit. See
 [README.md](./README.md)'s provenance note.
+
+## Installed state
+
+`installed-state.json` under `<config>/codex/update/`: the record of what build is installed (install kind, version, source commit, artifact sha256, managed path, eligibility). The Update panel and `is_install_eligible` read it; `update/seed.rs` writes it at every startup for `.deb`, dev and first-run AppImage installs, and `verify_relaunch_artifact` writes it after an AppImage self-update. Without it every installed field reads `unknown`. See [update-and-feedback.md](./update-and-feedback.md).
 
 ## Kanban
 
@@ -228,6 +236,10 @@ Three distinct senses, disambiguated by context:
    `Blocked` status and its explanation records. See [rules-engine.md](./rules-engine.md).
 3. **`provenance.json` receipt** — the release pipeline's per-build attestation written during
    `publish-tester-release.yml`. See [release-pipeline.md](./release-pipeline.md).
+
+## Release-notes pointer
+
+`docs/release/current-release.json` (`{"tranche": N, "notes_path": "docs/release/<spec-dir>/release-notes.md"}`): the only thing that tells the publish workflow which notes to ship. `tools/release/resolve_release_notes.py` reads it and fails when it disagrees with the app's tranche or names placeholder notes. See [release-pipeline.md](./release-pipeline.md) §How the release notes are chosen.
 
 ## Residue gate
 
@@ -323,6 +335,10 @@ drives the running desktop app through a spec of UI rows via the DOM probe (abov
 rendered state rather than screenshots. Supports `--only`, `--from`, and `--resume` for
 incremental repair passes. See [getting-started.md](./getting-started.md).
 
+## Version stamp
+
+The `<major>.<tranche>.<build>` version minted by the publish workflow's `stamp` job (`0.16.${GITHUB_RUN_NUMBER}`) and written into `apps/desktop/package.json` and `src-tauri/tauri.conf.json` before every build. The committed files stay at `0.<tranche>.0`. `Cargo.toml` is not stamped, so display code uses Tauri's `package_info().version`, never `CARGO_PKG_VERSION`. See [release-pipeline.md](./release-pipeline.md) §Stamp delivery.
+
 ## Wiring class
 
 The GE-01 taxonomy every corpus record carries — `Display`, `Static`, `Derived`, `Computed` (a
@@ -335,3 +351,15 @@ strict lattice, highest-bar-wins), or `Ambiguous` — determined once, corpus-wi
 - [overview.md](./overview.md) — where most of these terms are first used in context.
 - [getting-started.md](./getting-started.md) — the practical commands behind several of these terms.
 - [README.md](./README.md) — the doc set's index.
+
+## Custom
+
+The GM's grants and house-rule records for one character, saved as `custom.json` beside it. An
+ability grant is applied to the saved ability score; hit point and skill point grants are added by
+the sheet; custom feats, equipment, spells and magic devices are listed and printed but not computed
+from. See [desktop-app.md](./desktop-app.md).
+
+## Manage dialog
+
+The Create screen's modal for choosing a group of options (racial traits, traits, feats, spells) in
+Options / Selected (/ Innate) columns, with a Qualified filter and the remaining count on top.

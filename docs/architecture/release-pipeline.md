@@ -1,17 +1,10 @@
 # Release pipeline
 
 > Scope: how a commit on `develop` or `main` becomes a tagged, schema-validated tester release, how branches get promoted between channels, and how the public `campaign-codex.org` status site is deployed.
-> Last verified: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** — SD-36 docs-truth capability
-> pass: checked this document's claims against the fact sheet and found no capability/scope claim in
-> it that needed correction (it describes CI/release mechanics, not product-wide coverage or "N books"/
-> "pilot"/"proof harness" framing); no substantive change this pass beyond this header refresh. Prior
-> pass **2026-09-20 against `b22ea9e113`** re-derived the version stamp (`0.16.0`, tranche/16), the job
-> graph (`stamp`/`test`/three platform publishes/`finalize`, unchanged in shape), the
-> `tools/ci/test_branch_promotion_guard.sh` path (moved from `tests/sd16-e5-f1/` — SD-36 Epic C2,
-> already reflected in the working tree at the time of that pass), and added the `deploy-site.yml`
-> workflow (new since the pass before that, publishes the public status site, not the desktop app).
-> Line-number citations from earlier passes are dropped in favor of step/job names, which drift less
-> between passes on a 1,000+ line workflow file.
+> Last verified: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** — the
+> stamp, notes-selection, manifest and consistency-gate sections were re-derived against the workflow
+> and tools. Step/job names are cited rather than line numbers, which drift on a 1,000+ line
+> workflow file.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Overview
@@ -22,7 +15,7 @@ Three independent systems live under `.github/workflows/`:
 2. **Promotion**: a chain of branch-source guards and an evidence gate control which branch may open a PR into which downstream branch (`develop` → `test` → `main`), independent of the publish workflow.
 3. **Site deploy** (`deploy-site.yml`): pushes `site/**` to Cloudflare Pages on a push to `main` — a separate concern from the desktop app release, sharing only the same repo and the same `main` branch.
 
-Systems 1 and 2 share doctrine constants (tranche id, release-notes path, required sections) but are enforced by separate code paths kept in sync by hand — see [The pinned-SD-16 quirk](#the-pinned-sd-16-quirk) below.
+Systems 1 and 2 share doctrine constants (tranche id, required notes sections) but are enforced by separate code paths kept in sync by hand — see [The pinned-SD-16 quirk](#the-pinned-sd-16-quirk) below.
 
 ```mermaid
 flowchart LR
@@ -59,11 +52,11 @@ flowchart TD
 ```
 *`stamp` and `test` declare no `needs:` of their own and run in parallel; every downstream job fans in from both.*
 
-- **`stamp`**: checks out, derives `VERSION="0.16.${GITHUB_RUN_NUMBER}"`, and rewrites `apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json` in place. The stamped files are uploaded as the `stamped-sources` artifact so every downstream job reads the exact same version.
+- **`stamp`**: checks out, derives `VERSION="0.16.${GITHUB_RUN_NUMBER}"`, and rewrites `apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json` in place. The stamped files are uploaded as the `stamped-sources` artifact so every downstream job reads the exact same version. `upload-artifact` strips the two files' common parent (`apps/desktop`), so every consumer must download it with `path: apps/desktop` — see [Stamp delivery](#stamp-delivery).
 - **`test`**: `cargo test --locked` at repo root, `cargo test --locked` in `apps/desktop/src-tauri`, `npm run typecheck` and `npm test` in `apps/desktop`. All three platform-publish jobs `needs: [test, stamp]`, so a red test run blocks every artifact build.
-- **`publish-tester-release`** (linux): downloads the stamped sources, runs `npx tauri build --bundles deb,appimage --ci` (which itself runs `apps/desktop`'s `build` npm script — and therefore `scripts/gen-corpus-bundle.mjs` — before `vite build`; see [desktop-app.md](./desktop-app.md)), stages the `.deb`/`.AppImage` into `release-staging/`, writes a `provenance.json` receipt, generates and validates `update-manifest.json`, computes checksums, and uploads everything as the `platform-linux` artifact. It does **not** call `gh release create` itself.
-- **`publish-tester-release-macos`** and **`publish-tester-release-windows`** mirror this on `macos-latest` / `windows-latest`, building `.app`/`.dmg` and `.msi`/`.exe` respectively, uploading `platform-macos` / `platform-windows` artifacts. Neither is code-signed (macOS DMG ships unsigned; Windows testers click through SmartScreen).
-- **`finalize`** is the single writer of the GitHub release, the unified `update-manifest.json`, and the `update-index` branch push. It downloads whichever platform artifacts succeeded (`continue-on-error: true` per download — a missing platform does not fail the run), rebuilds a unified manifest with whichever optional platform blocks are present, validates it twice, creates the GitHub release with `gh release create`, then emits and pushes the channel index.
+- **`publish-tester-release`** (linux): downloads the stamped sources, runs `npx tauri build --bundles deb,appimage --ci` (which itself runs `apps/desktop`'s `build` npm script — and therefore `scripts/gen-corpus-bundle.mjs` — before `vite build`; see [desktop-app.md](./desktop-app.md)), stages the `.deb`/`.AppImage` into `release-staging/`, writes a `provenance.json` receipt, resolves the release notes ([How the notes are chosen](#how-the-release-notes-are-chosen)), generates `update-manifest.json` (with the `.deb`'s `linux_deb` block), validates it, runs the [consistency gate](#the-consistency-gate), computes checksums, and uploads everything as the `platform-linux` artifact. Before building it runs `tools/release/assert_version_stamp.py`. It does **not** call `gh release create` itself.
+- **`publish-tester-release-macos`** and **`publish-tester-release-windows`** mirror this on `macos-latest` / `windows-latest` (including the stamp download and `assert_version_stamp.py`), building `.app`/`.dmg` and `.msi`/`.exe` respectively, uploading `platform-macos` / `platform-windows` artifacts. Neither is code-signed (macOS DMG ships unsigned; Windows testers click through SmartScreen).
+- **`finalize`** is the single writer of the GitHub release, the unified `update-manifest.json`, and the `update-index` branch push. It downloads whichever platform artifacts succeeded (`continue-on-error: true` per download — a missing platform does not fail the run), rebuilds a unified manifest with whichever optional platform blocks are present (the `.deb` is required), validates it twice, runs the consistency gate with `--fetch-notes` **before** the release exists, creates the GitHub release with `gh release create`, then emits and pushes the channel index. It also downloads `stamped-sources` so the gate can compare the manifest against the stamped build files.
 
 ### Version stamp
 
@@ -74,6 +67,16 @@ Versioning semantics (`docs/release/SD-22/decisions.md:52`, `apps/desktop/src/re
 - **tranche-base** (the `16` in `0.16.x`): bumped only when a new `tranche/N` branch is cut for the next bundle — explicitly *not* at a bundle's own closure while still on the same tranche branch. Advances to date, most recent first: `0.9` (tranche/9, SD-29) → … → `0.15` (tranche/15, SD-35) → `0.16` (tranche/16, SD-36).
 - **build**: the monotonic `GITHUB_RUN_NUMBER`.
 
+#### Stamp delivery
+
+The `stamped-sources` artifact holds `package.json` and `src-tauri/tauri.conf.json`; `actions/upload-artifact` strips their common parent directory, so a download without a `path` unpacks them at the **repo root** and leaves the files `tauri build` reads untouched (the manifest would then say `0.16.140` while the binary says `0.16.0`). Therefore:
+
+- every platform job and `finalize` downloads the artifact with `path: apps/desktop`;
+- `tools/release/assert_version_stamp.py --repo-root . --version <stamped>` runs immediately before each build and fails if either file differs (and says so when stamped copies sit at the repo root, the signature of this exact mistake);
+- `tools/release/verify_release_consistency.py` re-checks, before the release is created, that the manifest, the staged `.deb`/AppImage names and `dpkg-deb -f Version` all carry the stamped version ([The consistency gate](#the-consistency-gate)).
+
+`Cargo.toml` is still not stamped, so `CARGO_PKG_VERSION` stays at `0.<tranche>.0` in a published build. Anything that shows or records the running version must use Tauri's `app.package_info().version` (which reads `tauri.conf.json`): the installed-state seed (`update/seed.rs`) and `load_backend_health` do; do not reintroduce `env!("CARGO_PKG_VERSION")` for display.
+
 The build label surfaced in the desktop UI is `Codex <version>` — `formatWorkbenchBuildLabel` in `apps/desktop/src/testerWorkbench/status/createWorkbenchStatus.ts` (`BUILD_PREFIX = 'Codex'`).
 
 Guard tests that keep the three files and the fixtures honest:
@@ -83,13 +86,25 @@ Guard tests that keep the three files and the fixtures honest:
 
 ### Manifest generation + dual validation
 
-`scripts/release/write_release_manifest.py` builds `update-manifest.json` against `schemas/update/update-manifest.schema.json`. It hard-codes `TRANCHE_ID = "STC-CODEX-SD-16"` and `SCHEMA_VERSION = "1.1.0"`, computes the AppImage's sha256/size from the file on disk (`_appimage_identity`), and accepts complete-triple-or-nothing `--windows-msi-*` / `--macos-dmg-*` flag sets (`_optional_platform_block`) so a partial platform block can never be emitted.
+`scripts/release/write_release_manifest.py` builds `update-manifest.json` against `schemas/update/update-manifest.schema.json`. It hard-codes `TRANCHE_ID = "STC-CODEX-SD-16"` and `SCHEMA_VERSION = "1.1.0"` (`SCHEMA_VERSION_WITH_DEB = "1.2.0"`, used whenever a `.deb` is staged; `SCHEMA_VERSION_WITH_NSIS = "1.3.0"`, used whenever the Windows NSIS installer is staged, which also sets `eligibility.windows_install`), computes the AppImage's sha256/size from the file on disk (`_appimage_identity`), and accepts complete-triple-or-nothing `--linux-deb-*` / `--windows-msi-*` / `--macos-dmg-*` flag sets (`_optional_platform_block`) so a partial platform block can never be emitted. A staged `.deb` produces the `linux_deb` block and sets `eligibility.deb_install: true`; the workflow passes `--required-install-kind any` because both the AppImage and the `.deb` can self-update. Manifest schema 1.2.0 is purely additive: 1.0.0 and 1.1.0 manifests still validate.
 
 Each publish job's manifest is checked twice, by two different scripts:
 1. `scripts/release/validate_manifest.py --manifest update-manifest.json --schema schemas/update/update-manifest.schema.json` — pure `jsonschema.Draft202012Validator` check against the wire schema.
 2. `tools/release/check_release_manifest_against_dev_schema.py update-manifest.json` — re-validates against the same schema, then re-runs `tools/release/check_release_manifest.py`'s `_coherence_check` (tranche_id / release_notes_path binding) against the manifest (`tools/release/check_release_manifest.py` normally validates the *legacy* `tools/release/release-manifest.schema.json` shape, not the dev `schemas/update/` shape — the dev-schema shim exists because those two schemas disagree, see below).
 
 The `finalize` job repeats both validations against the unified manifest.
+
+### The consistency gate
+
+Schema validity says a manifest is well-formed, not that it is true. `tools/release/verify_release_consistency.py --repo-root . --staging release-staging [--fetch-notes]` compares the manifest against the things it describes and reports every disagreement (exit 2):
+
+1. `apps/desktop/package.json` and `src-tauri/tauri.conf.json` carry the manifest version (the stamp reached the build).
+2. `linux_appimage.name` contains the version.
+3. `linux_deb`: the staged file matches the manifest's sha256 and size, and `dpkg-deb -f` reports `Package: codex` and `Version:` equal to the manifest version. `linux_appimage` and `windows_nsis` (when present): the staged file matches the manifest's sha256 and size, and the installer's name contains the version.
+4. `release_notes_hash` is the sha256 of the file at `release_notes_path`, and that file is not a closure placeholder.
+5. With `--fetch-notes`: the bytes served at `release_notes_url` hash to `release_notes_hash`. This is exactly the check the desktop app performs before showing notes.
+
+The linux job runs it without `--fetch-notes`; `finalize` runs it with `--fetch-notes` before `gh release create`. Its own tests, and those of the other release tools, run in CI from `release-tooling-tests.yml`.
 
 ### Tag forms
 
@@ -146,6 +161,10 @@ Enforcement is layered:
 
 Local, human-run helpers (not invoked by any workflow) that evaluate the same doctrine gates as `check_promotion_evidence.py` but against real `gh` calls, and print (or write to `--body-out`) a ready-to-paste PR body carrying the `tranche_id:` / `release_notes_path:` / evidence keys the CI gate expects. Both source `scripts/release/_lib-gates.sh` for shared helpers. Neither script ever calls `gh pr create` — `scripts/release/test-promotion-gates.test.sh`'s final assertion greps a full log of every `gh` invocation across the suite for the literal `pr create` and fails if found.
 
+## How the release notes are chosen
+
+The publish workflow no longer names a notes file. `docs/release/current-release.json` (`{"tranche": 16, "notes_path": "docs/release/SD-36-consolidation/release-notes.md"}`) is the pointer, and `tools/release/resolve_release_notes.py --repo-root .` is the only reader: it fails if the pointer is missing, if its `tranche` differs from the app's `0.<tranche>.x` version, if the path leaves `docs/release/<spec-dir>/release-notes.md`, or if the file is missing, empty or still carries closure-placeholder text ("Populated at closure"). The workflow validates the resolved file with `scripts/tranche/validate-tranche-notes.py` (seven required sections), hashes it into the manifest, and sets `release_notes_url` to the **commit-pinned raw file** — `https://raw.githubusercontent.com/<repo>/<GITHUB_SHA>/<notes_path>` — so the bytes the app fetches are the bytes that were hashed. The URL must not be the GitHub release's HTML page: that can never hash to the markdown's digest, and the app would report notes as unavailable. The pointer and the tranche bump change in the same commit at closure; see `docs/release/template/template.md §6 step 1a`.
+
 ## The release-notes CI contract
 
 `release_notes_path` is regex-locked in two independent schemas, kept in agreement by hand:
@@ -171,13 +190,12 @@ The same seven headers (as literal `## `-prefixed strings, order-checked) are in
 
 ## The pinned-SD-16 quirk
 
-Several pipeline surfaces are still pinned to frozen SD-16-era identifiers even though eight further bundles (SD-17 through SD-36) have shipped since. This is the manifest contract's frozen identity — intentional, not an oversight to "fix":
+Two pipeline surfaces are pinned to frozen SD-16-era identifiers regardless of which bundle ships. This is the manifest contract's frozen identity — intentional, not an oversight to "fix".
 
-1. **`docs/release/SD-16/release-notes.md` hardcoded as the publish workflow's notes source.** `publish-tester-release.yml` reads/writes this exact path at multiple steps (release-notes validation, manifest generation's `--release-notes-path`, staging the notes into the release, the `finalize` job's manifest rebuild, and the release-notes fallback when creating the GitHub release). Every tester release published today ships the SD-16 release-notes file regardless of which SD's code actually changed.
-2. **`tranche_id` is a JSON Schema `const` locked to `"STC-CODEX-SD-16"`.** `schemas/update/update-manifest.schema.json` and `schemas/update/channel-index.schema.json` both enforce this; `scripts/release/write_release_manifest.py`'s `TRANCHE_ID` emits exactly that constant.
-3. **`codex-tranche-2-5` is a separate pinned constant inside the promotion-gate surface** (distinct from the manifest's `STC-CODEX-SD-16`): `scripts/release/check_promotion_evidence.py`'s `TRANCHE_ID` and `scripts/release/_lib-gates.sh`'s `TRANCHE_ID` both gate the promotion-evidence PR-body and manifest checks against this literal string, independent of the update-manifest schema's pin.
+1. **`tranche_id` is a JSON Schema `const` locked to `"STC-CODEX-SD-16"`.** `schemas/update/update-manifest.schema.json` and `schemas/update/channel-index.schema.json` both enforce this; `scripts/release/write_release_manifest.py`'s `TRANCHE_ID` emits exactly that constant.
+2. **`codex-tranche-2-5` is a separate pinned constant inside the promotion-gate surface** (distinct from the manifest's `STC-CODEX-SD-16`): `scripts/release/check_promotion_evidence.py`'s `TRANCHE_ID` and `scripts/release/_lib-gates.sh`'s `TRANCHE_ID` both gate the promotion-evidence PR-body and manifest checks against this literal string, independent of the update-manifest schema's pin.
 
-These three pins are consistent with each other only in the sense that they all point at old identifiers; they are not the *same* identifier, and nothing in the codebase currently derives one from another. A future contract bump that changes any of the three needs to touch every file listed above plus its corresponding test fixtures (`scripts/release/test-promotion-gates.test.sh`, `scripts/release/__tests__/fixtures/`, `scripts/release/check_promotion_evidence.py`'s embedded `_t_*` self-tests).
+These two pins are consistent with each other only in the sense that they both point at old identifiers; they are not the *same* identifier, and nothing in the codebase currently derives one from another. A future contract bump that changes either needs to touch every file listed above plus its corresponding test fixtures (`scripts/release/test-promotion-gates.test.sh`, `scripts/release/__tests__/fixtures/`, `scripts/release/check_promotion_evidence.py`'s embedded `_t_*` self-tests).
 
 ## The site-deploy workflow (`deploy-site.yml`)
 
@@ -191,7 +209,7 @@ A separate, smaller lane, unrelated to the desktop-app release above except for 
 
 ## Installer contents and size
 
-Bundle targets, per `tauri.conf.json`: `deb`, `appimage` (Linux), `msi`, `nsis` (Windows), `app`, `dmg` (macOS). Bundled resources: `resources/authoring_workbench/guard-stance-package/`, `resources/corpus_fixtures/` (small hand-authored fixtures), and `resources/corpus_bundle/` mapped to `data/corpus/` inside the package — the sanitized runtime corpus mirror described in [desktop-app.md](./desktop-app.md)'s "The corpus-bundle build step". That bundle alone is **64 MiB** across **14,029** JSON files (`du -sh apps/desktop/src-tauri/resources/corpus_bundle/`; `find … -name '*.json' | wc -l`) — the dominant contributor to installed size alongside the Tauri/WebView2/webkit runtime itself. No installer artifact from a real `tauri build` run was inspected for this pass (that would mean running a build, out of this doc-only pass's scope) — the 64 MiB corpus-bundle figure is the one concretely re-derivable number; total installer size per platform is not independently re-verified here.
+Bundle targets, per `tauri.conf.json`: `deb`, `appimage` (Linux), `msi`, `nsis` (Windows), `app`, `dmg` (macOS). Bundled resources: `resources/authoring_workbench/guard-stance-package/`, `resources/corpus_fixtures/` (small hand-authored fixtures), `resources/corpus_bundle/` mapped to `data/corpus/` inside the package, and the rules engine's own runtime reads: `data/sheet_rules/`, `data/class_feature_grants/`, `data/converted/record_vars.json`, and two files under `tests/fixtures/rules_core/` (the shared sweep fixture and the multiclass mix panel) that the class roster reads. The engine reads these through `support::paths::repo_root()`, which a packaged app redirects with `set_data_root` at startup (see [desktop-app.md](./desktop-app.md)); `apps/desktop/src-tauri/tests/packaged_resources.rs` lays out exactly what `tauri.conf.json` bundles and fails if the engine reads anything else — the sanitized runtime corpus mirror described in [desktop-app.md](./desktop-app.md)'s "The corpus-bundle build step". That bundle alone is **64 MiB** across **14,029** JSON files (`du -sh apps/desktop/src-tauri/resources/corpus_bundle/`; `find … -name '*.json' | wc -l`) — the dominant contributor to installed size alongside the Tauri/WebView2/webkit runtime itself. No installer artifact from a real `tauri build` run was inspected for this pass (that would mean running a build, out of this doc-only pass's scope) — the 64 MiB corpus-bundle figure is the one concretely re-derivable number; total installer size per platform is not independently re-verified here.
 
 ## Scripts and tools inventory
 
@@ -202,15 +220,19 @@ Bundle targets, per `tauri.conf.json`: `deb`, `appimage` (Linux), `msi`, `nsis` 
 | `scripts/release/promote-alpha-to-beta.sh` | Local helper: evaluates the 5 alpha→beta gates against real `gh` state and prints/writes the AV-BR-6 PR body. Never calls `gh pr create`. | Run manually by an operator. |
 | `scripts/release/promote-beta-to-stable.sh` | Local helper: evaluates the 6 beta→stable gates (including provenance.json download) and prints/writes the PR body. | Run manually by an operator. |
 | `scripts/release/validate_manifest.py` | Validates an `update-manifest.json` against `schemas/update/update-manifest.schema.json` via `jsonschema`. | `publish-tester-release.yml` (linux publish job and `finalize`). |
-| `scripts/release/write_release_manifest.py` | Builds and writes a schema-conformant `update-manifest.json`, computing AppImage/MSI/DMG sha256+size from disk. | `publish-tester-release.yml` (linux publish job and `finalize`). |
+| `scripts/release/write_release_manifest.py` | Builds and writes a schema-conformant `update-manifest.json`, computing AppImage/deb/MSI/DMG sha256+size from disk (schema 1.2.0 with a `linux_deb` block when a `.deb` is staged; 1.3.0 with a `windows_nsis` block when the NSIS installer is staged). | `publish-tester-release.yml` (linux publish job and `finalize`). |
 | `scripts/release/test-promotion-gates.test.sh` | Bash self-test for `promote-alpha-to-beta.sh` / `promote-beta-to-stable.sh` against a stubbed `gh`. | Run manually; not wired into any workflow. |
 | `scripts/release/__tests__/test-write-release-manifest.test.sh` | Bash self-test for `write_release_manifest.py` / `validate_manifest.py` round-trip, including a malformed-sha256 negative case. | Run manually. |
-| `scripts/tranche/validate-tranche-notes.py` | Validates a tranche manifest YAML + its bound release-notes.md (required sections, order, non-empty). | `publish-tester-release.yml`'s `Validate tranche release notes` step. |
+| `scripts/tranche/validate-tranche-notes.py` | Validates a tranche manifest YAML + its bound release-notes.md (required sections, order, non-empty). | `publish-tester-release.yml`'s `Resolve and validate tranche release notes` step. |
 | `scripts/tranche/tests/test_validate_tranche_notes.py` | `unittest`-based test suite for `validate-tranche-notes.py`. | Run manually. |
 | `tools/ci/branch-promotion-guard.sh` | Defines `verify_promotion_source()`; sourceable for tests or directly runnable as the Action step body. | `allow-only-develop-into-test.yml`, `allow-only-test-into-main.yml`; unit-tested by `tools/ci/test_branch_promotion_guard.sh`. |
 | `tools/ci/test_branch_promotion_guard.sh` | Unit tests for `verify_promotion_source()` — moved here from `tests/sd16-e5-f1/` by SD-36 Epic C2. | Run manually; the same function it tests is exercised live by the `allow-only-*` workflows. |
 | `tools/release/check_release_manifest.py` | Validates release-manifest.json files against the legacy `tools/release/release-manifest.schema.json` shape plus tranche_id/release_notes_path coherence against the working tree. | `check-release-manifest.yml`, `tranche-3-ci.yml`. |
 | `tools/release/check_release_manifest_against_dev_schema.py` | Validates a manifest against the dev `schemas/update/update-manifest.schema.json` shape, then re-runs `check_release_manifest.py`'s `_coherence_check`. | `publish-tester-release.yml` (both the linux job's "Validate release manifest (gate)" step and `finalize`). |
+| `tools/release/resolve_release_notes.py` | Resolves the current tranche's notes path from `docs/release/current-release.json`; fails on a tranche mismatch, missing/empty file or placeholder text. | `publish-tester-release.yml` (linux job, `finalize`); `release-tooling-tests.yml`. |
+| `tools/release/assert_version_stamp.py` | Fails unless `apps/desktop/package.json` and `tauri.conf.json` carry the stamped version. | Every platform job, immediately before `tauri build`. |
+| `tools/release/verify_release_consistency.py` | Cross-checks manifest vs stamped files, staged artifacts, deb metadata, notes hash and (with `--fetch-notes`) the served notes bytes. | `publish-tester-release.yml` (linux job; `finalize` with `--fetch-notes`). |
+| `tools/release/test_resolve_release_notes.py`, `test_assert_version_stamp.py`, `test_verify_release_consistency.py`, `test_write_release_manifest.py` | `pytest`/`unittest` suites for the four tools above (the consistency tests build real `.deb`s with `dpkg-deb`). | `release-tooling-tests.yml`. |
 | `tools/release/emit_channel_index.py` | Emits and validates a `channels/<channel>.json` pointer from a schema-valid manifest. | `publish-tester-release.yml`'s `finalize` job. |
 | `tools/release/release-manifest.schema.json` | The legacy release-manifest schema (`schema_version: "v1"`, `platform_artifacts` array, linux-only). | Consumed by `check_release_manifest.py`. |
 | `tools/release/test_check_release_manifest.py` | `unittest` suite for `check_release_manifest.py`. | Run manually. |
@@ -230,6 +252,7 @@ All Python validators that call `jsonschema.validate`/`Draft202012Validator` nee
 | `check-release-manifest.yml` | `pull_request` → `develop`, `test`, `main` (path-filtered) | `contents: read`, `pull-requests: read` | none declared |
 | `tranche-3-ci.yml` | `pull_request` → `tranche/3`, `push` → `tranche/3` | `contents: read`, `pull-requests: read` | `tranche-3-${{ github.ref }}`, `cancel-in-progress: true` |
 | `deploy-site.yml` | `push` to `main` (path-filtered: `site/**`), `workflow_dispatch` | `contents: read` | `deploy-site`, `cancel-in-progress: false` |
+| `release-tooling-tests.yml` | `pull_request` and `push` to `develop` (path-filtered: `tools/release/**`, `scripts/release/**`, `schemas/update/**`, `docs/release/current-release.json`, the publish workflow) | `contents: read` | none declared |
 
 `publish-tester-release.yml` remains the only workflow that runs on every commit to `develop`/`main` with no `concurrency:` block — two pushes to `develop` in quick succession can run two full `finalize` jobs concurrently, each pushing to the shared `update-index` branch (mitigated only by each push being a fast-forward-or-fail `git push origin HEAD:update-index`, not by the workflow itself serializing runs). `deploy-site.yml` and `tranche-3-ci.yml` are the only two workflows with an explicit `concurrency:` group.
 
@@ -241,13 +264,13 @@ All Python validators that call `jsonschema.validate`/`Draft202012Validator` nee
 3. Add the `docs/release/**/manifest.yaml`/`release-notes.md` validation step via `check_release_manifest.py`, matching `tranche-3-ci.yml`'s own step.
 4. Give it its own `concurrency:` group (`tranche-N-${{ github.ref }}`, `cancel-in-progress: true`) so it doesn't inherit `publish-tester-release.yml`'s lack of one.
 
-**Bump the tranche-base version at a new tranche cut**: update `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`, and `apps/desktop/src-tauri/Cargo.toml` (and `Cargo.lock`'s `codex-desktop` entry) to the new `0.<N>.0` together, in the same commit; re-run `git grep -l '0\.<old>\.0-test' -- apps/desktop/src` and move every hit, then confirm `buildLabelFixtureFreshness.test.ts` still names a file that actually carries the new literal.
+**Bump the tranche-base version at a new tranche cut**: update `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`, and `apps/desktop/src-tauri/Cargo.toml` (and `Cargo.lock`'s `codex-desktop` entry) to the new `0.<N>.0`, the stamp step's `VERSION="0.<N>.${GITHUB_RUN_NUMBER}"` literal, and `docs/release/current-release.json` (`tranche` and `notes_path`) together, in the same commit (`resolve_release_notes.py` fails the publish if the pointer and the app version disagree); re-run `git grep -l '0\.<old>\.0-test' -- apps/desktop/src` and move every hit, then confirm `buildLabelFixtureFreshness.test.ts` still names a file that actually carries the new literal.
 
 **Add a required release-notes section**: it must be added to all three lists at once — `tools/release/check_release_manifest.py`'s `REQUIRED_NOTES_SECTIONS`, `scripts/release/check_promotion_evidence.py`'s `REQUIRED_NOTE_SECTIONS`, and `scripts/release/_lib-gates.sh`'s bash array — plus every fixture release-notes.md the promotion-gate test suite reads.
 
 ## Pitfalls
 
-- **The SD-16 pins are not stale references to fix** — see "The pinned-SD-16 quirk" above. Three separate literal identifiers (`STC-CODEX-SD-16`, the release-notes path, `codex-tranche-2-5`) are all deliberately frozen contract values; changing one without the others and their fixtures breaks the pipeline.
+- **The SD-16 pins are not stale references to fix** — see "The pinned-SD-16 quirk" above. Two separate literal identifiers (`STC-CODEX-SD-16` and `codex-tranche-2-5`) are deliberately frozen contract values; changing one without the other and their fixtures breaks the pipeline. The release-notes path is *not* one of them any more: it comes from `docs/release/current-release.json`.
 - **A `paths:` filter that names a moved directory silently stops firing** — `check-release-manifest.yml`'s `sd16/**`/`sd17/**` globs are the live example: they resolve to nothing today, so a change under the app's real `feedback/`/`update/` directories that should trigger this gate does not, unless it also happens to touch one of the filter's still-live globs. Whenever a directory this filter names gets renamed, update the filter in the same commit.
 - **Line-number citations in this doc rot fast.** `publish-tester-release.yml` is 1,000+ lines and grows every bundle; this pass deliberately cites step/job names instead of line ranges for exactly that reason. Do not reintroduce line-number citations without expecting them to be wrong again within a tranche or two.
 - **`GITHUB_RUN_NUMBER` is monotonic repo-wide, not per-branch** — a build number is never reused across channels, but it also never resets, so "build 42" on its own says nothing about which tranche it came from; always read it alongside the `major.tranche` prefix.

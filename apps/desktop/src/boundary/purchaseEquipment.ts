@@ -4,6 +4,7 @@ import type { CharacterSummaryDto } from './loadListSavedCharacters';
 import type { PilotSnapshotDto, CorpusDerivedDto, DiagnosticDto } from './loadCreateCharacter';
 import type { ActiveStateDto } from './addEquipmentSelection';
 import type { CharacterMoneyDto } from './characterMoney';
+import type { PriceMode } from '../characterHub/priceMode';
 
 /**
  * Write desktop boundary for atomically purchasing an equipment item: the
@@ -28,6 +29,8 @@ export interface PurchaseEquipmentRequest {
   itemId: string;
   activeState: ActiveStateDto;
   savedAt: string;
+  /** `cashless` adds the item without charging; otherwise it is bought at 100%. Absent means `standard`. */
+  priceMode?: PriceMode;
 }
 
 export type PurchaseEquipmentOutcome =

@@ -84,3 +84,33 @@ export function InstallControl({
     </section>
   );
 }
+
+export type InstallOutcome =
+  | { kind: 'installed'; fromVersion: string; toVersion: string; closesToFinish?: boolean }
+  | { kind: 'failed'; message: string };
+
+/** The result of the last Install click. Renders nothing until one has been attempted. */
+export function InstallOutcomePanel({ outcome }: { outcome: InstallOutcome | null }) {
+  if (outcome === null) {
+    return null;
+  }
+  return (
+    <section
+      id="install-outcome"
+      data-testid="install-outcome"
+      data-outcome={outcome.kind}
+      style={UI_PANEL_STYLE}
+      role={outcome.kind === 'failed' ? 'alert' : 'status'}
+    >
+      {outcome.kind === 'installed' ? (
+        <p style={{ margin: 0 }}>
+          {outcome.closesToFinish
+            ? `Downloaded ${outcome.toVersion} (was ${outcome.fromVersion}). Close Codex to finish the update; it will reopen when the update is installed.`
+            : `Installed ${outcome.toVersion} (was ${outcome.fromVersion}). Restart Codex to finish the update.`}
+        </p>
+      ) : (
+        <p style={{ margin: 0 }}>Install failed: {outcome.message}</p>
+      )}
+    </section>
+  );
+}

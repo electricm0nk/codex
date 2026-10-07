@@ -11,3 +11,7 @@ pub mod homebrew_authoring;
 pub mod rules_core;
 pub mod saved_character;
 pub(crate) mod support;
+
+/// Installs the process-wide data root a packaged app reads its bundled `data/` from; see
+/// [`support::paths::set_data_root`].
+pub use support::paths::set_data_root;

@@ -6,6 +6,7 @@ import {
   formatHeldClasses,
   levelGrantsFeat,
   maxHitPoints,
+  maxHitPointsWithSavedLevels,
   parseHeldClasses,
   previewLevelUp,
   totalCharacterLevel,
@@ -27,6 +28,7 @@ async function main() {
   verifiesTotalCharacterLevelSumsAcrossClasses();
   verifiesClassSkillPointsBaseReadsTheRoster();
   verifiesClassHitDieReadsTheRoster();
+  verifiesSavedHitPointResultsDriveTheTotal();
   verifiesMaxHitPointsSingleClass();
   verifiesMaxHitPointsMulticlassOnlyMaximizesTheVeryFirstLevel();
   verifiesTotalSkillPointsFlooredAndHumanBonus();
@@ -297,6 +299,68 @@ function verifiesFighterEvenLevelBonusFeatIsNoLongerClaimedLocally() {
     !levelGrantsFeat(fighterLevel2.features),
     'with no engine grants, Fighter class level 2 no longer claims a bonus combat feat locally'
   );
+}
+
+// The Create screen's Levels list saves the die result for every level. The sheet's HP follows those
+// results; levels gained afterwards (level-up) fall back to the average.
+function verifiesSavedHitPointResultsDriveTheTotal() {
+  const fighter3: HeldClass[] = [{ classId: 'class:fighter', classLabel: 'Fighter', level: 3 }];
+  const fighterWizard: HeldClass[] = [
+    { classId: 'class:fighter', classLabel: 'Fighter', level: 1 },
+    { classId: 'class:wizard', classLabel: 'Wizard', level: 1 },
+  ];
+  assertEqual(maxHitPointsWithSavedLevels(fighter3, 2, []), maxHitPoints(fighter3, 2), 'no saved results is the default rule');
+  assertEqual(
+    maxHitPointsWithSavedLevels(fighter3, 2, [
+      { classId: 'class:fighter', value: 10 },
+      { classId: 'class:fighter', value: 7 },
+      { classId: 'class:fighter', value: 3 },
+    ]),
+    12 + 9 + 5,
+    'every saved result plus Constitution: (10+2) + (7+2) + (3+2)'
+  );
+  assertEqual(
+    maxHitPointsWithSavedLevels(fighter3, 2, [
+      { classId: 'class:fighter', value: 10 },
+      { classId: 'class:fighter', value: 7 },
+    ]),
+    12 + 9 + (6 + 2),
+    'a level gained after creation has no saved result and takes the average (d10 -> 6)'
+  );
+  assertEqual(
+    maxHitPointsWithSavedLevels(fighterWizard, 0, [
+      { classId: 'class:wizard', value: 5 },
+      { classId: 'class:fighter', value: 10 },
+    ]),
+    15,
+    'the total does not depend on the order the classes were added in'
+  );
+  assertEqual(
+    maxHitPointsWithSavedLevels(fighter3, -5, [
+      { classId: 'class:fighter', value: 10 },
+      { classId: 'class:fighter', value: 1 },
+      { classId: 'class:fighter', value: 2 },
+    ]),
+    5 + 1 + 1,
+    'each level is worth at least 1 hp, not the sum floored once'
+  );
+  assertEqual(
+    maxHitPointsWithSavedLevels(fighter3, 0, [
+      { classId: 'class:fighter', value: 10 },
+      { classId: 'class:fighter', value: 6 },
+      { classId: 'class:fighter', value: 6 },
+      { classId: 'class:fighter', value: 6 },
+    ]),
+    22,
+    'results beyond the levels the character holds are ignored'
+  );
+  setClassCatalog(LOADING_CLASS_CATALOG);
+  assertEqual(
+    maxHitPointsWithSavedLevels(fighter3, 0, [{ classId: 'class:fighter', value: 10 }]),
+    null,
+    'an unsaved level of a class with no known die is Unknown, not guessed'
+  );
+  installClassRoster(classRosterWire());
 }
 
 main().catch((error: unknown) => {

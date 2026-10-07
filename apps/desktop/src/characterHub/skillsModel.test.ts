@@ -1,4 +1,5 @@
 import {
+  skillPointsStatus,
   allocationFromPersisted,
   classSkillLookup,
   DEFAULT_PICK_MARKER,
@@ -253,6 +254,18 @@ function verifiesCanonicalClassSkillPicksAreDefaultPicks() {
   assert(!samurai.classSkills.skills.includes('samurai_mount'), 'samurai_mount is not a skill');
 }
 
+// The skills dialogs show what is left at the top: "N of M points remaining", in a warning tone when
+// over-spent, and a named Unknown (never a guess) when a class states no skill ranks.
+function verifiesSkillPointsStatusSaysWhatIsLeft() {
+  assertEqual(skillPointsStatus(8, 5).text, '5 of 8 points remaining', 'remaining of total');
+  assertEqual(skillPointsStatus(8, 5).tone, 'ok', 'points left is fine');
+  assertEqual(skillPointsStatus(8, 8).tone, 'ok', 'all spent is fine');
+  assertEqual(skillPointsStatus(8, -1).tone, 'over', 'overspending is flagged');
+  assertEqual(skillPointsStatus(8, -1).text, '-1 of 8 points remaining', 'and still counted');
+  assertEqual(skillPointsStatus(null, 0).tone, 'unknown', 'no total is Unknown');
+  assert(skillPointsStatus(null, 0).text.includes('Unknown'), 'and says so');
+}
+
 async function main() {
   verifiesSkillIdForOnAParentheticalSkillName();
   verifiesSkillIdForOnMultiWordNonParentheticalNames();
@@ -269,6 +282,7 @@ async function main() {
   verifiesACrossClassRankCostsOnePoint();
   verifiesAnUnlistedIdRoundTrips();
   verifiesCanonicalClassSkillPicksAreDefaultPicks();
+  verifiesSkillPointsStatusSaysWhatIsLeft();
 }
 
 main().catch((error: unknown) => {

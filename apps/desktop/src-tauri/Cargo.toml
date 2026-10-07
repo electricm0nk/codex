@@ -18,6 +18,8 @@ tauri-build = { version = "2", features = [] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10"
+# Update downloads (deb self-update). Blocking, rustls-only: no OpenSSL link dependency.
+ureq = { version = "2", default-features = false, features = ["tls"] }
 base64 = "0.22"
 # Mints fresh character ids for `import_character` (Storage Tier Minimal
 # Fix). Already resolved transitively (tauri and other deps pull it in), so

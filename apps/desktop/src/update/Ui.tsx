@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ChannelSelector } from './ChannelSelector';
 import { CheckPanel } from './CheckPanel';
-import { InstallControl } from './InstallControl';
+import { InstallControl, InstallOutcomePanel, type InstallOutcome } from './InstallControl';
 import { InstalledPanel } from './installedPanel';
 import { LastCheckPanel } from './lastCheckPanel';
 import { PendingRollbackPanel } from './pendingRollbackPanel';
@@ -61,6 +61,7 @@ export function UpdateUi({ initialDeps, restoreOffer }: UpdateUiProps) {
   }, [initialDeps]);
   const [checkInProgress, setCheckInProgress] = useState(false);
   const [installInProgress, setInstallInProgress] = useState(false);
+  const [installOutcome, setInstallOutcome] = useState<InstallOutcome | null>(null);
   const [restoreInProgress, setRestoreInProgress] = useState(false);
   const handleRestore = useCallback(async () => {
     if (!restoreOffer) {
@@ -107,14 +108,21 @@ export function UpdateUi({ initialDeps, restoreOffer }: UpdateUiProps) {
     [deps],
   );
 
-  const handleInstall = useCallback(() => {
+  const handleInstall = useCallback(async () => {
     setInstallInProgress(true);
-    // The actual install transaction lives in the update backend (Tauri);
-    // F3c only owns the gate. When that backend lands, the wired `controller` will
-    // either expose an `install` method or hand the UI off to a Tauri
-    // command. F3c never invokes a Tauri command directly.
-    setInstallInProgress(false);
-  }, []);
+    setInstallOutcome(null);
+    try {
+      const result = await deps.controller.install();
+      setInstallOutcome({ kind: 'installed', ...result });
+    } catch (cause) {
+      setInstallOutcome({
+        kind: 'failed',
+        message: cause instanceof Error ? cause.message : String(cause),
+      });
+    } finally {
+      setInstallInProgress(false);
+    }
+  }, [deps]);
 
   const handleChannelChange = useCallback(
     (channel: UpdateChannelLabel) => {
@@ -157,6 +165,7 @@ export function UpdateUi({ initialDeps, restoreOffer }: UpdateUiProps) {
         installInProgress={installInProgress}
         onInstall={handleInstall}
       />
+      <InstallOutcomePanel outcome={installOutcome} />
       <InstalledPanel deps={deps} />
       <LastCheckPanel deps={deps} />
       <PendingRollbackPanel deps={deps} />

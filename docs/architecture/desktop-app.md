@@ -1,7 +1,7 @@
 # Desktop App
 
 > Scope: How the Tauri desktop shell is built, how it talks to the Rust backend, and how its frontend surfaces are organized.
-> Last verified: **2026-09-28 against `tranche/16`, HEAD `b021509e23`** (SD-36 Epic F7: Abilities panel and Weapons tab read the engine's own numbers, class-skill lists hold only skills, prestige/Level-Up requirement labels, Expert/Summoner/Psion default-pick markers — no command added or removed). Earlier pass: **2026-09-27 against `tranche/16`, HEAD `08f8cb5ace`** (SD-36 Epic F6: class facts from the engine, HP source rule, Level Up blockers). Earlier pass: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
+> Last verified: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** for bundled resources, the dependency list, `load_backend_health`, the update commands, the root-resolution chain and its pitfalls, the command inventory (84) and the Create-screen section; the rest of this file was last verified in the pass that follows. Earlier pass: **2026-09-28 against `tranche/16`, HEAD `b021509e23`** (SD-36 Epic F7: Abilities panel and Weapons tab read the engine's own numbers, class-skill lists hold only skills, prestige/Level-Up requirement labels, Expert/Summoner/Psion default-pick markers — no command added or removed). Earlier pass: **2026-09-27 against `tranche/16`, HEAD `08f8cb5ace`** (SD-36 Epic F6: class facts from the engine, HP source rule, Level Up blockers). Earlier pass: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Corrections since the last pass
@@ -35,11 +35,11 @@ The desktop app lives at `apps/desktop/` and is a React 18 + Tauri 2 application
 
 - **Entry chain**: `apps/desktop/index.html` loads `/src/main.tsx` as a module script. `apps/desktop/src/main.tsx` mounts `<App />` (from `apps/desktop/src/App.tsx`) into `#root` inside `<React.StrictMode>`, after importing `./theme.css`.
 - **Vite config** (`apps/desktop/vite.config.ts`): uses `@vitejs/plugin-react`; both the dev server and the preview server are pinned to port `1420` with `strictPort: true` (the port Tauri's `devUrl` points at), so a port conflict fails loudly instead of silently picking a different port.
-- **Tauri shell config** (`apps/desktop/src-tauri/tauri.conf.json`): `build.beforeDevCommand` is `npm run dev`, `build.beforeBuildCommand` is `npm run build`, `build.frontendDist` is `../dist`, `build.devUrl` is `http://localhost:1420`. The app window (`app.windows[0]`) is titled "Codex", `1920x1200`, resizable. Bundle targets are `deb`, `appimage`, `msi`, `nsis`, `app`, `dmg`. Bundled `resources`: `resources/authoring_workbench/guard-stance-package/`, `resources/corpus_fixtures/` (and its `spell/`/`equipment/`/`_settled/` subdirectories), and `resources/corpus_bundle/` mapped to `data/corpus/` inside the package — see "The corpus-bundle build step" below.
-- **src-tauri is a thin IPC shell over the root crate**: `apps/desktop/src-tauri/Cargo.toml` declares `codex = { path = "../../.." }` by relative path, not a published version. Other dependencies: `serde`, `serde_json`, `sha2`, `base64`, `tauri`, `tauri-plugin-opener`, `tauri-plugin-dialog`. There is no HTTP client crate (no `reqwest`/`ureq`/etc.) — the concrete reason `perform_install` cannot download an update artifact (see [update-and-feedback.md](./update-and-feedback.md)).
+- **Tauri shell config** (`apps/desktop/src-tauri/tauri.conf.json`): `build.beforeDevCommand` is `npm run dev`, `build.beforeBuildCommand` is `npm run build`, `build.frontendDist` is `../dist`, `build.devUrl` is `http://localhost:1420`. The app window (`app.windows[0]`) is titled "Codex", `1920x1200`, resizable. Bundle targets are `deb`, `appimage`, `msi`, `nsis`, `app`, `dmg`. Bundled `resources`: `resources/authoring_workbench/guard-stance-package/`, `resources/corpus_fixtures/` (and its `spell/`/`equipment/`/`_settled/` subdirectories), `resources/corpus_bundle/` mapped to `data/corpus/` inside the package (see "The corpus-bundle build step" below), and the rules engine's own runtime reads: `data/sheet_rules/`, `data/class_feature_grants/`, `data/converted/record_vars.json`, and the roster's `tests/fixtures/rules_core/` fixture and mix panel — see "How the rules crate finds its data" below.
+- **src-tauri is a thin IPC shell over the root crate**: `apps/desktop/src-tauri/Cargo.toml` declares `codex = { path = "../../.." }` by relative path, not a published version. Other dependencies: `serde`, `serde_json`, `sha2`, `base64`, `tauri`, `tauri-plugin-opener`, `tauri-plugin-dialog`. `ureq` (blocking HTTP, rustls only — no OpenSSL link dependency) is the one HTTP client; it exists for the `.deb` self-update download (see [update-and-feedback.md](./update-and-feedback.md)).
 - **npm scripts** (`apps/desktop/package.json`): `dev` → `vite`; `typecheck` → `tsc --noEmit`; `test` → `node scripts/run-tests.mjs`; `build` → `node ../../scripts/gen-corpus-bundle.mjs && vite build` (the corpus bundle is regenerated on every frontend build, not hand-maintained); `tauri:check` → `cargo check --manifest-path src-tauri/Cargo.toml`. Frontend dependencies: `@tauri-apps/api`, `@tauri-apps/plugin-dialog`, `ajv`, `react`, `react-dom`; dev dependencies include `@tauri-apps/cli`, `vite`, `typescript`, `tsx`.
 - **`tsconfig.json`** targets ES2020, `moduleResolution: "Bundler"`, `resolveJsonModule`. Its `include` list additively pulls in `../../schemas/update/*.json` and `../../tests/fixtures/update/**/*.json` from the repo root, which is how `update/loadSchemas.ts` imports the canonical JSON Schema documents as typed modules.
-- **Git-sha embedding**: `apps/desktop/src-tauri/build.rs` runs `git rev-parse --short=12 HEAD` at compile time into `CODEX_GIT_SHA`, falling back to `"unknown"` outside a git checkout, and emits `cargo:rerun-if-changed=../../../.git/HEAD` so any commit in the repo invalidates the cached build. `load_backend_health` reads this via `env!("CODEX_GIT_SHA")` alongside `env!("CARGO_PKG_VERSION")`.
+- **Git-sha embedding**: `apps/desktop/src-tauri/build.rs` runs `git rev-parse --short=12 HEAD` at compile time into `CODEX_GIT_SHA`, falling back to `"unknown"` outside a git checkout, and emits `cargo:rerun-if-changed=../../../.git/HEAD` so any commit in the repo invalidates the cached build. `load_backend_health` reads this via `env!("CODEX_GIT_SHA")` alongside Tauri's `app.package_info().version` (the stamped version from `tauri.conf.json`). It does not use `CARGO_PKG_VERSION`: the release stamp does not touch `Cargo.toml`, so that value stays `0.<tranche>.0` in every published build.
 
 ## The `CharacterHubPage` Mode machine
 
@@ -112,14 +112,14 @@ export function formatError(cause: unknown): string {
 
 **Verified exceptions to the "boundary/*.ts only" rule**: files that call `invoke()` directly rather than through a dedicated wrapper, though each still imports `hasTauriRuntime`/`formatError` from `boundary/runtime.ts` and keeps its own testability seam:
 
-- `apps/desktop/src/update/controllerAdapter.ts` — `callInvoke<T>` wraps `invoke()` for `is_install_eligible`, `verify_relaunch_artifact`, and `perform_restore_previous`; accepts an injectable `invokeImpl`.
-- `apps/desktop/src/update/installAction.ts` — `performInstall()` calls `invoke("perform_install", …)` directly; returns a no-runtime sentinel and keeps its DOM output pure as its testability seam.
+- `apps/desktop/src/update/controllerAdapter.ts` — `callInvoke<T>` wraps `invoke()` for `is_install_eligible`, `verify_relaunch_artifact`, `perform_restore_previous` and `perform_install` (the Install button's `controller.install()`); accepts an injectable `invokeImpl`.
+- `apps/desktop/src/update/installAction.ts` — `performInstall()` calls `invoke("perform_install", …)` directly; returns a no-runtime sentinel and keeps its DOM output pure as its testability seam. It is no longer on the Install button's path (the button uses `controller.install()`, which carries the eligibility guard).
 - `apps/desktop/src/feedback/browserHandoff.ts` — `runBrowserHandoff()` calls `invokeImpl('handoff_defect_report_to_browser', …)` directly (default `invokeImpl` is the real `invoke`).
 - `apps/desktop/src/characterHub/CorpusIngestDiagnosticPanel.tsx` — guards on `hasTauriRuntime()` and calls `invoke('corpus_ingest_diagnostic')` directly; no browser-preview fallback (the diagnostic reports real compiled-in table state, which has no meaningful sample stand-in).
 
 ## The complete Tauri command inventory
 
-**77 commands are registered** (reachable via `invoke()`), re-derived by parsing every entry of
+**84 commands are registered** (reachable via `invoke()`; the same parse of `develop`'s `main.rs` gives 78, so this branch adds 6, see the Create-screen rows below), re-derived by parsing every entry of
 `tauri::generate_handler![...]` in `apps/desktop/src-tauri/src/main.rs` with comments stripped
 (`python3` one-liner splitting on `,` after a regex-stripped comment pass — a plain `grep -c ','`
 overcounts because several list entries carry inline `//` explanatory comments of their own with
@@ -135,8 +135,10 @@ Grouped by the Rust file that defines each command:
 |---|---|---|---|
 | `main.rs` (inline) | `load_pilot_shell_snapshot`, `load_authoring_workbench_snapshot`, `load_backend_health` | Legacy scaffold snapshot; GE-08 authoring-workbench preview; crate-version + git-SHA IPC-liveness probe | superseded scaffold path; tester workbench "Backend" card |
 | `browser_handoff.rs` | `handoff_defect_report_to_browser` | Builds + validates a prefilled GitHub "new issue" URL and opens it via `tauri-plugin-opener` | feedback composers ([update-and-feedback.md](./update-and-feedback.md)) |
-| `update/transaction.rs` | `is_install_eligible`, `perform_install`, `perform_restore_previous`, `verify_relaunch_artifact` | Self-update eligibility/install/rollback/verify — `perform_install` is a governed stub | `App.tsx`'s `UpdateSection` ([update-and-feedback.md](./update-and-feedback.md)) |
+| `update/transaction.rs` (+ `update/seed.rs`, `update/deb_install.rs`) | `is_install_eligible`, `perform_install`, `perform_restore_previous`, `verify_relaunch_artifact` | Self-update eligibility/install/rollback/verify; `seed.rs` records the running build in `installed-state.json` at startup; `perform_install` is real for `.deb` (download, verify, `pkexec apt-get`), AppImage (staged atomic replace) and Windows (NSIS installer run after Codex exits) installs, in `update/{deb,appimage,windows}_install.rs` over the shared `update/download.rs` | `App.tsx`'s `UpdateSection` ([update-and-feedback.md](./update-and-feedback.md)) |
 | `character_hub.rs` | `create_character`, `clone_character`, `list_saved_characters`, `load_saved_character`, `level_up_character`, `preview_level_up`, `add_equipment_selection`, `attach_equipment_modifier`, `purchase_equipment`, `add_spell_selection`, `record_and_prepare_spell_selection`, `add_feat_selection`, `list_feats_for_character`, `remove_feat_selection`, `set_equipment_active_state`, `add_trait_selection`, `remove_trait_selection`, `remove_spell_selection`, `remove_equipment_selection`, `set_skill_allocations`, `save_character_portrait`, `load_character_portrait`, `delete_character_portrait`, `export_character_json`, `update_character_bio`, `load_character_bio`, `load_character_money`, `adjust_character_money`, `load_character_durability`, `adjust_character_hp`, `delete_character`, `export_character`, `import_character`, `list_race_creation_roster`, `list_class_creation_roster`, `list_level_up_class_options` | The Character Hub's create/load/mutate/persist surface — by far the largest file in the crate (11,544 lines, `wc -l`, 2026-09-26); see "Character flow" below | `apps/desktop/src/characterHub/` |
+| `character_hub.rs` (Create-screen additions) | `list_feats_for_draft`, `draft_spell_options`, `starting_wealth_for_class`, `load_character_hit_points` | Ask the backend about a character that is **not saved yet**: the feat catalog with the draft's prerequisite verdicts; spells-per-day rows plus the race's spell-like abilities; the class's maximum starting money (or the reason there is none); the hit point results saved with a character | `CreateCharacterForm.tsx` Manage dialogs, `CharacterSheet.tsx` |
+| `character_custom.rs` | `load_character_custom`, `save_character_custom` | The GM's grants and house-rule records (`custom.json`); ability grants are applied to the saved scores | `CustomDialog.tsx`, `CustomTab.tsx`, `CreateCharacterForm.tsx` |
 | `characterHub/appendToCharacter.rs` | `append_to_character` | Batch, corpus-validated equipment append, via `RuleSystemAdapter` | none — no frontend caller (see "Rule-system adapter seam" below) |
 | `characterHub/recomputeCharacter.rs` | `recompute_character` | Load + recompute without mutating, via `RuleSystemAdapter` | `CharacterSheet.tsx`'s `☰ Menu` "Recompute" |
 | `characterHub/reSaveCharacter.rs` | `re_save_character` | Re-saves under a freshly minted `{id}.rev.N`, via `RuleSystemAdapter` | none — no frontend caller |
@@ -263,6 +265,17 @@ setup call is the fix SD-36 Epic B landed for the previously-empty race roster i
 passes through unchanged, a `packaged://`-prefixed path resolves against the Tauri resource
 directory (falling back to a source-tree path for tests), and everything else anchors at
 `codex_repo_root()`.
+
+### How the rules crate finds its data
+
+`codex_repo_root()` serves the desktop crate. The root crate (`codex`, the rules engine) has its own root, `support::paths::repo_root()`, whose default is `env!("CARGO_MANIFEST_DIR")` — the path of the machine that *compiled* the binary (`/home/runner/work/codex/codex` on CI). In an installed app that directory does not exist, so an engine read joined onto it fails: the Create dialog would fall back to its built-in 31-class list ("class roster unavailable: … could not read /home/runner/work/…"), `corpus_loader::live_sheet_rules()` would return `None` without saying so, and the record-vars and class-grant readers would fall back to empty. No test can see this on its own, because tests run from the checkout.
+
+`main.rs`'s `.setup()` calls `codex::set_data_root(authoring_workbench::codex_repo_root()?)` right after `set_app_resource_dir`, before anything touches the engine; `repo_root()` returns that root when installed and the checkout otherwise (tests, bins, `cargo tauri dev`). It is a process-wide `OnceLock`: first call wins. Two controls keep it honest:
+
+- `tests/no_baked_manifest_dir_in_production.rs` (root crate) fails if production code, before a file's first `#[cfg(test)]`, reads `CARGO_MANIFEST_DIR` outside `support/paths.rs`. It does not see a baked path built another way or a production read placed after a file's first `#[cfg(test)]` module.
+- `apps/desktop/src-tauri/tests/packaged_resources.rs` reads `tauri.conf.json`, lays out **only** what `bundle.resources` lists (symlinks, nothing else) as the resource root, installs it with `set_data_root`, asserts every path the engine joins onto its root exists there (`FIXTURE_RELATIVE_PATH`, `MIX_PANEL_RELATIVE_PATH`, `RECORD_VARS_PATH`, `data/sheet_rules`, `data/class_feature_grants`, `data/corpus`), and builds the class roster (more than the 31-class fallback), the sweep fixture, the mix panel and the sheet-rule package from it. It is one `#[test]` in its own process because the root is process-wide.
+
+A new file the engine reads at runtime therefore needs three things at once: the read through `repo_root()`, a `bundle.resources` entry in `tauri.conf.json`, and an assertion in `packaged_resources.rs`.
 
 ## The corpus-bundle build step
 
@@ -456,6 +469,47 @@ and falls back to the compiled-in 31-row `CLASS_OPTIONS_FALLBACK` (`characterHub
 The census sweep holds race fixed to a single Human fixture, so "every level" is proven, "every race"
 is not proven by this instrument — see [status.md](./status.md) §Posture for race-creation breadth.
 
+### The Create screen's columns and Manage dialogs
+
+The window opens maximized (`tauri.conf.json`) and the Create screen uses the whole width
+(`layout/screenLayout.ts`).
+
+- **Levels** (`LevelsPanel.tsx`, `levelsModel.ts`): classes are added one level at a time from a
+  dropdown. Level 1 takes the full hit die; each later level defaults to die/2 + 1 (rounded down) with
+  a dice button to reroll. The rolls plus the Constitution modifier fill the HP box.
+  `CreateCharacterRequest` carries `additionalLevels` (applied through `apply_level_up`) and
+  `hitPointLevels`, validated by `validate_hit_point_levels` and saved as `hit_points.json`;
+  the sheet reads them back (`load_character_hit_points`), so HP is not re-rolled on reload.
+- **Manage boxes** (`ManageBox.tsx`) open **Manage dialogs**. Pick-once options (racial traits,
+  traits, feats) use `TransferListDialog.tsx` over the pure `transferListModel.ts`: Options and
+  Selected columns with `<` `>`, a **Qualified** filter (on by default), the remaining count on top,
+  the clicked item's full description below. Spells use the same dialog with a **per-spell-level
+  quota** (`groupLimits`) and a read-only **Innate** column. Skills reuse `SkillAllocationDialog.tsx`
+  (`+`/`-` ranks, remaining points on top). Equipment uses `CreationEquipmentDialog.tsx`.
+- **Draft questions.** "Qualified" for an unsaved character is asked of the backend
+  (`list_feats_for_draft`, `draft_spell_options`) through `build_create_input`, the same builder
+  `create_character` uses, so what the dialog offers is what creation accepts.
+- **One atomic create.** Feats, skill ranks, spells and equipment ride on `CreateCharacterRequest`
+  (`selectedFeats`, `skillAllocations`, `selectedSpells`, `selectedEquipment`, `priceMode`) and are
+  applied inside `build_create_input` before the build is computed. A refusal saves nothing:
+  `create.feat_unqualified`, `create.equipment_unaffordable`, `create.equipment_no_price`.
+- **Starting money** is the class's maximum roll (`money::starting_wealth_max_gp`, 53 classes; 6
+  classes publish none and start at 0 gp with a note: `money::starting_wealth_unpublished_reason`).
+  PCGen carries no starting-wealth token; the values come from the d20pfsrd class pages.
+- **Pricing** (`priceMode.ts`, `PriceModeControl.tsx`): cashless / buy 100% sell 50% (default) /
+  character build 100/100. It is chosen on the equipment screen and **never saved** on the character.
+- **Equipment categories** (`equipmentCategories.ts`, `ItemPickerModal.tsx`): a category rail plus
+  search over `data/equipment_types.json`, which `crates/codex-ingest`'s `gen_equipment_types`
+  derives from PCGen's TYPE data.
+- **Custom** (`character_custom.rs`, `customModel.ts`, `CustomDialog.tsx`, `CustomTab.tsx`): grants
+  and house-rule records in `custom.json`. An *ability* grant is baked into the saved ability score
+  (new revision), so every derived number stays the engine's. *Hit point* and *skill point* grants
+  are added by the sheet to the HP total and the skill pool. Custom feats, equipment, spells and
+  magic devices are raw objects (name, stat lines, description) that are listed and printed; the
+  engine does not compute from them. AC, saves and attack grants are not modelled.
+- **Print** (`printLayout.ts`): File menu "Print" renders every tab on 8.5x11 letter through the OS
+  print subsystem (`@media print`, `@page`); the Custom tab prints only when it has content.
+
 Class facts come from the engine, not desktop tables (SD-36 F6a/F6b,
 `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/`): `list_class_facts`
 (`class_facts_sheet_rules.rs`) serves each held class's weapon proficiency, caster level and class
@@ -592,6 +646,7 @@ own `forbid`.
   `first_candidate_root_carrying_corpus` is unit-tested as a pure function specifically so this can be
   covered without mutating the process-global `APP_RESOURCE_DIR`/`CODEX_DESKTOP_RESOURCE_DIR` state a
   concurrently-running test could also read.
+- **`set_data_root` must run before the engine does.** The class-roster sweep is a `OnceLock` started from `.setup()`; a first engine call made before `set_data_root` caches its failure for the life of the process. Keep the `set_data_root` call above the roster thread in `.setup()`'s body.
 - **`RUN_DESKTOP_AGENT` must be unique per concurrently-dispatched ui-smoke run** — it names the probe
   and command-channel files; two agents sharing a value will race each other's DOM commands.
   `resetToLanding()` runs before every row's own setup/steps and can leave the page mid-scroll if a
