@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type { EquipmentCatalogEntryDto } from '../boundary/loadEquipmentCatalog';
 import { categoryTabs, equipmentCategoryFor } from '../characterHub/equipmentCategories';
-import { loadEquipmentCatalogRuntime } from './equipmentCatalogRuntime';
+import { loadEquipmentCatalogWithNotice } from './equipmentCatalogRuntime';
 
 const panel: CSSProperties = {
   backgroundColor: 'var(--color-surface)',
@@ -10,6 +10,17 @@ const panel: CSSProperties = {
 };
 
 const MAX_RENDERED_ROWS = 200;
+
+/**
+ * The warning shown when the equipment type data (the source of the categories) could not be read,
+ * or `null` when it could. Without it every row would sit in "Uncategorized" with no explanation.
+ */
+export function typesWarning(typesError: string | null | undefined): string | null {
+  if (typesError === null || typesError === undefined || typesError === '') {
+    return null;
+  }
+  return `Categories unavailable: ${typesError}. Items are listed under Uncategorized until the type data can be read.`;
+}
 
 /** Display labels for the wire's short book codes. */
 export const BOOK_LABELS: Record<string, string> = {
@@ -70,13 +81,17 @@ export function hasDescription(description: string | null | undefined): descript
 export function EquipmentCatalogScreen(props: { onClose: () => void }) {
   const [entries, setEntries] = useState<EquipmentCatalogEntryDto[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [typesError, setTypesError] = useState<string | null>(null);
   const [category, setCategory] = useState<string | 'All'>('All');
   const [book, setBook] = useState<string | 'All'>('All');
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    loadEquipmentCatalogRuntime()
-      .then(setEntries)
+    loadEquipmentCatalogWithNotice()
+      .then((loaded) => {
+        setEntries(loaded.entries);
+        setTypesError(loaded.typesError);
+      })
       .catch((cause: unknown) => {
         setError(cause instanceof Error ? cause.message : 'Unknown equipment catalog failure');
       });
@@ -181,6 +196,12 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
               </>
             ) : null}
           </p>
+
+          {typesWarning(typesError) !== null ? (
+            <p role="alert" style={{ color: 'var(--color-warn)', fontSize: '0.8rem', margin: '0 0 0.75rem' }}>
+              {typesWarning(typesError)}
+            </p>
+          ) : null}
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
             <button type="button" onClick={() => setBook('All')} style={categoryButtonStyle(book === 'All')}>

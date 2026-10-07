@@ -1,5 +1,6 @@
 import { BOOK_LABELS, BOOK_ORDER, formatBookList, hasDescription } from './EquipmentCatalogScreen';
-import { loadEquipmentCatalogRuntime } from './equipmentCatalogRuntime';
+import { loadEquipmentCatalogRuntime, loadEquipmentCatalogWithNotice } from './equipmentCatalogRuntime';
+import { typesWarning } from './EquipmentCatalogScreen';
 import { assert, assertEqual } from '../testSupport/asserts';
 
 /**
@@ -135,6 +136,22 @@ async function main() {
   testFormatBookListReadsAsProseOverTheRealLabels();
   testFormatBookListNeverInventsALabelForAnUnknownCode();
   testFormatBookListOfNothingIsEmptyRatherThanAFabricatedBook();
+  await testTheCatalogCarriesTheTypesNoticeAlongside();
+  testTypesWarningNamesTheReasonOnlyWhenThereIsOne();
+}
+
+async function testTheCatalogCarriesTheTypesNoticeAlongside() {
+  const loaded = await loadEquipmentCatalogWithNotice();
+  assert(loaded.entries.length > 0, 'the entries still load');
+  assertEqual(loaded.typesError, null, 'the preview has no type-data failure to report');
+}
+
+function testTypesWarningNamesTheReasonOnlyWhenThereIsOne() {
+  assertEqual(typesWarning(null), null, 'no failure, no warning');
+  assertEqual(typesWarning(undefined), null, 'absent is not a failure');
+  const warning = typesWarning('equipment_types.json: not found') ?? '';
+  assert(warning.includes('equipment_types.json: not found'), 'the real reason is shown');
+  assert(warning.includes('Uncategorized'), 'and what the player will see because of it');
 }
 
 main().catch((error: unknown) => {

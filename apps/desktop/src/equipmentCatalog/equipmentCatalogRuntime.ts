@@ -60,10 +60,15 @@ function buildPreviewCatalog(): EquipmentCatalogEntryDto[] {
   ];
 }
 
-export async function loadEquipmentCatalogRuntime(): Promise<EquipmentCatalogEntryDto[]> {
+/** The catalog plus why its type data (the category source) could not be read, when it could not. */
+export async function loadEquipmentCatalogWithNotice(): Promise<{ entries: EquipmentCatalogEntryDto[]; typesError: string | null }> {
   if (!hasTauriRuntime()) {
-    return buildPreviewCatalog();
+    return { entries: buildPreviewCatalog(), typesError: null };
   }
   const response = await loadEquipmentCatalog();
-  return response.entries;
+  return { entries: response.entries, typesError: response.typesError ?? null };
+}
+
+export async function loadEquipmentCatalogRuntime(): Promise<EquipmentCatalogEntryDto[]> {
+  return (await loadEquipmentCatalogWithNotice()).entries;
 }
