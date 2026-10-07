@@ -60,3 +60,17 @@ taken immediately before the run.
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
+
+- cycle_id: 2026-10-07T19:24:19Z
+  row_or_kind: graphify:update
+  bundle: SD-37
+  branch: 645dcf320e703981defe87ae033e82092b5871f0
+  integration_target: develop
+  branch_tip: 645dcf32
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 1536.8
+  log_path: graphify-out/.truth-up-run-2026-10-07T19:24:19Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
