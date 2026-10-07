@@ -86,6 +86,17 @@ function testInstallOutcomeSaysToRestartAfterSuccess() {
   assertContains(html, 'Restart Codex', 'success tells the user how to finish');
 }
 
+function testInstallOutcomeOnWindowsSaysCodexClosesAndReopens() {
+  const html = renderToStaticMarkup(
+    createElement(InstallOutcomePanel, {
+      outcome: { kind: 'installed', fromVersion: '0.16.140', toVersion: '0.16.141', closesToFinish: true },
+    }),
+  );
+  assertContains(html, 'Close Codex', 'the Windows updater runs after Codex closes');
+  assertContains(html, 'reopen', 'and says it comes back');
+  assert(!html.includes('Restart Codex'), 'it must not ask for a manual restart that would race the installer');
+}
+
 function testInstallOutcomeShowsTheFailureReason() {
   const html = renderToStaticMarkup(
     createElement(InstallOutcomePanel, {
@@ -98,6 +109,7 @@ function testInstallOutcomeShowsTheFailureReason() {
 
 function main() {
   testInstallOutcomeRendersNothingBeforeAnyInstall();
+  testInstallOutcomeOnWindowsSaysCodexClosesAndReopens();
   testInstallOutcomeSaysToRestartAfterSuccess();
   testInstallOutcomeShowsTheFailureReason();
   testMountsWithCanonicalIdAndAllSubPanels();

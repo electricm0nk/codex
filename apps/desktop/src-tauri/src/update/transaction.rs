@@ -150,6 +150,8 @@ pub struct InstalledState {
 pub enum InstallKind {
     AppImage,
     Deb,
+    /// Installed by the Windows NSIS installer; updated by running the release's installer.
+    WindowsNsis,
     DevLocal,
 }
 
@@ -597,7 +599,7 @@ pub fn verify_relaunch_artifact() -> ReloadVerifyOutcome {
             };
         }
     };
-    let running_sha256 = match sha256_of_file(&exe) {
+    let running_sha256 = match sha256_of_file(&running_artifact_path(std::env::var_os("APPIMAGE").map(PathBuf::from), &exe)) {
         Ok(digest) => digest,
         Err(_) => {
             return ReloadVerifyOutcome::VerificationFailed {
@@ -610,6 +612,15 @@ pub fn verify_relaunch_artifact() -> ReloadVerifyOutcome {
         config_dir: resolve_config_root(),
         running_artifact_sha256: || Ok(running_sha256),
     })
+}
+
+/// The file whose hash identifies the running build: the `$APPIMAGE` file for an AppImage, else the
+/// current executable.
+pub(super) fn running_artifact_path(appimage_env: Option<PathBuf>, current_exe: &Path) -> PathBuf {
+    match appimage_env {
+        Some(path) if !path.as_os_str().is_empty() => path,
+        _ => current_exe.to_path_buf(),
+    }
 }
 
 /// Resolve the config ROOT that `config_update_dir` hangs the
@@ -741,10 +752,9 @@ fn managed_path_is_writable(managed_executable_path: &Path) -> bool {
 
 /// Tauri command shim — `perform_install`.
 ///
-/// Dispatches on the recorded install kind. A `.deb` install is updated through the package
-/// manager (`deb_install`). The AppImage staged-replace path (`execute_transaction`) is real and
-/// tested but still has no download step wired to this command, so an AppImage install gets an
-/// honest error naming that gap rather than a fabricated success.
+/// Dispatches on the recorded install kind: a `.deb` install is updated through the package manager
+/// (`deb_install`), an AppImage by the staged-replace transaction (`appimage_install`), and a
+/// Windows install by running the release's NSIS installer (`windows_install`).
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PerformInstallArgs {
@@ -766,11 +776,8 @@ fn perform_install_impl(config_dir: &Path, args: PerformInstallArgs) -> Result<R
         .map_err(|source| format!("installed-state.json is unreadable: {source}"))?;
     match installed.install_kind {
         InstallKind::Deb => super::deb_install::perform_deb_install(config_dir, &args.manifest),
-        InstallKind::AppImage => Err(
-            "perform_install is not wired for AppImage installs: the staged transaction exists \
-             but its download step has not been connected to this command"
-                .to_string(),
-        ),
+        InstallKind::AppImage => super::appimage_install::perform_appimage_install(config_dir, &args.manifest),
+        InstallKind::WindowsNsis => super::windows_install::perform_windows_install(config_dir, &args.manifest),
         InstallKind::DevLocal => Err("dev builds are not update-eligible".to_string()),
     }
 }
@@ -1062,6 +1069,22 @@ pub(super) fn now_iso8601() -> String {
         "{:04}-{:02}-{:02}T{:02}:{:02}:{:02}Z",
         year, month, day, hour, min, sec
     )
+}
+
+#[cfg(test)]
+mod running_artifact_tests {
+    use super::*;
+
+    #[test]
+    fn an_appimage_is_identified_by_the_appimage_file_not_the_binary_inside_its_mount() {
+        // `current_exe()` inside an AppImage is a file in a throwaway mount; the manifest's hash is of
+        // the `.AppImage` itself, so verifying against the mount's binary could never match.
+        let exe = PathBuf::from("/tmp/.mount_CodexAB/usr/bin/codex-desktop");
+        let appimage = PathBuf::from("/home/u/Applications/Codex.AppImage");
+        assert_eq!(running_artifact_path(Some(appimage.clone()), &exe), appimage);
+        assert_eq!(running_artifact_path(None, &exe), exe, "any other install hashes its own executable");
+        assert_eq!(running_artifact_path(Some(PathBuf::new()), &exe), exe, "an empty $APPIMAGE is not a path");
+    }
 }
 
 #[cfg(test)]
@@ -1762,11 +1785,22 @@ mod verify_relaunch_artifact_tests {
     }
 
     #[test]
-    fn perform_install_names_the_gap_for_appimage_installs() {
+    fn perform_install_routes_an_appimage_record_to_the_appimage_path() {
+        // Reaches the AppImage installer (no longer a "not wired" error): outside an AppImage there is
+        // no $APPIMAGE file to replace, and it says so rather than pretending to install.
         let dir = tempdir("perform-install-appimage");
         write_record(&dir, InstallKind::AppImage);
         let err = perform_install_impl(&dir, install_args()).unwrap_err();
-        assert!(err.contains("not wired for AppImage"), "{err}");
+        assert!(!err.contains("not wired"), "{err}");
+        assert!(err.contains("$APPIMAGE") || err.contains("linux_appimage"), "the AppImage path must run: {err}");
+    }
+
+    #[test]
+    fn perform_install_routes_a_windows_record_to_the_windows_path() {
+        let dir = tempdir("perform-install-windows");
+        write_record(&dir, InstallKind::WindowsNsis);
+        let err = perform_install_impl(&dir, install_args()).unwrap_err();
+        assert!(err.contains("windows_nsis"), "the Windows path must run and name the missing installer: {err}");
     }
 
     #[test]

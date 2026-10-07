@@ -744,6 +744,73 @@ async function verifiesInstallHandsTheFetchedManifestToPerformInstall() {
   assertEqual(response.toVersion, '0.2.0', 'the backend response is returned');
 }
 
+// ---------- Windows and AppImage installs ----------
+
+const WINDOWS_PROBE = {
+  installed: {
+    managedExecutablePath: 'C:\\Users\\u\\AppData\\Local\\Codex\\codex-desktop.exe',
+    installKind: 'windows-nsis',
+    channel: 'alpha',
+    version: '0.1.0',
+    sourceCommit: 'deadbeef',
+    releaseTag: 'alpha/v0.1.0',
+    manifestHash: '',
+    artifactSha256: SHA64,
+    installedAt: '2026-07-03T00:00:00Z',
+    updateEligible: true,
+    ineligibleReason: null,
+  },
+  isManagedPathWritable: true,
+};
+
+const WINDOWS_NSIS_BLOCK = {
+  name: 'Codex_0.2.0_x64-setup.exe',
+  url: 'https://github.com/electricm0nk/codex/releases/download/alpha-v0.2.0/Codex_0.2.0_x64-setup.exe',
+  sha256: 'e'.repeat(64),
+  size_bytes: 10,
+};
+
+async function checkedDeps(probe: unknown, manifestOverrides: Record<string, unknown>, performInstall: () => unknown = () => ({
+  pendingUpdatePath: 'p', managedExecutablePath: 'm', fromVersion: '0.1.0', toVersion: '0.2.0', artifactSha256: 'e'.repeat(64),
+})) {
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      { url: MANIFEST_URL, status: 200, responded: manifestText({ version: '0.2.0', ...manifestOverrides }) },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') return probe;
+      if (cmd === 'perform_install') return performInstall();
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+  await deps.controller.runCheck('alpha');
+  return deps;
+}
+
+async function verifiesAWindowsInstallIsEligibleWhenTheReleaseCarriesTheInstaller() {
+  const deps = await checkedDeps(WINDOWS_PROBE, { schema_version: '1.3.0', windows_nsis: WINDOWS_NSIS_BLOCK });
+  assertEqual(deps.controller.computeEligibility(deps.installed, deps.lastCheck), 'eligible', 'a windows install with a newer release and an installer');
+  const result = await deps.controller.install();
+  assertEqual(result.closesToFinish, true, 'a Windows update finishes by closing and reopening Codex');
+}
+
+async function verifiesAWindowsInstallIsNotOfferedARelease_WithoutTheInstaller() {
+  const deps = await checkedDeps(WINDOWS_PROBE, {});
+  assertEqual(deps.controller.computeEligibility(deps.installed, deps.lastCheck), 'ineligible', 'an AppImage-only release is not a Windows update');
+  const reason = deps.controller.disabledReason(deps.installed, deps.lastCheck);
+  assert((reason ?? '').includes('Windows installer'), `reason must name the missing installer, got: ${reason}`);
+}
+
+async function verifiesAnAppImageInstallStillChecksTheAppImageHashAndDoesNotCloseTheApp() {
+  const appimageProbe = { ...DEB_PROBE, installed: { ...DEB_PROBE.installed, installKind: 'app-image', managedExecutablePath: '/home/u/Codex.AppImage', artifactSha256: 'f'.repeat(64) }, isManagedPathWritable: true };
+  const deps = await checkedDeps(appimageProbe, {});
+  assertEqual(deps.controller.computeEligibility(deps.installed, deps.lastCheck), 'eligible', 'a newer AppImage release is installable');
+  const result = await deps.controller.install();
+  assertEqual(result.closesToFinish ?? false, false, 'an AppImage update asks for a restart, it does not close the app');
+}
+
 async function verifiesInstallBeforeAnyCheckFailsLoudly() {
   const { deps } = await checkedDebDeps(() => {
     throw new Error('must not be reached');
@@ -844,6 +911,9 @@ async function main() {
   await verifiesMountTimeProbeFailureIsReportedNotHidden();
   await verifiesPromotedStatePrefersTheWrittenRecord();
   await verifiesInstallHandsTheFetchedManifestToPerformInstall();
+  await verifiesAWindowsInstallIsEligibleWhenTheReleaseCarriesTheInstaller();
+  await verifiesAWindowsInstallIsNotOfferedARelease_WithoutTheInstaller();
+  await verifiesAnAppImageInstallStillChecksTheAppImageHashAndDoesNotCloseTheApp();
   await verifiesInstallBeforeAnyCheckFailsLoudly();
   await verifiesInstallSurfacesTheBackendFailure();
   await verifiesInstallRefusesWhenNotEligible();

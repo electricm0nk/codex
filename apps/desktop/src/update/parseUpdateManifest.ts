@@ -73,6 +73,15 @@ export interface LinuxDebArtifact {
   size_bytes: number;
 }
 
+// For the NSIS installer a Windows shell self-updates by running. Optional: schema < 1.3.0 manifests
+// do not set it.
+export interface WindowsNsisArtifact {
+  name: string;
+  url: string;
+  sha256: string;
+  size_bytes: number;
+}
+
 export interface WorkflowProvenance {
   workflow: string;
   run_id: number | string;
@@ -83,6 +92,7 @@ export interface Eligibility {
   min_supported_version: string;
   appimage_install: boolean;
   deb_install?: boolean;
+  windows_install?: boolean;
   required_install_kind: 'appimage' | 'dev' | 'any';
 }
 
@@ -105,6 +115,7 @@ export interface UpdateManifestFile {
   release_notes_hash: string;
   linux_appimage: LinuxAppImageArtifact;
   linux_deb?: LinuxDebArtifact;
+  windows_nsis?: WindowsNsisArtifact;
   windows_msi?: WindowsMsiArtifact;
   macos_dmg?: MacosDmgArtifact;
   workflow_provenance: WorkflowProvenance;

@@ -14,6 +14,9 @@
 // exercise the public surface and will surface real unused-symbol warnings naturally.
 #![cfg_attr(not(test), allow(dead_code))]
 
+pub mod appimage_install;
 pub mod deb_install;
+pub mod download;
 pub mod seed;
 pub mod transaction;
+pub mod windows_install;

@@ -337,6 +337,34 @@ export function test_linux_deb_block_rejects_missing_sha256(): void {
   assert(!parseUpdateManifest(broken).ok, 'a linux_deb block without sha256 must be rejected');
 }
 
+const WINDOWS_NSIS_MANIFEST_JSON = UPDATE_MANIFEST_JSON.replace('"schema_version": "1.1.0"', '"schema_version": "1.3.0"')
+  .replace(
+    '"workflow_provenance": {',
+    `"windows_nsis": {
+    "name": "Codex_0.16.140_x64-setup.exe",
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.16.140-157873a6/Codex_0.16.140_x64-setup.exe",
+    "sha256": "9b603c709ef6a39aabe9a1869bb4be8d93feef9ad5729123e5831f2ff6d168de",
+    "size_bytes": 71000000
+  },
+  "workflow_provenance": {`,
+  )
+  .replace('"appimage_install": true,', '"appimage_install": true,\n    "windows_install": true,');
+
+export function test_windows_nsis_block_optional_and_typed(): void {
+  const result = parseUpdateManifest(WINDOWS_NSIS_MANIFEST_JSON);
+  assert(result.ok, `manifest 1.3.0 with windows_nsis must parse: ${JSON.stringify(result.ok ? null : result.errors)}`);
+  if (result.ok) {
+    assertEqual(result.data.windows_nsis?.name, 'Codex_0.16.140_x64-setup.exe', 'windows_nsis.name must round-trip');
+    assertEqual(result.data.eligibility.windows_install, true, 'eligibility.windows_install must round-trip');
+  }
+}
+
+export function test_windows_nsis_block_rejects_missing_sha256(): void {
+  const broken = WINDOWS_NSIS_MANIFEST_JSON.replace(/"sha256": "9b603c[0-9a-f]+",\n\s*/, '');
+  assert(broken !== WINDOWS_NSIS_MANIFEST_JSON, 'fixture mutation must change the document');
+  assert(!parseUpdateManifest(broken).ok, 'a windows_nsis block without sha256 must be rejected');
+}
+
 export function test_manifest_1_1_0_without_linux_deb_still_parses(): void {
   assert(parseUpdateManifest(UPDATE_MANIFEST_JSON).ok, 'pre-1.2.0 manifests must keep validating');
 }
@@ -352,6 +380,8 @@ function run(): void {
   test_linux_deb_block_optional_and_typed();
   test_linux_deb_block_rejects_missing_sha256();
   test_manifest_1_1_0_without_linux_deb_still_parses();
+  test_windows_nsis_block_optional_and_typed();
+  test_windows_nsis_block_rejects_missing_sha256();
   console.log('parseUpdateManifest.test.ts: 10/10 AV-SCH-* + Windows MSI + macOS DMG + Linux deb assertions passed');
 }
 

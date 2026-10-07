@@ -16,7 +16,6 @@ use super::transaction::{
 };
 
 /// Only artifacts published on this repository's releases may be installed as root.
-pub const ALLOWED_URL_PREFIX: &str = "https://github.com/electricm0nk/codex/releases/download/";
 const PACKAGE_NAME: &str = "codex";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -73,13 +72,7 @@ pub fn parse_deb_install_request(manifest: &Value) -> Result<DebInstallRequest, 
 }
 
 fn validate_request(req: &DebInstallRequest) -> Result<(), String> {
-    if !req.url.starts_with(ALLOWED_URL_PREFIX) {
-        return Err(format!("refusing to install from {}: not a codex release asset URL", req.url));
-    }
-    if req.name.contains('/') || req.name.contains('\\') || req.name.contains("..") || !req.name.ends_with(".deb") {
-        return Err(format!("refusing artifact name {:?}: must be a bare .deb file name", req.name));
-    }
-    Ok(())
+    super::download::validate_asset(&req.url, &req.name, ".deb")
 }
 
 /// Download, verify and install the release's .deb. Returns the relaunch prompt on success.
@@ -138,15 +131,7 @@ pub struct SystemDebInstaller;
 
 impl DebSystem for SystemDebInstaller {
     fn download(&self, url: &str, dest: &Path) -> Result<(), String> {
-        let agent = ureq::AgentBuilder::new()
-            .timeout_connect(std::time::Duration::from_secs(15))
-            .timeout_read(std::time::Duration::from_secs(60))
-            .build();
-        let response = agent.get(url).call().map_err(|e| format!("download of {url} failed: {e}"))?;
-        let mut reader = response.into_reader();
-        let mut file = fs::File::create(dest).map_err(|e| format!("cannot create {}: {e}", dest.display()))?;
-        std::io::copy(&mut reader, &mut file).map_err(|e| format!("download of {url} interrupted: {e}"))?;
-        Ok(())
+        super::download::download_to_file(url, dest)
     }
 
     fn inspect(&self, deb: &Path) -> Result<DebMetadata, String> {

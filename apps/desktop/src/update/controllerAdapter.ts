@@ -79,7 +79,7 @@ async function callInvoke<T>(
  */
 interface RustInstalledStateWire {
   managedExecutablePath: string;
-  installKind: 'app-image' | 'deb' | 'dev-local';
+  installKind: 'app-image' | 'deb' | 'windows-nsis' | 'dev-local';
   channel: string;
   version: string;
   sourceCommit: string;
@@ -116,6 +116,23 @@ function mapRustInstallKind(
       return 'dev';
     case 'deb':
       return 'deb';
+    case 'windows-nsis':
+      return 'windows';
+  }
+}
+
+/** The hash of the artifact an install of this kind downloads, from the fetched manifest. */
+function artifactShaFor(
+  kind: EligibilityInput['installedState']['install_kind'],
+  manifest: { artifactSha256: string; debArtifactSha256: string | null; windowsArtifactSha256: string | null },
+): string | null {
+  switch (kind) {
+    case 'deb':
+      return manifest.debArtifactSha256;
+    case 'windows':
+      return manifest.windowsArtifactSha256;
+    default:
+      return manifest.artifactSha256;
   }
 }
 
@@ -211,6 +228,7 @@ export function createUpdateControllerDeps(
     version: string;
     artifactSha256: string;
     debArtifactSha256: string | null;
+    windowsArtifactSha256: string | null;
   } | null = null;
   // The validated manifest exactly as fetched; the backend re-reads the artifact block from it.
   let lastManifestRaw: unknown = null;
@@ -247,8 +265,7 @@ export function createUpdateControllerDeps(
         selectedChannel: currentChannel,
         manifest: {
           version: lastManifest.version,
-          artifact_sha256:
-            installKind === 'deb' ? lastManifest.debArtifactSha256 : lastManifest.artifactSha256,
+          artifact_sha256: artifactShaFor(installKind, lastManifest),
         },
         installedState: {
           version: localProbe.installed.version,
@@ -342,6 +359,7 @@ export function createUpdateControllerDeps(
           version: manifestResult.value.version,
           artifactSha256: manifestResult.value.linux_appimage.sha256,
           debArtifactSha256: manifestResult.value.linux_deb?.sha256 ?? null,
+          windowsArtifactSha256: manifestResult.value.windows_nsis?.sha256 ?? null,
         };
         // E3.12: the manifest names a release-notes body (`release_notes_url`
         // + `release_notes_hash`) but does not carry the prose itself — fetch
@@ -415,7 +433,9 @@ export function createUpdateControllerDeps(
       if (response === null) {
         throw new Error('install is only available in the desktop app');
       }
-      return { fromVersion: response.fromVersion, toVersion: response.toVersion };
+      // Windows runs its installer after Codex exits, so the app closes and reopens by itself.
+      const closesToFinish = localProbe?.installed?.installKind === 'windows-nsis';
+      return { fromVersion: response.fromVersion, toVersion: response.toVersion, ...(closesToFinish ? { closesToFinish } : {}) };
     },
   };
 

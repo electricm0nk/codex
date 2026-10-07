@@ -39,6 +39,16 @@ pub enum SeedOutcome {
 const PACKAGED_PREFIXES: [&str; 3] = ["/usr/", "/opt/", "/snap/"];
 
 pub fn detect_install_kind(running: &RunningInstall) -> InstallKind {
+    detect_install_kind_for(cfg!(windows), running)
+}
+
+/// `is_windows` is a parameter so the Windows rule is testable on any host.
+pub fn detect_install_kind_for(is_windows: bool, running: &RunningInstall) -> InstallKind {
+    if is_windows {
+        // A cargo build lives under `target\debug` or `target\release`; anything else came from the installer.
+        let exe = running.managed_executable_path.to_string_lossy().replace('\\', "/");
+        return if exe.contains("/target/") { InstallKind::DevLocal } else { InstallKind::WindowsNsis };
+    }
     if running.appimage_path.is_some() {
         return InstallKind::AppImage;
     }
@@ -54,7 +64,7 @@ fn build_record(running: &RunningInstall, kind: InstallKind) -> InstalledState {
     let commit8: String = running.source_commit.chars().take(8).collect();
     let (update_eligible, ineligible_reason) = match kind {
         InstallKind::DevLocal => (false, Some("dev build is not update-eligible".to_string())),
-        InstallKind::AppImage | InstallKind::Deb => (true, None),
+        InstallKind::AppImage | InstallKind::Deb | InstallKind::WindowsNsis => (true, None),
     };
     InstalledState {
         managed_executable_path: running.managed_executable_path.clone(),
@@ -83,6 +93,14 @@ pub fn reconcile_installed_state(
     config_dir: &Path,
     running: &RunningInstall,
 ) -> Result<SeedOutcome, String> {
+    reconcile_installed_state_for(config_dir, running, cfg!(windows))
+}
+
+pub fn reconcile_installed_state_for(
+    config_dir: &Path,
+    running: &RunningInstall,
+    is_windows: bool,
+) -> Result<SeedOutcome, String> {
     let path = config_update_dir(config_dir).join(INSTALLED_STATE_FILENAME);
     let existing = match fs::read(&path) {
         Ok(bytes) => Some(serde_json::from_slice::<InstalledState>(&bytes).map_err(|source| {
@@ -101,7 +119,7 @@ pub fn reconcile_installed_state(
         }
     }
 
-    let record = build_record(running, detect_install_kind(running));
+    let record = build_record(running, detect_install_kind_for(is_windows, running));
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent).map_err(|err| format!("cannot create {}: {err}", parent.display()))?;
     }
@@ -192,6 +210,53 @@ mod tests {
         let mut r = deb_running("a", "0.16.140");
         r.managed_executable_path = PathBuf::from("/home/u/src/codex/apps/desktop/src-tauri/target/debug/codex-desktop");
         assert_eq!(detect_install_kind(&r), InstallKind::DevLocal);
+    }
+
+    fn windows_running(exe: &str) -> RunningInstall {
+        let mut r = deb_running("a", "0.16.140");
+        r.managed_executable_path = PathBuf::from(exe);
+        r
+    }
+
+    #[test]
+    fn a_windows_executable_outside_a_cargo_target_dir_is_an_installer_install() {
+        let installed = windows_running("C:\\Users\\u\\AppData\\Local\\Codex\\codex-desktop.exe");
+        assert_eq!(detect_install_kind_for(true, &installed), InstallKind::WindowsNsis);
+        let per_machine = windows_running("C:\\Program Files\\Codex\\codex-desktop.exe");
+        assert_eq!(detect_install_kind_for(true, &per_machine), InstallKind::WindowsNsis);
+    }
+
+    #[test]
+    fn a_windows_cargo_build_is_dev_local() {
+        for exe in ["C:\\src\\codex\\apps\\desktop\\src-tauri\\target\\debug\\codex-desktop.exe", "C:/src/codex/target/release/codex-desktop.exe"] {
+            assert_eq!(detect_install_kind_for(true, &windows_running(exe)), InstallKind::DevLocal, "{exe}");
+        }
+    }
+
+    #[test]
+    fn the_windows_rule_does_not_change_how_other_systems_are_classified() {
+        assert_eq!(detect_install_kind_for(false, &deb_running("a", "1")), InstallKind::Deb);
+        assert_eq!(detect_install_kind_for(false, &windows_running("C:\\Users\\u\\Codex\\codex-desktop.exe")), InstallKind::DevLocal);
+    }
+
+    #[test]
+    fn a_windows_install_is_update_eligible_and_re_recorded_after_the_installer_replaces_it() {
+        let config = temp_config("windows");
+        let mut old = windows_running("C:\\Users\\u\\AppData\\Local\\Codex\\codex-desktop.exe");
+        old.artifact_sha256 = "old".into();
+        let record = build_record(&old, InstallKind::WindowsNsis);
+        assert!(record.update_eligible);
+        assert_eq!(record.install_kind, InstallKind::WindowsNsis);
+        // The installer is not the verifier: a new binary or version on the next start must rewrite the record.
+        let path = config_update_dir(&config).join(INSTALLED_STATE_FILENAME);
+        fs::create_dir_all(path.parent().unwrap()).unwrap();
+        fs::write(&path, serde_json::to_vec(&record).unwrap()).unwrap();
+        let mut new = old.clone();
+        new.artifact_sha256 = "new".into();
+        new.version = "0.16.141".into();
+        let outcome = reconcile_installed_state_for(&config, &new, true).unwrap();
+        assert!(matches!(outcome, SeedOutcome::Written(_)), "{outcome:?}");
+        assert_eq!(read_record(&config).version, "0.16.141");
     }
 
     #[test]

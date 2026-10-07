@@ -58,6 +58,7 @@ export type EligibilityResult = 'eligible' | 'ineligible' | 'unknown';
 export type InstallKind =
   | 'appimage'
   | 'deb'
+  | 'windows'
   | 'tarball'
   | 'dev'
   | 'unknown';
@@ -146,6 +147,11 @@ export interface UpdateController {
 export interface InstallResult {
   fromVersion: string;
   toVersion: string;
+  /**
+   * True when finishing the update closes Codex and reopens it on its own (Windows: the installer
+   * runs after Codex exits). Absent or false: the user restarts Codex.
+   */
+  closesToFinish?: boolean;
 }
 
 export interface UpdateControllerDeps {

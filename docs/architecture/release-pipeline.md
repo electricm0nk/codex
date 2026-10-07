@@ -86,7 +86,7 @@ Guard tests that keep the three files and the fixtures honest:
 
 ### Manifest generation + dual validation
 
-`scripts/release/write_release_manifest.py` builds `update-manifest.json` against `schemas/update/update-manifest.schema.json`. It hard-codes `TRANCHE_ID = "STC-CODEX-SD-16"` and `SCHEMA_VERSION = "1.1.0"` (`SCHEMA_VERSION_WITH_DEB = "1.2.0"`, used whenever a `.deb` is staged), computes the AppImage's sha256/size from the file on disk (`_appimage_identity`), and accepts complete-triple-or-nothing `--linux-deb-*` / `--windows-msi-*` / `--macos-dmg-*` flag sets (`_optional_platform_block`) so a partial platform block can never be emitted. A staged `.deb` produces the `linux_deb` block and sets `eligibility.deb_install: true`; the workflow passes `--required-install-kind any` because both the AppImage and the `.deb` can self-update. Manifest schema 1.2.0 is purely additive: 1.0.0 and 1.1.0 manifests still validate.
+`scripts/release/write_release_manifest.py` builds `update-manifest.json` against `schemas/update/update-manifest.schema.json`. It hard-codes `TRANCHE_ID = "STC-CODEX-SD-16"` and `SCHEMA_VERSION = "1.1.0"` (`SCHEMA_VERSION_WITH_DEB = "1.2.0"`, used whenever a `.deb` is staged; `SCHEMA_VERSION_WITH_NSIS = "1.3.0"`, used whenever the Windows NSIS installer is staged, which also sets `eligibility.windows_install`), computes the AppImage's sha256/size from the file on disk (`_appimage_identity`), and accepts complete-triple-or-nothing `--linux-deb-*` / `--windows-msi-*` / `--macos-dmg-*` flag sets (`_optional_platform_block`) so a partial platform block can never be emitted. A staged `.deb` produces the `linux_deb` block and sets `eligibility.deb_install: true`; the workflow passes `--required-install-kind any` because both the AppImage and the `.deb` can self-update. Manifest schema 1.2.0 is purely additive: 1.0.0 and 1.1.0 manifests still validate.
 
 Each publish job's manifest is checked twice, by two different scripts:
 1. `scripts/release/validate_manifest.py --manifest update-manifest.json --schema schemas/update/update-manifest.schema.json` — pure `jsonschema.Draft202012Validator` check against the wire schema.
@@ -100,7 +100,7 @@ Schema validity says a manifest is well-formed, not that it is true. `tools/rele
 
 1. `apps/desktop/package.json` and `src-tauri/tauri.conf.json` carry the manifest version (the stamp reached the build).
 2. `linux_appimage.name` contains the version.
-3. `linux_deb`: the staged file matches the manifest's sha256 and size, and `dpkg-deb -f` reports `Package: codex` and `Version:` equal to the manifest version.
+3. `linux_deb`: the staged file matches the manifest's sha256 and size, and `dpkg-deb -f` reports `Package: codex` and `Version:` equal to the manifest version. `linux_appimage` and `windows_nsis` (when present): the staged file matches the manifest's sha256 and size, and the installer's name contains the version.
 4. `release_notes_hash` is the sha256 of the file at `release_notes_path`, and that file is not a closure placeholder.
 5. With `--fetch-notes`: the bytes served at `release_notes_url` hash to `release_notes_hash`. This is exactly the check the desktop app performs before showing notes.
 
@@ -220,7 +220,7 @@ Bundle targets, per `tauri.conf.json`: `deb`, `appimage` (Linux), `msi`, `nsis` 
 | `scripts/release/promote-alpha-to-beta.sh` | Local helper: evaluates the 5 alpha→beta gates against real `gh` state and prints/writes the AV-BR-6 PR body. Never calls `gh pr create`. | Run manually by an operator. |
 | `scripts/release/promote-beta-to-stable.sh` | Local helper: evaluates the 6 beta→stable gates (including provenance.json download) and prints/writes the PR body. | Run manually by an operator. |
 | `scripts/release/validate_manifest.py` | Validates an `update-manifest.json` against `schemas/update/update-manifest.schema.json` via `jsonschema`. | `publish-tester-release.yml` (linux publish job and `finalize`). |
-| `scripts/release/write_release_manifest.py` | Builds and writes a schema-conformant `update-manifest.json`, computing AppImage/deb/MSI/DMG sha256+size from disk (schema 1.2.0 with a `linux_deb` block when a `.deb` is staged). | `publish-tester-release.yml` (linux publish job and `finalize`). |
+| `scripts/release/write_release_manifest.py` | Builds and writes a schema-conformant `update-manifest.json`, computing AppImage/deb/MSI/DMG sha256+size from disk (schema 1.2.0 with a `linux_deb` block when a `.deb` is staged; 1.3.0 with a `windows_nsis` block when the NSIS installer is staged). | `publish-tester-release.yml` (linux publish job and `finalize`). |
 | `scripts/release/test-promotion-gates.test.sh` | Bash self-test for `promote-alpha-to-beta.sh` / `promote-beta-to-stable.sh` against a stubbed `gh`. | Run manually; not wired into any workflow. |
 | `scripts/release/__tests__/test-write-release-manifest.test.sh` | Bash self-test for `write_release_manifest.py` / `validate_manifest.py` round-trip, including a malformed-sha256 negative case. | Run manually. |
 | `scripts/tranche/validate-tranche-notes.py` | Validates a tranche manifest YAML + its bound release-notes.md (required sections, order, non-empty). | `publish-tester-release.yml`'s `Resolve and validate tranche release notes` step. |
