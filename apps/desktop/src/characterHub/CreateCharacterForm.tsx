@@ -29,6 +29,10 @@ import {
 import { loadRaceRosterSurface, rosterErrorMessage, type RaceRosterSurface } from './raceRoster';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { LevelsPanel } from './LevelsPanel';
+import { ManageBox } from './ManageBox';
+import { TransferListDialog } from './TransferListDialog';
+import { CHARACTER_TRAIT_LIMIT, alternateTraitItems, characterTraitItems } from './manageItems';
+import { remainingSelections } from './transferListModel';
 import {
   addLevel,
   creationRequestShape,
@@ -327,6 +331,11 @@ function CreateCharacterFields(props: {
   const [traitOptions, setTraitOptions] = useState<CharacterTraitOptionDto[] | null>(null);
   const [traitOptionsError, setTraitOptionsError] = useState<string | null>(null);
   const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
+  // Manage dialogs: the selection edits live; Cancel restores what it was when the dialog opened.
+  const [racialDialogOpen, setRacialDialogOpen] = useState(false);
+  const [racialSnapshot, setRacialSnapshot] = useState<string[]>([]);
+  const [traitsDialogOpen, setTraitsDialogOpen] = useState(false);
+  const [traitsSnapshot, setTraitsSnapshot] = useState<string[]>([]);
   // AT-34-E4-002 (second slice): the player's resolved skill choice for
   // each selected fixed-choice open-slot trait, keyed by trait id. A trait
   // with no entry here yet (just checked, choice not made) submits no
@@ -510,34 +519,25 @@ function CreateCharacterFields(props: {
     };
   }, []);
 
-  function toggleTrait(id: string) {
-    const wasSelected = selectedTraits.includes(id);
-    setSelectedTraits((current) =>
-      wasSelected ? current.filter((existing) => existing !== id) : [...current, id]
-    );
-    if (wasSelected) {
-      // Unchecking a choice-based trait drops its recorded skill choice too
-      // -- an unselected trait must never leave a stale choice behind that
-      // a later re-check could silently pick back up.
+  function setTraitSkillChoice(traitId: string, skillId: string) {
+    setTraitSkillChoices((current) => ({ ...current, [traitId]: skillId }));
+  }
+
+  /** Applies the Traits dialog's selection: a trait leaving drops its skill choice, one arriving seeds a default. */
+  function applyTraitSelection(next: string[]) {
+    for (const id of selectedTraits.filter((existing) => !next.includes(existing))) {
       setTraitSkillChoices((current) => {
         const { [id]: _removed, ...rest } = current;
         return rest;
       });
-    } else {
-      // Checking a choice-based trait defaults its choice to the first
-      // `skillOptions` entry, so a submit before the player touches the
-      // dropdown still records a real, in-list choice rather than none at
-      // all -- the option is still visibly a `<select>` the player can
-      // change, this only avoids an accidentally-empty submission.
+    }
+    for (const id of next.filter((added) => !selectedTraits.includes(added))) {
       const option = traitOptions?.find((candidate) => candidate.id === id);
       if (option !== undefined && option.skillOptions.length > 0) {
         setTraitSkillChoices((current) => ({ ...current, [id]: option.skillOptions[0]!.skillId }));
       }
     }
-  }
-
-  function setTraitSkillChoice(traitId: string, skillId: string) {
-    setTraitSkillChoices((current) => ({ ...current, [traitId]: skillId }));
+    setSelectedTraits(next);
   }
 
   const alternateTraitRows = buildAlternateTraitRows(
@@ -549,12 +549,6 @@ function CreateCharacterFields(props: {
   const alternateTraitWarnings = creationSelectionWarnings(alternateResolution);
   const racialTraitsPreview = buildCreationRacialTraitsPreview(alternateResolution);
   const classPreview = buildClassPreview(classCatalog, selectedClass, Math.max(1, primaryLevels));
-
-  function toggleAlternateTrait(key: string) {
-    setSelectedAlternateTraitKeys((current) =>
-      current.includes(key) ? current.filter((existing) => existing !== key) : [...current, key]
-    );
-  }
 
   function handleRaceChange(nextRaceId: string) {
     const nextRace = races.find((option) => option.id === nextRaceId) ?? races[0];
@@ -639,7 +633,7 @@ function CreateCharacterFields(props: {
       // selected trait that both is choice-based (`choiceSetId !== null`)
       // and has a recorded skill choice. A choice-based trait somehow
       // selected with no recorded choice yet (should not happen --
-      // `toggleTrait` seeds a default the moment it is checked) is simply
+      // `applyTraitSelection` seeds a default the moment it is chosen) is simply
       // omitted rather than sent with a fabricated skill.
       const resolvedTraitSkillChoices = selectedTraits.flatMap((traitId) => {
         const option = traitOptions?.find((candidate) => candidate.id === traitId);
@@ -847,318 +841,108 @@ function CreateCharacterFields(props: {
             </LabeledField>
           </div>
 
-          {/* v0.8 F-2: the standard traits the picked race grants, before the
-              player commits. Same `resolve_race_alternate_selection` payload
-              the alternate picker below already receives on every race /
-              selection change; alternates are omitted here because they are
-              the checkboxes beneath. Prose is the engine's, verbatim. */}
-          <p
-            style={{
-              ...LABEL_STYLE,
-              borderTop: '1px solid var(--color-border)',
-              color: 'var(--color-text)',
-              fontSize: '0.95rem',
-              marginTop: '0.5rem',
-              paddingTop: '1rem',
+          {/* Racial traits: the standard traits the race grants are innate; alternate racial traits are
+              chosen in the Manage dialog. Every fact comes from the backend (`resolve_race_alternate_selection`),
+              and `create_character` re-validates the keys against the corpus. */}
+          <ManageBox
+            title="Racial Traits"
+            remaining={racialTraitsPreview.unavailableReason === null ? `${racialTraitsPreview.rows.length} innate` : undefined}
+            summary={selectedAlternateTraitKeys.map(
+              (key) => alternateTraitRows.find((row) => row.alternate.key === key)?.alternate.name ?? key
+            )}
+            disabledReason={
+              alternateMenuError !== null
+                ? `Alternate racial traits are unavailable: ${alternateMenuError}`
+                : alternateMenu === null
+                  ? 'Loading alternate racial traits…'
+                  : alternateTraitRows.length === 0
+                    ? `No ingested book declares an alternate racial trait for ${selectedRace.label}.`
+                    : undefined
+            }
+            onManage={() => {
+              setRacialSnapshot(selectedAlternateTraitKeys);
+              setRacialDialogOpen(true);
             }}
           >
-            Racial Traits
-          </p>
-          {racialTraitsPreview.unavailableReason !== null ? (
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>
-              {alternateResolution === null ? 'Resolving racial traits…' : racialTraitsPreview.unavailableReason}
-            </p>
-          ) : (
-            <>
-              {racialTraitsPreview.rows.map((row) => (
-                <div key={row.key} style={{ padding: '0.3rem 0' }}>
-                  <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700 }}>
-                    {row.name}
-                    <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>
-                      {' '}· {row.roleLabel} ({row.book})
-                    </span>
-                  </span>
-                  <span style={{ color: 'var(--color-text-secondary)', display: 'block', fontSize: '0.72rem' }}>
-                    {row.text}
-                  </span>
-                  {row.droppedArgs.length > 0 ? (
-                    <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.7rem' }}>
-                      The engine could not resolve {row.droppedArgs.join(', ')}, so this description is incomplete.
-                    </span>
-                  ) : null}
-                </div>
-              ))}
-              {racialTraitsPreview.replaced.map((gone) => (
-                <p key={gone.key} style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.2rem 0 0' }}>
-                  {gone.name} is replaced by {gone.byName}.
-                </p>
-              ))}
-            </>
-          )}
-
-          {/* Alternate racial traits, from every book
-              `race_catalog::RACE_CORPUS_BOOKS` loads — whichever those are.
-              This comment named ARG alone until SD-29's race-trait lane, then
-              named three books, and each list went stale the moment the next
-              book landed (four, at Inner Sea Races). It names none now, on
-              purpose: the surface is book-agnostic and the backing list is one
-              `grep RACE_CORPUS_BOOKS` away.
-
-              Every fact rendered here comes from the backend: which traits
-              exist, what each replaces, and which are locked out by the
-              current selection. `create_character` re-validates the submitted
-              keys against the corpus and returns `Blocked` rather than
-              persisting a swap that did not happen. */}
-          <p
-            style={{
-              ...LABEL_STYLE,
-              borderTop: '1px solid var(--color-border)',
-              color: 'var(--color-text)',
-              fontSize: '0.95rem',
-              marginTop: '0.5rem',
-              paddingTop: '1rem',
-            }}
-          >
-            Alternate Racial Traits
-          </p>
-          {alternateMenuError !== null ? (
-            <p style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.78rem', margin: 0 }}>
-              Alternate racial traits are unavailable: {alternateMenuError}
-            </p>
-          ) : alternateMenu === null ? (
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>
-              Loading alternate racial traits…
-            </p>
-          ) : alternateTraitRows.length === 0 ? (
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>
-              No ingested book declares an alternate racial trait for {selectedRace.label}.
-            </p>
-          ) : (
-            <>
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0 0 0.5rem' }}>
+            {alternateResolution !== null && selectedAlternateTraitKeys.length > 0 ? (
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>
                 {describeCreationSelection(selectedAlternateTraitKeys, alternateResolution)}
               </p>
-              <div
-                style={{
-                  border: '1px solid var(--color-border)',
-                  borderRadius: 8,
-                  // Each row now carries its rendered description, so the old
-                  // 220px showed barely two of them.
-                  maxHeight: 320,
-                  overflowY: 'auto',
-                  padding: '0.35rem 0.5rem',
-                }}
-              >
-                {alternateTraitRows.map((row) => (
-                  <label
-                    key={row.alternate.key}
-                    style={{
-                      alignItems: 'flex-start',
-                      cursor: row.disabledReason === null ? 'pointer' : 'not-allowed',
-                      display: 'flex',
-                      gap: '0.5rem',
-                      opacity: row.disabledReason === null ? 1 : 0.55,
-                      padding: '0.3rem 0',
-                    }}
-                    title={row.disabledReason ?? row.description}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={row.selected}
-                      disabled={row.disabledReason !== null}
-                      onChange={() => toggleAlternateTrait(row.alternate.key)}
-                      style={{ marginTop: '0.2rem' }}
-                    />
-                    <span style={{ minWidth: 0 }}>
-                      <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{row.alternate.name}</span>
-                      <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>
-                        {' '}
-                        · {row.alternate.book}
-                        {row.alternate.sourcePage === null ? '' : ` ${row.alternate.sourcePage}`}
-                      </span>
-                      {/* What the trait actually does, with its numbers.
+            ) : null}
+            {alternateTraitWarnings.map((warning) => (
+              <p key={warning} style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>
+                {warning}
+              </p>
+            ))}
+          </ManageBox>
+          <TransferListDialog
+            open={racialDialogOpen}
+            title={`Racial traits: ${selectedRace.label}`}
+            notice="Traits the race grants are listed under Innate. Pick alternate racial traits to replace some of them; ones the current picks rule out are struck through."
+            items={alternateTraitItems(alternateTraitRows, racialTraitsPreview.rows)}
+            selected={selectedAlternateTraitKeys}
+            onSelectedChange={setSelectedAlternateTraitKeys}
+            limit={null}
+            remainingNoun="alternate traits"
+            onAccept={() => setRacialDialogOpen(false)}
+            onCancel={() => {
+              setSelectedAlternateTraitKeys(racialSnapshot);
+              setRacialDialogOpen(false);
+            }}
+          />
 
-                          This row used to show a name, a page and "Replaces X"
-                          — three facts, none of them a magnitude — while the
-                          rendered sentence stating the number sat in the same
-                          payload, reaching only a hover tooltip. A player
-                          choosing between two alternates could not compare
-                          them. `description` is rendered verbatim: it is
-                          corpus prose with the engine's own numbers resolved
-                          into it (`decisions.md §29.1`). */}
-                      <span
-                        style={{
-                          color: 'var(--color-text-secondary)',
-                          display: 'block',
-                          fontSize: '0.72rem',
-                        }}
-                      >
-                        {row.description}
-                      </span>
-                      {row.droppedArgs.length > 0 ? (
-                        <span
-                          style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.7rem' }}
-                        >
-                          The engine could not resolve {row.droppedArgs.join(', ')}, so this description is
-                          incomplete.
-                        </span>
-                      ) : null}
-                      <span
-                        style={{
-                          color: 'var(--color-text-muted)',
-                          display: 'block',
-                          fontSize: '0.72rem',
-                        }}
-                      >
-                        {row.disabledReason ??
-                          (row.alternate.replaces.length > 0
-                            ? `Replaces ${row.alternate.replaces.map((link) => link.name).join(', ')}`
-                            : `Replaces nothing in the loaded books (${row.alternate.setsFlags.join(', ')})`)}
-                      </span>
-                    </span>
-                  </label>
-                ))}
-              </div>
-              {alternateTraitWarnings.map((warning) => (
-                <p
-                  key={warning}
-                  style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}
-                >
-                  {warning}
-                </p>
-              ))}
-            </>
-          )}
-
-          {/* AT-34-E4-002: character traits/drawbacks. Every option here
-              genuinely computes -- `list_available_character_traits` returns
-              only the 53 `ultimate_campaign` traits whose skill,
-              saving-throw, situational, initiative /
-              concentration bonus, ability-score-difference
-              formula, or mixed caster-level+skill this crate's
-              `trait_effects` compute paths really apply (31 flat skill + 5
-              fixed-choice skill + 4 open-family skill + 2 flat save + 3
-              situational + 3 initiative/concentration + 4
-              ability-substitution + 1 caster-level+skill). No wider trait
-              roster is offered, because no wider roster computes anything
-              yet. */}
-          <p
-            style={{
-              ...LABEL_STYLE,
-              borderTop: '1px solid var(--color-border)',
-              color: 'var(--color-text)',
-              fontSize: '0.95rem',
-              marginTop: '0.5rem',
-              paddingTop: '1rem',
+          {/* AT-34-E4-002: character traits. Every option offered genuinely computes (the 53 `ultimate_campaign`
+              traits whose skill, save, situational, initiative/concentration, ability-difference or mixed
+              caster-level bonuses the `trait_effects` compute paths apply); no wider roster is offered. */}
+          <ManageBox
+            title="Traits"
+            remaining={`${remainingSelections(CHARACTER_TRAIT_LIMIT, selectedTraits)} of ${CHARACTER_TRAIT_LIMIT} remaining`}
+            summary={selectedTraits.map((id) => traitOptions?.find((option) => option.id === id)?.name ?? id)}
+            disabledReason={
+              traitOptionsError !== null ? `Traits are unavailable: ${traitOptionsError}` : traitOptions === null ? 'Loading traits…' : undefined
+            }
+            onManage={() => {
+              setTraitsSnapshot(selectedTraits);
+              setTraitsDialogOpen(true);
             }}
           >
-            Traits
-          </p>
-          {traitOptionsError !== null ? (
-            <p style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.78rem', margin: 0 }}>
-              Traits are unavailable: {traitOptionsError}
-            </p>
-          ) : traitOptions === null ? (
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>Loading traits…</p>
-          ) : (
-            <div
-              style={{
-                border: '1px solid var(--color-border)',
-                borderRadius: 8,
-                maxHeight: 320,
-                overflowY: 'auto',
-                padding: '0.35rem 0.5rem',
-              }}
-            >
-              {traitOptions.map((option) => {
-                const isChoiceBased = option.skillOptions.length > 0;
-                const isSelected = selectedTraits.includes(option.id);
-                return (
-                  <div key={option.id} style={{ padding: '0.3rem 0' }}>
-                    <label
-                      style={{
-                        alignItems: 'flex-start',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        gap: '0.5rem',
-                      }}
-                      title={option.description}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={isSelected}
-                        onChange={() => toggleTrait(option.id)}
-                        style={{ marginTop: '0.2rem' }}
-                      />
-                      <span style={{ minWidth: 0 }}>
-                        <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{option.name}</span>
-                        <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>
-                          {' '}
-                          ·{' '}
-                          {[
-                            // The primary half: a skill/save/choice bonus
-                            // (also covers the eighth slice's flat-skill
-                            // half, which additionally carries an
-                            // `otherPillars` entry below rather than
-                            // dropping one half to fit the other).
-                            option.abilitySubstitution !== null
-                              ? `${option.skills.join(', ')} (ability-based${
-                                  option.abilitySubstitution.flatBonus !== 0
-                                    ? `, +${option.abilitySubstitution.flatBonus} flat`
-                                    : ''
-                                })`
-                              : option.skills.length > 0 || option.save !== null || isChoiceBased
-                                ? `${option.bonus >= 0 ? `+${option.bonus}` : option.bonus} ${
-                                    isChoiceBased
-                                      ? `choice of ${option.skillOptions.map((choice) => choice.name).join(', ')}`
-                                      : option.save !== null
-                                        ? `${option.save} save`
-                                        : option.skills.join(', ')
-                                  }`
-                                : null,
-                            // Any additional non-skill, non-save pillar
-                            // (fifth-slice initiative/concentration
-                            // options, and the eighth slice's
-                            // caster-level half).
-                            option.otherPillars.length > 0
-                              ? option.otherPillars
-                                  .map((pillar) => `${pillar.bonus >= 0 ? `+${pillar.bonus}` : pillar.bonus} ${pillar.label}`)
-                                  .join(', ')
-                              : null,
-                          ]
-                            .filter((part): part is string => part !== null)
-                            .join('; ')}
-                        </span>
-                        <span
-                          style={{
-                            color: 'var(--color-text-secondary)',
-                            display: 'block',
-                            fontSize: '0.72rem',
-                          }}
-                        >
-                          {option.description}
-                        </span>
-                      </span>
-                    </label>
-                    {isChoiceBased && isSelected ? (
-                      <select
-                        aria-label={`${option.name} skill choice`}
-                        value={traitSkillChoices[option.id] ?? option.skillOptions[0]!.skillId}
-                        onChange={(event) => setTraitSkillChoice(option.id, event.target.value)}
-                        style={{ fontSize: '0.78rem', marginLeft: '1.6rem', marginTop: '0.25rem' }}
-                      >
-                        {option.skillOptions.map((choice) => (
-                          <option key={choice.skillId} value={choice.skillId}>
-                            {choice.name}
-                          </option>
-                        ))}
-                      </select>
-                    ) : null}
-                  </div>
-                );
-              })}
-            </div>
-          )}
+            {selectedTraits.map((id) => {
+              const option = traitOptions?.find((candidate) => candidate.id === id);
+              if (option === undefined || option.skillOptions.length === 0) {
+                return null;
+              }
+              return (
+                <select
+                  key={id}
+                  aria-label={`${option.name} skill choice`}
+                  value={traitSkillChoices[id] ?? option.skillOptions[0]!.skillId}
+                  onChange={(event) => setTraitSkillChoice(id, event.target.value)}
+                  style={{ display: 'block', fontSize: '0.78rem', marginTop: '0.35rem' }}
+                >
+                  {option.skillOptions.map((choice) => (
+                    <option key={choice.skillId} value={choice.skillId}>
+                      {option.name}: {choice.name}
+                    </option>
+                  ))}
+                </select>
+              );
+            })}
+          </ManageBox>
+          <TransferListDialog
+            open={traitsDialogOpen}
+            title="Traits"
+            notice="A new character chooses two traits."
+            items={characterTraitItems(traitOptions ?? [])}
+            selected={selectedTraits}
+            onSelectedChange={applyTraitSelection}
+            limit={CHARACTER_TRAIT_LIMIT}
+            remainingNoun="traits"
+            onAccept={() => setTraitsDialogOpen(false)}
+            onCancel={() => {
+              applyTraitSelection(traitsSnapshot);
+              setTraitsDialogOpen(false);
+            }}
+          />
         </div>
 
         {/* Levels column: classes are added one level at a time; the HP and Level boxes follow this list. */}
