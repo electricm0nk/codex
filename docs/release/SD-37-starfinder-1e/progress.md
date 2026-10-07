@@ -31,10 +31,10 @@ it (`workflow-instruction.md §5`).
 | E4 | complete | 7 of 7 (E4.1–E4.6, E4.MC) | E4.MC receipt `artifacts/epic_4/E4.MC_cycle_receipt.md` |
 | E5 | complete | 5 of 5 (E5.1–E5.4, E5.MC) | E5.MC receipt `artifacts/epic_5/E5.MC_cycle_receipt.md` (E5.MC corrected this row from 0 of 5) |
 | E6 | complete | 8 of 8 (E6.1–E6.6 incl. E6.5a, E6.MC) | E6.MC receipt `artifacts/epic_6/E6.MC_cycle_receipt.md`; count from `kanban.md` rows (`awk -F'|' '$2 ~ /^ E6/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
-| E7.1 | complete | 1 of 1 | `artifacts/epic_7/E7.1_cycle_receipt.md` |
+| E7.1, E7.2 | complete | 2 of 2 | `artifacts/epic_7/E7.1_cycle_receipt.md`, `artifacts/epic_7/E7.2_cycle_receipt.md` |
 | E4a | in progress | 4 of 6 (E4a.1–E4a.4; E4a.4a discovered by E4a.4) | serial after E7.1 (C0.2); E4a.4 receipt `artifacts/epic_4a/E4a.4_cycle_receipt.md` |
-| E7.2–E7.9 | waiting | 0 of 8 | |
-| **Total** | | **47 of 57** | command below the table (E4a.4 re-ran it after its own row: 47 complete of 57 rows; 57 cards since E4a.4a) |
+| E7.3–E7.9 | waiting | 0 of 7 | |
+| **Total** | | **50 of 57** | command below the table (E7.2 re-ran it after its own row: 50 complete of 57 rows; the previous 47 predated E4a.4a and E4a.MC) |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -188,6 +188,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E4a.MC (attempt 2) | 2026-10-07 | Opus 5.5 | the `docs(sd37,e4a.mc)` attempt-2 commit | declined (owned_by E4a.4a: still `ready`; `origin/tranche/17` unmoved since attempt 1 at `949a8dbf62`; generator grep still → 6) | none re-rendered: tree identical to attempt 1, so attempt 1's deltas stand | `artifacts/epic_4a/E4a.MC_cycle_receipt.md` (attempt 1; no new evidence to add) |
 | E4a.4a | 2026-10-07 | Opus 5.5 | the `feat(sd37,e4a.4a)` commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_4a/E4a.4a_cycle_receipt.md`) | complete | Aldric unchanged (`1d830682…a569` = E1.4, rendered); Elowen unchanged (`8d1a711c…00f2` = E1.4, rendered); Soldier / Mystic / Technomancer / Envoy not re-rendered (no engine, data or desktop file changed) | `artifacts/epic_4a/E4a.4a_cycle_receipt.md` |
 | E4a.MC (attempt 3) | 2026-10-07 | Opus 5.5 | the `docs(sd37,e4a.mc)` attempt-3 commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_4a/E4a.MC_cycle_receipt.md`) | complete | Aldric unchanged (`1d830682…a569` = E1.4, rendered on `291484aa09`); Elowen unchanged (`8d1a711c…00f2` = E1.4; planted Wizard L5 fort 1→6 moves it to `16053a51…`, restored); Soldier / Mystic / Technomancer / Envoy rendered: printed lines byte-identical to E7.1 (51 / 72 / 63 / 42), desktop suite green (700, 1 harness failure re-run green) | `artifacts/epic_4a/E4a.MC_cycle_receipt.md` (dual audit run after the commit: no `src`, `crates` or `apps` path in this diff, all five checks print `OK_*`) |
+| E7.2 | 2026-10-07 | Sonnet 5.5 | the `docs(sd37,e7.2)` commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.2_cycle_receipt.md`) | complete | Aldric unchanged (`1d830682…a569` = E1.4); Elowen unchanged (`8d1a711c…00f2` = E1.4); SF seeds: no source change, covered by desktop 700 green, not hashed | `artifacts/epic_7/E7.2_cycle_receipt.md` |
 
 ## Decisions taken on safe defaults
 
