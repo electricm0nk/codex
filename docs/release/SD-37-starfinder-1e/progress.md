@@ -35,8 +35,9 @@ it (`workflow-instruction.md §5`).
 | E4a | complete | 6 of 6 (E4a.1–E4a.4, E4a.4a, E4a.MC) | serial after E7.1 (C0.2); E4a.MC receipt `artifacts/epic_4a/E4a.MC_cycle_receipt.md` (E7.3 corrected this row from "in progress, 4 of 6": `awk -F'\|' '$2 ~ /^ E4a/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 6) |
 | E7.3 | complete | 1 of 1 | `artifacts/epic_7/E7.3_cycle_receipt.md`; FSR-C4 revisit met → operator decision (`forward-scope-register.md §3.1`) |
 | E7.4 | complete | 1 of 1 | `artifacts/epic_7/E7.4_cycle_receipt.md`; `docs/retro/sd37-retrospective.md` |
-| E7.5–E7.9 | waiting | 0 of 5 | |
-| **Total** | | **52 of 57** | command below the table (E7.4 re-ran it after its own row: 52 complete of 57 rows) |
+| E7.5 | complete | 1 of 1 | `artifacts/epic_7/E7.5_cycle_receipt.md`; SD-j safe default applied (worktree/branch left untouched); CARGO_TARGET_DIR deleted |
+| E7.6–E7.9 | waiting | 0 of 4 | |
+| **Total** | | **53 of 57** | command below the table (E7.5 re-ran it after its own row: 53 complete of 57 rows) |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -193,6 +194,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E7.2 | 2026-10-07 | Sonnet 5.5 | the `docs(sd37,e7.2)` commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.2_cycle_receipt.md`) | complete | Aldric unchanged (`1d830682…a569` = E1.4); Elowen unchanged (`8d1a711c…00f2` = E1.4); SF seeds: no source change, covered by desktop 700 green, not hashed | `artifacts/epic_7/E7.2_cycle_receipt.md` |
 | E7.3 | 2026-10-07 | Opus 5.5 | the `docs(sd37,e7.3)` commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.3_cycle_receipt.md`) | complete | all six unchanged (no source change; nothing rendered; last renders = E7.2) | `artifacts/epic_7/E7.3_cycle_receipt.md`: scan prints nothing; DEF-1 clean; FSR-C4 met (31 SF `(kind, slug)` pairs in 2 books, 1 with a differing value) → operator decision, not a gate |
 | E7.4 | 2026-10-07 | Sonnet 5.5 | the `docs(sd37,e7.4)` commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.4_cycle_receipt.md`) | complete | all six unchanged (docs only; nothing rendered; last renders = E7.2) | `artifacts/epic_7/E7.4_cycle_receipt.md`: `docs/retro/sd37-retrospective.md` written and cited from `references/README.md`; Run handle table filled with the 5 workflow run ids |
+| E7.5 | 2026-10-07 | Haiku 4.5 | (to be filled) | complete | all six unchanged (no source change; nothing rendered; last renders = E7.2) | `artifacts/epic_7/E7.5_cycle_receipt.md`: worktree sweep; codex-sd37-c0-1 and sd37/c0-1 branch left per SD-j safe default; CARGO_TARGET_DIR sd37-codex-sd37 deleted |
 
 ## Decisions taken on safe defaults
 
