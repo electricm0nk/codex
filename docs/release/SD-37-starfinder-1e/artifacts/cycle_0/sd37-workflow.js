@@ -36,6 +36,7 @@ const RESULT = {
     ruling_needed: { type: 'string', description: 'blocked-escalated only: the exact operator ruling, write scope or precondition' },
     owned_by: { type: 'string', description: 'declined only: the card id whose row owns the file or item, e.g. E4.2; empty if none' },
     usage_limit_hit: { type: 'boolean', description: 'true if a usage-limit or quota error stopped you' },
+    discovered: { type: 'string', description: 'card ids you ADDED to kanban.md this cycle (DISCOVERED), comma-separated, e.g. "E4a.4a"; empty if none' },
   },
   required: ['status', 'summary'],
 }
@@ -65,6 +66,7 @@ const CORE = [
   '- Emit scripts/retro.py events at the moment they happen (correction needs --verified-by).',
   '- Closing commit: the receipt (§7 schema), your kanban.md row, and one progress.md cycle-log row, in one commit. After it, unfiltered `git status --porcelain` prints nothing. Then the dual audit (§6 step 4), then push with the §5 protocol. Commit and push even for a partial result.',
   '- Copy every log your receipt cites into ' + PKG + '/artifacts/ before you return.',
+  '- A DISCOVERED gap that your card cannot close becomes a new kanban.md row (id <your-epic>.<n>a, tier, status ready, Depends on, a criterion with a command that can fail) AND a criterion row in epic-breakdown.md\'s table for that epic, AND the row-count pin (epic-breakdown.md §Epic E7 E7.3 and workflow-instruction.md §11) raised by one. Name every added id in your structured return field `discovered`. The script then runs it next, before the epic\'s merge check.',
 ].join('\n')
 
 const slug = (id) => id.toLowerCase().replace(/[^a-z0-9]+/g, '-')
@@ -176,7 +178,8 @@ const MAIN = [
   card('E4a.2', 'sonnet', P.E4a, 'Re-point all 252 importers (one dispatch)'),
   card('E4a.3', 'sonnet', P.E4a, '.lst citation burn-down (re-derive SD-36 D6 status first; target 0)'),
   card('E4a.4', 'opus', P.E4a, 'PF parity + Rust table removal'),
-  card('E4a.MC', 'opus', P.E4a, 'E4a adversarial merge check', MC),
+  card('E4a.4a', 'opus', P.E4a, 'Six table generators write the data package, not compiled source (discovered by E4a.4)', 'New card, adopted 2026-10-07 (kanban.md row E4a.4a; epic-breakdown.md E4a table; row pin now 57). Read the E4a.4 receipt and the E4a.MC attempt-1 receipt first (its findings F1 and F2 may be yours to close if they sit in generator output). Port each of the six generators to write data/rules_tables/<id>.json; prove each by a re-run against the pinned oracle that leaves the package byte-identical; the generator grep in your criterion row must print 0.'),
+  card('E4a.MC', 'opus', P.E4a, 'E4a adversarial merge check', MC + ' Two earlier attempts exist (partial, then declined on E4a.4a). Re-run everything on the current origin/tranche/17; close F1/F2 from attempt 1 or name them as partial.'),
   card('E7.2', 'sonnet', P.E7, 'Widest-scope verify (root workspace + apps/desktop/src-tauri), baselines', 'ONE full pass. Check `df -h /` first (about 24 G needed). Attribute every `test result: FAILED` line to its `Running` line. A result with green=false and an empty failing list means NOT FINISHED: keep waiting. If a suite is red, return partial and name each failing suite; do not excuse any as environmental.'),
   card('E7.3', 'opus', P.E7, 'Final-acceptance scan (stop if short)', 'Run the fenced scan in workflow-instruction.md §11 step 1 and every FSR revisit check, including DEF-1. If ANY card is short, return partial and name each one with the command output. Then the run stops with no retrospective, no sweep and no PR. That is a correct outcome; do not close a short card yourself.'),
   card('E7.4', 'sonnet', P.E7, 'Retrospective written + cited', 'Also copy the Workflow run id from ~/.claude/projects/-home-ubuntu-workspace-repos-codex/memory/sd37-launch-state.md into the progress.md "Run handle" table.'),
@@ -190,7 +193,7 @@ const MAIN = [
 
 const results = {}
 const handoffs = {}
-const KNOWN = new Set(MAIN.map((c) => c.id).concat(['E6.5a'],['C0.1', 'C1', 'E0.1', 'E0.2', 'E0.3', 'E0.4', 'E1.1', 'E1.2', 'E1.3', 'E1.4', 'E1.MC']))
+const KNOWN = new Set(MAIN.map((c) => c.id).concat(['E6.5a', 'E4a.4a'],['C0.1', 'C1', 'E0.1', 'E0.2', 'E0.3', 'E0.4', 'E1.1', 'E1.2', 'E1.3', 'E1.4', 'E1.MC']))
 const passes = (r) => r && (r.status === 'complete' || r.status === 'handed-off')
 
 async function runCard(c) {
@@ -219,13 +222,24 @@ async function runCard(c) {
   return prev
 }
 
-// Runs cards in order; stops this chain at the first card that does not pass.
+// Runs cards in order; stops this chain at the first card that does not pass. A card that reports
+// `discovered` ids gets those cards queued NEXT (before this epic's merge check): a discovered
+// card is a dependency the authored list did not know about (control for the twice-fired
+// `dispatch-before-discovered-dependency` incident).
 async function chain(cards) {
-  for (const c of cards) {
+  const queue = cards.slice()
+  while (queue.length) {
+    const c = queue.shift()
     const r = await runCard(c)
     const key = results[c.id] ? c.id + ' (2)' : c.id
     results[key] = r
     log(c.id + ' → ' + r.status + (r.sha ? ' @' + r.sha.slice(0, 10) : ''))
+    const found = (r.discovered || '').split(',').map((x) => x.trim()).filter((x) => x && !results[x] && !queue.some((q) => q.id === x))
+    for (const id of found.reverse()) {
+      KNOWN.add(id)
+      queue.unshift(card(id, 'opus', c.phase, 'Discovered by ' + c.id + ' (read its kanban.md row and epic-breakdown.md criterion row)', 'This card was added to kanban.md by card ' + c.id + ' during this run. Read that card\'s receipt and the row it wrote for you; the criterion row in epic-breakdown.md is your acceptance. If the discovering card did not write the epic-breakdown.md row or raise the row-count pin, do that first.'))
+      log('queued discovered card ' + id + ' before ' + (queue[1] ? queue[1].id : 'end'))
+    }
     if (!passes(r)) return { ok: false, card: c.id, status: r.status, detail: r.ruling_needed || r.remainder || r.summary }
   }
   return { ok: true }
@@ -238,7 +252,7 @@ const report = (stopped) => ({ stopped: stopped, results: results, handoffs: han
 // prefix; the E0/E1 lanes interleaved differently on resume, so the cache missed and complete
 // cards were re-dispatched (E0.4, E1.4, E0.2 declined them). Trim instead of resume: C, E0 and
 // E1 are skipped here. To restart later, move START to the first non-complete kanban row.
-const START = 'E6.5a'
+const START = 'E4a.4a'
 const REMAINING = MAIN.slice(MAIN.findIndex((c) => c.id === START))
 log('starting at ' + START + ': ' + REMAINING.length + ' cards remain of ' + MAIN.length)
 
