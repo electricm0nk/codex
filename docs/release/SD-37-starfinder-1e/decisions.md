@@ -748,3 +748,28 @@ Applied to E5.4's three requests:
 
 **Revisit if the operator disagrees:** delete this section; the fences in `workflow-instruction.md
 §3` return to their literal reading. Every edit made under it is named in a receipt.
+
+## §22 — E7.8 graphify ruling (orchestrator, operator-away default, 2026-10-08)
+
+E7.8 asked which checkout owns `graphify-out/` (gitignored; the 648,328-node semantic graph is
+only in `/home/ubuntu/workspace/repos/codex`, 2.6 G, `du -sh`; the `tranche/17` worktree has none).
+Ruling: option (2), a semantic update over the final tree — run **in the worktree on a copy**.
+
+1. The main checkout is not modified. (The orchestrator's attempts to detach it at
+   `origin/tranche/17` were refused by the harness's safety classifier as destructive; the
+   checkout keeps `tranche/16` and its own copy of 8 derived retro lines, now also folded into
+   `tranche/17` as 31cabf82f7.)
+2. E7.8 copies `/home/ubuntu/workspace/repos/codex/graphify-out/` into
+   `/home/ubuntu/workspace/worktrees/codex-sd37/graphify-out/` (`cp -a`; the source is read only),
+   verifies the copy's node count equals the source's, then runs the §11 step-6 update in the
+   worktree with HEAD = `origin/tranche/17`. Never a force flag. AST-only rebuild (option 3) is
+   rejected (memory `graphify-force-update-replaces-semantic-graph`).
+3. Clean-tree precondition for this card: unfiltered `git status --porcelain` in the worktree
+   prints nothing (`graphify-out/` is gitignored, so the copy does not show).
+4. The updated graph stays in the worktree. **Operator action on return:** promote it to the main
+   checkout (`rsync -a --delete worktrees/codex-sd37/graphify-out/ repos/codex/graphify-out/`)
+   after confirming its node count ≥ the old graph's, or re-run the update there. Listed under
+   `progress.md ## For the operator`.
+
+**Revisit if the operator disagrees:** delete the worktree copy; the main checkout's graph is
+untouched.
