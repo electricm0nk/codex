@@ -1,8 +1,8 @@
 //! v0.6: APG and ACG feat catalogs.
 //!
 //! Before this cycle the engine's only feat catalog was CRB's 185 records
-//! (`rules_tables::crb::feats::feat_tables()`), and
-//! `rules_tables::{apg,acg}` carried no feat table at all — so a player
+//! (`rules_catalog::crb::feats::feat_tables()`), and
+//! `rules_catalog::{apg,acg}` carried no feat table at all — so a player
 //! building an APG or ACG class could not take a single feat from that
 //! class's own book. This test is the structural proof for the two new
 //! catalogs, mirroring `sd19_feat_catalog.rs`'s pattern for CRB: real
@@ -24,11 +24,11 @@
 use std::path::PathBuf;
 
 use codex_ingest::pcgen_import::feat_prereq_tokens::hand_authored_tokens_for_unique_key;
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::acg::feats as acg_feats;
-use codex::rules_core::rules_tables::apg::feats as apg_feats;
-use codex::rules_core::rules_tables::crb::feats::{FeatCategory, FeatEffectBonus};
-use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::acg::feats as acg_feats;
+use codex::rules_core::rules_catalog::apg::feats as apg_feats;
+use codex::rules_core::rules_catalog::crb::feats::{FeatCategory, FeatEffectBonus};
+use codex::rules_core::rules_catalog::feats_all::all_feat_tables;
 
 #[test]
 fn apg_feat_catalog_has_the_real_per_category_corpus_counts() {
@@ -239,7 +239,7 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
     // at all while the aggregate was CRB/APG/ACG. Pathfinder Unchained
     // introduces exactly one — `Endurance`, which it re-lists from the
     // Core Rulebook under its Wound Threshold rules rather than defining
-    // anew (see `rules_tables::feats_all`'s own "Key collisions" section
+    // anew (see `rules_catalog::feats_all`'s own "Key collisions" section
     // for the two corpus rows). This test pins that set exactly, so a
     // genuinely different feat arriving under an existing key fails here
     // instead of shadowing one silently.
@@ -279,7 +279,7 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
     // `SD31-E6-F8-002` widened this further with three more pairs, and NONE
     // is a reprint -- each is two genuinely DIFFERENT feats sharing a
     // display name, checked against both corpus records' own `DESC:`/
-    // `BENEFIT:` text (`rules_tables::feats_all`'s own
+    // `BENEFIT:` text (`rules_catalog::feats_all`'s own
     // `cross_book_key_collisions_are_exactly_the_known_set` carries the full
     // per-pair citation; not duplicated here):
     //   `Returning Throw` (Upsi marksman feat vs Isr goblinoid teamwork feat)
@@ -387,7 +387,7 @@ fn crb_records_gained_their_real_prerequisite_tokens() {
     // `PRE*`-family tokens on the table store as the blocker for a real
     // per-feat prerequisite chain, citing three CRB records by name. Those
     // tokens are now transcribed verbatim.
-    use codex::rules_core::rules_tables::crb::feats::feat_tables;
+    use codex::rules_core::rules_catalog::crb::feats::feat_tables;
     let all = feat_tables();
     let find = |key: &str| all.iter().find(|f| f.key == key).expect(key);
 
@@ -510,7 +510,7 @@ fn apg_and_acg_catalogs_match_the_live_corpus() {
         return;
     };
 
-    let cases: [(&str, &[codex::rules_core::rules_tables::crb::feats::FeatTableEntry], usize, RuleSetId); 2] = [
+    let cases: [(&str, &[codex::rules_core::rules_catalog::crb::feats::FeatTableEntry], usize, RuleSetId); 2] = [
         (
             "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
             apg_feats::feat_tables(),

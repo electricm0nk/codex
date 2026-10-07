@@ -63,18 +63,18 @@ pub(crate) enum BabProgression {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(test, derive(schemars::JsonSchema))]
 pub(crate) struct GoodSaves {
-    fortitude: bool,
-    reflex: bool,
-    will: bool,
+    pub(crate) fortitude: bool,
+    pub(crate) reflex: bool,
+    pub(crate) will: bool,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]
 #[cfg_attr(test, derive(schemars::JsonSchema))]
 pub(crate) struct ClassMeta {
-    class_id: ClassId,
-    max_supported_level: u8,
-    bab: BabProgression,
-    good_saves: GoodSaves,
+    pub(crate) class_id: ClassId,
+    pub(crate) max_supported_level: u8,
+    pub(crate) bab: BabProgression,
+    pub(crate) good_saves: GoodSaves,
     /// Hit die size (SD-13/v0.6 alpha swarm durability calc), from the same
     /// `cr_classes.lst` `HD:` token every other field in this table already
     /// cites -- e.g. `CLASS:Fighter HD:10` at line 139 (the same line this
@@ -85,7 +85,7 @@ pub(crate) struct ClassMeta {
     /// 2026-07-29 ruling (risks item 91). See the comment block on the Monk
     /// row below before changing it -- it is a documented corpus-defect
     /// override, not an uncorrected drift.
-    hit_die: u8,
+    pub(crate) hit_die: u8,
 }
 
 /// Mirrors `MAX_SUPPORTED_<CLASS>_LEVEL` in `pilot_compute.rs` as of the

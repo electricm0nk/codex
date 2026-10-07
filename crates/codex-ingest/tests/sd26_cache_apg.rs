@@ -8,7 +8,7 @@
 //!
 //! Real, measured ceilings this test asserts against (`decisions.md
 //! §11.4`, re-verified this cycle directly from the compiled
-//! `rules_tables::apg` module before generation — see this cycle's
+//! `rules_catalog::apg` module before generation — see this cycle's
 //! receipt): equipment `description` 331/338 (97.9%); spell `full_text`
 //! 296/297 (99.7%); spell `description` 297/297.
 //!
@@ -303,7 +303,7 @@ fn spell_cache_correctly_attributes_the_three_provenance_kinds_beyond_plain_lst_
     // this gap). Regenerating flattens every one of these 16 to `lst_token`,
     // which is an honest reflection of what the generator can currently
     // prove, not a data loss: the record's `data` (description/school/level)
-    // comes from the compiled `rules_tables::apg::spell_list` table
+    // comes from the compiled `rules_catalog::apg::spell_list` table
     // regardless of citation kind, so no player-facing value is affected --
     // only the citation's *kind* label, which no longer over-claims a
     // `.COPY=`-inheritance detection the generator doesn't perform.
@@ -381,7 +381,7 @@ fn equipment_cache_has_all_338_records_with_real_description_ceiling() {
 ///   provenance of the FIELD each SD-25 intake cycle was closing, and for APG
 ///   equipment that field was the description; the record's own identity,
 ///   `cost_gp` and `weight` were always corpus-derived
-///   (`rules_tables::apg::equipment_data`'s module doc comment states the
+///   (`rules_catalog::apg::equipment_data`'s module doc comment states the
 ///   `COST:`/`WT:`/`OUTPUTNAME:`/`KEY:` token sourcing directly).
 /// * **post-`SD31-E6-F5-005`** — `source` is the record's own real corpus row
 ///   (`lst_token`, with the sha256-pinned path/line it was always derivable

@@ -2,7 +2,7 @@
 //!
 //! Writes `data/corpus/advanced_players_guide/{class,spell,equipment}/*.json`
 //! by DUMPING the current, already-completed state of
-//! `rules_core::rules_tables::apg` (`ApgClassId::ALL` + each class's
+//! `rules_core::rules_catalog::apg` (`ApgClassId::ALL` + each class's
 //! `class_table()`, `spell_list::SPELL_LIST`, `equipment_tables::EQUIPMENT_TABLE`)
 //! -- per `decisions.md §11.3`, this module never re-parses raw PCGen LST
 //! to derive a field's *value*. Every value written here is read straight
@@ -64,8 +64,8 @@ use serde::Serialize;
 use crate::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use codex::rules_core::pi_screening;
-use codex::rules_core::rules_tables::apg::equipment_tables::EquipmentCategory;
-use codex::rules_core::rules_tables::apg::{self, ApgClassId};
+use codex::rules_core::rules_catalog::apg::equipment_tables::EquipmentCategory;
+use codex::rules_core::rules_catalog::apg::{self, ApgClassId};
 
 /// `wiring_class`'s corpus-wide book id for APG.
 const WIRING_CLASS_BOOK_ID: &str = "advanced_players_guide";
@@ -613,7 +613,7 @@ fn generate_spells(
     let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
     let mut wiring_lines = wiring_index.lines();
 
-    for entry in apg::spell_list::SPELL_LIST {
+    for entry in &apg::spell_list::SPELL_LIST {
         let source = spell_source(
             corpus_root,
             spell_file,
@@ -852,7 +852,7 @@ fn generate_equipment(
     let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
     let mut wiring_lines = wiring_index.lines();
 
-    for entry in apg::equipment_tables::EQUIPMENT_TABLE {
+    for entry in &apg::equipment_tables::EQUIPMENT_TABLE {
         let source = equipment_source(
             corpus_root,
             entry,

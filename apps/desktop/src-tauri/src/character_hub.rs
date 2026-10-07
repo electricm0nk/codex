@@ -1735,7 +1735,7 @@ const SECOND_SEED_CHARACTER_ID: &str = "00000000-0000-0000-0000-000000000002";
 const WIZARD_CLASS_ID_FOR_SEED: &str = "class:wizard";
 
 /// Fireball as the engine and the Add Spell picker name it: the key of the CRB spell-list
-/// row (`rules_tables::crb::spell_list::SPELL_LIST`, generated from `cr_spells.lst`), which is
+/// row (`rules_catalog::crb::spell_list::SPELL_LIST`, generated from `cr_spells.lst`), which is
 /// the label of the converted record [`FIREBALL_CONVERTED_RECORD_ID`]
 /// (`data/sheet_rules/core_rulebook/spell/fireball.json`, granted by
 /// `ClassSpellList { id: "wizard", spell_level: 3 }`). Pinned against both by
@@ -4819,7 +4819,7 @@ pub fn export_character(app: tauri::AppHandle, request: ExportCharacterRequest) 
 /// make one.
 ///
 /// A hand-maintained mirror of corpus facts is also how the identical table
-/// one layer down (`rules_tables::crb::race_tables`) silently drifted from
+/// one layer down (`rules_catalog::crb::race_tables`) silently drifted from
 /// the corpus on four races' ability modifiers: a +2 Con/Wis adjustment
 /// states two ability grants in one token and a transcription read only up
 /// to the comma. Deriving removes the class of defect rather than re-checking
@@ -11912,8 +11912,8 @@ mod starter_seed_tests {
     use super::*;
     use codex::rules_core::character_input::AcquisitionMode;
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
-    use codex::rules_core::rules_tables::class_spell_levels::class_spell_level;
-    use codex::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
+    use codex::rules_core::rules_catalog::class_spell_levels::class_spell_level;
+    use codex::rules_core::rules_catalog::crb::spell_list::SPELL_LIST;
 
     fn temp_app_data_dir(label: &str) -> PathBuf {
         let unique = std::time::SystemTime::now()

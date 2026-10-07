@@ -56,7 +56,7 @@
 //! corpus record genuinely has no `DESC:` token (so there is nothing to
 //! inherit) all correctly stay `None`.
 
-use codex::rules_core::rules_tables::crb::{equipment_tables, spell_list};
+use codex::rules_core::rules_catalog::crb::{equipment_tables, spell_list};
 
 /// CRB equipment record coverage is unchanged (still the full 2977/2977
 /// this cycle's own audit re-confirmed) -- criterion 6.2 for CRB

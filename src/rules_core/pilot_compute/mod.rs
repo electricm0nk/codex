@@ -120,20 +120,20 @@ use super::character_input::{
 };
 use super::description_completion::{feat_description_completion, ZeroMagnitudeResolution};
 use super::feat_prereqs::metamagic::{evaluate_metamagic_feat_prerequisites, resolve_metamagic_feat_effect};
-use super::rules_tables::acg::{self, AcgClassId};
-use super::rules_tables::acg::shaman_spell_list;
-use super::rules_tables::acg::hunter_spell_list;
-use super::rules_tables::advanced_race_guide;
-use super::rules_tables::apg::{self, ApgClassId};
-use super::rules_tables::class_spell_levels;
-use super::rules_tables::apg::alchemist_spell_list;
-use super::rules_tables::apg::inquisitor_spell_list;
-use super::rules_tables::apg::witch_spell_list;
-use super::rules_tables::pathfinder_unchained::class_chassis::{self as pu_class_chassis, PuClassId};
-use super::rules_tables::pathfinder_unchained::{
+use super::rules_catalog::acg::{self, AcgClassId};
+use super::rules_catalog::acg::shaman_spell_list;
+use super::rules_catalog::acg::hunter_spell_list;
+use super::rules_catalog::advanced_race_guide;
+use super::rules_catalog::apg::{self, ApgClassId};
+use super::rules_catalog::class_spell_levels;
+use super::rules_catalog::apg::alchemist_spell_list;
+use super::rules_catalog::apg::inquisitor_spell_list;
+use super::rules_catalog::apg::witch_spell_list;
+use super::rules_catalog::pathfinder_unchained::class_chassis::{self as pu_class_chassis, PuClassId};
+use super::rules_catalog::pathfinder_unchained::{
     barbarian_features, monk_features, rogue_features, summoner_features,
 };
-use super::rules_tables::ultimate_combat::{self as uc, UcClassId};
+use super::rules_catalog::ultimate_combat::{self as uc, UcClassId};
 use crate::rules_core::archetype_resolver;
 use crate::rules_core::durability::FamiliarSpecies;
 use crate::rules_core::feat_identity;
@@ -143,16 +143,16 @@ use crate::rules_core::feat_identity;
 use crate::rules_core::pilot_compute::resolved_prose::{resolved_description, DisplayValues};
 use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::size::SizeCategory;
-use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
-use super::rules_tables::crb::paladin_spell_list;
-use super::rules_tables::crb::bard_spell_list;
-use super::rules_tables::crb::cleric_spell_list;
-use super::rules_tables::crb::druid_spell_list;
-use super::rules_tables::crb::ranger_spell_list;
-use super::rules_tables::crb::sorcerer_spell_list;
-use super::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
-use super::rules_tables::crb::weapon_tables;
-use super::rules_tables::RuleSetId;
+use super::rules_catalog::crb::class_tables::{ClassId, class_tables, good_saves_for};
+use super::rules_catalog::crb::paladin_spell_list;
+use super::rules_catalog::crb::bard_spell_list;
+use super::rules_catalog::crb::cleric_spell_list;
+use super::rules_catalog::crb::druid_spell_list;
+use super::rules_catalog::crb::ranger_spell_list;
+use super::rules_catalog::crb::sorcerer_spell_list;
+use super::rules_catalog::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
+use super::rules_catalog::crb::weapon_tables;
+use super::rules_catalog::RuleSetId;
 
 // SD31-E4-F1-005: per-class modules split out of this file, a pure code-move
 // (unchanged behaviour -- see the split's own commit message and receipt).

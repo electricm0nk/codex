@@ -224,8 +224,8 @@ fn the_one_with_no_corpus_class_mapping_is_refused_as_unknown_not_invented() {
 /// `cargo run --bin ingest_class_spell_levels_arg`, which prints it.
 #[test]
 fn the_gate_now_covers_every_ingested_book_and_the_census_is_pinned() {
-    use codex::rules_core::rules_tables::class_spell_levels;
-    use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb};
+    use codex::rules_core::rules_catalog::class_spell_levels;
+    use codex::rules_core::rules_catalog::{acg, advanced_race_guide, apg, crb};
 
     let books: Vec<(&str, Vec<&str>)> = vec![
         ("CRB", crb::spell_list::SPELL_LIST.iter().map(|e| e.key).collect()),

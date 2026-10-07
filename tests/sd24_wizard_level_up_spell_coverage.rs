@@ -1,7 +1,7 @@
 //! SD-24 Epic 4 (Per-class audit, criterion 4.1): Wizard coverage audit.
 //!
 //! `src/rules_core/level_up/wizard.rs` composes two sources into a
-//! `LevelUpPlan`: `rules_tables::crb::class_tables::class_tables()` (the
+//! `LevelUpPlan`: `rules_catalog::crb::class_tables::class_tables()` (the
 //! class-generic BAB/save pillars) and `pilot_compute::
 //! compute_pilot_base_chassis`'s Wizard-specific explanations, filtered
 //! to ids equal to `class_chassis.spell_baseline.wizard` or prefixed

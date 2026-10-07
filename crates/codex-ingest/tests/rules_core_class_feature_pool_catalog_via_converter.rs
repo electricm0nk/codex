@@ -59,7 +59,7 @@ mod tests {
     /// the stated condition").
     #[test]
     fn weapon_proficiency_grant_class_table_matches_are_exact() {
-        use codex::rules_core::rules_tables::crb::weapon_tables;
+        use codex::rules_core::rules_catalog::crb::weapon_tables;
         let dir = repo_root().join("data/corpus/core_rulebook/class_feature/weapon_proficiencies");
         for (key, class_id) in WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES {
             let file_stub = key
@@ -109,7 +109,7 @@ mod tests {
     /// "cleared by revisiting the stated condition").
     #[test]
     fn weapon_and_armor_proficiency_grant_class_table_matches_are_exact() {
-        use codex::rules_core::rules_tables::crb::weapon_tables;
+        use codex::rules_core::rules_catalog::crb::weapon_tables;
         let dir = repo_root().join("data/corpus/core_rulebook/class_feature/weapon_and_armor_proficiency");
         for (key, class_id) in WEAPON_AND_ARMOR_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES {
             let class_name = key.rsplit(' ').next().expect("key has a class-name suffix");
@@ -337,8 +337,8 @@ mod tests {
     /// "cleared by revisiting the stated condition").
     #[test]
     fn wizard_school_spell_list_key_owner_matches_are_exact() {
-        use codex::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
-        use codex::rules_core::rules_tables::crb::wizard_spell_list::wizard_school_zero_level_spells;
+        use codex::rules_core::rules_catalog::crb::spell_list::Pf1SchoolId;
+        use codex::rules_core::rules_catalog::crb::wizard_spell_list::wizard_school_zero_level_spells;
         let dir = repo_root().join("data/corpus/core_rulebook/class_feature");
         let schools: &[(&str, &str, Pf1SchoolId)] = &[
             ("Abjuration Wizard Spells", "abjuration_wizard_spells", Pf1SchoolId::Abjuration),

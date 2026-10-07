@@ -29,7 +29,7 @@
 //! Per `adaptive-squishing-mccarthy.md`'s "Feat resolution" design
 //! decision: `CharacterInput.chosen.selected_feats: Vec<String>` has no
 //! category field, so the wiring resolves each entry against
-//! `rules_tables::crb::feats::feat_tables()` by matching
+//! `rules_catalog::crb::feats::feat_tables()` by matching
 //! `entry.key == feat_id || entry.name == feat_id`. An unmatched id is
 //! honestly skipped, not fabricated -- same discipline the feat catalog's
 //! own generator already uses (see `feats.rs`'s module doc comment on the
@@ -49,7 +49,7 @@ use codex::rules_core::feat_prereqs::{
     compute_feat_effects, evaluate_feat_prerequisites, FeatKey,
 };
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
-use codex::rules_core::rules_tables::crb::feats::{feat_tables, FeatCategory};
+use codex::rules_core::rules_catalog::crb::feats::{feat_tables, FeatCategory};
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
 fn empty_corpus(name: &str) -> SourcePackageContent<'static> {

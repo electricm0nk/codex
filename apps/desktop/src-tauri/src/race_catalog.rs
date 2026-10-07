@@ -4,7 +4,7 @@
 //! `codex::rules_core::race_resolver`.
 //!
 //! **This adapter served the 7 hardcoded CRB races alone until now.** It
-//! imported `rules_tables::crb::race_tables::race_traits()` — a 49-row
+//! imported `rules_catalog::crb::race_tables::race_traits()` — a 49-row
 //! hand-transcribed table — so the 11 Bestiary 1 races that SD-27 ingested
 //! (`aasimar drow duergar goblin hobgoblin kobold merfolk orc svirfneblin
 //! tengu tiefling`) reached no user-facing surface at all. This module now
@@ -421,7 +421,7 @@ pub fn list_race_catalog() -> RaceCatalogResponse {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::rules_core::rules_tables::crb::race_tables::RaceId;
+    use codex::rules_core::rules_catalog::crb::race_tables::RaceId;
     use std::collections::{BTreeMap, BTreeSet};
 
     /// Every book this catalog declares must actually resolve under the real

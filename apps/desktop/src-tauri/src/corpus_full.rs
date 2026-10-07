@@ -126,7 +126,7 @@ mod tests {
     #[test]
     fn a_real_item_from_a_non_crb_book_resolves_with_real_mechanical_data() {
         use codex::rules_core::equipment_resolver::equipment_id_resolve;
-        use codex::rules_core::rules_tables::RuleSetId;
+        use codex::rules_core::rules_catalog::RuleSetId;
 
         let corpus = full_corpus_bundle();
         let (record, _) = equipment_id_resolve("Dogslicer", RuleSetId::Crb, corpus)

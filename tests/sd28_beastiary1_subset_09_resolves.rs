@@ -15,8 +15,8 @@
 //! **Ogre** (line 316), **Pegasus** (line 323), **Rust Monster** (line
 //! 341), **Shadow** (line 357).
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::beastiary1::{MonsterId, NaturalAttack, monster_key_resolve, monster_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::{MonsterId, NaturalAttack, monster_key_resolve, monster_resolve};
 
 #[test]
 fn lion_resolves_via_ruleset_bestiary1() {

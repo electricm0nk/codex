@@ -11,7 +11,7 @@
 //!
 //! Every prior `cache_gen::*` module (`acg`, `apg`, `beastiary1`,
 //! `ultimate_equipment`) dumps an already-completed, hand-built
-//! `rules_tables::<book>` Rust module that carries every record's real
+//! `rules_catalog::<book>` Rust module that carries every record's real
 //! field values -- `§11.3`'s "dump from the completed Rust module, do not
 //! re-parse raw LST from scratch" applies to exactly that shape. **No such
 //! module exists for `class_feature`.** `grep -rl
@@ -2707,11 +2707,11 @@ mod tests {
     /// mis-resolving `data.class`.
     #[test]
     fn dispatched_class_title_names_len_matches_the_real_34_class_roster() {
-        use codex::rules_core::rules_tables::acg::AcgClassId;
-        use codex::rules_core::rules_tables::apg::ApgClassId;
-        use codex::rules_core::rules_tables::crb::class_tables::ClassId;
-        use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
-        use codex::rules_core::rules_tables::ultimate_combat::UcClassId;
+        use codex::rules_core::rules_catalog::acg::AcgClassId;
+        use codex::rules_core::rules_catalog::apg::ApgClassId;
+        use codex::rules_core::rules_catalog::crb::class_tables::ClassId;
+        use codex::rules_core::rules_catalog::pathfinder_unchained::class_chassis::PuClassId;
+        use codex::rules_core::rules_catalog::ultimate_combat::UcClassId;
         let real_total =
             ClassId::ALL.len() + ApgClassId::ALL.len() + AcgClassId::ALL.len() + UcClassId::ALL.len() + PuClassId::ALL.len();
         assert_eq!(DISPATCHED_CLASS_TITLE_NAMES.len(), real_total);

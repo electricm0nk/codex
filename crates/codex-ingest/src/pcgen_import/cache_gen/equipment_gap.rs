@@ -5,7 +5,7 @@
 //! `data/corpus/<book>/equipment/equipmods/*.json` for `Equipmods`-
 //! category rows, matching `cache_gen::ultimate_equipment`'s own nested
 //! layout) by DUMPING the current, already-completed state of
-//! `rules_core::rules_tables::equipment_gap_tables::equipment_gap_rows()`
+//! `rules_core::rules_catalog::equipment_gap_tables::equipment_gap_rows()`
 //! -- per `decisions.md §11.3`, this generator never re-parses raw PCGen
 //! LST to derive a field's *value*; every value written here is read
 //! straight from the compiled Rust module.
@@ -98,7 +98,7 @@ use serde::{Deserialize, Serialize};
 use crate::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use codex::rules_core::pi_screening::{self, DeclaredProductIdentity};
-use codex::rules_core::rules_tables::equipment_gap_tables;
+use codex::rules_core::rules_catalog::equipment_gap_tables;
 
 // ---------------------------------------------------------------------
 // Shape B schema (decisions.md §7) -- own local copy, per
@@ -1048,7 +1048,7 @@ mod tests {
     fn book_routing_includes_ue_gap_residue() {
         // `decisions.md §20`: `equipment_gap_tables::equipment_gap_rows()`
         // already computes 64 `"UE"` rows (the hand-authored
-        // `rules_tables::ultimate_equipment::equipment_tables` module's own
+        // `rules_catalog::ultimate_equipment::equipment_tables` module's own
         // real coverage gap, e.g. "Aklys"/"Belt of Foraging" -- present in
         // the real `.lst` content, absent from the hand-authored table) but
         // `generate()`'s `let Some(..) = book_routing(book) else { continue

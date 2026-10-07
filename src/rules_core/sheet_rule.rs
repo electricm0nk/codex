@@ -1501,7 +1501,7 @@ impl CharacterFacts {
         input: &crate::rules_core::character_input::CharacterInput,
         computation: &crate::rules_core::pilot_compute::PilotBaseChassisComputation,
     ) -> CharacterFacts {
-        use crate::rules_core::rules_tables::crb::race_tables::{race_id_from_token, race_size};
+        use crate::rules_core::rules_catalog::crb::race_tables::{race_id_from_token, race_size};
         let chosen = &input.chosen;
         let class_levels: Vec<(ClassId, i64)> =
             chosen.class_levels.iter().map(|c| (id_slug(&c.class_id), i64::from(c.level))).collect();

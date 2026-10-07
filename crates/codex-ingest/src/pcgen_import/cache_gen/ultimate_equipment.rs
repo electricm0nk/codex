@@ -3,7 +3,7 @@
 //!
 //! Writes `data/corpus/ultimate_equipment/equipment/*.json` by DUMPING the
 //! current, already-completed state of
-//! `rules_core::rules_tables::ultimate_equipment::equipment_tables`
+//! `rules_core::rules_catalog::ultimate_equipment::equipment_tables`
 //! (`equipment_tables()` + `equipmod_tables()`) -- per `decisions.md
 //! §11.3`, this generator never re-parses raw PCGen LST to derive a
 //! field's *value*; every value written here is read straight from the
@@ -60,8 +60,8 @@ use serde::Serialize;
 use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::pcgen_import::cache_gen::equipment_gap::{RenameInfo, resolve_name_or_rename};
 use codex::rules_core::pi_screening::{self, DeclaredProductIdentity};
-use codex::rules_core::rules_tables::ultimate_equipment as ue;
-use codex::rules_core::rules_tables::ultimate_equipment::equipment_tables::EquipmentCategory;
+use codex::rules_core::rules_catalog::ultimate_equipment as ue;
+use codex::rules_core::rules_catalog::ultimate_equipment::equipment_tables::EquipmentCategory;
 
 /// `wiring_class`'s corpus-wide book id for Ultimate Equipment.
 const WIRING_CLASS_BOOK_ID: &str = "ultimate_equipment";

@@ -1,6 +1,7 @@
 #[allow(unused_imports)]
 pub(crate) use super::*;
 use crate::rules_core::sheet_rule::Rat;
+use crate::rules_core::rules_catalog::COMPILED_MODULE_CITATION;
 
 // ---------------------------------------------------------------------------
 // SD-31 wave 27 -- prestige-class investigation (CRB shape), NOT a
@@ -176,7 +177,7 @@ pub(super) fn compute_generic_table_chassis(
         value: base_attack_bonus,
         detail: format!(
             "{class_id_str} level {level} base attack bonus from \
-             rules_tables::crb::class_tables::class_tables()'s row for this class: \
+             {COMPILED_MODULE_CITATION}::crb::class_tables::class_tables()'s row for this class: \
              {base_attack_bonus}"
         ),
     });
@@ -185,7 +186,7 @@ pub(super) fn compute_generic_table_chassis(
         value: base_saves.fortitude,
         detail: format!(
             "{class_id_str} level {level} base Fortitude save from \
-             rules_tables::crb::class_tables::class_tables()'s row for this class: {}",
+             {COMPILED_MODULE_CITATION}::crb::class_tables::class_tables()'s row for this class: {}",
             base_saves.fortitude
         ),
     });
@@ -194,7 +195,7 @@ pub(super) fn compute_generic_table_chassis(
         value: base_saves.reflex,
         detail: format!(
             "{class_id_str} level {level} base Reflex save from \
-             rules_tables::crb::class_tables::class_tables()'s row for this class: {}",
+             {COMPILED_MODULE_CITATION}::crb::class_tables::class_tables()'s row for this class: {}",
             base_saves.reflex
         ),
     });
@@ -203,7 +204,7 @@ pub(super) fn compute_generic_table_chassis(
         value: base_saves.will,
         detail: format!(
             "{class_id_str} level {level} base Will save from \
-             rules_tables::crb::class_tables::class_tables()'s row for this class: {}",
+             {COMPILED_MODULE_CITATION}::crb::class_tables::class_tables()'s row for this class: {}",
             base_saves.will
         ),
     });
@@ -213,7 +214,7 @@ pub(super) fn compute_generic_table_chassis(
 
 /// v0.6 alpha swarm, risks item 8 -- the class/multiclass breadth scoping
 /// plan's second slice: the same generic table-driven BAB/save pillar as
-/// `compute_generic_table_chassis`, sourced from `rules_tables::apg`'s own
+/// `compute_generic_table_chassis`, sourced from `rules_catalog::apg`'s own
 /// already-built `ApgClassId`/`class_chassis_resolve` (built in a past
 /// SD-22 cycle, deliberately left unwired -- see
 /// `class-multiclass-breadth-scoping.md`'s "central finding"). Deliberately
@@ -269,7 +270,7 @@ pub(super) fn compute_apg_class_chassis(
         value: base_attack_bonus,
         detail: format!(
             "{class_id_str} level {level} base attack bonus from \
-             rules_tables::apg::class_chassis_resolve's row for this class: {base_attack_bonus}"
+             {COMPILED_MODULE_CITATION}::apg::class_chassis_resolve's row for this class: {base_attack_bonus}"
         ),
     });
     explanations.push(ComputationExplanation {
@@ -277,7 +278,7 @@ pub(super) fn compute_apg_class_chassis(
         value: base_saves.fortitude,
         detail: format!(
             "{class_id_str} level {level} base Fortitude save from \
-             rules_tables::apg::class_chassis_resolve's row for this class: {}",
+             {COMPILED_MODULE_CITATION}::apg::class_chassis_resolve's row for this class: {}",
             base_saves.fortitude
         ),
     });
@@ -286,7 +287,7 @@ pub(super) fn compute_apg_class_chassis(
         value: base_saves.reflex,
         detail: format!(
             "{class_id_str} level {level} base Reflex save from \
-             rules_tables::apg::class_chassis_resolve's row for this class: {}",
+             {COMPILED_MODULE_CITATION}::apg::class_chassis_resolve's row for this class: {}",
             base_saves.reflex
         ),
     });
@@ -295,7 +296,7 @@ pub(super) fn compute_apg_class_chassis(
         value: base_saves.will,
         detail: format!(
             "{class_id_str} level {level} base Will save from \
-             rules_tables::apg::class_chassis_resolve's row for this class: {}",
+             {COMPILED_MODULE_CITATION}::apg::class_chassis_resolve's row for this class: {}",
             base_saves.will
         ),
     });
@@ -417,7 +418,7 @@ pub(super) fn compute_apg_class_chassis(
 /// CRB race table's own `Speed` trait row (`GAIT:WALK|N`) rather than
 /// re-transcribed here. `None` for an unrecognized race id.
 pub(super) fn base_land_speed_feet(race_id: &str) -> Option<i16> {
-    use crate::rules_core::rules_tables::crb::race_tables::{race_traits, RaceId};
+    use crate::rules_core::rules_catalog::crb::race_tables::{race_traits, RaceId};
     let race = match race_id {
         "race:human" => RaceId::Human,
         "race:dwarf" => RaceId::Dwarf,
@@ -528,8 +529,8 @@ pub(super) fn key_titlecase(key: &str) -> String {
 
 /// The ACG counterpart of `compute_apg_class_chassis` (v0.6 alpha swarm,
 /// risks item 8, fourth slice) -- identical shape, sourcing from
-/// `rules_tables::acg::class_chassis_resolve` instead of
-/// `rules_tables::apg::class_chassis_resolve`. Deliberately NOT registered
+/// `rules_catalog::acg::class_chassis_resolve` instead of
+/// `rules_catalog::apg::class_chassis_resolve`. Deliberately NOT registered
 /// with `table_class_id` for the same reason: only reachable from
 /// `compute_class_chassis`'s already-single-class-only section (a mix
 /// reaches it only through the class's isolated run, SD-36 F3b
@@ -568,7 +569,7 @@ pub(super) fn compute_acg_class_chassis(
         value: base_attack_bonus,
         detail: format!(
             "{class_id_str} level {level} base attack bonus from \
-             rules_tables::acg::class_chassis_resolve's row for this class: {base_attack_bonus}"
+             {COMPILED_MODULE_CITATION}::acg::class_chassis_resolve's row for this class: {base_attack_bonus}"
         ),
     });
     explanations.push(ComputationExplanation {
@@ -576,7 +577,7 @@ pub(super) fn compute_acg_class_chassis(
         value: base_saves.fortitude,
         detail: format!(
             "{class_id_str} level {level} base Fortitude save from \
-             rules_tables::acg::class_chassis_resolve's row for this class: {}",
+             {COMPILED_MODULE_CITATION}::acg::class_chassis_resolve's row for this class: {}",
             base_saves.fortitude
         ),
     });
@@ -585,7 +586,7 @@ pub(super) fn compute_acg_class_chassis(
         value: base_saves.reflex,
         detail: format!(
             "{class_id_str} level {level} base Reflex save from \
-             rules_tables::acg::class_chassis_resolve's row for this class: {}",
+             {COMPILED_MODULE_CITATION}::acg::class_chassis_resolve's row for this class: {}",
             base_saves.reflex
         ),
     });
@@ -594,7 +595,7 @@ pub(super) fn compute_acg_class_chassis(
         value: base_saves.will,
         detail: format!(
             "{class_id_str} level {level} base Will save from \
-             rules_tables::acg::class_chassis_resolve's row for this class: {}",
+             {COMPILED_MODULE_CITATION}::acg::class_chassis_resolve's row for this class: {}",
             base_saves.will
         ),
     });
@@ -892,7 +893,7 @@ pub(super) fn compute_class_chassis(
         // chassis magnitude -- base attack bonus and all three base saves,
         // computed from `untabled_base_class_chassis::resolve`'s
         // corpus-derived registry via the same
-        // `rules_tables::crb::class_tables` formulas the CRB table itself
+        // `rules_catalog::crb::class_tables` formulas the CRB table itself
         // uses. See `untabled_base_class_chassis`'s own doc comment for the
         // 18-vs-20 population correction and the re-derive command.
         let base_attack_bonus = row.base_attack_bonus;
@@ -1229,7 +1230,7 @@ fn push_prestige_entry_gate_diagnostic(
 /// `null` for `hit_die`, `bab` and all three save columns, i.e. the
 /// selection ability overrides no chassis field. The Unchained Monk is the
 /// one that does override (d10 / full BAB / poor Will). All of that lives
-/// in `rules_tables::pathfinder_unchained::class_chassis`, which owns the
+/// in `rules_catalog::pathfinder_unchained::class_chassis`, which owns the
 /// sourcing and pins it; this function only reads the row it returns.
 pub(super) fn compute_pu_class_chassis(
     class_id: PuClassId,
@@ -1265,7 +1266,7 @@ pub(super) fn compute_pu_class_chassis(
         value: base_attack_bonus,
         detail: format!(
             "{class_id_str} level {level} base attack bonus from \
-             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             {COMPILED_MODULE_CITATION}::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
              this class: {base_attack_bonus}"
         ),
     });
@@ -1274,7 +1275,7 @@ pub(super) fn compute_pu_class_chassis(
         value: base_saves.fortitude,
         detail: format!(
             "{class_id_str} level {level} base Fortitude save from \
-             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             {COMPILED_MODULE_CITATION}::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
              this class: {}",
             base_saves.fortitude
         ),
@@ -1284,7 +1285,7 @@ pub(super) fn compute_pu_class_chassis(
         value: base_saves.reflex,
         detail: format!(
             "{class_id_str} level {level} base Reflex save from \
-             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             {COMPILED_MODULE_CITATION}::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
              this class: {}",
             base_saves.reflex
         ),
@@ -1294,7 +1295,7 @@ pub(super) fn compute_pu_class_chassis(
         value: base_saves.will,
         detail: format!(
             "{class_id_str} level {level} base Will save from \
-             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             {COMPILED_MODULE_CITATION}::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
              this class: {}",
             base_saves.will
         ),
@@ -1849,7 +1850,7 @@ pub(super) fn push_untabled_base_class_feature_records(
 }
 
 /// Grounds the seven magnitude-bearing Antipaladin features
-/// (`rules_tables::apg::antipaladin_features`) — the first `untabled_base_
+/// (`rules_catalog::apg::antipaladin_features`) — the first `untabled_base_
 /// class_feature_roster` group given a real per-feature compute function
 /// rather than left "named, not attempted" (SD-32 card 11, T12).
 ///
@@ -1862,7 +1863,7 @@ pub(super) fn ground_antipaladin_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::apg::antipaladin_features as af;
+    use crate::rules_core::rules_catalog::apg::antipaladin_features as af;
     let cha = ability_modifiers.charisma;
 
     if let Some(uses) = af::touch_of_corruption_uses_per_day(level, cha) {
@@ -2029,7 +2030,7 @@ pub(super) fn ground_antipaladin_class_features(
 }
 
 /// Grounds Cryptic's six magnitude-bearing features
-/// (`rules_tables::ultimate_psionics::cryptic_features`) — SD-32 card 11
+/// (`rules_catalog::ultimate_psionics::cryptic_features`) — SD-32 card 11
 /// (T12), the second class attempted end-to-end after Antipaladin.
 pub(super) fn ground_cryptic_class_features(
     input: &CharacterInput,
@@ -2037,7 +2038,7 @@ pub(super) fn ground_cryptic_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_psionics::cryptic_features as cf;
+    use crate::rules_core::rules_catalog::ultimate_psionics::cryptic_features as cf;
     let int_mod = ability_modifiers.intelligence;
     let int_score = input.chosen.ability_scores.intelligence;
 
@@ -2132,7 +2133,7 @@ pub(super) fn ground_cryptic_class_features(
 }
 
 /// Grounds Dread's six magnitude-bearing features
-/// (`rules_tables::ultimate_psionics::dread_features`) — SD-32 card 11
+/// (`rules_catalog::ultimate_psionics::dread_features`) — SD-32 card 11
 /// (T12), the third class attempted end-to-end.
 pub(super) fn ground_dread_class_features(
     input: &CharacterInput,
@@ -2140,7 +2141,7 @@ pub(super) fn ground_dread_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_psionics::dread_features as df;
+    use crate::rules_core::rules_catalog::ultimate_psionics::dread_features as df;
     let cha = ability_modifiers.charisma;
     let cha_score = input.chosen.ability_scores.charisma;
 
@@ -2236,7 +2237,7 @@ pub(super) fn ground_dread_class_features(
 }
 
 /// Grounds Marksman's five magnitude-bearing features
-/// (`rules_tables::ultimate_psionics::marksman_features`) — SD-32 card 11
+/// (`rules_catalog::ultimate_psionics::marksman_features`) — SD-32 card 11
 /// (T12), the fourth class attempted end-to-end.
 pub(super) fn ground_marksman_class_features(
     input: &CharacterInput,
@@ -2244,7 +2245,7 @@ pub(super) fn ground_marksman_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_psionics::marksman_features as mf;
+    use crate::rules_core::rules_catalog::ultimate_psionics::marksman_features as mf;
     let dex = ability_modifiers.dexterity;
     let wis = ability_modifiers.wisdom;
     let wis_score = input.chosen.ability_scores.wisdom;
@@ -2339,7 +2340,7 @@ pub(super) fn ground_marksman_class_features(
 }
 
 /// Grounds Psychic Warrior's three magnitude-bearing features
-/// (`rules_tables::ultimate_psionics::psychic_warrior_features`) — SD-32
+/// (`rules_catalog::ultimate_psionics::psychic_warrior_features`) — SD-32
 /// card 11 (T12), the fifth class attempted end-to-end.
 pub(super) fn ground_psychic_warrior_class_features(
     input: &CharacterInput,
@@ -2347,7 +2348,7 @@ pub(super) fn ground_psychic_warrior_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_psionics::psychic_warrior_features as pwf;
+    use crate::rules_core::rules_catalog::ultimate_psionics::psychic_warrior_features as pwf;
     let wis = ability_modifiers.wisdom;
     let wis_score = input.chosen.ability_scores.wisdom;
 
@@ -2422,10 +2423,10 @@ max_power_level"
 }
 
 /// Grounds Soulknife's four magnitude-bearing features
-/// (`rules_tables::ultimate_psionics::soulknife_features`) — SD-32 card 11
+/// (`rules_catalog::ultimate_psionics::soulknife_features`) — SD-32 card 11
 /// (T12), the sixth class attempted end-to-end.
 pub(super) fn ground_soulknife_class_features(level: u8, explanations: &mut Vec<ComputationExplanation>) {
-    use crate::rules_core::rules_tables::ultimate_psionics::soulknife_features as skf;
+    use crate::rules_core::rules_catalog::ultimate_psionics::soulknife_features as skf;
 
     if let Some(lvl) = skf::form_mind_blade_level(level) {
         explanations.push(ComputationExplanation {
@@ -2470,14 +2471,14 @@ pub(super) fn ground_soulknife_class_features(level: u8, explanations: &mut Vec<
 }
 
 /// Grounds Aegis's seven magnitude-bearing features
-/// (`rules_tables::ultimate_psionics::aegis_features`) — SD-32 card 11
+/// (`rules_catalog::ultimate_psionics::aegis_features`) — SD-32 card 11
 /// (T12), cycle 3, the sixth class of `ultimate_psionics` attempted.
 pub(super) fn ground_aegis_class_features(
     level: u8,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_psionics::aegis_features as agf;
+    use crate::rules_core::rules_catalog::ultimate_psionics::aegis_features as agf;
     let int = ability_modifiers.intelligence;
 
     if let Some(hp) = agf::astral_repair_hp(level) {
@@ -2549,7 +2550,7 @@ pub(super) fn ground_aegis_class_features(
 }
 
 /// Grounds Tactician's six magnitude-bearing features
-/// (`rules_tables::ultimate_psionics::tactician_features`) — SD-32 card 11
+/// (`rules_catalog::ultimate_psionics::tactician_features`) — SD-32 card 11
 /// (T12), cycle 3, the seventh class of `ultimate_psionics` attempted.
 pub(super) fn ground_tactician_class_features(
     input: &CharacterInput,
@@ -2557,7 +2558,7 @@ pub(super) fn ground_tactician_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_psionics::tactician_features as tf;
+    use crate::rules_core::rules_catalog::ultimate_psionics::tactician_features as tf;
     let int = ability_modifiers.intelligence;
     let cha = ability_modifiers.charisma;
     let int_score = input.chosen.ability_scores.intelligence;
@@ -2662,7 +2663,7 @@ pub(super) fn ground_tactician_class_features(
 }
 
 /// Grounds Vitalist's six magnitude-bearing features
-/// (`rules_tables::ultimate_psionics::vitalist_features`) — SD-32 card 11
+/// (`rules_catalog::ultimate_psionics::vitalist_features`) — SD-32 card 11
 /// (T12), cycle 3, the eighth class of `ultimate_psionics` attempted.
 pub(super) fn ground_vitalist_class_features(
     input: &CharacterInput,
@@ -2670,7 +2671,7 @@ pub(super) fn ground_vitalist_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_psionics::vitalist_features as vf;
+    use crate::rules_core::rules_catalog::ultimate_psionics::vitalist_features as vf;
     let wis = ability_modifiers.wisdom;
     let wis_score = input.chosen.ability_scores.wisdom;
 
@@ -2772,7 +2773,7 @@ pub(super) fn ground_vitalist_class_features(
 }
 
 /// Grounds Wilder's five magnitude-bearing features
-/// (`rules_tables::ultimate_psionics::wilder_features`) — SD-32 card 11
+/// (`rules_catalog::ultimate_psionics::wilder_features`) — SD-32 card 11
 /// (T12), cycle 3, the ninth and last class of `ultimate_psionics`
 /// attempted, closing the whole source book.
 pub(super) fn ground_wilder_class_features(
@@ -2781,7 +2782,7 @@ pub(super) fn ground_wilder_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_psionics::wilder_features as wf;
+    use crate::rules_core::rules_catalog::ultimate_psionics::wilder_features as wf;
     let cha = ability_modifiers.charisma;
     let cha_score = input.chosen.ability_scores.charisma;
 
@@ -2868,7 +2869,7 @@ pub(super) fn ground_wilder_class_features(
 }
 
 /// Grounds Kineticist's six magnitude-bearing features
-/// (`rules_tables::occult_adventures::kineticist_features`) — SD-32 card 11
+/// (`rules_catalog::occult_adventures::kineticist_features`) — SD-32 card 11
 /// (T12), cycle 4, the first of six `occult_adventures` classes sharing
 /// `oa_abilities_class.lst`.
 pub(super) fn ground_kineticist_class_features(
@@ -2876,7 +2877,7 @@ pub(super) fn ground_kineticist_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::occult_adventures::kineticist_features as kf;
+    use crate::rules_core::rules_catalog::occult_adventures::kineticist_features as kf;
     let con = ability_modifiers.constitution;
 
     if let Some(v) = kf::burn_max_points(level, con) {
@@ -2936,7 +2937,7 @@ pub(super) fn ground_kineticist_class_features(
 }
 
 /// Grounds Medium's magnitude-bearing features
-/// (`rules_tables::occult_adventures::medium_features`) — SD-32 card 11
+/// (`rules_catalog::occult_adventures::medium_features`) — SD-32 card 11
 /// (T12), cycle 4, the second of six `occult_adventures` classes sharing
 /// `oa_abilities_class.lst`.
 pub(super) fn ground_medium_class_features(
@@ -2944,7 +2945,7 @@ pub(super) fn ground_medium_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::occult_adventures::medium_features as mf;
+    use crate::rules_core::rules_catalog::occult_adventures::medium_features as mf;
     let cha = ability_modifiers.charisma;
 
     if let Some(v) = mf::spirit_bonus(level) {
@@ -3021,7 +3022,7 @@ pub(super) fn ground_medium_class_features(
 }
 
 /// Grounds Mesmerist's ten magnitude-bearing features
-/// (`rules_tables::occult_adventures::mesmerist_features`) — SD-32 card 11
+/// (`rules_catalog::occult_adventures::mesmerist_features`) — SD-32 card 11
 /// (T12), cycle 4, the third of six `occult_adventures` classes sharing
 /// `oa_abilities_class.lst`.
 pub(super) fn ground_mesmerist_class_features(
@@ -3029,7 +3030,7 @@ pub(super) fn ground_mesmerist_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::occult_adventures::mesmerist_features as mf;
+    use crate::rules_core::rules_catalog::occult_adventures::mesmerist_features as mf;
     let cha = ability_modifiers.charisma;
 
     if let Some(v) = mf::consummate_liar_bonus(level) {
@@ -3158,7 +3159,7 @@ pub(super) fn ground_mesmerist_class_features(
 }
 
 /// Grounds Occultist's magnitude-bearing features
-/// (`rules_tables::occult_adventures::occultist_features`) — SD-32 card 11
+/// (`rules_catalog::occult_adventures::occultist_features`) — SD-32 card 11
 /// (T12), cycle 4, the fourth of six `occult_adventures` classes sharing
 /// `oa_abilities_class.lst`.
 pub(super) fn ground_occultist_class_features(
@@ -3166,7 +3167,7 @@ pub(super) fn ground_occultist_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::occult_adventures::occultist_features as of;
+    use crate::rules_core::rules_catalog::occult_adventures::occultist_features as of;
     let int = ability_modifiers.intelligence;
 
     if let Some(v) = of::focus_powers_count(level) {
@@ -3283,7 +3284,7 @@ pub(super) fn psychic_discipline_pool_ability(
 }
 
 /// Grounds Psychic's four magnitude-bearing features
-/// (`rules_tables::occult_adventures::psychic_features`) — SD-32 card 11
+/// (`rules_catalog::occult_adventures::psychic_features`) — SD-32 card 11
 /// (T12), cycle 4, the fifth of six `occult_adventures` classes sharing
 /// `oa_abilities_class.lst`; row 17 residual closure (cycle 2) then wired
 /// `Phrenic Pool`'s discipline-dependent ability term to the character's
@@ -3295,7 +3296,7 @@ pub(super) fn ground_psychic_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::occult_adventures::psychic_features as pf;
+    use crate::rules_core::rules_catalog::occult_adventures::psychic_features as pf;
 
     if let Some(v) = pf::phrenic_amplifications_count(level) {
         explanations.push(ComputationExplanation {
@@ -3338,11 +3339,11 @@ pub(super) fn ground_psychic_class_features(
 }
 
 /// Grounds Spiritualist's three magnitude-bearing features
-/// (`rules_tables::occult_adventures::spiritualist_features`) — SD-32 card
+/// (`rules_catalog::occult_adventures::spiritualist_features`) — SD-32 card
 /// 11 (T12), cycle 4, the sixth and last of the six `occult_adventures`
 /// classes sharing `oa_abilities_class.lst`, closing the whole source file.
 pub(super) fn ground_spiritualist_class_features(level: u8, explanations: &mut Vec<ComputationExplanation>) {
-    use crate::rules_core::rules_tables::occult_adventures::spiritualist_features as sf;
+    use crate::rules_core::rules_catalog::occult_adventures::spiritualist_features as sf;
 
     if let Some(v) = sf::phantom_master_level(level) {
         explanations.push(ComputationExplanation {
@@ -3375,14 +3376,14 @@ pub(super) fn ground_spiritualist_class_features(level: u8, explanations: &mut V
 }
 
 /// Grounds Magus's six magnitude-bearing features
-/// (`rules_tables::ultimate_magic::magus_features`) — SD-32 card 11 (T12),
+/// (`rules_catalog::ultimate_magic::magus_features`) — SD-32 card 11 (T12),
 /// cycle 4, `ultimate_magic`'s single magnitude-bearing class.
 pub(super) fn ground_magus_class_features(
     level: u8,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_magic::magus_features as mf;
+    use crate::rules_core::rules_catalog::ultimate_magic::magus_features as mf;
     let int = ability_modifiers.intelligence;
 
     if let Some(v) = mf::arcane_pool(level, int) {
@@ -3441,7 +3442,7 @@ pub(super) fn ground_magus_class_features(
 }
 
 /// Grounds Shifter's magnitude-bearing features
-/// (`rules_tables::ultimate_wilderness::shifter_features`) — SD-32 card 11
+/// (`rules_catalog::ultimate_wilderness::shifter_features`) — SD-32 card 11
 /// (T12), cycle 4, `ultimate_wilderness`'s single magnitude-bearing class.
 /// `Shifter Claws`' base value is keyed on the character's resolved size
 /// (`race_size_for_race_token`), the same size-resolution mechanism the
@@ -3452,7 +3453,7 @@ pub(super) fn ground_shifter_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_wilderness::shifter_features as sf;
+    use crate::rules_core::rules_catalog::ultimate_wilderness::shifter_features as sf;
     let wis = ability_modifiers.wisdom;
     let size = race_size_for_race_token(&input.chosen.race_id);
 
@@ -3512,14 +3513,14 @@ pub(super) fn ground_shifter_class_features(
 }
 
 /// Grounds Vigilante's seven magnitude-bearing features
-/// (`rules_tables::ultimate_intrigue::vigilante_features`) — SD-32 card 11
+/// (`rules_catalog::ultimate_intrigue::vigilante_features`) — SD-32 card 11
 /// (T12), cycle 4, `ultimate_intrigue`'s single magnitude-bearing class.
 pub(super) fn ground_vigilante_class_features(
     level: u8,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_intrigue::vigilante_features as vf;
+    use crate::rules_core::rules_catalog::ultimate_intrigue::vigilante_features as vf;
     let cha = ability_modifiers.charisma;
 
     if let Some(v) = vf::seamless_guise_bonus(level) {
@@ -3606,7 +3607,7 @@ pub(super) fn ground_vigilante_class_features(
     }
 }
 
-/// Grounds Psion's own shape-3 magnitude-bearing feature (`rules_tables::
+/// Grounds Psion's own shape-3 magnitude-bearing feature (`rules_catalog::
 /// ultimate_psionics::psion_features`) — SD-32 card 11 (T12), the tenth
 /// `ultimate_psionics` class attempted end-to-end, and the last named T12
 /// item. See `psion_features`'s own module doc comment for why `psion`
@@ -3620,7 +3621,7 @@ pub(super) fn ground_psion_class_features(
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    use crate::rules_core::rules_tables::ultimate_psionics::psion_features as pf;
+    use crate::rules_core::rules_catalog::ultimate_psionics::psion_features as pf;
     let int_mod = ability_modifiers.intelligence;
     let int_score = input.chosen.ability_scores.intelligence;
 
@@ -3700,7 +3701,7 @@ pub(super) fn push_deferred_class_features(
 }
 
 /// Grounds the Unchained Rogue's named features
-/// (`rules_tables::pathfinder_unchained::rogue_features`).
+/// (`rules_catalog::pathfinder_unchained::rogue_features`).
 /// Render a class-skill list as a sheet line reads it.
 ///
 /// A whole-family entry becomes the words the rule uses ("every Craft skill"),
@@ -3711,9 +3712,9 @@ pub(super) fn push_deferred_class_features(
 /// with `skill_allocation`, and inventing it here would be a different claim
 /// than the rule makes.
 pub(super) fn render_class_skill_list(
-    skills: &'static [crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry],
+    skills: &'static [crate::rules_core::rules_catalog::crb::class_skill_tables::ClassSkillEntry],
 ) -> String {
-    use crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry;
+    use crate::rules_core::rules_catalog::crb::class_skill_tables::ClassSkillEntry;
     skills
         .iter()
         .map(|entry| match entry {

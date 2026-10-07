@@ -28,7 +28,7 @@
 //! `SpellEffect` for every school.
 //!
 //! Reads spell level and effect text from the canonical CRB spell-list
-//! table store (`rules_tables::crb::spell_list::SPELL_LIST`, SD-19's
+//! table store (`rules_catalog::crb::spell_list::SPELL_LIST`, SD-19's
 //! foundation slice) via `TableCellRef`-style lookups — never hand-rolled
 //! or re-derived. Spell *identity* (does this spell exist, what corpus
 //! record does it resolve to) still goes through SD-19's own
@@ -41,7 +41,7 @@
 //! doc comment on `PilotReceipt` for precedent: illustrative doctrine
 //! types are adapted to the real codebase shape, not re-derived as
 //! parallel types). This module reads the table store directly
-//! (`rules_tables::crb::spell_list::SPELL_LIST`), matching how
+//! (`rules_catalog::crb::spell_list::SPELL_LIST`), matching how
 //! `spell_resolver.rs` and `equipment_resolver.rs` already read it.
 
 pub mod abjuration;
@@ -58,13 +58,13 @@ use std::collections::BTreeMap;
 
 use crate::rules_core::character_input::{AbilityScores, AcquisitionMode, CharacterInput};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::RuleSetId;
-use crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
+use crate::rules_core::rules_catalog::RuleSetId;
+use crate::rules_core::rules_catalog::crb::spell_list::Pf1SchoolId;
 use crate::rules_core::source_content::SourcePackageContent;
 use crate::rules_core::spell_resolver::spell_id_resolve;
 
 /// A caster's school of specialization. Reuses the existing strict-school
-/// enum (`rules_tables::crb::spell_list::Pf1SchoolId`, SD-19's foundation
+/// enum (`rules_catalog::crb::spell_list::Pf1SchoolId`, SD-19's foundation
 /// slice) rather than re-deriving a duplicate school taxonomy — an Arcane
 /// School specialization IS one of the nine strict schools.
 pub type ArcaneSchool = Pf1SchoolId;

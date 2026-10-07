@@ -25,8 +25,8 @@ use codex::rules_core::character_input::{
     SpellSelection,
 };
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::crb::spell_list::Pf1SchoolId;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 use codex::rules_core::spell_resolver::spell_id_resolve;
 

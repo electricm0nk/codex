@@ -3,7 +3,7 @@
 //!
 //! # The defect this closes
 //!
-//! `rules_tables::pathfinder_unchained::monk_features`'s module doc declined to
+//! `rules_catalog::pathfinder_unchained::monk_features`'s module doc declined to
 //! model unarmed strike damage, on the stated grounds that *"`pilot_compute.rs`'s
 //! `monk_unarmed_strike_damage_die` already states that progression"*. That was
 //! true of the **function** and false of the **sheet**: the only rows carrying

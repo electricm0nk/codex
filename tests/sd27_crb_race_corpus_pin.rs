@@ -33,7 +33,7 @@
 
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus};
 use codex::rules_core::corpus_loader::BookCorpusRoot;
-use codex::rules_core::rules_tables::crb::race_tables::{race_id_from_token, race_size, race_traits, RaceId};
+use codex::rules_core::rules_catalog::crb::race_tables::{race_id_from_token, race_size, race_traits, RaceId};
 use codex::rules_core::size::SizeCategory;
 use std::path::Path;
 

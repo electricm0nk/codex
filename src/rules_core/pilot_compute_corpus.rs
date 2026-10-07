@@ -47,8 +47,8 @@ use crate::rules_core::pilot_compute::{
     WEAPON_FOCUS_LONGSWORD_SELECTION, WEAPON_FOCUS_TO_HIT_BONUS,
     WEAPON_NONPROFICIENCY_ATTACK_PENALTY, WIZARD_CLASS_ID,
 };
-use crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::crb::spell_list::Pf1SchoolId;
+use crate::rules_core::rules_catalog::RuleSetId;
 use crate::rules_core::source_content::SourcePackageContent;
 use crate::rules_core::spell_resolver::spell_id_resolve;
 

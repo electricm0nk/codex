@@ -459,7 +459,7 @@ pub fn load_book_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageConten
 mod tests {
     use super::*;
     use crate::rules_core::equipment_resolver::equipment_id_resolve;
-    use crate::rules_core::rules_tables::RuleSetId;
+    use crate::rules_core::rules_catalog::RuleSetId;
 
     /// Real, on-disk enriched equipment record (ARG's Dogslicer) loads
     /// through the full package loader and resolves with real mechanical

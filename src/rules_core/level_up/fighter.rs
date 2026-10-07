@@ -7,7 +7,7 @@
 //! or resource pool), so this module composes with the identical two
 //! already-grounded, already-landed sources rather than re-deriving either:
 //!
-//! 1. `rules_tables::crb::class_tables::class_tables()` (SD-19's foundation
+//! 1. `rules_catalog::crb::class_tables::class_tables()` (SD-19's foundation
 //!    slice) for the class-generic BAB/save progression. Fighter's
 //!    `CLASS_META` row was spot-checked against the PF1 Core Rulebook
 //!    before composing with it (per this cycle's own brief, since the
@@ -73,7 +73,7 @@
 //!
 //! `pick_from_lists` stays empty for Fighter's ten Bonus Feat slots, even
 //! though — unlike Barbarian's open-ended Rage Power list — a real feat
-//! catalog now exists in `rules_tables::crb::feats` (Epic 3's General/
+//! catalog now exists in `rules_catalog::crb::feats` (Epic 3's General/
 //! Combat/ItemCreation/Metamagic categories, 185 records). Composing a
 //! genuine Fighter bonus-feat candidate list correctly would require
 //! filtering that catalog to PF1's "Combat Feats" eligibility rule and
@@ -100,8 +100,8 @@ use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan};
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::class_tables::{class_tables, ClassId, ClassTableRow};
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::crb::class_tables::{class_tables, ClassId, ClassTableRow};
+use crate::rules_core::rules_catalog::RuleSetId;
 
 const FIGHTER_CLASS_ID: &str = "class:fighter";
 /// SD-24 Epic 5 (criterion 5.1): the only class `pilot_compute.rs`'s own
@@ -183,7 +183,7 @@ fn class_table_row(level: u8) -> Option<ClassTableRow> {
         .find(|row| row.class_id == ClassId::Fighter && row.level == level)
 }
 
-/// Grants sourced from `rules_tables::crb::class_tables::class_tables()`
+/// Grants sourced from `rules_catalog::crb::class_tables::class_tables()`
 /// — the class-generic BAB/save progression pillars.
 fn append_class_table_grants(plan: &mut LevelUpPlan, from_level: u8, to_level: u8) {
     let Some(to_row) = class_table_row(to_level) else {

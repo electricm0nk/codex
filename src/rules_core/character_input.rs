@@ -95,7 +95,7 @@ pub struct ClassAbilityActivation {
 pub struct SpellSelection {
     /// The corpus identity of this spell (spell `name`, since the PF1
     /// spell corpus carries no separate `KEY:` token — see
-    /// `rules_tables::crb::spell_list`'s doc comment).
+    /// `rules_catalog::crb::spell_list`'s doc comment).
     pub spell_id: String,
     /// The class that provides this spell. Mirrors `CharacterClassLevel.class_id`
     /// (a plain string, not a typed enum) for consistency with the rest of

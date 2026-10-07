@@ -2,7 +2,7 @@
 //!
 //! Writes `data/corpus/beastiary/{monster,equipment}/*.json` by DUMPING
 //! the current, already-completed state of
-//! `rules_core::rules_tables::beastiary1` (`MonsterId::ALL` +
+//! `rules_core::rules_catalog::beastiary1` (`MonsterId::ALL` +
 //! `monster_resolve()`, `equipment_tables::EQUIPMENT_TABLE`) -- per
 //! `decisions.md §11.3`, this module never re-parses raw PCGen LST to
 //! derive a field's *value*. Every value written here is read straight
@@ -70,12 +70,12 @@ use serde::Serialize;
 use crate::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use codex::rules_core::pi_screening;
-use codex::rules_core::rules_tables::beastiary1::equipment_tables::EquipmentTableEntry;
-use codex::rules_core::rules_tables::beastiary1::natural_attack_provenance::{
+use codex::rules_core::rules_catalog::beastiary1::equipment_tables::EquipmentTableEntry;
+use codex::rules_core::rules_catalog::beastiary1::natural_attack_provenance::{
     self, AttackSource as ProvenanceSource,
 };
-use codex::rules_core::rules_tables::beastiary1::{self, MonsterId, MonsterStatBlock, NaturalAttack};
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::{self, MonsterId, MonsterStatBlock, NaturalAttack};
+use codex::rules_core::rules_catalog::RuleSetId;
 
 // ---------------------------------------------------------------------
 // Shape B schema (decisions.md §7, corrected §11.1/§11.2) -- mirrors
@@ -272,7 +272,7 @@ const WIRING_CLASS_BOOK_ID: &str = "bestiary";
 const MONSTERS_FILE: &str = "b1_races.lst";
 /// Carries the `Crocodile ~ Tail Slap` record, the one cross-file
 /// `NATURALATTACKS:` token this book's grounded attacks recover from the
-/// real corpus (see `rules_tables::beastiary1::natural_attack_provenance`).
+/// real corpus (see `rules_catalog::beastiary1::natural_attack_provenance`).
 const RACE_ABILITIES_FILE: &str = "b1_abilities_race.lst";
 
 fn book_dir(corpus_root: &Path) -> PathBuf {
@@ -516,7 +516,7 @@ fn generate_equipment(
     let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
     let mut wiring_lines = wiring_index.lines();
 
-    for entry in beastiary1::equipment_tables::EQUIPMENT_TABLE {
+    for entry in &beastiary1::equipment_tables::EQUIPMENT_TABLE {
         let category_file = entry.category.corpus_file_name();
         let sha256 = sha256_file(&book_dir(corpus_root).join(category_file))?;
 

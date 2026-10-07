@@ -210,7 +210,7 @@ pub(super) const INQUISITOR_JUDGMENT_RESISTANCE_SELECTION_ID: &str = "judgment:r
 /// (reuses Ranger's), the real `CLASS:Inquisitor` record carries no
 /// `SPELLLIST:` token at all -- its spell list is independently tagged
 /// per-spell (`CLASSES:...Inquisitor=N` across `apg_spells.lst`/
-/// `acg_spells.lst`), so `rules_tables::apg::inquisitor_spell_list` had
+/// `acg_spells.lst`), so `rules_catalog::apg::inquisitor_spell_list` had
 /// to be built fresh rather than reusing an existing module (see that
 /// module's own doc comment for the corpus derivation: 219 real spells,
 /// levels 0-6, split 15/38/43/44/35/24/20).

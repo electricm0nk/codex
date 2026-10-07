@@ -74,7 +74,7 @@ use codex::rules_core::derived_evaluator_fixture_check::{
     format_caster_level_linear_duration, format_spell_range_formula,
     spell_book_corpus_dir_for_short_code, CasterLevelLinearFormula, SpellRangeFormula,
 };
-use codex::rules_core::rules_tables::{
+use codex::rules_core::rules_catalog::{
     acg, adventurers_guide, advanced_race_guide, apg, bestiary, bestiary_4,
     book_of_the_damned_volume_1, book_of_the_damned_volume_2, crb, horror_adventures,
     inner_sea_faiths, inner_sea_gods, inner_sea_intrigue, inner_sea_magic, inner_sea_races,

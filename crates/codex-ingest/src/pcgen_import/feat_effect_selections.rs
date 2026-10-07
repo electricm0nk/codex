@@ -13,7 +13,7 @@
 //! `advanced_race_guide/feat_data/general.rs`.
 //!
 //! The live tables now carry
-//! [`EffectSelection`](codex::rules_core::rules_tables::crb::feats::EffectSelection)
+//! [`EffectSelection`](codex::rules_core::rules_catalog::crb::feats::EffectSelection)
 //! instead, and the marker slot is gone from `qualifiers`.
 //!
 //! This table is the proof that the conversion lost nothing: one row per
@@ -28,7 +28,7 @@
 //! `docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle12_selection_typing.py`.
 //! Do not hand-edit; re-run the generator.
 
-use codex::rules_core::rules_tables::crb::feats::EffectSelection;
+use codex::rules_core::rules_catalog::crb::feats::EffectSelection;
 
 /// One converted bonus's verbatim pre-conversion qualifier chain.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -83,8 +83,8 @@ pub const FEAT_EFFECT_SELECTIONS: &[FeatEffectSelectionRow] = &[
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::rules_core::rules_tables::advanced_race_guide::feats as arg_feats;
-    use codex::rules_core::rules_tables::{acg, apg, crb};
+    use codex::rules_core::rules_catalog::advanced_race_guide::feats as arg_feats;
+    use codex::rules_core::rules_catalog::{acg, apg, crb};
 
     /// Rebuild one live bonus's pre-conversion chain: re-insert the ingest
     /// marker at the slot it came out of.

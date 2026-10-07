@@ -114,9 +114,9 @@ pub const FEAT_EFFECT_TAILS: &[FeatEffectTail] = &[
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::rules_core::rules_tables::advanced_race_guide::feats as arg_feats;
-    use codex::rules_core::rules_tables::crb::feats::{ConditionItem, EffectCondition};
-    use codex::rules_core::rules_tables::{acg, apg, crb};
+    use codex::rules_core::rules_catalog::advanced_race_guide::feats as arg_feats;
+    use codex::rules_core::rules_catalog::crb::feats::{ConditionItem, EffectCondition};
+    use codex::rules_core::rules_catalog::{acg, apg, crb};
 
     /// Rebuilds one guard's verbatim ingest token from the typed live form.
     fn rebuild(condition: &EffectCondition) -> String {

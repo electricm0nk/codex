@@ -171,6 +171,9 @@ fn main() {
             if let Ok(resource_dir) = app.path().resource_dir() {
                 authoring_workbench::set_app_resource_dir(resource_dir);
             }
+            // SD-37 E4a.2: the Pathfinder rules tables are a data package, read from the
+            // resolved root. Bind it before the first table read (the seed character below).
+            authoring_workbench::bind_rules_tables_package_root();
 
             if let Err(err) = character_hub::seed_default_character_if_needed(app.handle()) {
                 eprintln!("Failed to seed default character: {err}");

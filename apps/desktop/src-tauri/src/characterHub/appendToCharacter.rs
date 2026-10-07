@@ -22,7 +22,7 @@ use std::path::Path;
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::character_input::EquipmentSelection;
-use codex::rules_core::rules_tables::crb::equipment_tables::equipment_tables;
+use codex::rules_core::rules_catalog::crb::equipment_tables::equipment_tables;
 
 use crate::character_hub::{
     self, ActiveStateDto, CharacterSummaryDto, CorpusDerivedDto, CreateCharacterResponse,

@@ -1,7 +1,7 @@
 //! Base-attack-bonus / base-save chassis for Core Rulebook's **NPC and
 //! `Ex-*` classes** (SD-34, `AT-34-E3-001`, mechanism
 //! `class_absent_from_ClassId_ALL_and_book_class_id_enums`): `ClassId::ALL`
-//! (`rules_tables::crb::class_tables`) carries only CRB's eleven `Base.PC`
+//! (`rules_catalog::crb::class_tables`) carries only CRB's eleven `Base.PC`
 //! classes -- Adept, Aristocrat, Commoner, Expert, Warrior (`TYPE:Base.NPC`)
 //! and Ex-Barbarian, Ex-Paladin (`TYPE:Base.PC`, `VISIBLE:NO`) are ingested,
 //! real corpus records with their own genuine `BONUS:COMBAT|BASEAB` /

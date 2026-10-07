@@ -58,7 +58,7 @@ use sha2::{Digest, Sha256};
 use codex::rules_core::derived_evaluator_fixture_check::{
     load_monster_fixtures, spell_like_ability_caster_level,
 };
-use codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS;
+use codex::rules_core::rules_catalog::monster_chassis::MONSTER_BOOKS;
 
 #[path = "support/paths.rs"]
 mod paths;

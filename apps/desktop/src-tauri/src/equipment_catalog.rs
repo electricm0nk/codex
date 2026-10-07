@@ -54,7 +54,7 @@
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::equipment_resolver::equipment_catalog_rows;
-use codex::rules_core::rules_tables::{
+use codex::rules_core::rules_catalog::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
     ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
     equipment_gap_tables, ultimate_magic as um, ultimate_psionics as upsi,
@@ -745,13 +745,13 @@ mod tests {
         for entry in crb::equipment_tables::equipment_tables() {
             count_raw("CRB", format!("{:?}", entry.category), entry.description);
         }
-        for entry in apg::equipment_tables::EQUIPMENT_TABLE {
+        for entry in &apg::equipment_tables::EQUIPMENT_TABLE {
             count_raw("APG", format!("{:?}", entry.category), entry.description);
         }
         for entry in acg::equipment_tables::equipment_tables() {
             count_raw("ACG", format!("{:?}", entry.category), entry.description);
         }
-        for entry in beastiary1::equipment_tables::EQUIPMENT_TABLE {
+        for entry in &beastiary1::equipment_tables::EQUIPMENT_TABLE {
             count_raw("B1", format!("{:?}", entry.category), entry.description);
         }
         for entry in arg::equipment_tables::equipment_tables() {
@@ -1345,7 +1345,7 @@ mod tests {
     #[test]
     fn catalog_weight_agrees_with_the_encumbrance_corpus_read_for_every_resolvable_crb_row() {
         use codex::rules_core::equipment_resolver::equipment_id_resolve;
-        use codex::rules_core::rules_tables::RuleSetId;
+        use codex::rules_core::rules_catalog::RuleSetId;
         use crate::corpus_full::full_corpus_bundle;
 
         let corpus = full_corpus_bundle();

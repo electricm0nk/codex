@@ -5,7 +5,7 @@
 //!
 //! One JSON file per table under `data/rules_tables/`, at `<table id>.json`. A table id is the
 //! table's own Rust location with `/` for `::`, e.g. `crb/feat_data/general/GENERAL_TABLE` for
-//! `rules_tables::crb::feat_data::general::GENERAL_TABLE`, or `<module>/<fn>` for a table a
+//! the compiled `crb::feat_data::general::GENERAL_TABLE` of the `rules_tables` module, or `<module>/<fn>` for a table a
 //! function builds (`acg/archetype_tables/archetype_swap_tables`). Every file is
 //!
 //! ```json
@@ -79,10 +79,26 @@ pub fn package_root(repo_root: &Path) -> PathBuf {
     repo_root.join(PACKAGE_RELATIVE)
 }
 
-/// The package directory this process reads: `CODEX_REPO_ROOT` when set, else the compile-time
-/// checkout (`game_system::runtime_repo_root`, the rule the sheet-rule packages already use).
+/// The root a launcher bound with [`use_repo_root`], if any.
+static BOUND_REPO_ROOT: OnceLock<PathBuf> = OnceLock::new();
+
+/// Bind the repo (or packaged resource) root this process reads the package from. The desktop
+/// calls it at startup with the root its own resolution found (`CODEX_REPO_ROOT`, else the
+/// packaged resource directory): a packaged build has no checkout, and the compile-time path
+/// below does not exist on a tester's machine. The first binding wins; call it before any table
+/// is read (every table is cached after its first read).
+pub fn use_repo_root(root: PathBuf) {
+    let _ = BOUND_REPO_ROOT.set(root);
+}
+
+/// The package directory this process reads: the root bound by [`use_repo_root`] when there is
+/// one, else `CODEX_REPO_ROOT` when set, else the compile-time checkout
+/// (`game_system::runtime_repo_root`, the rule the sheet-rule packages already use).
 pub fn runtime_package_root() -> PathBuf {
-    package_root(&crate::rules_core::game_system::runtime_repo_root())
+    match BOUND_REPO_ROOT.get() {
+        Some(root) => package_root(root),
+        None => package_root(&crate::rules_core::game_system::runtime_repo_root()),
+    }
 }
 
 /// The file that carries table `id` under `root`.
@@ -1115,6 +1131,8 @@ rules_tables_registry! {
         "ultimate_intrigue/equipment_tables/equipment_tables" => rt::ultimate_intrigue::equipment_tables::equipment_tables();
         "ultimate_intrigue/equipment_tables/equipmod_tables" => rt::ultimate_intrigue::equipment_tables::equipmod_tables();
         "pathfinder_unchained/summoner_features/eidolon_subtypes" => rt::pathfinder_unchained::summoner_features::eidolon_subtypes();
+        "pathfinder_unchained/rogue_features/class_skills" => rt::pathfinder_unchained::rogue_features::class_skills();
+        "pathfinder_unchained/summoner_features/class_skills" => rt::pathfinder_unchained::summoner_features::class_skills();
         "bestiary/cross_table_owner_names" => rt::bestiary::cross_table_owner_names();
         "beastiary1/monster_resolve" => beastiary1_monster_rows();
         "crb/class_tables/class_tables" => rt::crb::class_tables::class_tables();
@@ -1646,6 +1664,26 @@ mod tests {
         Some((name, ty.split('=').next().unwrap_or("").trim()))
     }
 
+    /// `(` + whitespace + `)` -> `()`, so a zero-argument signature split over lines reads as one.
+    fn join_empty_parameter_lists(text: &str) -> String {
+        let mut out = String::with_capacity(text.len());
+        let mut rest = text;
+        while let Some(at) = rest.find('(') {
+            out.push_str(&rest[..at]);
+            let after = &rest[at + 1..];
+            let trimmed = after.trim_start();
+            if trimmed.starts_with(')') && trimmed.len() != after.len() {
+                out.push_str("()");
+                rest = &trimmed[1..];
+            } else {
+                out.push('(');
+                rest = after;
+            }
+        }
+        out.push_str(rest);
+        out
+    }
+
     /// `pub fn name() -> Ret {` -> `(name, "Ret")` for a file-level zero-argument function.
     fn zero_arg_fn(line: &str) -> Option<(&str, &str)> {
         let mut rest = line.trim_start();
@@ -1697,6 +1735,9 @@ mod tests {
         let mut seen = BTreeSet::new();
         let mut unclassified = Vec::new();
         for (module, text) in source_modules() {
+            // A signature rustfmt split as `fn name(\n) -> Ret` is one line to the scanner (E4a.1's
+            // scanner missed the two `class_skills` functions that way).
+            let text = join_empty_parameter_lists(&text);
             for (line, depth) in lines_with_depth(&text) {
                 if depth != 0 {
                     continue;

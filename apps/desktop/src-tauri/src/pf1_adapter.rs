@@ -94,7 +94,7 @@ use crate::rule_system_adapter::{ClassLevelDelta, RuleSystemAdapter};
 /// The same literal already proven safe by
 /// `wizard_level1_reaches_computed_once_a_real_spell_is_recorded_and_prepared`.
 ///
-/// `"Light"` — a real `SPELL_LIST` key (`rules_tables::crb::spell_list.rs`),
+/// `"Light"` — a real `SPELL_LIST` key (`rules_catalog::crb::spell_list.rs`),
 /// not a synthetic placeholder: v0.6 alpha swarm's slot-budget-enforcement
 /// fix taught `parse_wizard_spellbook_spell_id` (`pilot_compute.rs`) to
 /// resolve real spell catalog keys directly, so production code now seeds a
@@ -2207,7 +2207,7 @@ mod tests {
     /// Decision 37 (populating it would have duplicated the already-real
     /// `class_spell.*.total_spells_per_day.*` chassis computation).
     /// Uses "Alarm" (Abjuration, Wizard level 1 per
-    /// `rules_tables::crb::spell_list::SPELL_LIST`) because it is one of
+    /// `rules_catalog::crb::spell_list::SPELL_LIST`) because it is one of
     /// the two spells `corpus_fixtures::SPELL_FIXTURES` actually loads
     /// (`spell_abjuration.txt`) -- `spellbook::compute_spellbook_coverage`
     /// resolves against the real on-disk corpus, unlike

@@ -8,7 +8,7 @@
 //! `PrerequisiteEvaluation.failing_prerequisites`."
 //!
 //! This cycle's feat catalog is the SD-19 foundation-slice
-//! `rules_tables::crb::feats` table store, landed at `04c3d08` after the
+//! `rules_catalog::crb::feats` table store, landed at `04c3d08` after the
 //! prior cycle's blocker. That table carries `key`/`category`/`name`/
 //! `description` per record only — no `PREREQ:`/`PREABILITY:`/`PRELEVEL:`
 //! tokens are transcribed (confirmed by reading `feats.rs` and
@@ -28,7 +28,7 @@
 //!   it fails eligibility (not a General feat) and resolves no effect.
 
 use codex::rules_core::feat_prereqs::{compute_feat_effects, evaluate_feat_prerequisites, FeatKey};
-use codex::rules_core::rules_tables::crb::feats::FeatCategory;
+use codex::rules_core::rules_catalog::crb::feats::FeatCategory;
 
 #[test]
 fn toughness_is_eligible_with_no_failing_prerequisites() {

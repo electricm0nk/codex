@@ -79,7 +79,7 @@ use codex::rules_core::codex_neutral_name::neutral_name;
 use codex::rules_core::pi_screening::{
     classify_field, classify_optional_field_declared, declared_product_identity,
 };
-use codex::rules_core::rules_tables::{
+use codex::rules_core::rules_catalog::{
     acg, adventurers_guide, advanced_race_guide, apg, crb, inner_sea_faiths, inner_sea_gods,
     inner_sea_magic, inner_sea_temples, occult_adventures, ultimate_intrigue, ultimate_magic,
     ultimate_wilderness,
@@ -213,7 +213,7 @@ const BOOKS: BookRegistry<BookInput> = BookRegistry::pathfinder_only(&[
     // Adventures, the 11th book in this config -- this book's SECOND
     // compiled record family (`RuleSetId::Ha` already exists for its
     // `companion`/`monster`/`monster_ability` tables; see
-    // `rules_tables::horror_adventures::mod.rs`'s own doc comment). All 72
+    // `rules_catalog::horror_adventures::mod.rs`'s own doc comment). All 72
     // base declarations in `ha_spells.lst` are clear per the T9 PI
     // disposition (`t9-pi-signoff-application_cycle-1_cycle_receipt.md`);
     // `pi_screen` still runs on every row rather than trusting that
@@ -461,7 +461,7 @@ fn levels_in_field(value: &str) -> Vec<u8> {
 }
 
 /// Minimum spell level across the record's `CLASSES:` and `DOMAINS:` tokens
-/// combined -- the `rules_tables::acg::spell_list` precedent. `None` when
+/// combined -- the `rules_catalog::acg::spell_list` precedent. `None` when
 /// neither token yields a parseable level (a genuine corpus gap, never
 /// fabricated here -- it lands `text-complete`, not `ingested-magnitude`,
 /// via `classify()`'s existing `Some(false)` branch).

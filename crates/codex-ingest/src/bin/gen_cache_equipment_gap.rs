@@ -4,7 +4,7 @@
 //! `PCGEN_CORPUS_ROOT` pointing at a local PCGen `data/` checkout
 //! (defaults to `$HOME/workspace/repos/pcgen/data`). Writes
 //! `data/corpus/<book>/equipment/*.json` for every book
-//! `rules_tables::equipment_gap_tables` covers except `ultimate_equipment`
+//! `rules_catalog::equipment_gap_tables` covers except `ultimate_equipment`
 //! (`cache_gen::ultimate_equipment` owns that book's directory).
 //!
 //! Unlike `gen_cache_ultimate_equipment`, an unresolved citation does NOT

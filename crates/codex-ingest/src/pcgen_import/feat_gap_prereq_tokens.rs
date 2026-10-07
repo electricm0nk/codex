@@ -5,11 +5,11 @@
 //! is addressed, and every lookup and gate over them.
 //!
 //! **Generated — do not hand-edit.** `cargo run --bin gen_feat_gap_tables`
-//! writes this file and `rules_tables::feat_gap_tables.rs` together, off the
+//! writes this file and `rules_catalog::feat_gap_tables.rs` together, off the
 //! same pass over the live corpus, so the two can never drift apart.
 
 use crate::pcgen_import::feat_prereq_tokens::FeatPrereqRow;
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::RuleSetId;
 
 /// The tokens the corpus gap rows carried, addressed by each record's index
          /// in `feat_gap_tables::feat_gap_rows_for(rule_set)`.

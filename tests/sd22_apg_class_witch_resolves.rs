@@ -15,14 +15,14 @@
 //! recognize `Witch`, real-corpus-gated on `PCGEN_CORPUS_ROOT`,
 //! mirroring `tests/sd22_apg_class_summoner_resolves.rs`'s established
 //! pattern) so the hand-transcribed chassis constants in
-//! `rules_tables::apg::class_witch` stay tied to the source record
+//! `rules_catalog::apg::class_witch` stay tied to the source record
 //! rather than to memory.
 
 use std::fs;
 use std::path::PathBuf;
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::apg::{ApgClassId, class_chassis_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::apg::{ApgClassId, class_chassis_resolve};
 
 #[test]
 fn witch_level_1_chassis_resolves_via_ruleset_apg() {

@@ -1,6 +1,6 @@
 // -- split from `class_armor_proficiency_tests` in src/rules_core/rules_tables/crb/weapon_tables.rs (pcgen-touching items only) --
 mod class_armor_proficiency_tests {
-    use codex::rules_core::rules_tables::crb::weapon_tables::*;
+    use codex::rules_core::rules_catalog::crb::weapon_tables::*;
     use codex_ingest::pcgen_import::ingest_record;
 
     /// Every row's own claim, re-derived from the LIVE corpus record's own

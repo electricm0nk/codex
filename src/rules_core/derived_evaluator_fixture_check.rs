@@ -33,8 +33,8 @@ use serde::{Deserialize, Serialize};
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
 use crate::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
 use crate::rules_core::equipment_effects::compute_equipment_effects;
-use crate::rules_core::rules_tables::companion_chassis::companion_book;
-use crate::rules_core::rules_tables::monster_chassis::{MonsterStatBlock, MONSTER_BOOKS};
+use crate::rules_core::rules_catalog::companion_chassis::companion_book;
+use crate::rules_core::rules_catalog::monster_chassis::{MonsterStatBlock, MONSTER_BOOKS};
 
 pub const FIXTURE_RELATIVE_PATH: &str = "tests/fixtures/rules_core/derived-evaluator-fixtures.json";
 
@@ -1337,7 +1337,7 @@ pub struct SpellLikeAbilitySaveDc {
 /// [`SPELL_LIKE_ABILITY_SAVE_DC_BASE`], which would imply a negative spell
 /// level and therefore means the token is not this shape at all.
 pub fn spell_like_ability_save_dc(
-    sla: &crate::rules_core::rules_tables::monster_chassis::MonsterSpellLikeAbility,
+    sla: &crate::rules_core::rules_catalog::monster_chassis::MonsterSpellLikeAbility,
 ) -> Option<SpellLikeAbilitySaveDc> {
     let raw = sla.save_dc_token?.trim();
     let (constant, ability) = raw.split_once('+')?;
@@ -2124,7 +2124,7 @@ mod monster_seam_tests {
     // independently by `monster_entries`'s own fixture row for this unit.
     #[test]
     fn hd_times_three_quarters_matches_the_real_demon_vermlek_worked_example() {
-        let vermlek = crate::rules_core::rules_tables::monster_chassis::monster_book(
+        let vermlek = crate::rules_core::rules_catalog::monster_chassis::monster_book(
             "book_of_the_damned_volume_2",
         )
         .expect("book_of_the_damned_volume_2 has a monster book")
@@ -2553,7 +2553,7 @@ fn dc_placeholder_slots(description: &str) -> Vec<usize> {
 /// COMPILED `monster_chassis` tables (generated from `data/corpus/`) and
 /// nothing else — never the upstream `.lst`, never the fixture.
 pub fn monster_ability_save_dc(
-    record: &crate::rules_core::rules_tables::monster_chassis::MonsterAbilityRecord,
+    record: &crate::rules_core::rules_catalog::monster_chassis::MonsterAbilityRecord,
 ) -> Option<MonsterAbilitySaveDc> {
     let description = record.description?;
     for slot in dc_placeholder_slots(description) {
@@ -2630,8 +2630,8 @@ fn parse_formula_base_plus_ability(arg: &str) -> Option<&'static str> {
 /// (the ability row's formula shape, or the owner's `MONSTERCLASS`) turns
 /// this check red.
 pub fn monster_ability_formula_save_dc(
-    record: &crate::rules_core::rules_tables::monster_chassis::MonsterAbilityRecord,
-    owner: &crate::rules_core::rules_tables::monster_chassis::MonsterStatBlock,
+    record: &crate::rules_core::rules_catalog::monster_chassis::MonsterAbilityRecord,
+    owner: &crate::rules_core::rules_catalog::monster_chassis::MonsterStatBlock,
 ) -> Option<MonsterAbilitySaveDc> {
     let description = record.description?;
     for slot in dc_placeholder_slots(description) {
@@ -4215,11 +4215,11 @@ mod companion_seam_tests {
     /// every registered book's shipped companion records.
     #[test]
     fn upstream_does_not_state_the_single_attack_rule_uniformly() {
-        use crate::rules_core::rules_tables::companion_chassis::COMPANION_BOOKS;
+        use crate::rules_core::rules_catalog::companion_chassis::COMPANION_BOOKS;
         let mut one_attack_with_token = 0usize;
         let mut one_attack_without_token = 0usize;
         let mut multi_attack_with_token = 0usize;
-        for book in COMPANION_BOOKS {
+        for book in &COMPANION_BOOKS {
             for c in book.companions {
                 let half = c
                     .natural_attack_damage_bonuses
@@ -4254,7 +4254,7 @@ mod companion_seam_tests {
     /// may join the two and drop the misses.
     #[test]
     fn a_damage_bonus_selector_need_not_name_one_of_the_records_natural_attacks() {
-        use crate::rules_core::rules_tables::companion_chassis::companion_book;
+        use crate::rules_core::rules_catalog::companion_chassis::companion_book;
         let apg = companion_book("advanced_players_guide").expect("APG companions are registered");
         let parrot = apg.companion_resolve("Parrot").expect("APG ships a Parrot");
         assert!(
@@ -4528,9 +4528,9 @@ mod companion_skill_seam_tests {
     /// this test forcing a re-derivation first.
     #[test]
     fn every_registered_skill_ability_diff_bonus_states_the_same_formula_and_skills() {
-        use crate::rules_core::rules_tables::companion_chassis::COMPANION_BOOKS;
+        use crate::rules_core::rules_catalog::companion_chassis::COMPANION_BOOKS;
         let mut total = 0usize;
-        for book in COMPANION_BOOKS {
+        for book in &COMPANION_BOOKS {
             for c in book.companions {
                 for b in c.skill_ability_diff_bonuses {
                     total += 1;

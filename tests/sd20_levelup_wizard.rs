@@ -17,7 +17,7 @@
 //! `pilot_compute.rs`'s `explain_wizard_level1_prepared_spell_baseline`
 //! requires to ground its specialization-choice-gated pillars at all.
 //!
-//! `rules_tables::crb::class_tables`'s `CLASS_META` row for
+//! `rules_catalog::crb::class_tables`'s `CLASS_META` row for
 //! `ClassId::Wizard` was spot-checked against `pilot_compute.rs`'s own
 //! independently-grounded Wizard formulas before writing any
 //! implementation code — the two sources agree at every level (Half

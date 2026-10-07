@@ -27,8 +27,8 @@
 //! then have to agree on separately.
 
 use crate::rules_core::character_input::CharacterInput;
-use crate::rules_core::rules_tables::archetype_swap::ArchetypeSwapEntry;
-use crate::rules_core::rules_tables::{
+use crate::rules_core::rules_catalog::archetype_swap::ArchetypeSwapEntry;
+use crate::rules_core::rules_catalog::{
     acg, advanced_race_guide as arg, apg, ultimate_combat as uc, ultimate_magic as um,
     ultimate_psionics as upsi, ultimate_wilderness as uw,
 };

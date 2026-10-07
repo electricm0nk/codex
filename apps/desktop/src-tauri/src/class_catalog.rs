@@ -1,5 +1,5 @@
 //! SD-19 class progression catalog browser — Tauri command adapter over the
-//! full CRB class table store (`rules_tables::crb::class_tables`, every
+//! full CRB class table store (`rules_catalog::crb::class_tables`, every
 //! class's level-1 through its `max_supported_level` ceiling: BAB and the
 //! three base saves).
 //!
@@ -12,9 +12,9 @@
 
 use serde::{Deserialize, Serialize};
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::crb::class_tables::class_tables;
-use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::{
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::crb::class_tables::class_tables;
+use codex::rules_core::rules_catalog::pathfinder_unchained::class_chassis::{
     self as pu_class_chassis, PuClassId,
 };
 
@@ -40,7 +40,7 @@ pub struct ClassCatalogResponse {
 }
 
 fn map_catalog_entry(
-    row: &codex::rules_core::rules_tables::crb::class_tables::ClassTableRow,
+    row: &codex::rules_core::rules_catalog::crb::class_tables::ClassTableRow,
 ) -> ClassCatalogEntryDto {
     ClassCatalogEntryDto {
         class_id: format!("{:?}", row.class_id),
@@ -126,7 +126,7 @@ mod tests {
     fn catalog_contains_all_eleven_classes_and_expected_counts() {
         let response = build_class_catalog();
         // Task #49 (2026-07-28) widened Monk's own max_supported_level from
-        // 12 to 20 (rules_tables::crb::class_tables.rs's CLASS_META row,
+        // 12 to 20 (rules_catalog::crb::class_tables.rs's CLASS_META row,
         // mirroring pilot_compute.rs's own MAX_SUPPORTED_MONK_LEVEL
         // widening to the full PF1 Core Rulebook capstone range), so the
         // total row count rose from 207 to 215 (207 - 12 + 20).

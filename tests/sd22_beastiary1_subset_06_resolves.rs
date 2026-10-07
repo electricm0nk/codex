@@ -27,8 +27,8 @@
 //! (line 401, CR 2), **Wolverine** (line 416, CR 2), **Worg** (line 418,
 //! CR 2), **Yellow Musk Creeper** (line 430, CR 2).
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
 
 #[test]
 fn squid_resolves_via_ruleset_bestiary1() {
@@ -119,7 +119,7 @@ fn yellow_musk_creeper_returns_none_for_ruleset_apg_acg_crb() {
 /// `NATURALATTACKS:` token at all — they name their attacks via
 /// `ABILITY:Internal` cross-references, so their dice are grounded from
 /// published values rather than transcribed
-/// (`rules_tables::beastiary1::natural_attack_provenance`). This test
+/// (`rules_catalog::beastiary1::natural_attack_provenance`). This test
 /// previously asserted all three were attack-less, which mistook a
 /// missing corpus token for a missing attack.
 #[test]

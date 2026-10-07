@@ -5,7 +5,7 @@
 //!
 //! # Why this moved, and why it was not deleted
 //!
-//! `rules_tables::ultimate_magic::feat_tables::UmFeatEntry` carried an
+//! `rules_catalog::ultimate_magic::feat_tables::UmFeatEntry` carried an
 //! `effect: Option<&'static [&'static str]>` field holding every `BONUS:`
 //! and `DEFINE:` token of the corpus row, verbatim, in source order. It was
 //! the largest single non-test PCGen residue left on the live side — 75 of
@@ -23,7 +23,7 @@
 //!   | grep -v "effect: " | grep -v effect_text | grep -v "\.effect\.spell_id"
 //! ```
 //!
-//! Every remaining hit is `rules_tables::crb::feats::FeatTableEntry.effect`,
+//! Every remaining hit is `rules_catalog::crb::feats::FeatTableEntry.effect`,
 //! a typed `FeatEffectBonus` slice — a different field of a different type,
 //! owned by a different lane, and untouched here.
 //!
@@ -47,7 +47,7 @@
 use std::collections::HashMap;
 use std::sync::OnceLock;
 
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::RuleSetId;
 
 /// One relocated record's effect tokens: `(rule_set, index in that book's
 /// table, the record's `key`, the tokens in corpus source order)`.
@@ -146,7 +146,7 @@ pub fn um_feat_carries_effect(rule_set: RuleSetId, index: usize, key: &str) -> b
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::rules_core::rules_tables::ultimate_magic::feat_tables::feat_tables;
+    use codex::rules_core::rules_catalog::ultimate_magic::feat_tables::feat_tables;
 
     #[test]
     fn every_relocated_row_still_names_its_own_live_record() {

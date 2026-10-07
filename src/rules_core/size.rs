@@ -40,7 +40,7 @@
 //!    trait row's `TEMPLATE:SIZE_<code>`, falling back to the chassis'
 //!    `FACT:BaseSize|<code>`. Owned by `race_resolver::RACE_SIZES` /
 //!    `race_resolver::race_size_for_race_token`, which is the authority --
-//!    **not** `rules_tables::crb::race_tables::race_size`, which knew only
+//!    **not** `rules_catalog::crb::race_tables::race_size`, which knew only
 //!    the 7 hardcoded CRB races.
 //!  - **What that size multiplies capacity by**: `SIZEMULT:<code>|<value>`
 //!    in the PCGen Pathfinder game mode's

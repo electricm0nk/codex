@@ -14,16 +14,16 @@
 //! by direct grep, not assumed) — those classes draw from other books'
 //! spell lists (e.g. Arcanist from the arcane Sorcerer/Wizard list) with
 //! no ACG-specific `.lst` record of their own. This is a bootstrap/
-//! representative sample, mirroring `rules_tables::crb::equipment_tables`'s
+//! representative sample, mirroring `rules_catalog::crb::equipment_tables`'s
 //! own "one representative item per category" precedent — not exhaustive
-//! coverage. See `rules_tables::acg::spell_list`'s doc comment for the
+//! coverage. See `rules_catalog::acg::spell_list`'s doc comment for the
 //! full citation.
 
 use std::fs;
 use std::path::PathBuf;
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::acg::spell_list::{Pf1SchoolId, spell_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::acg::spell_list::{Pf1SchoolId, spell_resolve};
 
 #[test]
 fn blade_lash_resolves_via_ruleset_acg() {

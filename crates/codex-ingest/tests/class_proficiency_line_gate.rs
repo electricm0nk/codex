@@ -19,7 +19,7 @@
 use std::sync::OnceLock;
 
 use codex::rules_core::pilot_compute::class_proficiency_sheet_rules::{class_weapon_proficiency_view_in, ProficiencyAnswer};
-use codex::rules_core::rules_tables::crb::weapon_tables::WeaponProficiency;
+use codex::rules_core::rules_catalog::crb::weapon_tables::WeaponProficiency;
 use codex::rules_core::sheet_rule::{Applies, BonusTarget, Cmp, Expr, SheetRule, SheetRulePackage};
 use codex::rules_core::sheet_rule_package::load_package_from;
 use codex_ingest::pcgen_import::sheet_rule::convert_one;

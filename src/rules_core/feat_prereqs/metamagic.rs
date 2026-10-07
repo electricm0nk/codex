@@ -1,10 +1,10 @@
 //! SD-20 Epic 3, fourth and FINAL feat category (`scope-draft.md` §1.3
 //! work-unit order): CRB `Metamagic` feats. Landing this category closes
-//! Epic 3 — every feat category in `rules_tables::crb::feats::feat_tables()`
+//! Epic 3 — every feat category in `rules_catalog::crb::feats::feat_tables()`
 //! (General, Combat, ItemCreation, Metamagic) now has a landed per-category
 //! evaluation module.
 //!
-//! Reads `rules_tables::crb::feats::feat_tables()` directly (SD-19's
+//! Reads `rules_catalog::crb::feats::feat_tables()` directly (SD-19's
 //! foundation-slice catalog, landed at `04c3d08`) — never hand-rolled,
 //! per this cycle's own brief. Mirrors `feat_prereqs/general.rs`,
 //! `feat_prereqs/combat.rs`, and `feat_prereqs/item_creation.rs` exactly,
@@ -34,8 +34,9 @@
 //! outside this cycle's scope.
 
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::RuleSetId;
-use crate::rules_core::rules_tables::crb::feats::{feat_tables, FeatCategory};
+use crate::rules_core::rules_catalog::RuleSetId;
+use crate::rules_core::rules_catalog::crb::feats::{feat_tables, FeatCategory};
+use crate::rules_core::rules_catalog::COMPILED_MODULE_CITATION;
 
 /// Result of a bounded, catalog-membership-only prerequisite check for a
 /// `Metamagic`-category feat lookup. See this module's doc comment for the
@@ -67,7 +68,7 @@ pub fn evaluate_metamagic_feat_prerequisites(feat_id: &str) -> MetamagicFeatPrer
             is_eligible: false,
             failing_prerequisites: vec![format!(
                 "'{feat_id}' is not a recognized CRB Metamagic feat in the catalog \
-                 (rules_tables::crb::feats::feat_tables(), FeatCategory::Metamagic)"
+                 ({COMPILED_MODULE_CITATION}::crb::feats::feat_tables(), FeatCategory::Metamagic)"
             )],
         }
     }
@@ -112,7 +113,7 @@ pub fn resolve_metamagic_feat_effect(feat_id: &str) -> Option<MetamagicFeatEffec
 }
 
 fn matches_feat_id(
-    entry: &crate::rules_core::rules_tables::crb::feats::FeatTableEntry,
+    entry: &crate::rules_core::rules_catalog::crb::feats::FeatTableEntry,
     feat_id: &str,
 ) -> bool {
     entry.key == feat_id || entry.name == feat_id

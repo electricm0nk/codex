@@ -14,7 +14,7 @@
 //! (`codex::rules_core::pilot_compute::class_proficiency_sheet_rules`).
 
 use codex::rules_core::pilot_compute::class_proficiency_sheet_rules::{class_weapon_proficiency_view, ProficiencyAnswer};
-use codex::rules_core::rules_tables::crb::weapon_tables::WeaponProficiency;
+use codex::rules_core::rules_catalog::crb::weapon_tables::WeaponProficiency;
 
 fn tiers_at_level_1(class: &str) -> Vec<WeaponProficiency> {
     match class_weapon_proficiency_view(class, 1) {

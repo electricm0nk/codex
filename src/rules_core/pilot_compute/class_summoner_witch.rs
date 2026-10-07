@@ -2980,7 +2980,7 @@ pub(super) fn swashbuckler_deed_tier_reached(level: u8, tier: u8) -> bool {
 pub(super) const SWASHBUCKLER_INITIATIVE_BONUS: i16 = 2;
 
 /// Grounds the Unchained Summoner's named features
-/// (`rules_tables::pathfinder_unchained::summoner_features`).
+/// (`rules_catalog::pathfinder_unchained::summoner_features`).
 pub(super) fn ground_unchained_summoner_class_features(
     level: u8,
     ability_modifiers: &AbilityModifiers,
@@ -4207,7 +4207,7 @@ mod monk_and_summoner_chassis_recognition_tests {
         CharacterClassLevel, CharacterInput, MONK_CLASS_ID, SUMMONER_CLASS_ID,
     };
     use crate::rules_core::character_input::load_character_input_fixture;
-    use crate::rules_core::rules_tables::crb::class_tables::ClassId;
+    use crate::rules_core::rules_catalog::crb::class_tables::ClassId;
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"

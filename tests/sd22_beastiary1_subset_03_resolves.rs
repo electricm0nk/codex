@@ -29,8 +29,8 @@
 //! for the full grounding and the new `corpus-source-inventory.md` §3.1
 //! row this cycle adds for subset 3.
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
 
 #[test]
 fn bat_swarm_resolves_via_ruleset_bestiary1() {
@@ -104,7 +104,7 @@ fn boggard_returns_none_for_ruleset_apg_acg_crb() {
 /// - **Boar** really has a Gore; its row grants it via
 ///   `ABILITY:Internal|AUTOMATIC|Gore`, a reference that carries no dice
 ///   at any hop. Its `1d8` is grounded from published values
-///   (`rules_tables::beastiary1::natural_attack_provenance`).
+///   (`rules_catalog::beastiary1::natural_attack_provenance`).
 /// - **Bugbear** genuinely has no natural attack — it fights with
 ///   manufactured weapons per `AUTO:WEAPONPROF`. Its empty list is
 ///   correct and must stay empty.

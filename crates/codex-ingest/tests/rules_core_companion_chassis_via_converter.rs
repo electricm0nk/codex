@@ -10,7 +10,7 @@ use std::collections::BTreeMap;
 
 use codex_ingest::pcgen_import::ingest_record;
 
-/// This cycle's own build: proves `codex::rules_core::rules_tables::companion_chassis::GRANT_TOKEN_ONLY_DISPATCH_ROWS`'
+/// This cycle's own build: proves `codex::rules_core::rules_catalog::companion_chassis::GRANT_TOKEN_ONLY_DISPATCH_ROWS`'
 /// own claim, per record, against the live corpus AND the live
 /// `docs/work-inventory.json` -- never merely asserted in a doc
 /// comment. For each of the 12 named keys: (1) the corpus shape is
@@ -77,8 +77,8 @@ fn grant_token_only_rows_dispatch_to_already_held_content() {
             .unwrap_or_else(|| panic!("{key}: no corpus record found under {}", companion_dir.display()))
     };
 
-    assert_eq!(codex::rules_core::rules_tables::companion_chassis::GRANT_TOKEN_ONLY_DISPATCH_ROWS.len(), 12);
-    for (key, _reason) in codex::rules_core::rules_tables::companion_chassis::GRANT_TOKEN_ONLY_DISPATCH_ROWS {
+    assert_eq!(codex::rules_core::rules_catalog::companion_chassis::GRANT_TOKEN_ONLY_DISPATCH_ROWS.len(), 12);
+    for (key, _reason) in &codex::rules_core::rules_catalog::companion_chassis::GRANT_TOKEN_ONLY_DISPATCH_ROWS {
         let doc = find_by_key(key);
         let has_modelled_token = ingest_record::token_keys(doc)
             .into_iter()

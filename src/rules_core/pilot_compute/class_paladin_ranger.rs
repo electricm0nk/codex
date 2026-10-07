@@ -2325,7 +2325,7 @@ pub(super) fn explain_paladin_level1_chassis_and_spell_burden_separation(
 /// paladin's own class level (no other producer sets it), used as the
 /// at-will spell-like ability's caster level. Race-independent,
 /// level-gate-only, the identical shape as the Antipaladin's own mirror
-/// feature, `rules_tables::apg::antipaladin_features::
+/// feature, `rules_catalog::apg::antipaladin_features::
 /// detect_good_caster_level` (`decisions.md §22`'s "FURTHER UPDATE,
 /// 2026-09-04": this class had the identical structural precedent already
 /// built for its own mirror class, just never symmetrically added here).
@@ -5348,7 +5348,7 @@ mod ranger_dispatch_widening_safety_tests {
     /// vacuous check would pass both this test's absence and the empty-case
     /// test identically. This proves a real, *non-empty*, genuinely valid
     /// prepared spell also reaches `Computed`: "Alarm" is a real 1st-level
-    /// ranger spell (`rules_tables::crb::ranger_spell_list`), accessible at
+    /// ranger spell (`rules_catalog::crb::ranger_spell_list`), accessible at
     /// ranger level 4 (spells begin at ranger level 4), and fits the real
     /// total budget at that level (base 0 + Wisdom-12 bonus 1 = 1 slot,
     /// exactly matching this fixture's own
@@ -5920,7 +5920,7 @@ mod paladin_dispatch_widening_safety_tests {
 /// anywhere in the engine before this cycle), both pure class-level
 /// pass-throughs following the exact structural precedent already built for
 /// the Antipaladin's own mirror features (`aura_of_evil_strength_level` /
-/// `detect_good_caster_level`, `rules_tables::apg::antipaladin_features`).
+/// `detect_good_caster_level`, `rules_catalog::apg::antipaladin_features`).
 /// These tests prove both formulas directly AND prove each explanation id
 /// is actually reachable through the real pipeline end to end -- the same
 /// "unit test the formula, then also prove reachability" discipline wave

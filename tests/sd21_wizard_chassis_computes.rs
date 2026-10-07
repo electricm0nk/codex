@@ -11,7 +11,7 @@
 //!
 //! This slice refactors `compute_pilot_base_chassis` into a per-class dispatch (single-
 //! class only; multiclass stays deferred to Epic 7) and adds `compute_wizard_chassis`,
-//! which composes `rules_tables::crb::class_tables::class_tables()`'s already-verified
+//! which composes `rules_catalog::crb::class_tables::class_tables()`'s already-verified
 //! Wizard `BabProgression::Half` / good-Will-only `GoodSaves` row (spot-checked against
 //! `pilot_compute.rs`'s own Wizard formulas by `level_up/wizard.rs`'s SD-20 cycle) rather
 //! than re-deriving the progression. The acceptance reproducer is a single-class Human

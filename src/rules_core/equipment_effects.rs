@@ -39,7 +39,7 @@
 //! path every other SD-19/20 corpus-derived field uses, and category
 //! membership comes from a `TableCellRef`-style lookup by the resolved
 //! record's `KEY:` token against the canonical
-//! `rules_tables::crb::equipment_tables` store — not re-derived from raw
+//! `rules_catalog::crb::equipment_tables` store — not re-derived from raw
 //! corpus text.
 //!
 //! ## SD-35 `AT-35-E6-003-RULED` cycles 11 and 12 — where these values now come from
@@ -75,8 +75,8 @@ use crate::rules_core::equipment_resolver::{
     equipment_converted_resolve, equipment_id_resolve,
 };
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::equipment_tables::{equipment_tables, EquipmentCategory};
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::crb::equipment_tables::{equipment_tables, EquipmentCategory};
+use crate::rules_core::rules_catalog::RuleSetId;
 use crate::rules_core::source_content::SourcePackageContent;
 
 /// The settled records of the modifier items attached to this one, resolved

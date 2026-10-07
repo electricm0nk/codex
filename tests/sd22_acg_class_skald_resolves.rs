@@ -27,14 +27,14 @@
 //! `hand_transcribed_chassis_matches_the_real_lst_bonus_tokens` below
 //! re-parses that exact line (real-corpus-gated on `PCGEN_CORPUS_ROOT`)
 //! so the hand-transcribed chassis constants in
-//! `rules_tables::acg::class_skald` stay tied to the source record
+//! `rules_catalog::acg::class_skald` stay tied to the source record
 //! rather than to memory.
 
 use std::fs;
 use std::path::PathBuf;
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::acg::{AcgClassId, class_chassis_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::acg::{AcgClassId, class_chassis_resolve};
 
 #[test]
 fn skald_level_1_chassis_resolves_via_ruleset_acg() {

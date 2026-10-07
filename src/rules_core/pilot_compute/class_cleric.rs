@@ -1422,7 +1422,7 @@ pub(super) fn cleric_touch_of_good_bonus(level: u8) -> i16 {
 /// `cr_abilities_class.lst:2874-2877`) displays which DESC-prose tier
 /// (faint at 1, moderate at 2-4, strong at 5-10, overwhelming at 11+) --
 /// the identical shape and tier breakpoints as the Antipaladin's own mirror
-/// feature, `rules_tables::apg::antipaladin_features::
+/// feature, `rules_catalog::apg::antipaladin_features::
 /// aura_of_evil_strength_level` (`decisions.md §22`'s "FURTHER UPDATE,
 /// 2026-09-04": this class had the identical structural precedent already
 /// built for its own mirror class, just never symmetrically added here).

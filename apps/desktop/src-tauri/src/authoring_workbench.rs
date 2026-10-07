@@ -210,6 +210,18 @@ pub fn codex_repo_root() -> Result<PathBuf, String> {
         .ok_or_else(|| "cannot determine codex repo root from CARGO_MANIFEST_DIR".to_string())
 }
 
+/// Bind the repo root [`codex_repo_root`] resolves as the root the Pathfinder rules tables are
+/// read from (`data/rules_tables/`, the package every rules-table importer reads through
+/// `codex::rules_core::rules_catalog`). A packaged build has no checkout, and the library's own
+/// default is the compile-time checkout, which does not exist on a tester's machine; so the
+/// desktop's startup calls this right after [`set_app_resource_dir`], before any table is read.
+pub fn bind_rules_tables_package_root() {
+    match codex_repo_root() {
+        Ok(root) => codex::rules_core::rules_data_package::use_repo_root(root),
+        Err(err) => eprintln!("Rules tables package root unresolved ({err}); the library default applies"),
+    }
+}
+
 /// The first candidate root, in priority order, whose `data/corpus`
 /// subdirectory actually exists on disk — the selection rule behind step 2
 /// of [`codex_repo_root`]'s doc comment, split out as a pure function of an
@@ -472,6 +484,67 @@ pub fn build_authoring_workbench_snapshot(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The variable that turns [`rules_tables_from_a_packaged_resource_root_probe`] on: the staged
+    /// resource root its parent test built.
+    const RULES_TABLES_PROBE: &str = "CODEX_RULES_TABLES_PACKAGED_ROOT_PROBE";
+
+    /// SD-37 E4a.2: a packaged app reads the Pathfinder rules tables from its bundled resources
+    /// (`data/rules_tables/`, laid out by `tauri.conf.json`), not from the build machine's
+    /// checkout. A resource root is staged with the `data/corpus` marker `codex_repo_root` looks
+    /// for and ONE package table whose first row is edited; a child process of this test binary,
+    /// with `CODEX_REPO_ROOT` unset and `CODEX_DESKTOP_RESOURCE_DIR` naming the staged root,
+    /// runs the startup binding and reads that table through the catalog. The checkout's own
+    /// table does not carry the edit, so only a read from the staged root can pass.
+    #[test]
+    fn a_packaged_app_reads_the_rules_tables_from_its_resource_root() {
+        let staged = std::env::temp_dir().join(format!("codex-rules-tables-packaged-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&staged);
+        std::fs::create_dir_all(staged.join(GameSystem::Pathfinder1e.corpus_relative())).expect("corpus dir");
+        let table = "crb/class_tables/class_tables.json";
+        let source = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../data/rules_tables").join(table);
+        let mut package: serde_json::Value =
+            serde_json::from_str(&std::fs::read_to_string(&source).expect("read the package table")).expect("parse it");
+        package["rows"][0]["base_attack_bonus"] = serde_json::json!(77);
+        let target = staged.join("data/rules_tables").join(table);
+        std::fs::create_dir_all(target.parent().expect("parent")).expect("package dir");
+        std::fs::write(&target, serde_json::to_string(&package).expect("serialise")).expect("write the staged table");
+
+        let output = std::process::Command::new(std::env::current_exe().expect("test binary"))
+            .args(["authoring_workbench::tests::rules_tables_from_a_packaged_resource_root_probe", "--exact", "--ignored", "--nocapture"])
+            .env_remove("CODEX_REPO_ROOT")
+            .env("CODEX_DESKTOP_RESOURCE_DIR", &staged)
+            .env(RULES_TABLES_PROBE, "1")
+            .output()
+            .expect("the probe runs");
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        std::fs::remove_dir_all(&staged).ok();
+        assert!(stdout.contains("1 passed"), "the probe must run and pass:\n{stdout}\n{stderr}");
+    }
+
+    /// Runs only as the child of [`a_packaged_app_reads_the_rules_tables_from_its_resource_root`].
+    #[test]
+    #[ignore = "child process of a_packaged_app_reads_the_rules_tables_from_its_resource_root"]
+    fn rules_tables_from_a_packaged_resource_root_probe() {
+        if std::env::var_os(RULES_TABLES_PROBE).is_none() {
+            return;
+        }
+        bind_rules_tables_package_root();
+        let rows = codex::rules_core::rules_catalog::crb::class_tables::class_tables();
+        assert_eq!(rows[0].base_attack_bonus, 77, "the first row is the staged resource root's, not the checkout's");
+    }
+
+    /// The startup binding is wired: `main`'s Tauri setup calls it, after the resource directory
+    /// is known and before the first table read.
+    #[test]
+    fn the_desktop_startup_binds_the_rules_tables_package_root() {
+        let main = std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join("src/main.rs")).expect("read main.rs");
+        let resource_dir = main.find("authoring_workbench::set_app_resource_dir(").expect("sets the resource dir");
+        let bind = main.find("authoring_workbench::bind_rules_tables_package_root()").expect("binds the package root");
+        let first_read = main.find("character_hub::seed_default_character_if_needed(").expect("seeds the default character");
+        assert!(resource_dir < bind && bind < first_read, "bind after the resource dir, before the first table read");
+    }
 
     /// The packaged-build fix this test pins: given a candidate root list
     /// like the one Tauri's own resolved resource directory would produce

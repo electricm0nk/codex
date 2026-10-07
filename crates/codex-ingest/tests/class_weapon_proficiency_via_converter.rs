@@ -23,7 +23,7 @@ use std::sync::OnceLock;
 use codex::rules_core::pilot_compute::class_proficiency_sheet_rules::{
     class_weapon_proficiency_view, class_weapon_proficiency_view_in, ClassWeaponProficiencyView, ProficiencyAnswer,
 };
-use codex::rules_core::rules_tables::crb::weapon_tables::{WeaponProficiency, CLASS_WEAPON_PROFICIENCIES};
+use codex::rules_core::rules_catalog::crb::weapon_tables::{WeaponProficiency, CLASS_WEAPON_PROFICIENCIES};
 use codex::rules_core::sheet_rule::{
     Applies, Effect, Fact, Grant, Granter, ProfRef, Provenance, SheetRule, SheetRulePackage, SheetValue, Subject,
 };
@@ -196,7 +196,7 @@ const KNOWN_DISAGREEMENTS: &[(&str, Disagreement, &str)] = &[];
 fn every_static_row_equals_the_reader_answer() {
     assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 42, "the static table is 42 rows");
     let mut actual: BTreeMap<String, (Disagreement, String)> = BTreeMap::new();
-    for row in CLASS_WEAPON_PROFICIENCIES {
+    for row in &CLASS_WEAPON_PROFICIENCIES {
         let class = slug_of(row.class_id);
         let view = match class_weapon_proficiency_view(class, 1) {
             ProficiencyAnswer::Known(view) => view,

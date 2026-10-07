@@ -119,7 +119,7 @@ fn wizard_level1_base_attack_and_saves_are_now_wired_into_integrated_totals() {
     // class fabricated a `base_attack_bonus: 0` / absent generic explanation) as a
     // negative control. `compute_pilot_base_chassis` now dispatches per-class via
     // `compute_class_chassis`, and a new `compute_wizard_chassis` composes
-    // `rules_tables::crb::class_tables::class_tables()`'s already-verified Wizard row
+    // `rules_catalog::crb::class_tables::class_tables()`'s already-verified Wizard row
     // to wire `base_attack_bonus` / `base_saves` for real — mirroring the identical
     // "superseded, not violated" idiom this file's own
     // `wizard_level_2/3/4/5_was_later_widened_into_the_supported_tranche` negative

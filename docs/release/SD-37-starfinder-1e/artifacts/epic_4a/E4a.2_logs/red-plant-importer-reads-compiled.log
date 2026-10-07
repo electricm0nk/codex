@@ -1,0 +1,14 @@
+
+---- an_importer_answers_from_the_package_it_is_pointed_at stdout ----
+
+thread 'an_importer_answers_from_the_package_it_is_pointed_at' (3443652) panicked at tests/rules_catalog_reads_the_package.rs:57:5:
+the planted package row names Appraise as a Fighter class skill
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    an_importer_answers_from_the_package_it_is_pointed_at
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `--test rules_catalog_reads_the_package`

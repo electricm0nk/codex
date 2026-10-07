@@ -18,7 +18,7 @@ use codex::rules_core::character_input::{ActiveState, EquipmentSelection};
 use codex::rules_core::encumbrance::{
     compute_encumbrance, carrying_capacity_thresholds, CarryingCapacityThresholds, EncumbranceLevel,
 };
-use codex::rules_core::rules_tables::crb::race_tables::{race_size_for_race_id, RaceId};
+use codex::rules_core::rules_catalog::crb::race_tables::{race_size_for_race_id, RaceId};
 use codex::rules_core::size::SizeCategory;
 use codex_ingest::pcgen_import::ir_converter::convert_equipment_record;
 use codex_ingest::pcgen_import::lst_parser::equipment::{parse_equipment_entries, EquipmentRecord};

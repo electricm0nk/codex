@@ -1,5 +1,5 @@
 //! Per-class spell levels — Tauri command adapter over the engine's
-//! `rules_tables::class_spell_levels` dispatch.
+//! `rules_catalog::class_spell_levels` dispatch.
 //!
 //! **Why this command exists.** `spell_catalog.rs` serves each spell
 //! record's own `level`, which is the MINIMUM spell level across every
@@ -32,7 +32,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 use std::sync::OnceLock;
 
-use codex::rules_core::rules_tables::class_spell_levels;
+use codex::rules_core::rules_catalog::class_spell_levels;
 use codex::rules_core::sheet_rule::{self, Effect, SheetRule};
 
 use crate::authoring_workbench::codex_repo_root;

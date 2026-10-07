@@ -12,7 +12,7 @@
 //! Builds a minimal in-memory corpus via
 //! `pcgen_import::lst_parser::spell::parse_lst_spell_row` (a single real
 //! `cr_spells.lst`-shaped row for "Shield", independently confirmed
-//! against `rules_tables::crb::spell_list::SPELL_LIST`'s own Abjuration
+//! against `rules_catalog::crb::spell_list::SPELL_LIST`'s own Abjuration
 //! entry before this test was written — school Abjuration, level 1,
 //! per the loop instruction's Step 4 corpus-existence check) rather than
 //! depending on `CORPUS_ROOT` or hand-copying the full corpus file --
@@ -25,7 +25,7 @@ use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, CharacterClassLevel, CharacterInput, ChosenCharacterState,
     SpellSelection,
 };
-use codex::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
+use codex::rules_core::rules_catalog::crb::spell_list::Pf1SchoolId;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 use codex::rules_core::spellbook::compute_spellbook_coverage;
 

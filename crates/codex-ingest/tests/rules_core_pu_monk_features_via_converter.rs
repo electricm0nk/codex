@@ -1,6 +1,6 @@
 // -- split from `tests` in src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs (pcgen-touching items only) --
 mod tests {
-    use codex::rules_core::rules_tables::pathfinder_unchained::monk_features::*;
+    use codex::rules_core::rules_catalog::pathfinder_unchained::monk_features::*;
     use codex_ingest::pcgen_import::ingest_record;
     use std::path::PathBuf;
 

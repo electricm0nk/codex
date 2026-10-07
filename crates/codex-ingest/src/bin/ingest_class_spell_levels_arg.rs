@@ -11,7 +11,7 @@
 //! and siblings). **The Advanced Race Guide was ingested later and never got the
 //! same treatment**, so all 92 ARG spells had no per-class level anywhere in the
 //! repo. This binary emits that missing table:
-//! `rules_tables::advanced_race_guide::class_spell_levels`.
+//! `rules_catalog::advanced_race_guide::class_spell_levels`.
 //!
 //! **It also verifies itself against the three books that already have tables.**
 //! `--verify` re-parses `cr_spells.lst`, `apg_spells.lst` and `acg_spells.lst`
@@ -267,8 +267,8 @@ fn emit_module(by_class: &BTreeMap<String, Vec<(String, u8)>>, record_count: usi
         classes = mapped.len(),
     ));
     out.push_str(
-        "/// `(class id, &[(spell key, that class's spell level)])`, classes and\n\
-         /// spell keys both sorted. Chained by `rules_tables::class_spell_levels`.\n\
+        concat!("/// `(class id, &[(spell key, that class's spell level)])`, classes and\n\
+         /// spell keys both sorted. Chained by `rules_tables", "::class_spell_levels`.\n\
          ///\n\
          /// The `allow` is for `src/bin/gen_book_cache.rs`, which still\n\
          /// `#[path]`-includes this book's `mod.rs` a second time into its own\n\
@@ -276,7 +276,7 @@ fn emit_module(by_class: &BTreeMap<String, Vec<(String, u8)>>, record_count: usi
          /// in `rules_tables/mod.rs` — and nothing in that binary consumes this\n\
          /// table, so the duplicate compilation reports it dead.\n\
          #[allow(dead_code)]\n\
-         pub const ARG_CLASS_SPELL_LEVELS: &[(&str, &[(&str, u8)])] = &[\n",
+         pub const ARG_CLASS_SPELL_LEVELS: &[(&str, &[(&str, u8)])] = &[\n"),
     );
     for (class_id, entries) in &mapped {
         out.push_str(&format!("    ({}, &[\n", rust_str(class_id)));
@@ -360,7 +360,7 @@ fn main() {
     // Scanned across all four files together, because a record defined in
     // one book can be granted to a class by a `.MOD` row in another.
     {
-        use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb};
+        use codex::rules_core::rules_catalog::{acg, advanced_race_guide, apg, crb};
 
         let mut mapped: BTreeSet<String> = BTreeSet::new();
         for rel in [CRB_SPELLS, APG_SPELLS, ACG_SPELLS, ARG_SPELLS] {
@@ -394,7 +394,7 @@ fn main() {
     }
 
     if do_verify {
-        use codex::rules_core::rules_tables::{acg, apg, crb};
+        use codex::rules_core::rules_catalog::{acg, apg, crb};
 
         let mut three_books: Vec<SpellClasses> = Vec::new();
         for rel in [CRB_SPELLS, APG_SPELLS, ACG_SPELLS] {
@@ -406,18 +406,18 @@ fn main() {
             three_books.len()
         );
         let checks: Vec<ShippedTableCheck> = vec![
-            ("crb::wizard", "Wizard", crb::wizard_spell_list::WIZARD_SPELL_LIST),
-            ("crb::sorcerer", "Sorcerer", crb::sorcerer_spell_list::SORCERER_SPELL_LIST),
-            ("crb::bard", "Bard", crb::bard_spell_list::BARD_SPELL_LIST),
-            ("crb::cleric", "Cleric", crb::cleric_spell_list::CLERIC_SPELL_LIST),
-            ("crb::druid", "Druid", crb::druid_spell_list::DRUID_SPELL_LIST),
-            ("crb::paladin", "Paladin", crb::paladin_spell_list::PALADIN_SPELL_LIST),
-            ("crb::ranger", "Ranger", crb::ranger_spell_list::RANGER_SPELL_LIST),
-            ("apg::alchemist", "Alchemist", apg::alchemist_spell_list::ALCHEMIST_SPELL_LIST),
-            ("apg::inquisitor", "Inquisitor", apg::inquisitor_spell_list::INQUISITOR_SPELL_LIST),
-            ("apg::witch", "Witch", apg::witch_spell_list::WITCH_SPELL_LIST),
-            ("acg::bloodrager", "Bloodrager", acg::bloodrager_spell_list::BLOODRAGER_SPELL_LIST),
-            ("acg::shaman", "Shaman", acg::shaman_spell_list::SHAMAN_SPELL_LIST),
+            ("crb::wizard", "Wizard", &crb::wizard_spell_list::WIZARD_SPELL_LIST),
+            ("crb::sorcerer", "Sorcerer", &crb::sorcerer_spell_list::SORCERER_SPELL_LIST),
+            ("crb::bard", "Bard", &crb::bard_spell_list::BARD_SPELL_LIST),
+            ("crb::cleric", "Cleric", &crb::cleric_spell_list::CLERIC_SPELL_LIST),
+            ("crb::druid", "Druid", &crb::druid_spell_list::DRUID_SPELL_LIST),
+            ("crb::paladin", "Paladin", &crb::paladin_spell_list::PALADIN_SPELL_LIST),
+            ("crb::ranger", "Ranger", &crb::ranger_spell_list::RANGER_SPELL_LIST),
+            ("apg::alchemist", "Alchemist", &apg::alchemist_spell_list::ALCHEMIST_SPELL_LIST),
+            ("apg::inquisitor", "Inquisitor", &apg::inquisitor_spell_list::INQUISITOR_SPELL_LIST),
+            ("apg::witch", "Witch", &apg::witch_spell_list::WITCH_SPELL_LIST),
+            ("acg::bloodrager", "Bloodrager", &acg::bloodrager_spell_list::BLOODRAGER_SPELL_LIST),
+            ("acg::shaman", "Shaman", &acg::shaman_spell_list::SHAMAN_SPELL_LIST),
         ];
         let mut all_match = true;
         for (label, corpus_class, shipped) in checks {

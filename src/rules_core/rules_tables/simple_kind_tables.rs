@@ -78,13 +78,13 @@ pub fn kind_dir_for(kind: &str) -> Option<&'static str> {
 pub struct SimpleKindTable {
     pub kind: String,
     pub dir: &'static str,
-    records: BTreeMap<(String, String), SimpleKindRecord>,
+    pub(crate) records: BTreeMap<(String, String), SimpleKindRecord>,
     /// `"{book}:{source_file}:{source_line}"` -> `(book, key)`, populated
     /// ONLY for records whose own JSON carries a `rename.coordinate`
     /// (PI-masked records -- `decisions.md §14`). Never built from a
     /// derived or guessed coordinate, only the one the record's own
     /// ingestion already wrote down.
-    by_coordinate: BTreeMap<String, (String, String)>,
+    pub(crate) by_coordinate: BTreeMap<String, (String, String)>,
 }
 
 impl SimpleKindTable {

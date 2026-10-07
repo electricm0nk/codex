@@ -73,8 +73,8 @@
 //! literal, confirming the two are the same value end to end.
 
 use codex::rules_core::encounters::{CharacterSnapshot, Difficulty, Encounter, MonsterRef};
-use codex::rules_core::rules_tables::beastiary1::{monster_resolve, MonsterId};
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::{monster_resolve, MonsterId};
+use codex::rules_core::rules_catalog::RuleSetId;
 
 /// The happy-path integration test itself: build a party fixture, resolve
 /// a real ingested monster-block fixture, feed both into `Encounter::new`,

@@ -13,7 +13,7 @@ use codex::rules_core::pilot_compute::class_facts_sheet_rules::{
     class_facts, CasterLevelFact, WeaponFactSource, WeaponFacts,
 };
 use codex::rules_core::pilot_compute::class_skill_sheet_rules::ClassSkillAnswer;
-use codex::rules_core::rules_tables::crb::weapon_tables::WeaponProficiency;
+use codex::rules_core::rules_catalog::crb::weapon_tables::WeaponProficiency;
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]

@@ -17,8 +17,8 @@
 //! `Hell Hound (Nessian)` (line 231) is a parenthetical sub-variant and
 //! excluded, same rule every prior subset has used.
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
 
 #[test]
 fn doppelganger_resolves_via_ruleset_bestiary1() {
@@ -33,7 +33,7 @@ fn doppelganger_resolves_via_ruleset_bestiary1() {
     assert_eq!(monster.source_page, "p.89");
     assert_eq!(
         monster.natural_attacks,
-        vec![codex::rules_core::rules_tables::beastiary1::NaturalAttack {
+        vec![codex::rules_core::rules_catalog::beastiary1::NaturalAttack {
             name: "Claw".to_string(),
             damage_dice: "1d8".to_string(),
         }]
@@ -144,11 +144,11 @@ fn racesubtype_and_natural_attack_variety_across_subset_08() {
     assert_eq!(
         ettercap.natural_attacks,
         vec![
-            codex::rules_core::rules_tables::beastiary1::NaturalAttack {
+            codex::rules_core::rules_catalog::beastiary1::NaturalAttack {
                 name: "Bite".to_string(),
                 damage_dice: "1d6".to_string(),
             },
-            codex::rules_core::rules_tables::beastiary1::NaturalAttack {
+            codex::rules_core::rules_catalog::beastiary1::NaturalAttack {
                 name: "Claw".to_string(),
                 damage_dice: "1d4".to_string(),
             },
@@ -164,7 +164,7 @@ fn racesubtype_and_natural_attack_variety_across_subset_08() {
     assert_eq!(gelatinous_cube.source_page, "p.138");
     assert_eq!(
         gelatinous_cube.natural_attacks,
-        vec![codex::rules_core::rules_tables::beastiary1::NaturalAttack {
+        vec![codex::rules_core::rules_catalog::beastiary1::NaturalAttack {
             name: "Slam".to_string(),
             damage_dice: "1d6".to_string(),
         }]
@@ -178,7 +178,7 @@ fn racesubtype_and_natural_attack_variety_across_subset_08() {
     assert_eq!(hell_hound.source_page, "p.173");
     assert_eq!(
         hell_hound.natural_attacks,
-        vec![codex::rules_core::rules_tables::beastiary1::NaturalAttack {
+        vec![codex::rules_core::rules_catalog::beastiary1::NaturalAttack {
             name: "Bite".to_string(),
             damage_dice: "1d8".to_string(),
         }]

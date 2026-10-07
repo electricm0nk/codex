@@ -4,7 +4,7 @@
 //!
 //! ## Why this exists
 //!
-//! `rules_tables::{ultimate_psionics,ultimate_combat,ultimate_intrigue,
+//! `rules_catalog::{ultimate_psionics,ultimate_combat,ultimate_intrigue,
 //! ultimate_magic}::equipment_tables` are full, oracle-verified,
 //! already-shipped-to-the-player-catalog per-book equipment tables --
 //! `equipment_resolver::equipment_catalog_rows()` already chains them, so
@@ -122,7 +122,7 @@ fn ultimate_psionics_entries() -> Vec<SourceEntry> {
     // was live. `equipmod_tables()`'s population was simply never reached
     // by this generator at all, which is the real defect
     // (`decisions.md §20`).
-    use codex::rules_core::rules_tables::ultimate_psionics::equipment_tables as t;
+    use codex::rules_core::rules_catalog::ultimate_psionics::equipment_tables as t;
     t::equipment_tables()
         .iter()
         .chain(t::equipmod_tables())
@@ -138,7 +138,7 @@ fn ultimate_psionics_entries() -> Vec<SourceEntry> {
 }
 
 fn ultimate_combat_entries() -> Vec<SourceEntry> {
-    use codex::rules_core::rules_tables::ultimate_combat::equipment_tables as t;
+    use codex::rules_core::rules_catalog::ultimate_combat::equipment_tables as t;
     t::equipment_tables()
         .iter()
         .chain(t::equipmod_tables())
@@ -154,7 +154,7 @@ fn ultimate_combat_entries() -> Vec<SourceEntry> {
 }
 
 fn ultimate_intrigue_entries() -> Vec<SourceEntry> {
-    use codex::rules_core::rules_tables::ultimate_intrigue::equipment_tables as t;
+    use codex::rules_core::rules_catalog::ultimate_intrigue::equipment_tables as t;
     t::equipment_tables()
         .iter()
         .chain(t::equipmod_tables())
@@ -175,7 +175,7 @@ fn ultimate_magic_entries() -> Vec<SourceEntry> {
     // `EquipmentCategory` enum has no `Equipmods` variant to format -- so
     // chaining it in here is a genuine no-op, kept only so this adapter has
     // the same shape as its three siblings rather than a special case.
-    use codex::rules_core::rules_tables::ultimate_magic::equipment_tables as t;
+    use codex::rules_core::rules_catalog::ultimate_magic::equipment_tables as t;
     t::equipment_tables()
         .iter()
         .chain(t::equipmod_tables())
@@ -393,7 +393,7 @@ mod tests {
 
     #[test]
     fn ultimate_magic_adapter_chains_an_empty_equipmod_tables_and_adds_nothing() {
-        use codex::rules_core::rules_tables::ultimate_magic::equipment_tables as t;
+        use codex::rules_core::rules_catalog::ultimate_magic::equipment_tables as t;
         let entries = ultimate_magic_entries();
         assert!(!entries.is_empty());
         // UM's `equipmod_tables()` is a genuinely empty slice (confirmed by
@@ -423,7 +423,7 @@ mod tests {
         // docs/work-inventory.json`, join `no_record` rows whose
         // `corpus_key` matches an `equipmod_tables()` entry in
         // `ultimate_psionics`/`ultimate_combat`/`ultimate_intrigue`).
-        use codex::rules_core::rules_tables::ultimate_psionics::equipment_tables as t;
+        use codex::rules_core::rules_catalog::ultimate_psionics::equipment_tables as t;
         let entries = ultimate_psionics_entries();
         let total = t::equipment_tables().len() + t::equipmod_tables().len();
         assert_eq!(entries.len(), total, "must chain equipment_tables() AND equipmod_tables()");

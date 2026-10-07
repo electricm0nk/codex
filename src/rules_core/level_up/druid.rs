@@ -15,7 +15,7 @@
 //! **Deliberate deviation from the Barbarian cycle's pattern (not a
 //! blocker, a documented finding):** Barbarian's cycle (`barbarian.rs`)
 //! sourced base-attack/base-save from
-//! `rules_tables::crb::class_tables::class_tables()` and only its
+//! `rules_catalog::crb::class_tables::class_tables()` and only its
 //! class-specific pillars from `pilot_compute.rs`'s chassis explanations.
 //! This module does NOT read `class_tables()` at all. The original reason
 //! was a real `CLASS_META` bug: `ClassId::Druid` used to carry
@@ -82,7 +82,7 @@ use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan};
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::RuleSetId;
 
 const DRUID_CLASS_ID: &str = "class:druid";
 const HUMAN_RACE_ID: &str = "race:human";

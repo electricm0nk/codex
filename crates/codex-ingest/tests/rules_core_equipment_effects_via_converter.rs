@@ -259,7 +259,7 @@ mod book_agnostic_resolution_tests {
     use codex::rules_core::equipment_effects::*;
     use codex::rules_core::source_content::SourcePackageContent;
     use codex::rules_core::character_input::EquipmentSelection;
-    use codex::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory;
+    use codex::rules_core::rules_catalog::crb::equipment_tables::EquipmentCategory;
     use codex_ingest::pcgen_import::ir_converter::convert_equipment_record;
     use codex_ingest::pcgen_import::lst_parser::equipment::{parse_equipment_entries, EquipmentRecord};
     use codex::rules_core::character_input::ActiveState;

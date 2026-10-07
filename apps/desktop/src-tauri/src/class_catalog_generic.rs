@@ -6,7 +6,7 @@
 //!
 //! `decisions.md §17` ("stop treating every object as a snowflake... a
 //! generic ingest already exists") rules directly against the shape the
-//! existing `rules_tables::crb::class_tables` layer used (137,002
+//! existing `rules_catalog::crb::class_tables` layer used (137,002
 //! hand-authored lines across the CRB/PU classes). Every conventional class
 //! carries its own base-attack-bonus and three base-save progressions, so one
 //! generic function serves them all rather than 62 per-class match arms.
@@ -77,8 +77,8 @@ use std::path::Path;
 
 use codex::rules_core::game_system::{BookRegistry, GameSystem};
 use codex::rules_core::pilot_compute::class_chassis_sheet_rules;
-use codex::rules_core::rules_tables::crb::class_tables::class_tables;
-use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
+use codex::rules_core::rules_catalog::crb::class_tables::class_tables;
+use codex::rules_core::rules_catalog::pathfinder_unchained::class_chassis::PuClassId;
 
 use crate::class_catalog::ClassCatalogEntryDto;
 

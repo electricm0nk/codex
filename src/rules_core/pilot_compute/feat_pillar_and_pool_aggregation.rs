@@ -526,14 +526,14 @@ pub(super) enum PreparedSpellLevel {
 /// class in its `CLASSES:` token — so a Wizard 1 could prepare
 /// `Hideous Laughter` (`CLASSES:Bard=1|Sorcerer,Wizard=2`, record level 1)
 /// although a Wizard learns it at 2. This resolves through
-/// `rules_tables::class_spell_levels`, which holds the per-class answer for
+/// `rules_catalog::class_spell_levels`, which holds the per-class answer for
 /// all four books.
 ///
 /// **Unknown is a refusal, never a default.** A spell with no stated level
 /// for this class comes back [`PreparedSpellLevel::Unknown`] carrying why;
 /// callers push that onto their unmet list. Falling back to the record's
 /// minimum level is precisely the wrong number
-/// `rules_tables::class_spell_levels` exists to remove, and inventing one
+/// `rules_catalog::class_spell_levels` exists to remove, and inventing one
 /// would violate `docs/governance/no-stub-mvp-doctrine.md`.
 pub(super) fn resolve_prepared_spell_level(class_id: &str, spell_id: &str) -> PreparedSpellLevel {
     if let Some(level) = class_spell_levels::class_spell_level(class_id, spell_id) {
@@ -3278,7 +3278,7 @@ mod converted_record_proficiency_fallback_tests {
         CharacterClassLevel, CharacterInput, WeaponProficiencyVerdict,
     };
     use crate::rules_core::character_input::load_character_input_fixture;
-    use crate::rules_core::rules_tables::crb::weapon_tables::{
+    use crate::rules_core::rules_catalog::crb::weapon_tables::{
         self, WeaponProficiency, WeaponTableEntry,
     };
     use crate::rules_core::sheet_rule::{Effect, Fact, ProfRef};

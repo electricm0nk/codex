@@ -1,0 +1,244 @@
+//! The package-backed catalog against the compiled tables, for the pieces the generator cannot
+//! derive from a table's own rows: the lookups built over a table (`monster_resolve`, the
+//! Unchained chassis, the psionic power-point ladders), the registries that name other tables,
+//! and the lookups that read them. Every comparison is catalog result == compiled result over
+//! the whole domain the compiled function answers for.
+//! (Hand-written; the one-to-one table and view comparisons are `equivalence_tests`.)
+
+use crate::rules_core::rules_catalog as cat;
+use crate::rules_core::rules_tables as rt;
+use cat::RuleSetId as Catalog;
+use rt::RuleSetId;
+
+const RULE_SETS: [RuleSetId; 4] = [
+    RuleSetId::Crb,
+    RuleSetId::Bestiary1,
+    RuleSetId::Pu,
+    RuleSetId::Apg,
+];
+
+#[test]
+fn the_power_point_ladders_equal_the_compiled_functions_over_every_level_and_modifier() {
+    macro_rules! ladder {
+        ($module:ident, $name:ident) => {
+            for level in 0..=40u8 {
+                for modifier in -5..=12i16 {
+                    assert_eq!(
+                        cat::ultimate_psionics::$module::$name(level, modifier),
+                        rt::ultimate_psionics::$module::$name(level, modifier),
+                        concat!(stringify!($name), " level {} modifier {}"),
+                        level,
+                        modifier
+                    );
+                }
+            }
+        };
+    }
+    ladder!(psion_features, psion_power_points_total);
+    ladder!(wilder_features, wilder_power_points_total);
+    ladder!(vitalist_features, vitalist_power_points_total);
+    ladder!(tactician_features, tactician_power_points_total);
+    ladder!(psychic_warrior_features, psychic_warrior_power_points_total);
+    ladder!(marksman_features, marksman_power_points_total);
+    ladder!(dread_features, dread_power_points_total);
+    ladder!(cryptic_features, cryptic_power_points_total);
+}
+
+#[test]
+fn bestiary_1_resolves_the_same_stat_block_for_every_monster_rule_set_and_key() {
+    let mut resolved = 0;
+    for &id in rt::beastiary1::MonsterId::ALL {
+        for rule_set in RULE_SETS {
+            let compiled = rt::beastiary1::monster_resolve(id, rule_set);
+            let catalog = cat::beastiary1::monster_resolve(id, rule_set);
+            assert_eq!(
+                format!("{catalog:?}"),
+                format!("{compiled:?}"),
+                "{id:?} under {rule_set:?}"
+            );
+            if compiled.is_some() {
+                resolved += 1;
+            }
+        }
+        let name = rt::beastiary1::monster_resolve(id, RuleSetId::Bestiary1)
+            .expect("every monster resolves")
+            .name;
+        let key = rt::beastiary1::monster_key(&name);
+        for rule_set in RULE_SETS {
+            assert_eq!(
+                format!("{:?}", cat::beastiary1::monster_key_resolve(&key, rule_set)),
+                format!("{:?}", rt::beastiary1::monster_key_resolve(&key, rule_set)),
+                "{key} under {rule_set:?}"
+            );
+        }
+    }
+    assert_eq!(resolved, rt::beastiary1::MonsterId::ALL.len());
+    for key in [
+        "",
+        "beastiary1:monster:no_such_monster",
+        "bestiary:monster:wolf",
+    ] {
+        assert!(
+            cat::beastiary1::monster_key_resolve(key, RuleSetId::Bestiary1).is_none(),
+            "{key}"
+        );
+    }
+}
+
+#[test]
+fn the_unchained_chassis_equals_the_compiled_resolver_for_every_class_level_and_rule_set() {
+    use rt::pathfinder_unchained::class_chassis::{PuClassId, class_chassis_resolve};
+    let mut answered = 0;
+    for class_id in PuClassId::ALL {
+        for level in 0..=25u8 {
+            for rule_set in RULE_SETS {
+                let compiled = class_chassis_resolve(class_id, level, rule_set);
+                let catalog = cat::pathfinder_unchained::class_chassis::class_chassis_resolve(
+                    class_id, level, rule_set,
+                );
+                assert_eq!(
+                    format!("{catalog:?}"),
+                    format!("{compiled:?}"),
+                    "{class_id:?} {level} {rule_set:?}"
+                );
+                answered += usize::from(compiled.is_some());
+            }
+        }
+    }
+    assert!(
+        answered >= 4 * 20 - 8,
+        "the Unchained roster resolves at its supported levels: {answered}"
+    );
+}
+
+#[test]
+fn the_book_registries_name_the_same_tables_as_the_compiled_registries() {
+    assert_eq!(
+        cat::monster_chassis::MONSTER_BOOKS.len(),
+        rt::monster_chassis::MONSTER_BOOKS.len()
+    );
+    for (catalog, compiled) in cat::monster_chassis::MONSTER_BOOKS
+        .iter()
+        .zip(rt::monster_chassis::MONSTER_BOOKS)
+    {
+        assert_eq!(catalog.corpus_book, compiled.corpus_book);
+        assert_eq!(
+            format!("{:?}", catalog.monsters),
+            format!("{:?}", compiled.monsters),
+            "{}",
+            compiled.corpus_book
+        );
+        assert_eq!(
+            format!("{:?}", catalog.monster_abilities),
+            format!("{:?}", compiled.monster_abilities),
+            "{}",
+            compiled.corpus_book
+        );
+        assert_eq!(
+            catalog.cross_table_owner_names, compiled.cross_table_owner_names,
+            "{}",
+            compiled.corpus_book
+        );
+        let found = cat::monster_chassis::monster_book(compiled.corpus_book)
+            .expect("a registered book is found");
+        assert_eq!(found.corpus_book, compiled.corpus_book);
+    }
+    assert!(cat::monster_chassis::monster_book("no_such_book").is_none());
+    assert_eq!(
+        cat::companion_chassis::COMPANION_BOOKS.len(),
+        rt::companion_chassis::COMPANION_BOOKS.len()
+    );
+    for (catalog, compiled) in cat::companion_chassis::COMPANION_BOOKS
+        .iter()
+        .zip(rt::companion_chassis::COMPANION_BOOKS)
+    {
+        assert_eq!(catalog.corpus_book, compiled.corpus_book);
+        assert_eq!(
+            format!("{:?}", catalog.companions),
+            format!("{:?}", compiled.companions),
+            "{}",
+            compiled.corpus_book
+        );
+        assert_eq!(
+            format!("{:?}", catalog.companion_abilities),
+            format!("{:?}", compiled.companion_abilities),
+            "{}",
+            compiled.corpus_book
+        );
+        assert_eq!(
+            format!("{:?}", catalog.companion_classes),
+            format!("{:?}", compiled.companion_classes),
+            "{}",
+            compiled.corpus_book
+        );
+        assert!(cat::companion_chassis::companion_book(compiled.corpus_book).is_some());
+    }
+    assert!(cat::companion_chassis::companion_book("no_such_book").is_none());
+}
+
+#[test]
+fn per_class_spell_levels_equal_the_compiled_answers_for_every_class_and_spell() {
+    let classes: Vec<&str> = rt::class_spell_levels::classes_with_spell_lists();
+    assert_eq!(cat::class_spell_levels::classes_with_spell_lists(), classes);
+    let mut keys: Vec<&str> = rt::crb::spell_list::SPELL_LIST
+        .iter()
+        .map(|e| e.key)
+        .collect();
+    keys.extend(rt::apg::spell_list::SPELL_LIST.iter().map(|e| e.key));
+    keys.extend(rt::acg::spell_list::SPELL_LIST.iter().map(|e| e.key));
+    keys.extend(
+        rt::advanced_race_guide::spell_list::SPELL_LIST
+            .iter()
+            .map(|e| e.key),
+    );
+    keys.push("no_such_spell");
+    let mut compared = 0usize;
+    for class in classes
+        .iter()
+        .copied()
+        .chain(["class:fighter", "", "class:magus"])
+    {
+        assert_eq!(
+            cat::class_spell_levels::class_has_spell_list(class),
+            rt::class_spell_levels::class_has_spell_list(class),
+            "{class}"
+        );
+        assert_eq!(
+            cat::class_spell_levels::class_spell_list_entries(class),
+            rt::class_spell_levels::class_spell_list_entries(class),
+            "{class}"
+        );
+        for key in &keys {
+            assert_eq!(
+                cat::class_spell_levels::class_spell_level(class, key),
+                rt::class_spell_levels::class_spell_level(class, key),
+                "{class} {key}"
+            );
+            compared += 1;
+        }
+    }
+    assert!(compared > 10_000, "compared {compared}");
+    assert_eq!(
+        format!(
+            "{:?}",
+            &*cat::advanced_race_guide::class_spell_levels::ARG_CLASS_SPELL_LEVELS
+        ),
+        format!(
+            "{:?}",
+            rt::advanced_race_guide::class_spell_levels::ARG_CLASS_SPELL_LEVELS
+        )
+    );
+}
+
+#[test]
+fn the_equipment_gap_rows_equal_the_compiled_iterator() {
+    let catalog: Vec<_> = cat::equipment_gap_tables::equipment_gap_rows().collect();
+    let compiled: Vec<_> = rt::equipment_gap_tables::equipment_gap_rows().collect();
+    assert_eq!(format!("{catalog:?}"), format!("{compiled:?}"));
+    assert!(catalog.len() > 1000);
+}
+
+#[test]
+fn the_root_re_exports_the_rule_set_ids() {
+    assert_eq!(Catalog::Crb, RuleSetId::Crb);
+}

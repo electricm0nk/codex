@@ -498,7 +498,7 @@ mod corpus_aware_posture_widening_tests {
     /// feat-derived term on either path is 0 for that loadout, so the two
     /// formulas agreed on a posture where the feat channel was vacuous. This
     /// test varies the **feat axis** instead, over the live 690-record catalog
-    /// (`rules_tables::feats_all::all_feat_tables` -- CRB + APG + ACG + ARG +
+    /// (`rules_catalog::feats_all::all_feat_tables` -- CRB + APG + ACG + ARG +
     /// PU), and so exercises every feat any producer keys on, present and
     /// future, with no per-feat list to keep up to date.
     ///
@@ -511,7 +511,7 @@ mod corpus_aware_posture_widening_tests {
     /// had the identical shape on Climb.
     #[test]
     fn every_catalog_feat_moves_both_compute_paths_identically() {
-        use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+        use codex::rules_core::rules_catalog::feats_all::all_feat_tables;
 
         let corpus = corpus_with_fixture();
         // Tiefling, deliberately: `Armor of the Pit`'s real +2 natural armor is

@@ -50,8 +50,8 @@ use codex::rules_core::character_input::{AcquisitionMode, SpellSelection};
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
-use codex::rules_core::rules_tables::class_spell_levels;
-use codex::rules_core::rules_tables::{
+use codex::rules_core::rules_catalog::class_spell_levels;
+use codex::rules_core::rules_catalog::{
     acg, adventurers_guide, advanced_race_guide, apg, crb, inner_sea_faiths, inner_sea_gods,
     inner_sea_magic, inner_sea_temples, occult_adventures, ultimate_combat, ultimate_intrigue,
     ultimate_magic, ultimate_wilderness,

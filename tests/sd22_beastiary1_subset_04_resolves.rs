@@ -21,8 +21,8 @@
 //! for the full grounding and the new `corpus-source-inventory.md` §3.1
 //! row this cycle adds for subset 4.
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
 
 #[test]
 fn choker_resolves_via_ruleset_bestiary1() {

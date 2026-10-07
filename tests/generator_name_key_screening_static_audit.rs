@@ -40,8 +40,8 @@
 //! (`decisions.md §27b`/`docs/governance/blocker-closure-doctrine.md`:
 //! named, not silently narrowed).
 //!
-//! Two files (`rules_tables::crb::json_cache`,
-//! `rules_tables::advanced_race_guide::json_cache`) define their record
+//! Two files (`rules_catalog::crb::json_cache`,
+//! `rules_catalog::advanced_race_guide::json_cache`) define their record
 //! payload shape SEPARATELY from the generator that actually screens it
 //! (`src/bin/gen_core_rulebook_cache.rs`, `src/bin/gen_book_cache.rs`
 //! respectively) -- `SCHEMA_ONLY_FILES` below maps each to its real

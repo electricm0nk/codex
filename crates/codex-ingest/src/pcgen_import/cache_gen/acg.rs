@@ -2,7 +2,7 @@
 //!
 //! Writes `data/corpus/advanced_class_guide/{class,spell,equipment}/*.json`
 //! by DUMPING the current, already-completed state of
-//! `rules_core::rules_tables::acg` (`AcgClassId::ALL` + each class's
+//! `rules_core::rules_catalog::acg` (`AcgClassId::ALL` + each class's
 //! `class_table()`, `spell_list::SPELL_LIST`,
 //! `equipment_tables::equipment_tables()`) -- per `decisions.md §11.3`,
 //! this module never re-parses raw PCGen LST to derive a field's *value*.
@@ -22,12 +22,12 @@
 //! -- no prior cycle measured its real per-field completion ceiling. This
 //! generator's own pre-generation probe (this cycle's receipt records the
 //! exact commands run) independently measured, directly from the
-//! compiled `rules_tables::acg` module:
+//! compiled `rules_catalog::acg` module:
 //! - Classes: 10/10, each with a full 20-level BAB/save chassis (matches
 //!   `AcgClassId::ALL`'s own corrected 10-class roster -- Alchemist is
 //!   APG-only content, excluded per `acg/mod.rs`'s own doc comment).
 //! - Spells: 144/144 `description` populated, 144/144 `full_text: true`
-//!   (100%/100%) -- `rules_tables::acg::spell_list`'s own doc comment
+//!   (100%/100%) -- `rules_catalog::acg::spell_list`'s own doc comment
 //!   explains why: unlike CRB/APG, ACG's base (non-`.MOD`) spell record
 //!   already carries the *full* multi-sentence text directly on its own
 //!   `DESC:` token, so every real spell record reaches the full ceiling
@@ -83,8 +83,8 @@ use serde::Serialize;
 use crate::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use codex::rules_core::pi_screening;
-use codex::rules_core::rules_tables::acg::equipment_tables::EquipmentCategory;
-use codex::rules_core::rules_tables::acg::{self, AcgClassId};
+use codex::rules_core::rules_catalog::acg::equipment_tables::EquipmentCategory;
+use codex::rules_core::rules_catalog::acg::{self, AcgClassId};
 
 /// `wiring_class`'s corpus-wide book id for ACG.
 const WIRING_CLASS_BOOK_ID: &str = "advanced_class_guide";
@@ -444,7 +444,7 @@ fn generate_spells(
     let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
     let mut wiring_lines = wiring_index.lines();
 
-    for entry in acg::spell_list::SPELL_LIST {
+    for entry in &acg::spell_list::SPELL_LIST {
         // `entry.key` is the record's real identity (module doc comment
         // on `SpellListEntry::key`): the row's own `KEY:` token when it
         // carries one, else its display name. The 9 Naturalist archetype

@@ -2,7 +2,7 @@
 mod tests {
     use codex::rules_core::equipment_resolver::*;
     use codex::rules_core::source_content::SourcePackageContent;
-    use codex::rules_core::rules_tables::RuleSetId;
+    use codex::rules_core::rules_catalog::RuleSetId;
     use codex_ingest::pcgen_import::ir_converter::convert_equipment_record;
     use codex_ingest::pcgen_import::lst_parser::equipment::parse_equipment_entries;
     use codex::rules_core::source_content::SourceRef;

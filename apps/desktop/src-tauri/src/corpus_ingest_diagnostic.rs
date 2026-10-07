@@ -93,30 +93,30 @@ use std::process::Command;
 
 use serde::{Deserialize, Serialize};
 
-use codex::rules_core::rules_tables::acg::{self, AcgClassId};
-use codex::rules_core::rules_tables::adventurers_guide as ag;
-use codex::rules_core::rules_tables::advanced_race_guide as arg;
-use codex::rules_core::rules_tables::apg::{self, ApgClassId};
-use codex::rules_core::rules_tables::beastiary1::MonsterId;
-use codex::rules_core::rules_tables::inner_sea_faiths as isf;
-use codex::rules_core::rules_tables::inner_sea_magic as ism;
-use codex::rules_core::rules_tables::inner_sea_races as isr;
-use codex::rules_core::rules_tables::inner_sea_temples as istem;
-use codex::rules_core::rules_tables::mythic_adventures as ma;
-use codex::rules_core::rules_tables::ultimate_magic_wordsofpower as umwop;
-use codex::rules_core::rules_tables::crb::{
+use codex::rules_core::rules_catalog::acg::{self, AcgClassId};
+use codex::rules_core::rules_catalog::adventurers_guide as ag;
+use codex::rules_core::rules_catalog::advanced_race_guide as arg;
+use codex::rules_core::rules_catalog::apg::{self, ApgClassId};
+use codex::rules_core::rules_catalog::beastiary1::MonsterId;
+use codex::rules_core::rules_catalog::inner_sea_faiths as isf;
+use codex::rules_core::rules_catalog::inner_sea_magic as ism;
+use codex::rules_core::rules_catalog::inner_sea_races as isr;
+use codex::rules_core::rules_catalog::inner_sea_temples as istem;
+use codex::rules_core::rules_catalog::mythic_adventures as ma;
+use codex::rules_core::rules_catalog::ultimate_magic_wordsofpower as umwop;
+use codex::rules_core::rules_catalog::crb::{
     class_tables::ClassId, equipment_tables as crb_equipment_tables, feats as crb_feats,
     race_tables::RaceId, spell_list as crb_spell_list,
 };
-use codex::rules_core::rules_tables::occult_adventures as oa;
-use codex::rules_core::rules_tables::pathfinder_unchained as pu;
-use codex::rules_core::rules_tables::ultimate_campaign as uca;
-use codex::rules_core::rules_tables::ultimate_equipment as ue;
-use codex::rules_core::rules_tables::ultimate_combat as uc;
-use codex::rules_core::rules_tables::ultimate_magic as um;
-use codex::rules_core::rules_tables::ultimate_psionics as upsi;
-use codex::rules_core::rules_tables::ultimate_wilderness as uw;
-use codex::rules_core::rules_tables::ultimate_intrigue as ui;
+use codex::rules_core::rules_catalog::occult_adventures as oa;
+use codex::rules_core::rules_catalog::pathfinder_unchained as pu;
+use codex::rules_core::rules_catalog::ultimate_campaign as uca;
+use codex::rules_core::rules_catalog::ultimate_equipment as ue;
+use codex::rules_core::rules_catalog::ultimate_combat as uc;
+use codex::rules_core::rules_catalog::ultimate_magic as um;
+use codex::rules_core::rules_catalog::ultimate_psionics as upsi;
+use codex::rules_core::rules_catalog::ultimate_wilderness as uw;
+use codex::rules_core::rules_catalog::ultimate_intrigue as ui;
 
 use crate::race_catalog::{book_code, build_race_catalog, RACE_CORPUS_BOOKS};
 
@@ -302,7 +302,7 @@ fn acg_counts() -> BTreeMap<String, u32> {
 /// its own row instead of reporting silently absent. The panel's own
 /// fail-closed test already treats an unreported book as an un-ingested one.
 fn chassis_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
-    use codex::rules_core::rules_tables::monster_chassis;
+    use codex::rules_core::rules_catalog::monster_chassis;
     let table = monster_chassis::monster_book(corpus_book).unwrap_or_else(|| {
         panic!("{corpus_book} is not registered in monster_chassis::MONSTER_BOOKS")
     });
@@ -332,7 +332,7 @@ fn chassis_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
 /// have to guess which. `monster_codex` is in both, which is exactly the case
 /// that would have broken a merged one.
 fn companion_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
-    use codex::rules_core::rules_tables::companion_chassis;
+    use codex::rules_core::rules_catalog::companion_chassis;
     let table = companion_chassis::companion_book(corpus_book).unwrap_or_else(|| {
         panic!("{corpus_book} is not registered in companion_chassis::COMPANION_BOOKS")
     });
@@ -1077,8 +1077,8 @@ mod tests {
     /// `rules_tables` module directories whose records are reported under
     /// ANOTHER book's panel row, because they are the same book.
     ///
-    /// `rules_tables::bestiary` is the chassis half of Bestiary 1 — the 280 rows
-    /// `rules_tables::beastiary1` does not hold (`decisions.md §58.3`) — and
+    /// `rules_catalog::bestiary` is the chassis half of Bestiary 1 — the 280 rows
+    /// `rules_catalog::beastiary1` does not hold (`decisions.md §58.3`) — and
     /// `beastiary1_counts` folds its two families into that book's row. A second
     /// row would tell a tester this repo had ingested two Bestiary 1s, which is
     /// the same class of wrong reading this drift guard exists to prevent, in
@@ -1541,7 +1541,7 @@ mod tests {
         // scope).
         //
         // SD-29 Epic 5 round 8 added the chassis half of the same book (280
-        // rows, `rules_tables::bestiary`, `decisions.md §58.3`), so the panel's
+        // rows, `rules_catalog::bestiary`, `decisions.md §58.3`), so the panel's
         // monster count is now the SUM of the two tables serving Bestiary 1 —
         // 46 + 280 — and the book gains its first `monster_abilities` family.
         // Stated as the sum rather than as `326` so a divergence says which
@@ -1562,14 +1562,14 @@ mod tests {
         // owner remedy `decisions.md §58.3` named and left unbuilt --
         // `transcribe_monster_tables.py`'s cross-table-owner screen now
         // transcribes ability rows whose owner's OWN stat block ships from
-        // `rules_tables::beastiary1` (46 legacy monsters) rather than
+        // `rules_catalog::beastiary1` (46 legacy monsters) rather than
         // dropping them, keyed to that real owner's name
         // (`MonsterBook::abilities_owned_by_name`).
         // T9 `MonsterAbilityFacet` widening cycle: 522 -> 529 (+7), 7 more
         // owned, reachable ability rows shipped once the widened facet
         // vocabulary (`Weakness`/`Defensive`/`Aura`/`Sense`/`Communicate`)
         // and the multi-`TYPE:`-token parsing fix landed
-        // (`rules_tables::bestiary::mod.rs`'s own comment carries the full
+        // (`rules_catalog::bestiary::mod.rs`'s own comment carries the full
         // derivation).
         // `decisions.md §20` (no_record-to-zero wave 2): 529 -> 709 (+180),
         // owner-less rows (no monster row of this book claims them) now

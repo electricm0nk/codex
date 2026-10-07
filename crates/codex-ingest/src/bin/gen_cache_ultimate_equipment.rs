@@ -7,7 +7,7 @@
 //!
 //! This binary is the generator itself, not a standing production
 //! surface -- it is re-run only when
-//! `codex::rules_core::rules_tables::ultimate_equipment` changes (mirrors
+//! `codex::rules_core::rules_catalog::ultimate_equipment` changes (mirrors
 //! `gen_cache_apg.rs`'s own framing).
 
 use std::path::PathBuf;

@@ -3,7 +3,7 @@
 //! paladin, ranger, rogue, sorcerer, wizard; `scope-draft.md` §1.7,
 //! `technical-design.md` §2.6).
 //!
-//! **Spot-check performed per this cycle's own brief**: `rules_tables::
+//! **Spot-check performed per this cycle's own brief**: `rules_catalog::
 //! crb::class_tables`'s `CLASS_META` row for `ClassId::Sorcerer`
 //! (`bab: BabProgression::Half`, `good_saves: { fortitude: false, reflex:
 //! false, will: true }`) was checked against
@@ -92,7 +92,7 @@
 //! `pick_from_lists` stays honestly empty: Sorcerer's only genuinely
 //! open-ended per-level choice is WHICH spells are known (the spells-known
 //! COUNT is grounded above; the spell-list content itself is not), and no
-//! spell-list candidate catalog exists anywhere in `rules_tables::crb` to
+//! spell-list candidate catalog exists anywhere in `rules_catalog::crb` to
 //! enumerate real candidates from — the identical "no catalog to
 //! enumerate" boundary every prior Epic 7 cycle's own choice-list feature
 //! hit.
@@ -101,8 +101,8 @@ use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan};
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::class_tables::{class_tables, ClassId, ClassTableRow};
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::crb::class_tables::{class_tables, ClassId, ClassTableRow};
+use crate::rules_core::rules_catalog::RuleSetId;
 
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const HUMAN_RACE_ID: &str = "race:human";
@@ -166,7 +166,7 @@ fn class_table_row(level: u8) -> Option<ClassTableRow> {
         .find(|row| row.class_id == ClassId::Sorcerer && row.level == level)
 }
 
-/// Grants sourced from `rules_tables::crb::class_tables::class_tables()`
+/// Grants sourced from `rules_catalog::crb::class_tables::class_tables()`
 /// — the class-generic BAB/save progression pillars, confirmed defect-free
 /// against Sorcerer's own grounded formula by this cycle's own spot-check
 /// (see this module's own doc comment).

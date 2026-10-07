@@ -17,9 +17,9 @@
 //! `compute_level_up_grants(character, from_level, to_level) ->
 //! LevelUpPlan` seam per §2.0's retirement of the illustrative
 //! `rules_tables: &RulesTables` parameter: no such parameter appears
-//! here. Per-class files read the specific `rules_tables::crb::<table>`
+//! here. Per-class files read the specific `rules_catalog::crb::<table>`
 //! item they need directly (this cycle:
-//! `rules_tables::crb::class_tables::class_tables()`), the same way
+//! `rules_catalog::crb::class_tables::class_tables()`), the same way
 //! `spellbook/<school>.rs` reads `SPELL_LIST` and
 //! `equipment_effects/<category>.rs` reads `equipment_tables`.
 //!
@@ -28,7 +28,7 @@
 //! this repo rather than re-deriving it (the same "adapt, don't
 //! re-derive" precedent Epic 1's `contract.rs` set for `PilotReceipt`):
 //! `automatic_features` composes with two already-grounded sources —
-//! `rules_tables::crb::class_tables::class_tables()` (SD-19's BAB/save
+//! `rules_catalog::crb::class_tables::class_tables()` (SD-19's BAB/save
 //! progression table) for the class-generic pillars, and
 //! `pilot_compute::compute_pilot_base_chassis`'s own per-class
 //! `explanations` (SD13/SD18's grounded per-level class-feature
@@ -39,7 +39,7 @@
 //! `CorpusDerivedSection` read-only. `pick_from_lists` stays genuinely
 //! empty wherever the underlying candidate catalog does not exist yet in
 //! this repo (e.g. Barbarian's open-ended Rage Power list has no catalog
-//! anywhere in `rules_tables::crb` — the identical "no catalog to
+//! anywhere in `rules_catalog::crb` — the identical "no catalog to
 //! enumerate" boundary Epic 3's original feat-catalog blocker hit, here
 //! scoped to a single class's own choice-list feature rather than an
 //! entire epic, so it is a documented boundary on this cycle's
@@ -90,7 +90,7 @@ pub struct LevelUpPlan {
     pub automatic_features: Vec<Grant>,
     /// Open-ended choice-list grants (e.g. "pick 1 feat from this
     /// list"). Empty when the underlying candidate catalog is not yet
-    /// grounded anywhere in `rules_tables::crb` for this class/level —
+    /// grounded anywhere in `rules_catalog::crb` for this class/level —
     /// see this module's own doc comment.
     pub pick_from_lists: Vec<PickList>,
     /// Named resource pools whose size changed between `from_level` and

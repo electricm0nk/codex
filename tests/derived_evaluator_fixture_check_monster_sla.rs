@@ -73,7 +73,7 @@ use sha2::{Digest, Sha256};
 use codex::rules_core::derived_evaluator_fixture_check::{
     load_monster_sla_fixtures, spell_like_ability_save_dc, SPELL_LIKE_ABILITY_SAVE_DC_BASE,
 };
-use codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS;
+use codex::rules_core::rules_catalog::monster_chassis::MONSTER_BOOKS;
 
 #[path = "support/paths.rs"]
 mod paths;
@@ -455,7 +455,7 @@ fn moving_the_save_dc_base_constant_makes_every_committed_fixture_fail() {
 /// The evaluator's own refusals, each an honest absence rather than a guess.
 #[test]
 fn the_evaluator_refuses_every_shape_it_cannot_ground() {
-    use codex::rules_core::rules_tables::monster_chassis::MonsterSpellLikeAbility;
+    use codex::rules_core::rules_catalog::monster_chassis::MonsterSpellLikeAbility;
     let sla = |dc: Option<&'static str>| MonsterSpellLikeAbility {
         label: "Innate",
         times: Some("3"),

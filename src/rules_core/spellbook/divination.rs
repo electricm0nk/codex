@@ -6,7 +6,7 @@
 //! illusion, necromancy, transmutation, universal remain).
 //!
 //! Reads spell level and effect text from the canonical CRB spell-list
-//! table store (`rules_tables::crb::spell_list::SPELL_LIST`, SD-19's
+//! table store (`rules_catalog::crb::spell_list::SPELL_LIST`, SD-19's
 //! foundation slice; 50 real Divination records) via a `TableCellRef`
 //! -style lookup — never hand-rolled or re-derived. This mirrors
 //! `spell_resolver::spell_id_resolve`'s own `TableCellRef` construction
@@ -17,14 +17,14 @@
 //! own `TableCellRef`.
 
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::RuleSetId;
-use crate::rules_core::rules_tables::acg::spell_list::{
+use crate::rules_core::rules_catalog::RuleSetId;
+use crate::rules_core::rules_catalog::acg::spell_list::{
     Pf1SchoolId as AcgPf1SchoolId, SPELL_LIST as ACG_SPELL_LIST,
 };
-use crate::rules_core::rules_tables::apg::spell_list::{
+use crate::rules_core::rules_catalog::apg::spell_list::{
     Pf1SchoolId as ApgPf1SchoolId, SPELL_LIST as APG_SPELL_LIST,
 };
-use crate::rules_core::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
+use crate::rules_core::rules_catalog::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
 
 /// One resolved Divination spell's effect: its level and effect text,
 /// both read directly from `SPELL_LIST`, plus a `TableCellRef` proving

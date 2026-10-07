@@ -51,8 +51,8 @@
 //! doc comment records why its feature is zero-magnitude.
 
 use crate::rules_core::character_input::CharacterInput;
-use crate::rules_core::rules_tables::feats_all::FeatCatalogRecord;
-use crate::rules_core::rules_tables::feats_all::all_feat_tables;
+use crate::rules_core::rules_catalog::feats_all::FeatCatalogRecord;
+use crate::rules_core::rules_catalog::feats_all::all_feat_tables;
 
 /// Where in the shipped desktop app a feature's description is rendered.
 ///
@@ -67,7 +67,7 @@ pub enum DescriptionSurface {
     /// name plus its `detail` line (category + corpus description).
     ///
     /// Render path, traced end to end:
-    /// `rules_tables::crb::feats::feat_tables()` (`description` field, corpus
+    /// `rules_catalog::crb::feats::feat_tables()` (`description` field, corpus
     /// `DESC:` verbatim) -> `apps/desktop/src-tauri/src/feat_catalog.rs`
     /// `map_catalog_entry` -> the `list_feats` Tauri command ->
     /// `apps/desktop/src/boundary/listFeats.ts` (`FeatCatalogEntryDto.description`)
@@ -212,7 +212,7 @@ pub fn feat_description_completion(
 mod tests {
     use super::*;
     use crate::rules_core::character_input::load_character_input_fixture;
-    use crate::rules_core::rules_tables::crb::feats::feat_tables;
+    use crate::rules_core::rules_catalog::crb::feats::feat_tables;
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -321,7 +321,7 @@ mod tests {
                 surface,
             } => {
                 assert_eq!(surface, DescriptionSurface::FeatsTab);
-                let catalog_text = crate::rules_core::rules_tables::apg::feats::feat_tables()
+                let catalog_text = crate::rules_core::rules_catalog::apg::feats::feat_tables()
                     .iter()
                     .find(|e| e.key == "Extra Hex")
                     .and_then(|e| e.description)

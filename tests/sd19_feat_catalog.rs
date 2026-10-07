@@ -17,7 +17,7 @@
 
 use std::path::PathBuf;
 
-use codex::rules_core::rules_tables::crb::feats::{feat_tables, FeatCategory, FeatEffectBonus, FeatTableEntry};
+use codex::rules_core::rules_catalog::crb::feats::{feat_tables, FeatCategory, FeatEffectBonus, FeatTableEntry};
 
 #[test]
 fn every_feat_category_is_non_empty() {

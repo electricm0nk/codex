@@ -17,8 +17,8 @@
 
 use crate::rules_core::source_content::SourceContentPayload;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::equipment_tables::equipment_tables;
-use crate::rules_core::rules_tables::{
+use crate::rules_core::rules_catalog::crb::equipment_tables::equipment_tables;
+use crate::rules_core::rules_catalog::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
     ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
     equipment_gap_tables, ultimate_magic as um, ultimate_psionics as upsi, RuleSetId,
@@ -420,7 +420,7 @@ pub fn equipment_catalog_row_by_key(key: &str) -> Option<&'static EquipmentCatal
 /// item 9): resolves an `item_id` to its `cost_gp`, with NO corpus access
 /// at all -- unlike `equipment_id_resolve` above (which needs a real
 /// `SourcePackageContent`), this only needs the flat cost figure, and
-/// `equipment_tables()` (`rules_tables::crb::equipment_tables`) already
+/// `equipment_tables()` (`rules_catalog::crb::equipment_tables`) already
 /// carries `cost_gp` on a `pub const`/`OnceLock`-cached table compiled
 /// directly into the binary -- generated from the corpus at build time,
 /// verified to mirror the same `KEY:`/`name` identity `equipment_id_resolve`

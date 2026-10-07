@@ -36,7 +36,7 @@
 //!
 //! **Table-store note (not a blocker on this cycle):** unlike Barbarian's
 //! cycle, this module does NOT compose with
-//! `rules_tables::crb::class_tables::class_tables()` for the base-save
+//! `rules_catalog::crb::class_tables::class_tables()` for the base-save
 //! columns. `class_tables.rs`'s `CLASS_META` entry for
 //! `ClassId::Druid` carries `good_saves: GoodSaves { fortitude: false,
 //! reflex: false, will: true }`, which computes a *poor* Fortitude save —

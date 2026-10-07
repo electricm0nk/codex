@@ -1,3 +1,4 @@
+use crate::rules_core::rules_catalog::COMPILED_MODULE_CITATION;
 #[allow(unused_imports)]
 pub(crate) use super::*;
 
@@ -1271,7 +1272,7 @@ pub(super) fn is_supported_arcanist_single_class(input: &CharacterInput) -> bool
 
 /// Compute the Wizard base-attack-bonus / base-save chassis pillar (SD-21 E6.26).
 ///
-/// Composes `rules_tables::crb::class_tables::class_tables()`'s Wizard row
+/// Composes `rules_catalog::crb::class_tables::class_tables()`'s Wizard row
 /// (`BabProgression::Half`; good Will only, poor Fortitude/Reflex) rather than
 /// re-deriving the progression — that row was independently spot-checked against
 /// this file's own already-primary-source-verified Wizard formulas (see
@@ -1334,7 +1335,7 @@ pub(super) fn compute_wizard_chassis(
         value: base_attack_bonus,
         detail: format!(
             "Wizard level {level} base attack bonus from \
-             rules_tables::crb::class_tables::class_tables()'s Wizard row (1/2 BAB, PF1 Core \
+             {COMPILED_MODULE_CITATION}::crb::class_tables::class_tables()'s Wizard row (1/2 BAB, PF1 Core \
              Rulebook Wizard class table): {base_attack_bonus}"
         ),
     });
@@ -1343,7 +1344,7 @@ pub(super) fn compute_wizard_chassis(
         value: base_saves.fortitude,
         detail: format!(
             "Wizard level {level} base Fortitude save (poor) from \
-             rules_tables::crb::class_tables::class_tables()'s Wizard row: {}",
+             {COMPILED_MODULE_CITATION}::crb::class_tables::class_tables()'s Wizard row: {}",
             base_saves.fortitude
         ),
     });
@@ -1352,7 +1353,7 @@ pub(super) fn compute_wizard_chassis(
         value: base_saves.reflex,
         detail: format!(
             "Wizard level {level} base Reflex save (poor) from \
-             rules_tables::crb::class_tables::class_tables()'s Wizard row: {}",
+             {COMPILED_MODULE_CITATION}::crb::class_tables::class_tables()'s Wizard row: {}",
             base_saves.reflex
         ),
     });
@@ -1361,7 +1362,7 @@ pub(super) fn compute_wizard_chassis(
         value: base_saves.will,
         detail: format!(
             "Wizard level {level} base Will save (good) from \
-             rules_tables::crb::class_tables::class_tables()'s Wizard row: {}",
+             {COMPILED_MODULE_CITATION}::crb::class_tables::class_tables()'s Wizard row: {}",
             base_saves.will
         ),
     });

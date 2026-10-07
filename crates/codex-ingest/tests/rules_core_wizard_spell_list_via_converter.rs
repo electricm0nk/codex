@@ -1,6 +1,6 @@
 // -- split from `tests` in src/rules_core/rules_tables/crb/wizard_spell_list.rs (pcgen-touching items only) --
 mod tests {
-    use codex::rules_core::rules_tables::crb::wizard_spell_list::*;
+    use codex::rules_core::rules_catalog::crb::wizard_spell_list::*;
     use codex_ingest::pcgen_import::ingest_record;
 
     /// `AT-34-E3-001` wizard-opposition-school-spell-tracking sub-cause:
@@ -12,7 +12,7 @@ mod tests {
     /// be revisited.
     #[test]
     fn wizard_school_zero_level_spells_matches_the_real_corpus_records() {
-        use codex::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
+        use codex::rules_core::rules_catalog::crb::spell_list::Pf1SchoolId;
         let repo_root = codex_ingest::repo_root();
         let cases: &[(&str, Pf1SchoolId)] = &[
             ("abjuration_wizard_spells", Pf1SchoolId::Abjuration),

@@ -50,6 +50,8 @@ pub mod racial_sla;
 pub mod rules_tables;
 // SD-37 E4a.1: the `rules_tables` data package (format, loader, schema, licence/PI stamp).
 pub mod rules_data_package;
+// SD-37 E4a.2: the package-backed catalog every importer of the rules tables reads.
+pub mod rules_catalog;
 pub mod shape_b_v1;
 pub mod sheet_line_join;
 pub mod sheet_rule;

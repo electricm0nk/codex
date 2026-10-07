@@ -1,8 +1,8 @@
 // -- split from `tests` in src/rules_core/rules_tables/ultimate_magic/feat_tables.rs (pcgen-touching items only) --
 mod tests {
-    use codex::rules_core::rules_tables::ultimate_magic::feat_tables::*;
+    use codex::rules_core::rules_catalog::ultimate_magic::feat_tables::*;
     use codex_ingest::pcgen_import::feat_effect_tokens::um_feat_carries_effect;
-    use codex::rules_core::rules_tables::RuleSetId;
+    use codex::rules_core::rules_catalog::RuleSetId;
 
     #[test]
     fn every_record_carries_real_content() {

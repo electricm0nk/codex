@@ -1032,7 +1032,7 @@ impl RaceCorpus {
 /// its chassis `FACT:BaseSize|M` is then the declaration.
 ///
 /// This deliberately supersedes
-/// `rules_tables::crb::race_tables::race_size_for_race_id`, which knew only the
+/// `rules_catalog::crb::race_tables::race_size_for_race_id`, which knew only the
 /// 7 hardcoded CRB races and returned `None` for all 11 Bestiary 1 ones —
 /// silently giving Goblin, Kobold and Svirfneblin (all Small) a Medium
 /// creature's carrying capacity at both of its call sites.

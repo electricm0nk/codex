@@ -224,7 +224,7 @@ pub type SkillId = String;
 /// `pilot_compute.rs`'s own `FIGHTER_CLASS_ID` value (verified by
 /// reading its source; that constant itself is not `pub`, so it is not
 /// imported, only matched by value).
-use crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry;
+use crate::rules_core::rules_catalog::crb::class_skill_tables::ClassSkillEntry;
 
 const FIGHTER_CLASS_ID: &str = "class:fighter";
 
@@ -232,7 +232,7 @@ const FIGHTER_CLASS_ID: &str = "class:fighter";
 /// not_yet_computed`, `decisions.md §2a`): Fighter's REAL, FULL class-skill
 /// list, superseding the old 3-skill bounded slice.** Every entry is
 /// Fighter's own literal `CSKILL:` token, read directly from
-/// `rules_tables::crb::class_skill_tables::CLASS_SKILL_LISTS`'s
+/// `rules_catalog::crb::class_skill_tables::CLASS_SKILL_LISTS`'s
 /// `"class:fighter"` row -- a table this repo already built and verified
 /// byte-for-byte against `cr_abilities_class.lst:2835`
 /// (`class_skill_lists_match_their_own_corpus_records`), not re-derived or
@@ -240,7 +240,7 @@ const FIGHTER_CLASS_ID: &str = "class:fighter";
 /// that row is ever renamed or removed -- a real closed-list lookup, never
 /// a name pattern.
 fn full_fighter_class_skills() -> &'static [ClassSkillEntry] {
-    crate::rules_core::rules_tables::crb::class_skill_tables::CLASS_SKILL_LISTS
+    crate::rules_core::rules_catalog::crb::class_skill_tables::CLASS_SKILL_LISTS
         .iter()
         .find(|list| list.owner_id == FIGHTER_CLASS_ID)
         .map(|list| list.skills)
@@ -282,7 +282,7 @@ const GROUNDED_ROGUE_CLASS_SKILLS: &[&str] = &[
 /// Profession|Spellcraft"` and whose `DESC:` states the two bare-family
 /// entries explicitly: "Knowledge (all) (Int)" and "Craft (Int)" /
 /// "Profession (Wis)" with no subtype named, i.e. every subskill of that
-/// family. `CLASS_SKILL_LISTS` (`rules_tables::crb::class_skill_tables`)
+/// family. `CLASS_SKILL_LISTS` (`rules_catalog::crb::class_skill_tables`)
 /// does not carry a Wizard row (Wizard is not one of its 9 transcribed
 /// classes), so this list is transcribed here directly from the same
 /// corpus file, in the same `TYPE=<Family>` wildcard convention

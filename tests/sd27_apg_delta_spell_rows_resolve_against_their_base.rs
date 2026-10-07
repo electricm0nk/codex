@@ -38,7 +38,7 @@
 
 use std::collections::BTreeSet;
 
-use codex::rules_core::rules_tables::{apg, crb};
+use codex::rules_core::rules_catalog::{apg, crb};
 
 /// Every `.COPY=` variant in `apg_spells.lst` whose base record lives in CRB,
 /// paired with that base. Read off `apg_spells.lst:1037`-`1052` — the file's

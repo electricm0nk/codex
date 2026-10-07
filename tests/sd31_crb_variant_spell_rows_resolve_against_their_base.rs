@@ -45,7 +45,7 @@
 //! honest: it reads the base record at runtime and requires equality, so if
 //! `crb::spell_list`'s base entry is ever corrected, the stale variant copy
 //! fails here rather than quietly disagreeing with its own base spell.
-use codex::rules_core::rules_tables::crb;
+use codex::rules_core::rules_catalog::crb;
 
 /// `(variant key, base key)` for every CRB record whose own `cr_spells.lst`
 /// row carries no `CLASSES:` token and whose name is `<base> (<qualifier>)`.

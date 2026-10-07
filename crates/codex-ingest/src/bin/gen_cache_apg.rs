@@ -6,7 +6,7 @@
 //! Writes `data/corpus/advanced_players_guide/{class,spell,equipment}/*.json`.
 //!
 //! This binary is the generator itself, not a standing production
-//! surface -- it is re-run only when `codex::rules_core::rules_tables::apg`
+//! surface -- it is re-run only when `codex::rules_core::rules_catalog::apg`
 //! changes (per `decisions.md §11.3`, the cache dumps that module's
 //! current state; it does not run at app runtime).
 

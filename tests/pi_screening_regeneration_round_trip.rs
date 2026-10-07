@@ -6,7 +6,7 @@
 //!
 //! **Deliberately does not run any generator binary or write a scratch
 //! directory.** Every generator's `data` construction pulls a record's
-//! free-text field straight from the SAME compiled `rules_tables::<book>`
+//! free-text field straight from the SAME compiled `rules_catalog::<book>`
 //! accessor this test calls directly (`SPELL_LIST`, `equipment_tables()`)
 //! -- so recomputing `pi_screening::classify_field` against that same
 //! source text and comparing to what is on disk today is the round-trip
@@ -82,9 +82,9 @@ const KNOWN_MISSING_FROM_DISK: &[(&str, &str, &str)] = &[
 ];
 
 use codex::rules_core::pi_screening;
-use codex::rules_core::rules_tables::acg;
-use codex::rules_core::rules_tables::apg;
-use codex::rules_core::rules_tables::crb::{equipment_tables as crb_equipment_tables, spell_list as crb_spell_list};
+use codex::rules_core::rules_catalog::acg;
+use codex::rules_core::rules_catalog::apg;
+use codex::rules_core::rules_catalog::crb::{equipment_tables as crb_equipment_tables, spell_list as crb_spell_list};
 use codex::rules_core::shape_b_v1::License;
 
 fn corpus_dir() -> PathBuf {

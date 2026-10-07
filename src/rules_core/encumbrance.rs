@@ -55,7 +55,7 @@
 //!
 //! Capacity is scaled by creature size (`SIZEMULT:`). This module does not
 //! decide what size a character is -- `rules_core::size` owns the size
-//! type and `rules_tables::crb::race_tables::race_size` owns the
+//! type and `rules_catalog::crb::race_tables::race_size` owns the
 //! race-to-size fact, read from each race record's own
 //! `FACT:BaseSize|<code>` token. Callers pass a `SizeCategory` in.
 
@@ -354,7 +354,7 @@ pub struct EncumbranceComputation {
 /// This closes the "capacity is computed at Medium size" limitation this
 /// function's doc comment used to carry. Creature size now has a real
 /// owner (`rules_core::size::SizeCategory`, with the race mapping in
-/// `rules_tables::crb::race_tables::race_size`), so this module consumes a
+/// `rules_catalog::crb::race_tables::race_size`), so this module consumes a
 /// size rather than assuming one -- which was the specific reason the
 /// original implementation stopped short of fixing it.
 ///

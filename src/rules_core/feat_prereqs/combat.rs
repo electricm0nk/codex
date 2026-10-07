@@ -1,7 +1,7 @@
 //! SD-20 Epic 3, second feat category (`scope-draft.md` §1.3 work-unit
 //! order): CRB `Combat` feats.
 //!
-//! Reads `rules_tables::crb::feats::feat_tables()` directly (SD-19's
+//! Reads `rules_catalog::crb::feats::feat_tables()` directly (SD-19's
 //! foundation-slice catalog, landed at `04c3d08`) — never hand-rolled,
 //! per this cycle's own brief. Mirrors `feat_prereqs/general.rs` exactly,
 //! one category over.
@@ -32,8 +32,9 @@
 //! foundation-slice change outside this cycle's scope.
 
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::RuleSetId;
-use crate::rules_core::rules_tables::crb::feats::{feat_tables, FeatCategory};
+use crate::rules_core::rules_catalog::RuleSetId;
+use crate::rules_core::rules_catalog::crb::feats::{feat_tables, FeatCategory};
+use crate::rules_core::rules_catalog::COMPILED_MODULE_CITATION;
 
 /// Result of a bounded, catalog-membership-only prerequisite check for a
 /// `Combat`-category feat lookup. See this module's doc comment for the
@@ -65,7 +66,7 @@ pub fn evaluate_combat_feat_prerequisites(feat_id: &str) -> CombatFeatPrerequisi
             is_eligible: false,
             failing_prerequisites: vec![format!(
                 "'{feat_id}' is not a recognized CRB Combat feat in the catalog \
-                 (rules_tables::crb::feats::feat_tables(), FeatCategory::Combat)"
+                 ({COMPILED_MODULE_CITATION}::crb::feats::feat_tables(), FeatCategory::Combat)"
             )],
         }
     }
@@ -108,7 +109,7 @@ pub fn resolve_combat_feat_effect(feat_id: &str) -> Option<CombatFeatEffect> {
 }
 
 fn matches_feat_id(
-    entry: &crate::rules_core::rules_tables::crb::feats::FeatTableEntry,
+    entry: &crate::rules_core::rules_catalog::crb::feats::FeatTableEntry,
     feat_id: &str,
 ) -> bool {
     entry.key == feat_id || entry.name == feat_id

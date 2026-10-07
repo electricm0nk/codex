@@ -46,7 +46,7 @@
 //!
 //! ## Field coverage (deliberately bounded)
 //!
-//! Mirrors `rules_tables::crb::class_tables`'s and every SD-22 Epic 3/4
+//! Mirrors `rules_catalog::crb::class_tables`'s and every SD-22 Epic 3/4
 //! class chassis module's scope boundary: only the fields *literally
 //! present as tokens on the row* are transcribed here (`SIZE:`, `MOVE:`
 //! walk speed, `CR:`, `RACETYPE:`, `RACESUBTYPE:`, `SOURCEPAGE:`,

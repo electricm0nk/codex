@@ -1,4 +1,4 @@
-//! Codegen for `rules_tables::equipment_gap_tables` — the corpus equipment
+//! Codegen for `rules_catalog::equipment_gap_tables` — the corpus equipment
 //! and equipment-modifier records that live in an **already-compiled** book
 //! whose hand-authored per-book table does not hold them.
 //!

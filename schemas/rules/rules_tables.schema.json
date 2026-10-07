@@ -9555,6 +9555,42 @@
       "properties": {
         "rows": {
           "items": {
+            "$ref": "#/definitions/ClassSkillEntry"
+          },
+          "type": "array"
+        },
+        "table": {
+          "const": "pathfinder_unchained/rogue_features/class_skills"
+        }
+      },
+      "required": [
+        "table",
+        "rows"
+      ],
+      "type": "object"
+    },
+    {
+      "properties": {
+        "rows": {
+          "items": {
+            "$ref": "#/definitions/ClassSkillEntry"
+          },
+          "type": "array"
+        },
+        "table": {
+          "const": "pathfinder_unchained/summoner_features/class_skills"
+        }
+      },
+      "required": [
+        "table",
+        "rows"
+      ],
+      "type": "object"
+    },
+    {
+      "properties": {
+        "rows": {
+          "items": {
             "type": "string"
           },
           "type": "array"
@@ -10497,6 +10533,8 @@
         "ultimate_intrigue/equipment_tables/equipment_tables",
         "ultimate_intrigue/equipment_tables/equipmod_tables",
         "pathfinder_unchained/summoner_features/eidolon_subtypes",
+        "pathfinder_unchained/rogue_features/class_skills",
+        "pathfinder_unchained/summoner_features/class_skills",
         "bestiary/cross_table_owner_names",
         "beastiary1/monster_resolve",
         "crb/class_tables/class_tables",

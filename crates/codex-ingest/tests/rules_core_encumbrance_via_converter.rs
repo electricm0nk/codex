@@ -32,7 +32,7 @@ mod tests {
     /// verbatim `COST:8 WT:1` from `arg_equip_arms_armor.lst`) resolves
     /// through `equipment_converted_resolve` (already book-agnostic) but weight and
     /// cost were both silently dropped when a second, CRB-only lookup ran
-    /// against `rules_tables::crb::equipment_tables()`. Reading both directly
+    /// against `rules_catalog::crb::equipment_tables()`. Reading both directly
     /// off the resolved record's own settled weight and price
     /// fixes this for every book, not just ARG. See
     /// `docs/release/v0.6/book-agnostic-backend-gaps-scoping.md` finding 1.

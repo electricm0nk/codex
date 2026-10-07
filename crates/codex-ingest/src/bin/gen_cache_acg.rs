@@ -8,7 +8,7 @@
 //!
 //! This binary is the generator itself, not a standing production
 //! surface -- it is re-run only when
-//! `codex::rules_core::rules_tables::acg` changes (per `decisions.md
+//! `codex::rules_core::rules_catalog::acg` changes (per `decisions.md
 //! §11.3`, the cache dumps that module's current state; it does not run
 //! at app runtime).
 

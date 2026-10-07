@@ -1,4 +1,4 @@
-//! Codegen for `rules_tables::feat_gap_tables` — the corpus `feat` records
+//! Codegen for `rules_catalog::feat_gap_tables` — the corpus `feat` records
 //! that live in an **already-compiled** book whose hand-authored per-book feat
 //! table does not hold them.
 //!
@@ -50,8 +50,8 @@ use std::path::{Path, PathBuf};
 use codex_ingest::pcgen_import::pcgen_desc;
 use codex::rules_core::pi_screening::{self, declared_product_identity};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
-use codex::rules_core::rules_tables::feats_all::hand_authored_feat_tables;
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::feats_all::hand_authored_feat_tables;
+use codex::rules_core::rules_catalog::RuleSetId;
 use codex::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
 
 /// Where the generated table lands, relative to the crate root.
@@ -65,7 +65,7 @@ const OUTPUT_RELATIVE_PATH: &str = "src/rules_core/rules_tables/feat_gap_tables.
 const PREREQ_OUTPUT_RELATIVE_PATH: &str = "src/pcgen_import/feat_gap_prereq_tokens.rs";
 
 /// The module doc and imports of `PREREQ_OUTPUT_RELATIVE_PATH`, verbatim.
-const PREREQ_FILE_HEADER: &str = "\
+const PREREQ_FILE_HEADER: &str = concat!("\
 //! The `PRE`-family prerequisite tokens the corpus **feat gap rows** carry,\n\
 //! relocated off the live side — SD-35 `AT-35-E6-003-SWEEP` cycle 3,\n\
 //! enforcing `decisions.md` §11. See\n\
@@ -73,11 +73,11 @@ const PREREQ_FILE_HEADER: &str = "\
 //! is addressed, and every lookup and gate over them.\n\
 //!\n\
 //! **Generated — do not hand-edit.** `cargo run --bin gen_feat_gap_tables`\n\
-//! writes this file and `rules_tables::feat_gap_tables.rs` together, off the\n\
+//! writes this file and `rules_tables", "::feat_gap_tables.rs` together, off the\n\
 //! same pass over the live corpus, so the two can never drift apart.\n\
 \n\
 use crate::pcgen_import::feat_prereq_tokens::FeatPrereqRow;\n\
-use crate::rules_core::rules_tables::RuleSetId;\n";
+use crate::rules_core::rules_tables", "::RuleSetId;\n");
 
 /// One book's gap-lane inputs: the `RuleSetId` the joined catalog files its
 /// records under, the `RuleSetId` variant name to emit in generated source,
