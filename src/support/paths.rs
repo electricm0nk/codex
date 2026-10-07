@@ -23,10 +23,54 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-/// The repo root, from Cargo's own build-time env var. Every corpus/data
-/// path a live consumer or a test builds is joined onto this.
+/// Process-wide data root installed by a packaged app at startup (see [`set_data_root`]).
+static DATA_ROOT_OVERRIDE: std::sync::OnceLock<PathBuf> = std::sync::OnceLock::new();
+
+/// Point every data read at `root` instead of the build checkout.
+///
+/// `CARGO_MANIFEST_DIR` is a path baked into the binary at compile time. In a packaged app that
+/// path is the build machine's checkout (`/home/runner/work/...` on CI), which does not exist on
+/// the user's machine, so every read joined onto it failed (the class roster fell back to a
+/// built-in list; `live_sheet_rules` silently returned `None`). The desktop shell calls this once,
+/// first thing in `setup`, with the directory its bundled `data/` resources live under. First call
+/// wins; a later call with a different root is ignored and reported by returning `false`.
+pub fn set_data_root(root: PathBuf) -> bool {
+    match DATA_ROOT_OVERRIDE.set(root.clone()) {
+        Ok(()) => true,
+        Err(_) => DATA_ROOT_OVERRIDE.get() == Some(&root),
+    }
+}
+
+/// The override when one is installed, else the build checkout. Pure, so the choice is testable
+/// without touching the process-wide static.
+fn resolve_root(installed: Option<&PathBuf>) -> PathBuf {
+    match installed {
+        Some(root) => root.clone(),
+        None => PathBuf::from(env!("CARGO_MANIFEST_DIR")),
+    }
+}
+
+/// The root every corpus/data path a live consumer or a test builds is joined onto: the packaged
+/// app's resource directory once [`set_data_root`] ran, otherwise the repo checkout (Cargo's
+/// build-time `CARGO_MANIFEST_DIR`, which is right for tests, bins and dev runs).
 pub(crate) fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    resolve_root(DATA_ROOT_OVERRIDE.get())
+}
+
+#[cfg(test)]
+mod root_resolution_tests {
+    use super::*;
+
+    #[test]
+    fn an_installed_root_wins_over_the_build_checkout() {
+        let installed = PathBuf::from("/usr/lib/Codex");
+        assert_eq!(resolve_root(Some(&installed)), installed);
+    }
+
+    #[test]
+    fn without_an_installed_root_the_build_checkout_is_used() {
+        assert_eq!(resolve_root(None), PathBuf::from(env!("CARGO_MANIFEST_DIR")));
+    }
 }
 
 /// `data/corpus`, joined onto [`repo_root`] -- the corpus this build ships,

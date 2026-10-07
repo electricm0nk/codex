@@ -357,7 +357,7 @@ pub fn live_sheet_rules() -> Option<&'static crate::rules_core::sheet_rule::Shee
         std::sync::OnceLock::new();
     PACKAGE
         .get_or_init(|| {
-            let dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/sheet_rules");
+            let dir = crate::support::paths::repo_root().join("data/sheet_rules");
             let load = load_sheet_rules(&dir);
             if load.package.rules.is_empty() {
                 None

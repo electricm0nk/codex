@@ -183,6 +183,19 @@ fn main() {
                 authoring_workbench::set_app_resource_dir(resource_dir);
             }
 
+            // The rules crate reads its own data (sheet rules, class grants, the roster fixture)
+            // through a root baked in at compile time -- the CI runner's checkout, which a user's
+            // machine does not have. Hand it the directory the bundled `data/` really lives under.
+            // Must run before anything touches the engine (the roster sweep below does).
+            match authoring_workbench::codex_repo_root() {
+                Ok(root) => {
+                    if !codex::set_data_root(root.clone()) {
+                        eprintln!("Rules data root already set to a different directory; ignoring {}", root.display());
+                    }
+                }
+                Err(err) => eprintln!("Cannot resolve the rules data root: {err}"),
+            }
+
             // Record the running build's real identity so the Update panel never has to say
             // "unknown". Failure is reported, not hidden: the panel then states the probe error.
             let version = app.package_info().version.to_string();

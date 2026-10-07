@@ -37,7 +37,11 @@
       "resources/corpus_fixtures/equipment/": "resources/corpus_fixtures/equipment/",
       "resources/corpus_fixtures/_settled/": "resources/corpus_fixtures/_settled/",
       "resources/corpus_bundle/": "data/corpus/",
-      "../../../data/sheet_rules/": "data/sheet_rules/"
+      "../../../data/sheet_rules/": "data/sheet_rules/",
+      "../../../data/class_feature_grants/": "data/class_feature_grants/",
+      "../../../data/converted/record_vars.json": "data/converted/record_vars.json",
+      "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt": "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt",
+      "../../../tests/fixtures/rules_core/multiclass_census_panel.json": "tests/fixtures/rules_core/multiclass_census_panel.json"
     },
     "icon": [
       "icons/icon.png",
