@@ -1,7 +1,7 @@
 # Cycle E4a.2 — E4a / Re-point all 252 importers (one dispatch)
 
 - **Card ID:** E4a.2   **Model:** sonnet   **RETRO_ACTOR:** sd37-e4a-2   **Attempt:** 1 of 3
-- **Commit SHA:** `<closing commit, filled by the audit commit>`   **Base SHA:** `21537bb2d4` (wrong-base control `BASE_OK`; `git fetch origin tranche/17 && git rebase origin/tranche/17` → "Current branch tranche/17 is up to date.")   **Oracle SHA:** `7f818006e3…` (no corpus-derived figure is quoted; every figure below is a repo count or a test result)
+- **Commit SHA:** `5cbee570e1` (`feat(sd37,e4a.2)`; the audit/acceptance-output commit follows it)   **Base SHA:** `21537bb2d4` (wrong-base control `BASE_OK`; `git fetch origin tranche/17 && git rebase origin/tranche/17` → "Current branch tranche/17 is up to date.")   **Oracle SHA:** `7f818006e3…` (no corpus-derived figure is quoted; every figure below is a repo count or a test result)
 - **Tree:** `/home/ubuntu/workspace/worktrees/codex-sd37` (tranche/17), `CARGO_TARGET_DIR=/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37`.
 - **Status:** **complete.**
 - **Acceptance criterion (verbatim from epic-breakdown.md, `\|` unescaped):** E4a.2 — All 252 importers (CUI F-12) re-pointed in one dispatch. Acceptance: `for r in src crates apps/desktop/src-tauri tests; do grep -rlE 'rules_tables::' $r --include='*.rs' | awk '!/src\/rules_core\/rules_tables\//' | awk 'END{print NR}'; done` → `0 0 0 0` (today `72 92 16 72`), cross-checked by a Python `os.walk` over the same roots skipping `target`/`node_modules`.
@@ -67,7 +67,10 @@
 
 ## Audits
 
-Filled in by the audit commit (below).
+- **Identifier audit:** `OK_NO_BUNDLE_TAGS`; **wired-integration audit:** `OK_NO_TOKENS` / `OK_NO_NOOP_HANDLERS` / `OK_NO_MOCK_LEAKS` / `OK_NO_WOULD_STRINGS` — run on `21537bb2d4...5cbee570e1` after the local commit (§6 step 4), scoped to `src tests crates apps data schemas` (`E4a.2_logs/audit.log`).
+- **Acceptance on the committed tree (`5cbee570e1`):** `0 0 0 0`, Python `os.walk` `[0, 0, 0, 0]`; the files that still name `rules_core::rules_tables` at all: 245 = 243 catalog files, `rules_data_package.rs` (the package writer's `rt` alias) and `crates/codex-ingest/src/bin/gen_feat_gap_tables.rs` (the generated header text it writes into the compiled module's own `feat_gap_tables.rs`) (`E4a.2_logs/acceptance.log`).
+- **Verify stages on the committed tree:** `bash scripts/verify.sh -j 8 --only tauri-resources-tracked --only rules-schema-check --only pi-sweep --only crate-wall --only clippy` → `RESULT: PASS`: tauri-resources-tracked `resources_checked=9`; rules-schema-check `3 schemas regenerate byte-equal; 3 schema tests pass`; pi-sweep `22 hits over src/rules_core/rules_tables (11) + data/rules_tables (11), 21 baseline rows, 0 package stamps disagree`; crate-wall clean; clippy `root:0 desktop:0 ingest:0` (`E4a.2_logs/verify-stages.log`, per-stage logs in `E4a.2_logs/verify-stages/`).
+- **Structural diff (converter cycles):** not a converter cycle — `git diff --stat 21537bb2d4 -- crates/codex-ingest/src` touches only importer paths and string literals (no converter logic); the converter's own gates were not re-run for a mapping change.
 
 ## Seed deltas
 
