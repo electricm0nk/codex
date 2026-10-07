@@ -63,7 +63,8 @@ def _build_deb(path: Path, version: str, package: str = "codex") -> None:
 
 
 def _make(*, app_version=VERSION, tauri_version=VERSION, deb_version=VERSION, notes_hash=None,
-          appimage_name=None, deb_sha=None) -> tuple[Path, Path]:
+          appimage_name=None, deb_sha=None, appimage_sha=None, nsis=None) -> tuple[Path, Path]:
+    # nsis: None (no Windows installer) or a dict overriding name/sha/size/staged for the windows_nsis block.
     root = Path(tempfile.mkdtemp(prefix="consistency-"))
     (root / "apps/desktop/src-tauri").mkdir(parents=True)
     (root / "apps/desktop/package.json").write_text(json.dumps({"version": app_version}))
@@ -82,9 +83,20 @@ def _make(*, app_version=VERSION, tauri_version=VERSION, deb_version=VERSION, no
         "release_notes_path": NOTES_REL,
         "release_notes_hash": notes_hash or _sha(NOTES),
         "release_notes_url": "REPLACED",
-        "linux_appimage": {"name": appimage_name or appimage.name, "sha256": _sha(b"appimage"), "size_bytes": 8, "url": "u"},
+        "linux_appimage": {"name": appimage_name or appimage.name, "sha256": appimage_sha or _sha(b"appimage"), "size_bytes": 8, "url": "u"},
         "linux_deb": {"name": deb.name, "sha256": deb_sha or _sha(deb.read_bytes()), "size_bytes": deb.stat().st_size, "url": "u"},
     }
+    if nsis is not None:
+        name = nsis.get("name", f"Codex_{VERSION}_x64-setup.exe")
+        payload = b"nsis-installer"
+        if nsis.get("staged", True):
+            (staging / name).write_bytes(payload)
+        manifest["windows_nsis"] = {
+            "name": name,
+            "sha256": nsis.get("sha256", _sha(payload)),
+            "size_bytes": nsis.get("size_bytes", len(payload)),
+            "url": "u",
+        }
     (staging / "update-manifest.json").write_text(json.dumps(manifest))
     return root, staging
 
@@ -98,6 +110,44 @@ def _run(root: Path, staging: Path, *extra: str) -> subprocess.CompletedProcess:
 
 @unittest.skipUnless(HAVE_DPKG, "dpkg-deb is required to build a real .deb fixture")
 class ConsistencyGateTests(unittest.TestCase):
+    def test_an_appimage_whose_bytes_do_not_match_the_manifest_fails(self) -> None:
+        # AppImage self-update downloads the file the manifest describes and refuses a hash mismatch,
+        # so a release whose manifest hash is wrong could never be installed.
+        root, staging = _make(appimage_sha="0" * 64)
+        result = _run(root, staging)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("linux_appimage sha256", result.stderr)
+
+    def test_a_consistent_windows_installer_passes(self) -> None:
+        root, staging = _make(nsis={})
+        result = _run(root, staging)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_a_windows_installer_whose_hash_differs_from_the_manifest_fails(self) -> None:
+        root, staging = _make(nsis={"sha256": "1" * 64})
+        result = _run(root, staging)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("windows_nsis sha256", result.stderr)
+
+    def test_a_windows_installer_whose_size_differs_from_the_manifest_fails(self) -> None:
+        root, staging = _make(nsis={"size_bytes": 999})
+        result = _run(root, staging)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("windows_nsis size", result.stderr)
+
+    def test_a_windows_installer_that_is_not_staged_fails(self) -> None:
+        root, staging = _make(nsis={"staged": False})
+        result = _run(root, staging)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("windows_nsis", result.stderr)
+        self.assertIn("not staged", result.stderr)
+
+    def test_a_windows_installer_named_for_another_version_fails(self) -> None:
+        root, staging = _make(nsis={"name": "Codex_0.16.0_x64-setup.exe"})
+        result = _run(root, staging)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("windows_nsis name", result.stderr)
+
     def test_a_consistent_release_passes(self) -> None:
         root, staging = _make()
         result = _run(root, staging)

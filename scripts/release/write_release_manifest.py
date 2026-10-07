@@ -56,12 +56,15 @@ from typing import Any, NoReturn
 SCHEMA_VERSION = "1.1.0"
 # Admits the optional linux_deb block + eligibility.deb_install; used only when a .deb is staged.
 SCHEMA_VERSION_WITH_DEB = "1.2.0"
+# Admits windows_nsis + eligibility.windows_install; used only when a Windows NSIS installer is staged.
+SCHEMA_VERSION_WITH_NSIS = "1.3.0"
 TRANCHE_ID = "STC-CODEX-SD-16"
 ALLOWED_CHANNELS = ("alpha", "beta", "stable")
 RELEASE_NOTES_PATH_PATTERN = re.compile(r"^docs/release/[^/]+/release-notes\.md$")
 SOURCE_COMMIT_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 TAG_PATTERN = re.compile(r"^(alpha|beta|stable)/.+$")
 LINUX_DEB_OPTIONALS = ("linux_deb_name", "linux_deb_path", "linux_deb_url")
+WINDOWS_NSIS_OPTIONALS = ("windows_nsis_name", "windows_nsis_path", "windows_nsis_url")
 WINDOWS_MSI_OPTIONALS = ("windows_msi_name", "windows_msi_path", "windows_msi_url")
 MACOS_DMG_OPTIONALS = ("macos_dmg_name", "macos_dmg_path", "macos_dmg_url")
 
@@ -133,6 +136,22 @@ def _deb_identity(name: str, path: Path) -> tuple[str, int]:
     size = path.stat().st_size
     if size < 1:
         _fail(f"Linux .deb artifact is empty: {path}")
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            h.update(chunk)
+    return (h.hexdigest(), size)
+
+
+def _nsis_identity(name: str, path: Path) -> tuple[str, int]:
+    """Parallel of _deb_identity for the optional Windows NSIS installer block (same hash + size discipline)."""
+    if not name or not name.lower().endswith(".exe"):
+        _fail(f"Windows NSIS installer name must be a .exe file name, got {name!r}")
+    if not path.is_file():
+        _fail(f"Windows NSIS installer does not exist on disk: {path}")
+    size = path.stat().st_size
+    if size < 1:
+        _fail(f"Windows NSIS installer is empty: {path}")
     h = hashlib.sha256()
     with path.open("rb") as f:
         for chunk in iter(lambda: f.read(65536), b""):
@@ -271,6 +290,7 @@ def _build_manifest(args: argparse.Namespace) -> dict[str, Any]:
     # unaffected because none of these flags are required.
     for flag_triple, identity_fn, key in (
         (LINUX_DEB_OPTIONALS, _deb_identity, "linux_deb"),
+        (WINDOWS_NSIS_OPTIONALS, _nsis_identity, "windows_nsis"),
         (WINDOWS_MSI_OPTIONALS, _msi_identity, "windows_msi"),
         (MACOS_DMG_OPTIONALS, _dmg_identity, "macos_dmg"),
     ):
@@ -283,6 +303,10 @@ def _build_manifest(args: argparse.Namespace) -> dict[str, Any]:
     if "linux_deb" in manifest:
         manifest["schema_version"] = SCHEMA_VERSION_WITH_DEB
         manifest["eligibility"]["deb_install"] = True
+    # Likewise a staged NSIS installer is what lets a Windows shell self-update.
+    if "windows_nsis" in manifest:
+        manifest["schema_version"] = SCHEMA_VERSION_WITH_NSIS
+        manifest["eligibility"]["windows_install"] = True
 
     return manifest
 
@@ -321,6 +345,12 @@ def main(argv: list[str]) -> int:
                         help="Path to the staged .deb on disk (used to compute sha256 + size).")
     parser.add_argument("--linux-deb-url", required=False, dest="linux_deb_url",
                         help="Canonical URL where the .deb can be fetched.")
+    parser.add_argument("--windows-nsis-name", required=False, dest="windows_nsis_name",
+                        help="File name of the Windows NSIS installer (.exe). Must be supplied with --windows-nsis-path and --windows-nsis-url; partial sets are rejected.")
+    parser.add_argument("--windows-nsis-path", required=False, dest="windows_nsis_path", type=Path,
+                        help="Path to the staged NSIS installer on disk (used to compute sha256 + size).")
+    parser.add_argument("--windows-nsis-url", required=False, dest="windows_nsis_url",
+                        help="Canonical URL where the NSIS installer can be fetched.")
     parser.add_argument(
         "--windows-msi-name",
         required=False,

@@ -26,6 +26,7 @@ WRITER = REPO_ROOT / "scripts" / "release" / "write_release_manifest.py"
 SCHEMA = json.loads((REPO_ROOT / "schemas" / "update" / "update-manifest.schema.json").read_text())
 
 DEB_BYTES = b"deb-bytes-for-test"
+NSIS_BYTES = b"nsis-installer-bytes-for-test"
 BASE = "https://github.com/electricm0nk/codex/releases/download/alpha-v0.16.141-abcdef12"
 
 
@@ -38,6 +39,7 @@ def _stage() -> tuple[Path, Path]:
     staging.mkdir()
     (staging / "Codex_0.16.141_amd64.AppImage").write_bytes(b"appimage-bytes")
     (staging / "Codex_0.16.141_amd64.deb").write_bytes(DEB_BYTES)
+    (staging / "Codex_0.16.141_x64-setup.exe").write_bytes(NSIS_BYTES)
     return root, staging
 
 
@@ -77,6 +79,72 @@ def _deb_flags(staging: Path) -> list[str]:
         "--linux-deb-path", str(staging / "Codex_0.16.141_amd64.deb"),
         "--linux-deb-url", f"{BASE}/Codex_0.16.141_amd64.deb",
     ]
+
+
+def _nsis_flags(staging: Path) -> list[str]:
+    return [
+        "--windows-nsis-name", "Codex_0.16.141_x64-setup.exe",
+        "--windows-nsis-path", str(staging / "Codex_0.16.141_x64-setup.exe"),
+        "--windows-nsis-url", f"{BASE}/Codex_0.16.141_x64-setup.exe",
+    ]
+
+
+class WindowsNsisManifestTests(unittest.TestCase):
+    """The Windows lane ships an NSIS installer (the MSI is not built), so that is what a Windows shell updates from."""
+
+    def test_nsis_block_carries_the_real_hash_and_size_of_the_staged_installer(self) -> None:
+        root, staging = _stage()
+        result = _run(root, staging, *_nsis_flags(staging))
+        self.assertEqual(result.returncode, 0, result.stderr)
+        manifest = json.loads((staging / "update-manifest.json").read_text())
+        self.assertEqual(
+            manifest["windows_nsis"],
+            {
+                "name": "Codex_0.16.141_x64-setup.exe",
+                "url": f"{BASE}/Codex_0.16.141_x64-setup.exe",
+                "sha256": hashlib.sha256(NSIS_BYTES).hexdigest(),
+                "size_bytes": len(NSIS_BYTES),
+            },
+        )
+
+    def test_nsis_manifest_is_schema_1_3_0_with_windows_install_and_validates(self) -> None:
+        root, staging = _stage()
+        _run(root, staging, *_nsis_flags(staging))
+        manifest = json.loads((staging / "update-manifest.json").read_text())
+        self.assertEqual(manifest["schema_version"], "1.3.0")
+        self.assertIs(manifest["eligibility"]["windows_install"], True)
+        self.assertNotIn("deb_install", manifest["eligibility"])
+        jsonschema.validate(manifest, SCHEMA)
+
+    def test_deb_and_nsis_together_advertise_both_and_validate(self) -> None:
+        root, staging = _stage()
+        _run(root, staging, *_deb_flags(staging), *_nsis_flags(staging))
+        manifest = json.loads((staging / "update-manifest.json").read_text())
+        self.assertEqual(manifest["schema_version"], "1.3.0")
+        self.assertIs(manifest["eligibility"]["deb_install"], True)
+        self.assertIs(manifest["eligibility"]["windows_install"], True)
+        jsonschema.validate(manifest, SCHEMA)
+
+    def test_without_nsis_the_manifest_has_no_windows_fields(self) -> None:
+        root, staging = _stage()
+        _run(root, staging, *_deb_flags(staging))
+        manifest = json.loads((staging / "update-manifest.json").read_text())
+        self.assertEqual(manifest["schema_version"], "1.2.0")
+        self.assertNotIn("windows_nsis", manifest)
+        self.assertNotIn("windows_install", manifest["eligibility"])
+
+    def test_partial_nsis_flags_are_rejected(self) -> None:
+        root, staging = _stage()
+        result = _run(root, staging, "--windows-nsis-name", "Codex_0.16.141_x64-setup.exe")
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("complete triple", result.stderr)
+
+    def test_a_non_exe_installer_name_is_rejected(self) -> None:
+        root, staging = _stage()
+        (staging / "setup.msi").write_bytes(b"x")
+        result = _run(root, staging, "--windows-nsis-name", "setup.msi", "--windows-nsis-path", str(staging / "setup.msi"), "--windows-nsis-url", f"{BASE}/setup.msi")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(".exe", result.stderr)
 
 
 class LinuxDebManifestTests(unittest.TestCase):

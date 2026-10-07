@@ -11,9 +11,11 @@ Checks (all failures are reported, not just the first):
   2. linux_appimage.name contains that version.
   3. linux_deb (when present): the staged file matches the manifest's sha256 and size, and
      `dpkg-deb -f` reports Package=codex and Version=<manifest version>.
-  4. release_notes_hash equals the sha256 of the notes file the manifest points at, and that file is
+  4. linux_appimage and windows_nsis (when present): the staged file matches the manifest's sha256
+     and size (self-update refuses a mismatch), and windows_nsis.name contains the version.
+  5. release_notes_hash equals the sha256 of the notes file the manifest points at, and that file is
      not a closure placeholder.
-  5. with --fetch-notes: the bytes served at release_notes_url hash to release_notes_hash, which is
+  6. with --fetch-notes: the bytes served at release_notes_url hash to release_notes_hash, which is
      what the desktop app checks before showing notes.
 
 Usage: verify_release_consistency.py --repo-root . --staging release-staging [--fetch-notes]
@@ -47,6 +49,20 @@ def _dpkg_field(deb: Path, field: str) -> str:
     return out.stdout.strip()
 
 
+def _check_staged_artifact(staging: Path, key: str, block: dict) -> list[str]:
+    """The staged file for a manifest artifact block has the block's sha256 and size."""
+    path = staging / block["name"]
+    if not path.is_file():
+        return [f"{key} {block['name']} is not staged"]
+    data = path.read_bytes()
+    errors = []
+    if _sha(data) != block["sha256"]:
+        errors.append(f"{key} sha256 {_sha(data)} does not match the manifest {block['sha256']}")
+    if len(data) != block["size_bytes"]:
+        errors.append(f"{key} size {len(data)} does not match the manifest {block['size_bytes']}")
+    return errors
+
+
 def check(repo_root: Path, staging: Path, fetch_notes: bool) -> list[str]:
     errors: list[str] = []
     manifest = json.loads((staging / "update-manifest.json").read_text(encoding="utf-8"))
@@ -60,6 +76,14 @@ def check(repo_root: Path, staging: Path, fetch_notes: bool) -> list[str]:
     appimage = manifest["linux_appimage"]["name"]
     if version not in appimage:
         errors.append(f"AppImage name {appimage} does not contain the manifest version {version}")
+
+    errors.extend(_check_staged_artifact(staging, "linux_appimage", manifest["linux_appimage"]))
+
+    nsis_block = manifest.get("windows_nsis")
+    if nsis_block is not None:
+        errors.extend(_check_staged_artifact(staging, "windows_nsis", nsis_block))
+        if version not in nsis_block["name"]:
+            errors.append(f"windows_nsis name {nsis_block['name']} does not contain the manifest version {version}")
 
     deb_block = manifest.get("linux_deb")
     if deb_block is not None:

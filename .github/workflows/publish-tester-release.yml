@@ -754,10 +754,13 @@ jobs:
           APPIMAGE_NAME="$(basename "${APPIMAGE_NAME:-}" 2>/dev/null || echo '')"
           MSI_NAME="$( (find . -maxdepth 5 -name '*.msi' -type f -print -quit 2>/dev/null || true) )"
           MSI_NAME="$(basename "${MSI_NAME:-}" 2>/dev/null || echo '')"
+          NSIS_NAME="$( (find . -maxdepth 5 -name '*-setup.exe' -type f -print -quit 2>/dev/null || true) )"
+          NSIS_NAME="$(basename "${NSIS_NAME:-}" 2>/dev/null || echo '')"
           DMG_NAME="$( (find . -maxdepth 5 -name '*.dmg' -type f -print -quit 2>/dev/null || true) )"
           DMG_NAME="$(basename "${DMG_NAME:-}" 2>/dev/null || echo '')"
           echo "appimage_name=${APPIMAGE_NAME}" >> "$GITHUB_OUTPUT"
           echo "msi_name=${MSI_NAME}" >> "$GITHUB_OUTPUT"
+          echo "nsis_name=${NSIS_NAME}" >> "$GITHUB_OUTPUT"
           echo "dmg_name=${DMG_NAME}" >> "$GITHUB_OUTPUT"
 
       # Build the unified update-manifest.json in a clean staging dir.
@@ -810,6 +813,15 @@ jobs:
             EXTRA_ARGS+=(--windows-msi-name "${MSI}")
             EXTRA_ARGS+=(--windows-msi-path "release-staging/${MSI}")
             EXTRA_ARGS+=(--windows-msi-url "${BASE}/${MSI}")
+          fi
+          # The Windows lane ships the NSIS installer only; it is what a Windows shell updates from.
+          if [ -n "${{ steps.resolve.outputs.nsis_name }}" ]; then
+            NSIS="${{ steps.resolve.outputs.nsis_name }}"
+            EXTRA_ARGS+=(--windows-nsis-name "${NSIS}")
+            EXTRA_ARGS+=(--windows-nsis-path "release-staging/${NSIS}")
+            EXTRA_ARGS+=(--windows-nsis-url "${BASE}/${NSIS}")
+          else
+            echo "::warning::no Windows NSIS installer staged: Windows installs cannot self-update from this release"
           fi
           if [ -n "${{ steps.resolve.outputs.dmg_name }}" ]; then
             DMG="${{ steps.resolve.outputs.dmg_name }}"
