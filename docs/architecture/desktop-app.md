@@ -1,7 +1,10 @@
 # Desktop App
 
 > Scope: How the Tauri desktop shell is built, how it talks to the Rust backend, and how its frontend surfaces are organized.
-> Last verified: **2026-09-28 against `tranche/16`, HEAD `b021509e23`** (SD-36 Epic F7: Abilities panel and Weapons tab read the engine's own numbers, class-skill lists hold only skills, prestige/Level-Up requirement labels, Expert/Summoner/Psion default-pick markers — no command added or removed). Earlier pass: **2026-09-27 against `tranche/16`, HEAD `08f8cb5ace`** (SD-36 Epic F6: class facts from the engine, HP source rule, Level Up blockers). Earlier pass: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
+> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for the command inventory (86
+> registered), the rule-system adapter seam (Pathfinder and Starfinder adapters), §"Starfinder 1e surface", the bundled
+> resources and the frontend map. Sections not named here (the Mode machine, boundary layer, persistence-facing commands,
+> ui_probe, character flow) were last verified 2026-09-28 against `tranche/16` (`b021509e23`) and not re-derived this pass.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Corrections since the last pass
@@ -24,10 +27,10 @@ re-derives the same corrections independently:
   `Print` are all wired to real handlers (`CharacterSheet.tsx`'s `menuItems`).
 - **`StubScreen.tsx` still exists as a component but nothing imports it** (confirmed by grep across
   `apps/desktop/src`) — it is dead code today, not a live placeholder for any screen.
-- **The command count is 77, not 53, 69 or 75** (75 before SD-36 Epic F4 added `list_class_creation_roster` and `list_level_up_class_options`) — re-derived by parsing `generate_handler![...]`
-  programmatically (`python3` script counting comma-separated entries after stripping comments); see
-  the inventory below.
-- **`apps/desktop/src/boundary/` holds 52 non-test files today**, not 27 — `ls apps/desktop/src/boundary/*.ts | grep -v '\.test\.ts$' | wc -l`.
+- **The command count is 86** — re-derived by parsing `generate_handler![...]`
+  programmatically (`python3` script counting non-empty comma-separated entries after stripping comments); see
+  the inventory below. (The same parse over `origin/develop`'s `main.rs` gives 78, one more than the prior pass's 77; SD-37 added eight Starfinder commands on top of it.)
+- **`apps/desktop/src/boundary/` holds 58 non-test files today**, not 27 — `ls apps/desktop/src/boundary/*.ts | grep -v '\.test\.ts$' | wc -l`.
 
 ## Build shape
 
@@ -35,7 +38,7 @@ The desktop app lives at `apps/desktop/` and is a React 18 + Tauri 2 application
 
 - **Entry chain**: `apps/desktop/index.html` loads `/src/main.tsx` as a module script. `apps/desktop/src/main.tsx` mounts `<App />` (from `apps/desktop/src/App.tsx`) into `#root` inside `<React.StrictMode>`, after importing `./theme.css`.
 - **Vite config** (`apps/desktop/vite.config.ts`): uses `@vitejs/plugin-react`; both the dev server and the preview server are pinned to port `1420` with `strictPort: true` (the port Tauri's `devUrl` points at), so a port conflict fails loudly instead of silently picking a different port.
-- **Tauri shell config** (`apps/desktop/src-tauri/tauri.conf.json`): `build.beforeDevCommand` is `npm run dev`, `build.beforeBuildCommand` is `npm run build`, `build.frontendDist` is `../dist`, `build.devUrl` is `http://localhost:1420`. The app window (`app.windows[0]`) is titled "Codex", `1920x1200`, resizable. Bundle targets are `deb`, `appimage`, `msi`, `nsis`, `app`, `dmg`. Bundled `resources`: `resources/authoring_workbench/guard-stance-package/`, `resources/corpus_fixtures/` (and its `spell/`/`equipment/`/`_settled/` subdirectories), and `resources/corpus_bundle/` mapped to `data/corpus/` inside the package — see "The corpus-bundle build step" below.
+- **Tauri shell config** (`apps/desktop/src-tauri/tauri.conf.json`): `build.beforeDevCommand` is `npm run dev`, `build.beforeBuildCommand` is `npm run build`, `build.frontendDist` is `../dist`, `build.devUrl` is `http://localhost:1420`. The app window (`app.windows[0]`) is titled "Codex", `1920x1200`, resizable. Bundle targets are `deb`, `appimage`, `msi`, `nsis`, `app`, `dmg`. Bundled `resources`: `resources/authoring_workbench/guard-stance-package/`, `resources/corpus_fixtures/` (and its `spell/`/`equipment/`/`_settled/` subdirectories), `resources/corpus_bundle/` mapped to `data/corpus/` inside the package (see "The corpus-bundle build step" below), and three repo-root trees mapped to the same relative path in the package: `data/sheet_rules/`, `data/starfinder-1e/sheet_rules/` and `data/rules_tables/`. `main.rs`'s `.setup()` binds the rules-table package root (`authoring_workbench::bind_rules_tables_package_root`) right after the resource directory, before the first table read.
 - **src-tauri is a thin IPC shell over the root crate**: `apps/desktop/src-tauri/Cargo.toml` declares `codex = { path = "../../.." }` by relative path, not a published version. Other dependencies: `serde`, `serde_json`, `sha2`, `base64`, `tauri`, `tauri-plugin-opener`, `tauri-plugin-dialog`. There is no HTTP client crate (no `reqwest`/`ureq`/etc.) — the concrete reason `perform_install` cannot download an update artifact (see [update-and-feedback.md](./update-and-feedback.md)).
 - **npm scripts** (`apps/desktop/package.json`): `dev` → `vite`; `typecheck` → `tsc --noEmit`; `test` → `node scripts/run-tests.mjs`; `build` → `node ../../scripts/gen-corpus-bundle.mjs && vite build` (the corpus bundle is regenerated on every frontend build, not hand-maintained); `tauri:check` → `cargo check --manifest-path src-tauri/Cargo.toml`. Frontend dependencies: `@tauri-apps/api`, `@tauri-apps/plugin-dialog`, `ajv`, `react`, `react-dom`; dev dependencies include `@tauri-apps/cli`, `vite`, `typescript`, `tsx`.
 - **`tsconfig.json`** targets ES2020, `moduleResolution: "Bundler"`, `resolveJsonModule`. Its `include` list additively pulls in `../../schemas/update/*.json` and `../../tests/fixtures/update/**/*.json` from the repo root, which is how `update/loadSchemas.ts` imports the canonical JSON Schema documents as typed modules.
@@ -119,7 +122,7 @@ export function formatError(cause: unknown): string {
 
 ## The complete Tauri command inventory
 
-**77 commands are registered** (reachable via `invoke()`), re-derived by parsing every entry of
+**86 commands are registered** (reachable via `invoke()`), re-derived by parsing every entry of
 `tauri::generate_handler![...]` in `apps/desktop/src-tauri/src/main.rs` with comments stripped
 (`python3` one-liner splitting on `,` after a regex-stripped comment pass — a plain `grep -c ','`
 overcounts because several list entries carry inline `//` explanatory comments of their own with
@@ -140,6 +143,10 @@ Grouped by the Rust file that defines each command:
 | `characterHub/appendToCharacter.rs` | `append_to_character` | Batch, corpus-validated equipment append, via `RuleSystemAdapter` | none — no frontend caller (see "Rule-system adapter seam" below) |
 | `characterHub/recomputeCharacter.rs` | `recompute_character` | Load + recompute without mutating, via `RuleSystemAdapter` | `CharacterSheet.tsx`'s `☰ Menu` "Recompute" |
 | `characterHub/reSaveCharacter.rs` | `re_save_character` | Re-saves under a freshly minted `{id}.rev.N`, via `RuleSystemAdapter` | none — no frontend caller |
+| `sf_creation.rs` | `preview_starfinder_character`, `create_starfinder_character` | Starfinder creation flow: race, theme, class, point buy (budget 10, cap 18) served from the converted package and `sf_abilities`; saves the `CharacterInput` `sf_adapter` reads | `StarfinderCreateForm.tsx` via `boundary/starfinderCreation.ts` |
+| `sf_level_up.rs` | `preview_starfinder_level_up`, `level_up_starfinder_character` | Starfinder level-up: classes, the 5/10/15/20 increase, skill ranks, owed picks and every `sf.*` total the level changes (`compute_sheet` at both levels); accept saves | `StarfinderLevelUpDialog.tsx` via `boundary/starfinderLevelUp.ts` |
+| `sf_choices.rs` | `preview_starfinder_choices`, `save_starfinder_choices`, `list_starfinder_equipment_options` | The one set of feats, spells known and gear the creation form, the level-up dialog and the sheet's "Feats, spells and gear" dialog all edit; prerequisite verdicts from the engine | `StarfinderChoicesDialog.tsx`, `StarfinderChoicesPanel.tsx` via `boundary/starfinderChoices.ts` |
+| `sf_catalog.rs` | `list_starfinder_catalog` | The six Starfinder catalogs (races, themes, classes, feats, spells, equipment) read from `data/starfinder-1e/sheet_rules` | `starfinderCatalog/StarfinderCatalogScreen.tsx` via `boundary/loadStarfinderCatalog.ts` |
 | `campaign_drive.rs` | `write_campaign_drive_artifacts`, `drive_list_campaigns`, `drive_load_campaign`, `drive_save_campaign`, `drive_delete_campaign` | `CampaignStore` wrapper over a local "Drive folder" path | only `write_campaign_drive_artifacts` is called, as a one-way mirror (see [persistence.md](./persistence.md)) |
 | `equipment_catalog.rs` | `list_equipment_catalog`, `list_equipment` | The equipment table store of **every ingested PF1 book**, not CRB alone (module's own header doc comment) — **8,119** entries test-pinned (`:1237`) across **29** distinct books; the full book roster and its derivation live in [status.md](./status.md)'s capability matrix, not restated here; additive filtered query | `EquipmentCatalogScreen.tsx`; `CharacterSheet.tsx`'s item pickers |
 | `spell_catalog.rs` | `list_spell_catalog`, `list_spells` | **2,481** entries test-pinned (`:945`) across **26** distinct books, exhaustive; the full book roster and its derivation live in [status.md](./status.md)'s capability matrix, not restated here; additive filtered query | `SpellCatalogScreen.tsx`; `CharacterSheet.tsx`'s spell picker |
@@ -158,7 +165,7 @@ Grouped by the Rust file that defines each command:
 | `intelligent_item_catalog.rs` | `list_intelligent_item_catalog` | 152 intelligent/legendary-item build components | `IntelligentItemCatalogScreen.tsx` |
 | `encounter_rating.rs` | `rate_encounter` | Real `Encounter`/party-CR compute | `dmToolkit/EncounterBuilderScreen.tsx` |
 | `dm_console_export.rs` | `export_dm_console` | Writes the DM console's session record/links/history to a caller-chosen path | `dmToolkit/DmToolkitScreen.tsx` |
-| `corpus_ingest_diagnostic.rs` | `corpus_ingest_diagnostic` | Per-book ingested-record-kind counts, read from the compiled tables | `CorpusIngestDiagnosticPanel.tsx` |
+| `corpus_ingest_diagnostic.rs` | `corpus_ingest_diagnostic` | Per-book ingested-record-kind counts, read from the package-backed catalog tables | `CorpusIngestDiagnosticPanel.tsx` |
 | `ui_probe.rs` | `record_ui_probe`, `poll_ui_probe_command` | Dev-only ui-smoke DOM-snapshot sink and command channel — see below | `testSupport/uiProbe.ts` (dev builds only) |
 
 ## Sequence — `create_character` end to end
@@ -335,29 +342,64 @@ truncated run reports exactly which rows never ran, rather than silently omittin
 
 ## Rule-system adapter seam (hub-of-hubs)
 
-The three iterative-mutation commands `append_to_character`, `recompute_character`, and
-`re_save_character` dispatch through a rule-system-agnostic trait rather than calling PF1-specific
-free functions by name, so a future rule system can be added by writing one adapter.
+The character commands dispatch through a rule-system-agnostic trait rather than calling PF1-specific
+free functions by name, so a rule system is added by writing one adapter.
 
 - **`apps/desktop/src-tauri/src/rule_system_adapter.rs`** — `trait RuleSystemAdapter` (object-safe;
   callers hold `Box<dyn RuleSystemAdapter>`). Methods: `rule_system_id`, `chassis_resolve`,
   `level_up` (takes `&[ClassLevelDelta]`, so a multiclass level-up is expressible), `save_character`,
-  `append_to_character`, `recompute`, `list_saved_characters`, `load_saved_character`.
-- **`apps/desktop/src-tauri/src/pf1_adapter.rs`** — `Pf1Adapter`, the one real implementation, wrapping
-  the PF1 compute/persistence free functions extracted out of `character_hub.rs`.
+  `append_to_character`, `recompute`, `list_saved_characters`, `load_saved_character`. The one resolver,
+  `resolve_rule_system_adapter(rule_system_id)`, maps `"pf1"` to `Pf1Adapter`, `"starfinder-1e"` to `StarfinderAdapter`
+  and any other id to `StubAdapter`.
+- **`apps/desktop/src-tauri/src/pf1_adapter.rs`** — `Pf1Adapter`, wrapping the PF1 compute/persistence free
+  functions extracted out of `character_hub.rs`.
+- **`apps/desktop/src-tauri/src/sf_adapter.rs`** — `StarfinderAdapter`, the Starfinder 1e implementation (rule-system id
+  `"starfinder-1e"`, the same string as `GameSystem::Starfinder1e.id()`, the landing screen's `RuleSetId` and the save
+  envelope's `game_system`). `build_from_input` reads a saved `CharacterInput` into a Starfinder build (race and class
+  records, final ability scores, held theme and picks, equipment selections with applied upgrades/fusions, skill ranks,
+  key-ability and rule choices) and every total comes from the `sf_*` readers
+  ([rules-engine.md](./rules-engine.md) §3e) as an `sf.*` explanation row. The printed lines come from
+  `sf_sheet_print.rs` (race, theme, class feature, feat, spell, item, upgrade, fusion and augmentation lines, with named
+  refusals) and `sf_drone_print.rs` (a Mechanic's drone as its own block of terms).
 - **`apps/desktop/src-tauri/src/stub_adapter.rs`** — `StubAdapter`, the governed placeholder
   (registered exception 0002, `docs/governance/wired-integration-stubs-registry.md`) for a
-  `rule_system_id` this codebase has no real adapter for yet: every method reports `"Would render for
-  system {id}; not yet implemented"` through its own diagnostic/`Err` channel, never fabricated data.
+  `rule_system_id` this codebase has no real adapter for: every method reports `"Would render for
+  system {id}; not yet implemented"` through its own diagnostic/`Err` channel, never fabricated data. It never
+  falls through to Pathfinder logic.
 
-Each of `characterHub/appendToCharacter.rs`, `characterHub/recomputeCharacter.rs`, and
-`characterHub/reSaveCharacter.rs` holds a `resolve_rule_system_adapter(rule_system_id)` mapping
-`"pf1"` → `Pf1Adapter`, anything else → `StubAdapter`; their own tests assert the literal stub message
-to prove the routing is real. On the frontend, `characterHubRuntime.ts`'s `resolveRuleSystemId` maps
-the UI's `RuleSetId` to that dispatch key. **All other character-mutation commands in the inventory
-table above** (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP) call
-PF1-specific free functions in `character_hub.rs` directly and do **not** go through this adapter
-seam — only the three commands named here do.
+Routing: `append_to_character`, `recompute_character` and `re_save_character` resolve their adapter from
+the request's `rule_system_id`. `list_saved_characters` dispatches on the system the landing screen has selected
+(`list_saved_characters_via_rule_system`; no id is Pathfinder's listing), and `load_saved_character` on the saved
+envelope's own `game_system` (`load_saved_character_via_envelope`; a Starfinder envelope goes to `StarfinderAdapter`,
+every other value, including the legacy values `local_store::derive_legacy_game_system` gives older envelopes,
+loads through `Pf1Adapter`). On the frontend, `characterHubRuntime.ts`'s `resolveRuleSystemId` maps the UI's `RuleSetId`
+(`pathfinder-1e` to `pf1`; `starfinder-1e` passes through). **The other Pathfinder character-mutation commands in the
+inventory above** (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP) call PF1-specific free
+functions in `character_hub.rs` directly and do **not** go through this seam; the Starfinder flows have their own commands
+(`sf_*`) and save through `StarfinderAdapter`.
+
+## Starfinder 1e surface
+
+Under the Starfinder 1e chip on `LandingScreen.tsx`:
+
+- **Create** — `StarfinderCreateForm.tsx` (race, theme, class, point buy) over `preview_starfinder_character` /
+  `create_starfinder_character`; every list, pick, budget and creation score is served, none is a desktop table.
+- **Sheet** — a saved Starfinder character opens `StarfinderCharacterSheet.tsx` (Stamina, HP, Resolve, EAC/KAC, saves,
+  initiative, BAB, skills, spells, credits, bulk, melee/ranged attack and a Weapons table), not the Pathfinder layout;
+  CMB, CMD, Touch and Flat-Footed do not appear. Every number is an engine explanation row rendered once, pinned by
+  `apps/desktop/src/characterHub/starfinderSheet.test.ts` (an `sf.*` row is the only source of a total, so there is no
+  hand-kept desktop table).
+- **Level up** — `StarfinderLevelUpDialog.tsx` over `preview_starfinder_level_up` / `level_up_starfinder_character`.
+  Multiclass is refused by the engine (`sf_chassis.multiclass_key_ability`).
+- **Feats, spells and gear** — `StarfinderChoicesDialog.tsx` / `StarfinderChoicesPanel.tsx` over `sf_choices.rs`; gear is
+  added through `append_to_character` and `StarfinderAdapter`. Feat counts are printed, not enforced.
+- **Catalogs** — with Starfinder selected the landing screen offers the six Starfinder catalogs instead of the
+  Pathfinder links (`starfinderCatalog/StarfinderCatalogScreen.tsx`, `list_starfinder_catalog`).
+- **Harnesses** — ui-smoke rows `build-/open-starfinder-{soldier,mystic,technomancer,envoy}` create each seed through the
+  creation flow, level it, give it feats/spells/gear and reopen it from the saved store; the harness runs against an isolated
+  `XDG_DATA_HOME` and records the real store's entry count and sha256 before and after (`103` rows, `14` Starfinder).
+  `sf_oracle_parity.rs` is the oracle-parity gate (see [homebrew-and-oracle.md](./homebrew-and-oracle.md)). The two
+  Pathfinder seeds have a render-hash pair (`pf_seed_render_hash.rs`, `pf_catalog_dump_hash.rs`); Starfinder has none.
 
 ## Frontend directory map
 
@@ -375,7 +417,7 @@ surface builders), `characterHubModel.ts` (race/class catalogues, PF1 math helpe
 sheet tab, each with its own `*.test.ts`), plus the screen/dialog components (`LandingScreen.tsx`,
 `CreateCharacterForm.tsx`, `LoadCharacterScreen.tsx`, `CharacterSheet.tsx`, `LevelUpDialog.tsx`,
 `SkillAllocationDialog.tsx`, `PortraitUpload.tsx`, `CharacterListRow.tsx`, `CorpusIngestDiagnosticPanel.tsx`,
-`StubScreen.tsx` — unreferenced today, see "Corrections" above).
+`StarfinderCreateForm.tsx`, `StarfinderCharacterSheet.tsx`, `StarfinderLevelUpDialog.tsx`, `StarfinderChoicesDialog.tsx`, `StarfinderChoicesPanel.tsx` (the Starfinder surface above), `StubScreen.tsx` — unreferenced today, see "Corrections" above).
 
 **`dmToolkit/`** — real DM-facing surface: `DmToolkitScreen.tsx`, `EncounterBuilderScreen.tsx`, plus
 model files for encounter building, DM console export, session history, and DM-to-player links
@@ -388,7 +430,8 @@ model files for encounter building, DM console export, session history, and DM-t
 
 **`classCatalog/`, `raceCatalog/`, `spellCatalog/`, `equipmentCatalog/`, `intelligentItemCatalog/`,
 `monsterCatalog/`, `companionCatalog/`** — near-identical catalog browsers, each a `*Screen.tsx` +
-`*Runtime.ts` pair (see the DI pattern below).
+`*Runtime.ts` pair (see the DI pattern below). **`starfinderCatalog/`** is the Starfinder equivalent
+(`StarfinderCatalogScreen.tsx`, `starfinderCatalogModel.ts`).
 
 **`testerWorkbench/`** — the tester workbench and its feedback composers: `loadTesterWorkbenchSurface.ts`
 / `loadTesterWorkbenchSurfaceRuntime.ts` assemble the `TesterWorkbenchSurface` driving `App.tsx`'s

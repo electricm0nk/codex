@@ -2,7 +2,8 @@
 
 > Scope: every project-specific term a newcomer meets in this codebase or its docs, each with a
 > short definition and a link to the doc that treats it in full.
-> Last verified: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for the SD-36 Epic F terms (carrier mix,
+> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the SD-37 terms (game system, held set,
+> data package, rules catalog, golden digests, Starfinder chassis). Earlier: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for the SD-36 Epic F terms (carrier mix,
 > class census, closure-complete attestation, class roster, mechanism, sabotage parity, status parity,
 > structural diff). Earlier: **2026-09-20 against `tranche/16` (`b22ea9e113`, SD-36 Epic D)**. New this pass
 > (`docs/architecture/glossary.md` did not exist before SD-36 Epic D).
@@ -54,9 +55,10 @@ decoration":
 1. **Class chassis** — the compute-side dispatch (`compute_class_chassis`,
    `compute_fighter_chassis`, ...) that produces base attack bonus and base saves for a
    class/level. See [rules-engine.md](./rules-engine.md).
-2. **Rules-table chassis** — the hand-transcribed per-book/per-class BAB/save/skill-points tables
-   in `src/rules_core/rules_tables/`, which carry a source TOKEN (never a pre-computed number) for
-   the compute side to read. See [rules-data-tables.md](./rules-data-tables.md) §"What it holds".
+2. **Rules-table chassis** — the per-book/per-class BAB/save/skill-points tables, stored as the JSON
+   data package `data/rules_tables/` and read through `src/rules_core/rules_catalog/`; rows carry a source
+   TOKEN (never a pre-computed number) for the compute side to read. See
+   [rules-data-tables.md](./rules-data-tables.md) §"Rows carry the corpus token, never a computed number".
 
 ## Class census
 
@@ -119,6 +121,13 @@ stage and by content via the residue gate (next entry). See [overview.md](./over
 One dispatched unit of work inside a bundle's epic, closed by a **cycle receipt** (see Receipt)
 following the schema in `docs/governance/workflow-instruction-template.md §7`.
 
+## Data package (`rules_tables`)
+
+The Pathfinder rules tables as one JSON file per table under `data/rules_tables/<table id>.json`, with a licence/PI
+stamp per file and a published schema. It is the tables' only home: the compiled Rust module they were first
+rendered from no longer exists. Loaded by `src/rules_core/rules_data_package.rs`, read through the
+[rules catalog](#rules-catalog). See [rules-data-tables.md](./rules-data-tables.md).
+
 ## Denominator gate
 
 `scripts/denominator_gate.py --check` (`verify.sh` stage `denominator-gate`) — fails a bundle's
@@ -156,11 +165,30 @@ doctrine" and [conventions.md](./conventions.md) §"Fail-honest computation".
 a "Figures + their re-derive commands" section carries its own re-derive command on its own line.
 See `AGENTS.md` rule 9 and [testing.md](./testing.md).
 
+## Game system
+
+`GameSystem` in `src/rules_core/game_system.rs`: `Pathfinder1e` (`pathfinder-1e`) or `Starfinder1e` (`starfinder-1e`).
+Names a package root and a book list; an unknown id is an error, never a default. See
+[overview.md](./overview.md) §"Two game systems, one engine".
+
+## Golden digest
+
+A sha256 in `src/rules_core/rules_catalog/golden_digests.txt` of the transcript of one rules table, view or lookup as
+the compiled module last answered it. `rules_catalog::golden_tests` re-derives each from the package, so a changed
+row or a type that serialises differently fails naming its table. See [rules-data-tables.md](./rules-data-tables.md).
+
 ## Grand epic (GE-NN)
 
 An older naming lineage predating the `SD-NN` convention, still visible as a file-name prefix
 (`ge06_*`, `ge08_*` test files) — a proper noun naming provenance, not a live organizing unit. See
 [README.md](./README.md)'s provenance note.
+
+## Held set
+
+The records a Starfinder character holds: its race, its first class's level-1 `BaseClass` template, its theme and every
+record those grant, to a fixpoint, plus the worn armour and its picks. Every `sf_*` reader folds the rows of the one held
+set (`sf_defense::held`), so a total on the sheet is the number the package's own rows produce. See
+[rules-engine.md](./rules-engine.md) §3e.
 
 ## Kanban
 
@@ -241,6 +269,12 @@ hit count rises above zero; `--check --closure` requires exactly zero. See
 One append-only JSON line in `docs/retro/events/<actor-slug>.jsonl`, emitted via `scripts/retro.py`
 to record a correction, incident, deferral, or rework — the things git itself never captures.
 See `AGENTS.md` §Retrospective Logging and `docs/retro/schema.json`.
+
+## Rules catalog
+
+`src/rules_core/rules_catalog/`: the package-backed Rust layer over the [data package](#data-package-rules_tables). It
+holds the row and id types, the pure functions, the `Table`/`Derived` accessors and the per-book resolvers; no table
+row is compiled into it. See [rules-data-tables.md](./rules-data-tables.md).
 
 ## Sabotage parity
 

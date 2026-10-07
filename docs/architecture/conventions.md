@@ -3,8 +3,9 @@
 > Scope: naming standards and cross-cutting code conventions — the rules a new contributor
 > follows to name a file, a function, a test, a branch, or a commit the way this repo already
 > does, plus the structural idioms every plane converges on independently.
-> Last verified: **2026-09-20 against `tranche/16`** (SD-36 Epic D truth-up, HEAD `5ee77f8d85` +
-> this cycle's Epic C2 working-tree state — see `docs/architecture/README.md`'s provenance note).
+> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the two paragraphs that cited the removed
+> `rules_tables` module (the book-id convention and the guard-then-dispatch resolver shape, now under
+> `src/rules_core/rules_catalog/`); the rest was last verified 2026-09-20 against `tranche/16` and not re-derived.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This is the doc to point an agent (or a new contributor) at for "what do I name this" and "how
@@ -116,10 +117,10 @@ its own `load_*` function first.
   the same id `docs/work-inventory.json` keys a unit by. A converter-minted variable id is `"v"` +
   16 hex of SHA-256 over the upper-cased source name (`sheet_rule::var_id`) — a pure hash that
   carries no source-format name outside `provenance`.
-- **A "book id" is the `rules_tables` module name, not always the literal book title.** Each
-  Paizo book gets its own directory under `src/rules_core/rules_tables/` (`crb`, `apg`, `acg`,
+- **A "book id" is the `rules_catalog` module name (which is also its `data/rules_tables/` directory name), not always the literal book title.** Each
+  Paizo book gets its own directory under `src/rules_core/rules_catalog/` (`crb`, `apg`, `acg`,
   `bestiary_2` .. `bestiary_6`, `inner_sea_world_guide`, ...) and a matching `RuleSetId` variant
-  documented in `rules_tables/mod.rs`. **Known exception, kept for compatibility rather than
+  documented in `rules_catalog/mod.rs`. **Known exception, kept for compatibility rather than
   fixed**: `beastiary1` is a legacy misspelling of "bestiary 1" that predates the convention and
   is not renamed, because the id is load-bearing (persisted data references it) — treat an
   established book id as a proper noun, not a typo to correct in passing.
@@ -391,10 +392,10 @@ module doc comments call this a correctness bug class of its own if gotten wrong
 
 ### Guard-then-dispatch resolver shape
 
-Every `rules_tables` book resolver starts with `if rule_set != RuleSetId::X { return None; }`
+Every `rules_catalog` book resolver starts with `if rule_set != RuleSetId::X { return None; }`
 before dispatching on the book-local id enum. See `apg::class_chassis_resolve`,
 `acg::class_chassis_resolve`, `beastiary1::monster_resolve` (all under
-`src/rules_core/rules_tables/`). **When adding a new book or resolver**: copy this guard-then-dispatch
+`src/rules_core/rules_catalog/`). **When adding a new book or resolver**: copy this guard-then-dispatch
 shape so a wrong-book query is a defined `None`, never a panic or silent wrong answer. Full
 treatment, including the cross-book acceptance-test pattern, in
 [rules-data-tables.md](./rules-data-tables.md) §"`RuleSetId` and per-book resolution."

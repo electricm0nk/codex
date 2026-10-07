@@ -1,28 +1,15 @@
 # Corpus Ingest
 
-> Scope: the crate wall between the PCGen converter/oracle and the live engine, and how real PCGen corpus files (`.pcc`/`.lst` data files) are parsed and projected into the canonical source-IR the rules engine consumes.
-> Last verified: **2026-09-29 against `tranche/16` (`165cc205e7`)** for §"Converter mechanisms added by
-> SD-36 Epic F" (added the F7b prose-formula row from `stage-f7/f7b-receipt.md`). Earlier pass:
-> **2026-09-26 against `tranche/16` (`e70a8745ed`)** for §"The sheet-rule converter" and
-> §"Converter mechanisms added by SD-36 Epic F" (report figures re-read from `data/sheet_rules/_report.json`
-> and `_defects/*.json`). Earlier pass: **2026-09-20 against `tranche/16` (`424e93e93c`)** — SD-36 docs-truth capability pass:
-> corrected the "how to onboard a book" section's book-count framing (was a vague "~30+"; now the
-> reconciled 37 `RuleSetId` variants / 38 tracked books / 39 `data/corpus/` directories, each with its
-> own denominator and re-derive command) and the stale pre-Epic-A paths this document's own §"The
-> crate wall" pass had already corrected elsewhere but had not swept from
-> `docs/work-inventory.FROZEN.md`'s reader list (fixed there, not here — see that file). Prior pass
-> **2026-09-20 against `b22ea9e113`** added §"The crate wall" and the path corrections it required
-> throughout this document: the old src/pcgen_import/ and src/oracle_validation/ directories do not
-> exist any more — SD-36 Epic A (operator ruling D1) moved the whole converter/oracle tree to
-> `crates/codex-ingest/src/pcgen_import/` and `crates/codex-ingest/src/oracle_validation/`, and every
-> generator/enrichment binary that used to live at `src/bin/*` moved to `crates/codex-ingest/src/bin/*`
-> (only `pi_sweep_rules_tables.rs`, `v06_class_state_dump.rs`, and `v06_content_state_dump.rs` remain
-> in `src/bin/`, re-derived with `ls src/bin/` vs `ls crates/codex-ingest/src/bin/`). That pass also
-> added the converter-pipeline flowchart, the corpus record erDiagram, and the generated PCGen-free
-> desktop corpus bundle section. Prior pass **2026-09-15 against `tranche/15`** (SD-35 closure
-> epilogue) verified §"The sheet-rule converter" and the `cache_gen` relocation (unaffected in
-> substance by the Epic A crate move — only the path prefix changed); the parsing-pipeline stages
-> (1-6) are otherwise unchanged since the 2026-08-07 tranche/8 pass.
+> Scope: the crate wall between the PCGen converter/oracle and the live engine, and how real PCGen corpus files (`.pcc`/`.lst` data files) are parsed and projected into the canonical source-IR and the sheet-rule packages (Pathfinder 1e and Starfinder 1e) the rules engine consumes.
+> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §"The Starfinder 1e
+> converter" (new), §"The sheet-rule converter" (the Pathfinder report figures below were re-read from
+> `data/sheet_rules/_report.json` this pass and are unmoved: 49,450 of 49,450, 73,363 rules, 6,211 tables, 424 degraded)
+> and the references to the Pathfinder rules tables, now a data package (`data/rules_tables/`, see
+> [rules-data-tables.md](./rules-data-tables.md)). Files in the root crate's `src/bin/` re-derived with
+> `ls src/bin/` → `class_census.rs`, `pi_sweep_rules_tables.rs`, `rules_tables_package.rs`,
+> `v06_class_state_dump.rs`, `v06_content_state_dump.rs`; every generator and enrichment binary lives in
+> `crates/codex-ingest/src/bin/`. The other sections were last verified at `tranche/16` (`165cc205e7`, 2026-09-29) and
+> were not re-derived this pass beyond path existence.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## The crate wall
@@ -143,7 +130,7 @@ read a PCGen TOKEN, not about who may read the JSON these tools produce.*
 
 ## The sheet-rule converter (`data/sheet_rules/`) — new 2026-09-15, SD-35
 
-The stages below produce the source-IR the engine's hand-transcribed chassis consumes. SD-35
+The stages below produce the source-IR the engine's package-backed chassis tables are authored from. SD-35
 added a **second, terminal output** of this module, and it is the one that carries the whole
 corpus: `crates/codex-ingest/src/pcgen_import/sheet_rule/` (`closure.rs`, `convert.rs`, `ctx.rs`, `formula.rs`,
 `mod.rs`, `prereq.rs`, `prose.rs`, `table.rs`, plus the SD-36 Epic F modules named below), driven by the `crates/codex-ingest/src/bin/sheet_rule_convert.rs`
@@ -238,6 +225,37 @@ SD-35 (`AT-35-E6-002`). They were under a `cache_gen/` directory in `src/rules_c
 PCGen-reading code on the live side of the boundary; the code is unchanged, only its side is.
 There is no `cache_gen/` under `src/rules_core/` any more — the path in any older doc or comment
 is stale.
+
+## The Starfinder 1e converter (`data/starfinder-1e/`)
+
+SD-37 ran the same converter over a second game system. `sheet_rule_convert --system starfinder-1e [--write | --check]`
+(`--system` absent means `pathfinder-1e`, so every existing invocation keeps its meaning;
+`crates/codex-ingest/src/bin/sheet_rule_convert.rs`) writes `data/starfinder-1e/sheet_rules/<book>/<kind>/<slug>.json`;
+`crates/codex-ingest/src/bin/sf_corpus.rs` (`--check` | `--write`) writes the licence-screened identity records
+`data/starfinder-1e/corpus/<book>/<kind>/<slug>.json` plus one `LICENSE.json` per book. The roots of each system come
+from `codex::rules_core::game_system::GameSystem::package_roots`.
+
+- **Report** (`jq -r '[.records,.converted,.refused,.rules_written,.var_tables,.degraded_records]|map(tostring)|join(" ")' data/starfinder-1e/sheet_rules/_report.json`):
+  `8582 8582 0 11320 238 30`, from eight books (`core`, `armory`, `character_operations_manual`, `pact_worlds`,
+  `near_space`, `alien_archive`, `alien_archive_2`, `alien_archive_3`). The work inventory is
+  `docs/work-inventory.starfinder-1e.json` (8,582 units).
+- **Books by `.pcc`, not by directory.** `crates/codex-ingest/src/pcgen_import/system_books.rs` registers a Starfinder book by
+  its `.pcc` entry file (`BOOK_PCCS`) and reads exactly the `.lst` that file includes. A book whose licence-matrix
+  row says exclude is absent from `BOOK_PCCS` and named in `EXCLUDED_BOOK_PCCS`; `resolve_book_includes` refuses any
+  include that reaches one (the core book's nested `_society` directory, the Starfinder Society guide, and the
+  Infinite Space theme PCC; `docs/governance/license-matrix.md`, `docs/release/SD-37-starfinder-1e/decisions.md §6`).
+- **A second formula engine.** Starfinder's data uses PCGen's newer variable engine: `MODIFY:` / `MODIFYOTHER:`
+  tokens, `VARIABLE:` files' `GLOBAL:`/`LOCAL:`/`CHANNEL:` declarations, `DATACONTROL:` functions and dynamic scopes,
+  `DYNAMIC:` objects and `DATATABLE:` tables. `crates/codex-ingest/src/pcgen_import/sheet_rule/formula_system.rs` reads it into the same
+  `SheetRule` schema (SF has 1,954 `MODIFY*` tokens against Pathfinder's 35, `docs/release/SD-37-starfinder-1e/content-unit-inventory.md` F-9).
+- **Overloaded fields are mapped, not assumed.** `crates/codex-ingest/src/pcgen_import/sheet_rule/sf_mapping.rs` holds `SF_MAPPING_TABLE`: PCGen's
+  Starfinder data reuses Pathfinder field names with other meanings (`BONUS:HP|ALTHP` is Stamina, `BONUS:COMBAT|AC`
+  feeds EAC and KAC separately, `FACT:KeyAbilityScore` can be a choice), so each sheet field names the oracle tokens
+  that feed it, with the SRD rule and a PCGen run observation per row.
+- **Gate.** Every converter change runs the structural-diff protocol (`docs/release/SD-36-consolidation/artifacts/epic-f/scripts/structural_diff.py`):
+  pinned delta classes, planted mutations that must fail, Pathfinder's 49,450 records unmoved,
+  `sheet_rule_convert --check` exit 0 and `python3 scripts/pcgen_residue_gate.py --check --closure` exit 0. The
+  `sf-sheet-rules-check` stage of `scripts/verify.sh` re-checks the Starfinder package.
 
 ## Pipeline stages
 
@@ -346,10 +364,10 @@ kind, one module per kind:
   `SourceContentPayload`** — there is no `MonsterStatBlockRecord`
   variant on either enum, and its only caller in the repo is the
   parser's own test suite (`crates/codex-ingest/tests/sd17_b_monster_stat_block.rs`). Its
-  output is read and hand-transcribed into `rules_tables` book modules
+  output is read and transcribed into the rules-table package (`data/rules_tables/`)
   rather than flowing through the canonical-IR projection path
   automatically (see [rules-data-tables.md](./rules-data-tables.md)'s
-  hand-transcription convention).
+  row-carries-the-token convention).
 
 Every per-kind parser's outputs are reachable through one kind-tagged
 union: `ParsedLstRecord<'a>` (`crates/codex-ingest/src/pcgen_import/lst_parser/mod.rs`,
@@ -736,7 +754,7 @@ stage (`corpus-sweep`); see [testing.md](./testing.md).
 
 See [rules-data-tables.md](./rules-data-tables.md) for what happens
 downstream once a corpus record is projected: transcribing its values
-into the hand-authored `rules_tables` book modules, and — new as of the
+into the rules-table package's per-book tables, and — new as of the
 wiring_class/PI-screening convergence cycle — the GE-01 `wiring_class`
 taxonomy every corpus record now carries (`crates/codex-ingest/src/pcgen_import/wiring_class.rs` —
 moved out of `src/rules_core/` by SD-35 `AT-35-E6-002`, because it reads PCGen
@@ -763,17 +781,16 @@ actually onboarded — `data/corpus/` holds 39 directories (`ls -d data/corpus/*
 than the tracked-book count because `beastiary/` and `bestiary/` are Bestiary 1's chassis half and
 hand-modelled half served under one `RuleSetId::Bestiary1`/one display name, not two books (see
 `apps/desktop/src-tauri/src/monster_catalog.rs:222-231`); the compiled `RuleSetId` enum has 37
-variants (`awk '/pub enum RuleSetId/,/^}/' src/rules_core/rules_tables/mod.rs | grep -cE "^\s+[A-Z][A-Za-z0-9_]*,\s*$"`),
+variants (`awk '/pub enum RuleSetId/,/^}/' src/rules_core/rules_catalog/mod.rs | grep -cE "^\s+[A-Z][A-Za-z0-9_]*,\s*$"`),
 one of which (`Ce`, `core_essentials`) is folded into other books' race data rather than tracked as
 its own book in `docs/work-inventory.json`'s `totals.by_book` (37 keys there, not 38: it has
 Beginner Box, 19 units, but not `core_essentials` — `python3 -c "import json;print(len(json.load(open('docs/work-inventory.json'))['totals']['by_book']))"`
 → 37); so tracked books = `RuleSetId` (37) − `core_essentials` (1) + Beginner Box (1) = 38 — see
 [rules-data-tables.md](./rules-data-tables.md)'s module map for the per-book table. All three figures
 (37/38/39) are correct for what each one denominates; they are not in tension with each other once
-each is read against its own denominator, and it is the starting point a future ingestion effort
-(Starfinder, most plausibly — this is why the converter and
-oracle harness were *kept*, not deleted, in `crates/codex-ingest/`) would adapt rather than redesign
-from nothing.
+each is read against its own denominator. These counts are Pathfinder's; Starfinder 1e has its own
+book registry (`system_books.rs`, eight converted books, see §"The Starfinder 1e converter") and a future
+system would adapt that path rather than redesign it.
 
 **The per-file count-pinning tax, the one lesson worth carrying forward regardless of tooling.**
 Every real book-onboarding cycle in this project's history found that **the cost is per file, not
@@ -781,7 +798,7 @@ per record** — a book with 3,000 equipment records and one with 30 cost roughl
 onboarding labor, because the tax is touching each of ~7 places that pin a *count*, not transcribing
 each record by hand:
 
-1. The `rules_tables/<book>/` (or shared cross-book table's) resolver and its acceptance test.
+1. The `rules_catalog/<book>/` (or shared cross-book table's) resolver, its package files under `data/rules_tables/<book>/`, and its acceptance test.
 2. The corpus-cache generator/enrichment binary and its round-trip test.
 3. Every hand-pinned count assertion anywhere in `tests/` that names the book (spell counts, feat
    counts, description-population percentages — `docs/governance/book-ingestion-playbook.md §6`'s own
@@ -832,10 +849,10 @@ silently, and a number without a reproducing command is a number nobody can re-c
   doc, comment, or dispatch prompt that still uses the old `src/`-rooted spelling is citing a path
   from before 2026-09-20; verify before trusting it (this document itself needed the same correction
   this pass).
-- **Almost every generator/enrichment/ingest binary moved to `crates/codex-ingest/src/bin/`, but not
-  all three remaining `src/bin/*.rs` files did** (`pi_sweep_rules_tables.rs`,
+- **Almost every generator/enrichment/ingest binary moved to `crates/codex-ingest/src/bin/`, but the
+  five remaining `src/bin/*.rs` files did not** (`class_census.rs`, `rules_tables_package.rs`, `pi_sweep_rules_tables.rs`,
   `v06_class_state_dump.rs`, `v06_content_state_dump.rs` stay in the root crate, because none of them
-  reads a raw corpus token — they walk already-compiled `rules_tables` state). Don't assume every
+  reads a raw corpus token — they walk already-loaded rules-table state). Don't assume every
   `src/bin/` binary moved, or that every `crates/codex-ingest/src/bin/` binary is new; check both
   directories.
 - **Regenerating an equipment cache without re-running `enrich_equipment_raw_tokens` afterward

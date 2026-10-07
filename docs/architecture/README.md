@@ -2,14 +2,11 @@
 
 > Scope: index and maintenance contract for the `docs/architecture/` living-documentation set,
 > plus reading paths into it by intent.
-> Last verified: **2026-09-20 against `tranche/16` (`b22ea9e113`, SD-36 Epic D)** — added
-> `getting-started.md` and `glossary.md` (new this pass) to the index and folded the crate-wall
-> (`crates/codex-ingest`) into the "Source dirs" column and the reading paths below. Prior pass
-> 2026-07-22 against tranche/5-3 (SD-25 closure). **Path correction 2026-08-22**
-> (SD-32 closure epilogue, `workflow-instruction.md §13` architecture-docs refresh): the
-> provenance-note example and the update-and-feedback source-dirs row cited the old
-> apps/desktop/src/sd16/ directory, renamed to `apps/desktop/src/feedback/` / `apps/desktop/src/update/`
-> by `06d926e90` (2026-08-10) — fixed below; no other content in this doc re-verified.
+> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)**. Index rows for
+> `rules-engine.md`, `rules-data-tables.md`, `corpus-ingest.md` and `desktop-app.md` now name the Starfinder 1e and
+> data-package paths (`src/rules_core/rules_catalog/`, `data/rules_tables/`, `data/starfinder-1e/`); the
+> compiled `rules_tables` module they used to name no longer exists. The verification one-liners below
+> were run against this tree.
 > Maintenance: updated at SD closure — see §Maintenance contract below
 
 ## Purpose
@@ -50,12 +47,12 @@ doc's coverage shifts.
 | [glossary.md](./glossary.md) | Every project term (SD-nn, tranche, epic, STC package, corpus, wiring_class, crate wall, oracle, ui-smoke, ...) defined once | (reference surface; no single source dir) |
 | [conventions.md](./conventions.md) | Cross-cutting idiom catalog: fail-honest, store shape, DI seams, boundary rule, TDD | `src/`, `apps/desktop/src/` |
 | [status.md](./status.md) | What is real vs. stubbed/partial/deferred across the whole repo | `src/`, `apps/desktop/` |
-| [corpus-ingest.md](./corpus-ingest.md) | PCGen `.pcc`/`.lst` parsing into canonical source-IR, the sheet-rule converter | `crates/codex-ingest/src/pcgen_import/` |
-| [rules-engine.md](./rules-engine.md) | The headless PF1 compute spine and per-domain engines | `src/rules_core/` (excluding `rules_tables/`) |
-| [rules-data-tables.md](./rules-data-tables.md) | Hand-transcribed per-book Paizo rule-data tables | `src/rules_core/rules_tables/` |
+| [corpus-ingest.md](./corpus-ingest.md) | PCGen `.pcc`/`.lst` parsing into canonical source-IR, the sheet-rule converter for both game systems | `crates/codex-ingest/src/pcgen_import/`, `data/starfinder-1e/` |
+| [rules-engine.md](./rules-engine.md) | The headless compute spine (PF1 per-domain engines and the Starfinder 1e `sf_*` readers) | `src/rules_core/` (excluding `rules_catalog/`) |
+| [rules-data-tables.md](./rules-data-tables.md) | The Pathfinder rule-data tables as a JSON data package, and the package-backed catalog that reads it | `data/rules_tables/`, `src/rules_core/rules_catalog/` |
 | [persistence.md](./persistence.md) | Saved-character and campaign local on-disk storage | `src/saved_character/`, `src/campaign/`, `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/campaign_drive.rs` |
 | [homebrew-and-oracle.md](./homebrew-and-oracle.md) | Homebrew package authoring; oracle-parity fixture schema | `src/homebrew_authoring/`, `crates/codex-ingest/src/oracle_validation/` |
-| [desktop-app.md](./desktop-app.md) | Tauri shell build, command inventory, boundary layer, frontend map, rule-system adapter seam | `apps/desktop/` |
+| [desktop-app.md](./desktop-app.md) | Tauri shell build, command inventory, boundary layer, frontend map, rule-system adapter seam (Pathfinder and Starfinder adapters) | `apps/desktop/` |
 | [update-and-feedback.md](./update-and-feedback.md) | Self-update chain and feedback/defect-report submission chain | `apps/desktop/src/feedback/`, `apps/desktop/src/update/`, `apps/desktop/src/testerWorkbench/feedback/`, `apps/desktop/src/testerWorkbench/update/`, `apps/desktop/src-tauri/src/update/`, `apps/desktop/src-tauri/src/browser_handoff.rs`, `schemas/update/` |
 | [release-pipeline.md](./release-pipeline.md) | Publish workflow, manifest generation, branch-promotion gates | `.github/workflows/`, `scripts/release/`, `tools/release/`, `scripts/tranche/` |
 | [testing.md](./testing.md) | Full verification command set, fixture grammar, corpus-gated tests | `tests/`, `apps/desktop/scripts/run-tests.mjs`, `apps/desktop/src/testSupport/` |
@@ -69,12 +66,12 @@ jump straight to the doc(s) for what you're actually doing:
 
 - **Fix a wrong number on a sheet** → [rules-engine.md](./rules-engine.md) (the compute spine and
   the fail-honest pattern) → [rules-data-tables.md](./rules-data-tables.md) if the wrong number
-  comes from a hand-transcribed table rather than a compute function → [testing.md](./testing.md)
+  comes from a rules-table package row rather than a compute function → [testing.md](./testing.md)
   §"The fixture grammar" to write the failing fixture first (TDD is mandatory, `AGENTS.md` rule 1).
 - **Add a book** (new Paizo sourcebook) → [corpus-ingest.md](./corpus-ingest.md) (how a `.pcc`/`.lst`
   book becomes `data/corpus/<book>/**/*.json` and, where sheet-rule-converted,
   `data/sheet_rules/<book>/**`) → [rules-data-tables.md](./rules-data-tables.md) §"`RuleSetId` and
-  per-book resolution" if the book needs a new hand-transcribed chassis →
+  per-book resolution" if the book needs a new chassis table in the data package →
   `docs/governance/book-ingestion-playbook.md` for the per-book cycle procedure.
 - **Add a UI screen or Tauri command** → [desktop-app.md](./desktop-app.md) (command inventory, the
   `build*Surface`/`*Runtime` DI pattern, the boundary-wrapper rule) →
@@ -87,6 +84,9 @@ jump straight to the doc(s) for what you're actually doing:
 - **Cut a release** → [release-pipeline.md](./release-pipeline.md) (publish pipeline, branch
   promotion, version stamp) → [getting-started.md](./getting-started.md) §"Branch model, commits,
   and PRs" for the `tranche/N` → `develop` → `test` → `main` flow and who merges what.
+- **Starfinder 1e** → [overview.md](./overview.md) §"Two game systems, one engine" →
+  [rules-engine.md](./rules-engine.md) §3e (the `sf_*` readers) → [corpus-ingest.md](./corpus-ingest.md) §"The Starfinder 1e
+  converter" → [desktop-app.md](./desktop-app.md) §"Starfinder 1e surface" → [status.md](./status.md) §"Starfinder 1e" for what it does not cover.
 - **Investigating CI** → [release-pipeline.md](./release-pipeline.md).
 - **What works today** → [status.md](./status.md).
 - **How saved characters/campaigns are stored** → [persistence.md](./persistence.md).

@@ -3,7 +3,8 @@
 > Scope: toolchain setup, build/run/test commands for every crate and the frontend, running the
 > desktop app, `verify.sh`, a first-contribution walkthrough done red-to-green, and the
 > branch/commit/PR model this repo actually uses.
-> Last verified: **2026-09-20 against `tranche/16` (`b22ea9e113`, SD-36 Epic D)**. New this pass
+> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the two package gates added under "Root crate" and "Ingest crate"
+> below. Everything else was last verified 2026-09-20 against `tranche/16` (`b22ea9e113`, SD-36 Epic D). Earlier: **2026-09-20 against `tranche/16` (`b22ea9e113`, SD-36 Epic D)**. New this pass
 > (`docs/architecture/getting-started.md` did not exist before SD-36 Epic D). Commands verified by
 > reading `scripts/verify.sh`'s own stage bodies (the authoritative source for exact invocations),
 > `apps/desktop/package.json`'s `scripts` block, and `apps/desktop/.claude/skills/run-desktop/SKILL.md`.
@@ -101,7 +102,11 @@ cargo build                       # compiles the codex package only (no default-
 cargo test --locked --lib         # unit tests inside src/ — fast
 cargo test --locked               # + every tests/*.rs integration file — the full root suite
 cargo clippy --locked --tests -- -D warnings   # lints, including test targets, zero-warning ceiling
+cargo run --locked -p codex --bin rules_tables_package -- --check   # data/rules_tables (the Pathfinder table package) is canonical
 ```
+
+The Pathfinder rules tables are data files (`data/rules_tables/`), not Rust source; a table edit is a package-file edit
+(see [rules-data-tables.md](./rules-data-tables.md)).
 
 ### Ingest crate (`crates/codex-ingest`)
 
@@ -112,6 +117,7 @@ Not built by a bare `cargo build`/`cargo test` at the repo root (no `default-mem
 cargo build -p codex-ingest
 cargo test --locked --no-fail-fast -p codex-ingest
 ( cd crates/codex-ingest && cargo clippy --locked --tests -- -D warnings )
+cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --system starfinder-1e --check   # Starfinder 1e package (needs the oracle checkout)
 ```
 
 ### Desktop shell, Rust side (`apps/desktop/src-tauri`, crate `codex-desktop`)
