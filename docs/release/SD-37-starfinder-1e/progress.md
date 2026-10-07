@@ -38,8 +38,9 @@ it (`workflow-instruction.md §5`).
 | E7.5 | complete | 1 of 1 | `artifacts/epic_7/E7.5_cycle_receipt.md`; SD-j safe default applied (worktree/branch left untouched); CARGO_TARGET_DIR deleted |
 | E7.6 | complete | 1 of 1 | `release-notes.md`; `artifacts/epic_7/E7.6_cycle_receipt.md` |
 | E7.7 | complete | 1 of 1 | truth-up + Opus claims critic (`artifacts/epic_7/E7.7_cycle_receipt.md`, `receipts.md`); critic: 6 wrong claims fixed, 0 blockers |
-| E7.8–E7.9 | waiting | 0 of 2 | |
-| **Total** | | **54 of 57** | command below the table (E7.6 re-ran it after its own row: 54 complete of 57 rows) |
+| E7.8 | complete | 1 of 1 | closed on the graphify guard outcome (`decisions.md §23`) |
+| E7.9 | complete | 1 of 1 | `artifacts/epic_7/E7.9_cycle_receipt.md`; PR `tranche/17 → develop` |
+| **Total** | | **57 of 57** | `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/ {n++} END {print n}' kanban.md` |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -202,6 +203,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E7.7 (critic) | 2026-10-07 | Opus 5.5 | the `docs(sd37,e7.7)` critic commit | complete | all six unchanged (docs only; nothing rendered; last renders = E7.2) | `artifacts/epic_7/E7.7_cycle_receipt.md` §"Second half": claims critic over the 14 truth-up docs and `release-notes.md`; 6 wrong claims fixed (narrow book dirs "about 35" → 32, 10 of them one-family; PI-screen call sites 25 → 27; `cargo metadata` output order; "every place keyed by GameSystem" → `settled_corpus::CORPUS_ROOT` is a literal PF root; `rules_tables_package --check` is not a `verify.sh` stage, the root-lib round-trip/ownership tests are the gate; Landing's six rule-set chips and per-system catalogs); 0 blockers; log `artifacts/epic_7/E7.7_logs/critic_checks.log`; retro corrections ×6 |
 | E7.8 | 2026-10-07 | Sonnet 5.5 | the closing `docs(sd37,e7.8)` commit | blocked-escalated | all six unchanged (docs only) | `artifacts/epic_7/E7.8_cycle_receipt.md`: `update_graphify.py` exit 1 (`no graph found`, 0.2 s; indexed SHA `05f2a325`); scratch unforced `graphify update` turned 648,328 nodes into 62,588; not promoted. Open blockers entry filed. |
 | E7.8 (attempt 2) | 2026-10-07 | Opus 5.5 | the `docs(sd37,e7.8)` attempt-2 commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.8_cycle_receipt.md`) | blocked-escalated | all six unchanged (docs only) | `artifacts/epic_7/E7.8_cycle_receipt.md` §Attempt 2: §22 copy verified (648,328 = 648,328 nodes, same sha256); `update_graphify.py` exit 1 on the node-count guard (648,327 vs 648,328, net -1), 1,536.8 s; graph unchanged, nothing to promote; recurrence of SD-36's 2026-09-27 refusal; Open blockers entry filed |
+| E7.9 | 2026-10-08 | Sonnet 5.5 | the closing `docs(sd37,e7.9)` commit | complete | all six unchanged (docs only) | `artifacts/epic_7/E7.9_cycle_receipt.md`: scan with `E7\.9` exemption prints nothing; merge-tree against `origin/develop` clean; PR opened after this commit, `pr-tests` awaited in-turn |
 
 ## Decisions taken on safe defaults
 
