@@ -8,12 +8,12 @@ paizo/core/_starfinder_core_rulebook.pcc: 87: #RACE:starship/scr_races_starship.
 paizo/core/_starfinder_core_rulebook.pcc: 88: #KIT:scr_kits_starship.lst
 
 ## FSR-C1 open SD-34 fable-review P1 rows
-apps/desktop/src-tauri/src/character_hub.rs exists=y sd37_numstat=+40/-16
-src/saved_character/local_store.rs exists=y sd37_numstat=
-src/bin/v06_work_inventory.rs exists=n sd37_numstat=
-src/rules_core/pilot_compute/mod.rs exists=y sd37_numstat=+44/-22
-scripts/transcribe_companion_tables.py exists=y sd37_numstat=+290/-215
-apps/desktop/src-tauri/src/reach_gate.rs exists=n sd37_numstat=
+apps/desktop/src-tauri/src/character_hub.rs exists=y tranche_numstat=+40/-16
+src/saved_character/local_store.rs exists=y tranche_numstat=
+src/bin/v06_work_inventory.rs exists=n tranche_numstat=
+src/rules_core/pilot_compute/mod.rs exists=y tranche_numstat=+44/-22
+scripts/transcribe_companion_tables.py exists=y tranche_numstat=+290/-215
+apps/desktop/src-tauri/src/reach_gate.rs exists=n tranche_numstat=
  desktop-P1-01 (path traversal) | **FIXED** (2 bypasses; see fix-cycle addendum) 
  desktop-P1-02 (non-atomic saves) | **FIXED** (3 stores) 
  PC8-1 (literal parens in id) | **FIXED** 

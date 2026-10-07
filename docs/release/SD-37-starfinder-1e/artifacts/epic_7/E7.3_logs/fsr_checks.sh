@@ -16,7 +16,7 @@ awk '/^#?(ABILITY|EQUIPMENT|RACE|KIT):[^\t]*starship/{print FILENAME": "FNR": "$
 
 echo; echo "## FSR-C1 open SD-34 fable-review P1 rows"
 for f in apps/desktop/src-tauri/src/character_hub.rs src/saved_character/local_store.rs src/bin/v06_work_inventory.rs src/rules_core/pilot_compute/mod.rs scripts/transcribe_companion_tables.py apps/desktop/src-tauri/src/reach_gate.rs; do
-  printf '%s exists=%s sd37_numstat=%s\n' "$f" "$(test -e "$f" && echo y || echo n)" "$(git diff --numstat $B HEAD -- "$f" | awk '{print "+"$1"/-"$2}')"
+  printf '%s exists=%s tranche_numstat=%s\n' "$f" "$(test -e "$f" && echo y || echo n)" "$(git diff --numstat $B HEAD -- "$f" | awk '{print "+"$1"/-"$2}')"
 done
 awk -F'|' '/^\| (desktop-P1|PC8-|PC4-1|R12-01)/{print $2"|"$3}' docs/release/SD-36-consolidation/receipts/epic-e_receipt.md
 git log --format='%h %s' --diff-filter=D -1 -- src/bin/v06_work_inventory.rs
