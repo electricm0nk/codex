@@ -1,0 +1,20 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 33.05s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 11 tests
+test rules_core::game_system::tests::game_system_root_pathfinder_is_the_current_path ... ok
+test rules_core::game_system::tests::game_system_root_an_installed_data_root_wins_over_codex_repo_root ... ok
+test rules_core::game_system::tests::game_system_root_resolves_at_runtime_before_the_compile_time_path ... ok
+test rules_core::game_system::tests::game_system_root_each_id_resolves_to_exactly_one_root ... ok
+test rules_core::money::system_wealth_tests::starfinder_wealth_by_level_matches_table_11_5 ... ok
+test rules_core::game_system::tests::game_system_root_unknown_id_is_an_error_not_a_fallback ... ok
+test rules_core::money::system_wealth_tests::pathfinder_starting_wealth_is_the_class_table_at_level_1 ... ok
+test rules_core::rules_catalog::control_tests::every_package_table_and_view_has_a_catalog_replacement ... ok
+test rules_core::rules_catalog::control_tests::the_compiled_tables_are_gone_and_no_catalog_file_aliases_them ... ok
+test rules_core::rules_catalog::control_tests::no_importer_names_the_compiled_tables ... ok
+test rules_core::game_system::tests::game_system_root_live_pathfinder_package_is_the_default_package ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 2844 filtered out; finished in 3.93s
+
+rc=0

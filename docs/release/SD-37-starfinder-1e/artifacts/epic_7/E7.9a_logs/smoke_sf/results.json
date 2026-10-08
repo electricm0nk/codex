@@ -1,0 +1,292 @@
+[
+  {
+    "id": "create-starfinder-soldier",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/create-starfinder-soldier.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nStarfinder 1st Edition — a 1st-level character: race, theme, class, then the point buy.\n\nCharacter name\n\nRace\n\nTheme\n\nClass\n\nKey ability\n\nChoices for this race, theme and class\n+2 Racial Stat Bonus — adjusts ability scores\n\nHuman — adjusts ability scores\n\nSoldier\n\nPrimary Fighting Style\n\nAbility scores (point buy)\nPoints spent: 10 of 10. Each point raises a score by 1; no",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "4af86b95-f75c-44ac-b664-2c1da5aca9ec"
+      ],
+      "deleted": [
+        "4af86b95-f75c-44ac-b664-2c1da5aca9ec"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-starfinder-sheet",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/open-starfinder-sheet.png",
+    "rendered_excerpt": "⚙\nSF Smoke Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nSoldier\t1\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t8\nHit Points\t11\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t12\nKinetic Armor Class (KAC)\t12\nInitiative\t+2\nSAVING TH",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "59255869-599a-4a1d-b368-84981bd7130a"
+      ],
+      "deleted": [
+        "59255869-599a-4a1d-b368-84981bd7130a"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-starfinder-soldier-preview",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/level-up-starfinder-soldier-preview.png",
+    "rendered_excerpt": "⚙\nSF Smoke Level Alpha\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nLevel up\n\nCharacter level now: 1\n\nSoldier 2 — character level 2\nSkill ranks per level: 4\nSkill ranks this level\nRanks in one skill: at most the character level, 2 (SRD Acquiring Skills (https://www.aonsrd.com/Rules.aspx?ID=77))\n-1 rank Acrobatics\n+1 rank Acrobatics\n0\n-1 rank Athletics\n+1 rank Athletics\n1 (+1)\n-1 r",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "3cc9c57a-1094-4e49-bb30-252f2512e018"
+      ],
+      "deleted": [
+        "3cc9c57a-1094-4e49-bb30-252f2512e018"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-starfinder-soldier-accept",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/level-up-starfinder-soldier-accept.png",
+    "rendered_excerpt": "⚙\nSF Smoke Level Bravo\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nLeveled up: Soldier 2 — character level 2\n\nCLASS\n\nSoldier\t2\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t16\nHit Points\t18\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t12\nKine",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "c477134b-df41-4c7f-945c-c37821575e32"
+      ],
+      "deleted": [
+        "c477134b-df41-4c7f-945c-c37821575e32"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "choices-starfinder-soldier-loadout",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/choices-starfinder-soldier-loadout.png",
+    "rendered_excerpt": "⚙\nSF Smoke Loadout\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nSaved feats, spells and gear: Energy Armor Class (EAC) 16 · Kinetic Armor Class (KAC) 19 · Credits remaining 2045 · Bulk carried 4\n\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina P",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "33d20a59-0e23-4b5c-9fbe-14a7ae51bae1"
+      ],
+      "deleted": [
+        "33d20a59-0e23-4b5c-9fbe-14a7ae51bae1"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "build-starfinder-soldier",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/build-starfinder-soldier.png",
+    "rendered_excerpt": "⚙\nSF Seed Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nSaved feats, spells and gear: Energy Armor Class (EAC) 16 · Kinetic Armor Class (KAC) 19 · Credits remaining 2045 · Bulk carried 4\n\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Po",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "bc6818d2-d90c-4c04-b27b-bec6feb517b5"
+      ],
+      "deleted": [
+        "bc6818d2-d90c-4c04-b27b-bec6feb517b5"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-starfinder-soldier",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/open-starfinder-soldier.png",
+    "rendered_excerpt": "⚙\nSF Seed Soldier\nStarfinder · Human\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nSoldier\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t16\t+3\nDexterity\t14\t+2\nConstitution\t12\t+1\nIntelligence\t11\t+0\nWisdom\t10\t+0\nCharisma\t10\t+0\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t24\nHit Points\t25\nResolve Points\t4\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t16\nKinetic Armor Class (KAC)\t19\nInitiative\t+2\nSAVING TH",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "1a7e9fc9-65bc-4127-8496-82ce8c2ff8a3"
+      ],
+      "deleted": [
+        "1a7e9fc9-65bc-4127-8496-82ce8c2ff8a3"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "build-starfinder-mystic",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/build-starfinder-mystic.png",
+    "rendered_excerpt": "⚙\nSF Seed Mystic\nStarfinder · Lashunta\nLevel up\nFeats, spells and gear\nOpen\nClose\nSaved feats, spells and gear: Energy Armor Class (EAC) 16 · Kinetic Armor Class (KAC) 16 · Credits remaining 6350 · Bulk carried 1\n\nCLASS\n\nMystic\t5\nABILITY SCORES\n\nScore\tModifier\nStrength\t10\t+0\nDexterity\t14\t+2\nConstitution\t8\t-1\nIntelligence\t14\t+2\nWisdom\t19\t+4\nCharisma\t15\t+2\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Po",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "540acd98-b59a-477d-86fe-5668a003ddba"
+      ],
+      "deleted": [
+        "540acd98-b59a-477d-86fe-5668a003ddba"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-starfinder-mystic",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/open-starfinder-mystic.png",
+    "rendered_excerpt": "⚙\nSF Seed Mystic\nStarfinder · Lashunta\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nMystic\t5\nABILITY SCORES\n\nScore\tModifier\nStrength\t10\t+0\nDexterity\t14\t+2\nConstitution\t8\t-1\nIntelligence\t14\t+2\nWisdom\t19\t+4\nCharisma\t15\t+2\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t25\nHit Points\t34\nResolve Points\t6\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t16\nKinetic Armor Class (KAC)\t16\nInitiative\t+2\nSAVING TH",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "255ee5ff-5b15-4cba-b0ae-c6305a269e58"
+      ],
+      "deleted": [
+        "255ee5ff-5b15-4cba-b0ae-c6305a269e58"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "build-starfinder-technomancer",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/build-starfinder-technomancer.png",
+    "rendered_excerpt": "⚙\nSF Seed Technomancer\nStarfinder · Android (Dex)\nLevel up\nFeats, spells and gear\nOpen\nClose\nSaved feats, spells and gear: Energy Armor Class (EAC) 18 · Kinetic Armor Class (KAC) 19 · Credits remaining 5350 · Bulk carried 1\n\nCLASS\n\nTechnomancer\t5\nABILITY SCORES\n\nScore\tModifier\nStrength\t10\t+0\nDexterity\t16\t+3\nConstitution\t14\t+2\nIntelligence\t19\t+4\nWisdom\t13\t+1\nCharisma\t8\t-1\nSTAMINA, HIT POINTS AND RE",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "14f7b412-c803-4318-bae2-2d1e76ae7ef9"
+      ],
+      "deleted": [
+        "14f7b412-c803-4318-bae2-2d1e76ae7ef9"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-starfinder-technomancer",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/open-starfinder-technomancer.png",
+    "rendered_excerpt": "⚙\nSF Seed Technomancer\nStarfinder · Android (Dex)\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nTechnomancer\t5\nABILITY SCORES\n\nScore\tModifier\nStrength\t10\t+0\nDexterity\t16\t+3\nConstitution\t14\t+2\nIntelligence\t19\t+4\nWisdom\t13\t+1\nCharisma\t8\t-1\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t35\nHit Points\t29\nResolve Points\t6\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t18\nKinetic Armor Class (KAC)\t19\nInitia",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "cf2baedd-6cb4-4364-a7d9-748c7580733a"
+      ],
+      "deleted": [
+        "cf2baedd-6cb4-4364-a7d9-748c7580733a"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "build-starfinder-envoy",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/build-starfinder-envoy.png",
+    "rendered_excerpt": "⚙\nSF Seed Envoy\nStarfinder · Ysoki (Str)\nLevel up\nFeats, spells and gear\nOpen\nClose\nSaved feats, spells and gear: Energy Armor Class (EAC) 14 · Kinetic Armor Class (KAC) 15 · Credits remaining 2330 · Bulk carried 1\n\nCLASS\n\nEnvoy\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t8\t-1\nDexterity\t13\t+1\nConstitution\t12\t+1\nIntelligence\t12\t+1\nWisdom\t10\t+0\nCharisma\t18\t+4\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina P",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "657d058b-d727-4828-9a02-f026197ece2e"
+      ],
+      "deleted": [
+        "657d058b-d727-4828-9a02-f026197ece2e"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-starfinder-envoy",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/open-starfinder-envoy.png",
+    "rendered_excerpt": "⚙\nSF Seed Envoy\nStarfinder · Ysoki (Str)\nLevel up\nFeats, spells and gear\nOpen\nClose\nCLASS\n\nEnvoy\t3\nABILITY SCORES\n\nScore\tModifier\nStrength\t8\t-1\nDexterity\t13\t+1\nConstitution\t12\t+1\nIntelligence\t12\t+1\nWisdom\t10\t+0\nCharisma\t18\t+4\nSTAMINA, HIT POINTS AND RESOLVE\n\nStamina Points\t21\nHit Points\t20\nResolve Points\t5\nARMOR CLASS\n\nEnergy Armor Class (EAC)\t14\nKinetic Armor Class (KAC)\t15\nInitiative\t+1\nSAVING T",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "28387e13-be73-4c5a-8301-2b230d5d2bcc"
+      ],
+      "deleted": [
+        "28387e13-be73-4c5a-8301-2b230d5d2bcc"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "browse-starfinder-catalog",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/browse-starfinder-catalog.png",
+    "rendered_excerpt": "⚙\nStarfinder 1e — Classes\nClose\nRaces\nThemes\nClasses\nFeats\nSpells\nEquipment\nSearch by name, book, tag or text\n11 classes from 2 books\nBiohacker\nCharacter Operations Manual\nBase · PC\nSkill ranks per level: 4\nBiohacker: Value: biohacker level times 3 divided by 4; Adds to the base attack bonus as a Base bonus; Tags: Base, PC; Applies if biohacker level at most 20; Declares KeyAbilityScore as INT or ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-select-pathfinder",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/landing-select-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-seed-aldric",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/open-seed-aldric.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nPROGRESSION\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nLevel 1 Fighter\nSkill points: 5\nFeat\nLevel 2 Fighter\nSkill points: 5\nLevel 3 Fighter\nSkill points: 5\nFeat\nNEXT\nLevel 4 Fighter\nSkill points: 5\nAbility score increase\nCharacter Name\nAldric Ironhand\nCampaign\n—\nABILITIES\n\nSTR\n19\n+4\nDEX\n13\n+1\nCON\n14\n+2\nINT\n14\n+2\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+1\nHI",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-seed-elowen",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/e79a-scratch/smoke_sf/open-seed-elowen.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nElowen Ashgrave — Wizard 5\nPROGRESSION\n«\n\nLevel\n5\n+\nCaster Level\n5\nRACE\nHuman\nCLASS\nWizard 5\nLevel 1 Wizard\nSkill points: 7\nFeat\nLevel 2 Wizard\nSkill points: 7\nLevel 3 Wizard\nSkill points: 7\nFeat\nLevel 4 Wizard\nSkill points: 7\nAbility score increase\nLevel 5 Wizard\nSkill points: 7\nFeat\nNEXT\nLevel 6 Wizard\nSkill points: 7\nCharacter Name\nElowen Ashgrave\nCampaign\n—\nABILITIES\n\nSTR\n8\n-1\nDEX\n1",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e7-9a-smoke-wj59T2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

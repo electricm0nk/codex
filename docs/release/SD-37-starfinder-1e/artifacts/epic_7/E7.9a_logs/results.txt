@@ -1,0 +1,13 @@
+frontend_test exit=0
+frontend_typecheck exit=0
+release_pytest exit=0
+root_full exit=0
+desktop_full exit=0
+pf_hash exit=0
+sf_seed_root exit=0
+sf_seed_desktop exit=0
+verify_sh exit=0
+store_before exit=0
+smoke_sf exit=0
+store_after exit=0
+RUN_DONE

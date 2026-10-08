@@ -87,7 +87,7 @@ This table leads the file because the Workflow script reads it (`workflow-instru
 **E8 (starship)** is **not a card**. It is a planned capability deferral (`decisions.md §17`, FSR
 DEF-1).
 
-**Card count:** there are 57 cards (`kanban.md` row check; 55 at authoring, E6.5a added 2026-10-06 and E4a.4a 2026-10-07 by discovery). This map has 55 rows, because
+**Card count:** there are 58 cards (`kanban.md` row check; 55 at authoring, E6.5a added 2026-10-06, E4a.4a 2026-10-07 by discovery, and E7.9a 2026-10-07 for the merge of `develop` after PR #396). This map has 55 rows, because
 E1.1–E1.3 are one dispatch. The criterion tables below carry all 55 IDs. `kanban.md` holds the
 `diff … && echo SAME_IDS` command that proves the two sets are identical. Re-run it after any
 edit.
@@ -229,6 +229,7 @@ the criterion unmet).
 | E7.7 | Architecture truth-up + claims critic | Truth-up receipt in `receipts.md`; critic 0 blockers | — |
 | E7.8 | Graphify LAST over the final tree | Receipt: `git status --porcelain \| wc -l` → 0, `git rev-parse HEAD` = `git rev-parse origin/tranche/17`, indexed SHA recorded; on the node-count guard (exit 1), file the receipt and stop. Never force. | — |
 | E7.9 | PR `tranche/17 → develop` opened as the final action, then the PR's `pr-tests` run awaited inside the turn (SD-n). E7.9 commits its own `kanban.md`/`progress.md` rows (status `complete`) in one docs-only commit immediately **before** `gh pr create`; if the PR cannot be opened or `pr-tests` is red, it pushes one follow-up commit setting itself `blocked-escalated` with the failing job named. | Before `gh pr create`: the E7.3 scan below with `E7\.[3-9]` narrowed to `E7\.9` prints nothing. After: `gh pr view --json state` → OPEN; `gh pr checks <n> --watch` exit 0. The operator merges. | — |
+| E7.9a | `tranche/17` merges cleanly into `develop` with every SD-37 and PR #396 behaviour kept (merge of `origin/develop` `fd68740f60` after the operator merged #396 on 2026-10-07, which made PR #397 conflict). | `git merge-tree --write-tree origin/develop HEAD` exit 0; widest verify green (root workspace, `apps/desktop/src-tauri`, frontend test + typecheck, `bash scripts/verify.sh -j 8`); PF hash pair (Aldric, Elowen) and the four SF seed fixtures green. | Windows/macOS packaged builds; a real `tauri build` install |
 
 **E7.3's closure scan** (run from the package directory; `$2` = ID, `$5` = Status, per
 `kanban.md`'s column order):
@@ -236,10 +237,10 @@ the criterion unmet).
 ```bash
 cd docs/release/SD-37-starfinder-1e
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 57) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 58) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E7\.[3-9] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 ```
 
 Pass = no output. C0.2 measured the authoring form (`(C\|E)` inside the regex) printing 0 rows
 over 54 open cards on 2026-10-02 — it could never fail. The E7.3–E7.9 exemption is by ID, not by
-"the card running", and the 57-row check (55 + E6.5a + E4a.4a) guards against a dropped row.
+"the card running", and the 58-row check (55 + E6.5a + E4a.4a + E7.9a) guards against a dropped row.

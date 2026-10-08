@@ -1,0 +1,11 @@
+== dual audit on f9af648ef1...bb0a26c0c6
+OK_NO_BUNDLE_TAGS
+4491:+                    <input aria-label="Grant label" placeholder="What is it for? (Boon of Pharasma)" value={grant.label} onChange={(event) => setGrant(index, { label: event.target.value })} style={{ ...inputStyle, flex: 2, minWidth: 200 }} />
+4500:+                  <input aria-label="Grant reason" placeholder="Why (the quest, the god, the house rule)" value={grant.reason} onChange={(event) => setGrant(index, { reason: event.target.value })} style={{ ...inputStyle, marginTop: '0.4rem', width: '100%' }} />
+4513:+                    <input aria-label={`Custom ${kind.singular} name`} placeholder="Name" value={record.name} onChange={(event) => setRecord(kind.kind, index, { name: event.target.value })} style={{ ...inputStyle, flex: 1 }} />
+4516:+                  <textarea aria-label={`Custom ${kind.singular} description`} placeholder="Description" rows={3} value={record.description} onChange={(event) => setRecord(kind.kind, index, { description: event.target.value })} style={{ ...inputStyle, marginTop: '0.4rem', resize: 'vertical', width: '100%' }} />
+4519:+                      <input aria-label="Stat label" placeholder="Stat (Damage)" value={stat.label} onChange={(event) => setRecord(kind.kind, index, { stats: record.stats.map((entry, position) => (position === statIndex ? { ...entry, label: event.target.value } : entry)) })} style={{ ...inputStyle, flex: 1 }} />
+4520:+                      <input aria-label="Stat value" placeholder="Value (1d8 fire)" value={stat.value} onChange={(event) => setRecord(kind.kind, index, { stats: record.stats.map((entry, position) => (position === statIndex ? { ...entry, value: event.target.value } : entry)) })} style={{ ...inputStyle, flex: 2 }} />
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS

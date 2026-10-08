@@ -40,7 +40,8 @@ it (`workflow-instruction.md §5`).
 | E7.7 | complete | 1 of 1 | truth-up + Opus claims critic (`artifacts/epic_7/E7.7_cycle_receipt.md`, `receipts.md`); critic: 6 wrong claims fixed, 0 blockers |
 | E7.8 | complete | 1 of 1 | closed on the graphify guard outcome (`decisions.md §23`) |
 | E7.9 | complete | 1 of 1 | `artifacts/epic_7/E7.9_cycle_receipt.md`; PR `tranche/17 → develop` |
-| **Total** | | **57 of 57** | `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/ {n++} END {print n}' kanban.md` |
+| E7.9a | complete | 1 of 1 | `artifacts/epic_7/E7.9a_cycle_receipt.md`; merge of `origin/develop` after PR #396 |
+| **Total** | | **58 of 58** | `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/ {n++} END {print n}' kanban.md` |
 
 Total complete, from this folder (C0.2: the authoring form, with `(C\|E)` escaped inside a table
 cell, printed 0):
@@ -204,6 +205,7 @@ corrected figures are in CUI §1, "Stale figures found during authoring".
 | E7.8 | 2026-10-07 | Sonnet 5.5 | the closing `docs(sd37,e7.8)` commit | blocked-escalated | all six unchanged (docs only) | `artifacts/epic_7/E7.8_cycle_receipt.md`: `update_graphify.py` exit 1 (`no graph found`, 0.2 s; indexed SHA `05f2a325`); scratch unforced `graphify update` turned 648,328 nodes into 62,588; not promoted. Open blockers entry filed. |
 | E7.8 (attempt 2) | 2026-10-07 | Opus 5.5 | the `docs(sd37,e7.8)` attempt-2 commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.8_cycle_receipt.md`) | blocked-escalated | all six unchanged (docs only) | `artifacts/epic_7/E7.8_cycle_receipt.md` §Attempt 2: §22 copy verified (648,328 = 648,328 nodes, same sha256); `update_graphify.py` exit 1 on the node-count guard (648,327 vs 648,328, net -1), 1,536.8 s; graph unchanged, nothing to promote; recurrence of SD-36's 2026-09-27 refusal; Open blockers entry filed |
 | E7.9 | 2026-10-08 | Sonnet 5.5 | the closing `docs(sd37,e7.9)` commit | complete | all six unchanged (docs only) | `artifacts/epic_7/E7.9_cycle_receipt.md`: scan with `E7\.9` exemption prints nothing; merge-tree against `origin/develop` clean; PR opened after this commit, `pr-tests` awaited in-turn |
+| E7.9a | 2026-10-08 | Opus 5.5 | merge `bb0a26c0c6` + the `docs(sd37,e7.9a)` commit (`git log -1 --format=%H -- docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.9a_cycle_receipt.md`) | complete | Aldric unchanged (`1d830682…a569`, rendered); Elowen unchanged (`8d1a711c…00f2`, rendered); Soldier / Mystic / Technomancer / Envoy printed lines byte-identical (51 / 72 / 63 / 42) | `artifacts/epic_7/E7.9a_cycle_receipt.md`: 12/12 verify stages exit=0 (root 8,365 / desktop 781 / frontend 154 / release pytest 54 / verify.sh PASS 53 / ui-smoke 17/17, real store untouched); release_pytest's attempt-1 exit=1 was the host python lacking pytest (retro correction); attempt-2 link error from a reboot-truncated rlib (retro incident); 7 baseline floors re-recorded |
 
 ## Decisions taken on safe defaults
 
