@@ -4,7 +4,7 @@
 //!
 //! Writes `data/corpus/<book>/feat/*.json` by DUMPING the current,
 //! already-completed state of
-//! `rules_core::rules_tables::feat_gap_tables::feat_gap_rows_for()` --
+//! `rules_core::rules_catalog::feat_gap_tables::feat_gap_rows_for()` --
 //! per `decisions.md §11.3`, this generator never re-parses raw PCGen LST
 //! to derive a field's *value*; every value written here is read straight
 //! from the compiled Rust module.
@@ -82,8 +82,8 @@ use serde::Serialize;
 use crate::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening::{self, DeclaredProductIdentity};
 use crate::pcgen_import::feat_prereq_tokens::feat_gap_prereq_tokens;
-use codex::rules_core::rules_tables::feat_gap_tables::feat_gap_rows_for;
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::feat_gap_tables::feat_gap_rows_for;
+use codex::rules_core::rules_catalog::RuleSetId;
 
 // ---------------------------------------------------------------------
 // Shape B schema -- own local copy, per `cache_gen::spell_lane_dump`'s

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Theme",
+    "key": "Tempered Pilgrim",
+    "name": "Tempered Pilgrim",
+    "type": "Theme.Theme Selection"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 96,
+    "path": "starfinder/paizo/pact_worlds/spw_abilities.lst",
+    "record_key": "Tempered Pilgrim",
+    "sha256": "00d61896ff6203e4fcc2cf8ccd79362a17739e63386a2b188fa2e9f5ccac9e2d"
+  },
+  "unit_id": "pact_worlds:ability:tempered_pilgrim"
+}

@@ -1,0 +1,14 @@
+P1 modifier gate dropped: check exit 101 -> FAIL (red, as required)
+P2 skill unit option deleted: check exit 101 -> FAIL (red, as required)
+P3 kit scores row dropped: check exit 101 -> FAIL (red, as required)
+P4 Limited AI edge dropped: check exit 101 -> FAIL (red, as required)
+P5 drone class race edge dropped: check exit 101 -> FAIL (red, as required)
+P8 flight-system waiver dropped: check exit 101 -> FAIL (red, as required)
+P9 drone hit-point line dropped: check exit 101 -> FAIL (red, as required)
+P10 hit_die_offset routed to hit points: check exit 101 -> FAIL (red, as required)
+P12 a waiver's kept gate altered: check exit 1 -> FAIL (red, as required)
+P6 master link dropped: check exit 101 -> FAIL (red, as required)
+P7 drone choices dropped: check exit 101 -> FAIL (red, as required)
+P11 print: flight-system waiver dropped: check exit 101 -> FAIL (red, as required)
+12 of 12 plants red; files restored byte-identical
+exit=0

@@ -1,0 +1,22 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.42s
+     Running tests/sf_core_proof.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_core_proof-4e9dcbaa34dab5f7)
+
+running 1 test
+test glued_tokens_split_and_product_identity_names_never_print ... FAILED
+
+failures:
+
+---- glued_tokens_split_and_product_identity_names_never_print stdout ----
+
+thread 'glued_tokens_split_and_product_identity_names_never_print' (2597971) panicked at crates/codex-ingest/tests/sf_core_proof.rs:432:5:
+source syntax in the conversion: Converted { rules: [SheetRule { id: "alien_archive:ability:formian_default_formian_senses", label: "FORMIAN SENSES", value: Text, also: [], prose: [ProseSegment { family: Desc, pieces: [Text("Formians have darkvision with a range of 60 feet, and they have blindsense (scent) with a range of 30 feet.")], applies: None, pick_last: false, suppress_when_all_zero: false }], applies: Always, target: None, bonus_type: None, print: true, pool: "racial_trait", tags: ["Racial Trait", "Formian Racial Trait"], subject: Character, repeatable: false, granted_by: [], offers: None, grants: [FactDeclare { name: "Formian_FormianSenses", value: "false" }], closure_complete: false, always_held: false, provenance: Provenance { book: "alien_archive", kind: "ability", closure_rows: ["starfinder/paizo/alien_archive/saa_abilities.lst:102"], oracle_pin: "7f818006e371188e5717fd18d74d18a420747fc6", converter_version: "sheet_rule_convert/0.15.0", pi: PiStamp { declared: [], term_hits: [] }, overlay: None, undeclared_in_pinned_tree: [], printing: None } }], grants_out: [], var_contribs: [("v89611b9176291288", "DARKVISIONRANGE", VarContribution { rule_id: "alien_archive:ability:formian_default_formian_senses", expr: Const(60), bonus_type: Some(BonusType { name: "Base BONUS:VAR", mode: Plain }), when: Always })], var_declares: [], refusals: {}, degradations: {}, tokens: {"BONUS:VAR", "CATEGORY", "DESC", "FACT / FACTSET", "KEY", "SORTKEY", "SOURCEPAGE / SOURCELONG / SOURCESHORT / SOURCEWEB / SOURCEDATE / SOURCELINK", "TYPE"}, refusal_under: {}, degraded_under: {}, defects: {}, var_names: {}, var_labels: {} }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    glued_tokens_split_and_product_identity_names_never_print
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10 filtered out; finished in 4.05s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_core_proof`

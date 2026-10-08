@@ -529,7 +529,7 @@ pub(super) fn ground_unchained_monk_unarmed_strike_damage(
 }
 
 /// Grounds the Unchained Monk's named features
-/// (`rules_tables::pathfinder_unchained::monk_features`).
+/// (`rules_catalog::pathfinder_unchained::monk_features`).
 ///
 /// `total_base_attack_bonus` is the chassis row's own value, passed in
 /// rather than recomputed, because Flurry of Blows keys off base attack
@@ -3117,7 +3117,7 @@ mod monk_bonus_feat_improvised_weapon_closure_tests {
         assert_eq!(record.value, 0, "a text-complete record fabricates no magnitude");
         // The record must quote the real surfaced text, not a restatement --
         // otherwise it could drift away from what the app actually shows.
-        let catalog_text = crate::rules_core::rules_tables::crb::feats::feat_tables()
+        let catalog_text = crate::rules_core::rules_catalog::crb::feats::feat_tables()
             .iter()
             .find(|e| e.key == "Deflect Arrows")
             .and_then(|e| e.description)

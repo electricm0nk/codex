@@ -1,0 +1,3 @@
+error[E0255]: the name `SPELL_LIST` is defined multiple times
+For more information about this error, try `rustc --explain E0255`.
+error: could not compile `codex` (lib test) due to 1 previous error

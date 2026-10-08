@@ -1,0 +1,1 @@
+{"var":"v91305a832b9eca4c","label":"Swim","declared_by":[],"contributions":[{"rule_id":"alien_archive:race:kalo","expr":{"Const":50},"when":"Always"},{"rule_id":"alien_archive:race:wrikreechee","expr":{"Const":30},"when":"Always"}],"provenance":{}}

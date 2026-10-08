@@ -5,7 +5,7 @@
 //!
 //! # Why these moved, and why they were not deleted
 //!
-//! `rules_tables::archetype_swap::ArchetypeSwapEntry` carried a
+//! `rules_catalog::archetype_swap::ArchetypeSwapEntry` carried a
 //! `prerequisites: Option<&'static [&'static str]>` field holding every
 //! top-level `PRE`-family token of the archetype's master row, verbatim.
 //! **Nothing read it** — not `archetype_resolver`, which states in its own

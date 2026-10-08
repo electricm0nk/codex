@@ -1,0 +1,76 @@
+crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs sha256 6fa835eb0f86371d1f29c21bad70d79aba0a29d6b26a6bb8c03f428ecbc30b8c
+crates/codex-ingest/src/pcgen_import/sheet_rule/formula.rs sha256 cd17a55fb97b7b00dcfcf577619c9fcc7b31e76d2462ce59b91f0f5b65e7919c
+data/starfinder-1e/sheet_rules/core/ability/empath.json sha256 c12f05f932e6b2019db019957b66a99a50f367a9a80cd9bf8e54ad8e10353fe2
+data/starfinder-1e/sheet_rules/core/class/mystic.json sha256 13644b7c0f6e88c92bd151b6b6e27763e2d24f48e0b787690ff3e5a11050cff8
+data/starfinder-1e/sheet_rules/core/feat/spell_focus.json sha256 f571db2320bc58f02a137d68285004c13474e198c40dd815fccc65d40d53b6d4
+src/rules_core/pilot_compute/sf_spells.rs sha256 2409c95b035530a554a068ef3ff1ee42b846dff2999dd674bd54b9019d90b445
+test: cargo test --locked -j 8 --lib sf_seed -- --test-threads=8
+check: cargo run --locked -j 8 -q -p codex-ingest --bin sheet_rule_convert -- --system starfinder-1e --check
+S1 on src/rules_core/pilot_compute/sf_spells.rs -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values' (109397) panicked at src/rules_core/pilot_compute/sf_spells.rs:288:9:
+    4 of 16 mismatch:
+    SF-Mystic-5 Spells per day: 1st: engine Some(SfTotal { total: 4, terms: [SfTerm { label: "Mystic (level 1 spells per day)", value: 4, source: "core:class:mystic#spells_per_day_1" }] }), SRD Value(5)
+    SF-Mystic-5 Spells per day: 2nd: engine Some(SfTotal { total: 2, terms: [SfTerm { label: "Mystic (level 2 spells per day)", value: 2, source: "core:class:mystic#spells_per_day_2" }] }), SRD Value(3)
+    SF-Technomancer-5 Spells per day: 1st: engine Some(SfTotal { total: 4, terms: [SfTerm { label: "Technomancer (level 1 spells per day)", value: 4, source: "core:class:technomancer#spells_per_day_1" }] }), SRD Value(5)
+    SF-Technomancer-5 Spells per day: 2nd: engine Some(SfTotal { total: 2, terms: [SfTerm { label: "Technomancer (level 2 spells per day)", value: 2, source: "core:class:technomancer#spells_per_day_2" }] }), SRD Value(3)
+    test result: FAILED. 22 passed; 1 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 2.62s
+S2 on src/rules_core/pilot_compute/sf_spells.rs -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values' (110368) panicked at src/rules_core/pilot_compute/sf_spells.rs:288:9:
+    6 of 16 mismatch:
+    SF-Mystic-5 Spell DC: 0: engine Some(SfTotal { total: 11, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value: 0, s
+    SF-Mystic-5 Spell DC: 1st: engine Some(SfTotal { total: 12, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value: 1,
+    SF-Mystic-5 Spell DC: 2nd: engine Some(SfTotal { total: 13, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value: 2,
+    SF-Technomancer-5 Spell DC: 0: engine Some(SfTotal { total: 11, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value
+    SF-Technomancer-5 Spell DC: 1st: engine Some(SfTotal { total: 12, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", val
+    SF-Technomancer-5 Spell DC: 2nd: engine Some(SfTotal { total: 13, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", val
+S3 on src/rules_core/pilot_compute/sf_spells.rs -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_connection_spells_and_spell_focus_are_their_own_terms' (111451) panicked at src/rules_core/pilot_compute/sf_spells.rs:332:9:
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values' (111452) panicked at src/rules_core/pilot_compute/sf_spells.rs:288:9:
+    6 of 16 mismatch:
+    SF-Mystic-5 Spell DC: 0: engine Some(SfTotal { total: 14, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value: 0, s
+    SF-Mystic-5 Spell DC: 1st: engine Some(SfTotal { total: 15, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value: 1,
+    SF-Mystic-5 Spell DC: 2nd: engine Some(SfTotal { total: 16, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value: 2,
+    SF-Technomancer-5 Spell DC: 0: engine Some(SfTotal { total: 14, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value
+    SF-Technomancer-5 Spell DC: 1st: engine Some(SfTotal { total: 15, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", val
+S4 on src/rules_core/pilot_compute/sf_spells.rs -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_class_tables_match_the_srd_at_every_level_1_to_20' (112439) panicked at src/rules_core/pilot_compute/sf_spells.rs:384:21:
+    left: true
+    right: false
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_casters_cast_levels_0_to_2_and_the_others_cast_nothing' (112438) panicked at src/rules_core/pilot_compute/sf_spells.rs:310:25:
+    left: SfSpellLevel { level: 3, per_day: None, unlimited: false, known: Some(SfTotal { total: 0, terms: [] }), save_dc: Some(SfTotal { total: 18, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (h
+    right: SfSpellLevel { level: 3, per_day: None, unlimited: false, known: None, save_dc: None }
+    test result: FAILED. 21 passed; 2 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 1.16s
+P1 on data/starfinder-1e/sheet_rules/core/ability/empath.json -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_connection_spells_and_spell_focus_are_their_own_terms' (113391) panicked at src/rules_core/pilot_compute/sf_spells.rs:329:13:
+    left: (4, 0)
+    right: (4, 1)
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values' (113392) panicked at src/rules_core/pilot_compute/sf_spells.rs:288:9:
+    1 of 16 mismatch:
+    SF-Mystic-5 Spells known: 1st: engine Some(SfTotal { total: 4, terms: [SfTerm { label: "Empath Connection Spell - 2: detect thoughts (level 1 Mystic spell known)", value: 0, source: "core:ability:empath#spell_known_empat
+    test result: FAILED. 21 passed; 2 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 2.70s
+P2 on data/starfinder-1e/sheet_rules/core/class/mystic.json -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_class_tables_match_the_srd_at_every_level_1_to_20' (113489) panicked at src/rules_core/pilot_compute/sf_spells.rs:386:25:
+    left: 3
+    right: 2
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values' (113491) panicked at src/rules_core/pilot_compute/sf_spells.rs:288:9:
+    1 of 16 mismatch:
+    SF-Mystic-5 Spells per day: 1st: engine Some(SfTotal { total: 6, terms: [SfTerm { label: "Mystic (level 1 spells per day)", value: 5, source: "core:class:mystic#spells_per_day_1" }, SfTerm { label: "bonus spells (Wis 19)
+    test result: FAILED. 21 passed; 2 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 1.18s
+P3 on data/starfinder-1e/sheet_rules/core/feat/spell_focus.json -> sf_seed FAIL (exit 101)
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_connection_spells_and_spell_focus_are_their_own_terms' (113568) panicked at src/rules_core/pilot_compute/sf_spells.rs:332:9:
+    thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values' (113569) panicked at src/rules_core/pilot_compute/sf_spells.rs:288:9:
+    6 of 16 mismatch:
+    SF-Mystic-5 Spell DC: 0: engine Some(SfTotal { total: 14, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value: 0, s
+    SF-Mystic-5 Spell DC: 1st: engine Some(SfTotal { total: 15, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value: 1,
+    SF-Mystic-5 Spell DC: 2nd: engine Some(SfTotal { total: 16, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value: 2,
+    SF-Technomancer-5 Spell DC: 0: engine Some(SfTotal { total: 14, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", value
+    SF-Technomancer-5 Spell DC: 1st: engine Some(SfTotal { total: 15, terms: [SfTerm { label: "base", value: 10, source: "SRD Difficulty Class (https://www.aonsrd.com/Rules.aspx?ID=106)" }, SfTerm { label: "spell level", val
+C1 on crates/codex-ingest/src/pcgen_import/sheet_rule/formula.rs -> convert --check FAIL (exit 1)
+    records=8582 converted=8582 refused=0 rules=11266 var_tables=228 verdict=FAIL problems=4
+C2 on crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs -> convert --check FAIL (exit 1)
+    records=8582 converted=8582 refused=0 rules=11227 var_tables=228 verdict=FAIL problems=4
+C3 on crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs -> convert --check FAIL (exit 1)
+    records=8582 converted=8582 refused=0 rules=11036 var_tables=227 verdict=FAIL problems=14
+restored (sha256 identical) -> sf_seed PASS (exit 0); convert --check PASS (exit 0)
+verdict=PASS S1=FAIL S2=FAIL S3=FAIL S4=FAIL P1=FAIL P2=FAIL P3=FAIL C1=FAIL C2=FAIL C3=FAIL
+exit=0

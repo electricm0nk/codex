@@ -1,0 +1,13 @@
+diff --git a/src/rules_core/sheet_rule.rs b/src/rules_core/sheet_rule.rs
+index e2d000e8bc..d45d6491f1 100644
+--- a/src/rules_core/sheet_rule.rs
++++ b/src/rules_core/sheet_rule.rs
+@@ -387,6 +387,8 @@ pub enum BonusTarget {
+     Stamina,
+     /// Starfinder 1e Resolve Points.
+     Resolve,
++    /// planted
++    PlantedProbe,
+     Initiative,
+     Cmb,
+     Cmd,

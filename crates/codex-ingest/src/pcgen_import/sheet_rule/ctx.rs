@@ -140,6 +140,9 @@ pub struct CorpusIndex {
     /// row of that one object (one record per book, no shipped `CATEGORY:`). A grant of the
     /// object holds each fragment.
     pub mod_fragments: BTreeMap<(String, String), Vec<RuleId>>,
+    /// SD-37 E5.4: every Starfinder `FOLLOWER:` companion modifier whose role a record offers
+    /// (`companion_mod.rs`), converted after the records.
+    pub companion_mods: Vec<super::companion_mod::CompanionModDecl>,
     /// The pick choosers (`pool_option.rs`).
     pub pool_option_choosers: Vec<super::pool_option::PickChooser>,
     /// SD-36 F3c5: `(INTERNAL, KEY-or-name upper)` -> the natural-attack helper that answers it
@@ -644,6 +647,7 @@ mod tests {
     /// `ability_category_parent` map under test (everything else `resolve_rule_in` never reads).
     fn tree_with_parent(pairs: &[(&str, &str)]) -> PinnedTree {
         PinnedTree {
+            system: codex::rules_core::game_system::GameSystem::Pathfinder1e,
             root: std::path::PathBuf::new(),
             book_paths: BTreeMap::new(),
             source_dates: BTreeMap::new(),
@@ -660,6 +664,7 @@ mod tests {
             ability_category_parent: pairs.iter().map(|(c, p)| (c.to_string(), p.to_string())).collect(),
             ability_category_type: BTreeMap::new(),
             ability_category_pool: BTreeMap::new(),
+            armor_class_split: BTreeMap::new(),
         }
     }
 

@@ -1,0 +1,2002 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_psionics/feat_tables/feat_tables",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_psionics",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Access Psionic Talent",
+      "category": "Psionic",
+      "name": "Access Psionic Talent",
+      "description": "You are able to manifest minor psionic abilities; gain %1 psionic talents.|max(5,BonusPsionicTalents)",
+      "pretext": null,
+      "source_page": "p.86",
+      "benefit": null
+    },
+    {
+      "key": "Additional Terror",
+      "category": "Psionic",
+      "name": "Additional Terror",
+      "description": "You gain an additional terror.",
+      "pretext": null,
+      "source_page": "p.86",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Archer Path",
+      "category": "Psionic",
+      "name": "Advanced Archer Path",
+      "description": "You gain +%1 to your damage rolls for attacks made with ranged or thrown weapons.  In addition, when using the Archer maneuver, you may perform a bull rush attempt instead of a trip attempt.|AdvancedArcherPathBonus",
+      "pretext": null,
+      "source_page": "p.86",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Ascetic Path",
+      "category": "Psionic",
+      "name": "Advanced Ascetic Path",
+      "description": "You gain +%1 competence bonus to both AC and saves.  In addition, when using the Ascetic maneuver, you can deflect one attack as if using the Deflect Arrows feat, although you may alternately deflect a melee attack.|AdvancedAsceticPathBonus",
+      "pretext": null,
+      "source_page": "p.86",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Assassin Path",
+      "category": "Psionic",
+      "name": "Advanced Assassin Path",
+      "description": "When using the Assassin trance, you deal sneak attack as a rogue of half your psychic warrior level.  Your target must be eligible for sneak attack.  In addition, when using the Assassin maneuver, your opponent is staggered for %1 rounds (Fort DC %2 negates).|AdvancedAssassinPathDuration|AdvancedAssassinPathDC",
+      "pretext": null,
+      "source_page": "p.87",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Brawling Path",
+      "category": "Psionic",
+      "name": "Advanced Brawling Path",
+      "description": "When using the Brawling trance, you gain a +%1 to your grapple checks.  In addition, when using the Brawling maneuver, the damage you deal can be lethal, instead of non-lethal.|AdvancedBrawlingPathBonus",
+      "pretext": null,
+      "source_page": "p.87",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Constructs",
+      "category": "Psionic",
+      "name": "Advanced Constructs",
+      "description": "You gain additional menu options for astral constructs.",
+      "pretext": null,
+      "source_page": "p.87",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Dervish Path",
+      "category": "Psionic",
+      "name": "Advanced Dervish Path",
+      "description": "When using the Dervish trance, you gain a +%1 competence bonus to your damage rolls.  In addition, you can use the Dervish maneuver even if you moved before your attack and you have no limit of how many 5-foot steps you can take while using the Dervish maneuver, as long as you make at least one attack before each 5-foot step.  The maximum distance you can move in this round is that of a double move.|AdvancedDervishPathBonus",
+      "pretext": null,
+      "source_page": "p.87",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Feral Path",
+      "category": "Psionic",
+      "name": "Advanced Feral Path",
+      "description": "When using the Feral trance, you gain a +%1 competence bonus to your damage rolls from natural attacks.  In addition, when using the Feral maneuver, if two natural attacks in the same charge are successful, your natural weapon deal extra damage equal to the damage dealt by one natural attack plus 1-1/2 times your Strength modifier (if the two natural addacks deal different amounts of damage, use the lesser of the two).|AdvancedFeralPathBonus",
+      "pretext": null,
+      "source_page": "p.87",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Infiltrator Path",
+      "category": "Psionic",
+      "name": "Advanced Infiltrator Path",
+      "description": "When using the Infiltrator trance, you gain a +%1 competence bonus to Bluff and Sense Motive checks.  In addition, when using the Infiltrator maneuver, for the duration of your metamorphosis power, you gain the scent extraordinary ability and +%1 to Survival checks.|AdvancedInfiltratorPathBonus",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Interceptor Path",
+      "category": "Psionic",
+      "name": "Advanced Interceptor Path",
+      "description": "When using the Interceptor trance, you can take a -%1 penalty to Armor Class to grant a deflection bonus to Armor Class to one ally threatened by an enemy within your melee reach.  In addition, when using the Interceptor maneuver, if your attack was successful, you can make a free disarm or trip attempt against the enemy struck.|AdvancedInterceptorPathBonus",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Mind Knight Path",
+      "category": "Psionic",
+      "name": "Advanced Mind Knight Path",
+      "description": "As long as you have both Mind Knight path powers, you can manifest both Mind Knight path powers at the same time as a single standard action.  Any time you manifest call weaponry, you may select one other 1st level power you know; you may manifest that power using Martial Power as if it were a Path power, as long as the attack is made using the weapon summoned.  In addition, when using the Mind Knight maneuver, you gain a +%1 compteence bonus on the attack rolls.|AdvancedMindKnightPathBonus",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Survivor Path",
+      "category": "Psionic",
+      "name": "Advanced Survivor Path",
+      "description": "When using the Survivor trance, you gain %1 resistance to your active energy type.  In addition, when using the Survivor maneuver, the bonus to Will saves can instead apply to Fortitude saves.|AdvancedSurvivorPathResistance",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Advanced Weaponmaster Path",
+      "category": "Psionic",
+      "name": "Advanced Weaponmaster Path",
+      "description": "When using the Weaponmaster trance, you gain a +%1 competence bonus to damage rolls made with a weapon.  In addition, when using the Weaponmaster maneuver, you can choose to make a free disarm attempt against your attacker in place of the single melee attack.  If the disarm is successful, you may then make a single melee attack against your opponent in place of the 5-foot step.|AdvancedWeaponmasterPathBonus",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Aligned Attack (Chaos)",
+      "category": "Psionic",
+      "name": "Aligned Attack (Chaos)",
+      "description": "Your attacks gain alignment",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Aligned Attack (Evil)",
+      "category": "Psionic",
+      "name": "Aligned Attack (Evil)",
+      "description": "Your attacks gain alignment",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Aligned Attack (Good)",
+      "category": "Psionic",
+      "name": "Aligned Attack (Good)",
+      "description": "Your attacks gain alignment",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Aligned Attack (Law)",
+      "category": "Psionic",
+      "name": "Aligned Attack (Law)",
+      "description": "Your attacks gain alignment",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Assassin's Shot",
+      "category": "Combat",
+      "name": "Assassin's Shot",
+      "description": "Once per round when making a successful ranged attack that deals sneak attack damage, you can activate any one style ability that requires expending your psionic focus without having to expend your psionic focus.",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Assassin's Venom",
+      "category": "Psionic",
+      "name": "Assassin's Venom",
+      "description": "You gain a bonus on the save DC of prevenom or prevenom weapon equal to the competence bonus granted by your trance class feature.",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Autonomous",
+      "category": "General",
+      "name": "Autonomous",
+      "description": "+2 on Autohypnosis and Knowledge (Psionics) checks",
+      "pretext": null,
+      "source_page": "p.94",
+      "benefit": null
+    },
+    {
+      "key": "Body Fuel",
+      "category": "Psionic",
+      "name": "Body Fuel",
+      "description": "Take ability burn to recover power points",
+      "pretext": null,
+      "source_page": "p.95",
+      "benefit": null
+    },
+    {
+      "key": "Boost Construct",
+      "category": "Psionic",
+      "name": "Boost Construct",
+      "description": "Astral construct gains additional ability",
+      "pretext": null,
+      "source_page": "p.95",
+      "benefit": null
+    },
+    {
+      "key": "Broken Dreams Style",
+      "category": "Psionic",
+      "name": "Broken Dreams Style",
+      "description": "When performing an unarmed attack, you can choose to also deliver your devastating touch damage through that attack.",
+      "pretext": null,
+      "source_page": "p.95",
+      "benefit": null
+    },
+    {
+      "key": "Burning Power",
+      "category": "Metapsionic",
+      "name": "Burning Power",
+      "description": "Do extra damage with acid or fire power.",
+      "pretext": null,
+      "source_page": "p.95",
+      "benefit": null
+    },
+    {
+      "key": "Burrowing Power",
+      "category": "Metapsionic",
+      "name": "Burrowing Power",
+      "description": "Bypass barrier with power",
+      "pretext": null,
+      "source_page": "p.95",
+      "benefit": null
+    },
+    {
+      "key": "Chain Power",
+      "category": "Metapsionic",
+      "name": "Chain Power",
+      "description": "Choose additional targets with power",
+      "pretext": null,
+      "source_page": "p.95",
+      "benefit": null
+    },
+    {
+      "key": "Channel Rage",
+      "category": "Psionic",
+      "name": "Channel Rage",
+      "description": "When you choose to power a manifestation with only your wild surge, you may spend 1 round of your rage instead of expending your psionic focus.",
+      "pretext": null,
+      "source_page": "p.96",
+      "benefit": null
+    },
+    {
+      "key": "Cloak Dance",
+      "category": "General",
+      "name": "Cloak Dance",
+      "description": "Gain concealment as a move action, total concealment as a full-round action",
+      "pretext": null,
+      "source_page": "p.96",
+      "benefit": null
+    },
+    {
+      "key": "Combat Manifestation",
+      "category": "Psionic",
+      "name": "Combat Manifestation",
+      "description": "+4 bonus on concentration checks for defensive manifesting",
+      "pretext": null,
+      "source_page": "p.96",
+      "benefit": null
+    },
+    {
+      "key": "Concussive Power",
+      "category": "Metapsionic",
+      "name": "Concussive Power",
+      "description": "Disorient with sonic power.",
+      "pretext": null,
+      "source_page": "p.96",
+      "benefit": null
+    },
+    {
+      "key": "Craft Crystalline Focus",
+      "category": "ItemCreation",
+      "name": "Craft Crystalline Focus",
+      "description": "You can craft crystalline focus items that harness psionic energy such as that for a mind blade, mind armor, or astral suit.",
+      "pretext": null,
+      "source_page": "p.96",
+      "benefit": null
+    },
+    {
+      "key": "Craft Cognizance Crystal",
+      "category": "ItemCreation",
+      "name": "Craft Cognizance Crystal",
+      "description": "Create congnizance crystals",
+      "pretext": null,
+      "source_page": "p.96",
+      "benefit": null
+    },
+    {
+      "key": "Crippling Assault",
+      "category": "Psionic",
+      "name": "Crippling Assault",
+      "description": "You can paralyze targets of your ranged attacks.",
+      "pretext": null,
+      "source_page": "p.96",
+      "benefit": null
+    },
+    {
+      "key": "Critical Refocus",
+      "category": "Combat",
+      "name": "Critical Refocus",
+      "description": "When you confirm a critical hit on an attack where you expended your psionic focus, you automatically regain psionic focus after the results of the attack are determined.",
+      "pretext": null,
+      "source_page": "p.96",
+      "benefit": null
+    },
+    {
+      "key": "Cushion the Blow",
+      "category": "Psionic",
+      "name": "Cushion the Blow",
+      "description": "As long as you are maintaining psoinic focus, as an immediate action, you can minimize the damage of a single attack with a ranged, melee, or natural weapon or unarmed strike (treat all dice rolled as 1s) on any member of the collective.  This ability must be used in response to an attack on a member of the collective.  In addition, if you expend your psionic focus, you can reduce any additional damage on the attack (such as bonus damage from a high Strength or sneak attack damage) by your key ability modifier.",
+      "pretext": null,
+      "source_page": "p.96",
+      "benefit": null
+    },
+    {
+      "key": "Dazing Power",
+      "category": "Metapsionic",
+      "name": "Dazing Power",
+      "description": "Daze creatures with power.",
+      "pretext": null,
+      "source_page": "p.96",
+      "benefit": null
+    },
+    {
+      "key": "Deadly Throw",
+      "category": "Psionic",
+      "name": "Deadly Throw",
+      "description": "You can replace power with finesse for thrown weapons.",
+      "pretext": null,
+      "source_page": "p.97",
+      "benefit": null
+    },
+    {
+      "key": "Deep Focus",
+      "category": "Psionic",
+      "name": "Deep Focus",
+      "description": "You can psionically focus your subconscious in the same manner in which you gain psionic focus normally.  You cannot benefit from both Psicrystal Containment and Deep Focus at the same time.",
+      "pretext": null,
+      "source_page": "p.97",
+      "benefit": null
+    },
+    {
+      "key": "Deep Impact",
+      "category": "Psionic",
+      "name": "Deep Impact",
+      "description": "Resolve melee attack as a touch attack",
+      "pretext": null,
+      "source_page": "p.97",
+      "benefit": null
+    },
+    {
+      "key": "Defensive Tactics",
+      "category": "General",
+      "name": "Defensive Tactics",
+      "description": "You add your levels of tactician and fighter together for purposes of your tactics and armor training class features.",
+      "pretext": null,
+      "source_page": "p.97",
+      "benefit": null
+    },
+    {
+      "key": "Delay Power",
+      "category": "Metapsionic",
+      "name": "Delay Power",
+      "description": "Delay effect of power up to 5 rounds",
+      "pretext": null,
+      "source_page": "p.97",
+      "benefit": null
+    },
+    {
+      "key": "Disciple of Fear",
+      "category": "Psionic",
+      "name": "Disciple of Fear",
+      "description": "For the purpose of your devastating touch and terror class features, your effective class level increases by 4.  This benefit can't increase your effective class level to higher than your Hit Dice.  This feat does not affect your terrors known or give you further uses of your terrors, but increases it for the purposes of augmentation and save DCs.",
+      "pretext": null,
+      "source_page": "p.97",
+      "benefit": null
+    },
+    {
+      "key": "Dispelling Static",
+      "category": "Psionic",
+      "name": "Dispelling Static",
+      "description": " If you make a successful targeted dispel check, you may choose to have the effect unravel violently, lashing the target of the dispel with psychic static that imposes a -1 penalty on saves against any power you manifest until the end of your next turn. The penalty increases by 1 for each effect dispelled. The target also loses any psionic focus it has and cannot regain psionic focus for 1 round.  This does not affect psionic focus contained in psicrystals via Psicrystal Containment, unless the psicrystal is the target of the targeted dispel attempt.",
+      "pretext": null,
+      "source_page": "p.98",
+      "benefit": null
+    },
+    {
+      "key": "Echoing Power",
+      "category": "Metapsionic",
+      "name": "Echoing Power",
+      "description": "Manifest this power a second time for free.",
+      "pretext": null,
+      "source_page": "p.98",
+      "benefit": null
+    },
+    {
+      "key": "Ectoplasmic Power",
+      "category": "Metapsionic",
+      "name": "Ectoplasmic Power",
+      "description": "Power has full effect on incorporeal or ethereal creatures.",
+      "pretext": null,
+      "source_page": "p.98",
+      "benefit": null
+    },
+    {
+      "key": "Efficient Aid",
+      "category": "Psionic",
+      "name": "Efficient Aid",
+      "description": "Request aid heals 4 hit points per power point.",
+      "pretext": null,
+      "source_page": "p.98",
+      "benefit": null
+    },
+    {
+      "key": "Elemental Blast",
+      "category": "Psionic",
+      "name": "Elemental Blast",
+      "description": "Your surge blast deals damage of your active energy type instead of force damage.  In addition, your surge blast is modified based upon your active energy type.  Cold: A surge blast of this energy type deals +1 point of damage per die.  Electricity: A surge blast of this energy type provides a +3 bonus on your attack roll if the target is wearing metal armor.  Fire: A surge blast of this energy type deals +1 point of damage per die.  Sonic: A surge blast of this energy type deals -1 point of damage per die and ignores an object's hardness.",
+      "pretext": null,
+      "source_page": "p.98",
+      "benefit": null
+    },
+    {
+      "key": "Empower Power",
+      "category": "Metapsionic",
+      "name": "Empower Power",
+      "description": "Increase power's variable, numeric effects by 50%%",
+      "pretext": null,
+      "source_page": "p.98",
+      "benefit": null
+    },
+    {
+      "key": "Empowered Shot",
+      "category": "Psionic",
+      "name": "Empowered Shot",
+      "description": "You can send your ranged attacks farther.",
+      "pretext": null,
+      "source_page": "p.98",
+      "benefit": null
+    },
+    {
+      "key": "Endowed Mind",
+      "category": "Metapsionic",
+      "name": "Endowed Mind",
+      "description": "Increase power's save DC for augmentation",
+      "pretext": null,
+      "source_page": "p.98",
+      "benefit": null
+    },
+    {
+      "key": "Enervation Fortitude",
+      "category": "Psionic",
+      "name": "Enervation Fortitude",
+      "description": "When you suffer psychic enervation, the penalties are calculated as if your wilder level were reduced by half (to a minimum of 1). [Not figured into the surge description.]",
+      "pretext": null,
+      "source_page": "p.98",
+      "benefit": null
+    },
+    {
+      "key": "Enhanced Steal Life",
+      "category": "Psionic",
+      "name": "Enhanced Steal Life",
+      "description": "Increase save of Steal Life by spending power points, DC +1/3 points spent.",
+      "pretext": null,
+      "source_page": "p.98",
+      "benefit": null
+    },
+    {
+      "key": "Enlarge Power",
+      "category": "Metapsionic",
+      "name": "Enlarge Power",
+      "description": "Double power's range",
+      "pretext": null,
+      "source_page": "p.99",
+      "benefit": null
+    },
+    {
+      "key": "Enlarged Collective",
+      "category": "Psionic",
+      "name": "Enlarged Collective",
+      "description": "The range of your collective is increased.",
+      "pretext": null,
+      "source_page": "p.99",
+      "benefit": null
+    },
+    {
+      "key": "Expanded Collective",
+      "category": "Psionic",
+      "name": "Expanded Collective",
+      "description": "Add two more creatures to collective.",
+      "pretext": null,
+      "source_page": "p.99",
+      "benefit": null
+    },
+    {
+      "key": "Expanded Favored Weapon",
+      "category": "Psionic",
+      "name": "Expanded Favored Weapon",
+      "description": "You get an extra favored weapon group.",
+      "pretext": null,
+      "source_page": "p.99",
+      "benefit": null
+    },
+    {
+      "key": "Expanded Knowledge",
+      "category": "Psionic",
+      "name": "Expanded Knowledge",
+      "description": "Learn an additional power",
+      "pretext": null,
+      "source_page": "p.99",
+      "benefit": null
+    },
+    {
+      "key": "Expanded Martial Power",
+      "category": "Psionic",
+      "name": "Expanded Martial Power",
+      "description": "Expend your focus to use any power you know when using your martial power ability, as long as it is at least one level lower than the highest level power you can manifest.",
+      "pretext": null,
+      "source_page": "p.99",
+      "benefit": null
+    },
+    {
+      "key": "Expanded Strategies",
+      "category": "Psionic",
+      "name": "Expanded Strategies",
+      "description": "Gain an additional strategy.",
+      "pretext": null,
+      "source_page": "p.99",
+      "benefit": null
+    },
+    {
+      "key": "Expansive Collective",
+      "category": "Psionic",
+      "name": "Expansive Collective",
+      "description": "When calculating the range and number of creatures which may be joined to your collective, use your total Hit Dice instead of your class level.",
+      "pretext": null,
+      "source_page": "p.99",
+      "benefit": null
+    },
+    {
+      "key": "Explosive Power",
+      "category": "Metapsionic",
+      "name": "Explosive Power",
+      "description": "Direct targeting powers that deal hit point damage deals damage to all creatures adjacent to target (Reflex half).",
+      "pretext": null,
+      "source_page": "p.99",
+      "benefit": null
+    },
+    {
+      "key": "Extra Blade Skill",
+      "category": "Psionic",
+      "name": "Extra Blade Skill",
+      "description": "Gain an extra blade skill.",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Extend Power",
+      "category": "Metapsionic",
+      "name": "Extend Power",
+      "description": "Double power's duration",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Extended Blast",
+      "category": "Psionic",
+      "name": "Extended Blast",
+      "description": "Increase surge blast range to 60 feet",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Extra Customization",
+      "category": "Psionic",
+      "name": "Extra Customization",
+      "description": "Gain an additional customization.",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Extra Disruption Type",
+      "category": "Psionic",
+      "name": "Extra Disruption Type",
+      "description": "When you gain psionic focus, you can select one additional creature type as your active type.",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Extra Insight",
+      "category": "Psionic",
+      "name": "Extra Insight",
+      "description": "You gain one additional insight.",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Extra Power Known",
+      "category": "Psionic",
+      "name": "Extra Power Known",
+      "description": "Learn an additional power from your class list.",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Extra Reconfiguration",
+      "category": "Psionic",
+      "name": "Extra Reconfiguration",
+      "description": "You gain one more use of reconfigure.",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Extra Strategy",
+      "category": "Psionic",
+      "name": "Extra Strategy",
+      "description": "You gain two additional uses of your strategy class feature.",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Extra Terrors",
+      "category": "Psionic",
+      "name": "Extra Terrors",
+      "description": "You gain 3 additional daily uses of your terrors.",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Extra Transfer",
+      "category": "Psionic",
+      "name": "Extra Transfer",
+      "description": "You can use transfer wounds or sickening touch 2 more times per day.  If you have both transfer wounds and sickening touch, choose which ability this feat affects when you take this feat.",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Fast Aid",
+      "category": "Psionic",
+      "name": "Fast Aid",
+      "description": "Your allies may request aid as a swift action.",
+      "pretext": null,
+      "source_page": "p.100",
+      "benefit": null
+    },
+    {
+      "key": "Fast Step",
+      "category": "Psionic",
+      "name": "Fast Step",
+      "description": "You may use Nomad's Step as a move action.",
+      "pretext": null,
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Favored Energy (Cold)",
+      "category": "Psionic",
+      "name": "Favored Energy (Cold)",
+      "description": "Any time you manifest a power that deals cold damage, the damage is increased by +1 per die.",
+      "pretext": "Able to manifest any power that deals cold damage.",
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Favored Energy (Electricity)",
+      "category": "Psionic",
+      "name": "Favored Energy (Electricity)",
+      "description": "Any time you manifest a power that deals electricity damage, the damage is increased by +1 per die.",
+      "pretext": "Able to manifest any power that deals electricity damage.",
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Favored Energy (Fire)",
+      "category": "Psionic",
+      "name": "Favored Energy (Fire)",
+      "description": "Any time you manifest a power that deals fire damage, the damage is increased by +1 per die.",
+      "pretext": "Able to manifest any power that deals fire damage.",
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Favored Energy (Sonic)",
+      "category": "Psionic",
+      "name": "Favored Energy (Sonic)",
+      "description": "Any time you manifest a power that deals sonic damage, the damage is increased by +1 per die.",
+      "pretext": "Able to manifest any power that deals sonic damage.",
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Fear Mastery",
+      "category": "Psionic",
+      "name": "Fear Mastery",
+      "description": "As long as you maintain psionic focus, you receive a +1 insight bonus to the save DCs of all your terrors and powers with the Fear descriptor.  You can expend your focus while manifesting a power or using a terror to increase this bonus to +2.",
+      "pretext": null,
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Fear's Reach",
+      "category": "Psionic",
+      "name": "Fear's Reach",
+      "description": "Your devastating touch ability may now be used as a ranged touch attack with a range of close (%1 ft.).|FearsReachRange",
+      "pretext": null,
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Fell Shot",
+      "category": "Psionic",
+      "name": "Fell Shot",
+      "description": "Resolve ranged attack as a touch attack",
+      "pretext": null,
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Flaring Power",
+      "category": "Metapsionic",
+      "name": "Flaring Power",
+      "description": "Dazzle creatures with fire, light, or electricity power.",
+      "pretext": null,
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Fighter's Blade",
+      "category": "General",
+      "name": "Fighter's Blade",
+      "description": "Treat your class level as four higher to determine your enhanced mind blade class feature and which blade skills you can select, to a maximum of your character level.",
+      "pretext": null,
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Focused Power",
+      "category": "Metapsionic",
+      "name": "Focused Power",
+      "description": "One target power must overcome higher DC.",
+      "pretext": null,
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Focused Precision",
+      "category": "Combat",
+      "name": "Focused Precision",
+      "description": "While maintaining focus, you add your Dexterity modifier to damage rolls made with a crossbow or firearm for which you have the Weapon Focus feat.  Damage from this feat is precision-based damage. [NOT IMPLEMENTED]",
+      "pretext": null,
+      "source_page": "p.101",
+      "benefit": null
+    },
+    {
+      "key": "Focused Sunder",
+      "category": "Psionic",
+      "name": "Focused Sunder",
+      "description": "Ignore 1/2 hardness of foe's weapon",
+      "pretext": null,
+      "source_page": "p.102",
+      "benefit": null
+    },
+    {
+      "key": "Ghost Attack",
+      "category": "Psionic",
+      "name": "Ghost Attack",
+      "description": "Reduce damage penalty for attacking incorporeal enemies",
+      "pretext": null,
+      "source_page": "p.102",
+      "benefit": null
+    },
+    {
+      "key": "Gravitic Stability",
+      "category": "Psionic",
+      "name": "Gravitic Stability",
+      "description": "Any time your movement speed would be reduced to 10 ft. as a result of using personal gravity or scorn earth (such as from wearing heavy armor or being more than 1 ft. away from a stable surface), your speed is instead reduced to 10 ft. plus any bonuses to your movement (such as from freerunning). You do not take any penalty for attacking while using scorn earth at distances greater than 1 ft. from the ground or a stable surface. You gain a bonus to your CMD equal to your elocater class level against any bull rush or trip attempt.",
+      "pretext": null,
+      "source_page": "p.102",
+      "benefit": null
+    },
+    {
+      "key": "Greater Cushion the Blow",
+      "category": "Psionic",
+      "name": "Greater Cushion the Blow",
+      "description": "When using the Cushion the Blow feat, the effect applies to all damage for that collective member until the beginning of your next turn.",
+      "pretext": null,
+      "source_page": "p.102",
+      "benefit": null
+    },
+    {
+      "key": "Greater Intuitive Shot",
+      "category": "Psionic",
+      "name": "Greater Intuitive Shot",
+      "description": "Expend focus to gain +%1 damage per attack on full attack with ranged weapon.|WIS",
+      "pretext": null,
+      "source_page": "p.102",
+      "benefit": null
+    },
+    {
+      "key": "Greater Power Penetration",
+      "category": "Psionic",
+      "name": "Greater Power Penetration",
+      "description": "Gain bonus to overcome power resistance",
+      "pretext": null,
+      "source_page": "p.102",
+      "benefit": null
+    },
+    {
+      "key": "Greater Power Specialization",
+      "category": "Psionic",
+      "name": "Greater Power Specialization",
+      "description": "Increased bonus damage to damaging powers",
+      "pretext": null,
+      "source_page": "p.102",
+      "benefit": null
+    },
+    {
+      "key": "Greater Psionic Endowment",
+      "category": "Psionic",
+      "name": "Greater Psionic Endowment",
+      "description": "Add +2 to power's save DC",
+      "pretext": null,
+      "source_page": "p.102",
+      "benefit": null
+    },
+    {
+      "key": "Greater Psionic Fist",
+      "category": "Psionic",
+      "name": "Greater Psionic Fist",
+      "description": "Unarmed attack or natural weapon deals extra damage",
+      "pretext": null,
+      "source_page": "p.102",
+      "benefit": null
+    },
+    {
+      "key": "Greater Psionic Shot",
+      "category": "Psionic",
+      "name": "Greater Psionic Shot",
+      "description": "Ranged weapon deals extra damage",
+      "pretext": null,
+      "source_page": "p.102",
+      "benefit": null
+    },
+    {
+      "key": "Greater Psionic Weapon",
+      "category": "Psionic",
+      "name": "Greater Psionic Weapon",
+      "description": "Melee weapon deals extra damage",
+      "pretext": null,
+      "source_page": "p.103",
+      "benefit": null
+    },
+    {
+      "key": "Harmonic Resonance",
+      "category": "Psionic",
+      "name": "Harmonic Resonance",
+      "description": "You can choose %1 powers from your collective members when you choose powers.|max(INT,WIS,CHA)",
+      "pretext": null,
+      "source_page": "p.103",
+      "benefit": null
+    },
+    {
+      "key": "Hawkeye",
+      "category": "Combat",
+      "name": "Hawkeye",
+      "description": "Gain +%1 on Perception; increase precision damage range by %2 ft.|if(skillinfo(\"RANK\",\"Perception\")>=10,4,2)|if(skillinfo(\"RANK\",\"Perception\")>=10,30,15)",
+      "pretext": null,
+      "source_page": "p.103",
+      "benefit": null
+    },
+    {
+      "key": "Hustle Power",
+      "category": "Metapsionic",
+      "name": "Hustle Power",
+      "description": "Manifest a power as a move action instead of a standard action.",
+      "pretext": null,
+      "source_page": "p.103",
+      "benefit": null
+    },
+    {
+      "key": "Improved Cover Fire",
+      "category": "Combat",
+      "name": "Improved Cover Fire",
+      "description": "You gain a +1 bonus on attack rolls to activate your cover fire class feature and the Reflex save DC increases by 1. When you confirm a critical hit when using your cover fire ability, you can expend your psionic focus as an immediate action; if you do and the opponent fails their Reflex save, they are stunned for one round instead of staggered. You must choose to use this ability before the Reflex save and critical confirmation roll.",
+      "pretext": null,
+      "source_page": "p.103",
+      "benefit": null
+    },
+    {
+      "key": "Improved Cushion the Blow",
+      "category": "Psionic",
+      "name": "Improved Cushion the Blow",
+      "description": "When using the Cushion the Blow feat, the effect can be applied to an additional attack with a melee, ranged, or natural weapon in the same round.",
+      "pretext": null,
+      "source_page": "p.103",
+      "benefit": null
+    },
+    {
+      "key": "Improved Disengage",
+      "category": "Combat",
+      "name": "Improved Disengage",
+      "description": "When you expend your psionic focus to activate your disengage class feature, you may move 5 feet as a free action that does not provoke an attack of opportunity. This movement does not provoke attacks of opportunity and does not count as a 5-foot step. You may only use this ability when leaving a threatened square.",
+      "pretext": null,
+      "source_page": "p.103",
+      "benefit": null
+    },
+    {
+      "key": "Improved Disruption",
+      "category": "Psionic",
+      "name": "Improved Disruption",
+      "description": "Your disrupt pattern ability deals one additional point of damage per die of damage.",
+      "pretext": null,
+      "source_page": "p.103",
+      "benefit": null
+    },
+    {
+      "key": "Improved Metamorphosis",
+      "category": "Psionic",
+      "name": "Improved Metamorphosis",
+      "description": "Gain one additional menu option from metamorphosis-type power.",
+      "pretext": null,
+      "source_page": "p.103",
+      "benefit": null
+    },
+    {
+      "key": "Improved Psi-Like Ability",
+      "category": "Psionic",
+      "name": "Improved Psi-Like Ability",
+      "description": "Choose one psi-like ability gained from your race.  You can use that racial psi-like ability an additional two times per day. [Not implemented.]",
+      "pretext": "Racial psi-like ability",
+      "source_page": "p.104",
+      "benefit": null
+    },
+    {
+      "key": "Improved Psicrystal",
+      "category": "Psionic",
+      "name": "Improved Psicrystal",
+      "description": "Enhance your psicrystal",
+      "pretext": null,
+      "source_page": "p.104",
+      "benefit": null
+    },
+    {
+      "key": "Inquisitor",
+      "category": "Psionic",
+      "name": "Inquisitor",
+      "description": "+10 on Sense Motive checks to oppose Bluff",
+      "pretext": null,
+      "source_page": "p.104",
+      "benefit": null
+    },
+    {
+      "key": "Insightful Terror",
+      "category": "Psionic",
+      "name": "Insightful Terror",
+      "description": "As a standard action you can make an Intimidate check to demoralize a single foe (within 30 ft).  If you succeed,the target is paralzed for one round.  This is a mind-affecting fear effect.",
+      "pretext": null,
+      "source_page": "p.104",
+      "benefit": null
+    },
+    {
+      "key": "Intimidating Shot",
+      "category": "Psionic",
+      "name": "Intimidating Shot",
+      "description": "Gain demoralize check on standard action to attack enemy.",
+      "pretext": null,
+      "source_page": "p.104",
+      "benefit": null
+    },
+    {
+      "key": "Intuitive Fighting",
+      "category": "Psionic",
+      "name": "Intuitive Fighting",
+      "description": "To use this feat you must maintain psionic focus.  You add your Wisdom modifier to your melee attack rolls instead of your Strength modifier.",
+      "pretext": null,
+      "source_page": "p.104",
+      "benefit": null
+    },
+    {
+      "key": "Intuitive Shot",
+      "category": "Psionic",
+      "name": "Intuitive Shot",
+      "description": "When focused, use a standard action to gain +%1 damage on a ranged weapon attack within 30 ft.|WIS",
+      "pretext": null,
+      "source_page": "p.104",
+      "benefit": null
+    },
+    {
+      "key": "Killer's Vitality",
+      "category": "General",
+      "name": "Killer's Vitality",
+      "description": "Any time you make a successful sneak attack against a living creature, you can expend your psionic focus to gain 3 temporary hit points per die of sneak attack dealt. You can divide these temporary hit points between yourself and members of your collective in any ratio. Special:If your attack reduces the target to fewer than 0 hit points, you gain double the temporary hit points.",
+      "pretext": null,
+      "source_page": "p.104",
+      "benefit": null
+    },
+    {
+      "key": "Knightmare",
+      "category": "General",
+      "name": "Knightmare",
+      "description": "Your manifester level which granted you the terrors class feature gains a +2 bonus as long as this bonus doesn't raise your manifester level above your current Hit Dice. [ML bonus not implemented.] In addition, for the purpose of terrors level requirements and order benefits, add your dread and cavalier levels together. In addition, when declaring your challenge, you can make a free Intimidate check against the target.",
+      "pretext": null,
+      "source_page": "p.104",
+      "benefit": null
+    },
+    {
+      "key": "Knockdown Shot",
+      "category": "Psionic",
+      "name": "Knockdown Shot",
+      "description": "Expend focus to damage and knock prone opponent with ranged attack.",
+      "pretext": null,
+      "source_page": "p.104",
+      "benefit": null
+    },
+    {
+      "key": "Levitative Transport",
+      "category": "Psionic",
+      "name": "Levitative Transport",
+      "description": "Share elocater movement abilities.",
+      "pretext": null,
+      "source_page": "p.105",
+      "benefit": null
+    },
+    {
+      "key": "Lingering Power",
+      "category": "Metapsionic",
+      "name": "Lingering Power",
+      "description": "Instantaneous power persists for a round.",
+      "pretext": null,
+      "source_page": "p.105",
+      "benefit": null
+    },
+    {
+      "key": "Malleable Power",
+      "category": "Metapsionic",
+      "name": "Malleable Power",
+      "description": "You can exclude areas from power effect.",
+      "pretext": null,
+      "source_page": "p.105",
+      "benefit": null
+    },
+    {
+      "key": "Master of All Forms",
+      "category": "Psionic",
+      "name": "Master of All Forms",
+      "description": "Manifest shapechanging powers as a swift action",
+      "pretext": null,
+      "source_page": "p.105",
+      "benefit": null
+    },
+    {
+      "key": "Master's Refuge",
+      "category": "Psionic",
+      "name": "Master's Refuge",
+      "description": "Transfer mind to thrall on death",
+      "pretext": null,
+      "source_page": "p.106",
+      "benefit": null
+    },
+    {
+      "key": "Master's Voice",
+      "category": "Psionic",
+      "name": "Master's Voice",
+      "description": "Have permanent mental contact with thralls",
+      "pretext": null,
+      "source_page": "p.106",
+      "benefit": null
+    },
+    {
+      "key": "Maximize Power",
+      "category": "Metapsionic",
+      "name": "Maximize Power",
+      "description": "Maximize power's variable, numeric effects",
+      "pretext": null,
+      "source_page": "p.106",
+      "benefit": null
+    },
+    {
+      "key": "Mental Leap",
+      "category": "Psionic",
+      "name": "Mental Leap",
+      "description": "+10 on Acrobatics checks to jump",
+      "pretext": null,
+      "source_page": "p.106",
+      "benefit": null
+    },
+    {
+      "key": "Merciful Power",
+      "category": "Metapsionic",
+      "name": "Merciful Power",
+      "description": "Power does nonlethal damage.",
+      "pretext": null,
+      "source_page": "p.106",
+      "benefit": null
+    },
+    {
+      "key": "Merge Designs",
+      "category": "Psionic",
+      "name": "Merge Designs",
+      "description": "Your attoos cannot be interpreted to determine your powers known. In addition, you can safely wear one additional psionic tattoo on your body.  Normal: Tattoos for the pattern designs class feature can be identified by a Spellcraft check.  A character can only safely wear twenty psionic tattoos.",
+      "pretext": null,
+      "source_page": "p.106",
+      "benefit": null
+    },
+    {
+      "key": "Metapsionic Mastery",
+      "category": "Psionic",
+      "name": "Metapsionic Mastery",
+      "description": "You can apply metapsionic feats to chosen power by increasing cost but not expending focus.",
+      "pretext": null,
+      "source_page": "p.106",
+      "benefit": null
+    },
+    {
+      "key": "Mind Blade Knight",
+      "category": "Psionic",
+      "name": "Mind Blade Knight",
+      "description": "Add weapon special abilities to summoned weapons.",
+      "pretext": null,
+      "source_page": "p.106",
+      "benefit": null
+    },
+    {
+      "key": "Mind Knight's Arsenal",
+      "category": "Psionic",
+      "name": "Mind Knight's Arsenal",
+      "description": "When you summon a weapon with the call weaponry path power with which you have the Weapon Focus feat, the weapon's enhancement bonus is increased by 1 and it gains a single predetermined weapon special ability with a +1 base price modifier. The weapon special ability must be appropriate for the weapon you choose and must be selected from those weapon special abilities available to the soulknife. You can meditate for 8 hours to change which predetermined special ability it gets.",
+      "pretext": null,
+      "source_page": "p.107",
+      "benefit": null
+    },
+    {
+      "key": "Mind Over Body",
+      "category": "General",
+      "name": "Mind Over Body",
+      "description": "Heal ability damage more quickly",
+      "pretext": null,
+      "source_page": "p.107",
+      "benefit": null
+    },
+    {
+      "key": "Mixed Combat",
+      "category": "Combat",
+      "name": "Mixed Combat",
+      "description": "You are trained in using ranged and melee attacks at the same time.",
+      "pretext": null,
+      "source_page": "p.107",
+      "benefit": null
+    },
+    {
+      "key": "Modified Blast",
+      "category": "Psionic",
+      "name": "Modified Blast",
+      "description": "When you activate your surge blast, you gain the following augment options.  Like augmenting a power, augmenting a surge blast is limited to your manifester level.  You can also choose to invoke a wild surge when using your surge blast, using the power from the wild surge to pay for augments to the surge blast, but suffer the standard risk of psychic enervation for invoking a wild surge.  Augment: You can augment your surge blast in one of the following ways.  1. If you spend 2 additional power points, your surge blast deals splash damage.  2. If you spend 3 additional power points, your surge blast is instead a 5 ft. emanation centered on you and cratures in the affected area gain a Reflex save (DC %1) to take half damage.  3. If you spend 4 additional power points, your surge blast deals half damage, but damages all creatures in a 30 ft. line.  4. If you spend 4 additional power points, your surge blast is empowered, dealing 50%% additional damage.  5. If you spend 4 additional power points, your surge blast is a 15 ft. cone effect instead of a ranged touch attack, and creatures in the affected area gain a Reflex save (DC %1) to take half damage.  6.  If you spend 4 additional power points, your surge blast affects all creatures within a 10 ft. radius of the targeted creature and creatures in the affected area gain a Reflex save (DC %1) to take half damage.  7. If you spend 6 additional power points, your surge blast is instead a 10 ft. emanation centered on you and creatures in the affected area gain a Reflex save (DC %1) to take half damage.|ModifiedBlastDC",
+      "pretext": null,
+      "source_page": "p.107",
+      "benefit": null
+    },
+    {
+      "key": "Multiple Connections",
+      "category": "Psionic",
+      "name": "Multiple Connections",
+      "description": "You can be attuned to up to three creatures for the purposes of Open Door.",
+      "pretext": null,
+      "source_page": "p.107",
+      "benefit": null
+    },
+    {
+      "key": "Nightmare Veil",
+      "category": "Psionic",
+      "name": "Nightmare Veil",
+      "description": "While in broken dreams style, any target that is shaken treats you as concealed.  In addition, while in the broken dreams style, you treat shaken targets as flat-footed for unarmed attacks.",
+      "pretext": null,
+      "source_page": "p.107",
+      "benefit": null
+    },
+    {
+      "key": "Nomad's Jump",
+      "category": "Psionic",
+      "name": "Nomad's Jump",
+      "description": "Your levels of elocater stack with your levels of nomad for the purposes of determining the range of nomad's step. In addition, when you use nomad's step, you may split your distance traveled into two steps and determine your line of sight at the end of the first step. The total distance traveled must not exceed your maximum range for nomad's step and you may perform no other actions during the steps.",
+      "pretext": null,
+      "source_page": "p.107",
+      "benefit": null
+    },
+    {
+      "key": "One Pattern",
+      "category": "Psionic",
+      "name": "One Pattern",
+      "description": "Your target no longer needs to match your active creature type to deal full damage with your disrupt pattern ability. If your target does match your active creature type, you inflict an extra 1 point of damage per dice of damage dealt with disrupt pattern. This extra damage is not multiplied on a critical hit.",
+      "pretext": null,
+      "source_page": "p.108",
+      "benefit": null
+    },
+    {
+      "key": "Open Door",
+      "category": "Psionic",
+      "name": "Open Door",
+      "description": "Once an individual has failed a Will save to avoid being mindlocked by you, you can attune yourself to that creature.  You can reactivate the mindlock to an attuned creature at any time by spending 1 power point as a free action, regardless of the time since you first mindlocked the target.  This means they count as having failed their Will save.  Maximum number of attunements:%1|OpenDoorAttunements",
+      "pretext": null,
+      "source_page": "p.108",
+      "benefit": null
+    },
+    {
+      "key": "Open Minded",
+      "category": "General",
+      "name": "Open Minded",
+      "description": "Gain skill points",
+      "pretext": null,
+      "source_page": "p.108",
+      "benefit": null
+    },
+    {
+      "key": "Opportunity Power",
+      "category": "Metapsionic",
+      "name": "Opportunity Power",
+      "description": "Make attacks of opportunity with touch powers",
+      "pretext": null,
+      "source_page": "p.108",
+      "benefit": null
+    },
+    {
+      "key": "Overchannel",
+      "category": "Psionic",
+      "name": "Overchannel",
+      "description": "Take damage to increase your manifester level",
+      "pretext": null,
+      "source_page": "p.108",
+      "benefit": null
+    },
+    {
+      "key": "Penetrating Fear",
+      "category": "Psionic",
+      "name": "Penetrating Fear",
+      "description": "You can expend your psionic focus when activating a terror to allow it to affect those normally immune to fear effects or mind-affecting effects.  The target gets a +4 bonus to any applicable save against the effect.",
+      "pretext": null,
+      "source_page": "p.108",
+      "benefit": null
+    },
+    {
+      "key": "Persistent Focus",
+      "category": "Psionic",
+      "name": "Persistent Focus",
+      "description": "Choose one psionic ability or psionic feat that requires maintaining psionic focus. From this point forward, you are always considered psionically focused even if you expend your psionic focus for any other ability.",
+      "pretext": null,
+      "source_page": "p.108",
+      "benefit": null
+    },
+    {
+      "key": "Persistent Power",
+      "category": "Metapsionic",
+      "name": "Persistent Power",
+      "description": "Target of power must make two saves.",
+      "pretext": null,
+      "source_page": "p.108",
+      "benefit": null
+    },
+    {
+      "key": "Piercing Power",
+      "category": "Metapsionic",
+      "name": "Piercing Power",
+      "description": "Power affects target as if target had 5 smaller SR.",
+      "pretext": null,
+      "source_page": "p.108",
+      "benefit": null
+    },
+    {
+      "key": "Piranha Strike",
+      "category": "Combat",
+      "name": "Piranha Strike",
+      "description": "You make a combination of quick strikes, sacrificing accuracy for multiple, minor wounds that prove exceptionally deadly.",
+      "pretext": null,
+      "source_page": "p.109",
+      "benefit": "When wielding a light weapon, you can choose to take a -%1 penalty on all melee attack rolls and combat maneuver checks to gain a +%2 bonus on all melee damage rolls.  This bonus damage is halved (-50%%) if you are making an attack with an off-hand weapon or secondary natural weapon.  You must choose to use this feat before the attack roll, and its effects last until your next turn.  The bonus damage does not apply to touch attacks or effects that do not deal hit point damage.  This feat cannot be used in conjunction with the Power Attack feat.|PiranhaStrikeAttackPenalty|PiranhaStrikeBonusDamage"
+    },
+    {
+      "key": "Power Channeler",
+      "category": "Psionic",
+      "name": "Power Channeler",
+      "description": "You can channel a touch range power through a melee weapon.  You can make a single melee attack during the same action in which you manifest a touch power with a manifesting time of one standard action; if this melee attack hits, it triggers the power as if you had succeeded on a touch attack and deals damage as normal.  If you miss, the power fizzles and the charge is lost.  This attack is made against standard AC and not touch AC.",
+      "pretext": null,
+      "source_page": "p.109",
+      "benefit": null
+    },
+    {
+      "key": "Power Penetration",
+      "category": "Psionic",
+      "name": "Power Penetration",
+      "description": "Gain bonus to overcome power resistance",
+      "pretext": null,
+      "source_page": "p.109",
+      "benefit": null
+    },
+    {
+      "key": "Power Perfection",
+      "category": "Psionic",
+      "name": "Power Perfection",
+      "description": "Pick one power which you have the ability to manifest. Whenever you manifest that power you may apply any one metapsionic feat you have to that power without expending psionic focus or affecting its level or manifesting time, as long as the total power point cost of the power, including the metapsionic feat cost and any augmentation, does not exceed 17 power points. In addition, if you have other feats which allow you to apply a set numerical bonus to any aspect of this power (such as Power Penetration, Psionic Endowment, Weapon Focus [ray], and so on), double the bonus granted by that feat when applied to this power.",
+      "pretext": null,
+      "source_page": "p.109",
+      "benefit": null
+    },
+    {
+      "key": "Power Specialization",
+      "category": "Psionic",
+      "name": "Power Specialization",
+      "description": "Gain bonus damage to damaging powers",
+      "pretext": null,
+      "source_page": "p.109",
+      "benefit": null
+    },
+    {
+      "key": "Psicrystal Affinity",
+      "category": "Psionic",
+      "name": "Psicrystal Affinity",
+      "description": "Obtain a psicrystal",
+      "pretext": null,
+      "source_page": "p.109",
+      "benefit": null
+    },
+    {
+      "key": "Psicrystal Containment",
+      "category": "Psionic",
+      "name": "Psicrystal Containment",
+      "description": "Your psicrystal can hold a psionic focus",
+      "pretext": null,
+      "source_page": "p.111",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Body",
+      "category": "Psionic",
+      "name": "Psionic Body",
+      "description": "+2 hit points for each psionic feat you have",
+      "pretext": null,
+      "source_page": "p.111",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Bull Rush",
+      "category": "Psionic",
+      "name": "Psionic Bull Rush",
+      "description": "While maintaining psionic focus, when you successfully perform a bull rush maneuver, you also deal %1 damage to the creature bull rushed.  If you expend your psoinic focus when you successfully make a bull rush maneuver, you can also knock the target of your bull rush prone.|PsionicBullRushDamage",
+      "pretext": null,
+      "source_page": "p.111",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Charge",
+      "category": "Psionic",
+      "name": "Psionic Charge",
+      "description": "Charge while taking erratic course to foe",
+      "pretext": null,
+      "source_page": "p.111",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Critical",
+      "category": "Psionic",
+      "name": "Psionic Critical",
+      "description": "While maintaining psionic focus, when you successfully score a critical hit, you deal +1d8 bonus damage.  If you expend your psionic focus, you deal an additional +1d8 bonus damage.",
+      "pretext": null,
+      "source_page": "p.112",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Disarm",
+      "category": "Psionic",
+      "name": "Psionic Disarm",
+      "description": "While maintaining psionic focus, when you successfully perform a disarm combat maneuver, you also deal %1 damage to the creature disarmed.  If you expend your psionic focus when you make a successful disarm combat maneuver, you can also send the disarmed object into any space of your choosing within %2 ft.  If a creature is in the selected space and has a hand free, it can grab the disarmed object as an immediate action.|PsionicDisarmDamage|PsionicDisarmDistance",
+      "pretext": null,
+      "source_page": "p.112",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Dodge",
+      "category": "Psionic",
+      "name": "Psionic Dodge",
+      "description": "+1 dodge bonus to AC",
+      "pretext": null,
+      "source_page": "p.112",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Endowment",
+      "category": "Psionic",
+      "name": "Psionic Endowment",
+      "description": "Add +1 to power's save DC",
+      "pretext": null,
+      "source_page": "p.112",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Fist",
+      "category": "Psionic",
+      "name": "Psionic Fist",
+      "description": "Unarmed attack or natural weapon deals extra damage",
+      "pretext": null,
+      "source_page": "p.112",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Meditation",
+      "category": "Psionic",
+      "name": "Psionic Meditation",
+      "description": "Become psionically focused as a move action",
+      "pretext": null,
+      "source_page": "p.112",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Overrun",
+      "category": "Psionic",
+      "name": "Psionic Overrun",
+      "description": "While maintaining psionic focus, when you successfully perform an overrun combat maneuver, you also deal %1 damage.  If you expend your psionic focus when you perform a successful overrun combat maneuver, you can also push your target up to %2 feet.|PsionicOverrunDamage|PsionicOverrunDistance",
+      "pretext": null,
+      "source_page": "p.112",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Precise Shot",
+      "category": "Psionic",
+      "name": "Psionic Precise Shot",
+      "description": "To use this feat, you must expend your psionic focus.  You can attempt to make a single ranged attack as a standard action against a target that is sheltered behind a wall, wall of force effect, or similar barrier.  Your attack briefly skips through the Astral Plane to bypass the barrier.  You must still have line of sight to the target.",
+      "pretext": null,
+      "source_page": "p.112",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Shield Bash",
+      "category": "Psionic",
+      "name": "Psionic Shield Bash",
+      "description": "While maintaining psionic focus, when you successfully strike a foe with a shield bash attack, the foe is shaken for 1 round (Will DC %1 negates).  This is a mind-affecting fear effect.  If you expend your psionic focus when you make a shield bash, on a successful attack roll you can instead force the target to make a Will saving throw or be stunned for 1 round.|PsionicShieldBashDC",
+      "pretext": null,
+      "source_page": "p.112",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Shot",
+      "category": "Psionic",
+      "name": "Psionic Shot",
+      "description": "Ranged weapon deals extra damage",
+      "pretext": null,
+      "source_page": "p.112",
+      "benefit": "While you maintain psionic focus, your attacks with a ranged weapon deal an extra 1 point of damage. Additionally, if you expend your psionic focus as part of an attack with a ranged weapon, that attack instead deals an extra 2d6 points of damage. You must decide whether or not to use this feat prior to making an attack. If your attack misses, you still expend your psionic focus."
+    },
+    {
+      "key": "Psionic Stamina",
+      "category": "Psionic",
+      "name": "Psionic Stamina",
+      "description": "As long as you maintain psionic focus, you gain a +1 bonus to your Fortitude saves for each psionic feat you have (including this one), to a maximum bonus of 1/3 of your soulknife class level (rounded down, minimum +1). You can expend your psionic focus as an immediate action to also add your Wisdom bonus to your Fortitude saves instead of your Constitution bonus until the beginning of your next turn.",
+      "pretext": null,
+      "source_page": "p.113",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Sunder",
+      "category": "Psionic",
+      "name": "Psionic Sunder",
+      "description": "While maintaining psionic focus, when you successfully perform a sunder combat maneuver, you also deal %1 damage to the creature holding the item sundered.  If you expend your psionic focus when you perform a successful sunder maneuver, you ignore half the hardness of the object you are sundering.|PsionicSunderDamage",
+      "pretext": null,
+      "source_page": "p.113",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Talent",
+      "category": "Psionic",
+      "name": "Psionic Talent",
+      "description": "Gain additional power points",
+      "pretext": null,
+      "source_page": "p.113",
+      "benefit": "You gain %1 power points.|COUNT[FEATNAME=Psionic Talent]+1"
+    },
+    {
+      "key": "Psionic Trip",
+      "category": "Psionic",
+      "name": "Psionic Trip",
+      "description": "While maintaining psionic focus, when you successfully perform a trip combat maneuver, you also deal %1 damage to the creature tripped.  If you expend your psionic focus when you perform a successful trip combat maneuver, you can also throw your target up to %2 ft., although the creature thrown may not be more than one size category larger than you.|PsionicTripDamage|PsionicTripDistance",
+      "pretext": null,
+      "source_page": "p.113",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Unarmed Strike",
+      "category": "Psionic",
+      "name": "Psionic Unarmed Strike",
+      "description": "To use this feat, you must expend psionic focus.  You can attempt to make a single unarmed melee attack as a standard action against a target that is sheltered behind a wall, wall of force effect, or similar barrier.  Your attack briefly skips through the Astral Plane to bypass the barrier.  This does not grant you line of sight or extra reach, requiring you to make the attack without being able to see the target or use some other method of seeing the target (such as clairaudience/clairvoyance) and be within your normal reach for your unarmed attack.",
+      "pretext": null,
+      "source_page": "p.113",
+      "benefit": null
+    },
+    {
+      "key": "Psionic Weapon",
+      "category": "Psionic",
+      "name": "Psionic Weapon",
+      "description": "Melee weapons deal extra damage",
+      "pretext": null,
+      "source_page": "p.113",
+      "benefit": null
+    },
+    {
+      "key": "Psychoportive Pathfinder",
+      "category": "Psionic",
+      "name": "Psychoportive Pathfinder",
+      "description": "Any time you manifest psychoport, you may, as a free action, choose to leave a marker for someone else to follow. This marker has a duration of one round. If another person casts teleport or greater teleport or manifests psychoport or greater psychoport in the space you left from, they can choose as part of casting the spell or manifesting the power to appear adjacent to you in a safe, uninhabited space even if they would normally fail due to lack of familiarity or lack of range.",
+      "pretext": null,
+      "source_page": "p.113",
+      "benefit": null
+    },
+    {
+      "key": "Pyromaniac",
+      "category": "General",
+      "name": "Pyromaniac",
+      "description": "Add your alchemist and pyrokineticist levels together to determine the damage done by your bombs and the number of bombs you can create each day. Additionally, when you apply your weapon afire ability to your bombs, all creatures in the splash area also take the extra damage from your weapon afire ability.",
+      "pretext": null,
+      "source_page": "p.113",
+      "benefit": null
+    },
+    {
+      "key": "Quick Suit",
+      "category": "Psionic",
+      "name": "Quick Suit",
+      "description": "You can form your astral suit as a free action once per turn.",
+      "pretext": null,
+      "source_page": "p.114",
+      "benefit": null
+    },
+    {
+      "key": "Quicken Power",
+      "category": "Metapsionic",
+      "name": "Quicken Power",
+      "description": "Manifest powers as a swift action",
+      "pretext": null,
+      "source_page": "p.114",
+      "benefit": null
+    },
+    {
+      "key": "Raging Hulk",
+      "category": "General",
+      "name": "Raging Hulk",
+      "description": "For the purpose of level requirements for rage powers or astral suit customizations, add your levels of barbarian and aegis together. Damage reduction from either class stacks. In addition, any time you enter a rage, you can activate augment suit as a free action.",
+      "pretext": null,
+      "source_page": "p.114",
+      "benefit": null
+    },
+    {
+      "key": "Rapid Augmentation",
+      "category": "Psionic",
+      "name": "Rapid Augmentation",
+      "description": "You can activate your augment suit class feature as a swift action.",
+      "pretext": null,
+      "source_page": "p.114",
+      "benefit": null
+    },
+    {
+      "key": "Rapid Draw",
+      "category": "Psionic",
+      "name": "Rapid Draw",
+      "description": "You may form your mind blade as a free action an additional %1 times per round.|RapidDrawExtraRounds",
+      "pretext": null,
+      "source_page": "p.114",
+      "benefit": null
+    },
+    {
+      "key": "Rapid Metabolism",
+      "category": "General",
+      "name": "Rapid Metabolism",
+      "description": "Heal hit points more quickly",
+      "pretext": null,
+      "source_page": "p.114",
+      "benefit": null
+    },
+    {
+      "key": "Ready Response",
+      "category": "Psionic",
+      "name": "Ready Response",
+      "description": "At the beginning of a surprise round, if you would not normally take an action, you can expend your psionic focus to roll initiative and take a standard action or a move action.  If you do move normally in a surprise round, you can expend your psionic focus to take a full-round of action, rather than only a standard or move action.",
+      "pretext": null,
+      "source_page": "p.114",
+      "benefit": null
+    },
+    {
+      "key": "Rebounding Throw",
+      "category": "Psionic",
+      "name": "Rebounding Throw",
+      "description": "Expend focus when thrown weapon hits to attack another enemy.",
+      "pretext": null,
+      "source_page": "p.114",
+      "benefit": null
+    },
+    {
+      "key": "Reckless Offense",
+      "category": "General",
+      "name": "Reckless Offense",
+      "description": "Take -4 to AC to gain +2 melee attack bonus",
+      "pretext": null,
+      "source_page": "p.115",
+      "benefit": null
+    },
+    {
+      "key": "Redirect Power",
+      "category": "Metapsionic",
+      "name": "Redirect Power",
+      "description": "You can redirect a failed power to a different target.",
+      "pretext": null,
+      "source_page": "p.115",
+      "benefit": null
+    },
+    {
+      "key": "Resonance Mastery",
+      "category": "Psionic",
+      "name": "Resonance Mastery",
+      "description": "Apply metapsionic feats to powers without paying increased cost but by increasing manifesting time",
+      "pretext": null,
+      "source_page": "p.115",
+      "benefit": null
+    },
+    {
+      "key": "Return Shot",
+      "category": "Psionic",
+      "name": "Return Shot",
+      "description": "Deflect range attacks back at attacker",
+      "pretext": null,
+      "source_page": "p.115",
+      "benefit": null
+    },
+    {
+      "key": "Returning Throw",
+      "category": "Psionic",
+      "name": "Returning Throw",
+      "description": "Thrown weapons return to your hand.",
+      "pretext": null,
+      "source_page": "p.115",
+      "benefit": null
+    },
+    {
+      "key": "Ricochet",
+      "category": "Psionic",
+      "name": "Ricochet",
+      "description": "Expend focus to redirect thrown attacks; %1 redirections per attack.|1+WIS",
+      "pretext": null,
+      "source_page": "p.115",
+      "benefit": null
+    },
+    {
+      "key": "Rime Power",
+      "category": "Metapsionic",
+      "name": "Rime Power",
+      "description": "Entangle creatures with cold power.",
+      "pretext": null,
+      "source_page": "p.115",
+      "benefit": null
+    },
+    {
+      "key": "Scholarly Discipline",
+      "category": "General",
+      "name": "Scholarly Discipline",
+      "description": "Your psion manifester level and wizard caster level gain a +2 bonus as long as this bonus doesn't raise your manifester level or caster level above your current Hit Dice. [NOT IMPLEMENTED]",
+      "pretext": null,
+      "source_page": "p.116",
+      "benefit": null
+    },
+    {
+      "key": "Scribe Tattoo",
+      "category": "ItemCreation",
+      "name": "Scribe Tattoo",
+      "description": "Create psionic tattoos",
+      "pretext": null,
+      "source_page": "p.116",
+      "benefit": null
+    },
+    {
+      "key": "Selective Power",
+      "category": "Metapsionic",
+      "name": "Selective Power",
+      "description": "Choose %1 targets to exclude from power.|SelectivePowerTargets",
+      "pretext": null,
+      "source_page": "p.116",
+      "benefit": null
+    },
+    {
+      "key": "Shared Power",
+      "category": "Metapsionic",
+      "name": "Shared Power",
+      "description": "Manifest personal power as a 30-ft. ray, or with the Network descriptor.",
+      "pretext": null,
+      "source_page": "p.116",
+      "benefit": null
+    },
+    {
+      "key": "Shattered Dream Strike",
+      "category": "Psionic",
+      "name": "Shattered Dream Strike",
+      "description": "While in the broken dreams style, after making a successful unarmed strike empowered with your devastating touch, you can make a free Intimidate check against the target.",
+      "pretext": null,
+      "source_page": "p.116",
+      "benefit": null
+    },
+    {
+      "key": "Sickening Power",
+      "category": "Metapsionic",
+      "name": "Sickening Power",
+      "description": "Sicken creatures with power.",
+      "pretext": null,
+      "source_page": "p.116",
+      "benefit": null
+    },
+    {
+      "key": "Sidestep Charge",
+      "category": "General",
+      "name": "Sidestep Charge",
+      "description": "+4 bonus to AC against a charging foe",
+      "pretext": null,
+      "source_page": "p.116",
+      "benefit": null
+    },
+    {
+      "key": "Soul Warrior",
+      "category": "General",
+      "name": "Soul Warrior",
+      "description": "Your manifester level which granted you the warrior's path class feature gains a +2 bonus as long as this bonus doesn't raise your manifester level above your current Hit Dice. Your soulknife level gains a +2 bonus, up to a maximum of your hit dice, for the purpose of your mind blade enhancement class feature. In addition, any time you perform a path maneuver while wielding your mind blade, you gain a +1 bonus to attack rolls with your mind blade for until the end of your next turn.",
+      "pretext": null,
+      "source_page": "p.116",
+      "benefit": null
+    },
+    {
+      "key": "Speed of Thought",
+      "category": "Psionic",
+      "name": "Speed of Thought",
+      "description": "+10 feet to speed in light or medium armor",
+      "pretext": null,
+      "source_page": "p.117",
+      "benefit": null
+    },
+    {
+      "key": "Split Headed Lash",
+      "category": "Psionic",
+      "name": "Split Headed Lash",
+      "description": "Expend focus to split one fire lash attack from a full attack into two attacks.",
+      "pretext": null,
+      "source_page": "p.117",
+      "benefit": null
+    },
+    {
+      "key": "Split Psionic Ray",
+      "category": "Metapsionic",
+      "name": "Split Psionic Ray",
+      "description": "Split one ray attack into two",
+      "pretext": null,
+      "source_page": "p.117",
+      "benefit": null
+    },
+    {
+      "key": "Staggering Shot",
+      "category": "Psionic",
+      "name": "Staggering Shot",
+      "description": "Stagger hampered enemy with a ranged attack.",
+      "pretext": null,
+      "source_page": "p.117",
+      "benefit": null
+    },
+    {
+      "key": "Student of the Astral Suit",
+      "category": "General",
+      "name": "Student of the Astral Suit",
+      "description": "Treat your class level as four higher to determine your number of customization points and which customizations you can select for your astral suit, to a maximum of your character level.",
+      "pretext": null,
+      "source_page": "p.117",
+      "benefit": null
+    },
+    {
+      "key": "Surging Aura",
+      "category": "Psionic",
+      "name": "Surging Aura",
+      "description": "Wild surge grants bonus to allies",
+      "pretext": null,
+      "source_page": "p.117",
+      "benefit": null
+    },
+    {
+      "key": "Swift Shapeshifter",
+      "category": "Psionic",
+      "name": "Swift Shapeshifter",
+      "description": "Manifest shapechanging powers more quickly",
+      "pretext": null,
+      "source_page": "p.117",
+      "benefit": null
+    },
+    {
+      "key": "Talented",
+      "category": "Psionic",
+      "name": "Talented",
+      "description": "Take no damage from overchanneling some powers",
+      "pretext": null,
+      "source_page": "p.117",
+      "benefit": null
+    },
+    {
+      "key": "Telepathic Link",
+      "category": "Psionic",
+      "name": "Telepathic Link",
+      "description": "Gain ability to link creatures together to communicate telepathically",
+      "pretext": null,
+      "source_page": "p.117",
+      "benefit": null
+    },
+    {
+      "key": "Terror Mastery",
+      "category": "Psionic",
+      "name": "Terror Mastery",
+      "description": "When you use your terrors class feature, you can activate two terrors in a single swift action.",
+      "pretext": null,
+      "source_page": "p.118",
+      "benefit": null
+    },
+    {
+      "key": "Thundering Power",
+      "category": "Metapsionic",
+      "name": "Thundering Power",
+      "description": "Deafen creatures with damaging power.",
+      "pretext": null,
+      "source_page": "p.118",
+      "benefit": null
+    },
+    {
+      "key": "Tomb Raider",
+      "category": "General",
+      "name": "Tomb Raider",
+      "description": "Add your levels of cryptic and ranger together for the purposes of your trapfinding and favored terrain class features. In addition, you can add your favored terrain (underground) bonus to Disable Device checks when in an underground terrain.",
+      "pretext": null,
+      "source_page": "p.118",
+      "benefit": null
+    },
+    {
+      "key": "Toppling Power",
+      "category": "Metapsionic",
+      "name": "Toppling Power",
+      "description": "Knock creatures prone with force power.",
+      "pretext": null,
+      "source_page": "p.118",
+      "benefit": null
+    },
+    {
+      "key": "Touch of Terror",
+      "category": "Psionic",
+      "name": "Touch of Terror",
+      "description": "Your devastating touch ability deals 1d6 points of damage plus your class level and your Charisma modifier.",
+      "pretext": null,
+      "source_page": "p.118",
+      "benefit": null
+    },
+    {
+      "key": "Toughened Suit",
+      "category": "Psionic",
+      "name": "Toughened Suit",
+      "description": "Any time you form your astral suit, you can choose to pay 1 power point as part of the action to form the astral suit to gain %1 temporary hit points. These temporary hit points last until your astral suit is dismissed, destroyed, or otherwise ends.|ToughenedSuitTempHP",
+      "pretext": null,
+      "source_page": "p.118",
+      "benefit": null
+    },
+    {
+      "key": "Twin Power",
+      "category": "Metapsionic",
+      "name": "Twin Power",
+      "description": "Manifest power twice",
+      "pretext": null,
+      "source_page": "p.118",
+      "benefit": null
+    },
+    {
+      "key": "Twin Throw",
+      "category": "Combat",
+      "name": "Twin Throw",
+      "description": "First attack in full-attack with thrown weapons uses two weapons.",
+      "pretext": null,
+      "source_page": "p.118",
+      "benefit": null
+    },
+    {
+      "key": "Unavoidable Strike",
+      "category": "Psionic",
+      "name": "Unavoidable Strike",
+      "description": "Resolve unarmed attack or natural weapon attack as a touch attack",
+      "pretext": null,
+      "source_page": "p.118",
+      "benefit": null
+    },
+    {
+      "key": "Unconditional Power",
+      "category": "Metapsionic",
+      "name": "Unconditional Power",
+      "description": "Manifest power despite character condition",
+      "pretext": null,
+      "source_page": "p.119",
+      "benefit": null
+    },
+    {
+      "key": "Unlocked Talent",
+      "category": "General",
+      "name": "Unlocked Talent",
+      "description": "You gain 2 power points and one 1st-level power.",
+      "pretext": null,
+      "source_page": "p.119",
+      "benefit": null
+    },
+    {
+      "key": "Unwilling Participant",
+      "category": "Psionic",
+      "name": "Unwilling Participant",
+      "description": "You can attempt to force others into your collective.",
+      "pretext": null,
+      "source_page": "p.119",
+      "benefit": "You may attempt to force a living creature into your collective.  The target may attempt a Will save (DC %1) to resist.  If the target fails the save, it may attempt another Will save at the same DC every 24 hours thereafter, but is otherwise unable to leave the collective unless you allow it.  Special: Creatures forced into your collective using Unwilling Participant are considered willing members for any collective-related effects unless they succeed on another Will save at the same DC to resist being forced into the collective.  A successful save means the creature resisted the speciifc effect but is still a member of the collective.|UnwillingParticipantDC"
+    },
+    {
+      "key": "Up the Walls",
+      "category": "Psionic",
+      "name": "Up the Walls",
+      "description": "Run on walls and ceilings",
+      "pretext": null,
+      "source_page": "p.120",
+      "benefit": null
+    },
+    {
+      "key": "Urban Tracking",
+      "category": "General",
+      "name": "Urban Tracking",
+      "description": "You can track down the location of missing persons or wanted individuals within communities.",
+      "pretext": null,
+      "source_page": "p.120",
+      "benefit": "To find the trail of an individual or to follow it for 1 hour requires a Diplomacy check to gather information. You must make another Diplomacy check every hour of the search, as well as each time the trail becomes difficult to follow, such as when it moves to a different area of town. The DC of the check, and the number of checks required to track down your quarry, depends on the community size and the conditions. If you fail a Diplomacy check, you can retry after 1 hour of questioning. The game master should roll the number of checks required secretly, so that the player doesn't know exactly how long the task will require.&nl; Normal: A character without this feat can use Diplomacy to find out information about a particular individual, but each check takes 1d4+1 hours and doesn't allow effective tailing."
+    },
+    {
+      "key": "Widen Power",
+      "category": "Metapsionic",
+      "name": "Widen Power",
+      "description": "Double power's area",
+      "pretext": null,
+      "source_page": "p.120",
+      "benefit": null
+    },
+    {
+      "key": "Wildblood Mage",
+      "category": "General",
+      "name": "Wildblood Mage",
+      "description": "Your wilder manifester level gains a +2 bonus as long as this bonus doesn't raise your manifester level above your current Hit Dice. Your sorcerer caster level gains a +2 bonus as long as this bonus doesn't raise your caster level above your current Hit Dice. In addition, you can use your wild surge on spells, increasing your caster level the wild surge amount, and your bloodline arcana is applied to applicable powers. [NOT IMPLEMENTED]",
+      "pretext": null,
+      "source_page": "p.120",
+      "benefit": null
+    },
+    {
+      "key": "Wild Talent",
+      "category": "General",
+      "name": "Wild Talent",
+      "description": "Gain psionic ability and 2 power points",
+      "pretext": null,
+      "source_page": "p.120",
+      "benefit": null
+    },
+    {
+      "key": "Wounding Attack",
+      "category": "Psionic",
+      "name": "Wounding Attack",
+      "description": "Wound opponents with your attack",
+      "pretext": null,
+      "source_page": "p.120",
+      "benefit": null
+    }
+  ]
+}

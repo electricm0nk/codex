@@ -17,7 +17,8 @@
 // driver.sh, which derives the same three from `RUN_DESKTOP_DATA_ROOT`; the
 // test asks driver.sh itself (`_data_env`) rather than trusting this file's
 // copy of the layout.
-import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { existsSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, readlinkSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { isAbsolute, join, relative, resolve } from 'node:path';
 
@@ -152,4 +153,39 @@ export function cleanupCreatedCharacters({ before, listIds, deleteById }) {
     leftover: created.filter((id) => remaining.has(id)),
     errors,
   };
+}
+
+/**
+ * R5 (SD-37): the fingerprint of a store, taken before and after a run so the
+ * receipt can say the real store was not touched. `entries` counts every file,
+ * directory and symlink under `dir` (the dir itself excluded); `sha256` hashes
+ * the sorted lines `<kind> <relative path> <size> <sha256 of the bytes>` (a
+ * symlink hashes its target text, and is never followed), so a changed byte, a
+ * renamed entry or a stray directory each moves it. Modification times are
+ * deliberately not part of it. An absent `dir` is `{entries: 0, present: false}`.
+ */
+export function fingerprintStore(dir) {
+  const lines = [];
+  const walk = (current, prefix) => {
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+      const full = join(current, entry.name);
+      const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+      if (entry.isSymbolicLink()) {
+        lines.push(`l\t${rel}\t${createHash('sha256').update(readlinkSync(full)).digest('hex')}`);
+      } else if (entry.isDirectory()) {
+        lines.push(`d\t${rel}`);
+        walk(full, rel);
+      } else {
+        const bytes = readFileSync(full);
+        lines.push(`f\t${rel}\t${lstatSync(full).size}\t${createHash('sha256').update(bytes).digest('hex')}`);
+      }
+    }
+  };
+  const present = existsSync(dir);
+  if (present) {
+    walk(dir, '');
+  }
+  lines.sort();
+  const sha256 = createHash('sha256').update(lines.join('\n')).digest('hex');
+  return { entries: lines.length, sha256, present };
 }

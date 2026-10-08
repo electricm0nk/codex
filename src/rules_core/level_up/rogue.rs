@@ -7,7 +7,7 @@
 //! `cleric.rs`'s deviation): composes with two already-grounded,
 //! already-landed sources rather than re-deriving either.
 //!
-//! 1. `rules_tables::crb::class_tables::class_tables()` (SD-19's
+//! 1. `rules_catalog::crb::class_tables::class_tables()` (SD-19's
 //!    foundation slice) for the class-generic BAB/save progression.
 //!    Per this cycle's own brief, Rogue's `CLASS_META` row was
 //!    spot-checked against `pilot_compute.rs`'s own already-grounded
@@ -69,7 +69,7 @@
 //! absent below gate, present at gate" shape.
 //!
 //! `pick_from_lists` stays empty: no PF1 Core Rulebook Rogue Talent
-//! candidate catalog exists anywhere in `rules_tables::crb` to enumerate
+//! candidate catalog exists anywhere in `rules_catalog::crb` to enumerate
 //! from — the identical "no catalog to enumerate" boundary `barbarian.rs`
 //! documented for the Rage Power list, here scoped to Rogue's own
 //! choice-list surface. `resource_pool_change` stays empty: unlike
@@ -121,8 +121,8 @@ use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan};
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::class_tables::{class_tables, ClassId, ClassTableRow};
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::crb::class_tables::{class_tables, ClassId, ClassTableRow};
+use crate::rules_core::rules_catalog::RuleSetId;
 
 const ROGUE_CLASS_ID: &str = "class:rogue";
 const HUMAN_RACE_ID: &str = "race:human";
@@ -184,7 +184,7 @@ fn class_table_row(level: u8) -> Option<ClassTableRow> {
         .find(|row| row.class_id == ClassId::Rogue && row.level == level)
 }
 
-/// Grants sourced from `rules_tables::crb::class_tables::class_tables()`
+/// Grants sourced from `rules_catalog::crb::class_tables::class_tables()`
 /// — the class-generic BAB/save progression pillars.
 fn append_class_table_grants(plan: &mut LevelUpPlan, from_level: u8, to_level: u8) {
     let Some(to_row) = class_table_row(to_level) else {

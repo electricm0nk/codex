@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Nyfiber net",
+    "name": "Nyfiber net",
+    "type": "Special Weapons"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 266,
+    "path": "starfinder/paizo/core/scr_profs_weapon.lst",
+    "record_key": "Nyfiber net",
+    "sha256": "82f827be51f88e0b47cced07677ec1715678b3805ceec139fdeeebbc3c088690"
+  },
+  "unit_id": "core:proficiency:nyfiber_net"
+}

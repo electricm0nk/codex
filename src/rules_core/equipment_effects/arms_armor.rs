@@ -2,7 +2,7 @@
 //! `arms_armor` per-item effect resolution.
 //!
 //! The canonical CRB equipment-table store
-//! (`rules_tables::crb::equipment_tables`) only carries `key` / `category`
+//! (`rules_catalog::crb::equipment_tables`) only carries `key` / `category`
 //! / `name` / `cost_gp` per record (see that module's own doc comment: a
 //! "bootstrap coverage" projection). It does not yet carry the
 //! armor/shield stat columns (`ACCHECK:` / `MAXDEX:` / `SPELLFAILURE:` /

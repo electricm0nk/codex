@@ -59,10 +59,10 @@ use std::process::Command;
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::class_seeds::{FIXTURE_RELATIVE_PATH, canonical_seeds_for, input_for};
 use codex::rules_core::pilot_compute::{HeadlessReceiptStatus, build_pilot_headless_receipt};
-use codex::rules_core::rules_tables::acg::AcgClassId;
-use codex::rules_core::rules_tables::apg::ApgClassId;
-use codex::rules_core::rules_tables::crb::class_tables::ClassId;
-use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
+use codex::rules_core::rules_catalog::acg::AcgClassId;
+use codex::rules_core::rules_catalog::apg::ApgClassId;
+use codex::rules_core::rules_catalog::crb::class_tables::ClassId;
+use codex::rules_core::rules_catalog::pathfinder_unchained::class_chassis::PuClassId;
 
 /// The level range every class is swept over. 20 is PF1's own class ceiling
 /// and the `MAXLEVEL:20` every CRB/APG/ACG class table already declares.

@@ -1,11 +1,14 @@
 import type { CSSProperties } from 'react';
 import type { CampaignManagerAccessGate } from '../campaign/campaignManagerAccessGate';
+import type { StarfinderCatalogKind } from '../boundary/loadStarfinderCatalog';
+import { STARFINDER_CATALOG_TABS } from '../starfinderCatalog/starfinderCatalogModel';
 
 /**
  * Rule-set landing screen (Pathbuilder-style): a rule-set selector followed by
  * "New character" / "Load character" banners whose artwork changes per rule
- * set. Only Pathfinder 1e is currently selectable; the other rule sets are
- * present as unselectable stubs until their rules land.
+ * set. Pathfinder 1e and Starfinder 1e are selectable (each has a rule-system
+ * adapter: `rule_system_adapter.rs`); the other rule sets are present as
+ * unselectable stubs until their rules land.
  */
 
 export type RuleSetId = 'pathfinder-1e' | 'solarus-arcanum' | 'traveller' | 'cyberpunk' | 'starfinder-1e' | 'world-of-darkness';
@@ -69,7 +72,7 @@ export const RULE_SETS: readonly RuleSet[] = [
     id: 'starfinder-1e',
     name: 'Starfinder 1e',
     tagline: 'Sci-fi fantasy',
-    available: false,
+    available: true,
     art: {
       create: 'linear-gradient(115deg, #062a1a 0%, #0e5c3a 55%, #2ad68a 130%)',
       load: 'linear-gradient(115deg, #041a10 0%, #0a4228 55%, #1ea868 135%)',
@@ -237,6 +240,15 @@ function ActionBanner(props: { title: string; art: string; onClick: () => void; 
   );
 }
 
+const BROWSE_LINK: CSSProperties = {
+  background: 'none',
+  border: 'none',
+  color: 'var(--color-text-muted)',
+  cursor: 'pointer',
+  fontSize: '0.85rem',
+  textDecoration: 'underline',
+};
+
 const CAMPAIGN_MANAGER_ART = 'linear-gradient(115deg, #0a1428 0%, #1c3466 55%, #4a7ad6 130%)';
 const DM_TOOLKIT_ART = 'linear-gradient(115deg, #240818 0%, #5c1040 55%, #c8288a 130%)';
 
@@ -244,6 +256,8 @@ export function LandingScreen(props: {
   selectedRuleSet: RuleSetId;
   onSelectRuleSet: (id: RuleSetId) => void;
   onCreate: () => void;
+  /** Whether "New Character" opens a creation flow for the selected rule set (`characterCreationGate`). */
+  createGate: { enabled: boolean; disabledHint?: string };
   onLoad: () => void;
   onBrowseEquipment: () => void;
   onBrowseSpells: () => void;
@@ -252,6 +266,8 @@ export function LandingScreen(props: {
   onBrowseMonsters: () => void;
   onBrowseCompanions: () => void;
   onBrowseIntelligentItems: () => void;
+  /** Starfinder 1e's catalogs (SD-37 E6.4), offered instead of the Pathfinder ones when it is selected. */
+  onBrowseStarfinder: (kind: StarfinderCatalogKind) => void;
   onCorpusIngestDiagnostic: () => void;
   onCampaignManager: () => void;
   campaignManagerGate: CampaignManagerAccessGate;
@@ -272,7 +288,13 @@ export function LandingScreen(props: {
         ))}
       </div>
 
-      <ActionBanner title={'New\nCharacter'} art={active.art.create} onClick={props.onCreate} />
+      <ActionBanner
+        title={'New\nCharacter'}
+        art={active.art.create}
+        onClick={props.onCreate}
+        disabled={!props.createGate.enabled}
+        disabledHint={props.createGate.disabledHint}
+      />
       <ActionBanner title={'Load\nCharacter'} art={active.art.load} onClick={props.onLoad} />
       <ActionBanner
         title={'Campaign\nManager'}
@@ -284,104 +306,65 @@ export function LandingScreen(props: {
       <ActionBanner title={'DM\nToolkit'} art={DM_TOOLKIT_ART} onClick={props.onDmToolkit} />
 
       <div style={{ alignSelf: 'center', display: 'flex', flexWrap: 'wrap', gap: '1.25rem', justifyContent: 'center' }}>
-        <button
-          type="button"
-          onClick={props.onBrowseEquipment}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'var(--color-text-muted)',
-            cursor: 'pointer',
-            fontSize: '0.85rem',
-            textDecoration: 'underline',
-          }}
-        >
-          Browse Equipment Catalog
-        </button>
-        <button
-          type="button"
-          onClick={props.onBrowseSpells}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'var(--color-text-muted)',
-            cursor: 'pointer',
-            fontSize: '0.85rem',
-            textDecoration: 'underline',
-          }}
-        >
-          Browse Spell Catalog
-        </button>
-        <button
-          type="button"
-          onClick={props.onBrowseClasses}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'var(--color-text-muted)',
-            cursor: 'pointer',
-            fontSize: '0.85rem',
-            textDecoration: 'underline',
-          }}
-        >
-          Browse Class Progression
-        </button>
-        <button
-          type="button"
-          onClick={props.onBrowseRaces}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'var(--color-text-muted)',
-            cursor: 'pointer',
-            fontSize: '0.85rem',
-            textDecoration: 'underline',
-          }}
-        >
-          Browse Race Traits
-        </button>
-        <button
-          type="button"
-          onClick={props.onBrowseMonsters}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'var(--color-text-muted)',
-            cursor: 'pointer',
-            fontSize: '0.85rem',
-            textDecoration: 'underline',
-          }}
-        >
-          Browse Monster Catalog
-        </button>
-        <button
-          type="button"
-          onClick={props.onBrowseCompanions}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'var(--color-text-muted)',
-            cursor: 'pointer',
-            fontSize: '0.85rem',
-            textDecoration: 'underline',
-          }}
-        >
-          Browse Companion Catalog
-        </button>
-        <button
-          type="button"
-          onClick={props.onBrowseIntelligentItems}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'var(--color-text-muted)',
-            cursor: 'pointer',
-            fontSize: '0.85rem',
-            textDecoration: 'underline',
-          }}
-        >
-          Browse Intelligent Item Components
-        </button>
+        {props.selectedRuleSet === 'starfinder-1e' ? (
+          STARFINDER_CATALOG_TABS.map((tab) => (
+            <button key={tab.kind} type="button" onClick={() => props.onBrowseStarfinder(tab.kind)} style={BROWSE_LINK}>
+              {tab.link}
+            </button>
+          ))
+        ) : (
+          <>
+            <button
+              type="button"
+              onClick={props.onBrowseEquipment}
+              style={BROWSE_LINK}
+            >
+              Browse Equipment Catalog
+            </button>
+            <button
+              type="button"
+              onClick={props.onBrowseSpells}
+              style={BROWSE_LINK}
+            >
+              Browse Spell Catalog
+            </button>
+            <button
+              type="button"
+              onClick={props.onBrowseClasses}
+              style={BROWSE_LINK}
+            >
+              Browse Class Progression
+            </button>
+            <button
+              type="button"
+              onClick={props.onBrowseRaces}
+              style={BROWSE_LINK}
+            >
+              Browse Race Traits
+            </button>
+            <button
+              type="button"
+              onClick={props.onBrowseMonsters}
+              style={BROWSE_LINK}
+            >
+              Browse Monster Catalog
+            </button>
+            <button
+              type="button"
+              onClick={props.onBrowseCompanions}
+              style={BROWSE_LINK}
+            >
+              Browse Companion Catalog
+            </button>
+            <button
+              type="button"
+              onClick={props.onBrowseIntelligentItems}
+              style={BROWSE_LINK}
+            >
+              Browse Intelligent Item Components
+            </button>
+          </>
+        )}
         <button
           type="button"
           onClick={props.onCorpusIngestDiagnostic}

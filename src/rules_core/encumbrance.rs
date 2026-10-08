@@ -55,7 +55,7 @@
 //!
 //! Capacity is scaled by creature size (`SIZEMULT:`). This module does not
 //! decide what size a character is -- `rules_core::size` owns the size
-//! type and `rules_tables::crb::race_tables::race_size` owns the
+//! type and `rules_catalog::crb::race_tables::race_size` owns the
 //! race-to-size fact, read from each race record's own
 //! `FACT:BaseSize|<code>` token. Callers pass a `SizeCategory` in.
 
@@ -354,7 +354,7 @@ pub struct EncumbranceComputation {
 /// This closes the "capacity is computed at Medium size" limitation this
 /// function's doc comment used to carry. Creature size now has a real
 /// owner (`rules_core::size::SizeCategory`, with the race mapping in
-/// `rules_tables::crb::race_tables::race_size`), so this module consumes a
+/// `rules_catalog::crb::race_tables::race_size`), so this module consumes a
 /// size rather than assuming one -- which was the specific reason the
 /// original implementation stopped short of fixing it.
 ///
@@ -417,6 +417,163 @@ pub fn compute_encumbrance(
         unresolved_item_ids,
         load_max_dex_cap: level.max_dex_cap(),
         load_armor_check_penalty: level.armor_check_penalty(),
+    }
+}
+
+// ---- Starfinder 1e: bulk, not pounds ---------------------------------------------------------
+//
+// SD-37 E4.5. Starfinder measures what a character carries in **bulk**, and its limits are a
+// fraction of the Strength score itself (SRD Carrying Capacity,
+// <https://www.aonsrd.com/Equipment.aspx>). The oracle's Starfinder game mode states the same
+// rule in `load.lst`'s own shape: `LOAD:<Str>|<Str>` (the load value IS the score),
+// `ENCUMBRANCE:Unencumbered|1/2`, `ENCUMBRANCE:Encumbered|1`. So the Pathfinder half above
+// (pounds, `load.lst` heavy column, size multipliers) does not apply, and this half carries no
+// size scaling: the Starfinder rule names none.
+
+/// One item's bulk as its record states it: a number, `L` (light) or a dash (negligible).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ItemBulk {
+    Negligible,
+    Light,
+    Units(i64),
+}
+
+impl ItemBulk {
+    /// The record's bulk text (`"3"`, `"L"`, `"-"`, `"—"`). Any other text (`"Varies"`) is
+    /// `None`: a bulk this rule cannot add, never a guessed 0.
+    pub fn parse(text: &str) -> Option<ItemBulk> {
+        match text.trim() {
+            "L" | "l" => Some(ItemBulk::Light),
+            "-" | "\u{2014}" | "\u{2013}" => Some(ItemBulk::Negligible),
+            t => t.parse::<i64>().ok().filter(|n| *n >= 0).map(ItemBulk::Units),
+        }
+    }
+}
+
+/// Total bulk of `(bulk, quantity)` pairs: numeric bulk adds; "every 10 items that have light
+/// bulk count as 1 bulk, and fractions don't count"; negligible items add nothing (SRD Item
+/// Bulk). Returns `(numeric sum, light-item count)`, so a sheet can print both terms; the total
+/// is `numeric + light / 10`.
+pub fn bulk_terms(items: impl IntoIterator<Item = (ItemBulk, u32)>) -> (i64, i64) {
+    let mut numeric = 0;
+    let mut light = 0;
+    for (bulk, quantity) in items {
+        match bulk {
+            ItemBulk::Units(n) => numeric += n * i64::from(quantity),
+            ItemBulk::Light => light += i64::from(quantity),
+            ItemBulk::Negligible => {}
+        }
+    }
+    (numeric, light)
+}
+
+/// Starfinder's two bulk limits for one Strength score (SRD Bulk Limits): up to half the
+/// score (rounded down; bulk is whole) without difficulty, and the score itself as the most a
+/// character can voluntarily carry.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct BulkLimits {
+    /// The most bulk carried without the encumbered condition: half the Strength score.
+    pub unencumbered_max: i64,
+    /// The most bulk carried without the overburdened condition: the Strength score.
+    pub overburdened_above: i64,
+}
+
+pub fn bulk_limits(strength_score: i64) -> BulkLimits {
+    let strength = strength_score.max(0);
+    BulkLimits { unencumbered_max: strength / 2, overburdened_above: strength }
+}
+
+/// The condition a bulk total gives (SRD Bulk Limits, Encumbered, Overburdened).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum BulkCondition {
+    Unencumbered,
+    Encumbered,
+    Overburdened,
+}
+
+impl BulkCondition {
+    pub fn of(bulk: i64, limits: BulkLimits) -> BulkCondition {
+        if bulk <= limits.unencumbered_max {
+            BulkCondition::Unencumbered
+        } else if bulk <= limits.overburdened_above {
+            BulkCondition::Encumbered
+        } else {
+            BulkCondition::Overburdened
+        }
+    }
+
+    /// The maximum Dexterity bonus to AC the condition allows (encumbered +2, overburdened +0),
+    /// `None` when unencumbered. As with Pathfinder's [`EncumbranceLevel::max_dex_cap`], a
+    /// caller combining it with worn armour's max Dex takes the lower.
+    pub fn max_dex_cap(self) -> Option<i64> {
+        match self {
+            BulkCondition::Unencumbered => None,
+            BulkCondition::Encumbered => Some(2),
+            BulkCondition::Overburdened => Some(0),
+        }
+    }
+
+    /// The penalty to Strength- and Dexterity-based checks (−5 encumbered or overburdened). The
+    /// SRD: "If you are wearing armor, use the worse penalty (from armor or bulk) … The
+    /// penalties do not stack" -- combining is the caller's job, as in Pathfinder.
+    pub fn check_penalty(self) -> i64 {
+        match self {
+            BulkCondition::Unencumbered => 0,
+            BulkCondition::Encumbered | BulkCondition::Overburdened => -5,
+        }
+    }
+
+    /// The condition's speed effect, printed (a speed is not a sheet total).
+    pub fn speed_text(self) -> Option<&'static str> {
+        match self {
+            BulkCondition::Unencumbered => None,
+            BulkCondition::Encumbered => Some("each movement speed reduced by 10 feet"),
+            BulkCondition::Overburdened => Some("each movement speed reduced to 5 feet"),
+        }
+    }
+}
+
+#[cfg(test)]
+mod starfinder_bulk_tests {
+    use super::*;
+
+    #[test]
+    fn item_bulk_reads_a_number_light_and_a_dash() {
+        assert_eq!(ItemBulk::parse("3"), Some(ItemBulk::Units(3)));
+        assert_eq!(ItemBulk::parse(" L "), Some(ItemBulk::Light));
+        assert_eq!(ItemBulk::parse("-"), Some(ItemBulk::Negligible));
+        assert_eq!(ItemBulk::parse("\u{2014}"), Some(ItemBulk::Negligible));
+        assert_eq!(ItemBulk::parse("Varies"), None);
+        assert_eq!(ItemBulk::parse("4,500"), None);
+        assert_eq!(ItemBulk::parse("-1"), None);
+    }
+
+    /// The SRD's own example: 10 light items are 1 bulk, and so are 19.
+    #[test]
+    fn ten_light_items_are_one_bulk_and_fractions_do_not_count() {
+        let total = |items: Vec<(ItemBulk, u32)>| {
+            let (n, l) = bulk_terms(items);
+            n + l / 10
+        };
+        assert_eq!(total(vec![(ItemBulk::Light, 10)]), 1);
+        assert_eq!(total(vec![(ItemBulk::Light, 19)]), 1);
+        assert_eq!(total(vec![(ItemBulk::Light, 9)]), 0);
+        assert_eq!(total(vec![(ItemBulk::Units(2), 2), (ItemBulk::Light, 20), (ItemBulk::Negligible, 50)]), 6);
+    }
+
+    #[test]
+    fn bulk_limits_are_half_the_strength_score_and_the_score() {
+        assert_eq!(bulk_limits(16), BulkLimits { unencumbered_max: 8, overburdened_above: 16 });
+        assert_eq!(bulk_limits(15), BulkLimits { unencumbered_max: 7, overburdened_above: 15 });
+        let l = bulk_limits(10);
+        assert_eq!(BulkCondition::of(5, l), BulkCondition::Unencumbered);
+        assert_eq!(BulkCondition::of(6, l), BulkCondition::Encumbered);
+        assert_eq!(BulkCondition::of(10, l), BulkCondition::Encumbered);
+        assert_eq!(BulkCondition::of(11, l), BulkCondition::Overburdened);
+        assert_eq!(BulkCondition::Encumbered.max_dex_cap(), Some(2));
+        assert_eq!(BulkCondition::Overburdened.max_dex_cap(), Some(0));
+        assert_eq!(BulkCondition::Unencumbered.check_penalty(), 0);
+        assert_eq!(BulkCondition::Encumbered.check_penalty(), -5);
     }
 }
 

@@ -41,6 +41,7 @@
 //! Run with `cargo run --locked --bin repair_spell_citations`.
 //! `PCGEN_CORPUS_ROOT` overrides the default `$HOME/workspace/repos/pcgen/data`.
 
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -52,13 +53,13 @@ use std::collections::{BTreeMap, BTreeSet};
 
 /// Same five books `enrich_spell_raw_tokens.rs` targets — the only books
 /// whose spell citations can affect a `done`-reachable unit at all.
-const TARGET_BOOKS: &[&str] = &[
+const TARGET_BOOKS: BookRegistry<&str> = BookRegistry::pathfinder_only(&[
     "core_rulebook",
     "advanced_players_guide",
     "advanced_class_guide",
     "advanced_race_guide",
     "ultimate_intrigue",
-];
+]);
 
 fn pcgen_data_root() -> PathBuf {
     if let Ok(v) = env::var("PCGEN_CORPUS_ROOT") {
@@ -245,7 +246,7 @@ fn main() {
     let mut misses: Vec<String> = Vec::new();
     let mut mod_index_cache: BTreeMap<String, BTreeMap<String, Vec<String>>> = BTreeMap::new();
 
-    for book in TARGET_BOOKS {
+    for book in TARGET_BOOKS.books(GameSystem::Pathfinder1e) {
         let book_dir = corpus_root.join(book);
         if !book_dir.is_dir() {
             continue;

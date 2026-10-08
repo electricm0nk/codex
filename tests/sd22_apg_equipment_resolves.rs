@@ -6,20 +6,20 @@
 //! bootstrap/representative sample of real, verbatim `COST:`/`WT:`
 //! records from `apg_equip_general.lst`, `apg_equip_arms_armor.lst`, and
 //! `apg_equip_magic_items.lst` — one item per file, mirroring
-//! `rules_tables::crb::equipment_tables`'s own "one representative item
+//! `rules_catalog::crb::equipment_tables`'s own "one representative item
 //! per category" bootstrap philosophy. Not exhaustive coverage.
 //!
 //! Note: Alchemist bombs are a `Su` class feature computed by formula
 //! (bomb count/damage scale with class level), not a purchasable
 //! equipment-table row — no `Bomb` record exists in any
-//! `apg_equip_*.lst` file. `rules_tables::apg::equipment_tables`'s doc
+//! `apg_equip_*.lst` file. `rules_catalog::apg::equipment_tables`'s doc
 //! comment records this so a future reader doesn't go looking for one.
 
 use std::fs;
 use std::path::PathBuf;
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::apg::equipment_tables::{EquipmentCategory, equipment_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::apg::equipment_tables::{EquipmentCategory, equipment_resolve};
 
 #[test]
 fn iron_spike_resolves_via_ruleset_apg() {

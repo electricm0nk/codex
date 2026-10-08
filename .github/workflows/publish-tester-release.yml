@@ -108,6 +108,9 @@ jobs:
       # (package.json, tauri.conf.json, src-tauri/Cargo.toml + Cargo.lock)
       # moved to 0.16.0 in the same commit, keeping this stamp in lockstep.
       #
+      # tranche/17: 0.16 -> 0.17 for the SD-37 bundle cut; the repo version
+      # files moved to 0.17.0 at the cut.
+      #
       # Only the tranche prefix is written here. The build number is always
       # ${GITHUB_RUN_NUMBER} — never hardcode one.
       - name: Stamp build version
@@ -115,7 +118,7 @@ jobs:
         working-directory: apps/desktop
         run: |
           set -euo pipefail
-          VERSION="0.16.${GITHUB_RUN_NUMBER}"
+          VERSION="0.17.${GITHUB_RUN_NUMBER}"
           node - "$VERSION" <<'EOF'
           const fs = require('fs');
           const version = process.argv[2];

@@ -11,7 +11,7 @@
 //! and siblings). **The Advanced Race Guide was ingested later and never got the
 //! same treatment**, so all 92 ARG spells had no per-class level anywhere in the
 //! repo. This binary emits that missing table:
-//! `rules_tables::advanced_race_guide::class_spell_levels`.
+//! `rules_catalog::advanced_race_guide::class_spell_levels`.
 //!
 //! **It also verifies itself against the three books that already have tables.**
 //! `--verify` re-parses `cr_spells.lst`, `apg_spells.lst` and `acg_spells.lst`
@@ -22,8 +22,9 @@
 //!
 //! Run with `cargo run --bin ingest_class_spell_levels_arg -- [--verify] [--emit]`.
 //! `PCGEN_CORPUS_ROOT` overrides the default `$HOME/workspace/repos/pcgen/data`.
-//! `--emit` rewrites
-//! `src/rules_core/rules_tables/advanced_race_guide/class_spell_levels.rs`;
+//! `--emit` rewrites the `rules_tables` data-package table
+//! `data/rules_tables/advanced_race_guide/class_spell_levels/ARG_CLASS_SPELL_LEVELS.json`
+//! (SD-37 E4a.4a; E4a.4 removed the compiled module it used to write);
 //! without it the binary only reports.
 
 use std::collections::{BTreeMap, BTreeSet};
@@ -225,68 +226,21 @@ fn class_id_for(corpus_name: &str) -> Option<&'static str> {
     })
 }
 
-fn rust_str(value: &str) -> String {
-    format!("\"{}\"", value.replace('\\', "\\\\").replace('"', "\\\""))
-}
+/// The `rules_tables` data-package table this binary writes (`--emit`):
+/// `data/rules_tables/advanced_race_guide/class_spell_levels/ARG_CLASS_SPELL_LEVELS.json`,
+/// the table `rules_catalog::advanced_race_guide::class_spell_levels` reads.
+const TABLE_ID: &str = "advanced_race_guide/class_spell_levels/ARG_CLASS_SPELL_LEVELS";
 
-fn emit_module(by_class: &BTreeMap<String, Vec<(String, u8)>>, record_count: usize) -> String {
-    let mapped: BTreeMap<&'static str, &Vec<(String, u8)>> = by_class
+/// The table's rows: `(class id, [(spell key, that class's spell level)])`,
+/// classes and spell keys both sorted. Corpus class names with no hub class id
+/// are deliberately absent rather than mapped to a plausible neighbour.
+fn table_rows(by_class: &BTreeMap<String, Vec<(String, u8)>>) -> Vec<(&'static str, Vec<(String, u8)>)> {
+    by_class
         .iter()
-        .filter_map(|(name, entries)| class_id_for(name).map(|id| (id, entries)))
-        .collect();
-    let total: usize = mapped.values().map(|e| e.len()).sum();
-
-    let mut out = String::new();
-    out.push_str(&format!(
-        "//! Advanced Race Guide per-class spell levels — the `CLASSES:` token of\n\
-         //! every real ARG spell record, split out per class.\n\
-         //!\n\
-         //! **Generated. Do not hand-edit.** Regenerate with\n\
-         //! `cargo run --bin ingest_class_spell_levels_arg -- --emit`.\n\
-         //!\n\
-         //! **Why this table exists.** `spell_list::SPELL_LIST`'s `level` field is\n\
-         //! the MINIMUM level across every class in the record's `CLASSES:` token,\n\
-         //! not the level for any one class — the same defect\n\
-         //! `crb::wizard_spell_list` was built to remove for the Core Rulebook.\n\
-         //! CRB, APG and ACG each had their per-class levels ingested into the\n\
-         //! twelve `<class>_spell_list.rs` tables; ARG landed later and never did,\n\
-         //! so until this module no ARG spell had a per-class level anywhere, and\n\
-         //! `pilot_compute`'s prepared-spell level gate silently accepted every one\n\
-         //! of them at every caster level.\n\
-         //!\n\
-         //! Source: `{ARG_SPELLS}`, {record_count} spell records (base rows plus\n\
-         //! the file's own `.MOD` class grafts folded into the record they name;\n\
-         //! `.COPY=` variant rows excluded, matching `spell_list.rs`), yielding\n\
-         //! {total} (class, spell, level) rows across {classes} classes. The\n\
-         //! generator that produced this file reproduces all twelve shipped\n\
-         //! CRB/APG/ACG per-class tables exactly from the same corpus token\n\
-         //! (`--verify`), which is what makes its ARG output trustworthy.\n\
-         //!\n\
-         //! Corpus class names with no hub class id are deliberately absent rather\n\
-         //! than mapped to a plausible neighbour.\n\n",
-        classes = mapped.len(),
-    ));
-    out.push_str(
-        "/// `(class id, &[(spell key, that class's spell level)])`, classes and\n\
-         /// spell keys both sorted. Chained by `rules_tables::class_spell_levels`.\n\
-         ///\n\
-         /// The `allow` is for `src/bin/gen_book_cache.rs`, which still\n\
-         /// `#[path]`-includes this book's `mod.rs` a second time into its own\n\
-         /// crate. That include is stale — the module has since been registered\n\
-         /// in `rules_tables/mod.rs` — and nothing in that binary consumes this\n\
-         /// table, so the duplicate compilation reports it dead.\n\
-         #[allow(dead_code)]\n\
-         pub const ARG_CLASS_SPELL_LEVELS: &[(&str, &[(&str, u8)])] = &[\n",
-    );
-    for (class_id, entries) in &mapped {
-        out.push_str(&format!("    ({}, &[\n", rust_str(class_id)));
-        for (key, level) in entries.iter() {
-            out.push_str(&format!("        ({}, {level}),\n", rust_str(key)));
-        }
-        out.push_str("    ]),\n");
-    }
-    out.push_str("];\n");
-    out
+        .filter_map(|(name, entries)| class_id_for(name).map(|id| (id, entries.clone())))
+        .collect::<BTreeMap<&'static str, Vec<(String, u8)>>>()
+        .into_iter()
+        .collect()
 }
 
 /// One `--verify` row: `(label, corpus class name, the shipped table)`.
@@ -360,7 +314,7 @@ fn main() {
     // Scanned across all four files together, because a record defined in
     // one book can be granted to a class by a `.MOD` row in another.
     {
-        use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb};
+        use codex::rules_core::rules_catalog::{acg, advanced_race_guide, apg, crb};
 
         let mut mapped: BTreeSet<String> = BTreeSet::new();
         for rel in [CRB_SPELLS, APG_SPELLS, ACG_SPELLS, ARG_SPELLS] {
@@ -394,7 +348,7 @@ fn main() {
     }
 
     if do_verify {
-        use codex::rules_core::rules_tables::{acg, apg, crb};
+        use codex::rules_core::rules_catalog::{acg, apg, crb};
 
         let mut three_books: Vec<SpellClasses> = Vec::new();
         for rel in [CRB_SPELLS, APG_SPELLS, ACG_SPELLS] {
@@ -406,18 +360,18 @@ fn main() {
             three_books.len()
         );
         let checks: Vec<ShippedTableCheck> = vec![
-            ("crb::wizard", "Wizard", crb::wizard_spell_list::WIZARD_SPELL_LIST),
-            ("crb::sorcerer", "Sorcerer", crb::sorcerer_spell_list::SORCERER_SPELL_LIST),
-            ("crb::bard", "Bard", crb::bard_spell_list::BARD_SPELL_LIST),
-            ("crb::cleric", "Cleric", crb::cleric_spell_list::CLERIC_SPELL_LIST),
-            ("crb::druid", "Druid", crb::druid_spell_list::DRUID_SPELL_LIST),
-            ("crb::paladin", "Paladin", crb::paladin_spell_list::PALADIN_SPELL_LIST),
-            ("crb::ranger", "Ranger", crb::ranger_spell_list::RANGER_SPELL_LIST),
-            ("apg::alchemist", "Alchemist", apg::alchemist_spell_list::ALCHEMIST_SPELL_LIST),
-            ("apg::inquisitor", "Inquisitor", apg::inquisitor_spell_list::INQUISITOR_SPELL_LIST),
-            ("apg::witch", "Witch", apg::witch_spell_list::WITCH_SPELL_LIST),
-            ("acg::bloodrager", "Bloodrager", acg::bloodrager_spell_list::BLOODRAGER_SPELL_LIST),
-            ("acg::shaman", "Shaman", acg::shaman_spell_list::SHAMAN_SPELL_LIST),
+            ("crb::wizard", "Wizard", &crb::wizard_spell_list::WIZARD_SPELL_LIST),
+            ("crb::sorcerer", "Sorcerer", &crb::sorcerer_spell_list::SORCERER_SPELL_LIST),
+            ("crb::bard", "Bard", &crb::bard_spell_list::BARD_SPELL_LIST),
+            ("crb::cleric", "Cleric", &crb::cleric_spell_list::CLERIC_SPELL_LIST),
+            ("crb::druid", "Druid", &crb::druid_spell_list::DRUID_SPELL_LIST),
+            ("crb::paladin", "Paladin", &crb::paladin_spell_list::PALADIN_SPELL_LIST),
+            ("crb::ranger", "Ranger", &crb::ranger_spell_list::RANGER_SPELL_LIST),
+            ("apg::alchemist", "Alchemist", &apg::alchemist_spell_list::ALCHEMIST_SPELL_LIST),
+            ("apg::inquisitor", "Inquisitor", &apg::inquisitor_spell_list::INQUISITOR_SPELL_LIST),
+            ("apg::witch", "Witch", &apg::witch_spell_list::WITCH_SPELL_LIST),
+            ("acg::bloodrager", "Bloodrager", &acg::bloodrager_spell_list::BLOODRAGER_SPELL_LIST),
+            ("acg::shaman", "Shaman", &acg::shaman_spell_list::SHAMAN_SPELL_LIST),
         ];
         let mut all_match = true;
         for (label, corpus_class, shipped) in checks {
@@ -430,10 +384,18 @@ fn main() {
     }
 
     if do_emit {
-        let module = emit_module(&arg_by_class, arg_records.len());
-        let out = codex_ingest::repo_root()
-            .join("src/rules_core/rules_tables/advanced_race_guide/class_spell_levels.rs");
-        fs::write(&out, module).expect("failed to write the generated module");
-        println!("\nwrote {out:?}");
+        let rows = table_rows(&arg_by_class);
+        let total: usize = rows.iter().map(|(_, entries)| entries.len()).sum();
+        let out = codex_ingest::rules_package_out::write_table(
+            &codex_ingest::rules_package_out::package_dir(),
+            TABLE_ID,
+            &rows,
+        )
+        .unwrap_or_else(|e| panic!("failed to write the package table: {e}"));
+        println!(
+            "\nwrote {out:?}: {total} (class, spell, level) rows across {} classes from {} ARG spell records",
+            rows.len(),
+            arg_records.len()
+        );
     }
 }

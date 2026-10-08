@@ -1,0 +1,845 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_magic/companion_data/COMPANION_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_magic",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Blue-Ringed Octopus ~ Ink Cloud",
+      "name": "Ink Cloud",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "While within water, an octopus can emit a 5-foot-radius sphere of ink once per minute as a swift action. This ink provides total concealment and persists for 1 minute.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.117",
+      "owners": [
+        "Familiar (Blue-Ringed Octopus)",
+        "Blue-Ringed Octopus"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_um",
+      "source_line": 10
+    },
+    {
+      "key": "Blue-Ringed Octopus ~ Jet",
+      "name": "Jet",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "The octopus can jet 60 feet in a straight line as a full-round action.  This does not provoke attacks of opportunity.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.117",
+      "owners": [
+        "Familiar (Blue-Ringed Octopus)",
+        "Blue-Ringed Octopus"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_um",
+      "source_line": 11
+    },
+    {
+      "key": "Blue-Ringed Octopus ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "Bite - injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1 Str; cure 1 save.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.117",
+      "owners": [
+        "Familiar (Blue-Ringed Octopus)",
+        "Blue-Ringed Octopus"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_um",
+      "source_line": 12
+    },
+    {
+      "key": "Hedgehog ~ Spiny Defense",
+      "name": "Spiny Defense",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "As a move action, a hedgehog can roll itself up into a spiny ball. While rolled up, it gains a +1 enhancement bonus to its existing natural armor, and any creature attempting to grapple the hedgehog takes 1d3 damage on making a grapple check. While rolled up, a hedgehog cannot take any action other than leaving this state. The hedgehog can leave this state as a move action.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.119",
+      "owners": [
+        "Familiar (Hedgehog)",
+        "Hedgehog"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_um",
+      "source_line": 20
+    },
+    {
+      "key": "Companion ~ Susceptible to Salt",
+      "name": "Susceptible to Salt",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "Weakness"
+      ],
+      "description": "A handful of salt burns as if it were a flask of acid, causing 1d6 points of damage per use.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.187",
+      "owners": [
+        "Companion (Leech (Giant))",
+        "Companion (Slug (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 21
+    },
+    {
+      "key": "Giant Ant Companion ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "Frequency 1 round [4], effect 1 Str damage, cure 1 save, DC %1",
+      "description_variables": [
+        "GiantAntCompanionPoisonDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.36",
+      "owners": [
+        "Companion (Ant (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 22
+    },
+    {
+      "key": "House Centipede ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "Bite - injury; save Fort DC %1; frequency 1/round for 2 rounds; effect daze 1 round; cure 1 save.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.119",
+      "owners": [
+        "House Centipede"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_um",
+      "source_line": 24
+    },
+    {
+      "key": "Giant Centipede Vermin Companion ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "Frequency 1 round [6], effect 1 Dex damage, cure 1 save, DC %1",
+      "description_variables": [
+        "GiantCentipedeCompanionPoisonDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.36",
+      "owners": [
+        "Companion (Centipede (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 25
+    },
+    {
+      "key": "Giant Crab Companion ~ Water Dependency",
+      "name": "Water Dependency",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "Weakness"
+      ],
+      "description": "Survive out of water for %1 hours, after which it begins to suffocate as if it were drowning.",
+      "description_variables": [
+        "CON"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.36",
+      "owners": [
+        "Companion (Crab (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 26
+    },
+    {
+      "key": "Giant Leech Companion ~ Blood Drain",
+      "name": "Blood Drain",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "A giant leech drains blood at the end of each turn it is attached",
+      "description_variables": [],
+      "description_variants": [
+        {
+          "text": "A giant leech drains blood at the end of each turn it is attached",
+          "variables": [],
+          "conditions": []
+        },
+        {
+          "text": " inflicting 1 point of Strength damage.",
+          "variables": [],
+          "conditions": [
+            {
+              "negated": true,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "Special Ability"
+                },
+                {
+                  "facet": null,
+                  "value": "Companion Advancement (Leech (Giant))"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "text": " inflicting 1 point of Strength  and Constitution damage.",
+          "variables": [],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "Special Ability"
+                },
+                {
+                  "facet": null,
+                  "value": "Companion Advancement (Leech (Giant))"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "stat_adjustments": [],
+      "source_page": "p.36",
+      "owners": [
+        "Companion (Leech (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 28
+    },
+    {
+      "key": "King Crab ~ Water Dependency",
+      "name": "Water Dependency",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Weakness",
+        "Extraordinary"
+      ],
+      "description": "This crab can survive out of the water for %1 hours.  Beyond this limit, a crab runs the risk of suffocation, as if it were drowning.",
+      "description_variables": [
+        "CONSCORE"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.119",
+      "owners": [
+        "King Crab"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_um",
+      "source_line": 28
+    },
+    {
+      "key": "Giant Mantis Companion ~ Lunge",
+      "name": "Lunge",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "A giant mantis's limbs are capable of reaching much farther than normal for a creature of its size. As a full-attack action, it can make a single attack with its claws at double its normal reach. When a giant mantis attacks with a claw in this manner, it gains a +4 bonus on its attack roll. A giant mantis cannot make attacks of opportunity with its lunge.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.200",
+      "owners": [
+        "Companion (Mantis (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 30
+    },
+    {
+      "key": "Giant Mantis Companion ~ Mandibles",
+      "name": "Mandibles",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "1d6 secondary attack against grabbed target",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.37",
+      "owners": [
+        "Companion (Mantis (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 31
+    },
+    {
+      "key": "Giant Mantis Companion ~ Sudden Strike",
+      "name": "Sudden Strike",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "May take a full attack in the surprise round",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.37",
+      "owners": [
+        "Companion (Mantis (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 32
+    },
+    {
+      "key": "Scarlet Spider ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "Bite - injury; save Fort DC %1; frequency 1/round for 4 rounds; effect 1 Str; cure 1 save.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.120",
+      "owners": [
+        "Scarlet Spider"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_um",
+      "source_line": 32
+    },
+    {
+      "key": "Giant Scorpion Companion ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "Frequency 1 round [6]",
+      "description_variables": [],
+      "description_variants": [
+        {
+          "text": "Frequency 1 round [6]",
+          "variables": [],
+          "conditions": []
+        },
+        {
+          "text": " effect 1 Str damage, cure 1 save, DC %1",
+          "variables": [
+            "GiantScorpionCompanionPoisonDC"
+          ],
+          "conditions": [
+            {
+              "negated": true,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "Special Ability"
+                },
+                {
+                  "facet": null,
+                  "value": "Companion Advancement (Scorpion (Giant))"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "text": " effect 1d2 Str damage, cure 1 save, DC %1",
+          "variables": [
+            "GiantScorpionCompanionPoisonDC"
+          ],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "Special Ability"
+                },
+                {
+                  "facet": null,
+                  "value": "Companion Advancement (Scorpion (Giant))"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "stat_adjustments": [],
+      "source_page": "p.37",
+      "owners": [
+        "Companion (Scorpion (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 33
+    },
+    {
+      "key": "Giant Slug Companion ~ Acid",
+      "name": "Acid",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [
+        {
+          "text": "A giant slug tongue attack does an extra 1 point of acid damage.",
+          "variables": [],
+          "conditions": [
+            {
+              "negated": true,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "Special Ability"
+                },
+                {
+                  "facet": null,
+                  "value": "Companion Advancement (Slug (Giant))"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "text": "A giant slug tongue attack does an extra 1d2 points of acid damage.",
+          "variables": [],
+          "conditions": [
+            {
+              "negated": false,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "Special Ability"
+                },
+                {
+                  "facet": null,
+                  "value": "Companion Advancement (Slug (Giant))"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "stat_adjustments": [],
+      "source_page": "p.37",
+      "owners": [
+        "Companion (Slug (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 35
+    },
+    {
+      "key": "Giant Slug Companion ~ Spit Acid",
+      "name": "Spit Acid",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "A giant slug can spit acid at an opponent within 30 feet (no range increment). With a successful ranged touch attack, the target takes 1d%1 points of acid damage (no save).",
+      "description_variables": [
+        "SpitAcidDamageDieSize"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.37",
+      "owners": [
+        "Companion (Slug (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 36
+    },
+    {
+      "key": "Turtle ~ Shell Retreat",
+      "name": "Shell Retreat",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "A turtle can retreat within its shell as a swift action, gaining a +2 enhancement bonus to its existing natural armor. While in its shell, a turtle cannot take any action except to end the retreat. The turtle can end its retreat with a free action on its turn.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.120",
+      "owners": [
+        "Familiar (Turtle)",
+        "Turtle"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_um",
+      "source_line": 36
+    },
+    {
+      "key": "Giant Wasp Companion ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "Frequency 1 round [6], effect 1 Dex damage, cure 1 save, DC %1",
+      "description_variables": [
+        "GiantWaspCompanionPoisonDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.37",
+      "owners": [
+        "Companion (Wasp (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 40
+    },
+    {
+      "key": "Companion Advancement ~ Ant (Giant)",
+      "name": "Companion Advancement (Ant (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Ant (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 44
+    },
+    {
+      "key": "Companion Advancement ~ Beetle (Giant)",
+      "name": "Companion Advancement (Beetle (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Beetle (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 45
+    },
+    {
+      "key": "Companion Advancement ~ Centipede (Giant)",
+      "name": "Companion Advancement (Centipede (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Centipede (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 46
+    },
+    {
+      "key": "Companion Advancement ~ Crab (Giant)",
+      "name": "Companion Advancement (Crab (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Crab (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 48
+    },
+    {
+      "key": "Companion Advancement ~ Leech (Giant)",
+      "name": "Companion Advancement (Leech (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Leech (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 50
+    },
+    {
+      "key": "Companion Advancement ~ Mantis (Giant)",
+      "name": "Companion Advancement (Mantis (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Mantis (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 51
+    },
+    {
+      "key": "Companion Advancement ~ Scorpion (Giant)",
+      "name": "Companion Advancement (Scorpion (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Scorpion (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 52
+    },
+    {
+      "key": "Companion Advancement ~ Slug (Giant)",
+      "name": "Companion Advancement (Slug (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -6
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Slug (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 54
+    },
+    {
+      "key": "Companion Advancement ~ Spider (Giant)",
+      "name": "Companion Advancement (Spider (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Spider (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 55
+    },
+    {
+      "key": "Companion Advancement ~ Wasp (Giant)",
+      "name": "Companion Advancement (Wasp (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Wasp (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "um_abilities_companion",
+      "source_line": 56
+    }
+  ]
+}

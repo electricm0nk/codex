@@ -1,0 +1,12 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.35s
+     Running tests/table_generators_write_the_data_package.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/table_generators_write_the_data_package-0f2ef0bf62b8f472)
+
+running 3 tests
+test a_written_table_is_the_canonical_package_file_at_its_id_path_and_loads_as_its_row_type ... ok
+test a_screened_write_refuses_a_product_identity_term_and_writes_nothing ... ok
+test no_generator_writes_into_the_removed_compiled_tables_directory ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+exit=0

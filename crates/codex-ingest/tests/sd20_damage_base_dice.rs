@@ -21,7 +21,7 @@
 use codex_ingest::pcgen_import::ir_converter::convert_equipment_record;
 use codex_ingest::pcgen_import::lst_parser::equipment::{parse_equipment_entries, EquipmentRecord};
 use codex::rules_core::damage_total::{resolve_base_damage_dice, DiceExpression};
-use codex::rules_core::rules_tables::crb::equipment_tables::equipment_tables;
+use codex::rules_core::rules_catalog::crb::equipment_tables::equipment_tables;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
 /// Real verbatim rows copied from `core_rulebook/cr_equip_arms_armor.lst`

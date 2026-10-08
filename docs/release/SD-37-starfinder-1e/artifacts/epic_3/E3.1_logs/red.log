@@ -1,0 +1,52 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 36.41s
+     Running tests/sf_license_registry.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_license_registry-80bc95590e9822cb)
+
+running 7 tests
+test sf_excluded_pccs_are_absent_from_the_registry_and_named_in_the_exclusion_record ... FAILED
+test sf_pathfinder_has_no_pcc_registry_and_is_refused_by_name ... ok
+test sf_registry_agrees_with_the_licence_matrix ... FAILED
+test sf_registry_books_resolve_to_123_in_scope_lst ... FAILED
+test sf_registry_lists_exactly_the_eight_in_scope_books ... FAILED
+test sf_game_mode_loads_ten_lst ... ok
+test sf_all_twelve_pccs_parse_and_every_include_resolves ... ok
+
+failures:
+
+---- sf_excluded_pccs_are_absent_from_the_registry_and_named_in_the_exclusion_record stdout ----
+
+thread 'sf_excluded_pccs_are_absent_from_the_registry_and_named_in_the_exclusion_record' (1290945) panicked at crates/codex-ingest/tests/sf_license_registry.rs:92:5:
+assertion `left == right` failed
+  left: {}
+ right: {"starfinder/lpj_design/infinite_space", "starfinder/paizo/core/_society", "starfinder/paizo/starfinder_society_rules"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- sf_registry_agrees_with_the_licence_matrix stdout ----
+
+thread 'sf_registry_agrees_with_the_licence_matrix' (1290948) panicked at crates/codex-ingest/tests/sf_license_registry.rs:111:5:
+assertion `left == right` failed
+  left: {}
+ right: {"starfinder/paizo/alien_archive", "starfinder/paizo/alien_archive_2", "starfinder/paizo/alien_archive_3", "starfinder/paizo/armory", "starfinder/paizo/character_operations_manual", "starfinder/paizo/core", "starfinder/paizo/near_space", "starfinder/paizo/pact_worlds"}
+
+---- sf_registry_books_resolve_to_123_in_scope_lst stdout ----
+
+thread 'sf_registry_books_resolve_to_123_in_scope_lst' (1290949) panicked at crates/codex-ingest/tests/sf_license_registry.rs:144:76:
+SF include structure: "no book .pcc is registered for game system starfinder-1e (system_books::BOOK_PCCS)"
+
+---- sf_registry_lists_exactly_the_eight_in_scope_books stdout ----
+
+thread 'sf_registry_lists_exactly_the_eight_in_scope_books' (1290950) panicked at crates/codex-ingest/tests/sf_license_registry.rs:80:5:
+assertion `left == right` failed
+  left: {}
+ right: {"starfinder/paizo/alien_archive", "starfinder/paizo/alien_archive_2", "starfinder/paizo/alien_archive_3", "starfinder/paizo/armory", "starfinder/paizo/character_operations_manual", "starfinder/paizo/core", "starfinder/paizo/near_space", "starfinder/paizo/pact_worlds"}
+
+
+failures:
+    sf_excluded_pccs_are_absent_from_the_registry_and_named_in_the_exclusion_record
+    sf_registry_agrees_with_the_licence_matrix
+    sf_registry_books_resolve_to_123_in_scope_lst
+    sf_registry_lists_exactly_the_eight_in_scope_books
+
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_license_registry`

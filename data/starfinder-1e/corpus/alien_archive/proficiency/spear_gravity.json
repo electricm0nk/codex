@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Spear (gravity)",
+    "name": "Spear (gravity)",
+    "type": "P.Weapon.Melee.Weapon Group ~ Basic Melee Weapons.Basic Melee.Uncategorized"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 4,
+    "path": "starfinder/paizo/alien_archive/saa_profs_weapon.lst",
+    "record_key": "Spear (gravity)",
+    "sha256": "5caee6834000e0b9338356a6f64c959da077516114ecd28051d5d76d7ed52bac"
+  },
+  "unit_id": "alien_archive:proficiency:spear_gravity"
+}

@@ -1,0 +1,72 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "book_of_the_damned_volume_1/companion_data/COMPANIONS",
+  "licence": {
+    "license": "OGL",
+    "book": "book_of_the_damned_volume_1",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion (Imp)",
+      "name": "Companion (Imp)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Devil|Lawful|Evil",
+      "monster_class": "Imp Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Sting",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 7
+        },
+        {
+          "ability": "INT",
+          "amount": 3
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.78",
+      "ability_keys": [
+        "Imp Companion ~ Poison"
+      ],
+      "external_ability_refs": [
+        "Detect Good ~ Constant",
+        "Detect Magic ~ Constant",
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "botd1_races_companion",
+      "source_line": 6
+    }
+  ]
+}

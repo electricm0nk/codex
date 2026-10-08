@@ -1,0 +1,31 @@
+core files differing 89 core files only in new 0 only in old 0
+  added_key:AtLeast: 4
+  added_key:Rule: 6
+  added_key:granted_by: 34
+  list_grew:closure_rows: 6
+  list_grew:granted_by: 13
+  list_grew:members: 7
+  list_grew:of: 36
+  list_grew:tags: 1
+  removed_key: 10
+non-additive deltas 20
+   ('/core/ability/technomancer_class_feature_resolve_attunement.json', 'added_key:Rule', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Rule')
+   ('/core/ability/technomancer_class_feature_resolve_attunement.json', 'removed_key', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Fact')
+   ('/core/ability/envoy_class_feature_true_expertise.json', 'added_key:Rule', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Rule')
+   ('/core/ability/envoy_class_feature_true_expertise.json', 'removed_key', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Fact')
+   ('/core/ability/mechanic_class_feature_artificial_intelligence.json', 'removed_key', '[0]/granted_by[0]/when/All[0]/Not/Holds')
+   ('/core/ability/mechanic_class_feature_artificial_intelligence.json', 'added_key:AtLeast', '[0]/granted_by[0]/when/All[0]/Not/AtLeast')
+   ('/core/ability/operative_class_feature_debilitating_trick.json', 'added_key:Rule', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Rule')
+   ('/core/ability/operative_class_feature_debilitating_trick.json', 'removed_key', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Fact')
+   ('/core/ability/operative_class_feature_trick_attack.json', 'added_key:Rule', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Rule')
+   ('/core/ability/operative_class_feature_trick_attack.json', 'removed_key', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Fact')
+   ('/core/ability/operative_class_feature_specialization_skill_mastery.json', 'added_key:Rule', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Rule')
+   ('/core/ability/operative_class_feature_specialization_skill_mastery.json', 'removed_key', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Fact')
+   ('/core/ability/envoy_class_feature_expertise.json', 'removed_key', '[0]/granted_by[0]/when/All[0]/Not/Holds')
+   ('/core/ability/envoy_class_feature_expertise.json', 'added_key:AtLeast', '[0]/granted_by[0]/when/All[0]/Not/AtLeast')
+   ('/core/ability/technomancer_class_feature_cache_capacitor.json', 'removed_key', '[0]/granted_by[1]/when/All[1]/Not/Holds')
+   ('/core/ability/technomancer_class_feature_cache_capacitor.json', 'added_key:AtLeast', '[0]/granted_by[1]/when/All[1]/Not/AtLeast')
+   ('/core/ability/technomancer_class_feature_spell_cache.json', 'added_key:Rule', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Rule')
+   ('/core/ability/technomancer_class_feature_spell_cache.json', 'removed_key', '[0]/granted_by[0]/when/All[0]/Not/Holds/what/Fact')
+   ('/core/ability/envoy_class_feature_skill_expertise.json', 'removed_key', '[0]/granted_by[0]/when/All[0]/Not/Holds')
+   ('/core/ability/envoy_class_feature_skill_expertise.json', 'added_key:AtLeast', '[0]/granted_by[0]/when/All[0]/Not/AtLeast')

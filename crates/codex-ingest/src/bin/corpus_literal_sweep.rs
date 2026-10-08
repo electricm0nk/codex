@@ -38,8 +38,13 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 
+use codex::rules_core::game_system::GameSystem;
+use codex_ingest::pcgen_import::sheet_rule::closure;
+
 const CORPUS_RECORDS_REL: &str = "data/corpus";
-const BOOKS_RELATIVE: &str = "pathfinder/paizo/roleplaying_game";
+/// The Pathfinder 1e book subtree, read from the converter's per-system registry
+/// (`closure::BOOKS_RELATIVE`, SD-37 E1.2) rather than restated here.
+const BOOKS_RELATIVE: &str = closure::BOOKS_RELATIVE.books(GameSystem::Pathfinder1e)[0];
 const LABEL: &str = "corpus-literal-sweep";
 
 fn main() -> ExitCode {

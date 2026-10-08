@@ -7,8 +7,13 @@
 //! implementation (`pf1_adapter.rs`, criterion 3.2). Criterion 3.4's Tauri
 //! command surface still needs a `dyn RuleSystemAdapter` to hand back for a
 //! `rule_system_id` that names a rule system this codebase has not built
-//! yet (e.g. an operator-pinned future Starfinder/5e rollout) rather than
+//! yet (e.g. an operator-pinned future 5e rollout) rather than
 //! panicking or refusing to compile a code path for that id at all.
+//! Starfinder 1e is no longer one of them: since SD-37 E4.6 the id
+//! `"starfinder-1e"` resolves to `StarfinderAdapter` (`sf_adapter.rs`), and
+//! the `"starfinder"` the tests below construct a `StubAdapter` with names no
+//! system (`rule_system_adapter::resolve_rule_system_adapter` matches ids
+//! exactly).
 //! `StubAdapter` is that placeholder: constructed with the caller-chosen
 //! system id, every method honestly reports "not yet implemented" for that
 //! id instead of fabricating a result.

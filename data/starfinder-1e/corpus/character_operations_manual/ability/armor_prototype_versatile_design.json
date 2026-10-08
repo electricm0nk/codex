@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Armor Prototype ~ Versatile Design",
+    "name": "Versatile Design",
+    "type": "Class Feature.Mechanic Class Feature.Experimental Armor.Extraordinary"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 356,
+    "path": "starfinder/paizo/character_operations_manual/scom_abilities_class.lst",
+    "record_key": "Armor Prototype ~ Versatile Design",
+    "sha256": "8b2b5d75240ea056952e4f05a02c832cfffd733e3f671c352c993fe7c3845fac"
+  },
+  "unit_id": "character_operations_manual:ability:armor_prototype_versatile_design"
+}

@@ -5,7 +5,7 @@
 //!
 //! # Why these moved, and why they were not deleted
 //!
-//! `rules_tables::feats_all::FeatCatalogRecord` and the five book-local feat
+//! `rules_catalog::feats_all::FeatCatalogRecord` and the five book-local feat
 //! entry types (`ultimate_combat`, `ultimate_magic`, `ultimate_psionics`,
 //! `ultimate_wilderness`, `ultimate_intrigue`) each carried a
 //! `prerequisites: Option<&'static [&'static str]>` field holding every
@@ -35,7 +35,7 @@
 //!
 //! * the gap half **regenerates byte-identically off the pinned corpus** —
 //!   `cargo run --bin gen_feat_gap_tables` writes
-//!   `feat_gap_prereq_tokens.rs` and `rules_tables::feat_gap_tables.rs` in
+//!   `feat_gap_prereq_tokens.rs` and `rules_catalog::feat_gap_tables.rs` in
 //!   one pass, and all 601 relocated rows came back unchanged;
 //! * `tests/sd27_feat_prerequisite_enforcement.rs::
 //!   the_gathered_arg_and_pu_prerequisites_match_the_live_corpus` re-derives
@@ -69,7 +69,7 @@
 use std::collections::HashMap;
 use std::sync::OnceLock;
 
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::RuleSetId;
 
 /// One relocated record's tokens: `(rule_set, index in that book's table,
 /// the record's `key`, the tokens in corpus source order)`.
@@ -1619,7 +1619,7 @@ pub fn joined_catalog_tokens(
     joined_index: usize,
     key: &str,
 ) -> Option<&'static [&'static str]> {
-    use codex::rules_core::rules_tables::feats_all::hand_authored_feat_tables;
+    use codex::rules_core::rules_catalog::feats_all::hand_authored_feat_tables;
     let hand_len = hand_authored_feat_tables()
         .iter()
         .find(|book| book.rule_set == rule_set)
@@ -1665,8 +1665,8 @@ pub const JOINED_ROW_COUNT: usize = 2030;
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::rules_core::rules_tables::feat_gap_tables::feat_gap_rows_for;
-    use codex::rules_core::rules_tables::feats_all::hand_authored_feat_tables;
+    use codex::rules_core::rules_catalog::feat_gap_tables::feat_gap_rows_for;
+    use codex::rules_core::rules_catalog::feats_all::hand_authored_feat_tables;
 
     /// The pairing gate. Every relocated row must still name the record it
     /// was taken from, and every index must still be in range — this is what
@@ -1731,9 +1731,9 @@ mod tests {
     /// no prerequisites" when the truth is "nobody looked".
     #[test]
     fn every_backfilled_book_key_was_checked() {
-        use codex::rules_core::rules_tables::advanced_race_guide::feats as arg_feats;
-        use codex::rules_core::rules_tables::pathfinder_unchained::feat_tables as pu_feats;
-        use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feats;
+        use codex::rules_core::rules_catalog::advanced_race_guide::feats as arg_feats;
+        use codex::rules_core::rules_catalog::pathfinder_unchained::feat_tables as pu_feats;
+        use codex::rules_core::rules_catalog::ultimate_campaign::feat_tables as uca_feats;
 
         let accounted = |rule_set: RuleSetId, key: &str| {
             HAND_AUTHORED_FEAT_PREREQ_TOKENS.iter().any(|row| row.0 == rule_set && row.2 == key)
@@ -1834,7 +1834,7 @@ mod tests {
     /// name clash could never carry.
     #[test]
     fn every_mythic_collision_names_the_base_feat_it_upgrades() {
-        use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+        use codex::rules_core::rules_catalog::feats_all::all_feat_tables;
 
         let mythic_keys: Vec<&'static str> = FEAT_GAP_PREREQ_TOKENS
             .iter()

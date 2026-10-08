@@ -13,8 +13,8 @@
 //! pattern.
 //!
 //! RED -> GREEN evidence (recorded in this cycle's receipt): before
-//! `rules_tables::{crb,apg,acg}::equipment_tables::field_coverage_report`
-//! and `rules_tables::{crb,apg,acg}::spell_list::spell_coverage_report`
+//! `rules_catalog::{crb,apg,acg}::equipment_tables::field_coverage_report`
+//! and `rules_catalog::{crb,apg,acg}::spell_list::spell_coverage_report`
 //! existed, this file did not compile (RED -- no such items). Adding
 //! those small, real (every field computed from the live table, or a
 //! documented corpus record count derived from the real PCGen LST files
@@ -23,12 +23,12 @@
 //!
 //! **Bestiary 1 update (SD-25 criterion 7.N item 4):** the "not covered
 //! by this test file" gap noted above through SD-24 is now closed.
-//! `rules_tables::beastiary1::equipment_tables` exists as of this cycle
+//! `rules_catalog::beastiary1::equipment_tables` exists as of this cycle
 //! (see that module's own doc comment for full sourcing methodology);
 //! `beastiary1_equipment_is_fully_record_ingested_with_full_description_coverage`
 //! below is this book's own coverage assertion, mirroring the pattern the
 //! other three books already use. RED -> GREEN evidence for this
-//! addition: before `rules_tables::beastiary1::equipment_tables` existed,
+//! addition: before `rules_catalog::beastiary1::equipment_tables` existed,
 //! a test referencing it did not compile (`error[E0433]: failed to
 //! resolve: could not find `equipment_tables` in `beastiary1``); adding
 //! the module (4 real records, hand-transcribed from
@@ -36,7 +36,7 @@
 //! `b1_equip_magic_items.lst`, one field web-sourced per the cycle
 //! receipt) turned it GREEN.
 
-use codex::rules_core::rules_tables::{acg, apg, beastiary1, crb};
+use codex::rules_core::rules_catalog::{acg, apg, beastiary1, crb};
 
 /// CRB's equipment corpus (`cr_equip_arms_armor.lst` + `cr_equip_general.lst`
 /// \+ `cr_equip_magic_items.lst` + `cr_equipmods.lst`) is **fully record-ingested**
@@ -101,7 +101,7 @@ fn equipment_table_entry_weight_and_description_field_coverage_for_crb() {
 /// from the criterion 6.1 audit's originally-documented 341: each of the
 /// three corpus files carries exactly one `SOURCELONG:` header line the
 /// audit's grep-based count double-counted as a record; see
-/// `rules_tables::apg::equipment_data`'s module doc comment). `weight` is
+/// `rules_catalog::apg::equipment_data`'s module doc comment). `weight` is
 /// real per-row (319/338 -- the corpus's own `WT:` token, `None` for the
 /// 19 records with no `WT:` token at all). `description` reached 331/338
 /// via SD-25 criterion 7.N's `apg-description` web second-source pass
@@ -265,7 +265,7 @@ fn crb_spell_list_is_fully_record_complete_with_full_text_coverage() {
 /// (corrected from the criterion 6.1 audit's originally-documented 298:
 /// the real corpus has one genuine duplicate `Resounding Blow` base
 /// record the audit's dedup methodology missed; see
-/// `rules_tables::apg::spell_list`'s module doc comment). 284 of 297
+/// `rules_catalog::apg::spell_list`'s module doc comment). 284 of 297
 /// records now carry full SRD/PRD text (`full_text_verified`), raised
 /// from criterion 6.5's original 261 by SD-25 criterion 7.N's
 /// "apg-spell-text" pass -- 13 recovered from an ingest miss on a
@@ -275,7 +275,7 @@ fn crb_spell_list_is_fully_record_complete_with_full_text_coverage() {
 /// same-line double-`DESC:` full paragraph), 3 from a same-book
 /// `PRESPELL`-fallback extension (`Threefold Aspect`'s 3 sub-forms), and
 /// 7 from a `d20pfsrd.com`/`legacy.aonprd.com` web second-source pass
-/// (see `rules_tables::apg::spell_list`'s module doc comment for the
+/// (see `rules_catalog::apg::spell_list`'s module doc comment for the
 /// full per-record sourcing and the rejected edition-cousin false match).
 /// The remaining 13/297 gap WAS the documented cross-book `.COPY=`
 /// variant scope boundary plus the corpus-typo `Wall of Thorms`. **That

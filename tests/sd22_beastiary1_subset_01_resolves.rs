@@ -28,8 +28,8 @@
 //! `corpus-source-inventory.md` §3's own "alphabetical by monster name
 //! within CR band" default ordering rule).
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
 
 #[test]
 fn ghoul_resolves_via_ruleset_bestiary1() {

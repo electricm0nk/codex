@@ -1823,7 +1823,7 @@ pub(super) fn apply_bloodrager_bloodrage_ability_bonuses(
 }
 
 /// Grounds the Unchained Barbarian's named features
-/// (`rules_tables::pathfinder_unchained::barbarian_features`).
+/// (`rules_catalog::pathfinder_unchained::barbarian_features`).
 ///
 /// Every magnitude below is that module's own pure function, called with
 /// this character's real level and ability modifiers. Nothing is recomputed

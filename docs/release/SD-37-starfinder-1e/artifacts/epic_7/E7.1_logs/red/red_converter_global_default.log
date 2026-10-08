@@ -1,0 +1,32 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.43s
+     Running tests/sf_global_default.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_global_default-b4166a2b11d988d5)
+
+running 2 tests
+test the_global_default_is_one_always_held_record_that_prints_nothing ... FAILED
+test effective_level_is_the_character_level_for_every_character ... FAILED
+
+failures:
+
+---- the_global_default_is_one_always_held_record_that_prints_nothing stdout ----
+
+thread 'the_global_default_is_one_always_held_record_that_prints_nothing' (2258150) panicked at crates/codex-ingest/tests/sf_global_default.rs:30:66:
+/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest/../../data/starfinder-1e/sheet_rules/core/ability/default.json: No such file or directory (os error 2)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- effective_level_is_the_character_level_for_every_character stdout ----
+
+thread 'effective_level_is_the_character_level_for_every_character' (2258149) panicked at crates/codex-ingest/tests/sf_global_default.rs:68:5:
+assertion `left == right` failed: {"contributions":[{"bonus_type":{"mode":"Plain","name":"Base"},"expr":{"Var":"vd65ec71a2e036cb6"},"rule_id":"core:ability:drone","when":"Always"}],"declared_by":["core:ability:drone"],"label":"Effective LVL","provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:68"]},"var":"v58a9536e3da2b476"}
+  left: 0
+ right: 1
+
+
+failures:
+    effective_level_is_the_character_level_for_every_character
+    the_global_default_is_one_always_held_record_that_prints_nothing
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_global_default`

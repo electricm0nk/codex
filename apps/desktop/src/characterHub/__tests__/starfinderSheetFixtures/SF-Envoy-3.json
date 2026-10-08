@@ -1,0 +1,850 @@
+{
+  "summary": {
+    "characterId": "SF-Envoy-3",
+    "displayLabel": "SF-Envoy-3 label",
+    "gameSystem": "starfinder-1e",
+    "schemaVersion": 2,
+    "savedAt": "2026-10-04T00:00:00Z",
+    "raceId": "core:race:ysoki",
+    "classSummary": "core:class:envoy:3"
+  },
+  "snapshot": {
+    "abilityModifiers": {
+      "strength": -1,
+      "dexterity": 1,
+      "constitution": 1,
+      "intelligence": 1,
+      "wisdom": 0,
+      "charisma": 4
+    },
+    "baseAttackBonus": 2,
+    "baseSaves": {
+      "fortitude": 1,
+      "reflex": 3,
+      "will": 3
+    },
+    "baselineMeleeAttackBonus": 0,
+    "baselineArmorClass": 0,
+    "totalSaves": {
+      "fortitude": 2,
+      "reflex": 4,
+      "will": 3
+    },
+    "selectedSkillModifiers": {
+      "climb": 0,
+      "intimidate": 0,
+      "swim": 0
+    }
+  },
+  "diagnostics": [
+    {
+      "id": "sf_adapter.pathfinder_fields_zero",
+      "message": "baseline_melee_attack_bonus, baseline_armor_class and selected_skill_modifiers are Pathfinder fixed-posture totals with no Starfinder meaning and are 0; the Starfinder sheet totals are the sf.* explanation rows (sf.eac, sf.kac, sf.skill.<skill>, ...)",
+      "claimBlocking": false
+    }
+  ],
+  "corpusDerived": {
+    "schoolCoverage": [],
+    "equippedItems": [],
+    "equipmentEffects": {
+      "perItem": [],
+      "armorClassDelta": 0,
+      "armorCheckPenaltyTotal": -1
+    },
+    "encumbrance": {
+      "totalCarriedWeightLbs": 0.0,
+      "totalCarriedCostGp": 0.0,
+      "lightMaxLbs": 0.0,
+      "mediumMaxLbs": 0.0,
+      "heavyMaxLbs": 0.0,
+      "level": "unencumbered",
+      "loadArmorCheckPenalty": 0,
+      "perItem": [],
+      "unresolvedItemIds": []
+    },
+    "unresolvedSpellIds": [],
+    "unresolvedEquipmentItemIds": []
+  },
+  "selectedFeats": [
+    "core:ability:icon",
+    "core:feat:mobility",
+    "core:feat:quick_draw"
+  ],
+  "spellsSelected": [],
+  "chosenFeatTargets": [],
+  "explanations": [
+    {
+      "id": "sf.ability_score.strength",
+      "value": 8,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.ability_score.dexterity",
+      "value": 13,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.ability_score.constitution",
+      "value": 12,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.ability_score.intelligence",
+      "value": 12,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.ability_score.wisdom",
+      "value": 10,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.ability_score.charisma",
+      "value": 18,
+      "detail": "the saved score: race, theme, point buy and ability increases applied"
+    },
+    {
+      "id": "sf.class_level.envoy",
+      "value": 3,
+      "detail": "core:class:envoy level 3"
+    },
+    {
+      "id": "sf.ability_modifier.strength",
+      "value": -1,
+      "detail": "score 8: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.ability_modifier.dexterity",
+      "value": 1,
+      "detail": "score 13: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.ability_modifier.constitution",
+      "value": 1,
+      "detail": "score 12: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.ability_modifier.intelligence",
+      "value": 1,
+      "detail": "score 12: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.ability_modifier.wisdom",
+      "value": 0,
+      "detail": "score 10: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.ability_modifier.charisma",
+      "value": 4,
+      "detail": "score 18: floor(score / 2) - 5 (Starfinder Table 2-1)"
+    },
+    {
+      "id": "sf.base_attack_bonus",
+      "value": 2,
+      "detail": "Envoy +2 (core:class:envoy)"
+    },
+    {
+      "id": "sf.fortitude",
+      "value": 2,
+      "detail": "Envoy (base Fortitude save) +1 (core:class:envoy#bonus3); Con modifier +1 (SRD Saving Throw Types (https://www.aonsrd.com/Rules.aspx?ID=106))"
+    },
+    {
+      "id": "sf.reflex",
+      "value": 4,
+      "detail": "Envoy (base Reflex save) +3 (core:class:envoy#bonus4); Dex modifier +1 (SRD Saving Throw Types (https://www.aonsrd.com/Rules.aspx?ID=106))"
+    },
+    {
+      "id": "sf.will",
+      "value": 3,
+      "detail": "Envoy (base Will save) +3 (core:class:envoy#bonus5); Wis modifier +0 (SRD Saving Throw Types (https://www.aonsrd.com/Rules.aspx?ID=106))"
+    },
+    {
+      "id": "sf.hit_points",
+      "value": 20,
+      "detail": "Envoy (hit points) +15 (core:class:envoy#bonus1); Envoy (hit die, 1 per level) +3 (core:class:envoy); Ysoki (racial Hit Points) +2 (core:race:ysoki#race_hp)"
+    },
+    {
+      "id": "sf.stamina",
+      "value": 21,
+      "detail": "Envoy (Stamina Points) +18 (core:class:envoy#bonus2); Constitution modifier × level +3 (SRD Calculating Stamina Points (https://www.aonsrd.com/Rules.aspx?ID=49))"
+    },
+    {
+      "id": "sf.resolve",
+      "value": 5,
+      "detail": "½ character level (minimum 1) +1 (SRD Calculating Resolve Points (https://www.aonsrd.com/Rules.aspx?ID=50)); Cha (key ability) modifier +4 (SRD Calculating Resolve Points (https://www.aonsrd.com/Rules.aspx?ID=50))"
+    },
+    {
+      "id": "sf.eac",
+      "value": 14,
+      "detail": "base +10 (SRD Armor Class (https://www.aonsrd.com/Rules.aspx?ID=102)); Carbon skin, graphite +3 (core:equipment:carbon_skin_graphite); Dexterity modifier (max 4 in Carbon skin, graphite) +1 (core:equipment:carbon_skin_graphite)"
+    },
+    {
+      "id": "sf.kac",
+      "value": 15,
+      "detail": "base +10 (SRD Armor Class (https://www.aonsrd.com/Rules.aspx?ID=102)); Carbon skin, graphite (KAC) +4 (core:equipment:carbon_skin_graphite#bonus1); Dexterity modifier (max 4 in Carbon skin, graphite) +1 (core:equipment:carbon_skin_graphite)"
+    },
+    {
+      "id": "sf.initiative",
+      "value": 1,
+      "detail": "Dexterity modifier +1 (SRD Initiative (https://www.aonsrd.com/Rules.aspx?ID=96))"
+    },
+    {
+      "id": "sf.attack.melee",
+      "value": 1,
+      "detail": "base attack bonus +2 (sf.base_attack_bonus); Strength modifier -1 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105))"
+    },
+    {
+      "id": "sf.attack.ranged",
+      "value": 3,
+      "detail": "base attack bonus +2 (sf.base_attack_bonus); Dexterity modifier +1 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105))"
+    },
+    {
+      "id": "sf.weapon.semi_auto_pistol_tactical.attack",
+      "value": 3,
+      "detail": "base attack bonus +2 (sf.base_attack_bonus); Dexterity modifier +1 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105)); Semi-auto pistol (tactical) attack +0 (core:ability:semi_auto_pistol_tactical)"
+    },
+    {
+      "id": "sf.weapon.semi_auto_pistol_tactical.damage",
+      "value": 1,
+      "detail": "Semi-auto pistol (tactical) damage +1 (core:ability:semi_auto_pistol_tactical#weapon1)"
+    },
+    {
+      "id": "sf.weapon.baton_tactical.attack",
+      "value": 3,
+      "detail": "base attack bonus +2 (sf.base_attack_bonus); Dexterity modifier (operative) +1 (SRD weapon special property Operative (https://www.aonsrd.com/WeaponProperties.aspx?ItemName=Operative)); Baton (tactical) attack +0 (core:ability:baton_tactical)"
+    },
+    {
+      "id": "sf.weapon.baton_tactical.damage",
+      "value": 0,
+      "detail": "Strength modifier -1 (SRD Basic Attack and Damage Bonuses (https://www.aonsrd.com/Rules.aspx?ID=105)); Baton (tactical) damage +1 (core:ability:baton_tactical#weapon1)"
+    },
+    {
+      "id": "sf.skill.acrobatics",
+      "value": 0,
+      "detail": "Dex modifier +1 (core:skill:acrobatics); armor check penalty -1 (core:equipment:carbon_skin_graphite)"
+    },
+    {
+      "id": "sf.skill.athletics",
+      "value": -2,
+      "detail": "Str modifier -1 (core:skill:athletics); armor check penalty -1 (core:equipment:carbon_skin_graphite)"
+    },
+    {
+      "id": "sf.skill.bluff",
+      "value": 10,
+      "detail": "ranks +3 (core:skill:bluff); Cha modifier +4 (core:skill:bluff); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78))"
+    },
+    {
+      "id": "sf.skill.computers",
+      "value": 7,
+      "detail": "ranks +3 (core:skill:computers); Int modifier +1 (core:skill:computers); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78))"
+    },
+    {
+      "id": "sf.skill.culture",
+      "value": 8,
+      "detail": "ranks +3 (core:skill:culture); Int modifier +1 (core:skill:culture); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)); THEME KNOWLEDGE (Culture) +1 (core:ability:icon_theme_benefit_theme_knowledge#bonus1)"
+    },
+    {
+      "id": "sf.skill.diplomacy",
+      "value": 10,
+      "detail": "ranks +3 (core:skill:diplomacy); Cha modifier +4 (core:skill:diplomacy); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78))"
+    },
+    {
+      "id": "sf.skill.disguise",
+      "value": 4,
+      "detail": "Cha modifier +4 (core:skill:disguise)"
+    },
+    {
+      "id": "sf.skill.engineering",
+      "value": 9,
+      "detail": "ranks +3 (core:skill:engineering); Int modifier +1 (core:skill:engineering); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)); SCROUNGER (Engineering) +2 (core:ability:ysoki_default_scrounger)"
+    },
+    {
+      "id": "sf.skill.intimidate",
+      "value": 10,
+      "detail": "ranks +3 (core:skill:intimidate); Cha modifier +4 (core:skill:intimidate); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78))"
+    },
+    {
+      "id": "sf.skill.perception",
+      "value": 6,
+      "detail": "ranks +3 (core:skill:perception); Wis modifier +0 (core:skill:perception); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78))"
+    },
+    {
+      "id": "sf.skill.piloting",
+      "value": 1,
+      "detail": "Dex modifier +1 (core:skill:piloting)"
+    },
+    {
+      "id": "sf.skill.sense_motive",
+      "value": 6,
+      "detail": "ranks +3 (core:skill:sense_motive); Wis modifier +0 (core:skill:sense_motive); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78))"
+    },
+    {
+      "id": "sf.skill.stealth",
+      "value": 8,
+      "detail": "ranks +3 (core:skill:stealth); Dex modifier +1 (core:skill:stealth); trained class skill +3 (SRD Skills (https://www.aonsrd.com/Rules.aspx?ID=78)); armor check penalty -1 (core:equipment:carbon_skin_graphite); SCROUNGER (Stealth) +2 (core:ability:ysoki_default_scrounger#bonus1)"
+    },
+    {
+      "id": "sf.skill.survival",
+      "value": 2,
+      "detail": "Wis modifier +0 (core:skill:survival); SCROUNGER (Survival) +2 (core:ability:ysoki_default_scrounger#bonus2)"
+    },
+    {
+      "id": "sf.credits.starting",
+      "value": 4000,
+      "detail": "wealth at character level 3 +4000 (SRD Table 11-5 Character Wealth per Level (https://www.aonsrd.com/Rules.aspx?ID=230))"
+    },
+    {
+      "id": "sf.credits.spent",
+      "value": 1670,
+      "detail": "Carbon skin, graphite × 1 +1220 (core:equipment:carbon_skin_graphite); Semi-auto pistol, tactical × 1 +260 (core:equipment:semi_auto_pistol_tactical); Baton, tactical × 1 +90 (core:equipment:baton_tactical); Serum of Healing Mk 1 × 2 +100 (core:equipment:serum_of_healing_mk_1)"
+    },
+    {
+      "id": "sf.credits.remaining",
+      "value": 2330,
+      "detail": "wealth at character level 3 +4000 (SRD Table 11-5 Character Wealth per Level (https://www.aonsrd.com/Rules.aspx?ID=230)); credits spent -1670 (the carried items' prices)"
+    },
+    {
+      "id": "sf.bulk",
+      "value": 1,
+      "detail": "Carbon skin, graphite × 1 +1 (core:equipment:carbon_skin_graphite); 4 light items ÷ 10, rounded down (Semi-auto pistol, tactical × 1, Baton, tactical × 1, Serum of Healing Mk 1 × 2) +0 (SRD Carrying Capacity (https://www.aonsrd.com/Equipment.aspx))"
+    },
+    {
+      "id": "sf.bulk_limit.unencumbered_max",
+      "value": 4,
+      "detail": "half the Strength score 8, rounded down (SRD Bulk Limits (https://www.aonsrd.com/Equipment.aspx))"
+    },
+    {
+      "id": "sf.bulk_limit.overburdened_above",
+      "value": 8,
+      "detail": "the Strength score 8 (SRD Bulk Limits (https://www.aonsrd.com/Equipment.aspx))"
+    }
+  ],
+  "weaponDamage": [],
+  "selectedAlternateTraitKeys": [],
+  "selectedTraits": [],
+  "resolvedRacialTraits": {
+    "raceId": "core:race:ysoki",
+    "raceKey": "core:race:ysoki",
+    "raceName": "",
+    "book": "",
+    "appliedTraits": [],
+    "suppressions": [],
+    "firedFlags": [],
+    "inertFlags": [],
+    "unmatchedSelections": [],
+    "blockedAlternates": [],
+    "conflictingSelections": [],
+    "renderedTraitDescriptions": [],
+    "displayValueFeats": [],
+    "errors": [
+      "core:race:ysoki: the race-trait picker reads the Pathfinder race corpus; a Starfinder race's traits are its sheet lines"
+    ]
+  },
+  "abilityScores": {
+    "strength": 8,
+    "dexterity": 13,
+    "constitution": 12,
+    "intelligence": 12,
+    "wisdom": 10,
+    "charisma": 18
+  },
+  "skillAllocations": [
+    {
+      "skillId": "bluff",
+      "ranks": 3
+    },
+    {
+      "skillId": "computers",
+      "ranks": 3
+    },
+    {
+      "skillId": "culture",
+      "ranks": 3
+    },
+    {
+      "skillId": "diplomacy",
+      "ranks": 3
+    },
+    {
+      "skillId": "engineering",
+      "ranks": 3
+    },
+    {
+      "skillId": "intimidate",
+      "ranks": 3
+    },
+    {
+      "skillId": "perception",
+      "ranks": 3
+    },
+    {
+      "skillId": "sense_motive",
+      "ranks": 3
+    },
+    {
+      "skillId": "stealth",
+      "ranks": 3
+    }
+  ],
+  "equipmentSelections": [
+    {
+      "itemId": "core:equipment:carbon_skin_graphite",
+      "activeState": "EquippedActive"
+    },
+    {
+      "itemId": "core:equipment:semi_auto_pistol_tactical",
+      "activeState": "SelectedInactive"
+    },
+    {
+      "itemId": "core:equipment:baton_tactical",
+      "activeState": "SelectedInactive"
+    },
+    {
+      "itemId": "core:equipment:serum_of_healing_mk_1",
+      "activeState": "SelectedInactive"
+    },
+    {
+      "itemId": "core:equipment:serum_of_healing_mk_1",
+      "activeState": "SelectedInactive"
+    }
+  ],
+  "sheetLines": [
+    {
+      "id": "core:ability:armor_prof_light_armor",
+      "kind": "ability",
+      "label": "Armor Prof ~ Light Armor",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:ysoki_default_cheek_pouches",
+      "kind": "ability",
+      "label": "CHEEK POUCHES",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Ysoki can store up to 1 cubic foot of items weighing up to 1 bulk in total in their cheek pouches, and they can transfer a single object between hand and cheek as a swift action. A ysoki can disgorge the entire contents of his pouch onto the ground in his square as a move action that does not provoke an attack of opportunity.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:ysoki_default_darkvision",
+      "kind": "ability",
+      "label": "DARKVISION",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Ysoki can see up to 60 feet in the dark. See page 263 for more information.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:envoy",
+      "kind": "ability",
+      "label": "Envoy",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:envoy_class_feature_envoy_improvisation",
+      "kind": "ability",
+      "label": "Envoy Improvisation",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "As you gain experience, you learn envoy improvisations-little tricks that bolster allies, confound enemies, or change the ebb and flow of battle using guile, inspiration, or luck. You learn your first envoy improvisation at 1st level, and you learn an additional improvisation at 2nd level and every 2 levels thereafter. The list of envoy improvisations appears on page 62. If an improvisation allows you to grant an effect to an ally, you cannot grant yourself that effect unless the improvisation states otherwise. If an envoy improvisation allows a saving throw to resist its effects or requires an enemy to attempt a skill check, the DC is equal to 10 + half your envoy level + your Charisma modifier. Some envoy improvisations are language-dependent, mindaffecting, sense-dependent, or some combination of any or all of these. These terms are defined on page 270.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:envoy_class_feature_expertise",
+      "kind": "ability",
+      "label": "Expertise",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You are an expert at dealing with challenges that test your skills, be the challenges social or otherwise. At 1st level, when attempting a Sense Motive check, you can roll 1d6 (your expertise die) and add the result of the roll to your check as an insight bonus. You can use this and other expertise abilities as long as you have at least 1 Resolve Point remaining. At 5th level, anytime you roll your expertise die, you gain a +1 bonus to the result. At 9th, 17th, and 20th levels, this bonus increases by 1. At 13th level, you roll 1d8 as your expertise die instead of 1d6. Beginning at 9th level, you have even greater expertise with skills to which you can add your expertise die that you have also selected with the Skill Focus feat. For each such skill, once per day when rolling your expertise die to add to that skill, you may roll the expertise die twice and take the better of the two results.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:envoy_class_feature_expertise_talent",
+      "kind": "ability",
+      "label": "Expertise Talent",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "At 3rd level and every 4 levels thereafter, you choose an expertise talent, which gives you an extra option when using a skill with which you have expertise. The list of expertise talents appears on pages 269-270.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:icon",
+      "kind": "ability",
+      "label": "Icon",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "TITLE: Icon",
+      "condition": null
+    },
+    {
+      "id": "core:ability:ysoki_default_moxie",
+      "kind": "ability",
+      "label": "MOXIE",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Ysoki are scrappy and nimble even when the odds are against them. A ysoki can stand from prone as a swift action. Additionally, when off-kilter (see page 276), a ysoki does not take the normal penalties to attacks or gain the flat-footed condition. When attempting an Acrobatics check to tumble through the space of an opponent at least one size category larger than himself, a ysoki receive a +5 racial bonus to the check.\nSkillBonus: Acrobatics check to tumble through the space of an opponent at least one size category larger than himself, a ysoki receive a +5 racial bonus to the check.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:ysoki_default_scrounger",
+      "kind": "ability",
+      "label": "SCROUNGER (Engineering)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "Ysoki receive a +2 racial bonus to Engineering, Stealth, and Survival checks.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:ysoki_default_scrounger#bonus1",
+      "kind": "ability",
+      "label": "SCROUNGER (Stealth)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:ysoki_default_scrounger#bonus2",
+      "kind": "ability",
+      "label": "SCROUNGER (Survival)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:ysoki_default_size_and_type",
+      "kind": "ability",
+      "label": "SIZE AND TYPE",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "Ysoki are Small humanoids with the ysoki subtype.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:envoy_class_feature_skill_expertise",
+      "kind": "ability",
+      "label": "Skill Expertise (skill expertise picks)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "At 1st level and every 4 levels thereafter, you can use expertise with one additional class skill. You must have at least 1 rank in a skill to select it, and it must come from the following list: Bluff (Cha), Computers (Int), Culture (Int), Diplomacy (Cha), Disguise (Cha), Engineering (Int), Intimidate (Cha), and Medicine (Int).",
+      "condition": null
+    },
+    {
+      "id": "core:ability:icon_theme_benefit_theme_knowledge#bonus2",
+      "kind": "ability",
+      "label": "THEME KNOWLEDGE (Cha)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:icon_theme_benefit_theme_knowledge#bonus1",
+      "kind": "ability",
+      "label": "THEME KNOWLEDGE (Culture)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:icon_theme_benefit_theme_knowledge",
+      "kind": "ability",
+      "label": "THEME KNOWLEDGE (icon profession picks)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "Choose a Profession skill. You are hooked deeply into the culture of your iconic profession. When attempting a Profession or Culture check to recall knowledge about other icons of your profession or details about your profession's cultural aspects, increase the DC by 5. You gain a +1 bonus to checks with your chosen Profession skill. Culture also becomes a class skill for you, though if it is a class skill from the class you take at 1st level, you instead gain a +1 bonus to Culture checks. In addition, you gain an ability adjustment of +1 to Charisma at character creation.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:weapon_prof_basic_melee_weapons",
+      "kind": "ability",
+      "label": "Weapon Prof ~ Basic Melee Weapons",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:weapon_prof_grenades",
+      "kind": "ability",
+      "label": "Weapon Prof ~ Grenades",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:weapon_prof_small_arms",
+      "kind": "ability",
+      "label": "Weapon Prof ~ Small Arms",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:envoy_class_feature_weapon_specialization",
+      "kind": "ability",
+      "label": "Weapon Specialization",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You gain the Weapon Specialization feat as a bonus feat for each weapon type with which this class grants you proficiency.",
+      "condition": null
+    },
+    {
+      "id": "core:ability:weapon_specialization_basic_melee_weapons",
+      "kind": "ability",
+      "label": "Weapon Specialization ~ Basic Melee Weapons",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:weapon_specialization_small_arms",
+      "kind": "ability",
+      "label": "Weapon Specialization ~ Small Arms",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:ability:ysoki",
+      "kind": "ability",
+      "label": "Ysoki",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:envoy",
+      "kind": "class",
+      "label": "Envoy",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "Skill ranks per level: 8",
+      "condition": null
+    },
+    {
+      "id": "core:class:envoy#bonus2",
+      "kind": "class",
+      "label": "Envoy (Stamina Points)",
+      "form": "number",
+      "value": "+18",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:envoy#bonus3",
+      "kind": "class",
+      "label": "Envoy (base Fortitude save)",
+      "form": "number",
+      "value": "+1",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:envoy#bonus4",
+      "kind": "class",
+      "label": "Envoy (base Reflex save)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:envoy#bonus5",
+      "kind": "class",
+      "label": "Envoy (base Will save)",
+      "form": "number",
+      "value": "+3",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:class:envoy#bonus1",
+      "kind": "class",
+      "label": "Envoy (hit points)",
+      "form": "number",
+      "value": "+15",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:carbon_skin_graphite",
+      "kind": "equipment",
+      "label": "Carbon skin, graphite",
+      "form": "number",
+      "value": "+3",
+      "also": [
+        "quantity 1",
+        "upgrade slots used 0 of 1"
+      ],
+      "prose": "EAC = 3\nKAC = 4\nPrice: 1220\nArmor check penalty: -1\nMax Dex bonus: 4\nQuality: Level: 3\nQuality: BULK: 1\nUpgrade slots: 1",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:carbon_skin_graphite#bonus1",
+      "kind": "equipment",
+      "label": "Carbon skin, graphite (KAC)",
+      "form": "number",
+      "value": "+4",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:carbon_skin_graphite#speed2",
+      "kind": "equipment",
+      "label": "Carbon skin, graphite (walk speed)",
+      "form": "number",
+      "value": "+0",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:feat:mobility",
+      "kind": "feat",
+      "label": "Mobility",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You can easily move past dangerous foes.\nYou gain a +4 bonus to your Armor Class against attacks of opportunity that you provoke by leaving a threatened square.",
+      "condition": null
+    },
+    {
+      "id": "core:feat:quick_draw",
+      "kind": "feat",
+      "label": "Quick Draw",
+      "form": "words",
+      "value": "",
+      "also": [],
+      "prose": "You can draw weapons faster than most.\nYou can draw a weapon as a swift action. Additionally, when making an attack using a thrown weapon as an attack or full attack action, you can draw a weapon as part of the action of making a thrown attack with it. You can draw a hidden weapon (see Sleight of Hand on page 146) as a move action.\nNormal: You can draw a weapon as a move action, or (if your base attack bonus is +1 or higher) as part of a move action, and you can draw a hidden weapon as a standard action.",
+      "condition": null
+    },
+    {
+      "id": "core:race:ysoki#bonus2",
+      "kind": "race",
+      "label": "Ysoki (Dex)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:race:ysoki#bonus1",
+      "kind": "race",
+      "label": "Ysoki (Int)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:race:ysoki",
+      "kind": "race",
+      "label": "Ysoki (Str)",
+      "form": "number",
+      "value": "-2",
+      "also": [],
+      "prose": "Speed: Walk 30 ft.",
+      "condition": null
+    },
+    {
+      "id": "core:race:ysoki#race_hp",
+      "kind": "race",
+      "label": "Ysoki (racial Hit Points)",
+      "form": "number",
+      "value": "+2",
+      "also": [],
+      "prose": "",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:semi_auto_pistol_tactical",
+      "kind": "equipment",
+      "label": "Semi-auto pistol, tactical",
+      "form": "dice",
+      "value": "1d6",
+      "also": [
+        "quantity 1"
+      ],
+      "prose": "Analog\nPrice: 260\nRange: 30\nQuality: Level: 1\nQuality: Critical: -\nQuality: Capacity: 9 rounds\nQuality: Usage: 1\nQuality: Bulk: L\nItem level: 1\nDamage: 1d6",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:baton_tactical",
+      "kind": "equipment",
+      "label": "Baton, tactical",
+      "form": "dice",
+      "value": "1d4",
+      "also": [
+        "quantity 1"
+      ],
+      "prose": "Analog.operative\nPrice: 90\nQuality: Level: 1\nQuality: Critical: -\nQuality: Bulk: L\nItem level: 1\nDamage: 1d4",
+      "condition": null
+    },
+    {
+      "id": "core:equipment:serum_of_healing_mk_1",
+      "kind": "equipment",
+      "label": "Serum of Healing Mk 1",
+      "form": "words",
+      "value": "",
+      "also": [
+        "quantity 2"
+      ],
+      "prose": "Price: 50\nQuality: Level: 1\nQuality: Bulk: L",
+      "condition": null
+    }
+  ],
+  "sheetRulesUnavailableReason": null,
+  "featSkillBonuses": {
+    "skills": {},
+    "groups": {},
+    "contributions": [],
+    "situational": [],
+    "unknown": []
+  }
+}

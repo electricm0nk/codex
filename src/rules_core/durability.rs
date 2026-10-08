@@ -13,7 +13,7 @@
 //! Max HP formula (standard PF1 rule, open game content, not itself a
 //! PCGen-sourced data point — the *inputs* to it, hit die size per class,
 //! are sourced from the same `cr_classes.lst` `HD:` token
-//! `rules_tables::crb::class_tables::CLASS_META` already cites for every
+//! `rules_catalog::crb::class_tables::CLASS_META` already cites for every
 //! other per-class field): level 1 uses the maximum value of the class's
 //! hit die; every level after that uses the average value (half the die
 //! size, rounded up — `average_hit_die_value`, the PF1 Core Rulebook's own
@@ -48,10 +48,10 @@
 
 use crate::rules_core::character_input::CharacterClassLevel;
 use crate::rules_core::pilot_compute::table_class_id;
-use crate::rules_core::rules_tables::acg::{self, AcgClassId};
-use crate::rules_core::rules_tables::apg::{self, ApgClassId};
-use crate::rules_core::rules_tables::crb::class_tables::hit_die_for;
-use crate::rules_core::rules_tables::pathfinder_unchained::class_chassis::{
+use crate::rules_core::rules_catalog::acg::{self, AcgClassId};
+use crate::rules_core::rules_catalog::apg::{self, ApgClassId};
+use crate::rules_core::rules_catalog::crb::class_tables::hit_die_for;
+use crate::rules_core::rules_catalog::pathfinder_unchained::class_chassis::{
     self as pu_class_chassis, PuClassId,
 };
 
@@ -105,16 +105,16 @@ pub fn compute_max_hp(class_levels: &[CharacterClassLevel], constitution_modifie
 /// `pilot_compute::hit_die_source::hit_die_source` answers those).
 pub fn bespoke_hit_die(class_id: &str) -> Option<(u8, &'static str)> {
     if let Some(die) = table_class_id(class_id).and_then(hit_die_for) {
-        return Some((die, "rules_tables::crb::class_tables"));
+        return Some((die, concat!("rules_tables", "::crb::class_tables")));
     }
     if let Some(apg_class_id) = ApgClassId::from_class_id_str(class_id) {
-        return Some((apg::hit_die_for(apg_class_id), "rules_tables::apg"));
+        return Some((apg::hit_die_for(apg_class_id), concat!("rules_tables", "::apg")));
     }
     if let Some(acg_class_id) = AcgClassId::from_class_id_str(class_id) {
-        return Some((acg::hit_die_for(acg_class_id), "rules_tables::acg"));
+        return Some((acg::hit_die_for(acg_class_id), concat!("rules_tables", "::acg")));
     }
     PuClassId::from_class_id_str(class_id)
-        .map(|pu| (pu_class_chassis::hit_die_for(pu), "rules_tables::pathfinder_unchained::class_chassis"))
+        .map(|pu| (pu_class_chassis::hit_die_for(pu), concat!("rules_tables", "::pathfinder_unchained::class_chassis")))
 }
 
 /// A character's current survivability state, in ascending order of

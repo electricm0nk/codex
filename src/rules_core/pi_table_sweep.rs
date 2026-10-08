@@ -1,5 +1,8 @@
 //! Product-Identity blacklist sweep for the Rust-literal table pipeline
-//! (`src/rules_core/rules_tables/**/*.rs`).
+//! (first `src/rules_core/rules_tables/**/*.rs`; since SD-37 E4a.4 removed
+//! that module, the catalog code `src/rules_core/rules_catalog/**/*.rs`, with
+//! the table rows themselves screened in the data package by
+//! `rules_data_package::sweep_package`).
 //!
 //! **Why this exists.** [`crate::rules_core::pi_screening`] screens a record's
 //! free-text field *at the moment a JSON corpus cache row is built*. It never
@@ -132,11 +135,12 @@ pub fn sweep_dir(root: &Path) -> io::Result<Vec<PiSweepHit>> {
     Ok(hits)
 }
 
-/// Repo-relative from `src/` onward when the path contains it, so a sweep run
-/// from any absolute root reports the same stable key the baseline file uses.
+/// Repo-relative from `src/rules_core/` onward when the path contains it, so a
+/// sweep run from any absolute root reports the same stable key the baseline
+/// file uses.
 fn display_path(path: &Path) -> String {
     let full = path.to_string_lossy().replace('\\', "/");
-    match full.find("src/rules_core/rules_tables/") {
+    match full.find("src/rules_core/") {
         Some(idx) => full[idx..].to_string(),
         None => full,
     }

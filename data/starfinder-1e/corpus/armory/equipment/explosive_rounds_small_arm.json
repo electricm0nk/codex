@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Explosive rounds (small arm)",
+    "name": "Explosive rounds, small arm",
+    "type": "Special Ammunition.Small Arm Round"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 747,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Explosive rounds (small arm)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:explosive_rounds_small_arm"
+}

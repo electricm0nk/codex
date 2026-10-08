@@ -1,0 +1,813 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "pathfinder_unchained/class_chassis/class_chassis_resolve",
+  "licence": {
+    "license": "OGL",
+    "book": "pathfinder_unchained",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 1,
+        "base_attack_bonus": 1,
+        "fort_save": 2,
+        "ref_save": 0,
+        "will_save": 0
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 2,
+        "base_attack_bonus": 2,
+        "fort_save": 3,
+        "ref_save": 0,
+        "will_save": 0
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 3,
+        "base_attack_bonus": 3,
+        "fort_save": 3,
+        "ref_save": 1,
+        "will_save": 1
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 4,
+        "base_attack_bonus": 4,
+        "fort_save": 4,
+        "ref_save": 1,
+        "will_save": 1
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 5,
+        "base_attack_bonus": 5,
+        "fort_save": 4,
+        "ref_save": 1,
+        "will_save": 1
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 6,
+        "base_attack_bonus": 6,
+        "fort_save": 5,
+        "ref_save": 2,
+        "will_save": 2
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 7,
+        "base_attack_bonus": 7,
+        "fort_save": 5,
+        "ref_save": 2,
+        "will_save": 2
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 8,
+        "base_attack_bonus": 8,
+        "fort_save": 6,
+        "ref_save": 2,
+        "will_save": 2
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 9,
+        "base_attack_bonus": 9,
+        "fort_save": 6,
+        "ref_save": 3,
+        "will_save": 3
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 10,
+        "base_attack_bonus": 10,
+        "fort_save": 7,
+        "ref_save": 3,
+        "will_save": 3
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 11,
+        "base_attack_bonus": 11,
+        "fort_save": 7,
+        "ref_save": 3,
+        "will_save": 3
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 12,
+        "base_attack_bonus": 12,
+        "fort_save": 8,
+        "ref_save": 4,
+        "will_save": 4
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 13,
+        "base_attack_bonus": 13,
+        "fort_save": 8,
+        "ref_save": 4,
+        "will_save": 4
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 14,
+        "base_attack_bonus": 14,
+        "fort_save": 9,
+        "ref_save": 4,
+        "will_save": 4
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 15,
+        "base_attack_bonus": 15,
+        "fort_save": 9,
+        "ref_save": 5,
+        "will_save": 5
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 16,
+        "base_attack_bonus": 16,
+        "fort_save": 10,
+        "ref_save": 5,
+        "will_save": 5
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 17,
+        "base_attack_bonus": 17,
+        "fort_save": 10,
+        "ref_save": 5,
+        "will_save": 5
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 18,
+        "base_attack_bonus": 18,
+        "fort_save": 11,
+        "ref_save": 6,
+        "will_save": 6
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 19,
+        "base_attack_bonus": 19,
+        "fort_save": 11,
+        "ref_save": 6,
+        "will_save": 6
+      }
+    },
+    {
+      "class_id": "UnchainedBarbarian",
+      "row": {
+        "level": 20,
+        "base_attack_bonus": 20,
+        "fort_save": 12,
+        "ref_save": 6,
+        "will_save": 6
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 1,
+        "base_attack_bonus": 1,
+        "fort_save": 2,
+        "ref_save": 2,
+        "will_save": 0
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 2,
+        "base_attack_bonus": 2,
+        "fort_save": 3,
+        "ref_save": 3,
+        "will_save": 0
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 3,
+        "base_attack_bonus": 3,
+        "fort_save": 3,
+        "ref_save": 3,
+        "will_save": 1
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 4,
+        "base_attack_bonus": 4,
+        "fort_save": 4,
+        "ref_save": 4,
+        "will_save": 1
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 5,
+        "base_attack_bonus": 5,
+        "fort_save": 4,
+        "ref_save": 4,
+        "will_save": 1
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 6,
+        "base_attack_bonus": 6,
+        "fort_save": 5,
+        "ref_save": 5,
+        "will_save": 2
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 7,
+        "base_attack_bonus": 7,
+        "fort_save": 5,
+        "ref_save": 5,
+        "will_save": 2
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 8,
+        "base_attack_bonus": 8,
+        "fort_save": 6,
+        "ref_save": 6,
+        "will_save": 2
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 9,
+        "base_attack_bonus": 9,
+        "fort_save": 6,
+        "ref_save": 6,
+        "will_save": 3
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 10,
+        "base_attack_bonus": 10,
+        "fort_save": 7,
+        "ref_save": 7,
+        "will_save": 3
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 11,
+        "base_attack_bonus": 11,
+        "fort_save": 7,
+        "ref_save": 7,
+        "will_save": 3
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 12,
+        "base_attack_bonus": 12,
+        "fort_save": 8,
+        "ref_save": 8,
+        "will_save": 4
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 13,
+        "base_attack_bonus": 13,
+        "fort_save": 8,
+        "ref_save": 8,
+        "will_save": 4
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 14,
+        "base_attack_bonus": 14,
+        "fort_save": 9,
+        "ref_save": 9,
+        "will_save": 4
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 15,
+        "base_attack_bonus": 15,
+        "fort_save": 9,
+        "ref_save": 9,
+        "will_save": 5
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 16,
+        "base_attack_bonus": 16,
+        "fort_save": 10,
+        "ref_save": 10,
+        "will_save": 5
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 17,
+        "base_attack_bonus": 17,
+        "fort_save": 10,
+        "ref_save": 10,
+        "will_save": 5
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 18,
+        "base_attack_bonus": 18,
+        "fort_save": 11,
+        "ref_save": 11,
+        "will_save": 6
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 19,
+        "base_attack_bonus": 19,
+        "fort_save": 11,
+        "ref_save": 11,
+        "will_save": 6
+      }
+    },
+    {
+      "class_id": "UnchainedMonk",
+      "row": {
+        "level": 20,
+        "base_attack_bonus": 20,
+        "fort_save": 12,
+        "ref_save": 12,
+        "will_save": 6
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 1,
+        "base_attack_bonus": 0,
+        "fort_save": 0,
+        "ref_save": 2,
+        "will_save": 0
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 2,
+        "base_attack_bonus": 1,
+        "fort_save": 0,
+        "ref_save": 3,
+        "will_save": 0
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 3,
+        "base_attack_bonus": 2,
+        "fort_save": 1,
+        "ref_save": 3,
+        "will_save": 1
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 4,
+        "base_attack_bonus": 3,
+        "fort_save": 1,
+        "ref_save": 4,
+        "will_save": 1
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 5,
+        "base_attack_bonus": 3,
+        "fort_save": 1,
+        "ref_save": 4,
+        "will_save": 1
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 6,
+        "base_attack_bonus": 4,
+        "fort_save": 2,
+        "ref_save": 5,
+        "will_save": 2
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 7,
+        "base_attack_bonus": 5,
+        "fort_save": 2,
+        "ref_save": 5,
+        "will_save": 2
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 8,
+        "base_attack_bonus": 6,
+        "fort_save": 2,
+        "ref_save": 6,
+        "will_save": 2
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 9,
+        "base_attack_bonus": 6,
+        "fort_save": 3,
+        "ref_save": 6,
+        "will_save": 3
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 10,
+        "base_attack_bonus": 7,
+        "fort_save": 3,
+        "ref_save": 7,
+        "will_save": 3
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 11,
+        "base_attack_bonus": 8,
+        "fort_save": 3,
+        "ref_save": 7,
+        "will_save": 3
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 12,
+        "base_attack_bonus": 9,
+        "fort_save": 4,
+        "ref_save": 8,
+        "will_save": 4
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 13,
+        "base_attack_bonus": 9,
+        "fort_save": 4,
+        "ref_save": 8,
+        "will_save": 4
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 14,
+        "base_attack_bonus": 10,
+        "fort_save": 4,
+        "ref_save": 9,
+        "will_save": 4
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 15,
+        "base_attack_bonus": 11,
+        "fort_save": 5,
+        "ref_save": 9,
+        "will_save": 5
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 16,
+        "base_attack_bonus": 12,
+        "fort_save": 5,
+        "ref_save": 10,
+        "will_save": 5
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 17,
+        "base_attack_bonus": 12,
+        "fort_save": 5,
+        "ref_save": 10,
+        "will_save": 5
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 18,
+        "base_attack_bonus": 13,
+        "fort_save": 6,
+        "ref_save": 11,
+        "will_save": 6
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 19,
+        "base_attack_bonus": 14,
+        "fort_save": 6,
+        "ref_save": 11,
+        "will_save": 6
+      }
+    },
+    {
+      "class_id": "UnchainedRogue",
+      "row": {
+        "level": 20,
+        "base_attack_bonus": 15,
+        "fort_save": 6,
+        "ref_save": 12,
+        "will_save": 6
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 1,
+        "base_attack_bonus": 0,
+        "fort_save": 0,
+        "ref_save": 0,
+        "will_save": 2
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 2,
+        "base_attack_bonus": 1,
+        "fort_save": 0,
+        "ref_save": 0,
+        "will_save": 3
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 3,
+        "base_attack_bonus": 2,
+        "fort_save": 1,
+        "ref_save": 1,
+        "will_save": 3
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 4,
+        "base_attack_bonus": 3,
+        "fort_save": 1,
+        "ref_save": 1,
+        "will_save": 4
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 5,
+        "base_attack_bonus": 3,
+        "fort_save": 1,
+        "ref_save": 1,
+        "will_save": 4
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 6,
+        "base_attack_bonus": 4,
+        "fort_save": 2,
+        "ref_save": 2,
+        "will_save": 5
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 7,
+        "base_attack_bonus": 5,
+        "fort_save": 2,
+        "ref_save": 2,
+        "will_save": 5
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 8,
+        "base_attack_bonus": 6,
+        "fort_save": 2,
+        "ref_save": 2,
+        "will_save": 6
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 9,
+        "base_attack_bonus": 6,
+        "fort_save": 3,
+        "ref_save": 3,
+        "will_save": 6
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 10,
+        "base_attack_bonus": 7,
+        "fort_save": 3,
+        "ref_save": 3,
+        "will_save": 7
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 11,
+        "base_attack_bonus": 8,
+        "fort_save": 3,
+        "ref_save": 3,
+        "will_save": 7
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 12,
+        "base_attack_bonus": 9,
+        "fort_save": 4,
+        "ref_save": 4,
+        "will_save": 8
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 13,
+        "base_attack_bonus": 9,
+        "fort_save": 4,
+        "ref_save": 4,
+        "will_save": 8
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 14,
+        "base_attack_bonus": 10,
+        "fort_save": 4,
+        "ref_save": 4,
+        "will_save": 9
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 15,
+        "base_attack_bonus": 11,
+        "fort_save": 5,
+        "ref_save": 5,
+        "will_save": 9
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 16,
+        "base_attack_bonus": 12,
+        "fort_save": 5,
+        "ref_save": 5,
+        "will_save": 10
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 17,
+        "base_attack_bonus": 12,
+        "fort_save": 5,
+        "ref_save": 5,
+        "will_save": 10
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 18,
+        "base_attack_bonus": 13,
+        "fort_save": 6,
+        "ref_save": 6,
+        "will_save": 11
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 19,
+        "base_attack_bonus": 14,
+        "fort_save": 6,
+        "ref_save": 6,
+        "will_save": 11
+      }
+    },
+    {
+      "class_id": "UnchainedSummoner",
+      "row": {
+        "level": 20,
+        "base_attack_bonus": 15,
+        "fort_save": 6,
+        "ref_save": 6,
+        "will_save": 12
+      }
+    }
+  ]
+}

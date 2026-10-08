@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "FEAT",
+    "key": "Polymorph adept",
+    "name": "Polymorph adept",
+    "type": "General"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1,
+    "path": "starfinder/paizo/alien_archive_2/saa2_feats.lst",
+    "record_key": "Polymorph adept",
+    "sha256": "bd031d2f9da7e9c2f4cc94f8546c15a9cc978e0eacd49e8b6fcffcfb2ed307e9"
+  },
+  "unit_id": "alien_archive_2:feat:polymorph_adept"
+}

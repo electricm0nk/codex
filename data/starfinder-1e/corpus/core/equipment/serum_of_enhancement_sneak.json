@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Serum of Enhancement (Sneak)",
+    "name": "Serum of Enhancement (Sneak)",
+    "type": "Magic.Serum.Consumable"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 28,
+    "path": "starfinder/paizo/core/scr_equip_magic.lst",
+    "record_key": "Serum of Enhancement (Sneak)",
+    "sha256": "5ce18c4f0c33fcaa19153e691d69a715051aad2b554d71e05ebf023e34dcb487"
+  },
+  "unit_id": "core:equipment:serum_of_enhancement_sneak"
+}

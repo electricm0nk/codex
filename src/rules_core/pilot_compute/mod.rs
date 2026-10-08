@@ -120,20 +120,20 @@ use super::character_input::{
 };
 use super::description_completion::{feat_description_completion, ZeroMagnitudeResolution};
 use super::feat_prereqs::metamagic::{evaluate_metamagic_feat_prerequisites, resolve_metamagic_feat_effect};
-use super::rules_tables::acg::{self, AcgClassId};
-use super::rules_tables::acg::shaman_spell_list;
-use super::rules_tables::acg::hunter_spell_list;
-use super::rules_tables::advanced_race_guide;
-use super::rules_tables::apg::{self, ApgClassId};
-use super::rules_tables::class_spell_levels;
-use super::rules_tables::apg::alchemist_spell_list;
-use super::rules_tables::apg::inquisitor_spell_list;
-use super::rules_tables::apg::witch_spell_list;
-use super::rules_tables::pathfinder_unchained::class_chassis::{self as pu_class_chassis, PuClassId};
-use super::rules_tables::pathfinder_unchained::{
+use super::rules_catalog::acg::{self, AcgClassId};
+use super::rules_catalog::acg::shaman_spell_list;
+use super::rules_catalog::acg::hunter_spell_list;
+use super::rules_catalog::advanced_race_guide;
+use super::rules_catalog::apg::{self, ApgClassId};
+use super::rules_catalog::class_spell_levels;
+use super::rules_catalog::apg::alchemist_spell_list;
+use super::rules_catalog::apg::inquisitor_spell_list;
+use super::rules_catalog::apg::witch_spell_list;
+use super::rules_catalog::pathfinder_unchained::class_chassis::{self as pu_class_chassis, PuClassId};
+use super::rules_catalog::pathfinder_unchained::{
     barbarian_features, monk_features, rogue_features, summoner_features,
 };
-use super::rules_tables::ultimate_combat::{self as uc, UcClassId};
+use super::rules_catalog::ultimate_combat::{self as uc, UcClassId};
 use crate::rules_core::archetype_resolver;
 use crate::rules_core::durability::FamiliarSpecies;
 use crate::rules_core::feat_identity;
@@ -143,16 +143,16 @@ use crate::rules_core::feat_identity;
 use crate::rules_core::pilot_compute::resolved_prose::{resolved_description, DisplayValues};
 use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::size::SizeCategory;
-use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
-use super::rules_tables::crb::paladin_spell_list;
-use super::rules_tables::crb::bard_spell_list;
-use super::rules_tables::crb::cleric_spell_list;
-use super::rules_tables::crb::druid_spell_list;
-use super::rules_tables::crb::ranger_spell_list;
-use super::rules_tables::crb::sorcerer_spell_list;
-use super::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
-use super::rules_tables::crb::weapon_tables;
-use super::rules_tables::RuleSetId;
+use super::rules_catalog::crb::class_tables::{ClassId, class_tables, good_saves_for};
+use super::rules_catalog::crb::paladin_spell_list;
+use super::rules_catalog::crb::bard_spell_list;
+use super::rules_catalog::crb::cleric_spell_list;
+use super::rules_catalog::crb::druid_spell_list;
+use super::rules_catalog::crb::ranger_spell_list;
+use super::rules_catalog::crb::sorcerer_spell_list;
+use super::rules_catalog::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
+use super::rules_catalog::crb::weapon_tables;
+use super::rules_catalog::RuleSetId;
 
 // SD31-E4-F1-005: per-class modules split out of this file, a pure code-move
 // (unchanged behaviour -- see the split's own commit message and receipt).
@@ -199,6 +199,28 @@ pub(crate) mod companion_base_stat_table;
 /// reference-library browser rather than mirroring the derivation a second
 /// time.
 pub mod class_chassis_sheet_rules;
+/// SD-37 E4.1: the Starfinder 1e chassis (BAB, saves, Hit Points, Stamina, Resolve, key
+/// ability) read from the converted Starfinder package, for every class and race -- no
+/// per-class module.
+pub mod sf_chassis;
+/// SD-37 E4.2: the Starfinder 1e EAC, KAC and initiative, and the held set every Starfinder
+/// sheet total reads, from the converted Starfinder package.
+pub mod sf_defense;
+/// SD-37 E4.2: the Starfinder 1e skill totals (ranks, ability, class skill, armour check
+/// penalty, every held bonus row), from the converted Starfinder package.
+pub mod sf_skills;
+/// SD-37 E4.3: the Starfinder 1e ability scores (race, theme, point buy, the increases at
+/// 5th/10th/15th/20th level) from the converted Starfinder package.
+pub mod sf_abilities;
+/// SD-37 E4.4: the Starfinder 1e spells per day, spells known and spell save DCs (levels 0–6)
+/// from the converted Starfinder package.
+pub mod sf_spells;
+/// SD-37 E4.5: the Starfinder 1e credits and bulk totals and the bulk limits, from the
+/// converted Starfinder package.
+pub mod sf_loadout;
+/// SD-37 E7.1: the Starfinder 1e melee and ranged attack bonus and each carried weapon's attack
+/// and damage bonus, from the converted Starfinder package.
+pub mod sf_attack;
 /// SD-36 Epic F §3.4: a class's weapon proficiency read from the converted package -- the
 /// source for every class without a `CLASS_WEAPON_PROFICIENCIES` row. `pub` so the
 /// codex-ingest oracle pin (`class_weapon_proficiency_via_converter.rs`) can call it.

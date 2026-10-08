@@ -1226,7 +1226,7 @@ mod tests {
     }
 
     fn pu_expected(class: &str) -> Vec<(String, Option<u8>, bool)> {
-        use codex::rules_core::rules_tables::pathfinder_unchained::{
+        use codex::rules_core::rules_catalog::pathfinder_unchained::{
             barbarian_features, monk_features, rogue_features, summoner_features,
         };
         match class {

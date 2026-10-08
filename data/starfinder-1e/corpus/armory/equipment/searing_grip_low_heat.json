@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Searing grip (low-heat)",
+    "name": "Searing grip, low-heat",
+    "type": "RESIZABLE.Weapon.Melee.Advanced Melee.Prof Group Advanced Melee.ToHit_UseStr.Damage_UseStr"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 111,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Searing grip (low-heat)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:searing_grip_low_heat"
+}

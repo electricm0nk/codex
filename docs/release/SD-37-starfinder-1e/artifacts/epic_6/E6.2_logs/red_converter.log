@@ -1,0 +1,20 @@
+     Running tests/sf_core_proof.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_core_proof-4e9dcbaa34dab5f7)
+
+running 1 test
+test a_selection_hop_carries_its_ability_pool_onto_the_race_ability ... FAILED
+
+failures:
+
+---- a_selection_hop_carries_its_ability_pool_onto_the_race_ability stdout ----
+
+thread 'a_selection_hop_carries_its_ability_pool_onto_the_race_ability' (246429) panicked at crates/codex-ingest/tests/sf_core_proof.rs:270:5:
+["human_variant_ability={\"Number\":{\"Const\":1}}"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    a_selection_hop_carries_its_ability_pool_onto_the_race_ability
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 11 filtered out; finished in 4.74s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_core_proof`

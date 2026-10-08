@@ -1,0 +1,95 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd37-e2-1": 1
+    },
+    "by_subject": {
+      "workflow-instruction.md \u00a73 E2 row / epic-breakdown.md \u00a70 E2.1 row": 1
+    },
+    "by_verification_method": {
+      "cargo build --locked -j 8 --lib after adding the variants: 4 x error[E0004] non-exhaustive patterns naming those 3 files": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd37-e2-1",
+        "id": "1790982485003-sd37-e2-1-42ff95",
+        "summary": "workflow-instruction.md \u00a73 E2 row / epic-breakdown.md \u00a70 E2.1 row claimed E2.1 file-touch set is src/rules_core/sheet_rule.rs only (exclusive owner); actual the additive variants also force arms in 3 exhaustive matches outside sheet_rule.rs: feat_prereqs/converted_gate.rs, level_up_option_filter.rs, sheet_rule_catalog.rs (in no card's row)",
+        "ts": "2026-10-02T23:08:05Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 1,
+    "with_blast_radius": 0
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "sd37-e2-1": 1
+    },
+    "by_origin": {
+      "agent": 1
+    },
+    "by_type": {
+      "correction": 1
+    },
+    "total": 1
+  },
+  "generated_at": "2026-10-03T01:24:33Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 5,
+    "events_per_commit": 0.2,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        5
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {},
+    "recent": [],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 0,
+    "total": 0
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/worktrees/codex-sd37/docs/retro/events",
+    "problems": [],
+    "shards": 1
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {},
+    "recent": [],
+    "total": 0
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {},
+    "fail_rate": null,
+    "failed_runs": 0,
+    "runs": 0
+  },
+  "window": {
+    "since": "2026-10-02T16:36:55-04:00",
+    "spec": "2026-10-02T16:36:55-04:00",
+    "until": null
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Magitech ~ Psychoactive eyes (charming)",
+    "name": "Psychoactive eyes, charming",
+    "type": "Magitech.ItemLevel_.6.Eyes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 952,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Magitech ~ Psychoactive eyes (charming)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:magitech_psychoactive_eyes_charming"
+}

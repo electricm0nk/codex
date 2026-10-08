@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Profession (Quartermaster)",
+    "name": "Profession (Quartermaster)",
+    "type": "Base.Intelligence.Profession"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1,
+    "path": "starfinder/paizo/near_space/sns_skills.lst",
+    "record_key": "Profession (Quartermaster)",
+    "sha256": "502c4df6324215bfdb2307e7b9f516b875aaff68562f19131658f844dea15ed3"
+  },
+  "unit_id": "near_space:skill:profession_quartermaster"
+}

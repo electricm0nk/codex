@@ -1,0 +1,62 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 52.37s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 23 tests
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_a_choice_key_ability_without_a_legal_choice_is_refused ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_term_names_its_source ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_core_player_class_has_a_chassis_at_level_1 ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_key_ability_is_read_from_the_class ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_a_record_that_is_not_armour_is_refused ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_increases_at_10_15_20_follow_the_17_rule ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_eac_kac_initiative_match_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_the_5th_level_increase_raises_four_scores ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_every_ac_term_names_its_source ... ok
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_envoy_3_skill_total_names_its_terms ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_bonus_spells_match_the_srd_table ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_the_soldier_armour_caps_dex ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_race_and_theme_terms_name_their_records ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_class_tables_match_the_srd_at_every_level_1_to_20 ... FAILED
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_ability_scores_match_the_seed_builds ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_point_buy_limits_are_refused_by_name ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_connection_spells_and_spell_focus_are_their_own_terms ... FAILED
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_casters_cast_levels_0_to_2_and_the_others_cast_nothing ... FAILED
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_a_trained_only_skill_opens_with_a_rank ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values ... FAILED
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_skill_total_matches_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_a_theme_adds_its_class_skill_and_its_ability_point ... ok
+
+failures:
+
+---- rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_class_tables_match_the_srd_at_every_level_1_to_20 stdout ----
+
+thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_class_tables_match_the_srd_at_every_level_1_to_20' (30010) panicked at src/rules_core/pilot_compute/sf_spells.rs:377:62:
+removal index (is 0) should be < len (is 0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_connection_spells_and_spell_focus_are_their_own_terms stdout ----
+
+thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_connection_spells_and_spell_focus_are_their_own_terms' (30011) panicked at src/rules_core/pilot_compute/sf_spells.rs:324:55:
+removal index (is 0) should be < len (is 0)
+
+---- rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_casters_cast_levels_0_to_2_and_the_others_cast_nothing stdout ----
+
+thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_casters_cast_levels_0_to_2_and_the_others_cast_nothing' (30009) panicked at src/rules_core/pilot_compute/sf_spells.rs:246:65:
+no spellcasting for core:class:mystic: []
+
+---- rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values stdout ----
+
+thread 'rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values' (30012) panicked at src/rules_core/pilot_compute/sf_spells.rs:246:65:
+no spellcasting for core:class:mystic: []
+
+
+failures:
+    rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_casters_cast_levels_0_to_2_and_the_others_cast_nothing
+    rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_class_tables_match_the_srd_at_every_level_1_to_20
+    rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_connection_spells_and_spell_focus_are_their_own_terms
+    rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values
+
+test result: FAILED. 19 passed; 4 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 1.21s
+
+error: test failed, to rerun pass `--lib`

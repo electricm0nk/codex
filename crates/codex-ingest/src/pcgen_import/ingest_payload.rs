@@ -67,7 +67,7 @@ pub fn ingest_record_json(key: &str, tokens: &[(&str, &str)]) -> String {
 /// et al.) are a deliberately thin "bootstrap coverage" projection --
 /// `key`/`category`/`name`/`cost_gp`/`weight_lbs`/`description` for
 /// equipment, no `ACCHECK:`/`MAXDEX:`/`SPELLFAILURE:`/`BONUS:` data at all.
-/// That's sufficient for the compiled `rules_tables::crb::equipment_tables()`
+/// That's sufficient for the compiled `rules_catalog::crb::equipment_tables()`
 /// static table this schema originally fed, but the real engine's
 /// book-agnostic resolvers (`encumbrance.rs`, `equipment_effects.rs`, and
 /// every future book-agnostic resolver) read a record's raw tokens/bonus
@@ -103,7 +103,7 @@ pub struct RawBonusChain {
 
 /// `data/corpus/<book>/equipment/<category>/<slug>.json` payload, v1.
 /// Additive over the pre-existing `EquipmentCacheData` copies
-/// (`rules_tables::crb::json_cache`, `rules_tables::advanced_race_guide::
+/// (`rules_catalog::crb::json_cache`, `rules_catalog::advanced_race_guide::
 /// json_cache`, `gen_book_cache`'s own local copy -- byte-identical to
 /// each other before this addition, confirmed via direct diff): every field
 /// those carry (`key`/`category`/`name`/`cost_gp`/`weight_lbs`/
@@ -266,7 +266,7 @@ pub struct ClassFeatureGrant {
 /// declared as a `CATEGORY:CLASS` selection ability over a base class
 /// declared in another book.
 ///
-/// **Why this is not `rules_tables::crb::json_cache::ClassCacheData`.**
+/// **Why this is not `rules_catalog::crb::json_cache::ClassCacheData`.**
 /// Pathfinder Unchained's `.pcc` declares **no `CLASS:` file at all**
 /// (verified 2026-07-31). Its four "Unchained classes" are not `CLASS`
 /// objects: each is an `ABILITY` in `CATEGORY:CLASS` that plugs into the

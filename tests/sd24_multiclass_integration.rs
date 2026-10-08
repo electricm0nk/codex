@@ -4,7 +4,7 @@
 //! asserts against canonical PF1 formulas *hand-typed independently in the
 //! test file*, this test derives its expected values from the actually
 //! ingested per-class-per-level content table
-//! (`rules_tables::crb::class_tables::class_tables()`, "SD-19's foundation"
+//! (`rules_catalog::crb::class_tables::class_tables()`, "SD-19's foundation"
 //! per every `level_up::<class>.rs` module's own doc comment) instead of
 //! re-deriving the formula a second time. If the production dispatch
 //! (`compute_pilot_base_chassis` / `compute_multiclass_base_chassis`) ever
@@ -28,7 +28,7 @@
 //! `class_tables()` row (already an integer, floored per class -- BAB does
 //! not need PF1's sum-fractions-then-round-down-once save rule). Saves use
 //! `good_saves_for` (this cycle's own new `class_tables` accessor,
-//! `rules_tables::crb::class_tables::good_saves_for`) to look up each
+//! `rules_catalog::crb::class_tables::good_saves_for`) to look up each
 //! class's good/poor classification from the ingested table itself, then
 //! applies PF1's sum-of-unrounded-fractions-then-floor-once multiclass rule
 //! -- the fractional arithmetic is inherent to the PF1 rule (not a data
@@ -37,7 +37,7 @@
 
 use codex::rules_core::character_input::CharacterInput;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
+use codex::rules_core::rules_catalog::crb::class_tables::{ClassId, class_tables, good_saves_for};
 mod common;
 use common::load;
 

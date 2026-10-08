@@ -1,0 +1,4 @@
+scope	command	status	log
+root-full	cargo test --locked -j 8 --no-fail-fast -- --test-threads=8	not-run	root-full.log
+ingest-full	(crates/codex-ingest) cargo test --locked -j 8 --no-fail-fast -- --test-threads=8	not-run	ingest-full.log
+desktop-full	(apps/desktop/src-tauri) PF_SEED_RENDER_OUT SF_SEED_LINES_OUT cargo test --locked -j 8 -- --test-threads=8	not-run	desktop-full.log

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Mindbreaker Connection Power ~ Sow Doubt",
+    "name": "Sow Doubt",
+    "type": "Class Feature.Mindbreaker Connection Power.Mindbreaker Connection Power LVL 6.Supernatural"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1627,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Mindbreaker Connection Power ~ Sow Doubt",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:mindbreaker_connection_power_sow_doubt"
+}

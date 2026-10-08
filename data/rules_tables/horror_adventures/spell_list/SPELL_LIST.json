@@ -1,0 +1,517 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "horror_adventures/spell_list/SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "horror_adventures",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Absurdity",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 2,
+      "description": "Threats seem like a ridiculous farce."
+    },
+    {
+      "key": "Alleviate Corruption",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 6,
+      "description": "Attempt to weaken a corruption's effect at risk to yourself."
+    },
+    {
+      "key": "Appearance of Life",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 2,
+      "description": "Undead appear to be alive."
+    },
+    {
+      "key": "Assume Appearance",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 3,
+      "description": "Use a creature's corpse to adopt its form."
+    },
+    {
+      "key": "Assume Appearance (Greater)",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 4,
+      "description": "Use a likeness to adopt a dead creature's form."
+    },
+    {
+      "key": "Ban Corruption",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 3,
+      "description": "Eliminate the gifts of nearby corrupted creatures."
+    },
+    {
+      "key": "Barbed Chains",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 1,
+      "description": "Hellish chains attack and cause a target to become shaken."
+    },
+    {
+      "key": "Blood Ties",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 4,
+      "description": "When a target is harmed, so is the target's relative."
+    },
+    {
+      "key": "Bloodbath",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 1,
+      "description": "Cause yourself and enemies to bleed."
+    },
+    {
+      "key": "Boneshaker",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 1,
+      "description": "Momentarily control a living or undead creature's skeleton."
+    },
+    {
+      "key": "Borrow Corruption",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 2,
+      "description": "Temporarily gain the effects of a corrupted creature's manifestations."
+    },
+    {
+      "key": "Charnel House",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 3,
+      "description": "Create an area of semi-real gore."
+    },
+    {
+      "key": "Compelling Rant",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 5,
+      "description": "People believe your ridiculous speech as long as you keep talking."
+    },
+    {
+      "key": "Contact Entity I",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 1,
+      "description": "Ask eldritch entities to find and converse with you."
+    },
+    {
+      "key": "Contact Entity II",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 2,
+      "description": "Ask more powerful eldritch entities to find and converse with you."
+    },
+    {
+      "key": "Contact Entity III",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 3,
+      "description": "Ask very powerful eldritch entities to find and converse with you, or they may reply telepathically."
+    },
+    {
+      "key": "Contact Entity IV",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 4,
+      "description": "Ask extraordinarily powerful eldritch entities to find and converse with you, or they may reply telepathically."
+    },
+    {
+      "key": "Cruel Jaunt",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 4,
+      "description": "Sense creatures suffering from fear, then teleport close to them."
+    },
+    {
+      "key": "Curse of Fell Seasons",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 9,
+      "description": "Curse an area's weather."
+    },
+    {
+      "key": "Curse of Night",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 8,
+      "description": "Curse an area with eternal night."
+    },
+    {
+      "key": "Curse Terrain",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 4,
+      "description": "Curse an area with four hazards."
+    },
+    {
+      "key": "Curse Terrain (Greater)",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 6,
+      "description": "Curse an area with six dangerous hazards."
+    },
+    {
+      "key": "Curse Terrain (Lesser)",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 2,
+      "description": "Curse an area with three mild hazards."
+    },
+    {
+      "key": "Curse Terrain (Supreme)",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 8,
+      "description": "Curse an area with seven deadly hazards."
+    },
+    {
+      "key": "Damnation",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 3,
+      "description": "Punish creatures for evil spells they know or that affect them."
+    },
+    {
+      "key": "Death Clutch",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 8,
+      "description": "Rip out someone's heart."
+    },
+    {
+      "key": "Decapitate",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 5,
+      "description": "Turn a critical hit into a decapitation."
+    },
+    {
+      "key": "Decollate",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 4,
+      "description": "A target can safely remove its head."
+    },
+    {
+      "key": "Dreadscape",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 3,
+      "description": "Surroundings and unfamiliar creatures seem like something out of a nightmare."
+    },
+    {
+      "key": "Flesh Puppet",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 2,
+      "description": "Control a zombie in human guise."
+    },
+    {
+      "key": "Flesh Puppet Horde",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 3,
+      "description": "Control multiple zombies in human guise."
+    },
+    {
+      "key": "Flesh Wall",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 5,
+      "description": "Create a wall of zombies."
+    },
+    {
+      "key": "Flickering Lights",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 2,
+      "description": "Create an area of inconsistent lighting."
+    },
+    {
+      "key": "Grasping Corpse",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 1,
+      "description": "Cause a corpse to grab or trip a foe."
+    },
+    {
+      "key": "Green Caress",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 4,
+      "description": "Slowly transform a creature into an inanimate plant."
+    },
+    {
+      "key": "Hedging Weapons",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 1,
+      "description": "Floating weapons protect you and make ranged attacks."
+    },
+    {
+      "key": "Holy Javelin",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 2,
+      "description": "Deal ongoing damage to evil creatures and apply penalties."
+    },
+    {
+      "key": "Horrific Doubles",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 3,
+      "description": "Call forth disturbing mirror images."
+    },
+    {
+      "key": "Hunger for Flesh",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 3,
+      "description": "Give a creature a bite attack and a hunger for its own kind's flesh."
+    },
+    {
+      "key": "Hunger for Flesh (Mass)",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 6,
+      "description": "Give creatures bite attacks and a hunger for their own kind's flesh."
+    },
+    {
+      "key": "Impossible Angles",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 3,
+      "description": "Distort geometry in an area."
+    },
+    {
+      "key": "Life Blast",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 3,
+      "description": "Drain life from local vegetation to launch a blast of positive energy."
+    },
+    {
+      "key": "Locate Gate",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 5,
+      "description": "Find a nearby magical portal."
+    },
+    {
+      "key": "Mad Sultan's Melody",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 3,
+      "description": "Bizarre cacophony fascinates eldritch creatures."
+    },
+    {
+      "key": "Massacre",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 9,
+      "description": "Slaughter creatures in a line."
+    },
+    {
+      "key": "Maze of Madness and Suffering",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 9,
+      "description": "Send a target into a dangerous extradimensional maze."
+    },
+    {
+      "key": "Night Terrors",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 6,
+      "description": "Disturb a creature's rest with dark dreams."
+    },
+    {
+      "key": "Pessimism",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 4,
+      "description": "Force a creature to see the negative side of things."
+    },
+    {
+      "key": "Phantasmal Asphyxiation",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 3,
+      "description": "Trick a creature into thinking it can't breathe."
+    },
+    {
+      "key": "Phantasmal Putrefaction",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 4,
+      "description": "Trick creatures into thinking their flesh is rotting."
+    },
+    {
+      "key": "Phobia",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 5,
+      "description": "Induce an irrational fear in a creature to the point of madness."
+    },
+    {
+      "key": "Plundered Power",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 6,
+      "description": "Kill a creature and steal its strongest spell-like ability."
+    },
+    {
+      "key": "Profane Nimbus",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 4,
+      "description": "Unholy energy damages good creatures that attack you and protects you from good attacks."
+    },
+    {
+      "key": "Pyrotechnic Eruption",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 3,
+      "description": "Erupting flames burn a target several times."
+    },
+    {
+      "key": "Quick Change",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 2,
+      "description": "Use change shape as a swift action and surprise foes."
+    },
+    {
+      "key": "Rigor Mortis",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 3,
+      "description": "Painfully swell a target's joints."
+    },
+    {
+      "key": "Sacramental Seal",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 8,
+      "description": "Seal a creature away inside the spell's focus."
+    },
+    {
+      "key": "Sacred Nimbus",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 4,
+      "description": "Holy energy damages evil creatures that attack you and protects you from evil attacks."
+    },
+    {
+      "key": "Screaming Flames",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 3,
+      "description": "Send forth a wave of flames screaming with the agony of the damned."
+    },
+    {
+      "key": "Sense Fear",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 1,
+      "description": "Perceive nearby creatures that are experiencing fear."
+    },
+    {
+      "key": "Sense Madness",
+      "name_pi_line": null,
+      "school": "Divination",
+      "level": 2,
+      "description": "Determine mental disturbances in nearby creatures."
+    },
+    {
+      "key": "Sleepwalking Suggestion",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 3,
+      "description": "Cause a creature to perform a suggested action while asleep."
+    },
+    {
+      "key": "Slough",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 4,
+      "description": "Slough off a target's skin."
+    },
+    {
+      "key": "Stave Off Corruption",
+      "name_pi_line": null,
+      "school": "Abjuration",
+      "level": 2,
+      "description": "Protect against a corruption's progression."
+    },
+    {
+      "key": "Straitjacket",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 4,
+      "description": "Restrain a creature's arms and grant it a second saving throw against certain magic."
+    },
+    {
+      "key": "Symbol of Exsanguination",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 2,
+      "description": "Triggered rune causes nearby creatures to bleed."
+    },
+    {
+      "key": "Temporary Graft",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 3,
+      "description": "Graft a body part onto yourself to gain one of several benefits."
+    },
+    {
+      "key": "Torpid Reanimation",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 4,
+      "description": "Animate dead when a specific trigger condition occurs."
+    },
+    {
+      "key": "Verminous Transformation",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 6,
+      "description": "Partially transform into a swarm."
+    },
+    {
+      "key": "Vile Dog Transformation",
+      "name_pi_line": null,
+      "school": "Transmutation",
+      "level": 3,
+      "description": "Transform ordinary dogs into fiendish minions."
+    },
+    {
+      "key": "Waves of Blood",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 3,
+      "description": "A cone of blood pushes creatures, sickens them, and makes the ground slick."
+    },
+    {
+      "key": "Wither Limb",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 5,
+      "description": "Make one of the target's limbs useless."
+    }
+  ]
+}

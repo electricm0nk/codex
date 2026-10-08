@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "Willower",
+    "name": "Willower"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1,
+    "path": "starfinder/paizo/near_space/sns_templates.lst",
+    "record_key": "Willower",
+    "sha256": "ebf7023b671ddac9e2b0d425e1e3c2435683373864bdcc6ecd796d0c8718bfb0"
+  },
+  "unit_id": "near_space:template:willower"
+}

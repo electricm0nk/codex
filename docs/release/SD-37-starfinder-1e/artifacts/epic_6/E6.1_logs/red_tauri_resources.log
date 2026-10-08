@@ -1,0 +1,12 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /tmp/codex-verify-T2PanU
+---------------------------------------------------------------
+==> tauri-resources-tracked — every bundle.resources path has >=1 git-tracked file
+    FAIL  tauri-resources-tracked  (one or more bundle.resources paths have 0 git-tracked files (a clean clone cannot build) — /tmp/codex-verify-T2PanU/tauri-resources-tracked.log)
+---------------------------------------------------------------
+SUMMARY
+  passed:  0  
+  FAILED:  1  tauri-resources-tracked
+
+RESULT: FAIL — logs in /tmp/codex-verify-T2PanU

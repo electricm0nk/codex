@@ -1,0 +1,1235 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "acg/shaman_spell_list/SHAMAN_SPELL_LIST",
+  "licence": {
+    "license": "PI",
+    "book": "acg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [
+      {
+        "row": 93,
+        "field": "0",
+        "term": "Nex"
+      }
+    ],
+    "redacted": []
+  },
+  "rows": [
+    [
+      "Adjustable Polymorph",
+      4
+    ],
+    [
+      "Aid",
+      2
+    ],
+    [
+      "Air Geyser",
+      4
+    ],
+    [
+      "Alter Self",
+      2
+    ],
+    [
+      "Anchored Step",
+      3
+    ],
+    [
+      "Animal Growth",
+      5
+    ],
+    [
+      "Animal Messenger",
+      2
+    ],
+    [
+      "Animal Purpose Training",
+      2
+    ],
+    [
+      "Animal Shapes",
+      8
+    ],
+    [
+      "Animate Dead",
+      3
+    ],
+    [
+      "Animate Dead (Lesser)",
+      2
+    ],
+    [
+      "Animate Plants",
+      7
+    ],
+    [
+      "Anti-Incorporeal Shell",
+      4
+    ],
+    [
+      "Antilife Shell",
+      6
+    ],
+    [
+      "Arcane Mark",
+      0
+    ],
+    [
+      "Augury",
+      2
+    ],
+    [
+      "Aura Sight",
+      3
+    ],
+    [
+      "Awaken",
+      6
+    ],
+    [
+      "Baleful Polymorph",
+      5
+    ],
+    [
+      "Ball Lightning",
+      4
+    ],
+    [
+      "Bane",
+      1
+    ],
+    [
+      "Banishment",
+      6
+    ],
+    [
+      "Barkskin",
+      2
+    ],
+    [
+      "Bear's Endurance",
+      2
+    ],
+    [
+      "Bear's Endurance (Mass)",
+      6
+    ],
+    [
+      "Beastspeak",
+      2
+    ],
+    [
+      "Bestow Curse",
+      3
+    ],
+    [
+      "Bleed",
+      0
+    ],
+    [
+      "Blend",
+      1
+    ],
+    [
+      "Bless",
+      1
+    ],
+    [
+      "Blight",
+      5
+    ],
+    [
+      "Blindness/Deafness",
+      3
+    ],
+    [
+      "Blood Mist",
+      8
+    ],
+    [
+      "Break Enchantment",
+      5
+    ],
+    [
+      "Breath of Life",
+      5
+    ],
+    [
+      "Bull's Strength",
+      2
+    ],
+    [
+      "Bull's Strength (Mass)",
+      6
+    ],
+    [
+      "Buoyancy",
+      2
+    ],
+    [
+      "Burning Gaze",
+      2
+    ],
+    [
+      "Burning Hands",
+      1
+    ],
+    [
+      "Call Lightning",
+      3
+    ],
+    [
+      "Call Lightning Storm",
+      5
+    ],
+    [
+      "Calm Animals",
+      1
+    ],
+    [
+      "Calm Emotions",
+      2
+    ],
+    [
+      "Cause Fear",
+      1
+    ],
+    [
+      "Charm Animal",
+      1
+    ],
+    [
+      "Charm Person",
+      1
+    ],
+    [
+      "Chill Touch",
+      1
+    ],
+    [
+      "Circle of Clarity",
+      8
+    ],
+    [
+      "Clairaudience/Clairvoyance",
+      3
+    ],
+    [
+      "Cloak of Dreams",
+      7
+    ],
+    [
+      "Command Plants",
+      4
+    ],
+    [
+      "Commune",
+      5
+    ],
+    [
+      "Commune with Nature",
+      5
+    ],
+    [
+      "Comprehend Languages",
+      1
+    ],
+    [
+      "Cone of Cold",
+      6
+    ],
+    [
+      "Control Water",
+      4
+    ],
+    [
+      "Control Weather",
+      7
+    ],
+    [
+      "Control Winds",
+      5
+    ],
+    [
+      "Create Food and Water",
+      3
+    ],
+    [
+      "Create Greater Undead",
+      8
+    ],
+    [
+      "Create Undead",
+      6
+    ],
+    [
+      "Create Water",
+      0
+    ],
+    [
+      "Creeping Doom",
+      7
+    ],
+    [
+      "Cure Critical Wounds",
+      4
+    ],
+    [
+      "Cure Critical Wounds (Mass)",
+      8
+    ],
+    [
+      "Cure Light Wounds",
+      1
+    ],
+    [
+      "Cure Light Wounds (Mass)",
+      5
+    ],
+    [
+      "Cure Moderate Wounds",
+      2
+    ],
+    [
+      "Cure Moderate Wounds (Mass)",
+      6
+    ],
+    [
+      "Cure Serious Wounds",
+      3
+    ],
+    [
+      "Cure Serious Wounds (Mass)",
+      7
+    ],
+    [
+      "Curse (Major)",
+      5
+    ],
+    [
+      "Curse of Burning Sleep",
+      4
+    ],
+    [
+      "Dancing Lantern",
+      1
+    ],
+    [
+      "Dancing Lights",
+      0
+    ],
+    [
+      "Darkness",
+      2
+    ],
+    [
+      "Daylight",
+      3
+    ],
+    [
+      "Daze",
+      0
+    ],
+    [
+      "Deep Slumber",
+      3
+    ],
+    [
+      "Deeper Darkness",
+      3
+    ],
+    [
+      "Delay Poison",
+      2
+    ],
+    [
+      "Destruction",
+      8
+    ],
+    [
+      "Detect Animals or Plants",
+      1
+    ],
+    [
+      "Detect Chaos",
+      1
+    ],
+    [
+      "Detect Evil",
+      1
+    ],
+    [
+      "Detect Good",
+      1
+    ],
+    [
+      "Detect Law",
+      1
+    ],
+    [
+      "Detect Magic",
+      0
+    ],
+    [
+      "Detect Poison",
+      0
+    ],
+    [
+      "Detect Scrying",
+      4
+    ],
+    [
+      "Detect Undead",
+      1
+    ],
+    [
+      "Discern Location",
+      8
+    ],
+    [
+      "Discern Next of Kin",
+      1
+    ],
+    [
+      "Dismissal",
+      4
+    ],
+    [
+      "Dispel Chaos",
+      5
+    ],
+    [
+      "Dispel Evil",
+      5
+    ],
+    [
+      "Dispel Good",
+      5
+    ],
+    [
+      "Dispel Law",
+      5
+    ],
+    [
+      "Dispel Magic",
+      3
+    ],
+    [
+      "Dispel Magic (Greater)",
+      6
+    ],
+    [
+      "Divination",
+      4
+    ],
+    [
+      "Divine Power",
+      4
+    ],
+    [
+      "Dominate Animal",
+      3
+    ],
+    [
+      "Dominate Person",
+      5
+    ],
+    [
+      "Doom",
+      1
+    ],
+    [
+      "Eagle Eye",
+      2
+    ],
+    [
+      "Eagle's Splendor",
+      2
+    ],
+    [
+      "Eagle's Splendor (Mass)",
+      6
+    ],
+    [
+      "Earth Glide",
+      4
+    ],
+    [
+      "Earthquake",
+      8
+    ],
+    [
+      "Elemental Swarm",
+      9
+    ],
+    [
+      "Endure Elements",
+      1
+    ],
+    [
+      "Energy Drain",
+      9
+    ],
+    [
+      "Entangle",
+      1
+    ],
+    [
+      "Enthrall",
+      2
+    ],
+    [
+      "Etherealness",
+      9
+    ],
+    [
+      "Fairy Ring Retreat",
+      7
+    ],
+    [
+      "False Life",
+      2
+    ],
+    [
+      "False Life (Greater)",
+      4
+    ],
+    [
+      "Familiar Melding",
+      4
+    ],
+    [
+      "Fear",
+      4
+    ],
+    [
+      "Feast on Fear",
+      5
+    ],
+    [
+      "Find the Path",
+      6
+    ],
+    [
+      "Fins to Feet",
+      3
+    ],
+    [
+      "Fire Seeds",
+      6
+    ],
+    [
+      "Fire Storm",
+      8
+    ],
+    [
+      "Flame Blade",
+      2
+    ],
+    [
+      "Flame Strike",
+      5
+    ],
+    [
+      "Flesh to Stone",
+      6
+    ],
+    [
+      "Fly",
+      3
+    ],
+    [
+      "Focused Scrutiny",
+      2
+    ],
+    [
+      "Fog Cloud",
+      2
+    ],
+    [
+      "Font of Spirit Magic",
+      3
+    ],
+    [
+      "Foresight",
+      9
+    ],
+    [
+      "Frostbite",
+      1
+    ],
+    [
+      "Gentle Breeze",
+      1
+    ],
+    [
+      "Gentle Repose",
+      2
+    ],
+    [
+      "Ghostbane Dirge",
+      2
+    ],
+    [
+      "Ghostbane Dirge (Mass)",
+      5
+    ],
+    [
+      "Giant Vermin",
+      4
+    ],
+    [
+      "Glide",
+      2
+    ],
+    [
+      "Goodberry",
+      1
+    ],
+    [
+      "Grove of Respite",
+      5
+    ],
+    [
+      "Guidance",
+      0
+    ],
+    [
+      "Guiding Star",
+      2
+    ],
+    [
+      "Harm",
+      7
+    ],
+    [
+      "Heal",
+      7
+    ],
+    [
+      "Heal (Mass)",
+      9
+    ],
+    [
+      "Heightened Awareness",
+      1
+    ],
+    [
+      "Hex Glyph",
+      3
+    ],
+    [
+      "Hex Glyph (Greater)",
+      5
+    ],
+    [
+      "Hex Vulnerability",
+      1
+    ],
+    [
+      "Hex Ward",
+      1
+    ],
+    [
+      "Hide from Animals",
+      1
+    ],
+    [
+      "Hold Person",
+      2
+    ],
+    [
+      "Horrid Wilting",
+      8
+    ],
+    [
+      "Hydraulic Push",
+      1
+    ],
+    [
+      "Ice Body",
+      7
+    ],
+    [
+      "Ice Storm",
+      4
+    ],
+    [
+      "Imbue With Elemental Might",
+      2
+    ],
+    [
+      "Imbue with Spell Ability",
+      4
+    ],
+    [
+      "Inflict Critical Wounds",
+      4
+    ],
+    [
+      "Inflict Critical Wounds (Mass)",
+      8
+    ],
+    [
+      "Inflict Light Wounds",
+      1
+    ],
+    [
+      "Inflict Light Wounds (Mass)",
+      5
+    ],
+    [
+      "Inflict Moderate Wounds",
+      2
+    ],
+    [
+      "Inflict Moderate Wounds (Mass)",
+      6
+    ],
+    [
+      "Inflict Serious Wounds",
+      3
+    ],
+    [
+      "Inflict Serious Wounds (Mass)",
+      7
+    ],
+    [
+      "Insect Plague",
+      5
+    ],
+    [
+      "Irresistible Dance",
+      8
+    ],
+    [
+      "Know Direction",
+      0
+    ],
+    [
+      "Levitate",
+      2
+    ],
+    [
+      "Life Pact",
+      2
+    ],
+    [
+      "Light",
+      0
+    ],
+    [
+      "Liveoak",
+      7
+    ],
+    [
+      "Magic Circle against Chaos",
+      3
+    ],
+    [
+      "Magic Circle against Evil",
+      3
+    ],
+    [
+      "Magic Circle against Good",
+      3
+    ],
+    [
+      "Magic Circle against Law",
+      3
+    ],
+    [
+      "Magic Stone",
+      1
+    ],
+    [
+      "Magic Vestment",
+      3
+    ],
+    [
+      "Magic Weapon",
+      1
+    ],
+    [
+      "Magic Weapon (Greater)",
+      4
+    ],
+    [
+      "Mantle of Calm",
+      3
+    ],
+    [
+      "Mending",
+      0
+    ],
+    [
+      "Mindlocked Messenger",
+      3
+    ],
+    [
+      "Monkey Fish",
+      1
+    ],
+    [
+      "Nauseating Trail",
+      3
+    ],
+    [
+      "Neutralize Poison",
+      4
+    ],
+    [
+      "Obscuring Mist",
+      1
+    ],
+    [
+      "Overland Flight",
+      5
+    ],
+    [
+      "Owl's Wisdom",
+      2
+    ],
+    [
+      "Owl's Wisdom (Mass)",
+      6
+    ],
+    [
+      "Pass without Trace",
+      1
+    ],
+    [
+      "Persistent Vigor",
+      4
+    ],
+    [
+      "Pierce Disguise",
+      3
+    ],
+    [
+      "Planar Ally",
+      6
+    ],
+    [
+      "Planar Ally (Greater)",
+      8
+    ],
+    [
+      "Planar Ally (Lesser)",
+      4
+    ],
+    [
+      "Plane Shift",
+      7
+    ],
+    [
+      "Poison",
+      4
+    ],
+    [
+      "Polar Midnight",
+      9
+    ],
+    [
+      "Polymorph Familiar",
+      3
+    ],
+    [
+      "Produce Flame",
+      1
+    ],
+    [
+      "Protection from Chaos",
+      1
+    ],
+    [
+      "Protection from Energy",
+      3
+    ],
+    [
+      "Protection from Evil",
+      1
+    ],
+    [
+      "Protection from Good",
+      1
+    ],
+    [
+      "Protection from Law",
+      1
+    ],
+    [
+      "Purify Food and Drink",
+      0
+    ],
+    [
+      "Rain of Frogs",
+      4
+    ],
+    [
+      "Raise Dead",
+      6
+    ],
+    [
+      "Read Magic",
+      0
+    ],
+    [
+      "Regenerate",
+      7
+    ],
+    [
+      "Reincarnate",
+      4
+    ],
+    [
+      "Remove Blindness/Deafness",
+      3
+    ],
+    [
+      "Remove Curse",
+      3
+    ],
+    [
+      "Remove Disease",
+      3
+    ],
+    [
+      "Remove Fear",
+      1
+    ],
+    [
+      "Remove Paralysis",
+      2
+    ],
+    [
+      "Repel Vermin",
+      4
+    ],
+    [
+      "Resist Energy",
+      2
+    ],
+    [
+      "Resistance",
+      0
+    ],
+    [
+      "Rest Eternal",
+      5
+    ],
+    [
+      "Restoration",
+      4
+    ],
+    [
+      "Restoration (Greater)",
+      7
+    ],
+    [
+      "Restoration (Lesser)",
+      2
+    ],
+    [
+      "Resurrection",
+      8
+    ],
+    [
+      "Ride the Waves",
+      4
+    ],
+    [
+      "Sands of Time",
+      4
+    ],
+    [
+      "Scare",
+      2
+    ],
+    [
+      "Scrying",
+      4
+    ],
+    [
+      "Scrying (Greater)",
+      7
+    ],
+    [
+      "Sending",
+      4
+    ],
+    [
+      "Sense Spirit Magic",
+      1
+    ],
+    [
+      "Shambler",
+      9
+    ],
+    [
+      "Shapechange",
+      9
+    ],
+    [
+      "Shield Companion",
+      2
+    ],
+    [
+      "Sickening Entanglement",
+      2
+    ],
+    [
+      "Slay Living",
+      6
+    ],
+    [
+      "Sleep",
+      1
+    ],
+    [
+      "Sleet Storm",
+      3
+    ],
+    [
+      "Slowing Mud",
+      4
+    ],
+    [
+      "Snake Staff",
+      6
+    ],
+    [
+      "Solid Fog",
+      4
+    ],
+    [
+      "Soul Bind",
+      9
+    ],
+    [
+      "Speak with Dead",
+      3
+    ],
+    [
+      "Speak with Haunt",
+      3
+    ],
+    [
+      "Spike Stones",
+      4
+    ],
+    [
+      "Spiritual Weapon",
+      2
+    ],
+    [
+      "Spit Venom",
+      4
+    ],
+    [
+      "Stabilize",
+      0
+    ],
+    [
+      "Stench of Prey",
+      3
+    ],
+    [
+      "Stinking Cloud",
+      3
+    ],
+    [
+      "Stone Shape",
+      3
+    ],
+    [
+      "Stone Shield",
+      1
+    ],
+    [
+      "Stone Tell",
+      7
+    ],
+    [
+      "Stone to Flesh",
+      6
+    ],
+    [
+      "Stoneskin",
+      5
+    ],
+    [
+      "Storm of Vengeance",
+      9
+    ],
+    [
+      "Stormbolts",
+      8
+    ],
+    [
+      "Stricken Heart",
+      3
+    ],
+    [
+      "Summon Nature's Ally I",
+      1
+    ],
+    [
+      "Summon Nature's Ally II",
+      2
+    ],
+    [
+      "Summon Nature's Ally III",
+      3
+    ],
+    [
+      "Summon Nature's Ally IV",
+      4
+    ],
+    [
+      "Summon Nature's Ally IX",
+      9
+    ],
+    [
+      "Summon Nature's Ally V",
+      5
+    ],
+    [
+      "Summon Nature's Ally VI",
+      6
+    ],
+    [
+      "Summon Nature's Ally VII",
+      7
+    ],
+    [
+      "Summon Nature's Ally VIII",
+      8
+    ],
+    [
+      "Summon Swarm",
+      2
+    ],
+    [
+      "Sunbeam",
+      7
+    ],
+    [
+      "Sunburst",
+      8
+    ],
+    [
+      "Thorn Body",
+      4
+    ],
+    [
+      "Thorn Javelin",
+      1
+    ],
+    [
+      "Thorny Entanglement",
+      3
+    ],
+    [
+      "Tongues",
+      4
+    ],
+    [
+      "Touch of Fatigue",
+      0
+    ],
+    [
+      "Transport via Plants",
+      7
+    ],
+    [
+      "Tree Shape",
+      2
+    ],
+    [
+      "True Seeing",
+      5
+    ],
+    [
+      "Tsunami",
+      9
+    ],
+    [
+      "Virtue",
+      0
+    ],
+    [
+      "Vision",
+      7
+    ],
+    [
+      "Vortex",
+      7
+    ],
+    [
+      "Wail of the Banshee",
+      9
+    ],
+    [
+      "Wall of Fire",
+      5
+    ],
+    [
+      "Wall of Stone",
+      6
+    ],
+    [
+      "Wall of Thorns",
+      5
+    ],
+    [
+      "Wandering Star Motes",
+      4
+    ],
+    [
+      "Ward of the Season",
+      3
+    ],
+    [
+      "Warp Wood",
+      2
+    ],
+    [
+      "Water Breathing",
+      3
+    ],
+    [
+      "Water Walk",
+      3
+    ],
+    [
+      "Wave Shield",
+      1
+    ],
+    [
+      "Web Shelter",
+      2
+    ],
+    [
+      "Whirlwind",
+      8
+    ],
+    [
+      "Wind Walk",
+      7
+    ],
+    [
+      "Wind Wall",
+      3
+    ],
+    [
+      "Winds of Vengeance",
+      9
+    ],
+    [
+      "Wood Shape",
+      2
+    ]
+  ]
+}

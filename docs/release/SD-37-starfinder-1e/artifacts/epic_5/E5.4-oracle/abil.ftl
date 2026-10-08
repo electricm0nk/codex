@@ -1,0 +1,9 @@
+name=${pcstring('NAME')}
+dronelvl=${pcvar('VAR.DroneLVL')}
+dronemastertotallvl=${pcvar('VAR.DroneMasterTotalLVL')}
+flighttaken=${pcvar('VAR.DroneModFlightSystemTaken')}
+fly=${pcvar('VAR.Fly')}
+movement=${pcstring('MOVEMENT')}
+dronemods=${pcstring('ABILITYALLLIST.Drone Mod')}
+internal=${pcstring('ABILITYALLLIST.Internal')}
+hp=${pcstring('HP')}

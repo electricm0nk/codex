@@ -17,14 +17,14 @@
 //! `PCGEN_CORPUS_ROOT`, mirroring
 //! `tests/sd22_apg_class_oracle_resolves.rs`'s established pattern) so
 //! the hand-transcribed chassis constants in
-//! `rules_tables::apg::class_summoner` stay tied to the source record
+//! `rules_catalog::apg::class_summoner` stay tied to the source record
 //! rather than to memory.
 
 use std::fs;
 use std::path::PathBuf;
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::apg::{ApgClassId, class_chassis_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::apg::{ApgClassId, class_chassis_resolve};
 
 #[test]
 fn summoner_level_1_chassis_resolves_via_ruleset_apg() {

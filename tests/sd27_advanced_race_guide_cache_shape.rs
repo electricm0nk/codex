@@ -10,12 +10,12 @@
 //! Shape B v1's schema (`license`/`pi_field`/`pi_marker`,
 //! `codex::rules_core::shape_b_v1::CorpusRecordV1`) and this book's own
 //! content-kind set (spell/equipment/feat — no class chassis; see
-//! `rules_tables::advanced_race_guide::mod`'s own doc comment for why).
+//! `rules_catalog::advanced_race_guide::mod`'s own doc comment for why).
 //!
 //! Real, independently re-verified record counts this test asserts
 //! against (computed directly from the live PCGen corpus this cycle, not
 //! taken from the scoping brief's rough estimate — see each
-//! `rules_tables::advanced_race_guide::*` module's own doc comment for the
+//! `rules_catalog::advanced_race_guide::*` module's own doc comment for the
 //! full accounting): 93 spells (92 base records + 1 `.COPY=` racial
 //! spell-like-ability variant, `Fins to Feet (self only)`, ingested under
 //! SD31 decisions.md §15, 2026-08-17), 200 equipment (28 ArmsArmor + 79
@@ -256,7 +256,7 @@ fn feat_cache_has_all_187_real_records_across_3_categories() {
                 .is_some_and(|c| REAL_FEAT_CATEGORIES.contains(&c))
         })
         .collect();
-    assert_eq!(records.len(), 187, "real arg_feats.lst CATEGORY:FEAT record count (re-measured this cycle; differs from the scoping brief's rough 239-line estimate -- see rules_tables::advanced_race_guide::feats's own doc comment)");
+    assert_eq!(records.len(), 187, concat!("real arg_feats.lst CATEGORY:FEAT record count (re-measured this cycle; differs from the scoping brief's rough 239-line estimate -- see rules_tables", "::advanced_race_guide::feats's own doc comment)"));
 
     let mut by_category: std::collections::HashMap<String, u32> = std::collections::HashMap::new();
     let mut slugs: std::collections::HashMap<String, BTreeSet<String>> = std::collections::HashMap::new();

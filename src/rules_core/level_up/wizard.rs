@@ -5,7 +5,7 @@
 //! closes Epic 7** — all 11 core classes now have a landed
 //! `LevelUpPlan`.
 //!
-//! **Spot-check performed per this cycle's own brief**: `rules_tables::
+//! **Spot-check performed per this cycle's own brief**: `rules_catalog::
 //! crb::class_tables`'s `CLASS_META` row for `ClassId::Wizard` (`bab:
 //! BabProgression::Half`, `good_saves: { fortitude: false, reflex:
 //! false, will: true }`) was checked against `pilot_compute.rs`'s own
@@ -128,7 +128,7 @@
 //! open-ended per-level choices are WHICH spells are written into the
 //! spellbook and the level-5+/level-10+ bonus-feat choice (metamagic,
 //! item creation, or Spell Mastery), and no such candidate catalog
-//! exists anywhere in `rules_tables::crb` to enumerate real candidates
+//! exists anywhere in `rules_catalog::crb` to enumerate real candidates
 //! from — the identical "no catalog to enumerate" boundary every prior
 //! Epic 7 cycle's own choice-list feature hit.
 
@@ -136,8 +136,8 @@ use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan};
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::class_tables::{class_tables, ClassId, ClassTableRow};
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::crb::class_tables::{class_tables, ClassId, ClassTableRow};
+use crate::rules_core::rules_catalog::RuleSetId;
 
 const WIZARD_CLASS_ID: &str = "class:wizard";
 /// SD-24 Epic 5 (criterion 5.1): the only class `pilot_compute.rs`'s own
@@ -242,7 +242,7 @@ fn class_table_row(level: u8) -> Option<ClassTableRow> {
         .find(|row| row.class_id == ClassId::Wizard && row.level == level)
 }
 
-/// Grants sourced from `rules_tables::crb::class_tables::class_tables()`
+/// Grants sourced from `rules_catalog::crb::class_tables::class_tables()`
 /// — the class-generic BAB/save progression pillars, confirmed defect-free
 /// against Wizard's own grounded formulas by this cycle's own spot-check
 /// (see this module's own doc comment).

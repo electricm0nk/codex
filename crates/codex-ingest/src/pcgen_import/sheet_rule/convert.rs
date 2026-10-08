@@ -15,6 +15,7 @@ use super::prereq::{convert_pre_token, resolve_holdable_rule};
 use super::prose::{convert_desc_like, convert_labelled, convert_positional, decode_entities, expand_output_name, pi_hit, strip_editorial_not_implemented_markers};
 use super::table::{row_for_head, MapsTo};
 use super::weapon_membership::{self, WeaponMembershipIndex};
+use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::sheet_rule::*;
 
 pub const CONVERTER_VERSION: &str = "sheet_rule_convert/0.15.0";
@@ -25,6 +26,11 @@ pub struct Converted {
     pub rules: Vec<SheetRule>,
     /// Grant edges this record hands to OTHER rules: `(target rule id, grant)`.
     pub grants_out: Vec<(RuleId, Grant)>,
+    /// SD-37 E5.4: the Starfinder `ABILITY:<cat>|AUTOMATIC|<key>` grants among `grants_out`,
+    /// `(target rule id, grant)`. PCGen holds an automatic grant's target whatever the target's
+    /// own prerequisites say (`decisions.md §21(c)`), so the target's gate also admits "this
+    /// grant holds" (`super::waive_automatic_grant_prerequisites`).
+    pub automatic_grants: Vec<(RuleId, Grant)>,
     /// Contributions to cross-record variable tables: `(VarId, name upper, contribution)`.
     pub var_contribs: Vec<(VarId, String, VarContribution)>,
     /// Names this record's own rows declare.
@@ -108,6 +114,13 @@ struct Acc {
     /// SD-36 F1c-5 (D8): the variable pools (variable name, original case) this record's own
     /// `BONUS:VAR` rows raise, in row order.
     pool_picks: Vec<String>,
+    /// SD-37 E4.4: spell-hop lines (`internal_spell_known_grants`), kept apart from `lines` so a
+    /// line numbered by `lines.len()` (`#bonus<n>`) keeps its id; appended after every other line.
+    sf_spell_hop_lines: Vec<Line>,
+    /// SD-37 E6.2: a selection hop's ability-pool lines (`internal_hop_ability_pools`), siblings
+    /// pushed after the principal and label rules (like E4.1's `#race_hp`), so no existing
+    /// line's id, label or value moves.
+    sf_hop_pool_lines: Vec<Line>,
 }
 
 /// A die literal with an optional flat modifier: `"1d8"` -> `("1d8", None)`, `"1d8+2"` ->
@@ -177,6 +190,658 @@ fn weapon_ref(ctx: &RecordCtx, name: &str) -> WeaponRef {
     }
 }
 
+/// SD-37 E3.4: a record a Starfinder record names (a language it grants, a weapon it bonuses or
+/// is proficient with) prints on the sheet, so the name is screened. A product-identity name
+/// (`Castrovelian`, `Skyfire sword (tactical)`) becomes the named record's own name -- matched by
+/// the row's name field or its `KEY:` -- which the corpus already renamed
+/// (`pcgen_import::sf_corpus`), so the reference still meets its record; a name no record of
+/// `kind` declares is withheld. Pathfinder names are unchanged.
+fn sf_screened_record_name(ctx: &mut RecordCtx, kind: &str, name: &str) -> Option<String> {
+    if ctx.tree.system == GameSystem::Pathfinder1e || pi_hit(ctx.tree.system, name).is_none() {
+        return Some(name.to_string());
+    }
+    let declared = ctx.index.records.iter().find(|r| {
+        r.kind == kind
+            && ctx.tree.file_index(&r.rel_path).is_some_and(|file| {
+                r.line > 0 && r.line <= ctx.tree.files[file].lines.len() && {
+                    // The row's own name field (before any `.COPY=`) or its `KEY:`.
+                    let row = ctx.tree.row_text(super::closure::RowRef { file, line: r.line });
+                    let head = super::closure::tokenize_row(row).0;
+                    head.split(".COPY=").next().unwrap_or(&head).trim().eq_ignore_ascii_case(name.trim())
+                        || super::closure::row_identity(row).key.eq_ignore_ascii_case(name.trim())
+                }
+            })
+    });
+    match declared {
+        Some(r) => Some(r.name.clone()),
+        None => {
+            ctx.pi_term_hits.push(format!("{kind} name"));
+            None
+        }
+    }
+}
+
+/// SD-37 E3.4: the formula-system heads a Starfinder record carries (`MODIFY:`, `MODIFYOTHER:`,
+/// and `PART:<n>|MODIFY:...` on a weapon), lowered by [`convert_sf_formula_token`]. Pathfinder's
+/// 35 `MODIFY*` tokens keep their table reading (`unmapped:<HEAD>`), so its package is unmoved.
+fn sf_formula_head(system: GameSystem, key: &str) -> bool {
+    system != GameSystem::Pathfinder1e && matches!(key, "MODIFY" | "MODIFYOTHER" | "PART")
+}
+
+/// SD-37 E3.5: a Starfinder row whose token was glued onto the previous one with a space instead
+/// of a tab (`saa_abilities.lst:102`, `BONUS:VAR|DarkvisionRange|60|TYPE=Base BONUS:VAR|...`;
+/// `scom_spells.lst:13`, `SOURCEPAGE: pg. 134 DESC:...`) is read as the two tokens it is. Only the
+/// heads measured glued in the eight converted books are split (`BONUS`, `DESC`; 2 rows), and
+/// never inside a prose token, whose words may contain anything. Pathfinder rows are unchanged.
+fn sf_unglued(system: GameSystem, tokens: &[(String, String)]) -> std::borrow::Cow<'_, [(String, String)]> {
+    const GLUED_HEADS: [&str; 2] = [" BONUS:", " DESC:"];
+    const PROSE_HEADS: [&str; 6] = ["DESC", "BENEFIT", "TEMPDESC", "ASPECT", "SPROP", "INFOTEXT"];
+    let glued = |k: &str, v: &str| !PROSE_HEADS.contains(&k.trim()) && GLUED_HEADS.iter().any(|h| v.contains(h));
+    if system == GameSystem::Pathfinder1e || !tokens.iter().any(|(k, v)| glued(k, v)) {
+        return std::borrow::Cow::Borrowed(tokens);
+    }
+    let mut out = Vec::with_capacity(tokens.len() + 1);
+    for (k, v) in tokens {
+        let (mut key, mut rest) = (k.clone(), v.as_str());
+        while !PROSE_HEADS.contains(&key.trim())
+            && let Some((at, head)) = GLUED_HEADS.iter().filter_map(|h| rest.find(h).map(|i| (i, *h))).min_by_key(|(i, _)| *i)
+        {
+            out.push((key, rest[..at].trim_end().to_string()));
+            key = head.trim().trim_end_matches(':').to_string();
+            rest = &rest[at + head.len()..];
+        }
+        out.push((key, rest.to_string()));
+    }
+    std::borrow::Cow::Owned(out)
+}
+
+/// The Windows-1252 byte a character stands for when UTF-8 was read as 1252: `0x80..=0xFF`, or
+/// `None` (ASCII, or not a 1252 character). The five bytes 1252 leaves undefined decode to the C1
+/// control of the same number (`scr_spells.lst:56`'s closing quote ends in U+009D).
+fn cp1252_byte(c: char) -> Option<u8> {
+    const HIGH: [(char, u8); 27] = [
+        ('\u{20ac}', 0x80), ('\u{201a}', 0x82), ('\u{192}', 0x83), ('\u{201e}', 0x84), ('\u{2026}', 0x85),
+        ('\u{2020}', 0x86), ('\u{2021}', 0x87), ('\u{2c6}', 0x88), ('\u{2030}', 0x89), ('\u{160}', 0x8a),
+        ('\u{2039}', 0x8b), ('\u{152}', 0x8c), ('\u{17d}', 0x8e), ('\u{2018}', 0x91), ('\u{2019}', 0x92),
+        ('\u{201c}', 0x93), ('\u{201d}', 0x94), ('\u{2022}', 0x95), ('\u{2013}', 0x96), ('\u{2014}', 0x97),
+        ('\u{2dc}', 0x98), ('\u{2122}', 0x99), ('\u{161}', 0x9a), ('\u{203a}', 0x9b), ('\u{153}', 0x9c),
+        ('\u{17e}', 0x9e), ('\u{178}', 0x9f),
+    ];
+    match u32::from(c) {
+        n @ (0x81 | 0x8d | 0x8f | 0x90 | 0x9d | 0xa0..=0xff) => u8::try_from(n).ok(),
+        _ => HIGH.iter().find(|(h, _)| *h == c).map(|(_, b)| *b),
+    }
+}
+
+/// SD-37 E5.2: Starfinder text the pinned oracle stores as UTF-8 that was once read as
+/// Windows-1252 and written back (`scr_spells.lst:56`, *Detect Thoughts*: `â€œListenâ€` + U+009D;
+/// 87 records over the eight books, 81 of them spells) is read as the characters it encodes:
+///
+/// - every run of 1252 characters that spells one valid UTF-8 sequence is that sequence's
+///   character (`â€™` -> `’`, `Â°` -> `°`);
+/// - three shapes lost a byte to a later clean-up and are mapped by what is left: `â€"` (an en or
+///   em dash whose 1252 curly quote was straightened) is `–` before a digit (`â€"4 penalty`) and
+///   `—` otherwise (`DR 5/â€"`); `Â` before a space is a no-break space written as a space; `Ã-`
+///   is `×` (its 1252 em dash written `-`; `animate_dead`'s "1,000 credits Ã- the total CR").
+///
+/// Text with none of the three lead characters (`â`, `Â`, `Ã`) is returned as it is; real
+/// non-ASCII text (`–2`, `—`, `×`, `°`) never forms a valid sequence and is unchanged.
+fn sf_unmisdecoded(text: &str) -> std::borrow::Cow<'_, str> {
+    if !text.contains(['\u{e2}', '\u{c2}', '\u{c3}']) {
+        return std::borrow::Cow::Borrowed(text);
+    }
+    let chars: Vec<char> = text.chars().collect();
+    let mut out = String::with_capacity(text.len());
+    let mut i = 0;
+    while i < chars.len() {
+        if chars[i..].starts_with(&['\u{e2}', '\u{20ac}', '"']) {
+            let digit = chars.get(i + 3).is_some_and(char::is_ascii_digit);
+            out.push(if digit { '\u{2013}' } else { '\u{2014}' });
+            i += 3;
+            continue;
+        }
+        if let Some(lead @ 0xc2..=0xf4) = cp1252_byte(chars[i]) {
+            let n = match lead {
+                0xc2..=0xdf => 2,
+                0xe0..=0xef => 3,
+                _ => 4,
+            };
+            let bytes: Option<Vec<u8>> = chars.get(i..i + n).map(|run| run.iter().filter_map(|c| cp1252_byte(*c)).collect());
+            if let Some(decoded) = bytes.filter(|b| b.len() == n).and_then(|b| String::from_utf8(b).ok()) {
+                out.push_str(&decoded);
+                i += n;
+                continue;
+            }
+        }
+        match (chars[i], chars.get(i + 1)) {
+            ('\u{c2}', Some(' ')) => {}
+            ('\u{c3}', Some('-')) => {
+                out.push('\u{d7}');
+                i += 1;
+            }
+            (c, _) => out.push(c),
+        }
+        i += 1;
+    }
+    if out == text {
+        std::borrow::Cow::Borrowed(text)
+    } else {
+        std::borrow::Cow::Owned(out)
+    }
+}
+
+/// [`sf_unmisdecoded`] over every token value of a Starfinder row. Pathfinder rows are unchanged.
+fn sf_text_repaired(system: GameSystem, tokens: &[(String, String)]) -> std::borrow::Cow<'_, [(String, String)]> {
+    if system == GameSystem::Pathfinder1e || !tokens.iter().any(|(_, v)| matches!(sf_unmisdecoded(v), std::borrow::Cow::Owned(_))) {
+        return std::borrow::Cow::Borrowed(tokens);
+    }
+    std::borrow::Cow::Owned(tokens.iter().map(|(k, v)| (k.clone(), sf_unmisdecoded(v).into_owned())).collect())
+}
+
+/// SD-37 E3.5: the prerequisite heads the seven wide books carry that the transcribed Pathfinder
+/// table (`table.rs`, SD-35's JSON) has no row for. They convert through
+/// [`super::prereq::convert_pre_token`] for Starfinder only; Pathfinder's 16 `PREATT` rows keep
+/// their `unmapped:PREATT` reading, so its package is unmoved.
+fn sf_prereq_head(system: GameSystem, key: &str) -> bool {
+    system != GameSystem::Pathfinder1e && matches!(key, "PREATT" | "PREHANDS" | "PREREACH")
+}
+
+/// SD-37 E3.4: one Starfinder formula-system token, by its variable's sheet role
+/// ([`super::formula_system::VARIABLE_ROLES`], E3.2) -- the paper-sheet rule (`decisions.md §5`):
+///
+/// - a **print** role prints one stat-block row with the literal the token states (`Item level
+///   3`, `Upgrade slots 1`, a weapon's `Damage 1d6`; `ADD` prints signed, `+1`). Dice stay
+///   literal. A value that is a formula, or an operator other than `SET`/`ADD`, degrades by name;
+/// - a **compute** role is lowered only where it is a term of a sheet total the record itself
+///   adds to: `MODIFYOTHER:PC.MOVEMENT|<mode>|Speed|ADD|<n>` (armour's speed adjustment) is a
+///   [`BonusTarget::Speed`] line. Every other compute role (ability scores and modifiers, set by
+///   the stat definitions, which are not records) degrades by name.
+fn convert_sf_formula_token(ctx: &mut RecordCtx, acc: &mut Acc, key: &str, value: &str) -> Result<(), String> {
+    use super::formula_system::{SheetUse, VARIABLE_ROLES};
+    let fields: Vec<&str> = value.split('|').map(str::trim).collect();
+    // (variable, operator, value, the MODIFYOTHER grouping)
+    let (var, op, val, grouping) = match key {
+        "MODIFY" if fields.len() >= 3 => (fields[0], fields[1], fields[2], None),
+        "MODIFYOTHER" if fields.len() >= 5 => (fields[2], fields[3], fields[4], Some((fields[0], fields[1]))),
+        "PART" => match fields.get(1).and_then(|f| f.strip_prefix("MODIFY:")) {
+            Some(v) if fields.len() >= 4 => (v, fields[2], fields[3], None),
+            _ => return Err("PART (only a MODIFY: part is read)".into()),
+        },
+        _ => return Err(format!("{key} (shape)")),
+    };
+    let Some((_, role, sheet)) = VARIABLE_ROLES.iter().find(|(name, _, _)| name.eq_ignore_ascii_case(var)) else {
+        return Err(format!("{key} (variable {var} has no sheet role)"));
+    };
+    match sheet {
+        SheetUse::Print => {
+            let label = sf_print_role_label(role).ok_or_else(|| format!("{key} (print role {role} has no sheet label)"))?;
+            // Two literal shapes the races carry: the body-plan flag (`RaceType_Humanoid|SET|True`)
+            // and the space a race occupies as a `width,depth` pair in feet (`Face|SET|10,10`).
+            let shaped = match (*role, op) {
+                ("humanoid_body_plan", "SET") if val.eq_ignore_ascii_case("true") => Some("humanoid".to_string()),
+                ("space", "SET") => val.split_once(',').and_then(|(w, d)| {
+                    let (w, d) = (w.trim(), d.trim());
+                    let feet = |s: &str| s.parse::<f64>().is_ok_and(|x| x.is_finite() && x >= 0.0);
+                    (feet(w) && feet(d)).then(|| if w == d { format!("{w} ft.") } else { format!("{w} ft. by {d} ft.") })
+                }),
+                _ => None,
+            };
+            if let Some(text) = shaped {
+                push_stat(acc, label, vec![ProsePiece::Text(text)]);
+                return Ok(());
+            }
+            let literal = val.parse::<i64>().is_ok() || is_dice_literal(val);
+            if !literal {
+                return Err(format!("{key} ({role} value is a formula; a printed value is a literal)"));
+            }
+            let text = match op {
+                "SET" => val.to_string(),
+                "ADD" if val.starts_with('-') => val.to_string(),
+                "ADD" => format!("+{val}"),
+                other => return Err(format!("{key} ({role} operator {other})")),
+            };
+            push_stat(acc, label, vec![ProsePiece::Text(text)]);
+            Ok(())
+        }
+        SheetUse::Compute => match (*role, op, grouping) {
+            ("movement_speed", "ADD", Some((scope, mode))) if scope.eq_ignore_ascii_case("PC.MOVEMENT") => {
+                let n = super::formula::integer_literal(val).ok_or_else(|| format!("{key} (movement_speed value {val} is not an integer)"))?;
+                acc.lines.push(Line {
+                    seq: ctx.current_seq,
+                    suffix: Some(format!("speed{}", acc.lines.len())),
+                    label: format!("{} ({} speed)", ctx.record.name, mode.to_ascii_lowercase()),
+                    value: SheetValue::Number(Expr::Const(n)),
+                    also: Vec::new(),
+                    target: Some(BonusTarget::Speed(mode.to_string())),
+                    bonus_type: None,
+                    applies: Applies::Always,
+                    prose: Vec::new(),
+                });
+                Ok(())
+            }
+            (role, op, _) => Err(format!("{key} (compute role {role} {op} is not a term this record adds)")),
+        },
+    }
+}
+
+/// The stat-block label a printed formula-system role carries.
+fn sf_print_role_label(role: &str) -> Option<&'static str> {
+    Some(match role {
+        "item_level" => "Item level",
+        "armor_upgrade_slots" => "Upgrade slots",
+        "armor_weapon_slots" => "Weapon slots",
+        "upgrade_slots_used" => "Upgrade slots used",
+        "android_upgrade_slots_used" => "Android upgrade slots used",
+        "aeon_upgrade_slots" => "Aeon upgrade slots",
+        "weapon_damage" => "Damage",
+        "space" => "Space",
+        "reach" => "Reach",
+        "hands" => "Hands",
+        "legs" => "Legs",
+        "humanoid_body_plan" => "Body plan",
+        _ => return None,
+    })
+}
+
+/// `1d6`, `2d10`, `1d4+1`: a dice literal (`DICE` format).
+fn is_dice_literal(s: &str) -> bool {
+    let (dice, plus) = match s.split_once('+') {
+        Some((d, p)) => (d, Some(p)),
+        None => (s, None),
+    };
+    let ok_dice = dice.split_once('d').is_some_and(|(n, d)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()) && !d.is_empty() && d.bytes().all(|b| b.is_ascii_digit()));
+    ok_dice && plus.is_none_or(|p| !p.is_empty() && p.bytes().all(|b| b.is_ascii_digit()))
+}
+
+/// SD-37 E3.4: the Starfinder reading of the two overloaded bonus heads (`decisions.md §8`).
+/// `None` for every other head and for every Pathfinder record, which keep [`bonus_targets`].
+///
+/// - `BONUS:HP|<pool>|<value>` feeds the pool the SF mapping table's row names
+///   ([`super::sf_mapping::hp_pool_row`]): `hit_points` -> [`BonusTarget::Hp`], `stamina` ->
+///   [`BonusTarget::Stamina`]. A token no table term claims degrades by name -- never the
+///   Pathfinder reading, which put both pools into hit points.
+/// - `BONUS:COMBAT|AC|...|TYPE=<t>` feeds each armour-class split ([`BonusTarget::Eac`],
+///   [`BonusTarget::Kac`]) whose game-mode `ACTYPE` row does not remove type `<t>`
+///   ([`PinnedTree::armor_class_split`]); an untyped bonus feeds both. Other `COMBAT` targets on
+///   the same token keep their Pathfinder reading.
+fn sf_bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str, value: &str, bonus_type: Option<&BonusType>) -> Result<Option<Vec<(BonusTarget, String)>>, String> {
+    if ctx.tree.system == GameSystem::Pathfinder1e {
+        return Ok(None);
+    }
+    match sub {
+        "HP" => {
+            let table = super::sf_mapping::converter_table().map_err(|e| format!("BONUS:HP (the Starfinder mapping table does not load: {e})"))?;
+            // The carrier is named by its own row's declaration in the pinned tree (`KEY:` else
+            // the name field), never by the corpus record's key, which a product-identity record
+            // replaces with its coordinate's Codex-neutral name.
+            let own_key = ctx
+                .tree
+                .file_index(&ctx.record.rel_path)
+                .filter(|f| ctx.record.line > 0 && ctx.record.line <= ctx.tree.files[*f].lines.len())
+                .map(|file| super::closure::row_identity(ctx.tree.row_text(super::closure::RowRef { file, line: ctx.record.line })).key)
+                .filter(|k| !k.is_empty())
+                .unwrap_or_else(|| ctx.record.key.to_ascii_uppercase());
+            let carrier = if ctx.record.kind == "class" { format!("CLASS:{own_key}") } else { own_key };
+            let pool = target.trim();
+            match super::sf_mapping::hp_pool_row(table, &carrier, pool, value) {
+                Some("hit_points") => Ok(Some(vec![(BonusTarget::Hp, "hit points".into())])),
+                Some("stamina") => Ok(Some(vec![(BonusTarget::Stamina, "Stamina Points".into())])),
+                // SD-37 E5.4: the drone class's `-1` cancels its one `HD:1` level (the table's
+                // `hit_die_offset` row); neither prints, so the drone's hit points are its
+                // `hit_points` term alone (the SRD drone table).
+                Some("hit_die_offset") => Ok(Some(Vec::new())),
+                _ => Err(format!("BONUS:HP|{pool} (no Starfinder mapping-table term)")),
+            }
+        }
+        "COMBAT" if target.split(',').any(|c| c.trim().eq_ignore_ascii_case("AC")) => {
+            let split = &ctx.tree.armor_class_split;
+            if split.is_empty() {
+                return Err("BONUS:COMBAT|AC (the game mode declares no armour-class split)".into());
+            }
+            let ty = bonus_type.map(|t| t.name.as_str()).unwrap_or("");
+            let mut out = Vec::new();
+            for c in target.split(',') {
+                if !c.trim().eq_ignore_ascii_case("AC") {
+                    out.extend(bonus_targets(ctx, sub, c)?);
+                    continue;
+                }
+                for (name, removes) in split {
+                    if removes.contains(ty) {
+                        continue;
+                    }
+                    match name.as_str() {
+                        "EAC" => out.push((BonusTarget::Eac, "EAC".to_string())),
+                        "KAC" => out.push((BonusTarget::Kac, "KAC".to_string())),
+                        other => return Err(format!("BONUS:COMBAT|AC (armour-class split {other} has no sheet total)")),
+                    }
+                }
+            }
+            Ok(Some(out))
+        }
+        _ => Ok(None),
+    }
+}
+
+/// SD-37 E5.1: the words a Starfinder skill bonus prints for its skill. A Starfinder skill bonus
+/// names the oracle's display record (`BONUS:SKILL|Display ~ Perception|2`); its target is
+/// already the base skill (E4.2), and its words print the skill's name, never the record key.
+/// A Pathfinder record keeps its words unchanged.
+fn sf_skill_words(ctx: &RecordCtx, skill: &str) -> String {
+    let skill = skill.trim();
+    if ctx.tree.system == GameSystem::Starfinder1e
+        && let Some(base) = skill.strip_prefix("Display ~ ")
+    {
+        return base.trim().to_string();
+    }
+    skill.to_string()
+}
+
+/// SD-37 E5.1: a Starfinder race's speeds, by movement mode, as its own row states them. The
+/// race row names its modes with a zero (`MOVE:Walk,0`) and states each speed as a variable bonus
+/// on the same row (`BONUS:VAR|Walk|30`, `scr_races.lst`; a mode the `MOVE` token does not name
+/// too, `BONUS:VAR|Fly|30` on `saa_races.lst` Barathu). A variable counts as a mode when the game
+/// mode's own data declares that movement (`MOVEMENT:<mode>` in a `*_dynamic.lst` file, read from
+/// the pinned tree). The wide books repeat the speed as `MODIFYOTHER:PC.MOVEMENT|Walk|Speed|SET|30`,
+/// which degrades by name. Empty for a Pathfinder record and for every kind but `race`; a mode
+/// with two different values is a named defect and is left out, never picked.
+/// SD-37 E5.4: the game mode's movement modes (`MOVEMENT:<mode>` rows of the `_dynamic.lst`
+/// files), in file order.
+fn sf_movement_modes(tree: &PinnedTree) -> Vec<String> {
+    let mut out: Vec<String> = Vec::new();
+    for mode in tree
+        .files
+        .iter()
+        .filter(|f| f.rel_path.to_ascii_lowercase().ends_with("_dynamic.lst"))
+        .flat_map(|f| f.lines.iter())
+        .filter_map(|l| l.split('\t').next().and_then(|first| first.trim().strip_prefix("MOVEMENT:")))
+        .map(|m| m.trim().to_string())
+    {
+        if !mode.is_empty() && !out.iter().any(|m| m.eq_ignore_ascii_case(&mode)) {
+            out.push(mode);
+        }
+    }
+    out
+}
+
+fn sf_race_speeds(ctx: &mut RecordCtx) -> BTreeMap<String, i64> {
+    if ctx.tree.system != GameSystem::Starfinder1e || ctx.record.kind != "race" {
+        return BTreeMap::new();
+    }
+    let modes: BTreeSet<String> = ctx
+        .tree
+        .files
+        .iter()
+        .filter(|f| f.rel_path.to_ascii_lowercase().ends_with("_dynamic.lst"))
+        .flat_map(|f| f.lines.iter())
+        .filter_map(|l| l.split('\t').next().and_then(|first| first.trim().strip_prefix("MOVEMENT:")))
+        .map(|m| m.trim().to_ascii_lowercase())
+        .collect();
+    let mut values: BTreeMap<String, BTreeSet<i64>> = BTreeMap::new();
+    for (k, v) in ctx.closure.rows.iter().flat_map(|r| r.tokens.iter()) {
+        if k.trim() != "BONUS" {
+            continue;
+        }
+        let fields: Vec<&str> = v.trim().split('|').map(str::trim).collect();
+        if let ["VAR", var, n] = fields.as_slice()
+            && modes.contains(&var.to_ascii_lowercase())
+            && let Some(n) = integer_literal(n)
+        {
+            values.entry((*var).to_string()).or_default().insert(i64::from(n));
+        }
+    }
+    let mut out = BTreeMap::new();
+    for (mode, ns) in values {
+        if ns.len() == 1 {
+            out.insert(mode, *ns.first().expect("one value"));
+        } else {
+            let id = ctx.record.id.clone();
+            ctx.defect("sf-race-speed-ambiguous", format!("{id}: BONUS:VAR|{mode} values {ns:?}"));
+        }
+    }
+    out
+}
+
+/// SD-37 E4.1: a Starfinder race's racial Hit Points, lowered onto the race record.
+///
+/// PCGen states the value two hops from the race (`decisions.md §8`; E3.MC discovery): the race
+/// row grants its `CATEGORY:Race` ability (`ABILITY:Race|AUTOMATIC|Android`), that ability grants
+/// the `CATEGORY:Internal` selection row (`ABILITY:Internal|AUTOMATIC|Playable Race
+/// Selected|Android Race Selection ~ Default`), and the selection row sets the variable
+/// (`BONUS:VAR|RaceHP|4`), which the always-held `Default` row adds to the pool
+/// (`BONUS:HP|CURRENTMAX|RaceHP`). Neither helper row is an inventory unit, so no converted record
+/// carried the number. This walks the grant chain from the race's own rows and returns the one
+/// value it reaches, with the sheet total the SF mapping table's `race_hp_var` term routes it to
+/// (`hit_points` -> [`BonusTarget::Hp`]); the table is read, not transcribed, so a planted edit
+/// to that term (M4) moves the package.
+///
+/// `Ok(None)`: the table names no racial-HP term (nothing to lower). `Err`: the walk reached no
+/// value, or two different ones -- a named defect, never a guessed number.
+fn sf_race_hit_points(tree: &PinnedTree, closure: &Closure) -> Result<Option<(BonusTarget, i64)>, String> {
+    use super::closure::{tokenize_row, FileFamily};
+    use super::sf_mapping::TermShape;
+    let table = super::sf_mapping::converter_table().map_err(|e| format!("the Starfinder mapping table does not load: {e}"))?;
+    let Some(row) = table.rows.iter().find(|r| r.terms.iter().any(|t| t.shape == TermShape::RaceHpVar)) else {
+        return Ok(None);
+    };
+    let target = match row.id.as_str() {
+        "hit_points" => BonusTarget::Hp,
+        "stamina" => BonusTarget::Stamina,
+        other => return Err(format!("the racial-HP term sits on mapping row {other:?}, which feeds no sheet total")),
+    };
+    // `<category>|<nature>|<target>|...|<PRE...>` -> the targets (PRE gates and choice selectors dropped).
+    let targets = |value: &str, category: &str| -> Vec<String> {
+        let mut parts = value.split('|');
+        if !parts.next().is_some_and(|c| c.trim().eq_ignore_ascii_case(category)) {
+            return Vec::new();
+        }
+        parts
+            .skip(1)
+            .map(str::trim)
+            .filter(|t| !t.is_empty() && !t.starts_with("PRE") && !t.starts_with("!PRE") && !t.contains('%') && !t.starts_with("TYPE="))
+            .map(str::to_ascii_uppercase)
+            .collect()
+    };
+    let tokens_of = |category: &str, key: &str| -> Vec<(String, String)> {
+        let mut rows: Vec<_> = tree.keyed_index.get(&(FileFamily::Ability, category.to_string(), key.to_string())).copied().into_iter().collect();
+        rows.extend(tree.mods_for(FileFamily::Ability, category, key).iter().copied());
+        rows.into_iter().flat_map(|r| tokenize_row(tree.row_text(r)).1).collect()
+    };
+    let mut values: BTreeSet<i64> = BTreeSet::new();
+    for (key, value) in closure.rows.iter().flat_map(|r| r.tokens.iter()) {
+        if key.trim() != "ABILITY" {
+            continue;
+        }
+        for race_ability in targets(value, "Race") {
+            for (k, v) in tokens_of("RACE", &race_ability) {
+                if k.trim() != "ABILITY" {
+                    continue;
+                }
+                for selection in targets(&v, "Internal") {
+                    for (k2, v2) in tokens_of("INTERNAL", &selection) {
+                        if k2.trim() == "BONUS"
+                            && let Some(n) = v2.trim().strip_prefix("VAR|RaceHP|")
+                        {
+                            values.insert(n.trim().parse::<i64>().map_err(|_| format!("BONUS:VAR|RaceHP|{n} on {selection:?} is not an integer"))?);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    match values.len() {
+        1 => Ok(values.first().map(|n| (target, *n))),
+        0 => Err("no BONUS:VAR|RaceHP reached through the race's Race and Internal ability grants".into()),
+        _ => Err(format!("two racial Hit Point values reached: {values:?}")),
+    }
+}
+
+/// SD-37 E4.4: one row of a Starfinder class's spell progression -- the class's spells per day
+/// (`CAST:`) or spells known (`KNOWN:`) at one spell level, over every class level.
+#[derive(Debug, Clone, PartialEq)]
+struct SfSpellProgressionRow {
+    known: bool,
+    spell_level: u8,
+    /// The first class level whose level line has this column.
+    first: u8,
+    /// `ClassLevel(class) >= first`: the table's value at each class level, as one expression --
+    /// the first level's value plus each later change, stepped in at the level it happens
+    /// (`min(1, max(0, ClassLevel - k + 1))` is 1 from class level k on, the encoding the formula
+    /// reader already writes for `(X>=k)`).
+    value: Expr,
+}
+
+/// SD-37 E4.4: a Starfinder class's spell progression, read from its own level lines
+/// (`scr_classes.lst` `1<TAB>CAST:0,2<TAB>KNOWN:4,2` ... `20<TAB>CAST:0,5,5,5,5,5,5<TAB>KNOWN:6,6,6,6,6,5,5`).
+/// The PF engine holds its class tables in Rust; the Starfinder engine reads only the package
+/// (`decisions.md §15` R2), so the converter lowers them: one `SpellCell` row per spell level the
+/// class casts per day (a column that is 0 at every level -- the 0-level column, "no limit" in the
+/// SRD -- is no per-day number and gets no row) and one `SpellsKnown` row per spell level. `Ok(vec![])`:
+/// the class casts no spells. A column with a gap, or a level line stated twice, is an `Err`.
+fn sf_spell_progression(closure: &Closure, class: &str) -> Result<Vec<SfSpellProgressionRow>, String> {
+    // (known?, spell level) -> class level -> value
+    let mut columns: BTreeMap<(bool, u8), BTreeMap<u8, i64>> = BTreeMap::new();
+    for row in closure.rows.iter().filter(|r| r.kind == ClosureRowKind::LevelLine) {
+        let Some(class_level) = row.level_gate else { continue };
+        for (key, value) in &row.tokens {
+            let known = match key.trim() {
+                "CAST" => false,
+                "KNOWN" => true,
+                _ => continue,
+            };
+            for (i, cell) in value.split(',').enumerate() {
+                let spell_level = u8::try_from(i).map_err(|_| format!("{key}:{value} at level {class_level}: too many columns"))?;
+                let n: i64 = cell.trim().parse().map_err(|_| format!("{key}:{value} at level {class_level}: {cell:?} is not an integer"))?;
+                if columns.entry((known, spell_level)).or_default().insert(class_level, n).is_some() {
+                    return Err(format!("{key} stated twice at class level {class_level}"));
+                }
+            }
+        }
+    }
+    let mut out = Vec::new();
+    for ((known, spell_level), by_level) in columns {
+        if !known && by_level.values().all(|n| *n == 0) {
+            continue;
+        }
+        let (&first, &first_value) = by_level.first_key_value().expect("a column has a first level");
+        let mut terms = vec![Expr::Const(first_value as i32)];
+        let mut previous = (first, first_value);
+        for (&level, &n) in by_level.iter().skip(1) {
+            if level != previous.0 + 1 {
+                return Err(format!("{} column {spell_level} jumps from class level {} to {level}", if known { "KNOWN" } else { "CAST" }, previous.0));
+            }
+            if n != previous.1 {
+                let step = Expr::min(Expr::Const(1), Expr::max(Expr::Const(0), Expr::sum(vec![Expr::ClassLevel(class.to_string()), Expr::Const(1 - i32::from(level))])));
+                terms.push(Expr::mul(Expr::Const((n - previous.1) as i32), step));
+            }
+            previous = (level, n);
+        }
+        out.push(SfSpellProgressionRow { known, spell_level, first, value: Expr::sum(terms) });
+    }
+    Ok(out)
+}
+
+/// SD-37 E4.2: the automatic `ABILITY:` grants of a `CATEGORY:Internal` helper row no inventory
+/// unit stands for, when every `ABILITY:` grant it makes is a plain automatic one -- a SELECTION
+/// HOP.
+///
+/// The oracle's Starfinder races reach their racial traits two rows from the race (the chain
+/// `sf_race_hit_points` documents): the race grants its `CATEGORY:Race` ability, which grants
+/// the internal selection row (`ABILITY:Internal|AUTOMATIC|Playable Race Selected|Ysoki Race
+/// Selection ~ Default`, `scr_abilities.lst:802`), and only that row grants the traits
+/// (`ABILITY:Ysoki Racial Trait|AUTOMATIC|Ysoki Default ~ SCROUNGER|!PREFACT:1,ABILITIES,
+/// Ysoki_Scrounger=true`, :814). The selection row is not an inventory unit, so the grant
+/// stopped at it (`unresolved-references`) and no character held its race's traits. PCGen
+/// applies every token of an ability the character holds; for the hop's `ABILITY:` tokens that
+/// means: the record that grants the hop grants the hop's targets, under both grants' gates.
+/// Only `ABILITY:` tokens are carried -- the racial Hit Points on the same row are E4.1's
+/// (`sf_race_hit_points`). `None`: the row grants no ability, or grants one by choice
+/// (`NORMAL`, `%LIST`) -- not a hop; the reference stays unresolved and named.
+///
+/// SD-37 E5.4: an automatic `TYPE=<tags>` target is a hop target too -- "every ability of this
+/// category carrying these tags", the same edge a record's own `TYPE=` grant makes
+/// (`ability_type_selector_targets`). The drone's special abilities reach it this way
+/// (`Drone Special Abilities`, `scr_abilities.lst:1398`: `ABILITY:Class Feature|AUTOMATIC|
+/// TYPE=Drone Special Ability LVL 1|PREVARGTEQ:DroneMasterLVL,1`).
+/// SD-37 E6.2: the `BONUS:ABILITYPOOL|<pool>|<n>` tokens of a selection hop's rows (the hop
+/// [`internal_hop_grants`] reads), as `(pool name, count, gates)`. PCGen applies every token of
+/// an ability the character holds; the hop's `ABILITY:` grants already land on the record that
+/// grants the hop, and its ability pools are the same kind of edge: the human's `+2 Racial Stat
+/// Bonus` pick is stated only here (`Human Race Selection ~ Default`, `scr_abilities.lst:809`).
+/// `Err`: a count that is not a whole number -- a named defect, never a guessed count.
+fn internal_hop_ability_pools(tree: &PinnedTree, key: &str) -> Result<Vec<(String, i32, Vec<String>)>, String> {
+    use super::closure::{tokenize_row, FileFamily};
+    let key = key.trim().to_ascii_uppercase();
+    let mut rows: Vec<_> = tree.keyed_index.get(&(FileFamily::Ability, "INTERNAL".to_string(), key.clone())).copied().into_iter().collect();
+    rows.extend(tree.mods_for(FileFamily::Ability, "INTERNAL", &key).iter().copied());
+    let mut out = Vec::new();
+    for (k, v) in rows.into_iter().flat_map(|r| tokenize_row(tree.row_text(r)).1) {
+        if k.trim() != "BONUS" {
+            continue;
+        }
+        let (fields, gates) = split_gates(&v);
+        if fields.len() < 3 || !fields[0].trim().eq_ignore_ascii_case("ABILITYPOOL") {
+            continue;
+        }
+        let n: i32 = fields[2].trim().parse().map_err(|_| format!("{key}: BONUS:ABILITYPOOL count {:?} is not a whole number", fields[2]))?;
+        out.push((fields[1].trim().to_string(), n, gates));
+    }
+    Ok(out)
+}
+
+fn internal_hop_grants(tree: &PinnedTree, key: &str) -> Option<Vec<String>> {
+    use super::closure::{tokenize_row, FileFamily};
+    let key = key.trim().to_ascii_uppercase();
+    let mut rows: Vec<_> = tree.keyed_index.get(&(FileFamily::Ability, "INTERNAL".to_string(), key.clone())).copied().into_iter().collect();
+    rows.extend(tree.mods_for(FileFamily::Ability, "INTERNAL", &key).iter().copied());
+    let grants: Vec<String> =
+        rows.into_iter().flat_map(|r| tokenize_row(tree.row_text(r)).1).filter(|(k, _)| k.trim() == "ABILITY").map(|(_, v)| v).collect();
+    let plain = |v: &String| {
+        let (fields, _) = split_gates(v);
+        fields.len() >= 3
+            && fields[1].trim().eq_ignore_ascii_case("AUTOMATIC")
+            && fields.iter().skip(2).all(|t| !t.contains("%LIST") && !t.contains("%CHOICE"))
+    };
+    (!grants.is_empty() && grants.iter().all(plain)).then_some(grants)
+}
+
+/// SD-37 E4.4: the spells a `CATEGORY:Internal` helper row adds to a class's spells known
+/// (`SPELLKNOWN:CLASS|Mystic=1|detect thoughts|Mystic=2|zone of truth`), when the row grants no
+/// ability -- a SPELL HOP. The oracle's mystic connections reach their connection spells this
+/// way: `Empath` grants `ABILITY:Internal|AUTOMATIC|Empath Connection Spell - 2|PREVAREQ:
+/// MysticHighestCastableConnectionLVL,2` (`scr_abilities.lst:1588`), and only that row names the
+/// spells (:1671). The spells are printed; the count is a sheet total ("one for each level of
+/// mystic spell you can cast", SRD Mystic Connection Spell). `(class, spell level, spell)` per
+/// spell named; `None`: the row is not a spell hop.
+fn internal_spell_known_grants(tree: &PinnedTree, key: &str) -> Option<Vec<(String, u8, String)>> {
+    use super::closure::{tokenize_row, FileFamily};
+    let key = key.trim().to_ascii_uppercase();
+    let mut rows: Vec<_> = tree.keyed_index.get(&(FileFamily::Ability, "INTERNAL".to_string(), key.clone())).copied().into_iter().collect();
+    rows.extend(tree.mods_for(FileFamily::Ability, "INTERNAL", &key).iter().copied());
+    let tokens: Vec<(String, String)> = rows.into_iter().flat_map(|r| tokenize_row(tree.row_text(r)).1).collect();
+    if tokens.iter().any(|(k, _)| k.trim() == "ABILITY") {
+        return None;
+    }
+    let mut out = Vec::new();
+    for (_, value) in tokens.iter().filter(|(k, _)| k.trim() == "SPELLKNOWN") {
+        let (fields, gates) = split_gates(value);
+        if !gates.is_empty() || !fields.first().is_some_and(|f| f.trim().eq_ignore_ascii_case("CLASS")) {
+            return None;
+        }
+        let mut current: Option<(String, u8)> = None;
+        for f in fields.iter().skip(1).map(|f| f.trim()) {
+            if let Some((class, level)) = f.split_once('=') {
+                current = Some((class.trim().to_string(), level.trim().parse().ok()?));
+            } else {
+                let (class, level) = current.clone()?;
+                for spell in f.split(',').map(str::trim).filter(|x| !x.is_empty()) {
+                    out.push((class.clone(), level, spell.to_string()));
+                }
+            }
+        }
+    }
+    (!out.is_empty()).then_some(out)
+}
+
 /// The sheet total(s) a `BONUS:<sub>|<target>` feeds, with the label words for the line.
 fn bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str) -> Result<Vec<(BonusTarget, String)>, String> {
     let t = target.trim();
@@ -207,7 +872,7 @@ fn bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str) -> Result<Vec<(Bo
                 } else if s.eq_ignore_ascii_case("ALL") {
                     out.push((BonusTarget::SkillGroup("All".into()), "all skills".into()));
                 } else {
-                    out.push((BonusTarget::Skill(ctx.skill_id(s)), s.to_string()));
+                    out.push((BonusTarget::Skill(ctx.skill_id(s)), sf_skill_words(ctx, s)));
                 }
             }
             out
@@ -318,7 +983,7 @@ fn bonus_targets(ctx: &mut RecordCtx, sub: &str, target: &str) -> Result<Vec<(Bo
                     return Err("BONUS:SITUATION (target shape)".into());
                 }
                 let sit = situation.trim().to_ascii_lowercase();
-                out.push((BonusTarget::SkillSituation { skill: ctx.skill_id(skill), situation: sit.clone() }, format!("{} ({sit})", skill.trim())));
+                out.push((BonusTarget::SkillSituation { skill: ctx.skill_id(skill), situation: sit.clone() }, format!("{} ({sit})", sf_skill_words(ctx, skill))));
             }
             out
         }
@@ -428,6 +1093,9 @@ fn weapon_type_selector(ctx: &mut RecordCtx, membership: &WeaponMembershipIndex,
         ctx.defect("unrecognized-proficiency-tag", format!("{}: {w}", ctx.record.id));
         return None;
     }
+    // SD-37 E3.4: each member is a weapon proficiency's name; a product-identity one becomes its
+    // proficiency record's renamed name ([`sf_screened_record_name`]; Pathfinder unchanged).
+    let members: Vec<String> = members.into_iter().filter_map(|m| sf_screened_record_name(ctx, "proficiency", &m)).collect();
     Some(ProfRef::WeaponSet { label: segments.join("."), members })
 }
 
@@ -682,6 +1350,8 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         desc_redacted: pi_desc,
         tempdesc_seen: false,
         pool_picks: Vec::new(),
+        sf_spell_hop_lines: Vec::new(),
+        sf_hop_pool_lines: Vec::new(),
     };
     // The choice id is the record's own id when it carries a CHOOSE (pre-scan so %CHOICE
     // markers before the CHOOSE token still bind).
@@ -709,7 +1379,8 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     let mut failed_seqs: BTreeSet<usize> = BTreeSet::new();
     for row in &closure.rows {
         let level_gate = row.level_gate;
-        for (key, value) in &row.tokens {
+        let unglued = sf_unglued(ctx.tree.system, &row.tokens);
+        for (key, value) in sf_text_repaired(ctx.tree.system, &unglued).iter() {
             let key = key.trim();
             let value = value.as_str();
             if row.kind == ClosureRowKind::LevelLine && !matches!(key, "ABILITY" | "BONUS" | "ADD" | "DOMAIN" | "TEMPLATE" | "SPELLS" | "UDAM" | "UMULT" | "DEFINE" | "AUTO" | "CSKILL") {
@@ -718,8 +1389,24 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             }
             // The census key: the row this token resolves to, recorded before any branch
             // below decides what to do with it (AT-35-E2-004).
-            let under = token_key(key, value);
+            let sf_formula = sf_formula_head(ctx.tree.system, key);
+            let under = if sf_formula { format!("formula-system:{key}") } else { token_key(key, value) };
             ctx.carry(under.clone());
+            if sf_formula && !value.contains("[redacted PI]") {
+                seq += 1;
+                ctx.current_under = Some(under.clone());
+                ctx.current_seq = Some(seq);
+                ctx.current_seq_degraded = false;
+                if let Err(tt) = convert_sf_formula_token(&mut ctx, &mut acc, key, value) {
+                    ctx.refuse_under(&under, tt);
+                }
+                if ctx.current_seq_degraded {
+                    failed_seqs.insert(seq);
+                }
+                ctx.current_under = None;
+                ctx.current_seq = None;
+                continue;
+            }
             if value.contains("[redacted PI]") {
                 match key {
                     // `decisions.md` §15 R2 (RULED): omit the redacted field, stamp
@@ -744,14 +1431,18 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
                 ctx.pi_declared.push("token".into());
                 continue;
             }
-            let Some(trow) = row_for_head(key, value) else {
-                // No row: the census key IS the refusal shape (`BONUS:<SUB>` / `unmapped:<HEAD>`).
-                ctx.refuse_under(&under, under.clone());
-                continue;
-            };
-            if trow.maps_to == MapsTo::Refuse {
-                ctx.refuse_under(&under, trow.token_type);
-                continue;
+            match row_for_head(key, value) {
+                // No row: the census key IS the refusal shape (`BONUS:<SUB>` / `unmapped:<HEAD>`),
+                // except a Starfinder prerequisite head the PF table has no row for.
+                None if !sf_prereq_head(ctx.tree.system, key) => {
+                    ctx.refuse_under(&under, under.clone());
+                    continue;
+                }
+                Some(trow) if trow.maps_to == MapsTo::Refuse => {
+                    ctx.refuse_under(&under, trow.token_type);
+                    continue;
+                }
+                _ => {}
             }
             seq += 1;
             ctx.current_under = Some(under.clone());
@@ -777,6 +1468,9 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     // to (its member list), never by which book's capitalization produced the label, so once
     // two grants resolve to the same member set only the first survives.
     acc.grants = dedup_weapon_set_grants(acc.grants);
+    // SD-37 E4.4: the spell-hop lines go after every other line, so no existing line's id moves.
+    let hop_lines = std::mem::take(&mut acc.sf_spell_hop_lines);
+    acc.lines.extend(hop_lines);
     // SD-36 F1c-5 (D8): a record that raises a variable pool offers the pick (`pool_pick.rs`).
     offer_pool_pick(&mut ctx, &mut acc, &mut out);
     // ---- assemble -------------------------------------------------------------------------
@@ -785,7 +1479,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         match &acc.output_name {
             Some(on) if !record.pi_fields.iter().any(|f| f == "name") => {
                 let expanded = expand_output_name(on, &base);
-                if pi_hit(&expanded).is_some() {
+                if pi_hit(ctx.tree.system, &expanded).is_some() {
                     ctx.pi_term_hits.push("output_name".into());
                     base
                 } else {
@@ -888,6 +1582,55 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     // record built this way. The real, precise line is "does a LATER line exist that this
     // line's assembled label could be discarding" -- exactly `lines.len() > 1`.
     let is_multi_line = lines.len() > 1;
+    // SD-37 E4.1: a Starfinder race's racial Hit Points, a sibling of its own (`#race_hp`) pushed
+    // after the principal and label rules above, so no existing line's id, label or value moves.
+    if ctx.tree.system == GameSystem::Starfinder1e && record.kind == "race" {
+        match sf_race_hit_points(ctx.tree, closure) {
+            Ok(Some((target, n))) => lines.push(Line {
+                seq: None,
+                suffix: Some("race_hp".into()),
+                label: format!("{label} (racial Hit Points)"),
+                value: SheetValue::Number(Expr::Const(n as i32)),
+                also: Vec::new(),
+                target: Some(target),
+                bonus_type: None,
+                applies: Applies::Always,
+                prose: Vec::new(),
+            }),
+            Ok(None) => {}
+            Err(why) => ctx.defect("sf-race-hit-points-unresolved", format!("{}: {why}", record.id)),
+        }
+    }
+    // SD-37 E6.2: a selection hop's ability pools, siblings pushed after the label rule above.
+    lines.extend(std::mem::take(&mut acc.sf_hop_pool_lines));
+    // SD-37 E4.4: a Starfinder class's spell progression (`sf_spell_progression`), siblings of
+    // their own pushed after every existing line, so no existing line's id, label or value moves.
+    if ctx.tree.system == GameSystem::Starfinder1e && record.kind == "class" {
+        let class = super::ctx::own_class_id(record);
+        match sf_spell_progression(closure, &class) {
+            Ok(rows) => {
+                for r in rows {
+                    let (target, words, suffix) = if r.known {
+                        (BonusTarget::SpellsKnown { class: class.clone(), level: r.spell_level }, "spells known", "spells_known")
+                    } else {
+                        (BonusTarget::SpellCell { class: class.clone(), level: r.spell_level }, "spells per day", "spells_per_day")
+                    };
+                    lines.push(Line {
+                        seq: None,
+                        suffix: Some(format!("{suffix}_{}", r.spell_level)),
+                        label: format!("{label} (level {} {words})", r.spell_level),
+                        value: SheetValue::Number(r.value),
+                        also: Vec::new(),
+                        target: Some(target),
+                        bonus_type: None,
+                        applies: Applies::Compare { lhs: Expr::ClassLevel(class.clone()), op: Cmp::Gte, rhs: Expr::Const(i32::from(r.first)) },
+                        prose: Vec::new(),
+                    });
+                }
+            }
+            Err(why) => ctx.defect("sf-spell-progression-unresolved", format!("{}: {why}", record.id)),
+        }
+    }
     let mut principal_also = std::mem::take(&mut acc.also);
     for (i, line) in lines.into_iter().enumerate() {
         let id = match (&line.suffix, i) {
@@ -990,6 +1733,9 @@ fn gates_of(ctx: &mut RecordCtx, gates: &[String], level_gate: Option<u8>) -> Re
 /// The class principal's skill-ranks row label; `class_chassis_sheet_rules` reads it by name.
 const SKILL_RANKS_LABEL: &str = "Skill ranks per level";
 
+/// A Starfinder item's price row label (credits); `pilot_compute::sf_loadout` reads it by name.
+const SF_PRICE_LABEL: &str = "Price";
+
 /// A `STARTSKILLPTS` value as one number: a literal (`STARTSKILLPTS:4`), or a bare variable the
 /// record's own closure `DEFINE`s with a literal and raises only by unconditional literal
 /// `BONUS:VAR` rows outside any level line (`STARTSKILLPTS:FighterSkillPoints` +
@@ -1035,6 +1781,67 @@ fn start_skill_points(ctx: &RecordCtx, value: &str) -> Option<u32> {
     u32::try_from(initial? + raised).ok()
 }
 
+/// SD-37 E5.3: a Starfinder equipment modifier states its item level and bulk as special
+/// properties (`SPROP:ItemLevel=1`, `SPROP:Bulk=L`, `scr_equipmods.lst`); they are its stat
+/// rows -- `"Item level"` and the `"Quality"` row `Bulk: <bulk>`, the shapes an equipment record
+/// carries (`QUALITY:Bulk|L`) and `pilot_compute::sf_loadout` reads -- not prose. `None` for
+/// every other value, kind and system.
+fn sf_modifier_stat(system: GameSystem, kind: &str, value: &str) -> Option<(&'static str, String)> {
+    if system != GameSystem::Starfinder1e || kind != "equipment_modifier" {
+        return None;
+    }
+    let (head, rest) = value.split_once('=')?;
+    let rest = rest.trim();
+    match head.trim() {
+        "ItemLevel" if !rest.is_empty() && rest.chars().all(|c| c.is_ascii_digit()) => Some(("Item level", rest.to_string())),
+        "Bulk" | "BULK" if rest == "L" || rest == "-" || (!rest.is_empty() && rest.chars().all(|c| c.is_ascii_digit())) => {
+            Some(("Quality", format!("Bulk: {rest}")))
+        }
+        _ => None,
+    }
+}
+
+/// The stat-block label of a Starfinder ability-score kit ([`sf_kit_base_scores`]).
+const SF_KIT_SCORES_LABEL: &str = "Base ability scores";
+
+/// SD-37 E5.4: `KIT:<n>|<name>` names a `STARTPACK:<name>` row of a kit file; when every line of
+/// that kit is a `STAT:` line, the scores it sets, as printed words (`Str 6, Dex 16, Int 6, Wis 8,
+/// Cha 6`, in the order the kit states them). `None` for a kit that does anything else (gear,
+/// funds, feats), or that the tree does not hold.
+fn sf_kit_base_scores(tree: &PinnedTree, value: &str) -> Option<String> {
+    use super::closure::FileFamily;
+    let name = value.split_once('|').map(|(_, n)| n).unwrap_or(value).trim();
+    for file in tree.files.iter().filter(|f| f.family == FileFamily::Kit && !f.is_pfs) {
+        let Some(start) = file.lines.iter().position(|l| {
+            l.split('\t').next().and_then(|h| h.trim().strip_prefix("STARTPACK:")).is_some_and(|n| n.trim().eq_ignore_ascii_case(name))
+        }) else {
+            continue;
+        };
+        let body: Vec<&str> = file.lines[start + 1..]
+            .iter()
+            .map(|l| l.trim_end_matches('\r'))
+            .take_while(|l| !l.trim().is_empty() && !l.trim_start().starts_with("STARTPACK:"))
+            .filter(|l| !l.trim_start().starts_with('#'))
+            .collect();
+        if body.is_empty() || !body.iter().all(|l| l.trim().starts_with("STAT:")) {
+            return None;
+        }
+        let mut words = Vec::new();
+        for line in body {
+            for pair in line.trim().trim_start_matches("STAT:").split('|') {
+                let (stat, n) = pair.split_once('=')?;
+                let n: i64 = n.trim().parse().ok()?;
+                let stat = stat.trim().to_ascii_lowercase();
+                let mut chars = stat.chars();
+                let word: String = chars.next().map(|c| c.to_ascii_uppercase()).into_iter().chain(chars).collect();
+                words.push(format!("{word} {n}"));
+            }
+        }
+        return (!words.is_empty()).then(|| words.join(", "));
+    }
+    None
+}
+
 fn push_stat(acc: &mut Acc, label: &str, pieces: Vec<ProsePiece>) {
     if pieces.is_empty() {
         return;
@@ -1054,7 +1861,7 @@ fn text_stat(ctx: &mut RecordCtx, acc: &mut Acc, label: &str, value: &str, field
     if text.is_empty() {
         return;
     }
-    if pi_hit(&text).is_some() {
+    if pi_hit(ctx.tree.system, &text).is_some() {
         ctx.pi_term_hits.push(field.to_string());
         return;
     }
@@ -1077,6 +1884,44 @@ fn number_piece(ctx: &mut RecordCtx, field: &str) -> Result<ProsePiece, String> 
 fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &str, value: &str, level_gate: Option<u8>, row_kind: ClosureRowKind) -> Result<(), String> {
     let v = value.trim();
     match key {
+        // SD-37 E5.4: a Starfinder starting kit that only sets ability scores (the drone
+        // chassis' `KIT:1|Drone ~ Hover` -> `STARTPACK:Drone ~ Hover` / `STAT:STR=6|DEX=16|INT=6|
+        // WIS=8|CHA=6`, `scr_kits.lst:9-10`) prints those scores as the record's
+        // `StatBlock "Base ability scores"` row ([`sf_kit_base_scores`]). Any other kit stays
+        // metadata, as before.
+        "KIT" if ctx.tree.system == GameSystem::Starfinder1e && level_gate.is_none() => {
+            if let Some(text) = sf_kit_base_scores(ctx.tree, v) {
+                acc.stat_block.retain(|seg| !matches!(&seg.family, ProseFamily::StatBlock(l) if l == SF_KIT_SCORES_LABEL));
+                push_stat(acc, SF_KIT_SCORES_LABEL, vec![ProsePiece::Text(text)]);
+            }
+        }
+        // SD-37 E5.4: a Starfinder race's `MONSTERCLASS:<class>:<n>` -- the class a creature of
+        // the race holds (`scr_races.lst:20`, the drone: `MONSTERCLASS:Drone:1`) -- is a grant of
+        // that class's record by the race, so the class's base attack and save rows print for a
+        // follower of the race. A class no record stands for is named, never guessed.
+        "MONSTERCLASS" if ctx.tree.system == GameSystem::Starfinder1e && ctx.record.kind == "race" => {
+            let class = v.split(':').next().unwrap_or_default().trim().to_ascii_uppercase();
+            match ctx.index.classes.get(&class) {
+                Some((rule_id, _)) => out.grants_out.push((rule_id.clone(), Grant { by: Granter::Rule(ctx.record.id.clone()), when: Applies::Always })),
+                None => ctx.defect("unresolved-references", format!("{}: MONSTERCLASS|{v}", ctx.record.id)),
+            }
+        }
+        // SD-37 E4.5: a Starfinder item's `COST:` is its price in credits, a term of the
+        // credits-spent sheet total (`decisions.md §5`), so it prints as the item's
+        // `StatBlock "Price"` row -- the stat-block shape the engine already reads for an
+        // armour's max Dex. A later row restates it (`.MOD`), so the last statement wins. A
+        // price that is not one whole number prints no row and is named in
+        // `_defects/sf-price-unresolved.json`, never guessed. Pathfinder's `COST:` stays
+        // metadata (its prices are read from the corpus, `CorpusEquipmentRecord`).
+        // SD-37 E5.3: an equipment modifier's `COST:` (an armour upgrade's, `scr_equipmods.lst`)
+        // is its price the same way; installed, it is a term of the credits spent.
+        "COST" if ctx.tree.system == GameSystem::Starfinder1e && matches!(ctx.record.kind.as_str(), "equipment" | "equipment_modifier") => match integer_literal(v) {
+            Some(n) if n >= 0 && level_gate.is_none() => {
+                acc.stat_block.retain(|seg| !matches!(&seg.family, ProseFamily::StatBlock(l) if l == SF_PRICE_LABEL));
+                push_stat(acc, SF_PRICE_LABEL, vec![ProsePiece::Text(n.to_string())]);
+            }
+            _ => ctx.defect("sf-price-unresolved", format!("{}: {v}", ctx.record.id)),
+        },
         // ---- identity / metadata rows ------------------------------------------------------
         "KEY" | "SORTKEY" | "SOURCEPAGE" | "SOURCELONG" | "SOURCESHORT" | "SOURCEWEB" | "SOURCEDATE" | "SOURCELINK" | "KIT" | "STARTFEATS" | "LEVELSPERFEAT" | "RACETYPE"
         | "RACESUBTYPE" | "SUBRACE" | "DEITYWEAP" | "ALIGN" | "USEUNTRAINED" | "ROLE" | "NAMEOPT" | "ITYPE" | "REPLACES" | "FORMATCAT" | "ASSIGNTOALL" | "REGION" | "REMOVABLE" | "VARIANTS"
@@ -1191,6 +2036,20 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         "OUTPUTNAME" => acc.output_name = Some(decode_entities(v)),
         "FACT" => {
             if let Some((name, val)) = v.split_once('|') {
+                // SD-37 E3.4: a Starfinder fact's value prints (a deity's title), so it is
+                // screened; a product-identity value is withheld, never printed. E3.5: so is a
+                // fact whose name is product identity (`FACT:SkyfireCenturion|True`), which is
+                // recorded without the name.
+                if ctx.tree.system != GameSystem::Pathfinder1e {
+                    if pi_hit(ctx.tree.system, name).is_some() {
+                        ctx.pi_term_hits.push("fact name".to_string());
+                        return Ok(());
+                    }
+                    if pi_hit(ctx.tree.system, val).is_some() {
+                        ctx.pi_term_hits.push(format!("fact {}", name.trim()));
+                        return Ok(());
+                    }
+                }
                 acc.grants.push(Effect::FactDeclare { name: name.trim().to_string(), value: val.trim().to_string() });
             }
         }
@@ -1237,7 +2096,11 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             // `inner_sea_intrigue:equipment_modifier:special_ability_transformative_greater_melee`
             // is the one live corpus record this fires on today.
             let v = v.strip_prefix(&format!("{key}:")).unwrap_or(v);
-            if v == ".CLEAR" {
+            if key == "SPROP"
+                && let Some((label, text)) = sf_modifier_stat(ctx.tree.system, &ctx.record.kind, v)
+            {
+                push_stat(acc, label, vec![ProsePiece::Text(text)]);
+            } else if v == ".CLEAR" {
                 acc.special.clear();
             } else if let Some(seg) = convert_positional(ctx, ProseFamily::Special, v, key.to_ascii_lowercase().as_str())? {
                 acc.special.push(seg);
@@ -1378,7 +2241,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     return Err("NATURALATTACKS (shape)".into());
                 }
                 let name = parts[0].to_string();
-                if pi_hit(&name).is_some() {
+                if pi_hit(ctx.tree.system, &name).is_some() {
                     ctx.pi_term_hits.push("natural attack".into());
                     continue;
                 }
@@ -1403,7 +2266,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                 let mut prose = Vec::new();
                 for extra in parts.iter().skip(4) {
                     if let Some(sp) = extra.strip_prefix("SPROP=") {
-                        if pi_hit(sp).is_some() {
+                        if pi_hit(ctx.tree.system, sp).is_some() {
                             ctx.pi_term_hits.push("natural attack".into());
                         } else {
                             prose.push(ProseSegment { family: ProseFamily::Special, pieces: vec![ProsePiece::Text(sp.to_string())], applies: None, pick_last: false, suppress_when_all_zero: false });
@@ -1458,17 +2321,58 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         }
         "MOVE" => {
             let parts: Vec<&str> = v.split(',').map(|s| s.trim()).collect();
+            // SD-37 E5.1: a Starfinder race's `MOVE:<mode>,0` prints the speed its row states
+            // (`sf_race_speeds`), and a mode only that row states prints after the `MOVE` modes.
+            let mut sf_speeds = sf_race_speeds(ctx);
+            let sf_race = ctx.tree.system == GameSystem::Starfinder1e && ctx.record.kind == "race";
+            let mut unstated = false;
             let mut pieces = Vec::new();
             for pair in parts.chunks(2) {
                 if pair.len() < 2 {
                     break;
                 }
+                // SD-37 E5.4: a Starfinder race whose row states no speed for a `MOVE:<mode>,0`
+                // mode (the drone, `scr_races.lst:20`: its speed is its chassis',
+                // `scr_abilities.lst:1393-1395` `BONUS:VAR|Walk|<n>`) prints no `<mode> 0 ft.`;
+                // its speeds are its movement variables (below).
+                if sf_race && pair[1] == "0" && !sf_speeds.keys().any(|m| m.eq_ignore_ascii_case(pair[0])) {
+                    unstated = true;
+                    continue;
+                }
                 if !pieces.is_empty() {
                     pieces.push(ProsePiece::Text(", ".into()));
                 }
                 pieces.push(ProsePiece::Text(format!("{} ", pair[0])));
-                pieces.push(number_piece(ctx, pair[1])?);
+                let stated = sf_speeds.keys().find(|m| m.eq_ignore_ascii_case(pair[0])).cloned().and_then(|m| sf_speeds.remove(&m));
+                let speed = match stated {
+                    Some(n) if pair[1] == "0" => ProsePiece::Text(n.to_string()),
+                    _ => number_piece(ctx, pair[1])?,
+                };
+                pieces.push(speed);
                 pieces.push(ProsePiece::Text(" ft.".into()));
+            }
+            for (mode, n) in sf_speeds.into_iter().filter(|(_, n)| *n > 0) {
+                if !pieces.is_empty() {
+                    pieces.push(ProsePiece::Text(", ".into()));
+                }
+                pieces.push(ProsePiece::Text(format!("{mode} {n} ft.")));
+            }
+            // SD-37 E5.4: a race that states no speed at all prints each movement mode of the game
+            // mode (`MOVEMENT:` rows, `scr__dynamic.lst:3-7`) as the value of its variable
+            // (`DEFINE:Walk|0` ... on the always-held `Default`, `scr_abilities.lst:87`; raised by
+            // what the creature holds, `BONUS:VAR|Walk|30`), and a mode whose variable is 0 prints
+            // nothing (`suppress_when_all_zero`).
+            if unstated && pieces.is_empty() {
+                for mode in sf_movement_modes(ctx.tree) {
+                    let speed = convert_formula(ctx, &mode)?;
+                    acc.stat_block.push(ProseSegment {
+                        family: ProseFamily::StatBlock("Speed".to_string()),
+                        pieces: vec![ProsePiece::Text(format!("{mode} ")), ProsePiece::Slot(speed), ProsePiece::Text(" ft.".into())],
+                        applies: None,
+                        pick_last: false,
+                        suppress_when_all_zero: true,
+                    });
+                }
             }
             push_stat(acc, "Speed", pieces);
         }
@@ -1506,7 +2410,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     Some(i) => (e[..i].trim().to_string(), Some(e[i + 1..].trim_end_matches(')').trim().to_string())),
                     None => (e.to_string(), None),
                 };
-                if pi_hit(&name).is_some() {
+                if pi_hit(ctx.tree.system, &name).is_some() {
                     ctx.pi_term_hits.push("vision".into());
                     continue;
                 }
@@ -1654,6 +2558,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                 "WEAPONPROF" => {
                     // Row BONUS:WEAPONPROF=<name>: the property named by the second field.
                     let weapon = weapon_ref(ctx, sub_arg.as_deref().unwrap_or(""));
+                    let weapon = match weapon {
+                        WeaponRef::Named(n) => match sf_screened_record_name(ctx, "equipment", &n) {
+                            Some(n) => WeaponRef::Named(n),
+                            None => return Err("BONUS:WEAPONPROF (weapon name withheld: product identity)".into()),
+                        },
+                        other => other,
+                    };
                     let expr = convert_formula(ctx, &formula)?;
                     let prop = target.to_ascii_uppercase();
                     let (bt, words) = match prop.as_str() {
@@ -1667,11 +2578,24 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         WeaponRef::Group(g) => format!("{g} weapons"),
                         _ => "chosen weapon".into(),
                     };
+                    // SD-37 E3.4: the weapon's name prints on the line, so it is screened like
+                    // every other printed string; a product-identity name prints as the
+                    // record's own (already screened) name instead.
+                    let wname = if pi_hit(ctx.tree.system, &wname).is_some() {
+                        ctx.pi_term_hits.push("weapon name".into());
+                        ctx.record.name.clone()
+                    } else {
+                        wname
+                    };
                     acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("weapon{}", acc.lines.len())), label: format!("{wname} {words}"), value: SheetValue::Number(expr), also: Vec::new(), target: Some(bt), bonus_type: bonus_type.clone(), applies: when, prose: Vec::new() });
                 }
                 other => {
+                    let sf_targets = sf_bonus_targets(ctx, other, &target, &formula, bonus_type.as_ref())?;
                     let expr = convert_formula(ctx, &formula)?;
-                    let targets = bonus_targets(ctx, other, &target)?;
+                    let targets = match sf_targets {
+                        Some(t) => t,
+                        None => bonus_targets(ctx, other, &target)?,
+                    };
                     for (bt, words) in targets {
                         acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("bonus{}", acc.lines.len())), label: format!("{} ({words})", ctx.record.name), value: SheetValue::Number(expr.clone()), also: Vec::new(), target: Some(bt), bonus_type: bonus_type.clone(), applies: when.clone(), prose: Vec::new() });
                     }
@@ -1725,7 +2649,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     Some((s, d)) => (s.trim().to_string(), Some(d.trim().to_string())),
                     None => (entry.trim().to_string(), None),
                 };
-                if pi_hit(&spell).is_some() {
+                if pi_hit(ctx.tree.system, &spell).is_some() {
                     ctx.pi_term_hits.push("spell-like ability".into());
                     continue;
                 }
@@ -1795,6 +2719,83 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     }
                     continue;
                 }
+                // SD-37 E4.2: a Starfinder `CATEGORY:Internal` selection row no unit stands for is
+                // a hop -- its own automatic `ABILITY:` grants are this record's
+                // ([`internal_hop_grants`]).
+                if ctx.tree.system == GameSystem::Starfinder1e
+                    && category.eq_ignore_ascii_case("Internal")
+                    && ctx.resolve_rule_checked(&category, t) == super::ctx::RuleLookup::Missing
+                    && let Some(inner) = internal_hop_grants(ctx.tree, t)
+                {
+                    for value in inner {
+                        let (inner_fields, inner_gates) = split_gates(&value);
+                        let inner_category = inner_fields[0].trim().to_string();
+                        let inner_when = Applies::all(vec![when.clone(), gates_of(ctx, &inner_gates, None)?]);
+                        for inner_target in inner_fields.iter().skip(2).map(|x| x.trim()).filter(|x| !x.is_empty() && *x != ".CLEAR") {
+                            if inner_target.starts_with("TYPE=") || inner_target.starts_with("TYPE.") {
+                                for id in ability_type_selector_targets(ctx, &inner_category, inner_target) {
+                                    out.grants_out.push((id, Grant { by: by.clone(), when: inner_when.clone() }));
+                                }
+                                continue;
+                            }
+                            if let Holdable::Rule(id) = resolve_holdable_rule(ctx, &inner_category, inner_target) {
+                                out.grants_out.push((id, Grant { by: by.clone(), when: inner_when.clone() }));
+                            }
+                        }
+                    }
+                    // SD-37 E6.2: the hop's ability pools are this record's too
+                    // ([`internal_hop_ability_pools`]), under the hop's gate.
+                    match internal_hop_ability_pools(ctx.tree, t) {
+                        Ok(pools) => {
+                            for (pool, n, pool_gates) in pools {
+                                let pool_when = Applies::all(vec![when.clone(), gates_of(ctx, &pool_gates, None)?]);
+                                acc.sf_hop_pool_lines.push(Line {
+                                    seq: ctx.current_seq,
+                                    suffix: Some(format!("pool_{}", slug(&pool))),
+                                    label: format!("{} ({} picks)", ctx.record.name, pool.to_ascii_lowercase()),
+                                    value: SheetValue::Number(Expr::Const(n)),
+                                    also: Vec::new(),
+                                    target: Some(BonusTarget::Pool(slug(&pool))),
+                                    bonus_type: None,
+                                    applies: pool_when,
+                                    prose: Vec::new(),
+                                });
+                            }
+                        }
+                        Err(why) => ctx.defect("sf-hop-ability-pool-count", why),
+                    }
+                    continue;
+                }
+                // SD-37 E4.4: a Starfinder `CATEGORY:Internal` row no unit stands for that names
+                // spells known is a spell hop -- each spell is one spell known on this record,
+                // under the grant's gate ([`internal_spell_known_grants`]).
+                if ctx.tree.system == GameSystem::Starfinder1e
+                    && category.eq_ignore_ascii_case("Internal")
+                    && ctx.resolve_rule_checked(&category, t) == super::ctx::RuleLookup::Missing
+                    && let Some(spells) = internal_spell_known_grants(ctx.tree, t)
+                {
+                    for (class, level, spell) in spells {
+                        let class_id = ctx.class_id(&class);
+                        let shown = if pi_hit(ctx.tree.system, &spell).is_some() {
+                            ctx.pi_term_hits.push("spell known".into());
+                            "a spell".to_string()
+                        } else {
+                            spell.clone()
+                        };
+                        acc.sf_spell_hop_lines.push(Line {
+                            seq: ctx.current_seq,
+                            suffix: Some(format!("spell_known_{}_{level}_{}", slug(t), slug(&spell))),
+                            label: format!("{t}: {shown} (level {level} {class} spell known)"),
+                            value: SheetValue::Number(Expr::Const(1)),
+                            also: Vec::new(),
+                            target: Some(BonusTarget::SpellsKnown { class: class_id, level }),
+                            bonus_type: None,
+                            applies: when.clone(),
+                            prose: Vec::new(),
+                        });
+                    }
+                    continue;
+                }
                 // SD-36 F3c5: a natural-attack helper no unit stands for (`natural_attack.rs`)
                 // converts as its attack fact on this rule.
                 if ctx.resolve_rule_checked(&category, t) == super::ctx::RuleLookup::Missing
@@ -1810,6 +2811,9 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     continue;
                 }
                 if let Holdable::Rule(id) = resolve_holdable_rule(ctx, &category, t) {
+                    if ctx.tree.system == GameSystem::Starfinder1e && nature == "AUTOMATIC" && matches!(by, Granter::Rule(_)) {
+                        out.automatic_grants.push((id.clone(), Grant { by: by.clone(), when: when.clone() }));
+                    }
                     out.grants_out.push((id, Grant { by, when: when.clone() }));
                 }
             }
@@ -1821,7 +2825,10 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             let items: Vec<String> = fields.iter().skip(1).map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect();
             let choice = ctx.choice_id.clone().unwrap_or_else(|| ctx.record.id.clone());
             let facts: Vec<Fact> = match head.as_str() {
-                "LANG" => items.into_iter().map(|l| if l.contains("%LIST") { Fact::Chosen(choice.clone()) } else { Fact::Language(tag_word(&l)) }).collect(),
+                "LANG" => items
+                    .into_iter()
+                    .filter_map(|l| if l.contains("%LIST") { Some(Fact::Chosen(choice.clone())) } else { sf_screened_record_name(ctx, "language", &l).map(|l| Fact::Language(tag_word(&l))) })
+                    .collect(),
                 "WEAPONPROF" => {
                     let membership = weapon_membership::index(ctx.tree);
                     let mut out = Vec::with_capacity(items.len());
@@ -1834,7 +2841,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                             }
                         } else if w.eq_ignore_ascii_case("DEITYWEAPONS") {
                             out.push(Fact::Proficiency(ProfRef::DeityFavoredWeapon));
-                        } else {
+                        } else if let Some(w) = sf_screened_record_name(ctx, "proficiency", &w) {
                             out.push(Fact::Proficiency(ProfRef::Weapon(tag_word(&w))));
                         }
                     }
@@ -2029,7 +3036,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             match head.as_str() {
                 "SPELLCASTER" => {
                     let who = fields.get(1).cloned().unwrap_or_default();
-                    if pi_hit(&who).is_none() {
+                    if pi_hit(ctx.tree.system, &who).is_none() {
                         acc.special.push(ProseSegment { family: ProseFamily::Special, pieces: vec![ProsePiece::Text(format!("Casts spells as a {who}."))], applies: None, pick_last: false, suppress_when_all_zero: false });
                     }
                 }
@@ -2159,6 +3166,7 @@ mod ability_type_selector_tests {
 
     fn empty_tree() -> PinnedTree {
         PinnedTree {
+            system: codex::rules_core::game_system::GameSystem::Pathfinder1e,
             root: PathBuf::new(),
             book_paths: BTreeMap::new(),
             source_dates: BTreeMap::new(),
@@ -2175,6 +3183,7 @@ mod ability_type_selector_tests {
             ability_category_parent: BTreeMap::new(),
             ability_category_type: BTreeMap::new(),
             ability_category_pool: BTreeMap::new(),
+            armor_class_split: BTreeMap::new(),
         }
     }
 
@@ -2284,5 +3293,64 @@ mod ability_type_selector_tests {
             let expected = format!("book:class_feature:granter: {category}|{rest}");
             assert_eq!(c.defects.get("grant-by-type"), Some(&vec![expected]), "{token}: {:?}", c.defects);
         }
+    }
+}
+
+#[cfg(test)]
+mod sf_text_repair_tests {
+    use super::*;
+    use codex::rules_core::game_system::GameSystem;
+
+    /// SD-37 E5.2: the oracle's Starfinder text stored as UTF-8 once read as Windows-1252
+    /// prints as the characters it encodes (shapes measured over the eight converted books).
+    #[test]
+    fn starfinder_mis_decoded_text_prints_as_the_characters_it_encodes() {
+        let cases = [
+            // scr_spells.lst:56, Detect Thoughts: curly quotes, the closing one's byte 0x9D undefined in 1252.
+            ("\u{e2}\u{20ac}\u{153}Listen\u{e2}\u{20ac}\u{9d} to surface thoughts.", "\u{201c}Listen\u{201d} to surface thoughts."),
+            ("death\u{e2}\u{20ac}\u{2122}s head", "death\u{2019}s head"),
+            ("50\u{c2}\u{b0} and 140\u{c2}\u{b0} F", "50\u{b0} and 140\u{b0} F"),
+            // a no-break space the source then wrote as a plain space
+            ("prone for 1\u{c2} round.", "prone for 1 round."),
+            // en/em dash whose third byte (0x93/0x94, a curly quote in 1252) was straightened to `"`
+            ("takes a \u{e2}\u{20ac}\"4 penalty", "takes a \u{2013}4 penalty"),
+            ("DR 5/\u{e2}\u{20ac}\" or energy resistance", "DR 5/\u{2014} or energy resistance"),
+            // a multiplication sign whose second byte (0x97, an em dash in 1252) was written `-`
+            ("1,000 credits \u{c3}- the total CR", "1,000 credits \u{d7} the total CR"),
+        ];
+        for (raw, want) in cases {
+            assert_eq!(sf_unmisdecoded(raw), want, "{raw:?}");
+        }
+        // Real non-ASCII text is left alone.
+        for text in ["a \u{2013}2 penalty", "powered armor\u{2014}they", "15 + 1-1/2 \u{d7} your", "-50\u{b0} and 170\u{b0} F", "plain"] {
+            assert!(matches!(sf_unmisdecoded(text), std::borrow::Cow::Borrowed(_)), "{text:?}");
+        }
+        // Pathfinder rows are read as they are.
+        let tokens = vec![("DESC".to_string(), "1\u{c2} round".to_string())];
+        assert_eq!(sf_text_repaired(GameSystem::Pathfinder1e, &tokens)[0].1, "1\u{c2} round");
+        assert_eq!(sf_text_repaired(GameSystem::Starfinder1e, &tokens)[0].1, "1 round");
+    }
+}
+
+#[cfg(test)]
+mod sf_modifier_stat_tests {
+    use super::*;
+    use codex::rules_core::game_system::GameSystem;
+
+    /// SD-37 E5.3: a Starfinder equipment modifier's `SPROP:ItemLevel=<n>` and
+    /// `SPROP:Bulk=<n|L|->` (`scr_equipmods.lst`: `Infrared sensors ... SPROP:ItemLevel=1
+    /// SPROP:Bulk=L`) are its stat rows -- the item level and the `Bulk:` quality an equipment
+    /// record carries -- not prose; every other `SPROP`, and Pathfinder's, stays prose.
+    #[test]
+    fn starfinder_modifier_level_and_bulk_sprops_are_stat_rows() {
+        let sf = GameSystem::Starfinder1e;
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "ItemLevel=1"), Some(("Item level", "1".to_string())));
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "Bulk=L"), Some(("Quality", "Bulk: L".to_string())));
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "BULK=-"), Some(("Quality", "Bulk: -".to_string())));
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "Bulk=2"), Some(("Quality", "Bulk: 2".to_string())));
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "You gain darkvision with a range of 60 feet."), None);
+        assert_eq!(sf_modifier_stat(sf, "equipment_modifier", "ItemLevel=varies"), None);
+        assert_eq!(sf_modifier_stat(sf, "equipment", "ItemLevel=1"), None);
+        assert_eq!(sf_modifier_stat(GameSystem::Pathfinder1e, "equipment_modifier", "Bulk=L"), None);
     }
 }

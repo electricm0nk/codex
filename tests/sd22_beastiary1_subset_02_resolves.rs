@@ -37,8 +37,8 @@
 //! for the full grounding and the corrected `corpus-source-inventory.md`
 //! §3.1 row.
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
 
 #[test]
 fn darkmantle_resolves_via_ruleset_bestiary1() {

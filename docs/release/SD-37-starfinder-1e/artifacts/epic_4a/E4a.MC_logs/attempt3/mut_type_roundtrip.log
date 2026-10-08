@@ -1,0 +1,25 @@
+      "fort_save": "one",
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 1 test
+test rules_core::rules_data_package::tests::every_table_round_trips_through_the_loader ... FAILED
+
+failures:
+
+---- rules_core::rules_data_package::tests::every_table_round_trips_through_the_loader stdout ----
+
+thread 'rules_core::rules_data_package::tests::every_table_round_trips_through_the_loader' (1418077) panicked at src/rules_core/rules_data_package.rs:1253:9:
+1 of 281 tables fail the round trip:
+crb/class_tables/class_tables: /home/ubuntu/workspace/worktrees/codex-sd37/data/rules_tables/crb/class_tables/class_tables.json: rows do not match the table's row type: invalid type: string "one", expected i16
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::rules_data_package::tests::every_table_round_trips_through_the_loader
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2843 filtered out; finished in 8.69s
+
+error: test failed, to rerun pass `--lib`
+roundtrip_rc_under_mutation=101
+exit=0

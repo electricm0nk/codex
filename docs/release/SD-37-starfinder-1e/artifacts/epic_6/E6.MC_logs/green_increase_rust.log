@@ -1,0 +1,14 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 32.55s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 6 tests
+test sf_level_up::tests::character_level_20_is_the_cap ... ok
+test sf_level_up::tests::the_preview_lists_the_class_the_level_and_every_total_it_changes ... ok
+test sf_level_up::tests::a_new_class_shows_its_level_and_the_engines_multiclass_refusal ... ok
+test sf_level_up::tests::the_increase_asks_for_the_engines_count_of_scores ... ok
+test sf_level_up::tests::a_level_the_rules_refuse_is_blocked_and_nothing_is_saved ... ok
+test sf_level_up::tests::the_seeds_leveled_through_the_level_up_have_their_totals ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 690 filtered out; finished in 21.76s
+

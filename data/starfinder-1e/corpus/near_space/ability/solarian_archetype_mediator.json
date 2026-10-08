@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Archetype",
+    "key": "Solarian Archetype ~ Mediator",
+    "name": "Mediator",
+    "type": "Archetype.Solarian Archetype"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 75,
+    "path": "starfinder/paizo/near_space/sns_abilities_class.lst",
+    "record_key": "Solarian Archetype ~ Mediator",
+    "sha256": "2f32621f4dc9d20fca4ca38995e6fd3816fa054a0c440949a71ac11e92124b9b"
+  },
+  "unit_id": "near_space:ability:solarian_archetype_mediator"
+}

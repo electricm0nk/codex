@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Electroplating",
+    "name": "Electroplating",
+    "type": "Spell"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "starfinder/paizo/armory/sa_spells.lst",
+    "record_key": "Electroplating",
+    "sha256": "652275c55bb15769a6646c3b3450b488f780d4ffede676fc8009a862ecad0d1c"
+  },
+  "unit_id": "armory:spell:electroplating"
+}

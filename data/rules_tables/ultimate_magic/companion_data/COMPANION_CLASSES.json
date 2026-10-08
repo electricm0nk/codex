@@ -1,0 +1,114 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_magic/companion_data/COMPANION_CLASSES",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_magic",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Vermin Companion",
+      "output_name": "Vermin",
+      "hit_dice": 8,
+      "max_level": "20",
+      "type_segments": [
+        "Monster",
+        "Companion"
+      ],
+      "visible_no": true,
+      "source_page": "p.36",
+      "ability_grants": [
+        {
+          "kind": "Special Ability",
+          "mode": "AUTOMATIC",
+          "name": "Vermin Traits",
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VAREQ",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "NoTypeTraits"
+                },
+                {
+                  "facet": null,
+                  "value": "0"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "kind": "Internal",
+          "mode": "AUTOMATIC",
+          "name": "Mindless Companion",
+          "conditions": [
+            {
+              "negated": true,
+              "family": "ABILITY",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "1"
+                },
+                {
+                  "facet": "CATEGORY",
+                  "value": "Special Ability"
+                },
+                {
+                  "facet": null,
+                  "value": "Companion Stat ~ Mindless to 1 INT"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "fact_class_type": "Companion",
+      "source_file": "um_classes_companion",
+      "source_line": 9
+    },
+    {
+      "key": "1",
+      "output_name": null,
+      "hit_dice": null,
+      "max_level": null,
+      "type_segments": [],
+      "visible_no": false,
+      "source_page": null,
+      "ability_grants": [
+        {
+          "kind": "FEAT",
+          "mode": "AUTOMATIC",
+          "name": "CMB Output",
+          "conditions": []
+        }
+      ],
+      "fact_class_type": null,
+      "source_file": "um_classes_companion",
+      "source_line": 13
+    },
+    {
+      "key": "Black Blade",
+      "output_name": "Black Blade",
+      "hit_dice": null,
+      "max_level": "1",
+      "type_segments": [
+        "Monster",
+        "Companion"
+      ],
+      "visible_no": true,
+      "source_page": "p.47",
+      "ability_grants": [],
+      "fact_class_type": "Companion",
+      "source_file": "um_classes_companion",
+      "source_line": 16
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "category": "Variant Ability",
+    "key": "Codex-Named Unit (ability_character_operations_manual_scom_abilities_race_lst_7)",
+    "name": "Codex-Named Unit (ability_character_operations_manual_scom_abilities_race_lst_7)",
+    "type": "Variant Ability.Kasatha Variant Ability"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description,name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "character_operations_manual:scom_abilities_race.lst:7",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 7,
+    "path": "starfinder/paizo/character_operations_manual/scom_abilities_race.lst",
+    "record_key": "Codex-Named Unit (ability_character_operations_manual_scom_abilities_race_lst_7)",
+    "sha256": "5588ba8c160a61a39435129e567d203bdb6ddb9799c66096192888dee5dac741"
+  },
+  "unit_id": "character_operations_manual:ability:kasatha_akitonian_settler_variant"
+}

@@ -15,7 +15,7 @@
 //! 1. **The leak reaches the player from the compiled tables, not from
 //!    `data/corpus/`.** `apps/desktop/src-tauri/src/spell_catalog.rs` serves
 //!    the Spell Catalog screen (and the Character Sheet's Add Spell picker)
-//!    straight out of `rules_tables::{crb,apg,acg,advanced_race_guide}::
+//!    straight out of `rules_catalog::{crb,apg,acg,advanced_race_guide}::
 //!    spell_list`. Fixing only the ingest binary that writes
 //!    `data/corpus/<book>/spell/*.json` would leave every leaking string on
 //!    screen exactly as before.

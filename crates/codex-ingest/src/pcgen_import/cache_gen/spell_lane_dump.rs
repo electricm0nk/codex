@@ -3,7 +3,7 @@
 //!
 //! **The gap this closes.** `spell_resolver::spell_catalog_rows()` chains
 //! eight books today (CRB/APG/ACG/ARG/UI/UM/OA/UC), each backed by a
-//! compiled `rules_tables::<book>::spell_list::SPELL_LIST` table -- but
+//! compiled `rules_catalog::<book>::spell_list::SPELL_LIST` table -- but
 //! only the original five (CRB/APG/ACG/ARG/UI) ever had a
 //! `data/corpus/<book>/spell/*.json` cache written for them. Ultimate
 //! Magic, Occult Adventures and Ultimate Combat were chained straight from
@@ -61,7 +61,7 @@ use codex::rules_core::pi_screening::{
     self, classify_optional_field_declared, declared_product_identity,
 };
 use codex::rules_core::shape_b_v1::{License, PI_MARKER_REDACTED, REDACTED_PI_MARKER};
-use codex::rules_core::rules_tables::{
+use codex::rules_core::rules_catalog::{
     adventurers_guide, bestiary, bestiary_4, bestiary_6, book_of_the_damned_volume_1,
     book_of_the_damned_volume_2, horror_adventures, inner_sea_faiths, inner_sea_gods,
     inner_sea_intrigue, inner_sea_magic, inner_sea_races, inner_sea_temples, inner_sea_world_guide,

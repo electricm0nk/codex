@@ -1,0 +1,13 @@
+mutC planted: core_rulebook removed from the PF entry of RACE_CORPUS_BOOK_REGISTRY (the RACE_CORPUS_BOOKS slice)
+diff --git a/apps/desktop/src-tauri/src/race_catalog.rs b/apps/desktop/src-tauri/src/race_catalog.rs
+index 716ddc4a09..33fe646681 100644
+--- a/apps/desktop/src-tauri/src/race_catalog.rs
++++ b/apps/desktop/src-tauri/src/race_catalog.rs
+@@ -78,7 +78,6 @@ use crate::authoring_workbench::codex_repo_root;
+ /// that is searched and contributes nothing (ARG), which is a measured zero
+ /// rather than an omission.
+ pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
+-    "core_rulebook",
+     "beastiary",
+     "advanced_race_guide",
+     "advanced_players_guide",

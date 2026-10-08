@@ -166,7 +166,7 @@ fn feat_cache_has_all_17_real_distinct_pu_feat_records() {
 #[test]
 fn feat_cache_covers_all_4_corpus_blocks() {
     // The 4 real ###Block: groupings this book's corpus carries (see
-    // rules_tables::pathfinder_unchained::feat_tables's own doc comment).
+    // rules_catalog::pathfinder_unchained::feat_tables's own doc comment).
     let records = load_all("feat");
     let mut categories: std::collections::HashMap<String, u32> = std::collections::HashMap::new();
     for (_, record) in &records {

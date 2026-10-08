@@ -51,9 +51,7 @@ use std::path::Path;
 use serde::{Deserialize, Serialize};
 
 use crate::character_hub;
-use crate::pf1_adapter::Pf1Adapter;
-use crate::rule_system_adapter::RuleSystemAdapter;
-use crate::stub_adapter::StubAdapter;
+use crate::rule_system_adapter::resolve_rule_system_adapter;
 use codex::saved_character::local_store::SavedCharacterStore;
 
 #[derive(Debug, Clone, Deserialize)]
@@ -67,7 +65,7 @@ pub struct ReSaveCharacterRequest {
     pub saved_at: String,
     /// SD-25 Criterion 3.4 (Epic 3 "Hub of Hubs" Tauri command-surface
     /// routing): which rule system's `RuleSystemAdapter` to dispatch this
-    /// re-save through — see `resolve_rule_system_adapter` below.
+    /// re-save through — see `rule_system_adapter::resolve_rule_system_adapter`.
     pub rule_system_id: String,
 }
 
@@ -135,26 +133,6 @@ pub fn re_save_character_at_root(
         revision_id: Some(next_revision_id),
         error: None,
     })
-}
-
-/// Resolves `rule_system_id` to the `RuleSystemAdapter` implementation the
-/// Tauri command dispatches through (SD-25 Criterion 3.4, `cycles/3_4.md`
-/// GREEN) — `"pf1"` to the real `Pf1Adapter`; any other id to `StubAdapter`.
-/// `StubAdapter::new` requires a `&'static str`; the caller-supplied
-/// `rule_system_id` is a runtime `String`, so an unknown id is leaked once
-/// per call to satisfy that bound — the same `Box::leak`-to-`'static`
-/// pattern this crate already uses at `corpus_fixtures.rs` /
-/// `codex::rules_core::equipment_resolver`. Unknown-`rule_system_id` calls
-/// are the rare/exceptional path (real traffic is `"pf1"`), so the leak is
-/// bounded by how many distinct not-yet-supported ids ever get dispatched.
-fn resolve_rule_system_adapter(rule_system_id: &str) -> Box<dyn RuleSystemAdapter> {
-    match rule_system_id {
-        "pf1" => Box::new(Pf1Adapter),
-        other => {
-            let leaked: &'static str = Box::leak(other.to_owned().into_boxed_str());
-            Box::new(StubAdapter::new(leaked))
-        }
-    }
 }
 
 /// Dispatches `re_save_character` through the `RuleSystemAdapter` trait

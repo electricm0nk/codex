@@ -1,0 +1,40 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.27s
+     Running tests/sf_core_proof.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_core_proof-4e9dcbaa34dab5f7)
+
+running 9 tests
+test the_converted_books_are_every_registered_book_and_never_an_excluded_book ... FAILED
+test the_package_report_counts_every_inventory_unit_and_names_every_refusal ... ok
+test the_starfinder_tree_reads_exactly_the_converted_books_includes ... ok
+test the_corpus_holds_one_screened_record_per_unit ... ok
+test the_starfinder_population_is_the_inventory_units_of_the_converted_books ... FAILED
+test armor_class_bonuses_split_into_eac_and_kac ... ok
+test the_package_prints_no_product_identity_term ... ok
+test class_hit_point_pools_route_by_the_sf_mapping_table ... ok
+test a_hit_point_token_no_table_term_claims_is_a_named_degradation ... ok
+
+failures:
+
+---- the_converted_books_are_every_registered_book_and_never_an_excluded_book stdout ----
+
+thread 'the_converted_books_are_every_registered_book_and_never_an_excluded_book' (2557705) panicked at crates/codex-ingest/tests/sf_core_proof.rs:101:5:
+assertion `left == right` failed: every licence-include book is converted
+  left: ["starfinder/paizo/core"]
+ right: ["starfinder/paizo/core", "starfinder/paizo/armory", "starfinder/paizo/character_operations_manual", "starfinder/paizo/pact_worlds", "starfinder/paizo/near_space", "starfinder/paizo/alien_archive", "starfinder/paizo/alien_archive_2", "starfinder/paizo/alien_archive_3"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- the_starfinder_population_is_the_inventory_units_of_the_converted_books stdout ----
+
+thread 'the_starfinder_population_is_the_inventory_units_of_the_converted_books' (2557709) panicked at crates/codex-ingest/tests/sf_core_proof.rs:152:5:
+assertion `left == right` failed: E0.3 counted 8,582 units in the 8 in-scope books
+  left: 3105
+ right: 8582
+
+
+failures:
+    the_converted_books_are_every_registered_book_and_never_an_excluded_book
+    the_starfinder_population_is_the_inventory_units_of_the_converted_books
+
+test result: FAILED. 7 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.98s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_core_proof`

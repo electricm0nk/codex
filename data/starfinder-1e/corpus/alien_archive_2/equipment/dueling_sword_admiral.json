@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Dueling sword (admiral)",
+    "name": "Dueling sword, admiral",
+    "type": "RESIZABLE.Slashing.Weapon.Melee.Weapon Group ~ Basic Melee Weapons.Basic Melee Weapons.Uncategorized.ToHit_UseStr.Damage_UseStr"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "starfinder/paizo/alien_archive_2/saa2_equip.lst",
+    "record_key": "Dueling sword (admiral)",
+    "sha256": "dbecc5c380f3c681431f6efec15c9342088b45fd267495725b03e6d844f0b83c"
+  },
+  "unit_id": "alien_archive_2:equipment:dueling_sword_admiral"
+}

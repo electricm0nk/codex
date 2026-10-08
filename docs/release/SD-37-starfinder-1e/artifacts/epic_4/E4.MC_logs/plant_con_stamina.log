@@ -1,0 +1,114 @@
+PLANTED: Con x level dropped from Stamina
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+warning: unused variable: `con`
+   --> src/rules_core/pilot_compute/sf_chassis.rs:288:9
+    |
+288 |     let con = mods[ability_index(Ability::Con)];
+    |         ^^^ help: if this is intentional, prefix it with an underscore: `_con`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `codex` (lib test) generated 1 warning (run `cargo fix --lib -p codex --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 20.49s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 29 tests
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_a_choice_key_ability_without_a_legal_choice_is_refused ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values ... FAILED
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_term_names_its_source ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_core_player_class_has_a_chassis_at_level_1 ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_key_ability_is_read_from_the_class ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_a_record_that_is_not_armour_is_refused ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_increases_at_10_15_20_follow_the_17_rule ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_eac_kac_initiative_match_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_bulk_over_the_limits_gives_the_condition ... ok
+test rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_credits_bulk_and_bulk_limits_match_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_every_term_names_its_item_record ... ok
+test rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_no_seed_is_encumbered ... ok
+test rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_ten_light_items_add_one_bulk ... ok
+test rules_core::pilot_compute::sf_loadout::sf_seed::sf_seed_unresolvable_items_and_budgets_are_refused_by_name ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_every_ac_term_names_its_source ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_the_soldier_armour_caps_dex ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_the_5th_level_increase_raises_four_scores ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_bonus_spells_match_the_srd_table ... ok
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_envoy_3_skill_total_names_its_terms ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_ability_scores_match_the_seed_builds ... ok
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_a_trained_only_skill_opens_with_a_rank ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_point_buy_limits_are_refused_by_name ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_race_and_theme_terms_name_their_records ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_connection_spells_and_spell_focus_are_their_own_terms ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_casters_cast_levels_0_to_2_and_the_others_cast_nothing ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_a_theme_adds_its_class_skill_and_its_ability_point ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_skill_total_matches_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_class_tables_match_the_srd_at_every_level_1_to_20 ... ok
+
+failures:
+
+---- rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values stdout ----
+
+thread 'rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values' (1033696) panicked at src/rules_core/pilot_compute/sf_chassis.rs:416:9:
+4 of 28 mismatch:
+SF-Soldier-3 Stamina: engine 21, SRD 24
+SF-Mystic-5 Stamina: engine 30, SRD 25
+SF-Technomancer-5 Stamina: engine 25, SRD 35
+SF-Envoy-3 Stamina: engine 18, SRD 21
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values
+
+test result: FAILED. 28 passed; 1 failed; 0 ignored; 0 measured; 2794 filtered out; finished in 2.59s
+
+error: test failed, to rerun pass `--lib`
+root_exit=101
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+warning: unused variable: `con`
+   --> /home/ubuntu/workspace/worktrees/codex-sd37/src/rules_core/pilot_compute/sf_chassis.rs:288:9
+    |
+288 |     let con = mods[ability_index(Ability::Con)];
+    |         ^^^ help: if this is intentional, prefix it with an underscore: `_con`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+warning: `codex` (lib) generated 1 warning (run `cargo fix --lib -p codex` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 26.32s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 2 tests
+test rule_system_adapter::tests::starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed ... FAILED
+test sf_adapter::tests::sf_seed_every_hand_value_equals_the_adapters_explanation_row ... FAILED
+
+failures:
+
+---- rule_system_adapter::tests::starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed stdout ----
+
+thread 'rule_system_adapter::tests::starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed' (1035287) panicked at src/rule_system_adapter.rs:687:9:
+assertion `left == right` failed
+  left: 21
+ right: 24
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- sf_adapter::tests::sf_seed_every_hand_value_equals_the_adapters_explanation_row stdout ----
+
+thread 'sf_adapter::tests::sf_seed_every_hand_value_equals_the_adapters_explanation_row' (1035288) panicked at src/sf_adapter.rs:1074:9:
+4 mismatches:
+SF-Soldier-3 Stamina (sf.stamina): adapter Some(21), SRD Some(24)
+SF-Mystic-5 Stamina (sf.stamina): adapter Some(30), SRD Some(25)
+SF-Technomancer-5 Stamina (sf.stamina): adapter Some(25), SRD Some(35)
+SF-Envoy-3 Stamina (sf.stamina): adapter Some(18), SRD Some(21)
+
+
+failures:
+    rule_system_adapter::tests::starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed
+    sf_adapter::tests::sf_seed_every_hand_value_equals_the_adapters_explanation_row
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 645 filtered out; finished in 1.21s
+
+error: test failed, to rerun pass `--bin codex-desktop`
+desktop_exit=101
+RESTORED
+exit=0

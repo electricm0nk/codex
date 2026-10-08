@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "Laborer frame (swim jets)",
+    "name": "Laborer frame (swim jets)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 21,
+    "path": "starfinder/paizo/alien_archive_2/saa2_profs_armor.lst",
+    "record_key": "Laborer frame (swim jets)",
+    "sha256": "e6cfa67177fc40d6f878f1553d69dfe32b117401ade2904fd153eedceb976e8e"
+  },
+  "unit_id": "alien_archive_2:proficiency:laborer_frame_swim_jets"
+}

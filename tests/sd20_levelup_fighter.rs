@@ -8,7 +8,7 @@
 //! Fighter-specific explanations (Bravery, the ten Bonus Feat slots at
 //! levels 1/2/4/6/8/10/12/14/16/18/20, Armor Training, Weapon Training,
 //! Armor Mastery, Weapon Mastery) composed with
-//! `rules_tables::crb::class_tables::class_tables()`'s class-generic
+//! `rules_catalog::crb::class_tables::class_tables()`'s class-generic
 //! BAB/save progression (Fighter's `CLASS_META` row was spot-checked
 //! against the PF1 Core Rulebook before use: good Fortitude only, full
 //! BAB — confirmed correct, unlike the now-fixed Cleric/Druid
@@ -214,7 +214,7 @@ fn fighter_level_1_to_2_grants_bab_rise_fortitude_rise_bravery_and_bonus_feat_sl
     // No Fighter bonus-feat candidate catalog is composed by this cycle —
     // see fighter.rs's own module doc comment on why `pick_from_lists`
     // stays honestly empty even though a real feat catalog now exists in
-    // `rules_tables::crb::feats` (a documented forward-pointing scope
+    // `rules_catalog::crb::feats` (a documented forward-pointing scope
     // note, not a blocker on this cycle's `LevelUpPlan`).
     assert!(
         plan.pick_from_lists.is_empty(),

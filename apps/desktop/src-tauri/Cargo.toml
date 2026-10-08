@@ -1,6 +1,6 @@
 [package]
 name = "codex-desktop"
-version = "0.16.0"
+version = "0.17.0"
 edition = "2021"
 
 # SD-36 Epic A: this crate's new dev-only path dependency below points at a

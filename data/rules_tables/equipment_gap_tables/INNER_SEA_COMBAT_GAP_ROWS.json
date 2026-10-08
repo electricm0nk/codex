@@ -1,0 +1,754 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/INNER_SEA_COMBAT_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "ISC",
+      "key": "Backbreaker Mail",
+      "name": "Backbreaker Mail",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Blackjacket",
+      "name": "Blackjacket",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Broadside Bulwark",
+      "name": "Broadside Bulwark",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Crag Linnorm Plate",
+      "name": "Crag Linnorm Plate",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Eagle Knight Dress Uniform",
+      "name": "Eagle Knight Dress Uniform",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Ekujae Jungle Armor",
+      "name": "Ekujae Jungle Armor",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Gelugon Plate",
+      "name": "Gelugon Plate",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Ghoul Hide",
+      "name": "Ghoul Hide",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Guard of Man",
+      "name": "Guard of Man",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Lyrune-Quah Klar",
+      "name": "Lyrune-Quah Klar",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Mammoth Hide",
+      "name": "Mammoth Hide",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Mosswater Stained Leather",
+      "name": "Mosswater Stained Leather",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_arms_armor_lst_18)",
+      "name": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_arms_armor_lst_18)",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": [
+        "isc_equip_arms_armor",
+        18
+      ]
+    },
+    {
+      "book": "ISC",
+      "key": "Okeno Madu",
+      "name": "Okeno Madu",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Scouting Leather",
+      "name": "Scouting Leather",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Truefaith Vestments",
+      "name": "Truefaith Vestments",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Tunnel Defender Stoneplate",
+      "name": "Tunnel Defender Stoneplate",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "War Commander's Field Plate",
+      "name": "War Commander's Field Plate",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Xill Carapace Armor",
+      "name": "Xill Carapace Armor",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_arms_armor_lst_27)",
+      "name": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_arms_armor_lst_27)",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": [
+        "isc_equip_arms_armor",
+        27
+      ]
+    },
+    {
+      "book": "ISC",
+      "key": "Crimson Bluff",
+      "name": "Crimson Bluff",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Earth Breaker of Righted Injustice",
+      "name": "Earth Breaker of Righted Injustice",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Final Word",
+      "name": "Final Word",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Greenblood Scourge",
+      "name": "Greenblood Scourge",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Hunter's Starknife",
+      "name": "Hunter's Starknife",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Monastic Warden",
+      "name": "Monastic Warden",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Peacekeeping Pistol",
+      "name": "Peacekeeping Pistol",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Purging Falcata",
+      "name": "Purging Falcata",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Quarterstaff of Contemplation",
+      "name": "Quarterstaff of Contemplation",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Risen Blade",
+      "name": "Risen Blade",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Rostland Edge",
+      "name": "Rostland Edge",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Shadde-Quah Spirit Bolas",
+      "name": "Shadde-Quah Spirit Bolas",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Shadowbound Chains",
+      "name": "Shadowbound Chains",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Shearing Sword",
+      "name": "Shearing Sword",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Steadfast Urumi",
+      "name": "Steadfast Urumi",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Wanderer's Scarf",
+      "name": "Wanderer's Scarf",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Wendifisa Spear",
+      "name": "Wendifisa Spear",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Canopic Wrap",
+      "name": "Canopic Wrap",
+      "category": "MagicItems",
+      "cost_gp": 10500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Choker of the Rough Beast",
+      "name": "Choker of the Rough Beast",
+      "category": "MagicItems",
+      "cost_gp": 100000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Colossus Draught",
+      "name": "Colossus Draught",
+      "category": "MagicItems",
+      "cost_gp": 28800.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Demonic Smith's Gloves",
+      "name": "Demonic Smith's Gloves",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Dueling Cuffs",
+      "name": "Dueling Cuffs",
+      "category": "MagicItems",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Feather Token (Catapult)",
+      "name": "Feather Token (Catapult)",
+      "category": "MagicItems",
+      "cost_gp": 400.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Feather Token (Ram)",
+      "name": "Feather Token (Ram)",
+      "category": "MagicItems",
+      "cost_gp": 500.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Feather Token (Siege Tower)",
+      "name": "Feather Token (Siege Tower)",
+      "category": "MagicItems",
+      "cost_gp": 1000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Guerrilla Bandanna",
+      "name": "Guerrilla Bandanna",
+      "category": "MagicItems",
+      "cost_gp": 18000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_13)",
+      "name": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_13)",
+      "category": "MagicItems",
+      "cost_gp": 14000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": [
+        "isc_equip_magic",
+        13
+      ]
+    },
+    {
+      "book": "ISC",
+      "key": "Holdout Ring",
+      "name": "Holdout Ring",
+      "category": "MagicItems",
+      "cost_gp": 11000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Imperial Army Greathelm",
+      "name": "Imperial Army Greathelm",
+      "category": "MagicItems",
+      "cost_gp": 29000.0,
+      "weight_lbs": 6.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Infernal Cord",
+      "name": "Infernal Cord",
+      "category": "MagicItems",
+      "cost_gp": 5000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Infernal Cord (Greater)",
+      "name": "Infernal Cord, Greater",
+      "category": "MagicItems",
+      "cost_gp": 31000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Ioun Stone (Thorny/Brown)",
+      "name": "Ioun Stone (Thorny/Brown)",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "+2 competence bonus on trip attempts",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Ioun Stone (Thorny/Crimson)",
+      "name": "Ioun Stone (Thorny/Crimson)",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "+2 competence bonus on bull rush attempts",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Ioun Stone (Thorny/Orange)",
+      "name": "Ioun Stone (Thorny/Orange)",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "+2 competence bonus on sunder attempts",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Ioun Stone (Thorny/Silver)",
+      "name": "Ioun Stone (Thorny/Silver)",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "+2 competence bonus on overrun attempts",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Ioun Stone (Thorny/Teal)",
+      "name": "Ioun Stone (Thorny/Teal)",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "+2 competence bonus on disarm attempts",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Ioun Stone (Thorny/Violet)",
+      "name": "Ioun Stone (Thorny/Violet)",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": "+2 competence bonus on grapple attempts",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Iron Guard Pauldrons",
+      "name": "Iron Guard Pauldrons",
+      "category": "MagicItems",
+      "cost_gp": 5750.0,
+      "weight_lbs": 6.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Kalistocrat's Gloves",
+      "name": "Kalistocrat's Gloves",
+      "category": "MagicItems",
+      "cost_gp": 3600.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_26)",
+      "name": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_26)",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": [
+        "isc_equip_magic",
+        26
+      ]
+    },
+    {
+      "book": "ISC",
+      "key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_27)",
+      "name": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_27)",
+      "category": "MagicItems",
+      "cost_gp": 15000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": [
+        "isc_equip_magic",
+        27
+      ]
+    },
+    {
+      "book": "ISC",
+      "key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_28)",
+      "name": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_28)",
+      "category": "MagicItems",
+      "cost_gp": 125000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": [
+        "isc_equip_magic",
+        28
+      ]
+    },
+    {
+      "book": "ISC",
+      "key": "Mantle of the Crusader Host",
+      "name": "Mantle of the Crusader Host",
+      "category": "MagicItems",
+      "cost_gp": 95000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_30)",
+      "name": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_magic_lst_30)",
+      "category": "MagicItems",
+      "cost_gp": 14800.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": [
+        "isc_equip_magic",
+        30
+      ]
+    },
+    {
+      "book": "ISC",
+      "key": "Ring of the Adept Maneuvers",
+      "name": "Ring of the Adept Maneuvers",
+      "category": "MagicItems",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Rod of Revolution",
+      "name": "Rod of Revolution",
+      "category": "MagicItems",
+      "cost_gp": 82000.0,
+      "weight_lbs": 8.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Sable Company Elite Saddle",
+      "name": "Sable Company Elite Saddle",
+      "category": "MagicItems",
+      "cost_gp": 14000.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Sandstorm Sandals",
+      "name": "Sandstorm Sandals",
+      "category": "MagicItems",
+      "cost_gp": 15000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Scabbard of the Efreet",
+      "name": "Scabbard of the Efreet",
+      "category": "MagicItems",
+      "cost_gp": 41000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Seafaring Stanchions",
+      "name": "Seafaring Stanchions",
+      "category": "MagicItems",
+      "cost_gp": 2400.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Summoner Slayer Eyes",
+      "name": "Summoner Slayer Eyes",
+      "category": "MagicItems",
+      "cost_gp": 11000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISC",
+      "key": "Tablet of the First Law",
+      "name": "Tablet of the First Law",
+      "category": "MagicItems",
+      "cost_gp": 3000.0,
+      "weight_lbs": 5.0,
+      "description": "Read 10 minutes for +1 to Will saves from divine sources.",
+      "name_pi_citation": null
+    }
+  ]
+}

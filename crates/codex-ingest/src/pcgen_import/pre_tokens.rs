@@ -515,7 +515,7 @@ fn evaluate_ability(token: &str, body: &str, facts: &CharacterPrereqFacts) -> Cl
 /// How many selected feats fall in the catalog category `facet` names, or
 /// `None` when `facet` is not one of the catalog's category strings.
 fn feats_held_in_category(facts: &CharacterPrereqFacts, facet: &str) -> Option<usize> {
-    use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+    use codex::rules_core::rules_catalog::feats_all::all_feat_tables;
 
     let mut is_known_category = false;
     let mut held = 0usize;

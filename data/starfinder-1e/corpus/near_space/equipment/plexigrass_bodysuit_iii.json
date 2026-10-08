@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Plexigrass bodysuit III",
+    "name": "Plexigrass bodysuit III",
+    "type": "ARMOR.Light_Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 104,
+    "path": "starfinder/paizo/near_space/sns_equip.lst",
+    "record_key": "Plexigrass bodysuit III",
+    "sha256": "597c20e87a811ffff6ea542d4aa1c33f55106c844cdd978829fd0f3e002dedfd"
+  },
+  "unit_id": "near_space:equipment:plexigrass_bodysuit_iii"
+}

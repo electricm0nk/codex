@@ -152,7 +152,7 @@
 //!
 //! This fixture's `input.selected_feats` mixes 3 namespaced ids
 //! (`feat:dodge`, `feat:weapon_focus`, `feat:power_attack` — none of
-//! which match any entry in `rules_tables::crb::feats::feat_tables()`)
+//! which match any entry in `rules_catalog::crb::feats::feat_tables()`)
 //! with 3 plain catalog names (`Dodge`, `Weapon Focus`, `Power Attack` —
 //! all real matches). Cycle 3 of the wiring project
 //! (`contract:feat_wiring`) found this quirk and decided deliberately, by
@@ -223,7 +223,7 @@ use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::feat_prereqs::{compute_feat_effects, evaluate_feat_prerequisites, FeatKey};
 use codex::rules_core::level_up::compute_level_up_grants;
 use codex::rules_core::pilot_compute_corpus::{compute_pilot_with_corpus, DerivedEquipmentStats};
-use codex::rules_core::rules_tables::crb::feats::{feat_tables, FeatCategory};
+use codex::rules_core::rules_catalog::crb::feats::{feat_tables, FeatCategory};
 use codex::rules_core::skill_allocation::allocate_skill_ranks;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 use codex::rules_core::spellbook::compute_spellbook_coverage;

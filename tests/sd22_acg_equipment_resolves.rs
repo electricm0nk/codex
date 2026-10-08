@@ -8,15 +8,15 @@
 //! from the single `acg_equip.lst` file (unlike APG, which splits
 //! equipment across three files, ACG carries general goods, weapons,
 //! armor, and magic items together in one file) — one item per
-//! category, mirroring `rules_tables::crb::equipment_tables`'s own "one
+//! category, mirroring `rules_catalog::crb::equipment_tables`'s own "one
 //! representative item per category" bootstrap philosophy. Not
 //! exhaustive coverage.
 
 use std::fs;
 use std::path::PathBuf;
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::acg::equipment_tables::{EquipmentCategory, equipment_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::acg::equipment_tables::{EquipmentCategory, equipment_resolve};
 
 #[test]
 fn marlinspike_resolves_via_ruleset_acg() {

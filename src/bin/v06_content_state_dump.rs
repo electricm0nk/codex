@@ -42,26 +42,26 @@ use codex::rules_core::pilot_compute::{
     HeadlessReceiptStatus, PilotBaseChassisComputation, build_pilot_headless_receipt,
     compute_pilot_base_chassis,
 };
-use codex::rules_core::rules_tables::acg::{self, AcgClassId};
-use codex::rules_core::rules_tables::apg::{self, ApgClassId};
-use codex::rules_core::rules_tables::beastiary1::{self, MonsterId, MonsterStatBlock};
-use codex::rules_core::rules_tables::crb::{
+use codex::rules_core::rules_catalog::acg::{self, AcgClassId};
+use codex::rules_core::rules_catalog::apg::{self, ApgClassId};
+use codex::rules_core::rules_catalog::beastiary1::{self, MonsterId, MonsterStatBlock};
+use codex::rules_core::rules_catalog::crb::{
     class_tables::ClassId, equipment_tables as crb_equipment_tables, feats as crb_feats,
     race_tables::{RaceId, race_id_from_token, race_traits},
     spell_list as crb_spell_list,
 };
-use codex::rules_core::rules_tables::advanced_race_guide as arg;
-use codex::rules_core::rules_tables::feats_all::all_feat_tables;
-use codex::rules_core::rules_tables::pathfinder_unchained as pu;
-use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
-use codex::rules_core::rules_tables::ultimate_campaign as uca;
-use codex::rules_core::rules_tables::ultimate_equipment as ue;
-use codex::rules_core::rules_tables::ultimate_combat as uc;
-use codex::rules_core::rules_tables::ultimate_magic as um;
-use codex::rules_core::rules_tables::ultimate_psionics as upsi;
-use codex::rules_core::rules_tables::ultimate_wilderness as uw;
-use codex::rules_core::rules_tables::ultimate_intrigue as ui;
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::advanced_race_guide as arg;
+use codex::rules_core::rules_catalog::feats_all::all_feat_tables;
+use codex::rules_core::rules_catalog::pathfinder_unchained as pu;
+use codex::rules_core::rules_catalog::pathfinder_unchained::class_chassis::PuClassId;
+use codex::rules_core::rules_catalog::ultimate_campaign as uca;
+use codex::rules_core::rules_catalog::ultimate_equipment as ue;
+use codex::rules_core::rules_catalog::ultimate_combat as uc;
+use codex::rules_core::rules_catalog::ultimate_magic as um;
+use codex::rules_core::rules_catalog::ultimate_psionics as upsi;
+use codex::rules_core::rules_catalog::ultimate_wilderness as uw;
+use codex::rules_core::rules_catalog::ultimate_intrigue as ui;
+use codex::rules_core::rules_catalog::RuleSetId;
 
 /// The shared deterministic pilot input fixture, relative to the crate root.
 /// Read at runtime rather than `include_str!`ed, exactly as

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Dueling sword (officer)",
+    "name": "Dueling sword (officer)",
+    "type": "S.Weapon.Melee.Weapon Group ~ Basic Melee Weapons.Basic Melee Weapons.Uncategorized"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 2,
+    "path": "starfinder/paizo/alien_archive_2/saa2_profs_weapon.lst",
+    "record_key": "Dueling sword (officer)",
+    "sha256": "f1a5bf9a8c96b1d98720208c6a9b6f73a699260ec5a368ebdf38e832dd708857"
+  },
+  "unit_id": "alien_archive_2:proficiency:dueling_sword_officer"
+}

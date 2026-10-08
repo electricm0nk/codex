@@ -1,0 +1,16 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /tmp/codex-verify-oRVSm7
+---------------------------------------------------------------
+==> tauri-resources-tracked — every bundle.resources path has >=1 git-tracked file
+    PASS  tauri-resources-tracked  (resources_checked=8 verdict=PASS)
+---------------------------------------------------------------
+==> rules-schema-check — regenerate schemas/rules/*.schema.json from the serde types and diff
+    PASS  rules-schema-check  (2 schemas regenerate byte-equal; 3 schema tests pass)
+---------------------------------------------------------------
+SUMMARY
+  passed:  2  tauri-resources-tracked rules-schema-check
+
+RESULT: PASS
+logs in /tmp/codex-verify-oRVSm7
+exit 0

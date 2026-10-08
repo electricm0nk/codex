@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Akashic Connection Power ~ Memory Palace",
+    "name": "Memory Palace",
+    "type": "Connection Power.Akashic Connection Power.Akashic Connection Power LVL 15.Class Feature.Extraordinary"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1603,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Akashic Connection Power ~ Memory Palace",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:akashic_connection_power_memory_palace"
+}

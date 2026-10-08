@@ -3,7 +3,13 @@
 > Scope: testing philosophy and the full verification command set for this repo — this file
 > doubles as the "how do I verify my change" runbook and as the reference for how this repo
 > writes a test.
-> Last verified: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** for the release-tooling, packaged-resources and baked-path rows added to §"Standalone scripts" and the `codex-desktop` paragraph (the other counts below are as of the pass that follows). Earlier pass: **2026-09-29 against `tranche/16` (`165cc205e7`)** for §"The ui-smoke harness" (86-row
+> Merge pass: **2026-10-07, `tranche/17` merged with `develop` @ `fd68740f60` (PR #396)** (SD-37 E7.9a): `packaged_resources.rs` and `no_baked_manifest_dir_in_production.rs` added below; floors as recorded in `scripts/verify-baselines.env`.
+> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §"The three crates" counts,
+> §"`scripts/verify.sh`" stage counts, the Starfinder gates and the ui-smoke spec size, each re-derived by the command beside
+> it. The test-count floors are the E7.2 full-run values recorded in `scripts/verify-baselines.env` (a full `verify.sh` run
+> was not repeated this pass; logs in `docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.2_logs/`). The SD-36 receipt
+> history in §"The ui-smoke harness" and the Epic F instruments section were last verified 2026-09-29 against `tranche/16`.
+> Also verified: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** for the release-tooling, packaged-resources and baked-path rows added to §"Standalone scripts" and the `codex-desktop` paragraph (the other counts below are as of the pass that follows). Earlier pass: **2026-09-29 against `tranche/16` (`165cc205e7`)** for §"The ui-smoke harness" (86-row
 > spec, the F6/F7 receipt dirs, and the F6d isolated-app-data-root rule; figures from
 > `stage-f6/f6d-receipt.md` and `stage-f7/merge-readiness-receipt.md`). Earlier pass: **2026-09-26
 > against `tranche/16` (`e70a8745ed`)** for §"`scripts/verify.sh`" item 10 and
@@ -126,12 +132,12 @@ points — `codex-desktop` never links `codex-ingest` in a normal build; the arr
 that it is dev-only.*
 
 - **`codex` (repo root)** — `cargo test --locked` runs unit tests inside `src/` plus every
-  integration test file under `tests/*.rs`. There are **279** files matching `tests/*.rs`
+  integration test file under `tests/*.rs`. There are **289** files matching `tests/*.rs`
   (`ls tests/*.rs | wc -l`, current). The last full-run floors recorded in
   `scripts/verify-baselines.env` (`grep -E '^[A-Z_]+=' scripts/verify-baselines.env | tail -n 20`,
-  read with last-assignment-wins semantics — see below): `BASELINE_ROOT_LIB_TESTS=2581`,
-  `BASELINE_ROOT_FULL_TESTS=6196`, `BASELINE_ROOT_TEST_BINARIES=285`. These are the **post-Epic-A**
-  numbers — root's counts dropped sharply (from `3402`/`7876`/`414` pre-Epic-A) because ~821 unit
+  read with last-assignment-wins semantics — see below): `BASELINE_ROOT_LIB_TESTS=2838`,
+  `BASELINE_ROOT_FULL_TESTS=6514`, `BASELINE_ROOT_TEST_BINARIES=297` (re-recorded by SD-37 E7.2). The post-Epic-A
+  drop in root's counts was sharp (from `3402`/`7876`/`414` pre-Epic-A) because ~821 unit
   tests and ~859 integration-test entries that used to live under root src/pcgen_import and
   src/oracle_validation (former paths, no longer valid — both are now
   `crates/codex-ingest/src/pcgen_import/` and `crates/codex-ingest/src/oracle_validation/`), and
@@ -139,8 +145,8 @@ that it is dev-only.*
   comment block for the full reconciliation).
 - **`codex-ingest` (`crates/codex-ingest`)** — `cargo test --locked -p codex-ingest` (from repo
   root; it's a workspace member) or `cd crates/codex-ingest && cargo test --locked`. Recorded
-  floors: `BASELINE_INGEST_FULL_TESTS=1673`, `BASELINE_INGEST_TEST_BINARIES=157` (110
-  `tests/*.rs` suites + 46 `src/bin/*.rs` unit-test targets + 1 lib target). Its `#[ignore]`-gated
+  floors: `BASELINE_INGEST_FULL_TESTS=1832`, `BASELINE_INGEST_TEST_BINARIES=175` (`ls crates/codex-ingest/tests/*.rs | wc -l` → 126
+  `tests/*.rs` suites, `ls crates/codex-ingest/src/bin/*.rs | wc -l` → 48 `src/bin/*.rs` unit-test targets, plus the lib target). Its `#[ignore]`-gated
   suites are the oracle-parity tier (see [Corpus-gated tests](#corpus-gated-tests)); they need a
   real, pinned local PCGen checkout and do not run in a plain `cargo test`.
 - **`codex-desktop` (`apps/desktop/src-tauri`)** — `cd apps/desktop/src-tauri && cargo test --locked`.
@@ -148,13 +154,13 @@ that it is dev-only.*
   `codex` and dev-depends **only** on `codex-ingest` (never a normal dependency — the `crate-wall`
   verify stage checks this structurally: `cargo tree --locked -e normal,build` must show zero
   `codex-ingest` lines). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs`
-  files. As of this verification, **34** source files under `apps/desktop/src-tauri/src/` carry
+  files. As of this verification, **43** source files under `apps/desktop/src-tauri/src/` carry
   one (`grep -rl '#\[cfg(test)\]' apps/desktop/src-tauri/src/ | wc -l`), including
   `corpus_bundle_parity_test.rs` (added for the corpus-bundle work — see
   [The corpus bundle](#the-corpus-bundle-and-its-parity-test) below), `spell_catalog.rs`,
   `race_catalog.rs`, `equipment_catalog.rs`, `character_hub.rs`, `update/transaction.rs`,
   `characterHub/appendToCharacter.rs`, `rule_system_adapter.rs`, `pf1_adapter.rs`, and
-  `corpus_ingest_diagnostic.rs`, plus `update/seed.rs` and `update/deb_install.rs` (installed-state seeding and the `.deb` self-update verification, tested through injected `DebSystem`/config-dir seams). The one exception to "inline modules only" is `apps/desktop/src-tauri/tests/packaged_resources.rs`, an integration test that lays out only what `tauri.conf.json` bundles and asserts the rules engine can build the class roster from it; it must stay a single `#[test]` because the data root it installs is process-wide (see [desktop-app.md](./desktop-app.md) §How the rules crate finds its data). The root crate gained `tests/no_baked_manifest_dir_in_production.rs` for the same defect class. Recorded floor: `BASELINE_DESKTOP_TESTS=597` (re-derive: the
+  `corpus_ingest_diagnostic.rs`, plus `update/seed.rs` and `update/deb_install.rs` (installed-state seeding and the `.deb` self-update verification, tested through injected `DebSystem`/config-dir seams). The one exception to "inline modules only" is `apps/desktop/src-tauri/tests/packaged_resources.rs`, an integration test that lays out only what `tauri.conf.json` bundles and asserts the rules engine can build the class roster from it; it must stay a single `#[test]` because the data root it installs is process-wide (see [desktop-app.md](./desktop-app.md) §How the rules crate finds its data). The root crate gained `tests/no_baked_manifest_dir_in_production.rs` for the same defect class. Recorded floor: `BASELINE_DESKTOP_TESTS=700` (frontend: `BASELINE_FRONTEND_TEST_FILES=137`) (re-derive: the
   desktop test-count line `scripts/verify.sh`'s `desktop` stage prints).
 
 ```
@@ -197,7 +203,7 @@ prints `PASS <file>` / `FAIL <file>` per file and a `<n>/<total> test files pass
 | `bash scripts/release/__tests__/test-write-release-manifest.test.sh` | `write_release_manifest.py` + `validate_manifest.py` round-trip. |
 | `python3 -m pytest tools/release -q` | The four release-gate tools plus the existing suites: `test_resolve_release_notes.py` (pointer vs app tranche, placeholder/empty/missing notes), `test_assert_version_stamp.py` (stamped files unpacked at the repo root), `test_write_release_manifest.py` (`linux_deb` block, schema 1.2.0, partial triples rejected), `test_verify_release_consistency.py` (builds real `.deb`s with `dpkg-deb`; serves notes from a local HTTP server to prove an HTML page fails the hash check). Needs `jsonschema` and `pytest` (CI installs both). Run from `release-tooling-tests.yml` on any change to the tooling, `schemas/update/**`, `docs/release/current-release.json` or the publish workflow. Not part of `scripts/verify.sh`. |
 | `python3 scripts/tranche/tests/test_validate_tranche_notes.py` | `scripts/tranche/validate-tranche-notes.py`. `unittest`, 9 test methods. |
-| `bash tools/ci/test_branch_promotion_guard.sh` | `tools/ci/branch-promotion-guard.sh`'s `verify_promotion_source` — the exact function the `allow-only-*` GitHub Actions workflows execute at PR time. **Moved here from `tests/sd16-e5-f1/` by SD-36 Epic C2.4** — update any script or CI reference still pointing at the old path. |
+| `bash tools/ci/test_branch_promotion_guard.sh` | `tools/ci/branch-promotion-guard.sh`'s `verify_promotion_source` — the exact function the `allow-only-*` GitHub Actions workflows execute at PR time. **Moved here from the `sd16-e5-f1` test directory by SD-36 Epic C2.4** — update any script or CI reference still pointing at the old path. |
 | `python3 scripts/release/check_promotion_evidence.py --self-test` | The promotion-evidence gate's own built-in RED-GREEN harness; also the first step `promotion-gates.yml` runs on every PR. |
 
 All `jsonschema`-based validators need the `jsonschema` pip package; CI pins `jsonschema==4.21.1`.
@@ -206,8 +212,8 @@ All `jsonschema`-based validators need the `jsonschema` pip package; CI pins `js
 
 `scripts/verify.sh` is the single verification command for this repo. `scripts/verify.sh --list`
 (read-only — it only prints and exits, never runs a stage) is the authority on stage membership;
-as of this verification it prints **50** stages in `ALL_STAGES`, **42** of which are also in
-`QUICK_STAGES` (`--quick`). Both counts come straight from that command's own output, not from a
+as of this verification it prints **53** stages in `ALL_STAGES`, **43** of which are also in
+`QUICK_STAGES` (`--quick`); `bash scripts/verify.sh --list | awk 'NR>1{n++; if($3=="yes")q++} END{print n,q}'` → `53 43`. Both counts come straight from that command's own output, not from a
 count maintained by hand in this doc.
 
 ```mermaid
@@ -217,13 +223,13 @@ flowchart TD
     C["standing audits & self-tests\n(reachability-audit + selftest,\ngroundtruth-guard-selftest,\nsupersession-gate-selftest,\nshape-coverage-standing-gate + selftest,\ncycle-scope-gate-selftest)"] --> D
     D["data-shape & wall gates\n(missing-engine-tables, denominator-gate,\nfigure-provenance, corpus-bundle,\ntauri-resources-tracked, pcgen-residue-gate,\ncrate-wall, token-coverage + selftest,\npi-sweep, declared-pi-audit)"] --> E
     E["tooling self-tests\n(audit-selftest, reclaim-selftest,\ndriver-selftest, corpus-sweep-selftest,\ncorpus-trap-audit-selftest)"] --> F
-    F["builds & full test suites\n(root-lib, root-full, ingest-full,\ndesktop, corpus-sweep, sheet-rules-check,\ncorpus-trap-audit, supersession-gate)"] --> G
+    F["builds & full test suites\n(root-lib, root-full, ingest-full,\ndesktop, corpus-sweep, sheet-rules-check,\nsf-sheet-rules-check, rules-schema-check,\ncorpus-trap-audit, supersession-gate)"] --> G
     G["frontend\n(frontend-install, frontend-test,\nfrontend-typecheck)"] --> H
     H["clippy\n(three crates, -D warnings)"] --> I["class-dump"]
 ```
-*`scripts/verify.sh`'s 50 stages, grouped by what they protect, in execution order. `--quick`
-(42 stages) drops the expensive builds group's `root-full`/`ingest-full`/`desktop`/`corpus-sweep`/
-`sheet-rules-check`/`corpus-trap-audit`/`supersession-gate` rows and `clippy`, keeping every
+*`scripts/verify.sh`'s 53 stages, grouped by what they protect, in execution order. `--quick`
+(43 stages) drops the expensive builds group's `root-full`/`ingest-full`/`desktop`/`corpus-sweep`/
+`sheet-rules-check`/`sf-sheet-rules-check`/`rules-schema-check`/`corpus-trap-audit`/`supersession-gate` rows and `clippy`, keeping every
 Python-or-hash-only gate — see `scripts/verify.sh --list`'s own `full`/`quick` columns for the
 authoritative per-stage membership.*
 
@@ -256,8 +262,9 @@ What each group actually protects:
    run below trusts their green.
 6. **Builds & full test suites** — the expensive group: `root-lib`/`root-full` (`codex`),
    `ingest-full` (`codex-ingest`), `desktop` (`codex-desktop`), `corpus-sweep` (the corpus-literal
-   byte-equality sweep — see [corpus-ingest.md](./corpus-ingest.md)), `sheet-rules-check` (see
-   [The sheet-rule data gates](#the-sheet-rule-data-gates)), `corpus-trap-audit`,
+   byte-equality sweep — see [corpus-ingest.md](./corpus-ingest.md)), `sheet-rules-check` and `sf-sheet-rules-check` (the Pathfinder and Starfinder sheet-rule packages regenerate as a no-op; see
+   [The sheet-rule data gates](#the-sheet-rule-data-gates)), `rules-schema-check` (the published JSON schemas under `schemas/rules/`, including
+   `rules_tables.schema.json`, match their generators), `corpus-trap-audit`,
    `supersession-gate`. Each build stage also runs a **per-suite non-execution check**: it derives
    the expected `tests/*.rs` (or equivalent) suite set from the filesystem and diffs it against the
    `Running tests/<name>.rs` lines the test runner's own log actually produced, failing by name if
@@ -302,6 +309,9 @@ you wrote.
 
 ```
 cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --check          # regeneration is a no-op
+cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --system starfinder-1e --check   # same, Starfinder 1e
+cargo run --locked -p codex-ingest --bin sf_corpus -- --check                     # data/starfinder-1e/corpus is fresh
+cargo run --locked -p codex --bin rules_tables_package -- --check                 # data/rules_tables is canonical and owned
 grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l   # must print 0
 ```
 
@@ -359,8 +369,8 @@ the fold's `multiclass.<class>.` re-scope stripped, equals the class-alone set; 
 loads at least two classes. Their fixtures are Blocked alone, so asserting `Computed` would fabricate a
 success; the Computed proof for mixes is the census mix panel (`decisions.md` §14.2).
 
-**The ui-smoke harness** (`apps/desktop/scripts/ui-smoke/`: `spec.json` 86 rows across 18 screens, 3
-manual; `run.mjs`; the DEV-only `ui_probe` DOM snapshot, see [desktop-app.md](./desktop-app.md)). Run with
+**The ui-smoke harness** (`apps/desktop/scripts/ui-smoke/`: `spec.json` 103 rows across 18 screens, 3
+manual, 14 of them Starfinder (`python3 -c "import json;d=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'));print(len(d['rows']),sum(1 for r in d['rows'] if 'starfinder' in r['id']))"` → `103 14`); `run.mjs`; the DEV-only `ui_probe` DOM snapshot, see [desktop-app.md](./desktop-app.md)). Run with
 `npm run ui-smoke` against one launched app; `results.json` is written as a `not-run` skeleton first, so a
 killed run keeps its denominator. `docs/testing/ui-smoke-inventory.md` is generated by
 `render-inventory.mjs` (`npm run ui-smoke:doc`). Receipts live under

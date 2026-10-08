@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "FEAT",
+    "key": "Kasathan Battle Dance",
+    "name": "Kasathan Battle Dance",
+    "type": "Combat"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "starfinder/paizo/pact_worlds/spw_feats.lst",
+    "record_key": "Kasathan Battle Dance",
+    "sha256": "4271608e5d933a18415cf0cad28e421308738be99d54d179628e72442dd424ed"
+  },
+  "unit_id": "pact_worlds:feat:kasathan_battle_dance"
+}

@@ -1,0 +1,24 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 33.57s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+test sf_adapter::tests::every_seed_carries_its_ability_score_and_class_level_rows ... FAILED
+
+failures:
+
+---- sf_adapter::tests::every_seed_carries_its_ability_score_and_class_level_rows stdout ----
+
+thread 'sf_adapter::tests::every_seed_carries_its_ability_score_and_class_level_rows' (715957) panicked at src/sf_adapter.rs:1167:17:
+assertion `left == right` failed: SF-Soldier-3 strength
+  left: None
+ right: Some(16)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sf_adapter::tests::every_seed_carries_its_ability_score_and_class_level_rows
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 676 filtered out; finished in 0.87s
+
+error: test failed, to rerun pass `--bin codex-desktop`

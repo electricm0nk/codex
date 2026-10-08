@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Magitech ~ Holographic eyes (mk 2)",
+    "name": "Holographic eyes, mk 2",
+    "type": "Magitech.ItemLevel_.13.Brain and eyes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 966,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Magitech ~ Holographic eyes (mk 2)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:magitech_holographic_eyes_mk_2"
+}

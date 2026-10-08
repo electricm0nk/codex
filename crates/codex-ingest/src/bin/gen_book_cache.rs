@@ -1,7 +1,7 @@
 //! SD-27 Cycle E2.1/E2.2 -- the shared per-book codegen tool
 //! `docs/release/SD-27-future-state-book-content-ingestion/
 //! technical-design.md §2.2`/§3 names: it reads an already-completed
-//! `rules_tables::<book>/` module's compiled state and serializes it to
+//! `rules_catalog::<book>/` module's compiled state and serializes it to
 //! `data/corpus/<book>/{content_kind}/<id>.json` as Shape B v1
 //! (`src/rules_core/shape_b_v1.rs`) records, mirroring
 //! `src/bin/gen_core_rulebook_cache.rs`'s established discipline:
@@ -19,7 +19,7 @@
 //! ARG or another future-state book extends the `match` in `main()`
 //! rather than replacing this file.
 //!
-//! **Why this binary does NOT `use codex::rules_core::rules_tables::
+//! **Why this binary does NOT `use codex::rules_core::rules_catalog::
 //! pathfinder_unchained` via the library crate.** SD-27's file-touch
 //! partition (`decisions.md §8`, enforced by the literal regex in
 //! `loop-instruction.md §6`) allow-lists `src/rules_core/rules_tables/
@@ -58,7 +58,7 @@ use std::path::{Path, PathBuf};
 use sha2::{Digest, Sha256};
 
 use codex_ingest::pcgen_import::companion_pcgen_guards::{rebuild_condition, rebuild_external_ability_refs};
-use codex_ingest::pcgen_import::cache_gen::WiringClassIndex;
+use codex_ingest::pcgen_import::cache_gen::{cited_coordinate, cited_file, cited_stem, WiringClassIndex};
 use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
 
@@ -147,10 +147,10 @@ fn wiring_class_for_source(
 // here like any other. Nothing about the generated cache changes -- it is
 // the same source file, reached by the ordinary module path instead of a
 // second, duplicate compilation of it into this binary crate.
-use codex::rules_core::rules_tables::pathfinder_unchained;
+use codex::rules_core::rules_catalog::pathfinder_unchained;
 
 // SD28-E30 (`epic-32-archetype-swap`): `advanced_race_guide::archetype_tables`
-// now depends on `rules_tables::archetype_swap`'s shared
+// now depends on `rules_catalog::archetype_swap`'s shared
 // `ArchetypeGrant`/`ArchetypeSwapEntry` struct. Since `advanced_race_guide`
 // is duplicated into this binary crate via `#[path]` rather than reached
 // through the library crate (see this file's own doc comment above), its
@@ -175,7 +175,7 @@ use codex::rules_core::rules_tables::pathfinder_unchained;
 // Retiring it is smaller than the alternative, which was duplicating
 // `companion_chassis` and `monster_chassis` into this binary as well and
 // carrying two copies of the companion tables in one build.
-use codex::rules_core::rules_tables::advanced_race_guide;
+use codex::rules_core::rules_catalog::advanced_race_guide;
 
 const BOOK_RELATIVE: &str = "pathfinder/paizo/roleplaying_game/pathfinder_unchained";
 
@@ -328,6 +328,8 @@ fn load_corpus_file_rel_with_fallback(
     corpus_data_root: Option<&Path>,
     file_name: &str,
 ) -> CorpusFile {
+    let file_name = cited_file(file_name);
+    let file_name = file_name.as_str();
     let (used_root, used_book_relative, resolved) = match try_resolve_book_file(root, file_name) {
         Some(found) => (root.to_path_buf(), book_relative.to_string(), found),
         None => {
@@ -945,7 +947,7 @@ fn gen_advanced_race_guide() {
     let mut spell_written = 0u32;
     let mut spell_unattributed: Vec<String> = Vec::new();
     let mut spell_slugs_used: std::collections::HashSet<String> = std::collections::HashSet::new();
-    for entry in advanced_race_guide::spell_list::SPELL_LIST {
+    for entry in &advanced_race_guide::spell_list::SPELL_LIST {
         match arg_find_citation_line_with_identity(&spells_index, entry.key) {
             Some((line_no, record_key)) => {
                 let rendered = render_player_facing_description(entry.key, entry.description);
@@ -1303,7 +1305,7 @@ fn gen_advanced_race_guide() {
 /// Two kinds, one book directory, per `docs/release/corpus-work-channels.md`
 /// §9.2: `monster/` is the chassis and `monster_ability/` is the features
 /// attached to it, the same shape `race`/`race_trait` already have. Both are
-/// dumped from the compiled `rules_tables::bonus_bestiary` module -- this
+/// dumped from the compiled `rules_catalog::bonus_bestiary` module -- this
 /// generator never re-derives a value from raw LST, exactly as
 /// `gen_pathfinder_unchained`/`gen_advanced_race_guide` above do not. It reads
 /// the live `.lst` only to attach a real `path`/`sha256`/`line` citation, and
@@ -1339,7 +1341,7 @@ fn compose_screening_note(prior: Option<String>, marker: &str, this_pass: String
 }
 
 fn gen_monster_book(spec: &MonsterBookSpec) {
-    use codex::rules_core::rules_tables::monster_chassis;
+    use codex::rules_core::rules_catalog::monster_chassis;
 
     let book_id = spec.corpus_book;
     let table = monster_chassis::monster_book(book_id)
@@ -1453,7 +1455,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
         .iter()
         .map(|name| {
             (
-                *name,
+                cited_stem(name),
                 load_corpus_file_rel_with_fallback(
                     &root,
                     spec.book_relative,
@@ -1470,7 +1472,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
         .iter()
         .map(|name| {
             (
-                *name,
+                cited_stem(name),
                 load_corpus_file_rel_with_fallback(
                     &root,
                     spec.book_relative,
@@ -1619,7 +1621,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             "rename": if ability.codex_generated_name {
                 serde_json::json!({
                     "reason": ability.rename_reason,
-                    "coordinate": ability.rename_coordinate,
+                    "coordinate": ability.rename_coordinate.map(cited_coordinate),
                 })
             } else {
                 serde_json::Value::Null
@@ -1758,7 +1760,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
 /// only to attach a real `path`/`sha256`/`line` citation, that line is verified
 /// against the file rather than trusted, and a PI hit is a hard stop.
 fn gen_companion_book(spec: &CompanionBookSpec) {
-    use codex::rules_core::rules_tables::companion_chassis;
+    use codex::rules_core::rules_catalog::companion_chassis;
 
     let book_id = spec.corpus_book;
     let table = companion_chassis::companion_book(book_id).unwrap_or_else(|| {
@@ -1813,7 +1815,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
         .iter()
         .map(|name| {
             (
-                *name,
+                cited_stem(name),
                 load_corpus_file_rel_with_fallback(
                     &root,
                     spec.book_relative,
@@ -1828,7 +1830,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
         .iter()
         .map(|name| {
             (
-                *name,
+                cited_stem(name),
                 load_corpus_file_rel_with_fallback(
                     &root,
                     spec.book_relative,

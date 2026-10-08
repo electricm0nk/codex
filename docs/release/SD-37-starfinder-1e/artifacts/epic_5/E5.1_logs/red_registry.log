@@ -1,0 +1,22 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 33.23s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+test race_trait_picker::tests::race_books_load_through_the_per_system_registry ... FAILED
+
+failures:
+
+---- race_trait_picker::tests::race_books_load_through_the_per_system_registry stdout ----
+
+thread 'race_trait_picker::tests::race_books_load_through_the_per_system_registry' (1390780) panicked at src/race_trait_picker.rs:1096:9:
+loaders read RACE_CORPUS_BOOKS, not RACE_CORPUS_BOOK_REGISTRY: [(124, "use crate::race_catalog::{book_code, RACE_CORPUS_BOOKS};"), (489, "let book_dirs: Vec<PathBuf> = RACE_CORPUS_BOOKS.iter().map(|book| corpus_root.join(book)).collect();"), (490, "let roots: Vec<BookCorpusRoot<'_>> = RACE_CORPUS_BOOKS"), (762, "let dirs: Vec<PathBuf> = RACE_CORPUS_BOOKS.iter().map(|book| corpus_root.join(book)).collect();"), (763, "let pool_roots: Vec<BookCorpusRoot<'_>> = RACE_CORPUS_BOOKS")]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    race_trait_picker::tests::race_books_load_through_the_per_system_registry
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 649 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--bin codex-desktop`

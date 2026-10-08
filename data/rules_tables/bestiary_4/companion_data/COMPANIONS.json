@@ -1,0 +1,2231 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "bestiary_4/companion_data/COMPANIONS",
+  "licence": {
+    "license": "OGL",
+    "book": "bestiary_4",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion (Dinosaur (Dimorphodon))",
+      "name": "Companion (Dinosaur (Dimorphodon))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 80
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.311",
+      "ability_keys": [
+        "Companion Advancement ~ Dinosaur (Dimorphodon)",
+        "Companion (Dinosaur (Dimorphodon)) ~ Poison"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 6
+    },
+    {
+      "key": "Companion (Dinosaur (Diplodocus))",
+      "name": "Companion (Dinosaur (Diplodocus))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Tail Slap",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Tail Slap",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 6,
+      "source_page": "p.311",
+      "ability_keys": [
+        "Companion Advancement ~ Dinosaur (Diplodocus)",
+        "Companion (Dinosaur (Diplodocus)) ~ Tail Lash"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 7
+    },
+    {
+      "key": "Companion (Dinosaur (Styracosaurus))",
+      "name": "Companion (Dinosaur (Styracosaurus))",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": "AnimalCompanionDinosaur",
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Gore",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 6,
+      "source_page": "p.311",
+      "ability_keys": [
+        "Companion Advancement ~ Dinosaur (Styracosaurus)",
+        "Companion (Dinosaur (Styracosaurus)) ~ Reflexive Strike"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 8
+    },
+    {
+      "key": "Companion (Giraffe)",
+      "name": "Companion (Giraffe)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Hoof",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 2,
+      "source_page": "p.311",
+      "ability_keys": [
+        "Companion (Giraffe) ~ Natural Weapons",
+        "Companion Advancement ~ Giraffe"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 9
+    },
+    {
+      "key": "Companion (Stag)",
+      "name": "Companion (Stag)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Gore",
+          "formula": "max(0,(STR/2))",
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VARLT",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "MasterLevel"
+                },
+                {
+                  "facet": null,
+                  "value": "4"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.311",
+      "ability_keys": [
+        "Companion Advancement ~ Stag"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 10
+    },
+    {
+      "key": "Companion (Seahorse)",
+      "name": "Companion (Seahorse)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 10,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 6
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.311",
+      "ability_keys": [
+        "Companion Advancement ~ Seahorse",
+        "Companion (Seahorse) ~ Anchor"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 11
+    },
+    {
+      "key": "Companion (Trumpeter Swan)",
+      "name": "Companion (Trumpeter Swan)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 80
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Wing",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.311",
+      "ability_keys": [
+        "Companion Advancement ~ Trumpeter Swan"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 12
+    },
+    {
+      "key": "Companion (Tortoise)",
+      "name": "Companion (Tortoise)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 4
+        },
+        {
+          "ability": "DEX",
+          "amount": -2
+        },
+        {
+          "ability": "CON",
+          "amount": 6
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "natural_armor": 6,
+      "source_page": "p.311",
+      "ability_keys": [
+        "Companion Advancement ~ Tortoise"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 13
+    },
+    {
+      "key": "Companion (Weasel (Giant))",
+      "name": "Companion (Weasel (Giant))",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 10
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.311",
+      "ability_keys": [
+        "Grab ~ Medium",
+        "Companion Advancement ~ Weasel (Giant)"
+      ],
+      "external_ability_refs": [
+        "Scent",
+        "Blood Drain"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 14
+    },
+    {
+      "key": "Companion (Walrus)",
+      "name": "Companion (Walrus)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Swim",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.312",
+      "ability_keys": [
+        "Companion Advancement ~ Walrus"
+      ],
+      "external_ability_refs": [
+        "Hold Breath"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 15
+    },
+    {
+      "key": "Familiar (Archaeopteryx)",
+      "name": "Familiar (Archaeopteryx)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 40
+        },
+        {
+          "mode": "Climb",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.96",
+      "ability_keys": [
+        "Archaeopteryx ~ Weak Flier"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 17
+    },
+    {
+      "key": "Familiar (Dodo)",
+      "name": "Familiar (Dodo)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Animal",
+      "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": -2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.96",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 18
+    },
+    {
+      "key": "Familiar (Platypus)",
+      "name": "Familiar (Platypus)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Swim",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Spur",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Spur",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.96",
+      "ability_keys": [
+        "Platypus ~ Electrolocation",
+        "Platypus ~ Poison",
+        "Platypus ~ Semiaquatic"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 19
+    },
+    {
+      "key": "Familiar (Sloth)",
+      "name": "Familiar (Sloth)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 5
+        },
+        {
+          "mode": "Climb",
+          "feet": 5
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Claw",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -6
+        },
+        {
+          "ability": "DEX",
+          "amount": -4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.97",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 20
+    },
+    {
+      "key": "Familiar (Tuatara)",
+      "name": "Familiar (Tuatara)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Animal"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.97",
+      "ability_keys": [],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 21
+    },
+    {
+      "key": "Familiar (Giant Flea)",
+      "name": "Familiar (Giant Flea)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Vermin",
+      "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+      "monster_class": "Vermin:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Vermin"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Bite",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -10
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.99",
+      "ability_keys": [
+        "Flea (Giant) ~ Disease",
+        "Flea (Giant) ~ Uncanny Leap"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 22
+    },
+    {
+      "key": "Familiar (Almiraj)",
+      "name": "Familiar (Almiraj)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Burrow",
+          "feet": 10
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "monster_class": "Magical Beast:2",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Magical Beast"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": "2d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.8",
+      "ability_keys": [
+        "Almiraj ~ Hex-Prone",
+        "Almiraj ~ Magic Horn"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 25
+    },
+    {
+      "key": "Familiar (Beheaded)",
+      "name": "Familiar (Beheaded)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Undead",
+      "race_subtype": null,
+      "monster_class": "Undead:1",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Undead"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.17",
+      "ability_keys": [
+        "Beheaded ~ Base",
+        "Beheaded ~ Belching",
+        "Beheaded ~ Flaming",
+        "Beheaded ~ Grabbing",
+        "Beheaded ~ Screaming",
+        "Beheaded ~ Swarming"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 26
+    },
+    {
+      "key": "Familiar (Shadow Drake)",
+      "name": "Familiar (Shadow Drake)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 90
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Dragon",
+      "race_subtype": "Cold",
+      "monster_class": "Dragon:3",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Dragon"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Tail Slap",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.80",
+      "ability_keys": [
+        "Drake (Shadow) ~ Shadow Blend",
+        "Drake (Shadow) ~ Speed Surge",
+        "Drake (Shadow) ~ Stygian Breath"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 27
+    },
+    {
+      "key": "Familiar (Isitoq)",
+      "name": "Familiar (Isitoq)",
+      "size": "D",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 5
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Undead",
+      "race_subtype": null,
+      "monster_class": "Undead:2",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Undead"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Wing",
+          "damage_dice": "1d1"
+        },
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -6
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.159",
+      "ability_keys": [
+        "Isitoq ~ Daze",
+        "Isitoq ~ Tears of Anguish",
+        "Isitoq ~ Visual Sensor"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 28
+    },
+    {
+      "key": "Familiar (Nycar)",
+      "name": "Familiar (Nycar)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Dragon",
+      "race_subtype": "Aquatic",
+      "monster_class": "Dragon:3",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Dragon"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.207",
+      "ability_keys": [
+        "Nycar ~ Elusive",
+        "Nycar ~ Poison"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 29
+    },
+    {
+      "key": "Familiar (Pipefox)",
+      "name": "Familiar (Pipefox)",
+      "size": "D",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "monster_class": "Magical Beast:3",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Magical Beast"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -10
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.215",
+      "ability_keys": [
+        "Comprehend Languages ~ Constant"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 30
+    },
+    {
+      "key": "Familiar (Pooka)",
+      "name": "Familiar (Pooka)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Fey",
+      "race_subtype": null,
+      "monster_class": "Fey:4",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Fey"
+      ],
+      "natural_attacks": [],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.216",
+      "ability_keys": [
+        "Pooka ~ Poison"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 31
+    },
+    {
+      "key": "Familiar (Nosoi)",
+      "name": "Familiar (Nosoi)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Psychopomp",
+      "monster_class": "Outsider (Ref/Will):3",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.220",
+      "ability_keys": [
+        "Psychopomp (Nosoi) ~ Haunting Melody"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 32
+    },
+    {
+      "key": "Familiar (Ratling)",
+      "name": "Familiar (Ratling)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Burrow",
+          "feet": 10
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "monster_class": "Magical Beast:3",
+      "type_segments": [
+        "Companion",
+        "Familiar",
+        "Magical Beast"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.226",
+      "ability_keys": [
+        "Ratling ~ Scroll Use",
+        "Read Magic ~ Constant",
+        "Speak with Animals (Rodents only) ~ Constant"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 33
+    },
+    {
+      "key": "Almiraj",
+      "name": "Almiraj",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Burrow",
+          "feet": 10
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "monster_class": "Magical Beast:2",
+      "type_segments": [
+        "Magical Beast"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Gore",
+          "damage_dice": "2d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.8",
+      "ability_keys": [
+        "Almiraj ~ Hex-Prone",
+        "Almiraj ~ Magic Horn"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 37
+    },
+    {
+      "key": "Beheaded",
+      "name": "Beheaded",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Undead",
+      "race_subtype": null,
+      "monster_class": "Undead:1",
+      "type_segments": [
+        "Undead"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.17",
+      "ability_keys": [
+        "Beheaded ~ Base",
+        "Beheaded ~ Belching",
+        "Beheaded ~ Flaming",
+        "Beheaded ~ Grabbing",
+        "Beheaded ~ Screaming",
+        "Beheaded ~ Swarming"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 38
+    },
+    {
+      "key": "Isitoq",
+      "name": "Isitoq",
+      "size": "D",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 5
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Undead",
+      "race_subtype": null,
+      "monster_class": "Undead:2",
+      "type_segments": [
+        "Undead"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Wing",
+          "damage_dice": "1d1"
+        },
+        {
+          "name": "Slam",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -6
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -4
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.159",
+      "ability_keys": [
+        "Isitoq ~ Daze",
+        "Isitoq ~ Tears of Anguish",
+        "Isitoq ~ Visual Sensor"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 39
+    },
+    {
+      "key": "Drake (Shadow)",
+      "name": "Shadow Drake",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 90
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Dragon",
+      "race_subtype": "Cold",
+      "monster_class": "Dragon:3",
+      "type_segments": [
+        "Dragon"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Tail Slap",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 10
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.80",
+      "ability_keys": [
+        "Drake (Shadow) ~ Shadow Blend",
+        "Drake (Shadow) ~ Speed Surge",
+        "Drake (Shadow) ~ Stygian Breath"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 40
+    },
+    {
+      "key": "Nycar",
+      "name": "Nycar",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Dragon",
+      "race_subtype": "Aquatic",
+      "monster_class": "Dragon:3",
+      "type_segments": [
+        "Dragon"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": -6
+        },
+        {
+          "ability": "CHA",
+          "amount": -2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.207",
+      "ability_keys": [
+        "Nycar ~ Elusive",
+        "Nycar ~ Poison"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 41
+    },
+    {
+      "key": "Pipefox",
+      "name": "Pipefox",
+      "size": "D",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "monster_class": "Magical Beast:3",
+      "type_segments": [
+        "Magical Beast"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -10
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": 4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.215",
+      "ability_keys": [
+        "Comprehend Languages ~ Constant"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 42
+    },
+    {
+      "key": "Pooka",
+      "name": "Pooka",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Fey",
+      "race_subtype": null,
+      "monster_class": "Fey:4",
+      "type_segments": [
+        "Fey"
+      ],
+      "natural_attacks": [],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.216",
+      "ability_keys": [
+        "Pooka ~ Poison"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 43
+    },
+    {
+      "key": "Psychopomp (Nosoi)",
+      "name": "Nosoi",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Outsider",
+      "race_subtype": "Extraplanar|Psychopomp",
+      "monster_class": "Outsider (Ref/Will):3",
+      "type_segments": [
+        "Outsider"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -2
+        },
+        {
+          "ability": "DEX",
+          "amount": 6
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 6
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.220",
+      "ability_keys": [
+        "Psychopomp (Nosoi) ~ Haunting Melody"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 44
+    },
+    {
+      "key": "Ratling",
+      "name": "Ratling",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Burrow",
+          "feet": 10
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        },
+        {
+          "mode": "Swim",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Magical Beast",
+      "race_subtype": null,
+      "monster_class": "Magical Beast:3",
+      "type_segments": [
+        "Magical Beast"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -4
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "INT",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": 2
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.226",
+      "ability_keys": [
+        "Ratling ~ Scroll Use",
+        "Read Magic ~ Constant",
+        "Speak with Animals (Rodents only) ~ Constant"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "b4_races_companion",
+      "source_line": 45
+    }
+  ]
+}

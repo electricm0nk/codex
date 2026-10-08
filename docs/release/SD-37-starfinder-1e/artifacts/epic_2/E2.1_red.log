@@ -1,0 +1,263 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+error[E0599]: no variant, associated function, or constant named `Eac` found for enum `sheet_rule::BonusTarget` in the current scope
+    --> src/rules_core/sheet_rule.rs:3814:27
+     |
+ 318 | pub enum BonusTarget {
+     | -------------------- variant, associated function, or constant `Eac` not found for this enum
+...
+3814 |             (BonusTarget::Eac, "\"Eac\""),
+     |                           ^^^ variant, associated function, or constant not found in `sheet_rule::BonusTarget`
+
+error[E0599]: no variant, associated function, or constant named `Kac` found for enum `sheet_rule::BonusTarget` in the current scope
+    --> src/rules_core/sheet_rule.rs:3815:27
+     |
+ 318 | pub enum BonusTarget {
+     | -------------------- variant, associated function, or constant `Kac` not found for this enum
+...
+3815 |             (BonusTarget::Kac, "\"Kac\""),
+     |                           ^^^ variant, associated function, or constant not found in `sheet_rule::BonusTarget`
+
+error[E0599]: no variant, associated function, or constant named `Stamina` found for enum `sheet_rule::BonusTarget` in the current scope
+    --> src/rules_core/sheet_rule.rs:3816:27
+     |
+ 318 | pub enum BonusTarget {
+     | -------------------- variant, associated function, or constant `Stamina` not found for this enum
+...
+3816 |             (BonusTarget::Stamina, "\"Stamina\""),
+     |                           ^^^^^^^ variant, associated function, or constant not found in `sheet_rule::BonusTarget`
+
+error[E0599]: no variant, associated function, or constant named `Resolve` found for enum `sheet_rule::BonusTarget` in the current scope
+    --> src/rules_core/sheet_rule.rs:3817:27
+     |
+ 318 | pub enum BonusTarget {
+     | -------------------- variant, associated function, or constant `Resolve` not found for this enum
+...
+3817 |             (BonusTarget::Resolve, "\"Resolve\""),
+     |                           ^^^^^^^ variant, associated function, or constant not found in `sheet_rule::BonusTarget`
+
+error[E0560]: struct `sheet_rule::CharacterFacts` has no field named `key_ability`
+    --> src/rules_core/sheet_rule.rs:3827:72
+     |
+3827 |         let facts = CharacterFacts { ability_mods: [0, 3, 1, 0, 0, 2], key_ability: Some(Ability::Cha), ..Default::default() };
+     |                                                                        ^^^^^^^^^^^ `sheet_rule::CharacterFacts` does not have this field
+     |
+     = note: available fields are: `level`, `class_levels`, `ability_scores`, `size`, `base_size` ... and 24 others
+
+error[E0599]: no variant, associated function, or constant named `KeyAbilityMod` found for enum `sheet_rule::Expr` in the current scope
+    --> src/rules_core/sheet_rule.rs:3828:52
+     |
+ 178 | pub enum Expr {
+     | ------------- variant, associated function, or constant `KeyAbilityMod` not found for this enum
+...
+3828 |         assert_eq!(evaluate_expr_from_facts(&Expr::KeyAbilityMod, &facts), Rat::int(2));
+     |                                                    ^^^^^^^^^^^^^ variant, associated function, or constant not found in `sheet_rule::Expr`
+     |
+help: there is a variant with a similar name
+     |
+3828 -         assert_eq!(evaluate_expr_from_facts(&Expr::KeyAbilityMod, &facts), Rat::int(2));
+3828 +         assert_eq!(evaluate_expr_from_facts(&Expr::AbilityMod(/* sheet_rule::Ability */), &facts), Rat::int(2));
+     |
+
+error[E0560]: struct `sheet_rule::CharacterFacts` has no field named `key_ability`
+    --> src/rules_core/sheet_rule.rs:3829:38
+     |
+3829 |         let facts = CharacterFacts { key_ability: Some(Ability::Dex), ..facts };
+     |                                      ^^^^^^^^^^^ `sheet_rule::CharacterFacts` does not have this field
+     |
+     = note: available fields are: `level`, `class_levels`, `ability_scores`, `ability_mods`, `size` ... and 25 others
+
+error[E0599]: no variant, associated function, or constant named `KeyAbilityMod` found for enum `sheet_rule::Expr` in the current scope
+    --> src/rules_core/sheet_rule.rs:3830:52
+     |
+ 178 | pub enum Expr {
+     | ------------- variant, associated function, or constant `KeyAbilityMod` not found for this enum
+...
+3830 |         assert_eq!(evaluate_expr_from_facts(&Expr::KeyAbilityMod, &facts), Rat::int(3));
+     |                                                    ^^^^^^^^^^^^^ variant, associated function, or constant not found in `sheet_rule::Expr`
+     |
+help: there is a variant with a similar name
+     |
+3830 -         assert_eq!(evaluate_expr_from_facts(&Expr::KeyAbilityMod, &facts), Rat::int(3));
+3830 +         assert_eq!(evaluate_expr_from_facts(&Expr::AbilityMod(/* sheet_rule::Ability */), &facts), Rat::int(3));
+     |
+
+error[E0599]: no variant, associated function, or constant named `KeyAbilityMod` found for enum `sheet_rule::Expr` in the current scope
+    --> src/rules_core/sheet_rule.rs:3831:49
+     |
+ 178 | pub enum Expr {
+     | ------------- variant, associated function, or constant `KeyAbilityMod` not found for this enum
+...
+3831 |         assert_eq!(serde_json::to_string(&Expr::KeyAbilityMod).unwrap(), "\"KeyAbilityMod\"");
+     |                                                 ^^^^^^^^^^^^^ variant, associated function, or constant not found in `sheet_rule::Expr`
+     |
+help: there is a variant with a similar name
+     |
+3831 -         assert_eq!(serde_json::to_string(&Expr::KeyAbilityMod).unwrap(), "\"KeyAbilityMod\"");
+3831 +         assert_eq!(serde_json::to_string(&Expr::AbilityMod(/* sheet_rule::Ability */)).unwrap(), "\"KeyAbilityMod\"");
+     |
+
+error[E0599]: no variant, associated function, or constant named `KeyAbilityMod` found for enum `sheet_rule::Expr` in the current scope
+    --> src/rules_core/sheet_rule.rs:3840:61
+     |
+ 178 | pub enum Expr {
+     | ------------- variant, associated function, or constant `KeyAbilityMod` not found for this enum
+...
+3840 |         let line = evaluate(&probe(SheetValue::Number(Expr::KeyAbilityMod)), &HeldSet::default(), &package, &facts, EvalContext::d...
+     |                                                             ^^^^^^^^^^^^^ variant, associated function, or constant not found in `sheet_rule::Expr`
+     |
+help: there is a variant with a similar name
+     |
+3840 -         let line = evaluate(&probe(SheetValue::Number(Expr::KeyAbilityMod)), &HeldSet::default(), &package, &facts, EvalContext::default());
+3840 +         let line = evaluate(&probe(SheetValue::Number(Expr::AbilityMod)), &HeldSet::default(), &package, &facts, EvalContext::default());
+     |
+
+error[E0425]: cannot find function `stacking_types` in this scope
+    --> src/rules_core/sheet_rule.rs:3850:20
+     |
+ 314 | / pub const STACKING_TYPES: [&str; 6] =
+ 315 | |     ["Defense", "Dodge", "Circumstance", "Racial", "NotRanged", "NotFlatFooted"];
+     | |_________________________________________________________________________________- similarly named constant `STACKING_TYPES` defined here
+...
+3850 |           assert_eq!(stacking_types(GameSystem::Pathfinder1e), &oracle[..]);
+     |                      ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+3850 -         assert_eq!(stacking_types(GameSystem::Pathfinder1e), &oracle[..]);
+3850 +         assert_eq!(STACKING_TYPES(GameSystem::Pathfinder1e), &oracle[..]);
+     |
+
+error[E0425]: cannot find function `stacking_types` in this scope
+    --> src/rules_core/sheet_rule.rs:3851:20
+     |
+ 314 | / pub const STACKING_TYPES: [&str; 6] =
+ 315 | |     ["Defense", "Dodge", "Circumstance", "Racial", "NotRanged", "NotFlatFooted"];
+     | |_________________________________________________________________________________- similarly named constant `STACKING_TYPES` defined here
+...
+3851 |           assert_eq!(stacking_types(GameSystem::Starfinder1e), &oracle[..]);
+     |                      ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+3851 -         assert_eq!(stacking_types(GameSystem::Starfinder1e), &oracle[..]);
+3851 +         assert_eq!(STACKING_TYPES(GameSystem::Starfinder1e), &oracle[..]);
+     |
+
+error[E0425]: cannot find function `stacking_types` in this scope
+    --> src/rules_core/sheet_rule.rs:3852:20
+     |
+ 314 | / pub const STACKING_TYPES: [&str; 6] =
+ 315 | |     ["Defense", "Dodge", "Circumstance", "Racial", "NotRanged", "NotFlatFooted"];
+     | |_________________________________________________________________________________- similarly named constant `STACKING_TYPES` defined here
+...
+3852 |           assert_eq!(stacking_types(GameSystem::Pathfinder1e), &STACKING_TYPES[..]);
+     |                      ^^^^^^^^^^^^^^
+     |
+help: a constant with a similar name exists
+     |
+3852 -         assert_eq!(stacking_types(GameSystem::Pathfinder1e), &STACKING_TYPES[..]);
+3852 +         assert_eq!(STACKING_TYPES(GameSystem::Pathfinder1e), &STACKING_TYPES[..]);
+     |
+
+error[E0599]: no method named `system` found for struct `sheet_rule::SheetRulePackage` in the current scope
+    --> src/rules_core/sheet_rule.rs:3853:44
+     |
+ 983 | pub struct SheetRulePackage {
+     | --------------------------- method `system` not found for this struct
+...
+3853 |         assert_eq!(SheetRulePackage::new().system(), GameSystem::Pathfinder1e);
+     |                                            ^^^^^^ method not found in `sheet_rule::SheetRulePackage`
+
+error[E0599]: no associated function or constant named `for_system` found for struct `sheet_rule::SheetRulePackage` in the current scope
+    --> src/rules_core/sheet_rule.rs:3854:38
+     |
+ 983 | pub struct SheetRulePackage {
+     | --------------------------- associated function or constant `for_system` not found for this struct
+...
+3854 |         assert_eq!(SheetRulePackage::for_system(GameSystem::Starfinder1e).system(), GameSystem::Starfinder1e);
+     |                                      ^^^^^^^^^^ associated function or constant not found in `sheet_rule::SheetRulePackage`
+     |
+note: if you're trying to build a new `sheet_rule::SheetRulePackage`, consider using `sheet_rule::SheetRulePackage::new` which returns `sheet_rule::SheetRulePackage`
+    --> src/rules_core/sheet_rule.rs:1080:5
+     |
+1080 |     pub fn new() -> Self {
+     |     ^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no variant, associated function, or constant named `Starfinder` found for enum `sheet_rule::SpellKind` in the current scope
+    --> src/rules_core/sheet_rule.rs:3860:54
+     |
+ 255 | pub enum SpellKind {
+     | ------------------ variant, associated function, or constant `Starfinder` not found for this enum
+...
+3860 |         assert_eq!(serde_json::to_string(&SpellKind::Starfinder).unwrap(), "\"Starfinder\"");
+     |                                                      ^^^^^^^^^^ variant, associated function, or constant not found in `sheet_rule::SpellKind`
+
+error[E0599]: no variant, associated function, or constant named `Starfinder` found for enum `sheet_rule::SpellKind` in the current scope
+    --> src/rules_core/sheet_rule.rs:3861:31
+     |
+ 255 | pub enum SpellKind {
+     | ------------------ variant, associated function, or constant `Starfinder` not found for this enum
+...
+3861 |         assert_eq!(SpellKind::Starfinder.max_spell_level(), 6);
+     |                               ^^^^^^^^^^ variant, associated function, or constant not found in `sheet_rule::SpellKind`
+
+error[E0599]: no method named `max_spell_level` found for enum `sheet_rule::SpellKind` in the current scope
+    --> src/rules_core/sheet_rule.rs:3863:27
+     |
+ 255 | pub enum SpellKind {
+     | ------------------ method `max_spell_level` not found for this enum
+...
+3863 |             assert_eq!(pf.max_spell_level(), 9);
+     |                           ^^^^^^^^^^^^^^^ method not found in `sheet_rule::SpellKind`
+
+error[E0609]: no field `theme` on type `sheet_rule::CharacterFacts`
+    --> src/rules_core/sheet_rule.rs:3871:24
+     |
+3871 |         assert_eq!((pf.theme.as_deref(), pf.key_ability), (None, None));
+     |                        ^^^^^ unknown field
+     |
+     = note: available fields are: `level`, `class_levels`, `ability_scores`, `ability_mods`, `size` ... and 25 others
+
+error[E0609]: no field `key_ability` on type `sheet_rule::CharacterFacts`
+    --> src/rules_core/sheet_rule.rs:3871:45
+     |
+3871 |         assert_eq!((pf.theme.as_deref(), pf.key_ability), (None, None));
+     |                                             ^^^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `level`, `class_levels`, `ability_scores`, `ability_mods`, `size` ... and 25 others
+
+error[E0560]: struct `sheet_rule::CharacterFacts` has no field named `theme`
+    --> src/rules_core/sheet_rule.rs:3872:35
+     |
+3872 |         let sf = CharacterFacts { theme: Some("ace_pilot".into()), key_ability: Some(Ability::Wis), ..Default::default() };
+     |                                   ^^^^^ `sheet_rule::CharacterFacts` does not have this field
+     |
+     = note: available fields are: `level`, `class_levels`, `ability_scores`, `ability_mods`, `size` ... and 25 others
+
+error[E0560]: struct `sheet_rule::CharacterFacts` has no field named `key_ability`
+    --> src/rules_core/sheet_rule.rs:3872:68
+     |
+3872 |         let sf = CharacterFacts { theme: Some("ace_pilot".into()), key_ability: Some(Ability::Wis), ..Default::default() };
+     |                                                                    ^^^^^^^^^^^ `sheet_rule::CharacterFacts` does not have this field
+     |
+     = note: available fields are: `level`, `class_levels`, `ability_scores`, `ability_mods`, `size` ... and 25 others
+
+error[E0609]: no field `theme` on type `sheet_rule::CharacterFacts`
+    --> src/rules_core/sheet_rule.rs:3873:24
+     |
+3873 |         assert_eq!((sf.theme.as_deref(), sf.key_ability), (Some("ace_pilot"), Some(Ability::Wis)));
+     |                        ^^^^^ unknown field
+     |
+     = note: available fields are: `level`, `class_levels`, `ability_scores`, `ability_mods`, `size` ... and 25 others
+
+error[E0609]: no field `key_ability` on type `sheet_rule::CharacterFacts`
+    --> src/rules_core/sheet_rule.rs:3873:45
+     |
+3873 |         assert_eq!((sf.theme.as_deref(), sf.key_ability), (Some("ace_pilot"), Some(Ability::Wis)));
+     |                                             ^^^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `level`, `class_levels`, `ability_scores`, `ability_mods`, `size` ... and 25 others
+
+Some errors have detailed explanations: E0425, E0560, E0599, E0609.
+For more information about an error, try `rustc --explain E0425`.
+error: could not compile `codex` (lib test) due to 24 previous errors

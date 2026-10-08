@@ -1,0 +1,109 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "companion_chassis/COMPANION_BOOKS",
+  "licence": {
+    "license": "OGL",
+    "book": "companion_chassis",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "corpus_book": "inner_sea_combat",
+      "companions": "inner_sea_combat/companion_data/COMPANIONS",
+      "companion_abilities": "inner_sea_combat/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "monster_codex",
+      "companions": "monster_codex/companion_data/COMPANIONS",
+      "companion_abilities": "monster_codex/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "inner_sea_intrigue",
+      "companions": "inner_sea_intrigue/companion_data/COMPANIONS",
+      "companion_abilities": "inner_sea_intrigue/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "horror_adventures",
+      "companions": "horror_adventures/companion_data/COMPANIONS",
+      "companion_abilities": "horror_adventures/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "bestiary_5",
+      "companions": "bestiary_5/companion_data/COMPANIONS",
+      "companion_abilities": "bestiary_5/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "bestiary_6",
+      "companions": "bestiary_6/companion_data/COMPANIONS",
+      "companion_abilities": "bestiary_6/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "bestiary_2",
+      "companions": "bestiary_2/companion_data/COMPANIONS",
+      "companion_abilities": "bestiary_2/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "beastiary",
+      "companions": "beastiary1/companion_data/COMPANIONS",
+      "companion_abilities": "beastiary1/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "bestiary_3",
+      "companions": "bestiary_3/companion_data/COMPANIONS",
+      "companion_abilities": "bestiary_3/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "bestiary_4",
+      "companions": "bestiary_4/companion_data/COMPANIONS",
+      "companion_abilities": "bestiary_4/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "ultimate_wilderness",
+      "companions": "ultimate_wilderness/companion_data/COMPANIONS",
+      "companion_abilities": "ultimate_wilderness/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "core_rulebook",
+      "companions": "crb/companion_data/COMPANIONS",
+      "companion_abilities": "crb/companion_data/COMPANION_ABILITIES",
+      "companion_classes": "crb/companion_data/COMPANION_CLASSES"
+    },
+    {
+      "corpus_book": "ultimate_magic",
+      "companions": "ultimate_magic/companion_data/COMPANIONS",
+      "companion_abilities": "ultimate_magic/companion_data/COMPANION_ABILITIES",
+      "companion_classes": "ultimate_magic/companion_data/COMPANION_CLASSES"
+    },
+    {
+      "corpus_book": "advanced_race_guide",
+      "companions": "advanced_race_guide/companion_data/COMPANIONS",
+      "companion_abilities": "advanced_race_guide/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "advanced_players_guide",
+      "companions": "apg/companion_data/COMPANIONS",
+      "companion_abilities": "apg/companion_data/COMPANION_ABILITIES",
+      "companion_classes": ""
+    },
+    {
+      "corpus_book": "book_of_the_damned_volume_1",
+      "companions": "book_of_the_damned_volume_1/companion_data/COMPANIONS",
+      "companion_abilities": "book_of_the_damned_volume_1/companion_data/COMPANION_ABILITIES",
+      "companion_classes": "book_of_the_damned_volume_1/companion_data/COMPANION_CLASSES"
+    }
+  ]
+}

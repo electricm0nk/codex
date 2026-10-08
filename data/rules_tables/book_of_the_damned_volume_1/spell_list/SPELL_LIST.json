@@ -1,0 +1,55 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "book_of_the_damned_volume_1/spell_list/SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "book_of_the_damned_volume_1",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Agonize",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 3,
+      "description": "You afflict a creature you have conjured with a calling spell with bolts of vicious energy to make it more pliant to your will."
+    },
+    {
+      "key": "Hellfire Ray",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 6,
+      "description": "A blast of hellfire blazes from your hands and deals (min(15,CASTERLEVEL))d6 points of damage."
+    },
+    {
+      "key": "Maledication",
+      "name_pi_line": null,
+      "school": "Necromancy",
+      "level": 4,
+      "description": "Target's soul is damned to hell and cannot be resurrected if killed while the spell lasts."
+    },
+    {
+      "key": "Sacrifice",
+      "name_pi_line": null,
+      "school": "Enchantment",
+      "level": 4,
+      "description": "You make a sacrifice to aid in conjuring and commanding a creature called with planar ally, planar binding, or a similar spell."
+    },
+    {
+      "key": "Vision of Hell",
+      "name_pi_line": null,
+      "school": "Illusion",
+      "level": 3,
+      "description": "You overlay a realistic illusion of a terrifying hellscape upon an area, causing creatures to be shaken."
+    },
+    {
+      "key": "Greater Teleport (Self Plus 50 Lbs. Of Objects Only)",
+      "name_pi_line": null,
+      "school": "Conjuration",
+      "level": 7,
+      "description": null
+    }
+  ]
+}

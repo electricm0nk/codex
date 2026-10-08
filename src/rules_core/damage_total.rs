@@ -30,14 +30,14 @@
 //! vs. out-of-scope boundary — this cycle resolves the prior blocked
 //! attempt (`cycle-2026-07-17T1738`, recorded in the progress doc's
 //! `damage:feat_effect` Open Blockers entry), a real gap
-//! (`rules_tables::crb::feats::FeatTableEntry` had no numeric effect
+//! (`rules_catalog::crb::feats::FeatTableEntry` had no numeric effect
 //! field at all) since resolved by `3d962c2`.
 //!
 //! Adapts `technical-design.md` §2.5's illustrative `compute_damage`
 //! seam to this repo's real types per §2.0 (`RulesTables` retired — no
 //! `rules_tables: &RulesTables` parameter anywhere; a table-store read,
 //! when this epic needs one, imports the specific
-//! `rules_tables::crb::<table>` item directly). The full
+//! `rules_catalog::crb::<table>` item directly). The full
 //! `compute_damage(attacker, weapon, target, attack_roll) -> DamageRoll`
 //! signature is not landed yet — it depends on STR-modifier, weapon-
 //! enhancement, feat-effect, and critical-rules work-units this cycle
@@ -126,8 +126,8 @@ use crate::rules_core::equipment_resolver::{
     equipment_converted_resolve, equipment_id_resolve,
 };
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::feats::{feat_tables, EffectSelection, FeatEffectBonus};
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::crb::feats::{feat_tables, EffectSelection, FeatEffectBonus};
+use crate::rules_core::rules_catalog::RuleSetId;
 use crate::rules_core::source_content::SourcePackageContent;
 
 /// A PF1 dice expression, e.g. `"1d8"` -> `{ count: 1, die_size: 8 }`,
@@ -599,7 +599,7 @@ pub struct DamageRollFeatEffect {
 /// The damage-total engine's fourth work-unit (SD-20 §1.6): feat-effect
 /// modifier — **bounded to feats whose `BONUS:` token is a directly
 /// usable constant**, per this cycle's explicit scoping (see below).
-/// Reads `rules_tables::crb::feats::feat_tables()` directly (no
+/// Reads `rules_catalog::crb::feats::feat_tables()` directly (no
 /// `RulesTables` parameter, `technical-design.md` §2.0) — the same
 /// direct-import pattern `feat_prereqs/combat.rs::resolve_combat_feat_effect`
 /// already uses for this table. Deliberately does **not** compose with

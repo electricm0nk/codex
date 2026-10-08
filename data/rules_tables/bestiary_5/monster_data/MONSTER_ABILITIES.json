@@ -1,0 +1,745 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "bestiary_5/monster_data/MONSTER_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "bestiary_5",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Brain Mole ~ Brain Drain",
+      "name": "Brain Drain",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "BrainMoleRacialTrait"
+      ],
+      "description": "When a brain mole maintains a grapple against a creature to which it is attached, it automatically deals an amount of damage equal to its bite damage. Whenever a brain mole successfully deals damage to a creature to which it is attached, it drains some of that creature's mental energy. If the creature is a spellcaster, the spellcaster loses a single spell he has prepared, or a single unused spell slot if he is a spontaneous spellcaster. The creature chooses which spell or spell slot is lost, but can't lose a 0-level spell in this way. If the creature is not a spellcaster or has no prepared spells or unused spell slots of 1st-level or higher, this ability instead deals 1 point of Intelligence, Wisdom, and Charisma damage. Either way, the brain mole gains 1 point each of psychic energy (PE) each time it uses this ability as long as it drains at least one spell or deals at least 1 point of ability damage.",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "b5_abilities_race_oa",
+      "source_line": 9,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Brain Mole ~ Second Sight",
+      "name": "Second Sight",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "BrainMoleRacialTrait"
+      ],
+      "description": "Brain moles can sense the presence of creatures whose minds have been opened to the world of magic. Brain moles can notice and locate any creature within 60 feet that is capable of casting spells (whether they are arcane, divine, or psychic spells). This functions identically to blindsight, except that it applies only to creatures that can cast spells.",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "b5_abilities_race_oa",
+      "source_line": 10,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Brain Mole ~ Shrouded Mind",
+      "name": "Shrouded Mind",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "BrainMoleRacialTrait"
+      ],
+      "description": "Brain moles are able to psychically shield their minds, allowing them to go undetected by predators that hunt psychically. Brain moles are immune to detect spells as well as spells that read or examine auras.",
+      "description_variables": [],
+      "source_page": "p.46",
+      "owners": [],
+      "source_file": "b5_abilities_race_oa",
+      "source_line": 11,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Brain Mole ~ SLA",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "BrainMoleRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race_oa",
+      "source_line": 12,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Chuspiki ~ Air Blast",
+      "name": "Air Blast",
+      "facet": "SpecialAttack",
+      "delivery": "SpellLike",
+      "traits": [
+        "ChuspikiRacialTrait"
+      ],
+      "description": "A chuspiki can make a ranged attack with an intense air blast, as the kineticist wild talent of the same name, using its Hit Dice as its kineticist level (Pathfinder RPG Occult Adventures 11, 15).",
+      "description_variables": [],
+      "source_page": "p.56",
+      "owners": [],
+      "source_file": "b5_abilities_race_oa",
+      "source_line": 15,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Chuspiki ~ Basic Aerokinesis",
+      "name": "Basic Aerokinesis",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "ChuspikiRacialTrait"
+      ],
+      "description": "A chuspiki can use basic aerokinesis, as the kineticist wild talent of the same name (Occult Adventures 23).",
+      "description_variables": [],
+      "source_page": "p.56",
+      "owners": [],
+      "source_file": "b5_abilities_race_oa",
+      "source_line": 16,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Chuspiki ~ Wind Blessed",
+      "name": "Wind Blessed",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "ChuspikiRacialTrait"
+      ],
+      "description": "A chuspiki is treated as a Large creature for the purposes of determining the effects wind has upon it.",
+      "description_variables": [],
+      "source_page": "p.56",
+      "owners": [],
+      "source_file": "b5_abilities_race_oa",
+      "source_line": 17,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Chuspiki ~ Wind Form",
+      "name": "Wind Form",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "ChuspikiRacialTrait"
+      ],
+      "description": "Three times per day as an immediate action, a chuspiki can become insubstantial for 1 round. It gains DR 10/magic and becomes immune to poison, sneak attacks, and critical hits. It can't attack or use any of its spell-like abilities while in wind form, with the exception of basic aerokinesis.",
+      "description_variables": [],
+      "source_page": "p.56",
+      "owners": [],
+      "source_file": "b5_abilities_race_oa",
+      "source_line": 18,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Chuspiki ~ SLA",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "ChuspikiRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race_oa",
+      "source_line": 19,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Cameroceras ~ Pressure Adaptation",
+      "name": "Pressure Adaptation",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "CamerocerasRacialTrait"
+      ],
+      "description": "A cameroceras suffers no pressure damage at depths less than 1 mile, even if it is instantaneously moved to a different pressure.",
+      "description_variables": [],
+      "source_page": "p.49",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 22,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Digmaul ~ Ball Tail",
+      "name": "Ball Tail",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [
+        "DigmaulRacialTrait"
+      ],
+      "description": "A digmaul has a spiked ball at the end of its tail, which it can use as a secondary natural attack that deals 1d4 points of bludgeoning and piercing damage. The digmaul can substitute a trip or bull rush combat maneuver check for its normal tail attack. Such a combat maneuver check doesn't provoke attacks of opportunity and receives a +4 racial bonus; a digmaul that fails its trip attempt by 10 or more in this way is not tripped.",
+      "description_variables": [],
+      "source_page": "p.82",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 33,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Plesiosaurus ~ Ambush Attack",
+      "name": "Ambush Attack",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [
+        "PlesiosaurusRacialTrait"
+      ],
+      "description": "If a plesiosaurus successfully hits a foe with its bite attack in the surprise round, it inflicts an additional 1d6 points of damage and threatens a critical hit on an 18-20. The additional damage from the ambush attack itself is precision damage and is not multiplied on a successful critical hit.",
+      "description_variables": [],
+      "source_page": "p.83",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 36,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Therizinosaurus ~ Sprint",
+      "name": "Sprint",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "TherizinosaurusRacialTrait"
+      ],
+      "description": "Once per hour, a therizinosaurus can move at 10 times its normal speed (400 feet) when it makes a charge.",
+      "description_variables": [],
+      "source_page": "p.84",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 39,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Therizinosaurus ~ Sweeping Strike",
+      "name": "Sweeping Strike",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [
+        "TherizinosaurusRacialTrait"
+      ],
+      "description": "As a full-round action, a therizinosaurus can hunker down and make a great, sweeping attack with its claws against up to four adjacent foes. The dinosaur makes an attack roll against each target, inflicting claw damage on a successful hit.",
+      "description_variables": [],
+      "source_page": "p.84",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 40,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Troodon ~ Easily Trained",
+      "name": "Easily Trained",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "TroodonRacialTrait"
+      ],
+      "description": "A troodon is unusually quick to pick up tricks and animal training. All Handle Animal checks made to train a troodon gain a +2 bonus. A troodon can learn an additional 2 tricks beyond what an animal of its intelligence can normally be taught.",
+      "description_variables": [],
+      "source_page": "p.84",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 43,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Kaprosuchus ~ Ramming Snout",
+      "name": "Ramming Snout",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [
+        "KaprosuchusRacialTrait"
+      ],
+      "description": "When a kaprosuchus charges, it can ram an opponent with the calcified tip of its snout. This attack has the same attack bonus as the kaprosuchus's bite attack, and it deals an amount of bludgeoning damage equal to the kaprosuchus's bite damage. If the attack is successful, the kaprosuchus can attempt a trip combat maneuver against the target as a free action.",
+      "description_variables": [],
+      "source_page": "p.170",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 46,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Liminal Sprite ~ Repartee",
+      "name": "Repartee",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "LiminalSpriteRacialTrait"
+      ],
+      "description": "Three times per day, when a liminal sprite successfully aids another creature's Charisma-based skill check, the creature gains a +2d4 bonus on the skill check instead of the normal +2 bonus. A creature can receive this bonus from only one liminal sprite per skill check.",
+      "description_variables": [],
+      "source_page": "p.158",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 49,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Liminal Sprite ~ Versatile Performance",
+      "name": "Versatile Performance",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "LiminalSpriteRacialTrait"
+      ],
+      "description": "A liminal sprite can use its bonus for Perform (comedy) in place of its bonus for Bluff and Intimidate. When substituting in this way, the liminal sprite uses its total bonus for Perform (comedy), including any class skill bonus, in place of the associated skill's total bonus, whether or not it has ranks in Perform (comedy) or Perform (comedy) is a class skill for the sprite.",
+      "description_variables": [],
+      "source_page": "p.158",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 50,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Liminal Sprite ~ SLA",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "LiminalSpriteRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 51,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Esipil ~ Bewildering Assault",
+      "name": "Bewildering Assault",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "EsipilRacialTrait"
+      ],
+      "description": "If an esipil makes a successful critical hit with one of its natural attacks, the target is confused for 1 round.",
+      "description_variables": [],
+      "source_page": "p.213",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 54,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Esipil ~ Look of Fear",
+      "name": "Look of Fear",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "EsipilRacialTrait"
+      ],
+      "description": "A creature affected by an esipil's gaze is shaken for 1 round.",
+      "description_variables": [],
+      "source_page": "p.213",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 55,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Esipil ~ SLA",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "EsipilRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 56,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Narwhal ~ Hold Breath",
+      "name": "Hold Breath",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "NarwhalRacialTrait"
+      ],
+      "description": "Narwhals are expert deep divers, and a narwhal can hold its breath %1 minutes equal to 2 times its Constitution score.",
+      "description_variables": [
+        "2*CONSCORE"
+      ],
+      "source_page": "p.276",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 60,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Narwhal ~ Tusk",
+      "name": "Tusk",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [
+        "NarwhalRacialTrait"
+      ],
+      "description": "A charging narwhal can make a single gore attack with its tusk in place of its normal bite attack. If it hits, the tusk deals 2d6+14 points of damage with a x3 critical multiplier.",
+      "description_variables": [],
+      "source_page": "p.276",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 61,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Blue Whale ~ Hold Breath",
+      "name": "Hold Breath",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "BlueWhaleRacialTrait"
+      ],
+      "description": "A blue whale can hold its breath for %1 minutes before it risks drowning.",
+      "description_variables": [
+        "10*CONSCORE"
+      ],
+      "source_page": "p.276",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 64,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Wolliped ~ Spit",
+      "name": "Spit",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [
+        "WollipedRacialTrait"
+      ],
+      "description": "Once per hour, a wolliped can regurgitate the contents of its stomach, spitting the foul slurry at a single target within 10 feet as a ranged touch attack. On a successful hit, the target must succeed at a DC %1 Fortitude save or be sickened for 1d4 rounds.",
+      "description_variables": [
+        "12+CHA"
+      ],
+      "source_page": "p.279",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 67,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Wysp ~ Living Battery",
+      "name": "Living Battery",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "WyspRacialTrait"
+      ],
+      "description": "As an immediate action, a wysp can kill itself to cause a creature benefiting from its resonance to heal 2 hit points for each of that creature's HD. If the wysp uses this ability, its death can't be prevented, and its life can't be restored by any effect less than true resurrection, miracle, or wish, even if such an effect can normally revive an outsider.",
+      "description_variables": [],
+      "source_page": "p.282",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 70,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Wysp ~ Resonance",
+      "name": "Resonance",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "WyspRacialTrait",
+        "Aura"
+      ],
+      "description": "A wysp's natural resonance strengthens the power of its element. The wysp grants a +2 competence bonus on attack rolls and damage rolls to all creatures within 30 feet with an elemental subtype that matches the wysp's, and to the DCs of all racial spell-like, supernatural, and extraordinary abilities of such creatures (as usual, this does not include creatures assuming an elemental form). Kineticists within 30 feet who share the wysp's element gain a +1 competence bonus on attack rolls and damage rolls. The wysp's statistics already include these bonuses.",
+      "description_variables": [],
+      "source_page": "p.282",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 71,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Wysp ~ Servitor",
+      "name": "Servitor",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "WyspRacialTrait"
+      ],
+      "description": "A wysp is a natural servitor. When it uses the aid another action to assist a creature benefiting from its resonance, the wisp can grant that creature a +4 bonus instead of +2. No other effect can increase this bonus beyond +4.",
+      "description_variables": [],
+      "source_page": "p.282",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 72,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Aether Wysp ~ Lesser Telekinesis",
+      "name": "Lesser Telekinesis",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "AetherWyspRacialTrait"
+      ],
+      "description": "By extending its strands of aether, an aether wysp can move small objects at a distance, as per mage hand except that lesser telekinesis is a supernatural ability and can move magical or nonmagical objects weighing up to 10 pounds.",
+      "description_variables": [],
+      "source_page": "p.282",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 75,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Water Wysp ~ Drench",
+      "name": "Drench",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "traits": [
+        "WaterWyspRacialTrait"
+      ],
+      "description": "A water wysp's touch puts out Large or smaller nonmagical flames. The creature can dispel magical fire it touches as per dispel magic (caster level = the wysp's HD).",
+      "description_variables": [],
+      "source_page": "p.283",
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 78,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Xiao ~ SLA",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "XiaoRacialTrait"
+      ],
+      "description": null,
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 81,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Feather Fall ~ Constant",
+      "name": "Feather Fall",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [],
+      "description": "You can feather fall, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 85,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Traits Output ~ Sahkil",
+      "name": "Sahkil Traits",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "Supernatural"
+      ],
+      "description": "Sahkils count as having fewer Hit Dice (%1) for purposes of spells or effects that call outsiders, receive a +%2 bonus on Charisma checks to break free of planar binding spells and similar effects, and their SR counts as if it were 5 higher (%3) for the purpose of breaking free of planar binding spells and similar effects. &nl; Whenever a sahkil casts a spell or uses a spell-like ability or effect with the emotion or fear descriptors that allows a saving throw, the DC is increased by 2. &nl; All sahkils have a gaze attack that instills dread in those they look upon. This gaze attack has a range of 30 feet (though when a sahkil is on the Ethereal Plane, it functions against creatures on the Material Plane that can see ethereal creatures), and can be negated by a Will save-the exact effects caused by a particular sahkil's look of fear depend on the type of sahkil. This is a mind-affecting fear effect. &nl; Many sahkils can shift between the Ethereal Plane and the Material Plane as a move action. This ability is otherwise identical to ethereal jaunt (CL 15th). &nl; A sahkil's natural weapons, as well as any weapon it wields, are treated as though they had the ghost touch weapon special ability.",
+      "description_variables": [
+        "max(2,HD-4)",
+        "HD/2",
+        "SR+5"
+      ],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 96,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Sahkil ~ Easy to Call",
+      "name": "Easy to Call",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "SahkilSubtypeTrait"
+      ],
+      "description": "Sahkils count as having 4 fewer Hit Dice (minimum 2) for purposes of spells or effects that call outsiders, such as planar binding. However, they receive a racial bonus equal to 1/2 their Hit Dice on Charisma checks to break free of planar binding spells and similar effects, and their spell resistance counts as if it were 5 higher for the purpose of breaking free of planar binding spells and similar effects.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 98,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Sahkil ~ Emotional Focus",
+      "name": "Emotional Focus",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "SahkilSubtypeTrait"
+      ],
+      "description": "Whenever a sahkil casts a spell or uses a spell-like ability or effect with the emotion or fear descriptors that allows a saving throw, the DC is increased by 2.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 99,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Sahkil ~ Look of Fear",
+      "name": "Look of Fear",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "traits": [
+        "SahkilSubtypeTrait"
+      ],
+      "description": "All sahkils have a gaze attack that instills dread in those they look upon. This gaze attack has a range of 30 feet (though when a sahkil is on the Ethereal Plane, it functions against creatures on the Material Plane that can see ethereal creatures), and can be negated by a Will save-the exact effects caused by a particular sahkil's look of fear depend on the type of sahkil. All sahkils are immune to their own look of fear and that of other sahkils. This is a mind-affecting fear effect. The save DC is Charisma-based and includes the +2 bonus from the sahkil's emotional focus ability.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 100,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Sahkil ~ Skip Between",
+      "name": "Skip Between",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "SahkilSubtypeTrait"
+      ],
+      "description": "Many sahkils can shift between the Ethereal Plane and the Material Plane as a move action. This ability is otherwise identical to ethereal jaunt (CL 15th).",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 101,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Sahkil ~ Spirit Touch",
+      "name": "Spirit Touch",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "SahkilSubtypeTrait"
+      ],
+      "description": "A sahkil's natural weapons, as well as any weapon it wields, are treated as though they had the ghost touch weapon special ability.",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "b5_abilities_race",
+      "source_line": 102,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Universal Monster Rule ~ Unnatural Aura",
+      "name": "Unnatural Aura",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [
+        "Universal Monster Rule",
+        "Aura"
+      ],
+      "description": "Animals do not willingly approach the creature unless the animal's master succeeds at a DC %1 Handle Animal, Ride, or wild empathy check.",
+      "description_variables": [
+        "UMR_UnnaturalAura_DC"
+      ],
+      "source_page": "p.301",
+      "owners": [],
+      "source_file": "ce_abilities_race",
+      "source_line": 2439,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    }
+  ]
+}

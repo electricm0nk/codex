@@ -1,0 +1,34 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_magic_wordsofpower/spell_list/SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_magic_wordsofpower",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Burst Fire Blast",
+      "name_pi_line": null,
+      "school": "Evocation",
+      "level": 3,
+      "description": "Deals (min(10,CASTERLEVEL))d6 fire damage in 10 foot burst."
+    },
+    {
+      "key": "Selected Ice Blast Life Leech",
+      "name_pi_line": null,
+      "school": null,
+      "level": 6,
+      "description": "Deals (min(10,CASTERLEVEL))d6 cold damage, entangles target for 1d4 rounds, and gives 1d4 temporary negative levels."
+    },
+    {
+      "key": "Selected Alignment Shield Enhance Form Grave Bane",
+      "name_pi_line": null,
+      "school": null,
+      "level": 6,
+      "description": "Grants +2 to AC and saves when attacked by chosen alignment type, +4 Strength, Dexterity, or Constitution, and +4 on saves vs. death magic; subject cannot gain negative levels and is automatically stabilized."
+    }
+  ]
+}

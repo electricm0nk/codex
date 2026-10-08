@@ -1,0 +1,12 @@
+name=R2-D2
+race=Drone
+hp=100
+althp=0
+var.drone_lvl=10
+var.drone_master_lvl=10
+var.race_hp=0
+ac.eac=22
+ac.kac=24
+master=Yo-yo
+master.level=20
+master.var.drone_companion_lvl=10

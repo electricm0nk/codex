@@ -1,0 +1,28 @@
+table sha256 5f6fd4a01fb106d1755d78e0663cd14114590d307c56f2a2d7e3e1e476cc15b7
+engine sha256 88c1ec6be4717c8510ecc0a0a62fe104aa2d91304584c734f005982c59dd0248
+test: cargo test --locked -j 8 --lib sf_seed -- --test-threads=8
+M1 (swap ALTHP<->CURRENTMAX) on the converter's table -> sf_seed FAIL (exit 101)
+    envoy: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+    called `Result::unwrap()` on an `Err` value: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+    called `Result::unwrap()` on an `Err` value: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+    SF-Soldier-3: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+M2 (drop HD from Hit Points) on the converter's table -> sf_seed PASS (exit 0)
+M3 (route CON*TL into Hit Points) on the converter's table -> sf_seed PASS (exit 0)
+M4 (drop RaceHP from Hit Points) on the converter's table -> sf_seed FAIL (exit 101)
+    envoy: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+    called `Result::unwrap()` on an `Err` value: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+    SF-Soldier-3: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+    called `Result::unwrap()` on an `Err` value: SfChassisRefusal { id: "sf_chassis.row_missing", message: "core:race:human: no racial Hp row" }
+M2 on sf_chassis.rs ('value: hit_die(principal)? * levels,' -> 'value: 0 * hit_die(principal)? * levels,') -> sf_seed FAIL (exit 101)
+    SF-Soldier-3 HP: engine 22, SRD 25
+    SF-Mystic-5 HP: engine 29, SRD 34
+    SF-Technomancer-5 HP: engine 24, SRD 29
+    SF-Envoy-3 HP: engine 17, SRD 20
+M3 on sf_chassis.rs ('stamina.push(SfTerm { label: "Constitution modifier × level".into()' -> 'hp.push(SfTerm { label: "Constitution modifier × level".into()') -> sf_seed FAIL (exit 101)
+    SF-Soldier-3 HP: engine 28, SRD 25
+    SF-Soldier-3 Stamina: engine 21, SRD 24
+    SF-Mystic-5 HP: engine 29, SRD 34
+    SF-Mystic-5 Stamina: engine 30, SRD 25
+restored (table and engine sha256 identical) -> sf_seed PASS (exit 0)
+verdict=PASS M1=FAIL M2=FAIL M3=FAIL M4=FAIL
+exit=0

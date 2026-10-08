@@ -1,0 +1,1227 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/ADVENTURERS_GUIDE_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_1)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_1)",
+      "category": "ArmsArmor",
+      "cost_gp": 20.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_arms_armor",
+        1
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Elven Leafblade",
+      "name": "Elven Leafblade",
+      "category": "ArmsArmor",
+      "cost_gp": 40.0,
+      "weight_lbs": 3.0,
+      "description": "+2 bonus on attack rolls made to confrm critical hits",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Elven Thornblade",
+      "name": "Elven Thornblade",
+      "category": "ArmsArmor",
+      "cost_gp": 60.0,
+      "weight_lbs": 4.0,
+      "description": "+2 bonus on attack rolls made to confrm critical hits",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Sawtooth Sabre",
+      "name": "Sawtooth Sabre",
+      "category": "ArmsArmor",
+      "cost_gp": 35.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_6)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_6)",
+      "category": "ArmsArmor",
+      "cost_gp": 1500.0,
+      "weight_lbs": 50.0,
+      "description": "This metal suit includes gauntlets, heavy leather boots, a visored helmet, and a thick layer of padding that is worn underneath the armor. Each suit of Gray Maiden plate must be individually fitted to its owner by a master armorsmith, although a captured suit can be resized to fit a new owner at a cost of 200 to 800 (2d4 x 100) gold pieces.",
+      "name_pi_citation": [
+        "ag_equip_arms_armor",
+        6
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_7)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_7)",
+      "category": "ArmsArmor",
+      "cost_gp": 1500.0,
+      "weight_lbs": 50.0,
+      "description": "This metal suit includes gauntlets, heavy leather boots, a visored helmet, and a thick layer of padding that is worn underneath the armor. Each suit of Gray Maiden plate must be individually fitted to its owner by a master armorsmith, although a captured suit can be resized to fit a new owner at a cost of 200 to 800 (2d4 x 100) gold pieces.",
+      "name_pi_citation": [
+        "ag_equip_arms_armor",
+        7
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_9)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_9)",
+      "category": "ArmsArmor",
+      "cost_gp": 850.0,
+      "weight_lbs": 50.0,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_arms_armor",
+        9
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_10)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_10)",
+      "category": "ArmsArmor",
+      "cost_gp": 30.0,
+      "weight_lbs": 25.0,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_arms_armor",
+        10
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_11)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_11)",
+      "category": "ArmsArmor",
+      "cost_gp": 2000.0,
+      "weight_lbs": 50.0,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_arms_armor",
+        11
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Hellknight Half-Plate Barding",
+      "name": "Hellknight Half-Plate Barding",
+      "category": "ArmsArmor",
+      "cost_gp": 850.0,
+      "weight_lbs": 50.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Hellknight Leather Barding",
+      "name": "Hellknight Leather Barding",
+      "category": "ArmsArmor",
+      "cost_gp": 30.0,
+      "weight_lbs": 25.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Hellknight Plate Barding",
+      "name": "Hellknight Plate Barding",
+      "category": "ArmsArmor",
+      "cost_gp": 2000.0,
+      "weight_lbs": 50.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_17)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_17)",
+      "category": "ArmsArmor",
+      "cost_gp": 20.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_arms_armor",
+        17
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Talonstrike Sword",
+      "name": "Talonstrike Sword",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_19)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_19)",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_arms_armor",
+        19
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_20)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_20)",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_arms_armor",
+        20
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Monastic Warden",
+      "name": "Monastic Warden",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Banshee's Howl",
+      "name": "Banshee's Howl",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Mammoth Lance",
+      "name": "Mammoth Lance",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Crimson Bluff",
+      "name": "Crimson Bluff",
+      "category": "ArmsArmor",
+      "cost_gp": 35.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Mantis Blade",
+      "name": "Mantis Blade",
+      "category": "ArmsArmor",
+      "cost_gp": 35.0,
+      "weight_lbs": 2.0,
+      "description": "Intelligent; LE; Ego 16; Int 10, Wis 12, Cha 14; Senses 60 ft, darkvision; Telepathy; Special Purpose-slay all; 1/day when wounding a creature, the wielder can activate the Bane special ability as a swift action (only against the creature type wounded, lasts 10 min)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Devil Catcher",
+      "name": "Devil Catcher",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_28)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_28)",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_arms_armor",
+        28
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Maiden's Panoply",
+      "name": "Maiden's Panoply",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Gelugon Plate",
+      "name": "Gelugon Plate",
+      "category": "ArmsArmor",
+      "cost_gp": 2000.0,
+      "weight_lbs": 50.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Elven Vengeance",
+      "name": "Elven Vengeance",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Mammoth Hide",
+      "name": "Mammoth Hide",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Red Stalker Armor",
+      "name": "Red Stalker Armor",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Maiden's Aegis",
+      "name": "Maiden's Aegis",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Anderos Salve and Mulibrous Tincture",
+      "name": "Anderos Salve and Mulibrous Tincture",
+      "category": "General",
+      "cost_gp": 5.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Applecheek",
+      "name": "Applecheek",
+      "category": "General",
+      "cost_gp": 10.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Boniface Paint",
+      "name": "Boniface Paint",
+      "category": "General",
+      "cost_gp": 15.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Cooking Powder",
+      "name": "Cooking Powder",
+      "category": "General",
+      "cost_gp": 2.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Lantern Honey",
+      "name": "Lantern Honey",
+      "category": "General",
+      "cost_gp": 150.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Nostalgia Oil",
+      "name": "Nostalgia Oil",
+      "category": "General",
+      "cost_gp": 80.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Phantom Ash",
+      "name": "Phantom Ash",
+      "category": "General",
+      "cost_gp": 10.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Scarsalve",
+      "name": "Scarsalve",
+      "category": "General",
+      "cost_gp": 10.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Sparkle Smoke",
+      "name": "Sparkle Smoke",
+      "category": "General",
+      "cost_gp": 25.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Tiller's Gum",
+      "name": "Tiller's Gum",
+      "category": "General",
+      "cost_gp": 100.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Branding Iron (Common)",
+      "name": "Branding Iron (Common)",
+      "category": "General",
+      "cost_gp": 2.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Branding Iron (Custom Shape)",
+      "name": "Branding Iron (Custom Shape)",
+      "category": "General",
+      "cost_gp": 10.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Caparison",
+      "name": "Caparison",
+      "category": "General",
+      "cost_gp": 2.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Mithral Horseshoes",
+      "name": "Mithral Horseshoes",
+      "category": "General",
+      "cost_gp": 550.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Pathfinder Chronicle",
+      "name": "Pathfinder Chronicle",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Spice (Black Cumin)",
+      "name": "Spice (Black Cumin)",
+      "category": "General",
+      "cost_gp": 15.0,
+      "weight_lbs": 0.1,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Spice (Flaming Sumac)",
+      "name": "Spice (Flaming Sumac)",
+      "category": "General",
+      "cost_gp": 20.0,
+      "weight_lbs": 0.1,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Spice (Golden Cardamom)",
+      "name": "Spice (Golden Cardamom)",
+      "category": "General",
+      "cost_gp": 30.0,
+      "weight_lbs": 0.1,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Spice (Striped Nutmeg)",
+      "name": "Spice (Striped Nutmeg)",
+      "category": "General",
+      "cost_gp": 100.0,
+      "weight_lbs": 0.1,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Spice (Sunrise Cinnamon)",
+      "name": "Spice (Sunrise Cinnamon)",
+      "category": "General",
+      "cost_gp": 15.0,
+      "weight_lbs": 0.1,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Spice (Tiger Cloves)",
+      "name": "Spice (Tiger Cloves)",
+      "category": "General",
+      "cost_gp": 25.0,
+      "weight_lbs": 0.1,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Spice (Violet Salt)",
+      "name": "Spice (Violet Salt)",
+      "category": "General",
+      "cost_gp": 5.0,
+      "weight_lbs": 0.1,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Sunblock Kohl",
+      "name": "Sunblock Kohl",
+      "category": "General",
+      "cost_gp": 10.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Signifer Mask",
+      "name": "Signifer Mask",
+      "category": "General",
+      "cost_gp": 75.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_general_lst_27)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_general_lst_27)",
+      "category": "General",
+      "cost_gp": 1500.0,
+      "weight_lbs": null,
+      "description": "Inhaled; Fort DC 21; Freq 1 min (6); Effect 1d4 bleed/1d3 Con dmg (see text); Cure 2 consecutive saves",
+      "name_pi_citation": [
+        "ag_equip_general",
+        27
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Amulet of the Storm",
+      "name": "Amulet of the Storm",
+      "category": "MagicItems",
+      "cost_gp": 3600.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_2)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_2)",
+      "category": "MagicItems",
+      "cost_gp": 750.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_magic_items",
+        2
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Bands of Unbreakable Camaraderie",
+      "name": "Bands of Unbreakable Camaraderie",
+      "category": "MagicItems",
+      "cost_gp": 5000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Banner of the Scarlet Rose",
+      "name": "Banner of the Scarlet Rose",
+      "category": "MagicItems",
+      "cost_gp": 18000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Caparison of Resistance +1 (Rider)",
+      "name": "Caparison of Resistance +1 (Rider)",
+      "category": "MagicItems",
+      "cost_gp": 2700.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Caparison of Resistance +1 (Mount)",
+      "name": "Caparison of Resistance +1 (Mount)",
+      "category": "MagicItems",
+      "cost_gp": null,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Caparison of Resistance +2 (Rider)",
+      "name": "Caparison of Resistance +2 (Rider)",
+      "category": "MagicItems",
+      "cost_gp": 10800.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Caparison of Resistance +2 (Mount)",
+      "name": "Caparison of Resistance +2 (Mount)",
+      "category": "MagicItems",
+      "cost_gp": null,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Caparison of Resistance +3 (Rider)",
+      "name": "Caparison of Resistance +3 (Rider)",
+      "category": "MagicItems",
+      "cost_gp": 24300.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Caparison of Resistance +3 (Mount)",
+      "name": "Caparison of Resistance +3 (Mount)",
+      "category": "MagicItems",
+      "cost_gp": null,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Caparison of Resistance +4 (Rider)",
+      "name": "Caparison of Resistance +4 (Rider)",
+      "category": "MagicItems",
+      "cost_gp": 43200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Caparison of Resistance +4 (Mount)",
+      "name": "Caparison of Resistance +4 (Mount)",
+      "category": "MagicItems",
+      "cost_gp": null,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Caparison of Resistance +5 (Rider)",
+      "name": "Caparison of Resistance +5 (Rider)",
+      "category": "MagicItems",
+      "cost_gp": 67500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Caparison of Resistance +5 (Mount)",
+      "name": "Caparison of Resistance +5 (Mount)",
+      "category": "MagicItems",
+      "cost_gp": null,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Cloak of Heavenly Fire",
+      "name": "Cloak of Heavenly Fire",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Dhoti of Style Mastery",
+      "name": "Dhoti of Style Mastery",
+      "category": "MagicItems",
+      "cost_gp": 54000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Discretion Charm",
+      "name": "Discretion Charm",
+      "category": "MagicItems",
+      "cost_gp": 3500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Dust of Hex Hiding",
+      "name": "Dust of Hex Hiding",
+      "category": "MagicItems",
+      "cost_gp": 250.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Efreeti Horns",
+      "name": "Efreeti Horns",
+      "category": "MagicItems",
+      "cost_gp": 24000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Erinyes Company Cloak",
+      "name": "Erinyes Company Cloak",
+      "category": "MagicItems",
+      "cost_gp": 23000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Eye of the Mantis",
+      "name": "Eye of the Mantis",
+      "category": "MagicItems",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "First Aid Gloves",
+      "name": "First Aid Gloves",
+      "category": "MagicItems",
+      "cost_gp": 4500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Gloves of Unfolding Wind",
+      "name": "Gloves of Unfolding Wind",
+      "category": "MagicItems",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Golden Eagle Epaulets",
+      "name": "Golden Eagle Epaulets",
+      "category": "MagicItems",
+      "cost_gp": 4500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_25)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_25)",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1.0,
+      "description": "see through obscuring vapor or silt, resist wind, breath water 1 hr/day",
+      "name_pi_citation": [
+        "ag_equip_magic_items",
+        25
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Greathelm of the Mammoth Lord",
+      "name": "Greathelm of the Mammoth Lord",
+      "category": "MagicItems",
+      "cost_gp": 24700.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Helm of the Fanged Crown",
+      "name": "Helm of the Fanged Crown",
+      "category": "MagicItems",
+      "cost_gp": 12000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Ioun Spite Bracers",
+      "name": "Ioun Spite Bracers",
+      "category": "MagicItems",
+      "cost_gp": 15000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Ironbound Ring (Master's)",
+      "name": "Ironbound Ring (Master's)",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Ironbound Ring (Minion's)",
+      "name": "Ironbound Ring (Minion's)",
+      "category": "MagicItems",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Jar of Lightning",
+      "name": "Jar of Lightning",
+      "category": "MagicItems",
+      "cost_gp": 800.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Lantern of Hidden Light",
+      "name": "Lantern of Hidden Light",
+      "category": "MagicItems",
+      "cost_gp": 1000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Liberator's Key",
+      "name": "Liberator's Key",
+      "category": "MagicItems",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Maiden's Helm",
+      "name": "Maiden's Helm",
+      "category": "MagicItems",
+      "cost_gp": 3500.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Maiden's Promise (Pair)",
+      "name": "Maiden's Promise (Pair)",
+      "category": "MagicItems",
+      "cost_gp": 500.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Mantis Embrace",
+      "name": "Mantis Embrace",
+      "category": "MagicItems",
+      "cost_gp": 50000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Mask of the Mantis",
+      "name": "Mask of the Mantis",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": "3 charges/day (darkvision 60 ft., see invisibility, deathwatch, or +5 competence to perception) for 30 mins",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Mountainshaper's Girdle",
+      "name": "Mountainshaper's Girdle",
+      "category": "MagicItems",
+      "cost_gp": 25000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Ring of Retreat",
+      "name": "Ring of Retreat",
+      "category": "MagicItems",
+      "cost_gp": 12000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Rod (Storm Kindler's)",
+      "name": "Rod (Storm Kindler's)",
+      "category": "MagicItems",
+      "cost_gp": null,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Sterling Salt",
+      "name": "Sterling Salt",
+      "category": "MagicItems",
+      "cost_gp": 1500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Subtle Slippers",
+      "name": "Subtle Slippers",
+      "category": "MagicItems",
+      "cost_gp": 5500.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_43)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_43)",
+      "category": "MagicItems",
+      "cost_gp": 4000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_magic_items",
+        43
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_44)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_44)",
+      "category": "MagicItems",
+      "cost_gp": 16000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_magic_items",
+        44
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_45)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_45)",
+      "category": "MagicItems",
+      "cost_gp": 37000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_magic_items",
+        45
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_46)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_46)",
+      "category": "MagicItems",
+      "cost_gp": 64000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_magic_items",
+        46
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_47)",
+      "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_magic_items_lst_47)",
+      "category": "MagicItems",
+      "cost_gp": 100000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": [
+        "ag_equip_magic_items",
+        47
+      ]
+    },
+    {
+      "book": "AG",
+      "key": "Tiller's Pendant",
+      "name": "Tiller's Pendant",
+      "category": "MagicItems",
+      "cost_gp": 6400.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Traveling Master's Turban",
+      "name": "Traveling Master's Turban",
+      "category": "MagicItems",
+      "cost_gp": 4000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Wayfinder",
+      "name": "Wayfinder",
+      "category": "MagicItems",
+      "cost_gp": 500.0,
+      "weight_lbs": 1.0,
+      "description": "light at will, +2 competence to Survival (avoid becoming lost), can contain an ioun stone",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Wayfinder (Ebon)",
+      "name": "Wayfinder (Ebon)",
+      "category": "MagicItems",
+      "cost_gp": 18000.0,
+      "weight_lbs": 1.0,
+      "description": "Can contain 2 slotted ioun stones. Casts darkness 1/day (0 slots filled) and provides darkvision (0-1 slots filled)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Wayfinder (Shining)",
+      "name": "Wayfinder (Shining)",
+      "category": "MagicItems",
+      "cost_gp": 2000.0,
+      "weight_lbs": 1.0,
+      "description": "light and detect evil at will, protection from evil 1/day, +2 competence to Survival (avoid becoming lost), can contain an ioun stone",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Wayfinder (Vanishing)",
+      "name": "Wayfinder (Vanishing)",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1.0,
+      "description": "light at will, +2 competence to Survival (avoid becoming lost), invisibility up to 5 minutes per day, each activation counts as 1 minute minimum",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Wayfinder of Hidden Strength",
+      "name": "Wayfinder of Hidden Strength",
+      "category": "MagicItems",
+      "cost_gp": 5000.0,
+      "weight_lbs": 1.0,
+      "description": "light at will, +2 competence to Survival (avoid becoming lost), can contain an ioun stone",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Whispering Shell",
+      "name": "Whispering Shell",
+      "category": "MagicItems",
+      "cost_gp": 3000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Zoic Fetish (Mammal)",
+      "name": "Zoic Fetish (Mammal)",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (mammal) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Zoic Fetish (Bird)",
+      "name": "Zoic Fetish (Bird)",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (bird) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Zoic Fetish (Reptile)",
+      "name": "Zoic Fetish (Reptile)",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (reptile) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Zoic Fetish (Amphibian)",
+      "name": "Zoic Fetish (Amphibian)",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (amphibian) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Zoic Fetish (Fish)",
+      "name": "Zoic Fetish (Fish)",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (fish) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Halcyon Bonded Mask",
+      "name": "Halcyon Bonded Mask",
+      "category": "MagicItems",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "AG",
+      "key": "Special Ability ~ Agile Maiden ~ Armor",
+      "name": "Medium Grey Maiden Plate",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    }
+  ]
+}

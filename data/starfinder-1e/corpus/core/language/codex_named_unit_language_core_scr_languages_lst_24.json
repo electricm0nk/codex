@@ -1,0 +1,24 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "key": "Codex-Named Unit (language_core_scr_languages_lst_24)",
+    "name": "Codex-Named Unit (language_core_scr_languages_lst_24)",
+    "type": "Spoken.World"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "description,name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "core:scr_languages.lst:24",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 24,
+    "path": "starfinder/paizo/core/scr_languages.lst",
+    "record_key": "Codex-Named Unit (language_core_scr_languages_lst_24)",
+    "sha256": "d0840be01c6376c60bfc73aab0c2af901634b94124401c5ccebf44d5945c412c"
+  },
+  "unit_id": "core:language:azlanti"
+}

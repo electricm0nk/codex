@@ -1032,7 +1032,7 @@ impl RaceCorpus {
 /// its chassis `FACT:BaseSize|M` is then the declaration.
 ///
 /// This deliberately supersedes
-/// `rules_tables::crb::race_tables::race_size_for_race_id`, which knew only the
+/// `rules_catalog::crb::race_tables::race_size_for_race_id`, which knew only the
 /// 7 hardcoded CRB races and returned `None` for all 11 Bestiary 1 ones —
 /// silently giving Goblin, Kobold and Svirfneblin (all Small) a Medium
 /// creature's carrying capacity at both of its call sites.
@@ -2099,7 +2099,9 @@ mod tests {
         let dirs: Vec<(String, PathBuf)> = books
             .into_iter()
             .map(|book| {
-                let dir = PathBuf::from("data/corpus").join(&book);
+                // `RACE_CORPUS_BOOKS` is the desktop's Pathfinder 1e race registry entry
+                // (SD-37 E1.2), so its books live under that system's corpus root.
+                let dir = PathBuf::from(crate::rules_core::game_system::GameSystem::Pathfinder1e.corpus_relative()).join(&book);
                 (book, dir)
             })
             .collect();

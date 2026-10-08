@@ -6,7 +6,7 @@
 //! deviation): composes with two already-grounded, already-landed
 //! sources rather than re-deriving either.
 //!
-//! 1. `rules_tables::crb::class_tables::class_tables()` (SD-19's
+//! 1. `rules_catalog::crb::class_tables::class_tables()` (SD-19's
 //!    foundation slice) for the class-generic BAB/save progression —
 //!    the class-generic pillars this table already carries. Unlike
 //!    Cleric/Druid (whose `CLASS_META` rows were found to wrongly encode
@@ -79,7 +79,7 @@
 //! `pick_from_lists` stays empty: Paladin's own per-level choices (which
 //! mercy to select at levels 3/6/9/12/15/18) are recognized as chosen
 //! input via `choice_selection`, not enumerated from a real mercy
-//! catalog — no mercy-list catalog exists anywhere in `rules_tables::crb`
+//! catalog — no mercy-list catalog exists anywhere in `rules_catalog::crb`
 //! to enumerate real candidates from, the identical "no catalog to
 //! enumerate" boundary `barbarian.rs` documented for the Rage Power list.
 //! `prerequisites_added` stays empty: no per-class file yet composes with
@@ -110,8 +110,8 @@ use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan, ResourcePoolDelta};
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::class_tables::{class_tables, ClassId, ClassTableRow};
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::crb::class_tables::{class_tables, ClassId, ClassTableRow};
+use crate::rules_core::rules_catalog::RuleSetId;
 
 const PALADIN_CLASS_ID: &str = "class:paladin";
 const HUMAN_RACE_ID: &str = "race:human";
@@ -194,7 +194,7 @@ fn class_table_row(level: u8) -> Option<ClassTableRow> {
         .find(|row| row.class_id == ClassId::Paladin && row.level == level)
 }
 
-/// Grants sourced from `rules_tables::crb::class_tables::class_tables()`
+/// Grants sourced from `rules_catalog::crb::class_tables::class_tables()`
 /// — the class-generic BAB/save progression pillars.
 fn append_class_table_grants(plan: &mut LevelUpPlan, from_level: u8, to_level: u8) {
     let Some(to_row) = class_table_row(to_level) else {

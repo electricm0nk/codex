@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "Formian hide (superior)",
+    "name": "Formian hide (superior)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "starfinder/paizo/pact_worlds/spw_profs_armor.lst",
+    "record_key": "Formian hide (superior)",
+    "sha256": "5fef8bc6ec8b28f467cce3b06f6b4d76739e6e24e0931e22253c9fe666e24f55"
+  },
+  "unit_id": "pact_worlds:proficiency:formian_hide_superior"
+}

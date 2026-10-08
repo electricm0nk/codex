@@ -66,7 +66,7 @@
 //!
 //! ## Defect 2 — `race_size_for_race_id` knew only 7 of the 18 races
 //!
-//! `rules_tables::crb::race_tables::race_size_for_race_id` is a
+//! `rules_catalog::crb::race_tables::race_size_for_race_id` is a
 //! seven-variant `RaceId` lookup. It returned `None` for all 11 Bestiary 1
 //! races, and both of its call sites
 //! (`contract::to_pilot_receipt`, `pilot_compute_corpus::compute_pilot_with_corpus`)

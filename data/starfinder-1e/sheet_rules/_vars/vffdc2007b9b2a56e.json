@@ -1,0 +1,1 @@
+{"var":"vffdc2007b9b2a56e","label":"Drone LVL","declared_by":["core:class:drone"],"contributions":[{"rule_id":"core:companion_mod:drone","expr":{"Var":"vd65ec71a2e036cb6"},"when":{"Compare":{"lhs":{"MasterVar":"v2a82165d14fc145c"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

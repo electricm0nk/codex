@@ -1,0 +1,102 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/BESTIARY_4_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "B4",
+      "key": "Pliers (Tooth Fairy)",
+      "name": "Pliers (Tooth Fairy)",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.5,
+      "description": "The pliers rust away into worthless splinters 1d4 rounds after the tooth fairy is killed.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "B4",
+      "key": "Rock (Fine)",
+      "name": "Rock (Fine)",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 200.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "B4",
+      "key": "Rock (Large)",
+      "name": "Rock (Large)",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 200.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "B4",
+      "key": "Skull",
+      "name": "Skull",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "B4",
+      "key": "Codex-Named Unit (equipment_bestiary_4_b4_equip_arms_armor_lst_10)",
+      "name": "Codex-Named Unit (equipment_bestiary_4_b4_equip_arms_armor_lst_10)",
+      "category": "ArmsArmor",
+      "cost_gp": 5000.0,
+      "weight_lbs": 12.0,
+      "description": "Misfire 1; Only functions on low-gravity worlds.",
+      "name_pi_citation": [
+        "b4_equip_arms_armor",
+        10
+      ]
+    },
+    {
+      "book": "B4",
+      "key": "Codex-Named Unit (equipment_bestiary_4_b4_equip_magic_items_lst_6)",
+      "name": "Codex-Named Unit (equipment_bestiary_4_b4_equip_magic_items_lst_6)",
+      "category": "MagicItems",
+      "cost_gp": 0.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": [
+        "b4_equip_magic_items",
+        6
+      ]
+    },
+    {
+      "book": "B4",
+      "key": "Codex-Named Unit (equipment_bestiary_4_b4_equip_magic_items_lst_8)",
+      "name": "Codex-Named Unit (equipment_bestiary_4_b4_equip_magic_items_lst_8)",
+      "category": "MagicItems",
+      "cost_gp": 0.0,
+      "weight_lbs": 4.0,
+      "description": "Functions as a rod of enemy detection (unlimited uses), rod of cancellation 1/day, can panic creatures within 30 ft. for 1d6 rounds (DC 23 Will negates), Pazuzu can call to hand across planar boundaries, trandforms into a +5 anarchic keen unholy longsword.",
+      "name_pi_citation": [
+        "b4_equip_magic_items",
+        8
+      ]
+    },
+    {
+      "book": "B4",
+      "key": "Material ~ Ironwood",
+      "name": "Ironwood",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    }
+  ]
+}

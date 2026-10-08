@@ -1,0 +1,69 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/feat_data/item_creation/ITEM_CREATION_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Brew Potion",
+      "category": "ItemCreation",
+      "name": "Brew Potion",
+      "description": "You can create magic potions.",
+      "effect": null
+    },
+    {
+      "key": "Craft Magic Arms and Armor",
+      "category": "ItemCreation",
+      "name": "Craft Magic Arms and Armor",
+      "description": "You can create magic armor, shields, or weapons.",
+      "effect": null
+    },
+    {
+      "key": "Craft Rod",
+      "category": "ItemCreation",
+      "name": "Craft Rod",
+      "description": "You can create magic rods.",
+      "effect": null
+    },
+    {
+      "key": "Craft Staff",
+      "category": "ItemCreation",
+      "name": "Craft Staff",
+      "description": "You can create magic staves.",
+      "effect": null
+    },
+    {
+      "key": "Craft Wand",
+      "category": "ItemCreation",
+      "name": "Craft Wand",
+      "description": "You can create magic wands.",
+      "effect": null
+    },
+    {
+      "key": "Craft Wondrous Item",
+      "category": "ItemCreation",
+      "name": "Craft Wondrous Item",
+      "description": "You can create wondrous items, a type of magic item.",
+      "effect": null
+    },
+    {
+      "key": "Forge Ring",
+      "category": "ItemCreation",
+      "name": "Forge Ring",
+      "description": "You can create magic rings.",
+      "effect": null
+    },
+    {
+      "key": "Scribe Scroll",
+      "category": "ItemCreation",
+      "name": "Scribe Scroll",
+      "description": "You can create magic scrolls.",
+      "effect": null
+    }
+  ]
+}

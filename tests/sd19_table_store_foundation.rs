@@ -6,12 +6,12 @@
 //! it does not assert exhaustive corpus coverage (that is the loop's job,
 //! one school/category per cycle, per scope-draft.md §2.4/§2.5).
 
-use codex::rules_core::rules_tables::crb::class_tables::{class_tables, ClassId};
-use codex::rules_core::rules_tables::crb::equipment_tables::{
+use codex::rules_core::rules_catalog::crb::class_tables::{class_tables, ClassId};
+use codex::rules_core::rules_catalog::crb::equipment_tables::{
     equipment_tables, EquipmentCategory,
 };
-use codex::rules_core::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
+use codex::rules_core::rules_catalog::RuleSetId;
 
 #[test]
 fn rule_set_id_crb_resolves() {

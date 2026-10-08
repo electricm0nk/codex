@@ -1,0 +1,44 @@
+name=sf_solarian_1
+race=Human
+class=Solarian
+level=1
+stat.STR=12
+stat.DEX=11
+stat.CON=12
+stat.INT=10
+stat.WIS=10
+stat.CHA=18
+hp=11
+stamina=8
+resolve=5
+eac=11
+kac=12
+initiative=+0
+bab=+1
+save.Fortitude=+3
+save.Reflex=+0
+save.Will=+2
+attack.melee=+2
+attack.ranged=+1
+skill.Acrobatics=0|ranks=0.0|untrained=Y
+skill.Athletics=5|ranks=1.0|untrained=Y
+skill.Bluff=4|ranks=0.0|untrained=Y
+skill.Diplomacy=4|ranks=0.0|untrained=Y
+skill.Disguise=4|ranks=0.0|untrained=Y
+skill.Intimidate=4|ranks=0.0|untrained=Y
+skill.Mysticism=4|ranks=1.0|untrained=NO
+skill.Perception=0|ranks=0.0|untrained=Y
+skill.Piloting=0|ranks=0.0|untrained=Y
+skill.Sense Motive=0|ranks=0.0|untrained=Y
+skill.Stealth=0|ranks=0.0|untrained=Y
+skill.Survival=4|ranks=1.0|untrained=Y
+weapon.*Laser pistol, azimuth=+1|damage=1d4|category=Non-Standard-Ranged
+weapon.Baton, tactical=+2|damage=1d4+1|category=OPERATIVE-Melee
+bulk=0.3 lbs.
+credits=0
+credits.spent=690 cr
+acp=+0
+abilities.feat=
+abilities.theme=Bounty Hunter, THEME KNOWLEDGE
+abilities.class_feature=Skill Adept, Solar Manifestation, Stellar Mode, Stellar Revelation, Black Hole, Supernova
+abilities.racial_trait=SIZE AND TYPE, BONUS FEAT, SKILLED

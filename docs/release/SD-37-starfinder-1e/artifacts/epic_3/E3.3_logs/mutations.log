@@ -1,0 +1,60 @@
+table sha256 before: 5f6fd4a01fb106d1755d78e0663cd14114590d307c56f2a2d7e3e1e476cc15b7
+test: cargo test --locked -j 8 -p codex-ingest --test sf_mapping_table seed_fixtures_match_the_srd_hand_values_and_the_oracle -- --test-threads=8 --exact
+M1 (swap ALTHP<->CURRENTMAX) -> FAIL (cargo exit 101; 16 seed-field disagreements)
+    SF-Soldier-3 HP: mapping gives 27, the SRD hand value says 25
+    SF-Soldier-3 HP: mapping gives 27, the PCGen run says 25
+    SF-Soldier-3 Stamina: mapping gives 22, the SRD hand value says 24
+    SF-Soldier-3 Stamina: mapping gives 22, the PCGen run says 24
+    SF-Mystic-5 HP: mapping gives 30, the SRD hand value says 34
+    SF-Mystic-5 HP: mapping gives 30, the PCGen run says 34
+    SF-Mystic-5 Stamina: mapping gives 29, the SRD hand value says 25
+    SF-Mystic-5 Stamina: mapping gives 29, the PCGen run says 25
+    SF-Technomancer-5 HP: mapping gives 40, the SRD hand value says 29
+    SF-Technomancer-5 HP: mapping gives 40, the PCGen run says 29
+    SF-Technomancer-5 Stamina: mapping gives 24, the SRD hand value says 35
+    SF-Technomancer-5 Stamina: mapping gives 24, the PCGen run says 35
+    SF-Envoy-3 HP: mapping gives 24, the SRD hand value says 20
+    SF-Envoy-3 HP: mapping gives 24, the PCGen run says 20
+    SF-Envoy-3 Stamina: mapping gives 17, the SRD hand value says 21
+    SF-Envoy-3 Stamina: mapping gives 17, the PCGen run says 21
+M2 (drop HD from Hit Points) -> FAIL (cargo exit 101; 8 seed-field disagreements)
+    SF-Soldier-3 HP: mapping gives 22, the SRD hand value says 25
+    SF-Soldier-3 HP: mapping gives 22, the PCGen run says 25
+    SF-Mystic-5 HP: mapping gives 29, the SRD hand value says 34
+    SF-Mystic-5 HP: mapping gives 29, the PCGen run says 34
+    SF-Technomancer-5 HP: mapping gives 24, the SRD hand value says 29
+    SF-Technomancer-5 HP: mapping gives 24, the PCGen run says 29
+    SF-Envoy-3 HP: mapping gives 17, the SRD hand value says 20
+    SF-Envoy-3 HP: mapping gives 17, the PCGen run says 20
+M3 (route CON*TL into Hit Points) -> FAIL (cargo exit 101; 16 seed-field disagreements)
+    SF-Soldier-3 HP: mapping gives 28, the SRD hand value says 25
+    SF-Soldier-3 HP: mapping gives 28, the PCGen run says 25
+    SF-Soldier-3 Stamina: mapping gives 21, the SRD hand value says 24
+    SF-Soldier-3 Stamina: mapping gives 21, the PCGen run says 24
+    SF-Mystic-5 HP: mapping gives 29, the SRD hand value says 34
+    SF-Mystic-5 HP: mapping gives 29, the PCGen run says 34
+    SF-Mystic-5 Stamina: mapping gives 30, the SRD hand value says 25
+    SF-Mystic-5 Stamina: mapping gives 30, the PCGen run says 25
+    SF-Technomancer-5 HP: mapping gives 39, the SRD hand value says 29
+    SF-Technomancer-5 HP: mapping gives 39, the PCGen run says 29
+    SF-Technomancer-5 Stamina: mapping gives 25, the SRD hand value says 35
+    SF-Technomancer-5 Stamina: mapping gives 25, the PCGen run says 35
+    SF-Envoy-3 HP: mapping gives 23, the SRD hand value says 20
+    SF-Envoy-3 HP: mapping gives 23, the PCGen run says 20
+    SF-Envoy-3 Stamina: mapping gives 18, the SRD hand value says 21
+    SF-Envoy-3 Stamina: mapping gives 18, the PCGen run says 21
+M4 (drop RaceHP from Hit Points) -> FAIL (cargo exit 101; 12 seed-field disagreements)
+    SF-Soldier-3 HP: mapping gives 21, the SRD hand value says 25
+    SF-Soldier-3 HP: mapping gives 21, the PCGen run says 25
+    SF-Soldier-3: oracle tokens no row claims: ["Default (paizo/core/scr_abilities.lst): BONUS:HP|CURRENTMAX|RaceHP"]
+    SF-Mystic-5 HP: mapping gives 30, the SRD hand value says 34
+    SF-Mystic-5 HP: mapping gives 30, the PCGen run says 34
+    SF-Mystic-5: oracle tokens no row claims: ["Default (paizo/core/scr_abilities.lst): BONUS:HP|CURRENTMAX|RaceHP"]
+    SF-Technomancer-5 HP: mapping gives 25, the SRD hand value says 29
+    SF-Technomancer-5 HP: mapping gives 25, the PCGen run says 29
+    SF-Technomancer-5: oracle tokens no row claims: ["Default (paizo/core/scr_abilities.lst): BONUS:HP|CURRENTMAX|RaceHP"]
+    SF-Envoy-3 HP: mapping gives 18, the SRD hand value says 20
+    SF-Envoy-3 HP: mapping gives 18, the PCGen run says 20
+    SF-Envoy-3: oracle tokens no row claims: ["Default (paizo/core/scr_abilities.lst): BONUS:HP|CURRENTMAX|RaceHP"]
+restored -> PASS (cargo exit 0); table sha256 after: 5f6fd4a01fb106d1755d78e0663cd14114590d307c56f2a2d7e3e1e476cc15b7 (identical)
+verdict=PASS M1=FAIL M2=FAIL M3=FAIL M4=FAIL restored=PASS

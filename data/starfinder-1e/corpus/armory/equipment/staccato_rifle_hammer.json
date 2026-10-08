@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Staccato rifle (hammer)",
+    "name": "Staccato rifle, hammer",
+    "type": "RESIZABLE.Weapon.Ranged.ToHit_UseDex.Prof Group Longarms.Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 552,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Staccato rifle (hammer)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:staccato_rifle_hammer"
+}

@@ -681,7 +681,7 @@ pub fn vacuous_placeholder_reason(key: &str) -> Option<&'static str> {
 /// (Cycle 2's 188-record near-miss from gating on record SHAPE alone) means
 /// each entry below was read against the REAL corpus token AND the real,
 /// already-shipped, already-tested
-/// [`crate::rules_core::rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES`]
+/// [`crate::rules_core::rules_catalog::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES`]
 /// table (built and cited independently, for combat's own
 /// `character_is_proficient_with`, long before this mechanism existed) —
 /// only kept when the corpus record's own named-weapon list is a BYTE-FOR-
@@ -737,9 +737,9 @@ pub fn weapon_proficiency_grant_class_id(key: &str) -> Option<&'static str> {
 /// **Each entry requires BOTH halves to verify, not just armor.** A
 /// combined record's weapon-side content must be an EXACT set match
 /// against
-/// [`crate::rules_core::rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES`]
+/// [`crate::rules_core::rules_catalog::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES`]
 /// AND its armor/shield-side content an exact match against
-/// [`crate::rules_core::rules_tables::crb::weapon_tables::CLASS_ARMOR_PROFICIENCIES`]
+/// [`crate::rules_core::rules_catalog::crb::weapon_tables::CLASS_ARMOR_PROFICIENCIES`]
 /// (verified against the live corpus record for both,
 /// `weapon_and_armor_proficiency_grant_class_table_matches_are_exact`
 /// below) before this table names the class at all. Two classes with a
@@ -783,7 +783,7 @@ pub fn weapon_and_armor_proficiency_grant_class_id(key: &str) -> Option<&'static
 /// genuine new-subsystem investment. Maps each of the 9 CRB base classes'
 /// own `"Class Skills ~ <Class>"` internal chassis record, plus `"Jack of
 /// All Trades ~ Class Skills"`, to the owner id
-/// `crate::rules_core::rules_tables::crb::class_skill_tables::class_skill_list`
+/// `crate::rules_core::rules_catalog::crb::class_skill_tables::class_skill_list`
 /// was independently verified against (byte-for-byte, its own module's
 /// `class_skill_lists_match_their_own_corpus_records` test). Closed,
 /// named-key list — never a shape predicate — mirroring
@@ -826,7 +826,7 @@ pub fn class_skill_list_grant_owner_id(key: &str) -> Option<&'static str> {
 ///
 /// **Not a new, standalone subsystem after all — a join of two
 /// already-shipped, already-tested tables.**
-/// [`crate::rules_core::rules_tables::crb::wizard_spell_list::wizard_school_zero_level_spells`]
+/// [`crate::rules_core::rules_catalog::crb::wizard_spell_list::wizard_school_zero_level_spells`]
 /// combines `WIZARD_SPELL_LIST`'s own Wizard-specific spell level (already
 /// isolated from `SPELL_LIST`'s minimum-across-classes level, see that
 /// table's own module doc comment) with `SPELL_LIST`'s own `school` field
@@ -907,7 +907,7 @@ mod tests {
     /// duplicate re-derivation of the skill-list content.
     #[test]
     fn class_skill_list_grant_owner_table_matches_resolve_to_real_rows() {
-        use crate::rules_core::rules_tables::crb::class_skill_tables;
+        use crate::rules_core::rules_catalog::crb::class_skill_tables;
         for (key, owner_id) in CLASS_SKILL_LIST_GRANT_OWNER_TABLE_MATCHES {
             assert_eq!(class_skill_list_grant_owner_id(key), Some(*owner_id));
             assert!(

@@ -1,0 +1,23 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.67s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 14 tests
+test sf_adapter::tests::build_from_input_reads_theme_armour_loadout_and_choices ... ok
+test sf_adapter::tests::a_refused_build_is_a_named_blocking_diagnostic ... ok
+test sf_sheet_print::tests::every_sf_spell_prints_its_formulas_as_words_with_no_character ... ok
+test sf_adapter::tests::bulk_condition_caps_dex_and_takes_the_worse_penalty_on_str_and_dex_skills ... ok
+test sf_sheet_print::tests::an_unprintable_spell_selection_is_a_named_refusal ... ok
+test sf_sheet_print::tests::sf_seed_feats_print_the_seed_builds_feats ... ok
+test sf_adapter::tests::the_command_paths_route_starfinder_1e_to_the_starfinder_adapter ... ok
+test sf_sheet_print::tests::sf_seed_spell_prose_resolves_the_casters_terms ... ok
+test sf_sheet_print::tests::sf_seed_lines_print_every_resolved_term_and_no_pcgen_residue ... ok
+test sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant ... ok
+test sf_adapter::tests::persistence_methods_work_on_a_saved_starfinder_character ... ok
+test sf_sheet_print::tests::sf_seed_spell_lists_equal_the_seed_builds_spells_known ... ok
+test sf_adapter::tests::sf_seed_every_hand_value_equals_the_adapters_explanation_row ... ok
+test sf_adapter::tests::a_saved_starfinder_caster_loads_with_its_spells_known ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 642 filtered out; finished in 1.84s
+
+exit=0

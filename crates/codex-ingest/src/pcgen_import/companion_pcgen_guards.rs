@@ -20,8 +20,8 @@
 //! `docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle9_type_companion_guards.py`.
 //! Do not hand-edit; re-run the generator.
 
-use codex::rules_core::rules_tables::companion_chassis::CompanionRecord;
-use codex::rules_core::rules_tables::crb::feats::EffectCondition;
+use codex::rules_core::rules_catalog::companion_chassis::CompanionRecord;
+use codex::rules_core::rules_catalog::crb::feats::EffectCondition;
 
 /// One converted companion guard's verbatim ingest tail.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -148,7 +148,7 @@ pub fn rebuild_external_ability_refs(record: &CompanionRecord) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::rules_core::rules_tables::companion_chassis::COMPANION_BOOKS;
+    use codex::rules_core::rules_catalog::companion_chassis::COMPANION_BOOKS;
 
     /// Every guard the live catalogs now carry in typed form, rebuilt into the
     /// ingest string it was converted from.
@@ -160,7 +160,7 @@ mod tests {
     /// is that the same guards, and only those, survive the conversion.
     fn live_tails() -> Vec<(String, String, String, String)> {
         let mut out = Vec::new();
-        for book in COMPANION_BOOKS {
+        for book in &COMPANION_BOOKS {
             for ability in book.companion_abilities {
                 for variant in ability.description_variants {
                     for condition in variant.conditions {
@@ -330,7 +330,7 @@ mod tests {
     #[test]
     fn no_live_external_ability_ref_is_an_ingest_token() {
         let mut guarded_rows = 0usize;
-        for book in COMPANION_BOOKS {
+        for book in &COMPANION_BOOKS {
             for companion in book.companions {
                 for r in companion.external_ability_refs {
                     assert!(

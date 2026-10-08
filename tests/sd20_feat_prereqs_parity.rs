@@ -12,7 +12,7 @@ use std::fs;
 use std::path::PathBuf;
 
 use codex::rules_core::feat_prereqs::{compute_feat_effects, evaluate_feat_prerequisites, FeatKey};
-use codex::rules_core::rules_tables::crb::feats::FeatCategory;
+use codex::rules_core::rules_catalog::crb::feats::FeatCategory;
 
 // --- minimal std-only JSON reader (test-scoped; see sd20_spellbook_parity.rs) ---
 

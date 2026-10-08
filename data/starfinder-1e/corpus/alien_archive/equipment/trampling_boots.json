@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Trampling Boots",
+    "name": "Trampling Boots",
+    "type": "Magic.Boot.WornMagic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "starfinder/paizo/alien_archive/saa_equip_magic.lst",
+    "record_key": "Trampling Boots",
+    "sha256": "2736a1a123570bf3b836ba942f88b499eb0e0eb5360a9710adb8b891bd61a775"
+  },
+  "unit_id": "alien_archive:equipment:trampling_boots"
+}

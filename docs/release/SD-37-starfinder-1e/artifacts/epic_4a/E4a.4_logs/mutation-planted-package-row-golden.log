@@ -1,0 +1,26 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.08s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 1 test
+test rules_core::rules_catalog::golden_tests::every_catalog_table_view_and_lookup_matches_its_golden_digest ... FAILED
+
+failures:
+
+---- rules_core::rules_catalog::golden_tests::every_catalog_table_view_and_lookup_matches_its_golden_digest stdout ----
+
+thread 'rules_core::rules_catalog::golden_tests::every_catalog_table_view_and_lookup_matches_its_golden_digest' (915898) panicked at src/rules_core/rules_catalog/golden_tests.rs:613:5:
+transcripts whose digest moved: [
+    "crb/feat_data/general/GENERAL_TABLE",
+    "crb/feats/feat_tables",
+    "feats_all/hand_authored_feat_tables",
+    "feats_all/all_feat_tables",
+]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::rules_catalog::golden_tests::every_catalog_table_view_and_lookup_matches_its_golden_digest
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2843 filtered out; finished in 5.43s
+
+error: test failed, to rerun pass `--lib`

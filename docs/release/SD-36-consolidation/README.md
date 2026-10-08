@@ -1,6 +1,6 @@
 ---
 title: SD-36 — Consolidation — Release Package
-status: in-progress — Epics B, A, E, C1, C2 done; D1 (architecture docs) done; D2/D3 written; Epic F (class completion) scoped 2026-09-21, all of F0–F5 open; D4–D6 held until Epic F closes
+status: complete — MERGED to develop 2026-09-29 PR #393. All epics B, A, E, C1, C2, F0–F7 complete; D1 architecture docs, D2–D4 retrospective/release-notes/graphify done pre-merge; D5 PR merged; D6 worktree sweep deferred to SD-37 C0.1
 bundle_id: SD-36
 slug: consolidation
 scope: docs/release/SD-36-consolidation

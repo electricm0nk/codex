@@ -20,7 +20,7 @@
 //!
 //! # What is served, and what is deliberately absent
 //!
-//! Every field on [`MonsterStatBlock`](codex::rules_core::rules_tables::beastiary1::MonsterStatBlock)
+//! Every field on [`MonsterStatBlock`](codex::rules_core::rules_catalog::beastiary1::MonsterStatBlock)
 //! crosses: name, challenge rating, size, land speed, creature type and
 //! subtype, source page, and the natural-attack list.
 //!
@@ -45,14 +45,14 @@
 
 use serde::{Deserialize, Serialize};
 
-use codex::rules_core::rules_tables::beastiary1::{
+use codex::rules_core::rules_catalog::beastiary1::{
     self, natural_attack_provenance, MonsterId, MonsterStatBlock,
 };
 use codex::rules_core::derived_evaluator_fixture_check::{
     spell_like_ability_caster_level, spell_like_ability_save_dc,
 };
-use codex::rules_core::rules_tables::monster_chassis::{self, MonsterBook};
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::monster_chassis::{self, MonsterBook};
+use codex::rules_core::rules_catalog::RuleSetId;
 
 use crate::converted_prose;
 
@@ -83,7 +83,7 @@ const BOOK_BOTD2: &str = "BOTD2";
 /// corpus declaring its own name Product Identity) and 13 of its 30 ability
 /// rows end up owned by no shipped monster. The catalog therefore shows 9
 /// monsters and 14 abilities -- every record that is both shippable and
-/// reachable. See `rules_tables::inner_sea_world_guide` for the derivation.
+/// reachable. See `rules_catalog::inner_sea_world_guide` for the derivation.
 const BOOK_ISWG: &str = "ISWG";
 
 /// Bestiary 2, the seventh (SD-29 Epic 5 extend, round 4) and the first that
@@ -98,14 +98,14 @@ const BOOK_ISWG: &str = "ISWG";
 /// against the new total; re-run `scripts/classify_monster_ability_rows.py`
 /// before quoting it again. It is also the first book here whose abilities
 /// have SEVERAL owners -- 19 of them do, and each is rendered under every
-/// monster that claims it. See `rules_tables::bestiary_2` for the derivation.
+/// monster that claims it. See `rules_catalog::bestiary_2` for the derivation.
 const BOOK_B2: &str = "B2";
 
 /// Bestiary 3, the eighth (SD-29 Epic 5 extend, round 5). Its wire code is the
 /// book's own `SOURCESHORT:B3`. Every one of its 261 corpus monster rows ships
 /// -- the first book in this catalog for which that is true -- and the 13
 /// ability rows that do not are owned by no monster row of this book. See
-/// `rules_tables::bestiary_3` for the derivation.
+/// `rules_catalog::bestiary_3` for the derivation.
 const BOOK_B3: &str = "B3";
 
 /// Bestiary 4, the ninth (SD-29 Epic 5 extend, round 6). Its wire code is the
@@ -114,7 +114,7 @@ const BOOK_B3: &str = "B3";
 /// `NAMEISPI:YES` and do not ship, and that drop is also why 73 of its 225
 /// excluded ability rows are excluded — they are well-formed and owned, and
 /// unreachable only because their owner is one of the 14. See
-/// `rules_tables::bestiary_4` for both derivations.
+/// `rules_catalog::bestiary_4` for both derivations.
 const BOOK_B4: &str = "B4";
 
 /// Inner Sea Bestiary, the tenth (SD-29 Epic 5 extend, round 7). Its wire code
@@ -122,14 +122,14 @@ const BOOK_B4: &str = "B4";
 /// lose monster rows to the Product Identity of the abilities they NAME rather
 /// than of their own name — a monster's emitted `ability_keys` array carries
 /// each ability's key, so a row naming a deity-namespaced ability cannot ship
-/// either. See `rules_tables::inner_sea_bestiary` for the derivation.
+/// either. See `rules_catalog::inner_sea_bestiary` for the derivation.
 const BOOK_ISB: &str = "ISB";
 
 /// Inner Sea Gods, the eleventh (SD-29 Epic 5 extend, round 9). Its wire code
 /// is the book's own short code. It is the first book in this catalog whose
 /// corpus rows are not all at the book root -- 3 of its 39 monsters come from
 /// a support file the book loads only when Bestiary 4 is also in the campaign.
-/// See `rules_tables::inner_sea_gods`.
+/// See `rules_catalog::inner_sea_gods`.
 const BOOK_ISG: &str = "ISG";
 
 /// Ultimate Psionics, the twelfth (SD-29 Epic 5 extend, round 10) and the first
@@ -222,7 +222,7 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "bestiary_3" => "Bestiary 3",
         "bestiary_4" => "Bestiary 4",
         // SD-29 Epic 5 extend, round 8. The chassis half of Bestiary 1 — the
-        // 284 rows `rules_tables::beastiary1` does not hold. It serves under
+        // 284 rows `rules_catalog::beastiary1` does not hold. It serves under
         // the SAME display name and the SAME wire code as that table, because
         // it is the same book: a player filtering the catalog by "Bestiary 1"
         // must see all 330 creatures, not 46 under one label and 284 under
@@ -319,7 +319,7 @@ const DICE_FROM_PUBLISHED_TEXT: &str = "publishedText";
 /// expression for it anywhere, and this book's ingest did not ground one from
 /// published text. The row prints the attack's name alone; it never prints a
 /// stand-in value. 13 of Bonus Bestiary's 14 natural attacks are in this state
-/// -- see `rules_tables::bonus_bestiary`'s module doc comment.
+/// -- see `rules_catalog::bonus_bestiary`'s module doc comment.
 const DICE_ABSENT_FROM_CORPUS: &str = "notInCorpus";
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -855,7 +855,7 @@ fn map_chassis_monster(
 pub fn build_monster_catalog() -> MonsterCatalogResponse {
     let mut entries: Vec<MonsterCatalogEntryDto> =
         MonsterId::ALL.iter().copied().map(map_monster).collect();
-    for table in monster_chassis::MONSTER_BOOKS {
+    for table in &monster_chassis::MONSTER_BOOKS {
         entries.extend(table.monsters.iter().map(|block| map_chassis_monster(table, block)));
     }
     MonsterCatalogResponse { entries }
@@ -916,8 +916,8 @@ mod tests {
         assert_eq!(
             chassis.len(),
             280,
-            "the chassis holds the book's complement less its 4 `.MOD` overlay rows -- see \
-             `rules_tables::bestiary`"
+            concat!("the chassis holds the book's complement less its 4 `.MOD` overlay rows -- see \
+             `rules_tables", "::bestiary`")
         );
         assert_eq!(
             b1.len(),
@@ -928,7 +928,7 @@ mod tests {
     }
 
     /// One creature, one row. The two tables serving Bestiary 1 are disjoint by
-    /// `rules_tables::bestiary`'s own test; this is the same claim made where a
+    /// `rules_catalog::bestiary`'s own test; this is the same claim made where a
     /// player would see it break, on the served response rather than on the
     /// tables.
     #[test]
@@ -992,7 +992,7 @@ mod tests {
     /// accidental property of the books registered when it was written.
     #[test]
     fn every_chassis_row_states_a_readable_challenge_rating() {
-        for table in monster_chassis::MONSTER_BOOKS {
+        for table in &monster_chassis::MONSTER_BOOKS {
             for block in table.monsters {
                 let cr = block.challenge_rating.expect("every row carries CR:");
                 let parsed = parse_challenge_rating(table.corpus_book, block.key, cr);
@@ -1044,7 +1044,7 @@ mod tests {
     /// shared ability is served once per owner **by design**. Bestiary 2 is the
     /// first book with any, and the old assertion read 522 against 488 and
     /// failed on correct output. Re-derived over
-    /// `rules_tables::bestiary_2`'s table: **19** ability records carry more
+    /// `rules_catalog::bestiary_2`'s table: **19** ability records carry more
     /// than one owner and account for exactly **34** extra served rows.
     ///
     /// The two properties that DO hold are the ones the old assertion was really
@@ -1088,13 +1088,13 @@ mod tests {
         // record silently losing its owner (which WOULD move it here) still
         // fails loudly, just under a different assertion.
         let owned_records_held: usize =
-            codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS
+            codex::rules_core::rules_catalog::monster_chassis::MONSTER_BOOKS
                 .iter()
                 .flat_map(|book| book.monster_abilities.iter())
                 .filter(|ability| !ability.owners.is_empty())
                 .count();
         let owner_less_records_held: usize =
-            codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS
+            codex::rules_core::rules_catalog::monster_chassis::MONSTER_BOOKS
                 .iter()
                 .flat_map(|book| book.monster_abilities.iter())
                 .filter(|ability| ability.owners.is_empty())
@@ -1259,7 +1259,7 @@ mod tests {
                     entry.name,
                     attack.name
                 );
-                for other in monster_chassis::MONSTER_BOOKS {
+                for other in &monster_chassis::MONSTER_BOOKS {
                     if other.corpus_book == table.corpus_book {
                         continue;
                     }
@@ -1301,7 +1301,7 @@ mod tests {
         // own. Subtracted by namespace rather than skipped by book, so a chassis
         // key that drifted into a foreign namespace still fails here.
         let foreign_namespaces = ["beastiary1:monster:"];
-        for table in monster_chassis::MONSTER_BOOKS {
+        for table in &monster_chassis::MONSTER_BOOKS {
             let wire_code = book_wire_code(table.corpus_book);
             let served: std::collections::BTreeSet<String> = response
                 .entries
@@ -1486,7 +1486,7 @@ mod tests {
     /// §58.3` scoped and `SD31-W22-MONSTER-001` bounded but did not build.
     /// Ankheg's two ability rows (`b1_abilities_race.lst:90`/`91`) are
     /// well-formed and owned, but their owner's `MonsterStatBlock` ships from
-    /// `rules_tables::beastiary1`, not from the `bestiary` chassis that holds
+    /// `rules_catalog::beastiary1`, not from the `bestiary` chassis that holds
     /// the `MonsterAbilityRecord`s themselves -- exactly the split this test
     /// exercises end to end, through the real `map_monster` production path,
     /// not a chassis-layer-only unit test that a desktop rendering gap could

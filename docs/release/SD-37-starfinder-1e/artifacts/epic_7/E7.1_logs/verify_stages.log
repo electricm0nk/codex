@@ -1,0 +1,40 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /tmp/codex-verify-LWiStp
+---------------------------------------------------------------
+==> preflight-oracle — scripts/fetch-pcgen-oracle.sh --check
+    PASS  preflight-oracle  (oracle at pin 7f818006e371188e5717fd18d74d18a420747fc6)
+---------------------------------------------------------------
+==> token-coverage — python3 scripts/token_coverage.py --check
+    PASS  token-coverage  (non_done=0 tokened=0 token_less=0 refused=0 refused_non_done=0 token_types=233 shapes=0 verdict=PASS)
+---------------------------------------------------------------
+==> denominator-gate — python3 scripts/denominator_gate.py --check
+    PASS  denominator-gate  (files_checked=367 violations=0)
+---------------------------------------------------------------
+==> figure-provenance — python3 scripts/denominator_gate.py --check-provenance
+    PASS  figure-provenance  (files_checked=297 figures_examined=631 violations=0)
+---------------------------------------------------------------
+==> tauri-resources-tracked — every bundle.resources path has >=1 git-tracked file
+    PASS  tauri-resources-tracked  (resources_checked=8 verdict=PASS)
+---------------------------------------------------------------
+==> crate-wall — codex-ingest reaches codex-desktop only via [dev-dependencies]
+    PASS  crate-wall  (0 codex-ingest in normal+build graph, dep direction codex-ingest->codex confirmed, manifest + residue gate clean)
+---------------------------------------------------------------
+==> pcgen-residue-gate — python3 scripts/pcgen_residue_gate.py --check --closure
+    PASS  pcgen-residue-gate  (live_files=0 live_hits=0 verdict=PASS)
+---------------------------------------------------------------
+==> rules-schema-check — regenerate schemas/rules/*.schema.json from the serde types and diff
+    PASS  rules-schema-check  (2 schemas regenerate byte-equal; 3 schema tests pass)
+---------------------------------------------------------------
+==> sheet-rules-check — cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --check  (repo root)
+    PASS  sheet-rules-check  (records=49450 converted=49450 refused=0 rules=73363 var_tables=6211 verdict=PASS (426.0s))
+---------------------------------------------------------------
+==> sf-sheet-rules-check — sheet_rule_convert --system starfinder-1e --check; sf_corpus --check  (repo root)
+    PASS  sf-sheet-rules-check  (package: records=8582 converted=8582 refused=0 rules=11320 var_tables=238 verdict=PASS (30.0s); corpus: records=8582 redacted=289 renamed=137 description_redacted=192 files=8590 verdict=PASS)
+---------------------------------------------------------------
+SUMMARY
+  passed:  10  preflight-oracle token-coverage denominator-gate figure-provenance tauri-resources-tracked crate-wall pcgen-residue-gate rules-schema-check sheet-rules-check sf-sheet-rules-check
+
+RESULT: PASS
+logs in /tmp/codex-verify-LWiStp
+exit=0

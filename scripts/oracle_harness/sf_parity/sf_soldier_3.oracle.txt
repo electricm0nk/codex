@@ -1,0 +1,44 @@
+name=sf_soldier_3
+race=Human
+class=Soldier
+level=3
+stat.STR=16
+stat.DEX=14
+stat.CON=12
+stat.INT=11
+stat.WIS=10
+stat.CHA=10
+hp=25
+stamina=24
+resolve=4
+eac=16
+kac=19
+initiative=+2
+bab=+3
+save.Fortitude=+4
+save.Reflex=+3
+save.Will=+3
+attack.melee=+6
+attack.ranged=+5
+skill.Acrobatics=2|ranks=0.0|untrained=Y
+skill.Athletics=10|ranks=3.0|untrained=Y
+skill.Bluff=0|ranks=0.0|untrained=Y
+skill.Diplomacy=0|ranks=0.0|untrained=Y
+skill.Disguise=0|ranks=0.0|untrained=Y
+skill.Intimidate=6|ranks=3.0|untrained=Y
+skill.Medicine=6|ranks=3.0|untrained=NO
+skill.Perception=0|ranks=0.0|untrained=Y
+skill.Piloting=8|ranks=3.0|untrained=Y
+skill.Sense Motive=0|ranks=0.0|untrained=Y
+skill.Stealth=2|ranks=0.0|untrained=Y
+skill.Survival=6|ranks=3.0|untrained=Y
+weapon.*Laser rifle, azimuth=+5|damage=1d8+3|category=Non-Standard-Ranged
+weapon.Baton, tactical=+6|damage=1d4+4|category=OPERATIVE-Melee
+bulk=4.3 lbs.
+credits=0
+credits.spent=1955 cr
+acp=-4
+abilities.feat=Coordinated Shot, Deadly Aim, Quick Draw
+abilities.theme=Mercenary, THEME KNOWLEDGE
+abilities.class_feature=Primary Fighting Style, Primary Style Technique, Combat Feat, Gear Boost, Weapon Specialization
+abilities.racial_trait=SIZE AND TYPE, BONUS FEAT, SKILLED

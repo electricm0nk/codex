@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "FEAT",
+    "key": "Major Psychic Power",
+    "name": "Major Psychic Power",
+    "type": "General"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 59,
+    "path": "starfinder/paizo/core/scr_feats.lst",
+    "record_key": "Major Psychic Power",
+    "sha256": "65ecef5ee331db46ca8dc7170577882615406ae6525023644f4e6c7a9042cbde"
+  },
+  "unit_id": "core:feat:major_psychic_power"
+}

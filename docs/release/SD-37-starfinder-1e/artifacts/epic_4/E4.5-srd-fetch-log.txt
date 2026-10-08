@@ -1,0 +1,5 @@
+# E4.5 SRD fetch log (curl -sS, 2026-10-04, pages saved 06:02–06:04 EDT (file mtimes); bytes + sha256 of the saved page)
+https://www.aonsrd.com/Equipment.aspx bytes=45281 sha256=c74c73e1ab71d425201202414b7eb1dc9324cbf3b07ece5f9392b2f4d6966047
+https://www.aonsrd.com/Rules.aspx?ID=230 bytes=36881 sha256=b21cd37dc963e978f6a57719dfff2803144062a0f695642ade23f8b01cf34613
+https://www.aonsrd.com/Rules.aspx?ID=39 bytes=22054 sha256=8b8eef311a2418ef6859b88e15229c0a3f881aeaafe2b21386bceb793ff5f4b0
+# Equipment.aspx is 45,281 bytes here vs 45,314 in E0.4-srd-fetch-log.txt (2026-10-02): the page carries site chrome that changes; the Carrying Capacity text quoted in E4.5-loadout-hand-values.md was read from this fetch.

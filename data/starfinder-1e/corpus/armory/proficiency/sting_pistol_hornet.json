@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Sting pistol (hornet)",
+    "name": "Sting pistol (hornet)",
+    "type": "SMALL ARMS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 445,
+    "path": "starfinder/paizo/armory/sa_profs_weapon.lst",
+    "record_key": "Sting pistol (hornet)",
+    "sha256": "6ba2601d94f6148c7b2a9869726ee868116de1ac2f7dcc21ea8d58922604c426"
+  },
+  "unit_id": "armory:proficiency:sting_pistol_hornet"
+}

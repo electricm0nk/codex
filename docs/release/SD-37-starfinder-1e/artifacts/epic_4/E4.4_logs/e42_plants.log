@@ -1,0 +1,66 @@
+crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs sha256 6fa835eb0f86371d1f29c21bad70d79aba0a29d6b26a6bb8c03f428ecbc30b8c
+crates/codex-ingest/src/pcgen_import/sheet_rule/mod.rs sha256 11971c973575bff146f625511552d43f2c8fd2fb141d2aa1ac93ee6229886295
+crates/codex-ingest/src/pcgen_import/sheet_rule/pool_option.rs sha256 10205255b5c677223373ce8980d7be6c0f34b0c7210a4d358838623b30707ffd
+src/rules_core/pilot_compute/sf_defense.rs sha256 125940f9538423697d4fc902f84f3a0f72c853f9e50d30044ce9608a06683b23
+src/rules_core/pilot_compute/sf_skills.rs sha256 c765672fdc5fb9e16f8f7e2f65d99f258cc9978a3777bcf433ff7adb51e7f7b3
+test: cargo test --locked -j 8 --lib sf_seed -- --test-threads=8
+C1 on crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs ('&& let Some(inner) = internal_hop_grants(ctx.tree, t)' -> '&& let Some(inner) = internal_hop_grants(ctx.tree, t).filter(|_| false)') -> sf_seed FAIL (exit 101)
+    4 skill totals mismatch:
+    SF-Technomancer-5 Sense Motive: engine Value(1), SRD Value(-1) -- Some(SfTotal { total: 1, terms: [SfTerm { label: "Wis modifier", value: 1, source: "core:skill:sense_motive" }] })
+    SF-Envoy-3 Engineering: engine Value(7), SRD Value(9) -- Some(SfTotal { total: 7, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:engineering" }, SfTerm { label: "Int modifier", value: 1, source: "core:ski
+    SF-Envoy-3 Stealth: engine Value(6), SRD Value(8) -- Some(SfTotal { total: 6, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:stealth" }, SfTerm { label: "Dex modifier", value: 1, source: "core:skill:steal
+    SF-Envoy-3 Survival: engine Value(0), SRD Value(2) -- Some(SfTotal { total: 0, terms: [SfTerm { label: "Wis modifier", value: 0, source: "core:skill:survival" }] })
+C2 on crates/codex-ingest/src/pcgen_import/sheet_rule/mod.rs ('if declared_by.is_empty() && always_held::defined_at_zero_only_on(' -> 'if false && declared_by.is_empty() && always_held::defined_at_zero_only_on(') -> sf_seed FAIL (exit 101)
+    6 skill totals mismatch:
+    SF-Soldier-3 Athletics: engine Value(5), SRD Value(6) -- Some(SfTotal { total: 5, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:athletics" }, SfTerm { label: "Str modifier", value: 3, source: "core:skill
+    SF-Mystic-5 Mysticism: engine Value(12), SRD Value(13) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:mysticism" }, SfTerm { label: "Wis modifier", value: 4, source: "core:ski
+    SF-Mystic-5 Perception: engine Value(12), SRD Value(14) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:perception" }, SfTerm { label: "Wis modifier", value: 4, source: "core:s
+    SF-Mystic-5 Sense Motive: engine Value(12), SRD Value(14) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:sense_motive" }, SfTerm { label: "Wis modifier", value: 4, source: "co
+    SF-Technomancer-5 Physical Science: engine Value(12), SRD Value(13) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:physical_science" }, SfTerm { label: "Int modifier", value: 
+    SF-Envoy-3 Culture: engine Value(7), SRD Value(8) -- Some(SfTotal { total: 7, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:culture" }, SfTerm { label: "Int modifier", value: 1, source: "core:skill:cultu
+    2 of 16 mismatch:
+C3 on crates/codex-ingest/src/pcgen_import/sheet_rule/pool_option.rs ('if tree.system == codex::rules_core::game_system::GameSystem::Starfinder1e {' -> 'if false && tree.system == codex::rules_core::game_system::GameSystem::Starfinder1e {') -> sf_seed FAIL (exit 101)
+    1 skill totals mismatch:
+    SF-Technomancer-5 Physical Science: engine Value(12), SRD Value(13) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:physical_science" }, SfTerm { label: "Int modifier", value: 
+E1 on src/rules_core/pilot_compute/sf_defense.rs ('value: dex.min(cap), source: a.id.clone() }' -> 'value: dex, source: a.id.clone() }') -> sf_seed FAIL (exit 101)
+    2 of 12 mismatch:
+    SF-Soldier-3 EAC: engine 17, SRD Value(16) -- terms [SfTotal { total: 17, terms: [SfTerm { label: "base", value: 10, source: "SRD Armor Class (https://www.aonsrd.com/Rules.aspx?ID=102)" }, SfTerm { label: "Defiance Serie
+    SF-Soldier-3 KAC: engine 20, SRD Value(19) -- terms [SfTotal { total: 17, terms: [SfTerm { label: "base", value: 10, source: "SRD Armor Class (https://www.aonsrd.com/Rules.aspx?ID=102)" }, SfTerm { label: "Defiance Serie
+E2 on src/rules_core/pilot_compute/sf_skills.rs ('if record.tags.iter().any(|t| t == "ACHECK") && acp != 0 {' -> 'if false && record.tags.iter().any(|t| t == "ACHECK") && acp != 0 {') -> sf_seed FAIL (exit 101)
+    6 skill totals mismatch:
+    SF-Soldier-3 Acrobatics: engine Value(2), SRD Value(-2) -- Some(SfTotal { total: 2, terms: [SfTerm { label: "Dex modifier", value: 2, source: "core:skill:acrobatics" }] })
+    SF-Soldier-3 Athletics: engine Value(10), SRD Value(6) -- Some(SfTotal { total: 10, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:athletics" }, SfTerm { label: "Str modifier", value: 3, source: "core:ski
+    SF-Soldier-3 Stealth: engine Value(2), SRD Value(-2) -- Some(SfTotal { total: 2, terms: [SfTerm { label: "Dex modifier", value: 2, source: "core:skill:stealth" }] })
+    SF-Envoy-3 Acrobatics: engine Value(1), SRD Value(0) -- Some(SfTotal { total: 1, terms: [SfTerm { label: "Dex modifier", value: 1, source: "core:skill:acrobatics" }] })
+    SF-Envoy-3 Athletics: engine Value(-1), SRD Value(-2) -- Some(SfTotal { total: -1, terms: [SfTerm { label: "Str modifier", value: -1, source: "core:skill:athletics" }] })
+    SF-Envoy-3 Stealth: engine Value(9), SRD Value(8) -- Some(SfTotal { total: 9, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:stealth" }, SfTerm { label: "Dex modifier", value: 1, source: "core:skill:steal
+E3 on src/rules_core/pilot_compute/sf_skills.rs ('if class_skill && ranks >= 1 {' -> 'if false && class_skill && ranks >= 1 {') -> sf_seed FAIL (exit 101)
+    29 skill totals mismatch:
+    SF-Soldier-3 Athletics: engine Value(3), SRD Value(6) -- Some(SfTotal { total: 3, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:athletics" }, SfTerm { label: "Str modifier", value: 3, source: "core:skill
+    SF-Soldier-3 Intimidate: engine Value(3), SRD Value(6) -- Some(SfTotal { total: 3, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:intimidate" }, SfTerm { label: "Cha modifier", value: 0, source: "core:ski
+    SF-Soldier-3 Medicine: engine Value(3), SRD Value(6) -- Some(SfTotal { total: 3, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:medicine" }, SfTerm { label: "Int modifier", value: 0, source: "core:skill:m
+    SF-Soldier-3 Piloting: engine Value(5), SRD Value(8) -- Some(SfTotal { total: 5, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:piloting" }, SfTerm { label: "Dex modifier", value: 2, source: "core:skill:p
+    SF-Soldier-3 Survival: engine Value(3), SRD Value(6) -- Some(SfTotal { total: 3, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:survival" }, SfTerm { label: "Wis modifier", value: 0, source: "core:skill:s
+    SF-Mystic-5 Bluff: engine Value(7), SRD Value(10) -- Some(SfTotal { total: 7, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:bluff" }, SfTerm { label: "Cha modifier", value: 2, source: "core:skill:bluff" 
+    SF-Mystic-5 Culture: engine Value(7), SRD Value(10) -- Some(SfTotal { total: 7, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:culture" }, SfTerm { label: "Int modifier", value: 2, source: "core:skill:cul
+E4 on src/rules_core/pilot_compute/sf_skills.rs ('if matches!(open, Gate::Exclude) {' -> 'if false && matches!(open, Gate::Exclude) {') -> sf_seed FAIL (exit 101)
+    174 skill totals mismatch:
+    SF-Soldier-3 Computers: engine Value(0), SRD Untrained -- Some(SfTotal { total: 0, terms: [SfTerm { label: "Int modifier", value: 0, source: "core:skill:computers" }] })
+    SF-Soldier-3 Culture: engine Value(0), SRD Untrained -- Some(SfTotal { total: 0, terms: [SfTerm { label: "Int modifier", value: 0, source: "core:skill:culture" }] })
+    SF-Soldier-3 Engineering: engine Value(0), SRD Untrained -- Some(SfTotal { total: 0, terms: [SfTerm { label: "Int modifier", value: 0, source: "core:skill:engineering" }] })
+    SF-Soldier-3 Life Science: engine Value(0), SRD Untrained -- Some(SfTotal { total: 0, terms: [SfTerm { label: "Int modifier", value: 0, source: "core:skill:life_science" }] })
+    SF-Soldier-3 Mysticism: engine Value(0), SRD Untrained -- Some(SfTotal { total: 0, terms: [SfTerm { label: "Wis modifier", value: 0, source: "core:skill:mysticism" }] })
+    SF-Soldier-3 Physical Science: engine Value(0), SRD Untrained -- Some(SfTotal { total: 0, terms: [SfTerm { label: "Int modifier", value: 0, source: "core:skill:physical_science" }] })
+    SF-Soldier-3 Profession (Accountant): engine Value(0), SRD Untrained -- Some(SfTotal { total: 0, terms: [SfTerm { label: "Int modifier", value: 0, source: "core:skill:profession_accountant" }] })
+E5 on src/rules_core/pilot_compute/sf_skills.rs ('terms.extend(fold(held_rows(package, sf, &wants, &mut not_folded)));' -> 'let _ = fold(held_rows(package, sf, &wants, &mut not_folded));') -> sf_seed FAIL (exit 101)
+    14 skill totals mismatch:
+    SF-Soldier-3 Athletics: engine Value(5), SRD Value(6) -- Some(SfTotal { total: 5, terms: [SfTerm { label: "ranks", value: 3, source: "core:skill:athletics" }, SfTerm { label: "Str modifier", value: 3, source: "core:skill
+    SF-Mystic-5 Diplomacy: engine Value(10), SRD Value(12) -- Some(SfTotal { total: 10, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:diplomacy" }, SfTerm { label: "Cha modifier", value: 2, source: "core:ski
+    SF-Mystic-5 Medicine: engine Value(10), SRD Value(12) -- Some(SfTotal { total: 10, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:medicine" }, SfTerm { label: "Int modifier", value: 2, source: "core:skill
+    SF-Mystic-5 Mysticism: engine Value(12), SRD Value(13) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:mysticism" }, SfTerm { label: "Wis modifier", value: 4, source: "core:ski
+    SF-Mystic-5 Perception: engine Value(12), SRD Value(14) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:perception" }, SfTerm { label: "Wis modifier", value: 4, source: "core:s
+    SF-Mystic-5 Sense Motive: engine Value(12), SRD Value(14) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:sense_motive" }, SfTerm { label: "Wis modifier", value: 4, source: "co
+    SF-Technomancer-5 Computers: engine Value(12), SRD Value(13) -- Some(SfTotal { total: 12, terms: [SfTerm { label: "ranks", value: 5, source: "core:skill:computers" }, SfTerm { label: "Int modifier", value: 4, source: "co
+restored (sha256 identical) -> sf_seed PASS (exit 0)
+verdict=PASS C1=FAIL C2=FAIL C3=FAIL E1=FAIL E2=FAIL E3=FAIL E4=FAIL E5=FAIL
+exit=0

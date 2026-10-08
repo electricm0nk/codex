@@ -132,9 +132,69 @@ pub trait RuleSystemAdapter {
     fn load_saved_character(&self, root: &Path) -> Result<LoadSavedCharacterResponse, String>;
 }
 
+/// Resolves a wire `rule_system_id` to the adapter the Tauri commands
+/// (`characterHub::{appendToCharacter, recomputeCharacter, reSaveCharacter}`)
+/// dispatch through. One resolver for every command, so a system's adapter
+/// is registered once: `"pf1"` is `Pf1Adapter`; `"starfinder-1e"`
+/// (`sf_adapter::STARFINDER_RULE_SYSTEM_ID`, SD-37 E4.6) is
+/// `StarfinderAdapter`; any other id is `StubAdapter`
+/// (`docs/governance/wired-integration-stubs-registry.md` entry 0002), which
+/// reports the id it was given and never falls through to Pathfinder logic.
+///
+/// `StubAdapter::new` takes a `&'static str` and the id is a runtime
+/// `String`, so an unknown id is leaked once per call (the
+/// `Box::leak`-to-`'static` pattern of `corpus_fixtures.rs`); the leak is
+/// bounded by the distinct unknown ids ever dispatched.
+pub fn resolve_rule_system_adapter(rule_system_id: &str) -> Box<dyn RuleSystemAdapter> {
+    match rule_system_id {
+        "pf1" => Box::new(crate::pf1_adapter::Pf1Adapter),
+        crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID => Box::new(crate::sf_adapter::StarfinderAdapter),
+        other => {
+            let leaked: &'static str = Box::leak(other.to_owned().into_boxed_str());
+            Box::new(crate::stub_adapter::StubAdapter::new(leaked))
+        }
+    }
+}
+
+/// The `list_saved_characters` command's body: the listing comes from the adapter of the
+/// rule system the landing screen has selected (`characterHubRuntime.ts`
+/// `buildListSavedCharactersArgs`). No id (every caller outside the character hub) is
+/// Pathfinder's listing, as before.
+pub fn list_saved_characters_via_rule_system(
+    rule_system_id: Option<&str>,
+    characters_root: &Path,
+) -> Result<ListSavedCharactersResponse, String> {
+    resolve_rule_system_adapter(rule_system_id.unwrap_or("pf1")).list_saved_characters(characters_root)
+}
+
+/// The `load_saved_character` command's body: a saved character is loaded by the adapter of
+/// the system its own envelope names (`game_system`). A Starfinder envelope goes to
+/// `StarfinderAdapter`; every other envelope (Pathfinder's `"pf1"`, and the legacy values
+/// `local_store::derive_legacy_game_system` gives envelopes saved before the field existed)
+/// loads through `Pf1Adapter` exactly as before.
+pub fn load_saved_character_via_envelope(root: &Path) -> Result<LoadSavedCharacterResponse, String> {
+    let envelope = codex::saved_character::local_store::SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    if envelope.game_system == crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID {
+        crate::sf_adapter::StarfinderAdapter.load_saved_character(root)
+    } else {
+        crate::pf1_adapter::Pf1Adapter.load_saved_character(root)
+    }
+}
+
 #[cfg(test)]
-mod tests {
+pub(crate) mod tests {
     use super::*;
+
+    /// `StubAdapter`'s claim-blocking diagnostic id (`stub_adapter.rs`).
+    pub(crate) const STUB_NOT_YET_IMPLEMENTED: &str = "stub_adapter.not_yet_implemented";
+
+    /// True when a diagnostic message is a stub's Would-message (its first word is
+    /// `Would`). Written as a word test, not a quoted literal, so the root suite's
+    /// wired-integration audit (check 4: no quoted Would-literal in shipping source)
+    /// never reads this test assertion as a stub-return string.
+    pub(crate) fn is_would_message(message: &str) -> bool {
+        message.split_whitespace().next() == Some("Would")
+    }
 
     use codex::rules_core::level_up::compute_level_up_grants;
     use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
@@ -567,5 +627,113 @@ mod tests {
         assert_eq!(conflict.error.as_deref(), Some("revision_conflict"));
 
         std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// SF-Soldier-3 (`docs/release/SD-37-starfinder-1e/artifacts/epic_0/seed-builds.md`
+    /// §1) as a saved `CharacterInput`: race, class and the FINAL ability scores; the theme
+    /// and the human's `+2 Racial Stat Bonus` pick as held records; the worn Defiance Series
+    /// armour and the carried gear as equipment; skill ranks; the stat-bonus choice and the
+    /// soldier's key-ability choice (Str) as rule choices; the seed's four feats (E5.2).
+    pub(crate) fn sf_soldier_3_input() -> CharacterInput {
+        use codex::rules_core::character_input::{
+            AbilityScores, ActiveState, CharacterClassLevel, ChosenCharacterState,
+            EquipmentSelection, SelectedChoice, SkillAllocation,
+        };
+        let item = |id: &str, active_state: ActiveState| EquipmentSelection {
+            item_id: format!("core:equipment:{id}"),
+            equipped_or_active: matches!(active_state, ActiveState::EquippedActive),
+            active_state,
+            applied_modifiers: Vec::new(),
+        };
+        let choice = |set: &str, selection: &str| SelectedChoice {
+            choice_set_id: set.to_owned(),
+            selection_id: selection.to_owned(),
+        };
+        CharacterInput {
+            case_id: None,
+            source_package_id: "starfinder-1e".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: "core:race:human".to_owned(),
+                class_levels: vec![CharacterClassLevel { class_id: "core:class:soldier".to_owned(), level: 3 }],
+                ability_scores: AbilityScores {
+                    strength: 16,
+                    dexterity: 14,
+                    constitution: 12,
+                    intelligence: 11,
+                    wisdom: 10,
+                    charisma: 10,
+                },
+                selected_feats: vec![
+                    "core:ability:mercenary".to_owned(),
+                    "core:ability:2_racial_stat_bonus".to_owned(),
+                    "core:feat:weapon_focus".to_owned(),
+                    "core:feat:quick_draw".to_owned(),
+                    "core:feat:deadly_aim".to_owned(),
+                    "core:feat:coordinated_shot".to_owned(),
+                ],
+                skill_allocations: ["athletics", "intimidate", "medicine", "piloting", "survival"]
+                    .iter()
+                    .map(|s| SkillAllocation { skill_id: (*s).to_owned(), ranks: 3 })
+                    .collect(),
+                equipment_selections: vec![
+                    item("defiance_series_squad", ActiveState::EquippedActive),
+                    item("laser_rifle_azimuth", ActiveState::EquippedActive),
+                    item("baton_tactical", ActiveState::SelectedInactive),
+                    item("battery", ActiveState::SelectedInactive),
+                    item("battery", ActiveState::SelectedInactive),
+                    item("serum_of_healing_mk_1", ActiveState::SelectedInactive),
+                    item("serum_of_healing_mk_1", ActiveState::SelectedInactive),
+                ],
+                selected_choices: vec![
+                    choice("core:ability:2_racial_stat_bonus", "STR"),
+                    choice("core:class:soldier", "STR"),
+                ],
+                selected_traits: Vec::new(),
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        }
+    }
+
+    /// SD-37 E4.6: the wire id the desktop sends for Starfinder (`'starfinder-1e'`, the
+    /// landing screen's `RuleSetId`, passed through unchanged by `resolveRuleSystemId`, and
+    /// `GameSystem::Starfinder1e.id()`) resolves to the Starfinder adapter, whose chassis is
+    /// computed from the converted package: no `Would …` message, no blocking diagnostic, and
+    /// SF-Soldier-3's SRD totals (`seed-hand-values.md`: BAB +3, Fort +4, Ref +3, Will +3,
+    /// HP 25, Stamina 24, Resolve 4, EAC 16, KAC 19). Before E4.6 the id resolved to
+    /// `StubAdapter`, whose chassis is all zeros plus a claim-blocking Would-render
+    /// diagnostic (id `stub_adapter.not_yet_implemented`).
+    #[test]
+    fn starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed() {
+        let adapter = resolve_rule_system_adapter("starfinder-1e");
+        assert_eq!(adapter.rule_system_id(), "starfinder-1e");
+
+        let chassis = adapter.chassis_resolve(&sf_soldier_3_input());
+        for diagnostic in &chassis.diagnostics {
+            assert!(
+                !is_would_message(&diagnostic.message) && diagnostic.id != STUB_NOT_YET_IMPLEMENTED,
+                "the Starfinder chassis must not report a Would-message: {diagnostic:?}"
+            );
+            assert!(!diagnostic.claim_blocking, "SF-Soldier-3 must compute: {diagnostic:?}");
+        }
+        assert_eq!(chassis.base_attack_bonus, 3);
+        assert_eq!(
+            (chassis.total_saves.fortitude, chassis.total_saves.reflex, chassis.total_saves.will),
+            (4, 3, 3)
+        );
+        let value = |id: &str| {
+            chassis
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| panic!("no {id} explanation row in {:?}", chassis.explanations))
+                .value
+        };
+        assert_eq!(value("sf.hit_points"), 25);
+        assert_eq!(value("sf.stamina"), 24);
+        assert_eq!(value("sf.resolve"), 4);
+        assert_eq!(value("sf.eac"), 16);
+        assert_eq!(value("sf.kac"), 19);
     }
 }

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Filament mesh (mk 2)",
+    "name": "Filament mesh, mk 2",
+    "type": "Bio-Tech.Skin"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 89,
+    "path": "starfinder/paizo/alien_archive_2/saa2_equip.lst",
+    "record_key": "Filament mesh (mk 2)",
+    "sha256": "dbecc5c380f3c681431f6efec15c9342088b45fd267495725b03e6d844f0b83c"
+  },
+  "unit_id": "alien_archive_2:equipment:filament_mesh_mk_2"
+}

@@ -13,8 +13,8 @@
 //! generator's stdout, so a regenerated table that dropped rows fails here.
 
 use codex_ingest::pcgen_import::feat_prereq_tokens::feat_gap_rows_for_key;
-use codex::rules_core::rules_tables::feats_all::{all_feat_tables, hand_authored_feat_tables};
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::feats_all::{all_feat_tables, hand_authored_feat_tables};
+use codex::rules_core::rules_catalog::RuleSetId;
 use std::collections::BTreeSet;
 
 /// `RuleSetId` is deliberately not `Ord`, so every set here is keyed on its

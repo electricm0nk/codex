@@ -1,0 +1,182 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "apg/companion_data/COMPANION_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "apg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Eidolon ~ Link",
+      "name": "Link",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "A summoner and his eidolon share a mental link that allows for communication across any distance (as long as they are on the same plane). This communication is a free action, allowing the summoner to give orders to his eidolon at any time. In addition, magic items interfere with the summoner's connection to his eidolon. As a result, the summoner and his eidolon share magic item slots. For example, if the summoner is wearing a ring, his eidolon can wear no more than one ring. In case of a conflict, the items worn by the summoner remain active, and those used by the eidolon become dormant. The eidolon must possess the appropriate appendages to utilize a magic item.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Eidolon"
+      ],
+      "cross_book_owners": [],
+      "source_file": "apg_abilities_companion",
+      "source_line": 67
+    },
+    {
+      "key": "Eidolon ~ Share Spells",
+      "name": "Share Spells",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "The summoner may cast a spell with a target of \"You\" on his eidolon (as a spell with a range of touch) instead of on himself. A summoner may cast spells on his eidolon even if the spells normally do not affect creatures of the eidolon's type (outsider). Spells cast in this way must come from the summoner spell list. This ability does not allow the eidolon to share abilities that are not spells, even if they function like spells.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Eidolon"
+      ],
+      "cross_book_owners": [],
+      "source_file": "apg_abilities_companion",
+      "source_line": 68
+    },
+    {
+      "key": "Eidolon ~ Skills",
+      "name": "Skills",
+      "facet": null,
+      "delivery": null,
+      "type_segments": [
+        "SkillChoice"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Eidolon"
+      ],
+      "cross_book_owners": [],
+      "source_file": "apg_abilities_companion",
+      "source_line": 69
+    },
+    {
+      "key": "Evolution ~ Scent",
+      "name": "Scent",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "EvolutionChoice",
+        "Extraordinary"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Familiar (Fox)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "apg_abilities_companion",
+      "source_line": 98
+    },
+    {
+      "key": "Evolution ~ Constrict",
+      "name": "Constrict",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "EvolutionChoice",
+        "Extraordinary"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Familiar (Crab (Giant King))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "apg_abilities_companion",
+      "source_line": 122
+    },
+    {
+      "key": "Temp Evolution ~ Scent",
+      "name": "Scent",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "TempEvolutionChoice",
+        "Extraordinary"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Familiar (Fox)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "apg_abilities_companion",
+      "source_line": 239
+    },
+    {
+      "key": "Temp Evolution ~ Constrict",
+      "name": "Constrict",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "TempEvolutionChoice",
+        "Extraordinary"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Familiar (Crab (Giant King))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "apg_abilities_companion",
+      "source_line": 261
+    },
+    {
+      "key": "Temp Evolution ~ Grab",
+      "name": "Grab",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "TempEvolutionChoice",
+        "Extraordinary"
+      ],
+      "description": "The eidolon becomes adept at grappling foes, gaining the grab ability. Whenever the eidolon makes a successful attack of the selected type, it can attempt a free combat maneuver check. If successful, the eidolon grapples the target. This ability only works on creatures of a size one category smaller than the eidolon or smaller.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Familiar (Crab (Giant King))",
+        "Familiar (Octopus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "apg_abilities_companion",
+      "source_line": 270
+    }
+  ]
+}

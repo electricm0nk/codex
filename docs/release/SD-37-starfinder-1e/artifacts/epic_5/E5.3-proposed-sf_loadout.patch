@@ -1,0 +1,45 @@
+--- a/src/rules_core/pilot_compute/sf_loadout.rs	2026-10-04 19:42:32.303680198 -0400
++++ b/src/rules_core/pilot_compute/sf_loadout.rs	2026-10-04 19:42:32.337681345 -0400
+@@ -32,6 +32,11 @@
+     pub starting_credits: Option<i64>,
+     /// `(equipment record id, quantity)` for every item carried other than the worn armour.
+     pub carried: Vec<(RuleId, u32)>,
++    /// `equipment_modifier` record ids applied to a carried item (armour upgrades, weapon
++    /// fusions; the save's `applied_modifiers`). Each one with a `Price` row was bought, and one
++    /// with a `Bulk:` quality adds its bulk. A fusion states neither: the fusion seal that pays
++    /// for it is a carried equipment record of its own.
++    pub applied: Vec<RuleId>,
+ }
+ 
+ /// The credits and bulk totals of one Starfinder character.
+@@ -104,7 +109,7 @@
+ /// The equipment record `id`, checked to be equipment.
+ fn item<'p>(package: &'p SheetRulePackage, id: &str) -> Result<&'p SheetRule, SfChassisRefusal> {
+     let rule = package.rule(id).ok_or_else(|| refuse(REFUSED_NOT_HELD, format!("{id}: no such record in the Starfinder package")))?;
+-    if split_rule_id(id).1 != "equipment" || id.contains('#') {
++    if !matches!(split_rule_id(id).1, "equipment" | "equipment_modifier") || id.contains('#') {
+         return Err(refuse(REFUSED_NOT_EQUIPMENT, format!("{id}: not an equipment record")));
+     }
+     Ok(rule)
+@@ -131,6 +136,9 @@
+     for (id, quantity) in &loadout.carried {
+         items.push((item(package, id)?, *quantity));
+     }
++    for id in &loadout.applied {
++        items.push((item(package, id)?, 1));
++    }
+ 
+     let mut spent = Vec::new();
+     let mut bulks = Vec::new();
+@@ -138,6 +146,11 @@
+     let mut light_items = Vec::new();
+     let mut negligible = Vec::new();
+     for (rule, quantity) in &items {
++        // An applied modifier that states no price (a fusion) and no bulk adds no term.
++        let modifier = split_rule_id(&rule.id).1 == "equipment_modifier";
++        if modifier && stat_rows(rule, "Price").next().is_none() && bulk(rule).is_err() {
++            continue;
++        }
+         let p = price(rule)?;
+         spent.push(SfTerm { label: format!("{} × {quantity}", rule.label), value: p * i64::from(*quantity), source: rule.id.clone() });
+         let b = bulk(rule)?;

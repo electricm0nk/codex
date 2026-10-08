@@ -1,0 +1,9 @@
+$ f=docs/release/SD-37-starfinder-1e/artifacts/epic_0/seed-hand-values.md; test -s "$f" || exit 1; awk -F"|" '/^\| *SF-/ && $0 !~ /https?:\/\//' "$f"; awk ... n[$2]++ ...; reviewer table: awk -F"|" '/^\| *R[0-9]+ /{n++; if($7 ~ /disagree/) d++} END{print "review_rows="n+0, "disagree="d+0}' "$f"
+--- rows without URL:
+--- per seed:
+ SF-Envoy-3  29
+ SF-Mystic-5  34
+ SF-Soldier-3  29
+ SF-Technomancer-5  34
+--- reviewer table:
+review_rows=0 disagree=0

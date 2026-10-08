@@ -1,0 +1,11 @@
+P11 augmentation bulk rule off (augmentation -> bulk() refusal)
+thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_an_augmentation_adds_its_price_and_no_bulk' (2455193) panicked at src/rules_core/pilot_compute/sf_loadout.rs:329:75:
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 2824 filtered out; finished in 0.60s
+P12 applied modifiers not pushed to the loadout (sf_loadout ignores applied)
+thread 'rules_core::pilot_compute::sf_loadout::sf_seed::sf_an_applied_modifier_feeds_credits_and_bulk' (2456104) panicked at src/rules_core/pilot_compute/sf_loadout.rs:355:9:
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 2824 filtered out; finished in 0.59s
+P13 adapter does not collect applied_modifiers
+thread 'sf_adapter::tests::applied_modifiers_and_an_augmentation_reach_the_credits_and_bulk_totals' (2457646) panicked at src/sf_adapter.rs:1249:9:
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 662 filtered out; finished in 0.85s
+src/rules_core/pilot_compute/sf_loadout.rs: OK
+apps/desktop/src-tauri/src/sf_adapter.rs: OK

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Flamethrower (ifrit-class)",
+    "name": "Flamethrower (ifrit-class)",
+    "type": "HEAVY WEAPONS"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 209,
+    "path": "starfinder/paizo/core/scr_profs_weapon.lst",
+    "record_key": "Flamethrower (ifrit-class)",
+    "sha256": "82f827be51f88e0b47cced07677ec1715678b3805ceec139fdeeebbc3c088690"
+  },
+  "unit_id": "core:proficiency:flamethrower_ifrit_class"
+}

@@ -45,8 +45,8 @@ use crate::pcgen_import::cache_gen::feat_gap::{CacheRecord, Completeness, FeatDa
 use crate::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
 use crate::pcgen_import::feat_prereq_tokens::hand_authored_feat_prereq_tokens;
-use codex::rules_core::rules_tables::feats_all::hand_authored_feat_tables;
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::feats_all::hand_authored_feat_tables;
+use codex::rules_core::rules_catalog::RuleSetId;
 use codex::rules_core::shape_b_v1::License;
 
 /// The four books whose hand-authored feat table was re-derived this cycle

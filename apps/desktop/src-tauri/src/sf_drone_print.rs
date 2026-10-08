@@ -1,0 +1,277 @@
+//! The Starfinder companion block (SD-37 E5.4): a mechanic's drone, printed under the master's
+//! sheet as the drone's own held records.
+//!
+//! The oracle builds the drone from the master (pinned oracle `starfinder/paizo/core`): the
+//! mechanic's AI selection `Drone` offers a follower of role `Drone` whose race is `Drone`
+//! (`scr_abilities.lst:1369`: `FOLLOWERS:Drone|1 COMPANIONLIST:Drone|Drone`, converted as a
+//! `Fact::CompanionSlots { role }` grant plus `offers: Races`), and the companion modifier for
+//! that role (`scr_companionmods.lst:13`, converted as `<book>:companion_mod:drone`, held through
+//! the race) hands the drone its special abilities, its chassis / skill unit / feat / mod picks
+//! and its level variables, read from the master (`MASTERVAR("DroneCompanionLVL")`).
+//!
+//! So the block is ONE more held set over the same package: the follower's race, the picks the
+//! save records for the drone's choosers (`CharacterInput.chosen.selected_choices`, keyed by the
+//! choosing rule's id like every other Starfinder pick), and the master link
+//! (`CharacterFacts::master_vars`: every master variable a held drone rule reads, each the
+//! master's own folded `Var`). `render_sheet` prints it the way it prints the master's lines, every
+//! resolvable term resolved (the drone class's base attack and saves over `DroneLVL`, the skill
+//! unit's ranks over `DroneMasterLVL`). Every drone line is kind [`COMPANION_KIND`], so it never
+//! counts as the master's feature.
+//!
+//! Paper-sheet rule (`decisions.md §5`): the drone's lines print; no drone total (its HP, EAC,
+//! KAC, saves as one number) is computed here.
+//!
+//! Named, never guessed: a follower role whose `offers` name several races and whose race the
+//! save does not choose ([`REFUSED_COMPANION_RACE`]).
+
+use std::collections::BTreeMap;
+
+use codex::rules_core::pilot_compute::sf_chassis::SfChassisRefusal;
+use codex::rules_core::pilot_compute::sf_defense::{SfBuild, SfHeld};
+use codex::rules_core::sheet_rule::{
+    evaluate_expr, render_sheet, CharacterFacts, Choice, EvalContext, Effect, Expr, Fact, HeldSeed, OptionSet,
+    RuleId, SheetLine, SheetRulePackage, VarId,
+};
+
+/// The `SheetLine.kind` of every companion line.
+pub const COMPANION_KIND: &str = "companion";
+
+pub const REFUSED_COMPANION_RACE: &str = "sf_drone_print.companion_race_unchosen";
+
+/// The package `pool` of a `CATEGORY:Weapon` ability (a per-weapon attack/damage row).
+const WEAPON_POOL: &str = "weapon";
+
+/// The stat-block row of PCGen's `HD:1` device on a Starfinder class line.
+const HIT_DIE_ROW: &str = "Hit die: ";
+
+/// The kind of a converted companion modifier (`companion_mod.rs` in the converter).
+const COMPANION_MOD_KIND: &str = "companion_mod";
+
+/// Every follower the master's held rules hand out: `(the offering rule, its follower race)`.
+fn followers(package: &SheetRulePackage, master: &SfHeld, build: &SfBuild) -> Result<Vec<(RuleId, RuleId)>, SfChassisRefusal> {
+    let mut out = Vec::new();
+    for id in master.held.rules.keys().filter(|id| !master.held.removed.contains(*id)) {
+        let Some(rule) = package.rule(id) else { continue };
+        let Some(Choice { from: OptionSet::Races(races), .. }) = &rule.offers else { continue };
+        if !rule.grants.iter().any(|e| matches!(e, Effect::FactGrant(Fact::CompanionSlots { .. }))) {
+            continue;
+        }
+        let race = match races.as_slice() {
+            [one] => one.clone(),
+            _ => match build.choices.get(id).and_then(|c| c.first()) {
+                Some(chosen) if races.contains(chosen) => chosen.clone(),
+                _ => {
+                    return Err(SfChassisRefusal {
+                        id: REFUSED_COMPANION_RACE,
+                        message: format!("{id}: a follower of {} races and none chosen", races.len()),
+                    });
+                }
+            },
+        };
+        out.push((id.clone(), race));
+    }
+    Ok(out)
+}
+
+/// Every master variable a companion modifier reads (`Expr::MasterVar`), with the master's value.
+fn master_vars(package: &SheetRulePackage, master: &SfHeld) -> BTreeMap<VarId, i64> {
+    let mut ids: Vec<VarId> = Vec::new();
+    for rule in package.rules_of_kind(COMPANION_MOD_KIND) {
+        for id in rule.var_ids() {
+            if rule_reads_master_var(rule, &id) && !ids.contains(&id) {
+                ids.push(id);
+            }
+        }
+    }
+    ids.into_iter()
+        .filter(|id| package.vars.contains_key(id))
+        .map(|id| {
+            let value = evaluate_expr(&Expr::Var(id.clone()), &master.held, package, &master.facts, EvalContext::default()).trunc();
+            (id, value)
+        })
+        .collect()
+}
+
+/// Whether `rule` reads `id` as a master variable (its gate, value or a line's terms).
+fn rule_reads_master_var(rule: &codex::rules_core::sheet_rule::SheetRule, id: &VarId) -> bool {
+    let text = serde_json::to_string(rule).unwrap_or_default();
+    text.contains(&format!("{{\"MasterVar\":\"{id}\"}}"))
+}
+
+/// The printed lines of every companion the master holds (module doc), each kind
+/// [`COMPANION_KIND`].
+pub fn companion_lines(package: &SheetRulePackage, build: &SfBuild, master: &SfHeld) -> Result<Vec<SheetLine>, SfChassisRefusal> {
+    let mut lines = Vec::new();
+    let followers = followers(package, master, build)?;
+    if followers.is_empty() {
+        return Ok(lines);
+    }
+    let master_vars = master_vars(package, master);
+    for (_, race) in followers {
+        let seed = HeldSeed { rule_ids: vec![race.clone()], ..HeldSeed::default() };
+        let facts = CharacterFacts {
+            race: Some(race.rsplit(':').next().unwrap_or(&race).to_string()),
+            choices: build
+                .choices
+                .iter()
+                .map(|(c, options)| (c.clone(), options.iter().map(|o| (o.clone(), o.clone())).collect()))
+                .collect(),
+            master_vars: master_vars.clone(),
+            ..CharacterFacts::default()
+        };
+        // A per-weapon attack row (package `pool` `weapon`) prints on a carried weapon, never
+        // as a line of its own (the master's rule, `sf_sheet_print`).
+        let printed = render_sheet(package, &seed, &facts).into_iter().filter(|l| package.rule(&l.id).is_none_or(|r| r.pool != WEAPON_POOL));
+        for mut line in printed {
+            // PCGen's `HD:1` device on the drone class is not a hit die (the master's rule).
+            if line.kind == "class" && !line.id.contains('#') {
+                line.prose = line.prose.split('\n').filter(|row| !row.starts_with(HIT_DIE_ROW)).collect::<Vec<_>>().join("\n");
+            }
+            line.kind = COMPANION_KIND.to_string();
+            lines.push(line);
+        }
+    }
+    Ok(lines)
+}
+
+#[cfg(test)]
+pub(crate) mod tests {
+    use codex::rules_core::character_input::{
+        AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SelectedChoice, SkillAllocation,
+    };
+
+    use crate::rule_system_adapter::RuleSystemAdapter;
+    use crate::sf_adapter::StarfinderAdapter;
+
+    use super::COMPANION_KIND;
+
+    fn choice(set: &str, selection: &str) -> SelectedChoice {
+        SelectedChoice { choice_set_id: set.to_owned(), selection_id: selection.to_owned() }
+    }
+
+    /// The Mechanic 1 build of the parity roster (`artifacts/epic_5/E5.4-mechanic-1-build.md`):
+    /// a human mechanic 1 whose AI is a drone -- hover chassis, Perception skill unit, Iron Will,
+    /// the camera mod, small-arms proficiency.
+    pub(crate) fn mechanic_1_input() -> CharacterInput {
+        CharacterInput {
+            case_id: None,
+            source_package_id: "starfinder-1e".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: "core:race:human".to_owned(),
+                class_levels: vec![CharacterClassLevel { class_id: "core:class:mechanic".to_owned(), level: 1 }],
+                ability_scores: AbilityScores { strength: 11, dexterity: 14, constitution: 12, intelligence: 18, wisdom: 10, charisma: 8 },
+                selected_feats: vec![
+                    "core:ability:mercenary".to_owned(),
+                    "core:ability:2_racial_stat_bonus".to_owned(),
+                    "core:ability:mechanic_artificial_intelligence_drone".to_owned(),
+                ],
+                skill_allocations: ["computers", "engineering", "physical_science", "piloting", "perception"]
+                    .iter()
+                    .map(|s| SkillAllocation { skill_id: (*s).to_owned(), ranks: 1 })
+                    .collect(),
+                equipment_selections: Vec::new(),
+                selected_choices: vec![
+                    choice("core:ability:2_racial_stat_bonus", "INT"),
+                    choice("core:companion_mod:drone", "core:pool_option:drone_chassis_selection_hover"),
+                    choice("core:companion_mod:drone#bonus1", "core:pool_option:drone_skill_unit_perception"),
+                    choice("core:companion_mod:drone#bonus2", "core:pool_option:drone_feat_iron_will"),
+                    choice("core:companion_mod:drone#bonus3", "core:ability:drone_mod_camera"),
+                    choice("core:ability:drone", "core:ability:initial_drone_proficiency_small_arms"),
+                ],
+                selected_traits: Vec::new(),
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        }
+    }
+
+    /// The drone block's records at Mechanic 1 (`E5.4_drone_block.py`, an independent walk over
+    /// the package JSON, derives the same set): the race and its class, the companion modifier
+    /// and its picks, the hover chassis and what it grants, the picked skill unit, feat and mod,
+    /// the level-1 special abilities.
+    const DRONE_BLOCK: [&str; 19] = [
+        "core:ability:basic_mods",
+        "core:ability:drone",
+        "core:ability:drone_mod_camera",
+        "core:ability:drone_mod_flight_system",
+        "core:ability:drone_mod_weapon_mount",
+        "core:ability:initial_drone_proficiency_small_arms",
+        "core:ability:limited_ai",
+        "core:ability:master_control",
+        "core:ability:racetype_construct",
+        "core:ability:skill_unit",
+        "core:ability:weapon_prof_small_arms",
+        "core:class:drone",
+        "core:companion_mod:drone",
+        "core:feat:iron_will",
+        "core:pool_option:drone_chassis_selection_hover",
+        "core:pool_option:drone_feat_iron_will",
+        "core:pool_option:drone_skill_unit_acrobatics",
+        "core:pool_option:drone_skill_unit_perception",
+        "core:race:drone",
+    ];
+
+    fn printed(lines: &[codex::rules_core::sheet_rule::SheetLine], id: &str) -> codex::rules_core::sheet_rule::SheetLine {
+        lines.iter().find(|l| l.id == id).cloned().unwrap_or_else(|| panic!("{id}: not printed; printed {:?}", lines.iter().map(|l| &l.id).collect::<Vec<_>>()))
+    }
+
+    /// E5.4's criterion: a Mechanic 1 render prints the drone block, every resolvable term
+    /// resolved over the drone's level (the master's `DroneCompanionLVL`, 1): the drone class's
+    /// base attack `(DroneLVL+1)*3/4` +1, the hover chassis' good Reflex `DroneLVL/2+2` +2, the
+    /// poor saves `DroneLVL/3` +0 (`scr_classes.lst:201`), the skill units' ranks `DroneMasterLVL`
+    /// +1, the chassis' speeds and kit scores (`scr_abilities.lst:1394`, `scr_kits.lst:9-10`).
+    #[test]
+    fn a_mechanic_1_render_prints_the_drone_block() {
+        let chassis = StarfinderAdapter.chassis_resolve(&mechanic_1_input());
+        assert!(chassis.diagnostics.iter().all(|d| !d.claim_blocking), "{:?}", chassis.diagnostics);
+        let drone: Vec<_> = chassis.sheet_lines.iter().filter(|l| l.kind == COMPANION_KIND).cloned().collect();
+        let roots: std::collections::BTreeSet<&str> = drone.iter().map(|l| l.id.split('#').next().unwrap_or(&l.id)).collect();
+        let want: std::collections::BTreeSet<&str> = DRONE_BLOCK.iter().copied().collect();
+        assert_eq!(roots, want, "the drone block's records");
+
+        let value = |id: &str| printed(&drone, id).value;
+        use codex::rules_core::sheet_rule::SheetLineValue::Resolved;
+        assert_eq!(value("core:class:drone"), Resolved(1), "base attack");
+        // The drone's Hit Points (`decisions.md §21(b)`): SRD drone table, 1st level 10
+        // (https://www.aonsrd.com/Classes.aspx?ItemName=Drone); the class's `-1` cancels its one
+        // `HD:1` level and prints nothing (PCGen party run `sf_mechanic_drone`: DroneLVL 10, hp 100).
+        assert_eq!(value("core:class:drone#bonus1"), Resolved(10), "Hit Points");
+        assert_eq!(drone.iter().filter(|l| l.label.contains("hit points")).count(), 1, "one hit-point line");
+        assert_eq!(value("core:class:drone#bonus3"), Resolved(0), "Fortitude (poor)");
+        assert_eq!(value("core:class:drone#bonus4"), Resolved(2), "Reflex (good, hover)");
+        assert_eq!(value("core:class:drone#bonus7"), Resolved(0), "Will (poor)");
+        // The hover chassis' initial Flight System mod (`decisions.md §21(c)`: "flight system (x2,
+        // included in its speed)", https://www.aonsrd.com/DroneChassis.aspx?ItemName=All) prints
+        // at level 1, although the mod picked from the pool needs level 11.
+        assert!(printed(&drone, "core:ability:drone_mod_flight_system").prose.contains("fly speed"));
+        assert_eq!(value("core:pool_option:drone_skill_unit_perception"), Resolved(1), "skill unit ranks");
+        assert_eq!(value("core:pool_option:drone_skill_unit_acrobatics"), Resolved(1), "hover skill unit ranks");
+        assert_eq!(value("core:feat:iron_will"), Resolved(2));
+        let race = printed(&drone, "core:race:drone").prose;
+        assert!(race.contains("Walk 30 ft.") && race.contains("Fly 30 ft."), "{race}");
+        assert!(printed(&drone, "core:pool_option:drone_chassis_selection_hover").prose.contains("Base ability scores: Str 6, Dex 16, Int 6, Wis 8, Cha 6"));
+        for line in &drone {
+            assert_eq!(line.condition, None, "{}: undecided on the drone block", line.id);
+            for text in [&line.label, &line.printed, &line.prose] {
+                for residue in ["BONUS:", "PRE", "Hit die: d1", "Walk 0 ft.", "%LIST", "this character has no master"] {
+                    assert!(!text.contains(residue), "{}: prints {residue:?}: {text:?}", line.id);
+                }
+            }
+        }
+        // The master's own feature list is unchanged by the drone: no drone record is a master line.
+        assert!(chassis.sheet_lines.iter().filter(|l| l.kind != COMPANION_KIND).all(|l| !l.id.starts_with("core:companion_mod:")));
+    }
+
+    /// A mechanic whose AI is an exocortex has no drone, so no companion block prints.
+    #[test]
+    fn a_mechanic_without_a_drone_prints_no_companion_block() {
+        let mut input = mechanic_1_input();
+        for feat in input.chosen.selected_feats.iter_mut().filter(|f| f.ends_with("_drone")) {
+            *feat = "core:ability:mechanic_artificial_intelligence_exocortex".to_owned();
+        }
+        let chassis = StarfinderAdapter.chassis_resolve(&input);
+        assert!(chassis.sheet_lines.iter().all(|l| l.kind != COMPANION_KIND));
+        assert!(!chassis.sheet_lines.is_empty());
+    }
+}

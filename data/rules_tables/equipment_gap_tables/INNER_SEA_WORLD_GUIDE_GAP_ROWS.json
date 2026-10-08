@@ -1,0 +1,564 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/INNER_SEA_WORLD_GUIDE_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "ISWG",
+      "key": "Blackaxe",
+      "name": "Blackaxe",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 50.0,
+      "description": "epic weapon, +1d6 acid (additional +2d10 on crit), Heal 1/min by striking living tree",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_8)",
+      "name": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_8)",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 10.0,
+      "description": "fire shield (warm) 1/day, redirect ranged/melee attack on adj ally 1/rnd as immed, benefits to allies within 100 ft.",
+      "name_pi_citation": [
+        "iswg_equip_arms_armor",
+        8
+      ]
+    },
+    {
+      "book": "ISWG",
+      "key": "Dogslicer",
+      "name": "Dogslicer",
+      "category": "ArmsArmor",
+      "cost_gp": 8.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "War Razor",
+      "name": "War Razor",
+      "category": "ArmsArmor",
+      "cost_gp": 8.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Klar (as weapon)",
+      "name": "Klar (as weapon)",
+      "category": "ArmsArmor",
+      "cost_gp": 12.0,
+      "weight_lbs": 6.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Earth Breaker",
+      "name": "Earth Breaker",
+      "category": "ArmsArmor",
+      "cost_gp": 40.0,
+      "weight_lbs": 14.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Horsechopper",
+      "name": "Horsechopper",
+      "category": "ArmsArmor",
+      "cost_gp": 10.0,
+      "weight_lbs": 12.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Ogre Hook",
+      "name": "Ogre Hook",
+      "category": "ArmsArmor",
+      "cost_gp": 24.0,
+      "weight_lbs": 10.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_15)",
+      "name": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_15)",
+      "category": "ArmsArmor",
+      "cost_gp": 20.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": [
+        "iswg_equip_arms_armor",
+        15
+      ]
+    },
+    {
+      "book": "ISWG",
+      "key": "Sawtooth Sabre",
+      "name": "Sawtooth Sabre",
+      "category": "ArmsArmor",
+      "cost_gp": 35.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Urumi",
+      "name": "Urumi",
+      "category": "ArmsArmor",
+      "cost_gp": 30.0,
+      "weight_lbs": 6.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Bladed Scarf",
+      "name": "Bladed Scarf",
+      "category": "ArmsArmor",
+      "cost_gp": 12.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_19)",
+      "name": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_19)",
+      "category": "ArmsArmor",
+      "cost_gp": 15.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": [
+        "iswg_equip_arms_armor",
+        19
+      ]
+    },
+    {
+      "book": "ISWG",
+      "key": "Leaf Armor",
+      "name": "Leaf Armor",
+      "category": "ArmsArmor",
+      "cost_gp": 350.0,
+      "weight_lbs": 20.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Field Plate",
+      "name": "Field Plate",
+      "category": "ArmsArmor",
+      "cost_gp": 1200.0,
+      "weight_lbs": 50.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_22)",
+      "name": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_arms_armor_lst_22)",
+      "category": "ArmsArmor",
+      "cost_gp": 2000.0,
+      "weight_lbs": 50.0,
+      "description": null,
+      "name_pi_citation": [
+        "iswg_equip_arms_armor",
+        22
+      ]
+    },
+    {
+      "book": "ISWG",
+      "key": "Stoneplate",
+      "name": "Stoneplate",
+      "category": "ArmsArmor",
+      "cost_gp": 1800.0,
+      "weight_lbs": 75.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Klar (as Shield)",
+      "name": "Klar (as Shield)",
+      "category": "ArmsArmor",
+      "cost_gp": 12.0,
+      "weight_lbs": 6.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Pepperbox",
+      "name": "Pepperbox",
+      "category": "ArmsArmor",
+      "cost_gp": 3000.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Pistol",
+      "name": "Pistol",
+      "category": "ArmsArmor",
+      "cost_gp": 1000.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Musket",
+      "name": "Musket",
+      "category": "ArmsArmor",
+      "cost_gp": 1500.0,
+      "weight_lbs": 9.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Cannon",
+      "name": "Cannon",
+      "category": "ArmsArmor",
+      "cost_gp": 6000.0,
+      "weight_lbs": 3000.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Black Powder (Dose)",
+      "name": "Black Powder (Dose)",
+      "category": "ArmsArmor",
+      "cost_gp": 10.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Black Powder (Keg)",
+      "name": "Black Powder (Keg)",
+      "category": "ArmsArmor",
+      "cost_gp": 1000.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Cannon Ball",
+      "name": "Cannon Ball",
+      "category": "ArmsArmor",
+      "cost_gp": 30.0,
+      "weight_lbs": 25.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Bullet (Firearm)",
+      "name": "Bullet (Firearm)",
+      "category": "ArmsArmor",
+      "cost_gp": 1.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_general_lst_5)",
+      "name": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_general_lst_5)",
+      "category": "General",
+      "cost_gp": 25.0,
+      "weight_lbs": 0.0,
+      "description": "Ingested; Addiction major, Fort DC 18; Effect 1 hour, +2 alchemical bonus to Constitution, -2 penalty on Wisdom-based skill checks; Damage 1d2 Con damage",
+      "name_pi_citation": [
+        "iswg_equip_general",
+        5
+      ]
+    },
+    {
+      "book": "ISWG",
+      "key": "Flag",
+      "name": "Flag",
+      "category": "General",
+      "cost_gp": 10.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_general_lst_7)",
+      "name": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_general_lst_7)",
+      "category": "General",
+      "cost_gp": 100.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": [
+        "iswg_equip_general",
+        7
+      ]
+    },
+    {
+      "book": "ISWG",
+      "key": "Heatstone",
+      "name": "Heatstone",
+      "category": "General",
+      "cost_gp": 20.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_general_lst_9)",
+      "name": "Codex-Named Unit (equipment_inner_sea_world_guide_iswg_equip_general_lst_9)",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": [
+        "iswg_equip_general",
+        9
+      ]
+    },
+    {
+      "book": "ISWG",
+      "key": "Perfume (Common)",
+      "name": "Perfume (Common)",
+      "category": "General",
+      "cost_gp": 1.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Perfume (Exotic)",
+      "name": "Perfume (Exotic)",
+      "category": "General",
+      "cost_gp": 100.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Powder Horn",
+      "name": "Powder Horn",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Charm of Aluum Control",
+      "name": "Charm of Aluum Control",
+      "category": "MagicItems",
+      "cost_gp": 20000.0,
+      "weight_lbs": null,
+      "description": "control an attuned aluum, attune vs. DC 16 Will save",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Goz Mask",
+      "name": "Goz Mask",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1.0,
+      "description": "see through obscuring vapor or silt, resist wind, breath water 1 hr/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Mask of the Mantis",
+      "name": "Mask of the Mantis",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": "3 charges/day (darkvision 60 ft., see invisibility, deathwatch, or +5 competence to perception) for 30 mins",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Unguent of Revivification",
+      "name": "Unguent of Revivification",
+      "category": "MagicItems",
+      "cost_gp": 300.0,
+      "weight_lbs": 1.0,
+      "description": "preserve corpse or provide living appearance to undead",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Wayfinder",
+      "name": "Wayfinder",
+      "category": "MagicItems",
+      "cost_gp": 500.0,
+      "weight_lbs": 1.0,
+      "description": "light at will, +2 competence to Survival (avoid becoming lost), can contain an ioun stone",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Zoic Fetish (Mammal)",
+      "name": "Zoic Fetish (Mammal)",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (mammal) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Zoic Fetish (Bird)",
+      "name": "Zoic Fetish (Bird)",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (bird) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Zoic Fetish (Reptile)",
+      "name": "Zoic Fetish (Reptile)",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (reptile) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Zoic Fetish (Amphibian)",
+      "name": "Zoic Fetish (Amphibian)",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (amphibian) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Zoic Fetish (Fish)",
+      "name": "Zoic Fetish (Fish)",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": null,
+      "description": "+1 insight bonus to AC vs. animals, +4 insight bonus to wild empathy, dominate animal (fish) 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Final Blade",
+      "name": "Final Blade",
+      "category": "MagicItems",
+      "cost_gp": 0.0,
+      "weight_lbs": 1000.0,
+      "description": "6d6+12 coup de grace vs. helpless victim, soul bind victim",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Sun Orchid Elixir",
+      "name": "Sun Orchid Elixir",
+      "category": "MagicItems",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": "restore drinker to starting age as young adult, removing all physical age-related penalties",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Wardstone",
+      "name": "Wardstone",
+      "category": "MagicItems",
+      "cost_gp": 0.0,
+      "weight_lbs": 2500.0,
+      "description": "forbiddance path 300-ft.-wide: 12d6 damage/rnd to demons (Will DC 18 for half), no teleportation",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Material ~ Leaf",
+      "name": "Leaf",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Material ~ Stone",
+      "name": "Stone",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "Material ~ Paueliel Wood",
+      "name": "Paueliel Wood",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "10 hp/inch, hardness 7",
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "LEAF",
+      "name": "LEAF",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "STONE",
+      "name": "STONE",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "ISWG",
+      "key": "PAUELIEL",
+      "name": "PAUELIEL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "10 hp/inch, hardness 7",
+      "name_pi_citation": null
+    }
+  ]
+}

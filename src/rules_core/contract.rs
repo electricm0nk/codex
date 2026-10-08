@@ -40,7 +40,7 @@ use crate::rules_core::pilot_compute::{
     apply_human_ability_bonus, ComputationDiagnostic, PilotBaseChassisComputation,
 };
 use crate::rules_core::pilot_compute_corpus::{CorpusDerivedSection, CorpusPilotReceipt};
-use crate::rules_core::rules_tables::crb::feats::feat_tables;
+use crate::rules_core::rules_catalog::crb::feats::feat_tables;
 use crate::rules_core::skill_allocation::{allocate_skill_ranks, SkillTotals};
 use crate::rules_core::source_content::SourcePackageContent;
 use crate::rules_core::spellbook::{compute_spellbook_coverage, SpellbookCoverage};
@@ -155,7 +155,7 @@ pub struct PilotReceipt {
     /// wired in by the `contract:feat_wiring` cycle
     /// (`adaptive-squishing-mccarthy.md`). One `ResolvedFeat` per entry in
     /// `input.chosen.selected_feats` that resolves against
-    /// `rules_tables::crb::feats::feat_tables()` (matching
+    /// `rules_catalog::crb::feats::feat_tables()` (matching
     /// `entry.key == feat_id || entry.name == feat_id`, per that cycle's
     /// "Feat resolution" design decision) -- an unmatched selected-feat
     /// string is honestly skipped, never fabricated into a made-up
@@ -278,7 +278,7 @@ pub struct ResolvedFeat {
 ///
 /// The `contract:feat_wiring` cycle (Cycle 3) populates
 /// `PilotReceipt.feats`: each entry in `input.chosen.selected_feats` is
-/// resolved against `rules_tables::crb::feats::feat_tables()` by matching
+/// resolved against `rules_catalog::crb::feats::feat_tables()` by matching
 /// `entry.key == feat_id || entry.name == feat_id` (per
 /// `adaptive-squishing-mccarthy.md`'s "Feat resolution" design decision --
 /// `selected_feats` carries no category field of its own, but the catalog
@@ -446,7 +446,7 @@ pub const UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID: &str = "encumbrance.race_size.unknown
 /// # The defect this replaces
 ///
 /// Both sites previously read
-/// `rules_tables::crb::race_tables::race_size_for_race_id(...).unwrap_or(SizeCategory::Medium)`.
+/// `rules_catalog::crb::race_tables::race_size_for_race_id(...).unwrap_or(SizeCategory::Medium)`.
 /// That function is a seven-variant `RaceId` lookup over the hardcoded CRB
 /// races, so it returned `None` for all 11 ingested Bestiary 1 races and the
 /// `unwrap_or` silently turned that into Medium. **Goblin, Kobold and

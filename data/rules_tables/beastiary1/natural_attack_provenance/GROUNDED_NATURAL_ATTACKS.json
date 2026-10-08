@@ -1,0 +1,248 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "beastiary1/natural_attack_provenance/GROUNDED_NATURAL_ATTACKS",
+  "licence": {
+    "license": "OGL",
+    "book": "beastiary1",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "monster_key": "beastiary1:monster:ankheg",
+      "attack_name": "Bite",
+      "damage_dice": "2d6",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite",
+      "published_melee_text": "bite +5 (2d6+4 plus 1d4 acid and grab)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Ankheg",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/magical-beasts/ankheg/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 3 + Large magical beast + Bestiary pg. 15 (matches the cached chassis's own source_page)"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:assassin_vine",
+      "attack_name": "Slam",
+      "damage_dice": "1d8",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Slam",
+      "published_melee_text": "slam +7 (1d8+7 plus grab)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Assassin+Vine",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/plants/assassin-vine/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 3 + Large plant + Bestiary pg. 22 (matches the cached chassis's own source_page)"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:boar",
+      "attack_name": "Gore",
+      "damage_dice": "1d8",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Gore",
+      "published_melee_text": "gore +4 (1d8+4)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://legacy.aonprd.com/bestiary/boar.html",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/animals/boar/boar/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 2 + Medium animal + Bestiary pg. 36 (matches the cached chassis's own source_page)"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:cave_fisher",
+      "attack_name": "Claw",
+      "damage_dice": "1d4",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Claw",
+      "published_melee_text": "2 claws +5 (1d4+3)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://legacy.aonprd.com/bestiary/caveFisher.html",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/vermin/cave-fisher/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 2 + Medium vermin + Bestiary pg. 41 (matches the cached chassis's own source_page); all sources place Filament on the Ranged line, matching the real row's own NATURALATTACKS:Filament,...Ranged... token"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:centaur",
+      "attack_name": "Hoof",
+      "damage_dice": "1d6",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Hoof",
+      "published_melee_text": "longsword +5 (1d8+2/19-20), 2 hooves +0 (1d6+1)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Centaur",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/monstrous-humanoids/centaur/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 3 + Large monstrous humanoid + Bestiary pg. 42 (matches the cached chassis's own source_page); the longsword is a manufactured weapon and is deliberately excluded, matching how Gnoll/Derro/Bugbear are handled"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:choker",
+      "attack_name": "Tentacle",
+      "damage_dice": "1d4",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Tentacle",
+      "published_melee_text": "2 tentacles +6 (1d4+3 plus grab)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Choker",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/aberrations/choker/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 2 + Small aberration + Bestiary pg. 45 (matches the cached chassis's own source_page); the published block has tentacles only -- no claw attack exists, so none is recorded"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:cockatrice",
+      "attack_name": "Bite",
+      "damage_dice": "1d4",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite",
+      "published_melee_text": "bite +9 (1d4-2 plus petrification)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Cockatrice",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/magical-beasts/cockatrice/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 3 + Small magical beast + Bestiary pg. 48 (matches the cached chassis's own source_page); the '-2' is the Strength penalty, not a die-size change"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:crocodile",
+      "attack_name": "Bite",
+      "damage_dice": "1d8",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Racial Traits ~ Crocodile -> ABILITY:Internal|AUTOMATIC|Bite (b1_abilities_race:244)",
+      "published_melee_text": "bite +5 (1d8+4 plus grab) and tail slap +0 (1d12+2)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Crocodile",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/animals/crocodilians/crocodile/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 2 + Large animal + Bestiary pg. 51 (matches the cached chassis's own source_page)"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:crocodile",
+      "attack_name": "Tail Slap",
+      "damage_dice": "1d12",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Racial Traits ~ Crocodile -> ABILITY:Internal|AUTOMATIC|Crocodile ~ Tail Slap",
+      "published_melee_text": "bite +5 (1d8+4 plus grab) and tail slap +0 (1d12+2)",
+      "source": {
+        "LstToken": {
+          "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race",
+          "line": 248,
+          "record_key": "Crocodile ~ Tail Slap"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:vargouille",
+      "attack_name": "Bite",
+      "damage_dice": "1d4",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite",
+      "published_melee_text": "bite +5 (1d4 plus poison)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Vargouille",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/outsiders/vargouille/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 2 + Small outsider (evil, extraplanar) + Bestiary pg. 272 (matches the cached chassis's own source_page and RACESUBTYPE); 'kiss' and 'shriek' appear only under Special Attacks with no damage dice in any source, so neither is recorded as a natural attack"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:wolf",
+      "attack_name": "Bite",
+      "damage_dice": "1d6",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite",
+      "published_melee_text": "bite +2 (1d6+1 plus trip)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Wolf",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/animals/canines/wolf/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 1 + Medium animal + Bestiary pg. 278 (matches the cached chassis's own source_page); explicitly the plain Bestiary 1 wolf, NOT the dire wolf and NOT the wolf animal companion"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:wolverine",
+      "attack_name": "Bite",
+      "damage_dice": "1d4",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite|Claw",
+      "published_melee_text": "2 claws +4 (1d6+2), bite +4 (1d4+2)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Wolverine",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/animals/wolverine/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 2 + Medium animal + Bestiary pg. 279 (matches the cached chassis's own source_page)"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:wolverine",
+      "attack_name": "Claw",
+      "damage_dice": "1d6",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite|Claw",
+      "published_melee_text": "2 claws +4 (1d6+2), bite +4 (1d4+2)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Wolverine",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/animals/wolverine/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 2 + Medium animal + Bestiary pg. 279 (matches the cached chassis's own source_page)"
+        }
+      }
+    },
+    {
+      "monster_key": "beastiary1:monster:worg",
+      "attack_name": "Bite",
+      "damage_dice": "1d6",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite",
+      "published_melee_text": "bite +7 (1d6+4 plus trip)",
+      "source": {
+        "WebSecondSource": {
+          "urls": [
+            "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Worg",
+            "https://www.d20pfsrd.com/bestiary/monster-listings/magical-beasts/worg/"
+          ],
+          "fetched_at": "2026-07-29",
+          "identity_match_basis": "name + CR 2 + Medium magical beast + Bestiary pg. 280 (matches the cached chassis's own source_page)"
+        }
+      }
+    }
+  ]
+}

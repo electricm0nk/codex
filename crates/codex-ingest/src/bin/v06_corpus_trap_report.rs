@@ -55,6 +55,9 @@ use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 
+use codex::rules_core::game_system::GameSystem;
+use codex_ingest::pcgen_import::sheet_rule::closure;
+
 use codex_ingest::pcgen_import::corpus_traps::{
     BookScan, Finding, Severity, Trap, audit_ingested_cache, concept_census, scan_book,
 };
@@ -63,7 +66,9 @@ use codex_ingest::pcgen_import::corpus_traps::{
 /// the operator keeps `workspace/` in the home directory and syncs it
 /// between machines, so this is correct on every box.
 const DEFAULT_CORPUS_ROOT_REL: &str = "workspace/repos/pcgen/data";
-const BOOKS_SUBDIR: &str = "pathfinder/paizo/roleplaying_game";
+/// The Pathfinder 1e book subtree, read from the converter's per-system registry
+/// (`closure::BOOKS_RELATIVE`, SD-37 E1.2) rather than restated here.
+const BOOKS_SUBDIR: &str = closure::BOOKS_RELATIVE.books(GameSystem::Pathfinder1e)[0];
 /// Every corpus subtree a bare book name is looked up in, in precedence
 /// order. `roleplaying_game` stays first so existing invocations keep their
 /// meaning; `campaign_setting` carries twelve of SD-30's sixteen books;

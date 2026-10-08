@@ -23,7 +23,7 @@
 //!
 //! # Method: reuse the CRB table's own formulas, source new metadata
 //!
-//! `rules_tables::crb::class_tables` already carries the two formulas every
+//! `rules_catalog::crb::class_tables` already carries the two formulas every
 //! PF1e base class chassis uses (`base_attack_bonus`/`save_bonus` for
 //! Full/ThreeQuarter/Half BAB and good/poor saves) -- verified by SD-18's
 //! test suite. Nothing about those formulas is CRB-specific; what differs
@@ -38,7 +38,7 @@
 
 use std::sync::OnceLock;
 
-use super::super::rules_tables::crb::class_tables::{base_attack_bonus, save_bonus, BabProgression};
+use super::super::rules_catalog::crb::class_tables::{base_attack_bonus, save_bonus, BabProgression};
 
 /// One untabled base class's corpus-derived chassis metadata.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -128,7 +128,7 @@ fn find_by_class_id(class_id_str: &str) -> Option<&'static UntabledBaseClassMeta
 /// One row: `class_id_str`'s base attack bonus and three base saves at
 /// `level`, computed from the registry's corpus-derived metadata using the
 /// same `base_attack_bonus`/`save_bonus` formulas
-/// `rules_tables::crb::class_tables` already carries. `None` when
+/// `rules_catalog::crb::class_tables` already carries. `None` when
 /// `class_id_str` names no class this registry covers, or when `level`
 /// exceeds that class's own corpus `MAXLEVEL` ceiling.
 pub struct UntabledBaseClassRow {

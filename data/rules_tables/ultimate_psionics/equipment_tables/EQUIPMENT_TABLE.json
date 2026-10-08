@@ -1,0 +1,2621 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_psionics/equipment_tables/EQUIPMENT_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_psionics",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Astral Skin",
+      "category": "MagicItems",
+      "name": "Astral Skin",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Astral Armor",
+      "category": "ArmsArmor",
+      "name": "Astral Armor",
+      "cost_gp": -150.0,
+      "weight_lbs": 40.0,
+      "description": null
+    },
+    {
+      "key": "Astral Juggernaut",
+      "category": "ArmsArmor",
+      "name": "Astral Juggernaut",
+      "cost_gp": -150.0,
+      "weight_lbs": 50.0,
+      "description": null
+    },
+    {
+      "key": "Astral Suit Ram 1",
+      "category": "ArmsArmor",
+      "name": "Ram",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Astral Suit Ram 2",
+      "category": "ArmsArmor",
+      "name": "Ram",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Astral Suit Ram 3",
+      "category": "ArmsArmor",
+      "name": "Ram",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Astral Suit Ram 4",
+      "category": "ArmsArmor",
+      "name": "Ram",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Blade (Light Bludgeoning)",
+      "category": "ArmsArmor",
+      "name": "Mind Blade, Light Bludgeoning",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Blade (Light Piercing)",
+      "category": "ArmsArmor",
+      "name": "Mind Blade, Light Piercing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Blade (Light Slashing)",
+      "category": "ArmsArmor",
+      "name": "Mind Blade, Light Slashing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Blade (One-Handed Bludgeoning)",
+      "category": "ArmsArmor",
+      "name": "Mind Blade, One-Handed Bludgeoning",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Blade (One-Handed Piercing)",
+      "category": "ArmsArmor",
+      "name": "Mind Blade, One-Handed Piercing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Blade (One-Handed Slashing)",
+      "category": "ArmsArmor",
+      "name": "Mind Blade, One-Handed Slashing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Blade (Two-Handed Bludgeoning)",
+      "category": "ArmsArmor",
+      "name": "Mind Blade, Two-Handed Bludgeoning",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Blade (Two-Handed Piercing)",
+      "category": "ArmsArmor",
+      "name": "Mind Blade, Two-Handed Piercing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Blade (Two-Handed Slashing)",
+      "category": "ArmsArmor",
+      "name": "Mind Blade, Two-Handed Slashing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Dagger",
+      "category": "ArmsArmor",
+      "name": "Mind Dagger",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Deadly Fist",
+      "category": "ArmsArmor",
+      "name": "Deadly Fist",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Arrow",
+      "category": "ArmsArmor",
+      "name": "Mind Arrow",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Xephyr Knife",
+      "category": "ArmsArmor",
+      "name": "Mind Xephyr Knife",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Bolt (Long Range Bludgeoning)",
+      "category": "ArmsArmor",
+      "name": "Mind Bolt, Long Range Bludgeoning",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Bolt (Long Range Piercing)",
+      "category": "ArmsArmor",
+      "name": "Mind Bolt, Long Range Piercing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Bolt (Long Range Slashing)",
+      "category": "ArmsArmor",
+      "name": "Mind Bolt, Long Range Slashing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Bolt (Medium Range Bludgeoning)",
+      "category": "ArmsArmor",
+      "name": "Mind Bolt, Medium Range Bludgeoning",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Bolt (Medium Range Piercing)",
+      "category": "ArmsArmor",
+      "name": "Mind Bolt, Medium Range Piercing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Bolt (Medium Range Slashing)",
+      "category": "ArmsArmor",
+      "name": "Mind Bolt, Medium Range Slashing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Bolt (Short Range Bludgeoning)",
+      "category": "ArmsArmor",
+      "name": "Mind Bolt, Short Range Bludgeoning",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Bolt (Short Range Piercing)",
+      "category": "ArmsArmor",
+      "name": "Mind Bolt, Short Range Piercing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Bolt (Short Range Slashing)",
+      "category": "ArmsArmor",
+      "name": "Mind Bolt, Short Range Slashing",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Armor (Light)",
+      "category": "ArmsArmor",
+      "name": "Mind Armor (Light)",
+      "cost_gp": 0.0,
+      "weight_lbs": 25.0,
+      "description": null
+    },
+    {
+      "key": "Mind Armor (Medium)",
+      "category": "ArmsArmor",
+      "name": "Mind Armor (Medium)",
+      "cost_gp": 0.0,
+      "weight_lbs": 40.0,
+      "description": null
+    },
+    {
+      "key": "Mind Armor (Heavy)",
+      "category": "ArmsArmor",
+      "name": "Mind Armor (Heavy)",
+      "cost_gp": 0.0,
+      "weight_lbs": 45.0,
+      "description": null
+    },
+    {
+      "key": "Improved Mind Armor (Light)",
+      "category": "ArmsArmor",
+      "name": "Improved Mind Armor (Light)",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Improved Mind Armor (Medium)",
+      "category": "ArmsArmor",
+      "name": "Improved Mind Armor (Medium)",
+      "cost_gp": 0.0,
+      "weight_lbs": 30.0,
+      "description": null
+    },
+    {
+      "key": "Improved Mind Armor (Heavy)",
+      "category": "ArmsArmor",
+      "name": "Improved Mind Armor (Heavy)",
+      "cost_gp": 0.0,
+      "weight_lbs": 50.0,
+      "description": null
+    },
+    {
+      "key": "Mind Shield",
+      "category": "ArmsArmor",
+      "name": "Mind Shield",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Shield (Heavy)",
+      "category": "ArmsArmor",
+      "name": "Mind Shield (Heavy)",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Shield (Tower)",
+      "category": "ArmsArmor",
+      "name": "Mind Shield (Tower)",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": "can grant full cover"
+    },
+    {
+      "key": "Flurry of Fists",
+      "category": "ArmsArmor",
+      "name": "Flurry of Fists",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Flurry of Strikes",
+      "category": "ArmsArmor",
+      "name": "Flurry of Strikes",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Astral Warrior Weapon (Bludgeoning)",
+      "category": "ArmsArmor",
+      "name": "Astral Warrior Weapon (Bludgeoning)",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Astral Warrior Weapon (Piercing)",
+      "category": "ArmsArmor",
+      "name": "Astral Warrior Weapon (Piercing)",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Astral Warrior Weapon (Slashing)",
+      "category": "ArmsArmor",
+      "name": "Astral Warrior Weapon (Slashing)",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Crystal Shard",
+      "category": "ArmsArmor",
+      "name": "Crystal Shard",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Xephyr Knife",
+      "category": "ArmsArmor",
+      "name": "Xephyr Knife",
+      "cost_gp": 15.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Dorje",
+      "category": "MagicItems",
+      "name": "Dorje",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Power Stone",
+      "category": "MagicItems",
+      "name": "Power Stone",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Psicrown",
+      "category": "MagicItems",
+      "name": "Psicrown",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Psionic Tattoo",
+      "category": "MagicItems",
+      "name": "Psionic Tattoo",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Crawling Tattoo",
+      "category": "MagicItems",
+      "name": "Crawling Tattoo",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Stone",
+      "category": "MagicItems",
+      "name": "Mind Stone",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Mind Stone (Greater)",
+      "category": "MagicItems",
+      "name": "Greater Mind Stone",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Leather of Confined Spaces",
+      "category": "ArmsArmor",
+      "name": "Leather of Confined Spaces",
+      "cost_gp": 10.0,
+      "weight_lbs": 15.0,
+      "description": "1/day reduce size by one category, +5 to Escape Artist and Combat Manuever checks to escape from grapples"
+    },
+    {
+      "key": "Shadow Shirt",
+      "category": "ArmsArmor",
+      "name": "Shadow Shirt",
+      "cost_gp": 100.0,
+      "weight_lbs": 25.0,
+      "description": "use shadow body for 5 rounds/day; +5 to Stealth checks"
+    },
+    {
+      "key": "Skinwalker's Leather",
+      "category": "ArmsArmor",
+      "name": "Skinwalker's Leather",
+      "cost_gp": 25.0,
+      "weight_lbs": 20.0,
+      "description": "merges with skin; gain 1 customization point as 2nd level aberrant or treat class level as 2 higher for customizations"
+    },
+    {
+      "key": "Plate of the Juggernaut",
+      "category": "ArmsArmor",
+      "name": "Plate of the Juggernaut",
+      "cost_gp": 1500.0,
+      "weight_lbs": 50.0,
+      "description": "gain 1 customization point as 2nd level aegis or treat class level as 2 higher for customizations"
+    },
+    {
+      "key": "Strengthbleeder",
+      "category": "ArmsArmor",
+      "name": "Strengthbleeder",
+      "cost_gp": 15.0,
+      "weight_lbs": 4.0,
+      "description": "1/day, until end of combat, enemy takes 1 Strength damage when hit and wielder gets a cumulative +1 enhancement bonus to Strength (up to +8)"
+    },
+    {
+      "key": "Cognizance Crystal (1)",
+      "category": "MagicItems",
+      "name": "Cognizance Crystal (1)",
+      "cost_gp": 1000.0,
+      "weight_lbs": 1.0,
+      "description": "Stores up to 1 Power Point to be used for manifesting powers"
+    },
+    {
+      "key": "Cognizance Crystal (3)",
+      "category": "MagicItems",
+      "name": "Cognizance Crystal (3)",
+      "cost_gp": 4000.0,
+      "weight_lbs": 1.0,
+      "description": "Stores up to 3 Power Points to be used for manifesting powers"
+    },
+    {
+      "key": "Cognizance Crystal (5)",
+      "category": "MagicItems",
+      "name": "Cognizance Crystal (5)",
+      "cost_gp": 9000.0,
+      "weight_lbs": 1.0,
+      "description": "Stores up to 5 Power Points to be used for manifesting powers"
+    },
+    {
+      "key": "Cognizance Crystal (7)",
+      "category": "MagicItems",
+      "name": "Cognizance Crystal (7)",
+      "cost_gp": 16000.0,
+      "weight_lbs": 1.0,
+      "description": "Stores up to 7 Power Points to be used for manifesting powers"
+    },
+    {
+      "key": "Cognizance Crystal (9)",
+      "category": "MagicItems",
+      "name": "Cognizance Crystal (9)",
+      "cost_gp": 25000.0,
+      "weight_lbs": 1.0,
+      "description": "Stores up to 9 Power Points to be used for manifesting powers"
+    },
+    {
+      "key": "Cognizance Crystal (11)",
+      "category": "MagicItems",
+      "name": "Cognizance Crystal (11)",
+      "cost_gp": 36000.0,
+      "weight_lbs": 1.0,
+      "description": "Stores up to 11 Power Points to be used for manifesting powers"
+    },
+    {
+      "key": "Cognizance Crystal (13)",
+      "category": "MagicItems",
+      "name": "Cognizance Crystal (13)",
+      "cost_gp": 49000.0,
+      "weight_lbs": 1.0,
+      "description": "Stores up to 13 Power Points to be used for manifesting powers"
+    },
+    {
+      "key": "Cognizance Crystal (15)",
+      "category": "MagicItems",
+      "name": "Cognizance Crystal (15)",
+      "cost_gp": 64000.0,
+      "weight_lbs": 1.0,
+      "description": "Stores up to 15 Power Points to be used for manifesting powers"
+    },
+    {
+      "key": "Cognizance Crystal (17)",
+      "category": "MagicItems",
+      "name": "Cognizance Crystal (17)",
+      "cost_gp": 81000.0,
+      "weight_lbs": 1.0,
+      "description": "Stores up to 17 Power Points to be used for manifesting powers"
+    },
+    {
+      "key": "Crystal Bow +1",
+      "category": "MagicItems",
+      "name": "Crystal Bow +1",
+      "cost_gp": 11200.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind bolt is increased by +1, up to +5"
+    },
+    {
+      "key": "Crystal Bow +2",
+      "category": "MagicItems",
+      "name": "Crystal Bow +2",
+      "cost_gp": 44800.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind bolt is increased by +2, up to +5"
+    },
+    {
+      "key": "Crystal Bow +3",
+      "category": "MagicItems",
+      "name": "Crystal Bow +3",
+      "cost_gp": 100800.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind bolt is increased by +3, up to +5"
+    },
+    {
+      "key": "Crystal Gauntlets +1",
+      "category": "MagicItems",
+      "name": "Crystal Gauntlets +1",
+      "cost_gp": 11200.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of empowered unarmed strikes is increased by +1, up to +5"
+    },
+    {
+      "key": "Crystal Gauntlets +2",
+      "category": "MagicItems",
+      "name": "Crystal Gauntlets +2",
+      "cost_gp": 44800.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of empowered unarmed strikes is increased by +2, up to +5"
+    },
+    {
+      "key": "Crystal Gauntlets +3",
+      "category": "MagicItems",
+      "name": "Crystal Gauntlets +3",
+      "cost_gp": 100800.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of empowered unarmed strikes is increased by +3, up to +5"
+    },
+    {
+      "key": "Crystal Grip +1",
+      "category": "MagicItems",
+      "name": "Crystal Grip +1",
+      "cost_gp": 5600.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind shield is increased by +1, up to +5"
+    },
+    {
+      "key": "Crystal Grip +2",
+      "category": "MagicItems",
+      "name": "Crystal Grip +2",
+      "cost_gp": 22400.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind shield is increased by +2, up to +5"
+    },
+    {
+      "key": "Crystal Grip +3",
+      "category": "MagicItems",
+      "name": "Crystal Grip +3",
+      "cost_gp": 50400.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind shield is increased by +3, up to +5"
+    },
+    {
+      "key": "Crystal Hilt (Light) +1",
+      "category": "MagicItems",
+      "name": "Crystal Hilt (Light) +1",
+      "cost_gp": 11200.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind blade is increased by +1, up to +5"
+    },
+    {
+      "key": "Crystal Hilt (Light) +2",
+      "category": "MagicItems",
+      "name": "Crystal Hilt (Light) +2",
+      "cost_gp": 44800.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind blade is increased by +2, up to +5"
+    },
+    {
+      "key": "Crystal Hilt (Light) +3",
+      "category": "MagicItems",
+      "name": "Crystal Hilt (Light) +3",
+      "cost_gp": 100800.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind blade is increased by +3, up to +5"
+    },
+    {
+      "key": "Crystal Hilt (One-Handed) +1",
+      "category": "MagicItems",
+      "name": "Crystal Hilt (One-Handed) +1",
+      "cost_gp": 11200.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind blade is increased by +1, up to +5"
+    },
+    {
+      "key": "Crystal Hilt (One-Handed) +2",
+      "category": "MagicItems",
+      "name": "Crystal Hilt (One-Handed) +2",
+      "cost_gp": 44800.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind blade is increased by +2, up to +5"
+    },
+    {
+      "key": "Crystal Hilt (One-Handed) +3",
+      "category": "MagicItems",
+      "name": "Crystal Hilt (One-Handed) +3",
+      "cost_gp": 100800.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind blade is increased by +3, up to +5"
+    },
+    {
+      "key": "Crystal Hilt (Two-Handed) +1",
+      "category": "MagicItems",
+      "name": "Crystal Hilt (Two-Handed) +1",
+      "cost_gp": 11200.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind blade is increased by +1, up to +5"
+    },
+    {
+      "key": "Crystal Hilt (Two-Handed) +2",
+      "category": "MagicItems",
+      "name": "Crystal Hilt (Two-Handed) +2",
+      "cost_gp": 44800.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind blade is increased by +2, up to +5"
+    },
+    {
+      "key": "Crystal Hilt (Two-Handed) +3",
+      "category": "MagicItems",
+      "name": "Crystal Hilt (Two-Handed) +3",
+      "cost_gp": 100800.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind blade is increased by +3, up to +5"
+    },
+    {
+      "key": "Crystal Spaulders +1",
+      "category": "MagicItems",
+      "name": "Crystal Spaulders +1",
+      "cost_gp": 5600.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind armor is increased by +1, up to +5"
+    },
+    {
+      "key": "Crystal Spaulders +2",
+      "category": "MagicItems",
+      "name": "Crystal Spaulders +2",
+      "cost_gp": 22400.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind armor is increased by +2, up to +5"
+    },
+    {
+      "key": "Crystal Spaulders +3",
+      "category": "MagicItems",
+      "name": "Crystal Spaulders +3",
+      "cost_gp": 50400.0,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind armor is increased by +3, up to +5"
+    },
+    {
+      "key": "Psicrown (Astral Legion)",
+      "category": "MagicItems",
+      "name": "True Psicrown of the [NAME]",
+      "cost_gp": 122400.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 170; Manifester Level - 17; Powers - Astral Construct; Recharge Cost 17 pp, Gain 17 pp"
+    },
+    {
+      "key": "Psicrown (Beast)",
+      "category": "MagicItems",
+      "name": "Lesser Psicrown of the [NAME]",
+      "cost_gp": 23400.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 30; Manifester Level - 9; Powers - Claw of Energy, Duodimensional Claw, Prevenom, Truevenom; Recharge Cost 9 pp, Gain 3 pp"
+    },
+    {
+      "key": "Psicrown (Cautious Warrior)",
+      "category": "MagicItems",
+      "name": "Greater Psicrown of the [NAME]",
+      "cost_gp": 61600.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 60; Manifester Level - 11; Powers - Adapt Body, Body Adjustment, Precognition (Defensive), Inertial Barrier; Recharge Cost 11 pp, Gain 6 pp"
+    },
+    {
+      "key": "Psicrown (Discerning Watcher)",
+      "category": "MagicItems",
+      "name": "Greater Psicrown of the [NAME]",
+      "cost_gp": 105600.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 60; Manifester Level - 11; Powers - Aura Sight, Clairtangent Hand, Clairvoyant Sense, Heightened Vision, Pierce the Veils, Remote Viewing; Recharge Cost 11 pp, Gain 6 pp"
+    },
+    {
+      "key": "Psicrown (Dominator)",
+      "category": "MagicItems",
+      "name": "Greater Psicrown of the [NAME]",
+      "cost_gp": 39600.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 60; Manifester Level - 11; Powers - Empathic Connection, Mind Control, Compelling Voice; Recharge Cost 11 pp, Gain 6 pp"
+    },
+    {
+      "key": "Psicrown (Lesser Dominator)",
+      "category": "MagicItems",
+      "name": "Lesser Psicrown of the Dominator",
+      "cost_gp": 14400.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 30; Manifester Level - 9; Powers - Empathic Connection, Mind Control, Compelling Voice; Recharge Cost 9 pp, Gain 3 pp"
+    },
+    {
+      "key": "Psicrown (Evader)",
+      "category": "MagicItems",
+      "name": "True Psicrown of the [NAME]",
+      "cost_gp": 145600.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 140; Manifester Level - 14; Powers - Flight, Slip the Bonds, Wall Walker; Recharge Cost 14 pp, Gain 14 pp"
+    },
+    {
+      "key": "Psicrown (Fiery Ruin)",
+      "category": "MagicItems",
+      "name": "Lesser Psicrown of [NAME]",
+      "cost_gp": 57000.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 50; Manifester Level - 15; Powers - Energy Ball, Energy Cone, Energy Missile, Energy Stun, Fiery Discorporation; Recharge Cost 15 pp, Gain 5 pp"
+    },
+    {
+      "key": "Psicrown (Temporal Juggler)",
+      "category": "MagicItems",
+      "name": "Greater Psicrown of the [NAME]",
+      "cost_gp": 122400.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 90; Manifester Level - 17; Powers - Temporal Acceleration, Time Hop, Timeless Body; Recharge Cost 17 pp, Gain 9 pp"
+    },
+    {
+      "key": "Psicrown (Traveler)",
+      "category": "MagicItems",
+      "name": "Lesser Psicrown of the [NAME]",
+      "cost_gp": 54000.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 50; Manifester Level - 15; Powers - Astral Traveler, Fold Space, Psychoport (Greater), Psychoport; Recharge Cost 15 pp, Gain 5 pp"
+    },
+    {
+      "key": "Psicrown (Kinetic Control)",
+      "category": "MagicItems",
+      "name": "True Psicrown of [NAME]",
+      "cost_gp": 130400.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 150; Manifester Level - 15; Powers - Psychokinetic Sphere, Telekinetic Force, Telekinetic Maneuver; Recharge Cost 15 pp, Gain 15 pp"
+    },
+    {
+      "key": "Psicrown (Lesser Force and Fire)",
+      "category": "MagicItems",
+      "name": "Lesser Psicrown of Force and Fire",
+      "cost_gp": 22000.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 60; Manifester Level - 11; Powers - Deflect Missiles, Energy Burst, Energy Push, Force Screen; Recharge Cost 11 pp, Gain 6 pp"
+    },
+    {
+      "key": "Psicrown (Force and Fire)",
+      "category": "MagicItems",
+      "name": "True Psicrown of [NAME]",
+      "cost_gp": 61600.0,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 140; Manifester Level - 14; Powers - Deflect Missiles, Energy Burst, Energy Push, Force Screen; Recharge Cost 14 pp, Gain 14 pp"
+    },
+    {
+      "key": "Amulet of Catapsi",
+      "category": "MagicItems",
+      "name": "Amulet of Catapsi",
+      "cost_gp": 16200.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Aura Monocle (Good/Evil)",
+      "category": "MagicItems",
+      "name": "Aura Monocle (Good/Evil)",
+      "cost_gp": 23520.0,
+      "weight_lbs": 0.5,
+      "description": "Discern good/evil alignment 3/day"
+    },
+    {
+      "key": "Aura Monocle (Law/Chaos)",
+      "category": "MagicItems",
+      "name": "Aura Monocle (Law/Chaos)",
+      "cost_gp": 23520.0,
+      "weight_lbs": 0.5,
+      "description": "Discern lawful/chaotic alignment 3/day"
+    },
+    {
+      "key": "Aura Monocle (Greater)",
+      "category": "MagicItems",
+      "name": "Aura Monocle, Greater",
+      "cost_gp": 47040.0,
+      "weight_lbs": 0.5,
+      "description": "Discern good/evil and lawful/chaotic alignment 3/day"
+    },
+    {
+      "key": "Belt of Ectoplasmic Safety",
+      "category": "MagicItems",
+      "name": "Belt of Ectoplasmic Safety",
+      "cost_gp": 30000.0,
+      "weight_lbs": 2.0,
+      "description": "3/day move out of area of effect on successful Reflex save, leaving ectoplasmic copy"
+    },
+    {
+      "key": "Boots of Gravity Binding",
+      "category": "MagicItems",
+      "name": "Boots of Gravity Binding",
+      "cost_gp": 18000.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Boots of Landing",
+      "category": "MagicItems",
+      "name": "Boots of Landing",
+      "cost_gp": 1000.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Boots of Skating",
+      "category": "MagicItems",
+      "name": "Boots of Skating",
+      "cost_gp": 7000.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Boots of Stomping",
+      "category": "MagicItems",
+      "name": "Boots of Stomping",
+      "cost_gp": 600.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Boots of Temporal Acceleration",
+      "category": "MagicItems",
+      "name": "Boots of Temporal Acceleration",
+      "cost_gp": 43200.0,
+      "weight_lbs": 1.0,
+      "description": "1/day temporal acceleration for 2 rounds"
+    },
+    {
+      "key": "Boots of the Nomad",
+      "category": "MagicItems",
+      "name": "Boots of the Nomad",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": "Gain Nomad's Step as 4th-level Nomad, or add 4 to Nomad level for Nomad's Step"
+    },
+    {
+      "key": "Bracers of Disruption",
+      "category": "MagicItems",
+      "name": "Bracers of Disruption",
+      "cost_gp": 20000.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Bracers of Martial Surging",
+      "category": "MagicItems",
+      "name": "Bracers of Martial Surging",
+      "cost_gp": 5000.0,
+      "weight_lbs": 1.0,
+      "description": "Charge bracers with wild surge; use charges to give weapon enhancement bonus or special ability"
+    },
+    {
+      "key": "Cacophonous Bell",
+      "category": "MagicItems",
+      "name": "Cacophonous Bell",
+      "cost_gp": 10500.0,
+      "weight_lbs": 3.0,
+      "description": "Bardic performance more difficult when rung"
+    },
+    {
+      "key": "Charm of Perservation",
+      "category": "MagicItems",
+      "name": "Charm of Perservation",
+      "cost_gp": 250.0,
+      "weight_lbs": 0.0,
+      "description": "Allows psionic revivify to be used up to a week later"
+    },
+    {
+      "key": "Charms of Friendly Interception",
+      "category": "MagicItems",
+      "name": "Charms of Friendly Interception",
+      "cost_gp": 12000.0,
+      "weight_lbs": 0.0,
+      "description": "switch places with wearer of mated charm (30 ft. range)"
+    },
+    {
+      "key": "Circlet of the Sheltered Mind",
+      "category": "MagicItems",
+      "name": "Circlet of the Sheltered Mind",
+      "cost_gp": 7500.0,
+      "weight_lbs": 2.0,
+      "description": "Reduce enervation chance by 5%"
+    },
+    {
+      "key": "Coin of Brotherhood",
+      "category": "MagicItems",
+      "name": "Coin of Brotherhood",
+      "cost_gp": 5000.0,
+      "weight_lbs": 0.0,
+      "description": "Gain +10 bonus on Diplomacy"
+    },
+    {
+      "key": "Companion Stone (Diplomacy)",
+      "category": "MagicItems",
+      "name": "Companion Stone of [NAME]",
+      "cost_gp": 1700.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Companion Stone (Electrical Protection)",
+      "category": "MagicItems",
+      "name": "Companion Stone of [NAME]",
+      "cost_gp": 27200.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Companion Stone (Far Sight)",
+      "category": "MagicItems",
+      "name": "Companion Stone of [NAME]",
+      "cost_gp": 7500.0,
+      "weight_lbs": 0.0,
+      "description": "+2 save vs. illusions"
+    },
+    {
+      "key": "Companion Stone (Fire)",
+      "category": "MagicItems",
+      "name": "Companion Stone of [NAME]",
+      "cost_gp": 17000.0,
+      "weight_lbs": 0.0,
+      "description": "energy cone [fire]; 30 charges"
+    },
+    {
+      "key": "Companion Stone (Fortify)",
+      "category": "MagicItems",
+      "name": "Companion Stone of [NAME]",
+      "cost_gp": 9000.0,
+      "weight_lbs": 0.0,
+      "description": "1/day +4 resistance bonus to saves for 5 minutes"
+    },
+    {
+      "key": "Companion Stone (Truthful Dealings)",
+      "category": "MagicItems",
+      "name": "Companion Stone of [NAME]",
+      "cost_gp": 10800.0,
+      "weight_lbs": 0.0,
+      "description": "1/day read thoughts for 3 minutes"
+    },
+    {
+      "key": "Cowardly Cryptic's Goggles",
+      "category": "MagicItems",
+      "name": "Cowardly Cryptic's Goggles",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": "gain trap spotter insight if wearer has insights; when passing within 10 ft. of a detected trap, goggles black out everything but the trap"
+    },
+    {
+      "key": "Creature of Habit's Medallion",
+      "category": "MagicItems",
+      "name": "Creature of Habit's Medallion",
+      "cost_gp": 2000.0,
+      "weight_lbs": 0.0,
+      "description": "when hit, wearer can cause attacker to make the same action next turn (Will DC 11)"
+    },
+    {
+      "key": "Crawling Tattoo (Concussion)",
+      "category": "MagicItems",
+      "name": "Crawling Tattoo of Concussion",
+      "cost_gp": 50.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Crawling Tattoo (Energy Bolt)",
+      "category": "MagicItems",
+      "name": "Crawling Tattoo of Energy Bolt",
+      "cost_gp": 750.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Crown of Traded Will",
+      "category": "MagicItems",
+      "name": "Crown of Traded Will",
+      "cost_gp": 20000.0,
+      "weight_lbs": 2.0,
+      "description": "1/day swap minds for one round (Will DC 19)"
+    },
+    {
+      "key": "Crystal Anchor (Body)",
+      "category": "MagicItems",
+      "name": "Body Crystal Anchor",
+      "cost_gp": 24000.0,
+      "weight_lbs": 3.0,
+      "description": "Those who manifest psychometabolism powers are affected"
+    },
+    {
+      "key": "Crystal Anchor (Comprehension)",
+      "category": "MagicItems",
+      "name": "Comprehension Crystal Anchor",
+      "cost_gp": 24000.0,
+      "weight_lbs": 3.0,
+      "description": "Those who manifest clairsentience powers are affected"
+    },
+    {
+      "key": "Crystal Anchor (Creation)",
+      "category": "MagicItems",
+      "name": "Creation Crystal Anchor",
+      "cost_gp": 24000.0,
+      "weight_lbs": 3.0,
+      "description": "Those who manifest metacreativity powers are affected"
+    },
+    {
+      "key": "Crystal Anchor (Energy)",
+      "category": "MagicItems",
+      "name": "Energy Crystal Anchor",
+      "cost_gp": 24000.0,
+      "weight_lbs": 3.0,
+      "description": "Those who manifest psychokinesis powers are affected"
+    },
+    {
+      "key": "Crystal Anchor (Ghost)",
+      "category": "MagicItems",
+      "name": "Ghost Crystal Anchor",
+      "cost_gp": 24000.0,
+      "weight_lbs": 3.0,
+      "description": "Those who manifest remote viewing are affected"
+    },
+    {
+      "key": "Crystal Anchor (Mind)",
+      "category": "MagicItems",
+      "name": "Mind Crystal Anchor",
+      "cost_gp": 24000.0,
+      "weight_lbs": 3.0,
+      "description": "Those who manifest telepathy powers are affected"
+    },
+    {
+      "key": "Crystal Anchor (Travel)",
+      "category": "MagicItems",
+      "name": "Travel Crystal Anchor",
+      "cost_gp": 24000.0,
+      "weight_lbs": 3.0,
+      "description": "Those who manifest psychoportation powers are affected"
+    },
+    {
+      "key": "Crystal Mask (Detection)",
+      "category": "MagicItems",
+      "name": "Crystal Mask of Detection",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Crystal Mask (Discernment)",
+      "category": "MagicItems",
+      "name": "Crystal Mask of Discernment",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Crystal Mask (Dread)",
+      "category": "MagicItems",
+      "name": "Crystal Mask of Dread",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Crystal Mask (Insightful Detection)",
+      "category": "MagicItems",
+      "name": "Crystal Mask of Insightful Detection",
+      "cost_gp": 20250.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Crystal Mask (Knowledge)",
+      "category": "MagicItems",
+      "name": "Crystal Mask of Knowledge",
+      "cost_gp": 2500.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Crystal Mask (Languages)",
+      "category": "MagicItems",
+      "name": "Crystal Mask of Languages",
+      "cost_gp": 2500.0,
+      "weight_lbs": 0.5,
+      "description": "Grants the ability to speak and write five different languages"
+    },
+    {
+      "key": "Crystal Mask (Mindarmor)",
+      "category": "MagicItems",
+      "name": "Crystal Mask of Mindarmor",
+      "cost_gp": 10667.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Crystal Mask (Psionic Craft)",
+      "category": "MagicItems",
+      "name": "Crystal Mask of Psionic Craft",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Dissipating Gloves",
+      "category": "MagicItems",
+      "name": "Dissipating Gloves",
+      "cost_gp": 6000.0,
+      "weight_lbs": 0.0,
+      "description": "3/day, melee touch attack deals 3d6 damage"
+    },
+    {
+      "key": "Earring of Resistance +1",
+      "category": "MagicItems",
+      "name": "Earring of Resistance +1",
+      "cost_gp": 700.0,
+      "weight_lbs": 0.0,
+      "description": "+1 competence bonus on save against a single psionic power"
+    },
+    {
+      "key": "Earring of Resistance +2",
+      "category": "MagicItems",
+      "name": "Earring of Resistance +2",
+      "cost_gp": 2800.0,
+      "weight_lbs": 0.0,
+      "description": "+2 competence bonus on save against a single psionic power"
+    },
+    {
+      "key": "Earring of Resistance +3",
+      "category": "MagicItems",
+      "name": "Earring of Resistance +3",
+      "cost_gp": 6300.0,
+      "weight_lbs": 0.0,
+      "description": "+3 competence bonus on save against a single psionic power"
+    },
+    {
+      "key": "Earring of Resistance +4",
+      "category": "MagicItems",
+      "name": "Earring of Resistance +4",
+      "cost_gp": 12200.0,
+      "weight_lbs": 0.0,
+      "description": "+4 competence bonus on save against a single psionic power"
+    },
+    {
+      "key": "Earring of Resistance +5",
+      "category": "MagicItems",
+      "name": "Earring of Resistance +5",
+      "cost_gp": 17500.0,
+      "weight_lbs": 0.0,
+      "description": "+5 competence bonus on save against a single psionic power"
+    },
+    {
+      "key": "Empathic Monocle",
+      "category": "MagicItems",
+      "name": "Empathic Monocle",
+      "cost_gp": 1750.0,
+      "weight_lbs": 0.5,
+      "description": "Expend focus for bonus to Diplomacy and Sense Motive"
+    },
+    {
+      "key": "Empathic Monocle (Greater)",
+      "category": "MagicItems",
+      "name": "Empathic Monocle, Greater",
+      "cost_gp": 8400.0,
+      "weight_lbs": 0.5,
+      "description": "Learn surface thoughts of creature (Will DC 12 negates)"
+    },
+    {
+      "key": "Eyes of Disarming Glances",
+      "category": "MagicItems",
+      "name": "Eyes of Disarming Glances",
+      "cost_gp": 20000.0,
+      "weight_lbs": 0.0,
+      "description": "2/day disarm with 30ft. range gaze attack"
+    },
+    {
+      "key": "Eyes of Expanded Vision",
+      "category": "MagicItems",
+      "name": "Eyes of Expanded Vision",
+      "cost_gp": 3000.0,
+      "weight_lbs": 0.0,
+      "description": "Flanking opponents gain only +1 bonus instead of +2 and -2 penalty on save against gaze attacks."
+    },
+    {
+      "key": "Eyes of Power Leech",
+      "category": "MagicItems",
+      "name": "Eyes of Power Leech",
+      "cost_gp": 10080.0,
+      "weight_lbs": 0.0,
+      "description": "1/day power leech for 7 rounds (1d6 pp lost; 1 pp gained)"
+    },
+    {
+      "key": "Eyes of Power Leech (Vampiric)",
+      "category": "MagicItems",
+      "name": "Eyes of Power Leech, Vampiric",
+      "cost_gp": 20160.0,
+      "weight_lbs": 0.0,
+      "description": "1/day power leech for 13 rounds (1d6 pp lost; 1 pp gained), can go over pp maximum"
+    },
+    {
+      "key": "Fear Drinker's Amulet",
+      "category": "MagicItems",
+      "name": "Fear Drinker's Amulet",
+      "cost_gp": 2500.0,
+      "weight_lbs": 0.0,
+      "description": "using devastating touch gives 2 temporary hit points, stacks with self up to dread level"
+    },
+    {
+      "key": "Fear Drinker's Amulet (Greater)",
+      "category": "MagicItems",
+      "name": "Fear Drinker's Amulet (Greater)",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.0,
+      "description": "using devastating touch gives 2 temporary hit points, stacks with self up to twice dread level; if target is frightened,gain 1 temporary power point"
+    },
+    {
+      "key": "Gauntlet of the Thunder Shield",
+      "category": "MagicItems",
+      "name": "Gauntlet of the Thunder Shield",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1.0,
+      "description": "gain +4 shield bonus to AC and sonic resistance 10 for 30 rounds per day"
+    },
+    {
+      "key": "Gladiator's Gauze",
+      "category": "MagicItems",
+      "name": "Gladiator's Gauze",
+      "cost_gp": 35.0,
+      "weight_lbs": 0.5,
+      "description": "Stabilizes and stops bleed effects"
+    },
+    {
+      "key": "Glove of Calling",
+      "category": "MagicItems",
+      "name": "Glove of Calling",
+      "cost_gp": 4000.0,
+      "weight_lbs": 1.0,
+      "description": "Call a weapon as a swift action."
+    },
+    {
+      "key": "Gloves of Object Reading",
+      "category": "MagicItems",
+      "name": "Gloves of Object Reading",
+      "cost_gp": 3000.0,
+      "weight_lbs": 0.0,
+      "description": "object reading while handling an item"
+    },
+    {
+      "key": "Gloves of Titan's Grip",
+      "category": "MagicItems",
+      "name": "Gloves of Titan's Grip",
+      "cost_gp": 14000.0,
+      "weight_lbs": 0.0,
+      "description": "3/day +8 enhancement bonus on grapple checks for 7 rounds"
+    },
+    {
+      "key": "Gloves of the Beast (1d3)",
+      "category": "MagicItems",
+      "name": "Gloves of the Beast (1d3)",
+      "cost_gp": 625.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Gloves of the Beast (1d4)",
+      "category": "MagicItems",
+      "name": "Gloves of the Beast (1d4)",
+      "cost_gp": 1000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Gloves of the Beast (1d6)",
+      "category": "MagicItems",
+      "name": "Gloves of the Beast (1d6)",
+      "cost_gp": 3000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Gloves of the Beast (1d8)",
+      "category": "MagicItems",
+      "name": "Gloves of the Beast (1d8)",
+      "cost_gp": 5000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Gloves of the Beast (2d6)",
+      "category": "MagicItems",
+      "name": "Gloves of the Beast (2d6)",
+      "cost_gp": 7000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Gloves of the Beast (3d6)",
+      "category": "MagicItems",
+      "name": "Gloves of the Beast (3d6)",
+      "cost_gp": 11000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Gloves of the Beast (4d6)",
+      "category": "MagicItems",
+      "name": "Gloves of the Beast (4d6)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Gloves of the Beast (5d6)",
+      "category": "MagicItems",
+      "name": "Gloves of the Beast (5d6)",
+      "cost_gp": 19000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Gloves of the Beast (6d6)",
+      "category": "MagicItems",
+      "name": "Gloves of the Beast (6d6)",
+      "cost_gp": 22000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Boots of the Beast (1d3)",
+      "category": "MagicItems",
+      "name": "Boots of the Beast (1d3)",
+      "cost_gp": 625.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Boots of the Beast (1d4)",
+      "category": "MagicItems",
+      "name": "Boots of the Beast (1d4)",
+      "cost_gp": 1000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Boots of the Beast (1d6)",
+      "category": "MagicItems",
+      "name": "Boots of the Beast (1d6)",
+      "cost_gp": 3000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Boots of the Beast (1d8)",
+      "category": "MagicItems",
+      "name": "Boots of the Beast (1d8)",
+      "cost_gp": 5000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Boots of the Beast (2d6)",
+      "category": "MagicItems",
+      "name": "Boots of the Beast (2d6)",
+      "cost_gp": 7000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Boots of the Beast (3d6)",
+      "category": "MagicItems",
+      "name": "Boots of the Beast (3d6)",
+      "cost_gp": 11000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Boots of the Beast (4d6)",
+      "category": "MagicItems",
+      "name": "Boots of the Beast (4d6)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Boots of the Beast (5d6)",
+      "category": "MagicItems",
+      "name": "Boots of the Beast (5d6)",
+      "cost_gp": 19000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Boots of the Beast (6d6)",
+      "category": "MagicItems",
+      "name": "Boots of the Beast (6d6)",
+      "cost_gp": 22000.0,
+      "weight_lbs": 0.5,
+      "description": null
+    },
+    {
+      "key": "Goggles of Far Sight",
+      "category": "MagicItems",
+      "name": "Goggles of Far Sight",
+      "cost_gp": 4000.0,
+      "weight_lbs": 0.0,
+      "description": "Ignore first ranged increment penalty"
+    },
+    {
+      "key": "Headband of the Great Village (1 creature)",
+      "category": "MagicItems",
+      "name": "Headband of the Great Village (1 creature)",
+      "cost_gp": 3000.0,
+      "weight_lbs": 0.5,
+      "description": "Mindlink with 1 creature within 30 ft.; Add one to size of collective"
+    },
+    {
+      "key": "Headband of the Great Village (2 creatures)",
+      "category": "MagicItems",
+      "name": "Headband of the Great Village (2 creatures)",
+      "cost_gp": 12000.0,
+      "weight_lbs": 0.5,
+      "description": "Mindlink with 2 creatures within 30 ft.; Add two to size of collective"
+    },
+    {
+      "key": "Headband of the Great Village (3 creatures)",
+      "category": "MagicItems",
+      "name": "Headband of the Great Village (3 creatures)",
+      "cost_gp": 27000.0,
+      "weight_lbs": 0.5,
+      "description": "Mindlink with 3 creatures within 30 ft.; Add three to size of collective"
+    },
+    {
+      "key": "Helm of Attitude Adjustment",
+      "category": "MagicItems",
+      "name": "Helm of Attitude Adjustment",
+      "cost_gp": 18000.0,
+      "weight_lbs": 2.0,
+      "description": "2/day shift attitude by one step (Will DC 14 negates); +4 bonus on Bluff, Diplomacy, Intimidate to change attitude"
+    },
+    {
+      "key": "Ioun Stone (Dull Grey)",
+      "category": "MagicItems",
+      "name": "Ioun Stone, [NAME]",
+      "cost_gp": 25.0,
+      "weight_lbs": 0.02,
+      "description": "Provides 1 psionic power point then disintegrates."
+    },
+    {
+      "key": "Ioun Stone (Green and White)",
+      "category": "MagicItems",
+      "name": "Ioun Stone, [NAME]",
+      "cost_gp": 12000.0,
+      "weight_lbs": 0.0,
+      "description": "Grants an additional power known."
+    },
+    {
+      "key": "Ioun Stone (Rainbow)",
+      "category": "MagicItems",
+      "name": "Ioun Stone, [NAME]",
+      "cost_gp": 16000.0,
+      "weight_lbs": 0.02,
+      "description": "Provides 5 psionic power points per day (regenerates)"
+    },
+    {
+      "key": "Lava Walker's Boots",
+      "category": "MagicItems",
+      "name": "Lava Walker's Boots",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": "walk on liquid surfaces and fire resistance 10 for 10 rounds/day"
+    },
+    {
+      "key": "Mantle of the Void",
+      "category": "MagicItems",
+      "name": "Mantle of the Void",
+      "cost_gp": 18480.0,
+      "weight_lbs": 0.0,
+      "description": "gain +6 insight bonus to one d20 roll in the next minute; take 1d3 Wisdom burn if used more than once per week"
+    },
+    {
+      "key": "Map of the Mind",
+      "category": "MagicItems",
+      "name": "Map of the Mind",
+      "cost_gp": 16000.0,
+      "weight_lbs": 0.0,
+      "description": "1/week psychic reformation"
+    },
+    {
+      "key": "Mask of Confounded Foes",
+      "category": "MagicItems",
+      "name": "Mask of Confounded Foes",
+      "cost_gp": 12000.0,
+      "weight_lbs": 0.5,
+      "description": "1/day force once creature to redirect attack (Will DC 16 negates)"
+    },
+    {
+      "key": "Meld Stone (Alchemist)",
+      "category": "MagicItems",
+      "name": "Meld Stone of the [NAME]",
+      "cost_gp": 3040.0,
+      "weight_lbs": 0.0,
+      "description": "+8 to Craft (Alchemy), +6 to Appraise and Use Magic Device, +4 to Knowledge (Arcana), if set in a Synaptic Mask"
+    },
+    {
+      "key": "Meld Stone (Inflitrator)",
+      "category": "MagicItems",
+      "name": "Meld Stone of the [NAME]",
+      "cost_gp": 3040.0,
+      "weight_lbs": 0.0,
+      "description": "+8 to Bluff, +6 to Disguise and Forgery, +4 to Gather Information, if set in a Synaptic Mask"
+    },
+    {
+      "key": "Meld Stone (Nimble Trickster)",
+      "category": "MagicItems",
+      "name": "Meld Stone of the [NAME]",
+      "cost_gp": 3040.0,
+      "weight_lbs": 0.0,
+      "description": "+8 to Tumble, +6 to Escape Artist and Stealth"
+    },
+    {
+      "key": "Mender's Vestments (extra time)",
+      "category": "MagicItems",
+      "name": "Mender's Vestments (extra time)",
+      "cost_gp": 3750.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Mender's Vestments (extra 1d6)",
+      "category": "MagicItems",
+      "name": "Mender's Vestments (extra 1d6)",
+      "cost_gp": 4000.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Mender's Vestments (extra time and 1d6)",
+      "category": "MagicItems",
+      "name": "Mender's Vestments (extra time and 1d6)",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Mind Sharing Circlets",
+      "category": "MagicItems",
+      "name": "Mind Sharing Circlets",
+      "cost_gp": 42000.0,
+      "weight_lbs": 1.0,
+      "description": "manifest powers known by other wearer for 6 extra pp"
+    },
+    {
+      "key": "Mirror of Lost Recollections",
+      "category": "MagicItems",
+      "name": "Mirror of Lost Recollections",
+      "cost_gp": 150000.0,
+      "weight_lbs": 0.5,
+      "description": "deal 8d6 damage (Will DC 16 half) to creature within 30 ft.; 1/day kill target (Will DC 22 for 5d6 damage)"
+    },
+    {
+      "key": "Mirror of Mind Switch",
+      "category": "MagicItems",
+      "name": "Mirror of Mind Switch",
+      "cost_gp": 19800.0,
+      "weight_lbs": 0.5,
+      "description": "1/day mind switch as gaze attack"
+    },
+    {
+      "key": "Mirror of Suggestion",
+      "category": "MagicItems",
+      "name": "Mirror of Suggestion",
+      "cost_gp": 3600.0,
+      "weight_lbs": 0.5,
+      "description": "2/day suggestion as gaze attack"
+    },
+    {
+      "key": "Mirror of Time Hop",
+      "category": "MagicItems",
+      "name": "Mirror of Time Hop",
+      "cost_gp": 9000.0,
+      "weight_lbs": 0.5,
+      "description": "2/day time hop as gaze attack"
+    },
+    {
+      "key": "Pattern Breaker's Gloves",
+      "category": "MagicItems",
+      "name": "Pattern Breaker's Gloves",
+      "cost_gp": 2000.0,
+      "weight_lbs": 1.0,
+      "description": "Use disrupt pattern with unarmed strikes or natural attacks"
+    },
+    {
+      "key": "Pearl (Brain Lock)",
+      "category": "MagicItems",
+      "name": "Pearl, Brain Lock",
+      "cost_gp": 300.0,
+      "weight_lbs": 0.0,
+      "description": "DC 13 Will"
+    },
+    {
+      "key": "Pearl (Breath Crisis)",
+      "category": "MagicItems",
+      "name": "Pearl, Breath Crisis",
+      "cost_gp": 750.0,
+      "weight_lbs": 0.0,
+      "description": "DC 14 Will"
+    },
+    {
+      "key": "Pearl (Mind Seed)",
+      "category": "MagicItems",
+      "name": "Pearl, Mind Seed",
+      "cost_gp": 18500.0,
+      "weight_lbs": 0.0,
+      "description": "DC 22 Will"
+    },
+    {
+      "key": "Pearl (Personality Parasite)",
+      "category": "MagicItems",
+      "name": "Pearl, Personality Parasite",
+      "cost_gp": 1400.0,
+      "weight_lbs": 0.0,
+      "description": "DC 16 Will"
+    },
+    {
+      "key": "Psicrystal Crown",
+      "category": "MagicItems",
+      "name": "Psicrystal Crown",
+      "cost_gp": 2000.0,
+      "weight_lbs": 0.5,
+      "description": "as psicrystal staff; expend psionic focus to gain psicrystal's sighted ability for one round"
+    },
+    {
+      "key": "Psicrystal Harness",
+      "category": "MagicItems",
+      "name": "Psicrystal Harness",
+      "cost_gp": 2000.0,
+      "weight_lbs": 0.5,
+      "description": "as psicrystal staff but no companion stones; expend psionic focus to gain psicrystal's natural armor adjustment as DR, and sonic vulnerability, until next turn"
+    },
+    {
+      "key": "Psicrystal Staff",
+      "category": "MagicItems",
+      "name": "Psicrystal Staff",
+      "cost_gp": 2000.0,
+      "weight_lbs": 5.0,
+      "description": "Can hold psicrystal, 3 setting stones, 10 companion stones"
+    },
+    {
+      "key": "Psicrystal Staff (Greater)",
+      "category": "ArmsArmor",
+      "name": "Psicrystal Staff, Greater",
+      "cost_gp": 10000.0,
+      "weight_lbs": 5.0,
+      "description": "Can hold psicrystal, 5 setting stones, 10 companion stones; psicrystal repairs 1 hp/minute; double personality bonuses [not implemented]"
+    },
+    {
+      "key": "Psionatrix (Clairsentience)",
+      "category": "MagicItems",
+      "name": "Psionatrix of [NAME]",
+      "cost_gp": 8000.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Psionatrix (Metacreativity)",
+      "category": "MagicItems",
+      "name": "Psionatrix of [NAME]",
+      "cost_gp": 8000.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Psionatrix (Psychokinesis)",
+      "category": "MagicItems",
+      "name": "Psionatrix of [NAME]",
+      "cost_gp": 8000.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Psionatrix (Psychometabolism)",
+      "category": "MagicItems",
+      "name": "Psionatrix of [NAME]",
+      "cost_gp": 8000.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Psionatrix (Psychoportation)",
+      "category": "MagicItems",
+      "name": "Psionatrix of [NAME]",
+      "cost_gp": 8000.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Psionatrix (Telepathy)",
+      "category": "MagicItems",
+      "name": "Psionatrix of [NAME]",
+      "cost_gp": 8000.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Psionic Restraint (Lesser)",
+      "category": "MagicItems",
+      "name": "Psionic Restraint, [NAME]",
+      "cost_gp": 1000.0,
+      "weight_lbs": 0.0,
+      "description": "Wearer can use at most 5PP/round"
+    },
+    {
+      "key": "Psionic Restraint (Average)",
+      "category": "MagicItems",
+      "name": "Psionic Restraint, [NAME]",
+      "cost_gp": 6000.0,
+      "weight_lbs": 0.0,
+      "description": "Wearer can use at most 3PP/round"
+    },
+    {
+      "key": "Psionic Restraint (Greater)",
+      "category": "MagicItems",
+      "name": "Psionic Restraint, [NAME]",
+      "cost_gp": 12000.0,
+      "weight_lbs": 0.0,
+      "description": "Wearer can use at most 1PP/round"
+    },
+    {
+      "key": "Psionic Restraint (Damping)",
+      "category": "MagicItems",
+      "name": "Psionic Restraint, [NAME]",
+      "cost_gp": 24000.0,
+      "weight_lbs": 0.0,
+      "description": "Wearer can use no PP"
+    },
+    {
+      "key": "Psychoactive Skin (Chameleon)",
+      "category": "MagicItems",
+      "name": "Skin of the [NAME]",
+      "cost_gp": 18000.0,
+      "weight_lbs": 2.0,
+      "description": null
+    },
+    {
+      "key": "Psychoactive Skin (Claw)",
+      "category": "MagicItems",
+      "name": "Skin of the [NAME]",
+      "cost_gp": 16000.0,
+      "weight_lbs": 2.0,
+      "description": "Claws of the Beast at will, as free action.  Only for Psychic Warrior."
+    },
+    {
+      "key": "Psychoactive Skin (Defender)",
+      "category": "MagicItems",
+      "name": "Skin of the [NAME]",
+      "cost_gp": 32000.0,
+      "weight_lbs": 2.0,
+      "description": null
+    },
+    {
+      "key": "Psychoactive Skin (Fiery Response)",
+      "category": "MagicItems",
+      "name": "Skin of [NAME]",
+      "cost_gp": 60000.0,
+      "weight_lbs": 2.0,
+      "description": "1/round Energy Retort [fire]"
+    },
+    {
+      "key": "Psychoactive Skin (Hero)",
+      "category": "MagicItems",
+      "name": "Skin of the [NAME]",
+      "cost_gp": 77500.0,
+      "weight_lbs": 2.0,
+      "description": null
+    },
+    {
+      "key": "Psychoactive Skin (Iron)",
+      "category": "MagicItems",
+      "name": "Skin of [NAME]",
+      "cost_gp": 129600.0,
+      "weight_lbs": 2.0,
+      "description": "3/day Psionic Iron Body for 15 minutes"
+    },
+    {
+      "key": "Psychoactive Skin (Nimbleness)",
+      "category": "MagicItems",
+      "name": "Skin of [NAME]",
+      "cost_gp": 10000.0,
+      "weight_lbs": 2.0,
+      "description": null
+    },
+    {
+      "key": "Psychoactive Skin (Proteus)",
+      "category": "MagicItems",
+      "name": "Skin of [NAME]",
+      "cost_gp": 84000.0,
+      "weight_lbs": 2.0,
+      "description": "continuous Metamorphosis"
+    },
+    {
+      "key": "Psychoactive Skin (Psion)",
+      "category": "MagicItems",
+      "name": "Skin of the [NAME]",
+      "cost_gp": 151000.0,
+      "weight_lbs": 2.0,
+      "description": "Power Resistance 21"
+    },
+    {
+      "key": "Psychoactive Skin (Spider)",
+      "category": "MagicItems",
+      "name": "Skin of the [NAME]",
+      "cost_gp": 79080.0,
+      "weight_lbs": 2.0,
+      "description": "continual Body Equilibrium; Entangling Ectoplasm 3/day, 30 ft."
+    },
+    {
+      "key": "Psychoactive Skin (Troll)",
+      "category": "MagicItems",
+      "name": "Skin of the [NAME]",
+      "cost_gp": 61200.0,
+      "weight_lbs": 2.0,
+      "description": "continual True Metabolism except heal 5 HP/minute."
+    },
+    {
+      "key": "Quiver of Recall",
+      "category": "MagicItems",
+      "name": "Quiver of Recall",
+      "cost_gp": 2000.0,
+      "weight_lbs": 2.0,
+      "description": "holds 60 units of ammunition; misses return to quiver (all if marksman using wind reader; surviving otherwise)"
+    },
+    {
+      "key": "Rug of Object Sliding (500 lbs.)",
+      "category": "MagicItems",
+      "name": "Rug of Object Sliding (500 lbs.)",
+      "cost_gp": 2000.0,
+      "weight_lbs": 0.5,
+      "description": "slides under object; only 1/10 of weight for dragging"
+    },
+    {
+      "key": "Rug of Object Sliding (2500 lbs.)",
+      "category": "MagicItems",
+      "name": "Rug of Object Sliding (2500 lbs.)",
+      "cost_gp": 5000.0,
+      "weight_lbs": 0.5,
+      "description": "slides under object; only 1/10 of weight for dragging"
+    },
+    {
+      "key": "Rug of Object Sliding (5000 lbs.)",
+      "category": "MagicItems",
+      "name": "Rug of Object Sliding (5000 lbs.)",
+      "cost_gp": 7400.0,
+      "weight_lbs": 0.5,
+      "description": "slides under object; only 1/10 of weight for dragging"
+    },
+    {
+      "key": "Rug of Object Sliding (10000 lbs.)",
+      "category": "MagicItems",
+      "name": "Rug of Object Sliding (10000 lbs.)",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.5,
+      "description": "slides under object; only 1/10 of weight for dragging"
+    },
+    {
+      "key": "Setting Stone (Invigoration)",
+      "category": "MagicItems",
+      "name": "Setting Stone of [NAME]",
+      "cost_gp": 10080.0,
+      "weight_lbs": 0.0,
+      "description": "1/day invigorate self for 10 minutes"
+    },
+    {
+      "key": "Setting Stone (Kenosis)",
+      "category": "MagicItems",
+      "name": "Setting Stone of [NAME]",
+      "cost_gp": 29000.0,
+      "weight_lbs": 0.0,
+      "description": "1/day ranged touch to suppress psi-like, spell-like, and supernatural abilities for 1d4 rounds"
+    },
+    {
+      "key": "Setting Stone (Power Echo (3rd))",
+      "category": "MagicItems",
+      "name": "Setting Stone of [NAME]",
+      "cost_gp": 9000.0,
+      "weight_lbs": 0.0,
+      "description": "1/day manifest 3rd or lower level power manifested earlier that day as free manifestation"
+    },
+    {
+      "key": "Setting Stone (Power Echo (6th))",
+      "category": "MagicItems",
+      "name": "Setting Stone of [NAME]",
+      "cost_gp": 36000.0,
+      "weight_lbs": 0.0,
+      "description": "1/day manifest 6th or lower level power manifested earlier that day as free manifestation"
+    },
+    {
+      "key": "Setting Stone (Power Echo (9th))",
+      "category": "MagicItems",
+      "name": "Setting Stone of [NAME]",
+      "cost_gp": 81000.0,
+      "weight_lbs": 0.0,
+      "description": "1/day manifest 9th or lower level power manifested earlier that day as free manifestation"
+    },
+    {
+      "key": "Setting Stone (Reconstruction)",
+      "category": "MagicItems",
+      "name": "Setting Stone of [NAME]",
+      "cost_gp": 2500.0,
+      "weight_lbs": 0.0,
+      "description": "1/day psicrystal heals 5 hit points per round, up to wielder's manifester level"
+    },
+    {
+      "key": "Shard +1",
+      "category": "MagicItems",
+      "name": "Shard +1",
+      "cost_gp": 10.0,
+      "weight_lbs": 0.0,
+      "description": "+1 competence bonus on one specific skill roll."
+    },
+    {
+      "key": "Shard +2",
+      "category": "MagicItems",
+      "name": "Shard +2",
+      "cost_gp": 40.0,
+      "weight_lbs": 0.0,
+      "description": "+2 competence bonus on one specific skill roll."
+    },
+    {
+      "key": "Shard +3",
+      "category": "MagicItems",
+      "name": "Shard +3",
+      "cost_gp": 90.0,
+      "weight_lbs": 0.0,
+      "description": "+3 competence bonus on one specific skill roll."
+    },
+    {
+      "key": "Shard +4",
+      "category": "MagicItems",
+      "name": "Shard +4",
+      "cost_gp": 160.0,
+      "weight_lbs": 0.0,
+      "description": "+4 competence bonus on one specific skill roll."
+    },
+    {
+      "key": "Shard +5",
+      "category": "MagicItems",
+      "name": "Shard +5",
+      "cost_gp": 250.0,
+      "weight_lbs": 0.0,
+      "description": "+5 competence bonus on one specific skill roll."
+    },
+    {
+      "key": "Shard +6",
+      "category": "MagicItems",
+      "name": "Shard +6",
+      "cost_gp": 360.0,
+      "weight_lbs": 0.0,
+      "description": "+6 competence bonus on one specific skill roll."
+    },
+    {
+      "key": "Shard +7",
+      "category": "MagicItems",
+      "name": "Shard +7",
+      "cost_gp": 490.0,
+      "weight_lbs": 0.0,
+      "description": "+7 competence bonus on one specific skill roll."
+    },
+    {
+      "key": "Shard +8",
+      "category": "MagicItems",
+      "name": "Shard +8",
+      "cost_gp": 640.0,
+      "weight_lbs": 0.0,
+      "description": "+8 competence bonus on one specific skill roll."
+    },
+    {
+      "key": "Shard +9",
+      "category": "MagicItems",
+      "name": "Shard +9",
+      "cost_gp": 810.0,
+      "weight_lbs": 0.0,
+      "description": "+9 competence bonus on one specific skill roll."
+    },
+    {
+      "key": "Shard +10",
+      "category": "MagicItems",
+      "name": "Shard +10",
+      "cost_gp": 1000.0,
+      "weight_lbs": 0.0,
+      "description": "+10 competence bonus on one specific skill roll."
+    },
+    {
+      "key": "Shimmering Vest",
+      "category": "MagicItems",
+      "name": "Shimmering Vest",
+      "cost_gp": 12500.0,
+      "weight_lbs": 0.5,
+      "description": "Gives or enhances light-bending pattern insight"
+    },
+    {
+      "key": "Shimmering Vest (Greater)",
+      "category": "MagicItems",
+      "name": "Shimmering Vest, Greater",
+      "cost_gp": 25000.0,
+      "weight_lbs": 0.5,
+      "description": "Gives or enhances light-bending pattern insight"
+    },
+    {
+      "key": "Sliver Prison",
+      "category": "MagicItems",
+      "name": "Sliver Prison",
+      "cost_gp": 5000.0,
+      "weight_lbs": 1.0,
+      "description": "capture psicrystal; gain +2 on DC of Will saves against master"
+    },
+    {
+      "key": "Snatching Gloves",
+      "category": "MagicItems",
+      "name": "Snatching Gloves",
+      "cost_gp": 20000.0,
+      "weight_lbs": 1.0,
+      "description": "1/day teleport item to hand"
+    },
+    {
+      "key": "Student's Robes",
+      "category": "MagicItems",
+      "name": "Student's Robes",
+      "cost_gp": 13000.0,
+      "weight_lbs": 1.0,
+      "description": "Psion level treated as five higher for discipline abilities."
+    },
+    {
+      "key": "Suffocating Collar",
+      "category": "MagicItems",
+      "name": "Suffocating Collar",
+      "cost_gp": 30000.0,
+      "weight_lbs": 1.0,
+      "description": "1/day use crisis of breath on all creatures within 20 ft. (Will DC 17); chokes wearer for duration of effect"
+    },
+    {
+      "key": "Surge Crystal +1",
+      "category": "MagicItems",
+      "name": "Surge Crystal +1",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.5,
+      "description": "permanent 2 Con drain; gain wild surge as free surge; take bleed damage to use surge blast; bonus to wilder's wild surge"
+    },
+    {
+      "key": "Surge Crystal +2",
+      "category": "MagicItems",
+      "name": "Surge Crystal +2",
+      "cost_gp": 30000.0,
+      "weight_lbs": 0.5,
+      "description": "permanent 2 Con drain; gain wild surge as free surge; take bleed damage to use surge blast; bonus to wilder's wild surge"
+    },
+    {
+      "key": "Surge Crystal +3",
+      "category": "MagicItems",
+      "name": "Surge Crystal +3",
+      "cost_gp": 60000.0,
+      "weight_lbs": 0.5,
+      "description": "permanent 2 Con drain; gain wild surge as free surge; take bleed damage to use surge blast; bonus to wilder's wild surge"
+    },
+    {
+      "key": "Survivor's Sleeping Bag",
+      "category": "MagicItems",
+      "name": "Survivor's Sleeping Bag",
+      "cost_gp": 1400.0,
+      "weight_lbs": 3.0,
+      "description": "No harm from hot or cold environments"
+    },
+    {
+      "key": "Sycophant's Ring",
+      "category": "MagicItems",
+      "name": "Sycophant's Ring",
+      "cost_gp": 1000.0,
+      "weight_lbs": 0.0,
+      "description": "wearer does not count against collective limit; must take worse of two rolls vs. charm effects and begin forcibly added to a collective"
+    },
+    {
+      "key": "Synaptic Mask",
+      "category": "MagicItems",
+      "name": "Synaptic Mask",
+      "cost_gp": 9000.0,
+      "weight_lbs": 1.0,
+      "description": "Can use embedded shard without losing shard"
+    },
+    {
+      "key": "Synaptic Shard (Medic)",
+      "category": "MagicItems",
+      "name": "Synaptic Shard (Medic)",
+      "cost_gp": 2000.0,
+      "weight_lbs": 0.0,
+      "description": "can take 10 on Heal checks even in combat; must be in synaptic mask"
+    },
+    {
+      "key": "Synaptic Shard (Precision)",
+      "category": "MagicItems",
+      "name": "Synaptic Shard (Precision)",
+      "cost_gp": 16000.0,
+      "weight_lbs": 0.0,
+      "description": "add 1d6 precision damage when flanking; must be in synaptic mask"
+    },
+    {
+      "key": "Synaptic Shard (Shifting Steps)",
+      "category": "MagicItems",
+      "name": "Synaptic Shard (Shifting Steps)",
+      "cost_gp": 9000.0,
+      "weight_lbs": 0.0,
+      "description": "use move action for a 5 foot step; must be in synaptic mask"
+    },
+    {
+      "key": "Synaptic Shard (Guarded Flank)",
+      "category": "MagicItems",
+      "name": "Synaptic Shard (Guarded Flank)",
+      "cost_gp": 16000.0,
+      "weight_lbs": 0.0,
+      "description": "+2 AC vs. flankers; must be in synaptic mask"
+    },
+    {
+      "key": "Tactician's Chessboard",
+      "category": "MagicItems",
+      "name": "Tactician's Chessboard",
+      "cost_gp": 8000.0,
+      "weight_lbs": 10.0,
+      "description": "shows collective members and what they see; can aid another through the board"
+    },
+    {
+      "key": "Third Eye (Aware)",
+      "category": "MagicItems",
+      "name": "Third Eye (Aware)",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Third Eye (Conceal)",
+      "category": "MagicItems",
+      "name": "Third Eye (Conceal)",
+      "cost_gp": 120000.0,
+      "weight_lbs": 0.0,
+      "description": "Continuous Psionic Mind Blank"
+    },
+    {
+      "key": "Third Eye (Concentrate)",
+      "category": "MagicItems",
+      "name": "Third Eye (Concentrate)",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.0,
+      "description": "+10 competence bonus to concentrate checks"
+    },
+    {
+      "key": "Third Eye (Dominate)",
+      "category": "MagicItems",
+      "name": "Third Eye (Dominate)",
+      "cost_gp": 120000.0,
+      "weight_lbs": 0.0,
+      "description": "1/day Mind Control, DC 18"
+    },
+    {
+      "key": "Third Eye (Energy Ray)",
+      "category": "MagicItems",
+      "name": "Third Eye (Energy Ray)",
+      "cost_gp": 7200.0,
+      "weight_lbs": 0.0,
+      "description": "3/day 30-ft. ray of active energy type, 5d6 damage (5d3 if sonic)"
+    },
+    {
+      "key": "Third Eye (Expose)",
+      "category": "MagicItems",
+      "name": "Third Eye (Expose)",
+      "cost_gp": 112000.0,
+      "weight_lbs": 0.0,
+      "description": "Know when someone lies directly to you"
+    },
+    {
+      "key": "Third Eye (Gather)",
+      "category": "MagicItems",
+      "name": "Third Eye (Gather)",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Third Eye (Penetrate)",
+      "category": "MagicItems",
+      "name": "Third Eye (Penetrate)",
+      "cost_gp": 8000.0,
+      "weight_lbs": 0.0,
+      "description": "+2 to overcome power resistance"
+    },
+    {
+      "key": "Third Eye (Powerthieve)",
+      "category": "MagicItems",
+      "name": "Third Eye (Powerthieve)",
+      "cost_gp": 10080.0,
+      "weight_lbs": 0.0,
+      "description": "1/day steal power from target within 40 ft., lasts for 70 minutes"
+    },
+    {
+      "key": "Third Eye (Repudiate)",
+      "category": "MagicItems",
+      "name": "Third Eye (Repudiate)",
+      "cost_gp": 43200.0,
+      "weight_lbs": 0.0,
+      "description": "1/day Dispel Psionics at +20 modifier"
+    },
+    {
+      "key": "Third Eye (Sense)",
+      "category": "MagicItems",
+      "name": "Third Eye (Sense)",
+      "cost_gp": 24000.0,
+      "weight_lbs": 0.0,
+      "description": "Clairvoyant Sense at will"
+    },
+    {
+      "key": "Third Eye (Talented)",
+      "category": "MagicItems",
+      "name": "Third Eye (Talented)",
+      "cost_gp": 10180.0,
+      "weight_lbs": 0.0,
+      "description": "grants user psionic talent, and Wild Talent or Psionic Talent feat"
+    },
+    {
+      "key": "Third Eye (View)",
+      "category": "MagicItems",
+      "name": "Third Eye (View)",
+      "cost_gp": 10180.0,
+      "weight_lbs": 0.0,
+      "description": "1/day Remote Viewing"
+    },
+    {
+      "key": "Torc of Free Will",
+      "category": "MagicItems",
+      "name": "Torc of Free Will",
+      "cost_gp": 6000.0,
+      "weight_lbs": 2.0,
+      "description": "not affected by Brain Lock power or items."
+    },
+    {
+      "key": "Torc of Interrogation",
+      "category": "MagicItems",
+      "name": "Torc of Interrogation",
+      "cost_gp": 0.0,
+      "weight_lbs": 2.0,
+      "description": "take 2d6 nonlethal damage when lying (Will DC 14); cumulative -1 penalty per save attempted"
+    },
+    {
+      "key": "Headband of Interrogation",
+      "category": "MagicItems",
+      "name": "Headband of Interrogation",
+      "cost_gp": 20000.0,
+      "weight_lbs": 0.0,
+      "description": "get +10 to Intimidate and Sense Motive against wearer of torc"
+    },
+    {
+      "key": "Torc of Leech Freedom",
+      "category": "MagicItems",
+      "name": "Torc of Leech Freedom",
+      "cost_gp": 12000.0,
+      "weight_lbs": 2.0,
+      "description": "resist up to two uses of Power Leech per day"
+    },
+    {
+      "key": "Torc of Power Preservation",
+      "category": "MagicItems",
+      "name": "Torc of Power Preservation",
+      "cost_gp": 36000.0,
+      "weight_lbs": 2.0,
+      "description": "manifest all powers by paying power points equal to the standard cost minus 1 (minimum of 1)"
+    },
+    {
+      "key": "Warrior's Bracer (Archer Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Archer Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Bracer (Ascetic Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Ascetic Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Bracer (Assassin's Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Assassin's Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Bracer (Brawling Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Brawling Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Bracer (Dervish Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Dervish Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Bracer (Feral Warrior Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Feral Warrior Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Bracer (Gladiator Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Gladiator Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Bracer (Infiltrator Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Infiltrator Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Bracer (Interceptor Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Interceptor Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Bracer (Mind Knight Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Mind Knight Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Bracer (Survivor Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Survivor Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Bracer (Weaponmaster Path)",
+      "category": "MagicItems",
+      "name": "Warrior's Bracer (Weaponmaster Path)",
+      "cost_gp": 15000.0,
+      "weight_lbs": 0.0,
+      "description": "Treat level as 4 higher for trance and maneuver for specific warrior's path, or can use the trance and maneuver 3/day for 1 minute if path is not known."
+    },
+    {
+      "key": "Warrior's Scabbard",
+      "category": "MagicItems",
+      "name": "Warrior's Scabbard",
+      "cost_gp": 1000.0,
+      "weight_lbs": 1.0,
+      "description": "Gain +1 insight bonus on attack rolls for 1 turn"
+    },
+    {
+      "key": "Warblade Staff",
+      "category": "MagicItems",
+      "name": "Warblade Staff",
+      "cost_gp": 16000.0,
+      "weight_lbs": 5.0,
+      "description": "as psicrystal staff; can be transformed into crystal blade (masterwork deep crystal bastard sword); can deliver touch attacks with melee attacks"
+    },
+    {
+      "key": "Warblade Staff (Greater)",
+      "category": "MagicItems",
+      "name": "Warblade Staff (Greater)",
+      "cost_gp": 20000.0,
+      "weight_lbs": 5.0,
+      "description": "as psicrystal staff; can be transformed into crystal blade (masterwork deep crystal bastard sword); can deliver touch attacks with melee attacks; crystal blade can create energy burst"
+    },
+    {
+      "key": "Wooden Shirt",
+      "category": "MagicItems",
+      "name": "Wooden Shirt",
+      "cost_gp": 32760.0,
+      "weight_lbs": 3.0,
+      "description": "1/day oak body for 9 minutes"
+    },
+    {
+      "key": "Ring of Altered Perception",
+      "category": "MagicItems",
+      "name": "Ring of Altered Perception",
+      "cost_gp": 12000.0,
+      "weight_lbs": 0.0,
+      "description": "Give false information to clairsentience powers"
+    },
+    {
+      "key": "Ring of Missile Protection",
+      "category": "MagicItems",
+      "name": "Ring of Missile Protection",
+      "cost_gp": 4000.0,
+      "weight_lbs": 0.0,
+      "description": "DR 10/magic vs. ranged attacks, inert for 24 hours after 50 damage avoided"
+    },
+    {
+      "key": "Ring of Psionics +2",
+      "category": "MagicItems",
+      "name": "Ring of Psionics +2",
+      "cost_gp": 20000.0,
+      "weight_lbs": 1.0,
+      "description": "Treat your key ability score as 2 higher for bonus power points"
+    },
+    {
+      "key": "Ring of Psionics +4",
+      "category": "MagicItems",
+      "name": "Ring of Psionics +4",
+      "cost_gp": 40000.0,
+      "weight_lbs": 1.0,
+      "description": "Treat your key ability score as 4 higher for bonus power points"
+    },
+    {
+      "key": "Ring of Psionics +6",
+      "category": "MagicItems",
+      "name": "Ring of Psionics +6",
+      "cost_gp": 70000.0,
+      "weight_lbs": 1.0,
+      "description": "Treat your key ability score as 6 higher for bonus power points"
+    },
+    {
+      "key": "Ring (Self Sufficiency)",
+      "category": "MagicItems",
+      "name": "Ring of Self-Sufficiency",
+      "cost_gp": 10000.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Reverse Capacitor",
+      "category": "MagicItems",
+      "name": "Reverse Capacitor",
+      "cost_gp": null,
+      "weight_lbs": 1.0,
+      "description": "lose 1d6 pp per round for 7 rounds when trying to use as crystal capacitor"
+    },
+    {
+      "key": "Sutra of Tranquil Thought",
+      "category": "MagicItems",
+      "name": "Sutra of Tranquil Thought",
+      "cost_gp": 0.0,
+      "weight_lbs": 3.0,
+      "description": null
+    },
+    {
+      "key": "Annulus",
+      "category": "MagicItems",
+      "name": "Annulus",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Psicrown of the Crystal Mind",
+      "category": "MagicItems",
+      "name": "Psicrown of the Crystal Mind",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.0,
+      "description": null
+    },
+    {
+      "key": "Crown of Chaos",
+      "category": "MagicItems",
+      "name": "Crown of Chaos",
+      "cost_gp": null,
+      "weight_lbs": 0.0,
+      "description": "Power Points - 60; Manifester Level - 11; Powers - Deflect Missiles, Energy Burst, Energy Push, Force Screen; Recharge Cost 11 pp, Gain 6 pp; treat powers as if on power list; Power Points - 140; Manifester Level - 14; Powers - Deflect Missiles, Energy Burst, Energy Push, Force Screen; Recharge Cost 14 pp, Gain 14 pp; treat powers as if on power list; 1/day recharge for 14 pp"
+    },
+    {
+      "key": "Dancing Robes of Sharatwan",
+      "category": "MagicItems",
+      "name": "Dancing Robes of Sharatwan",
+      "cost_gp": null,
+      "weight_lbs": 10.0,
+      "description": null
+    },
+    {
+      "key": "Disruptor",
+      "category": "MagicItems",
+      "name": "Disruptor",
+      "cost_gp": null,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind shield is increased by +%, up to +5|DisruptorShieldBonus"
+    },
+    {
+      "key": "Dissonance",
+      "category": "ArmsArmor",
+      "name": "Dissonance, Wind of the Mind",
+      "cost_gp": null,
+      "weight_lbs": 10.0,
+      "description": null
+    },
+    {
+      "key": "Groundscorn Boots",
+      "category": "MagicItems",
+      "name": "Groundscorn Boots of the Twice-Loved",
+      "cost_gp": null,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Heartstaff",
+      "category": "MagicItems",
+      "name": "The Heartstaff",
+      "cost_gp": null,
+      "weight_lbs": 5.0,
+      "description": "Can hold psicrystal, 3 setting stones, 10 companion stones; Can hold psicrystal, 5 setting stones, 10 companion stones; psicrystal repairs 1 hp/minute; double personality bonuses [not implemented]"
+    },
+    {
+      "key": "Helm of the Hydra",
+      "category": "MagicItems",
+      "name": "Helm of the Hydra",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Moldev",
+      "category": "MagicItems",
+      "name": "Moldev, the Secret Strike",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Can create a light piercing weapon with a 19-20/x2 crit range as a mind blade (1st level soulknife)."
+    },
+    {
+      "key": "Severis",
+      "category": "ArmsArmor",
+      "name": "Severis, the Scourge Slayer",
+      "cost_gp": null,
+      "weight_lbs": 6.0,
+      "description": null
+    },
+    {
+      "key": "Tempest's Blade",
+      "category": "MagicItems",
+      "name": "Tempest's Blade",
+      "cost_gp": null,
+      "weight_lbs": 2.0,
+      "description": "enhancement of mind blade is increased by +%, up to +5|TempestsBladeHiltBonus"
+    }
+  ]
+}

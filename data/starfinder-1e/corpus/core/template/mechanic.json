@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Mechanic",
+    "name": "Mechanic",
+    "type": "BaseClass"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "starfinder/paizo/core/scr_templates.lst",
+    "record_key": "Mechanic",
+    "sha256": "49b3ecaeb57b9df001ce7283de7accbba50de6188b8f8c1fbdcc40c76aa7bf88"
+  },
+  "unit_id": "core:template:mechanic"
+}

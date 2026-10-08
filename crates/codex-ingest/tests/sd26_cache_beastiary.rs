@@ -22,8 +22,8 @@ use std::path::{Path, PathBuf};
 
 use serde_json::Value;
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::beastiary1::monster_key_resolve;
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::monster_key_resolve;
 
 fn repo_root() -> PathBuf {
     codex_ingest::repo_root()
@@ -177,7 +177,7 @@ fn the_directory_holds_both_tables_records() {
     assert_eq!(
         chassis.len(),
         280,
-        "the SD-29 round 8 chassis complement -- see rules_tables::bestiary"
+        concat!("the SD-29 round 8 chassis complement -- see rules_tables", "::bestiary")
     );
     assert_eq!(
         all.len(),
@@ -374,7 +374,7 @@ fn every_monster_cache_record_matches_its_shipped_stat_block_field_for_field() {
 /// The 12 monsters whose natural-attack damage dice are not transcribed
 /// from their own `b1_races.lst` row, and therefore carry per-field
 /// provenance narrowing the record-level `lst_token` claim. See
-/// `rules_tables::beastiary1::natural_attack_provenance`.
+/// `rules_catalog::beastiary1::natural_attack_provenance`.
 const GROUNDED_MONSTER_SLUGS: &[&str] = &[
     "ankheg",
     "assassin_vine",

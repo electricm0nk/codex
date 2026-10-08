@@ -1,0 +1,81 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/companion_data/COMPANION_CLASSES",
+  "licence": {
+    "license": "OGL",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion",
+      "output_name": "Animal",
+      "hit_dice": 8,
+      "max_level": "20",
+      "type_segments": [
+        "Monster",
+        "Companion"
+      ],
+      "visible_no": true,
+      "source_page": "p.52",
+      "ability_grants": [
+        {
+          "kind": "FEAT",
+          "mode": "AUTOMATIC",
+          "name": "CMB Output",
+          "conditions": []
+        }
+      ],
+      "fact_class_type": "Companion",
+      "source_file": "cr_classes_companion",
+      "source_line": 6
+    },
+    {
+      "key": "Shadow Companion",
+      "output_name": null,
+      "hit_dice": 8,
+      "max_level": "NOLIMIT",
+      "type_segments": [
+        "Monster",
+        "Companion"
+      ],
+      "visible_no": true,
+      "source_page": "p.309",
+      "ability_grants": [
+        {
+          "kind": "Special Ability",
+          "mode": "AUTOMATIC",
+          "name": "Undead Traits",
+          "conditions": [
+            {
+              "negated": false,
+              "family": "VAREQ",
+              "items": [
+                {
+                  "facet": null,
+                  "value": "NoTypeTraits"
+                },
+                {
+                  "facet": null,
+                  "value": "0"
+                }
+              ],
+              "alternatives": []
+            }
+          ]
+        },
+        {
+          "kind": "FEAT",
+          "mode": "AUTOMATIC",
+          "name": "CMB Output",
+          "conditions": []
+        }
+      ],
+      "fact_class_type": "Companion",
+      "source_file": "cr_classes_companion",
+      "source_line": 15
+    }
+  ]
+}

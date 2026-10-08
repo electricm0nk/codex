@@ -1,0 +1,36 @@
+...../home/ubuntu/workspace/worktrees/codex-sd37/scripts/transcribe_monster_tables.py:1670: ResourceWarning: unclosed file <_io.TextIOWrapper name='docs/work-inventory.json' mode='r' encoding='utf-8'>
+  inventory = json.load(open("docs/work-inventory.json", encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/ubuntu/workspace/worktrees/codex-sd37/scripts/transcribe_monster_tables.py:384: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/ubuntu/workspace/worktrees/codex-sd37/src/rules_core/pi_screening.rs' mode='r' encoding='utf-8'>
+  text = open(PI_SCREEN_RS, encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+bonus_bestiary: 1 orphan ability row(s) transcribed WITHOUT an owner (no monster row of this book claims them; ingested for shape measurement per decisions.md §20, reachability NOT claimed -- see reach_gate.rs UNREACHED_RECORD_FINDINGS): Other Monster ~ Unrelated Ability
+.bonus_bestiary: 1 orphan ability row(s) transcribed WITHOUT an owner (no monster row of this book claims them; ingested for shape measurement per decisions.md §20, reachability NOT claimed -- see reach_gate.rs UNREACHED_RECORD_FINDINGS): Other Monster ~ Unrelated Ability
+.bonus_bestiary: PI screen dropped 1 monster row(s) and 1 ability row(s): Test Monster (1 PI_BLACKLIST_TERMS hit(s) in emitted values), Test Monster ~ Guarded (1 PI_BLACKLIST_TERMS hit(s) in emitted values)
+bonus_bestiary: 3 orphan ability row(s) transcribed WITHOUT an owner (no monster row of this book claims them; ingested for shape measurement per decisions.md §20, reachability NOT claimed -- see reach_gate.rs UNREACHED_RECORD_FINDINGS): Test Monster ~ Clean Ability, Pharasma Ability, Test Monster ~ Whisper
+bonus_bestiary: 1 ability row(s) description redacted (DESCISPI:YES): Test Monster ~ Whisper
+/home/ubuntu/workspace/worktrees/codex-sd37/scripts/transcribe_monster_tables.py:411: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/ubuntu/workspace/worktrees/codex-sd37/src/rules_core/shape_b_v1.rs' mode='r' encoding='utf-8'>
+  text = open(PI_MARKER_RS, encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.bonus_bestiary: PI screen dropped 1 monster row(s) and 1 ability row(s): Test Monster (1 PI_BLACKLIST_TERMS hit(s) in emitted values), Test Monster ~ Guarded (1 PI_BLACKLIST_TERMS hit(s) in emitted values)
+bonus_bestiary: 3 orphan ability row(s) transcribed WITHOUT an owner (no monster row of this book claims them; ingested for shape measurement per decisions.md §20, reachability NOT claimed -- see reach_gate.rs UNREACHED_RECORD_FINDINGS): Test Monster ~ Clean Ability, Pharasma Ability, Test Monster ~ Whisper
+bonus_bestiary: 1 ability row(s) description redacted (DESCISPI:YES): Test Monster ~ Whisper
+.bonus_bestiary: PI screen dropped 1 monster row(s) and 1 ability row(s): Test Monster (1 PI_BLACKLIST_TERMS hit(s) in emitted values), Test Monster ~ Guarded (1 PI_BLACKLIST_TERMS hit(s) in emitted values)
+bonus_bestiary: 3 orphan ability row(s) transcribed WITHOUT an owner (no monster row of this book claims them; ingested for shape measurement per decisions.md §20, reachability NOT claimed -- see reach_gate.rs UNREACHED_RECORD_FINDINGS): Test Monster ~ Clean Ability, Pharasma Ability, Test Monster ~ Whisper
+bonus_bestiary: 1 ability row(s) description redacted (DESCISPI:YES): Test Monster ~ Whisper
+.bonus_bestiary: PI screen dropped 1 monster row(s) and 1 ability row(s): Test Monster (1 PI_BLACKLIST_TERMS hit(s) in emitted values), Test Monster ~ Guarded (1 PI_BLACKLIST_TERMS hit(s) in emitted values)
+bonus_bestiary: 3 orphan ability row(s) transcribed WITHOUT an owner (no monster row of this book claims them; ingested for shape measurement per decisions.md §20, reachability NOT claimed -- see reach_gate.rs UNREACHED_RECORD_FINDINGS): Test Monster ~ Clean Ability, Pharasma Ability, Test Monster ~ Whisper
+bonus_bestiary: 1 ability row(s) description redacted (DESCISPI:YES): Test Monster ~ Whisper
+.bonus_bestiary: PI screen dropped 1 monster row(s) and 1 ability row(s): Test Monster (1 PI_BLACKLIST_TERMS hit(s) in emitted values), Test Monster ~ Guarded (1 PI_BLACKLIST_TERMS hit(s) in emitted values)
+bonus_bestiary: 3 orphan ability row(s) transcribed WITHOUT an owner (no monster row of this book claims them; ingested for shape measurement per decisions.md §20, reachability NOT claimed -- see reach_gate.rs UNREACHED_RECORD_FINDINGS): Test Monster ~ Clean Ability, Pharasma Ability, Test Monster ~ Whisper
+bonus_bestiary: 1 ability row(s) description redacted (DESCISPI:YES): Test Monster ~ Whisper
+.........../home/ubuntu/workspace/worktrees/codex-sd37/scripts/transcribe_monster_tables.py:384: ResourceWarning: unclosed file <_io.TextIOWrapper name='src/rules_core/pi_screening.rs' mode='r' encoding='utf-8'>
+  text = open(PI_SCREEN_RS, encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+............................
+----------------------------------------------------------------------
+Ran 50 tests in 1.857s
+
+OK
+a note
+exit=0

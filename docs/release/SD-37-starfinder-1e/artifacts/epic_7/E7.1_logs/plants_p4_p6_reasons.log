@@ -1,0 +1,10 @@
+== P4 1 line(s) changed
+thread 'rules_core::pilot_compute::sf_attack::sf_seed::sf_seed_the_envoy_uses_dexterity_with_an_operative_weapon' (2679805) panicked at src/rules_core/pilot_compute/sf_attack.rs:339:9:
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 2827 filtered out; finished in 0.67s
+== P5 1 line(s) changed
+thread 'rules_core::pilot_compute::sf_attack::sf_seed::sf_seed_a_weapon_without_proficiency_takes_minus_four' (2680590) panicked at src/rules_core/pilot_compute/sf_attack.rs:351:9:
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 2827 filtered out; finished in 0.65s
+== P6 1 line(s) changed
+thread 'sf_oracle_parity::tests::sf_oracle_parity_every_difference_is_explained' (2682209) panicked at src/sf_oracle_parity.rs:515:9:
+5 unexplained differences (build, field, engine, oracle):
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 697 filtered out; finished in 3.08s

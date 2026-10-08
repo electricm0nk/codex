@@ -13,14 +13,14 @@
 //! `Cavalier`, real-corpus-gated on `PCGEN_CORPUS_ROOT`, mirroring
 //! `tests/sd17_b1_martial_class.rs`'s established pattern) so the
 //! hand-transcribed chassis constants in
-//! `rules_tables::apg::class_cavalier` stay tied to the source record
+//! `rules_catalog::apg::class_cavalier` stay tied to the source record
 //! rather than to memory.
 
 use std::fs;
 use std::path::PathBuf;
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::apg::{ApgClassId, class_chassis_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::apg::{ApgClassId, class_chassis_resolve};
 
 #[test]
 fn cavalier_level_1_chassis_resolves_via_ruleset_apg() {

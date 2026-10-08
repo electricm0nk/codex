@@ -9,18 +9,19 @@
 //! `core_essentials/ce_abilities_race.lst`, not under `bestiary/`), but
 //! carry no dice — they are mechanical markers whose dice PCGen supplies
 //! at runtime from size tables. See
-//! `rules_tables::beastiary1::natural_attack_provenance`'s module doc
+//! `rules_catalog::beastiary1::natural_attack_provenance`'s module doc
 //! comment for the full finding.
 //!
 //! These tests exist so the grounded values cannot be silently reverted
 //! to an absent-token empty list, and so no attack can be added to the
 //! shipped tables without a cited source.
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::beastiary1::natural_attack_provenance::{
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::natural_attack_provenance::{
     AttackSource, GROUNDED_NATURAL_ATTACKS, provenance_for,
 };
-use codex::rules_core::rules_tables::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
+use codex::rules_core::rules_catalog::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
+use codex::rules_core::rules_catalog::COMPILED_MODULE_CITATION;
 
 /// `SD-26 decisions.md §11.5`: "Allowed domains only: `d20pfsrd.com`,
 /// `legacy.aonprd.com` / `aonprd.com`. No other source."
@@ -62,7 +63,7 @@ fn the_twelve_grounded_monsters_ship_exactly_their_corroborated_attack_lists() {
             actual, expected,
             "{key}: shipped natural attacks must match the corroborated list. If this failed \
              because the list is empty, do NOT 'fix' it by deleting the expectation -- read \
-             rules_tables::beastiary1::natural_attack_provenance first; the absent corpus token \
+             {COMPILED_MODULE_CITATION}::beastiary1::natural_attack_provenance first; the absent corpus token \
              is not evidence the monster has no attack."
         );
     }
@@ -72,7 +73,7 @@ fn the_twelve_grounded_monsters_ship_exactly_their_corroborated_attack_lists() {
 fn every_grounded_attack_has_a_provenance_row_and_every_provenance_row_is_shipped() {
     // Direction 1: every provenance row is really shipped, with the
     // exact dice it claims.
-    for g in GROUNDED_NATURAL_ATTACKS {
+    for g in &GROUNDED_NATURAL_ATTACKS {
         let block = monster_key_resolve(g.monster_key, RuleSetId::Bestiary1)
             .unwrap_or_else(|| panic!("{}: provenance row names an unresolvable monster", g.monster_key));
         let shipped = block
@@ -111,7 +112,7 @@ fn every_grounded_attack_has_a_provenance_row_and_every_provenance_row_is_shippe
 fn every_web_grounded_value_cites_at_least_two_independent_allowed_domain_sources() {
     // The 2-of-3 corroboration bar, enforced structurally rather than by
     // trusting a reviewer to notice a single-sourced value.
-    for g in GROUNDED_NATURAL_ATTACKS {
+    for g in &GROUNDED_NATURAL_ATTACKS {
         let AttackSource::WebSecondSource { urls, fetched_at, identity_match_basis } = g.source else {
             continue;
         };
@@ -164,7 +165,7 @@ fn crocodile_tail_slap_is_recovered_from_a_real_corpus_token_not_the_web() {
         .expect("Crocodile Tail Slap provenance row must exist");
     match row.source {
         AttackSource::LstToken { path, line, record_key } => {
-            assert_eq!(path, "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst");
+            assert_eq!(path, "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race");
             assert_eq!(line, 248);
             assert_eq!(record_key, "Crocodile ~ Tail Slap");
         }
@@ -250,7 +251,7 @@ fn published_melee_text_actually_contains_the_dice_it_was_read_from() {
     // Cheap transcription check: the recorded dice must literally appear
     // in the quoted published line. Catches a fat-fingered "1d8" against
     // a quote that reads "1d6".
-    for g in GROUNDED_NATURAL_ATTACKS {
+    for g in &GROUNDED_NATURAL_ATTACKS {
         if g.damage_dice == "0" {
             continue;
         }

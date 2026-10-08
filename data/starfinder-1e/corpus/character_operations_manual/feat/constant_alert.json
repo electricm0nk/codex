@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "FEAT",
+    "key": "Constant Alert",
+    "name": "Constant Alert",
+    "type": "Combat"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "starfinder/paizo/character_operations_manual/scom_feats.lst",
+    "record_key": "Constant Alert",
+    "sha256": "2585b61fc460e6f938529125b6a0cbc976d51bfa2068ccf50b5ac620b58c03c6"
+  },
+  "unit_id": "character_operations_manual:feat:constant_alert"
+}

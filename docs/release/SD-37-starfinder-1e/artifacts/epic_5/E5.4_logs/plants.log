@@ -1,0 +1,8 @@
+P1 modifier gate dropped: check exit 101 -> FAIL (red, as required)
+P2 skill unit option deleted: check exit 101 -> FAIL (red, as required)
+P3 kit scores row dropped: check exit 101 -> FAIL (red, as required)
+P4 Limited AI edge dropped: check exit 101 -> FAIL (red, as required)
+P5 drone class race edge dropped: check exit 101 -> FAIL (red, as required)
+P6 master link dropped: check exit 101 -> FAIL (red, as required)
+P7 drone choices dropped: check exit 101 -> FAIL (red, as required)
+7 of 7 plants red; files restored byte-identical

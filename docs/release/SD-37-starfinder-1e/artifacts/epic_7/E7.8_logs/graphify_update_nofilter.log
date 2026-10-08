@@ -1,0 +1,15 @@
+  warning: skill at /home/ubuntu/.claude/skills/graphify is from graphify 0.8.33, package is 0.9.64. Run 'graphify install --platform claude' to update it (a plain 'graphify install' refreshes only the detected platform).
+  warning: skill at /home/ubuntu/.hermes/skills/graphify is from graphify 0.8.33, package is 0.9.64. Run 'graphify install --platform hermes' to update it (a plain 'graphify install' refreshes only the detected platform).
+Re-extracting code files in . (no LLM needed)...
+[graphify watch] 2861 file(s) not classified (no supported extension or shebang), skipped: .git, .gitattributes, .gitignore, .gitkeep, 15-card-15-ability-category-rows.jsonl, 15-card-15-category-internal-rows.jsonl (+2855 more)
+[graphify] Extraction warning (1223 issues): 1043x missing required field 'source_file' (e.g. Node 61150 (id='GE-05') missing required field 'source_file'); 180x missing required field 'relation' (e.g. Edge 116013 missing required field 'relation')
+[graphify watch] community set changed since labeling (6726 saved labels, 3279 communities now; renamed 27 community(ies) by their hub). Run `graphify label` to refresh names with the LLM.
+[graphify] backed up semantic+curated graph (4 files) -> 2026-10-07/
+Graph has 62588 nodes (above 5000 limit). Building aggregated community view...
+graph.html written (aggregated: 3279 community nodes, 5810 cross-community edges)
+Tip: run with --obsidian for full node-level detail.
+[graphify watch] Rebuilt: 62588 nodes, 111520 edges, 3279 communities
+[graphify watch] graph.json, graph.html and GRAPH_REPORT.md updated in graphify-out
+Code graph updated. For doc/paper/image changes run /graphify --update in your AI assistant.
+Tip: set GEMINI_API_KEY or GOOGLE_API_KEY to use Gemini for semantic extraction.
+exit=0

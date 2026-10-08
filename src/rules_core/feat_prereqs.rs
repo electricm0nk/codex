@@ -6,7 +6,7 @@
 //! `Metamagic`). The first cycle (`b830769`) landed `FeatCategory::General`
 //! after an earlier blocked cycle (`cycle-2026-07-17T1920`) found the SD-19
 //! table store had no feat catalog at all — resolved at `04c3d08`, which
-//! landed `rules_tables::crb::feats` (`feat_tables()`, 185 real CRB feat
+//! landed `rules_catalog::crb::feats` (`feat_tables()`, 185 real CRB feat
 //! records across four categories — General 50, Combat 110, ItemCreation 8,
 //! Metamagic 17). The second cycle (`c15983d`) landed `FeatCategory::Combat`.
 //! The third cycle (`ce4a251`) landed `FeatCategory::ItemCreation`. This
@@ -16,7 +16,7 @@
 //! **This closes Epic 3**: every feat category in the landed CRB feat
 //! catalog now has a landed per-category evaluation module.
 //!
-//! Reads the feat catalog directly (`rules_tables::crb::feats::feat_tables()`)
+//! Reads the feat catalog directly (`rules_catalog::crb::feats::feat_tables()`)
 //! per `technical-design.md` §2.0's table-store access convention (no
 //! `RulesTables` parameter of any kind; a direct, fully-qualified `use`
 //! import of the specific table item, called inline) — the same pattern
@@ -45,7 +45,7 @@
 //! `FeatKey` is defined here (not sketched with fields anywhere in
 //! `technical-design.md`) as the minimal identity a catalog lookup needs:
 //! the feat's catalog id plus its category, reusing the already-landed
-//! `rules_tables::crb::feats::FeatCategory` enum rather than re-deriving
+//! `rules_catalog::crb::feats::FeatCategory` enum rather than re-deriving
 //! a duplicate category taxonomy.
 
 //! # SD-27: real prerequisite evaluation across all five books
@@ -85,9 +85,9 @@ pub mod metamagic;
 use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute::PilotBaseChassisComputation;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::feats::FeatCategory;
-use crate::rules_core::rules_tables::feats_all::{all_feat_tables, FeatCatalogRecord};
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::crb::feats::FeatCategory;
+use crate::rules_core::rules_catalog::feats_all::{all_feat_tables, FeatCatalogRecord};
+use crate::rules_core::rules_catalog::RuleSetId;
 use crate::rules_core::sheet_rule::{
     held_set, split_rule_id, Applies, CharacterFacts, HeldSeed, HeldSet, SheetRule,
     SheetRulePackage,
@@ -147,7 +147,7 @@ pub struct FeatEffects {
 /// cycle all four `FeatCategory` variants — `General`, `Combat`,
 /// `ItemCreation`, and `Metamagic` — have a landed per-category module,
 /// closing Epic 3 (`scope-draft.md` §1.3): every feat category in
-/// `rules_tables::crb::feats::feat_tables()` now has a landed evaluation
+/// `rules_catalog::crb::feats::feat_tables()` now has a landed evaluation
 /// path.
 pub fn evaluate_feat_prerequisites(feat: &FeatKey) -> PrerequisiteEvaluation {
     match feat.category {
@@ -202,7 +202,7 @@ pub fn evaluate_feat_prerequisites(feat: &FeatKey) -> PrerequisiteEvaluation {
         // `Teamwork` and `Panache` exist only on APG/ACG records (see
         // `FeatCategory`'s own doc comment). Every per-category module
         // above evaluates against the *CRB* catalog
-        // (`rules_tables::crb::feats::feat_tables()`), which by
+        // (`rules_catalog::crb::feats::feat_tables()`), which by
         // construction holds no record of either category, so neither has
         // a landed evaluation path. Routing them through a CRB lookup
         // anyway would report all 11 real APG/ACG feats as "not a

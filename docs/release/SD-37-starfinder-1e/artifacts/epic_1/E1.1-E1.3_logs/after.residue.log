@@ -1,0 +1,25 @@
+pattern raw_tokens files=0 hits=0
+pattern raw_bonus_chains files=0 hits=0
+pattern PcgenFormulaEvaluator files=0 hits=0
+pattern render_pcgen_desc files=0 hits=0
+pattern bonus_stack_reader files=0 hits=0
+pattern pre_tokens files=0 hits=0
+pattern lst_file files=0 hits=0
+pattern BONUS: files=0 hits=0
+pattern DEFINE: files=0 hits=0
+pattern PRE[A-Z]+: files=0 hits=0
+pattern SAB: files=0 hits=0
+pattern DESC: files=0 hits=0
+pattern %CHOICE files=0 hits=0
+pattern %LIST files=0 hits=0
+pattern TYPE= files=0 hits=0
+pattern pcgen_import files=0 hits=0
+pattern codex_ingest files=0 hits=0
+root src/rules_core files=0 hits=0
+root src/saved_character files=0 hits=0
+root src/campaign files=0 hits=0
+root src/homebrew_authoring files=0 hits=0
+root apps/desktop files=0 hits=0
+identifier_files=0 identifier_hits=0
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=56020
+live_files=0 live_hits=0 verdict=PASS

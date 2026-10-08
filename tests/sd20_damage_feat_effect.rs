@@ -19,7 +19,7 @@
 //! CRB's own benefit text confirms the constant: "You gain a +2 bonus on
 //! all damage rolls you make using the selected weapon" (p.137 / p.126).
 //!
-//! Reads `rules_tables::crb::feats::feat_tables()` directly (no
+//! Reads `rules_catalog::crb::feats::feat_tables()` directly (no
 //! `RulesTables` parameter, `technical-design.md` §2.0) — this table's
 //! `effect: Option<&'static [FeatEffectBonus]>` field landed at `3d962c2`,
 //! resolving the prior blocked attempt's (`cycle-2026-07-17T1738`) "no

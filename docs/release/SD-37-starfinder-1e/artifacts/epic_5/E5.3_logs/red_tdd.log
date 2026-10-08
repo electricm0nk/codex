@@ -1,0 +1,70 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.55s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 13 tests
+test sf_sheet_print::tests::an_installed_augmentation_prints_its_system_and_one_per_system ... FAILED
+test sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal ... FAILED
+test sf_sheet_print::tests::every_sf_spell_prints_its_formulas_as_words_with_no_character ... ok
+test sf_sheet_print::tests::installed_upgrades_and_fusions_print_on_their_item ... FAILED
+test sf_sheet_print::tests::an_equipped_items_bonus_reaches_the_skill_totals ... FAILED
+test sf_sheet_print::tests::sf_seed_spell_prose_resolves_the_casters_terms ... ok
+test sf_sheet_print::tests::sf_seed_loadouts_print_every_carried_item_with_its_quantity ... FAILED
+test sf_sheet_print::tests::an_unprintable_spell_selection_is_a_named_refusal ... ok
+test sf_sheet_print::tests::sf_seed_lines_print_every_resolved_term_and_no_pcgen_residue ... ok
+test sf_sheet_print::tests::sf_seed_feats_print_the_seed_builds_feats ... ok
+test sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant ... ok
+test sf_sheet_print::tests::sf_seed_spell_lists_equal_the_seed_builds_spells_known ... ok
+test sf_sheet_print::tests::sf_seed_weapon_lines_carry_their_attack_and_damage_rows ... FAILED
+
+failures:
+
+---- sf_sheet_print::tests::an_installed_augmentation_prints_its_system_and_one_per_system stdout ----
+
+thread 'sf_sheet_print::tests::an_installed_augmentation_prints_its_system_and_one_per_system' (2083038) panicked at src/sf_sheet_print.rs:635:95:
+the augmentation prints
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal stdout ----
+
+thread 'sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal' (2083039) panicked at src/sf_sheet_print.rs:576:13:
+assertion `left == right` failed: d_suit_i ["armor_infrared_sensors", "armor_jump_jets"]
+  left: "sf_adapter.pathfinder_fields_zero"
+ right: "sf_sheet_print.upgrade_slots_exceeded"
+
+---- sf_sheet_print::tests::installed_upgrades_and_fusions_print_on_their_item stdout ----
+
+thread 'sf_sheet_print::tests::installed_upgrades_and_fusions_print_on_their_item' (2083042) panicked at src/sf_sheet_print.rs:542:97:
+core:equipment_modifier:armor_infrared_sensors prints
+
+---- sf_sheet_print::tests::an_equipped_items_bonus_reaches_the_skill_totals stdout ----
+
+thread 'sf_sheet_print::tests::an_equipped_items_bonus_reaches_the_skill_totals' (2083037) panicked at src/sf_sheet_print.rs:600:13:
+the stone prints
+
+---- sf_sheet_print::tests::sf_seed_loadouts_print_every_carried_item_with_its_quantity stdout ----
+
+thread 'sf_sheet_print::tests::sf_seed_loadouts_print_every_carried_item_with_its_quantity' (2083086) panicked at src/sf_sheet_print.rs:469:13:
+assertion `left == right` failed: SF-Soldier-3: printed ["Defiance Series, Squad"]
+  left: 1
+ right: 5
+
+---- sf_sheet_print::tests::sf_seed_weapon_lines_carry_their_attack_and_damage_rows stdout ----
+
+thread 'sf_sheet_print::tests::sf_seed_weapon_lines_carry_their_attack_and_damage_rows' (2083090) panicked at src/sf_sheet_print.rs:508:9:
+assertion `left == right` failed: seed weapons: Soldier rifle + baton, Mystic pistol + baton, Technomancer pistol, Envoy pistol + baton
+  left: 0
+ right: 7
+
+
+failures:
+    sf_sheet_print::tests::an_equipped_items_bonus_reaches_the_skill_totals
+    sf_sheet_print::tests::an_installed_augmentation_prints_its_system_and_one_per_system
+    sf_sheet_print::tests::an_unplaceable_upgrade_or_fusion_is_a_named_refusal
+    sf_sheet_print::tests::installed_upgrades_and_fusions_print_on_their_item
+    sf_sheet_print::tests::sf_seed_loadouts_print_every_carried_item_with_its_quantity
+    sf_sheet_print::tests::sf_seed_weapon_lines_carry_their_attack_and_damage_rows
+
+test result: FAILED. 7 passed; 6 failed; 0 ignored; 0 measured; 649 filtered out; finished in 1.39s
+
+error: test failed, to rerun pass `--bin codex-desktop`

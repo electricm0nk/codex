@@ -1,0 +1,24 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "key": "Codex-Named Unit (proficiency_alien_archive_saa_profs_weapon_lst_54)",
+    "name": "Codex-Named Unit (proficiency_alien_archive_saa_profs_weapon_lst_54)",
+    "type": "F.SNIPER WEAPONS"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "alien_archive:saa_profs_weapon.lst:54",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 54,
+    "path": "starfinder/paizo/alien_archive/saa_profs_weapon.lst",
+    "record_key": "Codex-Named Unit (proficiency_alien_archive_saa_profs_weapon_lst_54)",
+    "sha256": "5caee6834000e0b9338356a6f64c959da077516114ecd28051d5d76d7ed52bac"
+  },
+  "unit_id": "alien_archive:proficiency:diasporan_rifle_elite"
+}

@@ -1,0 +1,1 @@
+{"var":"v22506d2b540576fa","label":"Fighting Style LVL Primary","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:soldier_class_feature_primary_fighting_style","expr":{"Var":"vb19a28e844514dae"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:204"]}}

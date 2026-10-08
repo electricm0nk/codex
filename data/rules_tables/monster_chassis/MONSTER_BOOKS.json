@@ -1,0 +1,192 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "monster_chassis/MONSTER_BOOKS",
+  "licence": {
+    "license": "OGL",
+    "book": "monster_chassis",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "corpus_book": "bonus_bestiary",
+      "monsters": "bonus_bestiary/monster_data/MONSTERS",
+      "monster_abilities": "bonus_bestiary/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "monster_codex",
+      "monsters": "monster_codex/monster_data/MONSTERS",
+      "monster_abilities": "monster_codex/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "book_of_the_damned_volume_1",
+      "monsters": "book_of_the_damned_volume_1/monster_data/MONSTERS",
+      "monster_abilities": "book_of_the_damned_volume_1/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "book_of_the_damned_volume_2",
+      "monsters": "book_of_the_damned_volume_2/monster_data/MONSTERS",
+      "monster_abilities": "book_of_the_damned_volume_2/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "inner_sea_world_guide",
+      "monsters": "inner_sea_world_guide/monster_data/MONSTERS",
+      "monster_abilities": "inner_sea_world_guide/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "bestiary_2",
+      "monsters": "bestiary_2/monster_data/MONSTERS",
+      "monster_abilities": "bestiary_2/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "bestiary_3",
+      "monsters": "bestiary_3/monster_data/MONSTERS",
+      "monster_abilities": "bestiary_3/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "bestiary_4",
+      "monsters": "bestiary_4/monster_data/MONSTERS",
+      "monster_abilities": "bestiary_4/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "inner_sea_bestiary",
+      "monsters": "inner_sea_bestiary/monster_data/MONSTERS",
+      "monster_abilities": "inner_sea_bestiary/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "inner_sea_gods",
+      "monsters": "inner_sea_gods/monster_data/MONSTERS",
+      "monster_abilities": "inner_sea_gods/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "beastiary",
+      "monsters": "bestiary/monster_data/MONSTERS",
+      "monster_abilities": "bestiary/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": [
+        "Ghoul",
+        "Gnoll",
+        "Goblin Dog",
+        "Lizardfolk",
+        "Wolf",
+        "Darkmantle",
+        "Horse",
+        "Hyena",
+        "Octopus",
+        "Spider Swarm",
+        "Bat Swarm",
+        "Boar",
+        "Boggard",
+        "Bugbear",
+        "Cave Fisher",
+        "Choker",
+        "Crocodile",
+        "Dark Creeper",
+        "Iron Cobra",
+        "Morlock",
+        "Rat Swarm",
+        "Sahuagin",
+        "Shark",
+        "Shocker Lizard",
+        "Skum",
+        "Squid",
+        "Troglodyte",
+        "Vargouille",
+        "Wolverine",
+        "Worg",
+        "Yellow Musk Creeper",
+        "Ankheg",
+        "Assassin Vine",
+        "Centaur",
+        "Cockatrice",
+        "Derro",
+        "Doppelganger",
+        "Dryad",
+        "Ettercap",
+        "Gelatinous Cube",
+        "Hell Hound",
+        "Lion",
+        "Ogre",
+        "Pegasus",
+        "Rust Monster",
+        "Shadow"
+      ]
+    },
+    {
+      "corpus_book": "ultimate_psionics",
+      "monsters": "ultimate_psionics/monster_data/MONSTERS",
+      "monster_abilities": "ultimate_psionics/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "horror_adventures",
+      "monsters": "horror_adventures/monster_data/MONSTERS",
+      "monster_abilities": "horror_adventures/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "ultimate_wilderness",
+      "monsters": "",
+      "monster_abilities": "ultimate_wilderness/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "ultimate_intrigue",
+      "monsters": "",
+      "monster_abilities": "ultimate_intrigue/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "ultimate_magic",
+      "monsters": "",
+      "monster_abilities": "ultimate_magic/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "bestiary_6",
+      "monsters": "",
+      "monster_abilities": "bestiary_6/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "bestiary_5",
+      "monsters": "",
+      "monster_abilities": "bestiary_5/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "pathfinder_unchained",
+      "monsters": "",
+      "monster_abilities": "pathfinder_unchained/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "advanced_race_guide",
+      "monsters": "",
+      "monster_abilities": "advanced_race_guide/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "mythic_adventures",
+      "monsters": "",
+      "monster_abilities": "mythic_adventures/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    },
+    {
+      "corpus_book": "occult_adventures",
+      "monsters": "occult_adventures/monster_data/MONSTERS",
+      "monster_abilities": "occult_adventures/monster_data/MONSTER_ABILITIES",
+      "cross_table_owner_names": []
+    }
+  ]
+}

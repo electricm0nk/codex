@@ -76,6 +76,8 @@ fn the_packaged_bundle_carries_everything_the_rules_engine_reads() {
         RECORD_VARS_PATH,
         EQUIPMENT_TYPES_PATH,
         "data/sheet_rules",
+        "data/starfinder-1e/sheet_rules",
+        "data/rules_tables",
         "data/class_feature_grants",
         "data/corpus",
     ] {
@@ -105,5 +107,20 @@ fn the_packaged_bundle_carries_everything_the_rules_engine_reads() {
     assert!(
         codex::rules_core::sheet_rule_package::package().is_ok(),
         "the sheet-rule package does not load from the packaged root"
+    );
+
+    // Every game system's package and the rules-table package resolve under the installed root,
+    // not the compile-time checkout (the per-system roots read `runtime_repo_root`).
+    let installed = codex::rules_core::game_system::runtime_repo_root();
+    assert_eq!(installed, root, "the per-system package root ignores the installed data root");
+    assert!(
+        codex::rules_core::corpus_loader::live_sheet_rules_for(codex::rules_core::game_system::GameSystem::Starfinder1e)
+            .is_some(),
+        "the Starfinder sheet-rule package does not load from the packaged root"
+    );
+    assert_eq!(
+        codex::rules_core::rules_data_package::runtime_package_root(),
+        root.join("data/rules_tables"),
+        "the rules-table package is not read from the packaged root"
     );
 }

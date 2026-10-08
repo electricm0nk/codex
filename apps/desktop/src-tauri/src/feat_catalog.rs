@@ -1,6 +1,6 @@
 //! v0.6 alpha swarm feat catalog browser — Tauri command adapter over the
 //! full feat table store across every ingested rule book
-//! (`rules_tables::feats_all::all_feat_tables`): 690 real corpus records,
+//! (`rules_catalog::feats_all::all_feat_tables`): 690 real corpus records,
 //! 185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU.
 //!
 //! Mirrors `equipment_catalog.rs`'s own command/pure-fn split and
@@ -27,8 +27,8 @@ use codex::rules_core::feat_effects;
 use codex::rules_core::feat_prereqs::{
     evaluate_catalog_feat_prerequisites, FeatPrerequisiteReport, PrereqFacts,
 };
-use codex::rules_core::rules_tables::feats_all::all_feat_tables;
-use codex::rules_core::rules_tables::RuleSetId;
+use codex::rules_core::rules_catalog::feats_all::all_feat_tables;
+use codex::rules_core::rules_catalog::RuleSetId;
 
 /// One feat's prerequisite verdict for the character the picker is open
 /// for. Absent (`None`) when the catalog is served with no character
@@ -224,7 +224,7 @@ fn row_description(rule_set: RuleSetId, key: &str, table_text: Option<&str>) -> 
 }
 
 fn map_catalog_entry(
-    entry: &codex::rules_core::rules_tables::feats_all::FeatCatalogRecord,
+    entry: &codex::rules_core::rules_catalog::feats_all::FeatCatalogRecord,
     rule_set: RuleSetId,
     source: &str,
     eligibility: Option<FeatEligibilityDto>,
@@ -587,8 +587,8 @@ mod tests {
     /// that the projection dropped or misfiled fails here by name.
     #[test]
     fn catalog_serves_every_corpus_gap_row() {
-        use codex::rules_core::rules_tables::feat_gap_tables::feat_gap_rows_for;
-        use codex::rules_core::rules_tables::feats_all::hand_authored_feat_tables;
+        use codex::rules_core::rules_catalog::feat_gap_tables::feat_gap_rows_for;
+        use codex::rules_core::rules_catalog::feats_all::hand_authored_feat_tables;
 
         let response = build_feat_catalog();
         let mut total = 0usize;
@@ -1152,7 +1152,7 @@ mod tests {
 /// The real corpus weapon list, for the "which weapon?" step of adding a
 /// chooser feat.
 ///
-/// Sourced from `rules_tables::crb::weapon_tables::WEAPON_TABLE` -- the same
+/// Sourced from `rules_catalog::crb::weapon_tables::WEAPON_TABLE` -- the same
 /// 106 ingested records the per-weapon attack/damage/threat-range totals are
 /// computed from. Deliberately NOT the arms-and-armor equipment catalog:
 /// that mixes armor and shields in, and offering "Chain Shirt" as a Weapon
@@ -1168,7 +1168,7 @@ pub struct WeaponTargetDto {
 }
 
 pub fn build_weapon_target_list() -> Vec<WeaponTargetDto> {
-    use codex::rules_core::rules_tables::crb::weapon_tables::{
+    use codex::rules_core::rules_catalog::crb::weapon_tables::{
         weapon_critical_threat_low, WEAPON_TABLE,
     };
 

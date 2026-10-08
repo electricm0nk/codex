@@ -28,6 +28,7 @@ use codex::rules_core::character_input::{
 use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
 use codex::rules_core::durability::{classify_durability, compute_max_hp, DurabilityStatus};
 use codex::rules_core::feat_effects;
+use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
 use codex::rules_core::level_up_option_filter::{filter_option_pool, FEAT_POOL};
 use codex::rules_core::money;
@@ -753,10 +754,24 @@ pub(crate) fn map_sheet_lines_dto(lines: &[codex::rules_core::sheet_rule::SheetL
 /// The `data/sheet_rules/` package, loaded once per process -- the same shape
 /// `race_trait_picker::race_corpus` uses for `data/corpus/`. `Err` names why it is
 /// unavailable (no repo root, an unreadable directory, an empty package).
+///
+/// This is the Pathfinder 1e package: [`sheet_rule_package_for`] with
+/// [`GameSystem::Pathfinder1e`].
 fn sheet_rule_package() -> &'static Result<codex::rules_core::sheet_rule::SheetRulePackage, String> {
-    static PACKAGE: OnceLock<Result<codex::rules_core::sheet_rule::SheetRulePackage, String>> = OnceLock::new();
-    PACKAGE.get_or_init(|| {
-        let dir = crate::authoring_workbench::codex_repo_root()?.join("data/sheet_rules");
+    sheet_rule_package_for(GameSystem::Pathfinder1e)
+}
+
+/// One game system's sheet-rule package, loaded once per process per system (SD-37 E1.1).
+/// The repo root is resolved at run time by [`crate::authoring_workbench::codex_repo_root`]
+/// (`CODEX_REPO_ROOT`, the packaged resource roots, then the dev checkout) and the system's
+/// own directory is taken from [`GameSystem::package_roots`].
+pub(crate) fn sheet_rule_package_for(
+    system: GameSystem,
+) -> &'static Result<codex::rules_core::sheet_rule::SheetRulePackage, String> {
+    type Slot = OnceLock<Result<codex::rules_core::sheet_rule::SheetRulePackage, String>>;
+    static PACKAGES: [Slot; GameSystem::ALL.len()] = [const { Slot::new() }; GameSystem::ALL.len()];
+    PACKAGES[system.index()].get_or_init(|| {
+        let dir = system.package_roots(&crate::authoring_workbench::codex_repo_root()?).sheet_rules;
         let load = codex::rules_core::corpus_loader::load_sheet_rules(&dir);
         if load.package.rules.is_empty() {
             return Err(format!(
@@ -1979,7 +1994,7 @@ const SECOND_SEED_CHARACTER_ID: &str = "00000000-0000-0000-0000-000000000002";
 const WIZARD_CLASS_ID_FOR_SEED: &str = "class:wizard";
 
 /// Fireball as the engine and the Add Spell picker name it: the key of the CRB spell-list
-/// row (`rules_tables::crb::spell_list::SPELL_LIST`, generated from `cr_spells.lst`), which is
+/// row (`rules_catalog::crb::spell_list::SPELL_LIST`, generated from `cr_spells.lst`), which is
 /// the label of the converted record [`FIREBALL_CONVERTED_RECORD_ID`]
 /// (`data/sheet_rules/core_rulebook/spell/fireball.json`, granted by
 /// `ClassSpellList { id: "wizard", spell_level: 3 }`). Pinned against both by
@@ -2221,24 +2236,26 @@ fn seed_one_starter(app_data_dir: &Path, app_version: &str, seed: StarterSeed) -
     write_marker()
 }
 
+/// Lists through the adapter of the rule system the landing screen selected
+/// (`rule_system_adapter::list_saved_characters_via_rule_system`); no id is Pathfinder's listing.
 #[tauri::command]
-pub fn list_saved_characters(app: tauri::AppHandle) -> Result<ListSavedCharactersResponse, String> {
+pub fn list_saved_characters(
+    app: tauri::AppHandle,
+    rule_system_id: Option<String>,
+) -> Result<ListSavedCharactersResponse, String> {
     let characters_root = resolve_characters_root(&app)?;
-    let listing = SavedCharacterStore::list_all(&characters_root).map_err(|err| err.message)?;
-
-    Ok(ListSavedCharactersResponse {
-        characters: listing.characters.iter().map(map_summary_dto).collect(),
-        unreadable_count: listing.unreadable_entries.len(),
-    })
+    crate::rule_system_adapter::list_saved_characters_via_rule_system(rule_system_id.as_deref(), &characters_root)
 }
 
+/// Loads through the adapter the character's own envelope names
+/// (`rule_system_adapter::load_saved_character_via_envelope`).
 #[tauri::command]
 pub fn load_saved_character(
     app: tauri::AppHandle,
     request: LoadSavedCharacterRequest,
 ) -> Result<LoadSavedCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    load_saved_character_at_root(&root)
+    crate::rule_system_adapter::load_saved_character_via_envelope(&root)
 }
 
 /// PF1 character level: the SUM of the character's class levels (a
@@ -5252,7 +5269,7 @@ pub fn export_character(app: tauri::AppHandle, request: ExportCharacterRequest) 
 /// make one.
 ///
 /// A hand-maintained mirror of corpus facts is also how the identical table
-/// one layer down (`rules_tables::crb::race_tables`) silently drifted from
+/// one layer down (`rules_catalog::crb::race_tables`) silently drifted from
 /// the corpus on four races' ability modifiers: a +2 Con/Wis adjustment
 /// states two ability grants in one token and a transcription read only up
 /// to the comma. Deriving removes the class of defect rather than re-checking
@@ -5383,7 +5400,7 @@ pub fn build_race_creation_roster() -> RaceCreationRosterResponse {
     // in the order it offered them), then Bestiary 1's, alphabetically within
     // each book. A book this list does not name sorts last rather than being
     // dropped.
-    let book_rank = |book: &str| crate::race_catalog::RACE_CATALOG_BOOKS.iter().position(|b| *b == book).unwrap_or(usize::MAX);
+    let book_rank = |book: &str| crate::race_catalog::RACE_CATALOG_BOOK_REGISTRY.books(GameSystem::Pathfinder1e).iter().position(|b| *b == book).unwrap_or(usize::MAX);
     races.sort_by(|a, b| book_rank(&a.book).cmp(&book_rank(&b.book)).then_with(|| a.label.cmp(&b.label)));
 
     RaceCreationRosterResponse { races, diagnostics }
@@ -12813,8 +12830,8 @@ mod starter_seed_tests {
     use super::*;
     use codex::rules_core::character_input::AcquisitionMode;
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
-    use codex::rules_core::rules_tables::class_spell_levels::class_spell_level;
-    use codex::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
+    use codex::rules_core::rules_catalog::class_spell_levels::class_spell_level;
+    use codex::rules_core::rules_catalog::crb::spell_list::SPELL_LIST;
 
     fn temp_app_data_dir(label: &str) -> PathBuf {
         let unique = std::time::SystemTime::now()
@@ -13211,3 +13228,10 @@ mod starter_seed_tests {
         files
     }
 }
+
+/// The PF seed render-hash harness (SD-37 E1.4): renders the PF starter seeds through
+/// `load_saved_character_at_root` and hashes the JSON. A child module so it reaches this
+/// module's private seed ids and helpers; see the file's header for how to run it.
+#[cfg(test)]
+#[path = "pf_seed_render_hash.rs"]
+mod pf_seed_render_hash;

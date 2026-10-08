@@ -1,0 +1,5 @@
+file:///tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e66/base/apps/desktop/scripts/ui-smoke/lib/rowSelection.mjs:31
+        throw new Error(`--only ${id}: no such row id in spec.json`);
+              ^
+
+exit=1

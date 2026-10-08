@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Racial Trait",
+    "key": "Vlaka Senses ~ Hearing and Sighted",
+    "name": "Hearing and Sighted",
+    "type": "Vlaka Senses Selection"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 183,
+    "path": "starfinder/paizo/alien_archive_2/saa2_abilities.lst",
+    "record_key": "Vlaka Senses ~ Hearing and Sighted",
+    "sha256": "14b406d0a3505b90887aa54a2c8210f18274d396e71a6cd1b86b881ae249ce8c"
+  },
+  "unit_id": "alien_archive_2:ability:vlaka_senses_hearing_and_sighted"
+}

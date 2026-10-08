@@ -22,3 +22,8 @@ serde_json = "1"
 # §11.2's discriminated-union `source` shape) -- never a fabricated/placeholder
 # hash.
 sha2 = "0.10"
+
+[dev-dependencies]
+# Rules-schema publication (SD-37 E2.2): `schemas/rules/*.schema.json` is generated from the
+# serde types by a test-only derive, so no shipped build links the crate.
+schemars = "0.8"

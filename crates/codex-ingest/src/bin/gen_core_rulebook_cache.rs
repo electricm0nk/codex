@@ -1,5 +1,5 @@
 //! SD-26 Epic 3 Criterion 3.1 -- one-off codegen tool that dumps the
-//! *already-completed* `rules_tables::crb` module state into the
+//! *already-completed* `rules_catalog::crb` module state into the
 //! `data/corpus/core_rulebook/` JSON cache (Shape B, per
 //! `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/decisions.md`
 //! §7/§11).
@@ -11,13 +11,13 @@
 //! SHA-256 + line number) for the discriminated `source` union -- per
 //! `decisions.md §11.3`, it never re-derives any `data` field's *value*
 //! from the raw LST; every value comes from the compiled Rust
-//! `rules_tables::crb` module's own public accessors
+//! `rules_catalog::crb` module's own public accessors
 //! (`class_tables()`, `equipment_tables()`, `SPELL_LIST`,
 //! `ClassId::ALL`, `good_saves_for()`), matching `corpus_ingest_diagnostic.rs`'s
 //! existing accessor surface.
 //!
 //! Run once: `cargo run --bin gen_core_rulebook_cache`. Regenerate if
-//! the corpus or `rules_tables::crb` changes (same "regenerate, don't
+//! the corpus or `rules_catalog::crb` changes (same "regenerate, don't
 //! hand-edit" convention `equipment_data/`'s own modules already document).
 
 use std::collections::{HashMap, HashSet};
@@ -29,13 +29,13 @@ use sha2::{Digest, Sha256};
 use codex_ingest::pcgen_import::cache_gen::WiringClassIndex;
 use codex_ingest::pcgen_import::cache_gen::equipment_gap::resolve_name_or_rename;
 use codex::rules_core::pi_screening;
-use codex::rules_core::rules_tables::crb::class_tables::{self, ClassId, ClassTableRow};
-use codex::rules_core::rules_tables::crb::equipment_tables::{self, EquipmentCategory, EquipmentTableEntry};
-use codex::rules_core::rules_tables::crb::json_cache::{
+use codex::rules_core::rules_catalog::crb::class_tables::{self, ClassId, ClassTableRow};
+use codex::rules_core::rules_catalog::crb::equipment_tables::{self, EquipmentCategory, EquipmentTableEntry};
+use codex::rules_core::rules_catalog::crb::json_cache::{
     ClassCacheData, Completeness, CorpusRecord, CorpusSource, EquipmentCacheData, Population,
     RenameInfo, SpellCacheData,
 };
-use codex::rules_core::rules_tables::crb::spell_list;
+use codex::rules_core::rules_catalog::crb::spell_list;
 
 /// `wiring_class`'s corpus-wide book id for CRB.
 const WIRING_CLASS_BOOK_ID: &str = "core_rulebook";
@@ -464,7 +464,7 @@ fn main() {
     let mut spell_unattributed: Vec<String> = Vec::new();
     let mut spell_slugs_used: HashMap<u8, HashSet<String>> = HashMap::new();
     let mut current_spell_keys: std::collections::HashSet<String> = std::collections::HashSet::new();
-    for entry in spell_list::SPELL_LIST {
+    for entry in &spell_list::SPELL_LIST {
         let mod_identity = format!("{}.MOD", entry.key);
         let mut found: Option<(u32, String)> = None;
         for (idx, line) in spells_file.lines.iter().enumerate() {

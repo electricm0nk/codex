@@ -11,7 +11,7 @@
 //! silently drift from the code.
 //!
 //! RED -> GREEN evidence (recorded in this cycle's receipt): before
-//! `rules_tables::apg::mod::{ApgClassId::ALL, ApgClassCoverage, class_coverage,
+//! `rules_catalog::apg::mod::{ApgClassId::ALL, ApgClassCoverage, class_coverage,
 //! coverage_report}` existed, this file did not compile (RED — no such
 //! items). Adding that small, real (non-fabricated: every field is computed
 //! from `class_table()` output, a `MAX_SUPPORTED_LEVEL` const, or a
@@ -21,7 +21,7 @@ use codex::rules_core::character_input::{
     AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState,
 };
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::rules_tables::apg::{ApgClassId, class_coverage, coverage_report};
+use codex::rules_core::rules_catalog::apg::{ApgClassId, class_coverage, coverage_report};
 
 /// Every real APG class's chassis table is fully wired for its own
 /// `MAXLEVEL:20` ceiling (SD-22 Epic 3's already-landed, LST-verified
@@ -120,7 +120,7 @@ fn all_six_apg_classes_have_full_chassis_row_coverage() {
 /// same "pool size only" shape as Swashbuckler's own Panache) is now also
 /// genuinely wired, earning its own slot. Inquisitor's own known-spell
 /// posture (a real, independently re-derived 219-spell spontaneous list
-/// across levels 0-6, built fresh in `rules_tables::apg::
+/// across levels 0-6, built fresh in `rules_catalog::apg::
 /// inquisitor_spell_list` since the real corpus record carries no
 /// `SPELLLIST:` token to reuse) is also now genuinely wired, but does NOT
 /// add a slot, the same spellcasting-sharing convention Oracle's own

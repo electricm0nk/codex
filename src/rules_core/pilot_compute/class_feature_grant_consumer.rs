@@ -2127,7 +2127,7 @@ mod tests {
         // exclusion list or grant data recognizes as itself (`strip_prefix`
         // still succeeds, but no grant fact's `class` field is ever
         // literally "unchained_barbarian" -- PU's own data lives in
-        // `rules_tables::pathfinder_unchained`, never in
+        // `rules_catalog::pathfinder_unchained`, never in
         // `data/class_feature_grants`), so no id collision with
         // `push_pu_class_feature_records`'s `class_feature.pu.*` namespace
         // is possible even in that scenario.
@@ -2144,7 +2144,7 @@ mod tests {
         // and directly checkable: this function must emit NOTHING at all
         // for a PU class id, because no grant fact's `class` field is ever
         // literally "unchained_barbarian" (PU's own data lives in
-        // `rules_tables::pathfinder_unchained`, never in
+        // `rules_catalog::pathfinder_unchained`, never in
         // `data/class_feature_grants`).
         assert!(
             explanations.is_empty(),

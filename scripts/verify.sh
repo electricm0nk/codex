@@ -107,7 +107,7 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full ingest-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump class-census)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full ingest-full desktop corpus-sweep sheet-rules-check sf-sheet-rules-check rules-schema-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump class-census)
 QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump class-census)
 
 usage() {
@@ -339,6 +339,21 @@ run_preflight_oracle() {
     if ! grep -q '^pcgen-oracle: OK' "$log"; then
         stage_fail preflight-oracle "exited 0 without the pcgen-oracle: OK token — $log"
         return
+    fi
+
+    # Starfinder cone (SD-37 E0.1): the fetch script's own probe already
+    # fails --check on a missing SF cone; this is a second, independent
+    # implementation of the same check, so a regression in the probe cannot
+    # turn the stage green. Only demanded when the pin names the SF paths.
+    local sf_root
+    sf_root=$(sed -n 's/^export PCGEN_REPO_DIR=//p' "$log" | tail -1)
+    if grep -q '^PCGEN_ORACLE_SPARSE_PATHS=.*data/starfinder' "$REPO_ROOT/scripts/pcgen-oracle-pin.env"; then
+        if [[ -z "$sf_root" || ! -f "$sf_root/data/starfinder/paizo/core/_starfinder_core_rulebook.pcc" || ! -d "$sf_root/system/gameModes/Starfinder" ]]; then
+            printf '    FAIL: the pin names the Starfinder cone but %s lacks data/starfinder/paizo/core/_starfinder_core_rulebook.pcc or system/gameModes/Starfinder\n' "${sf_root:-<unresolved>}"
+            stage_fail preflight-oracle "Starfinder cone missing from the oracle checkout — $log"
+            return
+        fi
+        actual "Starfinder cone present (core .pcc + game mode)"
     fi
 
     local sha
@@ -1467,6 +1482,12 @@ PYEOF
 # ls-files` finds at least one tracked file under it (a tracked `.gitkeep`
 # counts, which is exactly the fix for the corpus-bundle case: the directory
 # is gitignored except for that one file).
+#
+# SD-37 E6.1 (`decisions.md §7`): every game system's sheet-rule package root
+# (`GameSystem::sheet_rules_relative` in `src/rules_core/game_system.rs`, read
+# here, never restated) must be a `bundle.resources` source that ships at the
+# same relative path, so a packaged app's resource root carries each system's
+# package. A system root missing from the bundle fails the stage.
 # ---------------------------------------------------------------------------
 
 run_tauri_resources_tracked() {
@@ -1509,12 +1530,37 @@ for key in sorted(resources):
     if not tracked:
         problems.append(f"{key} -> {rel} (0 git-tracked files)")
 
+import re
+
+game_system_rs = os.path.join(repo_root, "src/rules_core/game_system.rs")
+with open(game_system_rs, encoding="utf-8") as fh:
+    source = fh.read()
+fn = re.search(r"fn sheet_rules_relative\(self\)[^{]*\{(.*?)\n    \}", source, re.S)
+system_roots = re.findall(r'=>\s*"([^"]+)"', fn.group(1)) if fn else []
+if not system_roots:
+    print(f"no sheet_rules_relative arms read from {game_system_rs} -- cannot check")
+    sys.exit(1)
+
+bundled = {}
+for key, target in resources.items():
+    rel = os.path.relpath(os.path.normpath(os.path.join(tauri_dir, key)), repo_root)
+    bundled[rel] = target.rstrip("/")
+missing = []
+for root in system_roots:
+    target = bundled.get(root)
+    print(f"system root {root}: bundled_as={target}")
+    if target != root:
+        missing.append(f"{root} (bundled as {target})")
+if missing:
+    problems.append("game-system sheet-rule roots not bundled at their own path: " + ", ".join(missing))
+
 if problems:
     print("UNTRACKED_RESOURCE_PATHS:")
     for p in problems:
         print(" ", p)
     sys.exit(1)
 
+print(f"system_roots_bundled={len(system_roots)}")
 print(f"resources_checked={len(resources)} verdict=PASS")
 PYEOF
     local status=$?
@@ -2200,7 +2246,7 @@ run_clippy() {
 # ---------------------------------------------------------------------------
 
 run_pi_sweep() {
-    stage_start "pi-sweep — Product-Identity blacklist over src/rules_core/rules_tables"
+    stage_start "pi-sweep — Product-Identity blacklist over src/rules_core/rules_catalog + data/rules_tables"
     local log="$LOG_DIR/pi-sweep.log"
 
     # The provenance gate for kind-lane ingestion
@@ -2232,7 +2278,7 @@ run_pi_sweep() {
 # Stage: declared-pi-audit
 #
 # SD31-PI-REPAIR-001 (OPEN-ISSUES rows 38/39). `pi-sweep` above is the
-# heuristic 55-term blacklist over `src/rules_core/rules_tables`; this stage
+# heuristic 55-term blacklist over `src/rules_core/rules_catalog` and the `data/rules_tables` package; this stage
 # is the corpus's OWN per-record declaration (`NAMEISPI:`/`DESCISPI:`),
 # cross-checked against what actually shipped under `data/corpus/`. Two real
 # defects reached `tranche/11` past every other gate because nothing did
@@ -2515,6 +2561,40 @@ run_corpus_sweep() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: rules-schema-check
+#
+# SD-37 E2.2. `schemas/rules/*.schema.json` is the published contract of the sheet-rule package
+# (`SheetRule`, `VarTable`), generated from the serde types in `src/rules_core/sheet_rule.rs` by
+# the `sheet_rule::schema_publish_tests` test (a test-only `schemars` derive). The stage
+# regenerates every schema into a scratch directory and diffs it against the published files, so a
+# type change with no regeneration, and a hand edit of a published file, both turn it red. It also
+# runs the test in compare mode, which fails on drift on its own.
+# ---------------------------------------------------------------------------
+run_rules_schema_check() {
+    stage_start "rules-schema-check — regenerate schemas/rules/*.schema.json from the serde types and diff"
+    local log="$LOG_DIR/rules-schema-check.log"
+    local scratch="$LOG_DIR/rules-schema-regen"
+    rm -rf "$scratch"
+    mkdir -p "$scratch"
+    {
+        ( cd "$REPO_ROOT" && RULES_SCHEMA_OUT="$scratch" cargo test --locked -j "$JOBS" --lib sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types -- --test-threads=8 ) 2>&1
+        echo "--- regenerated vs published (diff -r) ---"
+        diff -r "$scratch" "$REPO_ROOT/schemas/rules"
+        echo "diff exit $?"
+        ( cd "$REPO_ROOT" && cargo test --locked -j "$JOBS" --lib sheet_rule::schema_publish_tests -- --test-threads=8 ) 2>&1
+    } >"$log" 2>&1
+    local regen_ok diff_ok test_ok
+    regen_ok=$(awk '/^test result: ok\. 1 passed/ {n++} END {print n+0}' "$log")
+    diff_ok=$(awk '/^diff exit 0$/ {n++} END {print n+0}' "$log")
+    test_ok=$(awk '/^test result: ok\. 3 passed/ {n++} END {print n+0}' "$log")
+    if [[ "$regen_ok" -ne 1 || "$diff_ok" -ne 1 || "$test_ok" -ne 1 ]]; then
+        stage_fail rules-schema-check "a published schema drifts from the serde types, or a schema test did not run (regen=$regen_ok diff=$diff_ok tests=$test_ok) — $log"
+        return
+    fi
+    stage_pass rules-schema-check "$(ls "$REPO_ROOT/schemas/rules"/*.schema.json | wc -l) schemas regenerate byte-equal; 3 schema tests pass"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: sheet-rules-check
 #
 # Runs `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --check` -- `AT-35-E2-001`
@@ -2541,6 +2621,41 @@ run_sheet_rule_convert_check() {
         return
     fi
     stage_pass sheet-rules-check "$line"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: sf-sheet-rules-check
+#
+# SD-37 E3.4 (`docs/release/SD-37-starfinder-1e/epic-breakdown.md` E3.4): the Starfinder
+# package and corpus are fresh. Runs, from the repo root,
+#   cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --system starfinder-1e --check
+#   cargo run --locked -p codex-ingest --bin sf_corpus -- --check
+# -- `data/starfinder-1e/sheet_rules/` equals a fresh conversion of the converted books' units
+# of `docs/work-inventory.starfinder-1e.json` byte for byte (same literal and variable-table
+# checks as sheet-rules-check), and `data/starfinder-1e/corpus/` equals a fresh licence-screened
+# generation. Needs the pinned oracle checkout with data/starfinder (`preflight-oracle`).
+# ---------------------------------------------------------------------------
+run_sf_sheet_rules_check() {
+    stage_start "sf-sheet-rules-check — sheet_rule_convert --system starfinder-1e --check; sf_corpus --check  (repo root)"
+    local log="$LOG_DIR/sf-sheet-rules-check.log"
+    {
+        ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" -p codex-ingest --bin sheet_rule_convert -- --system starfinder-1e --check )
+        echo "convert_exit=$?"
+        ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" -p codex-ingest --bin sf_corpus -- --check )
+        echo "corpus_exit=$?"
+    } >"$log" 2>&1
+    if ! grep -qx 'convert_exit=0' "$log" || ! grep -qx 'corpus_exit=0' "$log"; then
+        stage_fail sf-sheet-rules-check "Starfinder package or corpus stale, or an input missing ($(grep -E '^(convert|corpus)_exit=' "$log" | tr '\n' ' ')) — $log"
+        return
+    fi
+    local pkg corpus
+    pkg=$(grep -E '^records=[0-9]+ converted=[0-9]+ refused=[0-9]+ .*verdict=PASS' "$log" | tail -n 1)
+    corpus=$(grep -E '^records=[0-9]+ redacted=[0-9]+ .*verdict=PASS' "$log" | tail -n 1)
+    if [[ -z "$pkg" || -z "$corpus" ]]; then
+        stage_fail sf-sheet-rules-check "a binary exited 0 without its verdict=PASS line — $log"
+        return
+    fi
+    stage_pass sf-sheet-rules-check "package: $pkg; corpus: $corpus"
 }
 
 # ---------------------------------------------------------------------------
@@ -2912,6 +3027,8 @@ for stage in "${SELECTED[@]}"; do
         corpus-trap-audit-selftest) run_corpus_trap_audit_selftest ;;
         corpus-sweep)        run_corpus_sweep ;;
         sheet-rules-check) run_sheet_rule_convert_check ;;
+        sf-sheet-rules-check) run_sf_sheet_rules_check ;;
+        rules-schema-check) run_rules_schema_check ;;
         corpus-trap-audit)   run_corpus_trap_audit ;;
         supersession-gate)   run_supersession_gate ;;
         root-lib)            run_root_lib ;;

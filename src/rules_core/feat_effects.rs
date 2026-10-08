@@ -77,7 +77,7 @@ pub fn effective_feats(selected_feats: &[String], class_granted_feats: &[&str]) 
 }
 
 /// The real PF1 Core Rulebook feat catalog's key for Toughness
-/// (`rules_tables::crb::feat_data::general`'s own
+/// (`rules_catalog::crb::feat_data::general`'s own
 /// `FeatTableEntry { key: "Toughness", ... }` record), verified against the
 /// real selection pipeline rather than assumed: `FeatCatalogEntryDto.key`
 /// (`feat_catalog.rs`) passes the catalog key through verbatim with no
@@ -1347,7 +1347,7 @@ pub fn base_speed_bonus_from_feats(selected_feats: &[String]) -> i16 {
 
 /// The real APG/ACG catalog keys for the four passive-bonus feats grounded
 /// below, verified against the ingested catalog records
-/// (`rules_tables::apg::feat_data::general` / `rules_tables::acg::feat_data::
+/// (`rules_catalog::apg::feat_data::general` / `rules_catalog::acg::feat_data::
 /// general`) AND against the raw corpus lines they came from
 /// (`apg_feats.lst` 21/41/172/187, `acg_feats.lst` 155). Each appears exactly
 /// once in its book, with no `.MOD` record and no `#`-disabled duplicate.
@@ -1848,7 +1848,7 @@ pub fn chosen_feat_targets(
 // This is the identical mentions-vs-distinct defect `decisions.md §27.1`
 // recorded for the replace-flag counts, in a table written after that
 // correction was published. Verified by set difference over
-// `rules_tables::advanced_race_guide::feats` rather than by re-reading the
+// `rules_catalog::advanced_race_guide::feats` rather than by re-reading the
 // table: 49 unconditionally bonused, 24 moving, 24 distinct deferred, and
 // `Bestow Luck` in neither set.
 // ---------------------------------------------------------------------------
@@ -1867,7 +1867,7 @@ pub fn chosen_feat_targets(
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ArgSkillFeatFact {
     /// The real ARG catalog `key` string
-    /// (`rules_tables::advanced_race_guide::feats`), matched through
+    /// (`rules_catalog::advanced_race_guide::feats`), matched through
     /// [`crate::rules_core::feat_identity`]'s fold.
     pub feat_key: &'static str,
     /// The skill named by the corpus `BONUS:SKILL|<skill>` token, verbatim.
@@ -4894,7 +4894,7 @@ mod arg_and_pu_feat_effect_tests {
     /// catalog, or the wiring is keyed on a string no player can ever send.
     #[test]
     fn every_grounded_key_is_a_real_shipped_catalog_key() {
-        use crate::rules_core::rules_tables::feats_all::all_feat_tables;
+        use crate::rules_core::rules_catalog::feats_all::all_feat_tables;
         let catalog: Vec<&str> = all_feat_tables()
             .iter()
             .flat_map(|t| t.entries.iter().map(|e| e.key))

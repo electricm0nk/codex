@@ -1,0 +1,1 @@
+{"var":"v721a45b62f83bcb8","label":"Mystic LVL","declared_by":["core:class:mystic"],"contributions":[{"rule_id":"core:class:mystic","expr":{"ClassLevel":"mystic"},"when":"Always"}],"provenance":{}}

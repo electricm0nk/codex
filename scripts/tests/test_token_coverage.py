@@ -354,5 +354,86 @@ class RuleFilesGate(_Fixture):
         self.assertTrue(last.endswith("verdict=PASS"), last)
 
 
+class SfFormulaMode(unittest.TestCase):
+    """`--sf-formula` (SD-37 E3.2): every Starfinder `MODIFY*` token is mapped or refused by
+    name, and the ledger's own walk of the `.lst` agrees with the converter's census."""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+        self.root = os.path.join(self.tmp, "data")
+        core = os.path.join(self.root, "starfinder", "paizo", "core")
+        os.makedirs(os.path.join(core, "_society"))
+        self._write(os.path.join(core, "a.lst"),
+                    "# MODIFY:ItemLevel|SET|9 in a comment is not a token\n"
+                    "Thing\tMODIFY:ItemLevel|SET|1\tMODIFYOTHER:PC.MOVEMENT|Walk|Speed|ADD|-5\n"
+                    "Other\tTYPE:x\tMODIFY:Nope|SET|1\n")
+        self._write(os.path.join(core, "_society", "s.lst"), "Soc\tMODIFY:ItemLevel|SET|2\n")
+        self.census = os.path.join(self.tmp, "census.json")
+        self.tokens = [
+            {"file": "starfinder/paizo/core/a.lst", "line": 2, "field": 2, "disposition": "mapped", "role": "item_level"},
+            {"file": "starfinder/paizo/core/a.lst", "line": 2, "field": 3, "disposition": "mapped", "role": "movement_speed"},
+            {"file": "starfinder/paizo/core/a.lst", "line": 3, "field": 3, "disposition": "refused", "reason": "undeclared variable \"Nope\""},
+        ]
+        self._write_census(self.tokens)
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    @staticmethod
+    def _write(path, text):
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(text)
+
+    def _write_census(self, tokens, files=("starfinder/paizo/core/a.lst",)):
+        mapped = sum(1 for t in tokens if t["disposition"] == "mapped")
+        with open(self.census, "w", encoding="utf-8") as fh:
+            json.dump({"schema": "sf-formula-census.v1", "files_read": list(files), "tokens": tokens,
+                       "totals": {"tokens": len(tokens), "mapped": mapped, "refused": len(tokens) - mapped}}, fh)
+
+    def _run(self):
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            code = tc.main(["--sf-formula", "--sf-census", self.census, "--sf-root", self.root])
+        out = buf.getvalue()
+        return code, out, out.strip().splitlines()[-1]
+
+    def test_partition_sums_and_refusals_are_named(self):
+        code, out, last = self._run()
+        self.assertEqual(code, 0, out)
+        self.assertEqual(last, "sf_tokens_all_trees=4 in_scope=3 outside_registered_books=1 mapped=2 "
+                               "refused=2 refused_in_scope=1 refused_outside_registered_books=1 verdict=PASS")
+        self.assertIn('refused starfinder/paizo/core/a.lst:3 field 3: undeclared variable "Nope"', out)
+        self.assertIn("refused starfinder/paizo/core/_society/s.lst:1 field 2: not in a registered book", out)
+
+    def test_a_token_the_census_missed_fails_identity(self):
+        self._write_census(self.tokens[:2])
+        code, _out, last = self._run()
+        self.assertEqual(code, 1)
+        self.assertTrue(last.endswith("verdict=FAIL_IDENTITY"), last)
+
+    def test_an_unnamed_refusal_fails(self):
+        self.tokens[2]["reason"] = " "
+        self._write_census(self.tokens)
+        code, _out, last = self._run()
+        self.assertEqual(code, 1)
+        self.assertTrue(last.endswith("verdict=FAIL_NAMED"), last)
+
+    def test_totals_that_do_not_sum_fail_partition(self):
+        with open(self.census, encoding="utf-8") as fh:
+            c = json.load(fh)
+        c["totals"]["mapped"] = 3
+        with open(self.census, "w", encoding="utf-8") as fh:
+            json.dump(c, fh)
+        code, _out, last = self._run()
+        self.assertEqual(code, 1)
+        self.assertTrue(last.endswith("verdict=FAIL_PARTITION"), last)
+
+    def test_a_missing_census_is_an_input_error(self):
+        os.remove(self.census)
+        code, _out, last = self._run()
+        self.assertEqual(code, 2)
+        self.assertEqual(last, "verdict=INPUT_ERROR")
+
+
 if __name__ == "__main__":
     unittest.main()

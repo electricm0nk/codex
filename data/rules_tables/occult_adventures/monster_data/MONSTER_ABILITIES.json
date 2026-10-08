@@ -1,0 +1,99 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "occult_adventures/monster_data/MONSTER_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "occult_adventures",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Shikigami ~ Improvised Weapon Mastery",
+      "name": "Improvised Weapon Mastery",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [
+        "ShikigamiRacialAbility"
+      ],
+      "description": "A shikigami gains Catch Off-Guard and Throw Anything as bonus feats, and adds its Charisma modifier instead of its Strength modifier to damage done with any improvised weapon, as attacks it makes with such weapons seem supernaturally lucky in landing damaging blows. Although a shikigami is Tiny, it never provokes attacks of opportunity when it attacks an adjacent foe with a melee weapon. If a shikigami critically hits an opponent with an improvised weapon, it deals ?3 damage.",
+      "description_variables": [],
+      "source_page": "p.163",
+      "owners": [],
+      "source_file": "oa_abilities_race_b3",
+      "source_line": 9,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Shikigami ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "facet": "SpecialQuality",
+      "delivery": "SpellLike",
+      "traits": [
+        "ShikigamiRacialAbility"
+      ],
+      "description": "(CL 6th; concentration +8) At will-invisibility (self only), statue (self only) 3/day-hide from animals, purify food and drink 1/week-commune with nature (CL 12th)",
+      "description_variables": [],
+      "source_page": null,
+      "owners": [],
+      "source_file": "oa_abilities_race_b3",
+      "source_line": 10,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Homunculus Companion ~ Sympathetic Alchemy",
+      "name": "Sympathetic Alchemy",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "The bond between a promethean alchemist and his homunculus is so close that the alchemist's extracts function for the homunculus as if it were the alchemist, allowing the homunculus companion to benefit from extracts without the alchemist needing the infusion discovery. The homunculus is treated as a humanoid or a construct-whichever is more beneficial-for the purposes of what extracts can affect it. Additionally, the homunculus can prepare its master's extracts from his formula book for him each day, as long as it's within the range of its telepathic link.",
+      "description_variables": [],
+      "source_page": "p.113",
+      "owners": [],
+      "source_file": "oa_abilities_race",
+      "source_line": 188,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Homunculus Companion ~ Telepathic Link",
+      "name": "Telepathic Link",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "traits": [],
+      "description": "A homunculus can't initially speak, but shares a telepathic link with its creator. It knows what its master knows and can convey to him everything it sees and hears, out to a range of 1,500 feet.",
+      "description_variables": [],
+      "source_page": "p.113",
+      "owners": [],
+      "source_file": "oa_abilities_race",
+      "source_line": 189,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    },
+    {
+      "key": "Homunculus Companion ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "traits": [],
+      "description": "Bite-injury frequency 1/minute for 60 minutes, effect sleep for 1 minute, cure 1 save, DC %1.",
+      "description_variables": [
+        "12+TL/2+CON"
+      ],
+      "source_page": "p.113",
+      "owners": [],
+      "source_file": "oa_abilities_race",
+      "source_line": 190,
+      "codex_generated_name": false,
+      "rename_reason": null,
+      "rename_coordinate": null
+    }
+  ]
+}

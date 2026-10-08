@@ -7,13 +7,13 @@
 //! (`acceptance-and-verification.md` row 3.3).
 //!
 //! Real, MEASURED ceilings this test asserts against (independently
-//! re-verified this cycle directly from the compiled `rules_tables::acg`
+//! re-verified this cycle directly from the compiled `rules_catalog::acg`
 //! module before generation — `decisions.md §11.4`/Q4: ACG was *not*
 //! covered by SD-25's corpus-intake pass, so no prior number could be
 //! trusted): 10/10 classes, each with a full 20-level chassis; spell
 //! `description`/`full_text` 144/144 (100%, ACG's own `acg_spells.lst`
 //! carries the full text directly on the base record — see
-//! `rules_tables::acg::spell_list`'s doc comment); equipment
+//! `rules_catalog::acg::spell_list`'s doc comment); equipment
 //! `description` 264/269 (98.1%, sourced from the corpus `SPROP:` token
 //! since `acg_equip.lst`/`acg_equipmods.lst` carry zero `DESC:` tokens).
 
@@ -151,7 +151,7 @@ fn class_cache_has_all_ten_real_acg_classes_with_full_chassis() {
         .into_iter()
         .filter(|(_, record)| record["data"]["class_id"].as_str().is_some())
         .collect();
-    assert_eq!(records.len(), 10, "expected exactly the 10 real ACG classes (decisions.md §11.4/Q4, re-measured this cycle -- Alchemist is APG-only, excluded per rules_tables::acg::mod's own roster correction)");
+    assert_eq!(records.len(), 10, concat!("expected exactly the 10 real ACG classes (decisions.md §11.4/Q4, re-measured this cycle -- Alchemist is APG-only, excluded per rules_tables", "::acg::mod's own roster correction)"));
 
     let mut seen_ids = HashSet::new();
     for (path, record) in &records {
@@ -236,7 +236,7 @@ fn spell_cache_has_all_144_records_at_the_real_100_percent_full_text_ceiling() {
         }
         // Every real ACG spell citation is a plain lst_token on the base
         // (non-.MOD) record -- unlike APG, ACG's base record already
-        // carries the full text (rules_tables::acg::spell_list's own doc
+        // carries the full text (rules_catalog::acg::spell_list's own doc
         // comment), so no web/fallback/corrected-ingest provenance is
         // needed anywhere in this book's spell cache.
         assert_eq!(record["source"]["kind"], "lst_token", "{}: every ACG spell has a real, checkable LST citation", path.display());
@@ -253,7 +253,7 @@ fn spell_cache_resolves_real_citations_for_the_naming_edge_cases() {
     // The 9 "Naturalist Summon Nature's Ally <roman>" records are filed
     // under their real, archetype-qualified `KEY:` identity (not the
     // display name they share with the CRB base spell -- see
-    // `rules_tables::acg::spell_list`'s doc comment and
+    // `rules_catalog::acg::spell_list`'s doc comment and
     // `tests/spell_cross_book_identity.rs`), resolved via a `KEY:` field
     // match against the corpus. The 1 domain-only variant (level from
     // DOMAINS:, not CLASSES:) has no KEY: token and resolves via its
@@ -293,7 +293,7 @@ fn equipment_cache_has_all_269_records_with_the_real_measured_ceiling() {
         assert!(slugs.insert(stem.clone()), "{}: duplicate equipment cache filename {stem}", path.display());
     }
 
-    assert_eq!(has_description, 264, "real ACG equipment description ceiling: 264/269 (98.1%), re-measured this cycle directly from rules_tables::acg::equipment_tables::field_coverage_report() (decisions.md §11.4/Q4 -- no prior number existed to trust)");
+    assert_eq!(has_description, 264, concat!("real ACG equipment description ceiling: 264/269 (98.1%), re-measured this cycle directly from rules_tables", "::acg::equipment_tables::field_coverage_report() (decisions.md §11.4/Q4 -- no prior number existed to trust)"));
 }
 
 #[test]

@@ -24,7 +24,7 @@
 //!
 //! The operator's ruling (2026-08-01) is that these are *display values*: the
 //! engine already computes every one of them in a hand-modelled
-//! `rules_tables::pathfinder_unchained` function, so the fix is to state the
+//! `rules_catalog::pathfinder_unchained` function, so the fix is to state the
 //! number under the name PCGen uses for it and re-render the description at
 //! compute time, per character.
 //!

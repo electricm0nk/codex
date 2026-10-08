@@ -1,0 +1,6 @@
+differing files: 2
+  hop_pool_sibling: 1
+  report_count: 1
+added rule ids: ['core:ability:human#pool_2_racial_stat_bonus']
+verdict=PASS
+exit=0

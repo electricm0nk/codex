@@ -1,0 +1,28 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 41.86s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 2 tests
+test sf_drone_print::tests::a_mechanic_1_render_prints_the_drone_block ... FAILED
+test sf_drone_print::tests::a_mechanic_without_a_drone_prints_no_companion_block ... ok
+
+failures:
+
+---- sf_drone_print::tests::a_mechanic_1_render_prints_the_drone_block stdout ----
+
+thread 'sf_drone_print::tests::a_mechanic_1_render_prints_the_drone_block' (3481977) panicked at src/sf_drone_print.rs:230:9:
+assertion `left == right` failed: the drone block's records
+  left: {"core:ability:drone", "core:ability:drone_mod_weapon_mount", "core:ability:initial_drone_proficiency_small_arms", "core:ability:racetype_construct", "core:ability:weapon_prof_small_arms", "core:class:drone", "core:companion_mod:drone", "core:feat:iron_will", "core:pool_option:drone_chassis_selection_hover", "core:pool_option:drone_feat_iron_will", "core:pool_option:drone_skill_unit_acrobatics", "core:pool_option:drone_skill_unit_perception", "core:race:drone"}
+ right: {"core:ability:basic_mods", "core:ability:drone", "core:ability:drone_mod_camera", "core:ability:drone_mod_weapon_mount", "core:ability:initial_drone_proficiency_small_arms", "core:ability:limited_ai", "core:ability:master_control", "core:ability:racetype_construct", "core:ability:skill_unit", "core:ability:weapon_prof_small_arms", "core:class:drone", "core:companion_mod:drone", "core:feat:iron_will", "core:pool_option:drone_chassis_selection_hover", "core:pool_option:drone_feat_iron_will", "core:pool_option:drone_skill_unit_acrobatics", "core:pool_option:drone_skill_unit_perception", "core:race:drone"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sf_drone_print::tests::a_mechanic_1_render_prints_the_drone_block
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 663 filtered out; finished in 0.71s
+
+error: test failed, to rerun pass `--bin codex-desktop`
+exit=101

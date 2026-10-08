@@ -5,10 +5,10 @@
 //! Fourth and FINAL Epic-3 work-unit per `scope-draft.md` §1.3's cycle order
 //! (general, then combat, then item_creation, now the fourth feat category:
 //! `Metamagic`, 17 records). This cycle closes Epic 3 — every feat category
-//! in `rules_tables::crb::feats::feat_tables()` now has a landed per-category
+//! in `rules_catalog::crb::feats::feat_tables()` now has a landed per-category
 //! evaluation module. Mirrors `tests/sd20_feat_item_creation.rs` exactly, one
 //! category over: this cycle's feat catalog slice is
-//! `rules_tables::crb::feats::feat_tables()`'s `FeatCategory::Metamagic`
+//! `rules_catalog::crb::feats::feat_tables()`'s `FeatCategory::Metamagic`
 //! records (17 total, landed at `04c3d08`), and the same bounded
 //! catalog-membership-only prerequisite posture applies (no
 //! `PREREQ:`/`PREABILITY:`/`PRELEVEL:` tokens are transcribed into the table
@@ -27,7 +27,7 @@
 //!   (not a Metamagic feat) and resolves no effect.
 
 use codex::rules_core::feat_prereqs::{compute_feat_effects, evaluate_feat_prerequisites, FeatKey};
-use codex::rules_core::rules_tables::crb::feats::FeatCategory;
+use codex::rules_core::rules_catalog::crb::feats::FeatCategory;
 
 #[test]
 fn empower_spell_is_eligible_with_no_failing_prerequisites() {

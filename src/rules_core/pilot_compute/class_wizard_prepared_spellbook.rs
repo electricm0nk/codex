@@ -1344,7 +1344,7 @@ pub(super) fn wizard_base_spells_per_day(level: u8) -> [Option<i16>; 10] {
 /// budget consumption count. A Wizard could add unlimited real spells with
 /// zero slot enforcement. Fixed by trying a real `SPELL_LIST` lookup FIRST:
 /// unlike equipment (which needs a corpus-resolved `EquipmentRecord` via
-/// `SourcePackageContent`), `SPELL_LIST` (`rules_tables::crb::spell_list`)
+/// `SourcePackageContent`), `SPELL_LIST` (`rules_catalog::crb::spell_list`)
 /// is a `pub const` compiled directly into the binary -- generated from the
 /// corpus at build time, not loaded from external fixture files at runtime
 /// -- so it is already fully accessible from this headless compute surface
@@ -2748,7 +2748,7 @@ mod sorcerer_arcane_bloodline_progression_tests {
         SORCERER_CLASS_ID,
     };
     use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
-    use crate::rules_core::rules_tables::crb::sorcerer_spell_list;
+    use crate::rules_core::rules_catalog::crb::sorcerer_spell_list;
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
         "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"

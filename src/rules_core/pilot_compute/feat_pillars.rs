@@ -1641,7 +1641,7 @@ mod opponent_conditioned_tier_zero_tests {
     /// and not another.
     #[test]
     fn every_class_grounding_the_shared_familiar_benefit_credits_it_in_its_coverage_row() {
-        use crate::rules_core::rules_tables::{acg, apg};
+        use crate::rules_core::rules_catalog::{acg, apg};
 
         let mut grounding: Vec<String> = Vec::new();
         for id in apg::ApgClassId::ALL {

@@ -1,0 +1,98 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+error[E0425]: cannot find value `HIT_DIE_ROW` in this scope
+   --> src/sf_catalog.rs:266:66
+    |
+266 |                     d.text.split('\n').filter(|l| !l.starts_with(HIT_DIE_ROW)).collect::<Vec<_>>().join("\n")
+    |                                                                  ^^^^^^^^^^^ not found in this scope
+    |
+note: constant `crate::sf_drone_print::HIT_DIE_ROW` exists but is inaccessible
+   --> src/sf_drone_print.rs:45:1
+    |
+ 45 | const HIT_DIE_ROW: &str = "Hit die: ";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not accessible
+help: consider importing this constant
+    |
+153 +     use crate::sf_sheet_print::HIT_DIE_ROW;
+    |
+
+error[E0425]: cannot find value `HIT_DIE_ROW` in this scope
+   --> src/sf_catalog.rs:288:61
+    |
+288 |                 assert!(!text.lines().any(|l| l.starts_with(HIT_DIE_ROW)), "{}: {text}", row.id);
+    |                                                             ^^^^^^^^^^^ not found in this scope
+    |
+note: constant `crate::sf_drone_print::HIT_DIE_ROW` exists but is inaccessible
+   --> src/sf_drone_print.rs:45:1
+    |
+ 45 | const HIT_DIE_ROW: &str = "Hit die: ";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not accessible
+help: consider importing this constant
+    |
+153 +     use crate::sf_sheet_print::HIT_DIE_ROW;
+    |
+
+error[E0609]: no field `rows` on type `SfCatalogEntryDto`
+   --> src/sf_catalog.rs:285:32
+    |
+285 |                     .chain(row.rows.iter().map(|r| format!("{}\n{}", r.label, r.summary)))
+    |                                ^^^^ unknown field
+    |
+    = note: available fields are: `id`, `name`, `book`, `tags`, `description`, `description_tier`
+
+error[E0609]: no field `rows` on type `SfCatalogEntryDto`
+   --> src/sf_catalog.rs:300:36
+    |
+300 |         let ids: Vec<&str> = ysoki.rows.iter().map(|r| r.id.as_str()).collect();
+    |                                    ^^^^ unknown field
+    |
+    = note: available fields are: `id`, `name`, `book`, `tags`, `description`, `description_tier`
+
+error[E0609]: no field `rows` on type `SfCatalogEntryDto`
+   --> src/sf_catalog.rs:302:24
+    |
+302 |         let hp = ysoki.rows.iter().find(|r| r.id == "core:race:ysoki#race_hp").unwrap();
+    |                        ^^^^ unknown field
+    |
+    = note: available fields are: `id`, `name`, `book`, `tags`, `description`, `description_tier`
+
+error[E0609]: no field `rows` on type `SfCatalogEntryDto`
+   --> src/sf_catalog.rs:306:31
+    |
+306 |         let stamina = soldier.rows.iter().find(|r| r.id == "core:class:soldier#bonus2").expect("stamina row");
+    |                               ^^^^ unknown field
+    |
+    = note: available fields are: `id`, `name`, `book`, `tags`, `description`, `description_tier`
+
+error[E0609]: no field `rows` on type `SfCatalogEntryDto`
+   --> src/sf_catalog.rs:309:31
+    |
+309 |         let kac = second_skin.rows.iter().find(|r| r.id == "core:equipment:second_skin#bonus1").expect("KAC row");
+    |                               ^^^^ unknown field
+    |
+    = note: available fields are: `id`, `name`, `book`, `tags`, `description`, `description_tier`
+
+error[E0609]: no field `rows` on type `SfCatalogEntryDto`
+   --> src/sf_catalog.rs:320:32
+    |
+320 |                 assert_eq!(row.rows.iter().map(|r| r.id.clone()).collect::<Vec<_>>(), expected, "{}", row.id);
+    |                                ^^^^ unknown field
+    |
+    = note: available fields are: `id`, `name`, `book`, `tags`, `description`, `description_tier`
+
+error[E0609]: no field `rows` on type `SfCatalogEntryDto`
+   --> src/sf_catalog.rs:321:35
+    |
+321 |                 for total in &row.rows {
+    |                                   ^^^^ unknown field
+    |
+    = note: available fields are: `id`, `name`, `book`, `tags`, `description`, `description_tier`
+
+error[E0425]: cannot find function `catalog_field_summary` in this scope
+   --> src/sf_catalog.rs:323:61
+    |
+323 |                     assert_eq!(Some(total.summary.clone()), catalog_field_summary(package(), rule), "{}", total.id);
+    |                                                             ^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+Some errors have detailed explanations: E0425, E0609.
+For more information about an error, try `rustc --explain E0425`.
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 10 previous errors

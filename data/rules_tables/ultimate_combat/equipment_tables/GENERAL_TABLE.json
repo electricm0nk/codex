@@ -1,0 +1,221 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_combat/equipment_tables/GENERAL_TABLE",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_combat",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Black Powder (Dose)",
+      "category": "General",
+      "name": "Black Powder (Dose)",
+      "cost_gp": 10.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Black Powder (Keg)",
+      "category": "General",
+      "name": "Black Powder (Keg)",
+      "cost_gp": 1000.0,
+      "weight_lbs": 5.0,
+      "description": null
+    },
+    {
+      "key": "Gunsmith's Kit",
+      "category": "General",
+      "name": "Gunsmith's Kit",
+      "cost_gp": 15.0,
+      "weight_lbs": 2.0,
+      "description": null
+    },
+    {
+      "key": "Powder Horn",
+      "category": "General",
+      "name": "Powder Horn",
+      "cost_gp": 3.0,
+      "weight_lbs": 1.0,
+      "description": null
+    },
+    {
+      "key": "Powder Keg",
+      "category": "General",
+      "name": "Powder Keg",
+      "cost_gp": 0.0,
+      "weight_lbs": 5.0,
+      "description": null
+    },
+    {
+      "key": "Bridge (Assault/Colossal)",
+      "category": "General",
+      "name": "Bridge (Assault/Colossal)",
+      "cost_gp": 250.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Bridge (Assault/Gargantuan)",
+      "category": "General",
+      "name": "Bridge (Assault/Gargantuan)",
+      "cost_gp": 50.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Bridge (Assault/Huge)",
+      "category": "General",
+      "name": "Bridge (Assault/Huge)",
+      "cost_gp": 10.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Bridge (Assault/Large)",
+      "category": "General",
+      "name": "Bridge (Assault/Large)",
+      "cost_gp": 1.0,
+      "weight_lbs": null,
+      "description": null
+    },
+    {
+      "key": "Corvus",
+      "category": "General",
+      "name": "Corvus",
+      "cost_gp": 100.0,
+      "weight_lbs": null,
+      "description": "Crew 1, Speed Special"
+    },
+    {
+      "key": "Gallery (Colossal)",
+      "category": "General",
+      "name": "Gallery (Colossal)",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "Crew 18, Speed 15 ft."
+    },
+    {
+      "key": "Gallery (Gargantuan)",
+      "category": "General",
+      "name": "Gallery (Gargantuan)",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "Crew 9, Speed 15 ft."
+    },
+    {
+      "key": "Gallery (Huge)",
+      "category": "General",
+      "name": "Gallery (Huge)",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "Crew 6, Speed 15 ft."
+    },
+    {
+      "key": "Gallery (Large)",
+      "category": "General",
+      "name": "Gallery (Large)",
+      "cost_gp": 250.0,
+      "weight_lbs": null,
+      "description": "Crew 3, Speed 15 ft."
+    },
+    {
+      "key": "Ladder (Escalade/Colossal)",
+      "category": "General",
+      "name": "Ladder (Escalade/Colossal)",
+      "cost_gp": 250.0,
+      "weight_lbs": null,
+      "description": "Crew 8, Speed as crew speed"
+    },
+    {
+      "key": "Ladder (Escalade/Gargantuan)",
+      "category": "General",
+      "name": "Ladder (Escalade/Gargantuan)",
+      "cost_gp": 50.0,
+      "weight_lbs": null,
+      "description": "Crew 6, Speed as crew speed"
+    },
+    {
+      "key": "Ladder (Escalade/Huge)",
+      "category": "General",
+      "name": "Ladder (Escalade/Huge)",
+      "cost_gp": 10.0,
+      "weight_lbs": null,
+      "description": "Crew 4, Speed as crew speed"
+    },
+    {
+      "key": "Ladder (Escalade/Large)",
+      "category": "General",
+      "name": "Ladder (Escalade/Large)",
+      "cost_gp": 5.0,
+      "weight_lbs": null,
+      "description": "Crew 2, Speed as crew speed"
+    },
+    {
+      "key": "Ram (Colossal)",
+      "category": "General",
+      "name": "Ram (Colossal)",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "Damage 10d6 20/x3 Bludgeoning; Crew 40, Speed 15 ft."
+    },
+    {
+      "key": "Ram (Gargantuan)",
+      "category": "General",
+      "name": "Ram (Gargantuan)",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "Damage 6d6 20/x3 Bludgeoning; Crew 20, Speed 15 ft."
+    },
+    {
+      "key": "Ram (Huge)",
+      "category": "General",
+      "name": "Ram (Huge)",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "Damage 3d6 20/x3 Bludgeoning; Crew 10, Speed 15 ft."
+    },
+    {
+      "key": "Ram (Large)",
+      "category": "General",
+      "name": "Ram (Large)",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "Damage 2d6 20/x3 Bludgeoning; Crew 5, Speed 15 ft."
+    },
+    {
+      "key": "Siege Tower (Colossal)",
+      "category": "General",
+      "name": "Siege Tower (Colossal)",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "Crew 48, Speed 15 ft."
+    },
+    {
+      "key": "Siege Tower (Gargantuan)",
+      "category": "General",
+      "name": "Siege Tower (Gargantuan)",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "Crew 24, Speed 15 ft."
+    },
+    {
+      "key": "Siege Tower (Huge)",
+      "category": "General",
+      "name": "Siege Tower (Huge)",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "Crew 12, Speed 15 ft."
+    },
+    {
+      "key": "Siege Tower (Large)",
+      "category": "General",
+      "name": "Siege Tower (Large)",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "Crew 6, Speed 15 ft."
+    }
+  ]
+}

@@ -21,7 +21,7 @@
 //! Every class id comes from exactly one of these eight raw registries,
 //! claimed in this precedence order (see [`ClassFamily`]):
 //!
-//! 1. [`ClassId::ALL`](crate::rules_core::rules_tables::crb::class_tables::ClassId::ALL) (CRB, `core_rulebook`)
+//! 1. [`ClassId::ALL`](crate::rules_core::rules_catalog::crb::class_tables::ClassId::ALL) (CRB, `core_rulebook`)
 //! 2. `ApgClassId::ALL` (APG, `advanced_players_guide`)
 //! 3. `AcgClassId::ALL` (ACG, `advanced_class_guide`)
 //! 4. `PuClassId::ALL` (Pathfinder Unchained, `pathfinder_unchained`)
@@ -70,11 +70,11 @@ use crate::rules_core::pilot_compute::crb_untabled_class_chassis;
 use crate::rules_core::pilot_compute::generic_class_chassis_covered_classes;
 use crate::rules_core::pilot_compute::untabled_base_class_chassis::untabled_base_class_registry;
 use crate::rules_core::pilot_compute::{HeadlessReceiptStatus, build_pilot_headless_receipt};
-use crate::rules_core::rules_tables::acg::AcgClassId;
-use crate::rules_core::rules_tables::apg::ApgClassId;
-use crate::rules_core::rules_tables::crb::class_tables::ClassId;
-use crate::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
-use crate::rules_core::rules_tables::ultimate_combat::UcClassId;
+use crate::rules_core::rules_catalog::acg::AcgClassId;
+use crate::rules_core::rules_catalog::apg::ApgClassId;
+use crate::rules_core::rules_catalog::crb::class_tables::ClassId;
+use crate::rules_core::rules_catalog::pathfinder_unchained::class_chassis::PuClassId;
+use crate::rules_core::rules_catalog::ultimate_combat::UcClassId;
 use crate::rules_core::character_input::SelectedChoice;
 use crate::rules_core::sheet_rule::{Applies, Choice, Cmp, Expr, Granter, Holdable, OptionSet, SpellKind};
 use crate::support::paths::repo_root;

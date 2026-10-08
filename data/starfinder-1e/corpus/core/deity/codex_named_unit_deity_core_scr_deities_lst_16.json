@@ -1,0 +1,23 @@
+{
+  "codex_generated_name": true,
+  "data": {
+    "key": "Codex-Named Unit (deity_core_scr_deities_lst_16)",
+    "name": "Codex-Named Unit (deity_core_scr_deities_lst_16)"
+  },
+  "license": "PI-REDACTED",
+  "pi_field": "name",
+  "pi_marker": "redacted",
+  "population": "in_scope",
+  "rename": {
+    "coordinate": "core:scr_deities.lst:16",
+    "reason": "name_pi_blocked"
+  },
+  "source": {
+    "kind": "lst_token",
+    "line": 16,
+    "path": "starfinder/paizo/core/scr_deities.lst",
+    "record_key": "Codex-Named Unit (deity_core_scr_deities_lst_16)",
+    "sha256": "a10990668da6fb1241cf6c88366a68017ff46f2aece4fe49ddac7b8e7c7b2f96"
+  },
+  "unit_id": "core:deity:lao_shu_po"
+}

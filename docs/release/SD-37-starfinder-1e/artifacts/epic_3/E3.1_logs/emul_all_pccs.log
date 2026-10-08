@@ -1,0 +1,17 @@
+2 lpj_design/infinite_space/themes/theme_outlaw_crew/_lpj9304.pcc
+12 paizo/alien_archive/_starfinder_alien_archive.pcc
+14 paizo/alien_archive_2/_starfinder_alien_archive_2.pcc
+5 paizo/alien_archive_3/_starfinder_alien_archive_3.pcc
+11 paizo/armory/_starfinder_armory.pcc
+21 paizo/character_operations_manual/_character_operations_manual.pcc
+1 paizo/core/_society/_.pcc
+30 paizo/core/_starfinder_core_rulebook.pcc
+87 paizo/master_loader.pcc
+16 paizo/near_space/_near_space.pcc
+15 paizo/pact_worlds/_starfinder_pact_worlds.pcc
+6 paizo/starfinder_society_rules/_sfs.pcc
+union 132 under S 131 all lst 131
+outside S ['_universal/races.lst']
+unreferenced []
+missing []
+odd []

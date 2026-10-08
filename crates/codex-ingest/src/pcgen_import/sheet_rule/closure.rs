@@ -18,11 +18,20 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
-/// The corpus subtree every core PF1 book lives under, relative to `PCGEN_CORPUS_ROOT`.
-pub const BOOKS_RELATIVE: &str = "pathfinder/paizo/roleplaying_game";
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 
-/// Books outside `roleplaying_game/` the corpus ships (mirrors `v06_work_inventory`).
-pub const EXTRA_BOOK_DIRS: &[&str] = &[
+use crate::pcgen_import::system_books;
+
+/// The corpus subtree whose child directories are a system's books, relative to
+/// `PCGEN_CORPUS_ROOT`, per game system (SD-37 E1.3). Pathfinder 1e: every core PF1 book lives
+/// under `pathfinder/paizo/roleplaying_game`. A system registers exactly one subtree; one with
+/// none registered is refused by [`PinnedTree::load_for`] (Starfinder's include structure is
+/// registered by the card that converts it).
+pub const BOOKS_RELATIVE: BookRegistry<&str> = BookRegistry::pathfinder_only(&["pathfinder/paizo/roleplaying_game"]);
+
+/// Books outside a system's [`BOOKS_RELATIVE`] subtree that the corpus ships, per game system.
+/// Pathfinder 1e: the books outside `roleplaying_game/` (mirrors `v06_work_inventory`).
+pub const EXTRA_BOOK_DIRS: BookRegistry<&str> = BookRegistry::pathfinder_only(&[
     "pathfinder/dreamscarred_press/ultimate_psionics",
     "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
     "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2",
@@ -36,7 +45,7 @@ pub const EXTRA_BOOK_DIRS: &[&str] = &[
     "pathfinder/paizo/campaign_setting/inner_sea_taverns",
     "pathfinder/paizo/campaign_setting/inner_sea_bestiary",
     "pathfinder/paizo/campaign_setting/inner_sea_intrigue",
-];
+]);
 
 /// Resolve the pinned corpus root: `$PCGEN_CORPUS_ROOT`, else `$HOME/workspace/repos/pcgen/data`.
 pub fn corpus_root() -> PathBuf {
@@ -129,6 +138,9 @@ pub struct LevelLine {
 
 /// The pinned tree with its indexes.
 pub struct PinnedTree {
+    /// The game system this tree's books belong to (SD-37 E1.3); keys the per-system book
+    /// registries the converter consults (e.g. `reprint::VARIANT_LINE_BOOKS`).
+    pub system: GameSystem,
     pub root: PathBuf,
     pub book_paths: BTreeMap<String, PathBuf>,
     /// SD-36 F3b2b: book id -> its publication date, the `SOURCEDATE:` header of the book
@@ -179,6 +191,12 @@ pub struct PinnedTree {
     /// `POOL:Pool_Summoner_Class_Selection`). A name declared with two different `POOL:` values is
     /// left out (never guessed).
     pub ability_category_pool: BTreeMap<String, (String, RowRef)>,
+    /// SD-37 E3.4: a system whose game mode splits armour class (Starfinder's EAC and KAC) --
+    /// split name (`EAC`, `KAC`) -> the bonus types its `ACTYPE:<split>` row removes from the
+    /// total (`miscinfo.lst`: `ACTYPE:EAC ADD:TOTAL REMOVE:KAC|KAC_Armor|...`). An `AC` bonus
+    /// feeds every split whose removal list does not name its type. Empty for Pathfinder, whose
+    /// `AC` is one total.
+    pub armor_class_split: BTreeMap<String, BTreeSet<String>>,
 }
 
 /// Split a raw row into its name field and `(KEY, VALUE)` tokens, tab-separated. A field with
@@ -322,6 +340,51 @@ fn copy_own_tokens_last(
     inherited
 }
 
+impl LstFile {
+    fn read(root: &Path, path: &Path, book: &str, text: &str) -> LstFile {
+        let rel = path.strip_prefix(root).unwrap_or(path).to_string_lossy().replace('\\', "/");
+        let is_pfs = rel.split('/').any(|seg| seg == "_pfs");
+        LstFile {
+            family: file_family(&rel),
+            rel_path: rel,
+            book: book.to_string(),
+            is_pfs,
+            lines: text.split('\n').map(|s| s.trim_end_matches('\r').to_string()).collect(),
+        }
+    }
+}
+
+/// The armour-class splits a game mode declares: every `ACTYPE:<name>` row of the mode whose
+/// `<name>` is `EAC` or `KAC`, with the bonus types its `REMOVE:` list takes off the total
+/// ([`PinnedTree::armor_class_split`]). A mode with neither row has no split (Pathfinder); a mode
+/// with one but not the other is refused by name, never half-split.
+pub fn armor_class_split(mode: &[system_books::GameModeFile]) -> Result<BTreeMap<String, BTreeSet<String>>, String> {
+    let mut out: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+    for file in mode {
+        for row in &file.rows {
+            let Some(name) = row.tokens.first().and_then(|t| t.strip_prefix("ACTYPE:")) else { continue };
+            if name != "EAC" && name != "KAC" {
+                continue;
+            }
+            let removes: BTreeSet<String> = row
+                .tokens
+                .iter()
+                .filter_map(|t| t.strip_prefix("REMOVE:"))
+                .flat_map(|v| v.split('|'))
+                .map(|t| t.trim().to_string())
+                .filter(|t| !t.is_empty())
+                .collect();
+            if out.insert(name.to_string(), removes).is_some() {
+                return Err(format!("{}:{}: ACTYPE:{name} is declared twice", file.name, row.line_number));
+            }
+        }
+    }
+    match out.len() {
+        0 | 2 => Ok(out),
+        _ => Err(format!("the game mode splits armour class into {:?} only; EAC and KAC are declared together", out.keys().collect::<Vec<_>>())),
+    }
+}
+
 fn walk_lst(dir: &Path, out: &mut Vec<PathBuf>) {
     let mut stack = vec![dir.to_path_buf()];
     while let Some(d) = stack.pop() {
@@ -363,9 +426,25 @@ fn book_source_dates(book_paths: &BTreeMap<String, PathBuf>) -> BTreeMap<String,
 }
 
 impl PinnedTree {
-    /// Read every `.lst` file under every known book directory and build the indexes.
+    /// The Pathfinder 1e tree: [`PinnedTree::load_for`] with [`GameSystem::Pathfinder1e`].
     pub fn load(root: &Path) -> Result<PinnedTree, String> {
-        let books_dir = root.join(BOOKS_RELATIVE);
+        PinnedTree::load_for(GameSystem::Pathfinder1e, root)
+    }
+
+    /// Read every `.lst` file under every book directory `system` registers and build the
+    /// indexes. A system with no [`BOOKS_RELATIVE`] subtree registered is an error naming the
+    /// system, never a fallback to another system's books.
+    pub fn load_for(system: GameSystem, root: &Path) -> Result<PinnedTree, String> {
+        if !system_books::CONVERTED_BOOKS.books(system).is_empty() {
+            return PinnedTree::load_converted_books(system, root);
+        }
+        let [books_relative] = BOOKS_RELATIVE.books(system) else {
+            return Err(format!(
+                "no PCGen book subtree is registered for game system {system} (closure::BOOKS_RELATIVE); \
+                 its corpus cannot be converted yet"
+            ));
+        };
+        let books_dir = root.join(books_relative);
         if !books_dir.is_dir() {
             return Err(format!(
                 "pinned corpus not found at {} -- set PCGEN_CORPUS_ROOT to a PCGen data/ checkout",
@@ -378,7 +457,7 @@ impl PinnedTree {
             .filter(|e| e.path().is_dir())
             .map(|e| (e.file_name().to_string_lossy().into_owned(), e.path()))
             .collect();
-        for extra in EXTRA_BOOK_DIRS {
+        for extra in EXTRA_BOOK_DIRS.books(system) {
             let path = root.join(extra);
             if !path.is_dir() {
                 return Err(format!("extra book directory not found at {}", path.display()));
@@ -393,18 +472,52 @@ impl PinnedTree {
             walk_lst(dir, &mut paths);
             for p in paths {
                 let Ok(text) = std::fs::read_to_string(&p) else { continue };
-                let rel = p.strip_prefix(root).unwrap_or(&p).to_string_lossy().replace('\\', "/");
-                let is_pfs = rel.split('/').any(|seg| seg == "_pfs");
-                files.push(LstFile {
-                    family: file_family(&rel),
-                    rel_path: rel,
-                    book: book.clone(),
-                    is_pfs,
-                    lines: text.split('\n').map(|s| s.trim_end_matches('\r').to_string()).collect(),
-                });
+                files.push(LstFile::read(root, &p, book, &text));
             }
         }
+        Ok(PinnedTree::indexed(system, root, book_paths, source_dates, files, BTreeMap::new()))
+    }
+
+    /// SD-37 E3.4: a system whose books are registered by `.pcc`
+    /// ([`system_books::CONVERTED_BOOKS`]) reads exactly the `.lst` files those `.pcc` include --
+    /// never a directory walk, which would read an excluded book nested beside or inside a
+    /// registered one (`core/_society`, `decisions.md §6`). Each file belongs to the book whose
+    /// `.pcc` first includes it; the book id is the last segment of its directory
+    /// ([`system_books::book_id`]). The game mode's armour-class split is read here too.
+    fn load_converted_books(system: GameSystem, root: &Path) -> Result<PinnedTree, String> {
+        let includes = system_books::resolve_converted_book_includes(system, root)?;
+        let mut book_paths: BTreeMap<String, PathBuf> = BTreeMap::new();
+        let mut files: Vec<LstFile> = Vec::new();
+        let mut seen: BTreeSet<PathBuf> = BTreeSet::new();
+        for (book, resolution) in &includes.books {
+            let id = system_books::book_id(book).to_string();
+            book_paths.insert(id.clone(), root.join(book.dir));
+            for lst in &resolution.lst_files {
+                if !seen.insert(lst.path.clone()) {
+                    continue;
+                }
+                let text = std::fs::read_to_string(&lst.path).map_err(|e| format!("{}: {e}", lst.path.display()))?;
+                files.push(LstFile::read(root, &lst.path, &id, &text));
+            }
+        }
+        files.sort_by(|a, b| a.rel_path.cmp(&b.rel_path));
+        let source_dates = book_source_dates(&book_paths);
+        let mode = system_books::GAME_MODES.get(system);
+        let repo_dir = root.parent().ok_or_else(|| format!("{} has no parent (the PCGen checkout)", root.display()))?;
+        let armor_class_split = armor_class_split(&system_books::load_game_mode(repo_dir, mode)?)?;
+        Ok(PinnedTree::indexed(system, root, book_paths, source_dates, files, armor_class_split))
+    }
+
+    fn indexed(
+        system: GameSystem,
+        root: &Path,
+        book_paths: BTreeMap<String, PathBuf>,
+        source_dates: BTreeMap<String, String>,
+        files: Vec<LstFile>,
+        armor_class_split: BTreeMap<String, BTreeSet<String>>,
+    ) -> PinnedTree {
         let mut tree = PinnedTree {
+            system,
             root: root.to_path_buf(),
             book_paths,
             source_dates,
@@ -421,9 +534,10 @@ impl PinnedTree {
             ability_category_parent: BTreeMap::new(),
             ability_category_type: BTreeMap::new(),
             ability_category_pool: BTreeMap::new(),
+            armor_class_split,
         };
         tree.build_indexes();
-        Ok(tree)
+        tree
     }
 
     fn build_indexes(&mut self) {
@@ -447,6 +561,9 @@ impl PinnedTree {
         // its parent and every reference under it missed.
         let mut ability_category_type_ambiguous: BTreeSet<String> = BTreeSet::new();
         let mut ability_category_listed: BTreeSet<String> = BTreeSet::new();
+        // SD-37 E5.4: every `ABILITYLIST:` category's listed keys (upper), for
+        // `listed_category_type_views`.
+        let mut ability_category_list: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
         let mut ability_category_pool: BTreeMap<String, (String, RowRef)> = BTreeMap::new();
         let mut ability_category_pool_ambiguous: BTreeSet<String> = BTreeSet::new();
         // `CATEGORY:Aligned Class` `BONUS:VAR` contributions (name upper, row, the row's own
@@ -548,6 +665,9 @@ impl PinnedTree {
                     if !own.is_empty() {
                         if tokens.iter().any(|(k, _)| k.eq_ignore_ascii_case("ABILITYLIST")) {
                             ability_category_listed.insert(own.clone());
+                            for (_, v) in tokens.iter().filter(|(k, _)| k.eq_ignore_ascii_case("ABILITYLIST")) {
+                                ability_category_list.entry(own.clone()).or_default().extend(v.split('|').map(|k| k.trim().to_ascii_uppercase()).filter(|k| !k.is_empty()));
+                            }
                         }
                         if let Some((_, v)) = tokens.iter().find(|(k, _)| k.eq_ignore_ascii_case("TYPE")) {
                             let tags: Vec<String> = v.split('.').map(str::trim).filter(|t| !t.is_empty()).map(str::to_string).collect();
@@ -645,6 +765,13 @@ impl PinnedTree {
         for name in ability_category_ambiguous.iter().chain(&ability_category_type_ambiguous).chain(&ability_category_listed) {
             ability_category_type.remove(name);
         }
+        if self.system == GameSystem::Starfinder1e {
+            let listed: BTreeMap<String, BTreeSet<String>> = ability_category_list
+                .into_iter()
+                .filter(|(name, _)| !ability_category_ambiguous.contains(name) && !ability_category_type_ambiguous.contains(name))
+                .collect();
+            ability_category_type.extend(listed_category_type_views(&self.files, &ability_category_parent, &listed));
+        }
         ability_category_type.retain(|name, tags| !tags.is_empty() && ability_category_parent.contains_key(name));
         for name in &ability_category_ambiguous {
             ability_category_parent.remove(name);
@@ -718,6 +845,68 @@ impl PinnedTree {
 
 fn define_or_push(index: &mut BTreeMap<String, Vec<RowRef>>, name: &str, row: RowRef) {
     index.entry(name.trim().to_ascii_uppercase()).or_default().push(row);
+}
+
+/// SD-37 E5.4 (Starfinder only): an `ABILITYLIST:` category whose parent is `CATEGORY:Internal`
+/// (a helper category, never a feat or racial-trait list a seed already picks from) and whose
+/// listed members are EXACTLY the rows of the parent carrying some one set of `TYPE:` tags gets
+/// that tag set as its
+/// member view -- the two definitions select the same rows, so the category's picks can offer
+/// its members (`pool_link::category_views`) without a new option-set shape. The tag set is the
+/// listed rows' shared tags; a category whose listed rows share none, or whose shared tags also
+/// select an unlisted row (or miss a listed key), gets no view and stays unlinked, as before.
+///
+/// The oracle's drone skill unit (`scr_abilitycategories.lst:132`, `ABILITYCATEGORY:DRONE Skill
+/// Unit ... CATEGORY:Internal ABILITYLIST:DRONE Skill Unit ~ Acrobatics|...|DRONE Skill Unit ~
+/// Stealth`): its six listed rows are the six `CATEGORY:Internal TYPE:Drone Skill Unit` rows
+/// (`scr_abilities.lst:1415-1420`).
+fn listed_category_type_views(
+    files: &[LstFile],
+    parents: &BTreeMap<String, String>,
+    listed: &BTreeMap<String, BTreeSet<String>>,
+) -> BTreeMap<String, Vec<String>> {
+    // (parent category upper) -> every plain row's (KEY-or-name upper, TYPE tags as written).
+    let listed: BTreeMap<&String, &BTreeSet<String>> = listed.iter().filter(|(name, _)| parents.get(*name).is_some_and(|p| p == "INTERNAL")).collect();
+    let wanted: BTreeSet<&String> = listed.keys().filter_map(|name| parents.get(*name)).collect();
+    let mut rows: BTreeMap<String, Vec<(String, Vec<String>)>> = BTreeMap::new();
+    for file in files.iter().filter(|f| f.family == FileFamily::Ability && !f.is_pfs) {
+        for raw in &file.lines {
+            let id = row_identity(raw);
+            if !matches!(id.shape, RowShape::Plain) || !wanted.contains(&id.category) {
+                continue;
+            }
+            let (head, tokens) = tokenize_row(raw);
+            if head.trim_start().to_ascii_uppercase().starts_with("ABILITYCATEGORY:") {
+                continue;
+            }
+            let tags: Vec<String> = tokens
+                .iter()
+                .rfind(|(k, _)| k == "TYPE")
+                .map(|(_, v)| v.split('.').map(str::trim).filter(|t| !t.is_empty()).map(str::to_string).collect())
+                .unwrap_or_default();
+            rows.entry(id.category.clone()).or_default().push((id.key.clone(), tags));
+        }
+    }
+    let upper = |tags: &[String]| tags.iter().map(|t| t.to_ascii_uppercase()).collect::<BTreeSet<String>>();
+    let mut out = BTreeMap::new();
+    for (name, keys) in listed {
+        let Some(parent_rows) = parents.get(name).and_then(|p| rows.get(p)) else { continue };
+        let members: Vec<&(String, Vec<String>)> = parent_rows.iter().filter(|(k, _)| keys.contains(k)).collect();
+        if members.len() != keys.len() {
+            continue;
+        }
+        let Some(((_, first_tags), rest)) = members.split_first() else { continue };
+        let shared: Vec<String> = first_tags.iter().filter(|t| rest.iter().all(|(_, o)| upper(o).contains(&t.to_ascii_uppercase()))).cloned().collect();
+        if shared.is_empty() {
+            continue;
+        }
+        let shared_u = upper(&shared);
+        let selected = parent_rows.iter().filter(|(_, tags)| shared_u.is_subset(&upper(tags))).count();
+        if selected == keys.len() {
+            out.insert(name.clone(), shared);
+        }
+    }
+    out
 }
 
 /// One record's closure: its rows in PCGen application order.
@@ -867,6 +1056,50 @@ impl PinnedTree {
 mod tests {
     use super::*;
 
+    /// SD-37 E1.3: the Pathfinder 1e registry entries are the paths the converter has always
+    /// read (one book subtree, thirteen extra book dirs). E3.4: Starfinder registers no subtree;
+    /// it is read through its converted books' `.pcc` (`system_books::CONVERTED_BOOKS`), so a
+    /// missing checkout is refused naming the `.pcc` -- never converted from Pathfinder's books.
+    #[test]
+    fn the_book_subtree_is_keyed_by_game_system() {
+        assert_eq!(BOOKS_RELATIVE.books(GameSystem::Pathfinder1e), &["pathfinder/paizo/roleplaying_game"]);
+        assert_eq!(EXTRA_BOOK_DIRS.books(GameSystem::Pathfinder1e).len(), 13);
+        assert!(EXTRA_BOOK_DIRS.books(GameSystem::Pathfinder1e).iter().all(|d| d.starts_with("pathfinder/")));
+        assert!(BOOKS_RELATIVE.books(GameSystem::Starfinder1e).is_empty());
+        let err = match PinnedTree::load_for(GameSystem::Starfinder1e, Path::new("/nonexistent")) {
+            Ok(_) => panic!("a missing Starfinder checkout must not load"),
+            Err(e) => e,
+        };
+        assert!(err.contains("starfinder/paizo/core/_starfinder_core_rulebook.pcc"), "{err}");
+    }
+
+    /// SD-37 E3.4: the Starfinder game mode's `ACTYPE:EAC` / `ACTYPE:KAC` rows are read as the
+    /// armour-class split; a mode with neither row (Pathfinder) has none; a half split is refused.
+    #[test]
+    fn the_armor_class_split_is_read_from_the_game_mode_rows() {
+        let file = |rows: &[&[&str]]| system_books::GameModeFile {
+            name: "miscinfo.lst".into(),
+            path: PathBuf::from("miscinfo.lst"),
+            rows: rows
+                .iter()
+                .enumerate()
+                .map(|(i, r)| system_books::GameModeRow { line_number: i + 1, tokens: r.iter().map(|t| t.to_string()).collect() })
+                .collect(),
+        };
+        let sf = file(&[
+            &["ACTYPE:Total", "ADD:TOTAL"],
+            &["ACTYPE:EAC", "ADD:TOTAL", "REMOVE:KAC|KAC_Armor|KACArmorEnhancement|KACArmorInsight"],
+            &["ACTYPE:KAC", "ADD:TOTAL", "REMOVE:EAC|EAC_Armor|EACArmorEnhancement"],
+        ]);
+        let split = armor_class_split(&[sf]).unwrap();
+        assert_eq!(split.keys().collect::<Vec<_>>(), ["EAC", "KAC"]);
+        assert!(split["EAC"].contains("KAC_Armor") && !split["EAC"].contains("EAC_Armor"));
+        assert!(split["KAC"].contains("EAC_Armor") && !split["KAC"].contains("KAC_Armor"));
+        assert!(armor_class_split(&[file(&[&["ACTYPE:Total", "ADD:TOTAL"]])]).unwrap().is_empty());
+        let half = armor_class_split(&[file(&[&["ACTYPE:EAC", "REMOVE:KAC"]])]).unwrap_err();
+        assert!(half.contains("EAC and KAC"), "{half}");
+    }
+
     #[test]
     fn row_identity_reads_category_key_and_shape() {
         let id = row_identity("CATEGORY=Special Ability|Foo.MOD\tDESC:x");
@@ -902,6 +1135,7 @@ mod tests {
     /// oracle checkout carries.
     fn tree_from_lines(files: Vec<(&str, Vec<&str>)>) -> PinnedTree {
         let mut tree = PinnedTree {
+            system: GameSystem::Pathfinder1e,
             root: PathBuf::new(),
             book_paths: BTreeMap::new(),
             source_dates: BTreeMap::new(),
@@ -927,6 +1161,7 @@ mod tests {
             ability_category_parent: BTreeMap::new(),
             ability_category_type: BTreeMap::new(),
             ability_category_pool: BTreeMap::new(),
+            armor_class_split: BTreeMap::new(),
         };
         tree.build_indexes();
         tree

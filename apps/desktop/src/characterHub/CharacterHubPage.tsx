@@ -1,5 +1,5 @@
 import { useEffect, useState, useLayoutEffect } from 'react';
-import { loadCharacterHubListSurfaceRuntime } from './characterHubRuntime';
+import { characterCreationGate, loadCharacterHubListSurfaceRuntime } from './characterHubRuntime';
 import {
   replaceRowInSurface,
   toRowSurface,
@@ -8,6 +8,9 @@ import {
 } from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { CreateCharacterForm } from './CreateCharacterForm';
+import { StarfinderCreateForm } from './StarfinderCreateForm';
+import { StarfinderCharacterSheet } from './StarfinderCharacterSheet';
+import { isStarfinderCharacter } from './starfinderSheetModel';
 import { LandingScreen, type RuleSetId } from './LandingScreen';
 import { LoadCharacterScreen } from './LoadCharacterScreen';
 import { CharacterSheet } from './CharacterSheet';
@@ -18,6 +21,8 @@ import { RaceCatalogScreen } from '../raceCatalog/RaceCatalogScreen';
 import { CompanionCatalogScreen } from '../companionCatalog/CompanionCatalogScreen';
 import { MonsterCatalogScreen } from '../monsterCatalog/MonsterCatalogScreen';
 import { IntelligentItemCatalogScreen } from '../intelligentItemCatalog/IntelligentItemCatalogScreen';
+import { StarfinderCatalogScreen } from '../starfinderCatalog/StarfinderCatalogScreen';
+import type { StarfinderCatalogKind } from '../boundary/loadStarfinderCatalog';
 import { CorpusIngestDiagnosticPanel } from './CorpusIngestDiagnosticPanel';
 import { DmToolkitScreen } from '../dmToolkit/DmToolkitScreen';
 import { isGoogleDriveConfigured } from '../settings/googleDrive';
@@ -40,6 +45,7 @@ type Mode =
   | 'monsterCatalog'
   | 'companionCatalog'
   | 'intelligentItemCatalog'
+  | 'starfinderCatalog'
   | 'corpusIngestDiagnostic'
   | 'dm-toolkit'
   | 'campaign-list'
@@ -67,6 +73,7 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
     onWideChange(mode === 'create');
   }, [mode, onWideChange]);
   const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
+  const [starfinderCatalogKind, setStarfinderCatalogKind] = useState<StarfinderCatalogKind>('race');
   const [sheet, setSheet] = useState<{ row: CharacterHubListRowSurface; detail: LoadSavedCharacterResponse | null } | null>(null);
   // Where the ✕ on the character sheet should return to — Load Character
   // normally, but the campaign screen when opened from a party member there.
@@ -76,16 +83,17 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
   const [error, setError] = useState<string | null>(null);
 
   function reload() {
-    loadCharacterHubListSurfaceRuntime()
+    loadCharacterHubListSurfaceRuntime(ruleSet)
       .then(setSurface)
       .catch((cause: unknown) => {
         setError(cause instanceof Error ? cause.message : 'Unknown character hub failure');
       });
   }
 
+  // The Load list is the selected rule set's: re-list when the landing's selection changes.
   useEffect(() => {
     reload();
-  }, []);
+  }, [ruleSet]);
 
   if (mode === 'landing') {
     return (
@@ -93,6 +101,7 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
         selectedRuleSet={ruleSet}
         onSelectRuleSet={setRuleSet}
         onCreate={() => setMode('create')}
+        createGate={characterCreationGate(ruleSet)}
         onLoad={() => setMode('load')}
         onBrowseEquipment={() => setMode('equipmentCatalog')}
         onBrowseSpells={() => setMode('spellCatalog')}
@@ -101,6 +110,10 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
         onBrowseMonsters={() => setMode('monsterCatalog')}
         onBrowseCompanions={() => setMode('companionCatalog')}
         onBrowseIntelligentItems={() => setMode('intelligentItemCatalog')}
+        onBrowseStarfinder={(kind) => {
+          setStarfinderCatalogKind(kind);
+          setMode('starfinderCatalog');
+        }}
         onCorpusIngestDiagnostic={() => setMode('corpusIngestDiagnostic')}
         onCampaignManager={() => setMode('campaign-list')}
         campaignManagerGate={computeCampaignManagerAccessGate(isGoogleDriveConfigured())}
@@ -135,6 +148,11 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
 
   if (mode === 'intelligentItemCatalog') {
     return <IntelligentItemCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'starfinderCatalog') {
+    // SD-37 E6.4: Starfinder 1e's catalogs, read from its own package.
+    return <StarfinderCatalogScreen initialKind={starfinderCatalogKind} onClose={() => setMode('landing')} />;
   }
 
   if (mode === 'corpusIngestDiagnostic') {
@@ -202,6 +220,27 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
     );
   }
 
+  if (mode === 'sheet' && sheet && sheet.detail !== null && isStarfinderCharacter(sheet.detail.summary)) {
+    // SD-37 E6.3: a Starfinder character opens the Starfinder sheet, never the Pathfinder one.
+    return (
+      <StarfinderCharacterSheet
+        key={sheet.detail.summary.characterId}
+        detail={sheet.detail}
+        onDetailRefreshed={(detail) => {
+          // SD-37 E6.5: after a level-up the row's class/level label follows the saved character.
+          const updatedRow = toRowSurface(detail.summary);
+          setSheet((current) => (current ? { row: updatedRow, detail } : current));
+          setSurface((current) => (current ? replaceRowInSurface(current, updatedRow) : current));
+        }}
+        onClose={() => setMode(sheetReturnMode)}
+        onOpen={() => {
+          setSheetReturnMode('load');
+          setMode('load');
+        }}
+      />
+    );
+  }
+
   if (mode === 'sheet' && sheet) {
     return (
       <CharacterSheet
@@ -264,7 +303,11 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
       {/* Refresh the list data in the background so it's current whenever the
           user chooses to go back — but stay on the form so they can see the
           computed character sheet (or blocked diagnostics) the submit produced. */}
-      <CreateCharacterForm onCreated={reload} />
+      {characterCreationGate(ruleSet).form === 'starfinder' ? (
+        <StarfinderCreateForm onCreated={reload} />
+      ) : (
+        <CreateCharacterForm onCreated={reload} />
+      )}
     </section>
   );
 }

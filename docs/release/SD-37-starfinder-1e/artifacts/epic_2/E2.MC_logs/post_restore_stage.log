@@ -1,0 +1,12 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/artifacts/epic_2/E2.MC_logs/vlog-post_restore_stage
+---------------------------------------------------------------
+==> rules-schema-check — regenerate schemas/rules/*.schema.json from the serde types and diff
+    PASS  rules-schema-check  (2 schemas regenerate byte-equal; 3 schema tests pass)
+---------------------------------------------------------------
+SUMMARY
+  passed:  1  rules-schema-check
+
+RESULT: PASS
+logs in /home/ubuntu/workspace/worktrees/codex-sd37/docs/release/SD-37-starfinder-1e/artifacts/epic_2/E2.MC_logs/vlog-post_restore_stage

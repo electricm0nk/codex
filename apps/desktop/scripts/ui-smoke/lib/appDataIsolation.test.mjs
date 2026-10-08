@@ -24,6 +24,7 @@ import {
   characterIds,
   cleanupCreatedCharacters,
   createIsolatedDataRoot,
+  fingerprintStore,
   isolatedXdg,
   launchEnv,
   removeDataRoot,
@@ -151,6 +152,27 @@ try {
   {
     const outcome = cleanupCreatedCharacters({ before: ['seed'], listIds: () => ['seed'], deleteById: () => assert.fail('nothing to delete') });
     assert.deepEqual(outcome.created, [], 'a row that creates nothing deletes nothing');
+  }
+
+  // --- R5: the real store's entry count + sha256, taken before and after a run ---
+  {
+    const store = join(scratch, 'fingerprinted');
+    mkdirSync(join(store, 'characters', 'character:a'), { recursive: true });
+    writeFileSync(join(store, 'characters', 'character:a', 'save.json'), '{"a":1}');
+    writeFileSync(join(store, '.default_character_seeded'), '1');
+    const first = fingerprintStore(store);
+    assert.equal(first.entries, 4, 'entries = every file and directory under the store: characters, character:a, save.json, the marker');
+    assert.match(first.sha256, /^[0-9a-f]{64}$/, 'a sha256 hex digest');
+    assert.deepEqual(fingerprintStore(store), first, 'reading twice gives the same fingerprint');
+    writeFileSync(join(store, 'characters', 'character:a', 'save.json'), '{"a":2}');
+    assert.equal(fingerprintStore(store).entries, first.entries, 'a changed file keeps the count');
+    assert.notEqual(fingerprintStore(store).sha256, first.sha256, 'a changed byte moves the hash');
+    writeFileSync(join(store, 'characters', 'character:a', 'save.json'), '{"a":1}');
+    assert.deepEqual(fingerprintStore(store), first, 'restoring the byte restores the fingerprint');
+    mkdirSync(join(store, 'characters', 'character:litter'));
+    assert.equal(fingerprintStore(store).entries, first.entries + 1, 'a stray directory moves the count');
+    rmSync(join(store, 'characters', 'character:litter'), { recursive: true });
+    assert.deepEqual(fingerprintStore(join(scratch, 'absent')), { entries: 0, sha256: fingerprintStore(join(scratch, 'absent2')).sha256, present: false }, 'an absent store is a stable, flagged empty fingerprint');
   }
 
   // --- removeDataRoot never reaches the real store -----------------------------

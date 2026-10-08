@@ -1,0 +1,1 @@
+{"var":"v5fe8f6232d5d4c84","label":"Skill Cap Culture","declared_by":["core:ability:default"],"contributions":[{"rule_id":"core:ability:default","expr":{"Var":"v5b16698d87ebd3f5"},"when":"Always"}],"provenance":{"outside_corpus_rows":["starfinder/paizo/core/scr_abilities.lst:15"]}}

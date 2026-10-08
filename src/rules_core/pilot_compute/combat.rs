@@ -1,3 +1,4 @@
+use crate::rules_core::rules_catalog::COMPILED_MODULE_CITATION;
 #[allow(unused_imports)]
 pub(crate) use super::*;
 
@@ -912,7 +913,7 @@ pub(super) fn compute_combat_baseline(
                  {WEAPON_NONPROFICIENCY_ATTACK_PENALTY} nonproficiency penalty only when \
                  this character's proficiency with {LONGSWORD_ITEM_ID} is actually known, \
                  and it is not: at least one class in {:?} has neither a \
-                 rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES row nor a Known \
+                 {COMPILED_MODULE_CITATION}::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES row nor a Known \
                  answer from the converted rule package ({reason}), so the attack total below \
                  is NOT claimed to be correct",
                 input
@@ -2001,7 +2002,7 @@ mod weapon_finesse_tests {
 /// ultimate_combat_chassis_gate_tests`, 4 passed).
 ///
 /// **Samurai's proficiency (closed by SD-36 Epic F step 2):**
-/// `rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES` still
+/// `rules_catalog::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES` still
 /// carries no row for Samurai -- its real corpus token,
 /// `AUTO:WEAPONPROF|TYPE=Samurai`, is a weapon TYPE selector that table has
 /// no representation for. The converted record answers instead: the

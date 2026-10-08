@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Irising shield (advanced)",
+    "name": "Irising shield, advanced",
+    "type": "ARMOR.Shields"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 88,
+    "path": "starfinder/paizo/near_space/sns_equip.lst",
+    "record_key": "Irising shield (advanced)",
+    "sha256": "597c20e87a811ffff6ea542d4aa1c33f55106c844cdd978829fd0f3e002dedfd"
+  },
+  "unit_id": "near_space:equipment:irising_shield_advanced"
+}

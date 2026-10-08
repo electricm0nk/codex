@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Theme",
+    "key": "Death Touched Theme Benefit ~ INURED TO THE GRAVE",
+    "name": "INURED TO THE GRAVE",
+    "type": "Theme.Theme Benefit.Death Touched Theme Benefit.Death Touched Theme Benefit Lvl 12"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 158,
+    "path": "starfinder/paizo/pact_worlds/spw_abilities.lst",
+    "record_key": "Death Touched Theme Benefit ~ INURED TO THE GRAVE",
+    "sha256": "00d61896ff6203e4fcc2cf8ccd79362a17739e63386a2b188fa2e9f5ccac9e2d"
+  },
+  "unit_id": "pact_worlds:ability:death_touched_theme_benefit_inured_to_the_grave"
+}

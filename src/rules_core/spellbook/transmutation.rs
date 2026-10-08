@@ -8,7 +8,7 @@
 //! -- Epic 2's ninth and final school).
 //!
 //! Reads spell level and effect text from the canonical CRB spell-list
-//! table store (`rules_tables::crb::spell_list::SPELL_LIST`, SD-19's
+//! table store (`rules_catalog::crb::spell_list::SPELL_LIST`, SD-19's
 //! foundation slice; 152 real Transmutation records) via a `TableCellRef`
 //! -style lookup — never hand-rolled or re-derived. This mirrors
 //! `spell_resolver::spell_id_resolve`'s own `TableCellRef` construction
@@ -21,14 +21,14 @@
 //! `spellbook::necromancy`'s own `TableCellRef`.
 
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::RuleSetId;
-use crate::rules_core::rules_tables::acg::spell_list::{
+use crate::rules_core::rules_catalog::RuleSetId;
+use crate::rules_core::rules_catalog::acg::spell_list::{
     Pf1SchoolId as AcgPf1SchoolId, SPELL_LIST as ACG_SPELL_LIST,
 };
-use crate::rules_core::rules_tables::apg::spell_list::{
+use crate::rules_core::rules_catalog::apg::spell_list::{
     Pf1SchoolId as ApgPf1SchoolId, SPELL_LIST as APG_SPELL_LIST,
 };
-use crate::rules_core::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
+use crate::rules_core::rules_catalog::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
 
 /// One resolved Transmutation spell's effect: its level and effect text,
 /// both read directly from `SPELL_LIST`, plus a `TableCellRef` proving the
@@ -138,7 +138,7 @@ mod tests {
     }
 
     /// W21-SPELL-001: this function used to read ONLY the CRB table store,
-    /// even though `rules_tables::crb::wizard_spell_list`'s own per-class
+    /// even though `rules_catalog::crb::wizard_spell_list`'s own per-class
     /// level table already spans CRB + APG + ACG (580 records, per that
     /// module's doc comment) — so a Wizard casting an ACG spell like this
     /// one resolved a level (via `wizard_spell_level`) but then found no

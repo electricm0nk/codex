@@ -30,7 +30,7 @@
 
 use std::collections::HashMap;
 
-use codex::rules_core::rules_tables::{RuleSetId, acg, apg, crb};
+use codex::rules_core::rules_catalog::{RuleSetId, acg, apg, crb};
 
 /// Every `(key, book)` pair across the three ingested spell tables.
 fn all_keys() -> Vec<(&'static str, &'static str)> {
@@ -166,10 +166,10 @@ fn no_archetype_display_name_shadows_another_record_in_its_own_book() {
     }
 
     let acg_keys: Vec<&str> = acg::spell_list::SPELL_LIST.iter().map(|e| e.key).collect();
-    check("ACG", acg::spell_list::ARCHETYPE_QUALIFIED_KEYS, &acg_keys);
+    check("ACG", &acg::spell_list::ARCHETYPE_QUALIFIED_KEYS, &acg_keys);
 
     let apg_keys: Vec<&str> = apg::spell_list::SPELL_LIST.iter().map(|e| e.key).collect();
-    check("APG", apg::spell_list::ARCHETYPE_QUALIFIED_KEYS, &apg_keys);
+    check("APG", &apg::spell_list::ARCHETYPE_QUALIFIED_KEYS, &apg_keys);
 }
 
 /// The `SPELL_LIST` table above is only half the pipeline: the on-disk

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Coil rifle (rangefinder)",
+    "name": "Coil rifle, rangefinder",
+    "type": "RESIZABLE.Weapon.Ranged.ToHit_UseDex.Prof Group Sniper.Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 716,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Coil rifle (rangefinder)",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:coil_rifle_rangefinder"
+}

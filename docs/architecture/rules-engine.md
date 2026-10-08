@@ -1,32 +1,15 @@
 # Rules engine
 
-> Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: **2026-09-29 against `tranche/16` (`165cc205e7`)** for §3d (SD-36 Epic F class dispatch:
-> the generic gate arm, the prestige rule, the multiclass fold, the proficiency reader, converted-record class
-> skills / sub-classes / bloodlines, the pick-to-option link, the census that measures them, and the F6/F7
-> desktop-polish additions — the hit-die source rule, feat skill bonuses folded from the record, F6a class
-> facts, F7a effective ability scores and weapon-record-only proficiency names, F7c class-skill/requirement-label/
-> default-pick rules; figures from `class_census --json` and the stage-f6/stage-f7 receipts).
-> Earlier pass: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for §3d (SD-36 Epic F class dispatch:
-> the generic gate arm, the prestige rule, the multiclass fold, the proficiency reader, converted-record class
-> skills / sub-classes / bloodlines, the pick-to-option link, and the census that measures them; figures from
-> `class_census --json`, `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/census-f5.json`).
-> Earlier pass: **2026-09-20 against `tranche/16` (`424e93e93c`)** for the SD-36 Epic C1 split of the
-> old, single `pilot_compute.rs` file into `src/rules_core/pilot_compute/` (41 submodules; `mod.rs`
-> itself is now a 297-line module-declaration/re-export shim, not the compute body), for
-> `src/support/paths.rs` (Epic C1.3's shared path-helper module), and for the module map, compute
-> pipeline, and sequence diagrams below. Also verified: no module under `src/rules_core/` reads a
-> PCGen token (`python3 scripts/pcgen_residue_gate.py --check --closure` → `live_files=0
-> live_hits=0`), and the old `oracle_validation` and `pcgen_import` trees under `src/` have both
-> moved to `crates/codex-ingest/` (SD-36 Epic A / operator ruling D1) — nothing under
-> `src/rules_core/` names either any more; see [corpus-ingest.md](./corpus-ingest.md) §"The crate
-> wall." Prior pass 2026-09-15 against tranche/15 (SD-35 closure) verified the sheet-rule layer
-> (§"The sheet rule" below) and the fail-honest/per-domain-engine catalog sections, which are
-> otherwise unchanged by the C1 split — it moved code, not behavior. **This pass** (capability-claims
-> audit, same day) re-checked every class/level/multiclass capability and limitation claim in this
-> file against a fresh `v06_class_state_dump` run and the dispatch code, and corrected the multiclass
-> section's stale "Fighter+Wizard only" claim — `table_class_id` recognizes all 11 CRB classes today
-> (see §"Multiclass base-chassis dispatch" below).
+> Scope: The headless rules-computation spine for Pathfinder 1e and Starfinder 1e — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
+> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §3e (the Starfinder 1e
+> generic chassis: the `sf_*` readers, `game_system.rs`, the engine master link) and for every reference to the
+> Pathfinder rules tables, now a data package read through `src/rules_core/rules_catalog/` (the compiled `rules_tables`
+> module no longer exists; see [rules-data-tables.md](./rules-data-tables.md)). Pathfinder compute behaviour is unchanged
+> by SD-37: the Aldric and Elowen seed render hashes are equal before and after
+> (`awk '/^pf-seed-render (aldric|elowen) /{print $2, substr($3,8,8)}' docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.2_logs/pf_hash.log`
+> → `aldric 1d830682`, `elowen 8d1a711c`). The SD-36 Epic F figures in §3d were not re-derived this pass; they are
+> the Epic F closure values (class census `63 of 63`, `68 of 74`, `185 of 185`). No module under `src/rules_core/`
+> reads a PCGen token (`python3 scripts/pcgen_residue_gate.py --check --closure`).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This document orients a contributor entering `src/rules_core/` cold. It describes the compute spine
@@ -37,8 +20,9 @@ cited modules for that.
 ## Module map
 
 `src/rules_core/` has no subdirectories of its own besides `pilot_compute/`, `equipment_effects/`,
-`feat_prereqs/`, `level_up/`, `spellbook/` and `rules_tables/` (the last is
-[rules-data-tables.md](./rules-data-tables.md)'s territory). Every other file listed here is a flat
+`feat_prereqs/`, `level_up/`, `spellbook/` and `rules_catalog/` (the last is
+[rules-data-tables.md](./rules-data-tables.md)'s territory). `game_system.rs` names the game system a package root belongs to, and
+`rules_data_package.rs` loads the Pathfinder table package. Every other file listed here is a flat
 sibling module. Grouped by role, not alphabetically — this is what
 `ls src/rules_core/*.rs src/rules_core/*/` groups into by reading each module's own doc comment:
 
@@ -124,7 +108,7 @@ flowchart LR
     D --> E["PilotReceipt\n(contract.rs::to_pilot_receipt)"]
     E --> F["Vec&lt;PrintedSheetCell&gt;\n(contract.rs::printed_sheet_cell_map)"]
     G["data/sheet_rules/**\n(converted corpus, read via corpus_loader)"] --> C
-    H["rules_tables::&lt;book&gt;::*\n(hand-transcribed chassis)"] --> C
+    H["rules_catalog::&lt;book&gt;::*\n(package-backed chassis tables)"] --> C
 ```
 
 *One character request, six inputs converge on `compute_pilot_base_chassis`, one receipt exits
@@ -649,7 +633,7 @@ figure is one mechanical rule applied to converted data, never a per-class case.
 canonical per-class picks come from one seed table, `class_seeds::canonical_seeds_for`
 (`src/rules_core/class_seeds.rs`), which the desktop's `pf1_adapter.rs` and `v06_class_state_dump` import.
 
-**Proficiency reader (F1/F1c).** `CLASS_WEAPON_PROFICIENCIES` (`rules_tables/crb/weapon_tables.rs`)
+**Proficiency reader (F1/F1c).** `CLASS_WEAPON_PROFICIENCIES` (`rules_catalog/crb/weapon_tables.rs`)
 keeps its 42 hand-transcribed rows, first precedence. Every other class is answered by
 `class_proficiency_sheet_rules::class_weapon_proficiency_view(class, level)` from the converted package:
 it seeds that one class, runs the held-set fixpoint, and collects `Fact::Proficiency` grants from the
@@ -763,6 +747,36 @@ Psion's Egoist discipline (**3 of 59** roster classes) — is served as `default
 and prints with the one `class_seeds::DEFAULT_PICK_MARKER` ("default pick") on the Skills panel and the
 allocation dialog, never a plain class skill (`f7c-receipt.md` §a–§c).
 
+### 3e. SD-37 — Starfinder 1e: the generic chassis
+
+Starfinder 1e is a second game system on this engine (`src/rules_core/game_system.rs`: `GameSystem::Pathfinder1e` /
+`Starfinder1e`, wire ids `pathfinder-1e` / `starfinder-1e`, `package_roots` giving each system's `sheet_rules` and
+`corpus` roots; an unknown id is `UnknownGameSystem`, never a default). It has **no per-class, per-race or per-skill
+table**. Seven readers in `src/rules_core/pilot_compute/` total every sheet number from the converted package
+(`data/starfinder-1e/sheet_rules/<book>/<kind>/<slug>.json`) over one **held set**:
+
+| Reader | Totals | Terms it reads |
+|---|---|---|
+| `sf_chassis.rs` | BAB, Fort/Ref/Will, Hit Points, Stamina, Resolve, key ability | the class's `BaseAttack`, `BaseSave`, `Hp`, `Stamina` rows; the race's `Hp` row; three SRD system rules (ability modifier into saves, Con into Stamina, ½ level plus key modifier into Resolve) |
+| `sf_defense.rs` | EAC, KAC, initiative; the held set itself (`held`, `held_set`) | 10, the worn armour's `Eac`/`Kac` rows, Dex capped by the armour's max Dex, every other held row targeting the total, folded by bonus type |
+| `sf_skills.rs` | every skill the package holds | ranks, the skill's key-ability modifier, the +3 trained class-skill bonus, the armour check penalty, held rows, all from the same held set |
+| `sf_spells.rs` | spells per day, spells known, save DCs, levels 0-6 | the class's `SpellCell` / `SpellsKnown` rows, bonus spells from the key ability, other held rows; 0-level per day is printed as unlimited, never a number |
+| `sf_loadout.rs` | credits spent and remaining, bulk, bulk limits | each item's `Price` and `Bulk` rows times quantity, applied upgrades/fusions/materials, augmentations (0 bulk), Table 11-5 starting credits |
+| `sf_abilities.rs` | final ability scores | race and theme adjustments from the held set, point buy, the 5/10/15/20 increases (`increase_term`) |
+| `sf_attack.rs` | melee/ranged attack, per-weapon attack and damage | BAB, Str or Dex modifier, proficiency, the package's per-weapon rows; a weapon no row names gets no total and prints its dice |
+
+The held set is the race, the class's first-level `BaseClass` template, the theme and every record they grant, to a
+fixpoint, plus the worn armour and the picks; `sf_defense::held` turns a build into it and the `CharacterFacts` the
+rows' gates read. `sheet_rule::CharacterFacts::master_vars` carries a master's variables to a companion (a Mechanic's
+drone). A term a reader cannot resolve is a named `SfChassisRefusal` (`REFUSED_MULTICLASS_KEY_ABILITY`,
+unknown modifier, item with no price, ...), never a 0. Each total is one `sf.*` `ComputationExplanation` row whose
+`detail` lists every term added into it (the paper-sheet rule: one number per sheet line, every term that resolves added
+in). The desktop assembles these in `apps/desktop/src-tauri/src/sf_adapter.rs` (`build_from_input`), which adds the one join
+the readers leave to the caller, the bulk condition's max-Dex cap and -5 Strength/Dexterity check penalty.
+
+What the Starfinder side does not cover is in [status.md](./status.md) §"Starfinder 1e". The Pathfinder census, the
+multiclass fold and the class dispatch of §3d are Pathfinder-only.
+
 ### 4. `src/rules_core/pilot_compute_corpus.rs` — the corpus-aware wrapping seam
 
 `compute_pilot_with_corpus(input: &CharacterInput, corpus: &SourcePackageContent) ->
@@ -791,7 +805,7 @@ per-domain engine directly. Its own header doc comment names it the contract's "
 
 - `CharacterInputPermutation` (`BrandNew` | `MidBuild` | `Multiclass`) and `classify_character_input(input: &CharacterInput) -> CharacterInputPermutation` classify an input into one of three canonical shapes the contract documents: multiclass takes precedence over mid-build, mid-build over brand-new (see the function body for the exact precedence and thresholds).
 - `PilotReceipt` is the full GUI-facing receipt. It does not duplicate `PilotBaseChassisComputation`/`CorpusPilotReceipt` — it composes with them: `chassis` is the unchanged chassis computation, `corpus_derived` is the unchanged corpus-derived section, and `diagnostics` hoists the chassis's diagnostics to the receipt's top level. On top of that it adds the real per-domain engine outputs: `skills: SkillTotals`, `spellbook: SpellbookCoverage`, `feats: Vec<ResolvedFeat>`, `equipment_effects: EquipmentEffects`, `weapon_damage: Vec<WeaponDamageBreakdown>`.
-- `to_pilot_receipt(receipt: &CorpusPilotReceipt, input: &CharacterInput, corpus: &SourcePackageContent) -> PilotReceipt` is the function that actually builds a `PilotReceipt`: it resolves `input.chosen.selected_feats` against `rules_tables::crb::feats::feat_tables()` (an unmatched feat string is silently skipped, never fabricated into a category), filters `equipment_selections` to `ActiveState::EquippedActive` before computing equipment effects, and reuses that same filtered `equipped` slice and its `EquipmentEffects` result when calling `damage_total::resolve_weapon_damage_breakdown` rather than recomputing either.
+- `to_pilot_receipt(receipt: &CorpusPilotReceipt, input: &CharacterInput, corpus: &SourcePackageContent) -> PilotReceipt` is the function that actually builds a `PilotReceipt`: it resolves `input.chosen.selected_feats` against `rules_catalog::crb::feats::feat_tables()` (an unmatched feat string is silently skipped, never fabricated into a category), filters `equipment_selections` to `ActiveState::EquippedActive` before computing equipment effects, and reuses that same filtered `equipped` slice and its `EquipmentEffects` result when calling `damage_total::resolve_weapon_damage_breakdown` rather than recomputing either.
 - `compute_level_up_preview(character: &CharacterInput, from_level: u8, to_level: u8) -> LevelUpPlan` is a thin pass-through to `level_up::compute_level_up_grants`. It is deliberately **not** a `PilotReceipt` field — the doc comment explains that Level-Up models a level *transition* (needs two extra parameters no other `PilotReceipt` consumer has), not a current-state snapshot, so it stays a standalone function alongside `PilotReceipt` instead of contaminating it.
 - `PrintedSheetCell { cell_id, source_field, value: PrintedSheetCellValue }` and `printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell>` are the literal cells a printed PF1 character sheet renders. `PrintedSheetCellValue` is either `Number(i16)` or `Blocked` — never a third "unknown" state, and never a fabricated number standing in for a blocked one. Every cell's `source_field` names the exact `PilotReceipt` field path it renders, for auditability. Not every `PilotReceipt` field becomes a cell: `printed_sheet_cell_map`'s own doc comment records, field by field, why `spells_prepared`/`spells_known`/`school_specialization` and `EquipmentEffects.spell_failure_chance` stay reachable only via `receipt.*` directly rather than being flattened into cells that don't fit `Number(i16) | Blocked` cleanly; `PilotReceipt.weapon_damage`'s own field doc comment records the same reasoning for why the full `WeaponDamageBreakdown` structures are never flattened into cells either.
 
@@ -995,15 +1009,15 @@ has no entry in `totals`, matching the fail-honest "absence, not fabrication" di
 PrerequisiteEvaluation` and `compute_feat_effects(feat: &FeatKey) -> FeatEffects`, dispatching by
 `FeatCategory` across four submodules under `src/rules_core/feat_prereqs/`: `src/rules_core/feat_prereqs/general.rs`,
 `src/rules_core/feat_prereqs/combat.rs`, `src/rules_core/feat_prereqs/item_creation.rs`, `src/rules_core/feat_prereqs/metamagic.rs` — one per category in
-`rules_tables::crb::feats::feat_tables()` (185 CRB feat records: 50 General, 110 Combat, 8
+`rules_catalog::crb::feats::feat_tables()` (185 CRB feat records: 50 General, 110 Combat, 8
 ItemCreation, 17 Metamagic), all four categories landed. `FeatCategory` also carries `Teamwork`
 and `Panache`, which only APG/ACG records use; those two dispatch arms have no landed
 evaluation path (every submodule above evaluates against the CRB catalog, which by construction
 holds no record of either) and say so rather than reporting a real APG/ACG feat as unrecognized.
 The book-spanning catalog the desktop Feat picker serves is
-`rules_tables::feats_all::all_feat_tables()` (23 books joined, 1578 hand-authored entries plus
+`rules_catalog::feats_all::all_feat_tables()` (23 books joined, 1578 hand-authored entries plus
 per-book corpus-gap rows — not just CRB/APG/ACG) — see
-[rules-data-tables.md](./rules-data-tables.md) §"Per-book directory pattern"'s `feats_all.rs` entry.
+[rules-data-tables.md](./rules-data-tables.md) §"Book layout inside the catalog and the package"'s cross-book tables.
 Ingesting those records does **not** ground their
 mechanical effects: `src/rules_core/feat_effects.rs` still grounds computed effects for a small
 subset of CRB feats only.
@@ -1102,7 +1116,7 @@ under `src/rules_core/level_up/`: `src/rules_core/level_up/barbarian.rs`, `src/r
 `src/rules_core/level_up/monk.rs`, `src/rules_core/level_up/paladin.rs`, `src/rules_core/level_up/ranger.rs`, `src/rules_core/level_up/rogue.rs`, `src/rules_core/level_up/sorcerer.rs`, `src/rules_core/level_up/wizard.rs` — all 11 landed,
 closing Epic 7. `LevelUpPlan`'s `automatic_features` field composes read-only with two
 already-grounded sources rather than re-deriving them:
-`rules_tables::crb::class_tables::class_tables()` for class-generic BAB/save progression, and
+`rules_catalog::crb::class_tables::class_tables()` for class-generic BAB/save progression, and
 `pilot_compute::compute_pilot_base_chassis`'s own per-class `explanations` for class-specific
 pillars (e.g. Barbarian Rage, Uncanny Dodge). This is a read-only composition, not a second copy of
 chassis logic. Note a live dispatch limitation surfaced by SD-25's adapter work: `compute_level_up_grants` reads a single implied class off `character.chosen.class_levels` and returns an honestly-empty `LevelUpPlan::default()` for any multiclass mix (it has no per-class-delta parameter). The desktop hub-of-hubs `RuleSystemAdapter::level_up` (see [desktop-app.md](./desktop-app.md) §"Rule-system adapter seam") deliberately takes an explicit `&[ClassLevelDelta]` slice so a multiclass level-up is *expressible* at that seam; widening the free function itself to honor that shape is still open.
@@ -1125,11 +1139,11 @@ criterion's literal signature even though the rule always yields a whole number.
 Most engines above read static rule tables rather than embedding rule data inline (`skill_allocation.rs`
 is a documented exception — its own module doc comment explains that the table store carries no
 class-skill-list table yet, so its bounded Fighter class-skill set is a cited inline constant instead);
-the tables live under `src/rules_core/rules_tables/` (`crb/`, `apg/`, `acg/`, `beastiary1/` — one
+the tables are rows in the data package `data/rules_tables/`, read through `src/rules_core/rules_catalog/` (`crb/`, `apg/`, `acg/`, `beastiary1/` and the narrow-book directories — one
 directory per sourcebook), each exposing a table accessor engines reference directly — typically a
-`pub fn <name>_tables() -> &'static [...]` (`rules_tables::crb::feats::feat_tables()`), but not
-uniformly: `rules_tables::crb::class_tables::class_tables()` returns an owned `Vec`, and
-`rules_tables::crb::spell_list::SPELL_LIST` is a plain `pub const` slice, not a function.
+`pub fn <name>_tables() -> &'static [...]` (`rules_catalog::crb::feats::feat_tables()`), but not
+uniformly: `rules_catalog::crb::class_tables::class_tables()` returns an owned `Vec`, and
+`rules_catalog::crb::spell_list::SPELL_LIST` is a package-backed `Table`, not a function. A table that cannot be loaded stops the caller with the package error.
 See [rules-data-tables.md](./rules-data-tables.md) for how those tables are structured and
 sourced. The convention every per-domain engine's doc comment converges on independently — noted
 explicitly in `src/rules_core/feat_prereqs.rs`, `src/rules_core/spellbook.rs`, and `src/rules_core/level_up.rs` — is a direct, fully-qualified
@@ -1164,7 +1178,7 @@ See [testing.md](./testing.md) for the full test-organization convention.
 | Corpus resolution for a chosen item/spell id | `src/rules_core/equipment_resolver.rs` / `src/rules_core/spell_resolver.rs` |
 | A whole book's worth of corpus content, or why a book reads empty | `src/rules_core/corpus_loader.rs` / `src/rules_core/race_resolver.rs` (§"The corpus loaders" above) — check the diagnostics before assuming a resolver bug |
 | An animal companion's or familiar's computed stat block (AC, HP, saves, attacks — the PLAYER-side pet, ground live) | `src/rules_core/pilot_compute/companion.rs` (`ground_*_companion_stat_block`) + `src/rules_core/pilot_compute/companion_base_stat_table.rs`; natural armor is one of the bonuses these compute — `grep -rli 'natural.armor' src/rules_core/pilot_compute/*.rs` finds every contributor |
-| A monster catalog stat block (Bestiary 1 and other book-side monsters, served READ-ONLY, never computed) | `src/rules_core/rules_tables/beastiary1/` (46 hand-modelled) and `src/rules_core/rules_tables/monster_chassis.rs` (the other 284 rows, `MONSTER_BOOKS` registry) via `apps/desktop/src-tauri/src/monster_catalog.rs` — see [rules-data-tables.md](./rules-data-tables.md) §"One book is served by two tables, deliberately." **AC, HP and saves are deliberately not served here**: they are not corpus tokens (PCGen computes them at runtime from `MONSTERCLASS:`/ability scores, not a literal row), and an empty AC column would be exactly the placeholder `docs/governance/no-stub-mvp-doctrine.md` forbids — see `monster_catalog.rs`'s own module doc for the full reasoning. Two same-named `struct MonsterStatBlock` types exist (`beastiary1/mod.rs` and `monster_chassis.rs`) — they are not the same type. |
+| A monster catalog stat block (Bestiary 1 and other book-side monsters, served READ-ONLY, never computed) | `src/rules_core/rules_catalog/beastiary1/` (46 hand-modelled) and `src/rules_core/rules_catalog/monster_chassis.rs` (the chassis rows, `MONSTER_BOOKS` registry) via `apps/desktop/src-tauri/src/monster_catalog.rs` — see [rules-data-tables.md](./rules-data-tables.md) §"Bestiary 1 is served by two tables, deliberately." **AC, HP and saves are deliberately not served here**: they are not corpus tokens (PCGen computes them at runtime from `MONSTERCLASS:`/ability scores, not a literal row), and an empty AC column would be exactly the placeholder `docs/governance/no-stub-mvp-doctrine.md` forbids — see `monster_catalog.rs`'s own module doc for the full reasoning. Two same-named `struct MonsterStatBlock` types exist (`beastiary1/mod.rs` and `monster_chassis.rs`) — they are not the same type. |
 | Whether something should count as claim-blocked | Re-read "The fail-honest pattern" above before writing a diagnostic |
 
 ## How to add X: three worked examples
@@ -1180,7 +1194,7 @@ See [testing.md](./testing.md) for the full test-organization convention.
 
 ### Add a feat effect
 
-1. `src/rules_core/feat_prereqs.rs` + its category submodule (`feat_prereqs/general.rs`, `combat.rs`, `item_creation.rs`, or `metamagic.rs`, matching the feat's `FeatCategory` in `rules_tables::crb::feats::feat_tables()`) is where *prerequisite evaluation* lives — start here only if the feat isn't reachable at all yet.
+1. `src/rules_core/feat_prereqs.rs` + its category submodule (`feat_prereqs/general.rs`, `combat.rs`, `item_creation.rs`, or `metamagic.rs`, matching the feat's `FeatCategory` in `rules_catalog::crb::feats::feat_tables()`) is where *prerequisite evaluation* lives — start here only if the feat isn't reachable at all yet.
 2. A feat's computed **mechanical effect** (not just whether it's legal to take) is a distinct, smaller surface: `src/rules_core/feat_effects.rs`, which grounds a bounded subset of CRB feats today. Add the feat's effect function there, following an existing entry's shape — it composes with `damage_total.rs`/`equipment_effects.rs` rather than duplicating either.
 3. A feat a class grants *automatically* (never appears in `selected_feats` because the player never picks it) is a third, separate case: `src/rules_core/pilot_compute/feat_pillars.rs`'s `class_granted_feats`.
 4. Prove it with a fixture-backed test under `tests/`, following the fail-honest pattern: an untriggered feat's absence is `None`/no explanation, never a zeroed placeholder.

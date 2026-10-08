@@ -121,7 +121,8 @@ use codex::rules_core::skinwalker_change_shape::skinwalker_change_shape_options;
 use codex::rules_core::trait_pool::{load_trait_pool, resolve_adopted_race_options};
 
 use crate::authoring_workbench::codex_repo_root;
-use crate::race_catalog::{book_code, RACE_CORPUS_BOOKS};
+use crate::race_catalog::{book_code, RACE_CORPUS_BOOK_REGISTRY};
+use codex::rules_core::game_system::GameSystem;
 
 /// `Half-Elf` → `HalfElf`. The same identity rule `race_catalog.rs` uses, so a
 /// race's `raceId` is the same string on both screens.
@@ -486,8 +487,9 @@ fn race_corpus() -> &'static Result<RaceCorpus, String> {
             // See `race_catalog::race_corpus`'s identical guard.
             return Err(format!("corpus root not found: {}", corpus_root.display()));
         }
-        let book_dirs: Vec<PathBuf> = RACE_CORPUS_BOOKS.iter().map(|book| corpus_root.join(book)).collect();
-        let roots: Vec<BookCorpusRoot<'_>> = RACE_CORPUS_BOOKS
+        let books = RACE_CORPUS_BOOK_REGISTRY.books(GameSystem::Pathfinder1e);
+        let book_dirs: Vec<PathBuf> = books.iter().map(|book| corpus_root.join(book)).collect();
+        let roots: Vec<BookCorpusRoot<'_>> = books
             .iter()
             .zip(book_dirs.iter())
             .map(|(book_id, dir)| BookCorpusRoot { book_id, dir: dir.as_path() })
@@ -759,8 +761,9 @@ fn build_menu(corpus: &RaceCorpus) -> AlternateRacialTraitsResponse {
     let adopted_race_options: Vec<AdoptedRaceOptionDto> = match codex_repo_root() {
         Ok(root) => {
             let corpus_root = root.join("data/corpus");
-            let dirs: Vec<PathBuf> = RACE_CORPUS_BOOKS.iter().map(|book| corpus_root.join(book)).collect();
-            let pool_roots: Vec<BookCorpusRoot<'_>> = RACE_CORPUS_BOOKS
+            let books = RACE_CORPUS_BOOK_REGISTRY.books(GameSystem::Pathfinder1e);
+            let dirs: Vec<PathBuf> = books.iter().map(|book| corpus_root.join(book)).collect();
+            let pool_roots: Vec<BookCorpusRoot<'_>> = books
                 .iter()
                 .zip(dirs.iter())
                 .map(|(book_id, dir)| BookCorpusRoot { book_id, dir: dir.as_path() })
@@ -1078,6 +1081,26 @@ pub fn resolve_race_alternate_selection(
 
 #[cfg(test)]
 mod tests {
+    /// SD-37 E5.1 (E1.MC discovery): the race corpus and the adopted-race Trait pool load
+    /// their books through `RACE_CORPUS_BOOK_REGISTRY` -- the per-system registry E1.2 built --
+    /// never the bare Pathfinder `RACE_CORPUS_BOOKS` list. E1.MC measured the gap: dropping a
+    /// book from the registry left both PF seed sheets byte-identical, because these two loaders
+    /// read the list instead. Read off this file's own non-test source.
+    #[test]
+    fn race_books_load_through_the_per_system_registry() {
+        let source = include_str!("race_trait_picker.rs");
+        let shipping = &source[..source.find("#[cfg(test)]\nmod tests {").expect("the test module")];
+        let direct: Vec<(usize, &str)> = shipping
+            .lines()
+            .enumerate()
+            .filter(|(_, l)| !l.trim_start().starts_with("//") && l.contains("RACE_CORPUS_BOOKS"))
+            .map(|(i, l)| (i + 1, l.trim()))
+            .collect();
+        assert!(direct.is_empty(), "loaders read RACE_CORPUS_BOOKS, not RACE_CORPUS_BOOK_REGISTRY: {direct:?}");
+        let registry_reads = shipping.matches("RACE_CORPUS_BOOK_REGISTRY.books(GameSystem::Pathfinder1e)").count();
+        assert_eq!(registry_reads, 2, "the race corpus and the Trait pool each read the registry");
+    }
+
     use super::*;
     use codex_ingest::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 

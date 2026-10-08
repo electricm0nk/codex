@@ -1,0 +1,48 @@
+[
+  {
+    "id": "create-starfinder-soldier",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e62/smoke_green/create-starfinder-soldier.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nStarfinder 1st Edition — a 1st-level character: race, theme, class, then the point buy.\n\nCharacter name\n\nRace\n\nTheme\n\nClass\n\nKey ability\n\nChoices for this race, theme and class\n+2 Racial Stat Bonus — adjusts ability scores\n\nHuman — adjusts ability scores\n\nSoldier\n\nPrimary Fighting Style\n\nAbility scores (point buy)\nPoints spent: 10 of 10. Each point raises a score by 1; no",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-2-jvwPi9/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "b2e69f4e-2c36-4d39-946b-f4a835f82b6e"
+      ],
+      "deleted": [
+        "b2e69f4e-2c36-4d39-946b-f4a835f82b6e"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-select-pathfinder",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e62/smoke_green/landing-select-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-2-jvwPi9/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-render",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e62/smoke_green/create-character-render.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nCharacter name\n\nPlayer name\n\nRace\n\nClass\n\nBarbarian is fully computed at every level offered here.\n\nBarbarian 1: BAB +1 · Fort +2 · Ref +0 · Will +0\n\nLevel\n\nHP\n15\nAlignment\n\nDeity\n\nPhysical Attributes\nSize\nMedium\nSex\n\nVision\nDarkvision 60 ft.\nHeight\n4'2\"\n🎲\nWeight\n178 lb\n🎲\nAge\n\nEyes\n\nHair\n\nRacial Traits\n+2 Constitution, +2 Wisdom, -2 Charisma · Racial trait (CRB)\nDwarves",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd37-e6-2-jvwPi9/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

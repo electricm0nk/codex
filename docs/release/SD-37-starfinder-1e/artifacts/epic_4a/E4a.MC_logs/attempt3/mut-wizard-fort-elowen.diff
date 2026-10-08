@@ -1,0 +1,20 @@
+22c22
+<       "fortitude": 1,
+---
+>       "fortitude": 6,
+29c29
+<       "fortitude": 2,
+---
+>       "fortitude": 7,
+196,197c196,197
+<       "value": 1,
+<       "detail": "Wizard level 5 base Fortitude save (poor) from rules_tables::crb::class_tables::class_tables()'s Wizard row: 1"
+---
+>       "value": 6,
+>       "detail": "Wizard level 5 base Fortitude save (poor) from rules_tables::crb::class_tables::class_tables()'s Wizard row: 6"
+256,257c256,257
+<       "value": 2,
+<       "detail": "Total Fortitude save: Wizard base Fortitude save (+1) + Constitution modifier (+1) + feat bonus (+0, Great Fortitude if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly judging Purity) + alternate racial trait (+0, only for a character who took one that declares a Fortitude bonus) + character trait (+0, Life of Toil if selected) = 2"
+---
+>       "value": 7,
+>       "detail": "Total Fortitude save: Wizard base Fortitude save (+6) + Constitution modifier (+1) + feat bonus (+0, Great Fortitude if selected) + Good domain Touch of Good sacred bonus (+0, self-applied) + Inquisitor Purity judgment sacred/profane bonus (+0, only while actively, validly judging Purity) + alternate racial trait (+0, only for a character who took one that declares a Fortitude bonus) + character trait (+0, Life of Toil if selected) = 7"

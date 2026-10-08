@@ -56,6 +56,9 @@ git init -q "$SEED"
     git config user.email test@example.com
     git config user.name "oracle-selftest"
     mkdir -p data/pathfinder/paizo/roleplaying_game system/gameModes/Pathfinder data/other_publisher
+    mkdir -p data/starfinder/paizo/core system/gameModes/Starfinder
+    echo "CAMPAIGN:Starfinder Core" > data/starfinder/paizo/core/_starfinder_core_rulebook.pcc
+    echo "SFMISC" > system/gameModes/Starfinder/miscinfo.lst
     echo "SOURCE:Core" > data/pathfinder/paizo/roleplaying_game/core.lst
     echo "MISC" > system/gameModes/Pathfinder/miscinfo.lst
     echo "outside the cone" > data/other_publisher/should_not_appear.txt
@@ -200,6 +203,57 @@ else fail "a full (non-sparse) clone at the pin passes --check" "$OUT (exit $ST)
 if [ "$ST" -eq 0 ] && printf '%s\n' "$OUT" | grep -qx "pcgen-oracle: OK $COMMIT1 $D9"; then
   pass "successful --check emits the exact pcgen-oracle: OK token"
 else fail "successful --check emits the exact pcgen-oracle: OK token" "$OUT (exit $ST)"; fi
+
+# ---------------------------------------------------------------------------
+# Starfinder cone (SD-37 E0.1). A pin whose sparse paths name data/starfinder
+# must (a) fetch the SF cone, (b) FAIL --check when the SF core campaign file
+# or the SF game mode directory is missing, (c) be repairable by --force.
+# The PF-only pin above must stay unaffected.
+# ---------------------------------------------------------------------------
+SFPIN="$WORKROOT/sfpin.env"
+cat > "$SFPIN" <<EOF
+PCGEN_ORACLE_REPO=file://$BARE
+PCGEN_ORACLE_SHA=$COMMIT1
+PCGEN_ORACLE_SPARSE_PATHS="data/pathfinder system/gameModes/Pathfinder data/starfinder system/gameModes/Starfinder"
+EOF
+runsf() { OUT=$(PCGEN_ORACLE_PIN_FILE="$SFPIN" "$SCRIPT" "$@" 2>&1); ST=$?; }
+
+# --- 11. SF pin, fresh fetch -> SF core pcc + SF game mode present. ---------
+D11=$(fresh_dest d11-sf)
+runsf --dest "$D11"
+if [ "$ST" -eq 0 ] && echo "$OUT" | grep -q "^pcgen-oracle: OK" \
+   && [ -f "$D11/data/starfinder/paizo/core/_starfinder_core_rulebook.pcc" ] \
+   && [ -d "$D11/system/gameModes/Starfinder" ]; then
+  pass "SF pin: fresh fetch brings data/starfinder/paizo/core and the SF game mode"
+else fail "SF pin: fresh fetch brings data/starfinder/paizo/core and the SF game mode" "$OUT (exit $ST)"; fi
+
+# --- 12. SF cone removed -> --check exits 1 naming the missing SF path. -----
+git -C "$D11" sparse-checkout set data/pathfinder system/gameModes/Pathfinder >/dev/null 2>&1
+runsf --dest "$D11" --check
+if [ "$ST" -eq 1 ] && echo "$OUT" | grep -q "data/starfinder/paizo/core" && ! echo "$OUT" | grep -q "^pcgen-oracle: OK"; then
+  pass "SF cone removed: --check exits 1 naming data/starfinder/paizo/core"
+else fail "SF cone removed: --check exits 1 naming data/starfinder/paizo/core" "$OUT (exit $ST)"; fi
+
+# --- 13. Only the SF game mode removed -> --check exits 1 naming it. --------
+git -C "$D11" sparse-checkout set data/pathfinder system/gameModes/Pathfinder data/starfinder >/dev/null 2>&1
+runsf --dest "$D11" --check
+if [ "$ST" -eq 1 ] && echo "$OUT" | grep -q "system/gameModes/Starfinder"; then
+  pass "SF game mode removed: --check exits 1 naming system/gameModes/Starfinder"
+else fail "SF game mode removed: --check exits 1 naming system/gameModes/Starfinder" "$OUT (exit $ST)"; fi
+
+# --- 14. --force re-applies the pin's cone and repairs the checkout. --------
+runsf --dest "$D11" --force
+if [ "$ST" -eq 0 ] && echo "$OUT" | grep -q "^pcgen-oracle: OK" \
+   && [ -f "$D11/data/starfinder/paizo/core/_starfinder_core_rulebook.pcc" ] \
+   && [ -d "$D11/system/gameModes/Starfinder" ]; then
+  pass "--force re-applies the SF cone and repairs the checkout"
+else fail "--force re-applies the SF cone and repairs the checkout" "$OUT (exit $ST)"; fi
+
+# --- 15. PF-only pin on a checkout with no SF files still passes. -----------
+run --dest "$D2" --check
+if [ "$ST" -eq 0 ] && echo "$OUT" | grep -q "^pcgen-oracle: OK"; then
+  pass "PF-only pin does not demand the SF cone"
+else fail "PF-only pin does not demand the SF cone" "$OUT (exit $ST)"; fi
 
 echo "---------------------------------------------------------------"
 echo "passed: $PASSED  failed: $FAILED"

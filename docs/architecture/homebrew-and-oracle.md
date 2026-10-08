@@ -1,7 +1,7 @@
 # Homebrew authoring and oracle validation
 
 > Scope: the headless GE-08 package-authoring surface (`src/homebrew_authoring/`, root `codex` crate), the GE-05 pilot oracle-parity surface (`crates/codex-ingest/src/oracle_validation/`), and the SD-33 corpus-wide oracle harness (`scripts/oracle_harness/`), as they exist today.
-> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** — SD-36 docs-truth capability pass:
+> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for §"The Starfinder 1e oracle parity gate" (new). The rest was last verified as follows: **2026-09-20 against `tranche/16` (`424e93e93c`)** — SD-36 docs-truth capability pass:
 > re-checked this document's "one proof package" framing for `homebrew_authoring` against the code
 > (`grep -rn "pub fn.*_proof\b" src/homebrew_authoring/` still returns exactly one hit,
 > `guard_stance_proof()` — the claim holds unchanged) and confirmed no other capability/scope claim in
@@ -393,6 +393,26 @@ already committed under `docs/release/SD-33-computed-value-verification/artifact
 compiled copies of some may still sit in an untracked `target/debug/` from before the deletion (not
 a sign the source still exists — `git log --diff-filter=D -- '*_ours.rs'` is the re-derive command).
 A future corpus-wide comparison run writes new, purpose-built probes rather than resurrecting these.
+
+## The Starfinder 1e oracle parity gate
+
+SD-37 compares the Starfinder engine against the real PCGen engine at the pinned oracle, for a bounded roster: the four
+seeds (Soldier 3, Mystic 5, Technomancer 5, Envoy 3), one level-1 build of each of the ten Starfinder player classes (the
+Mechanic 1 is the drone's master) and the Mechanic's drone, 15 oracle observation files
+(`ls scripts/oracle_harness/sf_parity/*.oracle.txt | awk 'END{print NR}'` → `15`).
+
+- **Run.** `bash scripts/oracle_harness/sf_parity_run.sh [<build-stem> ...]` (needs `PCGEN_REPO_DIR` at the pinned commit; it
+  refuses an off-pin checkout) builds each `.pcg` from `scripts/oracle_harness/sf_parity_builds.py`, runs
+  `scripts/pcgen-run-character.sh` with the export sheet `sf_parity.txt.ftl`, and writes
+  `scripts/oracle_harness/sf_parity/<build>.oracle.txt`. The drone runs in PCGen's party batch mode with its master first
+  (`sf_parity_drone.txt`), because a follower reads its master's variables.
+- **Gate.** The desktop test `sf_oracle_parity` (`apps/desktop/src-tauri/src/sf_oracle_parity.rs`) renders each build through
+  `StarfinderAdapter` and compares it field by field with the oracle file. A difference must have a row in
+  `scripts/oracle_harness/sf_parity/explained.tsv` (36 rows, by `awk '!/^#/ && NF' explained.tsv | awk 'END{print NR}'`), each with a class and a reason (for
+  example `oracle-departs-from-srd`, citing the SRD page the engine follows); a stale ledger row also fails. The independent re-count is `scripts/oracle_harness/sf_parity_check.py <engine dump dir>`.
+- **What it does not contain.** `not_in_oracle.tsv` lists the engine fields the oracle exports no value for (1,413 rows, test-kept to
+  equal the computation). Parity beyond the roster (higher-level builds of the six other classes), drone totals (printed as terms, an
+  open operator ruling) and anything the oracle does not export are not checked. See [status.md](./status.md) §"Starfinder 1e".
 
 ## Relationship to the fail-honest pattern and test locations
 

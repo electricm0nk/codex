@@ -1,0 +1,19 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.10s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 11 tests
+test rules_core::rules_data_package::tests::table_ids_are_unique_and_the_package_holds_exactly_them ... ok
+test rules_core::rules_data_package::tests::the_desktop_bundles_the_package ... ok
+test rules_core::rules_data_package::tests::an_unstamped_pi_row_a_non_canonical_file_or_a_wrong_table_id_is_refused ... ok
+test rules_core::rules_data_package::tests::the_stamp_records_every_pi_hit_and_says_pi ... ok
+test rules_core::rules_data_package::tests::every_file_level_table_is_a_package_table_and_no_array_is_compiled ... ok
+test rules_core::rules_data_package::tests::every_collection_function_is_a_table_or_a_named_view ... ok
+test rules_core::rules_data_package::tests::the_loader_returns_the_rows_typed ... ok
+test rules_core::rules_data_package::tests::registry_rows_name_registered_tables ... ok
+test rules_core::rules_data_package::tests::package_files_agree_with_the_published_schema ... ok
+test rules_core::rules_catalog::golden_tests::every_catalog_table_view_and_lookup_matches_its_golden_digest ... ok
+test rules_core::rules_data_package::tests::every_table_round_trips_through_the_loader ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 2833 filtered out; finished in 8.87s
+
+exit=0

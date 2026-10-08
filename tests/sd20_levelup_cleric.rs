@@ -11,7 +11,7 @@
 //! `pilot_compute.rs`'s `explain_cleric_level1_spell_baseline` requires to
 //! ground its domain-power pillars at all).
 //!
-//! **Discovered during this cycle**: `rules_tables::crb::class_tables`'s
+//! **Discovered during this cycle**: `rules_catalog::crb::class_tables`'s
 //! `CLASS_META` row for `ClassId::Cleric` encodes `good_saves.fortitude:
 //! false` — but the PF1 Core Rulebook Cleric class table's good saves are
 //! Fortitude AND Will (poor Reflex only), independently verified by this

@@ -98,7 +98,7 @@ fn the_real_package_attests_complete_closures_only() {
 /// weapon options are resolved at ingest to the oracle's Simple-tier weapon-proficiency names.
 #[test]
 fn the_commoner_pick_is_linked_to_the_simple_tier() {
-    use codex::rules_core::rules_tables::crb::weapon_tables::{WeaponProficiency, WEAPON_TABLE};
+    use codex::rules_core::rules_catalog::crb::weapon_tables::{WeaponProficiency, WEAPON_TABLE};
     use codex::rules_core::sheet_rule::{Choice, OptionSet};
     let package = sheet_rule_package::package().as_ref().expect("package loads");
     let pick = package.rule("core_rulebook:class_feature:weapon_and_armor_proficiency_commoner").expect("pick");
@@ -113,7 +113,7 @@ fn the_commoner_pick_is_linked_to_the_simple_tier() {
     let Some(Choice { from: OptionSet::Weapons(options), .. }) = &member.offers else { panic!("{:?}", member.offers) };
     // Every Simple CRB weapon is offered, and no Martial or Exotic one is (a table row with no
     // tier states nothing either way).
-    for entry in WEAPON_TABLE {
+    for entry in &WEAPON_TABLE {
         let Some(name) = entry.proficiency_name else { continue };
         let offered = options.iter().any(|o| o.eq_ignore_ascii_case(name));
         match entry.proficiency {

@@ -1,0 +1,94 @@
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+error[E0433]: cannot find `__tauri_command_name_list_starfinder_catalog` in `sf_catalog`
+   --> src/main.rs:187:25
+    |
+187 |           .invoke_handler(tauri::generate_handler![
+    |  _________________________^
+188 | |             load_pilot_shell_snapshot,
+189 | |             load_authoring_workbench_snapshot,
+190 | |             load_backend_health,
+...   |
+300 | |             ui_probe::poll_ui_probe_command
+301 | |         ])
+    | |_________^ could not find `__tauri_command_name_list_starfinder_catalog` in `sf_catalog`
+    |
+    = note: this error originates in the macro `tauri::generate_handler` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0433]: cannot find `__cmd__list_starfinder_catalog` in `sf_catalog`
+   --> src/main.rs:199:25
+    |
+199 |             sf_catalog::list_starfinder_catalog,
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^ could not find `__cmd__list_starfinder_catalog` in `sf_catalog`
+
+warning: unused import: `SheetRule`
+  --> src/sf_catalog.rs:27:37
+   |
+27 | use codex::rules_core::sheet_rule::{SheetRule, SheetRulePackage};
+   |                                     ^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `DescriptionTier`
+  --> src/sf_catalog.rs:28:76
+   |
+28 | use codex::rules_core::sheet_rule_catalog::{catalog_description_or_fields, DescriptionTier};
+   |                                                                            ^^^^^^^^^^^^^^^
+
+error[E0425]: cannot find function `entries` in this scope
+   --> src/sf_catalog.rs:145:24
+    |
+145 |             let rows = entries(package(), kind);
+    |                        ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `entries` in this scope
+   --> src/sf_catalog.rs:168:13
+    |
+168 |             entries(package(), kind).into_iter().find(|r| r.id == id).unwrap_or_else(|| panic!("{id} listed")).name
+    |             ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `entries` in this scope
+   --> src/sf_catalog.rs:176:22
+    |
+176 |         let spells = entries(package(), SfCatalogKind::Spell);
+    |                      ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `entries` in this scope
+   --> src/sf_catalog.rs:179:24
+    |
+179 |             for row in entries(package(), kind) {
+    |                        ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `entries` in this scope
+   --> src/sf_catalog.rs:184:17
+    |
+184 |         assert!(entries(package(), SfCatalogKind::Class).iter().all(|r| r.name != "Fighter"));
+    |                 ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `entries` in this scope
+   --> src/sf_catalog.rs:192:24
+    |
+192 |             for row in entries(package(), kind) {
+    |                        ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `entries` in this scope
+   --> src/sf_catalog.rs:198:20
+    |
+198 |         let feat = entries(package(), SfCatalogKind::Feat).into_iter().find(|r| r.id == "core:feat:adaptive_fighting").unwrap();
+    |                    ^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `list_starfinder_catalog` in this scope
+   --> src/sf_catalog.rs:225:28
+    |
+225 |             let response = list_starfinder_catalog(kind).expect("catalog");
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `entries` in this scope
+   --> src/sf_catalog.rs:228:42
+    |
+228 |             assert_eq!(response.entries, entries(package(), kind));
+    |                                          ^^^^^^^ not found in this scope
+
+Some errors have detailed explanations: E0425, E0433.
+For more information about an error, try `rustc --explain E0425`.
+warning: `codex-desktop` (bin "codex-desktop" test) generated 2 warnings
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 11 previous errors; 2 warnings emitted

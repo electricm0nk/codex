@@ -47,7 +47,7 @@ const MULTICLASS_DISPATCH_FILES: [&str; 4] = [
     "src/rules_core/pilot_compute.rs",
     "src/rules_core/level_up/fighter.rs",
     "src/rules_core/level_up/wizard.rs",
-    "src/rules_core/rules_tables/crb/class_tables.rs",
+    "src/rules_core/rules_catalog/crb/class_tables.rs",
 ];
 
 /// Run `git grep -nE <pattern>` over exactly the multiclass dispatch file

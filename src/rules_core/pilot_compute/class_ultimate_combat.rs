@@ -6,6 +6,7 @@
 //! `pilot_compute`, except `compute_uc_class_chassis`, re-exported by `mod.rs`.
 
 use super::*;
+use crate::rules_core::rules_catalog::COMPILED_MODULE_CITATION;
 
 /// SD31-E4-F1-002 (epic-4-mechanism F1, Ultimate Combat's first class):
 /// compute the base-attack-bonus / base-save chassis pillar for
@@ -53,7 +54,7 @@ pub(super) fn compute_uc_class_chassis(
         value: base_attack_bonus,
         detail: format!(
             "{class_id_str} level {level} base attack bonus from \
-             rules_tables::ultimate_combat::class_chassis_resolve's row for this class: \
+             {COMPILED_MODULE_CITATION}::ultimate_combat::class_chassis_resolve's row for this class: \
              {base_attack_bonus}"
         ),
     });
@@ -62,7 +63,7 @@ pub(super) fn compute_uc_class_chassis(
         value: base_saves.fortitude,
         detail: format!(
             "{class_id_str} level {level} base Fortitude save from \
-             rules_tables::ultimate_combat::class_chassis_resolve's row for this class: {}",
+             {COMPILED_MODULE_CITATION}::ultimate_combat::class_chassis_resolve's row for this class: {}",
             base_saves.fortitude
         ),
     });
@@ -71,7 +72,7 @@ pub(super) fn compute_uc_class_chassis(
         value: base_saves.reflex,
         detail: format!(
             "{class_id_str} level {level} base Reflex save from \
-             rules_tables::ultimate_combat::class_chassis_resolve's row for this class: {}",
+             {COMPILED_MODULE_CITATION}::ultimate_combat::class_chassis_resolve's row for this class: {}",
             base_saves.reflex
         ),
     });
@@ -80,7 +81,7 @@ pub(super) fn compute_uc_class_chassis(
         value: base_saves.will,
         detail: format!(
             "{class_id_str} level {level} base Will save from \
-             rules_tables::ultimate_combat::class_chassis_resolve's row for this class: {}",
+             {COMPILED_MODULE_CITATION}::ultimate_combat::class_chassis_resolve's row for this class: {}",
             base_saves.will
         ),
     });

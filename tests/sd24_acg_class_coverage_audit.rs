@@ -1,7 +1,7 @@
 //! SD-24 Epic 4 criterion 4.3 — Per-class audit: ACG classes (Arcanist,
 //! Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer,
 //! Swashbuckler, Warpriest — the real, corrected 10-class ACG roster;
-//! see `rules_tables::acg::mod.rs`'s own roster-correction doc comment
+//! see `rules_catalog::acg::mod.rs`'s own roster-correction doc comment
 //! for why criterion 4.3's header text's "Alchemist-side" is not real
 //! ACG content and "Slayer" — omitted from that same header text — is).
 //!
@@ -14,10 +14,10 @@
 //! checked on every run, rather than a one-off hand count that could
 //! silently drift from the code. Mirrors
 //! `tests/sd24_apg_class_coverage_audit.rs` exactly (same three-finding
-//! shape), scoped to `rules_tables::acg`.
+//! shape), scoped to `rules_catalog::acg`.
 //!
 //! RED -> GREEN evidence (recorded in this cycle's receipt): before
-//! `rules_tables::acg::mod::{AcgClassId::ALL, AcgClassCoverage,
+//! `rules_catalog::acg::mod::{AcgClassId::ALL, AcgClassCoverage,
 //! class_coverage, coverage_report}` existed, this file did not compile
 //! (RED — no such items). Adding that small, real (non-fabricated: every
 //! field is computed from `class_table()` output, a `MAX_SUPPORTED_LEVEL`
@@ -28,7 +28,7 @@ use codex::rules_core::character_input::{
     AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState,
 };
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::rules_tables::acg::{class_coverage, coverage_report, AcgClassId};
+use codex::rules_core::rules_catalog::acg::{class_coverage, coverage_report, AcgClassId};
 
 /// Every real ACG class's chassis table is fully wired for its own
 /// `MAXLEVEL:20` ceiling (SD-22 Epic 4's already-landed, LST-verified
@@ -127,7 +127,7 @@ fn all_ten_acg_classes_have_full_chassis_row_coverage() {
 /// 3`/`== 3` (Investigator's own `== 5` covered above) for yet another
 /// reason -- see
 /// `AcgClassCoverage::named_features_wired`'s own doc comment in
-/// `rules_tables::acg::mod` for the full record: Arcanist's real
+/// `rules_catalog::acg::mod` for the full record: Arcanist's real
 /// spellcasting build genuinely closes 1 more distinct `KEY:Arcanist ~
 /// ...` record (`Spells Prepared`) beyond Arcane Reservoir, and task #56
 /// closes a third -- the Familiar Exploit (`KEY:Arcanist Exploit ~

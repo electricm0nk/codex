@@ -1,0 +1,114 @@
+App data root: /tmp/codex-ui-smoke-sd37-e6-mc-full-lST4lG/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd37-e6-mc-full'...
+PASS  landing-render
+PASS  landing-ruleset-chips
+PASS  settings-tab-google-drive-disconnect
+PASS  landing-campaign-gate
+PASS  settings-open
+PASS  settings-tab-appearance
+PASS  settings-theme-select-and-manage-themes-modal
+PASS  settings-tab-google-drive
+PASS  settings-tab-update
+PASS  settings-tab-bug
+PASS  settings-tab-enhancement
+PASS  settings-tab-developer
+PASS  settings-close-esc
+PASS  settings-tab-google-drive-save
+PASS  equipment-catalog-open-and-search
+PASS  equipment-catalog-chip-filter-and-back
+PASS  spell-catalog-open-and-search
+PASS  spell-catalog-chip-filter-and-back
+PASS  class-catalog-open-and-search
+PASS  class-catalog-back
+PASS  race-catalog-open-and-search
+PASS  race-catalog-alternate-traits-tab
+PASS  race-catalog-back
+PASS  monster-catalog-open-and-search
+PASS  monster-catalog-back
+PASS  companion-catalog-open-and-search
+PASS  companion-catalog-back
+PASS  intelligent-item-catalog-open-and-search
+PASS  intelligent-item-catalog-back
+PASS  corpus-ingest-diagnostic
+PASS  create-character-render
+PASS  create-character-fill-and-submit
+PASS  create-character-back
+PASS  create-character-samurai
+PASS  create-character-magus
+PASS  create-character-warrior
+PASS  sheet-f6a-samurai-weapons
+PASS  sheet-f6a-warrior-weapons
+PASS  sheet-f6a-magus-caster-level
+PASS  sheet-f6c-shaman-no-domain-line
+PASS  create-character-kineticist
+PASS  create-character-inquisitor-generic
+PASS  load-character-render
+PASS  load-character-select-and-open
+PASS  load-seed-list-both
+PASS  load-character-delete-clone
+PASS  sheet-open-for-tabs
+PASS  sheet-tab-weapons
+PASS  sheet-tab-defense
+PASS  sheet-tab-gear
+PASS  sheet-tab-spells
+PASS  sheet-tab-pets
+PASS  sheet-tab-feats
+PASS  sheet-tab-actions
+PASS  sheet-action-add-armor-gear-picker
+PASS  sheet-action-add-feat
+PASS  sheet-action-add-spell
+PASS  sheet-action-level-up-dialog
+PASS  level-up-fighter6-into-arcane-archer
+PASS  level-up-fighter6-into-arcane-archer-accept
+PASS  level-up-fighter6-blockers-and-labels
+PASS  sheet-action-skill-allocation-dialog
+PASS  sheet-action-hp-adjust
+PASS  sheet-action-money-adjust
+PASS  sheet-action-trait-add
+PASS  sheet-menu-recompute
+PASS  sheet-menu-clone
+PASS  sheet-menu-export
+PASS  sheet-close
+PASS  dm-toolkit-open-and-kind-tabs
+PASS  dm-toolkit-create-record
+PASS  dm-toolkit-edit-record
+PASS  dm-toolkit-delete-record
+PASS  dm-toolkit-export
+PASS  encounter-builder-add-monster-and-rating
+BLOCKED  campaign-manager-list  -- could not reach the landing screen within 6 reset attempts
+run.mjs: 2 consecutive rows stalled on the command channel -- relaunching the app (auto-relaunch 1/3) and retrying 'campaign-create'.
+PASS  campaign-create  -- auto-relaunch
+PASS  campaign-edit
+PASS  campaign-sheet-tabs
+MANUAL  manual-character-import  -- handleImport opens a native OS file-open dialog (Tauri's dialog plugin) -- xdotool has no DOM to drive inside it.
+MANUAL  manual-character-export  -- handleExport / the sheet menu's 'Export' item open a native OS file-save dialog.
+MANUAL  manual-portrait-upload  -- PortraitUpload opens a native OS file-open dialog for the image file.
+PASS  sheet-f7c-expert-skills-default-picks
+PASS  sheet-f7c-samurai-skills-only-skills
+PASS  level-up-f7c-prestige-skill-labels
+PASS  load-seed-wizard-fireball
+PASS  create-starfinder-soldier
+PASS  open-starfinder-sheet
+PASS  level-up-starfinder-soldier-preview
+PASS  level-up-starfinder-soldier-accept
+PASS  choices-starfinder-soldier-loadout
+PASS  build-starfinder-soldier
+PASS  open-starfinder-soldier
+PASS  build-starfinder-mystic
+PASS  open-starfinder-mystic
+PASS  build-starfinder-technomancer
+PASS  open-starfinder-technomancer
+PASS  build-starfinder-envoy
+PASS  open-starfinder-envoy
+PASS  browse-starfinder-catalog
+PASS  landing-select-pathfinder
+PASS  open-seed-aldric
+PASS  open-seed-elowen
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+99/103 green, 0 red, 1 blocked, 3 manual, 0 not-run (M = 103 rows)
+Cleanup: 53 character(s) created across 103 row(s) with a cleanup record, 53 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd37-e6-mc-full-lST4lG/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002
+Evidence: /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e6mc/smoke_full
+Removed isolated app-data root /tmp/codex-ui-smoke-sd37-e6-mc-full-lST4lG (it held 2 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002).
+exit=1

@@ -1329,13 +1329,13 @@ pub(crate) struct CombatSizeModifiers {
 /// claim-blocking diagnostic is pushed, so the assumption is visible rather
 /// than laundered into a plausible-looking total.
 ///
-/// # Why the size comes from `race_resolver` and not `rules_tables::crb`
+/// # Why the size comes from `race_resolver` and not `rules_catalog::crb`
 ///
 /// `race_resolver::race_size_for_race_token` is the authority per
 /// `decisions.md §25.5`: it covers all 18 in-scope races and reads each one's
 /// `~ Size` racial-default trait `TEMPLATE:SIZE_<code>`, which is *not* always
 /// the chassis' `FACT:BaseSize` (Aasimar and Tiefling carry `FACT:BaseSize|S`
-/// and are Medium creatures). `rules_tables::crb::race_tables::race_size_for_race_id`
+/// and are Medium creatures). `rules_catalog::crb::race_tables::race_size_for_race_id`
 /// knew only the 7 hardcoded CRB races and returned `None` for all 11 Bestiary 1
 /// ones -- using it here would have silently left Goblin, Kobold and
 /// Svirfneblin on Medium arithmetic, which is the very defect being fixed.
@@ -3522,7 +3522,7 @@ pub(super) fn is_supported_crb_untabled_class_single_class(input: &CharacterInpu
 }
 
 /// A single-class Ultimate Combat character (Gunslinger, Ninja, or
-/// Samurai) at a level `rules_tables::ultimate_combat::class_chassis_resolve`
+/// Samurai) at a level `rules_catalog::ultimate_combat::class_chassis_resolve`
 /// carries a row for. Named and shaped like `is_supported_pu_single_class`
 /// rather than folded inline, so a future widening (a fourth UC class) has
 /// one obvious place to grow.
@@ -3598,7 +3598,7 @@ pub(super) fn is_supported_slayer_single_class(input: &CharacterInput) -> bool {
 /// once -- each one gets its own `ground_unchained_*_class_features` call
 /// in `compute_pu_class_chassis`, so there is no fifth PU class for a
 /// broad check to let through. `PuClassId::ALL.len() == 4` is asserted in
-/// `rules_tables::pathfinder_unchained::class_chassis`'s own tests, and
+/// `rules_catalog::pathfinder_unchained::class_chassis`'s own tests, and
 /// `pu_gate_admits_exactly_the_four_unchained_classes` below re-checks the
 /// admitted set from this side of the seam, so adding a fifth variant
 /// without wiring it fails loudly instead of leaking through here.
@@ -3681,7 +3681,7 @@ pub(super) fn race_display_label(race_id: &str) -> String {
         .join("-")
 }
 
-/// Maps a wire-level `class_id` string to `rules_tables::crb::class_tables`'s
+/// Maps a wire-level `class_id` string to `rules_catalog::crb::class_tables`'s
 /// `ClassId`, for Fighter, Wizard, and Rogue (v0.6 alpha swarm, task 4 --
 /// widened from a Fighter/Wizard-only pair to add Rogue, the task's own
 /// literal "Fighter/X" reproducer). Used to route both single-class and

@@ -1,0 +1,168 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd37-c0-1": 3,
+      "sd37-c0-2": 5,
+      "sd37-e1-1-e1-3": 1
+    },
+    "by_subject": {
+      "C1 commit 9d03a76996": 1,
+      "SD-35 forward-scope-register C2.1 owner column": 1,
+      "SD-36 FS-3 / scope-draft / memory rules-tables-stay-rust-until-starfinder": 1,
+      "SD-37 package authoring (CUI F-6 / \u00a72)": 1,
+      "SD-37 package authoring (CUI F-7 use in E4.1/E7.1/G-2)": 1,
+      "SD-37 package authoring (DEF-1 revisit command)": 1,
+      "SD-37 package authoring (E7.3 closure scan, progress Total, E4.1/NR-2 grep)": 1,
+      "SD-37 package authoring (decisions.md \u00a78, technical-design \u00a74-5, CUI \u00a73, risks R-1)": 1,
+      "SD-37 source-inventory research report": 1
+    },
+    "by_verification_method": {
+      "awk '/^[^#[:space:]]/ && !/^(SOURCELONG|SOURCESHORT|SOURCEWEB|SOURCEDATE)/{r++} END{print r}' $PCGEN_REPO_DIR/data/starfinder/paizo/core/_society/_abilities.lst -> 15; Python os.walk agrees": 1,
+      "awk -F'\\t' '!/^#/{for(i=1;i<=NF;i++) if($i ~ /HP\\|(CURRENTMAX|ALTHP)\\|/ && FILENAME !~ /scr_classes/) print FILENAME\": \"$1\" :: \"$i}' $PCGEN_REPO_DIR/data/starfinder/paizo/core/*.lst": 1,
+      "awk -F'\\t' '/^CLASS:Drone\\t/{for(i=1;i<=NF;i++) if($i~/TYPE:/) print $i}' $PCGEN_REPO_DIR/data/starfinder/paizo/core/scr_classes.lst -> TYPE:Monster": 1,
+      "awk -F'|' '$2 ~ /^ (C\\|E)[0-9]/ && $5 !~ /complete/' kanban.md | wc -l -> 0 vs 54 with (C|E)": 1,
+      "find $PCGEN_REPO_DIR/system/gameModes/Starfinder -maxdepth 1 -name '*.lst' | wc -l": 1,
+      "find src/rules_core/rules_tables -name '*.rs' -print0 | xargs -0 cat | wc -l; Python os.walk agrees": 1,
+      "git show 9d03a76996 -- apps/desktop/src-tauri/Cargo.lock; cd apps/desktop/src-tauri && cargo metadata --offline wanted \"Downgrading rfd v0.17.0 -> v0.16.0\"; after restore cargo metadata --locked exit 0": 1,
+      "grep -n 'C2.1' docs/release/SD-36-consolidation/forward-scope-register.md (no output)": 1,
+      "unset PCGEN_REPO_DIR; test -d \"$PCGEN_REPO_DIR/data/starfinder/paizo/core/starship\" || grep -lE '^ABILITY:starship' \"$PCGEN_REPO_DIR\"/data/starfinder/paizo/core/*.pcc -> stdout empty, rc=2": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd37-c0-1",
+        "id": "1790947629115-sd37-c0-1-20de54",
+        "summary": "SD-36 FS-3 / scope-draft / memory rules-tables-stay-rust-until-starfinder claimed 181,797 lines in src/rules_core/rules_tables; actual 180,883 lines (250 .rs files)",
+        "ts": "2026-10-02T13:27:09Z"
+      },
+      {
+        "actor": "sd37-c0-1",
+        "id": "1790947940687-sd37-c0-1-f3a030",
+        "summary": "SD-35 forward-scope-register C2.1 owner column claimed owner SD-36; actual SD-36 has no C2.1 row; adopted by SD-37 as E3",
+        "ts": "2026-10-02T13:32:20Z"
+      },
+      {
+        "actor": "sd37-c0-1",
+        "id": "1790947944179-sd37-c0-1-38f8b0",
+        "summary": "SD-37 source-inventory research report claimed system/gameModes/Starfinder has 12 .lst files; actual 10 .lst + base.xml.ftl + bio/",
+        "ts": "2026-10-02T13:32:24Z"
+      },
+      {
+        "actor": "sd37-c0-2",
+        "id": "1790947950348-sd37-c0-2-55e593",
+        "summary": "SD-37 package authoring (decisions.md \u00a78, technical-design \u00a74-5, CUI \u00a73, risks R-1) claimed HP|ALTHP is Hit Points; HP|CURRENTMAX (+HD) is Stamina; actual oracle routes CON*TL, Toughness and drone Energy Shield into ALTHP and RaceHP and +1 Hit Point into CURRENTMAX: ALTHP reads as Stamina, CURRENTMAX+HD as Hit Points (hypothesis for E3.3; SRD values to be sourced by E0.4)",
+        "ts": "2026-10-02T13:32:30Z"
+      },
+      {
+        "actor": "sd37-c0-2",
+        "id": "1790947955218-sd37-c0-2-8058eb",
+        "summary": "SD-37 package authoring (CUI F-6 / \u00a72) claimed 12,733 in-scope SF rows, 214 excluded; actual 12,718 in scope, 229 excluded (paizo/core/_society/ is SFS guide content, 15 rows)",
+        "ts": "2026-10-02T13:32:35Z"
+      },
+      {
+        "actor": "sd37-c0-2",
+        "id": "1790947959597-sd37-c0-2-b68253",
+        "summary": "SD-37 package authoring (E7.3 closure scan, progress Total, E4.1/NR-2 grep) claimed closure scan prints nothing only when every card is complete; actual the table-cell form (C\\|E) is a literal-pipe regex: printed 0 rows over 54 open cards",
+        "ts": "2026-10-02T13:32:39Z"
+      },
+      {
+        "actor": "sd37-c0-2",
+        "id": "1790947964008-sd37-c0-2-d8ec9e",
+        "summary": "SD-37 package authoring (DEF-1 revisit command) claimed any output means starship oracle data exists; actual test -d ... || grep printed nothing when the starship dir existed and nothing on stdout when PCGEN_REPO_DIR was unset",
+        "ts": "2026-10-02T13:32:44Z"
+      },
+      {
+        "actor": "sd37-c0-2",
+        "id": "1790947968459-sd37-c0-2-d2c955",
+        "summary": "SD-37 package authoring (CUI F-7 use in E4.1/E7.1/G-2) claimed 11 SF classes; actual 10 player classes + CLASS:Drone (TYPE:Monster)",
+        "ts": "2026-10-02T13:32:48Z"
+      },
+      {
+        "actor": "sd37-e1-1-e1-3",
+        "id": "1790948950405-sd37-e1-1-e1-3-a418b1",
+        "summary": "C1 commit 9d03a76996 claimed desktop Cargo.lock bumped only codex-desktop 0.16.0->0.17.0; actual it also rewrote registry crate rfd 0.16.0->0.17.0 (checksum unchanged), so desktop cargo --locked failed: cannot update the lock file",
+        "ts": "2026-10-02T13:49:10Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 9,
+    "with_blast_radius": 2
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "codex-sd37-e0-1": 4,
+      "sd37-c0-1": 3,
+      "sd37-c0-2": 5,
+      "sd37-e1-1-e1-3": 1
+    },
+    "by_origin": {
+      "agent": 9,
+      "derived": 4
+    },
+    "by_type": {
+      "correction": 9,
+      "verification": 4
+    },
+    "total": 13
+  },
+  "generated_at": "2026-10-02T17:46:09Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 16,
+    "events_per_commit": 0.8125,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        16
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {},
+    "recent": [],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 0,
+    "total": 0
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/worktrees/codex-sd37/docs/retro/events",
+    "problems": [],
+    "shards": 4
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {},
+    "recent": [],
+    "total": 0
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {
+      "preflight-oracle": 2
+    },
+    "fail_rate": 0.5,
+    "failed_runs": 2,
+    "runs": 4
+  },
+  "window": {
+    "since": "2026-10-02T09:24:03-04:00",
+    "spec": "2026-10-02T09:24:03-04:00",
+    "until": null
+  }
+}

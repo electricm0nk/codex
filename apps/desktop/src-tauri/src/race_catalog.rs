@@ -4,7 +4,7 @@
 //! `codex::rules_core::race_resolver`.
 //!
 //! **This adapter served the 7 hardcoded CRB races alone until now.** It
-//! imported `rules_tables::crb::race_tables::race_traits()` — a 49-row
+//! imported `rules_catalog::crb::race_tables::race_traits()` — a 49-row
 //! hand-transcribed table — so the 11 Bestiary 1 races that SD-27 ingested
 //! (`aasimar drow duergar goblin hobgoblin kobold merfolk orc svirfneblin
 //! tengu tiefling`) reached no user-facing surface at all. This module now
@@ -65,6 +65,7 @@ use std::sync::OnceLock;
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::corpus_loader::BookCorpusRoot;
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, ResolvedTrait};
 
 use crate::authoring_workbench::codex_repo_root;
@@ -114,6 +115,12 @@ pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
     // contributing catalog rows.
     "bestiary_3",
 ];
+
+/// [`RACE_CORPUS_BOOKS`] keyed by game system (SD-37 E1.2): the list above is the
+/// [`GameSystem::Pathfinder1e`] entry, read from that system's corpus root. The list keeps
+/// its own declaration because `race_resolver`'s pin test and `sheet_rule_parity` read it
+/// from this file's source text.
+pub(crate) const RACE_CORPUS_BOOK_REGISTRY: BookRegistry<&str> = BookRegistry::pathfinder_only(RACE_CORPUS_BOOKS);
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
 /// form, identical to the ones `equipment_catalog.rs` and `spell_catalog.rs`
@@ -168,6 +175,10 @@ const BOOK_B3: &str = "B3";
 /// content this book has ever declared. See `BOOK_ARG`'s call site below
 /// and this module's doc comment for why ARG previously contributed none.
 pub const RACE_CATALOG_BOOKS: &[&str] = &[BOOK_CRB, BOOK_B1, BOOK_B2, BOOK_B5, BOOK_B6, BOOK_ARG];
+
+/// [`RACE_CATALOG_BOOKS`] keyed by game system (SD-37 E1.2): the list above is the
+/// [`GameSystem::Pathfinder1e`] entry.
+pub const RACE_CATALOG_BOOK_REGISTRY: BookRegistry<&str> = BookRegistry::pathfinder_only(RACE_CATALOG_BOOKS);
 
 /// Maps a corpus book directory name to its wire code. An unrecognized book
 /// id passes through verbatim rather than being silently relabelled, so a
@@ -257,7 +268,7 @@ pub struct RaceCatalogResponse {
 }
 
 fn corpus_root_dir() -> Result<PathBuf, String> {
-    codex_repo_root().map(|root| root.join("data/corpus"))
+    codex_repo_root().map(|root| GameSystem::Pathfinder1e.package_roots(&root).corpus)
 }
 
 /// Loads the real race corpus once per process, mirroring
@@ -278,9 +289,9 @@ pub(crate) fn race_corpus() -> &'static Result<RaceCorpus, String> {
             // debug from.
             return Err(format!("corpus root not found: {}", corpus_root.display()));
         }
-        let book_dirs: Vec<PathBuf> =
-            RACE_CORPUS_BOOKS.iter().map(|book| corpus_root.join(book)).collect();
-        let roots: Vec<BookCorpusRoot<'_>> = RACE_CORPUS_BOOKS
+        let books = RACE_CORPUS_BOOK_REGISTRY.books(GameSystem::Pathfinder1e);
+        let book_dirs: Vec<PathBuf> = books.iter().map(|book| corpus_root.join(book)).collect();
+        let roots: Vec<BookCorpusRoot<'_>> = books
             .iter()
             .zip(book_dirs.iter())
             .map(|(book_id, dir)| BookCorpusRoot { book_id, dir: dir.as_path() })
@@ -410,7 +421,7 @@ pub fn list_race_catalog() -> RaceCatalogResponse {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::rules_core::rules_tables::crb::race_tables::RaceId;
+    use codex::rules_core::rules_catalog::crb::race_tables::RaceId;
     use std::collections::{BTreeMap, BTreeSet};
 
     /// Every book this catalog declares must actually resolve under the real

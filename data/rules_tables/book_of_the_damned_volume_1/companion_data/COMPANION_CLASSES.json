@@ -1,0 +1,49 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "book_of_the_damned_volume_1/companion_data/COMPANION_CLASSES",
+  "licence": {
+    "license": "OGL",
+    "book": "book_of_the_damned_volume_1",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Imp Companion",
+      "output_name": "Imp Companion",
+      "hit_dice": 10,
+      "max_level": "20",
+      "type_segments": [
+        "Monster",
+        "Companion"
+      ],
+      "visible_no": true,
+      "source_page": "p.44",
+      "ability_grants": [],
+      "fact_class_type": "Monster",
+      "source_file": "botd1_classes_companion",
+      "source_line": 5
+    },
+    {
+      "key": "1",
+      "output_name": null,
+      "hit_dice": null,
+      "max_level": null,
+      "type_segments": [],
+      "visible_no": false,
+      "source_page": null,
+      "ability_grants": [
+        {
+          "kind": "FEAT",
+          "mode": "AUTOMATIC",
+          "name": "CMB Output",
+          "conditions": []
+        }
+      ],
+      "fact_class_type": null,
+      "source_file": "botd1_classes_companion",
+      "source_line": 8
+    }
+  ]
+}

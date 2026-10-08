@@ -26,7 +26,7 @@ use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
     class_weapon_proficiency_view, ProficiencyAnswer, WeaponSetView,
 };
 use crate::rules_core::pilot_compute::class_skill_sheet_rules::{class_skill_view, ClassSkillAnswer};
-use crate::rules_core::rules_tables::crb::weapon_tables::{class_weapon_proficiency, WeaponProficiency};
+use crate::rules_core::rules_catalog::crb::weapon_tables::{class_weapon_proficiency, WeaponProficiency};
 use crate::rules_core::sheet_rule::{
     evaluate, held_set, sibling_line_gate, BonusTarget, CharacterFacts, EvalContext, Gate, HeldSeed, Scope, SheetLineValue,
     SheetRulePackage,

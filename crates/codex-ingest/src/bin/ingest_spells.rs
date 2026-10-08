@@ -68,6 +68,7 @@
 //! the `BookInput::id` values below). `PCGEN_CORPUS_ROOT` overrides the
 //! default `$HOME/workspace/repos/pcgen/data`.
 
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::env;
 use std::fs;
@@ -78,7 +79,7 @@ use codex::rules_core::codex_neutral_name::neutral_name;
 use codex::rules_core::pi_screening::{
     classify_field, classify_optional_field_declared, declared_product_identity,
 };
-use codex::rules_core::rules_tables::{
+use codex::rules_core::rules_catalog::{
     acg, adventurers_guide, advanced_race_guide, apg, crb, inner_sea_faiths, inner_sea_gods,
     inner_sea_magic, inner_sea_temples, occult_adventures, ultimate_intrigue, ultimate_magic,
     ultimate_wilderness,
@@ -92,13 +93,28 @@ struct BookInput {
     id: &'static str,
     display_name: &'static str,
     lst_rel: &'static str,
-    out_path: &'static str,
+    /// The `rules_tables` data-package table this book's spell list is
+    /// written to (`data/rules_tables/<table_id>.json`, SD-37 E4a.4a; E4a.4
+    /// removed the compiled `spell_list.rs` modules this used to write).
+    table_id: &'static str,
     /// `Some(f)` when this book must not re-declare a key another already-
     /// modeled book owns; `f` returns that set of keys.
     already_ingested: Option<fn() -> BTreeSet<&'static str>>,
     /// `true` when this book's own `.lst` file restates a base declaration
     /// more than once and first-declaration-wins within the book.
     dedup_within_book: bool,
+    /// `true` when this book's `.COPY=` variant rows are ingested as records
+    /// of their own (`decisions.md §17`, SD-32 `c27375ee1d`). That commit
+    /// added the mechanism for every book but regenerated only the two books
+    /// whose `.COPY=` rows the work inventory counted as missing records
+    /// (`bestiary` `Veil (self only)`, `book_of_the_damned_volume_1`
+    /// `Greater Teleport (Self Plus 50 Lbs. Of Objects Only)`); every other
+    /// book's shipped table carries no `.COPY=` variant. The data package is
+    /// the tables' source (SD-37 E4a.4), so this flag reproduces it exactly
+    /// (SD-37 E4a.4a). Widening it to another book is a content change to
+    /// that book's table: re-run, review the rows it adds, and update
+    /// `rules_catalog::golden_tests`' digests in the same change.
+    copy_variants: bool,
 }
 
 fn already_ingested_oa() -> BTreeSet<&'static str> {
@@ -119,46 +135,51 @@ fn already_ingested_uc() -> BTreeSet<&'static str> {
     s
 }
 
-const BOOKS: &[BookInput] = &[
+const BOOKS: BookRegistry<BookInput> = BookRegistry::pathfinder_only(&[
     BookInput {
         id: "adventurers_guide",
         display_name: "Adventurer's Guide (AG)",
         lst_rel: "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_spells.lst",
-        out_path: "src/rules_core/rules_tables/adventurers_guide/spell_list.rs",
+        table_id: "adventurers_guide/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     BookInput {
         id: "inner_sea_gods",
         display_name: "Inner Sea Gods",
         lst_rel: "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_spells.lst",
-        out_path: "src/rules_core/rules_tables/inner_sea_gods/spell_list.rs",
+        table_id: "inner_sea_gods/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     BookInput {
         id: "occult_adventures",
         display_name: "Occult Adventures",
         lst_rel: "pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells.lst",
-        out_path: "src/rules_core/rules_tables/occult_adventures/spell_list.rs",
+        table_id: "occult_adventures/spell_list/SPELL_LIST",
         already_ingested: Some(already_ingested_oa),
         dedup_within_book: false,
+        copy_variants: false,
     },
     BookInput {
         id: "ultimate_combat",
         display_name: "Ultimate Combat",
         lst_rel: "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
-        out_path: "src/rules_core/rules_tables/ultimate_combat/spell_list.rs",
+        table_id: "ultimate_combat/spell_list/SPELL_LIST",
         already_ingested: Some(already_ingested_uc),
         dedup_within_book: false,
+        copy_variants: false,
     },
     BookInput {
         id: "ultimate_magic",
         display_name: "Ultimate Magic",
         lst_rel: "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells.lst",
-        out_path: "src/rules_core/rules_tables/ultimate_magic/spell_list.rs",
+        table_id: "ultimate_magic/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     // SD-32 `decisions.md §20`, no_record-to-zero wave: `ultimate_magic`'s
     // SECOND source file -- the Words of Power variant subsystem's three
@@ -172,47 +193,52 @@ const BOOKS: &[BookInput] = &[
         id: "ultimate_magic_wordsofpower",
         display_name: "Ultimate Magic (Words of Power examples)",
         lst_rel: "pathfinder/paizo/roleplaying_game/ultimate_magic/um_spells_wordsofpower.lst",
-        out_path: "src/rules_core/rules_tables/ultimate_magic_wordsofpower/spell_list.rs",
+        table_id: "ultimate_magic_wordsofpower/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     BookInput {
         id: "ultimate_wilderness",
         display_name: "Ultimate Wilderness",
         lst_rel: "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_spells.lst",
-        out_path: "src/rules_core/rules_tables/ultimate_wilderness/spell_list.rs",
+        table_id: "ultimate_wilderness/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     BookInput {
         id: "inner_sea_faiths",
         display_name: "Inner Sea Faiths",
         lst_rel: "pathfinder/paizo/campaign_setting/inner_sea_faiths/isf_spells.lst",
-        out_path: "src/rules_core/rules_tables/inner_sea_faiths/spell_list.rs",
+        table_id: "inner_sea_faiths/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: true,
+        copy_variants: false,
     },
     BookInput {
         id: "inner_sea_magic",
         display_name: "Inner Sea Magic",
         lst_rel: "pathfinder/paizo/campaign_setting/inner_sea_magic/ism_spells.lst",
-        out_path: "src/rules_core/rules_tables/inner_sea_magic/spell_list.rs",
+        table_id: "inner_sea_magic/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: true,
+        copy_variants: false,
     },
     BookInput {
         id: "inner_sea_temples",
         display_name: "Inner Sea Temples",
         lst_rel: "pathfinder/paizo/campaign_setting/inner_sea_temples/istem_spells.lst",
-        out_path: "src/rules_core/rules_tables/inner_sea_temples/spell_list.rs",
+        table_id: "inner_sea_temples/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: true,
+        copy_variants: false,
     },
     // SD-32 card 11 (T9 onboarding, decisions.md §19 sign-off): Horror
     // Adventures, the 11th book in this config -- this book's SECOND
     // compiled record family (`RuleSetId::Ha` already exists for its
     // `companion`/`monster`/`monster_ability` tables; see
-    // `rules_tables::horror_adventures::mod.rs`'s own doc comment). All 72
+    // `rules_catalog::horror_adventures::mod.rs`'s own doc comment). All 72
     // base declarations in `ha_spells.lst` are clear per the T9 PI
     // disposition (`t9-pi-signoff-application_cycle-1_cycle_receipt.md`);
     // `pi_screen` still runs on every row rather than trusting that
@@ -221,9 +247,10 @@ const BOOKS: &[BookInput] = &[
         id: "horror_adventures",
         display_name: "Horror Adventures",
         lst_rel: "pathfinder/paizo/roleplaying_game/horror_adventures/ha_spells.lst",
-        out_path: "src/rules_core/rules_tables/horror_adventures/spell_list.rs",
+        table_id: "horror_adventures/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     // SD-32 `decisions.md §20`, card 11 next-cycle-plan item 1: a prior
     // cycle reported `bestiary`'s 109 and `bestiary_4`'s 56 `no_record`
@@ -245,17 +272,19 @@ const BOOKS: &[BookInput] = &[
         id: "bestiary",
         display_name: "Bestiary (custom spell-like-ability variants)",
         lst_rel: "pathfinder/paizo/roleplaying_game/core_essentials/ce_spells.lst",
-        out_path: "src/rules_core/rules_tables/bestiary/spell_list.rs",
+        table_id: "bestiary/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: true,
     },
     BookInput {
         id: "bestiary_4",
         display_name: "Bestiary 4 (modified spell variants)",
         lst_rel: "pathfinder/paizo/roleplaying_game/bestiary_4/b4_spells_modified.lst",
-        out_path: "src/rules_core/rules_tables/bestiary_4/spell_list.rs",
+        table_id: "bestiary_4/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     // SD-32 `decisions.md §20`, no_record-to-zero wave: eight more books
     // with a real, dedicated spell `.lst` and zero corpus coverage,
@@ -266,33 +295,37 @@ const BOOKS: &[BookInput] = &[
         id: "inner_sea_races",
         display_name: "Inner Sea Races",
         lst_rel: "pathfinder/paizo/campaign_setting/inner_sea_races/isr_spells.lst",
-        out_path: "src/rules_core/rules_tables/inner_sea_races/spell_list.rs",
+        table_id: "inner_sea_races/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     BookInput {
         id: "inner_sea_intrigue",
         display_name: "Inner Sea Intrigue",
         lst_rel: "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_spells.lst",
-        out_path: "src/rules_core/rules_tables/inner_sea_intrigue/spell_list.rs",
+        table_id: "inner_sea_intrigue/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     BookInput {
         id: "monster_codex",
         display_name: "Monster Codex",
         lst_rel: "pathfinder/paizo/roleplaying_game/monster_codex/mc_spells.lst",
-        out_path: "src/rules_core/rules_tables/monster_codex/spell_list.rs",
+        table_id: "monster_codex/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     BookInput {
         id: "inner_sea_world_guide",
         display_name: "Inner Sea World Guide",
         lst_rel: "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_spells.lst",
-        out_path: "src/rules_core/rules_tables/inner_sea_world_guide/spell_list.rs",
+        table_id: "inner_sea_world_guide/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     // The book's own `.pcc` loads `botd1_spells.lst` unconditionally; a
     // `_pfs/pfs_botd1_spells.lst` variant also exists but is the
@@ -303,9 +336,10 @@ const BOOKS: &[BookInput] = &[
         id: "book_of_the_damned_volume_1",
         display_name: "Book of the Damned, Volume 1",
         lst_rel: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_spells.lst",
-        out_path: "src/rules_core/rules_tables/book_of_the_damned_volume_1/spell_list.rs",
+        table_id: "book_of_the_damned_volume_1/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: true,
     },
     // This book's own `.pcc` loads TWO spell lists: `botd2_spells.lst`
     // unconditionally and `botd2_spells_ndl.lst` only
@@ -319,9 +353,10 @@ const BOOKS: &[BookInput] = &[
         id: "book_of_the_damned_volume_2",
         display_name: "Book of the Damned, Volume 2",
         lst_rel: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_spells.lst",
-        out_path: "src/rules_core/rules_tables/book_of_the_damned_volume_2/spell_list.rs",
+        table_id: "book_of_the_damned_volume_2/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     // `ma_abilities_spell.lst` is a spell-LIKE-ability catalog (a distinct
     // kind, `monster_ability`/`race_trait`-shaped), not this book's base
@@ -330,19 +365,21 @@ const BOOKS: &[BookInput] = &[
         id: "mythic_adventures",
         display_name: "Mythic Adventures",
         lst_rel: "pathfinder/paizo/roleplaying_game/mythic_adventures/ma_spells.lst",
-        out_path: "src/rules_core/rules_tables/mythic_adventures/spell_list.rs",
+        table_id: "mythic_adventures/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
     BookInput {
         id: "ultimate_equipment",
         display_name: "Ultimate Equipment",
         lst_rel: "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_spells.lst",
-        out_path: "src/rules_core/rules_tables/ultimate_equipment/spell_list.rs",
+        table_id: "ultimate_equipment/spell_list/SPELL_LIST",
         already_ingested: None,
         dedup_within_book: false,
+        copy_variants: false,
     },
-];
+]);
 
 /// Referenced so `cargo build`/`clippy` see these modules as used -- their
 /// only live consumer is `already_ingested_uc`'s `occult_adventures` link
@@ -393,7 +430,7 @@ const EXTRA_BASE_DECLARATION_FILES: &[&str] =
 /// already uses elsewhere in this file.
 fn build_global_base_index(data_root: &Path) -> HashMap<String, (Option<u8>, Option<String>)> {
     let mut index: HashMap<String, (Option<u8>, Option<String>)> = HashMap::new();
-    let mut lst_rels: Vec<&str> = BOOKS.iter().map(|b| b.lst_rel).collect();
+    let mut lst_rels: Vec<&str> = BOOKS.books(GameSystem::Pathfinder1e).iter().map(|b| b.lst_rel).collect();
     lst_rels.extend_from_slice(EXTRA_BASE_DECLARATION_FILES);
     for lst_rel in lst_rels {
         let path = data_root.join(lst_rel);
@@ -460,7 +497,7 @@ fn levels_in_field(value: &str) -> Vec<u8> {
 }
 
 /// Minimum spell level across the record's `CLASSES:` and `DOMAINS:` tokens
-/// combined -- the `rules_tables::acg::spell_list` precedent. `None` when
+/// combined -- the `rules_catalog::acg::spell_list` precedent. `None` when
 /// neither token yields a parseable level (a genuine corpus gap, never
 /// fabricated here -- it lands `text-complete`, not `ingested-magnitude`,
 /// via `classify()`'s existing `Some(false)` branch).
@@ -602,110 +639,42 @@ fn school_variant_name(raw: &str) -> Option<&'static str> {
     }
 }
 
-fn escape_rust_string(s: &str) -> String {
-    s.replace('\\', "\\\\").replace('"', "\\\"")
+/// The corpus carries U+00AD (soft hyphen, a PDF-extraction artifact) where
+/// the printed text has a hyphen (`3rd\u{ad}level`, `spell\u{ad}like`). The
+/// shipped tables print a plain hyphen: SD-34 `9d2e7d9e28` replaced them by
+/// hand in the generated source (`clippy::invisible_characters`), and the data
+/// package carries that text. Doing it here keeps a re-run byte-identical to
+/// the package (SD-37 E4a.4a) instead of re-introducing an invisible character.
+fn soft_hyphens_as_hyphens(text: &str) -> String {
+    text.replace('\u{ad}', "-")
 }
 
-fn render_entry(e: &SpellEntry) -> String {
-    let school = match &e.school {
-        Some(s) => format!("Some(Pf1SchoolId::{s})"),
-        None => "None".to_string(),
-    };
-    let level = match e.level {
-        Some(n) => format!("Some({n})"),
-        None => "None".to_string(),
-    };
-    let description = match &e.description {
-        Some(d) => format!("Some(\"{}\")", escape_rust_string(d)),
-        None => "None".to_string(),
-    };
-    let name_pi_line = match e.name_pi_line {
-        Some(n) => format!("Some({n})"),
-        None => "None".to_string(),
-    };
-    format!(
-        "    SpellListEntry {{ key: \"{}\", name_pi_line: {name_pi_line}, school: {school}, level: {level}, description: {description} }},",
-        escape_rust_string(&e.key)
-    )
+/// One package row of a book's `spell_list/SPELL_LIST` table: field for field
+/// the serde shape of every book's `rules_catalog::<book>::spell_list::
+/// SpellListEntry` (`school` is the `Pf1SchoolId` variant name, which is how
+/// that unit enum serialises). `rules_tables_package --check` loads each file
+/// back as the book's own row type, so a drift between this mirror and a
+/// book's type fails there.
+#[derive(serde::Serialize)]
+struct SpellListRow<'a> {
+    key: &'a str,
+    name_pi_line: Option<u32>,
+    school: Option<&'a str>,
+    level: Option<u8>,
+    description: Option<&'a str>,
 }
 
-fn build_module_source(display_name: &str, lst_rel: &str, entries: &[SpellEntry]) -> String {
-    let mut out = String::new();
-    out.push_str(&format!(
-        "//! {display_name} shared spell list.\n\
-         //!\n\
-         //! Generated by `src/bin/ingest_spells.rs` (config-driven, all\n\
-         //! books) from the real `{lst_rel}` corpus. Record coverage: every\n\
-         //! real, active (non-`.MOD`) base spell declaration, PLUS every\n\
-         //! `.COPY=` variant declared in this book (its own new identity is\n\
-         //! the name after `.COPY=`; `level`/`school` inherit from the base\n\
-         //! record it names, resolved corpus-wide, when its own row states\n\
-         //! neither).\n\
-         //!\n\
-         //! `level` is the minimum level across the record's `CLASSES:`/\n\
-         //! `DOMAINS:` token(s), `None` for the rare record that states\n\
-         //! neither (never fabricated -- these land `text-complete`, not\n\
-         //! `ingested-magnitude`, via `v06_work_inventory::classify`'s\n\
-         //! existing `Some(false)` branch).\n\
-         //!\n\
-         //! `school`/`description` are `Option` because a minority of\n\
-         //! records carry neither token of their own on this book's base\n\
-         //! row.\n\n",
-    ));
-    out.push_str(
-        "/// The full 9-school PF1 spell-school enum, mirroring every other book's\n\
-         /// own copy exactly.\n\
-         #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]\n\
-         pub enum Pf1SchoolId {\n\
-         \x20   Abjuration,\n\
-         \x20   Conjuration,\n\
-         \x20   Divination,\n\
-         \x20   Enchantment,\n\
-         \x20   Evocation,\n\
-         \x20   Illusion,\n\
-         \x20   Necromancy,\n\
-         \x20   Transmutation,\n\
-         \x20   Universal,\n\
-         }\n\n\
-         impl Pf1SchoolId {\n\
-         \x20   pub fn from_corpus_str(raw: &str) -> Option<Self> {\n\
-         \x20       match raw {\n\
-         \x20           \"Abjuration\" => Some(Pf1SchoolId::Abjuration),\n\
-         \x20           \"Conjuration\" => Some(Pf1SchoolId::Conjuration),\n\
-         \x20           \"Divination\" => Some(Pf1SchoolId::Divination),\n\
-         \x20           \"Enchantment\" => Some(Pf1SchoolId::Enchantment),\n\
-         \x20           \"Evocation\" => Some(Pf1SchoolId::Evocation),\n\
-         \x20           \"Illusion\" => Some(Pf1SchoolId::Illusion),\n\
-         \x20           \"Necromancy\" => Some(Pf1SchoolId::Necromancy),\n\
-         \x20           \"Transmutation\" => Some(Pf1SchoolId::Transmutation),\n\
-         \x20           \"Universal\" => Some(Pf1SchoolId::Universal),\n\
-         \x20           _ => None,\n\
-         \x20       }\n\
-         \x20   }\n\
-         }\n\n",
-    );
-    out.push_str(
-        "#[derive(Debug, Clone, PartialEq, Eq)]\n\
-         pub struct SpellListEntry {\n\
-         \x20   pub key: &'static str,\n\
-         \x20   /// `decisions.md §24`: `Some(line)` ONLY when `key` above\n\
-         \x20   /// is a Codex-generated neutral identity (the row's real\n\
-         \x20   /// name is Product Identity) -- carries the real citation\n\
-         \x20   /// line so `cache_gen::spell_lane_dump` can resolve it\n\
-         \x20   /// without a name-based lookup. `None` for an ordinary entry.\n\
-         \x20   pub name_pi_line: Option<u32>,\n\
-         \x20   pub school: Option<Pf1SchoolId>,\n\
-         \x20   pub level: Option<u8>,\n\
-         \x20   pub description: Option<&'static str>,\n\
-         }\n\n",
-    );
-    out.push_str("pub const SPELL_LIST: &[SpellListEntry] = &[\n");
-    for e in entries {
-        out.push_str(&render_entry(e));
-        out.push('\n');
-    }
-    out.push_str("];\n");
-    out
+fn package_rows(entries: &[SpellEntry]) -> Vec<SpellListRow<'_>> {
+    entries
+        .iter()
+        .map(|e| SpellListRow {
+            key: &e.key,
+            name_pi_line: e.name_pi_line,
+            school: e.school.as_deref(),
+            level: e.level,
+            description: e.description.as_deref(),
+        })
+        .collect()
 }
 
 fn ingest_one_book(
@@ -730,6 +699,7 @@ fn ingest_one_book(
     let mut seen_keys: HashSet<String> = HashSet::new();
     let mut copy_variants_resolved: Vec<String> = Vec::new();
     let mut copy_variants_unresolved: Vec<String> = Vec::new();
+    let mut copy_variants_not_ingested: usize = 0;
 
     for record in &parsed.records {
         let LstSpellRecord { name: raw_name, .. } = record;
@@ -745,6 +715,10 @@ fn ingest_one_book(
         // special-casing individual keys -- this applies uniformly to every
         // book this generator reads.
         let copy_base = copy_variant_split(raw_name).map(|(base, _)| base.to_string());
+        if copy_base.is_some() && !book.copy_variants {
+            copy_variants_not_ingested += 1;
+            continue;
+        }
         let name: String = match copy_variant_split(raw_name) {
             Some((_, variant)) => variant.to_string(),
             None => raw_name.clone(),
@@ -792,6 +766,7 @@ fn ingest_one_book(
             // real corpus row (`§24b`-1).
             entry.key = real_key;
         }
+        entry.description = entry.description.map(|text| soft_hyphens_as_hyphens(&text));
         entry.level = level;
         entry.school = match &school_raw {
             Some(raw_school) => match school_variant_name(raw_school) {
@@ -817,6 +792,9 @@ fn ingest_one_book(
         copy_variants_resolved.len(),
         copy_variants_unresolved.len(),
     );
+    if copy_variants_not_ingested > 0 {
+        eprintln!("  .COPY= variant rows not ingested (this book's `copy_variants` is false): {copy_variants_not_ingested}");
+    }
     if !cross_book_collision.is_empty() {
         eprintln!("  Cross-book collisions (kept the existing book's fuller record): {cross_book_collision:?}");
     }
@@ -833,9 +811,13 @@ fn ingest_one_book(
         eprintln!("  .COPY= variants whose base was not found in the global base index (kept, level/school from own row only): {copy_variants_unresolved:?}");
     }
 
-    let source = build_module_source(book.display_name, book.lst_rel, &entries);
-    fs::write(book.out_path, source).unwrap_or_else(|e| panic!("write {}: {e}", book.out_path));
-    eprintln!("  wrote {} ({} entries)", book.out_path, entries.len());
+    let out = codex_ingest::rules_package_out::write_table(
+        &codex_ingest::rules_package_out::package_dir(),
+        book.table_id,
+        &package_rows(&entries),
+    )
+    .unwrap_or_else(|e| panic!("write {}: {e}", book.table_id));
+    eprintln!("  wrote {} ({}, {} entries)", out.display(), book.display_name, entries.len());
 }
 
 fn main() {
@@ -845,13 +827,14 @@ fn main() {
     match arg {
         Some(id) => {
             let book = BOOKS
+                .books(GameSystem::Pathfinder1e)
                 .iter()
                 .find(|b| b.id == id)
-                .unwrap_or_else(|| panic!("unknown book id {id:?}; known ids: {:?}", BOOKS.iter().map(|b| b.id).collect::<Vec<_>>()));
+                .unwrap_or_else(|| panic!("unknown book id {id:?}; known ids: {:?}", BOOKS.books(GameSystem::Pathfinder1e).iter().map(|b| b.id).collect::<Vec<_>>()));
             ingest_one_book(&data_root, book, &base_index);
         }
         None => {
-            for book in BOOKS {
+            for book in BOOKS.books(GameSystem::Pathfinder1e) {
                 ingest_one_book(&data_root, book, &base_index);
             }
         }
@@ -1098,7 +1081,7 @@ mod tests {
         // dedicated `.lst`" claim for these two books' `no_record` spell
         // population was checked and found wrong; both carry a real,
         // dedicated `.lst` file of custom spell-variant declarations.
-        let ids: Vec<&str> = BOOKS.iter().map(|b| b.id).collect();
+        let ids: Vec<&str> = BOOKS.books(GameSystem::Pathfinder1e).iter().map(|b| b.id).collect();
         assert_eq!(
             ids,
             vec![
@@ -1138,16 +1121,23 @@ mod tests {
     /// to re-justify it rather than silently reintroducing a divergent
     /// screen the way the seven collapsed binaries had.
     #[test]
+    fn a_soft_hyphen_ships_as_a_hyphen_and_other_text_is_untouched() {
+        assert_eq!(soft_hyphens_as_hyphens("3rd\u{ad}level spell\u{ad}like"), "3rd-level spell-like");
+        assert_eq!(soft_hyphens_as_hyphens("cast-the spell"), "cast-the spell");
+    }
+
+    #[test]
     fn book_input_carries_no_per_book_pi_screen_override_field() {
-        let b = &BOOKS[0];
+        let b = &BOOKS.books(GameSystem::Pathfinder1e)[0];
         let _: &str = b.id;
         let _: &str = b.display_name;
         let _: &str = b.lst_rel;
-        let _: &str = b.out_path;
+        let _: &str = b.table_id;
         let _: Option<fn() -> BTreeSet<&'static str>> = b.already_ingested;
         let _: bool = b.dedup_within_book;
-        // Exactly six fields, none of function-pointer type over PiOutcome.
-        // If a seventh field of that shape is ever added, this test's own
+        let _: bool = b.copy_variants;
+        // Exactly seven fields, none of function-pointer type over PiOutcome.
+        // If an eighth field of that shape is ever added, this test's own
         // enumeration goes stale -- update it and justify the override here.
     }
 }

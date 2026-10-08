@@ -10,7 +10,7 @@
 //!
 //! Two separate things were missing, and both had to land:
 //!
-//! 1. **The data.** `rules_tables::feats_all::FeatCatalogRecord` carried no
+//! 1. **The data.** `rules_catalog::feats_all::FeatCatalogRecord` carried no
 //!    `prerequisites` field at all, and ARG's and PU's own tables never
 //!    gathered the tokens -- all 187 ARG feat rows carry at least one
 //!    `PRE`-family token in the corpus and the engine held none of them.
@@ -45,7 +45,7 @@ use codex::rules_core::feat_prereqs::{
     character_prereq_facts, evaluate_every_catalog_feat, evaluate_feat_key_prerequisites,
     PrereqFacts,
 };
-use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::rules_catalog::feats_all::all_feat_tables;
 
 fn build(
     race_id: &str,

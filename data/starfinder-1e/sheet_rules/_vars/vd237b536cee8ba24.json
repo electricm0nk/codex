@@ -1,0 +1,1 @@
+{"var":"vd237b536cee8ba24","label":"Vanguard LVL","declared_by":["character_operations_manual:class:vanguard"],"contributions":[{"rule_id":"character_operations_manual:class:vanguard","expr":{"ClassLevel":"vanguard"},"when":"Always"}],"provenance":{}}

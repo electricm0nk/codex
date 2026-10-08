@@ -4,7 +4,7 @@
 //!
 //! ## The defect this exists for
 //!
-//! `rules_tables::apg::equipment_data`'s own module doc comment states the
+//! `rules_catalog::apg::equipment_data`'s own module doc comment states the
 //! sourcing methodology plainly: every APG equipment record's `key`,
 //! `cost_gp` and `weight` were **generated from the real PCGen corpus**
 //! (`COST:`, `WT:`, `OUTPUTNAME:`, `KEY:` tokens in `apg_equip_general.lst` /

@@ -1,0 +1,12 @@
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.55s
+     Running tests/rules_core_feats_all_via_converter.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/rules_core_feats_all_via_converter-06af268c2a21f766)
+
+running 4 tests
+test tests::uca_u_bucket_records_still_carry_the_editorial_marker_in_served_form ... ok
+test tests::uca_records_join_desc_and_benefit_and_defer_the_two_corrupted_rows ... ok
+test tests::ui_records_join_desc_and_benefit_with_no_deferrals ... ok
+test tests::cross_book_key_collisions_are_exactly_the_known_set ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+

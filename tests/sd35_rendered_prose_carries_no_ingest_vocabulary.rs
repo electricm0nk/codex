@@ -46,6 +46,9 @@
 // exactly the shape this gate exists to prevent for *rendered prose*, just one
 // directory over. `pilot_compute_files` walks the directory at test-run time
 // instead, so every current and future submodule is scanned with no edit here.
+// SD-37 E4a.4: the shipped tables below are the `data/rules_tables/` package files (the compiled
+// `src/rules_core/rules_tables/<module>.rs` they were read from is gone); every file of each
+// module the gate scanned is listed.
 const SCANNED_FIXED: &[&str] = &[
     "src/rules_core/derived_evaluator_fixture_check.rs",
     // SD-36 D3: src/rules_core/support_state_matrix.rs (formerly scanned
@@ -58,26 +61,31 @@ const SCANNED_FIXED: &[&str] = &[
     // indexes it positionally; `apps/desktop/src-tauri/src/companion_catalog.rs`
     // serves it). A `%CHOICE` left in that array prints the ingest token where
     // the player's chosen option belongs.
-    "src/rules_core/rules_tables/bestiary/monster_data.rs",
-    "src/rules_core/rules_tables/bestiary_3/monster_data.rs",
-    "src/rules_core/rules_tables/inner_sea_world_guide/monster_data.rs",
+    "data/rules_tables/bestiary/monster_data/MONSTERS.json",
+    "data/rules_tables/bestiary/monster_data/MONSTER_ABILITIES.json",
+    "data/rules_tables/bestiary_3/monster_data/MONSTERS.json",
+    "data/rules_tables/bestiary_3/monster_data/MONSTER_ABILITIES.json",
+    "data/rules_tables/inner_sea_world_guide/monster_data/MONSTERS.json",
+    "data/rules_tables/inner_sea_world_guide/monster_data/MONSTER_ABILITIES.json",
     // Cycle 12. A shipped feat catalog's `FeatEffectBonus.qualifiers` is read
     // by `damage_total::constant_damage_bonus` to produce a number the sheet
     // prints, and the sheet line for Weapon Focus has to say "your chosen
     // weapon" — the rule's words — not the ingest format's `%LIST`. These four
     // files are every shipped feat table that carried a selection stand-in;
     // `pcgen_import::feat_effect_selections` holds the verbatim chains.
-    "src/rules_core/rules_tables/crb/feat_data/combat.rs",
-    "src/rules_core/rules_tables/crb/feat_data/general.rs",
-    "src/rules_core/rules_tables/acg/feat_data/combat.rs",
-    "src/rules_core/rules_tables/advanced_race_guide/feat_data/general.rs",
+    "data/rules_tables/crb/feat_data/combat/COMBAT_TABLE.json",
+    "data/rules_tables/crb/feat_data/general/GENERAL_TABLE.json",
+    "data/rules_tables/acg/feat_data/combat/COMBAT_TABLE.json",
+    "data/rules_tables/advanced_race_guide/feat_data/general/GENERAL_TABLE.json",
     // Cycle 13. `CompanionRecord::external_ability_refs` is a list of ability
     // NAMES, and `apps/desktop/src-tauri/src/companion_catalog.rs` serves it to
     // the player as one. Three CRB creature rows carried the ingest guard the
     // corpus appended to the grant as a fourth entry of that list, so the token
     // was on screen. `pcgen_import::companion_pcgen_guards` holds the verbatim
     // pre-conversion arrays.
-    "src/rules_core/rules_tables/crb/companion_data.rs",
+    "data/rules_tables/crb/companion_data/COMPANIONS.json",
+    "data/rules_tables/crb/companion_data/COMPANION_ABILITIES.json",
+    "data/rules_tables/crb/companion_data/COMPANION_CLASSES.json",
 ];
 
 /// A `\b` word boundary immediately before byte `at`, exactly as the residue

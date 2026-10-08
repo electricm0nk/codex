@@ -7,7 +7,7 @@
 //!
 //! This binary is the generator itself, not a standing production
 //! surface -- it is re-run only when
-//! `codex::rules_core::rules_tables::beastiary1` changes (per
+//! `codex::rules_core::rules_catalog::beastiary1` changes (per
 //! `decisions.md §11.3`, the cache dumps that module's current state; it
 //! does not run at app runtime).
 

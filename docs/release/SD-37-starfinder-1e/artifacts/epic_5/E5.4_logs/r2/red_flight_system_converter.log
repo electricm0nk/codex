@@ -1,0 +1,72 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 31.34s
+     Running tests/sf_drone_companion.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/sf_drone_companion-04e2450f1667edc7)
+
+running 6 tests
+test the_hover_chassis_grant_satisfies_flight_systems_own_prerequisite ... FAILED
+test each_chassis_prints_its_kits_base_ability_scores ... ok
+test the_drone_companion_modifier_is_held_through_the_drone_race_under_the_masters_level ... ok
+test the_drone_race_holds_the_drone_class_and_prints_no_zero_speed ... ok
+test the_level_one_special_abilities_are_granted_by_the_modifier ... ok
+test the_drone_picks_offer_the_oracle_members ... ok
+
+failures:
+
+---- the_hover_chassis_grant_satisfies_flight_systems_own_prerequisite stdout ----
+
+thread 'the_hover_chassis_grant_satisfies_flight_systems_own_prerequisite' (3488393) panicked at crates/codex-ingest/tests/sf_drone_companion.rs:158:5:
+assertion `left == right` failed: {
+  "All": [
+    {
+      "AtLeast": {
+        "n": 1,
+        "of": [
+          {
+            "Compare": {
+              "lhs": "Level",
+              "op": "Gte",
+              "rhs": {
+                "Const": 11
+              }
+            }
+          },
+          {
+            "Compare": {
+              "lhs": {
+                "Var": "v382dc82cf65e1f43"
+              },
+              "op": "Gte",
+              "rhs": {
+                "Const": 11
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Compare": {
+        "lhs": {
+          "Var": "v5194975300ae83bc"
+        },
+        "op": "Lt",
+        "rhs": {
+          "Const": 2
+        }
+      }
+    }
+  ]
+}
+  left: Null
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    the_hover_chassis_grant_satisfies_flight_systems_own_prerequisite
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+error: test failed, to rerun pass `-p codex-ingest --test sf_drone_companion`
+exit=101

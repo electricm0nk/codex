@@ -14,7 +14,7 @@
 //! `explain_sorcerer_level1_spell_baseline` requires to ground its
 //! bloodline-choice recognition pillars at all.
 //!
-//! `rules_tables::crb::class_tables`'s `CLASS_META` row for
+//! `rules_catalog::crb::class_tables`'s `CLASS_META` row for
 //! `ClassId::Sorcerer` was spot-checked against
 //! `pilot_compute.rs::explain_sorcerer_level1_spell_baseline`'s own
 //! independently-grounded formulas before writing any implementation

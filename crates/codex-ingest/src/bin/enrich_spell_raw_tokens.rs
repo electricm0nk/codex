@@ -38,7 +38,7 @@
 //! this tool follows is read from the JSON record's own `source.path`
 //! field, never assembled from a hardcoded `roleplaying_game/<book>`
 //! prefix).
-const TARGET_BOOKS: &[&str] = &[
+const TARGET_BOOKS: BookRegistry<&str> = BookRegistry::pathfinder_only(&[
     "core_rulebook",
     "advanced_players_guide",
     "advanced_class_guide",
@@ -52,11 +52,12 @@ const TARGET_BOOKS: &[&str] = &[
     // `cache_gen::spell_lane_dump`'s cache this wave (wave-19
     // `ultimate_wilderness` lane + integration-cycle follow-up).
     "ultimate_wilderness",
-];
+]);
 
 use codex_ingest::pcgen_import::cache_gen::enrich_raw_tokens_shared::{
     self as shared, EnrichConfig, Outcome,
 };
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
 
@@ -95,7 +96,7 @@ fn main() {
     let mut misses: Vec<String> = Vec::new();
     let mut mod_index_cache = std::collections::BTreeMap::new();
 
-    for book in TARGET_BOOKS {
+    for book in TARGET_BOOKS.books(GameSystem::Pathfinder1e) {
         let book_dir = corpus_root.join(book);
         if !book_dir.is_dir() {
             continue;

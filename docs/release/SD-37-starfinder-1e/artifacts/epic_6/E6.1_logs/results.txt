@@ -1,0 +1,5 @@
+desktop-full exit=0
+pf-hash-pair exit=0
+desktop-clippy exit=0
+root-full exit=0
+DONE

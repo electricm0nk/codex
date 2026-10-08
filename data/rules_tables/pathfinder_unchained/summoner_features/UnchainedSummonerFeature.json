@@ -1,0 +1,132 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "pathfinder_unchained/summoner_features/UnchainedSummonerFeature",
+  "licence": {
+    "license": "OGL",
+    "book": "pathfinder_unchained",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "feature": "Skills",
+      "key": "Unchained Summoner ~ Skills",
+      "name": "Skills",
+      "declaring_line": 727,
+      "min_level": 1
+    },
+    {
+      "feature": "WeaponAndArmorProficiency",
+      "key": "Unchained Summoner ~ Weapon and Armor Proficiency",
+      "name": "Weapon and Armor Proficiency",
+      "declaring_line": 728,
+      "min_level": 1
+    },
+    {
+      "feature": "Spells",
+      "key": "Unchained Summoner ~ Spells",
+      "name": "Spells",
+      "declaring_line": 729,
+      "min_level": 1
+    },
+    {
+      "feature": "Cantrips",
+      "key": "Unchained Summoner ~ Cantrips",
+      "name": "Cantrips",
+      "declaring_line": 730,
+      "min_level": 1
+    },
+    {
+      "feature": "Eidolon",
+      "key": "Unchained Summoner ~ Eidolon",
+      "name": "Eidolon",
+      "declaring_line": 731,
+      "min_level": 1
+    },
+    {
+      "feature": "LifeLink",
+      "key": "Unchained Summoner ~ Life Link",
+      "name": "Life Link",
+      "declaring_line": 732,
+      "min_level": 1
+    },
+    {
+      "feature": "SummonMonster",
+      "key": "Unchained Summoner ~ Summon Monster",
+      "name": "Summon Monster I",
+      "declaring_line": 733,
+      "min_level": 1
+    },
+    {
+      "feature": "BondSenses",
+      "key": "Unchained Summoner ~ Bond Senses",
+      "name": "Bond Senses",
+      "declaring_line": 734,
+      "min_level": 2
+    },
+    {
+      "feature": "ShieldAlly",
+      "key": "Unchained Summoner ~ Shield Ally",
+      "name": "Shield Ally",
+      "declaring_line": 735,
+      "min_level": 4
+    },
+    {
+      "feature": "MakersCall",
+      "key": "Unchained Summoner ~ Maker's Call",
+      "name": "Maker's Call",
+      "declaring_line": 736,
+      "min_level": 6
+    },
+    {
+      "feature": "Transposition",
+      "key": "Unchained Summoner ~ Transposition",
+      "name": "Transposition",
+      "declaring_line": 737,
+      "min_level": 8
+    },
+    {
+      "feature": "Aspect",
+      "key": "Unchained Summoner ~ Aspect",
+      "name": "Aspect",
+      "declaring_line": 738,
+      "min_level": 10
+    },
+    {
+      "feature": "GreaterShieldAlly",
+      "key": "Unchained Summoner ~ Greater Shield Ally",
+      "name": "Greater Shield Ally",
+      "declaring_line": 739,
+      "min_level": 12
+    },
+    {
+      "feature": "LifeBond",
+      "key": "Unchained Summoner ~ Life Bond",
+      "name": "Life Bond",
+      "declaring_line": 740,
+      "min_level": 14
+    },
+    {
+      "feature": "MergeForms",
+      "key": "Unchained Summoner ~ Merge Forms",
+      "name": "Merge Forms",
+      "declaring_line": 741,
+      "min_level": 16
+    },
+    {
+      "feature": "GreaterAspect",
+      "key": "Unchained Summoner ~ Greater Aspect",
+      "name": "Greater Aspect",
+      "declaring_line": 742,
+      "min_level": 18
+    },
+    {
+      "feature": "TwinEidolon",
+      "key": "Unchained Summoner ~ Twin Eidolon",
+      "name": "Twin Eidolon",
+      "declaring_line": 743,
+      "min_level": 20
+    }
+  ]
+}

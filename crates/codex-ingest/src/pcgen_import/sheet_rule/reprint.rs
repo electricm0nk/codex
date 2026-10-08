@@ -33,6 +33,8 @@
 
 use std::collections::BTreeMap;
 
+use codex::rules_core::game_system::BookRegistry;
+
 use codex::rules_core::sheet_rule::{split_rule_id, Printing, RuleId, SheetRule};
 
 use super::ctx::CorpusIndex;
@@ -43,7 +45,11 @@ use super::ctx::RecordRef;
 /// Books whose records are variants of an earlier object by default (operator amendment
 /// 2026-08-16: Mythic Adventures publishes mythic versions; Pathfinder Unchained publishes
 /// Unchained versions; "one does not replace the other").
-pub const VARIANT_LINE_BOOKS: [&str; 2] = ["mythic_adventures", "pathfinder_unchained"];
+///
+/// Keyed by [`GameSystem`](codex::rules_core::game_system::GameSystem) (SD-37 E1.3) and read
+/// with the tree's own system (`PinnedTree::system`): the variant lines are Pathfinder 1e
+/// books; a system with none registered treats no book as a variant line.
+pub const VARIANT_LINE_BOOKS: BookRegistry<&str> = BookRegistry::pathfinder_only(&["mythic_adventures", "pathfinder_unchained"]);
 
 /// The identity fields of a record's base row.
 struct Identity {
@@ -85,7 +91,7 @@ pub fn newest_printing(tree: &PinnedTree, by_id: &BTreeMap<&str, &RecordRef>, ca
     }
     let records: Vec<&RecordRef> = candidates.iter().map(|id| by_id.get(id.as_str()).copied()).collect::<Option<_>>()?;
     let kind = &records[0].kind;
-    if records.iter().any(|r| &r.kind != kind || VARIANT_LINE_BOOKS.contains(&r.book.as_str())) {
+    if records.iter().any(|r| &r.kind != kind || VARIANT_LINE_BOOKS.books(tree.system).contains(&r.book.as_str())) {
         return None;
     }
     let mut printed: Vec<(&RecordRef, Identity, &String)> = Vec::new();

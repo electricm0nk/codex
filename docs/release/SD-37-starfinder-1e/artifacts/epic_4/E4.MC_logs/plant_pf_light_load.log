@@ -1,0 +1,20 @@
+PLANTED: PF light load +1 lb
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+   Compiling codex-desktop v0.17.0 (/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 27.69s
+     Running unittests src/main.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex_desktop-f9c244288bc1271e)
+
+running 1 test
+pf-seed-render manifest_dir=/home/ubuntu/workspace/worktrees/codex-sd37/apps/desktop/src-tauri
+pf-seed-render aldric sha256=99678361f496e5f48d8a43db5433fba5e630f3f8acdf56aef8c3c2b622a6ab31 bytes=55037
+pf-seed-render elowen sha256=b442c07c395a070973ba594abb703ddf5ba125b06e7e8d99ae04dfa9a8be65bf bytes=81136
+test character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 646 filtered out; finished in 24.18s
+
+render_exit=0
+99678361f496e5f48d8a43db5433fba5e630f3f8acdf56aef8c3c2b622a6ab31  aldric.json
+b442c07c395a070973ba594abb703ddf5ba125b06e7e8d99ae04dfa9a8be65bf  elowen.json
+RESTORED
+exit=0

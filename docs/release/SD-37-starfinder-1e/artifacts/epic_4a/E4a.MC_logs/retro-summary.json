@@ -1,0 +1,185 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd37-e4a-2": 2,
+      "sd37-e4a-3": 1
+    },
+    "by_subject": {
+      "E4a.1 receipt (bundle path proof)": 1,
+      "E4a.1 receipt (rules_data_package every_collection_function_is_a_table_or_a_named_view)": 1,
+      "decisions.md \u00a719 / epic-breakdown E4a.3 'elsewhere' .lst count": 1
+    },
+    "by_verification_method": {
+      "cargo test --bins authoring_workbench::tests::a_packaged_app_reads_the_rules_tables_from_its_resource_root: RED with the binding removed (probe child read the checkout: left 1, right 77), GREEN with it; artifacts/epic_4a/E4a.2_logs/red-packaged-root-unbound.log + green-packaged-root-bound.log": 1,
+      "cargo test --lib every_collection_function (RED with the scanner joining split signatures and the two ids removed: 'collection functions neither a table nor a named view' lists both); artifacts/epic_4a/E4a.2_logs/red-collection-scanner.log": 1,
+      "grep -rcF '.lst' src/rules_core --exclude-dir=rules_tables | awk -F: '{s+=$2} END{print s+0}' -> 1117 ; Python os.walk agrees": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791321088652-sd37-e4a-2-e15c9d",
+        "summary": "E4a.1 receipt (rules_data_package every_collection_function_is_a_table_or_a_named_view) claimed every zero-argument collection function of rules_tables is a registered table or a named view (279 tables + 170 views); actual 2 were neither: pathfinder_unchained/{rogue,summoner}_features/class_skills, whose signature rustfmt splits as 'fn class_skills(\\n) -> ...' so the line scanner never saw it; package is now 281 tables",
+        "ts": "2026-10-06T21:11:28Z"
+      },
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791322850661-sd37-e4a-2-b9a79d",
+        "summary": "E4a.1 receipt (bundle path proof) claimed the bundle path is proven by tauri.conf.json resources + tauri-resources-tracked; the loader reads the package at runtime_package_root(); actual runtime_package_root() read only CODEX_REPO_ROOT or the compile-time checkout, so a packaged app on a tester machine (no checkout, no env) would have panicked on its first table read once importers read the package; fixed by use_repo_root + authoring_workbench::bind_rules_tables_package_root called from main's setup",
+        "ts": "2026-10-06T21:40:50Z"
+      },
+      {
+        "actor": "sd37-e4a-3",
+        "id": "1791349560749-sd37-e4a-3-c8d228",
+        "summary": "decisions.md \u00a719 / epic-breakdown E4a.3 'elsewhere' .lst count claimed 1098 .lst lines elsewhere in src/rules_core (2026-10-02); actual 1117 at E4a.3 start (tranche/17 615ce41338); 1110 at 5cbee570e1~1; 1117 after E4a.3",
+        "ts": "2026-10-07T05:06:00Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 3,
+    "with_blast_radius": 1
+  },
+  "deferrals": {
+    "open": 2,
+    "open_items": [
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791328034641-sd37-e4a-2-399125",
+        "reason": "types, impl methods and formulas are code, not table rows; E4a.4 'no .rs left in rules_tables' must place every one of them (move to a non-table module), and the package carries only table rows",
+        "revisit": "E4a.4: python3 docs/release/SD-37-starfinder-1e/artifacts/epic_4a/E4a.2_reexport_census.py prints the census (444 re-exports)",
+        "ts": "2026-10-06T23:07:14Z",
+        "what": "Compiled code that stays in the rules_tables module after E4a.2 and is re-exported by the catalog by name: 112 structs + 66 enums (row/id types, whose impl methods stay compiled, incl. the two enums UnchainedRogueFeature/UnchainedSummonerFeature whose per-variant facts the package also carries), 186 pure functions (formulas over their arguments, 295 plain fns in the module minus those the catalog replaces), 78 scalar consts (71 u8 + 7 i16), 2 inline modules"
+      },
+      {
+        "actor": "sd37-e4a-4",
+        "id": "1791361210108-sd37-e4a-4-8bb4cd",
+        "reason": "not in E4a.4's criterion (PF parity, catalog parity, Bestiary count, no .rs left); porting ~8.6k lines and proving each against the pinned oracle is its own card",
+        "revisit": "card E4a.4a (new, kanban.md), before E4a.MC",
+        "ts": "2026-10-07T08:20:10Z",
+        "what": "Six codegen tools still emit compiled table source into the removed src/rules_core/rules_tables (gen_feat_gap_tables, gen_equipment_gap_tables, ingest_class_spell_levels_arg, ingest_spells, scripts/transcribe_monster_tables.py, scripts/transcribe_companion_tables.py); they must write data/rules_tables/<id>.json instead"
+      }
+    ],
+    "recent": [
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791328034641-sd37-e4a-2-399125",
+        "summary": "deferred Compiled code that stays in the rules_tables module after E4a.2 and is re-exported by the catalog by name: 112 structs + 66 enums (row/id types, whose impl methods stay compiled, incl. the two enums UnchainedRogueFeature/UnchainedSummonerFeature whose per-variant facts the package also carries), 186 pure functions (formulas over their arguments, 295 plain fns in the module minus those the catalog replaces), 78 scalar consts (71 u8 + 7 i16), 2 inline modules: types, impl methods and formulas are code, not table rows; E4a.4 'no .rs left in rules_tables' must place every one of them (move to a non-table module), and the package carries only table rows",
+        "ts": "2026-10-06T23:07:14Z"
+      },
+      {
+        "actor": "sd37-e4a-4",
+        "id": "1791361210108-sd37-e4a-4-8bb4cd",
+        "summary": "deferred Six codegen tools still emit compiled table source into the removed src/rules_core/rules_tables (gen_feat_gap_tables, gen_equipment_gap_tables, ingest_class_spell_levels_arg, ingest_spells, scripts/transcribe_monster_tables.py, scripts/transcribe_companion_tables.py); they must write data/rules_tables/<id>.json instead: not in E4a.4's criterion (PF parity, catalog parity, Bestiary count, no .rs left); porting ~8.6k lines and proving each against the pinned oracle is its own card",
+        "ts": "2026-10-07T08:20:10Z"
+      }
+    ],
+    "resolved": 0,
+    "total": 2
+  },
+  "events": {
+    "by_actor": {
+      "codex-sd37": 2,
+      "sd37-e4a-1": 1,
+      "sd37-e4a-2": 8,
+      "sd37-e4a-3": 2,
+      "sd37-e4a-4": 2
+    },
+    "by_origin": {
+      "agent": 9,
+      "derived": 6
+    },
+    "by_type": {
+      "correction": 3,
+      "deferral": 2,
+      "incident": 1,
+      "rework": 3,
+      "verification": 6
+    },
+    "total": 15
+  },
+  "generated_at": "2026-10-07T09:45:44Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 9,
+    "events_per_commit": 1.6667,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        9
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "verify-without-cargo-target-dir": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791322580133-sd37-e4a-2-ce5b77",
+        "summary": "verify.sh launched without CARGO_TARGET_DIR exported: cargo built into ./target inside the tree",
+        "ts": "2026-10-06T21:36:20Z"
+      }
+    ],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 3,
+    "total": 1
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/worktrees/codex-sd37/docs/retro/events",
+    "problems": [],
+    "shards": 5
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "a textual substitution over source treated string literals like paths; the acceptance command counts the literal, the render counts the bytes, and nothing tied the two together before the sweep": 1,
+      "comment rewrite in the move reached doc comments that schemars publishes as descriptions": 1,
+      "ran the ingest sweep on a tree whose generators (gen_book_cache, equipment_gap, gen_equipment_gap_tables) still joined table citations by the old extension; the join sites were found by reading, after the sweep had started": 1
+    },
+    "recent": [
+      {
+        "actor": "sd37-e4a-2",
+        "id": "1791328034415-sd37-e4a-2-2085ae",
+        "summary": "redid The first re-point pass rewrote every rules_tables:: in the 253 importers to rules_catalog::, string literals included; 41 literals in 16 files are provenance text (Elowen's base attack bonus line, hit-die source labels, feat-prerequisite reasons) whose bytes the PF render hash and fixtures pin; root full run: 1 FAILED suite (sd20_feat_prereqs_parity). Redone as E4a.2_split_provenance_strings.py: the literals keep their bytes (concat! or the COMPILED_MODULE_CITATION constant), the source names no compiled path: a textual substitution over source treated string literals like paths; the acceptance command counts the literal, the render counts the bytes, and nothing tied the two together before the sweep",
+        "ts": "2026-10-06T23:07:14Z"
+      },
+      {
+        "actor": "sd37-e4a-3",
+        "id": "1791349574274-sd37-e4a-3-639beb",
+        "summary": "redid first codex-ingest full run (about 25 min) aborted and redone after the generator fixes landed: ran the ingest sweep on a tree whose generators (gen_book_cache, equipment_gap, gen_equipment_gap_tables) still joined table citations by the old extension; the join sites were found by reading, after the sweep had started",
+        "ts": "2026-10-07T05:06:14Z"
+      },
+      {
+        "actor": "sd37-e4a-4",
+        "id": "1791361210286-sd37-e4a-4-eba3d9",
+        "summary": "redid rules_tables.schema.json regenerated: 18 description lines changed rules_tables:: to rules_catalog:: after moved doc comments were path-rewritten: comment rewrite in the move reached doc comments that schemars publishes as descriptions",
+        "ts": "2026-10-07T08:20:10Z"
+      }
+    ],
+    "total": 3
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {
+      "clippy": 1
+    },
+    "fail_rate": 0.1667,
+    "failed_runs": 1,
+    "runs": 6
+  },
+  "window": {
+    "since": "2026-10-06T16:38:00-04:00",
+    "spec": "2026-10-06T16:38:00-04:00",
+    "until": null
+  }
+}

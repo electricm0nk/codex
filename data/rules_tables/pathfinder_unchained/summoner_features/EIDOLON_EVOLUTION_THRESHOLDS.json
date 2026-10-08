@@ -1,0 +1,27 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "pathfinder_unchained/summoner_features/EIDOLON_EVOLUTION_THRESHOLDS",
+  "licence": {
+    "license": "OGL",
+    "book": "pathfinder_unchained",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    2,
+    3,
+    5,
+    6,
+    7,
+    9,
+    10,
+    11,
+    13,
+    14,
+    15,
+    17,
+    18,
+    19
+  ]
+}

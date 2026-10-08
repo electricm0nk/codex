@@ -1,0 +1,38 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-sd37)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.86s
+     Running tests/rules_tables_citation_burn_down.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/rules_tables_citation_burn_down-34d755b2c78952df)
+
+running 3 tests
+test the_scan_counts_a_planted_citation ... ok
+test the_compiled_tables_hold_no_citation_literal ... FAILED
+test the_shipped_data_package_holds_no_citation_literal ... FAILED
+
+failures:
+
+---- the_compiled_tables_hold_no_citation_literal stdout ----
+
+thread 'the_compiled_tables_hold_no_citation_literal' (4181246) panicked at tests/rules_tables_citation_burn_down.rs:64:5:
+assertion `left == right` failed: compiled tables still cite the list-file extension
+  left: 12529
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- the_shipped_data_package_holds_no_citation_literal stdout ----
+
+thread 'the_shipped_data_package_holds_no_citation_literal' (4181248) panicked at tests/rules_tables_citation_burn_down.rs:75:5:
+assertion `left == right` failed: the data package still cites the list-file extension
+  left: 6164
+ right: 0
+
+
+failures:
+    the_compiled_tables_hold_no_citation_literal
+    the_shipped_data_package_holds_no_citation_literal
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+
+error: test failed, to rerun pass `--test rules_tables_citation_burn_down`
+
+real	0m18.175s
+user	0m18.359s
+sys	0m12.183s

@@ -1,0 +1,15 @@
+## HEAD ae5c7f3c3a77d02626b3933e6d538e818c0e703d
+## E4a.2 acceptance
+0 0 0 0 
+python [0, 0, 0, 0]
+## E4a.3 acceptance
+module-exit=0
+package .lst lines: 0
+python package files 281 lst lines 0
+## E4a.4 acceptance
+exit=0
+python .rs under rules_tables 0
+## tauri resources
+42:      "../../../data/rules_tables/": "data/rules_tables/"
+## package file count
+281

@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Uplifted Bear",
+    "name": "Uplifted Bear",
+    "type": "Uplifted Bear"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 5,
+    "path": "starfinder/paizo/alien_archive_2/saa2_races.lst",
+    "record_key": "Uplifted Bear",
+    "sha256": "4da4316d024c43ea4f0c4ed7ae98803224ef67308ea526581a86ff2010d93623"
+  },
+  "unit_id": "alien_archive_2:race:uplifted_bear"
+}

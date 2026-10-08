@@ -1,0 +1,503 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/MONSTER_CODEX_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "MC",
+      "key": "Bolts (Bolas/10)",
+      "name": "Bolas Bolts (10)",
+      "category": "ArmsArmor",
+      "cost_gp": 20.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Bullet (Sling/Alchemical)",
+      "name": "Bullet, Sling (Alchemical)",
+      "category": "ArmsArmor",
+      "cost_gp": 5.0,
+      "weight_lbs": 1.0,
+      "description": "DC 15 Craft (alchemy) or Sleight of Hand check to fill with one dose of alchemical splash weapon (like alchemist fire).",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Slaver's Crossbow (Heavy)",
+      "name": "Slaver's Crossbow, Heavy",
+      "category": "ArmsArmor",
+      "cost_gp": 400.0,
+      "weight_lbs": 12.0,
+      "description": "Entangles target on a successful critical.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Slaver's Crossbow (Light)",
+      "name": "Slaver's Crossbow, Light",
+      "category": "ArmsArmor",
+      "cost_gp": 250.0,
+      "weight_lbs": 6.0,
+      "description": "Entangles target on a successful critical.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Flindbar",
+      "name": "Flindbar",
+      "category": "ArmsArmor",
+      "cost_gp": 9.0,
+      "weight_lbs": 6.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Snakebiter Arrow",
+      "name": "Snakebiter Arrow",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Frostblood Axe",
+      "name": "Frostblood Axe",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Serpent-Necked Flail",
+      "name": "Serpent-Necked Flail",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Cave Dweller's Greataxe",
+      "name": "Cave Dweller's Greataxe",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Bloodfeast Shield",
+      "name": "Bloodfeast Shield",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Bombchucker",
+      "name": "Bombchucker",
+      "category": "General",
+      "cost_gp": 12.0,
+      "weight_lbs": 1.0,
+      "description": "Adds 10 ft. to range increment of thrown splash weapons.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Flying Straps",
+      "name": "Flying Straps",
+      "category": "General",
+      "cost_gp": 10.0,
+      "weight_lbs": 10.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Flying Straps (Masterwork)",
+      "name": "Flying Straps (Masterwork)",
+      "category": "General",
+      "cost_gp": 80.0,
+      "weight_lbs": 10.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Horn Harness",
+      "name": "Horn Harness",
+      "category": "General",
+      "cost_gp": 30.0,
+      "weight_lbs": 20.0,
+      "description": "Includes a quiver that typically holds up to 12 javelins.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Saddle (Gorthek)",
+      "name": "Saddle (Gorthek)",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": 75.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Alchemical Blood",
+      "name": "Alchemical Blood",
+      "category": "General",
+      "cost_gp": 40.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Fervor Juice",
+      "name": "Fervor Juice",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Light-Killer's Grease",
+      "name": "Light-Killer's Grease",
+      "category": "General",
+      "cost_gp": 25.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Signal Rocket",
+      "name": "Signal Rocket",
+      "category": "General",
+      "cost_gp": 100.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Spiderdraw",
+      "name": "Spiderdraw",
+      "category": "General",
+      "cost_gp": 40.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Rhinarium Paste",
+      "name": "Rhinarium Paste",
+      "category": "General",
+      "cost_gp": 75.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Rat (Riding)",
+      "name": "Rat (Riding)",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Rat (Riding/Combat Trained)",
+      "name": "Rat (Riding/Combat Trained)",
+      "category": "General",
+      "cost_gp": 75.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Ambush Cauldron",
+      "name": "Ambush Cauldron",
+      "category": "MagicItems",
+      "cost_gp": 28000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Banner of the Rushing Horde",
+      "name": "Banner of the Rushing Horde",
+      "category": "MagicItems",
+      "cost_gp": 60000.0,
+      "weight_lbs": null,
+      "description": "Allies within 60 feet of the banner gain the benefits of the Improved Bull Rush and Improved Overrun feats.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Cap of Enervation",
+      "name": "Cap of Enervation",
+      "category": "MagicItems",
+      "cost_gp": 3500.0,
+      "weight_lbs": 5.0,
+      "description": "Tongue attacks can drain enemy strength.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Caver's Bolt",
+      "name": "Caver's Bolt",
+      "category": "MagicItems",
+      "cost_gp": 2500.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Cloak of the Troll King",
+      "name": "Cloak of the Troll King",
+      "category": "MagicItems",
+      "cost_gp": 9000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Crashing Boots",
+      "name": "Crashing Boots",
+      "category": "MagicItems",
+      "cost_gp": 8800.0,
+      "weight_lbs": null,
+      "description": "+2 bonus on attack rolls when charging; once per day wearer can send struck foe flying 10 feet.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Elixir of Oppression",
+      "name": "Elixir of Oppression",
+      "category": "MagicItems",
+      "cost_gp": 600.0,
+      "weight_lbs": null,
+      "description": "Allows creatures with the scent ability to smell fear, instills bloodlust when facing a fearful creature.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Extractor's Gloves",
+      "name": "Extractor's Gloves",
+      "category": "MagicItems",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "After disarm attempt against magical weapon, gloves \"steal\" weapon's special abilities and apply them to unarmed strikes for 1d4 rounds.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Fog-Cutting Lenses",
+      "name": "Fog-Cutting Lenses",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": 1.0,
+      "description": "Allows wearer to see through magical and normal fogs, mists, and similar obscurement.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Gauntlets of Rending",
+      "name": "Gauntlets of Rending",
+      "category": "MagicItems",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Gorthek Masks",
+      "name": "Gorthek Masks",
+      "category": "MagicItems",
+      "cost_gp": 5800.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Headband of Vermin Control",
+      "name": "Headband of Vermin Control",
+      "category": "MagicItems",
+      "cost_gp": 1000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Horror Dust",
+      "name": "Horror Dust",
+      "category": "MagicItems",
+      "cost_gp": 600.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Hunter's Nose Ring",
+      "name": "Hunter's Nose Ring",
+      "category": "MagicItems",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Hyena Shawl",
+      "name": "Hyena Shawl",
+      "category": "MagicItems",
+      "cost_gp": 11000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Irongrip Gauntlets",
+      "name": "Irongrip Gauntlets",
+      "category": "MagicItems",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Pugwampi Braid",
+      "name": "Pugwampi Braid",
+      "category": "MagicItems",
+      "cost_gp": 9000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Serpentine Choker",
+      "name": "Serpentine Choker",
+      "category": "MagicItems",
+      "cost_gp": 16000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Spikebones",
+      "name": "Spikebones",
+      "category": "MagicItems",
+      "cost_gp": 22000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Venomsweat Salve",
+      "name": "Venomsweat Salve",
+      "category": "MagicItems",
+      "cost_gp": 2500.0,
+      "weight_lbs": null,
+      "description": "Wearer sweats poison [Venomsweat] Contact or injury; save Fort DC 16; frequency 1/round for 6 rounds; effect 1d3 Dexterity damage; cure 1 save.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Winter Wolf Runetooth",
+      "name": "Winter Wolf Runetooth",
+      "category": "MagicItems",
+      "cost_gp": 2500.0,
+      "weight_lbs": null,
+      "description": "Summons a winter wolf for 1 minute",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "War Drums of Savagery",
+      "name": "War Drums of Savagery",
+      "category": "MagicItems",
+      "cost_gp": 35000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Special Ability ~ Burning ~ Weapon",
+      "name": "Burning",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Causes an unattended flammable objects to ignite",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Special Ability ~ Catalytic ~ Weapon",
+      "name": "Catalytic",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Creatures struck must save or take acid damage for 1d4 additional rounds",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Special Ability ~ Virulent ~ Weapon",
+      "name": "Virulent",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Poison delivered by this weapon has DC, rounds of duration increased by a number equal to enhancement bonus",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MC",
+      "key": "Special Ability ~ Steaming ~ Armor",
+      "name": "Steaming",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    }
+  ]
+}

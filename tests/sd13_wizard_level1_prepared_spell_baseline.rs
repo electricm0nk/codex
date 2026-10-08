@@ -135,7 +135,7 @@ fn wizard_level1_leaves_direct_prepared_spell_baseline_recognition_evidence() {
     // Wizard's `base_attack_bonus` field and generic `class_chassis.base_attack_bonus`
     // explanation were fabricated absences, not a real +0. A per-class dispatch
     // (`compute_class_chassis`) plus a new `compute_wizard_chassis` now compute this
-    // pillar for real from `rules_tables::crb::class_tables::class_tables()`'s
+    // pillar for real from `rules_catalog::crb::class_tables::class_tables()`'s
     // Wizard row; at level 1 the 1/2-BAB formula still floors to the same +0 this
     // negative control originally pinned, but it is now a genuinely computed value.
     assert_eq!(

@@ -1,0 +1,34 @@
+P1 increase step: +1 only from 19 (engine increase_term): exit=101 RED restored=True
+    test sf_level_up::tests::a_level_the_rules_refuse_is_blocked_and_nothing_is_saved ... FAILED
+    test sf_level_up::tests::the_seeds_leveled_through_the_level_up_have_their_totals ... FAILED
+    thread 'sf_level_up::tests::a_level_the_rules_refuse_is_blocked_and_nothing_is_saved' (1752854) panicked at src/sf_level_up.rs:875:9:
+P2 a held class does not advance: exit=101 RED restored=True
+    test sf_level_up::tests::the_preview_lists_the_class_the_level_and_every_total_it_changes ... FAILED
+    test sf_level_up::tests::a_new_class_shows_its_level_and_the_engines_multiclass_refusal ... FAILED
+    test sf_level_up::tests::the_increase_asks_for_the_engines_count_of_scores ... FAILED
+P3 added skill ranks are dropped: exit=101 RED restored=True
+    test sf_level_up::tests::the_seeds_leveled_through_the_level_up_have_their_totals ... FAILED
+    thread 'sf_level_up::tests::the_seeds_leveled_through_the_level_up_have_their_totals' (1756406) panicked at src/sf_level_up.rs:729:13:
+    test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 690 filtered out; finished in 11.81s
+P4 the increase is never due: exit=101 RED restored=True
+    test sf_level_up::tests::the_increase_asks_for_the_engines_count_of_scores ... FAILED
+    test sf_level_up::tests::a_level_the_rules_refuse_is_blocked_and_nothing_is_saved ... FAILED
+    test sf_level_up::tests::the_seeds_leveled_through_the_level_up_have_their_totals ... FAILED
+P5 the skill cap is not checked: exit=101 RED restored=True
+    test sf_level_up::tests::a_level_the_rules_refuse_is_blocked_and_nothing_is_saved ... FAILED
+    thread 'sf_level_up::tests::a_level_the_rules_refuse_is_blocked_and_nothing_is_saved' (1759317) panicked at src/sf_level_up.rs:848:73:
+    test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 690 filtered out; finished in 22.01s
+P6 the preview lists no change: exit=101 RED restored=True
+    test sf_level_up::tests::the_preview_lists_the_class_the_level_and_every_total_it_changes ... FAILED
+    thread 'sf_level_up::tests::the_preview_lists_the_class_the_level_and_every_total_it_changes' (1761013) panicked at src/sf_level_up.rs:774:13:
+    test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 690 filtered out; finished in 22.01s
+P7 the level is not saved: exit=101 RED restored=True
+    test sf_level_up::tests::the_increase_asks_for_the_engines_count_of_scores ... FAILED
+    test sf_level_up::tests::a_new_class_shows_its_level_and_the_engines_multiclass_refusal ... FAILED
+    test sf_level_up::tests::a_level_the_rules_refuse_is_blocked_and_nothing_is_saved ... FAILED
+P8 rank buttons ignore the engine cap: exit=1 RED restored=True
+    Error: Athletics 1 + 1 = the cap 2: no more: expected 1, got 2
+P9 change lines swap before and after: exit=1 RED restored=True
+    Error: one line per changed engine row: expected Hit Points: 11 → 18|Base Attack Bonus: +1 → +2|Soldier level: 1 → 2|Athletics: — → +7, got Hit Points: 18 → 11|Base Attack Bonus: +2 → +1|Soldier level: 2 → 1|Athletics: +
+9 of 9 plants red, every file restored
+exit=0

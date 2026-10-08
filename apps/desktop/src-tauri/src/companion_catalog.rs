@@ -52,7 +52,7 @@ use codex::rules_core::derived_evaluator_fixture_check::{
     format_companion_strength_damage, parse_companion_save_dc_formula,
     parse_companion_skill_ability_diff, parse_companion_strength_damage,
 };
-use codex::rules_core::rules_tables::companion_chassis::{self, CompanionRecord};
+use codex::rules_core::rules_catalog::companion_chassis::{self, CompanionRecord};
 
 /// Wire code for a companion book's corpus directory.
 ///
@@ -885,7 +885,7 @@ mod tests {
         let root = repo_root().join("data/corpus");
         let pool_response = build_companion_catalog();
         let mut mismatches: Vec<String> = Vec::new();
-        for book in companion_chassis::COMPANION_BOOKS {
+        for book in &companion_chassis::COMPANION_BOOKS {
             let dir = root.join(book.corpus_book).join("companion");
             let on_disk: BTreeSet<String> = std::fs::read_dir(&dir)
                 .unwrap_or_else(|e| panic!("{}: {e}", dir.display()))

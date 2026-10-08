@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Spell Gem (Plane Shift)",
+    "name": "Spell Gem (Plane Shift)",
+    "type": "Magic.SpellGem.Consumable"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 279,
+    "path": "starfinder/paizo/core/scr_equip_magic.lst",
+    "record_key": "Spell Gem (Plane Shift)",
+    "sha256": "5ce18c4f0c33fcaa19153e691d69a715051aad2b554d71e05ebf023e34dcb487"
+  },
+  "unit_id": "core:equipment:spell_gem_plane_shift"
+}

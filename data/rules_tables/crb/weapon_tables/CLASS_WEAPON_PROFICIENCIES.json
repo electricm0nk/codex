@@ -1,0 +1,492 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "crb/weapon_tables/CLASS_WEAPON_PROFICIENCIES",
+  "licence": {
+    "license": "OGL",
+    "book": "crb",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "class_id": "class:alchemist",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [
+        "Bomb"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:arcanist",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:barbarian",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:bard",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [
+        "Longsword",
+        "Rapier",
+        "Sap",
+        "Sword (Short)",
+        "Shortbow",
+        "Whip"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:bloodrager",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:brawler",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [
+        "Handaxe",
+        "Sword (Short)"
+      ],
+      "weapon_groups": [
+        "Close"
+      ]
+    },
+    {
+      "class_id": "class:cavalier",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:cleric",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:druid",
+      "tiers": [],
+      "named": [
+        "Club",
+        "Dagger",
+        "Dart",
+        "Quarterstaff",
+        "Scimitar",
+        "Scythe",
+        "Sickle",
+        "Shortspear",
+        "Sling",
+        "Spear"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:fighter",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:hunter",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:inquisitor",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [
+        "Crossbow (Hand)",
+        "Longbow",
+        "Crossbow (Repeating Heavy)",
+        "Crossbow (Repeating Light)",
+        "Shortbow"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:investigator",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [
+        "Crossbow (Hand)",
+        "Rapier",
+        "Sap",
+        "Shortbow",
+        "Sword (Short)",
+        "Sword Cane"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:monk",
+      "tiers": [],
+      "named": [
+        "Club",
+        "Crossbow (Light)",
+        "Crossbow (Heavy)",
+        "Dagger",
+        "Handaxe",
+        "Javelin",
+        "Kama",
+        "Nunchaku",
+        "Quarterstaff",
+        "Sai",
+        "Shortspear",
+        "Sword (Short)",
+        "Shuriken",
+        "Siangham",
+        "Sling",
+        "Spear",
+        "Unarmed Strike",
+        "Flurry of Blows",
+        "Sword (Temple)"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:oracle",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:paladin",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:ranger",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:rogue",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [
+        "Crossbow (Hand)",
+        "Rapier",
+        "Sap",
+        "Shortbow",
+        "Sword (Short)"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:shaman",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:skald",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:slayer",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:sorcerer",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:summoner",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:swashbuckler",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:warpriest",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:witch",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:wizard",
+      "tiers": [],
+      "named": [
+        "Club",
+        "Dagger",
+        "Crossbow (Heavy)",
+        "Crossbow (Light)",
+        "Quarterstaff"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:unchained_barbarian",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:unchained_monk",
+      "tiers": [],
+      "named": [
+        "Club",
+        "Crossbow (Light)",
+        "Crossbow (Heavy)",
+        "Dagger",
+        "Handaxe",
+        "Javelin",
+        "Kama",
+        "Nunchaku",
+        "Quarterstaff",
+        "Sai",
+        "Sword (Short)",
+        "Shortspear",
+        "Shuriken",
+        "Siangham",
+        "Sling",
+        "Spear",
+        "Flurry of Blows",
+        "Sword (Temple)"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:unchained_rogue",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [
+        "Crossbow (Hand)",
+        "Rapier",
+        "Sap",
+        "Shortbow",
+        "Sword (Short)"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:unchained_summoner",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:gunslinger",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:kineticist",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:medium",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:mesmerist",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [
+        "Crossbow (Hand)",
+        "Sap",
+        "Sword Cane",
+        "Whip"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:occultist",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:vigilante",
+      "tiers": [
+        "Simple",
+        "Martial"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:psychic",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:spiritualist",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [
+        "Kukri",
+        "Sap",
+        "Scythe"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:psion",
+      "tiers": [],
+      "named": [
+        "Club",
+        "Dagger",
+        "Crossbow (Heavy)",
+        "Crossbow (Light)",
+        "Quarterstaff",
+        "Shortspear",
+        "Unarmed Strike",
+        "Spells (Ray)",
+        "Spells (Touch)",
+        "Splash Weapon"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:shifter",
+      "tiers": [],
+      "named": [
+        "Club",
+        "Dagger",
+        "Dart",
+        "Quarterstaff",
+        "Scimitar",
+        "Scythe",
+        "Sickle",
+        "Shortspear",
+        "Sling",
+        "Spear"
+      ],
+      "weapon_groups": []
+    },
+    {
+      "class_id": "class:ninja",
+      "tiers": [
+        "Simple"
+      ],
+      "named": [
+        "Shortbow",
+        "Sword (Short)",
+        "Kama",
+        "Kusarigama (Sickle and Chain)",
+        "Nunchaku",
+        "Sai",
+        "Shuriken",
+        "Siangham",
+        "Wakizashi",
+        "Unarmed Strike",
+        "Spells (Ray)",
+        "Spells (Touch)",
+        "Splash Weapon"
+      ],
+      "weapon_groups": []
+    }
+  ]
+}

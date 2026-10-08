@@ -21,7 +21,7 @@ fn class_skill_lists_match_their_own_corpus_records() {
         ("class:rogue", "Rogue"),
     ];
     for (owner_id, class_name) in expectations {
-        let row = codex::rules_core::rules_tables::crb::class_skill_tables::class_skill_list(owner_id)
+        let row = codex::rules_core::rules_catalog::crb::class_skill_tables::class_skill_list(owner_id)
             .unwrap_or_else(|| panic!("{owner_id} must be a real row in CLASS_SKILL_LISTS"));
         assert!(!row.all_skills, "{class_name} is a named list, not the ALL row");
         let mut found_file = false;
@@ -47,8 +47,8 @@ fn class_skill_lists_match_their_own_corpus_records() {
                 .skills
                 .iter()
                 .map(|entry| match entry {
-                    codex::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry::Named(name) => (*name).to_string(),
-                    codex::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry::Family(family) => format!("TYPE={family}"),
+                    codex::rules_core::rules_catalog::crb::class_skill_tables::ClassSkillEntry::Named(name) => (*name).to_string(),
+                    codex::rules_core::rules_catalog::crb::class_skill_tables::ClassSkillEntry::Family(family) => format!("TYPE={family}"),
                 })
                 .collect();
             assert_eq!(rebuilt, expected, "{class_name} CSKILL list");
@@ -61,7 +61,7 @@ fn class_skill_lists_match_their_own_corpus_records() {
 /// different shape (no enumerable list) — verified separately.
 #[test]
 fn jack_of_all_trades_is_the_all_skills_row() {
-    let row = codex::rules_core::rules_tables::crb::class_skill_tables::class_skill_list("class_feature:jack_of_all_trades")
+    let row = codex::rules_core::rules_catalog::crb::class_skill_tables::class_skill_list("class_feature:jack_of_all_trades")
         .expect("jack_of_all_trades must be a real row");
     assert!(row.all_skills);
     assert!(row.skills.is_empty());

@@ -81,7 +81,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 use codex::rules_core::corpus_loader::live_sheet_rules;
-use codex::rules_core::rules_tables::companion_chassis;
+use codex::rules_core::rules_catalog::companion_chassis;
 use codex::rules_core::sheet_rule::SheetRulePackage;
 use codex::rules_core::sheet_rule_catalog::{
     catalog_description, catalog_description_or_fields, DescriptionTier,
@@ -201,7 +201,7 @@ struct RawPoolEntry {
 fn load_raw_pool_entries(repo_root: &Path) -> Vec<RawPoolEntry> {
     let mut out = Vec::new();
     let package: Option<&'static SheetRulePackage> = live_sheet_rules();
-    for book in companion_chassis::COMPANION_BOOKS {
+    for book in &companion_chassis::COMPANION_BOOKS {
         let dir = repo_root.join("data/corpus").join(book.corpus_book).join("companion");
         let Ok(read_dir) = std::fs::read_dir(&dir) else { continue };
         let mut files: Vec<PathBuf> = read_dir

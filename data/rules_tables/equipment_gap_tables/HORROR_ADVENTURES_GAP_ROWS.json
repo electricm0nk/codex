@@ -1,0 +1,1183 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/HORROR_ADVENTURES_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "HA",
+      "key": "Living Grimoire Holy Text",
+      "name": "Living Grimoire Holy Text",
+      "category": "ArmsArmor",
+      "cost_gp": 0.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Lupine Rageskin",
+      "name": "Lupine Rageskin",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This +1 leather armor consists of wolf skins sewn together with sinew. When the wearer rages, he automatically turns into a Medium wolf, as if using change shape (beast shape I). The armor melds with his new form as normal, but the armor's enhancement bonus changes into a +1 enhancement bonus to her natural armor. When the rage ends, the wearer reverts to his own form. when wearer rages, he turns into a Medium wolf with +1 bonus to natural armor",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Ursine Rageskin",
+      "name": "Ursine Rageskin",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This +1 hide armor is stitched together from grizzly bear hides. When the wearer rages, she automatically turns into a Large brown bear, as if using change shape (beast shape II). The armor melds with her new form as normal, but the armor's enhancement bonus changes into a +1 enhancement bonus to her natural armor. When the rage ends, the wearer reverts to her own form. when wearer rages, he turns into a Large brown bear with +1 bonus to natural armor",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Boneshaking Cleaver",
+      "name": "Boneshaking Cleaver",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This well-balanced, two-handed cleaver is nearly 6 feet in length. Its blade protrudes from a hilt that appears to be the spine of an animal, capped with a skull at its end. A boneshaking cleaver functions as a +3 unholy greataxe. On a critical hit, it also rattles the target’s bones, rending flesh and separating joints. This deals 1 point of Constitution damage and allows the wielder to apply one of the following conditions to the target for 1 round: deafened, shaken, or sickened. On a critical, deals 1 point of Con damage, allows wielder to apply one of the following conditions to target for 1 round: deafened, shaken, or sickened.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Hangman's Noose",
+      "name": "Hangman's Noose",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This +1 whip is made from a hemp rope that once served as the noose in a gallows. The countless executions committed with the rope have left an indelible mark on the weapon.\nAs a standard action, the wielder of a hangman’s noose can attempt a combat maneuver check to wrap the whip around a creature’s neck. If she succeeds, the victim can’t move outside of the whip’s reach. As a standard action, the wielder can attempt a reposition combat maneuver check to move the victim within the whip’s reach or to pull the whip tighter, strangling the victim. Once the target is being strangled, the wielder can attempt a combat maneuver check as a standard action to squeeze the air out of the victim’s lungs. This reduces the amount of time the victim can hold his breath by 1d6+1 rounds.\nA victim can escape the noose with a successful Escape Artist check (DC = the wielder’s CMD), or by severing the noose with an attack or a successful sunder combat maneuver check. The noose has AC 18, hardness 2, and 12 hp. If severed, the noose can still be used as a +1 whip and repairs itself after 1 hour. As a standard action, the wielder can attempt a combat maneuver check to wrap the whip around a creature' s neck, allowing wielder to attempt a reposition maneuver or to strangle target",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Hooked Massacre",
+      "name": "Hooked Massacre",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This viciously barbed +1 spiked chain consists of a jagged hook at the end of a length of rusty chain. It twitches of its own accord, as if it had some semblance of cruel intelligence. As the wielder swings it, the chain contracts and expands with a seemingly endless supply of new links. As a free action, the wielder can cause the chain to expand, giving the weapon reach for 1 round. The weapon doesn’t threaten adjacent squares when it’s expanded. The wielder can’t reverse this change manually; he must wait for it to expire.\nIf the wielder of a hooked massacre uses it for a drag or reposition combat maneuver that brings the target adjacent to him, he can make an attack against the target at his highest base attack bonus as an immediate action. As a free action, wielder can cause chain to gain reach for 1 round; the weapon doesn't threaten adjacent squares when expanded. If used for a drag or reposition maneuver, wielder can make attack at highest bonus as an immediate action.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Murderer's Machete",
+      "name": "Murderer's Machete",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This wide machete is darkly stained with blood. It is treated as a +1 keen short sword that also has a vicious cutting edge, allowing it to deal slashing damage in addition to piercing damage.\nThe murderer’s machete grants its wielder the ability to move with unnatural grace and speed while stalking potential victims. The wielder gains a +2 competence bonus on Stealth checks and Survival checks to track. In addition, once per day, the wielder can lick the bloodstains on the blade as a standard action to gain the benefits of cruel jaunt. Wielder gains a +2 bonus on Stealth checks and Survival checks to track; 1/day wielder gains benefits of cruel jaunt spell.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Murderer's Machete (Greater)",
+      "name": "Murderer's Machete, Greater",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This item functions like a murderer’s machete, but is a +2 keen wounding short sword. Wielder gains a +2 bonus on Stealth checks and Survival checks to track; 1/day wielder gains benefits of cruel jaunt spell.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Sacrificial Dagger",
+      "name": "Sacrificial Dagger",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "The serrated blade of this +1 dagger is set in a hilt made of human bone carved in the shape of a scorpion’s tail. Once per day when the wielder delivers a coup de grace with the sacrificial dagger and the target dies as a result of the attack, the dagger traps the dead creature’s life energy for 10 minutes per Hit Die of the creature. A dark mist visibly seeps from the dagger during this time, and anyone wielding the dagger gains the benefits of death knell. Determine the number of temporary hit points granted when the target dies. The temporary hit points stem from the dagger, so if another creature wields the dagger, that creature gains the remaining temporary hit points (if any) and the previous wielder loses them.\nIf, while the death knell effect is active, the wielder casts a spell that requires sacrificing a creature, she can expend the life energy stored in the dagger. For the purpose of fulfilling the spell’s requirements, the life energy counts as the creature did when it was alive (including Hit Dice and whether or not it was sentient). Expending the trapped life energy ends the death knell effect immediately, before the casting of the sacrificial spell is complete, so the death knell effect doesn’t increase the wielder’s caster level for that spell. Sacrificing another creature dissipates the life energy of any previous sacrifice already held in the dagger. 1/day, killing a creature with a coup de grace grants wielder effects of death knell for 10 min/HD of slain creature",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Screaming Blade",
+      "name": "Screaming Blade",
+      "category": "ArmsArmor",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This +2 longsword contains the hideous captured screams of a torture victim. The blade howls these blasphemies and profanities whenever it is drawn. This discordant noise grants the wielder a +5 competence bonus on Intimidate checks, but any creature can hear the howls with a Perception DC of –10, regardless of the wielder’s Stealth.\nThe disturbing noise makes it difficult for nearby creatures to concentrate. Any creature other than the wielder within 60 feet attempting to cast a spell must succeed at a concentration check (DC = 15 + spell level) or the spell fails. Creatures within 60 feet take a –2 penalty on skill checks that require concentration and are unable to take 10 (unless they have an ability that enables them to take 10 while distracted or threatened). If the wielder is evil and has the bardic performance ability, she can use the screams as a masterwork instrument for either Perform (sing) or Perform (wind) and the DCs of her bardic performances that are fear effects increase by 1.\nSilence and similar effects suppress all the blade’s magical abilities except its enhancement bonus. Creatures other than wielder within 60 feet need a concentration check (DC = 15 + spell level) to cast as spell, they take -2 on skill chacks needing concentration, and cannot take 10 due to distraction.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Heretic's Fork",
+      "name": "Heretic's Fork",
+      "category": "General",
+      "cost_gp": 10.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Iron Maiden",
+      "name": "Iron Maiden",
+      "category": "General",
+      "cost_gp": 500.0,
+      "weight_lbs": 300.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Rack",
+      "name": "Rack",
+      "category": "General",
+      "cost_gp": 300.0,
+      "weight_lbs": 500.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Rat Cage",
+      "name": "Rat Cage",
+      "category": "General",
+      "cost_gp": 5.0,
+      "weight_lbs": 15.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Thumbscrew (Common)",
+      "name": "Thumbscrew (Common)",
+      "category": "General",
+      "cost_gp": 15.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Thumbscrew (Masterwork)",
+      "name": "Thumbscrew (Masterwork)",
+      "category": "General",
+      "cost_gp": 50.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Trephine",
+      "name": "Trephine",
+      "category": "General",
+      "cost_gp": 20.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Blinding Sickness)",
+      "name": "Plague Powder (Blinding Sickness)",
+      "category": "General",
+      "cost_gp": 256.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Bloody End)",
+      "name": "Plague Powder (Bloody End)",
+      "category": "General",
+      "cost_gp": 400.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Brain Moss)",
+      "name": "Plague Powder (Brain Moss)",
+      "category": "General",
+      "cost_gp": 256.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Bubonic Plague)",
+      "name": "Plague Powder (Bubonic Plague)",
+      "category": "General",
+      "cost_gp": 289.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Cackle Fever)",
+      "name": "Plague Powder (Cackle Fever)",
+      "category": "General",
+      "cost_gp": 256.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Demon Fever)",
+      "name": "Plague Powder (Demon Fever)",
+      "category": "General",
+      "cost_gp": 324.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Devil Chills)",
+      "name": "Plague Powder (Devil Chills)",
+      "category": "General",
+      "cost_gp": 196.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Filth Fever)",
+      "name": "Plague Powder (Filth Fever)",
+      "category": "General",
+      "cost_gp": 144.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Ghoul Distemper)",
+      "name": "Plague Powder (Ghoul Distemper)",
+      "category": "General",
+      "cost_gp": 324.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Leprosy)",
+      "name": "Plague Powder (Leprosy)",
+      "category": "General",
+      "cost_gp": 144.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Mindfire)",
+      "name": "Plague Powder (Mindfire)",
+      "category": "General",
+      "cost_gp": 144.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Red Ache)",
+      "name": "Plague Powder (Red Ache)",
+      "category": "General",
+      "cost_gp": 225.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Shakes)",
+      "name": "Plague Powder (Shakes)",
+      "category": "General",
+      "cost_gp": 169.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Slimy Doom)",
+      "name": "Plague Powder (Slimy Doom)",
+      "category": "General",
+      "cost_gp": 196.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Gore Worms)",
+      "name": "Plague Powder (Gore Worms)",
+      "category": "General",
+      "cost_gp": 400.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Plague Powder (Skin Wastes)",
+      "name": "Plague Powder (Skin Wastes)",
+      "category": "General",
+      "cost_gp": 400.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Reanimating Fluid",
+      "name": "Reanimating Fluid",
+      "category": "General",
+      "cost_gp": 100.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Heavenly Aegis Ring",
+      "name": "Heavenly Aegis Ring",
+      "category": "MagicItems",
+      "cost_gp": 16000.0,
+      "weight_lbs": null,
+      "description": "When wielder takes the total defense action, ring creates magic circle against evil effect centered on him for upto 10 rounds/day; if active and 5 round remain for the day, wielder can use all remaining rounds to cast holy smite centered on himself.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Kyton Ring",
+      "name": "Kyton Ring",
+      "category": "MagicItems",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "Creates up to 100 feet of rusty chain/day.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Rings of Alien Geometries",
+      "name": "Rings of Alien Geometries",
+      "category": "MagicItems",
+      "cost_gp": 30000.0,
+      "weight_lbs": null,
+      "description": "1/day, creat a 5 ft. wide, one way portal for 10 rounds.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Black Heart",
+      "name": "Black Heart",
+      "category": "MagicItems",
+      "cost_gp": 18800.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Blackmarrow Altar",
+      "name": "Blackmarrow Altar",
+      "category": "MagicItems",
+      "cost_gp": 32500.0,
+      "weight_lbs": 24.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Brilliant Flash Symbol",
+      "name": "Brilliant Flash Symbol",
+      "category": "MagicItems",
+      "cost_gp": 1600.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Channel-Thieving Belt",
+      "name": "Channel-Thieving Belt",
+      "category": "MagicItems",
+      "cost_gp": 2000.0,
+      "weight_lbs": 2.0,
+      "description": "If living heal 1 point for each 1d6 damage caused to undead by nearby Channel Positive Energy;If undead, same, but for Channel Negative Energy vs. living beings",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Channel-Thieving Belt (Greater)",
+      "name": "Channel-Thieving Belt (Greater)",
+      "category": "MagicItems",
+      "cost_gp": 9200.0,
+      "weight_lbs": 2.0,
+      "description": "If living heal 1/2 damage caused to undead by nearby Channel Positive Energy;If undead, same, but for Channel Negative Energy vs. living beings",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Crimson Altar",
+      "name": "Crimson Altar",
+      "category": "MagicItems",
+      "cost_gp": 17500.0,
+      "weight_lbs": 28.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Dark Lens Altar",
+      "name": "Dark Lens Altar",
+      "category": "MagicItems",
+      "cost_gp": 40000.0,
+      "weight_lbs": 37.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Eldritch Scholar's Monocle",
+      "name": "Eldritch Scholar's Monocle",
+      "category": "MagicItems",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Gloves of Feasting",
+      "name": "Gloves of Feasting",
+      "category": "MagicItems",
+      "cost_gp": 8400.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Mantle of Life",
+      "name": "Mantle of Life",
+      "category": "MagicItems",
+      "cost_gp": 48000.0,
+      "weight_lbs": 4.0,
+      "description": "Immunity to energy drain attacks from undead",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Mantle of the Darkest Night",
+      "name": "Mantle of the Darkest Night",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": null,
+      "description": "For as many as 10 rounds/day, if wearer takes total defense action, he is surrounded by a globe of deeper darkness; if thrown into a space within 30 feet, deeper darkness emmanates from that space for as many rounds remain in the cloak for that day.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Monster Almanac",
+      "name": "Monster Almanac",
+      "category": "MagicItems",
+      "cost_gp": 4000.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Monster Almanac (Greater)",
+      "name": "Monster Almanac (Greater)",
+      "category": "MagicItems",
+      "cost_gp": 20000.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Moonlight Lantern",
+      "name": "Moonlight Lantern",
+      "category": "MagicItems",
+      "cost_gp": 66000.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Necromancer's Beacon",
+      "name": "Necromancer's Beacon",
+      "category": "MagicItems",
+      "cost_gp": 48000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Oil of Attraction (Demons)",
+      "name": "Oil of Attraction (Demons)",
+      "category": "MagicItems",
+      "cost_gp": 1700.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Oil of Attraction (Devils)",
+      "name": "Oil of Attraction (Devils)",
+      "category": "MagicItems",
+      "cost_gp": 1700.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Oil of Attraction (Dragons)",
+      "name": "Oil of Attraction (Dragons)",
+      "category": "MagicItems",
+      "cost_gp": 1700.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Oil of Attraction (Hags)",
+      "name": "Oil of Attraction (Hags)",
+      "category": "MagicItems",
+      "cost_gp": 1700.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Oil of Attraction (Lycanthropes)",
+      "name": "Oil of Attraction (Lycanthropes)",
+      "category": "MagicItems",
+      "cost_gp": 1700.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Oil of Attraction (Vampires)",
+      "name": "Oil of Attraction (Vampires)",
+      "category": "MagicItems",
+      "cost_gp": 1700.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Pain Ward of the Ostiarius",
+      "name": "Pain Ward of the Ostiarius",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 0.5,
+      "description": "Acts as unholy symbol of evil deity of wearer, +10 bonus vs attempts to steal or otherwise remove; +4 bonus vs spells and abilities with pain descriptor; 1/day can deal 1d8+5 damage as a touch attack, sickening target for 1d4 rounds (DC 11 halves damage, negates sickening)",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Perilous Puzzle Box",
+      "name": "Perilous Puzzle Box",
+      "category": "MagicItems",
+      "cost_gp": 5000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Purifying Ointment",
+      "name": "Purifying Ointment",
+      "category": "MagicItems",
+      "cost_gp": 4000.0,
+      "weight_lbs": 0.5,
+      "description": "Full jar has 5 uses; acts as lesser restoration or remove curse with +5 on the check",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Redemptor's Blessing",
+      "name": "Redemptor's Blessing",
+      "category": "MagicItems",
+      "cost_gp": 9000.0,
+      "weight_lbs": 0.5,
+      "description": "Creatures healed with Positive Energy channeled by this holy symbol are affected by a calm emotions spell (DC 13) while brandished or an aggresive action is taken against them.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Silver Nail",
+      "name": "Silver Nail",
+      "category": "MagicItems",
+      "cost_gp": 2100.0,
+      "weight_lbs": null,
+      "description": "Full-round action with successful touch attack, acts as dimensional anchor against outsiders, or prevents incorporeal undead from passing through solid objects; effect lasts one minute.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Greater/Akoben)",
+      "name": "Talisman (Greater/Akoben)",
+      "category": "MagicItems",
+      "cost_gp": 4500.0,
+      "weight_lbs": 1.0,
+      "description": "Grants second save against sleep effects; if successful, wearer is deafened immune to sleep for one round. Only usable 1/day. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Greater/Ankh)",
+      "name": "Talisman (Greater/Ankh)",
+      "category": "MagicItems",
+      "cost_gp": 12500.0,
+      "weight_lbs": 1.0,
+      "description": "When a creature with energy drain hits wearer, he receives a save to negate the energy drain (or second save); if successful, attacker automatically hit by force punch (OA) spell. Only usable 1/day. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Greater/Hamsa)",
+      "name": "Talisman (Greater/Hamsa)",
+      "category": "MagicItems",
+      "cost_gp": 30000.0,
+      "weight_lbs": 1.0,
+      "description": "When wearer fails a save vs a hex, spell or ability with the curse descriptor, or a hag's ability, he can attempt a second save; if successful, the creature that targeted him must save at the same DC or suffer the effect. Only usable 1/day. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Greater/Pentacle)",
+      "name": "Talisman (Greater/Pentacle)",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": "Glows whenever wearer is targeted by a possesion, charm, or compulsion effect; if a save is allowed and failed, grants second save and grants wearer protection from evil for 5 rounds. Only usable 1/day. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Greater/Scarab)",
+      "name": "Talisman (Greater/Scarab)",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": "If wearer fails a save against a swarm's poison or distraction ability, he can attempt a second save; if he successful,wearer becomes immune to the poison and distraction abilities of swarms for 5 rounds. Only usable 1/day. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Greater/Triskelion)",
+      "name": "Talisman (Greater/Triskelion)",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": "If wearer fails a save against an effect that causes him to become entangled, paralyzed, or slowed, he gets a second save; if he successful at the second saving throw, he gains the benefits of longstrider for 5 rounds. Only usable 1/day. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Lesser/Akoben)",
+      "name": "Talisman (Lesser/Akoben)",
+      "category": "MagicItems",
+      "cost_gp": 450.0,
+      "weight_lbs": 1.0,
+      "description": "Grants second save against sleep effects; if successful, wearer is deafened immune to sleep for one round. Crumbles after use. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Lesser/Ankh)",
+      "name": "Talisman (Lesser/Ankh)",
+      "category": "MagicItems",
+      "cost_gp": 1250.0,
+      "weight_lbs": 1.0,
+      "description": "When a creature with energy drain hits wearer, he receives a save to negate the energy drain (or second save); if successful, attacker automatically hit by force punch (OA) spell. Crumbles after use. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Lesser/Hamsa)",
+      "name": "Talisman (Lesser/Hamsa)",
+      "category": "MagicItems",
+      "cost_gp": 3000.0,
+      "weight_lbs": 1.0,
+      "description": "When wearer fails a save vs a hex, spell or ability with the curse descriptor, or a hag's ability, he can attempt a second save; if successful, the creature that targeted him must save at the same DC or suffer the effect. Crumbles after use. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Lesser/Pentacle)",
+      "name": "Talisman (Lesser/Pentacle)",
+      "category": "MagicItems",
+      "cost_gp": 600.0,
+      "weight_lbs": 1.0,
+      "description": "Glows whenever wearer is targeted by a possesion, charm, or compulsion effect; if a save is allowed and failed, grants second save and grants wearer protection from evil for 5 rounds. Crumbles after use. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Lesser/Scarab)",
+      "name": "Talisman (Lesser/Scarab)",
+      "category": "MagicItems",
+      "cost_gp": 600.0,
+      "weight_lbs": 1.0,
+      "description": "If wearer fails a save against a swarm's poison or distraction ability, he can attempt a second save; if he successful,wearer becomes immune to the poison and distraction abilities of swarms for 5 rounds. Crumbles after use. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Talisman (Lesser/Triskelion)",
+      "name": "Talisman (Lesser/Triskelion)",
+      "category": "MagicItems",
+      "cost_gp": 600.0,
+      "weight_lbs": 1.0,
+      "description": "If wearer fails a save against an effect that causes him to become entangled, paralyzed, or slowed, he gets a second save; if he successful at the second saving throw, he gains the benefits of longstrider for 5 rounds. Crumbles after use. Up to 3 talismans may be worn at one time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Threshold Guardian",
+      "name": "Threshold Guardian",
+      "category": "MagicItems",
+      "cost_gp": 66000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Urn of Smoldering Shapes",
+      "name": "Urn of Smoldering Shapes",
+      "category": "MagicItems",
+      "cost_gp": 16000.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Witchlight Lantern",
+      "name": "Witchlight Lantern",
+      "category": "MagicItems",
+      "cost_gp": 7500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Wolf Caller's Horn",
+      "name": "Wolf Caller's Horn",
+      "category": "MagicItems",
+      "cost_gp": 4000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Book of Perilous Journeys",
+      "name": "Book of Perilous Journeys",
+      "category": "MagicItems",
+      "cost_gp": 0.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Needful Doll",
+      "name": "Needful Doll",
+      "category": "MagicItems",
+      "cost_gp": 0.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Cup of Forbidden Knowledge",
+      "name": "Cup of Forbidden Knowledge",
+      "category": "MagicItems",
+      "cost_gp": 0.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Dark Grimoire",
+      "name": "Dark Grimoire",
+      "category": "MagicItems",
+      "cost_gp": 0.0,
+      "weight_lbs": 6.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Elder Sign",
+      "name": "Elder Sign",
+      "category": "MagicItems",
+      "cost_gp": 0.0,
+      "weight_lbs": 10.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Cephalopod Staff",
+      "name": "Cephalopod Staff",
+      "category": "MagicItems",
+      "cost_gp": 22500.0,
+      "weight_lbs": 4.0,
+      "description": "Swift action allows user to use staff acts as a masterwork whip until end of turn.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Hungering Staff",
+      "name": "Hungering Staff",
+      "category": "MagicItems",
+      "cost_gp": 30000.0,
+      "weight_lbs": 4.0,
+      "description": "Staff does not regain charge from Magic Mouth until spell is dismissed or discharged; Beast Shape I only allows forms with bite attacks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Many-Eyed Staff",
+      "name": "Many-Eyed Staff",
+      "category": "MagicItems",
+      "cost_gp": 32000.0,
+      "weight_lbs": 5.0,
+      "description": "+5 bonus on Perception checks while grasping the staff, wielder can see through eyes of summoned spider's or blinded creature's eyes if within 100 ft.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Antennae)",
+      "name": "Fleshcraft Graft (Antennae)",
+      "category": "MagicItems",
+      "cost_gp": 70000.0,
+      "weight_lbs": null,
+      "description": "The creature gains blindsight to a range of 30 feet [Penalty] The subject is blinded",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Blinding Spittle Glands)",
+      "name": "Fleshcraft Graft (Blinding Spittle Glands)",
+      "category": "MagicItems",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "Ranged touch attack, 30 ft. range, blins the target for 1d4 rounds, usable three times per day [Penalty] The subject cannot speak or cast spells",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Burrowing Claws)",
+      "name": "Fleshcraft Graft (Burrowing Claws)",
+      "category": "MagicItems",
+      "cost_gp": 22500.0,
+      "weight_lbs": null,
+      "description": "Gain claws that deals 1d6 slashing damage (1d4 points if Small), burrow speed of 5 feet [Penalty] Attacks with manufactured weapons and skill checks and ability checks involving hands take a -2 penalty",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Camouflage Flesh)",
+      "name": "Fleshcraft Graft (Camouflage Flesh)",
+      "category": "MagicItems",
+      "cost_gp": 30000.0,
+      "weight_lbs": null,
+      "description": "Grants ability to use Stealth in any natural terrain, whether or not there is cover or concealment. [Penalty] -4 penalty on Perception checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Carapace)",
+      "name": "Fleshcraft Graft (Carapace)",
+      "category": "MagicItems",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "+4 bonus to natural armor bonus [Penalty] -4 armor check penalty",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Cerebral Husk)",
+      "name": "Fleshcraft Graft (Cerebral Husk)",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": null,
+      "description": "Once per day, when a saving throw against a mind-affecting effect fails, subject can shunt the effect into the cerebral husk, ignoring that effect, dealing 1d6 points of Constitution damage [Penalty] -2 penalty on Intelligence-based checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Claw Gauntlet)",
+      "name": "Fleshcraft Graft (Claw Gauntlet)",
+      "category": "MagicItems",
+      "cost_gp": 32000.0,
+      "weight_lbs": null,
+      "description": "Gain claws that deals 1d8 slashing damage (1d6 points if Small), +4 on grapple combat maneuver checks [Penalty] Can't wield weapons or manipulate objects, -4 penalty when performing precision-based tasks involving hands",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Darksight Eyes)",
+      "name": "Fleshcraft Graft (Darksight Eyes)",
+      "category": "MagicItems",
+      "cost_gp": 6000.0,
+      "weight_lbs": null,
+      "description": "Gain darkvision with 60 range [Penalty] Gain light blindness",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Grasping Tendril)",
+      "name": "Fleshcraft Graft (Grasping Tendril)",
+      "category": "MagicItems",
+      "cost_gp": 22500.0,
+      "weight_lbs": null,
+      "description": "If replacing an arm, can also deal 1d4 damage as a natural attack, if grafted elsewhere, can retrieve objects as a swift action [Penalty] If replacing an arm, attacks with manufactured weapons and skill checks and ability checks involving hands take a -2 penalty, no penalty if elsewhere",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Poison Fangs)",
+      "name": "Fleshcraft Graft (Poison Fangs)",
+      "category": "MagicItems",
+      "cost_gp": 12000.0,
+      "weight_lbs": null,
+      "description": "Gain a bite natural attack that deals 1d4 points of damage (1d3 points if Small), can attempt to use poison three times per day [Penalty] -2 penalty on all Charisma-based skill checks except Intimidate checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Retractable Spines)",
+      "name": "Fleshcraft Graft (Retractable Spines)",
+      "category": "MagicItems",
+      "cost_gp": 24000.0,
+      "weight_lbs": null,
+      "description": "Gain spines as natural weapons that deal 1d6 points of piercing damage (1d4 points if Small), +2 bonus on grapple combat maneuver checks [Penalty]  Attacks with manufactured weapons and skill checks and ability checks involving hands take a -2 penalty",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Shark Gills)",
+      "name": "Fleshcraft Graft (Shark Gills)",
+      "category": "MagicItems",
+      "cost_gp": 9000.0,
+      "weight_lbs": null,
+      "description": "Subject can breathe water [Penalty] Subject can no longer breathe air",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Stinging Tail)",
+      "name": "Fleshcraft Graft (Stinging Tail)",
+      "category": "MagicItems",
+      "cost_gp": 12000.0,
+      "weight_lbs": null,
+      "description": "Gain a tail attack that deals 1d6 points of piercing damage (1d4 points if Small), can attempt to use poison three times per day [Penalty] -5 feet to its land speed and a -2 penalty on Acrobatics checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Graft (Wings of Darkness)",
+      "name": "Fleshcraft Graft (Wings of Darkness)",
+      "category": "MagicItems",
+      "cost_gp": 36000.0,
+      "weight_lbs": null,
+      "description": "Fly speed of 60 feet (average maneuverability), +5 bonus on Fly checks [Penalty] -2 penalty on all Dexterity-based skill checks and ability checks except Fly checks",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Antennae)",
+      "name": "Fleshcraft Elixir (Antennae)",
+      "category": "MagicItems",
+      "cost_gp": 1250.0,
+      "weight_lbs": null,
+      "description": "The creature gains blindsight to a range of 30 feet [Penalty] The subject is blinded; DURATION 10 minutes; SAVE DC 20",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Blinding Spittle Glands)",
+      "name": "Fleshcraft Elixir (Blinding Spittle Glands)",
+      "category": "MagicItems",
+      "cost_gp": 600.0,
+      "weight_lbs": null,
+      "description": "Ranged touch attack, 30 ft. range, blins the target for 1d4 rounds, usable three times per day [Penalty] The subject cannot speak or cast spells; DURATION 1 hour; SAVE DC 13",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Burrowing Claws)",
+      "name": "Fleshcraft Elixir (Burrowing Claws)",
+      "category": "MagicItems",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "Gain claws that deals 1d6 slashing damage (1d4 points if Small), burrow speed of 5 feet [Penalty] Attacks with manufactured weapons and skill checks and ability checks involving hands take a -2 penalty; DURATION 1 hour; SAVE DC 15",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Camouflage Flesh)",
+      "name": "Fleshcraft Elixir (Camouflage Flesh)",
+      "category": "MagicItems",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "Grants ability to use Stealth in any natural terrain, whether or not there is cover or concealment. [Penalty] -4 penalty on Perception checks; DURATION 1 hour; SAVE DC 18",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Carapace)",
+      "name": "Fleshcraft Elixir (Carapace)",
+      "category": "MagicItems",
+      "cost_gp": 600.0,
+      "weight_lbs": null,
+      "description": "+4 bonus to natural armor bonus [Penalty] -4 armor check penalty; DURATION 1 hour; SAVE DC 19",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Cerebral Husk)",
+      "name": "Fleshcraft Elixir (Cerebral Husk)",
+      "category": "MagicItems",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "Once per day, when a saving throw against a mind-affecting effect fails, subject can shunt the effect into the cerebral husk, ignoring that effect, dealing 1d6 points of Constitution damage [Penalty] -2 penalty on Intelligence-based checks; DURATION 24 hours; SAVE DC 17",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Claw Gauntlet)",
+      "name": "Fleshcraft Elixir (Claw Gauntlet)",
+      "category": "MagicItems",
+      "cost_gp": 1600.0,
+      "weight_lbs": null,
+      "description": "Gain claws that deals 1d8 slashing damage (1d6 points if Small), +4 on grapple combat maneuver checks [Penalty] Can't wield weapons or manipulate objects, -4 penalty when performing precision-based tasks involving hands; DURATION 1 hour; SAVE DC 20",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Darksight Eyes)",
+      "name": "Fleshcraft Elixir (Darksight Eyes)",
+      "category": "MagicItems",
+      "cost_gp": 300.0,
+      "weight_lbs": null,
+      "description": "Gain darkvision with 60 range [Penalty] Gain light blindness; DURATION 24 hours; SAVE DC 15",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Grasping Tendril)",
+      "name": "Fleshcraft Elixir (Grasping Tendril)",
+      "category": "MagicItems",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "Can deal 1d4 damage as a natural attack if not holding anything [Penalty] Attacks with manufactured weapons and skill checks and ability checks involving hands take a -2 penalty; DURATION 1 hour; SAVE DC 16",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Poison Fangs)",
+      "name": "Fleshcraft Elixir (Poison Fangs)",
+      "category": "MagicItems",
+      "cost_gp": 800.0,
+      "weight_lbs": null,
+      "description": "Gain a bite natural attack deals that 1d4 points of damage (1d3 points if Small), can attempt to use poison three times per day [Penalty] -2 penalty on all Charisma-based skill checks except Intimidate checks; DURATION 10 minutes; SAVE DC 16",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Retractable Spines)",
+      "name": "Fleshcraft Elixir (Retractable Spines)",
+      "category": "MagicItems",
+      "cost_gp": 650.0,
+      "weight_lbs": null,
+      "description": "Gain spines as natural weapons that deal 1d6 points of piercing damage (1d4 points if Small), +2 bonus on grapple combat maneuver checks [Penalty]  Attacks with manufactured weapons and skill checks and ability checks involving hands take a -2 penalty; DURATION 1 hour; SAVE DC 15",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Shark Gills)",
+      "name": "Fleshcraft Elixir (Shark Gills)",
+      "category": "MagicItems",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "Subject can breathe water [Penalty] Subject can no longer breathe air; DURATION 1 hour; SAVE DC 20",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Stinging Tail)",
+      "name": "Fleshcraft Elixir (Stinging Tail)",
+      "category": "MagicItems",
+      "cost_gp": 800.0,
+      "weight_lbs": null,
+      "description": "Gain a tail attack that deals 1d6 points of piercing damage (1d4 points if Small), can attempt to use poison three times per day [Penalty] -5 feet to its land speed and a -2 penalty on Acrobatics checks; DURATION 10 minutes; SAVE DC 16",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Fleshcraft Elixir (Wings of Darkness)",
+      "name": "Fleshcraft Elixir (Wings of Darkness)",
+      "category": "MagicItems",
+      "cost_gp": 600.0,
+      "weight_lbs": null,
+      "description": "Fly speed of 60 feet (average maneuverability), +5 bonus on Fly checks [Penalty] -2 penalty on all Dexterity-based skill checks and ability checks except Fly checks; DURATION 10 minutes; SAVE DC 20",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Special Ability ~ Greater Vampiric ~ Melee",
+      "name": "Greater Vampiric",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "First hit each round on a living target restores hp to wielder equal to 1/2 the damage dealt, to a max equal to 5 times the wielder's number of HD/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "HA",
+      "key": "Special Ability ~ Vampiric ~ Melee",
+      "name": "Vampiric",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "First hit each round on a living target restores hp to wielder equal to 1/2 the damage dealt, to a max equal to the wielder's number of HD/day",
+      "name_pi_citation": null
+    }
+  ]
+}

@@ -1,0 +1,2195 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "ultimate_magic/archetype_tables/archetype_swap_tables",
+  "licence": {
+    "license": "OGL",
+    "book": "ultimate_magic",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Alchemist Archetype ~ Chirurgeon",
+      "subject": "Alchemist",
+      "archetype_name": "Chirurgeon",
+      "description": "An alchemist who studies anatomy and uses this knowledge to heal is a chirurgeon.",
+      "source_page": "p.18",
+      "replaces": [
+        "AlchemistPoisonUse",
+        "AlchemistPoisonResistance4",
+        "AlchemistPoisonImmunity"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Chirurgeon ~ Infused Curative",
+          "at_level": 2,
+          "description": "Your extracts of cure spells automatically act as infusions, and can be used by non-alchemists. When you prepare your extracts, you may choose to render any or all of your infused curatives inert and prepare other extracts to replace them (unlike infusions, which continue to occupy your daily extract slots until consumed or used).",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Chirurgeon ~ Anaesthetic",
+          "at_level": 5,
+          "description": "You know how to supplement uses of the Heal skill with pain-killing drugs. You gain Skill Focus (Heal) as a bonus feat. Any use of the Heal skill that has a risk of harming the patient (such as extracting a barb) only deals the minimum damage when performed by you.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Chirurgeon ~ Power Over Death",
+          "at_level": 10,
+          "description": "You add Breath of Life to your formula book as a 4th-level extract. Your infused curative ability applies to this extract.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Alchemist Archetype ~ Clone Master",
+      "subject": "Alchemist",
+      "archetype_name": "Clone Master",
+      "description": "Clone masters practice duplicating existing creatures in order to better understand how to create new life.",
+      "source_page": "p.18",
+      "replaces": [
+        "AlchemistPoisonResistance6",
+        "AlchemistPoisonImmunity",
+        "AlchemistBombReduction"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Clone Master ~ Lesser Simulacrum",
+          "at_level": 7,
+          "description": "You add Lesser Simulacrum to your formula book as a 3rd-level extract.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Clone Master ~ Rebirth",
+          "at_level": 8,
+          "description": "You can prepare a clone of yourself that awakens if you are slain. Creating the clone costs 5,000 gp, takes 1 week of work, and requires 3 additional weeks for the clone to grow to maturity. If you die, the clone awakens as if you had used the Clone spell on yourself. You can have one inert of yourself at a time. Unused clones you create do not rot.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Clone Master ~ Simulacrum",
+          "at_level": 13,
+          "description": "You add Simulacrum to your formula book as a 5th-level extract.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Clone Master ~ Clone",
+          "at_level": 16,
+          "description": "You add Clone to your formula book as a 6th-level extract.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Alchemist Archetype ~ Internal Alchemist",
+      "subject": "Alchemist",
+      "archetype_name": "Internal Alchemist",
+      "description": "An internal alchemist studies medicine, diet, and the living body to purify the self in the hope of gaining immortality by means of alchemical concoctions and controlling vital energy. Internal alchemists develop unusual physical abilities from heightened knowledge of how their bodies work.",
+      "source_page": "p.18",
+      "replaces": [
+        "AlchemistThrowAnything",
+        "AlchemistSwiftAlchemy",
+        "AlchemistSwiftPoisoning"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Internal Alchemist ~ Breath Mastery",
+          "at_level": 1,
+          "description": "You can control your breath and the flow of vital energy within your body. Without preparation, you can hold your breath for %1 minutes (after this, you must begin making Constitution checks or risk suffocation); by spending a full-round action preparing yourself, you can increase this duration to %1 hours. You can survive twice as long as normal without food or water before you start to take penalties. You can put yourself into a state of suspended animation as a move action, and are then unconscious and appear completely dead; you awaken at a preset time or in response to a condition set by you when you enters this state.|BreathMasteryDuration",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Internal Alchemist ~ Disease Resistance",
+          "at_level": 3,
+          "description": "You gain a +%1 bonus on all saving throws against disease.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Internal Alchemist ~ Uncanny Dodge",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Alchemist Archetype ~ Mindchemist",
+      "subject": "Alchemist",
+      "archetype_name": "Mindchemist",
+      "description": "While most alchemists use mutagens to boost their physical ability at the cost of mental ability, some use alchemy for the opposite purpose-to boost the power of the mind and memory. A mindchemist can reach incredible levels of mental acuity, but suffers lingering debilitating effects to his physique.",
+      "source_page": "p.19",
+      "replaces": [
+        "AlchemistMutagen",
+        "AlchemistPoisonUse"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Mindchemist ~ Cognatogen",
+          "at_level": 1,
+          "description": "You learn how to create a cognatogen, as the cognatogen discovery.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Mindchemist ~ Perfect Recall",
+          "at_level": 2,
+          "description": "You have honed your memory. When making a Knowledge check, you may add +%1 on the check. You can also use this ability when making an Intelligence check to remember something.|MindchemistPerfectRecallBonus",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Alchemist Archetype ~ Preservationist",
+      "subject": "Alchemist",
+      "archetype_name": "Preservationist",
+      "description": "Some alchemists are obsessed with collecting and preserving exotic creatures. These preservationists may use bottled animals and monsters as teaching tools, but some learn how to reanimate them for short periods to battle on the alchemist's behalf.",
+      "source_page": "p.19",
+      "replaces": [
+        "AlchemistPoisonUse",
+        "AlchemistPoisonResistance4",
+        "AlchemistPoisonResistance6",
+        "AlchemistPoisonImmunity",
+        "AlchemistPersistentMutagen",
+        "AlchemistDiscoveryLvl18"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Preservationist ~ Bottled Ally I",
+          "at_level": 2,
+          "description": "You add Handle Animal to your list of class skills. You add Summon Nature's Ally I to your formula book as a 1st-level extract. When you prepare that extract, you actually prepare a tiny, preserved specimen in a bottle (as with a caster casting the spell, you don't have to choose the creature until you use the extract). When you open the bottle, the specimen animates and grows to normal size, serving you as per the spell and otherwise being treated as a summoned creature. When the duration expires, the preserved creature decays into powder. If you have the infusion discovery, another character can use the infused specimen. The Augment Summoning feat can be applied to these specimens.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Preservationist ~ Bottled Ally II",
+          "at_level": 5,
+          "description": "You add Summon Nature's Ally II to your formula book as a 2nd-level extract.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Preservationist ~ Bottled Ally III",
+          "at_level": 8,
+          "description": "You add Summon Nature's Ally IV to your formula book as a 3rd-level extract.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Preservationist ~ Bottled Ally IV",
+          "at_level": 10,
+          "description": "You add Summon Nature's Ally V to your formula book as a 4th-level extract.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Preservationist ~ Bottled Ally V",
+          "at_level": 14,
+          "description": "You add Summon Nature's Ally VII to your formula book as a 5th-level extract.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Preservationist ~ Bottled Ally VI",
+          "at_level": 18,
+          "description": "You add Summon Nature's Ally IX to your formula book as a 6th-level extract.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Alchemist Archetype ~ Psychonaut",
+      "subject": "Alchemist",
+      "archetype_name": "Psychonaut",
+      "description": "A psychonaut uses his knowledge to explore altered states of consciousness and even other planes of existence.",
+      "source_page": "p.19",
+      "replaces": [
+        "AlchemistPoisonResistance4",
+        "AlchemistPoisonResistance6",
+        "AlchemistPoisonImmunity",
+        "AlchemistBombDamageLvl15",
+        "AlchemistBombDamageLvl17",
+        "AlchemistBombReduction"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Psychonaut ~ Precognition",
+          "at_level": 5,
+          "description": "You add Augury to your formula book as a 2nd-level extract (this extract does not require a divine focus component).",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Psychonaut ~ Psychic Senses",
+          "at_level": 8,
+          "description": "You add Clairaudience/Clairvoyance, Detect Scrying, Scrying, and Speak With Dead to your formula book as 3rd-level extracts (a Scrying extract does not require a focus or divine focus component).",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Psychonaut ~ Remote Consciousness",
+          "at_level": 10,
+          "description": "You add Dream, Lesser Astral Projection, Nightmare, Plane Shift, Sending, and Telepathic Bond to your formula book as 4th-level extracts (a Plane Shift extract does not require a focus component).",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Psychonaut ~ Greater Precognition",
+          "at_level": 15,
+          "description": "You add Moment of Prescience to your formula book as a 5th-level extract.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Psychonaut ~ Master Precognition",
+          "at_level": 17,
+          "description": "You add Foresight to your formula book as a 6th-level extract.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Alchemist Archetype ~ Reanimator",
+      "subject": "Alchemist",
+      "archetype_name": "Reanimator",
+      "description": "A reanimator is an alchemist who has discovered how to infuse a corpse with a semblance of life. Many work in tandem with necromancers to explore the fine border between the worlds of the living and the dead.",
+      "source_page": "p.20",
+      "replaces": [
+        "AlchemistBombDamageLvl7",
+        "AlchemistBombDamageLvl13",
+        "AlchemistBombDamageLvl15",
+        "AlchemistBombReduction"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Reanimator ~ Simple Reanimation",
+          "at_level": 7,
+          "description": "You add Lesser Animate Dead to your formula book as a 3rd-level extract.  When you use this extract, rather than drinking it, you inject it into the corpse you intend to animate, which rises as an undead creature under your control 1 hour later.  This extract can only create zombies (including variant zombies).",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Reanimator ~ Create Undead",
+          "at_level": 13,
+          "description": "You add Create Undead to your formula book as a 4th-level extract.  When you use this extract, rather than drinking it, you inject it into the corpse you intend to animate, which rises as an uncontrolled undead 1 hour later.  This extract can only create corporeal undead.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Reanimator ~ Create Greater Undead",
+          "at_level": 15,
+          "description": "You add Create Greater Undead to your formula book as a 5th-level extract.  This otherwise acts similarly to a Create Undead extract.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Alchemist Archetype ~ Vivisectionist",
+      "subject": "Alchemist",
+      "archetype_name": "Vivisectionist",
+      "description": "A vivisectionist studies bodies to better understand their function. Unlike a chirurgeon, a vivisectionist's goals are not related to healing, but rather to experimentation and knowledge that most people would consider evil.",
+      "source_page": "p.20",
+      "replaces": [
+        "AlchemistBomb",
+        "AlchemistBombDamageLvl1",
+        "AlchemistBombDamageLvl3",
+        "AlchemistBombDamageLvl5",
+        "AlchemistBombDamageLvl7",
+        "AlchemistBombDamageLvl9",
+        "AlchemistBombDamageLvl11",
+        "AlchemistBombDamageLvl13",
+        "AlchemistBombDamageLvl15",
+        "AlchemistBombDamageLvl17",
+        "AlchemistBombDamageLvl19",
+        "AlchemistBombReduction"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Vivisectionist ~ Sneak Attack",
+          "at_level": 1,
+          "description": "At 1st level, a vivisectionist gains the sneak attack ability as a rogue of the same level. If a character already has sneak attack from another class, the levels from the classes that grant sneak attack stack to determine the effective rogue level for the sneak attack's extra damage dice (so an alchemist 1/rogue 1 has a +1d6 sneak attack like a 2nd-level rogue, an alchemist 2/rogue 1 has a +2d6 sneak attack like a 3rd-level rogue, and so on). This ability replaces bomb.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Vivisectionist ~ Torturer's Eye",
+          "at_level": 2,
+          "description": "You add Deathwatch to your formula book as a 1st-level extract.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Vivisectionist ~ Cruel Anatomist",
+          "at_level": 3,
+          "description": "You may use your Knowledge (Nature) skill bonus in place of your Heal skill bonus.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Vivisectionist ~ Torturous Transformation",
+          "at_level": 7,
+          "description": "You add Anthropomorphic Animal to your formula book as a 2nd-level extract.  When you use this extract, you inject it into an animal as part of a 2-hour surgical procedure.  By using multiple doses of this extract as part of the surgery, you multiply the duration by the number of extracts used.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Bard Archetype ~ Animal Speaker",
+      "subject": "Bard",
+      "archetype_name": "Animal Speaker",
+      "description": "An animal speaker focuses not on the ears and minds of humans, but on the creatures of the wild and those in the underbellies of cities.",
+      "source_page": "p.25",
+      "replaces": [
+        "BardFascinate",
+        "BardWellVersed",
+        "BardInspireCompetence",
+        "BardSuggestion",
+        "BardMassSuggestion"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Animal Speaker ~ Animal Friend",
+          "at_level": 1,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Animal Speaker ~ Nature's Speaker",
+          "at_level": 5,
+          "description": "You can use Speak with Animals at will on %1 selected kinds of animals.|NaturesSpeakerNumber",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Animal Speaker ~ Soothing Performance",
+          "at_level": 3,
+          "description": "You can use bardic performance to influence animals. This works like the druid ability wild empathy, except you expend 1 round of bardic performance and make a Perform check. If you already have wild empathy from another class, you add the class levels that provide wild empathy to the result of your Perform check to influence an animal.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Animal Speaker ~ Attract Rats",
+          "at_level": 6,
+          "description": "You can use bardic performance to summon %1d3 rat swarms; they remain as long as you continue performing.|AttractRatsAmount",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Animal Speaker ~ Summon Nature's Ally",
+          "at_level": 1,
+          "description": null,
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Bard Archetype ~ Celebrity",
+      "subject": "Bard",
+      "archetype_name": "Celebrity",
+      "description": "Known for being known, a celebrity bard is a master of  performance  who  captures  the  imagination  and attention of his audience. He trades on his charisma, his wit, and his exploits to build his renown - and that of his companions.",
+      "source_page": "p.25",
+      "replaces": [
+        "BardInspireCourage",
+        "BardLoreMaster",
+        "BardDirgeOfDoom"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Celebrity ~ Famous",
+          "at_level": 1,
+          "description": "You may choose a region where you are famous, and within that region, the locals are more likely to react favorably toward you. You gain a +%1 bonus on Diplomacy and Intimidate checks in that area and to influence people from that area|FamousModifier",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Celebrity ~ Gather Crowd",
+          "at_level": 5,
+          "description": "You are skilled at drawing an audience to your performances. If you are in a settlement or populated area, you can shout, sing, or otherwise make yourself noticed in order to attract an audience to your impromptu stage. The size of the crowd depends on the local population, but typically is a number of people equal to %1 times the result of your Perform check. The crowd gathers over the next 1d10 rounds. If you fail to engage the crowd (such as by performing, kissing babies, trying to use fascinate, and so on), it disperses over the next 1d10 rounds.|classlevel(\"Bard\")/2",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Celebrity ~ Shining Star",
+          "at_level": 8,
+          "description": "You have learned how to focus attention on yourself so thoroughly that even the presence of danger does not distract your adoring crowd. When using fascinate, a target making a save to break the effect because of a potential threat takes a -4 penalty on that save, and even obvious threats require a save rather than automatically breaking the effect. Creatures affected by the bard's fascinate ability ignore the shaken condition.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Bard Archetype ~ Demagogue",
+      "subject": "Bard",
+      "archetype_name": "Demagogue",
+      "description": "Not content with providing amusing and occasionally instructive performances, the demagogue seeks to inflame and ignite his audience, driving them toward a specific purpose with carefully chosen words and tones that may spark momentous change.",
+      "source_page": "p.26",
+      "replaces": [
+        "BardInspireCourage1",
+        "BardLoreMaster",
+        "BardSuggestion",
+        "BardMassSuggestion"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Demagogue ~ Famous",
+          "at_level": 1,
+          "description": "You may choose a region where you are famous, and within that region, the locals are more likely to react favorably toward you. You gain a +%1 bonus on Bluff and Intimidate checks in that area and to influence people from that area|FamousModifier",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Demagogue ~ Gather Crowd",
+          "at_level": 5,
+          "description": "You are skilled at drawing an audience to your performances. If you are in a settlement or populated area, you can shout, sing, or otherwise make yourself noticed in order to attract an audience to your impromptu stage. The size of the crowd depends on the local population, but typically is a number of people equal to %1 times the result of your Perform check. The crowd gathers over the next 1d10 rounds. If you fail to engage the crowd (such as by performing, kissing babies, trying to use fascinate, and so on), it disperses over the next 1d10 rounds.|classlevel(\"Bard\")/2",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Demagogue ~ Incite Violence",
+          "at_level": 6,
+          "description": "You can use your performance to fan the fury of a crowd of people you has fascinated. Using this ability does not disrupt the fascinate effect, but does require a standard action to activate (in addition to the free action to continue the fascinate effect). You select %1 targets equal to your level, who must make Will saves (DC %2) or be affected by rage for %3 rounds. You indicate who is the intended target of violence (either after using this ability or as part of the performance leading to it) and the enraged members of the crowd immediately attack the target if possible. The target does not need to be present (\"kill the king\" is a suitable choice) and can be an object instead of a person (\"destroy the prison!\" is likewise appropriate). Other members of the crowd may follow suit, though they do not gain the benefits of rage . This is a sound-based effect and is affected by countersong. If two or more bards are attempting to direct the crowd against different targets, they must make opposed Charisma checks, with the crowd following the directions of the winner.|InciteViolenceTargets|InciteViolenceDC|InciteViolenceDuration",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Demagogue ~ Righteous Cause",
+          "at_level": 18,
+          "description": "You can lift a crowd's emotions and turn them toward a common purpose. First, you must fascinate the crowd, and then use incite violence without designating a target, at which point you can use righteous cause. Instead of driving the crowd with anger, you fill them with purpose. Fascinated creatures must make Will saves (DC %1) to resist. Those who fail are affected by mass suggestion of a plausible idea that lingers with them for one day. Typical uses of this ability are to spark rebellion, overthrow a king, build a beneficial structure such as an orphanage, or donate money to a cause.|RighteousCauseDC",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Bard Archetype ~ Dirge Bard",
+      "subject": "Bard",
+      "archetype_name": "Dirge Bard",
+      "description": "A composer of sonorous laments for the dead and elaborate requiems for those lost yet long remembered, dirge bards master musical tools and tropes that must appeal to the ears and hearts of both the living and the dead.",
+      "source_page": "p.26",
+      "replaces": [
+        "BardJackOfAllTrades",
+        "BardLoreMaster",
+        "BardWellVersed",
+        "BardVersatilePerformance"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Dirge Bard ~ Dance of the Dead",
+          "at_level": 10,
+          "description": "You can use your bardic performance to cause dead bones or bodies to rise up and move or fight at your command. This ability functions like animate dead, but the created skeletons or zombies remain fully animate only as long as you continue the performance. Once it stops, any created undead collapse into carrion. Bodies or bones cannot be animated more than once using this ability. Unlike animate dead, dance of the dead requires no components and does not have the evil descriptor.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Dirge Bard ~ Haunted Eyes",
+          "at_level": 2,
+          "description": "You gain a +4 bonus on saves against fear, energy drain, death effects, and necromantic effects.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Dirge Bard ~ Secrets of the Grave",
+          "at_level": 2,
+          "description": "You gain a +%1 bonus on Knowledge (religion) checks made to identify undead creatures and their abilities. You may use mind-affecting spells to affect undead as if they were living creatures, even if they are mindless (though spells that affect only humanoids do not affect them, even if they were humanoids in life). In addition, you may add one necromancy spell from the spell list of any arcane spellcasting class to your list of spells known at 2nd level and every four levels thereafter.|SecretsOfTheGraveBonus",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Dirge Bard ~ Haunting Refrain",
+          "at_level": 5,
+          "description": "You are able to stir primal terrors in the hearts of listeners. You can use a Perform (keyboard) or Perform (percussion) check in place of an Intimidate check to demoralize an opponent, with a +%1 bonus. In addition, saving throws against any fear effect you create are made with a -%2 penalty.|HauntingRefrainBonus|HauntingRefrainPenalty",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Bard Archetype ~ Geisha",
+      "subject": "Bard",
+      "archetype_name": "Geisha",
+      "description": "In some cultures, the professional entertainer is a prestigious role. Specially trained entertainers called geisha are praised for their appearance and skill at conversation, music, dancing, singing, poetry, and calligraphy. A geisha provides social intimacy and status but not physical intimacy.",
+      "source_page": "p.27",
+      "replaces": [
+        "BardWeaponProficiencies",
+        "BardArmorProficiencies",
+        "BardBardicKnowledge",
+        "BardArmoredCasting"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Scribe Scroll",
+          "at_level": 1,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Geisha ~ Tea Ceremony",
+          "at_level": 1,
+          "description": "By spending 10 minutes preparing an elaborate tea ceremony, you may affect your allies with inspire courage, inspire competence, inspire greatness, or inspire heroics. The ceremony's effects last 10 minutes. You must spend 4 rounds of bardic performance for each creature to be affected.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Bard Archetype ~ Songhealer",
+      "subject": "Bard",
+      "archetype_name": "Songhealer",
+      "description": "Words can harm, but they also heal. The songhealer brings peace and surcease of pain, calming wild emotions and providing a balm for the wounded body.",
+      "source_page": "p.27",
+      "replaces": [
+        "BardVersatilePerformance",
+        "BardFrighteningTune",
+        "BardDeadlyPerformance"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Songhealer ~ Enhance Healing",
+          "at_level": 1,
+          "description": "%1 times per day, you can cause any healing effect from a spell completion or spell trigger item to function at caster level %2.|EnhanceHealingTimes|EnhanceHealingCL",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Songhealer ~ Healing Performance",
+          "at_level": 14,
+          "description": "You can use your performance to create an effect equivalent to heal on a living target (or harm on an undead target), using your level as the caster level. Using this ability requires 5 rounds of continuous performance, and the target must be able to see and hear the bard throughout the performance. The healing performance relies on audible and visual components.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Songhealer ~ Funereal Ballad",
+          "at_level": 20,
+          "description": "You can use your performance to create an effect equivalent to resurrection on a dead creature, using your level as the caster level. Using this ability requires 20 rounds of continuous performance, and the target must be within 10 feet of you for the entire performance. Funereal ballad relies on audible and visual components.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Bard Archetype ~ Sound Striker",
+      "subject": "Bard",
+      "archetype_name": "Sound Striker",
+      "description": "They say that words can cut deeper than any blade, and the sound striker proves this true. Using music and words as a weapon, he can focus his performances into a deadly delivery.",
+      "source_page": "p.27",
+      "replaces": [
+        "BardInspireCompetence",
+        "BardSuggestion"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Sound Striker ~ Wordstrike",
+          "at_level": 3,
+          "description": "You can spend 1 round of bardic performance as a standard action to direct a burst of sonically charged words at a creature or object. This performance deals 1d4+%1 points of damage to an object, or half this damage to a living creature.|WordstrikeBonusDamage",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Sound Striker ~ Weird Words",
+          "at_level": 6,
+          "description": "You can start a performance as a standard action, lashing out with %1 potent sounds, each sound affecting one target within 30 feet. These are ranged touch attacks. Each weird word deals 1d8+%2 points of damage (Fortitude DC %3 half), and the bard chooses whether it deals bludgeoning, piercing, or slashing damage for each word.|WeirdWordsAMount|WeirdWordsBonusDamage|WeirdWordsDC",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Cleric Archetype ~ Cloistered Cleric",
+      "subject": "Cleric",
+      "archetype_name": "Cloistered Cleric",
+      "description": "Cloistered clerics typically live in a temple and rarely interact with the outside world. They are bookish and well learned in the lore of the faith, paying less attention to its magical and martial aspects. A cloistered cleric has the following class features.",
+      "source_page": "p.31",
+      "replaces": [
+        "ClericArmorProficiency",
+        "ClericWeaponProficiency",
+        "ClericClassSkills",
+        "ClericSkillRanks",
+        "ClericDomains",
+        "ClericSpellcasting"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Scribe Scroll",
+          "at_level": 4,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Cloistered Cleric ~ Diminished Spellcasting",
+          "at_level": 1,
+          "description": "You choose only one domain from your deity's list of domains, and your number of non-domain spells per day for each spell level is one less than normal (for example, a 4th-level cloistered cleric has three cantrips, two 1st-level spells, one 1st-level domain spell, one 2nd-level spell, and one 2nd-level domain spell). If this reduces the number of spells per day for that level to 0, you gain only the bonus spells you would be entitled to based on your Wisdom score for that level, plus your domain spell for that level.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Cloistered Cleric ~ Breadth of Knowledge",
+          "at_level": 1,
+          "description": "You gain a +%1 bonus on Knowledge skill checks and can make Knowledge checks untrained.|BreadthOfKnowledgeBonus",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Cloistered Cleric ~ Well-Read",
+          "at_level": 2,
+          "description": "You gain a +2 bonus on skill checks, caster level checks, and saving throws if such rolls pertain to mundane or magical glyphs, runes, scrolls, symbols, and other writings.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Cloistered Cleric ~ Verbal Instruction",
+          "at_level": 3,
+          "description": "You can use the aid another action to assist %1 allies within 30 feet on a skill or ability check. The ally must be able to hear and understand your instructions. If all allies are not engaged in the same task, using this ability is a full-round action rather than a standard action.|VerbalInstructionAllies",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Cleric Archetype ~ Separatist",
+      "subject": "Cleric",
+      "archetype_name": "Separatist",
+      "description": "A radical cleric, unsatisfied with the orthodoxy of her deity's teachings, forges her own path of defiant divine expression. Though most members of her faith would call her a separatist or heretic, she continues to receive spells from her deity. Charismatic separatists may develop a large following of like-minded believers and eventually found a splinter church of their deity - and they are just as likely to be the cause of a holy civil war as the branches of the religion fight to determine which is the true faith. A cleric who does not serve a deity cannot take the separatist archetype.",
+      "source_page": "p.32",
+      "replaces": [
+        "ClericWeaponProficiency",
+        "ClericDomains"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Separatist ~ Forbidden Rites",
+          "at_level": 1,
+          "description": "You select one domain from your deity's domain list, and a second domain that is not on your deity's domain list. This second domain cannot be an alignment domain that doesn't match your or your deity's alignment. For example, a lawful good separatist cleric of a neutral good deity cannot choose the Chaos or Evil domain with this ability, but can select the Lawful domain even though her deity isn't lawful. Granted powers from your second domain function as if your level, Wisdom, and Charisma were 2 lower than normal (minimum level 1) in terms of effect, DC, and uses per day. This also means you don't gain the domain's higher-level ability until 2 levels later than normal. If the second domain grants additional class skills, you gain these as normal.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Cleric Archetype ~ Theologian",
+      "subject": "Cleric",
+      "archetype_name": "Theologian",
+      "description": "A theologian is an expert on one particular area of her religion. She is so focused on that area that she eschews the broader sweep of her deity's dogma and focuses intensely upon that aspect of it, embodying its power in all she does. Theologians tend to be more zealous than other clerics, and many crusades are started by theologians.",
+      "source_page": "p.32",
+      "replaces": [
+        "ClericDomains"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Theologian ~ Focused Domain",
+          "at_level": 1,
+          "description": "You choose only one domain from your deity's portfolio rather than the normal two domains. All level-dependent effects of the granted powers from your domain function as if you were two cleric levels higher than your actual cleric level. This does not allow you to gain domain-granted powers earlier than normal. You can prepare domain spells using your non-domain slots. You cannot use her spontaneous casting ability on domain spells, even if they are prepared in non-domain slots. In all other respects, this works like and replaces the standard cleric domain ability.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Theologian ~ Domain Secret",
+          "at_level": 5,
+          "description": "You choose %1 domain spells. Those spells becomes permanently modified with one of the following metamagic feats: Bouncing Spell, Disruptive Spell, Ectoplasmic Spell, Enlarge Spell, Extend Spell, Focused Spell, Intensified Spell, Silent Spell, Still Spell. This metamagic feat does not increase the level of the spell. Once chosen, this modification cannot be changed. You need not have the metamagic feat to apply it to a spell using this ability. You cannot modify the same spell more than once.|DomainSecrets",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Cleric Archetype ~ Undead Lord",
+      "subject": "Cleric",
+      "archetype_name": "Undead Lord",
+      "description": "An undead lord is a cleric focused on using necromancy to control undead. Her flock is the walking dead and her choir the keening spirits of the damned. This unliving congregation is the manifestation of her unceasing love affair with death.",
+      "source_page": "p.32",
+      "replaces": [
+        "ClericDomains"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Command Undead",
+          "at_level": 1,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Undead Lord ~ Corpse Companion",
+          "at_level": 1,
+          "description": "With a ritual requiring 8 hours, you can animate a single skeleton or zombie of %1 HD or less. This corpse companion automatically follows your commands and does not need to be controlled by you. You cannot have more than one corpse companion at a time. It does not count against the number of HD of undead controlled by other methods. You can use this ability to create a variant skeleton such as a bloody or burning skeleton of %2 HD or less. You can dismiss your companion as a standard action, which destroys it.|CorpseCompanionHD|CorpseCompanionHD/2",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Undead Lord ~ Unlife Healer",
+          "at_level": 8,
+          "description": "Your spells, spell-like abilities, and supernatural abilities used to heal undead are Empowered.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Druid Archetype ~ Dragon Shaman",
+      "subject": "Druid",
+      "archetype_name": "Dragon Shaman",
+      "description": "Your totem is the legendary dragon, fearsome and deadly yet cunning and wise, a creature born of pure magic and raw elemental fury, bound within a shell of fangs, claws, and scales that few dare to challenge. Though your initial focus is on dragons' mundane cousins, as your powers grow you become attuned to actual dragons.",
+      "source_page": "p.37",
+      "replaces": [
+        "DruidThousandFaces",
+        "DruidWildShape",
+        "DruidWildShape8",
+        "DruidVenomImmunity"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Dragon Shaman ~ Nature's Bond",
+          "at_level": 1,
+          "description": "If you choose an animal companion, you must select a crocodile (see page 54 of the Core Rulebook) or monitor lizard (see page 194 of the Bestiary). If you choose a domain, you must choose from the Air, Animal, Destruction, Earth, Fire, War, and Water domains.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Dragon Shaman ~ Wild Empathy",
+          "at_level": 1,
+          "description": "You can use your wild empathy ability with lizards as a full-round action with a +4 bonus.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Dragon Shaman ~ Totem Transformation",
+          "at_level": 2,
+          "description": "You may adopt an aspect of the dragon while retaining your normal form. You gain one of the following bonuses: movement (fly speed 30 feet [average], you must be 5th level to select this bonus), senses (low-light vision, +4 racial bonus to Perception), toughness (+2 natural armor bonus to AC, Endurance feat), or natural weapons (bite [1d6] and 2 claws [1d4] for a Medium shaman, +2 to CMB on grapple checks). While using totem transformation, you may speak normally and can cast speak with animals (lizards only) at will. Using this ability is a standard action at 2nd level, a move action at 7th level, and a swift action at 12th level. You can use this ability for %1 minutes per day. These minutes do not need to be consecutive, but they must be used in 1-minute increments. This is a polymorph effect and cannot be used while you are using another polymorph effect, such as wild shape.|TotemTransformationDuration",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Dragon Shaman ~ Totemic Summons",
+          "at_level": 5,
+          "description": "You may cast summon nature's ally as a standard action when summoning lizards, and summoned lizards gain %1 temporary hit points. You can apply the young template to any lizard to reduce the level of the summoning spell required by one. You can also increase the level of summoning required by one in order to apply either the advanced or the giant template, or increase it by two to apply both the advanced and giant templates.|TotemicSummonsTempHP",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Dragon Shaman ~ Wild Shape",
+          "at_level": 6,
+          "description": "Your wild shape ability functions at your druid level - 4. If you take on the form of a lizard, you instead use your unmodified druid level.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Dragon Shaman ~ Dragon Bite",
+          "at_level": 8,
+          "description": "Your bite attack (whether using totem transformation or wild shape to take the form of a lizard) deals +1d6 points of energy damage (acid, cold, electricity, or fire). You choose what kind of energy damage that you deal each time you bite.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Druid ~ Wild Shape",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Druid Wild Shape",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Druid Wild Shape Progression",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Druid Wild Shape Times",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Wild Shape",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Druid Archetype ~ Menhir Savant",
+      "subject": "Druid",
+      "archetype_name": "Menhir Savant",
+      "description": "Some druids study the paths of nature's power through the nodes and ley lines that connect standing stones and megalithic circles, learning to tap into their energies.",
+      "source_page": "p.38",
+      "replaces": [
+        "DruidNatureSense",
+        "DruidWildEmpathy",
+        "DruidWoodlandStride",
+        "DruidTracklessStep",
+        "DruidThousandFaces"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Menhir Savant ~ Spirit Sense",
+          "at_level": 1,
+          "description": "You can detect the presence of undead; fey; outsiders; and astral, ethereal, or incorporeal creatures. This ability functions like detect undead, and you detect all of these creatures rather than trying to detect one kind.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Menhir Savant ~ Place Magic",
+          "at_level": 2,
+          "description": "You can identify and tap into ley lines in different types of terrain. As a free action, you can tap into the magic of a nearby ley line and increase your caster level by +1 for 1 round. You can use this ability %1 times per day.|PlaceMagicTimes",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Menhir Savant ~ Walk the Lines",
+          "at_level": 9,
+          "description": "You can use your connection to ley lines to cast transport via plants %1 times per day.|WalkTheLinesTimes",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Menhir Savant ~ Empty Body",
+          "at_level": 13,
+          "description": "You can become ethereal as a standard action, as if using ethereal jaunt. You can remain ethereal for %1 rounds per day. These rounds do not need to be consecutive.|EmptyBodyRounds",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Druid Archetype ~ Mooncaller",
+      "subject": "Druid",
+      "archetype_name": "Mooncaller",
+      "description": "A mooncaller is bound to the subtle influences of the ever-changing moon and its endless cycles from light to dark and back again.",
+      "source_page": "p.38",
+      "replaces": [
+        "DruidWoodlandStride",
+        "DruidResistNaturesLure",
+        "DruidVenomImmunity",
+        "DruidThousandFaces"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Mooncaller ~ Resist Call of the Wild",
+          "at_level": 4,
+          "description": "You gain a +4 bonus on saving throws to avoid confusion, daze, feeblemind, and insanity effects. You also gain a +4 bonus against the exceptional, spell-like, and supernatural abilities of creatures with the shapechanger subtype.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Mooncaller ~ Purity of Body",
+          "at_level": 9,
+          "description": "You gain immunity to all diseases, including supernatural and magical diseases.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Mooncaller ~ Wolfsbane",
+          "at_level": 13,
+          "description": "You gain DR %1/silver.|MooncallerWolfsbaneDR",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Druid Archetype ~ Pack Lord",
+      "subject": "Druid",
+      "archetype_name": "Pack Lord",
+      "description": "Some druids bond with many animal companions rather than just one, achieving a level of communion rare even in druidic circles and leading their pack brothers and pack sisters with total authority.",
+      "source_page": "p.38",
+      "replaces": [
+        "DruidNatureBond",
+        "DruidWildShape6"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Pack Lord ~ Pack Bond",
+          "at_level": 1,
+          "description": "You may not select a domain and must choose an animal companion. You gain a +2 bonus on wild empathy and Handle Animal checks made regarding your animal companion. You may have more than one animal companion, but you must divide up your effective druid level between your companions to determine the abilities of each companion. Each time your druid level increases, you must decide how to allocate the increase among your animal companions (including the option of adding a new 1st-level companion). Once a druid level is allocated to a particular companion, it cannot be redistributed while that companion is in your service (you must release the companion or wait until the companion dies to allocate its levels to another companion, which you can do the next time you prepare spells). The share spells animal companion ability only applies to one animal companion at a time - you cannot use it to cast a one-target spell and have it affect all of your animal companions.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Pack Lord ~ Improved Empathic Link",
+          "at_level": 6,
+          "description": "You gain an empathic link with all of your animal companions. This functions like an empathic link with a familiar. In addition, as a swift action you can shift your perception to one of your companions, allowing you to experience what it sees, hears, and so on. You can maintain this connection as long as you like (as long as the companion is within 1 mile) and end it as a free action. You can only use this ability on one companion at a time, and cannot see, hear, or smell with your own body while maintaining this connection.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Druid Archetype ~ Reincarnated Druid",
+      "subject": "Druid",
+      "archetype_name": "Reincarnated Druid",
+      "description": "Spun off into the endless circle of life, an incarnate druid is an embodiment of nature's eternal renewal. She lives many lives and wanders the world devoid of attachments, a stranger to all yet one with all life.",
+      "source_page": "p.39",
+      "replaces": [
+        "DruidWoodlandStride",
+        "DruidResistNaturesLure",
+        "DruidVenomImmunity",
+        "DruidTimelessBody"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Reincarnated Druid ~ Mysterious Stranger",
+          "at_level": 2,
+          "description": "You add %1 to the DC of Sense Motive, Diplomacy, and Knowledge checks to learn about you.|MysteriousStrangerBonus",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Reincarnated Druid ~ Resist Death's Touch",
+          "at_level": 4,
+          "description": "You gain a +4 bonus on saving throws against death effects, energy drain, and necromancy effects, and on stabilization checks when dying.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Reincarnated Druid ~ Many Lives",
+          "at_level": 5,
+          "description": "If you are killed, you may automatically reincarnate (as the spell) 1 day later.  You appear in a safe location within 1 mile of your previous body. At will for the next 7 days, you can sense the presence of your remains as if using locate object as a spell-like ability. If you are killed during these 7 days, you remain dead and do not reincarnate. The many lives ability does not function you are slain by a death effect.  You cannot be raised from the dead orresurrected, though you can be reincarnated.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Reincarnated Druid ~ Cheat Death",
+          "at_level": 9,
+          "description": "Once per day you may reroll a save against a death effect, energy drain, or necromancy effect before the result of the roll is revealed, or reroll a failed stabilization check while dying.  You must taket the result of the second roll, even if it is worse than the original roll.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Reincarnated Druid ~ Tongue of the Sun and Moon",
+          "at_level": 15,
+          "description": "You can speak with any living creature.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Druid Archetype ~ Saurian Shaman",
+      "subject": "Druid",
+      "archetype_name": "Saurian Shaman",
+      "description": "A shaman with this focus calls upon the primeval dinosaur, the archaic terror that lingers as a hungering, atavistic stranger at the fringes of the ecosystem, a destroyer and despoiler whose coming other animals dread.",
+      "source_page": "p.39",
+      "replaces": [
+        "DruidThousandFaces",
+        "DruidWildShape",
+        "DruidVenomImmunity"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Druid ~ Wild Shape",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Druid Wild Shape",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Druid Wild Shape Progression",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Druid Wild Shape Times",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Wild Shape",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Saurian Shaman ~ Wild Empathy",
+          "at_level": 1,
+          "description": "You can use your wild empathy ability with dinosaurs and reptiles as a full-round action with a +4 bonus.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Saurian Shaman ~ Totem Transformation",
+          "at_level": 2,
+          "description": "You may adopt an aspect of the saurian while retaining your normal form. You gain one of the following bonuses: movement (+10 enhancement bonus to land speed), scales (+2 natural armor bonus to AC), senses (low-light vision, scent), or natural weapons (bite [1d6], 2 claws [1d4] for a Medium druid, rake, +2 CMB to grapple). While using totem transformation, you may speak normally and can cast speak with animals (reptiles and dinosaurs only) at will. Using this ability is a standard action at 2nd level, a move action at 7th level, and a swift action at 12th level. You can use this ability for %1 minutes per day. These minutes do not need to be consecutive, but they must be used in 1-minute increments. This is a polymorph effect and cannot be used while you are using another polymorph effect, such as wild shape.|TotemTransformationDuration",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Saurian Shaman ~ Totemic Summons",
+          "at_level": 5,
+          "description": "You may cast summon nature's ally as a standard action when summoning reptiles and dinosaurs, and those summoned creatures gain %1 temporary hit points. You can apply the young template to any reptile or dinosaur to reduce the level of the summoning spell required by one. You can also increase the level of summoning required by one in order to apply either the advanced or the giant template, or increase it by two to apply both the advanced and giant templates.|TotemicSummonsTempHP",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Saurian Shaman ~ Wild Shape",
+          "at_level": 6,
+          "description": "Your wild shape ability functions at your druid level - 2. If you take on the form of a reptile or dinosaur, you instead use your druid level +2.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Saurian Shaman ~ Nature Bond",
+          "at_level": 1,
+          "description": "If you choose an animal companion, you must select a dinosaur. If you choose a domain, you must choose from the Animal, Destruction, Strength, and War domains.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Druid Archetype ~ Shark Shaman",
+      "subject": "Druid",
+      "archetype_name": "Shark Shaman",
+      "description": "Some druids emulate the deadly shark, a remorseless hunter that marine dwellers dread. Like a true shark, a shark shaman leaves blood and fear in her wake.",
+      "source_page": "p.40",
+      "replaces": [
+        "DruidThousandFaces",
+        "DruidWildShape",
+        "DruidVenomImmunity"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Druid ~ Wild Shape",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Druid Wild Shape",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Druid Wild Shape Progression",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Druid Wild Shape Times",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shaman Wild Shape",
+          "at_level": 6,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shark Shaman ~ Wild Empathy",
+          "at_level": 1,
+          "description": "You can use your wild empathy ability with fish as a full-round action with a +4 bonus.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shark Shaman ~ Totem Transformation",
+          "at_level": 2,
+          "description": "You may adopt an aspect of the shark while retaining your normal form. You gain one of the following bonuses: movement (can breathe water, swim speed 30 feet), senses (scent 30 feet, scent 90 feet in water), natural weapons (bite [1d6 for a Medium shaman), or shark skin (+2 natural armor, creatures grappling the shaman take 1 point of slashing damage per round of grapple). While using totem transformation, you may speak normally and can cast speak with animals (fish only) at will. Using this ability is a standard action at 2nd level, a move action at 7th level, and a swift action at 12th level. You can use this ability for %1 minutes per day. These minutes do not need to be consecutive, but they must be used in 1-minute increments. This is a polymorph effect and cannot be used while you are using another polymorph effect, such as wild shape.|TotemTransformationDuration",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shark Shaman ~ Totemic Summons",
+          "at_level": 5,
+          "description": "You may use summon nature's ally I to summon a stingray (Bestiary 2) and summon nature's ally II to summon a manta ray (Bestiary 2).  You may cast summon nature's ally as a standard action when summoning rays and sharks, and summoned rays and sharks gain %1 temporary hit points. This ability otherwise functions as the dragon shaman's totemic summons ability.|TotemicSummonsTempHP",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shark Shaman ~ Wild Shape",
+          "at_level": 6,
+          "description": "Your wild shape ability functions at your druid level - 2. If you take on the form of a shark, you instead use your druid level +2.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Shark Shaman ~ Nature Bond",
+          "at_level": 1,
+          "description": "If you choose an animal companion, you must select a shark. If you choose a domain, you must choose from the Animal, Death, War, and Water domains.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Druid Archetype ~ Storm Druid",
+      "subject": "Druid",
+      "archetype_name": "Storm Druid",
+      "description": "While most druids focus their attention upon the rich earth and the bounty of nature that springs forth from it, the storm druid's eyes have ever been cast to the skies and the endless expanse of blue, channeling the most raw and untamed aspects of nature.",
+      "source_page": "p.40",
+      "replaces": [
+        "DruidSpontaneousCasting",
+        "DruidWoodlandStride",
+        "DruidTracklessStep",
+        "DruidResistNaturesLure",
+        "DruidVenomImmunity",
+        "DruidThousandFaces"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Storm Druid ~ Spontaneous Domain Casting",
+          "at_level": 1,
+          "description": "You can channel stored spell energy into domain spells that you have not prepared ahead of time. You can \"lose\" a prepared spell in order to cast any domain spell of the same level or lower.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Storm Druid ~ Nature's Bond",
+          "at_level": 1,
+          "description": "You may not choose an animal companion. You must choose the Air or Weather domain, or the Cloud, Storm, or Wind subdomain.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Storm Druid ~ Windwalker",
+          "at_level": 2,
+          "description": "The penalties from natural or magical wind effects (see page 439 of the Core Rulebook) are treated as one step less severe for you.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Storm Druid ~ Stormvoice",
+          "at_level": 3,
+          "description": "Your voice can magically carry over howling winds and peals of thunder. Whenever a Perception check is needed to hear your voice, the DC is reduced by %1.|StormVoiceReduction",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Storm Druid ~ Eyes of the Storm",
+          "at_level": 4,
+          "description": "You can see through %1 feet of magical fog, mist, gas, wind, rain, or similar inclement weather conditions, ignoring any concealment it might grant.|EyesOfTheStormRange",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Storm Druid ~ Windlord",
+          "at_level": 9,
+          "description": "You can select another domain or subdomain from those available to you through your nature bond.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Storm Druid ~ Storm Lord",
+          "at_level": 13,
+          "description": "You are unaffected by natural and magical wind effects. You also become immune to deafness and gain +2 bonus on saving throws against sonic effects.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Inquisitor Archetype ~ Exorcist",
+      "subject": "Inquisitor",
+      "archetype_name": "Exorcist",
+      "description": "Some inquisitors, as they learn more about the threat of possession and the machinations of the planes, task themselves to expel possessing spirits and conniving outsiders from the world whenever possible. Eventually they learn the secret of the verdicts of exorcism, exile, and anathema.",
+      "source_page": "p.44",
+      "replaces": [
+        "InquisitorSecondJudgment",
+        "InquisitorThirdJudgment",
+        "InquisitorSlayer",
+        "InquisitorTrueJudgment"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Exorcist ~ Verdict of Exorcism",
+          "at_level": 8,
+          "description": "While using judgment, you can unleash the verdict of exorcism on a creature. When you do, your judgment ends, but the creature is dazed for 1 round (Will DC %1 negates); if the creature is possessed, the possessing entity must succeed at a Will saving throw (DC %1), or be exorcised and never again allowed in that same body.|VerdictOfExorcismDC",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Exorcist ~ Verdict of Exile",
+          "at_level": 16,
+          "description": "While using judgment, you can unleash the verdict of exile on a creature. When you do, your judgment ends, but the creature subject to that judgment is dazed for 1 round (Will DC %1 negates); if the creature is possessed or an outsider, the possessing entity or outsider is affected by dismissal (Will negates).|VerdictOfExileDC",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Exorcist ~ Closed Mind",
+          "at_level": 17,
+          "description": "You are immune to compulsion effects and possession attempts (including magic jar).",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Exorcist ~ Verdict of Anathema",
+          "at_level": 20,
+          "description": "While using judgment, you can unleash the verdict of anathema on your enemies. When you do, your judgment ends, and all enemy creatures within 10 feet are affected by your verdict of exorcism.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Inquisitor Archetype ~ Heretic",
+      "subject": "Inquisitor",
+      "archetype_name": "Heretic",
+      "description": "While all inquisitors hunt the enemies of the faith, sometimes, either through political maneuvering by her enemies or an unyielding tenacity that breaks her faith's basic tenets, an inquisitor can find herself a heretic. Still unyielding in her cause, these heretics are accustomed to using guile and deception to hide themselves and their activities while they continue to hunt their enemies.",
+      "source_page": "p.45",
+      "replaces": [
+        "InquisitorMonsterLore"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Judgment ~ Escape",
+          "at_level": 1,
+          "description": "Each time you hit an opponent with a melee or ranged attack while using this judgment, you can use a move action attempt to create a diversion to hide (see the Stealth skill).",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Heretic ~ Lore of Escape",
+          "at_level": 1,
+          "description": "You use every trick you know to escape those now pusuing you.  You add your Wisdom modifier on Bluff and Stealth skill checks in addition to the normal ability score modifiers.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Heretic ~ Hide Tracks",
+          "at_level": 1,
+          "description": "You are adept at hiding your tracks.  Creatures attempting to track you take a -5 penalty on rolls to find or follow your tracks.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Inquisitor Archetype ~ Infiltrator",
+      "subject": "Inquisitor",
+      "archetype_name": "Infiltrator",
+      "description": "This inquisitor uses guile and deception to blend in among the enemies of the faith rather than confronting them head-on.",
+      "source_page": "p.45",
+      "replaces": [
+        "InquisitorSternGaze",
+        "InquisitorMonsterLore",
+        "InquisitorTrack",
+        "InquisitorDiscernLies"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Infiltrator ~ Misdirection",
+          "at_level": 1,
+          "description": "Each day when you prepares spells, you may choose an alignment. You detect as that alignment as if you had used misdirection on a creature with that alignment (this does not change any divination results about her other than her alignment).",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Infiltrator ~ Guileful Lore",
+          "at_level": 1,
+          "description": "Your will is bent toward subterfuge and deception.  You add +%1 on Bluff and Diplomacy skill checks in addition to the normal ability score modifiers.|WIS",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Infiltrator ~ Forbidden Lore",
+          "at_level": 1,
+          "description": "While other inquisitors learned to track unbelievers, you learn how to cast their spells. You can cast spells of an alignment opposed to you or your deity (ignoring the restriction in the Chaotic, Evil, Good, and Lawful Spells class ability).",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Infiltrator ~ Necessary Lies",
+          "at_level": 1,
+          "description": "You add +%1 on saving throws against abilities that detect lies or reveal or force the truth, such as detect lies and zone of truth.|NecessaryLiesBonus",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Inquisitor Archetype ~ Preacher",
+      "subject": "Inquisitor",
+      "archetype_name": "Preacher",
+      "description": "Some inquisitors wander the land to spread the true word of their faith. Often they come into conflict with those hostile to their teachings or to the preacher's need to help those who cannot help themselves. The leaders of evil or aggressive religions send these preachers into new territories to win converts and hopefully allies. Often, they start uprisings against powers hostile to their religion, or defend a group of honest believers from the depredations of the unfaithful.",
+      "source_page": "p.46",
+      "replaces": [
+        "InquisitorSoloTactics"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Preacher ~ Determination",
+          "at_level": 3,
+          "description": "You are a person of few words on the battlefield, but those words hold great power and authority. You can use this ability to create one of the following effects %1/day. Each is a free action to use. Aggression: You may reroll an attack roll that you just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll.  Defense: When you would be hit by a melee or ranged attack, as an immediate action you may add a +4 insight bonus to your Armor Class against that attack, and if this makes your AC higher than the opponent's attack roll, the attack misses.  Warning: When your ally within line of sight would be hit by a melee or ranged attack, you may call out a warning to that ally, and the attacker must reroll the attack and use the results of the second roll. The ally must be able to hear you and must not be helpless for this ability to have any effect.  Whenever you could select a bonus teamwork feat (at 3rd, 6th, 9th, 12th, 15th, and 18th level), you can instead choose to increase your number of uses per day of this ability by one.|DeterminationTimes",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Inquisitor Archetype ~ Sin Eater",
+      "subject": "Inquisitor",
+      "archetype_name": "Sin Eater",
+      "description": "There is a sect of inquisitors in some religions that believes it is not enough to hunt the enemies of the church - one must also devour those enemies' sins. More benign versions of the practice believe that sin, or evil, is taken out of the world when a sin is devoured, denying the enemy's soul to the enemy's god and purifying the world of its taint. Followers of malevolent churches believe that consuming the sins of good folk not only corrupts the enemy soul to keep it from the celestial planes, but also taints the souls of those who witness the sin-eating or the corpse of its victim. Consuming sins empowers the sin eater, at least for a time.",
+      "source_page": "p.46",
+      "replaces": [
+        "InquisitorDomain",
+        "InquisitorTeamworkFeat6",
+        "InquisitorExploitWeakness"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Sin Eater ~ Eat Sin",
+          "at_level": 1,
+          "description": "As a free action, when you kill an enemy, you may eat the sins of that enemy by spending 1 minute adjacent to its corpse. This provokes attacks of opportunity. You can rush this ritual, performing it as a full-round action that provokes attacks of opportunity, but you only gain half the normal benefit (see below). Eating the enemy's sins heals you %1d8+%2 hit points of damage. The enemy must have been killed by you within the last hour, and it must have had at least %3 Hit Dice. You can use this ability once for each enemy you kill. This ability has no effect on mindless creatures or those with Intelligence 2 or less.  In some faiths, this \"eating\" is a purely symbolic act, while in others, the inquisitor must eat a small amount of food and water as part of the ritual. A few extreme faiths actually require the inquisitor to eat some of the body of the slain enemy.|EatSinDice|EatSinBonus|EatSinMinHD",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Sin Eater ~ Speak with Dead",
+          "at_level": 6,
+          "description": "When you eat an enemy's sins, within 10 minutes of doing so, you can ask the remnants of the enemy's soul questions as if using speak with dead, with a caster level of %1.  You do not need the enemy's corpse to use this ability (you can eat sin, move away from the corpse, then use speak with dead), though the soul gets a saving throw just as a corpse would.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Sin Eater ~ Burden of Sin",
+          "at_level": 14,
+          "description": "You may spend a full-round action to transfer one harmful affliction, condition, or spell effect from another creature to yourself (this includes curses, possessions, and permanent effects such as petrification, or any condition that break enchantment can end or reverse). The effect to be transferred is chosen by you and affects you as if you were the original target, continuing its duration (if any) and preventing any further effect on the original bearer. For example, you could transfer a lethal disease to yourself, or petrify yourself to restore a petrified comrade. You can use this ability as often as desired, even using it multiple times on the same creature.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Monk Archetype ~ Qinggong Monk Abundant Step",
+      "subject": "Monk",
+      "archetype_name": "Qinggong Monk Abundant Step",
+      "description": "Swap Abundant Step for a ki power.",
+      "source_page": "p.51",
+      "replaces": [
+        "MonkAbundantStep"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Monk Archetype ~ Qinggong Monk Diamond Body",
+      "subject": "Monk",
+      "archetype_name": "Qinggong Monk Diamond Body",
+      "description": "Swap Diamond Body for a ki power.",
+      "source_page": "p.51",
+      "replaces": [
+        "MonkDiamondBody"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Monk Archetype ~ Qinggong Monk Diamond Soul",
+      "subject": "Monk",
+      "archetype_name": "Qinggong Monk Diamond Soul",
+      "description": "Swap Diamond Soul for a ki power.",
+      "source_page": "p.51",
+      "replaces": [
+        "MonkDiamondSoul"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Monk Archetype ~ Qinggong Monk Empty Body",
+      "subject": "Monk",
+      "archetype_name": "Qinggong Monk Empty Body",
+      "description": "Swap Empty Body for a ki power.",
+      "source_page": "p.51",
+      "replaces": [
+        "MonkEmptyBody"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Monk Archetype ~ Qinggong Monk High Jump",
+      "subject": "Monk",
+      "archetype_name": "Qinggong Monk High Jump",
+      "description": "Swap High Jump for a ki power.",
+      "source_page": "p.51",
+      "replaces": [
+        "MonkHighJump"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Monk Archetype ~ Qinggong Monk Perfect Self",
+      "subject": "Monk",
+      "archetype_name": "Qinggong Monk Perfect Self",
+      "description": "Swap Perfect Self for a ki power.",
+      "source_page": "p.51",
+      "replaces": [
+        "MonkPerfectSelf"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Monk Archetype ~ Qinggong Monk Quivering Palm",
+      "subject": "Monk",
+      "archetype_name": "Qinggong Monk Quivering Palm",
+      "description": "Swap Quivering Palm for a ki power.",
+      "source_page": "p.51",
+      "replaces": [
+        "MonkQuiveringPalm"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Monk Archetype ~ Qinggong Monk Slow Fall",
+      "subject": "Monk",
+      "archetype_name": "Qinggong Monk Slow Fall",
+      "description": "Swap Slow Fall for a ki power.",
+      "source_page": "p.51",
+      "replaces": [
+        "MonkSlowFall"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Monk Archetype ~ Qinggong Monk Timeless Body",
+      "subject": "Monk",
+      "archetype_name": "Qinggong Monk Timeless Body",
+      "description": "Swap Timeless Body for a ki power.",
+      "source_page": "p.51",
+      "replaces": [
+        "MonkTimelessBody"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon",
+      "subject": "Monk",
+      "archetype_name": "Qinggong Monk Tongue of the Sun and Moon",
+      "description": "Swap Tongue of the Sun and Moon for a ki power.",
+      "source_page": "p.51",
+      "replaces": [
+        "MonkTongueOfTheSunAndMoon"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Monk Archetype ~ Qinggong Monk Wholeness of Body",
+      "subject": "Monk",
+      "archetype_name": "Qinggong Monk Wholeness of Body",
+      "description": "Swap Wholeness of Body for a ki power.",
+      "source_page": "p.51",
+      "replaces": [
+        "MonkWholenessOfBody"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Monk Archetype ~ Vow Monk",
+      "subject": "Monk",
+      "archetype_name": "Vow Monk",
+      "description": "You can take vows to increase your ki pool.",
+      "source_page": "p.50",
+      "replaces": [
+        "MonkStillMind"
+      ],
+      "grants": []
+    },
+    {
+      "key": "Oracle Archetype ~ Dual-Cursed Oracle",
+      "subject": "Oracle",
+      "archetype_name": "Dual-Cursed Oracle",
+      "description": "Though doubly-inflicted with supernatural or physical hindrances, a dual-cursed oracle can manipulate fortune and gains greater insight into her mystery.",
+      "source_page": "p.58",
+      "replaces": [
+        "OracleMysterySkills",
+        "OracleMysterySpell2",
+        "OracleMysterySpell4",
+        "OracleMysterySpell6"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Dual-Cursed Oracle ~ Second Curse",
+          "at_level": 1,
+          "description": "You must choose two curses at 1st level. One of these curses (oracle's choice) never changes its abilities as you gain levels; for example, an oracle with clouded vision never gains darkvision 60 feet, blindsense, or blindsight. The other curse comes with its normal benefits.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Dual-Cursed Oracle ~ Extra Revelations",
+          "at_level": 5,
+          "description": "You gain a new revelation at 5th level and 13th level.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Oracle Archetype ~ Enlightened Philosopher",
+      "subject": "Oracle",
+      "archetype_name": "Enlightened Philosopher",
+      "description": "The enlightened philosopher seeks enlightenment through compassion, moderation, and humility.",
+      "source_page": "p.58",
+      "replaces": [
+        "OracleMysterySkills",
+        "OracleMysterySpell4",
+        "OracleMysterySpell6",
+        "OracleMysterySpell8",
+        "OracleMysterySpell10",
+        "OracleMysterySpell12",
+        "OracleMysterySpell14",
+        "OracleMysterySpell16",
+        "OracleMysterySpell18",
+        "OracleRevelation7",
+        "OracleFinalRevelation"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Lore Mystery ~ Mental Acuity",
+          "at_level": 7,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Enlightened Philosopher ~ Final Revelation",
+          "at_level": 20,
+          "description": "You achieve true enlightenment and become one with the universe. You receive a +%1 bonus on all saving throws. You become immune to confusion, exhaustion, fatigue, nausea, and sickened effects. You can take 20 on all Knowledge skill checks. Should you die, you are reborn 3 days later as a living example of the summoning of your chosen philosophy (treat as the reincarnate spell).|EnlightenedPhilosopherFinalRevelationBonus",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Oracle Archetype ~ Planar Oracle",
+      "subject": "Oracle",
+      "archetype_name": "Planar Oracle",
+      "description": "A planar oracle has an affinity with one of the Outer Planes.",
+      "source_page": "p.59",
+      "replaces": [
+        "OracleMysterySpell2",
+        "OracleMysterySpell4",
+        "OracleMysterySpell6",
+        "OracleMysterySpell8",
+        "OracleMysterySpell10",
+        "OracleMysterySpell12",
+        "OracleMysterySpell14",
+        "OracleMysterySpell16",
+        "OracleMysterySpell18",
+        "OracleRevelation3",
+        "OracleFinalRevelation"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Planar Oracle ~ Revelations",
+          "at_level": 1,
+          "description": "Choose an outer plane with which you have affinity.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Planar Oracle ~ Final Revelation",
+          "at_level": 20,
+          "description": "You become an extraplanar creature. Choose one outer plane, such as Heaven or the Abyss. You gain superficial physical characteristics as appropriate to natives of your chosen outer plane (see the Pathfinder RPG Bestiary). For example, if your chosen plane is Heaven, you gain angelic features such as a halo and metallic skin. This change does not alter your Hit Dice, hit points, saving throws, skill points, class skills, or proficiencies. Your type changes to \"outsider (extraplanar),\" except on your associated plane, where your type is \"outsider (native).\" In addition, you gain immunity to your associated energy type and gain damage reduction 10/magic. Unlike other outsiders, you can still be brought back from the dead as if you were a member of your previous creature type.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Oracle Archetype ~ Possessed Oracle",
+      "subject": "Oracle",
+      "archetype_name": "Possessed Oracle",
+      "description": "Some oracles are possessed by spirits, demons, or similar beings.",
+      "source_page": "p.59",
+      "replaces": [
+        "OracleMysterySpell2",
+        "OracleMysterySpell4",
+        "OracleMysterySpell6",
+        "OracleMysterySpell8",
+        "OracleMysterySpell10",
+        "OracleMysterySpell12",
+        "OracleMysterySpell16",
+        "OracleRevelation1"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Possessed Oracle ~ Two Minds",
+          "at_level": 1,
+          "description": "You gain a +2 bonus on Will saves against enchantment spells or effects.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Oracle Archetype ~ Seer",
+      "subject": "Oracle",
+      "archetype_name": "Seer",
+      "description": "While all oracles possess some ability at divination, the seer is a true prophet, able to see things as they really are, or will be.",
+      "source_page": "p.59",
+      "replaces": [
+        "OracleMysterySpell4",
+        "OracleMysterySpell6",
+        "OracleMysterySpell8",
+        "OracleMysterySpell10",
+        "OracleMysterySpell12",
+        "OracleMysterySpell14",
+        "OracleMysterySpell16",
+        "OracleMysterySpell18",
+        "OracleRevelation1",
+        "OracleRevelation3"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Nature Mystery ~ Natural Divination",
+          "at_level": 1,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Seer ~ Gift of Prophecy",
+          "at_level": 3,
+          "description": "Once per day, you can enter a trance to gain a glimpse of the future. This trance lasts for 1 minute, which must be uninterrupted and during which you can take no other actions.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Paladin Archetype ~ Oath against Corruption",
+      "subject": "Paladin",
+      "archetype_name": "Oath against Corruption",
+      "description": "When you take this oath, you become a hunter of aberrations, protecting the common people from these bizarre threats.",
+      "source_page": "p.60",
+      "replaces": [
+        "PaladinAuraOfCourage",
+        "PaladinAuraOfJustice",
+        "PaladinHolyChampion"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Oath against Corruption ~ Aura of Purity",
+          "at_level": 3,
+          "description": "You gain a +4 sacred bonus on saves against spells and effects from creatures of the aberration type. Allies within 10 feet gain a +1 sacred bonus on these saves. This ability functions only while you are conscious, not if you are unconscious or dead.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against Corruption ~ Cleansing Flame",
+          "at_level": 11,
+          "description": "You may expend two uses of your smite evil ability to ignite your weapon with a cleansing blue flame for 1 minute. This flame sheds light as a torch. Aberrations within 20 feet of the flame take a -4 penalty on attack rolls against you and your allies, and your allies within 20 feet of the flame gain a +2 sacred bonus on saving throws against spells and effects from aberrations.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against Corruption ~ Cast into the Void",
+          "at_level": 20,
+          "description": "You become a conduit for the power of your god. Your DR increases to 10/evil. Whenever you use smite evil and successfully strike an aberration, the creature must make a Will save (DC %1) or be banished to oblivion. This ability does not kill the creature, but it is sent to a remote place, such as deep underground or far into space (if it is a creature native to space), and cannot return under its own power for at least 100 years. Whenever the paladin channels positive energy or uses lay on hands to heal a creature, she heals the maximum possible amount.|CastIntoTheVoidDC",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against Corruption ~ Code of Conduct",
+          "at_level": 1,
+          "description": "Hunt aberrations and do not allow them to roam freely or harm others. Destroy them if you can, or banish them if you cannot.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Paladin Archetype ~ Oath against Fiends",
+      "subject": "Paladin",
+      "archetype_name": "Oath against Fiends",
+      "description": "You are constantly on the lookout for malicious fiendish insurgence into the world, and face it with swift and unwavering defiance.",
+      "source_page": "p.61",
+      "replaces": [
+        "PaladinAuraOfResolve",
+        "PaladinMercy9"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Oath against Fiends ~ Anchoring Aura",
+          "at_level": 8,
+          "description": "Your aura hampers extradimensional travel by evil outsiders. The aura extends 20 feet from you. Evil outsiders attempting to use abilities such as dimension door, plane shift, or teleport to leave or enter the aura must succeed at a Will save (DC %1); failure means the ability does not function, as if the outsider were affected by dimensional anchor. The aura functions only while the paladin is conscious, not if she is unconscious or dead. Alternatively, as an immediate action, the paladin can expend one use of her smite evil ability to target an evil outsider within 30 feet with dimensional anchor. A targeted dimensional anchor persists even if the paladin is unconscious or dead.|AnchoringAuraDC",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against Fiends ~ Holy Vessel",
+          "at_level": 9,
+          "description": "If your divine bond is with a weapon, you can also use your divine bond to augment your armor or shield with enhancement bonuses, or add any of the following armor or shield properties: bashing, fortification, and spell resistance. Adding these properties consumes an amount of bonus equal to the property's cost (see Tables 15-4 and 15-5 in the Core Rulebook). You can divide your bonuses from the divine bond ability among your weapon, armor, and shield as you sees fit. This ability has no effect for a paladin whose divine bond is with a mount.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against Fiends ~ Code of Conduct",
+          "at_level": 1,
+          "description": "Never suffer an evil outsider to live if it is in your power to destroy it. Banish fiends you cannot kill. Purge the evil from those possessed by fiends.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Paladin Archetype ~ Oath against Savagery",
+      "subject": "Paladin",
+      "archetype_name": "Oath against Savagery",
+      "description": "You are a champion of order, pledging to battle the hordes of goblinoids, orcs, hostile barbarians, and similar savages that nip at the heels of civilization, as well as those who gnaw on society from within, such as thieves' and assassins' guilds.",
+      "source_page": "p.61",
+      "replaces": [
+        "PaladinDivineGrace",
+        "PaladinAuraOfJustice"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Oath against Savagery ~ Holy Reach",
+          "at_level": 2,
+          "description": "You can expend one use of your smite evil ability to extend your natural reach by 5 feet for 1 minute. This does not stack with the Lunge feat.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against Savagery ~ Hordebreaker",
+          "at_level": 11,
+          "description": "When you hit an evil humanoid with an attack of opportunity, you deal an additional 1d6 points of damage. When using holy reach, you may make %1 additional attacks of opportunity per round. This increase stacks with similar increases from other sources such as Combat Reflexes.|HordebreakerAttacks",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against Savagery ~ Code of Conduct",
+          "at_level": 1,
+          "description": "Always heed the call of a community in danger from savages. Be the first in line to defend a settlement and the last to retreat.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Paladin Archetype ~ Oath against Undeath",
+      "subject": "Paladin",
+      "archetype_name": "Oath against Undeath",
+      "description": "You vow to restore the natural state of death to any animate corpse you encounter, and destroy the undead energy in the process.",
+      "source_page": "p.61",
+      "replaces": [
+        "PaladinDetectEvil",
+        "PaladinMercy3",
+        "PaladinMercy9",
+        "PaladinAuraOfResolve",
+        "PaladinAuraOfJustice"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Oath against Undeath ~ Detect Undead",
+          "at_level": 1,
+          "description": "This ability works like the standard paladin ability to detect evil, except as detect undead instead of detect evil.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against Undeath ~ Ghost Touch Aura",
+          "at_level": 3,
+          "description": "Your armor is treated as if it had the ghost touch armor property. This does not affect the cost or effect of any other abilities of the armor.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against Undeath ~ Aura of Life",
+          "at_level": 8,
+          "description": "You gain a +4 morale bonus on saves against attacks that grant negative levels and saves to overcome negative levels. Each ally within 10 feet of you gains a +2 morale bonus on these saves. This ability functions only while you are conscious, not if you are unconscious or dead.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against Undeath ~ Superior Channeler",
+          "at_level": 11,
+          "description": "You can channel positive energy to harm undead by expending a single usage of your lay on hands ability instead of two.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against Undeath ~ Code of Conduct",
+          "at_level": 1,
+          "description": "Destroy all undead. Put to rest the poor souls turned against their will. Prevent the taint of undeath from spreading to the newly dead, blessing or burning the corpses as necessary.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Paladin Archetype ~ Oath against the Wyrm",
+      "subject": "Paladin",
+      "archetype_name": "Oath against the Wyrm",
+      "description": "You swear to protect others against the predation of dragonkind.",
+      "source_page": "p.62",
+      "replaces": [
+        "PaladinChannelPositiveEnergy",
+        "PaladinDivineBond",
+        "PaladinHolyChampion"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Oath against the Wyrm ~ Breath Evasion",
+          "at_level": 4,
+          "description": "You gain evasion, but only against the breath weapons of creatures with the dragon type.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against the Wyrm ~ Divine Bond",
+          "at_level": 5,
+          "description": "This works like the paladin's normal divine bond ability, except as follows. If your bond is with a weapon, you cannot use that ability to add the brilliant energy, disruption, or merciful weapon properties, but you can add the bane weapon property (but only against dragons). If your bond is with your steed, the steed gains the paladin's aura-based immunities and your aura does not affect allies.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against the Wyrm ~ Dragon-Slaying Strike",
+          "at_level": 20,
+          "description": "You become a conduit of holy power.  Your DR increases to 10/evil. Whenever you use smite evil and successfully strikes a dragon, the dragon is also subject to a single-target holy word (caster level %1). After the banishment effect and the damage from the attack are resolved, the smite immediately ends. In addition, whenever you use lay on hands to heal a creature, you heal the maximum possible amount.|DragonSlayingStrikeCL",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath against the Wyrm ~ Code of Conduct",
+          "at_level": 1,
+          "description": "Slay evil dragons, as well as other dangerous dragons whether or not they are evil. Prevent the bloodlines of other creatures from being corrupted with draconic power. Protect the innocent against the predation of dragons.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Paladin Archetype ~ Oath of Charity",
+      "subject": "Paladin",
+      "archetype_name": "Oath of Charity",
+      "description": "You dedicate your life to protecting those who can't protect themselves and giving to those who are in need.",
+      "source_page": "p.62",
+      "replaces": [
+        "PaladinLayOnHands",
+        "PaladinDivineBond"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Oath of Charity ~ Charitable Hands",
+          "at_level": 2,
+          "description": "You heal 50%% less when you use lay on hands on yourself, but 50%% more than the normal amount when you use it to heal others. Using lay on hands to harm undead deals the normal amount of damage.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath of Charity ~ Charitable Mercy",
+          "at_level": 5,
+          "description": "You are more flexible with your mercies than other paladins. At the start of each day, you can select your mercies anew from the list of available mercies.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath of Charity ~ Code of Conduct",
+          "at_level": 1,
+          "description": "Always offer help to good creatures who need it. Always offer help to the poor and destitute. (In settlements, this help is often handled by donating to charitable religious organizations, rather than the paladin being required to dole out coppers to every beggar in the street.)",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Paladin Archetype ~ Oath of Chastity",
+      "subject": "Paladin",
+      "archetype_name": "Oath of Chastity",
+      "description": "You prove your purity by way of your action and your abstinence from romantic activities.",
+      "source_page": "p.62",
+      "replaces": [
+        "PaladinDivineGrace",
+        "PaladinAuraOfResolve"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Oath of Chastity ~ Pure of Mind",
+          "at_level": 2,
+          "description": "You gain a +4 sacred bonus on saves against charm effects and figments, and gain a +%1 bonus on Will saving throws.|PureOfMindBonus",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath of Chastity ~ Pure of Body",
+          "at_level": 8,
+          "description": "You havea 50%% chance to turn any critical hit or sneak attack against you into a normal hit, as if you were wearing fortification armor.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath of Chastity ~ Code of Conduct",
+          "at_level": 1,
+          "description": "Never engage in a romantic relationship or a sexual act.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Paladin Archetype ~ Oath of Loyalty",
+      "subject": "Paladin",
+      "archetype_name": "Oath of Loyalty",
+      "description": "Your word is a promise, a sacred bond, and also greater power in the cause of law and good.",
+      "source_page": "p.63",
+      "replaces": [
+        "PaladinSmiteEvil"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Oath of Loyalty ~ Loyal Oath",
+          "at_level": 1,
+          "description": "As a swift action, you can choose a willing creature within line of sight as the target of your loyal oath. When you are adjacent to the target of your loyal oath, you grant the target a +%1 sacred bonus on saving throws and to Armor Class. The loyal oath lasts 1 minute, or until you dismiss it (a free action) or discharge it (see below), whichever comes first. If the target is struck by an enemy and you are adjacent to that enemy, as an immediate action you may make a single melee attack against that enemy; making this attack ends the loyal oath. You may use your loyal oath %2/day.|LoyalOathBonus|LoyalOathTimes",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath of Loyalty ~ Loyal Guardian",
+          "at_level": 8,
+          "description": "Whenever the target of your loyal oath is hit with a melee or ranged attack, if you are adjacent to the target, you can spend an immediate action to have the attack automatically hit you instead of the intended target. This ends the loyal oath.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath of Loyalty ~ Code of Conduct",
+          "at_level": 1,
+          "description": "Keep all promises. Never make an oath or promise lightly. Never go back on an oath.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Paladin Archetype ~ Oath of Vengeance",
+      "subject": "Paladin",
+      "archetype_name": "Oath of Vengeance",
+      "description": "You are always on the hunt for those who have perpetrated evil, and are the instrument of Heaven's most definitive and implacable judgment.",
+      "source_page": "p.63",
+      "replaces": [
+        "PaladinChannelPositiveEnergy",
+        "PaladinAuraOfJustice"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Oath of Vengeance ~ Channel Wrath",
+          "at_level": 4,
+          "description": "You can spend two uses of your lay on hands ability to gain an extra use of smite evil that day. This ability has no effect for a paladin who does not have the smite evil ability.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath of Vengeance ~ Powerful Justice",
+          "at_level": 11,
+          "description": "You may spend one use of your smite evil ability to grant your allies within 10 feet the ability to smite evil, except they only gain your bonus to damage, not your smite's attack bonus or ability to bypass DR.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Oath of Vengeance ~ Code of Conduct",
+          "at_level": 1,
+          "description": "Never let lesser evils distract you from your pursuit of just vengeance.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Ranger Archetype ~ Trapper",
+      "subject": "Ranger",
+      "archetype_name": "Trapper",
+      "description": "A trapper is a ranger who focuses exclusively on traps, rather than learning conventional magic.",
+      "source_page": "p.65",
+      "replaces": [
+        "RangerSpells"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Trapper ~ Trapfinding",
+          "at_level": 1,
+          "description": "A trapper adds 1/2 her ranger level on Perception skill checks made to locate traps and on Disable Device skill checks (minimum +1). A trapper can use Disable Device to disarm magic traps.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Trapper ~ Trap",
+          "at_level": 5,
+          "description": "You can use ranger traps %1/day, DC %2 for Perception (to notice), Disable Device (to disable), and saving throws (to avoid).|TrapTimes|TrapDC",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Trapper ~ Launch Trap",
+          "at_level": 10,
+          "description": "You can affix a magical ranger trap to an arrow, crossbow bolt, or thrown weapon, allowing you to set the trap remotely or use it as a  direct attack. Attaching the trap to the projectile is part of the full-round action of creating a new trap. The trapped projectile is fired or thrown in the normal manner. If fired at a square, the trap is treated as if you had set the trap in that square, except the DC is 5 lower than normal. If fired at a creature, the target takes damage from the ranged weapon and is treated as if it had triggered the trap (saving throw applies, if any). The attack has a maximum range of 60 feet, and range increments apply to the attack roll. The duration of the trapped projectile starts from when it is created, not from when it is used.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "No Spellcasting ~ Ranger",
+          "at_level": 1,
+          "description": null,
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Summoner Archetype ~ Broodmaster",
+      "subject": "Summoner",
+      "archetype_name": "Broodmaster",
+      "description": "A broodmaster forges a link with multiple smaller eidolons that make up his brood.",
+      "source_page": "p.78",
+      "replaces": [
+        "SummonerLifeLink",
+        "SummonerLifeBond",
+        "SummonerMergeForms"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Broodmaster ~ Eidolon Brood",
+          "at_level": 2,
+          "description": "You summon two Small eidolons to your side, each less powerful than the single eidolon of a standard summoner.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Broodmaster ~ Brood Link",
+          "at_level": 2,
+          "description": "You form a close bond with your eidolons. This ability works like the standard summoner life link ability, except you can only sacrifice hit points to prevent damage to one eidolon in the brood at a time. If two or more eidolons in the brood take enough damage to send them back to their home plane, you can only sacrifice hit points to prevent damage to one of them.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Broodmaster ~ Larger Brood",
+          "at_level": 8,
+          "description": "At 8th level, you can spend 4 evolution points from the evolution pool for the large evolution; unlike with other evolutions, you spend these 4 points before assigning evolution points to your individual eidolons (for an 8th-level broodmaster with 11 evolution points, This leaves 7 evolution points to distribute among the eidolons). This allows you to summon two Medium eidolons, four Small eidolons, or one Medium eidolon and two Small eidolons. At 13th level, if you has purchased the large evolution for your brood, you can spend an additional 6 evolution points from the evolution pool for the huge evolution, distributing the remaining points among your eidolons. This allows him to call two Large eidolons, four Medium eidolons, eight Small eidolons, or any similar combination in which two smaller eidolons count as one eidolon of one size larger.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Broodmaster ~ Brood Bond",
+          "at_level": 14,
+          "description": "At 14th level, your life becomes linked to your brood. This functions as the life bond ability, except you can only transfer damage to one eidolon in the brood at a time. If that eidolon takes enough damage to send it back to its home plane, all excess damage remains with you, killing you.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Broodmaster ~ Merge Forms",
+          "at_level": 16,
+          "description": "You can only merge with one eidolon in the brood at a time.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Summoner Archetype ~ Evolutionist",
+      "subject": "Summoner",
+      "archetype_name": "Evolutionist",
+      "description": "An evolutionist possesses greater power over his eidolon's form, and is able to evolve his eidolon and its abilities to meet any challenge or face any threat as it comes up, seemingly on a whim.",
+      "source_page": "p.79",
+      "replaces": [
+        "SummonerMakersCall",
+        "SummonerTransposition",
+        "SummonerGreaterShieldAlly"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Evolutionist ~ Mutate Eidolon",
+          "at_level": 6,
+          "description": "You can change your eidolon's evolutions as if you had gained a level. To mutate your eidolon, you must perform an arcane ritual that requires 24 hours of uninterrupted concentration and costs %1 gp in material components.|classlevel(\"Summoner\")*200",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Evolutionist ~ Evolve Base Form",
+          "at_level": 8,
+          "description": "Whenever you gain a level, you can change your eidolon's base form to a new base form. Once chosen, this base form is set until you gain another summoner level.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Evolutionist ~ Transmogrify",
+          "at_level": 12,
+          "description": "You can cast transmogrify as a spell-like ability once per day without the need for a material component. This ability has a casting time of 1 minute.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Summoner Archetype ~ Master Summoner",
+      "subject": "Summoner",
+      "archetype_name": "Master Summoner",
+      "description": "A master summoner sacrifices the power of his eidolon in favor of summoning a plethora of otherworldly creatures to aid him.",
+      "source_page": "p.80",
+      "replaces": [
+        "SummonerShieldAlly",
+        "SummonerGreaterShieldAlly",
+        "SummonerBondSenses",
+        "SummonerSummonMonster"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Master Summoner ~ Lesser Eidolon",
+          "at_level": 1,
+          "description": "You possess the ability to summon a powerful outsider called an eidolon. You always summon an aspect of the same creature. Your eidolon has your alignment and can speak all of your languages. Your eidolon is treated as a summoned creature, except that it is not sent back to its home plane until reduced to a number of negative hit points equal to or greater than its Constitution score. In addition, due to its tie to you, your eidolon can touch and attack creatures warded by protection from evil and similar effects that prevent contact with summoned creatures. You can summon your eidolon in a ritual that takes 1 minute to perform. When summoned in this way, your eidolon's hit points are unchanged from the last time it was summoned. The only exception to this is if your eidolon was slain, in which case it returns with half its normal hit points. Your eidolon remains until dismissed (a standard action). If your eidolon is sent back to its home plane due to damage, it cannot be summoned again until the following day. Your eidolon cannot be sent back to its home plane by means of dispel magic, but spells such as dismissal and banishment work normally.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Master Summoner ~ Summoning Mastery",
+          "at_level": 1,
+          "description": "You can cast Summon Monster %1 as a spell-like ability %2 times per day as a standard action and the creatures remain for %3 minutes (instead of %3 rounds).  You can use this ability when his eidolon is summoned. Only one summon monster spell may be in effect while the eidolon is summoned. If your eidolon is not summoned, the number of creatures that can be summoned with this ability is only limited by its uses per day.|SummonMonsterLvl|SummonMonsterTimes|SummonMonsterDuration",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Summoner ~ Shield Ally",
+          "at_level": 12,
+          "description": null,
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Witch Archetype ~ Beast-Bonded",
+      "subject": "Witch",
+      "archetype_name": "Beast-Bonded",
+      "description": "While all witches are intimately tied to their familiars, a beast-bonded witch's craft focuses specifically on her familiar bond and developing the relationship with her patron through her familiar.",
+      "source_page": "p.83",
+      "replaces": [
+        "WitchHex4",
+        "WitchHex8",
+        "WitchHex10"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Beast-Bonded ~ Transfer Feats",
+          "at_level": 1,
+          "description": "Whenever you are capable of learning a new feat, you may choose to instead have your familiar learn the feat as a bonus feat. The familiar must meet the prerequisites for any feats that it learns this way. If your familiar is lost or dies, you can reclaim the feat slots and select new feats for yourself, or apply the slots toward your new familiar.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Beast-Bonded ~ Enhanced Familiar",
+          "at_level": 4,
+          "description": "Your connection with your familiar strengthens. For the purposes of determining your familiar's powers and abilities, you treat your familiar as if you were one level higher than your actual witch level.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Beast-Bonded ~ Familiar Form",
+          "at_level": 8,
+          "description": "You may take the shape of your familiar (or a giant version of your familiar or a similar kind of animal) as if using beast shape II. For example, a witch with a rat familiar can turn into a Tiny rat, Small dire rat, or a larger rodent; one with a cat familiar can turn into a Tiny cat or a Large feline such as a tiger or lion; one with a monkey familiar can turn into a Tiny monkey or a Large gorilla, and so on. You can remain in animal form for %1 minutes per day.|FamiliarFormDuration",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Beast-Bonded ~ Twin Soul",
+          "at_level": 10,
+          "description": "If you or your familiar is gravely injured or about to die, the soul of the dying one immediately transfers to the other's body. The two souls share the surviving body peaceably, can communicate freely, and both retain their ability to think and reason. The host may allow the guest soul to take over the body temporarily or reclaim it as a move action. They can persist in this state indefinitely, or the guest can return to its own body (if available) by touch, transfer into a suitable vessel (such as a clone), or take over another body as if using magic jar (with no receptacle).",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Witch Archetype ~ Gravewalker",
+      "subject": "Witch",
+      "archetype_name": "Gravewalker",
+      "description": "Having much in common with necromancers, the gravewalker is obsessed with the occult manipulations of the dead, particularly mindless undead such as zombies. Unlike the creations of standard necromancers, a gravewalker's creations remain forever tied to her will, and she can produce vile apparitions of tremendous power.",
+      "source_page": "p.84",
+      "replaces": [
+        "WitchPatronSpell4",
+        "WitchPatronSpell6",
+        "WitchPatronSpell12",
+        "WitchPatronSpell14",
+        "WitchPatronSpell16",
+        "WitchFamiliar",
+        "WitchHex1",
+        "WitchHex4",
+        "WitchHex8"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Gravewalker ~ Spell Poppet",
+          "at_level": 1,
+          "description": "You carry around a gristly, inanimate poppet stitched from human skin and stuffed with shards of bone, fingernails, and grave dirt. Your spells come from the will of evil spirits residing in the poppet, and its ability to hold spells functions in a manner identical to the way a witch's spells are granted by her familiar. You must commune with your poppet each day to prepare your spells and cannot prepare spells that are not stored in the poppet.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Gravewalker ~ Aura of Desecration",
+          "at_level": 1,
+          "description": "You can create a %1-foot-radius aura of evil power. This aura increases the DC of channeled negative energy by +1 and the turn resistance of undead by +1.|AuraOfDesecrationRadius",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Gravewalker Bonus Spells",
+          "at_level": 1,
+          "description": null,
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Gravewalker ~ Deliver Touch Spells",
+          "at_level": 3,
+          "description": "You can use your poppet to deliver touch spells. After casting a touch spell, as a full-round action, you can designate a target and stab a pin into your poppet, delivering the spell as a ranged touch attack. The target must be within range of your aura of desecration ability.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Gravewalker ~ Bonethrall",
+          "at_level": 4,
+          "description": "You can take control of an undead creature within your aura of desecration by forcing your will upon it (Will negates, using your hex DC). If it fails the save, the creature falls under your control as if you had used command undead (once control is established, the undead remain controlled even if outside the witch's aura). Intelligent undead receive a new saving throw each day to resist your command. The witch can control up to %1 HD of undead creatures. If an undead creature is under the control of another creature, you must make an opposed Charisma check whenever your orders conflict with that creature's.|BonethrallHD",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Gravewalker ~ Possess Undead",
+          "at_level": 8,
+          "description": "You may take direct control of one of your undead minions within your aura of desecration, as if using magic jar; your poppet acts as the soul receptacle for this ability. The minion gets no saving throw against this ability.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Witch Archetype ~ Hedge Witch",
+      "subject": "Witch",
+      "archetype_name": "Hedge Witch",
+      "description": "Among witches, there are those who devote themselves to the care of others and restrict their practices to the healing arts. They often take the place of clerics in rural communities and may wander the countryside servicing the needs of several small communities.",
+      "source_page": "p.84",
+      "replaces": [
+        "WitchHex4",
+        "WitchHex8"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Hedge Witch ~ Spontaneous Healing",
+          "at_level": 4,
+          "description": "You can channel stored spell energy into healing spells that you did not prepare ahead of time. You can 'lose' any prepared spell that is not an orison in order to cast any cure spell of the same spell level or lower, even if you don't know that cure spell.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Hedge Witch ~ Empathic Healing",
+          "at_level": 8,
+          "description": "You can minister to a diseased or poisoned target, redirecting the affliction into yourself. For a poisoned target, you must tend to him as a standard action; he makes his next saving throw against the poison as normal, but you suffer the effects of the failed save instead of the poisoned creature. For a diseased target, you must tend to the sick person for an hour; he makes his next saving throw against the disease as normal, but you suffer the effects of the failed save instead of the diseased creature. You do not actually become poisoned or diseased (and are not contagious and do not need to be cured), but suffer the effects of the affliction as if you had been. You normally use this ability to extend the life of someone near death, giving him time to recover. This ability has no effect if you are immune to disease or poison.",
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Witch Archetype ~ Sea Witch",
+      "subject": "Witch",
+      "archetype_name": "Sea Witch",
+      "description": "A sea witch's affinities are tied to the vast oceans and the rolling waves. Her magic concerns the moon, tides, water, and winds, and she is most at peace when she is upon or near the sea.",
+      "source_page": "p.85",
+      "replaces": [
+        "WitchPatronSpell2",
+        "WitchPatronSpell4",
+        "WitchPatronSpell6",
+        "WitchPatronSpell8",
+        "WitchPatronSpell10",
+        "WitchPatronSpell12",
+        "WitchPatronSpell14",
+        "WitchPatronSpell16",
+        "WitchPatronSpell18",
+        "WitchHex1"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Sea Witch ~ Know Direction",
+          "at_level": 1,
+          "description": "So long as you are near a sizable body of water (at least a lake with a diameter of 1 mile or more), you may cast know direction at will as a spelllike ability.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Sea Witch ~ Sea Creature Empathy",
+          "at_level": 1,
+          "description": "You can influence the attitude of water-dwelling animals and animals that live along coasts and shores, including birds, as if using wild empathy. You use your witch level as your druid level for this ability. If you have wild empathy from another class, your witch levels stack with the other class's levels to determine your wild empathy bonus for these kinds of creatures.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Sea Witch Bonus Spells",
+          "at_level": 1,
+          "description": null,
+          "benefit": null
+        }
+      ]
+    },
+    {
+      "key": "Wizard Archetype ~ Scrollmaster",
+      "subject": "Wizard",
+      "archetype_name": "Scrollmaster",
+      "description": "To some wizards, a scroll is not just a written form of a spell, it is a physical weapon meant to be used in combat like a sword or a shield. These strange wizards enter battle armed with scrolls, often one in each in each hand, practicing combat techniques resembling some monk martial arts.",
+      "source_page": "p.89",
+      "replaces": [
+        "WizardArcaneBond",
+        "WizardFeat10"
+      ],
+      "grants": [
+        {
+          "grants_feature_key": "Scrollmaster ~ Scroll Blade",
+          "at_level": 1,
+          "description": "You can wield any paper, parchment, or cloth scroll as if it were a melee weapon. In your hands, the scroll acts as a short sword with an enhancement bonus equal to 1/2 the level of the highest-level wizard spell on the scroll; a scroll with only a cantrip or 1st-level spell on it counts as a masterwork short sword. You are proficient in this weapon, and feats and abilities that affect short swords (such as Weapon Focus) apply to this weapon. You cannot wield two scrollblades at the same time. Activating this ability is a free action. A scroll blade only retains its abilities in your hands. The scroll blade has hardness 0 and hit points equal to the highest-level wizard spell on the scroll. Each successful hit by the scroll blade reduces its hit points by 1; this damage cannot be repaired, but does not affect casting from the scroll. When its hit points reach 0, the scroll is destroyed. If a scroll contains a spell with a metamagic feat, this ability uses the original spell level of the spell (a scroll of empowered fireball counts as a 3rd-level spell).",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Scrollmaster ~ Scroll Shield",
+          "at_level": 1,
+          "description": "You can wield any paper, parchment, or cloth scroll as if it were a light wooden shield. In your hands, the scroll grants a +1 shield bonus with an enhancement bonus equal to 1/2 the level of the highest-level wizard spell on the scroll; a scroll with only a cantrip or 1st-level spell counts as a masterwork light shield sword. The scroll shield has no armor check penalty, arcane spell failure chance, or maximum Dexterity bonus. The scrollmaster is considered proficient in this shield. You can use a scrollblade in one hand and a scroll shield in the other hand. Activating this ability is a free action. A scroll shield only retains its abilities in your hands. The scroll shield has hardness 0 and hit points equal to the highest-level wizard spell on the scroll. Each successful attack roll against you reduces the scroll shield's hit points by 1; this damage cannot be repaired, but does not affect casting from the scroll. When its hit points reach 0, the scroll is destroyed.",
+          "benefit": null
+        },
+        {
+          "grants_feature_key": "Scrollmaster ~ Improved Scroll Casting",
+          "at_level": 10,
+          "description": "You can cast a wizard spell from a scroll and use your own Intelligence score and relevant feats to set the DC for the spell, and can use your own caster level if it is higher than that of the scroll (similar to a caster using a staff). You must have already deciphered the writing on the scroll to use this ability.",
+          "benefit": null
+        }
+      ]
+    }
+  ]
+}

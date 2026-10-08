@@ -1,7 +1,7 @@
 //! SD-20 Epic 3, third feat category (`scope-draft.md` §1.3 work-unit
 //! order): CRB `ItemCreation` feats.
 //!
-//! Reads `rules_tables::crb::feats::feat_tables()` directly (SD-19's
+//! Reads `rules_catalog::crb::feats::feat_tables()` directly (SD-19's
 //! foundation-slice catalog, landed at `04c3d08`) — never hand-rolled,
 //! per this cycle's own brief. Mirrors `feat_prereqs/general.rs` and
 //! `feat_prereqs/combat.rs` exactly, one category over.
@@ -31,8 +31,9 @@
 //! foundation-slice change outside this cycle's scope.
 
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::RuleSetId;
-use crate::rules_core::rules_tables::crb::feats::{feat_tables, FeatCategory};
+use crate::rules_core::rules_catalog::RuleSetId;
+use crate::rules_core::rules_catalog::crb::feats::{feat_tables, FeatCategory};
+use crate::rules_core::rules_catalog::COMPILED_MODULE_CITATION;
 
 /// Result of a bounded, catalog-membership-only prerequisite check for an
 /// `ItemCreation`-category feat lookup. See this module's doc comment for
@@ -66,7 +67,7 @@ pub fn evaluate_item_creation_feat_prerequisites(
             is_eligible: false,
             failing_prerequisites: vec![format!(
                 "'{feat_id}' is not a recognized CRB Item Creation feat in the catalog \
-                 (rules_tables::crb::feats::feat_tables(), FeatCategory::ItemCreation)"
+                 ({COMPILED_MODULE_CITATION}::crb::feats::feat_tables(), FeatCategory::ItemCreation)"
             )],
         }
     }
@@ -110,7 +111,7 @@ pub fn resolve_item_creation_feat_effect(feat_id: &str) -> Option<ItemCreationFe
 }
 
 fn matches_feat_id(
-    entry: &crate::rules_core::rules_tables::crb::feats::FeatTableEntry,
+    entry: &crate::rules_core::rules_catalog::crb::feats::FeatTableEntry,
     feat_id: &str,
 ) -> bool {
     entry.key == feat_id || entry.name == feat_id

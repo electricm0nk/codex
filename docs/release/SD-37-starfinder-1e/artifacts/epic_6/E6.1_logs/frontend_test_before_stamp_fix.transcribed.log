@@ -1,0 +1,4 @@
+# Transcribed from the first `npm test` run on this card (before the stamp-line fix); that log file was overwritten by the re-run.
+FAIL src/release/buildVersionTriple.test.ts
+Error: workflow stamp "0.16.${GITHUB_RUN_NUMBER}" must reuse package.json's major.tranche (0.17) and take its build position from GITHUB_RUN_NUMBER: expected 0.17.${GITHUB_RUN_NUMBER}, got 0.16.${GITHUB_RUN_NUMBER}
+131/132 test files passed.

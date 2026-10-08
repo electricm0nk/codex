@@ -1,0 +1,12 @@
+codex verify — mode: --only, jobs: 2
+repo:  /home/ubuntu/workspace/worktrees/codex-sd37
+logs:  /tmp/codex-verify-VAwlmf
+---------------------------------------------------------------
+==> tauri-resources-tracked — every bundle.resources path has >=1 git-tracked file
+    PASS  tauri-resources-tracked  (resources_checked=7 verdict=PASS)
+---------------------------------------------------------------
+SUMMARY
+  passed:  1  tauri-resources-tracked
+
+RESULT: PASS
+logs in /tmp/codex-verify-VAwlmf

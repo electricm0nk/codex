@@ -3,6 +3,7 @@
 
 use super::ctx::{split_top_level, RecordCtx, RuleLookup};
 use super::formula::{ability, cmp_expr, convert_formula};
+use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::sheet_rule::{Applies, Cmp, DeityRef, Expr, HeldFilter, Holdable, ProfRef, RuleId, SpellKind};
 
 /// `F/D/T/S/M/L/H/G/C` -> 0..8.
@@ -382,6 +383,18 @@ fn convert_pre(ctx: &mut RecordCtx, kind: &str, body: &str) -> Result<Applies, S
             at_least(n, of)
         }
         "PRETOTALAB" => Applies::Compare { lhs: Expr::BaseAttack, op: Cmp::Gte, rhs: Expr::Const(body.trim().parse().unwrap_or(0)) },
+        // Starfinder only (Pathfinder's 16 `PREATT` rows keep their reading, so its package is
+        // unmoved). PCGen `PreAttackTester`: base attack bonus >= n. `PreHandsTester` /
+        // `PreReachTester`: the character's hands / reach >= n -- the sheet holds neither as a
+        // total, so they print as words.
+        "PREATT" | "PREHANDS" | "PREREACH" if ctx.tree.system != GameSystem::Pathfinder1e => {
+            let n: i32 = body.trim().parse().map_err(|_| format!("{kind} (operand {body} is not an integer)"))?;
+            match kind {
+                "PREATT" => Applies::Compare { lhs: Expr::BaseAttack, op: Cmp::Gte, rhs: Expr::Const(n) },
+                "PREHANDS" => situational(&format!("requires at least {n} hands")),
+                _ => situational(&format!("requires a reach of at least {n} ft.")),
+            }
+        }
         "PRECHECKBASE" => {
             let (n, items) = count_prefix(body);
             let mut of = Vec::new();
@@ -816,6 +829,13 @@ fn resolve_holdable_rule_with_option(ctx: &mut RecordCtx, category: &str, name: 
             RuleLookup::Missing => {}
         }
     }
+    // SD-37 E3.5: a Starfinder name that resolves to nothing and is product identity is never
+    // printed (a renamed record answers to its row's name through `build_index`).
+    if ctx.tree.system != GameSystem::Pathfinder1e && super::prose::pi_hit(ctx.tree.system, name).is_some() {
+        ctx.pi_term_hits.push("prerequisite name".to_string());
+        ctx.defect("unresolved-references", format!("{}: {category}|[name withheld]", ctx.record.id));
+        return (Holdable::MissingRule { pool: super::ctx::slug(category), name: "[name withheld]".to_string() }, None);
+    }
     ctx.defect("unresolved-references", format!("{}: {category}|{name}", ctx.record.id));
     (Holdable::MissingRule { pool: super::ctx::slug(category), name: name.to_string() }, None)
 }
@@ -832,6 +852,7 @@ mod tests {
     /// else `resolve_holdable_rule` never reads through `RecordCtx::resolve_rule_checked`.
     fn tree_with_parent(pairs: &[(&str, &str)]) -> PinnedTree {
         PinnedTree {
+            system: codex::rules_core::game_system::GameSystem::Pathfinder1e,
             root: PathBuf::new(),
             book_paths: BTreeMap::new(),
             source_dates: BTreeMap::new(),
@@ -848,6 +869,7 @@ mod tests {
             ability_category_parent: pairs.iter().map(|(c, p)| (c.to_string(), p.to_string())).collect(),
             ability_category_type: BTreeMap::new(),
             ability_category_pool: BTreeMap::new(),
+            armor_class_split: BTreeMap::new(),
         }
     }
 

@@ -1,0 +1,18 @@
+{
+  "data": {
+    "key": "Kyton bloodsuit (hybrid)",
+    "name": "Kyton bloodsuit (hybrid)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 70,
+    "path": "starfinder/paizo/armory/sa_profs_armor.lst",
+    "record_key": "Kyton bloodsuit (hybrid)",
+    "sha256": "48b29a3452e63c792f87a0ede85365a4e88da4edb184f9bbed2b6f5587e4eb21"
+  },
+  "unit_id": "armory:proficiency:kyton_bloodsuit_hybrid"
+}

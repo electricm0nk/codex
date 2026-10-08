@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Mystic ~ Lose Healing Touch",
+    "name": "Lose Healing Touch",
+    "type": "Mystic LV 9 Archetype Choice.Class Feature"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1578,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Mystic ~ Lose Healing Touch",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:mystic_lose_healing_touch"
+}

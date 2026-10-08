@@ -5,7 +5,7 @@
 //! Composes with two already-grounded, already-landed sources — the
 //! identical two-source idiom `barbarian.rs` established:
 //!
-//! 1. `rules_tables::crb::class_tables::class_tables()` (SD-19's
+//! 1. `rules_catalog::crb::class_tables::class_tables()` (SD-19's
 //!    foundation slice) for the class-generic BAB/save progression.
 //!    Monk's `CLASS_META` row (`ClassId::Monk`) was spot-checked before
 //!    composing with it here, per this cycle's own brief: 3/4-BAB
@@ -100,8 +100,8 @@ use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan, ResourcePoolDelta};
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::class_tables::{class_tables, ClassId, ClassTableRow};
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::crb::class_tables::{class_tables, ClassId, ClassTableRow};
+use crate::rules_core::rules_catalog::RuleSetId;
 
 const MONK_CLASS_ID: &str = "class:monk";
 const HUMAN_RACE_ID: &str = "race:human";
@@ -167,7 +167,7 @@ fn class_table_row(level: u8) -> Option<ClassTableRow> {
         .find(|row| row.class_id == ClassId::Monk && row.level == level)
 }
 
-/// Grants sourced from `rules_tables::crb::class_tables::class_tables()`
+/// Grants sourced from `rules_catalog::crb::class_tables::class_tables()`
 /// — the class-generic BAB/save progression pillars. Identical shape to
 /// `barbarian.rs`'s own `append_class_table_grants`, except Monk's three
 /// saves are ALL good (so all three columns commonly rise together,

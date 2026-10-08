@@ -14,14 +14,14 @@
 //! recognize `Oracle`, real-corpus-gated on `PCGEN_CORPUS_ROOT`,
 //! mirroring `tests/sd22_apg_class_inquisitor_resolves.rs`'s established
 //! pattern) so the hand-transcribed chassis constants in
-//! `rules_tables::apg::class_oracle` stay tied to the source record
+//! `rules_catalog::apg::class_oracle` stay tied to the source record
 //! rather than to memory.
 
 use std::fs;
 use std::path::PathBuf;
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::apg::{ApgClassId, class_chassis_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::apg::{ApgClassId, class_chassis_resolve};
 
 #[test]
 fn oracle_level_1_chassis_resolves_via_ruleset_apg() {

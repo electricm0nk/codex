@@ -1,0 +1,388 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "advanced_race_guide/companion_data/COMPANIONS",
+  "licence": {
+    "license": "OGL",
+    "book": "advanced_race_guide",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Familiar (Parrot)",
+      "name": "Familiar (Parrot)",
+      "size": "T",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 10
+        },
+        {
+          "mode": "Fly",
+          "feet": 40
+        }
+      ],
+      "reach_feet": 0,
+      "race_type": "Animal",
+      "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+      "monster_class": "Animal:1",
+      "type_segments": [
+        "Companion",
+        "Familiar"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d3"
+        }
+      ],
+      "natural_attack_damage_bonuses": [
+        {
+          "attack": "Claw",
+          "formula": "max(0,(STR/2))",
+          "conditions": []
+        }
+      ],
+      "skill_ability_diff_bonuses": [
+        {
+          "skills": [
+            "Climb",
+            "Swim"
+          ],
+          "formula": "DEX-STR"
+        }
+      ],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": -8
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": -2
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 4
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": null,
+      "source_page": "p.133",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "arg_races_companion",
+      "source_line": 9
+    },
+    {
+      "key": "Companion (Carnivorous Flower)",
+      "name": "Companion (Carnivorous Flower)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 10
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Plant",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "PlantCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": "1d6"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [],
+      "natural_armor": 2,
+      "source_page": "p.26",
+      "ability_keys": [
+        "Companion Advancement ~ Carnivorous Flower"
+      ],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "arg_races_companion",
+      "source_line": 14
+    },
+    {
+      "key": "Companion (Crawling Vine)",
+      "name": "Companion (Crawling Vine)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Climb",
+          "feet": 20
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Plant",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "PlantCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [],
+      "natural_armor": 2,
+      "source_page": "p.26",
+      "ability_keys": [
+        "Companion Advancement ~ Crawling Vine",
+        "Crawling Vine ~ Constrict"
+      ],
+      "external_ability_refs": [
+        "Grab",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "arg_races_companion",
+      "source_line": 15
+    },
+    {
+      "key": "Companion (Puffball)",
+      "name": "Companion (Puffball)",
+      "size": "S",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 20
+        },
+        {
+          "mode": "Fly",
+          "feet": 60
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Plant",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "PlantCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Thorn",
+          "damage_dice": "1d4"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [],
+      "natural_armor": 1,
+      "source_page": "p.26",
+      "ability_keys": [
+        "Puffball ~ Poison",
+        "Companion Advancement ~ Puffball"
+      ],
+      "external_ability_refs": [
+        "Flight Maneuverability"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "arg_races_companion",
+      "source_line": 16
+    },
+    {
+      "key": "Companion (Sapling Treant)",
+      "name": "Companion (Sapling Treant)",
+      "size": "M",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 30
+        },
+        {
+          "mode": "Climb",
+          "feet": 30
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Plant",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "PlantCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Slam",
+          "damage_dice": "1d6"
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [],
+      "natural_armor": 1,
+      "source_page": "p.26",
+      "ability_keys": [
+        "Companion Advancement ~ Sapling Treant",
+        "Sapling Treant ~ Double Damage"
+      ],
+      "external_ability_refs": [],
+      "external_ability_ref_conditions": [],
+      "source_file": "arg_races_companion",
+      "source_line": 17
+    },
+    {
+      "key": "Brute Steed (Camel)",
+      "name": "Brute Steed (Camel)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 10
+        },
+        {
+          "ability": "DEX",
+          "amount": 4
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "CHA",
+          "amount": -6
+        }
+      ],
+      "natural_armor": 1,
+      "source_page": "p.56",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Camel ~ Spit",
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "arg_races_companion",
+      "source_line": 29
+    },
+    {
+      "key": "Brute Steed (Horse)",
+      "name": "Brute Steed (Horse)",
+      "size": "L",
+      "speeds": [
+        {
+          "mode": "Walk",
+          "feet": 50
+        }
+      ],
+      "reach_feet": 5,
+      "race_type": "Companion",
+      "race_subtype": null,
+      "monster_class": "Companion:2",
+      "type_segments": [
+        "Companion",
+        "AnimalCompanion"
+      ],
+      "natural_attacks": [
+        {
+          "name": "Bite",
+          "damage_dice": null
+        },
+        {
+          "name": "Hoof",
+          "damage_dice": null
+        }
+      ],
+      "natural_attack_damage_bonuses": [],
+      "skill_ability_diff_bonuses": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 8
+        },
+        {
+          "ability": "CON",
+          "amount": 4
+        },
+        {
+          "ability": "INT",
+          "amount": -8
+        },
+        {
+          "ability": "WIS",
+          "amount": 2
+        },
+        {
+          "ability": "CHA",
+          "amount": -4
+        }
+      ],
+      "natural_armor": 4,
+      "source_page": "p.56",
+      "ability_keys": [],
+      "external_ability_refs": [
+        "Scent"
+      ],
+      "external_ability_ref_conditions": [],
+      "source_file": "arg_races_companion",
+      "source_line": 30
+    }
+  ]
+}

@@ -272,7 +272,7 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
     // so an ordinary "placeholder" stub marker in that file still fails.
     let is_pcgen_pxx_source_page_token = |line: &str| {
         let in_scoped_path = line.starts_with("src/bin/ingest_races.rs:")
-            || line.starts_with("src/rules_core/rules_tables/pathfinder_unchained/")
+            || line.starts_with("src/rules_core/rules_catalog/pathfinder_unchained/")
             || line.starts_with("apps/desktop/src-tauri/src/race_trait_picker.rs:");
         in_scoped_path && line.contains("p.xx")
     };

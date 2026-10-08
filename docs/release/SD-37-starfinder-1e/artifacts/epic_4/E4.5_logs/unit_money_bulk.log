@@ -1,0 +1,28 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 20 tests
+test rules_core::encumbrance::starfinder_bulk_tests::bulk_limits_are_half_the_strength_score_and_the_score ... ok
+test rules_core::encumbrance::starfinder_bulk_tests::ten_light_items_are_one_bulk_and_fractions_do_not_count ... ok
+test rules_core::encumbrance::tests::carrying_capacity_thresholds_extrapolate_beyond_strength_29 ... ok
+test rules_core::encumbrance::starfinder_bulk_tests::item_bulk_reads_a_number_light_and_a_dash ... ok
+test rules_core::money::starting_wealth_tests::each_unchained_class_starts_with_its_base_classs_wealth ... ok
+test rules_core::encumbrance::tests::carrying_capacity_thresholds_match_the_cited_table_at_known_rows ... ok
+test rules_core::money::starting_wealth_tests::every_value_is_the_dice_count_times_35_confirming_the_average_column_arithmetic ... ok
+test rules_core::money::starting_wealth_tests::matches_the_operator_cited_average_for_every_non_crb_class ... ok
+test rules_core::money::starting_wealth_tests::matches_the_operator_cited_average_for_every_other_crb_class ... ok
+test rules_core::money::starting_wealth_tests::returns_none_for_a_class_id_it_does_not_recognize ... ok
+test rules_core::money::starting_wealth_tests::matches_the_operator_cited_average_for_the_three_classes_that_reach_computed ... ok
+test rules_core::money::system_wealth_tests::starfinder_wealth_by_level_matches_table_11_5 ... ok
+test rules_core::money::system_wealth_tests::pathfinder_starting_wealth_is_the_class_table_at_level_1 ... ok
+test rules_core::money::starting_wealth_tests::converts_cleanly_to_a_starting_copper_balance_via_the_existing_conversion ... ok
+test rules_core::money::tests::copper_to_denominations_breaks_down_a_mixed_total_greedily ... ok
+test rules_core::money::tests::copper_to_denominations_handles_an_amount_under_one_silver ... ok
+test rules_core::money::tests::copper_to_denominations_handles_zero ... ok
+test rules_core::money::tests::denominations_to_copper_is_the_real_inverse_of_copper_to_denominations ... ok
+test rules_core::money::tests::denominations_to_copper_sums_an_arbitrary_mixed_breakdown_not_just_a_round_trip ... ok
+test rules_core::money::tests::gp_to_copper_converts_whole_and_fractional_gold_values ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 2803 filtered out; finished in 0.00s
+
+exit=0

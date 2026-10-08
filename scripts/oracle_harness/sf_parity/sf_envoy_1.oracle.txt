@@ -1,0 +1,44 @@
+name=sf_envoy_1
+race=Human
+class=Envoy
+level=1
+stat.STR=10
+stat.DEX=12
+stat.CON=12
+stat.INT=11
+stat.WIS=10
+stat.CHA=18
+hp=10
+stamina=7
+resolve=5
+eac=12
+kac=13
+initiative=+1
+bab=+0
+save.Fortitude=+1
+save.Reflex=+3
+save.Will=+2
+attack.melee=+0
+attack.ranged=+1
+skill.Acrobatics=1|ranks=0.0|untrained=Y
+skill.Athletics=0|ranks=0.0|untrained=Y
+skill.Bluff=8|ranks=1.0|untrained=Y
+skill.Culture=4|ranks=1.0|untrained=NO
+skill.Diplomacy=8|ranks=1.0|untrained=Y
+skill.Disguise=4|ranks=0.0|untrained=Y
+skill.Intimidate=4|ranks=0.0|untrained=Y
+skill.Perception=0|ranks=0.0|untrained=Y
+skill.Piloting=1|ranks=0.0|untrained=Y
+skill.Sense Motive=4|ranks=1.0|untrained=Y
+skill.Stealth=1|ranks=0.0|untrained=Y
+skill.Survival=0|ranks=0.0|untrained=Y
+weapon.*Laser pistol, azimuth=+1|damage=1d4|category=Non-Standard-Ranged
+weapon.Baton, tactical=+1|damage=1d4|category=OPERATIVE-Melee
+bulk=0.3 lbs.
+credits=0
+credits.spent=690 cr
+acp=+0
+abilities.feat=
+abilities.theme=Xenoseeker, THEME KNOWLEDGE
+abilities.class_feature=Envoy Improvisation, Expertise, Skill Expertise, Skill Expertise (Sense Motive)
+abilities.racial_trait=SIZE AND TYPE, BONUS FEAT, SKILLED

@@ -1,8 +1,8 @@
 // -- split from `tests` in src/rules_core/rules_tables/feats_all.rs (pcgen-touching items only) --
 mod tests {
-    use codex::rules_core::rules_tables::feats_all::*;
-    use codex::rules_core::rules_tables::RuleSetId;
-    use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feats;
+    use codex::rules_core::rules_catalog::feats_all::*;
+    use codex::rules_core::rules_catalog::RuleSetId;
+    use codex::rules_core::rules_catalog::ultimate_campaign::feat_tables as uca_feats;
     use std::collections::BTreeMap;
 
     /// UCA's 21 text-complete records surface both the corpus `DESC:`
@@ -46,7 +46,7 @@ mod tests {
                 "{key}'s joined description must carry the deferral diagnostic, not just flavor text"
             );
             assert!(
-                desc.contains("uca_feats.lst:"),
+                desc.contains("uca_feats:"),
                 "{key}'s deferral diagnostic must cite a file:line, not a vague reason"
             );
         }

@@ -7,7 +7,8 @@
 
 use super::ctx::{split_gates, RecordCtx};
 use super::formula::{convert_formula, convert_prose_formula, integer_literal, is_prose_formula};
-use codex::rules_core::pi_screening::normalized_term_hit;
+use codex::rules_core::game_system::GameSystem;
+use codex::rules_core::pi_screening::{normalized_term_hit, SF_PI_TERMS};
 use codex::rules_core::sheet_rule::{Applies, Expr, Holdable, ProseFamily, ProsePiece, ProseSegment};
 
 /// PCGen's eight entities (`EntityEncoder.java:42-49`).
@@ -136,11 +137,21 @@ pub fn scrub_editorial_markers(ctx: &mut RecordCtx, text: &str, field_name: &str
 }
 
 /// Screen one text for product identity. `Some(term)` on a hit.
-pub fn pi_hit(text: &str) -> Option<&'static str> {
+pub fn pi_hit(system: GameSystem, text: &str) -> Option<&'static str> {
     if text.contains("[redacted PI]") {
         return Some("[redacted PI]");
     }
-    normalized_term_hit(text)
+    if let Some(hit) = normalized_term_hit(text) {
+        return Some(hit);
+    }
+    // SD-37 E3.4: a Starfinder record is also screened against E0.2's Starfinder term set,
+    // with the same case-sensitive substring rule its corpus is stamped by
+    // (`pi_screening::classify_field_sf`), so a derived adjective (`Eoxian`) is caught by its
+    // root. Pathfinder's screen is unchanged.
+    match system {
+        GameSystem::Pathfinder1e => None,
+        _ => SF_PI_TERMS.iter().copied().find(|term| text.contains(term)),
+    }
 }
 
 /// Split a `%N`-template into pieces; `args[N-1]` supplies slot N. `%%` -> `%`; a lone `%`
@@ -707,7 +718,7 @@ pub fn convert_desc_like(ctx: &mut RecordCtx, family: ProseFamily, value: &str, 
     if text.trim().is_empty() {
         return Ok(None);
     }
-    if let Some(_hit) = pi_hit(&text) {
+    if let Some(_hit) = pi_hit(ctx.tree.system, &text) {
         ctx.pi_term_hits.push(field_name.to_string());
         return Ok(None);
     }
@@ -737,7 +748,7 @@ pub fn convert_positional(ctx: &mut RecordCtx, family: ProseFamily, value: &str,
     if text.trim().is_empty() || text.trim() == ".CLEAR" {
         return Ok(None);
     }
-    if let Some(_hit) = pi_hit(&text) {
+    if let Some(_hit) = pi_hit(ctx.tree.system, &text) {
         ctx.pi_term_hits.push(field_name.to_string());
         return Ok(None);
     }
@@ -835,6 +846,17 @@ pub fn expand_output_name(output_name: &str, record_name: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// SD-37 E3.4: the Starfinder screen adds E0.2's term set (substring, case-sensitive, so a
+    /// derived adjective is caught by its root); the Pathfinder screen is unchanged by it.
+    #[test]
+    fn pi_hit_screens_starfinder_terms_for_starfinder_only() {
+        assert_eq!(pi_hit(GameSystem::Starfinder1e, "an Eoxian bone blade"), Some("Eox"));
+        assert_eq!(pi_hit(GameSystem::Starfinder1e, "speaks Castrovelian"), Some("Castrovel"));
+        assert_eq!(pi_hit(GameSystem::Pathfinder1e, "an Eoxian bone blade"), None);
+        assert_eq!(pi_hit(GameSystem::Starfinder1e, "light armor"), None);
+        assert!(pi_hit(GameSystem::Pathfinder1e, "a [redacted PI] value").is_some());
+    }
 
     /// The ACG row that named the blocker (`acg_feats.lst:20`, `Befuddling Strike`): its DC
     /// argument is `CL/2+10+WIS`, `CL` has no owning class on a feat, and before this cycle

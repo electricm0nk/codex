@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Dwarf",
+    "name": "Dwarf",
+    "type": "Humanoid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 12,
+    "path": "starfinder/paizo/core/scr_races.lst",
+    "record_key": "Dwarf",
+    "sha256": "fc57615fa89dfeae8f23bf31ffe57b4d4c000cdff49c9a5d6a7193d44b869cc1"
+  },
+  "unit_id": "core:race:dwarf"
+}

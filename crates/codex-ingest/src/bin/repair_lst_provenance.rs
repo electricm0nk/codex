@@ -18,6 +18,7 @@
 //! verification is done by the gate's own tools rather than by the tool that
 //! made the claim.
 
+use codex::rules_core::game_system::{BookRegistry, GameSystem};
 use std::collections::BTreeMap;
 use std::path::PathBuf;
 
@@ -34,7 +35,7 @@ use codex_ingest::pcgen_import::cache_gen::lst_provenance_repair::{repair_book, 
 /// #   core_rulebook            82
 /// #   beastiary                 1
 /// ```
-const BOOKS: &[(&str, &str)] = &[
+const BOOKS: BookRegistry<(&str, &str)> = BookRegistry::pathfinder_only(&[
     (
         "advanced_players_guide",
         "pathfinder/paizo/roleplaying_game/advanced_players_guide",
@@ -45,7 +46,7 @@ const BOOKS: &[(&str, &str)] = &[
     // same file-vs-attribution split `equipment_gap::book_routing` documents
     // for `B1`.
     ("beastiary", "pathfinder/paizo/roleplaying_game/core_essentials"),
-];
+]);
 
 fn main() {
     let corpus_root = match std::env::var("PCGEN_CORPUS_ROOT") {
@@ -66,7 +67,7 @@ fn main() {
     let corpus_out = PathBuf::from(manifest_dir).join("data/corpus");
 
     let mut totals: BTreeMap<&str, RepairReport> = BTreeMap::new();
-    for (book_id, book_rel_dir) in BOOKS {
+    for (book_id, book_rel_dir) in BOOKS.books(GameSystem::Pathfinder1e) {
         let records_dir = corpus_out.join(book_id).join("equipment");
         if !records_dir.is_dir() {
             eprintln!("NOTE: {book_id}: no equipment records directory at {records_dir:?}; skipped");

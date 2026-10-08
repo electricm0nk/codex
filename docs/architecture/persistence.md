@@ -1,7 +1,9 @@
 # Persistence
 
 > Scope: how saved characters and campaigns are typed, stored on disk, and reached from the desktop shell.
-> Last verified: **2026-09-29 against `tranche/16` (`165cc205e7`)** — added the SD-36 F6e starter-seeds
+> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the `game_system` routing note below (`src/saved_character/` and
+> `src/campaign/` have no diff against `origin/develop`: `git diff --stat origin/develop...HEAD -- src/saved_character src/campaign` prints nothing). The rest was last verified
+> 2026-09-29 against `tranche/16`. Earlier: **2026-09-29 against `tranche/16` (`165cc205e7`)** — added the SD-36 F6e starter-seeds
 > section (`starter_seeds()` is a list, each entry with its own marker; `character_hub.rs`,
 > `stage-f6/f6e-receipt.md`). Prior pass **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** — SD-36
 > docs-truth capability pass: checked this document's claims against the fact sheet and found no
@@ -35,6 +37,10 @@ one `CharacterInput` field. `CURRENT_SAVED_CHARACTER_SCHEMA_VERSION` is `2`;
 schema_version 1 envelopes (no `game_system` line) still load, via
 `local_store::derive_legacy_game_system`, which derives a short id like
 `"pf1"` from the `content_or_rules_provenance` lineage prefix.
+The field routes a load: a Starfinder 1e character is saved with `game_system` `"starfinder-1e"` (`GameSystem::Starfinder1e.id()`), and
+`rule_system_adapter::load_saved_character_via_envelope` sends exactly that value to `StarfinderAdapter`; every other value loads through
+`Pf1Adapter` (see [desktop-app.md](./desktop-app.md) §"Rule-system adapter seam"). The store itself is system-neutral: it saves the same
+`CharacterInput` shape for both systems.
 
 `SavedCharacterRevisionKind` currently has exactly one variant,
 `Authoritative` — there is no autosave/recovery revision kind implemented yet,

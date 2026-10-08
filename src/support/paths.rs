@@ -41,6 +41,17 @@ pub fn set_data_root(root: PathBuf) -> bool {
     }
 }
 
+/// The root [`set_data_root`] installed, if any (`None` in tests, bins and dev runs).
+pub(crate) fn installed_data_root() -> Option<PathBuf> {
+    DATA_ROOT_OVERRIDE.get().cloned()
+}
+
+/// The build checkout (Cargo's compile-time `CARGO_MANIFEST_DIR`): the last fallback of every
+/// root rule, right for tests, bins and dev runs and wrong in a packaged app.
+pub(crate) fn build_checkout_root() -> PathBuf {
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+}
+
 /// The override when one is installed, else the build checkout. Pure, so the choice is testable
 /// without touching the process-wide static.
 fn resolve_root(installed: Option<&PathBuf>) -> PathBuf {

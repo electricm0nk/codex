@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Magitech ~ Dimensional braces",
+    "name": "Dimensional braces",
+    "type": "Magitech.ItemLevel_.12.All legs"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 964,
+    "path": "starfinder/paizo/armory/sa_equip.lst",
+    "record_key": "Magitech ~ Dimensional braces",
+    "sha256": "16a1e2005f35a11d8cd4257261849d989dc1785163c445080b169de86002c057"
+  },
+  "unit_id": "armory:equipment:magitech_dimensional_braces"
+}

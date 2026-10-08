@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Arcane Assailant FIGHTING STYLE ~ Rune of the Eldritch Knight",
+    "name": "Rune of the Eldritch Knight",
+    "type": "Class Feature.Arcane Assailant FIGHTING STYLE.Arcane Assailant FIGHTING STYLE LVL 1.Supernatural"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1981,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Arcane Assailant FIGHTING STYLE ~ Rune of the Eldritch Knight",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:arcane_assailant_fighting_style_rune_of_the_eldritch_knight"
+}

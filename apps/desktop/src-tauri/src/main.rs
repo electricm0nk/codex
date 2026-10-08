@@ -28,6 +28,8 @@ mod feat_catalog;
 mod authoring_workbench;
 #[cfg(test)]
 mod corpus_bundle_parity_test;
+#[cfg(test)]
+mod pf_catalog_dump_hash;
 mod companion_catalog;
 mod companion_pool_catalog;
 mod intelligent_item_catalog;
@@ -37,6 +39,14 @@ mod race_catalog;
 mod race_trait_picker;
 mod reference_library_catalog;
 mod rule_system_adapter;
+mod sf_adapter;
+mod sf_catalog;
+mod sf_choices;
+mod sf_creation;
+mod sf_drone_print;
+mod sf_level_up;
+mod sf_oracle_parity;
+mod sf_sheet_print;
 mod spell_catalog;
 mod stub_adapter;
 mod trait_picker;
@@ -184,6 +194,9 @@ fn main() {
             if let Ok(resource_dir) = app.path().resource_dir() {
                 authoring_workbench::set_app_resource_dir(resource_dir);
             }
+            // SD-37 E4a.2: the Pathfinder rules tables are a data package, read from the
+            // resolved root. Bind it before the first table read (the seed character below).
+            authoring_workbench::bind_rules_tables_package_root();
 
             // The rules crate reads its own data (sheet rules, class grants, the roster fixture)
             // through a root baked in at compile time -- the CI runner's checkout, which a user's
@@ -230,6 +243,14 @@ fn main() {
             perform_restore_previous,
             verify_relaunch_artifact,
             create_character,
+            sf_creation::preview_starfinder_character,
+            sf_creation::create_starfinder_character,
+            sf_level_up::preview_starfinder_level_up,
+            sf_level_up::level_up_starfinder_character,
+            sf_catalog::list_starfinder_catalog,
+            sf_choices::preview_starfinder_choices,
+            sf_choices::save_starfinder_choices,
+            sf_choices::list_starfinder_equipment_options,
             clone_character,
             level_up_character,
             recompute_character,

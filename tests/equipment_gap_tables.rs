@@ -14,7 +14,7 @@ use codex::rules_core::equipment_resolver::{
     equipment_catalog_row_by_key, equipment_catalog_rows, hand_authored_equipment_rows,
     EQUIPMENT_BOOK_UW,
 };
-use codex::rules_core::rules_tables::equipment_gap_tables::equipment_gap_rows;
+use codex::rules_core::rules_catalog::equipment_gap_tables::equipment_gap_rows;
 
 /// The generator's own per-book output, re-derived here from the table rather
 /// than transcribed from its stdout. Each figure is that book's

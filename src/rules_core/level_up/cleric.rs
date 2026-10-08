@@ -6,7 +6,7 @@
 //! **Deviation from Barbarian's own composition precedent, documented in
 //! full**: Barbarian's `LevelUpPlan` (`level_up/barbarian.rs`) composes
 //! its base-attack/base-save pillars from
-//! `rules_tables::crb::class_tables::class_tables()` (SD-19's
+//! `rules_catalog::crb::class_tables::class_tables()` (SD-19's
 //! class-generic BAB/save progression table), calling it "the more
 //! authoritative, class-generic source". This module does NOT do the
 //! same for Cleric, because `class_tables()`'s `CLASS_META` row for
@@ -33,7 +33,7 @@
 //! instead — a single, internally consistent, already-verified source,
 //! mirroring exactly how Barbarian sources ITS OWN class-specific pillars
 //! (the ones `class_tables()` does not carry at all) from the identical
-//! seam. `rules_tables::crb::class_tables` is not imported by this file
+//! seam. `rules_catalog::crb::class_tables` is not imported by this file
 //! at all. A future SD-19 cycle should fix `class_tables.rs`'s Cleric
 //! (and Druid) `good_saves` records; this cycle's own `LevelUpPlan` does
 //! not depend on that fix landing.
@@ -73,7 +73,7 @@
 //!
 //! `pick_from_lists` stays empty: Cleric's domain spells (which would
 //! fill the grounded domain spell slot count) have no domain-spell-list
-//! candidate catalog anywhere in `rules_tables::crb` to enumerate real
+//! candidate catalog anywhere in `rules_catalog::crb` to enumerate real
 //! candidates from — the identical "no catalog to enumerate" boundary
 //! Barbarian's Rage Power list hit, here scoped to Cleric's own
 //! choice-list feature. A documented, bounded scope note, not a blocker
@@ -83,7 +83,7 @@ use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan};
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::RuleSetId;
 
 const CLERIC_CLASS_ID: &str = "class:cleric";
 const HUMAN_RACE_ID: &str = "race:human";

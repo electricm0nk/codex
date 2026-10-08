@@ -239,7 +239,7 @@ fn convert_class(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef, dec
         let first = printed_identity(tree, &decls[group[0]]);
         let identical = group.iter().all(|&i| printed_identity(tree, &decls[i]) == first);
         let dates: Option<Vec<&String>> = group.iter().map(|&i| tree.source_dates.get(&book_of(i))).collect();
-        let variant = group.iter().any(|&i| VARIANT_LINE_BOOKS.contains(&book_of(i).as_str()));
+        let variant = group.iter().any(|&i| VARIANT_LINE_BOOKS.books(tree.system).contains(&book_of(i).as_str()));
         let newest = match (identical && !variant, dates) {
             (true, Some(d)) => {
                 let latest = d.iter().max().copied();
@@ -281,7 +281,7 @@ fn convert_class(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef, dec
         let d = &decls[i];
         let file = &tree.files[d.row.file];
         let id = option_id(&file.book, &class_slug, &d.name);
-        if pi_hit(&d.name).is_some() {
+        if pi_hit(tree.system, &d.name).is_some() {
             run.defects.entry("subclass-token-unconverted".into()).or_default().push(format!("{id}: name withheld (product identity) ({})", tree.cite(d.row)));
             continue;
         }

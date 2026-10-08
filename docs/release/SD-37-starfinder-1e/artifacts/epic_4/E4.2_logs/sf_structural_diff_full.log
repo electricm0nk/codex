@@ -1,0 +1,734 @@
+baseline normalized (stages it already carries, undone on both sides): {'F6c': 0, 'F3p': 0, 'F4pre': 0}
+== file set ==
+  rule files:  +244 -0  (+310 -0 rule ids)
+  _vars/:      +59 -0
+  _defects/:   +2 -0
+  other:       +0 -0  []
+
+== counts (baseline -> fresh) ==
+  records: 8582 -> 8582
+  converted: 8582 -> 8582
+  refused: 0 -> 0
+  rules_written: 10687 -> 10997
+  var_tables: 168 -> 227
+
+== added granted_by edges by TARGET kind ==
+  ability: 432
+  feat: 1
+  TOTAL: 433
+  added grants (total): 0
+
+== expected delta classes (named, counted, explained -- never a blanket allowance) ==
+  added granted_by edges: 433  (F1's own declared purpose -- a bare AUTO reference now resolving through its parent ability category; SS3.5 permits growth)
+  added grants: 0  (F1-2 GatedFactGrant wrapping / F1-3 WeaponSet expansion of a previously-bare selector; see grant_signature/grant_covers)
+  added _vars/ tables: 59  (condition variables an added GatedFactGrant's `when` now references, and the pool variables a D8 pick's `count` references)
+  added _defects/ files: 2
+  provenance deltas on the pinned current_class-fix record list: 0 of 30 pinned records (see structural_diff_expected_provenance_deltas.json)
+  naturalattacks suffix-fix rename: 0 of 1290 pinned old ids -> 0 of 1659 pinned new ids (net +0), plus 0 field deltas on 0 of 6 pinned same-id content-shift ids (see structural_diff_naturalattacks_renames.json -- content-preserved per file, not a genuine loss)
+  bonus_var_index comma-split fix (stage5 §1a): 0 of 35 pinned (rule id, field) record deltas -- a flattened Const/Never/bare-AbilityMod now resolving to its real multi-contribution Var (see structural_diff_bonus_var_split_record_deltas.json for the per-family mechanism and reachability)
+  F1c d2_line_split: 0 field deltas on 0 records, 0 added rule ids -- D2: a record's first line carried its own condition; the record gets a Text principal with only the record's gates and the line moves, condition intact, to a new #<suffix> sibling (see structural_diff_f1c_deltas.json)
+  F1c d4_closure_complete: 0 field deltas on 0 records, 0 added rule ids -- D4: closure_complete=true attested on a class principal whose whole closure is defect-free (sheet_rule/attest.rs) (see structural_diff_f1c_deltas.json)
+  F1c d4_pi_reclosure: 0 field deltas on 0 records, 0 added rule ids -- D4 soundness: 21 product-identity class records re-keyed from the codex-named placeholder to the class's own base row, so their continuation rows, level lines and .MOD rows convert (see structural_diff_f1c_deltas.json)
+  F1c d3_unchained_class: 0 field deltas on 0 records, 0 added rule ids -- D3: a Pathfinder Unchained class principal (TakenOnClass <base>), one per class-selection ability (see structural_diff_f1c_deltas.json)
+  F1c d6_weapon_choice: 0 field deltas on 0 records, 0 added rule ids -- D6: a CHOOSE:WEAPONPROFICIENCY option list resolved to oracle weapon names, or a pick linked to its child pool's one member (see structural_diff_f1c_deltas.json)
+  F1c f1c3_preability_bracket: 0 field deltas on 0 records, 0 added rule ids -- F1c-3: a PREABILITY `[<key>]` item no longer converts to an unholdable MissingRule alternative (see structural_diff_f1c_deltas.json)
+  F1c d7_always_held: 0 field deltas on 0 records, 0 added rule ids -- D7: always_held=true attested on the principal of a record every character holds unconditionally -- the target of an unconditional ABILITY|AUTOMATIC grant on a STAT/SAVE row (sheet_rule/always_held.rs) (see structural_diff_f1c_deltas.json)
+  F1c d8_pool_pick: 0 field deltas on 0 records, 0 added rule ids -- D8: a record that raises an ability category's POOL variable offers the pick -- offers {id: <the record>, count: Var(<pool variable>), from: Rules {pool, tags}} on its principal (sheet_rule/pool_pick.rs) (see structural_diff_f1c_deltas.json)
+  F3b2 f3b2_skill_ranks: 0 of 176 pinned field deltas on 0 records -- F3b2 (1): a class line's STARTSKILLPTS is written as the principal's StatBlock "Skill ranks per level" prose row (one added row, a plain number) (see structural_diff_f3b2_deltas.json)
+  F3b2 f3b2_closure_complete: 0 of 8 pinned field deltas on 0 records -- F3b2 (2): closure_complete=true attested on a class principal whose closure is now defect-free because its references to placeholder-keyed records resolve (see structural_diff_f3b2_deltas.json)
+  F3b2 f3b2_placeholder_key_resolved: 0 of 73 pinned field deltas on 0 records -- F3b2 (2): a reference to a product-identity record by the KEY its oracle row declares resolves (the record was indexed only under its codex-named placeholder corpus key): MissingRule -> Rule, nothing else in the field moves (see structural_diff_f3b2_deltas.json)
+  F3b2b f3b2b_undeclared_note: 0 of 829 pinned field deltas on 0 records -- F3b2b (1): provenance gains undeclared_in_pinned_tree -- the variables the record reads that no row of the pinned tree declares and that are not oracle built-in terms, read as Const(0), the oracle's own value (VariableProcessor.java:394-402); nothing else in provenance moves (see structural_diff_f3b2b_deltas.json)
+  F3b2b f3b2b_closure_complete: 0 of 9 pinned field deltas on 0 records -- F3b2b (1)(2): closure_complete=true attested on a class principal whose closure is now defect-free -- its undeclared-variable reads are the oracle's 0, not closure defects, or its twin-printing reference resolves to the newest printing (see structural_diff_f3b2b_deltas.json)
+  F3c3 f3c3_subclass_choice: 0 of 2 pinned added rule ids (content sha256 held) -- F3c3: a class's SUBCLASS lines become ONE choice sibling <class id>#subclass (offers Rules{pool: subclass, tags: [<Class> Subclass]}, count 1, print false) (see structural_diff_f3c3_deltas.json)
+  F3c3 f3c3_subclass_option: 0 of 52 pinned added rule ids (content sha256 held) -- F3c3: one subclass rule per SUBCLASS line (and its #<n> line siblings), granted by the class's choice, carrying the line's CSKILL / SUBCLASSLEVEL grants (see structural_diff_f3c3_deltas.json)
+  F3c3 pinned added granted_by edges: 53; pinned _vars/ contributions: 16; pinned _defects/ row counts: {'_defects/subclass-token-unconverted.json': 117, '_defects/subclass-superseded-reprint.json': 7}
+  F3c4b f3c4b_pool_option: 0 of 290 pinned added rule ids (content sha256 held) -- F3c4b: an ability-category pick row no inventory unit stands for becomes a pool_option rule granted by the choice that picks it (Granter::Choice), carrying its BONUS:VAR / ABILITY / PRE (see structural_diff_f3c4b_deltas.json)
+  F3c4b f3c4b_gate_term_resolves: 0 of 40 pinned field deltas on 0 records -- F3c4b: a gate term naming a pick row (or a CATEGORY-less record under its row's declared category) was MissingRule and now resolves to that Rule; nothing else in the field moves (see structural_diff_f3c4b_deltas.json)
+  F3c4b f3c4b_closure_complete: 0 of 62 pinned field deltas on 0 records -- F3c4b: closure_complete=true attested on a class principal whose closure is now defect-free (its Internal|CMB / tracker reference resolves to the .MOD-row records of that one object) (see structural_diff_f3c4b_deltas.json)
+  F3c4b replaced self-edges: 0 of 6 pinned; pinned added granted_by edges: 480; pinned _vars/ contributions: 1189; pinned _defects/ row counts: {'_defects/pool-option-id-collision.json': 1, '_defects/pool-option-unconverted.json': 2, '_defects/row-declared-category-shared.json': 1, '_defects/unresolved-references.json': 6932}
+  F3c5 f3c5_line_sibling: 0 of 3 pinned added rule ids (content sha256 held) -- F3c5: a record that now carries its Internal natural-attack helper as a NaturalAttack fact is no longer a single-line principal (CONV-02), so its one line moves, value/target/gate intact, to a #weapon<n> sibling (see structural_diff_f3c5_deltas.json)
+  F3c5 f3c5_line_split: 0 of 9 pinned field deltas on 0 records -- F3c5: that record's principal becomes a Text principal with no target, gated by a subset of the sibling's gate terms (the line's own level term moves with the line) (see structural_diff_f3c5_deltas.json)
+  F3c5 f3c5_closure_complete: 0 of 1 pinned field deltas on 0 records -- F3c5: closure_complete=true attested on a class principal whose one closure defect was an Internal natural-attack helper reference (Dragon Disciple: Internal|Bite) (see structural_diff_f3c5_deltas.json)
+  F3p f3p_option_gate: 0 of 465 pinned field deltas and 0 of 414 pinned _vars/ tables, 0 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)
+  F4pre f4pre_offer: 0 of 1733 pinned offers removed before the diff ({}) -- F4pre: a selection pool the oracle fills (BONUS:ABILITYPOOL into a TYPE-filtered child category; BONUS:DOMAIN|NUMBER) offers the pick's own count over the category's members / the domains (see structural_diff_f4pre_deltas.json)
+  F6c: 0 of 6 pinned class printings and 0 of 1 pinned withheld domain counts and 0 of 10 pinned unprinted domain records undone before the diff -- F6c: class records several books state carry the converter's newest-printing reading; a class's domain count its own DOMAIN: grants fill is no pick and prints no line, nor do the domain records only that class grants (see structural_diff_f6c_deltas.json)
+  F7b: 0 of 0 pinned field deltas on 0 records (by class: {}) -- F7b: prose formulas render as typed pieces (spell brackets print as the book's parentheses); out-of-inventory prose conditions decided as the evaluator decides them (see structural_diff_f7b_deltas.json)
+  F3c5 pinned NaturalAttack grants: 681; pinned added _vars/ tables: 2; pinned _defects/ row counts: {'_defects/unresolved-references.json': 6252, '_defects/natural-attack-helper-carries-more.json': 0, '_defects/natural-attack-helper-names-no-attack.json': 0, '_defects/natural-attack-helper-pair-shared.json': 0}
+  added rule ids: 310 (310 with no named cause)
+    character_operations_manual:pool_option:athlete_1_ability_score_choose_athlete_ability_score: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:athlete_theme_skill_acrobatics: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:athlete_theme_skill_acrobatics#bonus1: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:athlete_theme_skill_athletics: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:athlete_theme_skill_athletics#bonus1: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:guard_1_ability_score_choose_guard_ability_score: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:nanite_integrations_rebooting_nanites: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:nanite_integrations_repairing_nanites: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:nanite_integrations_surging_nanites: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:noble_scion_theme_skill_bluff: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:noble_scion_theme_skill_bluff#bonus1: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:noble_scion_theme_skill_diplomacy: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:noble_scion_theme_skill_diplomacy#bonus1: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:solarian_solar_manifestation_solar_flare: cause not yet named -- explain before treating this as expected
+    character_operations_manual:pool_option:solarian_solar_manifestation_solar_shield: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_0_level_selection_daze: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_0_level_selection_detect_affliction: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_0_level_selection_detect_magic: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_0_level_selection_fatigue: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_0_level_selection_ghost_sound: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_0_level_selection_grave_words: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_0_level_selection_psychokinetic_hand: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_0_level_selection_stabilize: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_0_level_selection_telekinetic_projectile: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_0_level_selection_telepathic_message: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_0_level_selection_token_spell: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_charm_person: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_command: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_confusion_lesser: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_detect_radiation: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_detect_thoughts: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_disguise_self: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_fear: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_identify: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_keen_senses: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_life_bubble: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_mind_link: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_mind_thrust: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_mystic_cure: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_reflecting_armor: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_remove_condition_lesser: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_share_language: cause not yet named -- explain before treating this as expected
+    core:pool_option:connection_inkling_1st_level_selection_wisp_ally: cause not yet named -- explain before treating this as expected
+    core:pool_option:enhanced_resistance_selection_acid: cause not yet named -- explain before treating this as expected
+    core:pool_option:enhanced_resistance_selection_cold: cause not yet named -- explain before treating this as expected
+    core:pool_option:enhanced_resistance_selection_electricity: cause not yet named -- explain before treating this as expected
+    core:pool_option:enhanced_resistance_selection_fire: cause not yet named -- explain before treating this as expected
+    core:pool_option:enhanced_resistance_selection_kinetic: cause not yet named -- explain before treating this as expected
+    core:pool_option:enhanced_resistance_selection_sonic: cause not yet named -- explain before treating this as expected
+    core:pool_option:improved_combat_maneuver_selection_bull_rush: cause not yet named -- explain before treating this as expected
+    core:pool_option:improved_combat_maneuver_selection_dirty_trick: cause not yet named -- explain before treating this as expected
+    core:pool_option:improved_combat_maneuver_selection_disarm: cause not yet named -- explain before treating this as expected
+    core:pool_option:improved_combat_maneuver_selection_grapple: cause not yet named -- explain before treating this as expected
+    core:pool_option:improved_combat_maneuver_selection_reposition: cause not yet named -- explain before treating this as expected
+    core:pool_option:improved_combat_maneuver_selection_sunder: cause not yet named -- explain before treating this as expected
+    core:pool_option:improved_combat_maneuver_selection_trip: cause not yet named -- explain before treating this as expected
+    core:pool_option:major_psychic_power_selection_augury: cause not yet named -- explain before treating this as expected
+    core:pool_option:major_psychic_power_selection_status: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_computers: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_engineering: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_life_science: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_mysticism: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_physical_science: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_accountant: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_actor: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_archaeologist: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_architect: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_artist: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_bounty_hunter: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_comedian: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_con_artist: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_cook: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_corporate_professional: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_counselor: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_courtesan: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_dancer: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_dockworker: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_electrician: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_farmer: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_gambler: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_general_contractor: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_herbalist: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_lab_technician: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_lawyer: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_maintenance_worker: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_manager: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_mathematician: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_mercenary: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_merchant: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_miner: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_musician: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_orator: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_philosopher: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_poet: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_politician: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_professor: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_psychologist: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_smuggler: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_video_personality: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_vidgamer: cause not yet named -- explain before treating this as expected
+    core:pool_option:master_crafter_selection_profession_writer: cause not yet named -- explain before treating this as expected
+    core:pool_option:mechanic_control_net_selection_add_another_ai: cause not yet named -- explain before treating this as expected
+    core:pool_option:mechanic_control_net_selection_add_another_ai#bonus1: cause not yet named -- explain before treating this as expected
+    core:pool_option:mechanic_control_net_selection_no_new_ai: cause not yet named -- explain before treating this as expected
+    core:pool_option:minor_psychic_power_selection_dancing_lights: cause not yet named -- explain before treating this as expected
+    core:pool_option:minor_psychic_power_selection_psychokinetic_hand: cause not yet named -- explain before treating this as expected
+    core:pool_option:minor_psychic_power_selection_telekinetic_projectile: cause not yet named -- explain before treating this as expected
+    core:pool_option:minor_psychic_power_selection_telepathic_message: cause not yet named -- explain before treating this as expected
+    core:pool_option:opening_volley_choice_choose_combat_feat: cause not yet named -- explain before treating this as expected
+    core:pool_option:opening_volley_choice_gain_opening_volley: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_charm_person: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_command: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_confusion_lesser: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_detect_radiation: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_detect_thoughts: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_disguise_self: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_fear_level_1: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_identify: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_keen_senses: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_life_bubble: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_mind_link: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_mind_thrust_level_1: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_mystic_cure_level_1: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_reflecting_armor: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_remove_condition_lesser: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_share_language: cause not yet named -- explain before treating this as expected
+    core:pool_option:priest_theme_benefit_divine_boon_wisp_ally: cause not yet named -- explain before treating this as expected
+    core:pool_option:psychic_power_selection_comprehend_languages: cause not yet named -- explain before treating this as expected
+    core:pool_option:psychic_power_selection_detect_thoughts: cause not yet named -- explain before treating this as expected
+    core:pool_option:psychic_power_selection_mind_link: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_1_fortitude_1: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_1_reflex_1: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_1_will_1: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_2_fortitude_2: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_2_reflex_2: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_2_will_2: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_3_fortitude_3: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_3_reflex_3: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_3_will_3: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_4_fortitude_4: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_4_reflex_4: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_4_will_4: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_5_fortitude_5: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_5_reflex_5: cause not yet named -- explain before treating this as expected
+    core:pool_option:ring_of_resistance_5_will_5: cause not yet named -- explain before treating this as expected
+    core:pool_option:scholar_theme_chosen_skill_life_science: cause not yet named -- explain before treating this as expected
+    core:pool_option:scholar_theme_chosen_skill_life_science#bonus1: cause not yet named -- explain before treating this as expected
+    core:pool_option:scholar_theme_chosen_skill_physical_science: cause not yet named -- explain before treating this as expected
+    core:pool_option:scholar_theme_chosen_skill_physical_science#bonus1: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_acrobatics: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_acrobatics#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_athletics: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_athletics#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_bluff: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_bluff#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_computers: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_computers#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_culture: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_culture#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_diplomacy: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_diplomacy#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_disguise: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_disguise#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_engineering: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_engineering#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_intimidate: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_intimidate#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_life_science: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_life_science#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_medicine: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_medicine#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_mysticism: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_mysticism#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_perception: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_perception#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_physical_science: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_physical_science#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_piloting: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_piloting#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_accountant: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_accountant#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_actor: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_actor#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_archaeologist: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_archaeologist#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_architect: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_architect#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_artist: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_artist#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_bounty_hunter: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_bounty_hunter#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_comedian: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_comedian#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_con_artist: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_con_artist#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_cook: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_cook#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_corporate_professional: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_corporate_professional#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_counselor: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_counselor#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_courtesan: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_courtesan#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_dancer: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_dancer#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_dockworker: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_dockworker#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_electrician: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_electrician#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_farmer: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_farmer#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_gambler: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_gambler#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_general_contractor: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_general_contractor#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_herbalist: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_herbalist#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_lab_technician: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_lab_technician#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_lawyer: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_lawyer#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_maintenance_worker: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_maintenance_worker#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_manager: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_manager#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_mathematician: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_mathematician#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_mercenary: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_mercenary#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_merchant: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_merchant#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_miner: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_miner#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_musician: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_musician#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_orator: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_orator#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_philosopher: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_philosopher#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_poet: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_poet#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_politician: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_politician#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_professor: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_professor#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_psychologist: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_psychologist#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_smuggler: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_smuggler#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_video_personality: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_video_personality#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_vidgamer: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_vidgamer#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_writer: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_profession_writer#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_sense_motive: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_sense_motive#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_sleight_of_hand: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_sleight_of_hand#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_stealth: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_stealth#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_survival: cause not yet named -- explain before treating this as expected
+    core:pool_option:skill_synergy_survival#bonus0: cause not yet named -- explain before treating this as expected
+    core:pool_option:solarian_skill_adept_solarian_skill_adept_choice: cause not yet named -- explain before treating this as expected
+    core:pool_option:solarian_solar_manifestation_armor: cause not yet named -- explain before treating this as expected
+    core:pool_option:solarian_solar_manifestation_armor#bonus1: cause not yet named -- explain before treating this as expected
+    core:pool_option:solarian_solar_manifestation_color_glows_blue: cause not yet named -- explain before treating this as expected
+    core:pool_option:solarian_solar_manifestation_color_glows_red: cause not yet named -- explain before treating this as expected
+    core:pool_option:solarian_solar_manifestation_color_glows_white: cause not yet named -- explain before treating this as expected
+    core:pool_option:solarian_solar_manifestation_color_glows_yellow: cause not yet named -- explain before treating this as expected
+    core:pool_option:solarian_solar_manifestation_color_perfect_darkness_of_a_black_hole: cause not yet named -- explain before treating this as expected
+    core:pool_option:solarian_solar_manifestation_weapon: cause not yet named -- explain before treating this as expected
+    core:pool_option:soldier_key_ability_dexterity: cause not yet named -- explain before treating this as expected
+    core:pool_option:soldier_key_ability_strength: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_0_level_selection_dancing_lights: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_0_level_selection_daze: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_0_level_selection_detect_affliction: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_0_level_selection_detect_magic: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_0_level_selection_energy_ray: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_0_level_selection_ghost_sound: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_0_level_selection_mending: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_0_level_selection_psychokinetic_hand: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_0_level_selection_telepathic_message: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_0_level_selection_token_spell: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_0_level_selection_transfer_charge: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_comprehend_languages: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_detect_radiation: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_detect_tech: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_disguise_self: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_erase: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_flight: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_grease: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_hold_portal: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_holographic_image: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_identify: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_jolting_surge: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_keen_senses: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_life_bubble: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_magic_missile: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_overheat: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_supercharge_weapon: cause not yet named -- explain before treating this as expected
+    core:pool_option:technomantic_dabbler_1st_level_selection_unseen_servant: cause not yet named -- explain before treating this as expected
+    core:pool_option:themeless_1_ability_score_choose_ability_score: cause not yet named -- explain before treating this as expected
+    core:pool_option:themeless_class_skill_choose_class_skill: cause not yet named -- explain before treating this as expected
+    near_space:pool_option:bureaucrat_1_ability_score_choose_bureaucrat_ability_score: cause not yet named -- explain before treating this as expected
+    near_space:pool_option:bureaucrat_theme_skill_life_science: cause not yet named -- explain before treating this as expected
+    near_space:pool_option:bureaucrat_theme_skill_mysticism: cause not yet named -- explain before treating this as expected
+    near_space:pool_option:bureaucrat_theme_skill_mysticism#bonus0: cause not yet named -- explain before treating this as expected
+    near_space:pool_option:bureaucrat_theme_skill_physical_science: cause not yet named -- explain before treating this as expected
+    near_space:pool_option:bureaucrat_theme_skill_profession: cause not yet named -- explain before treating this as expected
+
+unexpected field deltas: 47
+  character_operations_manual:ability:athlete_theme_benefit_theme_knowledge: offers
+  character_operations_manual:ability:athlete_theme_benefit_theme_knowledge#bonus1: offers
+  character_operations_manual:ability:guard_theme_benefit_theme_knowledge: offers
+  character_operations_manual:ability:nanite_integration: prose
+  character_operations_manual:ability:noble_scion_theme_benefit_theme_knowledge: offers
+  character_operations_manual:ability:stellar_revelation_agile_wavelengths: applies
+  character_operations_manual:ability:stellar_revelation_binary_shield_system: applies
+  character_operations_manual:ability:stellar_revelation_curving_flare: applies
+  character_operations_manual:ability:stellar_revelation_forceful_shield: applies
+  character_operations_manual:ability:stellar_revelation_gallant_rebuttal: applies
+  character_operations_manual:ability:stellar_revelation_gravity_pulse: applies
+  character_operations_manual:ability:stellar_revelation_stalwart_shield: applies
+  character_operations_manual:equipment:solarian_flare: prose
+  character_operations_manual:feat:nanite_integration: offers
+  character_operations_manual:feat:nanite_integration: prose
+  core:ability:hit_and_run_fighting_style_opening_volley: offers
+  core:ability:mechanic_class_feature_control_net: offers
+  core:ability:priest_theme_benefit_divine_boon#bonus1: offers
+  core:ability:scholar_theme_benefit_theme_knowledge: offers
+  core:ability:solarian_class_feature_skill_adept: offers
+  core:ability:solarian_class_feature_solar_manifestation: offers
+  core:ability:solarian_class_feature_solar_manifestation: prose
+  core:ability:solarian_class_feature_solar_manifestation#bonus1: offers
+  core:ability:themeless_theme_benefit_general_knowledge: offers
+  core:ability:themeless_theme_benefit_general_knowledge#bonus1: offers
+  core:class:solarian: closure_complete
+  core:equipment:ring_of_resistance_mk_1: offers
+  core:equipment:ring_of_resistance_mk_2: offers
+  core:equipment:ring_of_resistance_mk_3: offers
+  core:equipment:ring_of_resistance_mk_4: offers
+  core:equipment:ring_of_resistance_mk_5: offers
+  core:equipment:solarian_weapon: prose
+  core:feat:connection_inkling: offers
+  core:feat:connection_inkling#bonus1: offers
+  core:feat:enhanced_resistance: offers
+  core:feat:improved_combat_maneuver: offers
+  core:feat:major_psychic_power: offers
+  core:feat:master_crafter: offers
+  core:feat:master_crafter: prose
+  core:feat:minor_psychic_power: offers
+  core:feat:psychic_power: offers
+  core:feat:skill_synergy: offers
+  core:feat:technomantic_dabbler: offers
+  core:feat:technomantic_dabbler#bonus1: offers
+  core:template:class_soldier: offers
+  near_space:ability:bureaucrat_theme_benefit_theme_knowledge: offers
+  near_space:ability:bureaucrat_theme_benefit_theme_knowledge#bonus1: offers
+F3b2b pinned added granted_by edges: 11 of 11 present (see structural_diff_f3b2b_deltas.json)
+new rule ids: 310 ['character_operations_manual:pool_option:athlete_1_ability_score_choose_athlete_ability_score', 'character_operations_manual:pool_option:athlete_theme_skill_acrobatics', 'character_operations_manual:pool_option:athlete_theme_skill_acrobatics#bonus1', 'character_operations_manual:pool_option:athlete_theme_skill_athletics', 'character_operations_manual:pool_option:athlete_theme_skill_athletics#bonus1', 'character_operations_manual:pool_option:guard_1_ability_score_choose_guard_ability_score', 'character_operations_manual:pool_option:nanite_integrations_rebooting_nanites', 'character_operations_manual:pool_option:nanite_integrations_repairing_nanites', 'character_operations_manual:pool_option:nanite_integrations_surging_nanites', 'character_operations_manual:pool_option:noble_scion_theme_skill_bluff', 'character_operations_manual:pool_option:noble_scion_theme_skill_bluff#bonus1', 'character_operations_manual:pool_option:noble_scion_theme_skill_diplomacy', 'character_operations_manual:pool_option:noble_scion_theme_skill_diplomacy#bonus1', 'character_operations_manual:pool_option:solarian_solar_manifestation_solar_flare', 'character_operations_manual:pool_option:solarian_solar_manifestation_solar_shield', 'core:pool_option:connection_inkling_0_level_selection_daze', 'core:pool_option:connection_inkling_0_level_selection_detect_affliction', 'core:pool_option:connection_inkling_0_level_selection_detect_magic', 'core:pool_option:connection_inkling_0_level_selection_fatigue', 'core:pool_option:connection_inkling_0_level_selection_ghost_sound', 'core:pool_option:connection_inkling_0_level_selection_grave_words', 'core:pool_option:connection_inkling_0_level_selection_psychokinetic_hand', 'core:pool_option:connection_inkling_0_level_selection_stabilize', 'core:pool_option:connection_inkling_0_level_selection_telekinetic_projectile', 'core:pool_option:connection_inkling_0_level_selection_telepathic_message', 'core:pool_option:connection_inkling_0_level_selection_token_spell', 'core:pool_option:connection_inkling_1st_level_selection_charm_person', 'core:pool_option:connection_inkling_1st_level_selection_command', 'core:pool_option:connection_inkling_1st_level_selection_confusion_lesser', 'core:pool_option:connection_inkling_1st_level_selection_detect_radiation', 'core:pool_option:connection_inkling_1st_level_selection_detect_thoughts', 'core:pool_option:connection_inkling_1st_level_selection_disguise_self', 'core:pool_option:connection_inkling_1st_level_selection_fear', 'core:pool_option:connection_inkling_1st_level_selection_identify', 'core:pool_option:connection_inkling_1st_level_selection_keen_senses', 'core:pool_option:connection_inkling_1st_level_selection_life_bubble', 'core:pool_option:connection_inkling_1st_level_selection_mind_link', 'core:pool_option:connection_inkling_1st_level_selection_mind_thrust', 'core:pool_option:connection_inkling_1st_level_selection_mystic_cure', 'core:pool_option:connection_inkling_1st_level_selection_reflecting_armor', 'core:pool_option:connection_inkling_1st_level_selection_remove_condition_lesser', 'core:pool_option:connection_inkling_1st_level_selection_share_language', 'core:pool_option:connection_inkling_1st_level_selection_wisp_ally', 'core:pool_option:enhanced_resistance_selection_acid', 'core:pool_option:enhanced_resistance_selection_cold', 'core:pool_option:enhanced_resistance_selection_electricity', 'core:pool_option:enhanced_resistance_selection_fire', 'core:pool_option:enhanced_resistance_selection_kinetic', 'core:pool_option:enhanced_resistance_selection_sonic', 'core:pool_option:improved_combat_maneuver_selection_bull_rush', 'core:pool_option:improved_combat_maneuver_selection_dirty_trick', 'core:pool_option:improved_combat_maneuver_selection_disarm', 'core:pool_option:improved_combat_maneuver_selection_grapple', 'core:pool_option:improved_combat_maneuver_selection_reposition', 'core:pool_option:improved_combat_maneuver_selection_sunder', 'core:pool_option:improved_combat_maneuver_selection_trip', 'core:pool_option:major_psychic_power_selection_augury', 'core:pool_option:major_psychic_power_selection_status', 'core:pool_option:master_crafter_selection_computers', 'core:pool_option:master_crafter_selection_engineering', 'core:pool_option:master_crafter_selection_life_science', 'core:pool_option:master_crafter_selection_mysticism', 'core:pool_option:master_crafter_selection_physical_science', 'core:pool_option:master_crafter_selection_profession_accountant', 'core:pool_option:master_crafter_selection_profession_actor', 'core:pool_option:master_crafter_selection_profession_archaeologist', 'core:pool_option:master_crafter_selection_profession_architect', 'core:pool_option:master_crafter_selection_profession_artist', 'core:pool_option:master_crafter_selection_profession_bounty_hunter', 'core:pool_option:master_crafter_selection_profession_comedian', 'core:pool_option:master_crafter_selection_profession_con_artist', 'core:pool_option:master_crafter_selection_profession_cook', 'core:pool_option:master_crafter_selection_profession_corporate_professional', 'core:pool_option:master_crafter_selection_profession_counselor', 'core:pool_option:master_crafter_selection_profession_courtesan', 'core:pool_option:master_crafter_selection_profession_dancer', 'core:pool_option:master_crafter_selection_profession_dockworker', 'core:pool_option:master_crafter_selection_profession_electrician', 'core:pool_option:master_crafter_selection_profession_farmer', 'core:pool_option:master_crafter_selection_profession_gambler', 'core:pool_option:master_crafter_selection_profession_general_contractor', 'core:pool_option:master_crafter_selection_profession_herbalist', 'core:pool_option:master_crafter_selection_profession_lab_technician', 'core:pool_option:master_crafter_selection_profession_lawyer', 'core:pool_option:master_crafter_selection_profession_maintenance_worker', 'core:pool_option:master_crafter_selection_profession_manager', 'core:pool_option:master_crafter_selection_profession_mathematician', 'core:pool_option:master_crafter_selection_profession_mercenary', 'core:pool_option:master_crafter_selection_profession_merchant', 'core:pool_option:master_crafter_selection_profession_miner', 'core:pool_option:master_crafter_selection_profession_musician', 'core:pool_option:master_crafter_selection_profession_orator', 'core:pool_option:master_crafter_selection_profession_philosopher', 'core:pool_option:master_crafter_selection_profession_poet', 'core:pool_option:master_crafter_selection_profession_politician', 'core:pool_option:master_crafter_selection_profession_professor', 'core:pool_option:master_crafter_selection_profession_psychologist', 'core:pool_option:master_crafter_selection_profession_smuggler', 'core:pool_option:master_crafter_selection_profession_video_personality', 'core:pool_option:master_crafter_selection_profession_vidgamer', 'core:pool_option:master_crafter_selection_profession_writer', 'core:pool_option:mechanic_control_net_selection_add_another_ai', 'core:pool_option:mechanic_control_net_selection_add_another_ai#bonus1', 'core:pool_option:mechanic_control_net_selection_no_new_ai', 'core:pool_option:minor_psychic_power_selection_dancing_lights', 'core:pool_option:minor_psychic_power_selection_psychokinetic_hand', 'core:pool_option:minor_psychic_power_selection_telekinetic_projectile', 'core:pool_option:minor_psychic_power_selection_telepathic_message', 'core:pool_option:opening_volley_choice_choose_combat_feat', 'core:pool_option:opening_volley_choice_gain_opening_volley', 'core:pool_option:priest_theme_benefit_divine_boon_charm_person', 'core:pool_option:priest_theme_benefit_divine_boon_command', 'core:pool_option:priest_theme_benefit_divine_boon_confusion_lesser', 'core:pool_option:priest_theme_benefit_divine_boon_detect_radiation', 'core:pool_option:priest_theme_benefit_divine_boon_detect_thoughts', 'core:pool_option:priest_theme_benefit_divine_boon_disguise_self', 'core:pool_option:priest_theme_benefit_divine_boon_fear_level_1', 'core:pool_option:priest_theme_benefit_divine_boon_identify', 'core:pool_option:priest_theme_benefit_divine_boon_keen_senses', 'core:pool_option:priest_theme_benefit_divine_boon_life_bubble', 'core:pool_option:priest_theme_benefit_divine_boon_mind_link', 'core:pool_option:priest_theme_benefit_divine_boon_mind_thrust_level_1', 'core:pool_option:priest_theme_benefit_divine_boon_mystic_cure_level_1', 'core:pool_option:priest_theme_benefit_divine_boon_reflecting_armor', 'core:pool_option:priest_theme_benefit_divine_boon_remove_condition_lesser', 'core:pool_option:priest_theme_benefit_divine_boon_share_language', 'core:pool_option:priest_theme_benefit_divine_boon_wisp_ally', 'core:pool_option:psychic_power_selection_comprehend_languages', 'core:pool_option:psychic_power_selection_detect_thoughts', 'core:pool_option:psychic_power_selection_mind_link', 'core:pool_option:ring_of_resistance_1_fortitude_1', 'core:pool_option:ring_of_resistance_1_reflex_1', 'core:pool_option:ring_of_resistance_1_will_1', 'core:pool_option:ring_of_resistance_2_fortitude_2', 'core:pool_option:ring_of_resistance_2_reflex_2', 'core:pool_option:ring_of_resistance_2_will_2', 'core:pool_option:ring_of_resistance_3_fortitude_3', 'core:pool_option:ring_of_resistance_3_reflex_3', 'core:pool_option:ring_of_resistance_3_will_3', 'core:pool_option:ring_of_resistance_4_fortitude_4', 'core:pool_option:ring_of_resistance_4_reflex_4', 'core:pool_option:ring_of_resistance_4_will_4', 'core:pool_option:ring_of_resistance_5_fortitude_5', 'core:pool_option:ring_of_resistance_5_reflex_5', 'core:pool_option:ring_of_resistance_5_will_5', 'core:pool_option:scholar_theme_chosen_skill_life_science', 'core:pool_option:scholar_theme_chosen_skill_life_science#bonus1', 'core:pool_option:scholar_theme_chosen_skill_physical_science', 'core:pool_option:scholar_theme_chosen_skill_physical_science#bonus1', 'core:pool_option:skill_synergy_acrobatics', 'core:pool_option:skill_synergy_acrobatics#bonus0', 'core:pool_option:skill_synergy_athletics', 'core:pool_option:skill_synergy_athletics#bonus0', 'core:pool_option:skill_synergy_bluff', 'core:pool_option:skill_synergy_bluff#bonus0', 'core:pool_option:skill_synergy_computers', 'core:pool_option:skill_synergy_computers#bonus0', 'core:pool_option:skill_synergy_culture', 'core:pool_option:skill_synergy_culture#bonus0', 'core:pool_option:skill_synergy_diplomacy', 'core:pool_option:skill_synergy_diplomacy#bonus0', 'core:pool_option:skill_synergy_disguise', 'core:pool_option:skill_synergy_disguise#bonus0', 'core:pool_option:skill_synergy_engineering', 'core:pool_option:skill_synergy_engineering#bonus0', 'core:pool_option:skill_synergy_intimidate', 'core:pool_option:skill_synergy_intimidate#bonus0', 'core:pool_option:skill_synergy_life_science', 'core:pool_option:skill_synergy_life_science#bonus0', 'core:pool_option:skill_synergy_medicine', 'core:pool_option:skill_synergy_medicine#bonus0', 'core:pool_option:skill_synergy_mysticism', 'core:pool_option:skill_synergy_mysticism#bonus0', 'core:pool_option:skill_synergy_perception', 'core:pool_option:skill_synergy_perception#bonus0', 'core:pool_option:skill_synergy_physical_science', 'core:pool_option:skill_synergy_physical_science#bonus0', 'core:pool_option:skill_synergy_piloting', 'core:pool_option:skill_synergy_piloting#bonus0', 'core:pool_option:skill_synergy_profession_accountant', 'core:pool_option:skill_synergy_profession_accountant#bonus0', 'core:pool_option:skill_synergy_profession_actor', 'core:pool_option:skill_synergy_profession_actor#bonus0', 'core:pool_option:skill_synergy_profession_archaeologist', 'core:pool_option:skill_synergy_profession_archaeologist#bonus0', 'core:pool_option:skill_synergy_profession_architect', 'core:pool_option:skill_synergy_profession_architect#bonus0', 'core:pool_option:skill_synergy_profession_artist', 'core:pool_option:skill_synergy_profession_artist#bonus0', 'core:pool_option:skill_synergy_profession_bounty_hunter', 'core:pool_option:skill_synergy_profession_bounty_hunter#bonus0', 'core:pool_option:skill_synergy_profession_comedian', 'core:pool_option:skill_synergy_profession_comedian#bonus0', 'core:pool_option:skill_synergy_profession_con_artist', 'core:pool_option:skill_synergy_profession_con_artist#bonus0', 'core:pool_option:skill_synergy_profession_cook', 'core:pool_option:skill_synergy_profession_cook#bonus0', 'core:pool_option:skill_synergy_profession_corporate_professional', 'core:pool_option:skill_synergy_profession_corporate_professional#bonus0', 'core:pool_option:skill_synergy_profession_counselor', 'core:pool_option:skill_synergy_profession_counselor#bonus0', 'core:pool_option:skill_synergy_profession_courtesan', 'core:pool_option:skill_synergy_profession_courtesan#bonus0', 'core:pool_option:skill_synergy_profession_dancer', 'core:pool_option:skill_synergy_profession_dancer#bonus0', 'core:pool_option:skill_synergy_profession_dockworker', 'core:pool_option:skill_synergy_profession_dockworker#bonus0', 'core:pool_option:skill_synergy_profession_electrician', 'core:pool_option:skill_synergy_profession_electrician#bonus0', 'core:pool_option:skill_synergy_profession_farmer', 'core:pool_option:skill_synergy_profession_farmer#bonus0', 'core:pool_option:skill_synergy_profession_gambler', 'core:pool_option:skill_synergy_profession_gambler#bonus0', 'core:pool_option:skill_synergy_profession_general_contractor', 'core:pool_option:skill_synergy_profession_general_contractor#bonus0', 'core:pool_option:skill_synergy_profession_herbalist', 'core:pool_option:skill_synergy_profession_herbalist#bonus0', 'core:pool_option:skill_synergy_profession_lab_technician', 'core:pool_option:skill_synergy_profession_lab_technician#bonus0', 'core:pool_option:skill_synergy_profession_lawyer', 'core:pool_option:skill_synergy_profession_lawyer#bonus0', 'core:pool_option:skill_synergy_profession_maintenance_worker', 'core:pool_option:skill_synergy_profession_maintenance_worker#bonus0', 'core:pool_option:skill_synergy_profession_manager', 'core:pool_option:skill_synergy_profession_manager#bonus0', 'core:pool_option:skill_synergy_profession_mathematician', 'core:pool_option:skill_synergy_profession_mathematician#bonus0', 'core:pool_option:skill_synergy_profession_mercenary', 'core:pool_option:skill_synergy_profession_mercenary#bonus0', 'core:pool_option:skill_synergy_profession_merchant', 'core:pool_option:skill_synergy_profession_merchant#bonus0', 'core:pool_option:skill_synergy_profession_miner', 'core:pool_option:skill_synergy_profession_miner#bonus0', 'core:pool_option:skill_synergy_profession_musician', 'core:pool_option:skill_synergy_profession_musician#bonus0', 'core:pool_option:skill_synergy_profession_orator', 'core:pool_option:skill_synergy_profession_orator#bonus0', 'core:pool_option:skill_synergy_profession_philosopher', 'core:pool_option:skill_synergy_profession_philosopher#bonus0', 'core:pool_option:skill_synergy_profession_poet', 'core:pool_option:skill_synergy_profession_poet#bonus0', 'core:pool_option:skill_synergy_profession_politician', 'core:pool_option:skill_synergy_profession_politician#bonus0', 'core:pool_option:skill_synergy_profession_professor', 'core:pool_option:skill_synergy_profession_professor#bonus0', 'core:pool_option:skill_synergy_profession_psychologist', 'core:pool_option:skill_synergy_profession_psychologist#bonus0', 'core:pool_option:skill_synergy_profession_smuggler', 'core:pool_option:skill_synergy_profession_smuggler#bonus0', 'core:pool_option:skill_synergy_profession_video_personality', 'core:pool_option:skill_synergy_profession_video_personality#bonus0', 'core:pool_option:skill_synergy_profession_vidgamer', 'core:pool_option:skill_synergy_profession_vidgamer#bonus0', 'core:pool_option:skill_synergy_profession_writer', 'core:pool_option:skill_synergy_profession_writer#bonus0', 'core:pool_option:skill_synergy_sense_motive', 'core:pool_option:skill_synergy_sense_motive#bonus0', 'core:pool_option:skill_synergy_sleight_of_hand', 'core:pool_option:skill_synergy_sleight_of_hand#bonus0', 'core:pool_option:skill_synergy_stealth', 'core:pool_option:skill_synergy_stealth#bonus0', 'core:pool_option:skill_synergy_survival', 'core:pool_option:skill_synergy_survival#bonus0', 'core:pool_option:solarian_skill_adept_solarian_skill_adept_choice', 'core:pool_option:solarian_solar_manifestation_armor', 'core:pool_option:solarian_solar_manifestation_armor#bonus1', 'core:pool_option:solarian_solar_manifestation_color_glows_blue', 'core:pool_option:solarian_solar_manifestation_color_glows_red', 'core:pool_option:solarian_solar_manifestation_color_glows_white', 'core:pool_option:solarian_solar_manifestation_color_glows_yellow', 'core:pool_option:solarian_solar_manifestation_color_perfect_darkness_of_a_black_hole', 'core:pool_option:solarian_solar_manifestation_weapon', 'core:pool_option:soldier_key_ability_dexterity', 'core:pool_option:soldier_key_ability_strength', 'core:pool_option:technomantic_dabbler_0_level_selection_dancing_lights', 'core:pool_option:technomantic_dabbler_0_level_selection_daze', 'core:pool_option:technomantic_dabbler_0_level_selection_detect_affliction', 'core:pool_option:technomantic_dabbler_0_level_selection_detect_magic', 'core:pool_option:technomantic_dabbler_0_level_selection_energy_ray', 'core:pool_option:technomantic_dabbler_0_level_selection_ghost_sound', 'core:pool_option:technomantic_dabbler_0_level_selection_mending', 'core:pool_option:technomantic_dabbler_0_level_selection_psychokinetic_hand', 'core:pool_option:technomantic_dabbler_0_level_selection_telepathic_message', 'core:pool_option:technomantic_dabbler_0_level_selection_token_spell', 'core:pool_option:technomantic_dabbler_0_level_selection_transfer_charge', 'core:pool_option:technomantic_dabbler_1st_level_selection_comprehend_languages', 'core:pool_option:technomantic_dabbler_1st_level_selection_detect_radiation', 'core:pool_option:technomantic_dabbler_1st_level_selection_detect_tech', 'core:pool_option:technomantic_dabbler_1st_level_selection_disguise_self', 'core:pool_option:technomantic_dabbler_1st_level_selection_erase', 'core:pool_option:technomantic_dabbler_1st_level_selection_flight', 'core:pool_option:technomantic_dabbler_1st_level_selection_grease', 'core:pool_option:technomantic_dabbler_1st_level_selection_hold_portal', 'core:pool_option:technomantic_dabbler_1st_level_selection_holographic_image', 'core:pool_option:technomantic_dabbler_1st_level_selection_identify', 'core:pool_option:technomantic_dabbler_1st_level_selection_jolting_surge', 'core:pool_option:technomantic_dabbler_1st_level_selection_keen_senses', 'core:pool_option:technomantic_dabbler_1st_level_selection_life_bubble', 'core:pool_option:technomantic_dabbler_1st_level_selection_magic_missile', 'core:pool_option:technomantic_dabbler_1st_level_selection_overheat', 'core:pool_option:technomantic_dabbler_1st_level_selection_supercharge_weapon', 'core:pool_option:technomantic_dabbler_1st_level_selection_unseen_servant', 'core:pool_option:themeless_1_ability_score_choose_ability_score', 'core:pool_option:themeless_class_skill_choose_class_skill', 'near_space:pool_option:bureaucrat_1_ability_score_choose_bureaucrat_ability_score', 'near_space:pool_option:bureaucrat_theme_skill_life_science', 'near_space:pool_option:bureaucrat_theme_skill_mysticism', 'near_space:pool_option:bureaucrat_theme_skill_mysticism#bonus0', 'near_space:pool_option:bureaucrat_theme_skill_physical_science', 'near_space:pool_option:bureaucrat_theme_skill_profession']
+
+removed granted_by edges: 0  (never allowed -- SS3.5 permits growth only)
+removed grants: 0  (a grant SIGNATURE lost with no replacement of the same target -- gating-wrapper and WeaponGroup/WeaponTag/WeaponAllOf/WeaponSet-tag-case changes are NOT counted here, only a genuine loss or a fabricated replacement)
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:athlete_1_ability_score_choose_athlete_ability_score
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:athlete_theme_skill_acrobatics
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:athlete_theme_skill_acrobatics#bonus1
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:athlete_theme_skill_athletics
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:athlete_theme_skill_athletics#bonus1
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:guard_1_ability_score_choose_guard_ability_score
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:nanite_integrations_rebooting_nanites
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:nanite_integrations_repairing_nanites
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:nanite_integrations_surging_nanites
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:noble_scion_theme_skill_bluff
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:noble_scion_theme_skill_bluff#bonus1
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:noble_scion_theme_skill_diplomacy
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:noble_scion_theme_skill_diplomacy#bonus1
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:solarian_solar_manifestation_solar_flare
+  F3c4b unpinned f3c4b_pool_option rule character_operations_manual:pool_option:solarian_solar_manifestation_solar_shield
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_0_level_selection_daze
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_0_level_selection_detect_affliction
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_0_level_selection_detect_magic
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_0_level_selection_fatigue
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_0_level_selection_ghost_sound
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_0_level_selection_grave_words
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_0_level_selection_psychokinetic_hand
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_0_level_selection_stabilize
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_0_level_selection_telekinetic_projectile
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_0_level_selection_telepathic_message
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_0_level_selection_token_spell
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_charm_person
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_command
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_confusion_lesser
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_detect_radiation
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_detect_thoughts
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_disguise_self
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_fear
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_identify
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_keen_senses
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_life_bubble
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_mind_link
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_mind_thrust
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_mystic_cure
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_reflecting_armor
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_remove_condition_lesser
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_share_language
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:connection_inkling_1st_level_selection_wisp_ally
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:enhanced_resistance_selection_acid
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:enhanced_resistance_selection_cold
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:enhanced_resistance_selection_electricity
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:enhanced_resistance_selection_fire
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:enhanced_resistance_selection_kinetic
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:enhanced_resistance_selection_sonic
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:improved_combat_maneuver_selection_bull_rush
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:improved_combat_maneuver_selection_dirty_trick
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:improved_combat_maneuver_selection_disarm
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:improved_combat_maneuver_selection_grapple
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:improved_combat_maneuver_selection_reposition
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:improved_combat_maneuver_selection_sunder
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:improved_combat_maneuver_selection_trip
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:major_psychic_power_selection_augury
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:major_psychic_power_selection_status
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_computers
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_engineering
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_life_science
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_mysticism
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_physical_science
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_accountant
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_actor
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_archaeologist
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_architect
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_artist
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_bounty_hunter
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_comedian
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_con_artist
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_cook
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_corporate_professional
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_counselor
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_courtesan
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_dancer
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_dockworker
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_electrician
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_farmer
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_gambler
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_general_contractor
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_herbalist
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_lab_technician
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_lawyer
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_maintenance_worker
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_manager
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_mathematician
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_mercenary
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_merchant
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_miner
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_musician
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_orator
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_philosopher
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_poet
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_politician
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_professor
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_psychologist
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_smuggler
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_video_personality
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_vidgamer
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:master_crafter_selection_profession_writer
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:mechanic_control_net_selection_add_another_ai
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:mechanic_control_net_selection_add_another_ai#bonus1
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:mechanic_control_net_selection_no_new_ai
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:minor_psychic_power_selection_dancing_lights
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:minor_psychic_power_selection_psychokinetic_hand
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:minor_psychic_power_selection_telekinetic_projectile
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:minor_psychic_power_selection_telepathic_message
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:opening_volley_choice_choose_combat_feat
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:opening_volley_choice_gain_opening_volley
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_charm_person
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_command
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_confusion_lesser
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_detect_radiation
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_detect_thoughts
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_disguise_self
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_fear_level_1
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_identify
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_keen_senses
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_life_bubble
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_mind_link
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_mind_thrust_level_1
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_mystic_cure_level_1
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_reflecting_armor
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_remove_condition_lesser
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_share_language
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:priest_theme_benefit_divine_boon_wisp_ally
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:psychic_power_selection_comprehend_languages
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:psychic_power_selection_detect_thoughts
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:psychic_power_selection_mind_link
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_1_fortitude_1
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_1_reflex_1
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_1_will_1
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_2_fortitude_2
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_2_reflex_2
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_2_will_2
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_3_fortitude_3
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_3_reflex_3
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_3_will_3
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_4_fortitude_4
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_4_reflex_4
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_4_will_4
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_5_fortitude_5
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_5_reflex_5
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:ring_of_resistance_5_will_5
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:scholar_theme_chosen_skill_life_science
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:scholar_theme_chosen_skill_life_science#bonus1
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:scholar_theme_chosen_skill_physical_science
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:scholar_theme_chosen_skill_physical_science#bonus1
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_acrobatics
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_acrobatics#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_athletics
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_athletics#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_bluff
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_bluff#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_computers
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_computers#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_culture
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_culture#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_diplomacy
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_diplomacy#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_disguise
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_disguise#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_engineering
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_engineering#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_intimidate
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_intimidate#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_life_science
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_life_science#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_medicine
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_medicine#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_mysticism
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_mysticism#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_perception
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_perception#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_physical_science
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_physical_science#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_piloting
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_piloting#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_accountant
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_accountant#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_actor
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_actor#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_archaeologist
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_archaeologist#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_architect
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_architect#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_artist
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_artist#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_bounty_hunter
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_bounty_hunter#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_comedian
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_comedian#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_con_artist
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_con_artist#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_cook
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_cook#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_corporate_professional
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_corporate_professional#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_counselor
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_counselor#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_courtesan
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_courtesan#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_dancer
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_dancer#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_dockworker
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_dockworker#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_electrician
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_electrician#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_farmer
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_farmer#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_gambler
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_gambler#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_general_contractor
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_general_contractor#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_herbalist
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_herbalist#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_lab_technician
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_lab_technician#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_lawyer
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_lawyer#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_maintenance_worker
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_maintenance_worker#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_manager
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_manager#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_mathematician
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_mathematician#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_mercenary
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_mercenary#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_merchant
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_merchant#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_miner
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_miner#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_musician
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_musician#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_orator
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_orator#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_philosopher
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_philosopher#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_poet
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_poet#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_politician
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_politician#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_professor
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_professor#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_psychologist
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_psychologist#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_smuggler
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_smuggler#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_video_personality
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_video_personality#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_vidgamer
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_vidgamer#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_writer
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_profession_writer#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_sense_motive
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_sense_motive#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_sleight_of_hand
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_sleight_of_hand#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_stealth
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_stealth#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_survival
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:skill_synergy_survival#bonus0
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:solarian_skill_adept_solarian_skill_adept_choice
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:solarian_solar_manifestation_armor
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:solarian_solar_manifestation_armor#bonus1
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:solarian_solar_manifestation_color_glows_blue
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:solarian_solar_manifestation_color_glows_red
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:solarian_solar_manifestation_color_glows_white
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:solarian_solar_manifestation_color_glows_yellow
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:solarian_solar_manifestation_color_perfect_darkness_of_a_black_hole
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:solarian_solar_manifestation_weapon
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:soldier_key_ability_dexterity
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:soldier_key_ability_strength
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_0_level_selection_dancing_lights
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_0_level_selection_daze
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_0_level_selection_detect_affliction
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_0_level_selection_detect_magic
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_0_level_selection_energy_ray
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_0_level_selection_ghost_sound
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_0_level_selection_mending
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_0_level_selection_psychokinetic_hand
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_0_level_selection_telepathic_message
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_0_level_selection_token_spell
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_0_level_selection_transfer_charge
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_comprehend_languages
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_detect_radiation
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_detect_tech
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_disguise_self
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_erase
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_flight
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_grease
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_hold_portal
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_holographic_image
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_identify
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_jolting_surge
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_keen_senses
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_life_bubble
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_magic_missile
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_overheat
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_supercharge_weapon
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:technomantic_dabbler_1st_level_selection_unseen_servant
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:themeless_1_ability_score_choose_ability_score
+  F3c4b unpinned f3c4b_pool_option rule core:pool_option:themeless_class_skill_choose_class_skill
+  F3c4b unpinned f3c4b_pool_option rule near_space:pool_option:bureaucrat_1_ability_score_choose_bureaucrat_ability_score
+  F3c4b unpinned f3c4b_pool_option rule near_space:pool_option:bureaucrat_theme_skill_life_science
+  F3c4b unpinned f3c4b_pool_option rule near_space:pool_option:bureaucrat_theme_skill_mysticism
+  F3c4b unpinned f3c4b_pool_option rule near_space:pool_option:bureaucrat_theme_skill_mysticism#bonus0
+  F3c4b unpinned f3c4b_pool_option rule near_space:pool_option:bureaucrat_theme_skill_physical_science
+  F3c4b unpinned f3c4b_pool_option rule near_space:pool_option:bureaucrat_theme_skill_profession
+
+verdict=FAIL (unexpected field deltas: 47; F3c4b pin failures: 310)
+exit=1

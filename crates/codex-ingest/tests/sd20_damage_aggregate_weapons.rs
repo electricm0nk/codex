@@ -23,7 +23,7 @@
 //! / `tests/sd20_damage_weapon_enhancement.rs`: `KEY:Longsword (Base)`
 //! (`core_rulebook/cr_equip_arms_armor.lst`) and `KEY:Leather Armor
 //! (Base)` (same file) as the non-weapon control record. Feat data comes
-//! from the real, already-landed `rules_tables::crb::feats::feat_tables()`
+//! from the real, already-landed `rules_catalog::crb::feats::feat_tables()`
 //! catalog (`KEY:Weapon Specialization`, `BONUS:WEAPONPROF=%LIST|DAMAGE|2`,
 //! CRB p.137) — no fabricated values anywhere in this test.
 

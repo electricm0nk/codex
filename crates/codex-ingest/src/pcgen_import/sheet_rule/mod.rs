@@ -29,9 +29,11 @@
 pub mod always_held;
 pub mod attest;
 pub mod closure;
+pub mod companion_mod;
 pub mod convert;
 pub mod ctx;
 pub mod formula;
+pub mod formula_system;
 pub mod natural_attack;
 pub mod oracle_terms;
 pub mod pool_link;
@@ -40,6 +42,7 @@ pub mod pool_pick;
 pub mod prereq;
 pub mod prose;
 pub mod reprint;
+pub mod sf_mapping;
 pub mod subclass;
 pub mod table;
 pub mod weapon_membership;
@@ -49,7 +52,8 @@ use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
-use crate::pcgen_import::ingest_record;
+use crate::pcgen_import::{ingest_record, system_books};
+use codex::rules_core::game_system::{GameSystem, PerSystem};
 use codex::rules_core::sheet_rule::*;
 use closure::{Closure, PinnedTree, RowRef};
 use ctx::{slug, CorpusIndex, OwnContribution, RecordRef};
@@ -77,6 +81,37 @@ pub fn repo_root() -> PathBuf {
 #[derive(Deserialize)]
 struct InventoryFile {
     units: Vec<InventoryUnit>,
+}
+
+/// The work inventory each system's population comes from (repo-relative). Pathfinder's is the
+/// SD-35 inventory; Starfinder's is E0.3's (`docs/work-inventory.starfinder-1e.json`).
+pub const WORK_INVENTORY: PerSystem<&str> =
+    PerSystem { pathfinder_1e: "docs/work-inventory.json", starfinder_1e: "docs/work-inventory.starfinder-1e.json" };
+
+/// Where `--write` puts the source-name -> `VarId` map (repo-relative directory). Pathfinder's
+/// is the oracle harness's; Starfinder's sits beside its package so a Starfinder run can never
+/// overwrite Pathfinder's map (E1.3 "Does not cover").
+pub const VAR_NAMES_DIR: PerSystem<&str> = PerSystem { pathfinder_1e: "scripts/oracle_harness", starfinder_1e: "data/starfinder-1e" };
+
+/// The population's inventory for `system`. For a system whose books are registered by `.pcc`
+/// ([`system_books::CONVERTED_BOOKS`]) only the converted books' units are kept, and each unit's
+/// `book` (the inventory's directory form, `paizo/core`) becomes the book id the tree, the
+/// corpus and the package use (`core`, [`system_books::book_id`]).
+fn read_inventory(repo: &Path, system: GameSystem) -> Result<InventoryFile, String> {
+    let rel = WORK_INVENTORY.get(system);
+    let text = std::fs::read_to_string(repo.join(rel)).map_err(|e| format!("{rel}: {e}"))?;
+    let mut inv: InventoryFile = serde_json::from_str(&text).map_err(|e| format!("{rel}: {e}"))?;
+    let converted = system_books::CONVERTED_BOOKS.books(system);
+    if !converted.is_empty() {
+        let book_of = |dir: &str| -> Option<&'static str> {
+            converted.iter().find(|b| b.dir.ends_with(&format!("/{dir}"))).map(system_books::book_id)
+        };
+        inv.units.retain(|u| book_of(&u.book).is_some());
+        for u in &mut inv.units {
+            u.book = book_of(&u.book).unwrap_or_default().to_string();
+        }
+    }
+    Ok(inv)
 }
 
 #[derive(Deserialize, Clone)]
@@ -112,8 +147,8 @@ struct CorpusEntry {
     line: Option<usize>,
 }
 
-fn walk_corpus(repo: &Path) -> Vec<CorpusEntry> {
-    let root = repo.join("data/corpus");
+fn walk_corpus(repo: &Path, system: GameSystem) -> Vec<CorpusEntry> {
+    let root = system.package_roots(repo).corpus;
     let mut out = Vec::new();
     let Ok(books) = std::fs::read_dir(&root) else { return out };
     let mut book_dirs: Vec<PathBuf> = books.flatten().map(|e| e.path()).filter(|p| p.is_dir()).collect();
@@ -213,9 +248,17 @@ fn record_from_json(tree: &PinnedTree, unit: &InventoryUnit, path: &Path) -> Opt
         .and_then(|v| v.as_array())
         .map(|a| a.iter().filter_map(|x| x.as_str().map(|s| s.to_string())).collect())
         .unwrap_or_default();
+    // SD-37 E3.4: a Starfinder corpus record ships no token array; it states its row's own
+    // `CATEGORY:` and `TYPE:` as `data.category` / `data.type` (the corpus generator,
+    // `pcgen_import::sf_corpus`). Pathfinder records keep reading the shipped tokens only:
+    // their `data.category` is the corpus ingest's display category ("General"), not the row's.
+    let row_facet = |field: &str| -> Option<String> {
+        (tree.system != GameSystem::Pathfinder1e).then(|| data.get(field).and_then(|v| v.as_str()).map(|s| s.to_string())).flatten()
+    };
     let category = shipped_tokens
         .as_ref()
         .and_then(|t| t.iter().find(|(k, _)| k == "CATEGORY").map(|(_, v)| v.clone()))
+        .or_else(|| row_facet("category"))
         .unwrap_or_else(|| match unit.kind.as_str() {
             "feat" => "FEAT".to_string(),
             _ => String::new(),
@@ -223,6 +266,7 @@ fn record_from_json(tree: &PinnedTree, unit: &InventoryUnit, path: &Path) -> Opt
     let type_facet = shipped_tokens
         .as_ref()
         .and_then(|t| t.iter().find(|(k, _)| k == "TYPE").map(|(_, v)| v.clone()))
+        .or_else(|| row_facet("type"))
         .or_else(|| unit.type_facet.clone())
         .unwrap_or_default();
     let pi_fields: Vec<String> = rec.pi_field.as_deref().unwrap_or("").split(',').map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect();
@@ -249,6 +293,46 @@ fn record_from_json(tree: &PinnedTree, unit: &InventoryUnit, path: &Path) -> Opt
     })
 }
 
+/// One inventory unit and its own source row in the pinned tree, read from the inventory alone
+/// -- never from a corpus already on disk -- so a corpus generator can rebuild the corpus from
+/// the inventory and the oracle without reading its own previous output (SD-37 E3.4,
+/// `pcgen_import::sf_corpus`).
+#[derive(Debug, Clone)]
+pub struct InventorySourceRow {
+    pub id: String,
+    /// The book id the tree and the package use ([`system_books::book_id`] for a `.pcc` system).
+    pub book: String,
+    pub kind: String,
+    pub name: String,
+    pub source_file: String,
+    /// Repo-of-the-oracle relative path of the row's `.lst` (empty when the row is not found).
+    pub rel_path: String,
+    /// One-based line (0 when the row is not found).
+    pub line: usize,
+}
+
+/// Every inventory unit of `tree.system`'s population with its own source row
+/// ([`source_row_in_tree`]), in inventory order.
+pub fn inventory_source_rows(repo: &Path, tree: &PinnedTree) -> Result<Vec<InventorySourceRow>, String> {
+    let inv = read_inventory(repo, tree.system)?;
+    Ok(inv
+        .units
+        .iter()
+        .map(|u| {
+            let (rel_path, line) = source_row_in_tree(tree, u).unwrap_or_default();
+            InventorySourceRow {
+                id: u.id.clone(),
+                book: u.book.clone(),
+                kind: u.kind.clone(),
+                name: u.name.clone(),
+                source_file: u.source_file.clone().unwrap_or_default(),
+                rel_path,
+                line,
+            }
+        })
+        .collect())
+}
+
 /// Locate an inventory unit's own source row in the pinned tree by the coordinates the
 /// inventory already carries: `(book, source_file basename, source_line)`.
 ///
@@ -260,16 +344,19 @@ fn record_from_json(tree: &PinnedTree, unit: &InventoryUnit, path: &Path) -> Opt
 /// words exist prints those words, so resolving the row here is what turns a refusal with a
 /// blank sheet line into a printed rule. Never invents a row: the file must sit in the unit's
 /// own book directory, outside `_pfs/`, and the line must exist in it.
+///
+/// `source_file` is a basename in the Pathfinder inventory and a book-relative path in the
+/// Starfinder one (Character Operations Manual's `support/scom_feats_spw.lst`), so the file
+/// matches when its path ends in `/<source_file>`. For a bare basename that is the same test as
+/// the basename comparison it replaces.
 fn source_row_in_tree(tree: &PinnedTree, unit: &InventoryUnit) -> Option<(String, usize)> {
-    let basename = unit.source_file.as_deref()?;
+    let source_file = unit.source_file.as_deref()?;
     let line = unit.source_line?;
-    if line == 0 {
+    if line == 0 || source_file.is_empty() {
         return None;
     }
-    let file = tree
-        .files
-        .iter()
-        .find(|f| f.book == unit.book && !f.is_pfs && f.rel_path.rsplit('/').next() == Some(basename))?;
+    let suffix = format!("/{source_file}");
+    let file = tree.files.iter().find(|f| f.book == unit.book && !f.is_pfs && f.rel_path.ends_with(&suffix))?;
     if line > file.lines.len() {
         return None;
     }
@@ -303,9 +390,8 @@ fn source_row_in_tree(tree: &PinnedTree, unit: &InventoryUnit) -> Option<(String
 /// [`source_row_in_tree`] exactly as before. It therefore cannot silently re-join a unit that
 /// was already converting.
 pub fn load_population(repo: &Path, tree: &PinnedTree) -> Result<Vec<RecordRef>, String> {
-    let inv_text = std::fs::read_to_string(repo.join("docs/work-inventory.json")).map_err(|e| format!("docs/work-inventory.json: {e}"))?;
-    let inv: InventoryFile = serde_json::from_str(&inv_text).map_err(|e| format!("docs/work-inventory.json: {e}"))?;
-    let entries = walk_corpus(repo);
+    let inv = read_inventory(repo, tree.system)?;
+    let entries = walk_corpus(repo, tree.system);
     let mut by_line: BTreeMap<(String, String, usize), usize> = BTreeMap::new();
     let mut by_key: BTreeMap<(String, String, String), usize> = BTreeMap::new();
     // (basename, line, kind) -> every corpus record at that source row of that kind, in ANY
@@ -424,6 +510,22 @@ fn declared_row_key(tree: &PinnedTree, r: &RecordRef) -> Option<String> {
     (matches!(id.shape, closure::RowShape::Plain | closure::RowShape::Copy(_)) && !id.key.is_empty()).then_some(id.key)
 }
 
+/// The name field (upper-cased, before any `.COPY=`) the record's own base row declares in the
+/// pinned tree, or `None` when it has no plain or `.COPY=` declaration row there.
+fn declared_row_name(tree: &PinnedTree, r: &RecordRef) -> Option<String> {
+    let file = tree.file_index(&r.rel_path)?;
+    if r.line == 0 || r.line > tree.files[file].lines.len() {
+        return None;
+    }
+    let row = tree.row_text(RowRef { file, line: r.line });
+    if !matches!(closure::row_identity(row).shape, closure::RowShape::Plain | closure::RowShape::Copy(_)) {
+        return None;
+    }
+    let head = closure::tokenize_row(row).0;
+    let name = head.split(".COPY=").next().unwrap_or(&head).trim().to_ascii_uppercase();
+    (!name.is_empty()).then_some(name)
+}
+
 /// Record both ids of a newly seen ambiguous pair (the first-indexed one once).
 fn push_candidates(map: &mut BTreeMap<(String, String), Vec<RuleId>>, pair: &(String, String), existing: &RuleId, id: &RuleId) {
     let list = map.entry(pair.clone()).or_default();
@@ -439,6 +541,7 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
     let mut index = CorpusIndex::default();
     let mut closures: Vec<Closure> = Vec::with_capacity(records.len());
     let mut placeholder_declared: Vec<((String, String), RuleId)> = Vec::new();
+    let mut placeholder_declared_name: Vec<((String, String), RuleId)> = Vec::new();
     let mut row_declared_category: Vec<((String, String), RuleId, bool)> = Vec::new();
     for r in &records {
         let closure = if r.rel_path.is_empty() {
@@ -487,6 +590,16 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             && declared != key_u
         {
             placeholder_declared.push(((cat_u.clone(), declared), r.id.clone()));
+        }
+        // SD-37 E3.5: the name twin of F3b2, Starfinder only. A record the PI screen renamed
+        // (`Driftborn`, `KEY:Gnome ~ Driftborn`) is named by other records' prerequisites by its
+        // row's name field, which its codex-named corpus name hides. Pathfinder is unchanged.
+        if tree.system != GameSystem::Pathfinder1e
+            && is_codex_placeholder_key(&r.name)
+            && let Some(declared) = declared_row_name(tree, r)
+            && declared != name_u
+        {
+            placeholder_declared_name.push(((cat_u.clone(), declared), r.id.clone()));
         }
         // SD-36 F3c4b: a record whose shipped tokens state no `CATEGORY:` (the corpus record
         // sits at a `.MOD` row, `CATEGORY=Internal|Bloodline Tracker.MOD`,
@@ -596,6 +709,23 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             Some(_) => {}
         }
     }
+    // SD-37 E3.5: the declared row names of codex-named records, under the F3b2 rule
+    // (only where no corpus name answers the pair; two claimants are ambiguous to each other).
+    let mut claimed_names: BTreeSet<(String, String)> = BTreeSet::new();
+    for (pair, id) in placeholder_declared_name {
+        match index.by_cat_name.get(&pair) {
+            None => {
+                claimed_names.insert(pair.clone());
+                index.by_cat_name.insert(pair, id);
+            }
+            Some(existing) if *existing != id && claimed_names.contains(&pair) => {
+                let existing = existing.clone();
+                push_candidates(&mut index.cat_name_candidates, &pair, &existing, &id);
+                index.ambiguous_cat_name.insert(pair);
+            }
+            Some(_) => {}
+        }
+    }
     // SD-36 F3c4b: the category a CATEGORY-less record's own source row declares. A pair
     // several such records claim, every one of them from a `.MOD` row, is ONE object whose `.MOD`
     // rows the inventory filed as one record per book (`Bloodline Tracker`: 8 books): PCGen
@@ -624,6 +754,12 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
     let by_id: BTreeMap<&str, &RecordRef> = records.iter().map(|r| (r.id.as_str(), r)).collect();
     index.reprint_newest_key = reprint::newest_printings(tree, &by_id, &index.cat_key_candidates);
     index.reprint_newest_name = reprint::newest_printings(tree, &by_id, &index.cat_name_candidates);
+    // SD-37 E5.4: the converted Starfinder books' companion modifiers (`companion_mod.rs`).
+    let (companion_mods, companion_defects) = companion_mod::scan(tree);
+    for (k, v) in companion_defects {
+        index.index_defects.entry(k).or_default().extend(v);
+    }
+    index.companion_mods = companion_mods;
     // SD-36 F3c4b: ability-category pick rows no unit stands for become options of the choice
     // that picks them (`pool_option.rs`); their pairs are registered BEFORE any record converts,
     // so a record naming one resolves to it. Only pairs no unit answers are registered.
@@ -633,9 +769,32 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             index.by_cat_key.contains_key(&pair) || index.by_cat_name.contains_key(&pair)
         };
         let owned = |row: RowRef| index.row_owner.contains_key(&row);
-        pool_option::scan(tree, &records, &closures, &owned, &answered)
+        // SD-37 E5.4: a companion modifier's picks are scanned with the records' (`companion_mod.rs`).
+        if index.companion_mods.is_empty() {
+            pool_option::scan(tree, &records, &closures, &owned, &answered)
+        } else {
+            let mut scan_records = records.clone();
+            let mut scan_closures = closures.clone();
+            for d in &index.companion_mods {
+                scan_records.push(d.record());
+                scan_closures.push(d.closure.clone());
+            }
+            pool_option::scan(tree, &scan_records, &scan_closures, &owned, &answered)
+        }
     };
-    for d in &scan.options {
+    // SD-37 E5.4: the members of a companion modifier's picks register their pairs LAST, so a
+    // pair an earlier option already answered (`(INTERNAL, COMPUTERS)`: the Skill Synergy
+    // option) keeps resolving where it did before the companion's picks were scanned.
+    let companion_pools: BTreeSet<String> = index
+        .companion_mods
+        .iter()
+        .flat_map(|d| d.closure.rows.iter().flat_map(|r| r.tokens.iter()))
+        .filter(|(k, _)| k == "BONUS")
+        .filter_map(|(_, v)| v.strip_prefix("ABILITYPOOL|").and_then(|rest| rest.split('|').next()).map(slug))
+        .collect();
+    let from_companion = |d: &pool_option::PoolOptionDecl| d.via_pool && companion_pools.contains(&d.pool);
+    let registration_order = scan.options.iter().filter(|d| !from_companion(d)).chain(scan.options.iter().filter(|d| from_companion(d)));
+    for d in registration_order {
         for pair in [(d.category.clone(), d.key.clone()), (d.category.clone(), d.name.to_ascii_uppercase())] {
             let taken = index.by_cat_key.get(&pair).or_else(|| index.by_cat_name.get(&pair)).cloned();
             match taken {
@@ -826,9 +985,9 @@ pub fn class_selection_principal(index: &CorpusIndex, record: &RecordRef, select
 /// (`license_pi`) or by declared field (`pi_fields`); it would put a source-format literal in
 /// the package (`FORBIDDEN_LITERALS`); it carries a glued `PRE<KIND>:` head; or it carries a
 /// `%1` slot with no argument row to fill it.
-fn printable_description(r: &RecordRef) -> Option<String> {
+fn printable_description(system: GameSystem, r: &RecordRef) -> Option<String> {
     let text = prose::decode_entities(r.description.as_deref()?.trim());
-    if text.is_empty() || prose::pi_hit(&text).is_some() || r.license_pi || r.pi_fields.iter().any(|f| f == "description") {
+    if text.is_empty() || prose::pi_hit(system, &text).is_some() || r.license_pi || r.pi_fields.iter().any(|f| f == "description") {
         return None;
     }
     if FORBIDDEN_LITERALS.iter().any(|lit| text.contains(lit)) || has_pre_head(&text) || text.contains("%1") {
@@ -860,8 +1019,8 @@ fn printable_description(r: &RecordRef) -> Option<String> {
     Some(text)
 }
 
-fn description_only_rules(r: &RecordRef) -> Option<Vec<SheetRule>> {
-    let text = printable_description(r)?;
+fn description_only_rules(system: GameSystem, r: &RecordRef) -> Option<Vec<SheetRule>> {
+    let text = printable_description(system, r)?;
     Some(vec![SheetRule {
         id: r.id.clone(),
         label: r.name.clone(),
@@ -935,6 +1094,8 @@ pub fn display_label(source_name: &str) -> String {
 pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run {
     let mut files: BTreeMap<String, Vec<SheetRule>> = BTreeMap::new();
     let mut grants_out: BTreeMap<RuleId, Vec<Grant>> = BTreeMap::new();
+    // SD-37 E5.4: target -> the Starfinder automatic grants that hold it (`Converted::automatic_grants`).
+    let mut automatic_grants: BTreeMap<RuleId, Vec<Grant>> = BTreeMap::new();
     let mut contribs: BTreeMap<VarId, (String, Vec<VarContribution>)> = BTreeMap::new();
     let mut declares: BTreeMap<VarId, (String, BTreeSet<RuleId>)> = BTreeMap::new();
     let mut var_names: BTreeMap<VarId, String> = BTreeMap::new();
@@ -949,7 +1110,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         let kc = report.by_kind.entry(r.kind.clone()).or_default();
         kc.records += 1;
         if !r.joined || r.rel_path.is_empty() {
-            if let Some(rules) = description_only_rules(r) {
+            if let Some(rules) = description_only_rules(tree.system, r) {
                 census.entries.push(TokenCensusRecord {
                     id: r.id.clone(),
                     book: r.book.clone(),
@@ -971,7 +1132,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             continue;
         }
         if tree.file_index(&r.rel_path).is_none() && r.prerequisites.is_empty() && r.shipped_tokens.as_ref().is_none_or(|t| t.is_empty()) {
-            if let Some(rules) = description_only_rules(r) {
+            if let Some(rules) = description_only_rules(tree.system, r) {
                 census.entries.push(TokenCensusRecord {
                     id: r.id.clone(),
                     book: r.book.clone(),
@@ -1038,6 +1199,9 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         for (target, grant) in c.grants_out {
             grants_out.entry(target).or_default().push(grant);
         }
+        for (target, grant) in c.automatic_grants {
+            automatic_grants.entry(target).or_default().push(grant);
+        }
         kc.converted += 1;
         converted_ids.push((r.book.clone(), r.kind.clone(), r.id.clone()));
         let mut rules = c.rules;
@@ -1059,7 +1223,7 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         // through this door with words the other door would have refused.
         if !rules.iter().any(|rule| !rule.prose.is_empty())
             && !prose_decided_never
-            && let Some(text) = printable_description(r)
+            && let Some(text) = printable_description(tree.system, r)
             && let Some(first) = rules.first_mut()
         {
             first.prose.push(ProseSegment {
@@ -1117,6 +1281,9 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         for (target, grant) in opt.grants_out {
             grants_out.entry(target).or_default().push(grant);
         }
+        for (target, grant) in c.automatic_grants {
+            automatic_grants.entry(target).or_default().push(grant);
+        }
         let rel = rule_file_rel(&opt.rule.provenance.book, subclass::SUBCLASS_KIND, &opt.rule.id);
         let mut rules = vec![opt.rule];
         rules.extend(opt.siblings);
@@ -1161,11 +1328,68 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             for (target, grant) in opt.grants_out {
                 grants_out.entry(target).or_default().push(grant);
             }
+            for (target, grant) in c.automatic_grants {
+                automatic_grants.entry(target).or_default().push(grant);
+            }
             option_rows.extend(opt.own_rows.iter().copied());
             let rel = rule_file_rel(&opt.rule.provenance.book, pool_option::POOL_OPTION_KIND, &opt.rule.id);
             let mut rules = vec![opt.rule];
             rules.extend(opt.siblings);
             files.insert(rel, rules);
+        }
+    }
+    // SD-37 E5.4: each Starfinder companion modifier converts as one rule its follower's race
+    // holds, every line under the row's own gate (`companion_mod.rs`). No inventory unit is
+    // added: the record count does not move.
+    if !index.companion_mods.is_empty() {
+        let role_races = companion_mod::role_races(&files);
+        for d in &index.companion_mods {
+            let cite = tree.cite(d.row);
+            let Some(races) = role_races.get(&d.role.to_ascii_uppercase()).filter(|r| !r.is_empty()) else {
+                defects.entry("companion-mod-race-unresolved".into()).or_default().push(format!("{}: role {} ({cite})", d.id, d.role));
+                continue;
+            };
+            let mut c = convert::convert_record(tree, index, &d.record(), &d.closure);
+            if !c.refusals.is_empty() {
+                let r: Vec<String> = c.refusals.iter().cloned().collect();
+                defects.entry("companion-mod-unconverted".into()).or_default().push(format!("{}: refused {} ({cite})", d.id, r.join(", ")));
+                continue;
+            }
+            let mut rules = std::mem::take(&mut c.rules);
+            if rules.is_empty() {
+                defects.entry("companion-mod-unconverted".into()).or_default().push(format!("{}: no rule ({cite})", d.id));
+                continue;
+            }
+            for rule in rules.iter_mut() {
+                rule.applies = Applies::all(vec![d.gate(), rule.applies.clone()]);
+            }
+            rules[0].granted_by.extend(races.iter().map(|race| Grant { by: Granter::Rule(race.clone()), when: Applies::Always }));
+            for (k, v) in c.defects {
+                defects.entry(k).or_default().extend(v);
+            }
+            for (id, name) in c.var_names {
+                var_names.insert(id, name);
+            }
+            for (id, label) in c.var_labels {
+                var_labels.entry(id).or_insert(label);
+            }
+            for (id, name) in c.var_declares {
+                declares.entry(id).or_insert_with(|| (name, BTreeSet::new())).1.insert(d.id.clone());
+            }
+            for (id, name, mut contrib) in c.var_contribs {
+                contrib.when = Applies::all(vec![d.gate(), contrib.when]);
+                contribs.entry(id).or_insert_with(|| (name, Vec::new())).1.push(contrib);
+            }
+            for (target, grant) in std::mem::take(&mut c.grants_out) {
+                let grant = Grant { by: grant.by, when: Applies::all(vec![d.gate(), grant.when]) };
+                grants_out.entry(target).or_default().push(grant);
+            }
+            for (target, grant) in std::mem::take(&mut c.automatic_grants) {
+                let grant = Grant { by: grant.by, when: Applies::all(vec![d.gate(), grant.when]) };
+                automatic_grants.entry(target).or_default().push(grant);
+            }
+            option_rows.extend(d.closure.own_rows.iter().copied());
+            files.insert(rule_file_rel(&d.book, companion_mod::COMPANION_MOD_KIND, &d.id), rules);
         }
     }
     // D3: every class-selection record gets the class principal it stands for.
@@ -1201,6 +1425,15 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             first.granted_by.extend(g);
         }
     }
+    // SD-37 E5.4 (`decisions.md §21(c)`): a Starfinder automatic grant holds its target whatever
+    // the target's own prerequisites say, so the target's gate also admits each such grant.
+    for rules in files.values_mut() {
+        if let Some(first) = rules.first_mut()
+            && let Some(g) = automatic_grants.remove(&first.id)
+        {
+            first.applies = waive_automatic_grant_prerequisites(&first.applies, &g);
+        }
+    }
     for (target, g) in &grants_out {
         defects.entry("grants-to-unconverted-targets".into()).or_default().push(format!("{target}: {} grant(s)", g.len()));
     }
@@ -1214,8 +1447,35 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
     attest::attest_class_closures(&mut files, &defective);
     // D7: the global abilities every character holds unconditionally (`always_held.rs`).
     let (_, unresolved_globals) = always_held::mark_always_held(tree, &mut files, index, &always_held::global_grants(tree));
+    // SD-37 E7.1: a Starfinder global no population record stands for (`Default`) converts as one
+    // always-held record carrying its variable bookkeeping (`always_held::convert_unconverted_globals`).
+    // No inventory unit is added: the record count does not move.
+    let (globals, unresolved_globals) = always_held::convert_unconverted_globals(tree, index, &unresolved_globals);
+    for gb in globals {
+        let id = gb.rule.id.clone();
+        let c = gb.converted;
+        for (vid, name) in c.var_names {
+            var_names.insert(vid, name);
+        }
+        for (vid, label) in c.var_labels {
+            var_labels.entry(vid).or_insert(label);
+        }
+        for (vid, name) in c.var_declares {
+            declares.entry(vid).or_insert_with(|| (name, BTreeSet::new())).1.insert(id.clone());
+        }
+        for (vid, name, mut contrib) in c.var_contribs {
+            contrib.rule_id = id.clone();
+            contribs.entry(vid).or_insert_with(|| (name, Vec::new())).1.push(contrib);
+        }
+        let rel = rule_file_rel(&gb.rule.provenance.book, "ability", &id);
+        if files.contains_key(&rel) {
+            defects.entry("unresolved-references".into()).or_default().push(format!("{id}: a converted global collides with {rel}"));
+            continue;
+        }
+        files.insert(rel, vec![gb.rule]);
+    }
     if !unresolved_globals.is_empty() {
-        defects.entry("unresolved-references".into()).or_default().extend(unresolved_globals);
+        defects.entry("unresolved-references".into()).or_default().extend(unresolved_globals.iter().map(always_held::unresolved_global_line));
     }
     // D8: an oracle member of a filled variable pool no converted record stands for.
     let unconverted_members = pool_pick::unconverted_member_defects(&index.filled_pools);
@@ -1244,8 +1504,14 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         let name = var_names.get(id).cloned().or_else(|| contribs.get(id).map(|(n, _)| n.clone())).or_else(|| declares.get(id).map(|(n, _)| n.clone()));
         let Some(name) = name else { continue };
         var_names.entry(id.clone()).or_insert(name.clone());
-        let declared_by: Vec<RuleId> = declares.get(id).map(|(_, s)| s.iter().cloned().collect()).unwrap_or_default();
+        let mut declared_by: Vec<RuleId> = declares.get(id).map(|(_, s)| s.iter().cloned().collect()).unwrap_or_default();
         let contributions: Vec<VarContribution> = contribs.get(id).map(|(_, v)| v.clone()).unwrap_or_default();
+        // SD-37 E4.2: a variable only an unconverted always-held global DEFINEs at 0 (Starfinder's
+        // `Default`) is declared for every character; its contributors stand as its declarers,
+        // which folds identically (`always_held::defined_at_zero_only_on`).
+        if declared_by.is_empty() && always_held::defined_at_zero_only_on(tree, &name, &unresolved_globals) {
+            declared_by = contributions.iter().map(|c| c.rule_id.clone()).collect::<BTreeSet<_>>().into_iter().collect();
+        }
         let outside: Vec<String> = tree.variable_rows(&name).into_iter().filter(|r| !owned_rows.contains(r)).map(|r| tree.cite(r)).collect();
         let label = display_label(var_labels.get(id).unwrap_or(&name));
         vars.insert(id.clone(), VarTable { var: id.clone(), label, declared_by, contributions, provenance: VarProvenance { outside_corpus_rows: outside } });
@@ -1355,8 +1621,8 @@ pub fn write_output(out_dir: &Path, rendered: &BTreeMap<String, Vec<u8>>) -> std
     Ok(())
 }
 
-pub fn write_var_names(repo: &Path, run: &Run) -> std::io::Result<()> {
-    write_var_names_to(&repo.join("scripts/oracle_harness"), run)
+pub fn write_var_names(repo: &Path, system: GameSystem, run: &Run) -> std::io::Result<()> {
+    write_var_names_to(&repo.join(VAR_NAMES_DIR.get(system)), run)
 }
 
 /// Write `var_names.json` to an arbitrary directory (e.g. a `--dump` scratch dir), the same
@@ -1471,6 +1737,32 @@ pub fn check(out_dir: &Path, run: &Run) -> Result<(), Vec<String>> {
     if problems.is_empty() { Ok(()) } else { Err(problems) }
 }
 
+
+/// SD-37 E5.4: `applies` widened to admit each automatic grant of the rule: "one of the granters
+/// is held under its grant gate, or the rule's own prerequisites hold". PCGen holds an
+/// `ABILITY:<cat>|AUTOMATIC|<key>` target without testing the target's own `PRE` tokens (pinned
+/// oracle: a hover drone at character level 1 counts `DroneModFlightSystemTaken` = 2 although
+/// Flight System requires level 11; `decisions.md §21(c)`). An ungated rule is unchanged, and a
+/// pick of the same rule through a pool still meets its own prerequisites when no granter holds.
+fn waive_automatic_grant_prerequisites(applies: &Applies, grants: &[Grant]) -> Applies {
+    if *applies == Applies::Always {
+        return Applies::Always;
+    }
+    let mut of: Vec<Applies> = Vec::new();
+    for g in grants {
+        let Granter::Rule(granter) = &g.by else { continue };
+        let term = Applies::all(vec![Applies::Holds { what: Holdable::Rule(granter.clone()), count: 1 }, g.when.clone()]);
+        if !of.contains(&term) {
+            of.push(term);
+        }
+    }
+    if of.is_empty() {
+        return applies.clone();
+    }
+    of.push(applies.clone());
+    Applies::AtLeast { n: 1, of }
+}
+
 #[cfg(test)]
 mod check_tests {
     use super::*;
@@ -1503,19 +1795,25 @@ mod check_tests {
     }
 }
 
-/// Load everything and run once: the tree, the population, the index, the conversion.
-pub fn convert_repo(repo: &Path) -> Result<(Run, CorpusIndex), String> {
-    let tree = PinnedTree::load(&closure::corpus_root())?;
+/// Load everything and run once for one game system: the tree, the population, the index, the
+/// conversion (SD-37 E1.3: the system keys the pinned book subtree and the corpus root).
+pub fn convert_repo(repo: &Path, system: GameSystem) -> Result<(Run, CorpusIndex), String> {
+    let tree = PinnedTree::load_for(system, &closure::corpus_root())?;
     let records = load_population(repo, &tree)?;
     let (index, closures) = build_index(&tree, records);
     let run = run(&tree, &index, &closures);
     Ok((run, index))
 }
 
+/// Convert one Pathfinder 1e unit by id: [`convert_one_for`] with [`GameSystem::Pathfinder1e`].
+pub fn convert_one(repo: &Path, unit_id: &str) -> Result<(convert::Converted, Vec<String>), String> {
+    convert_one_for(repo, GameSystem::Pathfinder1e, unit_id)
+}
+
 /// Convert one unit by id (for tests and spot checks): the whole index is built, one record
 /// is converted, and its `Converted` is returned with the closure rows it read.
-pub fn convert_one(repo: &Path, unit_id: &str) -> Result<(convert::Converted, Vec<String>), String> {
-    let tree = PinnedTree::load(&closure::corpus_root())?;
+pub fn convert_one_for(repo: &Path, system: GameSystem, unit_id: &str) -> Result<(convert::Converted, Vec<String>), String> {
+    let tree = PinnedTree::load_for(system, &closure::corpus_root())?;
     let records = load_population(repo, &tree)?;
     let (index, closures) = build_index(&tree, records);
     let pos = index.records.iter().position(|r| r.id == unit_id).ok_or_else(|| format!("no unit {unit_id}"))?;
@@ -1790,7 +2088,7 @@ mod term_level_refusal_gate {
     #[test]
     fn a_copy_rows_own_visible_no_reaches_the_converted_rule() {
         let pinned = closure::corpus_root();
-        if !pinned.join(closure::BOOKS_RELATIVE).is_dir() {
+        if !pinned.join(closure::BOOKS_RELATIVE.books(GameSystem::Pathfinder1e)[0]).is_dir() {
             eprintln!("skipping: no pinned PCGen corpus checkout at {pinned:?}");
             return;
         }

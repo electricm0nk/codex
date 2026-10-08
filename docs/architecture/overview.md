@@ -2,23 +2,16 @@
 
 > Scope: what Codex is, its product doctrine, its workspace/crate structure, its four top-level
 > planes, and how a character's data flows from raw PCGen corpus text to a rendered sheet cell.
-> Last verified: **2026-09-20 against `tranche/16` (`b22ea9e113`, SD-36 Epic D)**. Re-derived from
-> the live tree for SD-36 Epic A (the crate wall is now a real Cargo workspace boundary —
-> `crates/codex-ingest`, not a path convention under `src/`) and Epic C1 (`pilot_compute` split
-> into per-class submodules). §"The converter/live boundary", §"Workspace and crate dependency
-> graph", §"Directory map", and §"The product doctrine" are new or substantially rewritten this
-> pass; §"Data flow, end to end" is redrawn to put the converter inside its own crate. Verified via
-> `cargo metadata --no-deps --format-version1 | python3 -c "import json,sys; print([p['name'] for p in json.load(sys.stdin)['packages']])"`
-> (`["codex", "codex-ingest"]` at the workspace root) and `python3 scripts/pcgen_residue_gate.py --check --closure`.
-> Prior pass 2026-09-15 (SD-35 closure) added §"The converter/live boundary" when the wall was
-> still path-based; that path-based claim was superseded, not layered on, by this pass. **Path
-> correction 2026-08-22** (SD-32 closure epilogue): the source-tree map's `sd16/` row and
-> `pilot_compute.rs` cites were renamed away — carried forward below.
+> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)**. Starfinder 1e is a
+> second game system on the same engine (§"Two game systems, one engine"); the Pathfinder rules tables are a bundled data
+> package read through `src/rules_core/rules_catalog/`, not compiled source. Workspace shape re-derived with
+> `cargo metadata --no-deps --format-version=1 | python3 -c "import json,sys; print([p['name'] for p in json.load(sys.stdin)['packages']])"`
+> (prints `['codex-ingest', 'codex']`: two packages at the workspace root) and `python3 scripts/pcgen_residue_gate.py --check --closure`.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## What Codex is
 
-Codex is a desktop Pathfinder 1st Edition (PF1) character-management tool. It
+Codex is a desktop character-management tool for two game systems, Pathfinder 1st Edition (PF1) and Starfinder 1st Edition (SF1). It
 pairs a headless Rust rules-computation crate with a React/Tauri desktop
 shell, and it grounds its rule data in the real PCGen open-source corpus (a
 separate, unvendored checkout of `.pcc`/`.lst` files) rather than
@@ -94,6 +87,23 @@ flowchart LR
 talks to the ingest tooling at ingest time, never to the running app. CI is the only path from a
 developer's commit to a player's update.*
 
+## Two game systems, one engine
+
+`src/rules_core/game_system.rs` defines `GameSystem` (`Pathfinder1e`, `Starfinder1e`), whose wire ids are
+`pathfinder-1e` and `starfinder-1e`. The package roots (`GameSystem::package_roots`), the converter's book
+registries (`crates/codex-ingest/src/pcgen_import/system_books.rs`) and `sheet_rule_convert --system` are keyed by it,
+and an unknown id is an error, never a fallback to a default system. Not every root is: Pathfinder-only tools still
+name the Pathfinder corpus directly (`settled_corpus::CORPUS_ROOT` = `"data/corpus"`, read by
+`crates/codex-ingest/src/bin/gen_settled_corpus.rs` and `pcgen_import/corpus_settled_bundle.rs`). Pathfinder's paths are unchanged
+(`data/sheet_rules/`, `data/corpus/`); Starfinder's live under `data/starfinder-1e/` (`sheet_rules/` and
+`corpus/`, eight converted books). The saved-character envelope carries a `game_system` field, and the desktop
+routes a command to one of two `RuleSystemAdapter`s (see [desktop-app.md](./desktop-app.md) §"Rule-system adapter
+seam"). Both systems share the converter (`crates/codex-ingest`), the sheet-rule evaluator
+(`src/rules_core/sheet_rule.rs`) and the fail-honest explanation record. The Pathfinder side computes through
+per-domain engines and class tables; the Starfinder side has **no per-class, per-race or per-skill table**: the
+`sf_*` readers in `src/rules_core/pilot_compute/` total every number from the converted records the character
+holds (see [rules-engine.md](./rules-engine.md) §"Starfinder 1e: the generic chassis").
+
 ## The converter/live boundary
 
 *Load-bearing structural fact about this codebase — read it before the four planes below, because
@@ -133,8 +143,9 @@ live_files=0 live_hits=0 verdict=PASS
 ```
 
 **The tool side is never deleted.** The converter, the `.lst` parser, the generators, and the
-oracle harness are the reusable half — they are what a second game system (Starfinder) would be
-ingested with. Removing PCGen from the live side is not removing PCGen from the repo.
+oracle harness are the reusable half — Starfinder 1e was ingested with them (`sheet_rule_convert --system starfinder-1e`,
+`crates/codex-ingest/src/bin/sf_corpus.rs`, `scripts/oracle_harness/sf_parity_run.sh`). Removing PCGen from the live side is not
+removing PCGen from the repo.
 
 ## Workspace and crate dependency graph
 
@@ -172,7 +183,7 @@ its own `Cargo.lock` and `target/` — see [desktop-app.md](./desktop-app.md).
 ## The four planes
 
 **The core crate (`src/`, package `codex`).** A single, headless Rust crate
-(root `Cargo.toml`) that owns every PF1 rule computation and local
+(root `Cargo.toml`) that owns every PF1 and SF1 rule computation and local
 persistence. Nothing under `src/`
 depends on Tauri, any GUI framework, or PCGen's file format; it is tested entirely through
 `cargo test` and the repo-root `tests/*.rs` integration suite. This is the
@@ -190,7 +201,7 @@ depends on it. Nothing here ships in the desktop binary. See
 **The desktop app (`apps/desktop/`).** A React 18 + Tauri 2 application: a
 Vite-built TypeScript frontend and a thin Rust IPC shell
 (`apps/desktop/src-tauri/`, crate `codex-desktop`) that depends on the root
-`codex` crate by relative path. The frontend never computes PF1 rules itself
+`codex` crate by relative path. The frontend never computes rules itself
 — every real number it renders came from a Tauri command that calls into
 `codex::rules_core`. IPC calls are meant to flow through one dedicated
 wrapper per command family under `apps/desktop/src/boundary/`. See
@@ -226,7 +237,8 @@ flowchart TD
 
     subgraph diskdata["data/ (on disk, committed)"]
         DCORPUS["data/corpus/&lt;book&gt;/**/*.json\n+ _settled/&lt;kind&gt;.json bundles"]
-        DSHEET["data/sheet_rules/**/*.json"]
+        DSHEET["data/sheet_rules/**/*.json\n+ data/starfinder-1e/sheet_rules/**"]
+        DTABLES["data/rules_tables/&lt;table id&gt;.json\n(Pathfinder chassis tables)"]
     end
 
     subgraph rulescore["src/rules_core/ — compute spine (codex crate, live, no PCGen)"]
@@ -236,7 +248,8 @@ flowchart TD
         PCC2["pilot_compute_corpus.rs: compute_pilot_with_corpus"]
         VM["pilot_view_model.rs: PilotViewModel::from_receipt -> PilotSnapshot"]
         DOMAIN["per-domain engines: spellbook.rs, skill_allocation.rs,\nfeat_prereqs.rs, equipment_effects.rs, damage_total.rs, level_up.rs"]
-        TABLES["rules_tables/{crb,apg,acg,beastiary1}"]
+        TABLES["rules_catalog/&lt;book&gt;/*\n(package-backed Pathfinder tables)"]
+        SF["pilot_compute/sf_*.rs\n(Starfinder readers over the held records)"]
         SHEETRULE["sheet_rule.rs, via corpus_loader.rs::load_sheet_rules"]
         CONTRACT["contract.rs: to_pilot_receipt -> PilotReceipt,\nprinted_sheet_cell_map -> PrintedSheetCell\n(proof surface, exercised by tests/sd20_contract_*.rs)"]
     end
@@ -261,7 +274,10 @@ flowchart TD
     CI --> PCC2
     SC --> PCC2
     PC --> PCC2
+    DTABLES --> TABLES
     TABLES --> DOMAIN
+    DSHEET --> SF
+    SF --> CONTRACT
     SHEETRULE --> DOMAIN
     PCC2 --> CONTRACT
     DOMAIN --> CONTRACT
@@ -320,7 +336,7 @@ shaped the way it is:
   per-domain engine directly (the catalog commands — backed by
   `class_catalog.rs`, `race_catalog.rs`, `spell_catalog.rs`,
   `equipment_catalog.rs`, renamed off their originating `sd19_*` prefixes by
-  SD-24 criterion 1.1 — expose static `rules_tables` rows read-only, without
+  SD-24 criterion 1.1 — expose the package-backed table rows read-only, without
   computing anything).
   `src/rules_core/contract.rs`'s `PilotReceipt`/`printed_sheet_cell_map` is
   the machine-checked boundary-contract proof surface, exercised by
@@ -332,9 +348,10 @@ shaped the way it is:
   claim `'submitted'` without a transport-confirmed result. See
   [conventions.md](./conventions.md) for the full catalog.
 - **Static rule data is read, never inlined.** Every per-domain engine reads
-  `src/rules_core/rules_tables/` rather than embedding rule numbers in
-  compute code, via a direct fully-qualified `use` of the specific table
-  item — see [rules-data-tables.md](./rules-data-tables.md).
+  the package-backed catalog (`src/rules_core/rules_catalog/`, rows in `data/rules_tables/`) rather than
+  embedding rule numbers in compute code, via a direct fully-qualified `use` of the specific table
+  item — see [rules-data-tables.md](./rules-data-tables.md). The Starfinder readers
+  read the converted package under `data/starfinder-1e/sheet_rules/` the same way.
 
 ## Directory map
 
@@ -345,12 +362,12 @@ not structure, and are not listed below):
 
 | Top-level path | What it is | Owning doc |
 |---|---|---|
-| `src/` | The `codex` root crate: `rules_core/` (compute spine + per-domain engines + `rules_tables/`), `saved_character/`, `campaign/`, `homebrew_authoring/`, `support/` (shared path helpers, SD-36 C1.3), `bin/` (a small number of live-side binaries — `pi_sweep_rules_tables`, the `v06_*_dump` reporting bins) | [rules-engine.md](./rules-engine.md), [rules-data-tables.md](./rules-data-tables.md), [persistence.md](./persistence.md), [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
+| `src/` | The `codex` root crate: `rules_core/` (compute spine + per-domain engines + `rules_catalog/` + the `rules_data_package.rs` loader + `game_system.rs`), `saved_character/`, `campaign/`, `homebrew_authoring/`, `support/` (shared path helpers, SD-36 C1.3), `bin/` (a small number of live-side binaries — `pi_sweep_rules_tables`, `rules_tables_package`, `class_census`, the `v06_*_dump` reporting bins) | [rules-engine.md](./rules-engine.md), [rules-data-tables.md](./rules-data-tables.md), [persistence.md](./persistence.md), [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
 | `crates/codex-ingest/` | The `codex-ingest` crate: `crates/codex-ingest/src/pcgen_import/` (parser + `sheet_rule/` converter + `wiring_class.rs`), `crates/codex-ingest/src/oracle_validation/` (parity harness), `crates/codex-ingest/src/bin/` (`sheet_rule_convert`, every `gen_*`/`enrich_*` corpus-cache generator), its own `crates/codex-ingest/tests/` | [corpus-ingest.md](./corpus-ingest.md), [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
 | `apps/desktop/` | React 18 + Tauri 2 desktop shell: frontend under `src/` (screens, `boundary/*.ts` wrappers, `testSupport/`), Rust IPC shell under `src-tauri/` (`codex-desktop`, its own Cargo workspace) | [desktop-app.md](./desktop-app.md), [update-and-feedback.md](./update-and-feedback.md) |
-| `data/` | Committed, generated (never hand-edited) data: `data/corpus/<book>/**/*.json` (the JSON corpus cache, one dir per book, each carrying a `_settled/<kind>.json` pre-resolved bundle where applicable), `data/sheet_rules/<book>/<kind>/<key>.json` (the SD-35 sheet-rule schema, plus `_vars/`, `_defects/`, `_report.json`), `data/stubs/<book>.json` (future-state placeholders for out-of-scope books), `data/class_feature_grants/`, `data/converted/` | [rules-data-tables.md](./rules-data-tables.md), [corpus-ingest.md](./corpus-ingest.md), [status.md](./status.md) |
+| `data/` | Committed data: `data/rules_tables/<table id>.json` (the Pathfinder rules-table package, 281 files; normalised by `rules_tables_package`), `data/starfinder-1e/sheet_rules/` and `data/starfinder-1e/corpus/` (the Starfinder 1e converted package, generated), `data/corpus/<book>/**/*.json` (the JSON corpus cache, one dir per book, each carrying a `_settled/<kind>.json` pre-resolved bundle where applicable), `data/sheet_rules/<book>/<kind>/<key>.json` (the SD-35 sheet-rule schema, plus `_vars/`, `_defects/`, `_report.json`), `data/stubs/<book>.json` (future-state placeholders for out-of-scope books), `data/class_feature_grants/`, `data/converted/`. Converter and corpus-cache output is never hand-edited | [rules-data-tables.md](./rules-data-tables.md), [corpus-ingest.md](./corpus-ingest.md), [status.md](./status.md) |
 | `tests/` | Root-crate integration suite: one behavior per file, named by originating slice (`sd*`, `ge*`, `pcc_*`, `golden_case_*`); `tests/fixtures/`, `tests/support/` | [testing.md](./testing.md) |
-| `schemas/update/` | JSON Schemas for the update manifest and channel index the release pipeline validates against | [release-pipeline.md](./release-pipeline.md) |
+| `schemas/` | `schemas/update/` (JSON Schemas for the update manifest and channel index the release pipeline validates against), `schemas/rules/` (`sheet_rule.schema.json`, `var_table.schema.json`, `rules_tables.schema.json`, generated and checked by the `rules-schema-check` stage) | [release-pipeline.md](./release-pipeline.md), [rules-data-tables.md](./rules-data-tables.md) |
 | `scripts/` | Everything that is not a Cargo target or an npm script: `verify.sh` (the verification gate), `denominator_gate.py`/`pcgen_residue_gate.py`/`token_coverage.py` (the standing gates), `release/`, `tranche/`, `site/`, one-shot per-bundle census/ingest/classify scripts (most are named after the bundle that wrote them and are historical, not living infrastructure) | [testing.md](./testing.md), [release-pipeline.md](./release-pipeline.md) |
 | `tools/` | `ci/` (branch-promotion guard + its test), `release/` (legacy manifest validators consumed by CI) | [release-pipeline.md](./release-pipeline.md) |
 | `site/` | The public status/dashboard static site, deployed to Cloudflare Pages (see the `publish-site` skill) — a frozen snapshot per SD-36 D5, not a live-regenerated dashboard | [status.md](./status.md) |

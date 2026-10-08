@@ -7,7 +7,7 @@
 //! Epic 5's `equipment_effects.rs` output instead of re-deriving corpus
 //! lookups):
 //!
-//! 1. `rules_tables::crb::class_tables::class_tables()` (SD-19's
+//! 1. `rules_catalog::crb::class_tables::class_tables()` (SD-19's
 //!    foundation slice) for the class-generic BAB/save progression —
 //!    the class-generic pillars this table already carries.
 //! 2. `pilot_compute::compute_pilot_base_chassis`'s own
@@ -44,7 +44,7 @@
 //! per-level choice is the Rage Power list (granted at barbarian levels
 //! 2/4/6/8/10/12/14/16/18/20 per `BARBARIAN_RAGE_POWER_SLOTS` in
 //! `pilot_compute.rs`), and no Rage Power catalog exists anywhere in
-//! `rules_tables::crb` to enumerate real candidates from — fabricating a
+//! `rules_catalog::crb` to enumerate real candidates from — fabricating a
 //! candidate list would be exactly the counterfeit-completion risk
 //! `AGENTS.md` rules out. This is a documented, bounded scope note (like
 //! Epic 6's feat-effect modifier bounding to constant-valued feats only),
@@ -95,8 +95,8 @@ use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan, ResourcePoolDelta};
 use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, ComputationExplanation};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::class_tables::{class_tables, ClassId, ClassTableRow};
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::rules_catalog::crb::class_tables::{class_tables, ClassId, ClassTableRow};
+use crate::rules_core::rules_catalog::RuleSetId;
 
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const HUMAN_RACE_ID: &str = "race:human";
@@ -163,7 +163,7 @@ fn class_table_row(level: u8) -> Option<ClassTableRow> {
         .find(|row| row.class_id == ClassId::Barbarian && row.level == level)
 }
 
-/// Grants sourced from `rules_tables::crb::class_tables::class_tables()`
+/// Grants sourced from `rules_catalog::crb::class_tables::class_tables()`
 /// — the class-generic BAB/save progression pillars.
 fn append_class_table_grants(plan: &mut LevelUpPlan, from_level: u8, to_level: u8) {
     let Some(to_row) = class_table_row(to_level) else {

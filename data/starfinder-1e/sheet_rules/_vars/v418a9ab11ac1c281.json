@@ -1,0 +1,1 @@
+{"var":"v418a9ab11ac1c281","label":"Technomancer LVL","declared_by":["core:class:technomancer"],"contributions":[{"rule_id":"core:class:technomancer","expr":{"ClassLevel":"technomancer"},"when":"Always"}],"provenance":{}}

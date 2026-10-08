@@ -252,6 +252,7 @@ fn expr_unverifiable_reason(package: &SheetRulePackage, e: &Expr) -> Option<&'st
         Expr::MasterLevel | Expr::MasterVar(_) => Some("this character has no master"),
         Expr::Speed(_) => Some("movement-mode prerequisites are not modelled"),
         Expr::BaseSave(_) => Some("base saving-throw prerequisites are not modelled"),
+        Expr::KeyAbilityMod => Some("the character record carries no key ability"),
         // A variable folds through the package's own contributions -- a real evaluation over
         // what the character holds. Only a variable the package carries no table for is
         // undecidable.
@@ -287,6 +288,15 @@ fn expr_unverifiable_reason(package: &SheetRulePackage, e: &Expr) -> Option<&'st
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// SD-37 E2.1: the character record carries no key ability yet, so a prerequisite on its
+    /// modifier is reported unverified rather than decided against a 0.
+    #[test]
+    fn a_key_ability_prerequisite_is_unverified_without_a_key_ability_on_record() {
+        let package = SheetRulePackage::new();
+        let gate = Applies::Compare { lhs: Expr::KeyAbilityMod, op: crate::rules_core::sheet_rule::Cmp::Gte, rhs: Expr::Const(1) };
+        assert_eq!(unverifiable_reason(&package, &gate), Some("the character record carries no key ability"));
+    }
     use crate::rules_core::sheet_rule::{Ability, Cmp};
 
     fn facts_with_base_attack(base_attack: i64) -> CharacterFacts {

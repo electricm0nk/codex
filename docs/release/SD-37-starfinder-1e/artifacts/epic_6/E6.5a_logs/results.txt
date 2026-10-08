@@ -1,0 +1,8 @@
+desktop_full exit=0
+pf_hash_pair exit=0
+desktop_clippy exit=101
+root_clippy exit=1
+root_full exit=0
+frontend_test exit=0
+frontend_typecheck exit=0
+DONE

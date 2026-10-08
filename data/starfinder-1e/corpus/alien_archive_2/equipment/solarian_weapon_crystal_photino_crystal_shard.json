@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Solarian Weapon Crystal ~ Photino crystal (shard)",
+    "name": "Photino crystal, shard",
+    "type": "Weapon Crystal.Solarian Weapon Crystal"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 37,
+    "path": "starfinder/paizo/alien_archive_2/saa2_equip.lst",
+    "record_key": "Solarian Weapon Crystal ~ Photino crystal (shard)",
+    "sha256": "dbecc5c380f3c681431f6efec15c9342088b45fd267495725b03e6d844f0b83c"
+  },
+  "unit_id": "alien_archive_2:equipment:solarian_weapon_crystal_photino_crystal_shard"
+}

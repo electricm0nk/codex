@@ -1,0 +1,5 @@
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       1.5T  1.1T  391G  74% /
+               total        used        free      shared  buff/cache   available
+Mem:             134           6          42           0          86         127
+Swap:              0           0           0

@@ -1,0 +1,601 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "apg/alchemist_spell_list/ALCHEMIST_SPELL_LIST",
+  "licence": {
+    "license": "OGL",
+    "book": "apg",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    [
+      "Absorbing Touch",
+      3
+    ],
+    [
+      "Adhesive Blood",
+      2
+    ],
+    [
+      "Adhesive Spittle",
+      1
+    ],
+    [
+      "Adjustable Disguise",
+      3
+    ],
+    [
+      "Adjustable Polymorph",
+      4
+    ],
+    [
+      "Aid",
+      2
+    ],
+    [
+      "Air Step",
+      2
+    ],
+    [
+      "Air Walk",
+      4
+    ],
+    [
+      "Alchemical Allocation",
+      2
+    ],
+    [
+      "Alter Self",
+      2
+    ],
+    [
+      "Amplify Elixir",
+      3
+    ],
+    [
+      "Analyze Dweomer",
+      6
+    ],
+    [
+      "Anchored Step",
+      3
+    ],
+    [
+      "Ant Haul",
+      1
+    ],
+    [
+      "Arcane Eye",
+      4
+    ],
+    [
+      "Arcane Sight",
+      3
+    ],
+    [
+      "Aura Sight",
+      3
+    ],
+    [
+      "Barkskin",
+      2
+    ],
+    [
+      "Bear's Endurance",
+      2
+    ],
+    [
+      "Beast Shape I",
+      3
+    ],
+    [
+      "Beast Shape II",
+      4
+    ],
+    [
+      "Beast Shape III",
+      5
+    ],
+    [
+      "Beast Shape IV",
+      6
+    ],
+    [
+      "Blood Armor",
+      2
+    ],
+    [
+      "Blood Sentinel",
+      3
+    ],
+    [
+      "Bloodhound",
+      3
+    ],
+    [
+      "Blur",
+      2
+    ],
+    [
+      "Blurred Movement",
+      1
+    ],
+    [
+      "Body Capacitance",
+      1
+    ],
+    [
+      "Bomber's Eye",
+      1
+    ],
+    [
+      "Bull's Strength",
+      2
+    ],
+    [
+      "Cat's Grace",
+      2
+    ],
+    [
+      "Comprehend Languages",
+      1
+    ],
+    [
+      "Contact Other Plane",
+      5
+    ],
+    [
+      "Crafter's Fortune",
+      1
+    ],
+    [
+      "Cure Critical Wounds",
+      4
+    ],
+    [
+      "Cure Light Wounds",
+      1
+    ],
+    [
+      "Cure Moderate Wounds",
+      2
+    ],
+    [
+      "Cure Serious Wounds",
+      3
+    ],
+    [
+      "Darkvision",
+      2
+    ],
+    [
+      "Death Ward",
+      4
+    ],
+    [
+      "Delay Poison",
+      2
+    ],
+    [
+      "Delayed Consumption",
+      5
+    ],
+    [
+      "Detect Secret Doors",
+      1
+    ],
+    [
+      "Detect Thoughts",
+      2
+    ],
+    [
+      "Detect Undead",
+      1
+    ],
+    [
+      "Detonate",
+      4
+    ],
+    [
+      "Disable Construct",
+      3
+    ],
+    [
+      "Discern Lies",
+      4
+    ],
+    [
+      "Disguise Self",
+      1
+    ],
+    [
+      "Displacement",
+      3
+    ],
+    [
+      "Draconic Reservoir",
+      3
+    ],
+    [
+      "Dragon's Breath",
+      4
+    ],
+    [
+      "Dream",
+      5
+    ],
+    [
+      "Eagle's Splendor",
+      2
+    ],
+    [
+      "Elemental Aura",
+      3
+    ],
+    [
+      "Elemental Body I",
+      4
+    ],
+    [
+      "Elemental Body II",
+      5
+    ],
+    [
+      "Elemental Body III",
+      6
+    ],
+    [
+      "Elemental Touch",
+      2
+    ],
+    [
+      "Elude Time",
+      5
+    ],
+    [
+      "Enchantment Foil",
+      4
+    ],
+    [
+      "Endure Elements",
+      1
+    ],
+    [
+      "Enlarge Person",
+      1
+    ],
+    [
+      "Expeditious Retreat",
+      1
+    ],
+    [
+      "Extreme Flexibility",
+      2
+    ],
+    [
+      "Eyebite",
+      6
+    ],
+    [
+      "Eyes of the Void",
+      4
+    ],
+    [
+      "False Life",
+      2
+    ],
+    [
+      "Fire Breath",
+      2
+    ],
+    [
+      "Fire Shield",
+      4
+    ],
+    [
+      "Fluid Form",
+      4
+    ],
+    [
+      "Fly",
+      3
+    ],
+    [
+      "Focused Scrutiny",
+      2
+    ],
+    [
+      "Form of the Dragon I",
+      6
+    ],
+    [
+      "Fox's Cunning",
+      2
+    ],
+    [
+      "Freedom of Movement",
+      4
+    ],
+    [
+      "Gaseous Form",
+      3
+    ],
+    [
+      "Giant Form I",
+      6
+    ],
+    [
+      "Haste",
+      3
+    ],
+    [
+      "Heal",
+      6
+    ],
+    [
+      "Heightened Awareness",
+      1
+    ],
+    [
+      "Heroic Fortune",
+      2
+    ],
+    [
+      "Heroism",
+      3
+    ],
+    [
+      "Identify",
+      1
+    ],
+    [
+      "Investigative Mind",
+      2
+    ],
+    [
+      "Invisibility",
+      2
+    ],
+    [
+      "Invisibility (Greater)",
+      4
+    ],
+    [
+      "Invisibility Alarm",
+      1
+    ],
+    [
+      "Jump",
+      1
+    ],
+    [
+      "Keen Senses",
+      1
+    ],
+    [
+      "Levitate",
+      2
+    ],
+    [
+      "Long Arm",
+      1
+    ],
+    [
+      "Magic Jar",
+      5
+    ],
+    [
+      "Mislead",
+      6
+    ],
+    [
+      "Monkey Fish",
+      1
+    ],
+    [
+      "Nauseating Trail",
+      3
+    ],
+    [
+      "Negate Aroma",
+      1
+    ],
+    [
+      "Neutralize Poison",
+      4
+    ],
+    [
+      "Nightmare",
+      5
+    ],
+    [
+      "Nondetection",
+      3
+    ],
+    [
+      "Overland Flight",
+      5
+    ],
+    [
+      "Owl's Wisdom",
+      2
+    ],
+    [
+      "Perceive Cues",
+      2
+    ],
+    [
+      "Persistent Vigor",
+      4
+    ],
+    [
+      "Phantom Blood",
+      1
+    ],
+    [
+      "Planar Adaptation",
+      5
+    ],
+    [
+      "Plant Shape I",
+      5
+    ],
+    [
+      "Plant Shape II",
+      6
+    ],
+    [
+      "Polymorph",
+      5
+    ],
+    [
+      "Protection from Arrows",
+      2
+    ],
+    [
+      "Protection from Energy",
+      3
+    ],
+    [
+      "Rage",
+      3
+    ],
+    [
+      "Reduce Person",
+      1
+    ],
+    [
+      "Remove Blindness/Deafness",
+      3
+    ],
+    [
+      "Remove Curse",
+      3
+    ],
+    [
+      "Remove Disease",
+      3
+    ],
+    [
+      "Resist Energy",
+      2
+    ],
+    [
+      "Restoration",
+      4
+    ],
+    [
+      "Restoration (Lesser)",
+      2
+    ],
+    [
+      "Resurgent Transformation",
+      5
+    ],
+    [
+      "See Invisibility",
+      2
+    ],
+    [
+      "Seek Thoughts",
+      3
+    ],
+    [
+      "Sending",
+      5
+    ],
+    [
+      "Shadow Walk",
+      6
+    ],
+    [
+      "Shield",
+      1
+    ],
+    [
+      "Sonic Form",
+      6
+    ],
+    [
+      "Spell Immunity",
+      4
+    ],
+    [
+      "Spell Resistance",
+      5
+    ],
+    [
+      "Spider Climb",
+      2
+    ],
+    [
+      "Statue",
+      6
+    ],
+    [
+      "Stone Fist",
+      1
+    ],
+    [
+      "Stoneskin",
+      4
+    ],
+    [
+      "Thorn Body",
+      3
+    ],
+    [
+      "Tongues",
+      3
+    ],
+    [
+      "Touch of the Sea",
+      1
+    ],
+    [
+      "Transformation",
+      6
+    ],
+    [
+      "Transmute Potion to Poison",
+      2
+    ],
+    [
+      "True Seeing",
+      6
+    ],
+    [
+      "True Strike",
+      1
+    ],
+    [
+      "Twin Form",
+      6
+    ],
+    [
+      "Unbearable Brightness",
+      4
+    ],
+    [
+      "Undetectable Alignment",
+      2
+    ],
+    [
+      "Universal Formula",
+      4
+    ],
+    [
+      "Vomit Swarm",
+      2
+    ],
+    [
+      "Water Breathing",
+      3
+    ],
+    [
+      "Wind Walk",
+      6
+    ]
+  ]
+}

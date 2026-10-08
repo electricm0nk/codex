@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Polymorphic serum (mk 2)",
+    "name": "Polymorphic serum (mk 2)",
+    "type": "Magic.Serum.Consumable"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "starfinder/paizo/near_space/sns_equip_magic.lst",
+    "record_key": "Polymorphic serum (mk 2)",
+    "sha256": "faa64e4fe65a9de81f4d767a0e5ff54b3649e2c588379f4c0925dcf71dcc1484"
+  },
+  "unit_id": "near_space:equipment:polymorphic_serum_mk_2"
+}

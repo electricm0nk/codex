@@ -38,7 +38,7 @@
 //! distinct feat keys fold together. One key string does appear in two books
 //! -- `Endurance`, which Pathfinder Unchained re-lists from the Core Rulebook
 //! -- but those are one feat under one identity, not two the fold merged; see
-//! `rules_tables::feats_all`'s own
+//! `rules_catalog::feats_all`'s own
 //! `cross_book_key_collisions_are_exactly_the_known_set` for the corpus
 //! evidence.
 
@@ -110,7 +110,7 @@ pub fn count(selected_feats: &[String], feat_key: &str) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::rules_core::rules_tables::feats_all::all_feat_tables;
+    use crate::rules_core::rules_catalog::feats_all::all_feat_tables;
     use std::collections::HashMap;
 
     /// The exact input shapes `normalizeFeatIdentity` in
@@ -189,7 +189,7 @@ mod tests {
             }
         }
         // 1578 hand-authored records + the 649 corpus gap rows the feat gap
-        // lane joined on (`rules_tables::feat_gap_tables`: `SD31-E6-F8-001`'s
+        // lane joined on (`rules_catalog::feat_gap_tables`: `SD31-E6-F8-001`'s
         // original 83 + `SD31-E6-F8-002`'s 242 + `SD31-E6-F2-007`'s 199
         // Mythic Adventures rows -- SD31-W10-INTEGRATE-001 excluded 159
         // VISIBLE:EXPORT display-plumbing twins from the original 358 --

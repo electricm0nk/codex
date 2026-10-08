@@ -3,7 +3,7 @@
 //! `cargo run --locked --bin gen_cache_feat_gap` with `PCGEN_CORPUS_ROOT`
 //! pointing at a local PCGen `data/` checkout (defaults to
 //! `$HOME/workspace/repos/pcgen/data`). Writes `data/corpus/<book>/feat/
-//! *.json` for every book `rules_tables::feat_gap_tables` covers.
+//! *.json` for every book `rules_catalog::feat_gap_tables` covers.
 //!
 //! Mirrors `gen_cache_equipment_gap.rs`'s own posture exactly: an
 //! unresolved citation does NOT fail this binary (19 books, one file-set

@@ -4,7 +4,7 @@
 //!
 //! # What this is for
 //!
-//! `rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES` is 42 hand-typed rows.
+//! `rules_catalog::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES` is 42 hand-typed rows.
 //! Ruling 7 keeps those rows in Rust until Starfinder; it does not require new data to be
 //! authored as Rust. Every class WITHOUT a static row is answered here instead, from the grants
 //! the converter already wrote onto the class's own rules -- never from a new hand-typed row.
@@ -67,7 +67,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::sync::{Mutex, OnceLock};
 
 use crate::rules_core::level_up_option_filter::{describe_gate, describe_prof};
-use crate::rules_core::rules_tables::crb::weapon_tables::WeaponProficiency;
+use crate::rules_core::rules_catalog::crb::weapon_tables::WeaponProficiency;
 use crate::rules_core::sheet_rule::{
     held_set, resolve_gated_fact_grant, split_rule_id, Applies, BonusTarget, CharacterFacts, Choice, Effect, EvalContext, Expr,
     Fact, GatedFact, Granter, HeldSeed, HeldSet, Holdable, OptionSet, ProfRef, RuleId, SheetRule, SheetRulePackage,

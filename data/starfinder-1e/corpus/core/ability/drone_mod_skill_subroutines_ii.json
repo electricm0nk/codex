@@ -1,0 +1,20 @@
+{
+  "data": {
+    "category": "Class Feature",
+    "key": "Drone Mod ~ Skill Subroutines II",
+    "name": "Skill Subroutines (Adv.)",
+    "type": "Drone Mod.Class Feature.Extraordinary"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1487,
+    "path": "starfinder/paizo/core/scr_abilities.lst",
+    "record_key": "Drone Mod ~ Skill Subroutines II",
+    "sha256": "dfd415e1ab4cbef3c0417edecd59e13a7a116cad2086fcf2773dbafcb78711f5"
+  },
+  "unit_id": "core:ability:drone_mod_skill_subroutines_ii"
+}

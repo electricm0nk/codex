@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Transcribe one book's `monster` / `monster_ability` rows into a Rust table.
+"""Transcribe one book's `monster` / `monster_ability` rows into the `rules_tables` data package.
+
+Writes `data/rules_tables/<book>/monster_data/{MONSTERS,MONSTER_ABILITIES}.json`
+(SD-37 E4a.4a; E4a.4 removed the compiled `monster_data.rs` modules this used to
+write) and normalises them with `rules_tables_package --write`
+(`scripts/rules_tables_package_out.py`). Run it from the repo root.
 
 The Bonus Bestiary pilot (SD-29 Epic 5) produced its `monster_data.rs` with a
 *throwaway* parser that was described in a receipt but never checked in, so the
@@ -42,6 +47,7 @@ from codex_neutral_name import (  # noqa: E402
     neutral_key,
     neutral_name,
 )
+import rules_tables_package_out as package_out  # noqa: E402
 
 # Book id -> path of the book's directory relative to the PCGen `data/` root.
 # The two `.lst` file names are read from the inventory units themselves, so
@@ -543,18 +549,6 @@ def token(row: list[str], prefix: str) -> str | None:
         if field.startswith(prefix):
             return field[len(prefix) :]
     return None
-
-
-def rust_str(value: str) -> str:
-    return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
-
-
-def rust_opt(value: str | None) -> str:
-    return f"Some({rust_str(value)})" if value is not None else "None"
-
-
-def rust_slice(values: list[str]) -> str:
-    return "&[" + ", ".join(rust_str(v) for v in values) + "]"
 
 
 def parse_speeds(row: list[str]) -> list[tuple[str, int]]:
@@ -1614,13 +1608,61 @@ def cross_table_served_monster_keys(corpus_dir: str) -> set[str]:
     return served
 
 
-def transcribe(book: str, provisional_facets: dict[str, str] | None = None) -> str:
+CHOSEN_OPTION = "the chosen option"
+
+
+def in_the_rules_words(
+    description: str | None, variables: list[str]
+) -> tuple[str | None, list[str]]:
+    """The words a player reads, not PCGen's tokens -- SD-35
+    `AT-35-E6-003-SWEEP` cycle 11 (`208ebf1e21`), which made these edits by
+    hand in the generated tables; SD-37 E4a.4a moves them here so a re-run
+    reproduces the data package instead of reverting them.
+
+    * a `description_variables` slot that IS `%CHOICE` or `%LIST` (PCGen's two
+      spellings of "the option this character chose") becomes
+      `"the chosen option"`, the phrase the converter already prints for both
+      (`pcgen_import::sheet_rule::convert::tag_word`);
+    * a slot that is a bare `TYPE=<word>` bonus-type qualifier becomes the
+      word, as `tag_word` strips it;
+    * a `DESC:` token name the multi-`DESC:` concatenation carried into the
+      text (`" DESC:&nl; "`) is dropped; the `&nl;` beside it stays.
+
+    No slot is added or removed, so every positional `%N` read is unchanged."""
+    words = []
+    for value in variables:
+        if value in ("%CHOICE", "%LIST"):
+            words.append(CHOSEN_OPTION)
+        elif value.startswith("TYPE=") and "," not in value and "=" not in value[5:]:
+            words.append(value[5:])
+        else:
+            words.append(value)
+    if description is not None:
+        description = description.replace(" DESC:&nl; ", "&nl; ")
+    return description, words
+
+
+class Transcription:
+    """One book's transcription: `tables` maps each package table name
+    (`MONSTERS`, `MONSTER_ABILITIES`) to its rows, each row a dict shaped
+    field for field like the row type `rules_catalog::monster_chassis` loads
+    (`MonsterStatBlock`, `MonsterAbilityRecord`); `notes` are the provenance
+    lines (dropped, renamed, redacted, orphan rows and why), which
+    `write_book` prints."""
+
+    def __init__(self, tables: dict[str, list[dict]], notes: list[str]) -> None:
+        self.tables = tables
+        self.notes = notes
+
+
+def transcribe(
+    book: str, provisional_facets: dict[str, str] | None = None
+) -> Transcription:
     """`provisional_facets`, if given, is filled IN PLACE with
     `{corpus_key: reason}` for every ability row this call defaults via
     `decisions.md §27` (see `parse_type_or_provisional_default`). Optional
-    and defaults to a throwaway dict so every existing caller's
-    `transcribe(book) -> str` signature is unchanged -- only `write_book`
-    passes a real dict, to hand the population to the stamping step."""
+    and defaults to a throwaway dict -- only callers that hand the
+    population to the stamping step pass a real one."""
     if provisional_facets is None:
         provisional_facets = {}
     book_relative = BOOKS[book]
@@ -2500,151 +2542,95 @@ def transcribe(book: str, provisional_facets: dict[str, str] | None = None) -> s
         )
         for key in sorted(provisional_facets):
             out.append(f"//!   * `{key}` ({provisional_facets[key]})")
-    out.append("")
-    # `MonsterSpellLikeAbility` is imported only when this book actually
-    # constructs one. Four registered books (Monster Codex, both Book of the
-    # Damned volumes, Horror Adventures) carry no `SPELLS:` grant on any
-    # monster row at all, and an unconditional import there is an
-    # `unused_imports` warning in a generated file -- which is noise the next
-    # reader has to re-diagnose, not a harmless extra line.
-    imports = [
-        "MonsterAbilityDelivery",
-        "MonsterAbilityFacet",
-        "MonsterAbilityRecord",
-    ]
-    if any(parse_spell_like_abilities(monster_rows[u["corpus_key"]]) for u in monsters):
-        imports.append("MonsterSpellLikeAbility")
-    imports += ["MonsterStatBlock", "NaturalAttack", "Speed", "StatAdjustment"]
-    out.append(
-        "use crate::rules_core::rules_tables::monster_chassis::{"
-        + ", ".join(imports)
-        + "};"
-    )
-    out.append("")
-    out.append(f"/// Every {book} monster stat block ({len(monsters)} rows).")
-    out.append("pub(super) static MONSTERS: &[MonsterStatBlock] = &[")
+    # The header lines above are the transcription's provenance notes (which
+    # rows were dropped, renamed, redacted, left orphan, and why). The data
+    # package carries rows only, so `write_book` prints them instead of
+    # writing them into a generated source file (SD-37 E4a.4a).
+    notes = [line[4:] if line.startswith("//! ") else line[3:] for line in out]
+
+    monster_table: list[dict] = []
     for unit in monsters:
         key = unit["corpus_key"]
         row = monster_rows[key]
-        speeds = parse_speeds(row)
-        attacks = parse_natural_attacks(row)
-        stat_adjustments = parse_stat_adjustments(row)
-        has_spell_like_abilities = parse_has_spell_like_abilities(row)
-        sla_cl_token = parse_sla_cl_token(row)
-        out.append("    MonsterStatBlock {")
-        out.append(f"        key: {rust_str(key)},")
-        out.append(f"        name: {rust_str(unit['name'])},")
-        out.append(f"        size: {rust_opt(parse_size(row))},")
-        out.append(
-            "        speeds: &["
-            + ", ".join(
-                f'Speed {{ mode: {rust_str(m)}, feet: {f} }}' for m, f in speeds
-            )
-            + "],"
+        monster_table.append(
+            {
+                "key": key,
+                "name": unit["name"],
+                "size": parse_size(row),
+                "speeds": [{"mode": m, "feet": f} for m, f in parse_speeds(row)],
+                "race_type": token(row, "RACETYPE:"),
+                "race_subtype": token(row, "RACESUBTYPE:"),
+                "challenge_rating": token(row, "CR:"),
+                "monster_class": token(row, "MONSTERCLASS:"),
+                "source_page": token(row, "SOURCEPAGE:"),
+                "natural_attacks": [
+                    {"name": n, "damage_dice": d} for n, d in parse_natural_attacks(row)
+                ],
+                "stat_adjustments": [
+                    {"ability": a, "amount": v} for a, v in parse_stat_adjustments(row)
+                ],
+                "has_spell_like_abilities": bool(parse_has_spell_like_abilities(row)),
+                "sla_cl_token": parse_sla_cl_token(row),
+                "spell_like_abilities": [
+                    {
+                        "label": label,
+                        "times": times,
+                        "time_unit": time_unit,
+                        "caster_level_token": caster_level,
+                        "spell": spell,
+                        "save_dc_token": save_dc,
+                    }
+                    for label, times, time_unit, caster_level, spell, save_dc
+                    in parse_spell_like_abilities(row)
+                ],
+                "ability_keys": [emitted_ability_key(k) for k in monster_ability_keys[key]],
+                "external_ability_refs": list(external[key]),
+                "source_file": unit["source_file"],
+                "source_line": unit["source_line"],
+            }
         )
-        out.append(f"        race_type: {rust_opt(token(row, 'RACETYPE:'))},")
-        out.append(f"        race_subtype: {rust_opt(token(row, 'RACESUBTYPE:'))},")
-        out.append(f"        challenge_rating: {rust_opt(token(row, 'CR:'))},")
-        out.append(f"        monster_class: {rust_opt(token(row, 'MONSTERCLASS:'))},")
-        out.append(f"        source_page: {rust_opt(token(row, 'SOURCEPAGE:'))},")
-        out.append(
-            "        natural_attacks: &["
-            + ", ".join(
-                f"NaturalAttack {{ name: {rust_str(n)}, damage_dice: {rust_opt(d)} }}"
-                for n, d in attacks
-            )
-            + "],"
-        )
-        out.append(
-            "        ability_keys: "
-            f"{rust_slice([emitted_ability_key(k) for k in monster_ability_keys[key]])},"
-        )
-        out.append(f"        external_ability_refs: {rust_slice(external[key])},")
-        out.append(
-            "        stat_adjustments: &["
-            + ", ".join(
-                f"StatAdjustment {{ ability: {rust_str(a)}, amount: {v} }}"
-                for a, v in stat_adjustments
-            )
-            + "],"
-        )
-        out.append(
-            f"        has_spell_like_abilities: {'true' if has_spell_like_abilities else 'false'},"
-        )
-        out.append(f"        sla_cl_token: {rust_opt(sla_cl_token)},")
-        out.append(
-            "        spell_like_abilities: &["
-            + ", ".join(
-                "MonsterSpellLikeAbility { "
-                f"label: {rust_str(label)}, "
-                f"times: {rust_opt(times)}, "
-                f"time_unit: {rust_opt(time_unit)}, "
-                f"caster_level_token: {rust_opt(caster_level)}, "
-                f"spell: {rust_str(spell)}, "
-                f"save_dc_token: {rust_opt(save_dc)} }}"
-                for label, times, time_unit, caster_level, spell, save_dc
-                in parse_spell_like_abilities(row)
-            )
-            + "],"
-        )
-        out.append(f"        source_file: {rust_str(unit['source_file'])},")
-        out.append(f"        source_line: {unit['source_line']},")
-        out.append("    },")
-    out.append("];")
-    out.append("")
-    out.append(f"/// Every {book} monster-ability record ({len(abilities)} rows).")
-    out.append("pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[")
+
+    ability_table: list[dict] = []
     for unit in abilities:
         row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
         facet, delivery, traits, facet_provisional_reason = parse_type_or_provisional_default(row)
         if facet_provisional_reason:
             provisional_facets[unit["corpus_key"]] = facet_provisional_reason
         description, variables = parse_desc(row)
+        description, variables = in_the_rules_words(description, variables)
         if unit["corpus_key"] in desc_redacted:
             # `DESCISPI:YES`, or an undeclared blacklist-term hit found by
-            # scanning -- either way the redaction promised by the module
-            # doc's own listing above. The `%N` placeholders in `description`
-            # name variables from the ORIGINAL text, which no longer ships,
-            # so they are cleared too rather than left dangling against a
-            # marker string that contains no `%N` for them to refer to.
+            # scanning -- either way the redaction promised by the notes
+            # above. The `%N` placeholders in `description` name variables
+            # from the ORIGINAL text, which no longer ships, so they are
+            # cleared too rather than left dangling against a marker string
+            # that contains no `%N` for them to refer to.
             description = redacted_pi_marker()
             variables = []
         renamed = name_renamed.get(unit["corpus_key"])
-        emitted_key = renamed[1] if renamed else unit["corpus_key"]
-        emitted_name = renamed[0] if renamed else unit["name"]
-        out.append("    MonsterAbilityRecord {")
-        out.append(f"        key: {rust_str(emitted_key)},")
-        out.append(f"        name: {rust_str(emitted_name)},")
-        out.append(f"        facet: MonsterAbilityFacet::{facet},")
-        out.append(
-            "        delivery: "
-            + (
-                f"Some(MonsterAbilityDelivery::{delivery})"
-                if delivery
-                else "None"
-            )
-            + ","
+        ability_table.append(
+            {
+                "key": renamed[1] if renamed else unit["corpus_key"],
+                "name": renamed[0] if renamed else unit["name"],
+                "facet": facet,
+                "delivery": delivery or None,
+                "traits": list(traits),
+                "description": description,
+                "description_variables": list(variables),
+                "source_page": token(row, "SOURCEPAGE:"),
+                "owners": list(owners[unit["corpus_key"]]),
+                "source_file": unit["source_file"],
+                "source_line": unit["source_line"],
+                # `decisions.md §24b`-3: "a field marks it as carrying a
+                # Codex-generated name". `§24b`-4: the divergence record stops
+                # at the coordinate -- never the original string.
+                "codex_generated_name": bool(renamed),
+                "rename_reason": "name_pi_blocked" if renamed else None,
+                "rename_coordinate": (
+                    f"{book}:{unit['source_file']}:{unit['source_line']}" if renamed else None
+                ),
+            }
         )
-        out.append(f"        traits: {rust_slice(traits)},")
-        out.append(f"        description: {rust_opt(description)},")
-        out.append(f"        description_variables: {rust_slice(variables)},")
-        out.append(f"        source_page: {rust_opt(token(row, 'SOURCEPAGE:'))},")
-        out.append(f"        owners: {rust_slice(owners[unit['corpus_key']])},")
-        out.append(f"        source_file: {rust_str(unit['source_file'])},")
-        out.append(f"        source_line: {unit['source_line']},")
-        # `decisions.md §24b`-3: "a field marks it as carrying a
-        # Codex-generated name". `§24b`-4: the divergence record stops at
-        # the coordinate -- never the original string.
-        out.append(f"        codex_generated_name: {'true' if renamed else 'false'},")
-        out.append(f"        rename_reason: {rust_opt('name_pi_blocked' if renamed else None)},")
-        out.append(
-            "        rename_coordinate: "
-            + rust_opt(f"{book}:{unit['source_file']}:{unit['source_line']}" if renamed else None)
-            + ","
-        )
-        out.append("    },")
-    out.append("];")
-    out.append("")
     if provisional_facets:
         print(
             f"{book}: {len(provisional_facets)} ability row(s) shipped with a "
@@ -2654,7 +2640,10 @@ def transcribe(book: str, provisional_facets: dict[str, str] | None = None) -> s
             + ", ".join(sorted(provisional_facets)),
             file=sys.stderr,
         )
-    return "\n".join(out)
+    return Transcription(
+        tables={"MONSTERS": monster_table, "MONSTER_ABILITIES": ability_table},
+        notes=notes,
+    )
 
 
 # The `data/corpus/` directory name a book's chassis output actually lands
@@ -2682,49 +2671,67 @@ def provisional_facet_units(book: str) -> dict[str, str]:
     return provisional_facets
 
 
-def write_book(book: str) -> str:
-    """Transcribe `book` and write it to its `monster_data.rs`, atomically.
+def table_ids(book: str) -> dict[str, str]:
+    """The data-package table id of each of `book`'s two tables."""
+    return {name: f"{book}/monster_data/{name}" for name in ("MONSTERS", "MONSTER_ABILITIES")}
+
+
+def write_book(book: str, repo_root: str = package_out.REPO_ROOT) -> list[str]:
+    """Transcribe `book` and write its two tables into the `rules_tables`
+    data package (`data/rules_tables/<book>/monster_data/{MONSTERS,
+    MONSTER_ABILITIES}.json`, SD-37 E4a.4a), then normalise the package.
 
     `transcribe()` can raise partway through a book with real, un-fabricatable
     problems (an orphan-owning row whose `DESC:` shape `parse_desc` refuses,
     `SD31-E6-F9-002`'s own `ce_abilities_race.lst:1955`/`:2043` finding) --
     that is the transcriber correctly REFUSING rather than guessing, not a bug.
-    The bug this guards is orthogonal: `main()` used to `open(path, "w")`
-    *before* calling `transcribe()`, which truncates the target file to 0
-    bytes immediately, so a mid-`transcribe()` raise left the file empty --
-    confirmed live twice in one cycle (`SD31-E6-F9-002`, `bestiary` and
-    `bestiary_2`; both were the committed, unmodified file at the time, so
-    `git checkout --` would have equally recovered them -- a WORKING tree with
-    uncommitted local changes queued for this same book would not have had
-    that luxury). `transcribe()`
-    is computed FIRST, in full, into a string; the file on disk is touched
-    only after that succeeds, and a raise leaves the existing file exactly as
-    it was.
-
-    The write itself is now genuinely atomic too (`SD31-W9-INTEGRATE-001`
-    finding: the word was true of the compute-then-write ordering above but
-    not of the write call itself -- an interruption or disk-full error
-    mid-`handle.write()` could still have left a truncated file on disk,
-    the identical failure mode this docstring's own word promises against).
-    Writes to a same-directory temp file first, then `os.replace()`s it onto
-    the real path -- `os.replace` is a single filesystem rename, so the
-    target either has the OLD complete content or the NEW complete content,
-    never a partial write, on every platform this repo runs on.
+    `transcribe()` therefore runs FIRST, in full; the package is touched only
+    after it succeeds, so a raise leaves every existing file exactly as it
+    was (`SD31-W9-INTEGRATE-001`: each file is written to a same-directory
+    temp file and `os.replace()`d, a single rename, never a partial write).
     """
-    path = f"src/rules_core/rules_tables/{book}/monster_data.rs"
-    content = transcribe(book)
-    tmp_path = f"{path}.tmp"
-    with open(tmp_path, "w", encoding="utf-8") as handle:
-        handle.write(content)
-    os.replace(tmp_path, path)
-    return path
+    transcription = transcribe(book)
+    tables = {
+        table_id: [strip_citation_extension_value(row) for row in transcription.tables[name]]
+        for name, table_id in table_ids(book).items()
+    }
+    for note in transcription.notes:
+        print(note)
+    written = package_out.write_tables(tables, repo_root)
+    normalise_package()
+    package_out.check_written(written)
+    return written
+
+
+def normalise_package() -> None:
+    """`rules_tables_package --write` (re-stamps and canonicalises the files
+    `write_book` wrote). A module attribute so a test can stand it down."""
+    package_out.normalise_package()
+
+
+def strip_citation_extension(text: str) -> str:
+    """SD-37 E4a.3: the tables cite a source file by its stem, never with the list-file
+    extension. The corpus is still read with the real file names; only the emitted citation
+    changes, so this runs on the finished rows, once, at the point they are written."""
+    return re.sub(r"(?<=[A-Za-z0-9_])\.lst\b", "", text)
+
+
+def strip_citation_extension_value(value):
+    """`strip_citation_extension` over every string inside a row (dicts, lists, scalars)."""
+    if isinstance(value, str):
+        return strip_citation_extension(value)
+    if isinstance(value, list):
+        return [strip_citation_extension_value(v) for v in value]
+    if isinstance(value, dict):
+        return {k: strip_citation_extension_value(v) for k, v in value.items()}
+    return value
 
 
 def main() -> None:
     if len(sys.argv) != 2 or sys.argv[1] not in BOOKS:
         raise SystemExit(f"usage: {sys.argv[0]} <{'|'.join(sorted(BOOKS))}>")
-    path = write_book(sys.argv[1])
-    print(f"wrote {path}")
+    for path in write_book(sys.argv[1]):
+        print(f"wrote {path}")
 
 
 if __name__ == "__main__":

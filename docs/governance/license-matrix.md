@@ -212,3 +212,64 @@ This is a record for the operator's own disposition — including whether the ne
 prerequisite work is wiring `pi_screening::classify_field` into the extraction
 scripts that write `rules_tables/*.rs`, before any kind-scoped package runs against
 a book that has never passed through it.
+
+## Starfinder 1e (SD-37 E0.2, 2026-10-02)
+
+**Scope.** One row per Starfinder `.pcc` that carries data, at the pinned oracle
+(`scripts/pcgen-oracle-pin.env`, `PCGEN_ORACLE_SHA=7f818006e3…`), resolved via
+`$PCGEN_CORPUS_ROOT/starfinder/`. The corpus has 12 `.pcc` files (CUI F-2); 11 carry data.
+The twelfth, `starfinder/paizo/master_loader.pcc` (`BOOKTYPE:MultiSet`, the only SF PCC with
+`ISOGL:YES`), is a loader with no `.lst` of its own and gets no row.
+
+**Nothing below is legal clearance.** The same limit as the Pathfinder table above applies. Every
+row's `operator_sign_off` is **false**: only the operator signs. A book is ingested only if its row
+says `include`. Where E0.2 could not settle a book's licence or PI status, it is excluded under the
+safe default (`docs/release/SD-37-starfinder-1e/decisions.md §6`, §12.1 SD-a).
+
+**Evidence command** (every column except the last three is printed by it):
+`python3 docs/release/SD-37-starfinder-1e/artifacts/epic_0/sf_licence_evidence.py` → output committed
+at `docs/release/SD-37-starfinder-1e/artifacts/epic_0/E0.2_licence_evidence.tsv`. Rows = the F-6
+predicate (`content-unit-inventory.md §1`); the 11 rows sum to 12,947 = F-6 total (the script
+prints `TOTAL_ROWS 12947`), in-scope 12,718 + excluded 229.
+
+| PCC (under `$PCGEN_CORPUS_ROOT`) | code | publisher (`PUBNAMELONG`) | `OGL.txt` (lines) | active `COPYRIGHT:` lines / OGL 1.0a line | `ISOGL` | Paizo Community Use `INFOTEXT` | licence | PI posture | data rows | include / exclude | `operator_sign_off` |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| `starfinder/paizo/core` (`_starfinder_core_rulebook.pcc`) | SCR | Paizo | yes (103) | 4 / yes | absent | yes | OGL 1.0a; §15 notice names Starfinder Core Rulebook © 2017 Paizo Inc. (`OGL.txt`) | Paizo SF PI declaration (see `ogl-pi-blacklist.md §7`); screen with `classify_field_sf` | 5,959 | **include** (proof book) | false |
+| `starfinder/paizo/core/_society` (`_.pcc`) | — | none | **no** | 0 / no | absent | no | **none declared** — no `COPYRIGHT:`, no `OGL.txt`, no `ISOGL`; content is the SFS Roleplaying Guild Guide's core mods, whose own PCC (row below) reads "All Rights Reserved" | unsettled | 15 | **exclude** (SD-a) | false |
+| `starfinder/paizo/armory` (`_starfinder_armory.pcc`) | SA | Paizo | yes (42) | 6 / yes | absent | yes | OGL 1.0a; `COPYRIGHT:` names Starfinder Armory © 2018 Paizo Inc. | Paizo SF PI declaration; `classify_field_sf` | 2,977 | **include** | false |
+| `starfinder/paizo/character_operations_manual` (`_character_operations_manual.pcc`) | SCOM | Paizo | yes (41) | 5 / yes | absent | yes | OGL 1.0a; `COPYRIGHT:` names Character Operations Manual © 2019 Paizo Inc. | Paizo SF PI declaration; `classify_field_sf` | 1,507 | **include** | false |
+| `starfinder/paizo/pact_worlds` (`_starfinder_pact_worlds.pcc`) | SPW | Paizo | yes (22) | 8 / yes | absent | yes | OGL 1.0a; `COPYRIGHT:` names Pact Worlds © 2018 Paizo Inc. and Tome of Horrors Complete (Necromancer Games) | Paizo SF PI declaration; densest proper-noun book (setting gazetteer); `classify_field_sf` | 527 | **include** | false |
+| `starfinder/paizo/near_space` (`_near_space.pcc`) | SNS | Paizo | yes (40) | 5 / yes | absent | yes | OGL 1.0a; `COPYRIGHT:` names Near Space © 2020 Paizo Inc. | Paizo SF PI declaration; `classify_field_sf` | 396 | **include** | false |
+| `starfinder/paizo/alien_archive` (`_starfinder_alien_archive.pcc`) | SAA | Paizo | yes (40) | 4 / yes | absent | yes | OGL 1.0a; `COPYRIGHT:` names Alien Archive © 2017 Paizo Inc. | Paizo SF PI declaration; `classify_field_sf` | 488 | **include** | false |
+| `starfinder/paizo/alien_archive_2` (`_starfinder_alien_archive_2.pcc`) | SAA2 | Paizo | yes (40) | 4 / yes | absent | yes | OGL 1.0a; `COPYRIGHT:` names Alien Archive 2 © 2018 Paizo Inc. | Paizo SF PI declaration; `classify_field_sf` | 519 | **include** | false |
+| `starfinder/paizo/alien_archive_3` (`_starfinder_alien_archive_3.pcc`) | SAA3 | Paizo | yes (39) | 4 / yes | absent | yes | OGL 1.0a; `COPYRIGHT:` names Alien Archive 3 © 2018 Paizo Inc. | Paizo SF PI declaration; `classify_field_sf` | 345 | **include** | false |
+| `starfinder/paizo/starfinder_society_rules` (`_sfs.pcc`) | SSRGG | Paizo | yes (122) | 5 / yes | absent | yes | **"All Rights Reserved"** (`COPYRIGHT:` "Starfinder Society Roleplaying Guild Guide, Version 1.0 © 2017, Paizo Inc. All Rights Reserved.") plus a Paizo trademark line; its `OGL.txt` carries the Paizo SF Product Identity declaration (lines 112-117) | campaign-organisation rules, not a rules book; reserved | 177 | **exclude** (`decisions.md §6`) | false |
+| `starfinder/lpj_design/infinite_space` (`themes/theme_outlaw_crew/_lpj9304.pcc`) | LPJ9304 | Louis Porter Jr. Design, Inc. | yes (60) | 15 / yes | absent | no | OGL 1.0a declared by the third-party publisher; its `COPYRIGHT:` block cites Modern SRD and Ronin Arts / Expeditious Retreat Press works — **not verified** against those sources | third-party, no PI declaration found in its `OGL.txt` (script column `PI_declaration_in_OGL.txt` = False) | 37 | **exclude** (`decisions.md §6`; SD-a) | false |
+
+**Sum check:** included 5,959 + 2,977 + 1,507 + 527 + 396 + 488 + 519 + 345 = 12,718; excluded
+15 + 177 + 37 = 229; 12,718 + 229 = 12,947 (CUI F-6).
+
+**Findings E0.2 adds to the authoring roster.**
+
+1. **No SF book PCC carries `ISOGL`.** The authoring roster read "OGL 1.0a COPYRIGHT"; that is
+   true, but the `ISOGL:YES` flag the Pathfinder table relies on is absent from all 11 data PCCs
+   and present only on `master_loader.pcc`. The licence evidence for each included book is its
+   active `COPYRIGHT:` OGL 1.0a line plus a present `OGL.txt`.
+2. **`_society/_.pcc` declares nothing.** It has no `COPYRIGHT:`, no `OGL.txt` and no
+   `PUBNAMELONG`. Its exclusion is therefore not only "same content as SSRGG" (`decisions.md §6`)
+   but "no licence declared at all", which SD-a excludes on its own.
+3. **Paizo's SF Product Identity declaration is in the corpus.** Only the SSRGG `OGL.txt`
+   carries it (`grep -a -n 'hereby identified' $PCGEN_CORPUS_ROOT/starfinder/paizo/starfinder_society_rules/OGL.txt`
+   → line 112). The included books' `OGL.txt` files carry the license text and §15 notice but
+   not the declaration paragraph. The declaration is Paizo's standard SF wording; E0.2 uses it
+   as the source of the SF term set's categories (`ogl-pi-blacklist.md §7`), which is a
+   reading, not a legal finding.
+4. **Community Use Policy.** 9 of the 10 Paizo data PCCs (all except `_society/_.pcc`; script
+   column `Community_Use_INFOTEXT`) carry the
+   Paizo Community Use Policy `INFOTEXT` ("This dataset uses trademarks and/or copyrights owned by
+   Paizo Inc., which are used under Paizo's Community Use Policy…"). That policy covers PCGen's own
+   distribution; whether it extends to Campaign Codex is an operator question, recorded here and
+   not decided by E0.2.
+
+**Revisit:** if the operator verifies the LPJ licence, flip its row to `include` and add a go-wide
+cycle for its 37 rows (`decisions.md §6`). SSRGG and `_society` stay out unless Paizo's terms change.

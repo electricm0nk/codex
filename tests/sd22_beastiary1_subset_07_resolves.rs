@@ -20,8 +20,8 @@
 //! **Assassin Vine** (line 29), **Centaur** (line 60), **Cockatrice**
 //! (line 73), **Derro** (line 104).
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::beastiary1::{MonsterId, monster_key_resolve, monster_resolve};
 
 #[test]
 fn ankheg_resolves_via_ruleset_bestiary1() {

@@ -69,7 +69,7 @@ use codex::rules_core::derived_evaluator_fixture_check::{
     load_monster_ability_fixtures, load_monster_ability_formula_fixtures, monster_ability_save_dc,
     monster_ability_formula_save_dc, universal_monster_rule_save_dc_base,
 };
-use codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS;
+use codex::rules_core::rules_catalog::monster_chassis::MONSTER_BOOKS;
 
 fn repo_root() -> PathBuf {
     codex_ingest::repo_root()
@@ -563,7 +563,7 @@ fn a_wrong_universal_monster_rule_base_makes_the_bar_check_fail() {
 // ---------------------------------------------------------------------------
 
 use codex_ingest::bar_check::run_bar_check;
-use codex::rules_core::rules_tables::monster_chassis::{
+use codex::rules_core::rules_catalog::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
 };
 

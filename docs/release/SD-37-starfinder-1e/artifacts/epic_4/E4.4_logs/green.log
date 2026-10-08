@@ -1,0 +1,31 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 23 tests
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_a_choice_key_ability_without_a_legal_choice_is_refused ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_chassis_totals_match_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_core_player_class_has_a_chassis_at_level_1 ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_every_term_names_its_source ... ok
+test rules_core::pilot_compute::sf_chassis::sf_seed::sf_seed_key_ability_is_read_from_the_class ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_a_record_that_is_not_armour_is_refused ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_increases_at_10_15_20_follow_the_17_rule ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_eac_kac_initiative_match_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_every_ac_term_names_its_source ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_the_5th_level_increase_raises_four_scores ... ok
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_envoy_3_skill_total_names_its_terms ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_bonus_spells_match_the_srd_table ... ok
+test rules_core::pilot_compute::sf_defense::sf_seed::sf_seed_the_soldier_armour_caps_dex ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_race_and_theme_terms_name_their_records ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_point_buy_limits_are_refused_by_name ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_ability_scores_match_the_seed_builds ... ok
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_a_trained_only_skill_opens_with_a_rank ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_connection_spells_and_spell_focus_are_their_own_terms ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_casters_cast_levels_0_to_2_and_the_others_cast_nothing ... ok
+test rules_core::pilot_compute::sf_skills::sf_seed::sf_seed_every_skill_total_matches_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_abilities::sf_seed::sf_seed_a_theme_adds_its_class_skill_and_its_ability_point ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_spells_per_day_known_and_dcs_match_the_srd_hand_values ... ok
+test rules_core::pilot_compute::sf_spells::sf_seed::sf_seed_class_tables_match_the_srd_at_every_level_1_to_20 ... ok
+
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 2789 filtered out; finished in 2.77s
+
+exit=0

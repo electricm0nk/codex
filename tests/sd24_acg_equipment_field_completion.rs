@@ -18,8 +18,8 @@
 //! independent physical weight at all). Per the no-stub-mvp doctrine,
 //! this cycle never fabricates a value the corpus doesn't provide.
 
-use codex::rules_core::rules_tables::RuleSetId;
-use codex::rules_core::rules_tables::acg::{equipment_tables, spell_list};
+use codex::rules_core::rules_catalog::RuleSetId;
+use codex::rules_core::rules_catalog::acg::{equipment_tables, spell_list};
 
 /// ACG equipment record coverage went from the SD-22 bootstrap sample (3
 /// records) to the full corpus (269: 221 from `acg_equip.lst` + 48 from

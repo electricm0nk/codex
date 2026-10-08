@@ -1,0 +1,124 @@
+pcgen-run-character.sh: running PCGen (gradlew run) against /home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/sf_soldier.pcg
+pcgen-run-character.sh: export sheet: /home/ubuntu/workspace/repos/pcgen/code/testsuite/base-xml.ftl
+pcgen-run-character.sh: output file:  /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e33/sf_soldier.live.xml
+Parallel Configuration Cache is an incubating feature.
+Calculating task graph as no cached configuration is available for tasks: run --args=--character "/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/sf_soldier.pcg" --exportsheet "/home/ubuntu/workspace/repos/pcgen/code/testsuite/base-xml.ftl" --outputfile "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e33/sf_soldier.live.xml" --settingsdir "/tmp/pcgen-run-character-settings.ERNYRt"
+> Task :PCGen-Formula:processResources NO-SOURCE
+> Task :PCGen-base:processResources NO-SOURCE
+> Task :PCGen-Formula:jjtree UP-TO-DATE
+> Task :copyMasterSheets UP-TO-DATE
+> Task :downloadJavaFXLocal UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :PCGen-base:compileJava UP-TO-DATE
+> Task :PCGen-base:classes UP-TO-DATE
+> Task :PCGen-Formula:javacc UP-TO-DATE
+> Task :PCGen-base:jar UP-TO-DATE
+> Task :PCGen-Formula:compileJava UP-TO-DATE
+> Task :PCGen-Formula:classes UP-TO-DATE
+> Task :PCGen-Formula:jar UP-TO-DATE
+> Task :extractJavaFXLocal UP-TO-DATE
+> Task :compileJava UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :jarBonusPlugins UP-TO-DATE
+> Task :jarFunctionPlugins UP-TO-DATE
+> Task :jarGroupingPlugins UP-TO-DATE
+> Task :jarModifierPlugins UP-TO-DATE
+> Task :jarPrimitivePlugins UP-TO-DATE
+> Task :jarPrePlugins UP-TO-DATE
+> Task :jarQualifierPlugins UP-TO-DATE
+> Task :jarJepCommandsPlugins UP-TO-DATE
+> Task :jarExportPlugins UP-TO-DATE
+> Task :jarConverterPlugins UP-TO-DATE
+> Task :jarLstPlugins UP-TO-DATE
+> Task :jarAllPlugins UP-TO-DATE
+> Task :jar UP-TO-DATE
+> Task :converterJar UP-TO-DATE
+> Task :startScripts UP-TO-DATE
+> Task :distTar SKIPPED
+> Task :distZip SKIPPED
+> Task :assemble UP-TO-DATE
+
+> Task :run
+2026-10-03T09:16:17.967322321 INFO main Main:105 Starting PCGen v6.09.08.RC1
+2026-10-03T09:16:19.063173215 INFO main LanguageBundle:134 Initialising language bundle with locale en.
+2026-10-03T09:16:22.711178897 INFO main BatchExporter:117 Started export of /home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/sf_soldier.pcg using /home/ubuntu/workspace/repos/pcgen/code/testsuite/base-xml.ftl to /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e33/sf_soldier.live.xml
+2026-10-03T09:16:22.743351404 INFO main BatchExporter:122 Loading sources [Starfinder RPG Core Supplements] using game mode Starfinder
+2026-10-03T09:16:22.774675290 INFO main SourceFileLoader:507 Loading game Starfinder and sources [Starfinder RPG Core Supplements].
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+2026-10-03T09:16:42.821365948 INFO main CharacterManager:193 Loaded character Q-186 - /home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/sf_soldier.pcg
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'CHANNEL*STATSCORE', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+Evaluation called on invalid variable: 'Mod', assuming default for Number
+Evaluation called on invalid variable: 'Score', assuming default for Number
+
+BUILD SUCCESSFUL in 40s
+26 actionable tasks: 1 executed, 25 up-to-date
+Configuration cache entry stored.
+/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/33627023-04e6-4757-9afa-d5c1463408f3/scratchpad/e33/sf_soldier.live.xml

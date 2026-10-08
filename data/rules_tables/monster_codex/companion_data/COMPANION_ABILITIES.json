@@ -1,0 +1,181 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "monster_codex/companion_data/COMPANION_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "monster_codex",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion Advancement ~ Cave Salamander",
+      "name": "Companion Advancement (Cave Salamander)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Cave Salamander)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "mc_abilities_companion",
+      "source_line": 5
+    },
+    {
+      "key": "Companion Advancement ~ Gorthek",
+      "name": "Companion Advancement (Gorthek)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Gorthek)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "mc_abilities_companion",
+      "source_line": 6
+    },
+    {
+      "key": "Companion Advancement ~ Python (Riding)",
+      "name": "Companion Advancement (Python (Riding))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Python (Riding))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "mc_abilities_companion",
+      "source_line": 7
+    },
+    {
+      "key": "Companion Advancement ~ Yzobu",
+      "name": "Companion Advancement (Yzobu)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Yzobu)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "mc_abilities_companion",
+      "source_line": 8
+    },
+    {
+      "key": "Companion Advancement ~ Rat (Riding)",
+      "name": "Companion Advancement (Rat (Riding))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Rat (Riding))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "mc_abilities_companion",
+      "source_line": 9
+    },
+    {
+      "key": "Yzobu ~ Stampede",
+      "name": "Stampede",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "A stampede occurs if three or more creatures with stampede make a trample attack while remaining adjacent to each other. While stampeding, the creatures can trample foes of their size or smaller, and the trample's save DC increases by +2.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Yzobu)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "mc_abilities_companion",
+      "source_line": 11
+    },
+    {
+      "key": "Companion Advancement ~ Giant Vulture",
+      "name": "7th-Level Advancement ~ Companion (Giant Vulture)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Giant Vulture)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "mc_abilities_companion",
+      "source_line": 14
+    }
+  ]
+}

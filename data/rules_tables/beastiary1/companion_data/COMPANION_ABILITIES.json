@@ -1,0 +1,1623 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "beastiary1/companion_data/COMPANION_ABILITIES",
+  "licence": {
+    "license": "OGL",
+    "book": "beastiary1",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "key": "Companion Advancement ~ Bat (Dire)",
+      "name": "Companion Advancement (Bat (Dire))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Bat (Dire))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 6
+    },
+    {
+      "key": "Companion Advancement ~ Dinosaur (Ankylosaurus)",
+      "name": "Companion Advancement (Dinosaur (Ankylosaurus))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Dinosaur (Ankylosaurus))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 7
+    },
+    {
+      "key": "Companion Advancement ~ Dinosaur (Brachiosaurus)",
+      "name": "Companion Advancement (Dinosaur (Brachiosaurus))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Dinosaur (Brachiosaurus))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 8
+    },
+    {
+      "key": "Companion Advancement ~ Dinosaur (Elasmosaurus)",
+      "name": "Companion Advancement (Dinosaur (Elasmosaurus))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Dinosaur (Elasmosaurus))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 9
+    },
+    {
+      "key": "Companion Advancement ~ Dinosaur (Pteranodon)",
+      "name": "Companion Advancement (Dinosaur (Pteranodon))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Dinosaur (Pteranodon))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 10
+    },
+    {
+      "key": "Companion Advancement ~ Dinosaur (Stegosaurus)",
+      "name": "Companion Advancement (Dinosaur (Stegosaurus))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Dinosaur (Stegosaurus))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 11
+    },
+    {
+      "key": "Companion Advancement ~ Dinosaur (Triceratops)",
+      "name": "Companion Advancement (Dinosaur (Triceratops))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Dinosaur (Triceratops))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 12
+    },
+    {
+      "key": "Companion Advancement ~ Dinosaur (Tyrannosaurus)",
+      "name": "Companion Advancement (Dinosaur (Tyrannosaurus))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Dinosaur (Tyrannosaurus))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 13
+    },
+    {
+      "key": "Companion Advancement ~ Dolphin",
+      "name": "Companion Advancement (Dolphin)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Dolphin)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 14
+    },
+    {
+      "key": "Companion Advancement ~ Dolphin (Orca)",
+      "name": "Companion Advancement (Dolphin (Orca))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Dolphin (Orca))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 15
+    },
+    {
+      "key": "Companion Advancement ~ Frog (Giant)",
+      "name": "Companion Advancement (Frog (Giant))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Frog (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 16
+    },
+    {
+      "key": "Companion Advancement ~ Eel (Electric)",
+      "name": "Companion Advancement (Eel (Electric))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "DEX",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Eel (Electric))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 17
+    },
+    {
+      "key": "Companion Advancement ~ Eel (Giant Moray)",
+      "name": "Companion Advancement (Eel (Giant Moray))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Eel (Giant Moray))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 18
+    },
+    {
+      "key": "Companion Advancement ~ Elephant (Mastodon)",
+      "name": "Companion Advancement (Elephant (Mastodon))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Elephant (Mastodon))",
+        "Companion (Elephant)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 19
+    },
+    {
+      "key": "Companion Advancement ~ Goblin Dog",
+      "name": "Companion Advancement (Goblin Dog)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Goblin Dog)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 20
+    },
+    {
+      "key": "Companion Advancement ~ Herd Animal (Aurochs)",
+      "name": "Companion Advancement (Herd Animal (Aurochs))",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Herd Animal (Aurochs))",
+        "Companion (Herd Animal (Bison))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 21
+    },
+    {
+      "key": "Companion Advancement ~ Hyena",
+      "name": "Companion Advancement (Hyena)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Hyena)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 22
+    },
+    {
+      "key": "Companion Advancement ~ Monitor Lizard",
+      "name": "Companion Advancement (Monitor Lizard)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Lizard (Monitor))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 23
+    },
+    {
+      "key": "Companion Advancement ~ Octopus",
+      "name": "Companion Advancement (Octopus)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "DEX",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Octopus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 24
+    },
+    {
+      "key": "Companion Advancement ~ Rhinoceros",
+      "name": "Companion Advancement (Rhinoceros)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Rhinoceros)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 25
+    },
+    {
+      "key": "Companion Advancement ~ Roc",
+      "name": "Companion Advancement (Roc)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Roc)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 26
+    },
+    {
+      "key": "Companion Advancement ~ Squid",
+      "name": "Companion Advancement (Squid)",
+      "facet": "CompanionAdvancement",
+      "delivery": null,
+      "type_segments": [
+        "CompanionAdvancement"
+      ],
+      "description": null,
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [
+        {
+          "ability": "STR",
+          "amount": 2
+        },
+        {
+          "ability": "CON",
+          "amount": 2
+        }
+      ],
+      "source_page": null,
+      "owners": [
+        "Companion (Squid)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 27
+    },
+    {
+      "key": "Ankylosaurus ~ Stun",
+      "name": "Stun",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "The ankylosaurus's tail can deliver a powerful, stunning blow. A creature struck by this attack must make a DC %1 save or be dazed for 1 round. If the strike is a critical hit and the target fails its save, it is instead stunned for 1d4 rounds.",
+      "description_variables": [
+        "StunDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.83",
+      "owners": [
+        "Companion (Dinosaur (Ankylosaurus))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 31
+    },
+    {
+      "key": "Dolphin ~ Hold Breath",
+      "name": "Hold Breath",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "You can hold your breath for %1 rounds before it risks drowning.",
+      "description_variables": [
+        "HoldBreathDuration"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.88",
+      "owners": [
+        "Companion (Dolphin)",
+        "Companion (Dolphin (Orca))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 32
+    },
+    {
+      "key": "Electric Eel ~ Electricity",
+      "name": "Electricity",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "An electric eel can produce a powerful jolt of electricity from its tail, delivering the jolt with a successful touch attack. On a critical hit, the creature struck must make a DC %1 Fortitude save or be stunned for 1d4 rounds.",
+      "description_variables": [
+        "ElectricityDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.119",
+      "owners": [
+        "Companion (Eel (Electric))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 33
+    },
+    {
+      "key": "Giant Frog ~ Tongue",
+      "name": "Tongue",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "A giant frog's tongue is a primary attack with reach equal to three times the frog's normal reach (15 feet for a Medium giant frog). A giant frog's tongue deals no damage on a hit, but can be used to grab. A giant frog does not gain the grappled condition while using its tongue in this manner.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.135",
+      "owners": [
+        "Companion (Frog (Giant))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 34
+    },
+    {
+      "key": "Giant Moray Eel ~ Gnaw",
+      "name": "Gnaw",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "If a giant moray begins a round with a grabbed foe, it inflicts automatic bite damage (2d6+%1 points of damage). A giant moray eel possesses a second set of jaws in its throat that aid in swallowing - it can make a second bite attack (same attack bonus, 1d6+%2 damage) against a foe it has already grabbed.",
+      "description_variables": [
+        "STR*3/2",
+        "STR/2"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.119",
+      "owners": [
+        "Companion (Eel (Giant Moray))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 35
+    },
+    {
+      "key": "Goblin Dog ~ Allergic Reaction",
+      "name": "Allergic Reaction",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "Your dander is highly irritating to all creatures save those with the goblinoid subtype. A non-goblinoid creature damaged by your bite, who deals damage to you with a natural weapon or unarmed attack, or who otherwise comes into contact with you (including attempts to grapple or ride you) must make a DC %1 Fortitude save or break out in an itching rash. A creature affected by this rash takes a -2 penalty to Dexterity and Charisma for 1 day (multiple allergic reactions do not stack). Remove disease or any magical healing removes the rash instantly. This is a disease effect.",
+      "description_variables": [
+        "AllergicReactionDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.157",
+      "owners": [
+        "Companion (Goblin Dog)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 36
+    },
+    {
+      "key": "Lizard Monitor ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "Bite--injury; save Fort DC %1; onset 1 minute; frequency 1/hour for 6 hours; effect 1d2 Dexterity damage; cure 1 save.",
+      "description_variables": [
+        "PoisonSaveDC"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.194",
+      "owners": [
+        "Companion (Lizard (Monitor))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 37
+    },
+    {
+      "key": "Octopus ~ Ink Cloud",
+      "name": "Ink Cloud",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "Defensive"
+      ],
+      "description": "An octopus can emit a 10ft radius sphere of ink once per minute as a free action. The ink provides total concealment in water, and persists for 1 minute.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.219",
+      "owners": [
+        "Companion (Octopus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 38
+    },
+    {
+      "key": "Octopus ~ Jet",
+      "name": "Jet",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "ModifyMovement"
+      ],
+      "description": "An octopus can jet backward once per round as a full-round action, at a speed of 200 ft. It must move in a straight line while jetting, and does not provoke attacks of opportunity when it does so.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.219",
+      "owners": [
+        "Companion (Octopus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 39
+    },
+    {
+      "key": "Octopus ~ Poison",
+      "name": "Poison",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "Bite-injury; save Fort DC 13; frequency 1/round for 6 rounds; effect 1 Str; cure 1 save.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.219",
+      "owners": [
+        "Companion (Octopus)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 40
+    },
+    {
+      "key": "Squid ~ Ink Cloud",
+      "name": "Ink Cloud",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary",
+        "Defensive"
+      ],
+      "description": "A squid can emit a %1 foot-radius cloud of ink once per minute as a free action while underwater. This cloud provides total concealment. The ink persists for 1 minute.",
+      "description_variables": [
+        "InkCloudRadius"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.259",
+      "owners": [
+        "Companion (Squid)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 41
+    },
+    {
+      "key": "Squid ~ Jet",
+      "name": "Jet",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "description": "A squid can jet in a straight line as a full-round action. It does not provoke attacks of opportunity while jetting.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": null,
+      "owners": [
+        "Companion (Squid)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 42
+    },
+    {
+      "key": "Tyrannosaurus ~ Powerful Bite",
+      "name": "Powerful Bite",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "A tyrannosaurus applies twice its Strength modifier to bite damage.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.86",
+      "owners": [
+        "Companion (Dinosaur (Tyrannosaurus))"
+      ],
+      "cross_book_owners": [],
+      "source_file": "b1_abilities_companion",
+      "source_line": 43
+    },
+    {
+      "key": "Weasel ~ Attach",
+      "name": "Attach",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Special Ability",
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "description": "When a weasel hits with a bite attack, it automatically grapples its foe, inflicting automatic bite damage each round.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.133",
+      "owners": [
+        "Weasel"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 76
+    },
+    {
+      "key": "Air Elemental ~ Air Mastery",
+      "name": "Air Mastery",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Special Ability",
+        "Extraordinary",
+        "Defensive"
+      ],
+      "description": "Airborne creatures take a -1 penalty on attack and damage rolls against an air elemental.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.120",
+      "owners": [
+        "Elemental (Air/Small)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 97
+    },
+    {
+      "key": "Earth Elemental ~ Earth Glide",
+      "name": "Earth Glide",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Special Ability",
+        "Extraordinary",
+        "ModifyMovement"
+      ],
+      "description": "A burrowing earth elemental can pass through stone, dirt, or almost any other sort of earth except metal as easily as a fish swims through water. If protected against fire damage, it can even glide through lava. Its burrowing leaves behind no tunnel or hole, nor does it create any ripple or other sign of its presence. A Move Earth spell cast on an area containing a burrowing earth elemental flings the elemental back 30 feet, stunning the creature for 1 round unless it succeeds on a DC 15 Fortitude save.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.122",
+      "owners": [
+        "Elemental (Earth/Small)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 105
+    },
+    {
+      "key": "Earth Elemental ~ Earth Mastery",
+      "name": "Earth Mastery",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "An earth elemental gains a +1 bonus on attack and damage rolls if both it and its foe are touching the ground. If an opponent is airborne or waterborne, the elemental takes a -4 penalty on attack and damage rolls. These modifiers apply to bull rush and overrun maneuvers, whether the elemental is initiating or resisting these kinds of attacks. (These modifiers are not included in the statistics block.)",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.122",
+      "owners": [
+        "Elemental (Earth/Small)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 106
+    },
+    {
+      "key": "Water Elemental ~ Drench",
+      "name": "Drench",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "The elemental's touch puts out nonmagical flames of Large size or smaller. The creature can dispel magical fire it touches as Dispel Magic (caster level %1).",
+      "description_variables": [
+        "TL"
+      ],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.126",
+      "owners": [
+        "Elemental (Water/Small)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 121
+    },
+    {
+      "key": "Water Elemental ~ Vortex",
+      "name": "Vortex",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural",
+        "AttackOption"
+      ],
+      "description": "A water elemental can create a whirlpool as a standard action, at will. This ability functions identically to the whirlwind special attack (see page Bestiary Appendix 3: Universal Monster Rules), but can only form underwater and cannot leave the water.&nl;Some creatures can transform themselves into vortexes and remain in that form for up to 1 round for every 2 HD they have. If the creature has a swim speed, it can continue to swim at that same speed while in vortex form, otherwise it gains a swim speed equal to its base land speed while in vortex form.&nl;The vortex is always 5 feet wide at its base, but its height and width at the top vary from creature to creature (minimum 10 feet high). A vortex's width at its peak is always equal to half of its height. The creature controls the exact height, but it must be at least 10 feet high.&nl;The vortex form does not provoke attacks of opportunity, even if the creature enters the space another creature occupies. Another creature might be caught in the vortex if it touches or enters the vortex, or if the vortex moves into or through a creature's space. A creature in vortex form cannot make its normal attacks and does not threaten the area around it.&nl;Creatures one or more size categories smaller than the vortex might take damage when caught in the vortex (generally damage equal to the monster's slam attack for a creature of its size) and may be lifted into the air. An affected creature must succeed on a Reflex save (DC 10 + half monster's HD + the monster's Strength modifier) when it comes into contact with the vortex or take damage as if it were hit by the vortex creature's slam attack. It must also succeed on a second Reflex save or be picked up bodily and held suspended in the powerful currents, automatically taking the indicated damage each round. A creature that can swim is allowed a Reflex save each round to escape the vortex. The creature still takes damage but can leave if the save is successful.&nl;Creatures trapped in the vortex cannot move except to go where the vortex carries them or to escape the vortex. Trapped creatures can otherwise act normally, but must succeed on a concentration check (DC 15 + spell level) to cast a spell. Creatures caught in the vortex take a -4 penalty to Dexterity and a -2 penalty on attack rolls. The vortex can have only as many creatures trapped inside at one time as will fit inside the vortex's volume. The vortex can eject any carried creatures whenever it wishes as a free action, depositing them in its space.&nl;If the vortex's base touches the ground, it creates a swirling cloud of debris. This cloud is centered on the creature and has a diameter equal to half the vortex's height. The cloud obscures all vision, including darkvision, beyond 5 feet. Creatures 5 feet away have concealment, while those farther away have total concealment. Those caught in the cloud of debris must succeed on a concentration check (DC 15 + spell level) to cast a spell.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.126",
+      "owners": [
+        "Elemental (Water/Small)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 122
+    },
+    {
+      "key": "Water Elemental ~ Water Mastery",
+      "name": "Water Mastery",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "A water elemental gains a +1 bonus on attack and damage rolls if both it and its opponent are touching water. If the opponent or the elemental is touching the ground, the elemental takes a -4 penalty on attack and damage rolls. These modifiers apply to bull rush and overrun maneuvers, whether the elemental is initiating or resisting these kinds of attacks.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.126",
+      "owners": [
+        "Elemental (Water/Small)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 123
+    },
+    {
+      "key": "Stirge ~ Attach",
+      "name": "Attach",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "When a stirge hits with a touch attack, its barbed legs latch onto the target, anchoring it in place. An attached stirge is effectively grappling its prey. The stirge loses its Dexterity bonus to AC, but holds on with great tenacity and inserts its proboscis into the grappled target's flesh. A stirge has a +8 racial bonus to maintain its grapple on a foe once it is attached. An attached stirge can be struck with a weapon or grappled itself. If its prey manages to win a grapple check or Escape Artist check against it, the stirge is removed.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.260",
+      "owners": [
+        "Stirge"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 130
+    },
+    {
+      "key": "Stirge ~ Blood Drain",
+      "name": "Blood Drain",
+      "facet": "SpecialAttack",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "A stirge drains blood at the end of its turn if it is attached to a foe, inflicting 1 point of Constitution damage. Once a stirge has dealt 4 points of Constitution damage, it detaches and flies off to digest the meal. If its victim dies before the stirge’s appetite has been sated, the stirge detaches and seeks a new target.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.260",
+      "owners": [
+        "Stirge"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 131
+    },
+    {
+      "key": "Stirge ~ Diseased",
+      "name": "Diseased",
+      "facet": "SpecialQuality",
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "Due to the stagnant swamps in which they live and their contact with the blood of numerous creatures, stirges are harbingers of disease. Any creature subjected to a stirge’s blood drain attack has a 10%% chance of being exposed to filth fever, blinding sickness, or a similar disease (Pathfinder RPG Core Appendix 1: Special Abilities, Diseases). Once this check is made, the victim can no longer be infected by this particular stirge, though attacks by different stirges are resolved normally and may result in multiple illnesses.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.260",
+      "owners": [
+        "Stirge"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 132
+    },
+    {
+      "key": "Homunculus ~ Telepathic Link",
+      "name": "Telepathic Link",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialQuality",
+        "Special Ability",
+        "Supernatural",
+        "Communicate"
+      ],
+      "description": "A homunculus cannot speak, but the process of creating one links it telepathically with its creator. A homunculus knows what its master knows and can convey to him or her everything it sees and hears, out to a distance of 1,500 feet.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.176",
+      "owners": [
+        "Homunculus"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 139
+    },
+    {
+      "key": "Earth Mephit ~ Change Size",
+      "name": "Change Size",
+      "facet": "SpecialQuality",
+      "delivery": null,
+      "type_segments": [
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability"
+      ],
+      "description": "Once per day, an earth mephit can enlarge one size category, as enlarge person, except that it only works on the earth mephit. This power acts as a 2nd-level spell.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Earth)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 173
+    },
+    {
+      "key": "Magma Mephit ~ Magma Form",
+      "name": "Magma Form",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Supernatural"
+      ],
+      "description": "Once per hour, a magma mephit can assume the form of a pool of lava, 3 feet in diameter and 6 inches deep. While in this form, its DR increases to 20/ magic and it cannot attack. It can move at a speed of 10 feet per round and can pass through small openings and cracks. Anything touching this pool takes 1d6 fire damage. A magma mephit may remain in this form for up to 10 minutes.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Magma)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 174
+    },
+    {
+      "key": "Salt Mephit ~ Dehydrate",
+      "name": "Dehydrate",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural"
+      ],
+      "description": "Once per day a salt mephit can draw the moisture from an area in a 20-foot radius centered on itself. Living creatures within range take 2d8 points of damage (Fortitude DC 14 half; caster level 6th). This effect is especially devastating to plant and aquatic creatures, which take a -2 penalty on their saving throws. This ability is the equivalent of a 2nd-level spell.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.203",
+      "owners": [
+        "Mephit (Salt)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 175
+    },
+    {
+      "key": "Steam Mephit ~ Boiling Rain",
+      "name": "Boiling Rain",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural"
+      ],
+      "description": "Once per day a steam mephit can create a rainstorm of boiling water in a 20-foot-square area. Living creatures within the area take 2d6 points of fire damage (Fortitude DC 14 half; caster level 6th). This ability is the equivalent of a 2nd-level spell.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.203",
+      "owners": [
+        "Mephit (Steam)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 176
+    },
+    {
+      "key": "Air Mephit ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural",
+        "BreathWeapon"
+      ],
+      "description": "Air mephits can unleash a cone of sand and grit that deals 1d8 slashing damage as a breath weapon every 4 rounds as a standard action. The DC is Constitution-based and includes a +1 racial bonus.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Air)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 178
+    },
+    {
+      "key": "Dust Mephit ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural",
+        "BreathWeapon"
+      ],
+      "description": "Dust mephits can unleash a cone of dust that deals 1d4 slashing damage as a breath weapon every 4 rounds as a standard action. The dust also causes living creatures to be sickened for 3 rounds. A Reflex save halves the damage and negates the sickened effect. The DC is Constitution-based and includes a +1 racial bonus.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Dust)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 179
+    },
+    {
+      "key": "Earth Mephit ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural",
+        "BreathWeapon"
+      ],
+      "description": "Earth mephits can unleash a cone of rocks that deals 1d8 bludgeoning damage as a breath weapon every 4 rounds as a standard action. The DC is Constitution-based and includes a +1 racial bonus.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Earth)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 180
+    },
+    {
+      "key": "Fire Mephit ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural",
+        "BreathWeapon"
+      ],
+      "description": "Fire mephits can unleash a cone of flames that deals 1d8 fire damage as a breath weapon every 4 rounds as a standard action. The DC is Constitution-based and includes a +1 racial bonus.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Fire)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 181
+    },
+    {
+      "key": "Ice Mephit ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural",
+        "BreathWeapon"
+      ],
+      "description": "Ice mephits can unleash a cone of ice that deals 1d4 cold damage as a breath weapon every 4 rounds as a standard action. The cold also causes living creatures to be sickened for 3 rounds. A Reflex save halves the damage and negates the sickened effect. The DC is Constitution-based and includes a +1 racial bonus.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Ice)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 182
+    },
+    {
+      "key": "Magma Mephit ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural",
+        "BreathWeapon"
+      ],
+      "description": "Magma mephits can unleash a one of fire that deals 1d8 fire damage as a breath weapon every 4 rounds as a standard action. The DC is Constitution-based and includes a +1 racial bonus.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Magma)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 183
+    },
+    {
+      "key": "Ooze Mephit ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural",
+        "BreathWeapon"
+      ],
+      "description": "Ooze mephits can unleash a cone of slime that deals 1d4 acid damage as a breath weapon every 4 rounds as a standard action. The slime also causes living creatures to be sickened for 3 rounds. A Reflex save halves the damage and negates the sickened effect. The DC is Constitution-based and includes a +1 racial bonus.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Ooze)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 184
+    },
+    {
+      "key": "Salt Mephit ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural",
+        "BreathWeapon"
+      ],
+      "description": "Salt mephits can unleash a cone of salt crystals that deals 1d4 slashing damage as a breath weapon every 4 rounds as a standard action. The salt also causes living creatures to be sickened for 3 rounds. A Reflex save halves the damage and negates the sickened effect. The DC is Constitution-based and includes a +1 racial bonus.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Salt)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 185
+    },
+    {
+      "key": "Steam Mephit ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural",
+        "BreathWeapon"
+      ],
+      "description": "Steam mephits can unleash a cone of steam that deals 1d4 fire damage as a breath weapon every 4 rounds as a standard action. The scalding water also causes living creatures to be sickened for 3 rounds. A Reflex save halves the damage and negates the sickened effect. The DC is Constitution-based and includes a +1 racial bonus.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Steam)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 186
+    },
+    {
+      "key": "Water Mephit ~ Breath Weapon",
+      "name": "Breath Weapon",
+      "facet": "SpecialAttack",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialAttack",
+        "Special Attack",
+        "Special Ability",
+        "Supernatural",
+        "BreathWeapon"
+      ],
+      "description": "Water mephits can unleash a cone of acid that deals 1d8 acid damage as a breath weapon every 4 rounds as a standard action. The DC is Constitution-based and includes a +1 racial bonus.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Water)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 187
+    },
+    {
+      "key": "Air Mephit ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "Works only in gusty and windy areas.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Air)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 199
+    },
+    {
+      "key": "Dust Mephit ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "Works only in dusty environments.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Dust)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 200
+    },
+    {
+      "key": "Earth Mephit ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "Works only while underground.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Earth)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 201
+    },
+    {
+      "key": "Fire Mephit ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "Works only while in contact with fire.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Fire)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 202
+    },
+    {
+      "key": "Ice Mephit ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "Works only in areas below freezing.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Ice)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 203
+    },
+    {
+      "key": "Magma Mephit ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "Works only in contact with magma or lava.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Magma)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 204
+    },
+    {
+      "key": "Ooze Mephit ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "Works only in wet or muddy environments.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Ooze)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 205
+    },
+    {
+      "key": "Salt Mephit ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "Works only in arid environments.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Salt)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 206
+    },
+    {
+      "key": "Steam Mephit ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "Works only in boiling water or steam.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Steam)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 207
+    },
+    {
+      "key": "Water Mephit ~ Fast Healing",
+      "name": "Fast Healing",
+      "facet": null,
+      "delivery": "Extraordinary",
+      "type_segments": [
+        "Special Ability",
+        "Extraordinary"
+      ],
+      "description": "Works only while the mephit is underwater.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.202",
+      "owners": [
+        "Mephit (Water)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 208
+    },
+    {
+      "key": "Quasit ~ Telepathy",
+      "name": "Telepathy",
+      "facet": "SpecialQuality",
+      "delivery": "Supernatural",
+      "type_segments": [
+        "SpecialQuality",
+        "Supernatural",
+        "Communicate"
+      ],
+      "description": "The creature can mentally communicate with any other creature within a certain range (specified in the creature's entry, usually 100 feet) that has a language. It is possible to address multiple creatures at once telepathically, although maintaining a telepathic conversation with more than one creature at a time is just as difficult as simultaneously speaking and listening to multiple people at the same time.",
+      "description_variables": [],
+      "description_variants": [],
+      "stat_adjustments": [],
+      "source_page": "p.305",
+      "owners": [
+        "Demon (Quasit)"
+      ],
+      "cross_book_owners": [],
+      "source_file": "ce_abilities_familiar_race_cr",
+      "source_line": 225
+    }
+  ]
+}

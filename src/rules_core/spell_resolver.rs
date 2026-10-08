@@ -10,7 +10,7 @@
 //! Note on identity: unlike equipment records, spell records in
 //! `cr_spells.lst` carry no `KEY:` token — a spell's identity is its
 //! `name` field (confirmed against the real corpus; see
-//! `rules_tables::crb::spell_list`'s doc comment). So "spell_id" here
+//! `rules_catalog::crb::spell_list`'s doc comment). So "spell_id" here
 //! means the spell's corpus `name`, matched exactly; no normalization is
 //! needed since PF1 spell names are unique across the strict-school
 //! partition.
@@ -25,9 +25,9 @@
 use crate::rules_core::source_content::SourceContentPayload;
 use crate::rules_core::spell_record::CorpusSpellRecord;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
-use crate::rules_core::rules_tables::RuleSetId;
-use crate::rules_core::rules_tables::{
+use crate::rules_core::rules_catalog::crb::spell_list::SPELL_LIST;
+use crate::rules_core::rules_catalog::RuleSetId;
+use crate::rules_core::rules_catalog::{
     acg, adventurers_guide, advanced_race_guide, apg, bestiary, bestiary_4, bestiary_6,
     book_of_the_damned_volume_1, book_of_the_damned_volume_2, crb, horror_adventures,
     inner_sea_faiths, inner_sea_gods, inner_sea_intrigue, inner_sea_magic, inner_sea_races,
@@ -73,7 +73,7 @@ pub const SPELL_BOOK_UW: &str = "UW";
 /// SD-31 wave-24 (`bestiary_6` book-auditor lane): Bestiary 6, the eleventh
 /// book -- both of its 2 base spell declarations (`b6_spells.lst`), the
 /// whole of this book's `spell`-kind `engine-does-not-hold` population. See
-/// `rules_tables::bestiary_6::spell_list`'s doc comment for the two rows'
+/// `rules_catalog::bestiary_6::spell_list`'s doc comment for the two rows'
 /// verbatim reprint inside Ultimate Wilderness's own `uw_spells.lst`.
 pub const SPELL_BOOK_B6: &str = "B6";
 /// SD-31 wave-29 (`lane5-book-onboard` lane): Adventurer's Guide, the
@@ -435,7 +435,7 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
         // book can genuinely reprint an earlier book's spell verbatim (e.g.
         // Bestiary 6's two Scalykind-subdomain spells are also printed,
         // word-for-word, inside Ultimate Wilderness's own `uw_spells.lst` --
-        // see `rules_tables::bestiary_6::spell_list`'s doc comment). Serving
+        // see `rules_catalog::bestiary_6::spell_list`'s doc comment). Serving
         // the same `key` twice broke `no_key_is_served_twice_so_a_selection_
         // resolves_unambiguously` (apps/desktop/src-tauri's own product
         // invariant: the catalog browser and picker key off spell name

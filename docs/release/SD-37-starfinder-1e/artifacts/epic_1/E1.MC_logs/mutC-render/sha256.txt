@@ -1,0 +1,2 @@
+165c38f3e7f978e8f6b3eae149eb96f098a6e0bddce4a2b5cbab8cfe5deef7bc  aldric.json
+bffcf7dd332d64e666143b8ea3e0a676e8dd0aab2b4392c5e7634c30beb6ae14  elowen.json

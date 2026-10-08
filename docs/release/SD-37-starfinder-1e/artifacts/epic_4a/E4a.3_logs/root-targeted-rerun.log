@@ -1,0 +1,48 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.09s
+     Running tests/rules_tables_citation_burn_down.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/rules_tables_citation_burn_down-34d755b2c78952df)
+
+running 3 tests
+test the_scan_counts_a_planted_citation ... ok
+test the_compiled_tables_hold_no_citation_literal ... ok
+test the_shipped_data_package_holds_no_citation_literal ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+     Running tests/v06_beastiary1_natural_attack_grounding.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/v06_beastiary1_natural_attack_grounding-e790ec6323632a2f)
+
+running 8 tests
+test crocodile_tail_slap_is_recovered_from_a_real_corpus_token_not_the_web ... ok
+test published_melee_text_actually_contains_the_dice_it_was_read_from ... ok
+test every_web_grounded_value_cites_at_least_two_independent_allowed_domain_sources ... ok
+test vargouille_kiss_and_shriek_are_not_recorded_as_natural_attacks ... ok
+test the_five_weapon_using_monsters_keep_their_correctly_empty_attack_lists ... ok
+test no_monster_outside_the_grounded_twelve_gained_or_lost_attacks ... ok
+test the_twelve_grounded_monsters_ship_exactly_their_corroborated_attack_lists ... ok
+test every_grounded_attack_has_a_provenance_row_and_every_provenance_row_is_shipped ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running unittests src/lib.rs (/home/ubuntu/workspace/worktrees/cargo-target/sd37-codex-sd37/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 17 tests
+test rules_core::rules_tables::simple_kind_tables::tests::an_unknown_kind_yields_an_empty_table_not_a_panic ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::language_table_holds_xenophobic ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::domain_table_resolves_a_pi_renamed_record_by_coordinate_not_by_the_real_name ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::domain_table_holds_battle_spirit ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::skill_table_holds_craft_rope ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::trait_kind_resolves_to_the_trait_generic_directory ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::deity_table_holds_a_pi_masked_codex_named_record ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::trait_table_holds_trait_adopted ... ok
+test rules_core::sheet_rule::schema_publish_tests::published_schemas_match_the_serde_types ... ok
+test rules_core::sheet_rule::schema_publish_tests::the_schema_names_the_starfinder_variants_and_every_shape_the_package_uses ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::race_trait_generic_table_resolves_the_sibling_directory_not_race_trait_itself ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::template_table_holds_arcanist_spellbook ... ok
+test rules_core::sheet_rule::schema_publish_tests::sampled_package_files_agree_with_the_schema_at_the_top_level ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::ability_table_holds_aberrant_bloodline ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::an_absent_key_is_refused_not_fabricated ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::every_seven_kind_table_is_non_empty_at_head ... ok
+test rules_core::rules_tables::simple_kind_tables::tests::every_seven_kind_record_resolves_to_its_own_converted_rules ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 2836 filtered out; finished in 4.77s
+

@@ -1,0 +1,1286 @@
+{
+  "schema": "sf-mapping-table.v1",
+  "system": "starfinder-1e",
+  "oracle_sha": "7f818006e371188e5717fd18d74d18a420747fc6",
+  "decision": "docs/release/SD-37-starfinder-1e/decisions.md §8",
+  "reading_rule": "Each row is one sheet field; its terms are the oracle tokens that feed it, summed. A term names its token, the .lst (under the corpus starfinder/ directory) and record that carry it, and a shape the evaluator (codex-ingest sheet_rule::sf_mapping) knows. A shape the evaluator does not know, a token missing from its carrier, or an unresolved choice is refused by name. Every oracle observation is a value a real PCGen run printed for a named build (oracle-builds/<build>.oracle.txt, re-run by oracle-builds/run_oracle_builds.sh).",
+  "oracle_builds": {
+    "sf_seed_soldier_3": "oracle-builds/sf_seed_soldier_3.pcg (SD-37 seed SF-Soldier-3, artifacts/epic_0/seed-builds.md §1)",
+    "sf_seed_mystic_5": "oracle-builds/sf_seed_mystic_5.pcg (SF-Mystic-5, §2)",
+    "sf_seed_technomancer_5": "oracle-builds/sf_seed_technomancer_5.pcg (SF-Technomancer-5, §3)",
+    "sf_seed_envoy_3": "oracle-builds/sf_seed_envoy_3.pcg (SF-Envoy-3, §4)",
+    "sf_soldier": "$PCGEN_REPO_DIR/code/testsuite/PCGfiles/sf_soldier.pcg (PCGen's own test character: android soldier 10)",
+    "sf_mechanic": "$PCGEN_REPO_DIR/code/testsuite/PCGfiles/sf_mechanic.pcg (PCGen's own test character: ysoki mechanic 20, Toughness)",
+    "sf_mechanic_drone": "$PCGEN_REPO_DIR/code/testsuite/PCGfiles/sf_mechanic_drone.pcg (PCGen's own test drone R2-D2, stealth chassis, master sf_mechanic.pcg), run in PCGen's party batch-export mode with its master loaded: oracle-builds/run_drone_party.sh (SD-37 E5.4; a single-character run prints DroneLVL 0, hp 0, because MASTERVAR needs the master)"
+  },
+  "rows": [
+    {
+      "id": "hit_points",
+      "sheet_field": "Hit Points",
+      "pf_reading": "PF reads BONUS:HP|CURRENTMAX as a bonus to the one hit-point total and HD as a die rolled per level; it has no RaceHP and reads BONUS:HP|ALTHP as a second hit-point figure. Read that way, a reader that adds ALTHP into HP, or swaps the two pools, prints per-level-plausible numbers with Con and race HP in the wrong total.",
+      "terms": [
+        {
+          "id": "class_hp_coefficient",
+          "token": "BONUS:HP|CURRENTMAX",
+          "file": "paizo/core/scr_classes.lst",
+          "record": "CLASS:{class}",
+          "shape": "class_level_coefficient",
+          "note": "Soldier 6, Envoy 5, Mystic 5, Mechanic 5, Technomancer 4 per level: one less than the SRD class Hit Points, the HD die makes up the 1"
+        },
+        {
+          "id": "hit_die",
+          "token": "HD:",
+          "file": "paizo/core/scr_classes.lst",
+          "record": "CLASS:{class}",
+          "shape": "hit_die_per_level",
+          "note": "HD:1 on every player class: a d1, one point per level (the .pcg stores HITPOINTS:1 per level)"
+        },
+        {
+          "id": "race_hp",
+          "token": "BONUS:HP|CURRENTMAX|RaceHP",
+          "file": "paizo/core/scr_abilities.lst",
+          "record": "Default",
+          "shape": "race_hp_var",
+          "note": "RaceHP is set by BONUS:VAR|RaceHP|<n> on '<race> Race Selection ~ Default' (Human/Lashunta/Android 4, Ysoki 2)"
+        },
+        {
+          "id": "drone_hp_progression",
+          "token": "BONUS:HP|CURRENTMAX|(10*DroneLVL)+if(DroneLVL>=18,10,0)+if(DroneLVL>=19,10,0)+if(DroneLVL>=20,10,0)",
+          "file": "paizo/core/scr_classes.lst",
+          "record": "CLASS:Drone",
+          "shape": "companion_class_token",
+          "note": "the drone's Hit Points (a companion, never a player build: 0 for every player class). DroneLVL is the master's DroneCompanionLVL through the companion modifier (scr_companionmods.lst:13); the engine evaluates it on the drone's own held set (sf_drone_print.rs). With the class's -1 (row hit_die_offset) cancelling its one HD:1 level, HP = 10 x DroneLVL (+10 at 18, 19, 20) = the SRD table"
+        }
+      ],
+      "srd": [
+        {
+          "url": "https://www.aonsrd.com/Rules.aspx?ID=49",
+          "section": "Calculating Hit Points: racial Hit Points at 1st level + class Hit Points each level"
+        },
+        {
+          "url": "https://www.aonsrd.com/Classes.aspx?ItemName=Soldier",
+          "section": "Hit Points: 7"
+        },
+        {
+          "url": "https://www.aonsrd.com/Races.aspx?ItemName=Human",
+          "section": "Hit Points 4"
+        },
+        {
+          "url": "https://www.aonsrd.com/Classes.aspx?ItemName=Drone",
+          "section": "Drone base statistics table, Hit Points column: 10 per class level 1-17 (1st 10, 10th 100, 17th 170), 18th 190, 19th 210, 20th 230 (Core Rulebook p. 72; fetched 2026-10-05, E5.4)"
+        }
+      ],
+      "oracle": [
+        {
+          "build": "sf_seed_soldier_3",
+          "key": "hp",
+          "value": "25"
+        },
+        {
+          "build": "sf_seed_soldier_3",
+          "key": "var.race_hp",
+          "value": "4"
+        },
+        {
+          "build": "sf_seed_mystic_5",
+          "key": "hp",
+          "value": "34"
+        },
+        {
+          "build": "sf_seed_mystic_5",
+          "key": "var.race_hp",
+          "value": "4"
+        },
+        {
+          "build": "sf_seed_technomancer_5",
+          "key": "hp",
+          "value": "29"
+        },
+        {
+          "build": "sf_seed_technomancer_5",
+          "key": "var.race_hp",
+          "value": "4"
+        },
+        {
+          "build": "sf_seed_envoy_3",
+          "key": "hp",
+          "value": "20"
+        },
+        {
+          "build": "sf_seed_envoy_3",
+          "key": "var.race_hp",
+          "value": "2"
+        },
+        {
+          "build": "sf_soldier",
+          "key": "hp",
+          "value": "74"
+        },
+        {
+          "build": "sf_soldier",
+          "key": "var.race_hp",
+          "value": "4"
+        },
+        {
+          "build": "sf_mechanic",
+          "key": "hp",
+          "value": "122"
+        },
+        {
+          "build": "sf_mechanic",
+          "key": "var.race_hp",
+          "value": "2"
+        },
+        {
+          "build": "sf_mechanic_drone",
+          "key": "hp",
+          "value": "100"
+        }
+      ]
+    },
+    {
+      "id": "hit_die_offset",
+      "sheet_field": "(no printed line) the drone class's -1 against its one HD:1 class level",
+      "pf_reading": "PF has no drone; read as a PF bonus, BONUS:HP|CURRENTMAX|-1 would print a -1 hit-point line that, without the d1 die it cancels, leaves the drone one short of the SRD table",
+      "terms": [
+        {
+          "id": "drone_hit_die_offset",
+          "token": "BONUS:HP|CURRENTMAX|-1",
+          "file": "paizo/core/scr_classes.lst",
+          "record": "CLASS:Drone",
+          "shape": "companion_class_token",
+          "note": "the drone race holds one Drone class level (MONSTERCLASS:Drone:1, scr_races.lst:20); its HD:1 adds 1 (the .pcg stores HITPOINTS:1) and this -1 removes it. The converter prints neither: the drone's hit points are the drone_hp_progression term alone"
+        }
+      ],
+      "srd": [
+        {
+          "url": "https://www.aonsrd.com/Classes.aspx?ItemName=Drone",
+          "section": "Drone base statistics table, Hit Points column: 10 per class level 1-17 (1st 10, 10th 100, 17th 170), 18th 190, 19th 210, 20th 230 (Core Rulebook p. 72; fetched 2026-10-05, E5.4)"
+        }
+      ],
+      "oracle": [
+        {
+          "build": "sf_mechanic_drone",
+          "key": "hp",
+          "value": "100"
+        },
+        {
+          "build": "sf_mechanic_drone",
+          "key": "var.drone_lvl",
+          "value": "10"
+        }
+      ]
+    },
+    {
+      "id": "stamina",
+      "sheet_field": "Stamina Points",
+      "pf_reading": "PF has no Stamina; BONUS:HP|ALTHP read through the PF mapping is an alternate hit-point figure, and Con-to-hit-points (PF's per-level Con bonus) would put CON*TL into Hit Points.",
+      "terms": [
+        {
+          "id": "class_sp_coefficient",
+          "token": "BONUS:HP|ALTHP",
+          "file": "paizo/core/scr_classes.lst",
+          "record": "CLASS:{class}",
+          "shape": "class_level_coefficient",
+          "note": "Soldier 7, Envoy 6, Mystic 6, Mechanic 6, Technomancer 5: equal to the SRD class Stamina Points"
+        },
+        {
+          "id": "con_mod_per_level",
+          "token": "BONUS:HP|ALTHP|CON*TL",
+          "file": "paizo/core/scr__stats.lst",
+          "record": "Constitution",
+          "shape": "con_mod_times_level"
+        },
+        {
+          "id": "toughness",
+          "token": "BONUS:HP|ALTHP|TL",
+          "file": "paizo/core/scr_feats.lst",
+          "record": "Toughness",
+          "shape": "feat_total_level"
+        }
+      ],
+      "srd": [
+        {
+          "url": "https://www.aonsrd.com/Rules.aspx?ID=49",
+          "section": "Calculating Stamina Points: class Stamina Points + Constitution modifier each level"
+        },
+        {
+          "url": "https://www.aonsrd.com/Classes.aspx?ItemName=Soldier",
+          "section": "Stamina Points: 7"
+        },
+        {
+          "url": "https://www.aonsrd.com/FeatDisplay.aspx?ItemName=Toughness",
+          "section": "Benefit: 1 Stamina Point for every character level"
+        }
+      ],
+      "oracle": [
+        {
+          "build": "sf_seed_soldier_3",
+          "key": "althp",
+          "value": "24"
+        },
+        {
+          "build": "sf_seed_mystic_5",
+          "key": "althp",
+          "value": "25"
+        },
+        {
+          "build": "sf_seed_technomancer_5",
+          "key": "althp",
+          "value": "35"
+        },
+        {
+          "build": "sf_seed_envoy_3",
+          "key": "althp",
+          "value": "21"
+        },
+        {
+          "build": "sf_soldier",
+          "key": "althp",
+          "value": "90"
+        },
+        {
+          "build": "sf_mechanic",
+          "key": "althp",
+          "value": "220"
+        }
+      ]
+    },
+    {
+      "id": "eac",
+      "sheet_field": "Energy Armor Class",
+      "pf_reading": "PF reads every BONUS:COMBAT|AC as one Armor Class and prints AC.Total, which here sums EAC_Armor and KAC_Armor: the six runs print AC.Total 24/20/24/18/49/28 against EAC 16/16/18/14/30/21.",
+      "terms": [
+        {
+          "id": "ac_base",
+          "token": "BONUS:COMBAT|AC|10|TYPE=Base",
+          "file": "paizo/core/scr__stats.lst",
+          "record": "Dexterity",
+          "shape": "ac_base"
+        },
+        {
+          "id": "eac_armor",
+          "token": "BONUS:COMBAT|AC|TYPE=EAC_Armor",
+          "file": "paizo/core/scr_equip.lst",
+          "record": "KEY:{armor}",
+          "shape": "armor_typed_bonus"
+        },
+        {
+          "id": "dex_capped",
+          "token": "BONUS:COMBAT|AC|min(ACAbilityStat, min(MXDXEN,MODEQUIPMAXDEX))|TYPE=Ability|PREVAREQ:ACStatNotDex,0",
+          "file": "paizo/core/scr__stats.lst",
+          "record": "Dexterity",
+          "shape": "dex_capped_by_max_dex",
+          "armor_file": "paizo/core/scr_equip.lst"
+        }
+      ],
+      "srd": [
+        {
+          "url": "https://www.aonsrd.com/Rules.aspx?ID=102",
+          "section": "Armor Class: EAC = 10 + armor's EAC bonus + Dex modifier"
+        },
+        {
+          "url": "https://www.aonsrd.com/Rules.aspx?ID=87",
+          "section": "Maximum Dex Bonus"
+        }
+      ],
+      "oracle": [
+        {
+          "build": "sf_seed_soldier_3",
+          "key": "ac.eac",
+          "value": "16"
+        },
+        {
+          "build": "sf_seed_soldier_3",
+          "key": "ac.total",
+          "value": "24"
+        },
+        {
+          "build": "sf_seed_mystic_5",
+          "key": "ac.eac",
+          "value": "16"
+        },
+        {
+          "build": "sf_seed_mystic_5",
+          "key": "ac.total",
+          "value": "20"
+        },
+        {
+          "build": "sf_seed_technomancer_5",
+          "key": "ac.eac",
+          "value": "18"
+        },
+        {
+          "build": "sf_seed_technomancer_5",
+          "key": "ac.total",
+          "value": "24"
+        },
+        {
+          "build": "sf_seed_envoy_3",
+          "key": "ac.eac",
+          "value": "14"
+        },
+        {
+          "build": "sf_seed_envoy_3",
+          "key": "ac.total",
+          "value": "18"
+        },
+        {
+          "build": "sf_soldier",
+          "key": "ac.eac",
+          "value": "30"
+        },
+        {
+          "build": "sf_soldier",
+          "key": "ac.total",
+          "value": "49"
+        },
+        {
+          "build": "sf_mechanic",
+          "key": "ac.eac",
+          "value": "21"
+        },
+        {
+          "build": "sf_mechanic",
+          "key": "ac.total",
+          "value": "28"
+        }
+      ]
+    },
+    {
+      "id": "kac",
+      "sheet_field": "Kinetic Armor Class",
+      "pf_reading": "As eac: the PF reading prints AC.Total (EAC_Armor + KAC_Armor + Dex + 10), not KAC.",
+      "terms": [
+        {
+          "id": "ac_base",
+          "token": "BONUS:COMBAT|AC|10|TYPE=Base",
+          "file": "paizo/core/scr__stats.lst",
+          "record": "Dexterity",
+          "shape": "ac_base"
+        },
+        {
+          "id": "kac_armor",
+          "token": "BONUS:COMBAT|AC|TYPE=KAC_Armor",
+          "file": "paizo/core/scr_equip.lst",
+          "record": "KEY:{armor}",
+          "shape": "armor_typed_bonus"
+        },
+        {
+          "id": "dex_capped",
+          "token": "BONUS:COMBAT|AC|min(ACAbilityStat, min(MXDXEN,MODEQUIPMAXDEX))|TYPE=Ability|PREVAREQ:ACStatNotDex,0",
+          "file": "paizo/core/scr__stats.lst",
+          "record": "Dexterity",
+          "shape": "dex_capped_by_max_dex",
+          "armor_file": "paizo/core/scr_equip.lst"
+        }
+      ],
+      "srd": [
+        {
+          "url": "https://www.aonsrd.com/Rules.aspx?ID=102",
+          "section": "Armor Class: KAC = 10 + armor's KAC bonus + Dex modifier"
+        },
+        {
+          "url": "https://www.aonsrd.com/Rules.aspx?ID=87",
+          "section": "Maximum Dex Bonus"
+        }
+      ],
+      "oracle": [
+        {
+          "build": "sf_seed_soldier_3",
+          "key": "ac.kac",
+          "value": "19"
+        },
+        {
+          "build": "sf_seed_soldier_3",
+          "key": "ac.total",
+          "value": "24"
+        },
+        {
+          "build": "sf_seed_mystic_5",
+          "key": "ac.kac",
+          "value": "16"
+        },
+        {
+          "build": "sf_seed_mystic_5",
+          "key": "ac.total",
+          "value": "20"
+        },
+        {
+          "build": "sf_seed_technomancer_5",
+          "key": "ac.kac",
+          "value": "19"
+        },
+        {
+          "build": "sf_seed_technomancer_5",
+          "key": "ac.total",
+          "value": "24"
+        },
+        {
+          "build": "sf_seed_envoy_3",
+          "key": "ac.kac",
+          "value": "15"
+        },
+        {
+          "build": "sf_seed_envoy_3",
+          "key": "ac.total",
+          "value": "18"
+        },
+        {
+          "build": "sf_soldier",
+          "key": "ac.kac",
+          "value": "32"
+        },
+        {
+          "build": "sf_soldier",
+          "key": "ac.total",
+          "value": "49"
+        },
+        {
+          "build": "sf_mechanic",
+          "key": "ac.kac",
+          "value": "22"
+        },
+        {
+          "build": "sf_mechanic",
+          "key": "ac.total",
+          "value": "28"
+        }
+      ]
+    },
+    {
+      "id": "key_ability",
+      "sheet_field": "Key Ability Score",
+      "pf_reading": "PF has no key ability; FACT is a free-text fact, so a PF reader prints the string ('Str or Dex') and cannot resolve the choice forms the Resolve total depends on.",
+      "terms": [
+        {
+          "id": "key_ability_fact",
+          "token": "FACT:KeyAbilityScore",
+          "file": "paizo/core/scr_classes.lst",
+          "record": "CLASS:{class}",
+          "shape": "key_ability_fact",
+          "note": "fixed (CHA, WIS, INT, DEX, CON) or choice ('Str or Dex' Soldier; 'INT or WIS' Biohacker, COM); the choice comes from the build ('Soldier Key Ability ~ STR' in the .pcg)"
+        }
+      ],
+      "srd": [
+        {
+          "url": "https://www.aonsrd.com/Classes.aspx?ItemName=Soldier",
+          "section": "Key Ability Score - Str|Dex"
+        },
+        {
+          "url": "https://www.aonsrd.com/Classes.aspx?ItemName=Mystic",
+          "section": "Key Ability Score - Wis"
+        }
+      ],
+      "oracle": [
+        {
+          "build": "sf_seed_soldier_3",
+          "key": "var.key_ability_score",
+          "value": "16"
+        },
+        {
+          "build": "sf_seed_soldier_3",
+          "key": "var.key_ability_bonus",
+          "value": "3"
+        },
+        {
+          "build": "sf_seed_mystic_5",
+          "key": "var.key_ability_score",
+          "value": "19"
+        },
+        {
+          "build": "sf_seed_mystic_5",
+          "key": "var.key_ability_bonus",
+          "value": "4"
+        },
+        {
+          "build": "sf_seed_technomancer_5",
+          "key": "var.key_ability_score",
+          "value": "19"
+        },
+        {
+          "build": "sf_seed_technomancer_5",
+          "key": "var.key_ability_bonus",
+          "value": "4"
+        },
+        {
+          "build": "sf_seed_envoy_3",
+          "key": "var.key_ability_score",
+          "value": "18"
+        },
+        {
+          "build": "sf_seed_envoy_3",
+          "key": "var.key_ability_bonus",
+          "value": "4"
+        },
+        {
+          "build": "sf_soldier",
+          "key": "var.key_ability_score",
+          "value": "21"
+        },
+        {
+          "build": "sf_soldier",
+          "key": "var.key_ability_bonus",
+          "value": "5"
+        },
+        {
+          "build": "sf_mechanic",
+          "key": "var.key_ability_score",
+          "value": "26"
+        },
+        {
+          "build": "sf_mechanic",
+          "key": "var.key_ability_bonus",
+          "value": "8"
+        }
+      ]
+    },
+    {
+      "id": "resolve",
+      "sheet_field": "Resolve Points",
+      "pf_reading": "PF has no Resolve; the PF mapping reads BONUS:VAR|Resolve as an opaque variable contribution with no sheet line.",
+      "terms": [
+        {
+          "id": "level_and_key",
+          "token": "BONUS:VAR|Resolve|max(1,Resolve_PCLvl+KeyAbilityBonus)",
+          "file": "paizo/core/scr_abilities.lst",
+          "record": "Default",
+          "shape": "resolve_level_and_key",
+          "note": "with BONUS:VAR|Resolve_PCLvl|max(1,EffectiveLVL/2): max(1, max(1, level/2) + key modifier). The SRD has no outer max(1, …); the two differ only when the key modifier makes the sum < 1"
+        },
+        {
+          "id": "extra_resolve",
+          "token": "BONUS:VAR|Resolve|2",
+          "file": "paizo/core/scr_feats.lst",
+          "record": "Extra Resolve",
+          "shape": "feat_flat_bonus"
+        }
+      ],
+      "srd": [
+        {
+          "url": "https://www.aonsrd.com/Rules.aspx?ID=50",
+          "section": "Calculating Resolve Points: half character level (minimum 1) + key ability modifier"
+        },
+        {
+          "url": "https://www.aonsrd.com/FeatDisplay.aspx?ItemName=Extra%20Resolve",
+          "section": "Benefit: 2 additional Resolve Points"
+        }
+      ],
+      "oracle": [
+        {
+          "build": "sf_seed_soldier_3",
+          "key": "var.resolve",
+          "value": "4"
+        },
+        {
+          "build": "sf_seed_mystic_5",
+          "key": "var.resolve",
+          "value": "6"
+        },
+        {
+          "build": "sf_seed_technomancer_5",
+          "key": "var.resolve",
+          "value": "6"
+        },
+        {
+          "build": "sf_seed_envoy_3",
+          "key": "var.resolve",
+          "value": "5"
+        },
+        {
+          "build": "sf_soldier",
+          "key": "var.resolve",
+          "value": "12"
+        },
+        {
+          "build": "sf_mechanic",
+          "key": "var.resolve",
+          "value": "20"
+        }
+      ]
+    }
+  ],
+  "refusals": [
+    {
+      "field": "BONUS:HP|ALTHP|DroneMasterLVL (Energy Shield, drone)",
+      "why": "a drone has no Stamina Points (SRD drone base statistics: 'Drones do not have Stamina Points'); Energy Shield is a level-11 mod whose shield points no drone build observed by the oracle holds, so it is named here, not mapped (SD-37 E5.4)"
+    },
+    {
+      "field": "BONUS:HP|CURRENTMAX|1 (+1 Hit Point ability)",
+      "why": "no seed or PCGen test character holds it; it feeds hit_points by its token but has no oracle observation, so it is named here, not mapped"
+    },
+    {
+      "field": "HD:<n> with n != 1",
+      "why": "no Starfinder player class has one; a rolled die is refused by the evaluator"
+    }
+  ],
+  "reused_pf_fields": [
+    {
+      "field": "BONUS:VAR",
+      "sf_tag_occurrences": 3332,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:VAR (TYPE=Boolean flag)",
+      "sf_tag_occurrences": 3332,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:VAR ([redacted PI] value)",
+      "sf_tag_occurrences": 3332,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:STAT",
+      "sf_tag_occurrences": 414,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:ABILITYPOOL",
+      "sf_tag_occurrences": 162,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:SKILL",
+      "sf_tag_occurrences": 448,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:SPELLCAST",
+      "sf_tag_occurrences": 7,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:SPELLKNOWN",
+      "sf_tag_occurrences": 17,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:SITUATION",
+      "sf_tag_occurrences": 20,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:SAVE",
+      "sf_tag_occurrences": 61,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:CASTERLEVEL",
+      "sf_tag_occurrences": 4,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:SKILLRANK",
+      "sf_tag_occurrences": 74,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:SLOTS",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:MISC",
+      "sf_tag_occurrences": 5,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:DC",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:DR",
+      "sf_tag_occurrences": 2,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:SKILLPOINTS",
+      "sf_tag_occurrences": 2,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:WIELDCATEGORY",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:WEAPON",
+      "sf_tag_occurrences": 7,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:LANGUAGES",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "DEFINE",
+      "sf_tag_occurrences": 369,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "DEFINE (PI-redacted token)",
+      "sf_tag_occurrences": 369,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "DEFINESTAT",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "DAMAGE / ALTDAMAGE",
+      "sf_tag_occurrences": 1108,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "UDAM",
+      "sf_tag_occurrences": 6,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "UMULT",
+      "sf_tag_occurrences": 6,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "RANGE (spell / power keyword)",
+      "sf_tag_occurrences": 1096,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "WT",
+      "sf_tag_occurrences": 1835,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "COST (literal)",
+      "sf_tag_occurrences": 3135,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "COST (formula, equipment_modifier)",
+      "sf_tag_occurrences": 3135,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "ACCHECK",
+      "sf_tag_occurrences": 242,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "MAXDEX",
+      "sf_tag_occurrences": 229,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "MOVE",
+      "sf_tag_occurrences": 158,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "MOVECLONE",
+      "sf_tag_occurrences": 5,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "UNENCUMBEREDMOVE",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "HD (template band: <lo>-<hi>:TEMPLATE:<name>)",
+      "sf_tag_occurrences": 11,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "DR",
+      "sf_tag_occurrences": 12,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SPELLS",
+      "sf_tag_occurrences": 85,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SPELLS (PI-redacted token)",
+      "sf_tag_occurrences": 85,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SPELLKNOWN",
+      "sf_tag_occurrences": 84,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "TEMPBONUS",
+      "sf_tag_occurrences": 42,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "TEMPDESC",
+      "sf_tag_occurrences": 32,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "DESC / BENEFIT %N argument (a formula inside a prose token)",
+      "sf_tag_occurrences": 3488,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SPROP",
+      "sf_tag_occurrences": 2369,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SIZE",
+      "sf_tag_occurrences": 84,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SIZE (formula)",
+      "sf_tag_occurrences": 84,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "LEGS / HANDS",
+      "sf_tag_occurrences": 31,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "VISION",
+      "sf_tag_occurrences": 13,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "KEYSTAT",
+      "sf_tag_occurrences": 116,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SITUATION",
+      "sf_tag_occurrences": 7,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PROFICIENCY / WIELD",
+      "sf_tag_occurrences": 2583,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "CONTAINS / CHARGES / BASEITEM / BASEQTY / MODS / FUMBLERANGE",
+      "sf_tag_occurrences": 49,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "STAT: / AC: / LEVELADJUSTMENT: (listed in v06_work_inventory's magnitude_tokens)",
+      "sf_tag_occurrences": 3,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PREABILITY",
+      "sf_tag_occurrences": 166,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PREMULT",
+      "sf_tag_occurrences": 320,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PREVARGTEQ",
+      "sf_tag_occurrences": 38,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PREVARLT",
+      "sf_tag_occurrences": 63,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PREVARLTEQ",
+      "sf_tag_occurrences": 25,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PREVAREQ",
+      "sf_tag_occurrences": 2,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRECLASS",
+      "sf_tag_occurrences": 227,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRESTAT",
+      "sf_tag_occurrences": 55,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRESKILL",
+      "sf_tag_occurrences": 84,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRECSKILL",
+      "sf_tag_occurrences": 3,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRETOTALAB",
+      "sf_tag_occurrences": 27,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRECHECKBASE",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRELEVEL",
+      "sf_tag_occurrences": 8,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PREPCLEVEL",
+      "sf_tag_occurrences": 334,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRERACE",
+      "sf_tag_occurrences": 2,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PREFACT",
+      "sf_tag_occurrences": 2,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRESIZEEQ",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PREALIGN",
+      "sf_tag_occurrences": 21,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRESPELL",
+      "sf_tag_occurrences": 3,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRESPELLTYPE",
+      "sf_tag_occurrences": 6,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PREHANDSGTEQ",
+      "sf_tag_occurrences": 2,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRETEXT",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "PRETYPE",
+      "sf_tag_occurrences": 76,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "KEY",
+      "sf_tag_occurrences": 4513,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "CATEGORY",
+      "sf_tag_occurrences": 4608,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "TYPE",
+      "sf_tag_occurrences": 11091,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "VISIBLE",
+      "sf_tag_occurrences": 1829,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "ABILITY",
+      "sf_tag_occurrences": 2358,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "AUTO",
+      "sf_tag_occurrences": 1104,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "TEMPLATE",
+      "sf_tag_occurrences": 54,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "KIT",
+      "sf_tag_occurrences": 82,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "CSKILL",
+      "sf_tag_occurrences": 184,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "CLASSES",
+      "sf_tag_occurrences": 491,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "RACETYPE",
+      "sf_tag_occurrences": 77,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "RACESUBTYPE",
+      "sf_tag_occurrences": 50,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SUBRACE",
+      "sf_tag_occurrences": 11,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SERVESAS",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "CHOOSE",
+      "sf_tag_occurrences": 90,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SELECT",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "MULT",
+      "sf_tag_occurrences": 89,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "STACK",
+      "sf_tag_occurrences": 82,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "LANGBONUS",
+      "sf_tag_occurrences": 76,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "STARTFEATS",
+      "sf_tag_occurrences": 76,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "DESC",
+      "sf_tag_occurrences": 3260,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "DESC:.CLEAR",
+      "sf_tag_occurrences": 3260,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BENEFIT",
+      "sf_tag_occurrences": 228,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "ASPECT:<display sub-key> (Ability Benefit, AbilityBenefit, SaveBonus, CombatBonus, SkillBonus, RacialSkillModifier, Immunity, Resistance, ResistanceOutput, UnarmedNotes, Vision, Maneuverability, ModifyAC, CMBCircumstance, NaturalAttack*, Typical Alignment, Ancestry, Alternate *, Skill Modifiers, Spell-Like Ability, *SaveBonus, Racial Points)",
+      "sf_tag_occurrences": 125,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "ASPECT:CheckCount / ASPECT:CheckType",
+      "sf_tag_occurrences": 125,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "ASPECT:NAME",
+      "sf_tag_occurrences": 125,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "ASPECT:<structural sub-key> (ChildAbility, MasterAbility, Archetype Base Class, Bloodline, StatBlockName, SourceBook)",
+      "sf_tag_occurrences": 125,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "OUTPUTNAME",
+      "sf_tag_occurrences": 101,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "NAMEISPI / DESCISPI (and the corpus `license`/`pi_field`/`pi_marker` stamps)",
+      "sf_tag_occurrences": 39,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SORTKEY",
+      "sf_tag_occurrences": 1456,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SOURCEPAGE / SOURCELONG / SOURCESHORT / SOURCEWEB / SOURCEDATE / SOURCELINK",
+      "sf_tag_occurrences": 3839,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "MONSTERCLASS",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "MAXLEVEL",
+      "sf_tag_occurrences": 10,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SCHOOL",
+      "sf_tag_occurrences": 369,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "DESCRIPTOR",
+      "sf_tag_occurrences": 173,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "DURATION",
+      "sf_tag_occurrences": 369,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "CASTTIME",
+      "sf_tag_occurrences": 369,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "TARGETAREA",
+      "sf_tag_occurrences": 331,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "COMPS",
+      "sf_tag_occurrences": 15,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SAVEINFO",
+      "sf_tag_occurrences": 351,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SPELLRES",
+      "sf_tag_occurrences": 351,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "ALIGN",
+      "sf_tag_occurrences": 32,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "COMPANIONLIST",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "FOLLOWERS",
+      "sf_tag_occurrences": 1,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "USEUNTRAINED",
+      "sf_tag_occurrences": 127,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "QUALITY",
+      "sf_tag_occurrences": 7635,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "NAMEOPT / ITYPE / REPLACES / FORMATCAT / ASSIGNTOALL",
+      "sf_tag_occurrences": 89,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "REGION / REMOVABLE / VARIANTS / INFO / EXCLUSIVE / ALLOWBASECLASS / EXCLASS / WEAPONBONUS / ACHECK / CHANGEPROF / ADDSPELLLEVEL",
+      "sf_tag_occurrences": 19,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "BONUS:ITEMCOST",
+      "sf_tag_occurrences": 30,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "GROUP",
+      "sf_tag_occurrences": 7,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "MEMORIZE",
+      "sf_tag_occurrences": 3,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "SPELLSTAT",
+      "sf_tag_occurrences": 3,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    },
+    {
+      "field": "STARTSKILLPTS",
+      "sf_tag_occurrences": 10,
+      "why_unchanged": "same PCGen tag, loaded by the same game-mode-independent PCGen token plugin; E3.3 found no Starfinder rule that reads it differently (challengeable)"
+    }
+  ],
+  "remapped_pf_fields": [
+    {
+      "field": "BONUS:COMBAT",
+      "sf_tag_occurrences": 510,
+      "remapped_part": "only |AC|…|TYPE=EAC_Armor / KAC_Armor / Base / Ability (rows eac, kac); BASEAB, TOHIT, INITIATIVE etc. keep the PF meaning"
+    },
+    {
+      "field": "BONUS:HP",
+      "sf_tag_occurrences": 29,
+      "remapped_part": "all of it: |CURRENTMAX (+HD, +RaceHP) is Hit Points, |ALTHP is Stamina (rows hit_points, stamina)"
+    },
+    {
+      "field": "HD (class)",
+      "sf_tag_occurrences": 11,
+      "remapped_part": "HD:1 is one Hit Point per level, a term of hit_points (row hit_points)"
+    },
+    {
+      "field": "FACT / FACTSET",
+      "sf_tag_occurrences": 1164,
+      "remapped_part": "only FACT:KeyAbilityScore (row key_ability); every other FACT keeps the PF meaning"
+    }
+  ]
+}

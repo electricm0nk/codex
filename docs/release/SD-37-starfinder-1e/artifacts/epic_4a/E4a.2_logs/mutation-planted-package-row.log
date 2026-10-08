@@ -1,0 +1,4 @@
+test rules_core::rules_catalog::equivalence_tests::every_package_view_equals_its_compiled_function ... FAILED
+thread 'rules_core::rules_catalog::equivalence_tests::every_package_view_equals_its_compiled_function' (3446106) panicked at src/rules_core/rules_catalog/equivalence_tests.rs:10:5:
+crb/class_tables/class_tables: package-backed rows differ from the compiled table
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 2850 filtered out; finished in 2.34s

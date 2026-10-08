@@ -1,0 +1,72 @@
+## link E5.1: b9797f1392 -> a94024c402
+differing_files=152 race_speed=41 skill_words=212 other_moves=0
+movement_modes=['burrow', 'climb', 'fly', 'swim', 'walk'] race_principals=77 speed_mismatches=0
+labels_with_Display~ before=214 after=2
+verdict=PASS
+exit=0
+## gap a94024c402 -> a94024c402 (E5.2 started on E5.1's commit)
+## link E5.2: a94024c402 -> 465a6c7228
+records_moved=87 misdecoded_text_pieces=78 misdecoded_fact_leaves=2 stray_pipe_pieces=29 glued_defect_rows_removed=20 files_with_lead_chars_after=0 other_moves=0
+records_moved_by_kind={'deity': 6, 'spell': 81}
+verdict=PASS
+exit=0
+## gap 465a6c7228 -> e49a1669d1
+diff_exit=0
+## link E5.3: e49a1669d1 -> ef2589c219
+differing_files=223 bulk_row=108 item_level_row=135 price_row_added=222 price_unresolved_defect_rows=1 records_moved=223 other_moves=0
+equipment_modifier_principals=336 oracle_cost=223 package_bulk_rows=108 package_item_level_rows=135 package_price_rows=222 mismatches=0
+verdict=PASS
+exit=0
+## gap ef2589c219 -> 7df1e26d57 (incl. E5.3 attempt 2, 12835aa82c: claimed no package change)
+diff_exit=0
+## link E5.4 attempt 1: 7df1e26d57 -> c73912b57d
+added 52 removed 0 changed 60
+class companion_mod_added: 1 files
+class defects: 4 files
+class drone_pool_option_added: 42 files
+class drone_race_speed: 1 files
+class grant_edge_added: 47 files
+class offers_added: 1 files
+class var_table: 16 files
+other_moves=0
+exit=0
+## gap c73912b57d -> 4c50ff7752
+diff_exit=0
+## link E5.4 attempt 2: 4c50ff7752 -> d87611ea43
+automatic_grant_waiver: 31
+drone_class_hp: 1
+report: 2
+other_moves=0
+exit=0
+## gap d87611ea43 -> HEAD
+diff_exit=0
+## HEAD snapshot = working tree package
+diff_exit=0
+## PF package across E5 (b9797f1392 -> HEAD)
+0 lines of diffstat
+## plant E5.2 link
+planted label move on core:feat:quick_draw
+  OTHER text move not the repair: core:feat:quick_draw: 'Quick Draw' -> 'Quick Draw (planted)'
+verdict=FAIL
+plant_exit=1
+## plant E5.1 link
+planted label move on core:feat:quick_draw
+labels_with_Display~ before=214 after=2
+verdict=FAIL
+plant_exit=1
+## plant E5.3 link
+planted label move on core:feat:quick_draw
+equipment_modifier_principals=336 oracle_cost=223 package_bulk_rows=108 package_item_level_rows=135 package_price_rows=222 mismatches=0
+verdict=FAIL
+plant_exit=1
+## plant E5.4 attempt-1 link
+planted label move on core:feat:quick_draw
+other_moves=1
+  OTHER rule core/feat/quick_draw.json
+plant_exit=1
+## plant E5.4 attempt-2 link
+planted label move on core:feat:quick_draw
+other_moves=1
+  OTHER core/feat/quick_draw.json
+plant_exit=1
+CHAIN_DONE

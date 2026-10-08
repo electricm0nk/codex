@@ -1,0 +1,6 @@
+ M docs/retro/events/codex-sd37.jsonl
+?? docs/release/SD-37-starfinder-1e/artifacts/epic_5/E5.MC_chain.sh
+?? docs/release/SD-37-starfinder-1e/artifacts/epic_5/E5.MC_logs/
+?? docs/release/SD-37-starfinder-1e/artifacts/epic_5/E5.MC_plants.py
+?? docs/release/SD-37-starfinder-1e/artifacts/epic_5/E5.MC_run.sh
+?? docs/retro/events/sd37-e5-mc.jsonl

@@ -13,7 +13,7 @@
 //! reach it before: `src/bin/v06_work_inventory.rs`, which lives in this
 //! crate and cannot depend on the desktop crate. Until this move, the
 //! inventory's `race`-kind verdict answered "is this race modelled?" by
-//! testing membership in [`RaceId::ALL`](crate::rules_core::rules_tables::
+//! testing membership in [`RaceId::ALL`](crate::rules_core::rules_catalog::
 //! crb::race_tables::RaceId) — the original seven-variant CRB enum — while
 //! the product had long since moved to the corpus-driven
 //! [`RaceCorpus`](crate::rules_core::race_resolver::RaceCorpus). The gap is

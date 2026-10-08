@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Polymorphic serum (mk 3)",
+    "name": "Polymorphic serum (mk 3)",
+    "type": "Magic.Serum.Consumable"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 8,
+    "path": "starfinder/paizo/character_operations_manual/scom_equip_magic.lst",
+    "record_key": "Polymorphic serum (mk 3)",
+    "sha256": "97de35e74d85fee6261d2ee44cf2b856fa721ab2a78c69414d8e6de69557d0e2"
+  },
+  "unit_id": "character_operations_manual:equipment:polymorphic_serum_mk_3"
+}

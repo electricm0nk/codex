@@ -1,0 +1,2572 @@
+{
+  "format": "codex.rules_tables/1",
+  "table": "equipment_gap_tables/MYTHIC_ADVENTURES_GAP_ROWS",
+  "licence": {
+    "license": "OGL",
+    "book": "equipment_gap_tables",
+    "screen": "pi_screening::classify_field",
+    "pi_hits": [],
+    "redacted": []
+  },
+  "rows": [
+    {
+      "book": "MYTHIC",
+      "key": "Bastion of the Inheritor",
+      "name": "Bastion of the Inheritor",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Spiritwalk Armor",
+      "name": "Spiritwalk Armor",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Stalwart Breastplate",
+      "name": "Stalwart Breastplate",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Codex-Named Unit (equipment_mythic_adventures_ma_equip_lst_12)",
+      "name": "Codex-Named Unit (equipment_mythic_adventures_ma_equip_lst_12)",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": [
+        "ma_equip",
+        12
+      ]
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Brutal Axe",
+      "name": "Brutal Axe",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Chaos Hammer",
+      "name": "Chaos Hammer",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Dagger of a Thousand Bites",
+      "name": "Dagger of a Thousand Bites",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Dragonbreath Bow",
+      "name": "Dragonbreath Bow",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Fire Goddess's Blade",
+      "name": "Fire Goddess's Blade",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Gun with no Name",
+      "name": "Gun with no Name",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Pick of Stonecleaving",
+      "name": "Pick of Stonecleaving",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Sacred Avenger",
+      "name": "Sacred Avenger",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Shadow Spike",
+      "name": "Shadow Spike",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Shadow's Touch",
+      "name": "Shadow's Touch",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Skirmishing Spear",
+      "name": "Skirmishing Spear",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Spellbreaker",
+      "name": "Spellbreaker",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Stormcaller",
+      "name": "Stormcaller",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Sword of Inner Fire",
+      "name": "Sword of Inner Fire",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Ambrosia",
+      "name": "Ambrosia",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Anchoring Belt",
+      "name": "Anchoring Belt",
+      "category": "General",
+      "cost_gp": 60000.0,
+      "weight_lbs": 10.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Blind Helm",
+      "name": "Blind Helm",
+      "category": "General",
+      "cost_gp": 85000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Book of Banishing",
+      "name": "Book of Banishing",
+      "category": "General",
+      "cost_gp": 50000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Book of Perfect Jokes",
+      "name": "Book of Perfect Jokes",
+      "category": "General",
+      "cost_gp": 27000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Boots of Earth and Wind",
+      "name": "Boots of Earth and Wind",
+      "category": "General",
+      "cost_gp": 20000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Bountiful Bottle",
+      "name": "Bountiful Bottle",
+      "category": "General",
+      "cost_gp": 60000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Bracers of Might",
+      "name": "Bracers of Might",
+      "category": "General",
+      "cost_gp": 60000.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Bracers of the Shield Mates",
+      "name": "Bracers of the Shield Mates",
+      "category": "General",
+      "cost_gp": 60000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Canopic Jar",
+      "name": "Canopic Jar",
+      "category": "General",
+      "cost_gp": 60000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cape of Free Will +1",
+      "name": "Cape of Free Will +1",
+      "category": "General",
+      "cost_gp": 1500.0,
+      "weight_lbs": 1.0,
+      "description": "The wearer of this brightly colored patchwork cape gains a bonus on all saving throws, as with a cloak of resistance, but the resistance bonus on Will saves is one greater. Furthermore, if the wearer fails a Will saving throw, he can expend one use of mythic power as an immediate action to reroll that saving throw. If the wearer fails the saving throw on the reroll, he can’t use this ability again for 24 hours.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cape of Free Will +2",
+      "name": "Cape of Free Will +2",
+      "category": "General",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": "The wearer of this brightly colored patchwork cape gains a bonus on all saving throws, as with a cloak of resistance, but the resistance bonus on Will saves is one greater. Furthermore, if the wearer fails a Will saving throw, he can expend one use of mythic power as an immediate action to reroll that saving throw. If the wearer fails the saving throw on the reroll, he can’t use this ability again for 24 hours.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cape of Free Will +3",
+      "name": "Cape of Free Will +3",
+      "category": "General",
+      "cost_gp": 13500.0,
+      "weight_lbs": 1.0,
+      "description": "The wearer of this brightly colored patchwork cape gains a bonus on all saving throws, as with a cloak of resistance, but the resistance bonus on Will saves is one greater. Furthermore, if the wearer fails a Will saving throw, he can expend one use of mythic power as an immediate action to reroll that saving throw. If the wearer fails the saving throw on the reroll, he can’t use this ability again for 24 hours.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cape of Free Will +4",
+      "name": "Cape of Free Will +4",
+      "category": "General",
+      "cost_gp": 24000.0,
+      "weight_lbs": 1.0,
+      "description": "The wearer of this brightly colored patchwork cape gains a bonus on all saving throws, as with a cloak of resistance, but the resistance bonus on Will saves is one greater. Furthermore, if the wearer fails a Will saving throw, he can expend one use of mythic power as an immediate action to reroll that saving throw. If the wearer fails the saving throw on the reroll, he can’t use this ability again for 24 hours.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cape of Free Will +5",
+      "name": "Cape of Free Will +5",
+      "category": "General",
+      "cost_gp": 37500.0,
+      "weight_lbs": 1.0,
+      "description": "The wearer of this brightly colored patchwork cape gains a bonus on all saving throws, as with a cloak of resistance, but the resistance bonus on Will saves is one greater. Furthermore, if the wearer fails a Will saving throw, he can expend one use of mythic power as an immediate action to reroll that saving throw. If the wearer fails the saving throw on the reroll, he can’t use this ability again for 24 hours.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Codex-Named Unit (equipment_mythic_adventures_ma_equip_lst_70)",
+      "name": "Codex-Named Unit (equipment_mythic_adventures_ma_equip_lst_70)",
+      "category": "General",
+      "cost_gp": 16500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": [
+        "ma_equip",
+        70
+      ]
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Censet of Sanctuary",
+      "name": "Censet of Sanctuary",
+      "category": "General",
+      "cost_gp": 18000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Chime of Disillusionment",
+      "name": "Chime of Disillusionment",
+      "category": "General",
+      "cost_gp": 35000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cloak of Quick Reflexes +1",
+      "name": "Cloak of Quick Reflexes +1",
+      "category": "General",
+      "cost_gp": 1500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cloak of Quick Reflexes +2",
+      "name": "Cloak of Quick Reflexes +2",
+      "category": "General",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cloak of Quick Reflexes +3",
+      "name": "Cloak of Quick Reflexes +3",
+      "category": "General",
+      "cost_gp": 13500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cloak of Quick Reflexes +4",
+      "name": "Cloak of Quick Reflexes +4",
+      "category": "General",
+      "cost_gp": 24000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cloak of Quick Reflexes +5",
+      "name": "Cloak of Quick Reflexes +5",
+      "category": "General",
+      "cost_gp": 37500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cloak of the Hunt",
+      "name": "Cloak of the Hunt",
+      "category": "General",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Cornucopia of Plenty",
+      "name": "Cornucopia of Plenty",
+      "category": "General",
+      "cost_gp": 35000.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Death Warden's Bandolier",
+      "name": "Death Warden's Bandolier",
+      "category": "General",
+      "cost_gp": 15000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Dolorous Rod",
+      "name": "Dolorous Rod",
+      "category": "General",
+      "cost_gp": 120000.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Everburning Lantern",
+      "name": "Everburning Lantern",
+      "category": "General",
+      "cost_gp": 3000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Eye Orb",
+      "name": "Eye Orb",
+      "category": "General",
+      "cost_gp": 80000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Figure of Wondrous Power (Basalt Dragon)",
+      "name": "Figure of Wondrous Power (Basalt Dragon)",
+      "category": "General",
+      "cost_gp": 60000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Gallow's Rope",
+      "name": "Gallow's Rope",
+      "category": "General",
+      "cost_gp": 18000.0,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Gloves of Distant Action",
+      "name": "Gloves of Distant Action",
+      "category": "General",
+      "cost_gp": 20000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Gloves of Spell Snaring",
+      "name": "Gloves of Spell Snaring",
+      "category": "General",
+      "cost_gp": 9000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Golden Holy Symbol",
+      "name": "Golden Holy Symbol",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Headband of Sealed Thoughts",
+      "name": "Headband of Sealed Thoughts",
+      "category": "General",
+      "cost_gp": 150000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Helm of the Serpent King",
+      "name": "Helm of the Serpent King",
+      "category": "General",
+      "cost_gp": 96000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Herbs of the Primal Beast",
+      "name": "Herbs of the Primal Beast",
+      "category": "General",
+      "cost_gp": 1400.0,
+      "weight_lbs": 0.5,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Immolation Cloak",
+      "name": "Immolation Cloak",
+      "category": "General",
+      "cost_gp": 65000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Inescapable Gloves",
+      "name": "Inescapable Gloves",
+      "category": "General",
+      "cost_gp": 9000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Laurel Wreath",
+      "name": "Laurel Wreath",
+      "category": "General",
+      "cost_gp": 19000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Lyre of Storms",
+      "name": "Lyre of Storms",
+      "category": "General",
+      "cost_gp": 65000.0,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Mantle of the Faithful Vessel",
+      "name": "Mantle of the Faithful Vessel",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Mirroring Belt",
+      "name": "Mirroring Belt",
+      "category": "General",
+      "cost_gp": 36000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Mithral Rose",
+      "name": "Mithral Rose",
+      "category": "General",
+      "cost_gp": 9000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Monocle of Unveiled Auras",
+      "name": "Monocle of Unveiled Auras",
+      "category": "General",
+      "cost_gp": 12700.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Moonstone Cat",
+      "name": "Moonstone Cat",
+      "category": "General",
+      "cost_gp": 12000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Necklace of Spectral Strikes",
+      "name": "Necklace of Spectral Strikes",
+      "category": "General",
+      "cost_gp": 35500.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Nectar of the Gods",
+      "name": "Nectar of the Gods",
+      "category": "General",
+      "cost_gp": 5000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Pauldrons of Unflinching Fortitude +1",
+      "name": "Pauldrons of Unflinching Fortitude +1",
+      "category": "General",
+      "cost_gp": 1500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Pauldrons of Unflinching Fortitude +2",
+      "name": "Pauldrons of Unflinching Fortitude +2",
+      "category": "General",
+      "cost_gp": 6000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Pauldrons of Unflinching Fortitude +3",
+      "name": "Pauldrons of Unflinching Fortitude +3",
+      "category": "General",
+      "cost_gp": 13500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Pauldrons of Unflinching Fortitude +4",
+      "name": "Pauldrons of Unflinching Fortitude +4",
+      "category": "General",
+      "cost_gp": 24000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Pauldrons of Unflinching Fortitude +5",
+      "name": "Pauldrons of Unflinching Fortitude +5",
+      "category": "General",
+      "cost_gp": 37500.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Penitent's Robes",
+      "name": "Penitent's Robes",
+      "category": "General",
+      "cost_gp": 95000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Phoenix Cloak",
+      "name": "Phoenix Cloak",
+      "category": "General",
+      "cost_gp": 55000.0,
+      "weight_lbs": 7.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Ring of Energy Dampening",
+      "name": "Ring of Energy Dampening",
+      "category": "General",
+      "cost_gp": 31500.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Ring of Transcendent Spells",
+      "name": "Ring of Transcendent Spells",
+      "category": "General",
+      "cost_gp": 30000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Root of the World Tree (Lesser)",
+      "name": "Root of the World Tree (Lesser)",
+      "category": "General",
+      "cost_gp": 300.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Root of the World Tree (Normal)",
+      "name": "Root of the World Tree (Normal)",
+      "category": "General",
+      "cost_gp": 1000.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Root of the World Tree (Greater)",
+      "name": "Root of the World Tree (Greater)",
+      "category": "General",
+      "cost_gp": 2500.0,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Seven-League Boots",
+      "name": "Seven-League Boots",
+      "category": "General",
+      "cost_gp": 80000.0,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Stonefist Gloves",
+      "name": "Stonefist Gloves",
+      "category": "General",
+      "cost_gp": 10000.0,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Torc of Truespeech",
+      "name": "Torc of Truespeech",
+      "category": "General",
+      "cost_gp": 60000.0,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Aegis",
+      "name": "Aegis",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Black Iron Axe",
+      "name": "Black Iron Axe",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Screaming Spear of the Sun",
+      "name": "Screaming Spear of the Sun",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Sword of the Mists",
+      "name": "Sword of the Mists",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Witherfang",
+      "name": "Witherfang",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendsbane",
+      "name": "Legendsbane",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Scepter of the Shining Lord",
+      "name": "Scepter of the Shining Lord",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Bullroarers of Outburst",
+      "name": "Bullroarers of Outburst",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Elemental Chain",
+      "name": "Elemental Chain",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Fleshhook of Mythic Sustenance",
+      "name": "Fleshhook of Mythic Sustenance",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 12.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Fortune's Arrow",
+      "name": "Fortune's Arrow",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 0.1,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Glabrezu Claw",
+      "name": "Glabrezu Claw",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Hermetic Flask",
+      "name": "Hermetic Flask",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Codex-Named Unit (equipment_mythic_adventures_ma_equip_lst_137)",
+      "name": "Codex-Named Unit (equipment_mythic_adventures_ma_equip_lst_137)",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": [
+        "ma_equip",
+        137
+      ]
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Ring of Equilibrium",
+      "name": "Ring of Equilibrium",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Rod of Spell Sundering",
+      "name": "Rod of Spell Sundering",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 4.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Staff of Eldritch sovereignty",
+      "name": "Staff of Eldritch sovereignty",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 5.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Torc of the Heavens",
+      "name": "Torc of the Heavens",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Apocalypse Box",
+      "name": "Apocalypse Box",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Diadem of Nod",
+      "name": "Diadem of Nod",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Emperor's Mammoth",
+      "name": "Emperor's Mammoth",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Frozen Heart of Cocytus",
+      "name": "Frozen Heart of Cocytus",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 1.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Netherworld Cauldron",
+      "name": "Netherworld Cauldron",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 500000.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Nimbus of Radiant Truth",
+      "name": "Nimbus of Radiant Truth",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Plaguebringer",
+      "name": "Plaguebringer",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 0.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Shadowwraith Heart",
+      "name": "Shadowwraith Heart",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 3.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Silver Maiden",
+      "name": "Silver Maiden",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 1000000.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Tarnhelm",
+      "name": "Tarnhelm",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 2.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Trueforge",
+      "name": "Trueforge",
+      "category": "General",
+      "cost_gp": null,
+      "weight_lbs": 500.0,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Special Ability ~ Deflecting ~ Shield",
+      "name": "Deflecting",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day gain deflection bonus +% to self and allies within 10', lasts 1 minute or dismissed as a free action.|var(\"AC.ShieldEnhancement\")",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Special Ability ~ Denying ~ Armor",
+      "name": "Denying",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "1/day, negate a critical hit or sneak attack from melee weapon.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Special Ability ~ Resonating ~ Armor",
+      "name": "Resonating",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day, when the wearer expends at least one use of mythic power on his turn, this armor surges with sympathetic power. Its enhancement bonus increases by 2, and any damage reduction the wearer has increases by 5. This lasts for a number of rounds equal to the wearer's tier, and doesn't stack with itself.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Special Ability ~ Disjoining ~ Weapon",
+      "name": "Disjoining",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When the wielder confirms a critical hit against a mythic creature with a disjoining weapon, the target loses the ability to expend its mythic power for 1d4 rounds. A mythic creature wielding a disjoining weapon loses the ability to expend uses of mythic power for as long as he wields the weapon.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Special Ability ~ Harvesting ~ Weapon",
+      "name": "Harvesting",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Whenever a mythic wielder confirms a critical hit against another mythic creature, the weapon leeches away one use of the target's mythic power and transfers it to the wielder. If the wielder already has her maximum number of uses of mythic power, the target's use of mythic power is still leeched, but the wielder doesn't gain it. The weapon can do this a number of times per day equal to the enhancement bonus of the weapon. If the harvesting weapon is a legendary item (see page 169), the wielder can have the mythic power that is leeched replenish one of that weapon's uses of legendary power.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Special Ability ~ Mythic Bane ~ Weapon",
+      "name": "Mythic Bane",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A mythic bane weapon works exactly like a bane weapon, except it has a higher bonus and deals extra damage against any creature with the mythic subtype. This ability stacks with the bane weapon special ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Special Ability ~ Potent ~ Weapon",
+      "name": "Potent",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "As a swift action, the wielder can expend one use of mythic power to increase the weapon's enhancement bonus by half his mythic tier (minimum 1, to a maximum of a +6 enhancement bonus) and give it the ability to bypass damage reduction. These benefits last for 1 round.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Special Ability ~ Sacrosanct ~ Weapon",
+      "name": "Sacrosanct",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "Once per day when the wielder uses the sacrosanct weapon to channel energy, she can increase the radius of the channel energy to 40 feet. They wielder must be able to channel positive or negative energy to use this ability. Alternatively, the wielder can expend one use of mythic power to use this ability instead of expending its daily use. When using mythic power to activate this ability, it can be done at will.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item",
+      "name": "Legendary",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Artifact / Minor",
+      "name": "MinorArtifact",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Artifact / Major",
+      "name": "MajorArtifact",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Adroit",
+      "name": "Adroit",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "As a swift action, the item's bonded creature can expend one use of legendary power to gain a +20 insight bonus on the next check she attempts with the chosen skill before the end of her turn. The item must have a legendary surge that augments skill checks to have this ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Dedicated Bond",
+      "name": "Dedicated Bond",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "An item with this ability can't be used by anyone not bonded with it. Such creatures can't use the item's non-mythic special abilities, its legendary power, or its legendary surge.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Eternal Bond",
+      "name": "Eternal Bond",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When this ability is taken, the item becomes intimately tied to the creature that gave it this ability. This item can't be bonded to another creature as long as the creature that gave it this ability is alive and mythic.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Everlasting",
+      "name": "Everlasting",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This ability grants its bearer limited immortality. While in contact with this item, the bonded creature doesn't age; doesn't need to eat, drink, or breathe; and doesn't suffer any ill effects from extreme heat or extreme cold.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Flexible Bond",
+      "name": "Flexible Bond",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "The bonded creature can lend this item out with full utility to other creatures. As a standard action, the bonded creature can grant a temporary bond to a number of creatures equal to or less than her mythic tier. These creatures can be mythic or non-mythic.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Foe-Biting",
+      "name": "Foe-Biting",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When this item deals damage, its user can use mythic power to double the total amount of damage it deals. If the attack is a normal attack, the bearer can expend one use of legendary power to double the total amount of damage. If the attack is a confirmed critical hit, the bearer must instead expend two uses of legendary power to double the total damage. Damage from weapon special abilities (such as flaming) and precision-based damage are also doubled.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Legendary Fortification",
+      "name": "Legendary Fortification",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "the wearer can expend one use of legendary power to negate the critical hit or sneak attack and instead take normal damage.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Metamagician",
+      "name": "Metamagician",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "allows a spellcaster to apply a metamagic feat she knows to a spell as she casts it. She must expend a number of uses of legendary power equal to the increase of spell level the metamagic feat usually applies (minimum 1). This metamagic feat is applied spontaneously and without changing the casting time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Perfect Surge",
+      "name": "Perfect Surge",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "item's legendary surge can apply to any d20 roll. The surge adds a further +2 bonus when applied to one of the types of rolls initially chosen for it.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Powerful",
+      "name": "Powerful",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "item with this ability has two additional uses of legendary power per day. This ability can be taken up to three times.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Powerful / 2",
+      "name": "Powerful (2)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Powerful / 3",
+      "name": "Powerful (3)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Rejuvenating",
+      "name": "Rejuvenating",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "bearer of this item can expend uses of legendary power to rejuvenate her body. As a standard action, she can expend one use of legendary power to heal herself of 10 points of damage per mythic tier she possesses. Alternatively, as a standard action she can expend two uses of legendary power to remove a single condition affecting her.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Returning",
+      "name": "Returning",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "creature bonded to this item can expend one use of mythic power to teleport the item to her waiting hand, as if using teleport object. The item must be on the same plane as the bonded creature for this ability to function.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Returning / 2",
+      "name": "Returning (2)",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Undetectable",
+      "name": "Undetectable",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "grants its bonded user the ability to become utterly undetectable while invisible. While invisible and in physical contact with this item, the bonded creature can't be detected or scryed by any method.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Unstoppable Strike",
+      "name": "Unstoppable Strike",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "weapon bypasses all armor. The wielder can expend one use of legendary power when attacking to make the attack against touch AC. If she instead expends two uses of legendary power, the weapon also bypasses any def lection bonus to AC the target has.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Unyielding",
+      "name": "Unyielding",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "item with this ability has double the hardness of a typical item of its type and triple the hit points. Furthermore, it's immune to all attempts to sunder it made by non-mythic creatures. This is a persistent ability. [Not implemented - requires Formula parser]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Upgradable",
+      "name": "Upgradable",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "grants the bonded creature the ability to more easily increase the non-mythic magical power of the legendary item. If the base magic item has a version with a higher bonus or greater version (such as a +1 longsword, a +2 light steel shield, a cloak of protection +3, an amulet of might fists +4, or a minor ring of inner fortitude), the bonded creature can improve it by performing a special ritual. She must spend a number of gold pieces equal to half the difference between the cost of the legendary item's current, non-mythic base item and the greater version she wishes to upgrade the item into. For example, she would pay 3,000 gp to upgrade a +1 longsword into a +2 longsword. This ritual takes 8 hours. When it's completed, the bonded creature transmutes the item's base version into the desired version. When upgraded in this fashion, the legendary item retains all legendary item abilities it had before the transmutation.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item",
+      "name": "Intelligent",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 11",
+      "name": "Legendary Intelligent Item / Stat Intelligence 11",
+      "category": "Equipmods",
+      "cost_gp": 200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 12",
+      "name": "Legendary Intelligent Item / Stat Intelligence 12",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 13",
+      "name": "Legendary Intelligent Item / Stat Intelligence 13",
+      "category": "Equipmods",
+      "cost_gp": 700.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 14",
+      "name": "Legendary Intelligent Item / Stat Intelligence 14",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 15",
+      "name": "Legendary Intelligent Item / Stat Intelligence 15",
+      "category": "Equipmods",
+      "cost_gp": 1400.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 16",
+      "name": "Legendary Intelligent Item / Stat Intelligence 16",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 17",
+      "name": "Legendary Intelligent Item / Stat Intelligence 17",
+      "category": "Equipmods",
+      "cost_gp": 2800.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 18",
+      "name": "Legendary Intelligent Item / Stat Intelligence 18",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 19",
+      "name": "Legendary Intelligent Item / Stat Intelligence 19",
+      "category": "Equipmods",
+      "cost_gp": 5200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Intelligence 20",
+      "name": "Legendary Intelligent Item / Stat Intelligence 20",
+      "category": "Equipmods",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Wisdom 11",
+      "name": "Legendary Intelligent Item / Stat Wisdom 11",
+      "category": "Equipmods",
+      "cost_gp": 200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Wisdom 12",
+      "name": "Legendary Intelligent Item / Stat Wisdom 12",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Wisdom 13",
+      "name": "Legendary Intelligent Item / Stat Wisdom 13",
+      "category": "Equipmods",
+      "cost_gp": 700.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Wisdom 14",
+      "name": "Legendary Intelligent Item / Stat Wisdom 14",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Wisdom 15",
+      "name": "Legendary Intelligent Item / Stat Wisdom 15",
+      "category": "Equipmods",
+      "cost_gp": 1400.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Wisdom 16",
+      "name": "Legendary Intelligent Item / Stat Wisdom 16",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Wisdom 17",
+      "name": "Legendary Intelligent Item / Stat Wisdom 17",
+      "category": "Equipmods",
+      "cost_gp": 2800.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Wisdom 18",
+      "name": "Legendary Intelligent Item / Stat Wisdom 18",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Wisdom 19",
+      "name": "Legendary Intelligent Item / Stat Wisdom 19",
+      "category": "Equipmods",
+      "cost_gp": 5200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Wisdom 20",
+      "name": "Legendary Intelligent Item / Stat Wisdom 20",
+      "category": "Equipmods",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Charisma 11",
+      "name": "Legendary Intelligent Item / Stat Charisma 11",
+      "category": "Equipmods",
+      "cost_gp": 200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Charisma 12",
+      "name": "Legendary Intelligent Item / Stat Charisma 12",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Charisma 13",
+      "name": "Legendary Intelligent Item / Stat Charisma 13",
+      "category": "Equipmods",
+      "cost_gp": 700.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Charisma 14",
+      "name": "Legendary Intelligent Item / Stat Charisma 14",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Charisma 15",
+      "name": "Legendary Intelligent Item / Stat Charisma 15",
+      "category": "Equipmods",
+      "cost_gp": 1400.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Charisma 16",
+      "name": "Legendary Intelligent Item / Stat Charisma 16",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Charisma 17",
+      "name": "Legendary Intelligent Item / Stat Charisma 17",
+      "category": "Equipmods",
+      "cost_gp": 2800.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Charisma 18",
+      "name": "Legendary Intelligent Item / Stat Charisma 18",
+      "category": "Equipmods",
+      "cost_gp": 4000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Charisma 19",
+      "name": "Legendary Intelligent Item / Stat Charisma 19",
+      "category": "Equipmods",
+      "cost_gp": 5200.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Ability Score / Charisma 20",
+      "name": "Legendary Intelligent Item / Stat Charisma 20",
+      "category": "Equipmods",
+      "cost_gp": 8000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Alignment / Chaotic Good",
+      "name": "Legendary Intelligent Item / Align (CG)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Alignment / Chaotic Neutral",
+      "name": "Legendary Intelligent Item / Align (CN)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Alignment / Chaotic Evil",
+      "name": "Legendary Intelligent Item / Align (CE)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Alignment / Neutral Evil",
+      "name": "Legendary Intelligent Item / Align (NE)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Alignment / Lawful Evil",
+      "name": "Legendary Intelligent Item / Align (LE)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Alignment / Lawful Good",
+      "name": "Legendary Intelligent Item / Align (LG)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Alignment / Lawful Neutral",
+      "name": "Legendary Intelligent Item / Align (LN)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Alignment / Neutral Good",
+      "name": "Legendary Intelligent Item / Align (NG)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Alignment / True Neutral",
+      "name": "Legendary Intelligent Item / Align (TN)",
+      "category": "Equipmods",
+      "cost_gp": 0.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Movement / Walk 10 Feet",
+      "name": "Legendary Intelligent Item / Animate",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "This item can sprout limbs and move with a speed of 10 feet.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Sense / Blindsense",
+      "name": "Legendary Intelligent Item / Blindsense",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "This item gains blindsense with the same range as its other senses. The item must have the darkvision ability to have this ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Sense / Darkvision",
+      "name": "Legendary Intelligent Item / Darkvision",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "This item gains darkvision with the same range as its other senses.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Sense / Range 60",
+      "name": "Legendary Intelligent Item / Expanded Senses (60 ft.)",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "The range of this item's senses increases to 60 feet.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Sense / Range 120",
+      "name": "Legendary Intelligent Item / Expanded Senses (120 ft.)",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "The range of this item's senses increases to 120 feet. The item must have expanded senses (60 ft.) to have this ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Movement / Fly 30 Feet",
+      "name": "Legendary Intelligent Item / Fly",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "The item gains a fly speed of 30 feet with average maneuverability. The item must have the animate ability to have this ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Communication / Read Language",
+      "name": "Legendary Intelligent Item / Read Languages",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "This item can read script in any language regardless of its known languages.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Communication / Read Magic",
+      "name": "Legendary Intelligent Item / Read Magic",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "This item can read magical writing and scrolls as if using read magic. This ability doesn't allow the item to activate scrolls or other spell-completion items. The item can suppress and resume this ability as a free action.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Shape Change",
+      "name": "Legendary Intelligent Item / Shape Change",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "The item can change its shape into one other form of the same size.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Skill Ranks / 10",
+      "name": "Legendary Intelligent Item / Skill Ranks",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "This item gains 10 ranks in one skill. This must be an Intelligence-, Wisdom-, or Charisma-based skill, unless the item has the animate ability (allowing it to choose Acrobatics) or the fly ability (allowing it to choose Fly).",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting",
+      "name": "Legendary Intelligent Item / Spellcasting",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This item allows its bearer to cast a limited number of spells as spell-like abilities. This ability can be taken more than once. Each time it's taken, the bonded creature gains 5 points to spend on selecting what spells the item can cast. A spell costs a number of points equal to its level (minimum 1). The bearer can then activate the item to use each spell-like ability once per day. By spending double the cost, the bearer can use each spell-like ability three times per day. All spells must come from the same class's spell list. No spell can have a level higher than the bonded creature's tier. The caster level for these spells is equal to double the bonded creature's tier. The save DC for these spells is equal to 10 + the spell level + the bonded creature's tier.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Communication / Telepathy",
+      "name": "Legendary Intelligent Item / Telepathy",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "This item can hold private mental conversations with its bearer, regardless of whether they share a known language. The item must be in physical contact with a creature to communicate this way.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Movement / Teleport / 1 per Day",
+      "name": "Legendary Intelligent Item / Teleport",
+      "category": "Equipmods",
+      "cost_gp": 15000.0,
+      "weight_lbs": null,
+      "description": "Once per day, the item can teleport as the spell. It must have either the spellcasting ability or the fly ability to have this ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 1st Level Spell / 1 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 1st-level spell 1/day",
+      "category": "Equipmods",
+      "cost_gp": 400.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 1st Level Spell / 3 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 1st-level spell 3/day",
+      "category": "Equipmods",
+      "cost_gp": 1200.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 2nd Level Spell / 1 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 2nd-level spell 1/day",
+      "category": "Equipmods",
+      "cost_gp": 2400.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 2nd Level Spell / 3 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 2nd-level spell 3/day",
+      "category": "Equipmods",
+      "cost_gp": 7200.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 3rd Level Spell / 1 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 3rd-level spell 1/day",
+      "category": "Equipmods",
+      "cost_gp": 6000.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 3rd Level Spell / 3 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 3rd-level spell 3/day",
+      "category": "Equipmods",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 4th Level Spell / 1 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 4th-level spell 1/day",
+      "category": "Equipmods",
+      "cost_gp": 11200.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 4th Level Spell / 3 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 4th-level spell 3/day",
+      "category": "Equipmods",
+      "cost_gp": 33600.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 5th Level Spell / 1 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 5th-level spell 1/day",
+      "category": "Equipmods",
+      "cost_gp": 18000.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 5th Level Spell / 3 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 5th-level spell 3/day",
+      "category": "Equipmods",
+      "cost_gp": 54000.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 6th Level Spell / 1 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 6th-level spell 1/day",
+      "category": "Equipmods",
+      "cost_gp": 26400.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 6th Level Spell / 3 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 6th-level spell 3/day",
+      "category": "Equipmods",
+      "cost_gp": 79200.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 7th Level Spell / 1 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 7th-level spell 1/day",
+      "category": "Equipmods",
+      "cost_gp": 36400.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 7th Level Spell / 3 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 7th-level spell 3/day",
+      "category": "Equipmods",
+      "cost_gp": 109200.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 8th Level Spell / 1 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 8th-level spell 1/day",
+      "category": "Equipmods",
+      "cost_gp": 48000.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 8th Level Spell / 3 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 8th-level spell 3/day",
+      "category": "Equipmods",
+      "cost_gp": 144000.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 9th Level Spell / 1 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 9th-level spell 1/day",
+      "category": "Equipmods",
+      "cost_gp": 61200.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 1/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "Legendary Item ~ Intelligent Item ~ Spellcasting / 9th Level Spell / 3 per Day",
+      "name": "Legendary Intelligent Item / Spellcasting 9th-level spell 3/day",
+      "category": "Equipmods",
+      "cost_gp": 183600.0,
+      "weight_lbs": null,
+      "description": "The chosen spell 3/day",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "DEFLECTING",
+      "name": "DEFLECTING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day gain deflection bonus +% to self and allies within 10', lasts 1 minute or dismissed as a free action.|var(\"AC.ShieldEnhancement\")",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "DENYING",
+      "name": "DENYING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "1/day, negate a critical hit or sneak attack from melee weapon.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "RESONATING",
+      "name": "RESONATING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "3/day, when the wearer expends at least one use of mythic power on his turn, this armor surges with sympathetic power. Its enhancement bonus increases by 2, and any damage reduction the wearer has increases by 5. This lasts for a number of rounds equal to the wearer's tier, and doesn't stack with itself.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "DISJOINING",
+      "name": "DISJOINING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When the wielder confirms a critical hit against a mythic creature with a disjoining weapon, the target loses the ability to expend its mythic power for 1d4 rounds. A mythic creature wielding a disjoining weapon loses the ability to expend uses of mythic power for as long as he wields the weapon.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "HARVESTING",
+      "name": "HARVESTING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "Whenever a mythic wielder confirms a critical hit against another mythic creature, the weapon leeches away one use of the target's mythic power and transfers it to the wielder. If the wielder already has her maximum number of uses of mythic power, the target's use of mythic power is still leeched, but the wielder doesn't gain it. The weapon can do this a number of times per day equal to the enhancement bonus of the weapon. If the harvesting weapon is a legendary item (see page 169), the wielder can have the mythic power that is leeched replenish one of that weapon's uses of legendary power.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "MYTHIC_BANE",
+      "name": "MYTHIC_BANE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "A mythic bane weapon works exactly like a bane weapon, except it has a higher bonus and deals extra damage against any creature with the mythic subtype. This ability stacks with the bane weapon special ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "POTENT",
+      "name": "POTENT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "As a swift action, the wielder can expend one use of mythic power to increase the weapon's enhancement bonus by half his mythic tier (minimum 1, to a maximum of a +6 enhancement bonus) and give it the ability to bypass damage reduction. These benefits last for 1 round.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "SACROSANCT",
+      "name": "SACROSANCT",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "Once per day when the wielder uses the sacrosanct weapon to channel energy, she can increase the radius of the channel energy to 40 feet. They wielder must be able to channel positive or negative energy to use this ability. Alternatively, the wielder can expend one use of mythic power to use this ability instead of expending its daily use. When using mythic power to activate this ability, it can be done at will.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGENDARY",
+      "name": "LEGENDARY",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "MinorArtifact",
+      "name": "MinorArtifact",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "MajorArtifact",
+      "name": "MajorArtifact",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_ADROIT",
+      "name": "LEGEND_ADROIT",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "As a swift action, the item's bonded creature can expend one use of legendary power to gain a +20 insight bonus on the next check she attempts with the chosen skill before the end of her turn. The item must have a legendary surge that augments skill checks to have this ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_DEDICATED_BOND",
+      "name": "LEGEND_DEDICATED_BOND",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "An item with this ability can't be used by anyone not bonded with it. Such creatures can't use the item's non-mythic special abilities, its legendary power, or its legendary surge.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_ETERNAL_BOND",
+      "name": "LEGEND_ETERNAL_BOND",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When this ability is taken, the item becomes intimately tied to the creature that gave it this ability. This item can't be bonded to another creature as long as the creature that gave it this ability is alive and mythic.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_EVERLASTING",
+      "name": "LEGEND_EVERLASTING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This ability grants its bearer limited immortality. While in contact with this item, the bonded creature doesn't age; doesn't need to eat, drink, or breathe; and doesn't suffer any ill effects from extreme heat or extreme cold.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_FLEXIBLE_BOND",
+      "name": "LEGEND_FLEXIBLE_BOND",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "The bonded creature can lend this item out with full utility to other creatures. As a standard action, the bonded creature can grant a temporary bond to a number of creatures equal to or less than her mythic tier. These creatures can be mythic or non-mythic.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_FOE-BITING",
+      "name": "LEGEND_FOE-BITING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "When this item deals damage, its user can use mythic power to double the total amount of damage it deals. If the attack is a normal attack, the bearer can expend one use of legendary power to double the total amount of damage. If the attack is a confirmed critical hit, the bearer must instead expend two uses of legendary power to double the total damage. Damage from weapon special abilities (such as flaming) and precision-based damage are also doubled.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INTELLIGENT",
+      "name": "LEGEND_INTELLIGENT",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGENDARY_FORTIFICATION",
+      "name": "LEGENDARY_FORTIFICATION",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "the wearer can expend one use of legendary power to negate the critical hit or sneak attack and instead take normal damage.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_METAMAGICIAN",
+      "name": "LEGEND_METAMAGICIAN",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "allows a spellcaster to apply a metamagic feat she knows to a spell as she casts it. She must expend a number of uses of legendary power equal to the increase of spell level the metamagic feat usually applies (minimum 1). This metamagic feat is applied spontaneously and without changing the casting time.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_PERFECT_SURGE",
+      "name": "LEGEND_PERFECT_SURGE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "item's legendary surge can apply to any d20 roll. The surge adds a further +2 bonus when applied to one of the types of rolls initially chosen for it.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_POWERFUL",
+      "name": "LEGEND_POWERFUL",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "item with this ability has two additional uses of legendary power per day. This ability can be taken up to three times.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_POWERFUL_2",
+      "name": "LEGEND_POWERFUL_2",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_POWERFUL_3",
+      "name": "LEGEND_POWERFUL_3",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_REJUVENATION",
+      "name": "LEGEND_REJUVENATION",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "bearer of this item can expend uses of legendary power to rejuvenate her body. As a standard action, she can expend one use of legendary power to heal herself of 10 points of damage per mythic tier she possesses. Alternatively, as a standard action she can expend two uses of legendary power to remove a single condition affecting her.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_RETURNING",
+      "name": "LEGEND_RETURNING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "creature bonded to this item can expend one use of mythic power to teleport the item to her waiting hand, as if using teleport object. The item must be on the same plane as the bonded creature for this ability to function.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_RETURNING_2",
+      "name": "LEGEND_RETURNING_2",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": null,
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_UNDETECTABLE",
+      "name": "LEGEND_UNDETECTABLE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "grants its bonded user the ability to become utterly undetectable while invisible. While invisible and in physical contact with this item, the bonded creature can't be detected or scryed by any method.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_UNSTOPPABLE_STRIKE",
+      "name": "LEGEND_UNSTOPPABLE_STRIKE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "weapon bypasses all armor. The wielder can expend one use of legendary power when attacking to make the attack against touch AC. If she instead expends two uses of legendary power, the weapon also bypasses any def lection bonus to AC the target has.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_UNYIELDING",
+      "name": "LEGEND_UNYIELDING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "item with this ability has double the hardness of a typical item of its type and triple the hit points. Furthermore, it's immune to all attempts to sunder it made by non-mythic creatures. This is a persistent ability. [Not implemented - requires Formula parser]",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_UPGRADABLE",
+      "name": "LEGEND_UPGRADABLE",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "grants the bonded creature the ability to more easily increase the non-mythic magical power of the legendary item. If the base magic item has a version with a higher bonus or greater version (such as a +1 longsword, a +2 light steel shield, a cloak of protection +3, an amulet of might fists +4, or a minor ring of inner fortitude), the bonded creature can improve it by performing a special ritual. She must spend a number of gold pieces equal to half the difference between the cost of the legendary item's current, non-mythic base item and the greater version she wishes to upgrade the item into. For example, she would pay 3,000 gp to upgrade a +1 longsword into a +2 longsword. This ritual takes 8 hours. When it's completed, the bonded creature transmutes the item's base version into the desired version. When upgraded in this fashion, the legendary item retains all legendary item abilities it had before the transmutation.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_ANIMATE",
+      "name": "LEGEND_INT_ANIMATE",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "This item can sprout limbs and move with a speed of 10 feet.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_BLINDSENSE",
+      "name": "LEGEND_INT_BLINDSENSE",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "This item gains blindsense with the same range as its other senses. The item must have the darkvision ability to have this ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_DARKVISION",
+      "name": "LEGEND_INT_DARKVISION",
+      "category": "Equipmods",
+      "cost_gp": 5000.0,
+      "weight_lbs": null,
+      "description": "This item gains darkvision with the same range as its other senses.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_EXP_SENSES_60",
+      "name": "LEGEND_INT_EXP_SENSES_60",
+      "category": "Equipmods",
+      "cost_gp": 500.0,
+      "weight_lbs": null,
+      "description": "The range of this item's senses increases to 60 feet.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_EXP_SENSES_120",
+      "name": "LEGEND_INT_EXP_SENSES_120",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "The range of this item's senses increases to 120 feet. The item must have expanded senses (60 ft.) to have this ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_FLY",
+      "name": "LEGEND_INT_FLY",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "The item gains a fly speed of 30 feet with average maneuverability. The item must have the animate ability to have this ability.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_READ_LANG",
+      "name": "LEGEND_INT_READ_LANG",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "This item can read script in any language regardless of its known languages.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_READ_MAGIC",
+      "name": "LEGEND_INT_READ_MAGIC",
+      "category": "Equipmods",
+      "cost_gp": 2000.0,
+      "weight_lbs": null,
+      "description": "This item can read magical writing and scrolls as if using read magic. This ability doesn't allow the item to activate scrolls or other spell-completion items. The item can suppress and resume this ability as a free action.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_SHAPE_CHANGE",
+      "name": "LEGEND_INT_SHAPE_CHANGE",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "The item can change its shape into one other form of the same size.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_SKILL_RANKS",
+      "name": "LEGEND_INT_SKILL_RANKS",
+      "category": "Equipmods",
+      "cost_gp": 10000.0,
+      "weight_lbs": null,
+      "description": "This item gains 10 ranks in one skill. This must be an Intelligence-, Wisdom-, or Charisma-based skill, unless the item has the animate ability (allowing it to choose Acrobatics) or the fly ability (allowing it to choose Fly).",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_SPELLCASTING",
+      "name": "LEGEND_INT_SPELLCASTING",
+      "category": "Equipmods",
+      "cost_gp": null,
+      "weight_lbs": null,
+      "description": "This item allows its bearer to cast a limited number of spells as spell-like abilities. This ability can be taken more than once. Each time it's taken, the bonded creature gains 5 points to spend on selecting what spells the item can cast. A spell costs a number of points equal to its level (minimum 1). The bearer can then activate the item to use each spell-like ability once per day. By spending double the cost, the bearer can use each spell-like ability three times per day. All spells must come from the same class's spell list. No spell can have a level higher than the bonded creature's tier. The caster level for these spells is equal to double the bonded creature's tier. The save DC for these spells is equal to 10 + the spell level + the bonded creature's tier.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_TELEPATHY",
+      "name": "LEGEND_INT_TELEPATHY",
+      "category": "Equipmods",
+      "cost_gp": 1000.0,
+      "weight_lbs": null,
+      "description": "This item can hold private mental conversations with its bearer, regardless of whether they share a known language. The item must be in physical contact with a creature to communicate this way.",
+      "name_pi_citation": null
+    },
+    {
+      "book": "MYTHIC",
+      "key": "LEGEND_INT_TELEPORT",
+      "name": "LEGEND_INT_TELEPORT",
+      "category": "Equipmods",
+      "cost_gp": 15000.0,
+      "weight_lbs": null,
+      "description": "Once per day, the item can teleport as the spell. It must have either the spellcasting ability or the fly ability to have this ability.",
+      "name_pi_citation": null
+    }
+  ]
+}

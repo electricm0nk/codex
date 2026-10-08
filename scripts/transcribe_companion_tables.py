@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Transcribe one book's `companion` rows into a Rust table.
+"""Transcribe one book's `companion` rows into the `rules_tables` data package.
+
+Writes `data/rules_tables/<module dir>/companion_data/{COMPANIONS,COMPANION_ABILITIES[,
+COMPANION_CLASSES]}.json` (SD-37 E4a.4a; E4a.4 removed the compiled `companion_data.rs`
+modules this used to write) and normalises them with `rules_tables_package --write`
+(`scripts/rules_tables_package_out.py`). Run it from the repo root.
 
 The companion analogue of ``scripts/transcribe_monster_tables.py``, written to
 that file's rules because they are the ones that made the monster lane's output
@@ -34,6 +39,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import rules_tables_package_out as package_out  # noqa: E402
+
 from classify_companion_rows import (  # noqa: E402
     bare_species,
     book_dirs,
@@ -65,45 +72,6 @@ DELIVERIES = {
 }
 
 FULL_ABILITY_RULE = "DisplayFullAbility"
-
-# The emitted `use` line is derived from the symbols the emitted rows actually
-# name, never written as a fixed line: Horror Adventures' single ability row
-# carries no delivery segment, so importing `CompanionAbilityDelivery` there is
-# an unused import, and `./scripts/verify.sh`'s clippy stage denies warnings.
-IMPORT_PLACEHOLDER = "// __COMPANION_CHASSIS_IMPORTS__"
-IMPORTABLE = (
-    "CompanionAbilityDelivery",
-    "CompanionAbilityFacet",
-    "CompanionAbilityRecord",
-    "CompanionClassRecord",
-    "CompanionDescriptionVariant",
-    "CompanionRecord",
-    "NaturalAttack",
-    "NaturalAttackDamageBonus",
-    "SkillAbilityDiffBonus",
-    "Speed",
-    "StatAdjustment",
-)
-
-
-def rust_str(value: str) -> str:
-    return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
-
-
-def rust_opt(value: str | None) -> str:
-    return f"Some({rust_str(value)})" if value is not None else "None"
-
-
-def rust_pair_slice(pairs: list[tuple[str, str]]) -> str:
-    """Emit `&[(&str, &str)]` for Shape 8 cross-book ownership grants."""
-    if not pairs:
-        return "&[]"
-    return "&[" + ", ".join(f"({rust_str(a)}, {rust_str(b)})" for a, b in pairs) + "]"
-
-
-def rust_slice(values: list[str]) -> str:
-    return "&[" + ", ".join(rust_str(v) for v in values) + "]"
-
 
 PI_MARKER_RS = "src/rules_core/shape_b_v1.rs"
 
@@ -463,7 +431,7 @@ def parse_class_row(row: list[str]) -> dict:
     }
 
 
-def transcribe(book: str) -> str:
+def transcribe(book: str) -> "Transcription":
     directory = book_dirs()[book]
     inventory = json.load(open("docs/work-inventory.json", encoding="utf-8"))
     units = [u for u in inventory["units"] if u["book"] == book and u["kind"] == "companion"]
@@ -1358,175 +1326,255 @@ def transcribe(book: str) -> str:
                 f"//!   * `{unit['corpus_key']}` -- `{unit['source_file']}`, "
                 f"`{gates[unit['source_file']]}`"
             )
-    out.append("")
-    # Filled in at the end from what the emitted rows actually name -- see the
-    # note beside `IMPORT_PLACEHOLDER`.
-    out.append(IMPORT_PLACEHOLDER)
-    out.append("")
-    out.append(f"/// Every {book} companion creature ({len(creatures)} rows).")
-    out.append("pub(super) static COMPANIONS: &[CompanionRecord] = &[")
+    # The header lines above are the transcription's provenance notes. The
+    # data package carries rows only, so `main` prints them (SD-37 E4a.4a).
+    notes = [line[4:] if line.startswith("//! ") else line[3:] for line in out]
+
+    companion_table: list[dict] = []
     for unit in creatures:
         key = unit["corpus_key"]
         row = creature_rows[key]
-        speeds = parse_speeds(row)
-        attacks = parse_natural_attacks(row)
-        adjustments = parse_stat_adjustments(row)
-        damage_bonuses = parse_natural_attack_damage_bonuses(row)
-        skill_bonuses = parse_skill_ability_diff_bonuses(row)
-        reach = parse_reach(row)
-        armor = parse_natural_armor(row)
-        out.append("    CompanionRecord {")
-        out.append(f"        key: {rust_str(key)},")
-        out.append(f"        name: {rust_str(unit['name'])},")
-        out.append(f"        size: {rust_opt(parse_size(row))},")
-        out.append(
-            "        speeds: &["
-            + ", ".join(f"Speed {{ mode: {rust_str(m)}, feet: {f} }}" for m, f in speeds)
-            + "],"
+        refs, ref_conditions = split_external_ref_guards(external[key])
+        companion_table.append(
+            {
+                "key": key,
+                "name": unit["name"],
+                "size": parse_size(row),
+                "speeds": [{"mode": m, "feet": f} for m, f in parse_speeds(row)],
+                "reach_feet": parse_reach(row),
+                "race_type": token(row, "RACETYPE:"),
+                "race_subtype": token(row, "RACESUBTYPE:"),
+                "monster_class": token(row, "MONSTERCLASS:"),
+                "type_segments": parse_type_segments(row),
+                "natural_attacks": [
+                    {"name": n, "damage_dice": d} for n, d in parse_natural_attacks(row)
+                ],
+                "natural_attack_damage_bonuses": [
+                    natural_attack_damage_bonus(a, f)
+                    for a, f in parse_natural_attack_damage_bonuses(row)
+                ],
+                "skill_ability_diff_bonuses": [
+                    {"skills": list(skills), "formula": formula}
+                    for skills, formula in parse_skill_ability_diff_bonuses(row)
+                ],
+                "stat_adjustments": [
+                    {"ability": a, "amount": v} for a, v in parse_stat_adjustments(row)
+                ],
+                "natural_armor": parse_natural_armor(row),
+                "source_page": token(row, "SOURCEPAGE:"),
+                "ability_keys": list(creature_ability_keys[key]),
+                "external_ability_refs": refs,
+                "external_ability_ref_conditions": ref_conditions,
+                "source_file": unit["source_file"],
+                "source_line": unit["source_line"],
+            }
         )
-        out.append(f"        reach_feet: {'Some(' + str(reach) + ')' if reach is not None else 'None'},")
-        out.append(f"        race_type: {rust_opt(token(row, 'RACETYPE:'))},")
-        out.append(f"        race_subtype: {rust_opt(token(row, 'RACESUBTYPE:'))},")
-        out.append(f"        monster_class: {rust_opt(token(row, 'MONSTERCLASS:'))},")
-        out.append(f"        type_segments: {rust_slice(parse_type_segments(row))},")
-        out.append(
-            "        natural_attacks: &["
-            + ", ".join(
-                f"NaturalAttack {{ name: {rust_str(n)}, damage_dice: {rust_opt(d)} }}"
-                for n, d in attacks
-            )
-            + "],"
-        )
-        out.append(
-            "        natural_attack_damage_bonuses: &["
-            + ", ".join(
-                f"NaturalAttackDamageBonus {{ attack: {rust_str(a)}, formula: {rust_str(f)} }}"
-                for a, f in damage_bonuses
-            )
-            + "],"
-        )
-        out.append(
-            "        skill_ability_diff_bonuses: &["
-            + ", ".join(
-                f"SkillAbilityDiffBonus {{ skills: {rust_slice(skills)}, "
-                f"formula: {rust_str(formula)} }}"
-                for skills, formula in skill_bonuses
-            )
-            + "],"
-        )
-        out.append(
-            "        stat_adjustments: &["
-            + ", ".join(
-                f"StatAdjustment {{ ability: {rust_str(a)}, amount: {v} }}" for a, v in adjustments
-            )
-            + "],"
-        )
-        out.append(
-            f"        natural_armor: {'Some(' + str(armor) + ')' if armor is not None else 'None'},"
-        )
-        out.append(f"        source_page: {rust_opt(token(row, 'SOURCEPAGE:'))},")
-        out.append(f"        ability_keys: {rust_slice(creature_ability_keys[key])},")
-        out.append(f"        external_ability_refs: {rust_slice(external[key])},")
-        out.append(f"        source_file: {rust_str(unit['source_file'])},")
-        out.append(f"        source_line: {unit['source_line']},")
-        out.append("    },")
-    out.append("];")
-    out.append("")
-    out.append(f"/// Every {book} companion ability record ({len(abilities)} rows).")
-    out.append("pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[")
+
+    ability_table: list[dict] = []
     for unit in abilities:
         row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
         segments = parse_type_segments(row)
         facet, delivery = read_facet_and_delivery(segments)
         description, variables, variants = parse_desc(row)
         if unit["corpus_key"] in desc_redacted:
-            # `DESCISPI:YES` -- the redaction promised by the module doc's
-            # own listing above. `variables` names `%N` placeholders from the
-            # ORIGINAL text, which no longer ships, so it is cleared too
-            # rather than left dangling against a marker with no `%N` for
-            # them to refer to; `variants` are alternate renderings of the
-            # SAME declared-PI prose, so they are dropped rather than each
-            # individually redacted -- one marker says everything three would.
+            # `DESCISPI:YES` -- the redaction promised by the notes above.
+            # `variables` names `%N` placeholders from the ORIGINAL text,
+            # which no longer ships, so it is cleared too rather than left
+            # dangling against a marker with no `%N` for them to refer to;
+            # `variants` are alternate renderings of the SAME declared-PI
+            # prose, so they are dropped rather than each individually
+            # redacted -- one marker says everything three would.
             description = redacted_pi_marker()
             variables = []
             variants = []
-        adjustments = parse_stat_adjustments(row)
-        out.append("    CompanionAbilityRecord {")
-        out.append(f"        key: {rust_str(unit['corpus_key'])},")
-        out.append(f"        name: {rust_str(unit['name'])},")
-        out.append(
-            "        facet: "
-            + (f"Some(CompanionAbilityFacet::{facet})" if facet else "None")
-            + ","
+        ability_table.append(
+            {
+                "key": unit["corpus_key"],
+                "name": unit["name"],
+                "facet": facet or None,
+                "delivery": delivery or None,
+                "type_segments": list(segments),
+                "description": description,
+                "description_variables": list(variables),
+                "description_variants": [
+                    {
+                        "text": text,
+                        "variables": list(vs),
+                        "conditions": [typed_guard(c) for c in cs],
+                    }
+                    for text, vs, cs in variants
+                ],
+                "stat_adjustments": [
+                    {"ability": a, "amount": v} for a, v in parse_stat_adjustments(row)
+                ],
+                "source_page": token(row, "SOURCEPAGE:"),
+                "owners": list(owners[unit["corpus_key"]]),
+                "cross_book_owners": [
+                    [a, b] for a, b in cross_book_owners.get(unit["corpus_key"], [])
+                ],
+                "source_file": unit["source_file"],
+                "source_line": unit["source_line"],
+            }
         )
-        out.append(
-            "        delivery: "
-            + (f"Some(CompanionAbilityDelivery::{delivery})" if delivery else "None")
-            + ","
-        )
-        out.append(f"        type_segments: {rust_slice(segments)},")
-        out.append(f"        description: {rust_opt(description)},")
-        out.append(f"        description_variables: {rust_slice(variables)},")
-        out.append(
-            "        description_variants: &["
-            + ", ".join(
-                "CompanionDescriptionVariant { "
-                f"text: {rust_str(text)}, "
-                f"variables: {rust_slice(vs)}, "
-                f"conditions: {rust_slice(cs)} }}"
-                for text, vs, cs in variants
-            )
-            + "],"
-        )
-        out.append(
-            "        stat_adjustments: &["
-            + ", ".join(
-                f"StatAdjustment {{ ability: {rust_str(a)}, amount: {v} }}" for a, v in adjustments
-            )
-            + "],"
-        )
-        out.append(f"        source_page: {rust_opt(token(row, 'SOURCEPAGE:'))},")
-        out.append(f"        owners: {rust_slice(owners[unit['corpus_key']])},")
-        out.append(
-            "        cross_book_owners: "
-            f"{rust_pair_slice(cross_book_owners.get(unit['corpus_key'], []))},"
-        )
-        out.append(f"        source_file: {rust_str(unit['source_file'])},")
-        out.append(f"        source_line: {unit['source_line']},")
-        out.append("    },")
-    out.append("];")
-    out.append("")
-    out.append(f"/// Every {book} `*_classes_companion.lst` row ({len(class_units)} rows).")
-    out.append("pub(super) static COMPANION_CLASSES: &[CompanionClassRecord] = &[")
+
+    class_table: list[dict] = []
     for unit in class_units:
         row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
         fields = parse_class_row(row)
-        out.append("    CompanionClassRecord {")
-        out.append(f"        key: {rust_str(unit['corpus_key'])},")
-        out.append(f"        output_name: {rust_opt(fields['output_name'])},")
-        hd = fields["hit_dice"]
-        out.append(f"        hit_dice: {'Some(' + str(hd) + ')' if hd is not None else 'None'},")
-        out.append(f"        max_level: {rust_opt(fields['max_level'])},")
-        out.append(f"        type_segments: {rust_slice(fields['type_segments'])},")
-        out.append(f"        visible_no: {'true' if fields['visible_no'] else 'false'},")
-        out.append(f"        source_page: {rust_opt(fields['source_page'])},")
-        out.append(f"        ability_grants: {rust_slice(fields['ability_grants'])},")
-        out.append(f"        fact_class_type: {rust_opt(fields['fact_class_type'])},")
-        out.append(f"        source_file: {rust_str(unit['source_file'])},")
-        out.append(f"        source_line: {unit['source_line']},")
-        out.append("    },")
-    out.append("];")
-    out.append("")
+        class_table.append(
+            {
+                "key": unit["corpus_key"],
+                "output_name": fields["output_name"],
+                "hit_dice": fields["hit_dice"],
+                "max_level": fields["max_level"],
+                "type_segments": list(fields["type_segments"]),
+                "visible_no": bool(fields["visible_no"]),
+                "source_page": fields["source_page"],
+                "ability_grants": [ability_grant(g) for g in fields["ability_grants"]],
+                "fact_class_type": fields["fact_class_type"],
+                "source_file": unit["source_file"],
+                "source_line": unit["source_line"],
+            }
+        )
 
-    index = out.index(IMPORT_PLACEHOLDER)
-    body = "\n".join(out[index + 1 :])
-    used = [symbol for symbol in IMPORTABLE if re.search(rf"\b{symbol}\b", body)]
-    out[index] = (
-        "use crate::rules_core::rules_tables::companion_chassis::{"
-        + ", ".join(used)
-        + "};"
-    )
-    return "\n".join(out)
+    tables = {"COMPANIONS": companion_table, "COMPANION_ABILITIES": ability_table}
+    # Only a book with `*_classes_companion.lst` rows has a class table: the
+    # package registers `COMPANION_CLASSES` for exactly those books.
+    if class_table:
+        tables["COMPANION_CLASSES"] = class_table
+    return Transcription(tables=tables, notes=notes)
+
+
+# ---------------------------------------------------------------------------
+# The live schema for an ingest `PRE<FAMILY>:` guard (SD-35 `AT-35-E6-003-SWEEP`
+# cycles 9 and 13, `decisions.md` §11: nothing on the live side reads a PCGen
+# token). Those cycles converted the guards by hand in the generated tables;
+# SD-37 E4a.4a moves the conversion here so a re-run reproduces the data
+# package. The conversion is a lossless re-shaping -- nothing is evaluated --
+# and `crates/codex-ingest/src/pcgen_import/companion_pcgen_guards.rs` pins the
+# verbatim tails and rebuilds them from the typed form.
+# ---------------------------------------------------------------------------
+GUARD = re.compile(r"^(?P<neg>!?)PRE(?P<family>[A-Z]+):(?P<arg>.*)$", re.S)
+
+
+def split_top_level(text: str) -> list[str]:
+    """Comma-split `text`, ignoring commas inside `[]`, `()` or double quotes."""
+    parts: list[str] = []
+    depth = 0
+    quoted = False
+    buf: list[str] = []
+    for ch in text:
+        if ch == '"':
+            quoted = not quoted
+            buf.append(ch)
+            continue
+        if not quoted:
+            if ch in "[(":
+                depth += 1
+            elif ch in "])":
+                depth -= 1
+            elif ch == "," and depth == 0:
+                parts.append("".join(buf))
+                buf = []
+                continue
+        buf.append(ch)
+    parts.append("".join(buf))
+    return [p for p in parts if p != ""]
+
+
+def typed_guard(token_text: str) -> dict:
+    """One `!?PRE<FAMILY>:<arg>` token as an `EffectCondition`
+    (`{negated, family, items: [{facet, value}], alternatives}`). Refuses a
+    token that does not rebuild character for character."""
+    m = GUARD.match(token_text)
+    if not m:
+        raise SystemExit(f"not a PRE guard: {token_text!r}")
+    items: list[dict] = []
+    alternatives: list[dict] = []
+    for part in split_top_level(m.group("arg")):
+        if part.startswith("[") and part.endswith("]"):
+            alternatives.append(typed_guard(part[1:-1]))
+        elif "=" in part:
+            facet, _, value = part.partition("=")
+            items.append({"facet": facet, "value": value})
+        else:
+            items.append({"facet": None, "value": part})
+    guard = {
+        "negated": m.group("neg") == "!",
+        "family": m.group("family"),
+        "items": items,
+        "alternatives": alternatives,
+    }
+    if rebuild_guard(guard) != token_text:
+        raise SystemExit(f"guard does not round-trip: {token_text!r}")
+    return guard
+
+
+def rebuild_guard(guard: dict) -> str:
+    """The inverse of `typed_guard` -- the verbatim ingest token."""
+    parts = [
+        item["value"] if item["facet"] is None else f"{item['facet']}={item['value']}"
+        for item in guard["items"]
+    ]
+    parts += ["[" + rebuild_guard(alt) + "]" for alt in guard["alternatives"]]
+    return ("!" if guard["negated"] else "") + f"PRE{guard['family']}:" + ",".join(parts)
+
+
+def natural_attack_damage_bonus(attack: str, formula: str) -> dict:
+    """`formula|PRE...` -> the formula half plus its typed guards (cycle 9)."""
+    parts = formula.split("|")
+    return {
+        "attack": attack,
+        "formula": "|".join(p for p in parts if not GUARD.match(p)),
+        "conditions": [typed_guard(p) for p in parts if GUARD.match(p)],
+    }
+
+
+def ability_grant(grant: str) -> dict:
+    """`kind|mode|name[|PRE...]` -> a `CompanionAbilityGrant` (cycle 9)."""
+    parts = grant.split("|")
+    head = [p for p in parts if not GUARD.match(p)]
+    if len(head) != 3:
+        raise SystemExit(f"grant head is not kind|mode|name: {grant!r}")
+    return {
+        "kind": head[0],
+        "mode": head[1],
+        "name": head[2],
+        "conditions": [typed_guard(p) for p in parts if GUARD.match(p)],
+    }
+
+
+def split_external_ref_guards(refs: list[str]) -> tuple[list[str], list[dict]]:
+    """A guard the corpus appended to an ability grant arrives as one more
+    "name" in `external_ability_refs`, right after the ability it gates
+    (cycle 13: `!PRETEMPLATE:1,Hippopotamus Companion Advancement` after
+    `Hippopotamus Companion Natural Attack`). It leaves the name list and
+    becomes an `ExternalAbilityRefCondition` on that ability."""
+    names: list[str] = []
+    conditions: list[dict] = []
+    for ref in refs:
+        if GUARD.match(ref):
+            if not names:
+                raise SystemExit(f"a guard with no ability before it: {ref!r}")
+            if conditions and conditions[-1]["ability"] == names[-1]:
+                conditions[-1]["conditions"].append(typed_guard(ref))
+            else:
+                conditions.append({"ability": names[-1], "conditions": [typed_guard(ref)]})
+        else:
+            names.append(ref)
+    return names, conditions
+
+
+class Transcription:
+    """One book's transcription: `tables` maps each package table name
+    (`COMPANIONS`, `COMPANION_ABILITIES`, and `COMPANION_CLASSES` when the book
+    has class rows) to its rows, each a dict shaped like the row type
+    `rules_catalog::companion_chassis` loads; `notes` are the provenance lines
+    `main` prints."""
+
+    def __init__(self, tables: dict[str, list[dict]], notes: list[str]) -> None:
+        self.tables = tables
+        self.notes = notes
 
 
 # A corpus book id is not always the name of the Rust module that holds its
@@ -1562,31 +1610,58 @@ def module_dir(book: str) -> str:
     return MODULE_DIR.get(book, book)
 
 
+def strip_citation_extension(text: str) -> str:
+    """SD-37 E4a.3: the compiled tables cite a source file by its stem, never with the list-file
+    extension. The corpus is still read with the real file names; only the emitted citation
+    changes, so this runs on the finished text, once, at the point it is written."""
+    return re.sub(r"(?<=[A-Za-z0-9_])\.lst\b", "", text)
+
+
+def strip_citation_extension_value(value):
+    """`strip_citation_extension` over every string inside a row."""
+    if isinstance(value, str):
+        return strip_citation_extension(value)
+    if isinstance(value, list):
+        return [strip_citation_extension_value(v) for v in value]
+    if isinstance(value, dict):
+        return {k: strip_citation_extension_value(v) for k, v in value.items()}
+    return value
+
+
+def write_book(book: str, repo_root: str = package_out.REPO_ROOT) -> list[str]:
+    """Transcribe `book` and write its tables into the `rules_tables` data
+    package (`data/rules_tables/<module dir>/companion_data/<TABLE>.json`,
+    SD-37 E4a.4a), then normalise the package.
+
+    Transcribe BEFORE touching the package: a run that refuses -- an unknown
+    book id, a class row, an unresolvable multi-`DESC:` -- leaves every
+    existing file exactly as it was (each file is written to a same-directory
+    temp file and `os.replace()`d; SD-36 Epic E R12-01)."""
+    transcription = transcribe(book)
+    tables = {
+        f"{module_dir(book)}/companion_data/{name}": [
+            strip_citation_extension_value(row) for row in rows
+        ]
+        for name, rows in transcription.tables.items()
+    }
+    for note in transcription.notes:
+        print(note)
+    written = package_out.write_tables(tables, repo_root)
+    normalise_package()
+    package_out.check_written(written)
+    return written
+
+
+def normalise_package() -> None:
+    """`rules_tables_package --write`. A module attribute so a test can stand it down."""
+    package_out.normalise_package()
+
+
 def main() -> None:
     if len(sys.argv) != 2:
         raise SystemExit(f"usage: {sys.argv[0]} <book>")
-    book = sys.argv[1]
-    # Transcribe BEFORE opening the output, never inside the `with`. Opening
-    # for write creates the file, so a run that then refuses -- an unknown book
-    # id, a class row, an unresolvable multi-`DESC:` -- used to leave an EMPTY
-    # generated module behind, in a directory it had just created. Round 6 did
-    # exactly that with a mistyped book id and left an empty
-    # `rules_tables/beastiary/companion_data.rs` on the tree; nothing in the
-    # gate would have caught it, because an unreferenced module compiles fine.
-    contents = transcribe(book)
-    directory = f"src/rules_core/rules_tables/{module_dir(book)}"
-    os.makedirs(directory, exist_ok=True)
-    path = os.path.join(directory, "companion_data.rs")
-    # SD-36 Epic E R12-01: write to a same-directory temp file first, then `os.replace()`
-    # it onto the real path -- a single filesystem rename, so `path` either has the OLD
-    # complete content or the NEW complete content, never a partial write, on every
-    # platform this repo runs on. Mirrors `transcribe_monster_tables.py`'s own
-    # SD31-W9-INTEGRATE-001 fix for the identical shape.
-    tmp_path = f"{path}.tmp"
-    with open(tmp_path, "w", encoding="utf-8") as handle:
-        handle.write(contents)
-    os.replace(tmp_path, path)
-    print(f"wrote {path}")
+    for path in write_book(sys.argv[1]):
+        print(f"wrote {path}")
 
 
 if __name__ == "__main__":

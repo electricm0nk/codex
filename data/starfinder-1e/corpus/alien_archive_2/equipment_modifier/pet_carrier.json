@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Pet carrier",
+    "name": "Pet carrier",
+    "type": "Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 6,
+    "path": "starfinder/paizo/alien_archive_2/saa2_equipmods.lst",
+    "record_key": "Pet carrier",
+    "sha256": "81eb2dc2b2280772b5943b97225ddd75755a28f029efe1faa2ef05e901f1e03c"
+  },
+  "unit_id": "alien_archive_2:equipment_modifier:pet_carrier"
+}

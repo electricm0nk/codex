@@ -1,0 +1,19 @@
+{
+  "data": {
+    "key": "Tactical shield (basic)",
+    "name": "Tactical shield, basic",
+    "type": "SHIELD.Shields"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 84,
+    "path": "starfinder/paizo/character_operations_manual/scom_equip.lst",
+    "record_key": "Tactical shield (basic)",
+    "sha256": "cba8b09cc85fd6b39a2c1eb058e378f02f0e47c390d227dd1738fee55d8cdd3e"
+  },
+  "unit_id": "character_operations_manual:equipment:tactical_shield_basic"
+}

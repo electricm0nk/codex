@@ -22,7 +22,7 @@
 //! ARG's split is re-derived below from the **shipped catalog table**, which
 //! carries every record's `BONUS:` tokens verbatim, so it cannot drift from
 //! what the engine actually holds. PU's catalog carries no `effect` field (see
-//! `rules_tables::feats_all`'s own doc comment for why), so its split is pinned
+//! `rules_catalog::feats_all`'s own doc comment for why), so its split is pinned
 //! as constants; re-derive them against the corpus with:
 //!
 //! ```text
@@ -66,8 +66,8 @@ use codex::rules_core::character_input::{
     load_character_input_fixture, CharacterInput, SelectedChoice,
 };
 use codex::rules_core::pilot_compute::{compute_pilot_base_chassis, PilotBaseChassisComputation};
-use codex::rules_core::rules_tables::advanced_race_guide::feats as arg_feats;
-use codex::rules_core::rules_tables::pathfinder_unchained::feat_tables as pu_feats;
+use codex::rules_core::rules_catalog::advanced_race_guide::feats as arg_feats;
+use codex::rules_core::rules_catalog::pathfinder_unchained::feat_tables as pu_feats;
 
 const DETERMINISTIC_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");

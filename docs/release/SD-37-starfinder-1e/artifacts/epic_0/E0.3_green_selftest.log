@@ -1,0 +1,7 @@
+PASS real inventory exits 0
+PASS planted drop_unit exits 1: FAIL 3 mismatch(es)
+PASS planted bump_total exits 1: FAIL 2 mismatch(es)
+PASS planted bump_bucket exits 1: FAIL 2 mismatch(es)
+PASS planted move_unit exits 1: FAIL 2 mismatch(es)
+PASS planted dup_unit exits 1: FAIL 4 mismatch(es)
+PASS planted excluded_rows exits 1: FAIL 3 mismatch(es)
