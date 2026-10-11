@@ -223,6 +223,7 @@ app-data dir and runs `seed_default_characters_at(app_data_dir, app_version)` ov
 |---|---|---|---|
 | `00000000-0000-0000-0000-000000000001` | Aldric Ironhand | Human Fighter 3 (Str 17 Dex 13 Con 14 Int 14 Wis 12 Cha 8, Human +2 → Str) | `.default_character_seeded` |
 | `00000000-0000-0000-0000-000000000002` | Elowen Ashgrave | Human Wizard 5 (Str 8 Dex 14 Con 13 Int 16 Wis 12 Cha 10, Human +2 → Int 18); canonical Wizard seeds (Evocation, Light) plus **Fireball** recorded and prepared | `.default_character_seeded_2` |
+| `00000000-0000-0000-0000-000000000003` | Brother Tomas Vane | Cleric 3 / Fighter 2 (prints as "Cleric 3 / Fighter 2"); canonical Cleric seed (domain good, no deity); skills Climb/Intimidate/Swim 1 each, Heal 5, Knowledge (religion) 5, Sense Motive 2 (15 ranks); spells Cure Light Wounds and Spiritual Weapon | `.default_character_seeded_3` |
 
 - **Built through the create path, never a hand-written file.** Each seed is a
   `CreateCharacterRequest` run through `compose_character_input` (the composer `create_character`
@@ -232,15 +233,20 @@ app-data dir and runs `seed_default_characters_at(app_data_dir, app_version)` ov
   picker resolve, which is the label of the converted record `core_rulebook:spell:fireball`
   (`ClassSpellList { id: "wizard", spell_level: 3 }`) — pinned by
   `the_fireball_seed_id_is_the_converted_crb_record`.
-- **One marker per seed.** An install that already holds Aldric's marker gains Elowen on its next
-  launch. A marker keeps a deleted seed deleted.
+- **One marker per seed.** An install that already holds Aldric's marker gains Elowen and Tomas on its next
+  launch. A marker keeps a deleted seed deleted on launch; the Load screen's "Restore starter characters"
+  button (`restore_starter_characters`, returns `{restored, errors}`) brings it back, and reports "Restored:
+  <names>" or "All starter characters are already here.".
+- **Seed errors are shown.** A seed that fails to build is not silently dropped: `list_starter_seed_errors`
+  returns the latest pass's errors and the Load screen shows "A starter character could not be created:
+  <errors>".
 - **Never overwrite.** A seed whose character directory already exists is skipped (its marker is
   written), marker or not — a player's edits survive a lost marker.
-- **Tests.** `character_hub::starter_seed_tests` (6 + the list-wire pin); the Load list the frontend
+- **Tests.** `character_hub::starter_seed_tests` (20 tests; count: `cargo test --locked -p codex-desktop --bins starter_seed_tests -- --list | grep -c ": test"`, run from `apps/desktop/src-tauri`, includes the list-wire pin); the Load list the frontend
   test reads is the pinned artifact
   `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/f6e-starter-seed-list-wire.json`
-  (`CODEX_WRITE_F6E_WIRE=1` rewrites it). ui-smoke rows `load-seed-list-both` and
-  `load-seed-wizard-fireball` prove both in the real app against an isolated app-data root.
+  (`CODEX_WRITE_F6E_WIRE=1` rewrites it). ui-smoke rows `load-seed-list-both`, `load-restore-starter-characters` and
+  `load-seed-wizard-fireball` prove the three seeds and the restore button in the real app against an isolated app-data root.
 - **Known limit, by mechanism.** `compose_character_input` applies one fixed starter loadout to every
   created character regardless of class (Power Attack, Dodge from the Human bonus-feat slot, Weapon
   Focus (longsword); longsword + chain shirt equipped; 1 rank each in Climb/Intimidate/Swim). Elowen

@@ -91,3 +91,17 @@ None.
 - Renamed tests: Rust `a_fresh_install_seeds_both_characters_and_both_markers` → `a_fresh_install_seeds_all_three_characters_and_all_three_markers`; TS `verifiesAFreshInstallListsBothStarterSeeds` → `verifiesAFreshInstallListsAllThreeStarterSeeds`.
 - Already done here (do not redo): the wire JSON pin, `starterSeedListWire.ts` comment, `buildCharacterHubListSurface.test.ts`.
 - Still S3: `ui-smoke/spec.json` (`load-seed-list-both`, a row for the button), generated inventory, `docs/architecture/persistence.md`, `docs/architecture/desktop-app.md`, `appDataIsolation.mjs`, `run-desktop/SKILL.md`.
+
+## S3 lane (docs / ui-smoke / render-hash)
+
+Files changed: `apps/desktop/scripts/ui-smoke/spec.json` (`load-seed-list-both` widened to three seeds, new row `load-restore-starter-characters`, `open-seed-aldric` note), `docs/testing/ui-smoke-inventory.md` (regenerated), `docs/architecture/persistence.md`, `docs/architecture/desktop-app.md`, `apps/desktop/scripts/ui-smoke/lib/appDataIsolation.mjs`, `apps/desktop/.claude/skills/run-desktop/SKILL.md`, `apps/desktop/src-tauri/src/pf_seed_render_hash.rs` (third seed `tomas`), `apps/desktop/src-tauri/src/character_hub.rs` (one stale comment, "both seeds" to "all three seeds").
+
+Commands and results (cargo from `apps/desktop/src-tauri`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-target/brief3`):
+- RED: `cargo test --locked -j 8 -p codex-desktop --bins pf_seed_render_hash -- --test-threads=8` with the names assertion widened first: FAILED, `left: ["aldric","elowen"] right: ["aldric","elowen","tomas"]`.
+- GREEN: same command after adding `("tomas", THIRD_SEED_CHARACTER_ID)`: `1 passed; 0 failed`. The test is not a pinned-hash test (no committed hash), so nothing was regenerated. Hashes it printed: aldric `1d830682...a5a569` (55037 bytes), elowen `8d1a711c...b100f2` (81136), tomas `bc50abd2...18ccdf` (79490).
+- Test count in docs: `cargo test --locked -p codex-desktop --bins starter_seed_tests -- --list | grep -c ": test"` printed 20. Marker count: `grep -c "marker: " apps/desktop/src-tauri/src/character_hub.rs` printed 5.
+- `cd apps/desktop && npm run ui-smoke:doc`: row count 103 to 104. The regeneration also refreshed 4 create-character/encounter rows that were already stale against HEAD's spec.json ("Add level" form); that drift is not from this lane.
+- `npm run typecheck && npm test`: exit 0, `155/155 test files passed`.
+- Leftover wording grep (`both seeds|two seeds|both starter|two starter|2 seeds`): only `pf1_adapter.rs:3063` remains; it is about two arcanist spell seeds, unrelated.
+
+Not covered: no built-app / ui-smoke run (the new row `load-restore-starter-characters` and the widened `load-seed-list-both` are unexecuted); the row only proves the "nothing to restore" path, the restore-after-delete path is covered by the Rust tests only; `Cleric 3` is expected as a substring of Tomas's list row, unconfirmed live.

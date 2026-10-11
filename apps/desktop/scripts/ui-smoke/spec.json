@@ -637,9 +637,21 @@
       "steps": [
         { "op": "click", "target": "Load\nCharacter" }
       ],
-      "marker": "Elowen Ashgrave",
-      "expect": ["Aldric Ironhand", "Fighter 3", "Elowen Ashgrave", "Wizard 5"],
-      "notes": "SD-36 F6e (operator ruling 2026-09-27, option 3): a fresh install's Load screen lists BOTH starter seeds -- Aldric Ironhand (Human Fighter 3) and Elowen Ashgrave (Human Wizard 5). run.mjs gives every run a fresh isolated app-data root (F6d), so the app seeds both on its first launch; no setup row is needed and nothing is created, so the row's cleanup deletes nothing. The seeds come from character_hub.rs seed_default_characters_at, built through compose_character_input (the create path)."
+      "marker": "Brother Tomas Vane",
+      "expect": ["Aldric Ironhand", "Fighter 3", "Elowen Ashgrave", "Wizard 5", "Brother Tomas Vane", "Cleric 3"],
+      "notes": "SD-36 F6e (operator ruling 2026-09-27, option 3), widened to three seeds by tranche-17-ui brief 3: a fresh install's Load screen lists ALL THREE starter seeds -- Aldric Ironhand (Human Fighter 3), Elowen Ashgrave (Human Wizard 5) and Brother Tomas Vane (Cleric 3 / Fighter 2). (The row id keeps its historical name.) run.mjs gives every run a fresh isolated app-data root (F6d), so the app seeds all three on its first launch; no setup row is needed and nothing is created, so the row's cleanup deletes nothing. The seeds come from character_hub.rs seed_default_characters_at, built through compose_character_input (the create path)."
+    },
+    {
+      "id": "load-restore-starter-characters",
+      "screen": "load",
+      "steps": [
+        { "op": "click", "target": "Load\nCharacter" },
+        { "op": "click", "target": "Restore starter characters" },
+        { "op": "wait", "ms": 1500 }
+      ],
+      "marker": "All starter characters are already here.",
+      "expect": ["Restore starter characters", "All starter characters are already here."],
+      "notes": "Tranche-17-ui brief 3: the Load screen's 'Restore starter characters' button. On a fresh isolated app-data root all three seeds are present (see load-seed-list-both), so clicking it restores nothing and the status line reads 'All starter characters are already here.' The restore-after-delete path is pinned by the Rust starter_seed_tests, not by this row; this row proves the button is on the real screen and wired to the restore_starter_characters command."
     },
     {
       "id": "load-character-delete-clone",
@@ -5278,7 +5290,7 @@
         "Fighter 3",
         "☰ Menu"
       ],
-      "notes": "SD-37 E6.6: the first Pathfinder starter seed, Aldric Ironhand (Human Fighter 3), opened from the isolated store (the app seeds it on first launch; load-seed-list-both lists it). With open-seed-elowen and the four open-starfinder-* rows this is the six seeds of E6.6."
+      "notes": "SD-37 E6.6: the first Pathfinder starter seed, Aldric Ironhand (Human Fighter 3), opened from the isolated store (the app seeds it on first launch; load-seed-list-both lists it along with the other two Pathfinder seeds, Elowen and Brother Tomas Vane). With open-seed-elowen and the four open-starfinder-* rows this is the six seeds of E6.6."
     },
     {
       "id": "open-seed-elowen",

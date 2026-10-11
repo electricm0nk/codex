@@ -25,15 +25,16 @@
 
 use super::{
     characters_root_from_app_data_dir, load_saved_character_at_root, seed_default_characters_at,
-    DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID,
+    DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID, THIRD_SEED_CHARACTER_ID,
 };
 use sha2::{Digest, Sha256};
 use std::path::{Path, PathBuf};
 
 /// The Pathfinder starter seeds, by output name and saved-character id.
-const PF_SEEDS: [(&str, &str); 2] = [
+const PF_SEEDS: [(&str, &str); 3] = [
     ("aldric", DEFAULT_CHARACTER_ID),
     ("elowen", SECOND_SEED_CHARACTER_ID),
+    ("tomas", THIRD_SEED_CHARACTER_ID),
 ];
 
 /// A fresh, empty app-data directory under the OS temp dir, unique to this process and `tag`.
@@ -81,7 +82,7 @@ fn pf_seed_render_hash_renders_every_seed_deterministically() {
     let _ = std::fs::remove_dir_all(&second_dir);
 
     let names: Vec<&str> = first.iter().map(|(name, _)| *name).collect();
-    assert_eq!(names, ["aldric", "elowen"]);
+    assert_eq!(names, ["aldric", "elowen", "tomas"]);
 
     for ((name, json), (_, again)) in first.iter().zip(&second) {
         // Same seed, two independent app-data roots: the render must not depend on the root

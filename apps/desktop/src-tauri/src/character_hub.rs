@@ -13642,7 +13642,7 @@ mod starter_seed_tests {
 
     /// The Load list the app serves on a fresh install, pinned as the wire the frontend's
     /// Load-list test reads (`src/testSupport/starterSeedListWire.ts`), so "the Load screen
-    /// lists both seeds" is asserted against the real `list_saved_characters` payload, never a
+    /// lists all three seeds" is asserted against the real `list_saved_characters` payload, never a
     /// hand-written sample. `CODEX_WRITE_F6E_WIRE=1` rewrites the artifact.
     #[test]
     fn the_starter_seed_list_wire_matches_the_committed_artifact() {
