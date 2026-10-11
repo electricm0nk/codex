@@ -18,6 +18,25 @@ export interface TransferItem {
   innate?: boolean;
 }
 
+/**
+ * A cap shared by several limit groups (a wizard's spellbook spells gained after 1st level may be of
+ * any level the wizard can cast, so one pool spans several spell levels).
+ */
+export interface SharedLimit {
+  key: string;
+  /** Names the pool in a refusal ("Wizard spells of level 2 or higher"). */
+  label: string;
+  limit: number;
+  groups: string[];
+}
+
+function takenIn(items: TransferItem[], selected: string[], groups: readonly string[]): number {
+  return selected.filter((id) => {
+    const group = items.find((candidate) => candidate.id === id)?.group;
+    return group !== undefined && groups.includes(group);
+  }).length;
+}
+
 /** The left column: everything not yet chosen and not innate; with `qualifiedOnly`, only what the character may take. */
 export function availableItems(items: TransferItem[], selected: string[], qualifiedOnly: boolean): TransferItem[] {
   return items.filter((item) => !item.innate && !selected.includes(item.id) && (!qualifiedOnly || item.qualified));
@@ -46,7 +65,8 @@ export function canMoveRight(
   selected: string[],
   id: string,
   limit: number | null,
-  groupLimits?: Record<string, number>
+  groupLimits?: Record<string, number>,
+  sharedLimits?: SharedLimit[]
 ): { ok: boolean; reason?: string } {
   const item = items.find((candidate) => candidate.id === id);
   if (item === undefined) {
@@ -69,6 +89,11 @@ export function canMoveRight(
       return { ok: false, reason: `No selections remaining for ${item.group}.` };
     }
   }
+  for (const shared of sharedLimits ?? []) {
+    if (item.group !== undefined && shared.groups.includes(item.group) && takenIn(items, selected, shared.groups) >= shared.limit) {
+      return { ok: false, reason: `No selections remaining for ${shared.label}.` };
+    }
+  }
   if (!item.qualified) {
     return { ok: false, reason: item.unqualifiedReason ?? 'The character does not qualify.' };
   }
@@ -81,20 +106,30 @@ export function moveRight(
   selected: string[],
   id: string,
   limit: number | null,
-  groupLimits?: Record<string, number>
+  groupLimits?: Record<string, number>,
+  sharedLimits?: SharedLimit[]
 ): string[] {
-  return canMoveRight(items, selected, id, limit, groupLimits).ok ? [...selected, id] : selected;
+  return canMoveRight(items, selected, id, limit, groupLimits, sharedLimits).ok ? [...selected, id] : selected;
 }
 
-/** For each limited group, how many more may be chosen, in the order the limits are declared. */
+/**
+ * For each limited group, how many more may be chosen, in the order the limits are declared: the
+ * group's own room, or less when a shared limit over it has less left.
+ */
 export function remainingByGroup(
   items: TransferItem[],
   selected: string[],
-  groupLimits: Record<string, number>
+  groupLimits: Record<string, number>,
+  sharedLimits: SharedLimit[] = []
 ): Array<{ key: string; limit: number; remaining: number }> {
   return Object.entries(groupLimits).map(([key, limit]) => {
-    const taken = selected.filter((id) => items.find((candidate) => candidate.id === id)?.group === key).length;
-    return { key, limit, remaining: Math.max(0, limit - taken) };
+    let remaining = Math.max(0, limit - takenIn(items, selected, [key]));
+    for (const shared of sharedLimits) {
+      if (shared.groups.includes(key)) {
+        remaining = Math.min(remaining, Math.max(0, shared.limit - takenIn(items, selected, shared.groups)));
+      }
+    }
+    return { key, limit, remaining };
   });
 }
 

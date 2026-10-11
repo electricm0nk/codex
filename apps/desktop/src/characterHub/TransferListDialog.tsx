@@ -10,6 +10,7 @@ import {
   remainingByGroup,
   remainingSelections,
   selectedItems,
+  type SharedLimit,
   type TransferItem,
 } from './transferListModel';
 
@@ -35,6 +36,8 @@ const arrowStyle = {
 
 function Column(props: {
   title: string;
+  /** The list's accessible name; defaults to `title`. */
+  ariaLabel?: string;
   items: TransferItem[];
   focusedId: string | null;
   onFocus: (id: string) => void;
@@ -46,7 +49,7 @@ function Column(props: {
       <p style={{ fontSize: '0.8rem', fontWeight: 700, margin: '0 0 0.3rem' }}>
         {props.title} <span style={{ color: 'var(--color-text-muted)', fontWeight: 500 }}>({props.items.length})</span>
       </p>
-      <div role="listbox" aria-label={props.title} style={listStyle}>
+      <div role="listbox" aria-label={props.ariaLabel ?? props.title} style={listStyle}>
         {props.items.map((item) => {
           const focused = props.focusedId === item.id;
           return (
@@ -81,6 +84,38 @@ function Column(props: {
   );
 }
 
+function MoveButtons(props: {
+  rightMove: { ok: boolean; reason?: string };
+  canMoveLeft: boolean;
+  onRight: () => void;
+  onLeft: () => void;
+}) {
+  return (
+    <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0.5rem', justifyContent: 'center' }}>
+      <button
+        type="button"
+        aria-label="Move to selected"
+        title={props.rightMove.ok ? 'Select the highlighted option' : props.rightMove.reason ?? 'Click an option first'}
+        disabled={!props.rightMove.ok}
+        onClick={props.onRight}
+        style={{ ...arrowStyle, opacity: props.rightMove.ok ? 1 : 0.4 }}
+      >
+        &gt;
+      </button>
+      <button
+        type="button"
+        aria-label="Move to options"
+        title="Remove the highlighted selection"
+        disabled={!props.canMoveLeft}
+        onClick={props.onLeft}
+        style={{ ...arrowStyle, opacity: props.canMoveLeft ? 1 : 0.4 }}
+      >
+        &lt;
+      </button>
+    </div>
+  );
+}
+
 /**
  * The dialog's contents, controlled by its parent so it can be rendered and tested without a DOM
  * portal: options on the left, `<` `>` between, selected on the right, an optional Innate column,
@@ -96,6 +131,13 @@ export function TransferListBody(props: {
   groupLimits?: Record<string, number>;
   /** Display names for the group keys in the remaining line. */
   groupLabels?: Record<string, string>;
+  /** Pools that cap several groups together (a wizard's spellbook spells of any castable level). */
+  sharedLimits?: SharedLimit[];
+  /**
+   * One labelled Options/Selected pair per group, the group's label and "N of M picks left" on the
+   * far left (the spells dialog: one pair per spell level). Without it, groups only limit picks.
+   */
+  pairPerGroup?: boolean;
   /** What is being chosen, for the remaining count ("feats", "racial traits"). */
   remainingNoun: string;
   onFocus: (id: string) => void;
@@ -108,15 +150,29 @@ export function TransferListBody(props: {
   const innate = innateItems(props.items);
   const remaining = remainingSelections(props.limit, props.selected);
   const focusedIsSelected = props.focusedId !== null && props.selected.includes(props.focusedId);
-  const rightMove = props.focusedId === null ? { ok: false } : canMoveRight(props.items, props.selected, props.focusedId, props.limit, props.groupLimits);
+  const rightMove = props.focusedId === null ? { ok: false } : canMoveRight(props.items, props.selected, props.focusedId, props.limit, props.groupLimits, props.sharedLimits);
   const focus = describeFocus(props.items, props.focusedId);
+  const focusedGroup = props.items.find((item) => item.id === props.focusedId)?.group;
+  const grouped = props.pairPerGroup === true && props.groupLimits !== undefined;
+  const groupRemaining = props.groupLimits === undefined ? [] : remainingByGroup(props.items, props.selected, props.groupLimits, props.sharedLimits);
+  const pools = (props.sharedLimits ?? []).map((shared) => {
+    const taken = props.selected.filter((id) => {
+      const group = props.items.find((item) => item.id === id)?.group;
+      return group !== undefined && shared.groups.includes(group);
+    }).length;
+    return `${shared.label}: ${Math.max(0, shared.limit - taken)} of ${shared.limit} picks left`;
+  });
 
   return (
     <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.75rem', minHeight: 0 }}>
       <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
-        {props.groupLimits !== undefined ? (
+        {grouped ? (
+          <p role="status" style={{ fontSize: '0.9rem', fontWeight: 700, margin: 0 }}>
+            {groupRemaining.length === 0 ? `No ${props.remainingNoun} to choose` : pools.join(' · ')}
+          </p>
+        ) : props.groupLimits !== undefined ? (
           <p role="status" style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0 }}>
-            {remainingByGroup(props.items, props.selected, props.groupLimits)
+            {groupRemaining
               .map((group) => `${props.groupLabels?.[group.key] ?? group.key}: ${group.remaining} of ${group.limit}`)
               .join(' · ') || `No ${props.remainingNoun} to choose`}{' '}
             remaining
@@ -134,35 +190,52 @@ export function TransferListBody(props: {
         </label>
       </div>
 
-      <div style={{ display: 'flex', flex: 1, gap: '0.6rem', minHeight: 0 }}>
-        <Column title="Options" items={available} focusedId={props.focusedId} onFocus={props.onFocus} onActivate={props.onMoveRight} />
-        <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '0.5rem', justifyContent: 'center' }}>
-          <button
-            type="button"
-            aria-label="Move to selected"
-            title={rightMove.ok ? 'Select the highlighted option' : (rightMove as { reason?: string }).reason ?? 'Click an option first'}
-            disabled={!rightMove.ok}
-            onClick={() => props.focusedId !== null && props.onMoveRight(props.focusedId)}
-            style={{ ...arrowStyle, opacity: rightMove.ok ? 1 : 0.4 }}
-          >
-            &gt;
-          </button>
-          <button
-            type="button"
-            aria-label="Move to options"
-            title="Remove the highlighted selection"
-            disabled={!focusedIsSelected}
-            onClick={() => props.focusedId !== null && props.onMoveLeft(props.focusedId)}
-            style={{ ...arrowStyle, opacity: focusedIsSelected ? 1 : 0.4 }}
-          >
-            &lt;
-          </button>
+      {grouped ? (
+        <div style={{ display: 'flex', flex: 1, gap: '0.6rem', minHeight: 0 }}>
+          <div style={{ display: 'flex', flex: 2, flexDirection: 'column', gap: '0.6rem', minHeight: 0, overflowY: 'auto' }}>
+            {groupRemaining.map((group) => {
+              const label = props.groupLabels?.[group.key] ?? group.key;
+              const inGroup = (item: TransferItem) => item.group === group.key;
+              const focusedHere = focusedGroup === group.key;
+              return (
+                <div key={group.key} role="group" aria-label={`${label} group`} style={{ display: 'flex', flexShrink: 0, gap: '0.6rem', height: 170 }}>
+                  <div style={{ flexShrink: 0, width: 140 }}>
+                    <p style={{ fontSize: '0.88rem', fontWeight: 700, margin: '0 0 0.2rem' }}>{label}</p>
+                    <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: 0 }}>
+                      {group.remaining} of {group.limit} picks left
+                    </p>
+                  </div>
+                  <Column title="Options" ariaLabel={`${label} options`} items={available.filter(inGroup)} focusedId={props.focusedId} onFocus={props.onFocus} onActivate={props.onMoveRight} />
+                  <MoveButtons
+                    rightMove={focusedHere ? rightMove : { ok: false }}
+                    canMoveLeft={focusedHere && focusedIsSelected}
+                    onRight={() => props.focusedId !== null && props.onMoveRight(props.focusedId)}
+                    onLeft={() => props.focusedId !== null && props.onMoveLeft(props.focusedId)}
+                  />
+                  <Column title="Selected" ariaLabel={`${label} selected`} items={chosen.filter(inGroup)} focusedId={props.focusedId} onFocus={props.onFocus} onActivate={props.onMoveLeft} />
+                </div>
+              );
+            })}
+          </div>
+          {innate.length > 0 ? (
+            <Column title="Innate" items={innate} focusedId={props.focusedId} onFocus={props.onFocus} muted />
+          ) : null}
         </div>
-        <Column title="Selected" items={chosen} focusedId={props.focusedId} onFocus={props.onFocus} onActivate={props.onMoveLeft} />
-        {innate.length > 0 ? (
-          <Column title="Innate" items={innate} focusedId={props.focusedId} onFocus={props.onFocus} muted />
-        ) : null}
-      </div>
+      ) : (
+        <div style={{ display: 'flex', flex: 1, gap: '0.6rem', minHeight: 0 }}>
+          <Column title="Options" items={available} focusedId={props.focusedId} onFocus={props.onFocus} onActivate={props.onMoveRight} />
+          <MoveButtons
+            rightMove={rightMove}
+            canMoveLeft={focusedIsSelected}
+            onRight={() => props.focusedId !== null && props.onMoveRight(props.focusedId)}
+            onLeft={() => props.focusedId !== null && props.onMoveLeft(props.focusedId)}
+          />
+          <Column title="Selected" items={chosen} focusedId={props.focusedId} onFocus={props.onFocus} onActivate={props.onMoveLeft} />
+          {innate.length > 0 ? (
+            <Column title="Innate" items={innate} focusedId={props.focusedId} onFocus={props.onFocus} muted />
+          ) : null}
+        </div>
+      )}
 
       <div style={{ border: '1px solid var(--color-border)', borderRadius: 8, maxHeight: '32%', minHeight: 110, overflowY: 'auto', padding: '0.7rem 0.9rem' }}>
         {focus === null ? (
@@ -194,6 +267,8 @@ export function TransferListDialog(props: {
   limit: number | null;
   groupLimits?: Record<string, number>;
   groupLabels?: Record<string, string>;
+  sharedLimits?: SharedLimit[];
+  pairPerGroup?: boolean;
   remainingNoun: string;
   /** A line under the title: what the list covers or what is not modelled. */
   notice?: string;
@@ -256,9 +331,11 @@ export function TransferListDialog(props: {
           limit={props.limit}
           groupLimits={props.groupLimits}
           groupLabels={props.groupLabels}
+          sharedLimits={props.sharedLimits}
+          pairPerGroup={props.pairPerGroup}
           remainingNoun={props.remainingNoun}
           onFocus={setFocusedId}
-          onMoveRight={(id) => props.onSelectedChange(moveRight(props.items, props.selected, id, props.limit, props.groupLimits))}
+          onMoveRight={(id) => props.onSelectedChange(moveRight(props.items, props.selected, id, props.limit, props.groupLimits, props.sharedLimits))}
           onMoveLeft={(id) => props.onSelectedChange(moveLeft(props.selected, id))}
           onQualifiedChange={setQualifiedOnly}
         />
