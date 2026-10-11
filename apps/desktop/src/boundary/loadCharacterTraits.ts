@@ -71,6 +71,12 @@ export interface CharacterTraitOptionDto {
   otherPillars: TraitOtherPillarBonusDto[];
   /** `non-null` only for a sixth-slice ability-score-difference-formula trait; `null` for every other slice. */
   abilitySubstitution: TraitAbilitySubstitutionDto | null;
+  /**
+   * `true` for one of the 17 `ultimate_campaign` drawbacks (`trait_effects::DRAWBACKS`, id
+   * `drawback:<slug>`): taking one gives a third trait at creation. Its penalty is printed text only.
+   * Optional on the wire type only so older fixtures stay valid; `list_available_character_traits` always sends it.
+   */
+  isDrawback?: boolean;
 }
 
 /** One non-skill, non-save pillar bonus a fifth-slice option grants. */
