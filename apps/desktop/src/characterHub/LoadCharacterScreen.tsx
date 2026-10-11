@@ -8,15 +8,17 @@ import { cloneCharacter } from '../boundary/cloneCharacter';
 import { loadDeleteCharacter } from '../boundary/loadDeleteCharacter';
 import { loadImportCharacter } from '../boundary/loadImportCharacter';
 import { loadCharacterPortrait } from '../boundary/characterPortrait';
+import { listStarterSeedErrors, restoreStarterCharacters } from '../boundary/restoreStarterCharacters';
 import { buildPreviewDetail } from './previewData';
 import { formatHeldClasses } from './characterProgression';
 import { toCharacterMutationRefresh } from './characterSheetRefresh';
+import { restoreStarterCharactersMessage, starterSeedErrorsMessage } from './starterCharactersModel';
 
 /**
  * Load Character screen, patterned after Pathbuilder's loader: a selectable
  * character list on the left, a stat-block detail pane (portrait + summary +
  * computed stats) on the right, and a bottom action bar
- * (Load / Delete / Export / Clone / Import / Cancel).
+ * (Load / Delete / Export / Clone / Import / Restore starter characters / Cancel).
  *
  * Storage is the database (no folders). Load, Delete, Export, Clone, and
  * Import all operate on the real desktop runtime — Delete removes the saved
@@ -160,6 +162,8 @@ export function LoadCharacterScreen(props: {
   const [cloning, setCloning] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [importing, setImporting] = useState(false);
+  const [restoring, setRestoring] = useState(false);
+  const [seedNotice, setSeedNotice] = useState<string | null>(null);
 
   const rows = props.surface?.rows ?? [];
   const selectedRow = rows.find((row) => row.characterId === selectedId) ?? null;
@@ -185,6 +189,29 @@ export function LoadCharacterScreen(props: {
       cancelled = true;
     };
   }, [selectedId]);
+
+  // A starter character the latest seeding pass could not create is shown here,
+  // not only on the backend's stderr (Brief 3 S1).
+  useEffect(() => {
+    if (!hasTauriRuntime()) {
+      return;
+    }
+    let cancelled = false;
+    listStarterSeedErrors()
+      .then((errors) => {
+        if (!cancelled) {
+          setSeedNotice(starterSeedErrorsMessage(errors));
+        }
+      })
+      .catch((cause: unknown) => {
+        if (!cancelled) {
+          setSeedNotice(cause instanceof Error ? cause.message : 'Could not read the starter character status.');
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function selectRow(characterId: string) {
     setSelectedId(characterId);
@@ -316,6 +343,27 @@ export function LoadCharacterScreen(props: {
     }
   }
 
+  // Rebuilds every starter character whose folder is missing; one that still
+  // exists (edited or not) is never touched. A deleted starter only comes back
+  // through this button, never on launch.
+  async function handleRestore() {
+    if (!hasTauriRuntime()) {
+      setStatus('Restoring requires the desktop runtime.');
+      return;
+    }
+    setRestoring(true);
+    try {
+      const response = await restoreStarterCharacters();
+      setStatus(restoreStarterCharactersMessage(response));
+      setSeedNotice(starterSeedErrorsMessage(response.errors));
+      props.onRefresh();
+    } catch (cause: unknown) {
+      setStatus(cause instanceof Error ? cause.message : 'Could not restore the starter characters.');
+    } finally {
+      setRestoring(false);
+    }
+  }
+
   async function handleClone() {
     if (!selectedRow) {
       return;
@@ -348,6 +396,7 @@ export function LoadCharacterScreen(props: {
   return (
     <section style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 8rem)', marginTop: '1rem' }}>
       <h2 style={{ margin: '0 0 1rem' }}>Load Character</h2>
+      {seedNotice ? <p style={{ color: 'var(--color-warn)', margin: '0 0 1rem' }}>{seedNotice}</p> : null}
 
       <div style={{ display: 'flex', flex: 1, gap: '1rem', minHeight: 0 }}>
         {/* Character list */}
@@ -430,6 +479,9 @@ export function LoadCharacterScreen(props: {
           style={barButton('default', !importing)}
         >
           {importing ? 'Importing…' : 'Import'}
+        </button>
+        <button type="button" onClick={handleRestore} disabled={restoring} style={barButton('default', !restoring)}>
+          {restoring ? 'Restoring…' : 'Restore starter characters'}
         </button>
         <div style={{ flex: 1 }} />
         <button type="button" onClick={props.onCancel} style={barButton('default', true)}>

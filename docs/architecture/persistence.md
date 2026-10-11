@@ -280,13 +280,21 @@ on-disk revision); every other write path that persists a
 
 **Starter seeds are a list, not a single hardcoded character.** `seed_default_character_if_needed`
 resolves the app-data directory and calls `character_hub.rs`'s `seed_default_characters_at`, which
-walks `starter_seeds()` — as of SD-36 F6e, two `StarterSeed` entries: Aldric Ironhand (Human Fighter 3)
-and Elowen Ashgrave (Human Wizard 5, with Fireball recorded and prepared). Each seed carries its own
-marker file (`DEFAULT_CHARACTER_SEED_MARKER` = `.default_character_seeded` for Aldric,
-`SECOND_SEED_MARKER` = `.default_character_seeded_2` for Elowen), so an install that already carries
-one seed's marker gains any later seed on its next launch without re-writing the first; a marker keeps
-a deleted seed deleted, and a seed whose character directory already exists on disk is never
-overwritten (its marker is written instead, so a player's edits survive even a lost marker). Each seed
+walks `starter_seeds()` — three `StarterSeed` entries as of tranche-17-ui brief 3: Aldric Ironhand (Human Fighter 3),
+Elowen Ashgrave (Human Wizard 5, with Fireball recorded and prepared) and Brother Tomas Vane (Cleric 3 / Fighter 2,
+id `00000000-0000-0000-0000-000000000003`). Each seed carries its own marker file
+(`DEFAULT_CHARACTER_SEED_MARKER` = `.default_character_seeded` for Aldric, `SECOND_SEED_MARKER` =
+`.default_character_seeded_2` for Elowen, `THIRD_SEED_MARKER` = `.default_character_seeded_3` for Tomas), so an
+install that already carries one seed's marker gains any later seed on its next launch without re-writing the
+first. A marker keeps a deleted seed deleted on launch; the Load screen's "Restore starter characters" button
+(the `restore_starter_characters` Tauri command, `restore_starter_characters_at`) is the only way it comes back. It
+rebuilds every seed whose character directory is missing, ignoring the marker and rewriting it afterwards, and never
+touches a seed whose directory exists. A seed whose character directory already exists on disk is never
+overwritten at launch either (its marker is written instead, so a player's edits survive even a lost marker). A seed
+that fails to build is reported, not dropped: the pass collects its error, `list_starter_seed_errors` returns the
+latest pass's errors, and the Load screen shows "A starter character could not be created: <errors>".
+Count check: `grep -c "marker: " apps/desktop/src-tauri/src/character_hub.rs` prints 5 (three `starter_seeds()`
+entries, the struct field, one test fixture). Each seed
 is built through `compose_character_input`, the same composer `create_character` uses, plus
 `pf1_adapter::apply_record_and_prepare_spell_selection` for any extra spells — never a hand-written
 character file — and is written only when its headless build receipt is `Computed`

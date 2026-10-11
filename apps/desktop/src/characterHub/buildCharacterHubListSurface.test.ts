@@ -10,7 +10,7 @@ async function main() {
   verifiesUnreadableNotice();
   verifiesReplaceRowInSurfaceUpdatesTheMatchingRowOnly();
   verifiesReplaceRowInSurfaceLeavesAnUnknownCharacterIdUnchanged();
-  verifiesAFreshInstallListsBothStarterSeeds();
+  verifiesAFreshInstallListsAllThreeStarterSeeds();
 }
 
 function verifiesEmptyState() {
@@ -93,25 +93,34 @@ main().catch((error: unknown) => {
 });
 
 /**
- * SD-36 F6e: a fresh install's Load list, as the backend serves it, shows both starter seeds --
- * Aldric Ironhand (Human Fighter 3) and Elowen Ashgrave (Human Wizard 5).
+ * SD-36 F6e + Brief 3: a fresh install's Load list, as the backend serves it, shows all three
+ * starter seeds -- Aldric Ironhand (Human Fighter 3), Elowen Ashgrave (Human Wizard 5) and
+ * Brother Tomas Vane (Human Cleric 3 / Fighter 2).
  */
-function verifiesAFreshInstallListsBothStarterSeeds() {
+function verifiesAFreshInstallListsAllThreeStarterSeeds() {
   const surface = buildCharacterHubListSurface(starterSeedListWire());
 
   assertEqual(surface.unreadableNotice, null, 'no unreadable entries');
   const rows = surface.rows.map((row) => `${row.displayLabel} | ${row.raceLabel} | ${row.classSummary}`).sort();
   assertEqual(
     JSON.stringify(rows),
-    JSON.stringify(['Aldric Ironhand | Human | class:fighter:3', 'Elowen Ashgrave | Human | class:wizard:5']),
-    'the Load list shows both starter seeds'
+    JSON.stringify([
+      'Aldric Ironhand | Human | class:fighter:3',
+      'Brother Tomas Vane | Human | class:cleric:3,class:fighter:2',
+      'Elowen Ashgrave | Human | class:wizard:5',
+    ]),
+    'the Load list shows all three starter seeds'
   );
   const printed = surface.rows.map((row) => formatHeldClasses(row.classSummary)).sort();
-  assertEqual(JSON.stringify(printed), JSON.stringify(['Fighter 3', 'Wizard 5']), 'the rows print Fighter 3 and Wizard 5');
+  assertEqual(JSON.stringify(printed), JSON.stringify(['Cleric 3 / Fighter 2', 'Fighter 3', 'Wizard 5']), 'the rows print each seed\'s classes');
   const ids = surface.rows.map((row) => row.characterId).sort();
   assertEqual(
     JSON.stringify(ids),
-    JSON.stringify(['00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000002']),
+    JSON.stringify([
+      '00000000-0000-0000-0000-000000000001',
+      '00000000-0000-0000-0000-000000000002',
+      '00000000-0000-0000-0000-000000000003',
+    ]),
     'the seeds keep their fixed ids'
   );
 }

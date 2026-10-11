@@ -9,8 +9,9 @@
 // `src/lin.rs`, `data_dir`; the absolute-path filter is dirs-sys 0.5.0
 // `is_absolute_path`). `app_config_dir`/`app_cache_dir` follow
 // `$XDG_CONFIG_HOME`/`$XDG_CACHE_HOME` the same way. So a run that hands the
-// app its own three XDG roots gets a fresh, empty store (the app seeds Aldric
-// Ironhand itself on first run -- `seed_default_character_if_needed`), and
+// app its own three XDG roots gets a fresh, empty store (the app seeds its three
+// starter characters, Aldric Ironhand, Elowen Ashgrave and Brother Tomas Vane, itself on first run --
+// `seed_default_character_if_needed`), and
 // nothing it creates can land in `~/.local/share/io.electricm0nk.codex`.
 //
 // The layout (`<root>/data`, `<root>/config`, `<root>/cache`) is shared with
