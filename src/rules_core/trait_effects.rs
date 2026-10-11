@@ -239,7 +239,10 @@
 //! - **All 30 `ability_content` units** (`ultimate_campaign`'s
 //!   Drawback/Retraining sub-mechanics) -- house-rule bookkeeping and
 //!   GM-adjudicated narrative penalties with no clean formulaic trigger,
-//!   per the prior cycle's own direct reading of that corpus.
+//!   per the prior cycle's own direct reading of that corpus. Brief 1 F3
+//!   (tranche-17-ui) lists the 17 drawbacks in [`DRAWBACKS`] so one can be
+//!   taken for a third trait ([`creation_trait_selection_refusal`]); their
+//!   penalties stay printed text, never a computed total.
 //!
 //! Widening past these eight slices is future work, gated on genuinely
 //! separate per-pillar compute paths for the mixed `BONUS:VAR/
@@ -1978,6 +1981,141 @@ pub fn caster_level_skill_trait_magnitude_is_grounded_for_corpus_key(
         return None;
     };
     Some(entry.skill_bonus.saturating_add(caster_level_bonus_i8))
+}
+
+/// One `ultimate_campaign` drawback (`Drawback ~ <Name>`, `data/corpus/ultimate_campaign/ability/`),
+/// Brief 1 F3 (tranche-17-ui). PF1 Ultimate Campaign: a character may take one drawback to gain
+/// one additional trait. Every drawback's penalty is situational (a named trigger, a GM-chosen
+/// person, an untrained check), so it is printed as the rule's own text on the sheet, never
+/// folded into a total (the paper-sheet rule: compute only what feeds a sheet total).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Drawback {
+    /// The wire id `CharacterInput.chosen.selected_traits` carries: `"drawback:" + the corpus
+    /// filename slug` (`ability/power_hungry.json` -> `"drawback:power_hungry"`).
+    pub drawback_id: &'static str,
+    /// The record's own corpus `KEY` token (`"Drawback ~ Power-Hungry"`).
+    pub corpus_key: &'static str,
+    /// The record's own `name` field.
+    pub name: &'static str,
+    /// The record's own `description` field, verbatim except PCGen's `%%` escape read as `%`.
+    pub description: &'static str,
+}
+
+/// Every `Drawback ~` record in `data/corpus/ultimate_campaign/ability/` (17), transcribed from
+/// the corpus JSON; `every_corpus_drawback_is_in_the_table_verbatim` holds it to the files.
+pub static DRAWBACKS: &[Drawback] = &[
+    Drawback { drawback_id: "drawback:attached", corpus_key: "Drawback ~ Attached", name: "Attached", description: "You have a strong emotional attachment to a person or object that you're terrified of losing. The GM chooses the object of your attachment. Whenever the object of your attachment is either threatened, in danger, or in someone else's possession, you take a -1 penalty on Will saves and a -2 penalty on saves against fear effects. If the person or object to which you're attached is ever lost, killed, or destroyed, exchange this drawback for the Doubt drawback." },
+    Drawback { drawback_id: "drawback:avarice", corpus_key: "Drawback ~ Avarice", name: "Avarice", description: "Deep, compulsive greed gnaws at you. Whenever monetary treasure is divided, you must end up with a greater share of that treasure than your companions or you're wracked with feelings of jealousy and ill will. When treasure is divided, if you do not end up with at least 10% more treasure than any other individual companion does, you have a hard time being helpful to your allies. You become irritable, and can't take the aid another action for the next week." },
+    Drawback { drawback_id: "drawback:dependent", corpus_key: "Drawback ~ Dependent", name: "Dependent", description: "You are dependent upon the acceptance of others. Whenever you fail a Diplomacy check, you become shaken for 1 hour." },
+    Drawback { drawback_id: "drawback:doubt", corpus_key: "Drawback ~ Doubt", name: "Doubt", description: "You lack confidence in your abilities or confidence in the universe at large. Whenever you fail a skill or ability check, you take a -4 penalty on that type of skill or ability check for the next hour." },
+    Drawback { drawback_id: "drawback:family_ties", corpus_key: "Drawback ~ Family Ties", name: "Family Ties", description: "Your family is extremely important to you, and you feel disheartened when you can't do what they ask. When a family member makes a request of you, you must fulfill that request or take a -2 penalty on all Wisdom- and Charisma-based ability checks and skill checks until you either do what was requested or succeed at a DC 20 Will saving throw, which you can attempt once per day at the start of each day. You can't take this drawback if you have no family. If you ever lose your family or lose contact with your family, exchange this drawback for the Doubt drawback." },
+    Drawback { drawback_id: "drawback:headstrong", corpus_key: "Drawback ~ Headstrong", name: "Headstrong", description: "You feel compelled to correct every action and argument that contradicts your worldview. Whenever you witness an action or hear an argument that contradicts your alignment, you must attempt to stop or correct that action or argument. If you either don't try to stop it or fail in your attempt to stop it (as adjudicated by the GM), you are shaken for 1 hour." },
+    Drawback { drawback_id: "drawback:hedonistic", corpus_key: "Drawback ~ Hedonistic", name: "Hedonistic", description: "You are a creature of pleasure and comfort. Whenever you spend a day without gaining reward or treasure (at least 10 or more gold pieces) or spending an hour on entertainment or pleasure, attempt a DC 20 Fortitude save at the end of that day. If you fail, you begin the next day fatigued. This fatigue lasts 4 hours, or until you receive a reward or sufficient entertainment or pleasure." },
+    Drawback { drawback_id: "drawback:lovesick", corpus_key: "Drawback ~ Lovesick", name: "Lovesick", description: "Your love for another occupies your every thought, and you become despondent when you are away from that person. The person is chosen by your GM. At the start of each day, if you are away from this person you take a -2 penalty on initiative checks and Perception checks. If you ever lose or fall out of love with this person, exchange this drawback for the Doubt drawback." },
+    Drawback { drawback_id: "drawback:meticulous", corpus_key: "Drawback ~ Meticulous", name: "Meticulous", description: "You plan and prepare everything in detail, and aren't good at improvising when things don't go as planned. You take a -2 penalty on skill checks for skills with which you're untrained." },
+    Drawback { drawback_id: "drawback:paranoid", corpus_key: "Drawback ~ Paranoid", name: "Paranoid", description: "You believe that someone or something is always out to get you, so you have a hard time truly trusting anyone. Anyone who attempts an aid another action of any type to assist you must succeed at a DC 15 check instead of the normal DC 10 check." },
+    Drawback { drawback_id: "drawback:power_hungry", corpus_key: "Drawback ~ Power-Hungry", name: "Power-Hungry", description: "You're addicted to power. You take a -2 penalty on Will saving throws against charm and compulsion effects if the creature creating the effect promises wealth or power." },
+    Drawback { drawback_id: "drawback:pride", corpus_key: "Drawback ~ Pride", name: "Pride", description: "You can't abide challenges to your dignity, authority, or honor. When someone threatens, accuses, or challenges you, you take a -2 penalty on Diplomacy checks and Sense Motive checks involving that creature until the creature apologizes to you." },
+    Drawback { drawback_id: "drawback:provincial", corpus_key: "Drawback ~ Provincial", name: "Provincial", description: "You have only one way of looking at things: the right way. You take a -2 penalty on Diplomacy checks and Sense Motive checks made against all creatures whose religion or alignment differs from your own." },
+    Drawback { drawback_id: "drawback:sentimental", corpus_key: "Drawback ~ Sentimental", name: "Sentimental", description: "You are sentimental, and your thoughts often stray to the past at inappropriate times. You take a -2 penalty on Perception checks to avoid being surprised and on Reflex saving throws to avoid traps or hazards." },
+    Drawback { drawback_id: "drawback:vain", corpus_key: "Drawback ~ Vain", name: "Vain", description: "You are sensitive about the way others perceive you. Whenever you fail an opposed Charisma-based check, you take a -2 penalty on all Charisma-based checks for the next 24 hours." },
+    Drawback { drawback_id: "drawback:xenophobic", corpus_key: "Drawback ~ Xenophobic", name: "Xenophobic", description: "You have a hard time understanding and trusting those with unfamiliar ways and appearances. You take a -2 penalty on Diplomacy and Sense Motive checks made against creatures of a different race or from a different culture." },
+    Drawback { drawback_id: "drawback:zealous", corpus_key: "Drawback ~ Zealous", name: "Zealous", description: "You are fanatical in your beliefs, ruled by emotion over reason. When you attack a creature that you know worships a different religion than you do, you take a -5 penalty on the attack  roll and a +2 trait bonus on the damage roll with your first attack." },
+];
+
+/// How many traits a new character takes (PF1 Ultimate Campaign, Traits).
+pub const CREATION_TRAIT_LIMIT: usize = 2;
+
+/// Whether `id` names one of [`DRAWBACKS`].
+pub fn is_drawback(id: &str) -> bool {
+    DRAWBACKS.iter().any(|drawback| drawback.drawback_id == id)
+}
+
+/// Why a creation trait selection breaks the PF1 count rule, or `None` when it is legal: two
+/// traits, or three when exactly one drawback is taken; never more than one drawback.
+pub fn creation_trait_selection_refusal(selected: &[String]) -> Option<String> {
+    let drawbacks = selected.iter().filter(|id| is_drawback(id)).count();
+    let traits = selected.len() - drawbacks;
+    if drawbacks > 1 {
+        return Some(format!("A character may take at most one drawback; {drawbacks} were chosen."));
+    }
+    let limit = CREATION_TRAIT_LIMIT + drawbacks;
+    if traits > limit {
+        return Some(if drawbacks == 1 {
+            format!("A character with a drawback takes at most {limit} traits; {traits} were chosen.")
+        } else {
+            format!("A character takes at most {limit} traits (3 with one drawback); {traits} were chosen.")
+        });
+    }
+    None
+}
+
+#[cfg(test)]
+mod drawback_tests {
+    use super::*;
+
+    fn ids(list: &[&str]) -> Vec<String> {
+        list.iter().map(|id| (*id).to_owned()).collect()
+    }
+
+    #[test]
+    fn every_corpus_drawback_is_in_the_table_verbatim() {
+        let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus/ultimate_campaign/ability");
+        let mut seen = 0;
+        for entry in std::fs::read_dir(&dir).expect("ultimate_campaign ability dir") {
+            let path = entry.expect("dir entry").path();
+            let record: serde_json::Value =
+                serde_json::from_str(&std::fs::read_to_string(&path).expect("read")).expect("json");
+            let data = &record["data"];
+            let key = data["key"].as_str().unwrap_or_default();
+            if !key.starts_with("Drawback ~") {
+                continue;
+            }
+            seen += 1;
+            let slug = path.file_stem().and_then(|s| s.to_str()).expect("stem");
+            let drawback = DRAWBACKS
+                .iter()
+                .find(|d| d.drawback_id == format!("drawback:{slug}"))
+                .unwrap_or_else(|| panic!("{key} ({slug}) is missing from DRAWBACKS"));
+            assert_eq!(drawback.corpus_key, key);
+            assert_eq!(drawback.name, data["name"].as_str().unwrap_or_default(), "{key}");
+            assert_eq!(
+                drawback.description,
+                data["description"].as_str().unwrap_or_default().replace("%%", "%"),
+                "{key}"
+            );
+        }
+        assert_eq!(seen, DRAWBACKS.len(), "one table row per corpus drawback, no extras");
+        assert_eq!(seen, 17);
+    }
+
+    #[test]
+    fn no_drawback_id_is_also_a_trait_id() {
+        for drawback in DRAWBACKS {
+            assert!(!FLAT_SKILL_TRAIT_BONUSES.iter().any(|t| t.trait_id == drawback.drawback_id));
+            assert!(drawback.drawback_id.starts_with("drawback:"));
+        }
+    }
+
+    #[test]
+    fn two_traits_are_legal_and_a_third_needs_a_drawback() {
+        assert_eq!(creation_trait_selection_refusal(&ids(&["trait:trait_acrobat", "trait:trait_bastard"])), None);
+        let three = ids(&["trait:trait_acrobat", "trait:trait_bastard", "trait:trait_caretaker"]);
+        let refusal = creation_trait_selection_refusal(&three).expect("a third trait needs a drawback");
+        assert!(refusal.contains("at most 2 traits"), "{refusal}");
+        let mut with_drawback = three.clone();
+        with_drawback.push("drawback:vain".to_owned());
+        assert_eq!(creation_trait_selection_refusal(&with_drawback), None, "3 traits + 1 drawback");
+        let mut four = with_drawback.clone();
+        four.push("trait:trait_civilized".to_owned());
+        assert!(creation_trait_selection_refusal(&four).expect("4 traits").contains("at most 3 traits"));
+    }
+
+    #[test]
+    fn a_second_drawback_is_refused() {
+        let refusal = creation_trait_selection_refusal(&ids(&["drawback:vain", "drawback:pride"])).expect("two drawbacks");
+        assert!(refusal.contains("at most one drawback"), "{refusal}");
+    }
 }
 
 #[cfg(test)]

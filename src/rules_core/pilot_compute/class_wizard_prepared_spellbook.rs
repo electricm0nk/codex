@@ -1229,6 +1229,11 @@ pub(super) fn explain_wizard_level1_prepared_spell_baseline(
     // now also cites the specific unmet reason); when it is met, this replaces
     // them with real spellbook-contents / daily-preparation / spells-per-day
     // explanation records instead.
+    for (id, value) in wizard_spellbook_size_rows(level, ability_modifiers.intelligence) {
+        let detail = wizard_spellbook_size_detail(&id, level, ability_modifiers.intelligence, value);
+        explanations.push(ComputationExplanation { id, value, detail });
+    }
+
     let spellbook_unmet =
         unmet_wizard_spellbook_conditions(input, level, ability_modifiers);
     if spellbook_unmet.is_empty() {
@@ -1331,6 +1336,70 @@ pub(super) fn wizard_base_spells_per_day(level: u8) -> [Option<i16>; 10] {
             Some(4),
         ],
         _ => [None, None, None, None, None, None, None, None, None, None],
+    }
+}
+
+/// The highest spell level a wizard of `level` can cast (the table's last accessible column).
+fn wizard_highest_castable_spell_level(level: u8) -> Option<u8> {
+    wizard_base_spells_per_day(level)
+        .iter()
+        .rposition(Option::is_some)
+        .map(|spell_level| spell_level as u8)
+}
+
+/// The wizard's spellbook size (Brief 1 F5), one `(id, count)` row per bound, from the PF1 Core
+/// Rulebook Wizard "Spells" paragraph: the spellbook holds every 0-level wizard spell, three
+/// 1st-level spells plus one per point of Intelligence bonus at 1st level, and two more spells
+/// at each new wizard level, each of any level the wizard can cast at that new level.
+///
+/// - `spell_level_0`: every cantrip on the wizard list (`class_spell_list_entries`). Opposed
+///   schools are not removed: no school choice is modelled on the Create screen.
+/// - `spell_level_<k>_and_higher` for each castable `k >= 1`: how many spellbook spells may be
+///   of level `k` or higher. For `k = 1` that is the whole non-cantrip spellbook,
+///   `max(0, 3 + Int) + 2 * (level - 1)`; for `k >= 2` it is two per wizard level from 2 up to
+///   `level` whose highest castable spell level is at least `k`. These nested bounds are the
+///   exact limit: any picks that respect all of them can be assigned to the levels they were
+///   gained at.
+pub(super) fn wizard_spellbook_size_rows(level: u8, intelligence_modifier: i16) -> Vec<(String, i16)> {
+    let Some(highest) = wizard_highest_castable_spell_level(level) else {
+        return Vec::new();
+    };
+    let cantrips = crate::rules_core::rules_catalog::class_spell_levels::class_spell_list_entries(WIZARD_CLASS_ID)
+        .map_or(0, |entries| entries.iter().filter(|(_, spell_level)| *spell_level == 0).count() as i16);
+    let mut rows = vec![("class_spell.wizard.spellbook_size.spell_level_0".to_owned(), cantrips)];
+    let gained_after_first = 2 * (i16::from(level) - 1);
+    for spell_level in 1..=highest {
+        let count = if spell_level == 1 {
+            (3 + intelligence_modifier).max(0) + gained_after_first
+        } else {
+            2 * (2..=level)
+                .filter(|gained_at| wizard_highest_castable_spell_level(*gained_at).is_some_and(|top| top >= spell_level))
+                .count() as i16
+        };
+        rows.push((format!("class_spell.wizard.spellbook_size.spell_level_{spell_level}_and_higher"), count));
+    }
+    rows
+}
+
+fn wizard_spellbook_size_detail(id: &str, level: u8, intelligence_modifier: i16, value: i16) -> String {
+    if id.ends_with("spell_level_0") {
+        format!(
+            "Wizard level {level} spellbook: all {value} 0-level spells on the wizard spell list \
+             (PF1 Core Rulebook Wizard, Spells: a wizard begins play with a spellbook containing \
+             all 0-level wizard/sorcerer spells). Opposed schools are not removed"
+        )
+    } else if id.ends_with("spell_level_1_and_higher") {
+        format!(
+            "Wizard level {level} spellbook: {value} spells of 1st level or higher = 3 + \
+             Intelligence modifier {intelligence_modifier} (never below 0) at 1st level, plus 2 \
+             per wizard level after 1st (PF1 Core Rulebook Wizard, Spells)"
+        )
+    } else {
+        format!(
+            "Wizard level {level} spellbook: at most {value} of its spells may be this level or \
+             higher -- two for each wizard level after 1st at which the wizard could already cast \
+             a spell of this level (each new spell must be of a level the wizard can cast)"
+        )
     }
 }
 
@@ -2318,6 +2387,88 @@ mod wizard_spellbook_spell_id_resolution_tests {
         );
         assert_eq!(parse_wizard_spellbook_spell_id("not.a.real.spell.id.at.all"), None);
         assert_eq!(parse_wizard_spellbook_spell_id("no dots and not a catalog key"), None);
+    }
+}
+
+/// Brief 1 F5 (tranche-17-ui): the wizard's spellbook size, the number the Create screen's
+/// spell picker uses as its known-spell quota. PF1 Core Rulebook Wizard "Spells": every
+/// cantrip, three 1st-level spells plus one per point of Intelligence bonus at 1st level,
+/// and two more spells at each new wizard level, each of any level the wizard can cast at
+/// the level it is gained.
+#[cfg(test)]
+mod wizard_spellbook_size_tests {
+    use super::{compute_pilot_base_chassis, wizard_spellbook_size_rows, WIZARD_CLASS_ID};
+    use crate::rules_core::character_input::load_character_input_fixture;
+    use crate::rules_core::rules_catalog::class_spell_levels::class_spell_list_entries;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn value(rows: &[(String, i16)], id: &str) -> Option<i16> {
+        rows.iter().find(|(row_id, _)| row_id == id).map(|(_, value)| *value)
+    }
+
+    fn wizard_cantrip_count() -> i16 {
+        class_spell_list_entries(WIZARD_CLASS_ID)
+            .expect("the wizard has a spell list")
+            .iter()
+            .filter(|(_, level)| *level == 0)
+            .count() as i16
+    }
+
+    #[test]
+    fn a_level_1_wizard_knows_every_cantrip_and_three_plus_int_first_level_spells() {
+        let rows = wizard_spellbook_size_rows(1, 2);
+        assert_eq!(value(&rows, "class_spell.wizard.spellbook_size.spell_level_0"), Some(wizard_cantrip_count()));
+        assert!(wizard_cantrip_count() > 0, "the wizard list has cantrips");
+        assert_eq!(value(&rows, "class_spell.wizard.spellbook_size.spell_level_1_and_higher"), Some(5), "3 + Int 2");
+        assert_eq!(value(&rows, "class_spell.wizard.spellbook_size.spell_level_2_and_higher"), None, "no 2nd-level spells at level 1");
+    }
+
+    #[test]
+    fn each_wizard_level_after_the_first_adds_two_spells_of_a_level_castable_when_gained() {
+        // Level 5, Int +3: 3 + 3 + 2 * 4 = 14 spells of 1st level or higher. Of those, only
+        // the ones gained at levels 3, 4 and 5 (6) can be 2nd level or higher, and only the
+        // two gained at level 5 can be 3rd level.
+        let rows = wizard_spellbook_size_rows(5, 3);
+        assert_eq!(value(&rows, "class_spell.wizard.spellbook_size.spell_level_1_and_higher"), Some(14));
+        assert_eq!(value(&rows, "class_spell.wizard.spellbook_size.spell_level_2_and_higher"), Some(6));
+        assert_eq!(value(&rows, "class_spell.wizard.spellbook_size.spell_level_3_and_higher"), Some(2));
+        assert_eq!(value(&rows, "class_spell.wizard.spellbook_size.spell_level_4_and_higher"), None);
+    }
+
+    #[test]
+    fn the_spellbook_grows_with_wizard_level() {
+        // Level 13, Int 0: 3 + 0 + 2 * 12 = 27.
+        let rows = wizard_spellbook_size_rows(13, 0);
+        assert_eq!(value(&rows, "class_spell.wizard.spellbook_size.spell_level_1_and_higher"), Some(27));
+        assert_eq!(value(&rows, "class_spell.wizard.spellbook_size.spell_level_7_and_higher"), Some(2), "7th level first castable at 13");
+    }
+
+    #[test]
+    fn a_negative_intelligence_modifier_never_makes_the_first_level_count_negative() {
+        let rows = wizard_spellbook_size_rows(1, -4);
+        assert_eq!(value(&rows, "class_spell.wizard.spellbook_size.spell_level_1_and_higher"), Some(0));
+    }
+
+    #[test]
+    fn a_wizard_with_no_spells_chosen_yet_still_gets_its_spellbook_size() {
+        // The Create screen asks before any spell is recorded, so the size cannot depend on
+        // the prepared-spellbook posture the per-day rows wait for.
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE)
+            .character_input
+            .expect("fixture loads");
+        input.chosen.class_levels[0].class_id = WIZARD_CLASS_ID.to_owned();
+        input.chosen.class_levels[0].level = 3;
+        let computation = compute_pilot_base_chassis(&input);
+        let first = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.wizard.spellbook_size.spell_level_1_and_higher")
+            .expect("spellbook size is stated for a wizard with an empty spellbook");
+        // Fixture Intelligence 10 (+0): 3 + 0 + 2 * 2.
+        assert_eq!(first.value, 7, "{first:?}");
     }
 }
 

@@ -1810,6 +1810,10 @@ pub struct DraftSpellOptionsDto {
     /// Spell names the race grants as spell-like abilities (`ABILITY:Spell-Like Ability|AUTOMATIC|Racial SLA ~ <spell>`),
     /// in corpus order, for the dialog's read-only Innate column. A trait the draft's alternates suppress is not listed.
     pub innate: Vec<String>,
+    /// The engine's known-spell quotas for the draft: a spontaneous caster's
+    /// `*.spells_known.spell_level_<n>` rows and the wizard's `class_spell.wizard.spellbook_size.*`
+    /// rows. The Create screen picks KNOWN spells, so these, not `per_day`, are its quotas.
+    pub known: Vec<ExplanationDto>,
 }
 
 const RACIAL_SLA_PREFIX: &str = "Racial SLA ~ ";
@@ -1818,7 +1822,13 @@ fn draft_spell_options_impl(request: &CreateCharacterRequest) -> Result<DraftSpe
     let (input, _) = build_create_input(request, FeatPolicy::Trust)
         .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
     let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
-    let per_day = map_explanations_dto(&receipt.base.explanations)
+    let explanations = map_explanations_dto(&receipt.base.explanations);
+    let known = explanations
+        .iter()
+        .filter(|row| row.id.contains(".spells_known.") || row.id.starts_with("class_spell.wizard.spellbook_size."))
+        .cloned()
+        .collect();
+    let per_day = explanations
         .into_iter()
         .filter(|row| row.id.contains("spells_per_day") || row.id.contains("extracts_per_day"))
         .collect();
@@ -1843,7 +1853,7 @@ fn draft_spell_options_impl(request: &CreateCharacterRequest) -> Result<DraftSpe
             }
         }
     }
-    Ok(DraftSpellOptionsDto { per_day, innate })
+    Ok(DraftSpellOptionsDto { per_day, innate, known })
 }
 
 #[tauri::command]
@@ -1856,6 +1866,11 @@ pub(crate) fn create_character_at_root(
     request: &CreateCharacterRequest,
     app_version: String,
 ) -> Result<CreateCharacterResponse, String> {
+    // Brief 1 F3: two traits, or three with exactly one drawback (the Traits dialog enforces the
+    // same rule). Checked at save only, so a draft the player is still editing keeps computing.
+    if let Some(message) = codex::rules_core::trait_effects::creation_trait_selection_refusal(&request.selected_traits) {
+        return Ok(CreateCharacterResponse::Blocked { diagnostics: vec![create_diagnostic("create.trait_count", message)] });
+    }
     let (character_input, equipment_cost_copper) = match build_create_input(request, FeatPolicy::Enforce) {
         Ok(built) => built,
         Err(diagnostics) => return Ok(CreateCharacterResponse::Blocked { diagnostics }),
@@ -7957,6 +7972,72 @@ mod tests {
         }
         // Choosing an alternate trait that replaces Gnome Magic removes them (suppression is the resolver's).
         assert!(gnome.per_day.is_empty(), "a fighter has no spell quota");
+    }
+
+    fn known_value(options: &DraftSpellOptionsDto, id: &str) -> Option<i16> {
+        options.known.iter().find(|row| row.id == id).map(|row| row.value)
+    }
+
+    #[test]
+    fn the_draft_spell_options_state_a_sorcerers_spells_known_per_level() {
+        // Brief 1 F4/F5: a sorcerer's rows are `class_chassis.sorcerer.spontaneous.*`, and the
+        // Create screen's quota is the spells it KNOWS (PF1 Sorcerer table: 4 cantrips, 2 1st).
+        let mut request = request_for_class("race:human", "class:sorcerer", 1);
+        request.ability_scores.charisma = 16;
+        let sorcerer = draft_spell_options_impl(&request).expect("options");
+        assert!(
+            sorcerer.per_day.iter().any(|row| row.id == "class_chassis.sorcerer.spontaneous.total_spells_per_day.spell_level_1"),
+            "per-day rows: {:?}",
+            sorcerer.per_day.iter().map(|row| &row.id).collect::<Vec<_>>()
+        );
+        assert_eq!(known_value(&sorcerer, "class_chassis.sorcerer.spontaneous.spells_known.spell_level_0"), Some(4), "{:?}", sorcerer.known);
+        assert_eq!(known_value(&sorcerer, "class_chassis.sorcerer.spontaneous.spells_known.spell_level_1"), Some(2), "{:?}", sorcerer.known);
+    }
+
+    #[test]
+    fn the_draft_spell_options_state_a_wizards_spellbook_size_and_it_grows_with_levels() {
+        let mut request = request_for_class("race:human", "class:wizard", 1);
+        request.ability_scores.intelligence = 14;
+        let first = draft_spell_options_impl(&request).expect("options");
+        assert_eq!(
+            known_value(&first, "class_spell.wizard.spellbook_size.spell_level_1_and_higher"),
+            Some(5),
+            "3 + Int 2: {:?}",
+            first.known
+        );
+        request.additional_levels = vec!["class:wizard".to_owned(); 4];
+        let fifth = draft_spell_options_impl(&request).expect("options");
+        assert_eq!(known_value(&fifth, "class_spell.wizard.spellbook_size.spell_level_1_and_higher"), Some(13), "5 + 2 * 4: {:?}", fifth.known);
+        assert_eq!(known_value(&fifth, "class_spell.wizard.spellbook_size.spell_level_3_and_higher"), Some(2), "{:?}", fifth.known);
+        assert_eq!(known_value(&fifth, "class_spell.wizard.spellbook_size.spell_level_4_and_higher"), None, "a level-5 wizard casts up to 3rd");
+    }
+
+    #[test]
+    fn create_refuses_more_traits_than_the_rule_allows() {
+        let root = tempdir("create-trait-count");
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        request.selected_traits =
+            vec!["trait:trait_acrobat".to_owned(), "trait:trait_bastard".to_owned(), "trait:trait_caretaker".to_owned()];
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        let CreateCharacterResponse::Blocked { diagnostics } = response else {
+            panic!("three traits without a drawback must be refused: {response:?}");
+        };
+        assert!(diagnostics.iter().any(|d| d.id == "create.trait_count" && d.message.contains("at most 2 traits")), "{diagnostics:?}");
+
+        request.selected_traits.push("drawback:vain".to_owned());
+        request.selected_traits.push("drawback:pride".to_owned());
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        let CreateCharacterResponse::Blocked { diagnostics } = response else {
+            panic!("two drawbacks must be refused: {response:?}");
+        };
+        assert!(diagnostics.iter().any(|d| d.id == "create.trait_count" && d.message.contains("one drawback")), "{diagnostics:?}");
+
+        request.selected_traits.pop();
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "3 traits + 1 drawback is legal: {response:?}");
+        let saved = SavedCharacterStore::load(&root).unwrap();
+        assert!(saved.character_input.chosen.selected_traits.contains(&"drawback:vain".to_owned()), "the drawback is saved");
+        std::fs::remove_dir_all(&root).ok();
     }
 
     #[test]

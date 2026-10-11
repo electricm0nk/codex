@@ -173,6 +173,10 @@ fn wizard_level1_fabricates_no_spell_math() {
                 // ids for Wizard (previously wholesale-excluded); this shape carve-out admits
                 // them without weakening the substring check for anything else.
                 || explanation.id.starts_with("class_feature.wizard.corpus_record.")
+                // Brief 1 F5 (tranche-17-ui): the spellbook SIZE (how many spells the book
+                // holds, a CRB table rule), not its contents -- grounded by
+                // `wizard_spellbook_size_tests` in class_wizard_prepared_spellbook.rs.
+                || explanation.id.starts_with("class_spell.wizard.spellbook_size.")
                 || !explanation.id.contains("spell"),
             "no fabricated spell explanation is allowed beyond the +0 recognition, the flat \
              specialist bonus slot count, and the real spell-save-DC records: {explanation:?}"
