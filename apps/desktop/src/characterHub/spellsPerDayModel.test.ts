@@ -107,7 +107,26 @@ function verifiesANonCasterGetsACleanEmptySurface() {
   assert(surface.isEmpty, 'a fighter casts nothing and gets no fabricated rows');
 }
 
+// Brief 1 F4: the engine states a sorcerer's (and a bard's, a paladin's ...) slots under
+// `class_chassis.<class>.<kind>.*`, not `class_spell.*`. The sheet read none of them, and the
+// Create screen's spells dialog (which reads this same surface) was empty for a sorcerer.
+function verifiesASorcerersChassisRowsReachTheSheetUnderTheSorcerer() {
+  const surface = buildSpellsPerDaySurface([
+    explanation('class_chassis.sorcerer.spontaneous.base_spells_per_day.spell_level_1', 3, 'base'),
+    explanation('class_chassis.sorcerer.spontaneous.total_spells_per_day.spell_level_1', 4, 'total'),
+    explanation('class_chassis.sorcerer.spontaneous.spells_known.spell_level_1', 2, 'known, not per day'),
+    explanation('class_chassis.paladin.partial_caster.total_spells_per_day.spell_level_1', 1, 'paladin'),
+  ]);
+
+  assertEqual(
+    surface.rows.map((row) => `${row.classToken}:${row.spellLevel}:${row.count}:${row.basis}`).join(' '),
+    'paladin:1:1:total sorcerer:1:4:total',
+    'the class is the segment before the casting-kind qualifier, and spells known is not a per-day row'
+  );
+}
+
 async function main() {
+  verifiesASorcerersChassisRowsReachTheSheetUnderTheSorcerer();
   verifiesAWizardsPerDayCountsComeFromTheEnginesOwnRecords();
   verifiesTheTotalIsPreferredOverTheBaseForTheSameLevel();
   verifiesABaseOnlyCountIsNotPassedOffAsATotal();

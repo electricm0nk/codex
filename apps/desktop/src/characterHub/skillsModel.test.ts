@@ -9,6 +9,7 @@ import {
   skillIdFor,
   skillModifier,
   SKILLS,
+  traitSkillModifierFor,
   skillPointsSpent,
   totalSkillPointsAvailable,
 } from './skillsModel';
@@ -266,6 +267,20 @@ function verifiesSkillPointsStatusSaysWhatIsLeft() {
   assert(skillPointsStatus(null, 0).text.includes('Unknown'), 'and says so');
 }
 
+// Brief 1 F3b: the engine's per-skill trait/drawback modifier (`skill.trait_modifier.<id>` rows on
+// the sheet's explanations) is what each row adds: Acrobat's +1, Meticulous's untrained -2.
+function verifiesTheTraitModifierRowIsAddedToTheSkill() {
+  const explanations = [
+    { id: 'skill.trait_modifier.acrobatics', value: -1, detail: '+1 Acrobat, -2 Meticulous' },
+    { id: 'skill.trait_modifier.sense_motive', value: 1, detail: 'Bastard' },
+    { id: 'skill.selected_modifier.climb', value: 5, detail: 'not a trait row' },
+  ];
+  assertEqual(traitSkillModifierFor(explanations, 'Acrobatics'), -1, 'Acrobatics row');
+  assertEqual(traitSkillModifierFor(explanations, 'Sense Motive'), 1, 'two-word skill');
+  assertEqual(traitSkillModifierFor(explanations, 'Climb'), 0, 'no trait row, nothing added');
+  assertEqual(skillModifier(2, 0, true, 0) + traitSkillModifierFor(explanations, 'Acrobatics'), 1, 'Dex +2, untrained, Acrobat + Meticulous');
+}
+
 async function main() {
   verifiesSkillIdForOnAParentheticalSkillName();
   verifiesSkillIdForOnMultiWordNonParentheticalNames();
@@ -274,6 +289,7 @@ async function main() {
   verifiesAGrantedFamilyCoversItsMembers();
   verifiesNewlyOfferedClassesHaveTheirClassSkills();
   verifiesEveryRosterClassIsAnsweredOrNamed();
+  verifiesTheTraitModifierRowIsAddedToTheSkill();
   verifiesLoadingAndFailureNameEveryClass();
   verifiesTotalSkillPointsAvailableReadsTheRoster();
   verifiesAlertnessAddsTwoToPerceptionAndSenseMotive();

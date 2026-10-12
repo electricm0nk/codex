@@ -8,6 +8,38 @@ import type { TransferItem } from './transferListModel';
 export const CHARACTER_TRAIT_LIMIT = 2;
 
 /**
+ * The Traits dialog's limit groups (Brief 1 F3, PF1 Ultimate Campaign): two traits, or three once
+ * one drawback is taken, and at most one drawback. `create_character` enforces the same rule
+ * (`trait_effects::creation_trait_selection_refusal`).
+ */
+export const TRAIT_GROUP_LABELS: Record<string, string> = { trait: 'Traits', drawback: 'Drawbacks' };
+
+function drawbacksChosen(options: CharacterTraitOptionDto[], selected: readonly string[]): number {
+  return selected.filter((id) => options.find((option) => option.id === id)?.isDrawback === true).length;
+}
+
+/** The limit per group; `drawback` only when a drawback is offered at all. */
+export function traitGroupLimits(options: CharacterTraitOptionDto[], selected: readonly string[]): Record<string, number> {
+  const trait = CHARACTER_TRAIT_LIMIT + (drawbacksChosen(options, selected) === 1 ? 1 : 0);
+  return options.some((option) => option.isDrawback === true) ? { trait, drawback: 1 } : { trait };
+}
+
+/** Why the selection breaks the trait count rule (a drawback removed after its third trait was taken), or `null`. */
+export function traitCountProblem(options: CharacterTraitOptionDto[], selected: readonly string[]): string | null {
+  const drawbacks = drawbacksChosen(options, selected);
+  if (drawbacks > 1) {
+    return 'Only one drawback may be taken.';
+  }
+  const traits = selected.length - drawbacks;
+  if (traits > CHARACTER_TRAIT_LIMIT + drawbacks) {
+    return drawbacks === 0
+      ? 'Three traits need a drawback: take one drawback or remove a trait.'
+      : `At most ${CHARACTER_TRAIT_LIMIT + drawbacks} traits may be taken.`;
+  }
+  return null;
+}
+
+/**
  * Racial traits for the Manage dialog: every alternate racial trait is a selectable option (one the
  * current selection locks out is listed as not qualified, with the backend's reason), and the
  * standard traits the race grants are innate (shown, never moved). Prose is the engine's.
@@ -62,15 +94,29 @@ export function traitBonusSummary(option: CharacterTraitOptionDto): string {
   return parts.join('; ');
 }
 
-/** Character traits for the Manage dialog. Every one offered genuinely computes, so all are qualified. */
+/**
+ * Character traits and drawbacks for the Manage dialog. Every trait offered genuinely computes, and
+ * a drawback's penalty is its printed text, so all are qualified; each counts against its own limit
+ * group (`traitGroupLimits`).
+ */
 export function characterTraitItems(options: CharacterTraitOptionDto[]): TransferItem[] {
   return options.map((option) => {
+    if (option.isDrawback) {
+      return {
+        id: option.id,
+        label: `${option.name} (drawback)`,
+        description: `Drawback: taking one gives a third trait.\n\n${option.description}`,
+        qualified: true,
+        group: 'drawback',
+      };
+    }
     const summary = traitBonusSummary(option);
     return {
       id: option.id,
       label: option.name,
       description: summary ? `${summary}\n\n${option.description}` : option.description,
       qualified: true,
+      group: 'trait',
     };
   });
 }

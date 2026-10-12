@@ -66,6 +66,40 @@ function verifiesTheDescriptionPaneShowsTheClickedItemAndWhyItCannotBeTaken() {
   assert(render().includes('Click an item'), 'a hint when nothing is focused');
 }
 
+// Brief 1 F6: the spells dialog shows one labelled Options/Selected pair per spell level, the level
+// on the far left and "N of M picks left" on each pair.
+function verifiesOnePairPerGroupInGroupedMode() {
+  const spells = [
+    item('c1', { label: 'Light', group: 'wizard:0' }),
+    item('s1', { label: 'Sleep', group: 'wizard:1' }),
+    item('s2', { label: 'Magic Missile', group: 'wizard:1' }),
+    item('i1', { label: 'Dancing Lights', innate: true }),
+  ];
+  const html = render({
+    items: spells,
+    selected: ['s1'],
+    limit: null,
+    groupLimits: { 'wizard:0': 1, 'wizard:1': 2 },
+    groupLabels: { 'wizard:0': 'Wizard level 0', 'wizard:1': 'Wizard level 1' },
+    pairPerGroup: true,
+  });
+  assertEqual((html.match(/role="group"/g) ?? []).length, 2, 'one pair per spell level');
+  assert(html.includes('aria-label="Wizard level 0 options"') && html.includes('aria-label="Wizard level 1 selected"'), 'each list is named for its level');
+  assert(html.indexOf('Wizard level 0') < html.indexOf('aria-label="Wizard level 0 options"'), 'the level label comes first, on the left');
+  assert(html.includes('1 of 1 picks left') && html.includes('1 of 2 picks left'), 'each pair says how many picks are left');
+  const level1 = html.slice(html.indexOf('aria-label="Wizard level 1 group"'));
+  assert(level1.includes('Magic Missile') && !level1.slice(0, level1.indexOf('Wizard level 1 selected')).includes('>Light<'), 'a level lists only its own spells');
+  assertEqual((html.match(/Dancing Lights/g) ?? []).length, 1, 'innate abilities are listed once, not per level');
+}
+
+function verifiesTheSinglePairStaysWithoutGroupedMode() {
+  const html = render({ groupLimits: { traits: 2 }, groupLabels: { traits: 'Traits' } });
+  assertEqual((html.match(/role="group"/g) ?? []).length, 0, 'Traits, Feats and Racial traits keep one pair');
+  assert(html.includes('aria-label="Options"') && html.includes('aria-label="Selected"'), 'the plain Options and Selected lists');
+}
+
+verifiesOnePairPerGroupInGroupedMode();
+verifiesTheSinglePairStaysWithoutGroupedMode();
 verifiesTheRemainingCountIsAtTheTop();
 verifiesQualifiedIsCheckedByDefaultAndFiltersTheOptions();
 verifiesThreeColumnsWhenThereAreInnateItems();

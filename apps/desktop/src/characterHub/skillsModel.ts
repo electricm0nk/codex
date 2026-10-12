@@ -1,6 +1,6 @@
 import type { AbilityScoresDto } from '../boundary/loadCreateCharacter';
 import type { ClassSkillFactsDto } from '../boundary/listClassFacts';
-import type { FeatSkillBonusesDto } from '../boundary/loadSavedCharacterDetail';
+import type { ExplanationDto, FeatSkillBonusesDto } from '../boundary/loadSavedCharacterDetail';
 import { buildLevelEntries, totalSkillPoints, type HeldClass } from './characterProgression';
 import type { ClassFactsState } from './classFactsModel';
 
@@ -179,6 +179,16 @@ export function featSkillBonusFor(bonuses: FeatSkillBonusesDto, skillName: strin
     }
   }
   return total;
+}
+
+/**
+ * Brief 1 F3b: the trait and drawback modifier the engine reports for `skillName` (a `SKILLS`
+ * display name) as its `skill.trait_modifier.<id>` explanation row -- Acrobat's +1, Meticulous's
+ * untrained -2. `0` when the engine reports none. Nothing is computed here.
+ */
+export function traitSkillModifierFor(explanations: readonly ExplanationDto[], skillName: string): number {
+  const id = `skill.trait_modifier.${skillIdFor(skillName).slice('skill:'.length)}`;
+  return explanations.find((row) => row.id === id)?.value ?? 0;
 }
 
 /**

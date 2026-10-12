@@ -141,6 +141,7 @@ import {
   classSkillLookup,
   featSkillBonusFor,
   featSkillBonusesWithoutARow,
+  traitSkillModifierFor,
   isClassSkill,
   type ClassSkillLookup,
   persistedFromAllocation,
@@ -637,6 +638,12 @@ function SkillsPanel(props: {
    * engine's own figure.
    */
   featSkillBonuses: FeatSkillBonusesDto;
+  /**
+   * Brief 1 F3b: the sheet response's explanations. Each row adds the engine's
+   * `skill.trait_modifier.<skill>` value (trait bonuses, Meticulous's untrained -2), which neither
+   * the panel's own sum nor `realModifiers` carries.
+   */
+  explanations: readonly ExplanationDto[];
   onOpenDialog: () => void;
   custom: CharacterCustom;
 }) {
@@ -699,7 +706,9 @@ function SkillsPanel(props: {
           const ranks = props.allocation[skill.name] ?? 0;
           const abilityMod = props.abilities[skill.ability];
           const real = REAL_MODIFIER_BY_SKILL[skill.name];
-          const total = real ?? skillModifier(abilityMod, ranks, classSkill, featSkillBonusFor(props.featSkillBonuses, skill.name));
+          const total =
+            (real ?? skillModifier(abilityMod, ranks, classSkill, featSkillBonusFor(props.featSkillBonuses, skill.name))) +
+            traitSkillModifierFor(props.explanations, skill.name);
           return (
             <div key={skill.name} style={{ alignItems: 'center', display: 'flex', fontSize: '0.85rem', gap: '0.4rem' }}>
               <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{fmt(total)}</span>
@@ -4827,6 +4836,7 @@ export function CharacterSheet(props: {
             allocation={skillAllocation}
             realModifiers={snapshot?.selectedSkillModifiers}
             featSkillBonuses={engineRecords.featSkillBonuses}
+            explanations={engineRecords.explanations}
             onOpenDialog={() => setSkillDialogOpen(true)}
             custom={custom}
           />

@@ -1676,6 +1676,32 @@ pub(super) fn ground_hunter_spellcasting_chassis_and_nature_training(
         });
     }
 
+    // Brief 1 F7: the freely chosen spells-known quota per spell level (the Create screen's picker).
+    // `acg_classes.lst:143`: "The KNOWN are 1 higher than in the book for levels 1+ because all the
+    // Summon Nature's Ally spells are automatically known in addition", so levels 1+ are KNOWN - 1.
+    for (spell_level, known) in hunter_spells_known_table(level).iter().enumerate() {
+        let Some(known) = known else {
+            continue;
+        };
+        let chosen = if spell_level == 0 { *known } else { known - 1 };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.hunter.spontaneous.spells_known.spell_level_{spell_level}"),
+            value: chosen,
+            detail: format!(
+                "Hunter spells known to choose at hunter level {level}, spell level {spell_level}: \
+                 {chosen}, from the corpus's KNOWN: column {known} (acg_classes.lst:144-163){}",
+                if spell_level == 0 {
+                    String::new()
+                } else {
+                    " less the Summon Nature's Ally of this level the hunter knows automatically \
+                     (acg_classes.lst:143: the KNOWN column is 1 higher than the book for that \
+                     reason)"
+                        .to_owned()
+                }
+            ),
+        });
+    }
+
     let wisdom_modifier = ability_modifier_for(ability_modifiers, "wisdom");
     for spell_level in 1..=access_ceiling {
         let spell_save_dc = 10 + spell_level + wisdom_modifier;
@@ -4197,3 +4223,47 @@ mod swashbuckler_finesse_tests {
     }
 }
 
+
+/// Brief 1 F7 (tranche-17-ui): the Hunter's spells-known quota per spell level, the Create screen's
+/// picker quota. `acg_classes.lst:144-163` `KNOWN:` (pinned PCGen oracle), whose own comment
+/// (`acg_classes.lst:143`) says the column is "1 higher than in the book for levels 1+ because all
+/// the Summon Nature's Ally spells are automatically known in addition" -- so the freely chosen
+/// quota is `KNOWN - 1` at spell levels 1+, and `KNOWN` for orisons.
+#[cfg(test)]
+mod hunter_spells_known_quota_tests {
+    use super::HUNTER_CLASS_ID;
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterClassLevel};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn known(level: u8) -> Vec<(String, i16)> {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE).character_input.expect("fixture");
+        input.chosen.class_levels = vec![CharacterClassLevel { class_id: HUNTER_CLASS_ID.to_owned(), level }];
+        crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input)
+            .explanations
+            .into_iter()
+            .filter(|e| e.id.starts_with("class_chassis.hunter.spontaneous.spells_known."))
+            .map(|e| (e.id, e.value))
+            .collect()
+    }
+
+    fn at(rows: &[(String, i16)], spell_level: u8) -> Option<i16> {
+        let id = format!("class_chassis.hunter.spontaneous.spells_known.spell_level_{spell_level}");
+        rows.iter().find(|(row, _)| *row == id).map(|(_, v)| *v)
+    }
+
+    #[test]
+    fn a_level_1_hunter_chooses_four_orisons_and_two_first_level_spells() {
+        let rows = known(1);
+        assert_eq!((at(&rows, 0), at(&rows, 1), at(&rows, 2)), (Some(4), Some(2), None), "{rows:?}");
+    }
+
+    #[test]
+    fn a_level_4_hunter_reads_the_known_column_less_its_summon_natures_ally() {
+        // acg_classes.lst:147 `KNOWN:6,5,3`.
+        let rows = known(4);
+        assert_eq!((at(&rows, 0), at(&rows, 1), at(&rows, 2)), (Some(6), Some(4), Some(2)), "{rows:?}");
+    }
+}

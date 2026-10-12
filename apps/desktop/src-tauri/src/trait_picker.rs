@@ -19,7 +19,7 @@
 //! primitive already established, not a new mechanism.
 use codex::rules_core::trait_effects::{
     family_choice_skill_options, trait_skill_choice_id, ABILITY_DIFF_SKILL_TRAIT_BONUSES,
-    CASTER_LEVEL_SKILL_TRAIT_BONUSES, CONCENTRATION_TRAIT_BONUSES, FAMILY_CHOICE_TRAIT_BONUSES,
+    CASTER_LEVEL_SKILL_TRAIT_BONUSES, CONCENTRATION_TRAIT_BONUSES, DRAWBACKS, FAMILY_CHOICE_TRAIT_BONUSES,
     FLAT_SKILL_TRAIT_BONUSES, INITIATIVE_TRAIT_BONUSES, SAVE_TRAIT_BONUSES,
     SITUATIONAL_SKILL_TRAIT_BONUSES, SKILL_CHOICE_TRAIT_BONUSES,
 };
@@ -89,6 +89,10 @@ pub struct CharacterTraitOptionDto {
     /// for every other slice.
     #[serde(default)]
     pub ability_substitution: Option<TraitAbilitySubstitutionDto>,
+    /// `true` for one of `trait_effects::DRAWBACKS` (Brief 1 F3): taking one drawback lets a new
+    /// character take a third trait. Its penalty is its `description` (Meticulous's untrained -2 is
+    /// computed by `skill_allocation`, not carried here), so `skills`/`bonus`/`save` stay empty.
+    pub is_drawback: bool,
 }
 
 /// One non-skill, non-save pillar bonus this option grants -- see
@@ -144,7 +148,8 @@ fn skill_display_name(skill_id: &str) -> String {
 /// open-skill-slot traits, its 2 flat saving-throw-bonus traits, its 3
 /// situational-bonus traits, its 3 flat initiative-bonus /
 /// concentration-bonus traits, and its 4 ability-score-
-/// difference-formula traits (52 total) -- every option returned
+/// difference-formula traits (52 total; the eighth slice's Eldritch Delver makes 53, and
+/// Brief 1 F3 adds the 17 drawbacks, `is_drawback: true`, for 70 options) -- every option returned
 /// genuinely grants its stated bonus when selected (and, for a
 /// choice-based option, a valid `skill_options` choice recorded) and
 /// passed through `create_character`/`compose_character_input`
@@ -182,6 +187,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         choice_set_id: None,
         save: None,
         other_pillars: Vec::new(),
+        is_drawback: false,
         ability_substitution: None,
     });
     let choice = SKILL_CHOICE_TRAIT_BONUSES.iter().map(|entry| CharacterTraitOptionDto {
@@ -201,6 +207,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         choice_set_id: Some(trait_skill_choice_id(entry.trait_id)),
         save: None,
         other_pillars: Vec::new(),
+        is_drawback: false,
         ability_substitution: None,
     });
     // Third slice (`AT-34-E4-002`): the 4 open-subtype-family skill-slot
@@ -225,6 +232,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         choice_set_id: Some(trait_skill_choice_id(entry.trait_id)),
         save: None,
         other_pillars: Vec::new(),
+        is_drawback: false,
         ability_substitution: None,
     });
     // Fourth slice (`AT-34-E4-002`): the 2 flat saving-throw-bonus traits --
@@ -243,6 +251,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         choice_set_id: None,
         save: Some(entry.save.to_owned()),
         other_pillars: Vec::new(),
+        is_drawback: false,
         ability_substitution: None,
     });
     // Seventh slice (`AT-34-E4-002`): the 3 situational-bonus traits.
@@ -275,6 +284,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             choice_set_id: None,
             save: None,
             other_pillars: Vec::new(),
+            is_drawback: false,
             ability_substitution: None,
         }
     });
@@ -314,6 +324,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             choice_set_id: None,
             save: None,
             other_pillars,
+            is_drawback: false,
             ability_substitution: None,
         });
     }
@@ -334,6 +345,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
                 label: "Concentration checks".to_owned(),
                 bonus: entry.bonus,
             }],
+            is_drawback: false,
             ability_substitution: None,
         });
     }
@@ -358,6 +370,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             choice_set_id: None,
             save: None,
             other_pillars: Vec::new(),
+            is_drawback: false,
             ability_substitution: Some(TraitAbilitySubstitutionDto {
                 formula: entry.substitution_words(),
                 flat_bonus: entry.flat_bonus,
@@ -385,8 +398,26 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
                 label: format!("Caster level ({} subschool spells)", entry.subschool),
                 bonus: entry.caster_level_bonus,
             }],
+            is_drawback: false,
             ability_substitution: None,
         }
+    });
+    // Brief 1 F3: the 17 `ultimate_campaign` drawbacks (`trait_effects::DRAWBACKS`). One may be
+    // taken for a third trait; `create_character` enforces the count. Each carries only its words:
+    // 16 penalties are situational text, and Meticulous's untrained -2 is computed by
+    // `skill_allocation`, never restated here as a DTO number.
+    let drawbacks = DRAWBACKS.iter().map(|drawback| CharacterTraitOptionDto {
+        id: drawback.drawback_id.to_owned(),
+        name: drawback.name.to_owned(),
+        description: drawback.description.to_owned(),
+        skills: Vec::new(),
+        bonus: 0,
+        skill_options: Vec::new(),
+        choice_set_id: None,
+        save: None,
+        other_pillars: Vec::new(),
+        ability_substitution: None,
+        is_drawback: true,
     });
     flat.chain(choice)
         .chain(family_choice)
@@ -395,6 +426,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         .chain(pillar_options)
         .chain(ability_diff)
         .chain(caster_level_skill)
+        .chain(drawbacks)
         .collect()
 }
 
@@ -429,8 +461,32 @@ mod tests {
                 + unique_pillar_trait_ids.len()
                 + ABILITY_DIFF_SKILL_TRAIT_BONUSES.len()
                 + CASTER_LEVEL_SKILL_TRAIT_BONUSES.len()
+                + DRAWBACKS.len()
         );
-        assert_eq!(options.len(), 53);
+        assert_eq!(options.len(), 53 + 17, "53 traits and the 17 drawbacks");
+    }
+
+    /// Brief 1 F3: every `ultimate_campaign` drawback is offered, flagged `is_drawback`, with the
+    /// corpus's own words and no bonus numbers (its penalty is printed text, or -- Meticulous --
+    /// computed by `skill_allocation`, never a DTO number); no trait is flagged.
+    #[test]
+    fn every_drawback_is_offered_and_flagged_and_no_trait_is() {
+        let options = list_available_character_traits();
+        for drawback in DRAWBACKS {
+            let option = options
+                .iter()
+                .find(|o| o.id == drawback.drawback_id)
+                .unwrap_or_else(|| panic!("{} is offered", drawback.drawback_id));
+            assert!(option.is_drawback, "{}", option.id);
+            assert!(codex::rules_core::trait_effects::is_drawback(&option.id), "the count rule recognizes {}", option.id);
+            assert_eq!(option.name, drawback.name);
+            assert_eq!(option.description, drawback.description);
+            assert!(option.skills.is_empty() && option.bonus == 0 && option.save.is_none(), "{option:?}");
+        }
+        assert_eq!(options.iter().filter(|o| o.is_drawback).count(), DRAWBACKS.len());
+        assert!(options.iter().filter(|o| o.id.starts_with("trait:")).all(|o| !o.is_drawback));
+        let wire = serde_json::to_value(options.iter().find(|o| o.id == "drawback:vain").unwrap()).unwrap();
+        assert_eq!(wire["isDrawback"], serde_json::Value::Bool(true), "camelCase on the wire");
     }
 
     /// Eldritch Delver (eighth slice: mixed skill + caster-level) reaches
@@ -761,6 +817,13 @@ mod tests {
                 // own skill half reaches
                 // `caster_level_skill_bonuses_from_traits`, not
                 // `skill_bonuses_from_traits`.
+                continue;
+            }
+            if option.is_drawback {
+                // covered by `every_drawback_is_offered_and_flagged_and_no_trait_is`: a
+                // drawback's effect is the third trait it allows
+                // (`creation_trait_selection_refusal`), its printed text, and -- Meticulous
+                // only -- `skill_allocation`'s untrained penalty, never a trait skill bonus.
                 continue;
             }
             if option.ability_substitution.is_some() {

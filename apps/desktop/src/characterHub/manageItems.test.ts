@@ -3,7 +3,17 @@ import type { CharacterTraitOptionDto } from '../boundary/loadCharacterTraits';
 import type { AlternateTraitRow } from './alternateTraitSelection';
 import type { RacialTraitRow } from './racialTraitsModel';
 import type { FeatCatalogEntryDto } from '../boundary/listFeats';
-import { CHARACTER_TRAIT_LIMIT, alternateTraitItems, characterTraitItems, creationFeatSlots, featItems, traitBonusSummary } from './manageItems';
+import {
+  CHARACTER_TRAIT_LIMIT,
+  TRAIT_GROUP_LABELS,
+  alternateTraitItems,
+  characterTraitItems,
+  creationFeatSlots,
+  featItems,
+  traitBonusSummary,
+  traitCountProblem,
+  traitGroupLimits,
+} from './manageItems';
 
 const altRow = (over: Record<string, unknown> = {}): AlternateTraitRow =>
   ({
@@ -29,6 +39,7 @@ const trait = (over: Partial<CharacterTraitOptionDto> = {}): CharacterTraitOptio
   save: null,
   otherPillars: [],
   abilitySubstitution: null,
+  isDrawback: false,
   ...over,
 });
 
@@ -122,6 +133,32 @@ function verifiesCharacterTraitsAreAllQualifiedAndCarryTheirNumbers() {
   assertEqual(CHARACTER_TRAIT_LIMIT, 2, 'PF1 gives two traits');
 }
 
+// Brief 1 F3 (PF1 Ultimate Campaign): two traits; taking one drawback gives a third; never two drawbacks.
+function verifiesADrawbackBuysAThirdTrait() {
+  const options = [
+    trait(),
+    trait({ id: 'trait:b', name: 'B' }),
+    trait({ id: 'trait:c', name: 'C' }),
+    trait({ id: 'drawback:vain', name: 'Vain', skills: [], bonus: 0, isDrawback: true, description: 'You are sensitive.' }),
+    trait({ id: 'drawback:pride', name: 'Pride', skills: [], bonus: 0, isDrawback: true }),
+  ];
+  const items = characterTraitItems(options);
+  assertEqual(items.map((item) => item.group).join(','), 'trait,trait,trait,drawback,drawback', 'traits and drawbacks count against their own limits');
+  assert((items[3]!.description ?? '').startsWith('Drawback: taking one gives a third trait.'), 'a drawback says what it is for');
+  assertEqual(JSON.stringify(traitGroupLimits(options, [])), JSON.stringify({ trait: 2, drawback: 1 }), 'two traits, room for one drawback');
+  assertEqual(JSON.stringify(traitGroupLimits(options, ['drawback:vain'])), JSON.stringify({ trait: 3, drawback: 1 }), 'a drawback makes room for a third trait');
+  assertEqual(TRAIT_GROUP_LABELS.drawback, 'Drawbacks', 'named for the remaining line');
+  assertEqual(JSON.stringify(traitGroupLimits([trait()], [])), JSON.stringify({ trait: 2 }), 'no drawback offered, no drawback limit shown');
+  assertEqual(traitCountProblem(options, ['trait:trait_acrobat', 'trait:b', 'trait:c', 'drawback:vain']), null, 'three traits and one drawback is legal');
+  assertEqual(
+    traitCountProblem(options, ['trait:trait_acrobat', 'trait:b', 'trait:c']),
+    'Three traits need a drawback: take one drawback or remove a trait.',
+    'removing the drawback leaves one trait too many, and that is said'
+  );
+  assertEqual(traitCountProblem(options, ['drawback:vain', 'drawback:pride']), 'Only one drawback may be taken.', 'two drawbacks are refused');
+}
+
+verifiesADrawbackBuysAThirdTrait();
 verifiesAlternateTraitsBecomeSelectableItemsAndStandardOnesBecomeInnate();
 verifiesALockedOutAlternateIsUnqualifiedWithTheBackendsReason();
 verifiesAnIncompleteDescriptionIsFlagged();

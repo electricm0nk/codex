@@ -1,5 +1,5 @@
 import { useEffect, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
-import { buildCreationRacialTraitsPreview } from './creationRacialTraitsPreview';
+import { buildCreationRacialTraitsPreview, racialTraitsCountLabel } from './creationRacialTraitsPreview';
 import { composeCreationBio } from './creationBio';
 import { buildClassPreview } from './classPreviewModel';
 import { loadClassCatalog, type ClassCatalogEntryDto } from '../boundary/loadClassCatalog';
@@ -31,7 +31,7 @@ import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { LevelsPanel } from './LevelsPanel';
 import { ManageBox } from './ManageBox';
 import { TransferListDialog } from './TransferListDialog';
-import { CHARACTER_TRAIT_LIMIT, alternateTraitItems, characterTraitItems } from './manageItems';
+import { TRAIT_GROUP_LABELS, alternateTraitItems, characterTraitItems, traitCountProblem, traitGroupLimits } from './manageItems';
 import { remainingSelections } from './transferListModel';
 import { SkillAllocationDialog } from './SkillAllocationDialog';
 import {
@@ -58,7 +58,16 @@ import { saveCharacterCustom } from '../boundary/characterCustom';
 import { loadDraftSpellOptions } from '../boundary/draftSpellOptions';
 import { listSpells } from '../boundary/listSpells';
 import { loadClassSpellLevels } from '../boundary/loadClassSpellLevels';
-import { creationSpellDialog, keepOfferedSpells, spellQuotaOverruns, spellSelectionsFromIds, type SpellDialog } from './spellDialogModel';
+import {
+  creationSpellDialog,
+  keepOfferedSpells,
+  spellClassTokens,
+  spellOptionsKey,
+  spellPicksLeft,
+  spellQuotaOverruns,
+  spellSelectionsFromIds,
+  type SpellDialog,
+} from './spellDialogModel';
 import type { HeldClass } from './characterProgression';
 import { heldClassesOf } from './levelsModel';
 import {
@@ -517,9 +526,9 @@ function CreateCharacterFields(props: {
     };
   }, [primaryClassId]);
 
-  // Spell quotas follow the draft (class levels, Intelligence/Wisdom/Charisma, race). Reload whenever the
-  // inputs change while the dialog is open, and drop picks that are no longer offered.
-  const spellKey = JSON.stringify([heldClassKey, raceId, ABILITY_KEYS.map((key) => calculatedScore(key)), selectedAlternateTraitKeys]);
+  // Spell quotas follow the draft (each class's level count, Intelligence/Wisdom/Charisma, race). Reload
+  // whenever the inputs change while the dialog is open, and drop picks that are no longer offered.
+  const spellKey = spellOptionsKey(heldClasses, raceId, ABILITY_KEYS.map((key) => calculatedScore(key)), selectedAlternateTraitKeys);
   useEffect(() => {
     if (!spellDialogOpen && selectedSpellIds.length === 0) {
       return undefined;
@@ -533,15 +542,12 @@ function CreateCharacterFields(props: {
     setSpellDialogError(null);
     (async () => {
       const options = await loadDraftSpellOptions(draft);
-      const tokens = [...new Set(options.perDay.flatMap((row) => {
-        const match = /^class_spell\.(?:.+\.)?([a-z_]+)\.(?:total|base)_/.exec(row.id);
-        return match ? [`class:${match[1]}`] : [];
-      }))];
+      const tokens = spellClassTokens(options.perDay, options.known);
       const [levels, catalog] = await Promise.all([
         tokens.length === 0 ? Promise.resolve({ classes: [] }) : loadClassSpellLevels(tokens),
         listSpells({ nameContains: null, school: null }),
       ]);
-      return creationSpellDialog({ perDay: options.perDay, classLevels: levels.classes, catalog: catalog.entries, innate: options.innate });
+      return creationSpellDialog({ perDay: options.perDay, known: options.known, classLevels: levels.classes, catalog: catalog.entries, innate: options.innate });
     })()
       .then((dialog) => {
         if (cancelled) return;
@@ -726,6 +732,9 @@ function CreateCharacterFields(props: {
     alternateResolution
   );
   const alternateTraitWarnings = creationSelectionWarnings(alternateResolution);
+  const traitLimits = traitGroupLimits(traitOptions ?? [], selectedTraits);
+  const traitsChosen = selectedTraits.filter((id) => traitOptions?.find((option) => option.id === id)?.isDrawback !== true).length;
+  const traitProblem = traitCountProblem(traitOptions ?? [], selectedTraits);
   const racialTraitsPreview = buildCreationRacialTraitsPreview(alternateResolution);
   const classPreview = buildClassPreview(classCatalog, selectedClass, Math.max(1, primaryLevels));
 
@@ -1071,7 +1080,8 @@ function CreateCharacterFields(props: {
               and `create_character` re-validates the keys against the corpus. */}
           <ManageBox
             title="Racial Traits"
-            remaining={racialTraitsPreview.unavailableReason === null ? `${racialTraitsPreview.rows.length} innate` : undefined}
+            remaining={racialTraitsCountLabel(racialTraitsPreview)}
+            manageLabel="Swap racial traits"
             summary={selectedAlternateTraitKeys.map(
               (key) => alternateTraitRows.find((row) => row.alternate.key === key)?.alternate.name ?? key
             )}
@@ -1118,10 +1128,11 @@ function CreateCharacterFields(props: {
 
           {/* AT-34-E4-002: character traits. Every option offered genuinely computes (the 53 `ultimate_campaign`
               traits whose skill, save, situational, initiative/concentration, ability-difference or mixed
-              caster-level bonuses the `trait_effects` compute paths apply); no wider roster is offered. */}
+              caster-level bonuses the `trait_effects` compute paths apply); no wider roster is offered.
+              Brief 1 F3: one drawback (printed text) may be taken for a third trait. */}
           <ManageBox
             title="Traits"
-            remaining={`${remainingSelections(CHARACTER_TRAIT_LIMIT, selectedTraits)} of ${CHARACTER_TRAIT_LIMIT} remaining`}
+            remaining={`${traitLimits.trait! - traitsChosen} of ${traitLimits.trait} remaining`}
             summary={selectedTraits.map((id) => traitOptions?.find((option) => option.id === id)?.name ?? id)}
             disabledReason={
               traitOptionsError !== null ? `Traits are unavailable: ${traitOptionsError}` : traitOptions === null ? 'Loading traits…' : undefined
@@ -1152,15 +1163,20 @@ function CreateCharacterFields(props: {
                 </select>
               );
             })}
+            {traitProblem !== null ? (
+              <p style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>{traitProblem}</p>
+            ) : null}
           </ManageBox>
           <TransferListDialog
             open={traitsDialogOpen}
             title="Traits"
-            notice="A new character chooses two traits."
+            notice="A new character chooses two traits. Taking one drawback (listed with the traits) gives a third."
             items={characterTraitItems(traitOptions ?? [])}
             selected={selectedTraits}
             onSelectedChange={applyTraitSelection}
-            limit={CHARACTER_TRAIT_LIMIT}
+            limit={null}
+            groupLimits={traitLimits}
+            groupLabels={TRAIT_GROUP_LABELS}
             remainingNoun="traits"
             onAccept={() => setTraitsDialogOpen(false)}
             onCancel={() => {
@@ -1236,21 +1252,29 @@ function CreateCharacterFields(props: {
             }}
           />
 
-          {/* Spells: a quota per spell level from the engine; racial spell-like abilities sit in a read-only Innate column. */}
+          {/* Spells: a known-spell quota per spell level from the engine, one Options/Selected pair per level;
+              a caster that knows its whole list gets its spells per day as text; racial spell-like abilities
+              sit in a read-only Innate column. */}
           <ManageBox
             title="Spells"
             remaining={
               spellDialog === null || Object.keys(spellDialog.groupLimits).length === 0
                 ? undefined
-                : `${Object.values(spellDialog.groupLimits).reduce((sum, n) => sum + n, 0) - selectedSpellIds.length} of ${Object.values(spellDialog.groupLimits).reduce((sum, n) => sum + n, 0)} remaining`
+                : `${spellPicksLeft(spellDialog, selectedSpellIds).left} of ${spellPicksLeft(spellDialog, selectedSpellIds).total} remaining`
             }
             summary={selectedSpellIds.map((id) => id.split('|')[1] ?? id)}
-            disabledReason={heldClasses.length === 0 ? 'Add a level first: spell slots come from the class levels.' : undefined}
+            disabledReason={heldClasses.length === 0 ? 'Add a level first: spells known come from the class levels.' : undefined}
             onManage={() => {
               setSpellsSnapshot(selectedSpellIds);
               setSpellDialogOpen(true);
             }}
-          />
+          >
+            {(spellDialog?.readOnly ?? []).map((caster) => (
+              <p key={caster.classToken} style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>
+                {caster.text}
+              </p>
+            ))}
+          </ManageBox>
           <TransferListDialog
             open={spellDialogOpen}
             title="Spells"
@@ -1259,9 +1283,12 @@ function CreateCharacterFields(props: {
                 ? `Spells could not be loaded for this character: ${spellDialogError}`
                 : spellDialog === null
                   ? 'Working out how many spells of each level this character may pick…'
-                  : Object.keys(spellDialog.groupLimits).length === 0
-                    ? 'This character has no spell slots at this level, so there is nothing to pick. Innate abilities are listed below.'
-                    : 'Quotas are the engine\'s spells per day for each level (a wizard\'s spellbook holds more than it prepares; a spontaneous caster knows a different count). Picks are added as known spells.'
+                  : [
+                      Object.keys(spellDialog.groupLimits).length === 0
+                        ? 'This character knows no spells it picks at this level, so there is nothing to pick. Innate abilities are listed below.'
+                        : 'Quotas are the spells this character knows at each level (a wizard: its spellbook). Picks are added as known spells.',
+                      ...spellDialog.readOnly.map((caster) => caster.text),
+                    ].join(' ')
             }
             items={spellDialog?.items ?? []}
             selected={selectedSpellIds}
@@ -1269,6 +1296,8 @@ function CreateCharacterFields(props: {
             limit={null}
             groupLimits={spellDialog?.groupLimits}
             groupLabels={spellDialog?.groupLabels}
+            sharedLimits={spellDialog?.sharedLimits}
+            pairPerGroup
             remainingNoun="spells"
             onAccept={() => setSpellDialogOpen(false)}
             onCancel={() => {

@@ -9,6 +9,7 @@
 import { assert, assertEqual } from './asserts';
 // eslint-disable-next-line import/extensions -- plain Node ESM lib, see mjsModules.d.ts
 import { findSelect, findTarget, findTargets, screenContains } from '../../scripts/ui-smoke/lib/probe.mjs';
+import { headingMarkerText } from './uiProbe';
 
 function target(name: string, overrides: Partial<{ disabled: boolean; y: number }> = {}) {
   return {
@@ -91,7 +92,18 @@ function verifiesScreenContainsChecksHeadingsBodyAndDialogs() {
   assert(!screenContains(null, 'anything'), 'a null snapshot never matches (never a silent false-pass)');
 }
 
+// Brief 1 F1: a theme's `h2:before { content: "H2 " }` is invisible to textContent/innerText, so the
+// probe reads each heading's computed ::before content and reports any generated text.
+function verifiesHeadingMarkerTextReadsOnlyRealGeneratedText() {
+  assertEqual(headingMarkerText('"H2 "'), 'H2 ', 'a quoted string is generated text');
+  assertEqual(headingMarkerText("'§'"), '§', 'single quotes too');
+  assertEqual(headingMarkerText('none'), null, 'none is no marker');
+  assertEqual(headingMarkerText('normal'), null, 'normal (the default) is no marker');
+  assertEqual(headingMarkerText('""'), null, 'an empty string draws nothing');
+}
+
 function main() {
+  verifiesHeadingMarkerTextReadsOnlyRealGeneratedText();
   verifiesExactNameMatchOnly();
   verifiesEnabledPreferredOverDisabledDuplicate();
   verifiesFallsBackToFirstWhenAllDisabled();
