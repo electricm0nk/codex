@@ -55,13 +55,35 @@ export const SHEET_LAYOUT: readonly LayoutBox<SheetBoxId, SheetColumn>[] = [
 export const SQUARE_BLOCK_STYLE: CSSProperties = { display: 'grid', gap: '0.6rem', gridTemplateColumns: '1fr 1fr' };
 export const SQUARE_BOX_STYLE: CSSProperties = { aspectRatio: '1' };
 
+/** The four boxes of the 2x2 block, read left to right, top to bottom. */
+export type SquareBoxId = 'hitPoints' | 'initiative' | 'encumbrance' | 'conditions';
+
+export const SQUARE_BLOCK_LAYOUT: readonly LayoutBox<SquareBoxId, 'square'>[] = [
+  { id: 'hitPoints', column: 'square', order: 0, boxStyle: SQUARE_BOX_STYLE },
+  { id: 'initiative', column: 'square', order: 1, boxStyle: SQUARE_BOX_STYLE },
+  { id: 'encumbrance', column: 'square', order: 2, boxStyle: SQUARE_BOX_STYLE },
+  { id: 'conditions', column: 'square', order: 3, boxStyle: SQUARE_BOX_STYLE },
+];
+
 /** Create screen boxes (Brief 2 L3 renders Create from this). */
-export type CreateBoxId = 'levels' | 'abilities' | 'skills';
-export type CreateColumn = 'left' | 'abilities';
+export type CreateBoxId = 'levels' | 'details' | 'abilities' | 'skills';
+export type CreateColumn = 'left' | 'details' | 'abilities';
+
+/** Create's columns, left to right: progression rail, identity and choices, Abilities + Skills. */
+export const CREATE_COLUMNS: readonly CreateColumn[] = ['left', 'details', 'abilities'];
+
+/** Style of each Create column (each a vertical stack; the widths the columns had before L3). */
+export const CREATE_COLUMN_STYLES: Readonly<Record<CreateColumn, CSSProperties>> = {
+  left: { ...STACK, flex: '2 1 380px' },
+  details: { ...STACK, flex: '3 1 520px', gap: 0 },
+  abilities: { ...STACK, flex: '1 1 360px', maxWidth: 560 },
+};
 
 export const CREATE_LAYOUT: readonly LayoutBox<CreateBoxId, CreateColumn>[] = [
   // Far-left: the level-add dialog and HP roller (`LevelsPanel`).
   { id: 'levels', column: 'left', order: 0, boxStyle: { display: 'flex', flexDirection: 'column', gap: '0.5rem' } },
+  // Name, race, physical attributes and the Manage boxes (traits, feats, spells, equipment, custom).
+  { id: 'details', column: 'details', order: 0, boxStyle: { minWidth: 0 } },
   { id: 'abilities', column: 'abilities', order: 0, boxStyle: ABILITY_ROWS },
   // Same column as Abilities: a Skills box listing known skills.
   { id: 'skills', column: 'abilities', order: 1, boxStyle: { display: 'flex', flexDirection: 'column', gap: '0.2rem' } },

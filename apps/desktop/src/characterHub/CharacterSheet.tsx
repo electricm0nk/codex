@@ -151,6 +151,7 @@ import {
 import { AbilitiesPanel } from './panels/AbilitiesPanel';
 import { ArmorClassPanel, AttackPanel, SavingThrowsPanel, SpeedPanel } from './panels/CombatPanels';
 import { StatBox, StatTile, fmt, fmtOrAbsent, panel } from './panels/StatBox';
+import { SquareBlock, initiativeRow } from './panels/SquareBlock';
 import { SHEET_COLUMNS, SHEET_COLUMN_STYLES, SHEET_LAYOUT, boxesInColumn, type SheetBoxId } from './sheetLayout';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/setSkillAllocations';
@@ -431,21 +432,6 @@ function IdentityPanel(props: { name: string; campaign: string }) {
         <p style={{ fontWeight: 700, margin: '0.1rem 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.campaign}</p>
       </div>
     </div>
-  );
-}
-
-/**
- * `hp` is `null` when a held class's hit die is not known to the engine's hit-point fold (no
- * chassis record, or the class roster is still loading): Unknown, never a guessed total.
- */
-function InitiativeHpPanel(props: { initiative: number; hp: number | null }) {
-  return (
-    <StatBox>
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <StatTile label="Initiative" value={fmt(props.initiative)} />
-        <StatTile label="Hit Points" value={props.hp === null ? 'Unknown' : `${props.hp} / ${props.hp}`} />
-      </div>
-    </StatBox>
   );
 }
 
@@ -4061,7 +4047,6 @@ export function CharacterSheet(props: {
   // `snapshot` regardless.
   const ac = recomputed?.baselineArmorClass ?? snapshot?.baselineArmorClass ?? 10;
   const saves = recomputed?.totalSaves ?? snapshot?.totalSaves ?? { fortitude: 0, reflex: 0, will: 0 };
-  const dexMod = abilities.dexterity;
   // SD-27 `decisions.md §28` defect 1: touch AC comes from the engine
   // (`defense.touch_armor_class`), which derives it by removing the
   // contributors a touch attack ignores from the very Armor Class shown beside
@@ -4624,7 +4609,14 @@ export function CharacterSheet(props: {
         {/* MIDDLE: stat panels on top, weapons/defense/gear at the bottom */}
         <div className="sheet-mid" style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
           <IdentityPanel name={props.row.displayLabel} campaign={props.row.campaign ?? '—'} />
-          <InitiativeHpPanel initiative={dexMod} hp={hp} />
+          {/* The 2x2 block under the name (SQUARE_BLOCK_LAYOUT): Initiative is the engine's
+              `initiative.total` row, Conditions the custom record's list (Normal when empty). */}
+          <SquareBlock
+            hp={hp}
+            initiative={initiativeRow(engineRecords.explanations)}
+            encumbrance={props.detail?.corpusDerived?.encumbrance}
+            conditions={custom.conditions}
+          />
 
           {/* Stat block, placed by SHEET_LAYOUT (sheetLayout.ts): Abilities as one vertical
               column, AC / Attack / Speed / Saves stacked as their own boxes beside it. */}

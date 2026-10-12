@@ -29,6 +29,7 @@ import {
 import { loadRaceRosterSurface, rosterErrorMessage, type RaceRosterSurface } from './raceRoster';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { LevelsPanel } from './LevelsPanel';
+import { CREATE_COLUMNS, CREATE_COLUMN_STYLES, CREATE_LAYOUT, boxesInColumn, type CreateBoxId } from './sheetLayout';
 import { ManageBox } from './ManageBox';
 import { TransferListDialog } from './TransferListDialog';
 import { TRAIT_GROUP_LABELS, alternateTraitItems, characterTraitItems, traitCountProblem, traitGroupLimits } from './manageItems';
@@ -317,7 +318,7 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
   );
 }
 
-function CreateCharacterFields(props: {
+export function CreateCharacterFields(props: {
   races: RaceOption[];
   rosterDiagnostics: string[];
   /** The served class roster, or the announced fallback (never empty: an empty roster is a failure). */
@@ -919,705 +920,728 @@ function CreateCharacterFields(props: {
     }
   }
 
-  return (
-    <form onSubmit={handleSubmit} style={{ border: '1px solid var(--color-border)', borderRadius: 12, padding: '1.25rem' }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem' }}>
-        {/* Left column: identity + rule-set fields */}
-        <div style={{ flex: '3 1 520px', minWidth: 0 }}>
-          {/* Character name + Player name on one line */}
-          <div style={ROW_STYLE}>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <label style={LABEL_STYLE} htmlFor="character-name">
-                Character name
-              </label>
-              <input
-                id="character-name"
-                style={INPUT_STYLE}
-                value={displayLabel}
-                onChange={(event) => setDisplayLabel(event.target.value)}
-                required
-              />
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <label style={LABEL_STYLE} htmlFor="player-name">
-                Player name
-              </label>
-              <input
-                id="player-name"
-                style={INPUT_STYLE}
-                value={playerName}
-                onChange={(event) => setPlayerName(event.target.value)}
-              />
-            </div>
-          </div>
-
-          {/* Race + Class on one line */}
-          <div style={ROW_STYLE}>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <label style={LABEL_STYLE} htmlFor="character-race">
-                Race
-              </label>
-              <select id="character-race" style={INPUT_STYLE} value={raceId} onChange={(event) => handleRaceChange(event.target.value)}>
-                {races.map((option) => (
-                  <option key={option.id} value={option.id}>
-                    {option.label} ({option.book})
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          {props.classRosterNotice !== null ? (
-            <p role="alert" style={{ color: 'var(--color-warn)', fontSize: '0.8rem', margin: '-0.5rem 0 0.5rem' }}>
-              {props.classRosterNotice} — offering the built-in list of {classOptions.length} classes instead.
-            </p>
-          ) : null}
-          {levels.length > 0 ? (
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '-0.5rem 0 0.5rem' }}>
-              {describeClassSupportLevel(selectedClass.supportLevel, selectedClass.label)}
-            </p>
-          ) : null}
-          {/* v0.8 F-11: what this class is mechanically at the level being
-              created — the `list_class_catalog` row, verbatim. Skill points
-              per level are not on that DTO, so none are shown. */}
-          {levels.length > 0 ? (
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
-              {classCatalogError !== null
-                ? `Class preview unavailable: ${classCatalogError}`
-                : classPreview.kind === 'Loading'
-                  ? 'Loading class preview…'
-                  : classPreview.kind === 'Unavailable'
-                    ? classPreview.message
-                    : `${selectedClass.label} ${classPreview.level}: BAB ${classPreview.baseAttackBonus} · Fort ${classPreview.fortSave} · Ref ${classPreview.refSave} · Will ${classPreview.willSave}`}
-            </p>
-          ) : null}
-
-          {/* Level + HP (computed) + Alignment + Deity */}
-          <div style={ROW_STYLE}>
-            {/* The character level: how many levels are in the Levels list. */}
-            <LabeledField label="Level" flex="0 0 96px">
-              <ReadOnlyBox value={String(characterLevel(levels))} />
-            </LabeledField>
-            <LabeledField label="HP" flex="0 0 96px">
-              {/* The sum of the Levels list; a dash until the first level is added. */}
-              <ReadOnlyBox value={maxHp === null ? '—' : String(maxHp)} />
-            </LabeledField>
-            <LabeledField label="Alignment" htmlFor="character-alignment">
-              <select id="character-alignment" style={INPUT_STYLE} value={alignment} onChange={(event) => setAlignment(event.target.value)}>
-                {ALIGNMENT_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </LabeledField>
-            <LabeledField label="Deity" htmlFor="character-deity">
-              <input id="character-deity" style={INPUT_STYLE} value={deity} onChange={(event) => setDeity(event.target.value)} />
-            </LabeledField>
-          </div>
-
-          {/* Physical attributes */}
-          <p style={{ ...LABEL_STYLE, borderTop: '1px solid var(--color-border)', color: 'var(--color-text)', fontSize: '0.95rem', marginTop: '0.5rem', paddingTop: '1rem' }}>
-            Physical Attributes
-          </p>
-          <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(3, 1fr)' }}>
-            <LabeledField label="Size">
-              <ReadOnlyBox value={selectedRace.size} />
-            </LabeledField>
-            <LabeledField label="Sex" htmlFor="character-sex">
-              <select id="character-sex" style={INPUT_STYLE} value={sex} onChange={(event) => handleSexChange(event.target.value as Sex)}>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-            </LabeledField>
-            <LabeledField label="Vision">
-              <ReadOnlyBox value={selectedRace.vision} />
-            </LabeledField>
-
-            {/* Height and weight are the one field the corpus carries for no
-                race at all; only the seven hand-entered profiles exist. A
-                race without one shows the absence and offers no reroll
-                button, rather than a button that would roll nothing. */}
-            <LabeledField label="Height">
-              <ReadOnlyBox
-                value={heightInches === null ? NO_BODY_PROFILE : formatHeight(heightInches)}
-                action={
-                  body === null ? undefined : (
-                    <DiceButton label="Reroll height" onClick={() => setHeightInches(rollHeight(body))} />
-                  )
-                }
-              />
-            </LabeledField>
-            <LabeledField label="Weight">
-              <ReadOnlyBox
-                value={weightLb === null ? NO_BODY_PROFILE : `${weightLb} lb`}
-                action={
-                  body === null ? undefined : (
-                    <DiceButton label="Reroll weight" onClick={() => setWeightLb(rollWeight(body))} />
-                  )
-                }
-              />
-            </LabeledField>
-            <LabeledField label="Age" htmlFor="character-age">
-              <select id="character-age" style={INPUT_STYLE} value={age} onChange={(event) => setAge(event.target.value as AgeCategory)}>
-                {AGE_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </LabeledField>
-
-            <LabeledField label="Eyes" htmlFor="character-eyes">
-              <input id="character-eyes" style={INPUT_STYLE} value={eyes} onChange={(event) => setEyes(event.target.value)} />
-            </LabeledField>
-            <LabeledField label="Hair" htmlFor="character-hair">
-              <input id="character-hair" style={INPUT_STYLE} value={hair} onChange={(event) => setHair(event.target.value)} />
-            </LabeledField>
-          </div>
-
-          {/* Racial traits: the standard traits the race grants are innate; alternate racial traits are
-              chosen in the Manage dialog. Every fact comes from the backend (`resolve_race_alternate_selection`),
-              and `create_character` re-validates the keys against the corpus. */}
-          <ManageBox
-            title="Racial Traits"
-            remaining={racialTraitsCountLabel(racialTraitsPreview)}
-            manageLabel="Swap racial traits"
-            summary={selectedAlternateTraitKeys.map(
-              (key) => alternateTraitRows.find((row) => row.alternate.key === key)?.alternate.name ?? key
-            )}
-            disabledReason={
-              alternateMenuError !== null
-                ? `Alternate racial traits are unavailable: ${alternateMenuError}`
-                : alternateMenu === null
-                  ? 'Loading alternate racial traits…'
-                  : alternateTraitRows.length === 0
-                    ? `No ingested book declares an alternate racial trait for ${selectedRace.label}.`
-                    : undefined
-            }
-            onManage={() => {
-              setRacialSnapshot(selectedAlternateTraitKeys);
-              setRacialDialogOpen(true);
-            }}
-          >
-            {alternateResolution !== null && selectedAlternateTraitKeys.length > 0 ? (
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>
-                {describeCreationSelection(selectedAlternateTraitKeys, alternateResolution)}
-              </p>
-            ) : null}
-            {alternateTraitWarnings.map((warning) => (
-              <p key={warning} style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>
-                {warning}
-              </p>
-            ))}
-          </ManageBox>
-          <TransferListDialog
-            open={racialDialogOpen}
-            title={`Racial traits: ${selectedRace.label}`}
-            notice="Traits the race grants are listed under Innate. Pick alternate racial traits to replace some of them; ones the current picks rule out are struck through."
-            items={alternateTraitItems(alternateTraitRows, racialTraitsPreview.rows)}
-            selected={selectedAlternateTraitKeys}
-            onSelectedChange={setSelectedAlternateTraitKeys}
-            limit={null}
-            remainingNoun="alternate traits"
-            onAccept={() => setRacialDialogOpen(false)}
-            onCancel={() => {
-              setSelectedAlternateTraitKeys(racialSnapshot);
-              setRacialDialogOpen(false);
-            }}
+  // Brief 2 L3: Create is laid out from CREATE_LAYOUT (sheetLayout.ts) to match the sheet: the
+  // level-add dialog and HP roller far-left, the Skills box under Abilities in one column. Moving a
+  // box is an edit to its registry entry.
+  function renderCreateBox(id: CreateBoxId): ReactNode {
+    switch (id) {
+      case 'levels':
+        return (
+          <LevelsPanel
+            classOptions={classOptions}
+            levels={levels}
+            constitutionModifier={abilityModifier(calculatedScore('constitution'))}
+            onAdd={handleAddLevel}
+            onReroll={(index) => setLevels((current) => rerollLevel(current, index))}
+            onRemove={(index) => setLevels((current) => removeLevel(current, index))}
           />
+        );
+      case 'details':
+        return (
+          <>
+            {/* Character name + Player name on one line */}
+            <div style={ROW_STYLE}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <label style={LABEL_STYLE} htmlFor="character-name">
+                  Character name
+                </label>
+                <input
+                  id="character-name"
+                  style={INPUT_STYLE}
+                  value={displayLabel}
+                  onChange={(event) => setDisplayLabel(event.target.value)}
+                  required
+                />
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <label style={LABEL_STYLE} htmlFor="player-name">
+                  Player name
+                </label>
+                <input
+                  id="player-name"
+                  style={INPUT_STYLE}
+                  value={playerName}
+                  onChange={(event) => setPlayerName(event.target.value)}
+                />
+              </div>
+            </div>
 
-          {/* AT-34-E4-002: character traits. Every option offered genuinely computes (the 53 `ultimate_campaign`
-              traits whose skill, save, situational, initiative/concentration, ability-difference or mixed
-              caster-level bonuses the `trait_effects` compute paths apply); no wider roster is offered.
-              Brief 1 F3: one drawback (printed text) may be taken for a third trait. */}
-          <ManageBox
-            title="Traits"
-            remaining={`${traitLimits.trait! - traitsChosen} of ${traitLimits.trait} remaining`}
-            summary={selectedTraits.map((id) => traitOptions?.find((option) => option.id === id)?.name ?? id)}
-            disabledReason={
-              traitOptionsError !== null ? `Traits are unavailable: ${traitOptionsError}` : traitOptions === null ? 'Loading traits…' : undefined
-            }
-            onManage={() => {
-              setTraitsSnapshot(selectedTraits);
-              setTraitsDialogOpen(true);
-            }}
-          >
-            {selectedTraits.map((id) => {
-              const option = traitOptions?.find((candidate) => candidate.id === id);
-              if (option === undefined || option.skillOptions.length === 0) {
-                return null;
-              }
-              return (
-                <select
-                  key={id}
-                  aria-label={`${option.name} skill choice`}
-                  value={traitSkillChoices[id] ?? option.skillOptions[0]!.skillId}
-                  onChange={(event) => setTraitSkillChoice(id, event.target.value)}
-                  style={{ display: 'block', fontSize: '0.78rem', marginTop: '0.35rem' }}
-                >
-                  {option.skillOptions.map((choice) => (
-                    <option key={choice.skillId} value={choice.skillId}>
-                      {option.name}: {choice.name}
+            {/* Race + Class on one line */}
+            <div style={ROW_STYLE}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <label style={LABEL_STYLE} htmlFor="character-race">
+                  Race
+                </label>
+                <select id="character-race" style={INPUT_STYLE} value={raceId} onChange={(event) => handleRaceChange(event.target.value)}>
+                  {races.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.label} ({option.book})
                     </option>
                   ))}
                 </select>
-              );
-            })}
-            {traitProblem !== null ? (
-              <p style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>{traitProblem}</p>
-            ) : null}
-          </ManageBox>
-          <TransferListDialog
-            open={traitsDialogOpen}
-            title="Traits"
-            notice="A new character chooses two traits. Taking one drawback (listed with the traits) gives a third."
-            items={characterTraitItems(traitOptions ?? [])}
-            selected={selectedTraits}
-            onSelectedChange={applyTraitSelection}
-            limit={null}
-            groupLimits={traitLimits}
-            groupLabels={TRAIT_GROUP_LABELS}
-            remainingNoun="traits"
-            onAccept={() => setTraitsDialogOpen(false)}
-            onCancel={() => {
-              applyTraitSelection(traitsSnapshot);
-              setTraitsDialogOpen(false);
-            }}
-          />
-
-          {/* Skills: a full list with + and - to add ranks; the remaining points show at the top of the dialog. */}
-          <ManageBox
-            title="Skills"
-            remaining={heldClasses.length === 0 ? undefined : skillPointsStatus(skillPointsTotal, skillPointsLeft).text}
-            summary={Object.entries(skillAllocation)
-              .filter(([, ranks]) => ranks > 0)
-              .map(([name, ranks]) => `${name}: ${ranks} rank${ranks === 1 ? '' : 's'}`)}
-            disabledReason={heldClasses.length === 0 ? 'Add a level first: skill points come from the class levels.' : undefined}
-            onManage={() => setSkillDialogOpen(true)}
-          />
-          <SkillAllocationDialog
-            open={skillDialogOpen}
-            onClose={() => setSkillDialogOpen(false)}
-            heldClasses={heldClasses}
-            classSkills={classSkillLookup(heldClasses, classFacts)}
-            characterLevel={characterLevel(levels)}
-            abilities={{
-              strength: abilityModifier(calculatedScore('strength')),
-              dexterity: abilityModifier(calculatedScore('dexterity')),
-              constitution: abilityModifier(calculatedScore('constitution')),
-              intelligence: abilityModifier(calculatedScore('intelligence')),
-              wisdom: abilityModifier(calculatedScore('wisdom')),
-              charisma: abilityModifier(calculatedScore('charisma')),
-            }}
-            totalPoints={skillPointsTotal}
-            allocation={skillAllocation}
-            featSkillBonuses={NO_FEAT_SKILL_BONUSES}
-            onAccept={(next) => {
-              setSkillAllocation(next);
-              setSkillsTouched(true);
-              setSkillDialogOpen(false);
-            }}
-          />
-
-          {/* Feats: qualification is the draft character's own verdict from the backend. */}
-          <ManageBox
-            title="Feats"
-            remaining={heldClasses.length === 0 ? undefined : `${remainingSelections(feats, selectedFeats)} of ${feats} remaining`}
-            summary={selectedFeats.map((id) => draftFeats?.find((entry) => entry.key === id)?.name ?? id)}
-            disabledReason={heldClasses.length === 0 ? 'Add a level first: feats come with the character level.' : undefined}
-            onManage={() => {
-              setFeatsSnapshot(selectedFeats);
-              setFeatDialogOpen(true);
-            }}
-          />
-          <TransferListDialog
-            open={featDialogOpen}
-            title="Feats"
-            notice={
-              draftFeatsError !== null
-                ? `Feats could not be checked for this character: ${draftFeatsError}`
-                : draftFeats === null
-                  ? 'Checking which feats this character qualifies for…'
-                  : 'One feat at every odd level, plus a human\'s bonus feat. Class bonus feats (a Fighter\'s, say) are chosen on the sheet, as are the targets of feats that name a weapon, skill or school.'
-            }
-            items={featItems(draftFeats ?? [])}
-            selected={selectedFeats}
-            onSelectedChange={setSelectedFeats}
-            limit={feats}
-            remainingNoun="feats"
-            onAccept={() => setFeatDialogOpen(false)}
-            onCancel={() => {
-              setSelectedFeats(featsSnapshot);
-              setFeatDialogOpen(false);
-            }}
-          />
-
-          {/* Spells: a known-spell quota per spell level from the engine, one Options/Selected pair per level;
-              a caster that knows its whole list gets its spells per day as text; racial spell-like abilities
-              sit in a read-only Innate column. */}
-          <ManageBox
-            title="Spells"
-            remaining={
-              spellDialog === null || Object.keys(spellDialog.groupLimits).length === 0
-                ? undefined
-                : `${spellPicksLeft(spellDialog, selectedSpellIds).left} of ${spellPicksLeft(spellDialog, selectedSpellIds).total} remaining`
-            }
-            summary={selectedSpellIds.map((id) => id.split('|')[1] ?? id)}
-            disabledReason={heldClasses.length === 0 ? 'Add a level first: spells known come from the class levels.' : undefined}
-            onManage={() => {
-              setSpellsSnapshot(selectedSpellIds);
-              setSpellDialogOpen(true);
-            }}
-          >
-            {(spellDialog?.readOnly ?? []).map((caster) => (
-              <p key={caster.classToken} style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>
-                {caster.text}
-              </p>
-            ))}
-          </ManageBox>
-          <TransferListDialog
-            open={spellDialogOpen}
-            title="Spells"
-            notice={
-              spellDialogError !== null
-                ? `Spells could not be loaded for this character: ${spellDialogError}`
-                : spellDialog === null
-                  ? 'Working out how many spells of each level this character may pick…'
-                  : [
-                      Object.keys(spellDialog.groupLimits).length === 0
-                        ? 'This character knows no spells it picks at this level, so there is nothing to pick. Innate abilities are listed below.'
-                        : 'Quotas are the spells this character knows at each level (a wizard: its spellbook). Picks are added as known spells.',
-                      ...spellDialog.readOnly.map((caster) => caster.text),
-                    ].join(' ')
-            }
-            items={spellDialog?.items ?? []}
-            selected={selectedSpellIds}
-            onSelectedChange={setSelectedSpellIds}
-            limit={null}
-            groupLimits={spellDialog?.groupLimits}
-            groupLabels={spellDialog?.groupLabels}
-            sharedLimits={spellDialog?.sharedLimits}
-            pairPerGroup
-            remainingNoun="spells"
-            onAccept={() => setSpellDialogOpen(false)}
-            onCancel={() => {
-              setSelectedSpellIds(spellsSnapshot);
-              setSpellDialogOpen(false);
-            }}
-          />
-
-          {/* Equipment: starting money is the class's maximum; categories, search and the pricing choice live in the dialog. */}
-          <ManageBox
-            title="Equipment"
-            remaining={
-              primaryClassId === null
-                ? undefined
-                : equipmentBudget({ startingGp: wealth?.maxGp ?? null, mode: priceMode, costsGp: chosenEquipment.map((item) => item.costGp ?? 0) }).text
-            }
-            summary={chosenEquipment.map((item) => item.name)}
-            disabledReason={primaryClassId === null ? 'Add a level first: starting money comes from the class.' : undefined}
-            onManage={() => setEquipmentDialogOpen(true)}
-          />
-          <CreationEquipmentDialog
-            open={equipmentDialogOpen}
-            wealth={wealth}
-            wealthError={wealthError}
-            mode={priceMode}
-            onModeChange={setPriceMode}
-            chosen={chosenEquipment}
-            onChange={setChosenEquipment}
-            onClose={() => setEquipmentDialogOpen(false)}
-          />
-
-          {/* Custom: the GM's grants and house-rule records, available on Create and on the sheet. */}
-          <ManageBox title="Custom" summary={customSummaryLines(custom)} onManage={() => setCustomDialogOpen(true)}>
-            {custom.grants.some((grant) => grant.target.startsWith('ability:')) ? (
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>Ability grants are applied to the saved scores when the character is created.</p>
-            ) : null}
-          </ManageBox>
-          <CustomDialog
-            open={customDialogOpen}
-            value={custom}
-            onSave={(next) => {
-              setCustom(next);
-              setCustomDialogOpen(false);
-            }}
-            onCancel={() => setCustomDialogOpen(false)}
-          />
-        </div>
-
-        {/* Levels column: classes are added one level at a time; the HP and Level boxes follow this list. */}
-        <LevelsPanel
-          classOptions={classOptions}
-          levels={levels}
-          constitutionModifier={abilityModifier(calculatedScore('constitution'))}
-          onAdd={handleAddLevel}
-          onReroll={(index) => setLevels((current) => rerollLevel(current, index))}
-          onRemove={(index) => setLevels((current) => removeLevel(current, index))}
-        />
-
-        {/* Right column: ability scores panel */}
-        <div
-          style={{
-            backgroundColor: 'var(--color-surface)',
-            border: '1px solid var(--color-border)',
-            borderRadius: 10,
-            flex: '1 1 360px',
-            maxWidth: 560,
-            padding: '1rem',
-          }}
-        >
-          <p style={{ ...LABEL_STYLE, marginBottom: '0.35rem' }}>Ability scores</p>
-
-          <div style={{ marginBottom: '0.5rem' }}>
-            <label style={LABEL_STYLE} htmlFor="ability-score-method">
-              Generation method
-            </label>
-            <div style={{ alignItems: 'center', display: 'flex', gap: '0.4rem' }}>
-              <select
-                id="ability-score-method"
-                style={{ ...INPUT_STYLE, flex: 1 }}
-                value={method}
-                onChange={(event) => handleMethodChange(event.target.value as AbilityScoreMethodId)}
-              >
-                {ABILITY_SCORE_METHOD_OPTIONS.map((option) => (
-                  <option key={option.id} value={option.id}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-              {methodOption.kind === 'pool' && method !== 'eliteArray' ? (
-                <DiceButton label="Reroll all six scores" onClick={handleReroll} />
-              ) : null}
-              {methodOption.kind === 'straight' ? <DiceButton label="Reroll all six scores" onClick={handleReroll} /> : null}
-            </div>
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.35rem 0 0' }}>{methodOption.description}</p>
-            {methodOption.kind === 'pool' ? (
-              <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginTop: '0.5rem' }}>
-                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', textTransform: 'uppercase' }}>Rolled:</span>
-                {pool.map((value, index) => {
-                  const assigned = ABILITY_KEYS.some((key) => poolAssignment[key] === index);
-                  return (
-                    <span
-                      key={index}
-                      style={{
-                        backgroundColor: assigned ? 'var(--color-surface-2)' : 'var(--color-accent)',
-                        border: '1px solid var(--color-border)',
-                        borderRadius: 6,
-                        color: assigned ? 'var(--color-text-muted)' : 'var(--color-on-accent)',
-                        fontSize: '0.85rem',
-                        fontWeight: 700,
-                        opacity: assigned ? 0.6 : 1,
-                        padding: '0.15rem 0.5rem',
-                        textDecoration: assigned ? 'line-through' : 'none',
-                      }}
-                    >
-                      {value}
-                    </span>
-                  );
-                })}
               </div>
-            ) : null}
-          </div>
-
-          {methodOption.kind === 'pointBuy' ? (
-            <div style={{ alignItems: 'center', display: 'flex', gap: '0.4rem', marginBottom: '0.5rem' }}>
-              <select
-                style={{ ...INPUT_STYLE, flex: 1 }}
-                value=""
-                onChange={(event) => {
-                  if (event.target.value) {
-                    setPointBuyPool(Number(event.target.value));
-                  }
-                }}
-              >
-                <option value="">Pool presets…</option>
-                {POINT_BUY_POOL_PRESETS.map((preset) => (
-                  <option key={preset.points} value={preset.points}>
-                    {preset.label}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="number"
-                aria-label="Point buy pool"
-                style={{ ...INPUT_STYLE, flex: '0 0 72px' }}
-                value={pointBuyPool}
-                onChange={(event) => setPointBuyPool(Number(event.target.value))}
-              />
             </div>
-          ) : null}
+            {props.classRosterNotice !== null ? (
+              <p role="alert" style={{ color: 'var(--color-warn)', fontSize: '0.8rem', margin: '-0.5rem 0 0.5rem' }}>
+                {props.classRosterNotice} — offering the built-in list of {classOptions.length} classes instead.
+              </p>
+            ) : null}
+            {levels.length > 0 ? (
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '-0.5rem 0 0.5rem' }}>
+                {describeClassSupportLevel(selectedClass.supportLevel, selectedClass.label)}
+              </p>
+            ) : null}
+            {/* v0.8 F-11: what this class is mechanically at the level being
+                created — the `list_class_catalog` row, verbatim. Skill points
+                per level are not on that DTO, so none are shown. */}
+            {levels.length > 0 ? (
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
+                {classCatalogError !== null
+                  ? `Class preview unavailable: ${classCatalogError}`
+                  : classPreview.kind === 'Loading'
+                    ? 'Loading class preview…'
+                    : classPreview.kind === 'Unavailable'
+                      ? classPreview.message
+                      : `${selectedClass.label} ${classPreview.level}: BAB ${classPreview.baseAttackBonus} · Fort ${classPreview.fortSave} · Ref ${classPreview.refSave} · Will ${classPreview.willSave}`}
+              </p>
+            ) : null}
 
+            {/* Level + HP (computed) + Alignment + Deity */}
+            <div style={ROW_STYLE}>
+              {/* The character level: how many levels are in the Levels list. */}
+              <LabeledField label="Level" flex="0 0 96px">
+                <ReadOnlyBox value={String(characterLevel(levels))} />
+              </LabeledField>
+              <LabeledField label="HP" flex="0 0 96px">
+                {/* The sum of the Levels list; a dash until the first level is added. */}
+                <ReadOnlyBox value={maxHp === null ? '—' : String(maxHp)} />
+              </LabeledField>
+              <LabeledField label="Alignment" htmlFor="character-alignment">
+                <select id="character-alignment" style={INPUT_STYLE} value={alignment} onChange={(event) => setAlignment(event.target.value)}>
+                  {ALIGNMENT_OPTIONS.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </LabeledField>
+              <LabeledField label="Deity" htmlFor="character-deity">
+                <input id="character-deity" style={INPUT_STYLE} value={deity} onChange={(event) => setDeity(event.target.value)} />
+              </LabeledField>
+            </div>
+
+            {/* Physical attributes */}
+            <p style={{ ...LABEL_STYLE, borderTop: '1px solid var(--color-border)', color: 'var(--color-text)', fontSize: '0.95rem', marginTop: '0.5rem', paddingTop: '1rem' }}>
+              Physical Attributes
+            </p>
+            <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(3, 1fr)' }}>
+              <LabeledField label="Size">
+                <ReadOnlyBox value={selectedRace.size} />
+              </LabeledField>
+              <LabeledField label="Sex" htmlFor="character-sex">
+                <select id="character-sex" style={INPUT_STYLE} value={sex} onChange={(event) => handleSexChange(event.target.value as Sex)}>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </LabeledField>
+              <LabeledField label="Vision">
+                <ReadOnlyBox value={selectedRace.vision} />
+              </LabeledField>
+
+              {/* Height and weight are the one field the corpus carries for no
+                  race at all; only the seven hand-entered profiles exist. A
+                  race without one shows the absence and offers no reroll
+                  button, rather than a button that would roll nothing. */}
+              <LabeledField label="Height">
+                <ReadOnlyBox
+                  value={heightInches === null ? NO_BODY_PROFILE : formatHeight(heightInches)}
+                  action={
+                    body === null ? undefined : (
+                      <DiceButton label="Reroll height" onClick={() => setHeightInches(rollHeight(body))} />
+                    )
+                  }
+                />
+              </LabeledField>
+              <LabeledField label="Weight">
+                <ReadOnlyBox
+                  value={weightLb === null ? NO_BODY_PROFILE : `${weightLb} lb`}
+                  action={
+                    body === null ? undefined : (
+                      <DiceButton label="Reroll weight" onClick={() => setWeightLb(rollWeight(body))} />
+                    )
+                  }
+                />
+              </LabeledField>
+              <LabeledField label="Age" htmlFor="character-age">
+                <select id="character-age" style={INPUT_STYLE} value={age} onChange={(event) => setAge(event.target.value as AgeCategory)}>
+                  {AGE_OPTIONS.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </LabeledField>
+
+              <LabeledField label="Eyes" htmlFor="character-eyes">
+                <input id="character-eyes" style={INPUT_STYLE} value={eyes} onChange={(event) => setEyes(event.target.value)} />
+              </LabeledField>
+              <LabeledField label="Hair" htmlFor="character-hair">
+                <input id="character-hair" style={INPUT_STYLE} value={hair} onChange={(event) => setHair(event.target.value)} />
+              </LabeledField>
+            </div>
+
+            {/* Racial traits: the standard traits the race grants are innate; alternate racial traits are
+                chosen in the Manage dialog. Every fact comes from the backend (`resolve_race_alternate_selection`),
+                and `create_character` re-validates the keys against the corpus. */}
+            <ManageBox
+              title="Racial Traits"
+              remaining={racialTraitsCountLabel(racialTraitsPreview)}
+              manageLabel="Swap racial traits"
+              summary={selectedAlternateTraitKeys.map(
+                (key) => alternateTraitRows.find((row) => row.alternate.key === key)?.alternate.name ?? key
+              )}
+              disabledReason={
+                alternateMenuError !== null
+                  ? `Alternate racial traits are unavailable: ${alternateMenuError}`
+                  : alternateMenu === null
+                    ? 'Loading alternate racial traits…'
+                    : alternateTraitRows.length === 0
+                      ? `No ingested book declares an alternate racial trait for ${selectedRace.label}.`
+                      : undefined
+              }
+              onManage={() => {
+                setRacialSnapshot(selectedAlternateTraitKeys);
+                setRacialDialogOpen(true);
+              }}
+            >
+              {alternateResolution !== null && selectedAlternateTraitKeys.length > 0 ? (
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>
+                  {describeCreationSelection(selectedAlternateTraitKeys, alternateResolution)}
+                </p>
+              ) : null}
+              {alternateTraitWarnings.map((warning) => (
+                <p key={warning} style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>
+                  {warning}
+                </p>
+              ))}
+            </ManageBox>
+            <TransferListDialog
+              open={racialDialogOpen}
+              title={`Racial traits: ${selectedRace.label}`}
+              notice="Traits the race grants are listed under Innate. Pick alternate racial traits to replace some of them; ones the current picks rule out are struck through."
+              items={alternateTraitItems(alternateTraitRows, racialTraitsPreview.rows)}
+              selected={selectedAlternateTraitKeys}
+              onSelectedChange={setSelectedAlternateTraitKeys}
+              limit={null}
+              remainingNoun="alternate traits"
+              onAccept={() => setRacialDialogOpen(false)}
+              onCancel={() => {
+                setSelectedAlternateTraitKeys(racialSnapshot);
+                setRacialDialogOpen(false);
+              }}
+            />
+
+            {/* AT-34-E4-002: character traits. Every option offered genuinely computes (the 53 `ultimate_campaign`
+                traits whose skill, save, situational, initiative/concentration, ability-difference or mixed
+                caster-level bonuses the `trait_effects` compute paths apply); no wider roster is offered.
+                Brief 1 F3: one drawback (printed text) may be taken for a third trait. */}
+            <ManageBox
+              title="Traits"
+              remaining={`${traitLimits.trait! - traitsChosen} of ${traitLimits.trait} remaining`}
+              summary={selectedTraits.map((id) => traitOptions?.find((option) => option.id === id)?.name ?? id)}
+              disabledReason={
+                traitOptionsError !== null ? `Traits are unavailable: ${traitOptionsError}` : traitOptions === null ? 'Loading traits…' : undefined
+              }
+              onManage={() => {
+                setTraitsSnapshot(selectedTraits);
+                setTraitsDialogOpen(true);
+              }}
+            >
+              {selectedTraits.map((id) => {
+                const option = traitOptions?.find((candidate) => candidate.id === id);
+                if (option === undefined || option.skillOptions.length === 0) {
+                  return null;
+                }
+                return (
+                  <select
+                    key={id}
+                    aria-label={`${option.name} skill choice`}
+                    value={traitSkillChoices[id] ?? option.skillOptions[0]!.skillId}
+                    onChange={(event) => setTraitSkillChoice(id, event.target.value)}
+                    style={{ display: 'block', fontSize: '0.78rem', marginTop: '0.35rem' }}
+                  >
+                    {option.skillOptions.map((choice) => (
+                      <option key={choice.skillId} value={choice.skillId}>
+                        {option.name}: {choice.name}
+                      </option>
+                    ))}
+                  </select>
+                );
+              })}
+              {traitProblem !== null ? (
+                <p style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>{traitProblem}</p>
+              ) : null}
+            </ManageBox>
+            <TransferListDialog
+              open={traitsDialogOpen}
+              title="Traits"
+              notice="A new character chooses two traits. Taking one drawback (listed with the traits) gives a third."
+              items={characterTraitItems(traitOptions ?? [])}
+              selected={selectedTraits}
+              onSelectedChange={applyTraitSelection}
+              limit={null}
+              groupLimits={traitLimits}
+              groupLabels={TRAIT_GROUP_LABELS}
+              remainingNoun="traits"
+              onAccept={() => setTraitsDialogOpen(false)}
+              onCancel={() => {
+                applyTraitSelection(traitsSnapshot);
+                setTraitsDialogOpen(false);
+              }}
+            />
+
+            {/* Feats: qualification is the draft character's own verdict from the backend. */}
+            <ManageBox
+              title="Feats"
+              remaining={heldClasses.length === 0 ? undefined : `${remainingSelections(feats, selectedFeats)} of ${feats} remaining`}
+              summary={selectedFeats.map((id) => draftFeats?.find((entry) => entry.key === id)?.name ?? id)}
+              disabledReason={heldClasses.length === 0 ? 'Add a level first: feats come with the character level.' : undefined}
+              onManage={() => {
+                setFeatsSnapshot(selectedFeats);
+                setFeatDialogOpen(true);
+              }}
+            />
+            <TransferListDialog
+              open={featDialogOpen}
+              title="Feats"
+              notice={
+                draftFeatsError !== null
+                  ? `Feats could not be checked for this character: ${draftFeatsError}`
+                  : draftFeats === null
+                    ? 'Checking which feats this character qualifies for…'
+                    : 'One feat at every odd level, plus a human\'s bonus feat. Class bonus feats (a Fighter\'s, say) are chosen on the sheet, as are the targets of feats that name a weapon, skill or school.'
+              }
+              items={featItems(draftFeats ?? [])}
+              selected={selectedFeats}
+              onSelectedChange={setSelectedFeats}
+              limit={feats}
+              remainingNoun="feats"
+              onAccept={() => setFeatDialogOpen(false)}
+              onCancel={() => {
+                setSelectedFeats(featsSnapshot);
+                setFeatDialogOpen(false);
+              }}
+            />
+
+            {/* Spells: a known-spell quota per spell level from the engine, one Options/Selected pair per level;
+                a caster that knows its whole list gets its spells per day as text; racial spell-like abilities
+                sit in a read-only Innate column. */}
+            <ManageBox
+              title="Spells"
+              remaining={
+                spellDialog === null || Object.keys(spellDialog.groupLimits).length === 0
+                  ? undefined
+                  : `${spellPicksLeft(spellDialog, selectedSpellIds).left} of ${spellPicksLeft(spellDialog, selectedSpellIds).total} remaining`
+              }
+              summary={selectedSpellIds.map((id) => id.split('|')[1] ?? id)}
+              disabledReason={heldClasses.length === 0 ? 'Add a level first: spells known come from the class levels.' : undefined}
+              onManage={() => {
+                setSpellsSnapshot(selectedSpellIds);
+                setSpellDialogOpen(true);
+              }}
+            >
+              {(spellDialog?.readOnly ?? []).map((caster) => (
+                <p key={caster.classToken} style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>
+                  {caster.text}
+                </p>
+              ))}
+            </ManageBox>
+            <TransferListDialog
+              open={spellDialogOpen}
+              title="Spells"
+              notice={
+                spellDialogError !== null
+                  ? `Spells could not be loaded for this character: ${spellDialogError}`
+                  : spellDialog === null
+                    ? 'Working out how many spells of each level this character may pick…'
+                    : [
+                        Object.keys(spellDialog.groupLimits).length === 0
+                          ? 'This character knows no spells it picks at this level, so there is nothing to pick. Innate abilities are listed below.'
+                          : 'Quotas are the spells this character knows at each level (a wizard: its spellbook). Picks are added as known spells.',
+                        ...spellDialog.readOnly.map((caster) => caster.text),
+                      ].join(' ')
+              }
+              items={spellDialog?.items ?? []}
+              selected={selectedSpellIds}
+              onSelectedChange={setSelectedSpellIds}
+              limit={null}
+              groupLimits={spellDialog?.groupLimits}
+              groupLabels={spellDialog?.groupLabels}
+              sharedLimits={spellDialog?.sharedLimits}
+              pairPerGroup
+              remainingNoun="spells"
+              onAccept={() => setSpellDialogOpen(false)}
+              onCancel={() => {
+                setSelectedSpellIds(spellsSnapshot);
+                setSpellDialogOpen(false);
+              }}
+            />
+
+            {/* Equipment: starting money is the class's maximum; categories, search and the pricing choice live in the dialog. */}
+            <ManageBox
+              title="Equipment"
+              remaining={
+                primaryClassId === null
+                  ? undefined
+                  : equipmentBudget({ startingGp: wealth?.maxGp ?? null, mode: priceMode, costsGp: chosenEquipment.map((item) => item.costGp ?? 0) }).text
+              }
+              summary={chosenEquipment.map((item) => item.name)}
+              disabledReason={primaryClassId === null ? 'Add a level first: starting money comes from the class.' : undefined}
+              onManage={() => setEquipmentDialogOpen(true)}
+            />
+            <CreationEquipmentDialog
+              open={equipmentDialogOpen}
+              wealth={wealth}
+              wealthError={wealthError}
+              mode={priceMode}
+              onModeChange={setPriceMode}
+              chosen={chosenEquipment}
+              onChange={setChosenEquipment}
+              onClose={() => setEquipmentDialogOpen(false)}
+            />
+
+            {/* Custom: the GM's grants and house-rule records, available on Create and on the sheet. */}
+            <ManageBox title="Custom" summary={customSummaryLines(custom)} onManage={() => setCustomDialogOpen(true)}>
+              {custom.grants.some((grant) => grant.target.startsWith('ability:')) ? (
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}>Ability grants are applied to the saved scores when the character is created.</p>
+              ) : null}
+            </ManageBox>
+            <CustomDialog
+              open={customDialogOpen}
+              value={custom}
+              onSave={(next) => {
+                setCustom(next);
+                setCustomDialogOpen(false);
+              }}
+              onCancel={() => setCustomDialogOpen(false)}
+            />
+          </>
+        );
+      case 'abilities':
+        return (
           <div
             style={{
-              alignItems: 'center',
-              color: 'var(--color-text-muted)',
-              display: 'grid',
-              fontSize: '0.7rem',
-              gap: '0.4rem 0.5rem',
-              gridTemplateColumns: '44px 1fr 110px',
-              letterSpacing: '0.04em',
-              marginBottom: '0.35rem',
-              textTransform: 'uppercase',
+              backgroundColor: 'var(--color-surface)',
+              border: '1px solid var(--color-border)',
+              borderRadius: 10,
+              padding: '1rem',
             }}
           >
-            <span />
-            <span>Raw</span>
-            <span style={{ textAlign: 'center' }}>Calculated</span>
-          </div>
+            <p style={{ ...LABEL_STYLE, marginBottom: '0.35rem' }}>Ability scores</p>
 
-          {ABILITY_KEYS.map((key) => (
-            <div
-              key={key}
-              style={{ alignItems: 'center', display: 'grid', gap: '0.4rem 0.5rem', gridTemplateColumns: '44px 1fr 110px', marginBottom: '0.4rem' }}
-            >
-              <label style={{ fontSize: '0.75rem', fontWeight: 700 }} htmlFor={`ability-${key}`}>
-                {ABILITY_ABBREVIATIONS[key]}
+            <div style={{ marginBottom: '0.5rem' }}>
+              <label style={LABEL_STYLE} htmlFor="ability-score-method">
+                Generation method
               </label>
-              {methodOption.kind === 'manual' ? (
-                <input
-                  id={`ability-${key}`}
-                  type="number"
-                  style={{ ...INPUT_STYLE, padding: '0.35rem 0.5rem' }}
-                  value={abilityScores[key]}
-                  onChange={(event) => setAbilityScores((prev) => ({ ...prev, [key]: Number(event.target.value) }))}
-                />
-              ) : methodOption.kind === 'straight' ? (
-                <ReadOnlyBox value={String(abilityScores[key])} />
-              ) : methodOption.kind === 'pool' ? (
+              <div style={{ alignItems: 'center', display: 'flex', gap: '0.4rem' }}>
                 <select
-                  id={`ability-${key}`}
-                  style={{ ...INPUT_STYLE, padding: '0.35rem 0.5rem' }}
-                  value={poolAssignment[key] ?? ''}
-                  onChange={(event) => assignPoolValue(key, event.target.value === '' ? null : Number(event.target.value))}
+                  id="ability-score-method"
+                  style={{ ...INPUT_STYLE, flex: 1 }}
+                  value={method}
+                  onChange={(event) => handleMethodChange(event.target.value as AbilityScoreMethodId)}
                 >
-                  <option value="">— choose —</option>
+                  {ABILITY_SCORE_METHOD_OPTIONS.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                {methodOption.kind === 'pool' && method !== 'eliteArray' ? (
+                  <DiceButton label="Reroll all six scores" onClick={handleReroll} />
+                ) : null}
+                {methodOption.kind === 'straight' ? <DiceButton label="Reroll all six scores" onClick={handleReroll} /> : null}
+              </div>
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.35rem 0 0' }}>{methodOption.description}</p>
+              {methodOption.kind === 'pool' ? (
+                <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginTop: '0.5rem' }}>
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', textTransform: 'uppercase' }}>Rolled:</span>
                   {pool.map((value, index) => {
-                    const takenByOther = ABILITY_KEYS.some((otherKey) => otherKey !== key && poolAssignment[otherKey] === index);
-                    if (takenByOther) {
-                      return null;
-                    }
+                    const assigned = ABILITY_KEYS.some((key) => poolAssignment[key] === index);
                     return (
-                      <option key={index} value={index}>
+                      <span
+                        key={index}
+                        style={{
+                          backgroundColor: assigned ? 'var(--color-surface-2)' : 'var(--color-accent)',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: 6,
+                          color: assigned ? 'var(--color-text-muted)' : 'var(--color-on-accent)',
+                          fontSize: '0.85rem',
+                          fontWeight: 700,
+                          opacity: assigned ? 0.6 : 1,
+                          padding: '0.15rem 0.5rem',
+                          textDecoration: assigned ? 'line-through' : 'none',
+                        }}
+                      >
                         {value}
-                      </option>
+                      </span>
                     );
                   })}
-                </select>
-              ) : (
-                <div style={{ alignItems: 'center', display: 'flex', gap: '0.35rem' }}>
-                  <button
-                    type="button"
-                    aria-label={`Decrease ${key}`}
-                    onClick={() => adjustPointBuyScore(key, -1)}
-                    disabled={abilityScores[key] <= POINT_BUY_MIN_SCORE}
-                    style={stepButtonStyle(abilityScores[key] > POINT_BUY_MIN_SCORE)}
-                  >
-                    −
-                  </button>
-                  <span style={{ flex: 1, fontWeight: 700, textAlign: 'center' }}>{abilityScores[key]}</span>
-                  <button
-                    type="button"
-                    aria-label={`Increase ${key}`}
-                    onClick={() => adjustPointBuyScore(key, 1)}
-                    disabled={
-                      abilityScores[key] >= POINT_BUY_MAX_SCORE ||
-                      pointBuyCost(abilityScores[key] + 1) - pointBuyCost(abilityScores[key]) > pointBuyRemaining
-                    }
-                    style={stepButtonStyle(
-                      abilityScores[key] < POINT_BUY_MAX_SCORE &&
-                        pointBuyCost(abilityScores[key] + 1) - pointBuyCost(abilityScores[key]) <= pointBuyRemaining
-                    )}
-                  >
-                    +
-                  </button>
                 </div>
-              )}
-              <div style={{ alignItems: 'center', display: 'flex', gap: '0.35rem', justifyContent: 'center' }}>
-                {selectedRace.floatingBonusPoints > 0 ? (
-                  <button
-                    type="button"
-                    aria-label={`Decrease ${key}`}
-                    onClick={() => adjustAllocation(key, -1)}
-                    disabled={allocation[key] <= 0}
-                    style={stepButtonStyle(allocation[key] > 0)}
-                  >
-                    −
-                  </button>
-                ) : null}
-                <span style={{ fontWeight: 800, minWidth: 24, textAlign: 'center' }}>{calculatedScore(key)}</span>
-                {selectedRace.floatingBonusPoints > 0 ? (
-                  <button
-                    type="button"
-                    aria-label={`Increase ${key}`}
-                    onClick={() => adjustAllocation(key, 1)}
-                    disabled={remainingPoints <= 0}
-                    style={stepButtonStyle(remainingPoints > 0)}
-                  >
-                    +
-                  </button>
-                ) : null}
+              ) : null}
+            </div>
+
+            {methodOption.kind === 'pointBuy' ? (
+              <div style={{ alignItems: 'center', display: 'flex', gap: '0.4rem', marginBottom: '0.5rem' }}>
+                <select
+                  style={{ ...INPUT_STYLE, flex: 1 }}
+                  value=""
+                  onChange={(event) => {
+                    if (event.target.value) {
+                      setPointBuyPool(Number(event.target.value));
+                    }
+                  }}
+                >
+                  <option value="">Pool presets…</option>
+                  {POINT_BUY_POOL_PRESETS.map((preset) => (
+                    <option key={preset.points} value={preset.points}>
+                      {preset.label}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="number"
+                  aria-label="Point buy pool"
+                  style={{ ...INPUT_STYLE, flex: '0 0 72px' }}
+                  value={pointBuyPool}
+                  onChange={(event) => setPointBuyPool(Number(event.target.value))}
+                />
               </div>
-            </div>
-          ))}
+            ) : null}
 
-          {(() => {
-            const fixed = ABILITY_KEYS.filter((key) => selectedRace.abilityAdjustments[key]).map(
-              (key) => `${(selectedRace.abilityAdjustments[key] as number) > 0 ? '+' : ''}${selectedRace.abilityAdjustments[key]} ${ABILITY_ABBREVIATIONS[key]}`
-            );
-            return fixed.length ? (
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.5rem 0 0' }}>
-                {selectedRace.label} racial modifiers: {fixed.join(', ')}
+            <div
+              style={{
+                alignItems: 'center',
+                color: 'var(--color-text-muted)',
+                display: 'grid',
+                fontSize: '0.7rem',
+                gap: '0.4rem 0.5rem',
+                gridTemplateColumns: '44px 1fr 110px',
+                letterSpacing: '0.04em',
+                marginBottom: '0.35rem',
+                textTransform: 'uppercase',
+              }}
+            >
+              <span />
+              <span>Raw</span>
+              <span style={{ textAlign: 'center' }}>Calculated</span>
+            </div>
+
+            {ABILITY_KEYS.map((key) => (
+              <div
+                key={key}
+                style={{ alignItems: 'center', display: 'grid', gap: '0.4rem 0.5rem', gridTemplateColumns: '44px 1fr 110px', marginBottom: '0.4rem' }}
+              >
+                <label style={{ fontSize: '0.75rem', fontWeight: 700 }} htmlFor={`ability-${key}`}>
+                  {ABILITY_ABBREVIATIONS[key]}
+                </label>
+                {methodOption.kind === 'manual' ? (
+                  <input
+                    id={`ability-${key}`}
+                    type="number"
+                    style={{ ...INPUT_STYLE, padding: '0.35rem 0.5rem' }}
+                    value={abilityScores[key]}
+                    onChange={(event) => setAbilityScores((prev) => ({ ...prev, [key]: Number(event.target.value) }))}
+                  />
+                ) : methodOption.kind === 'straight' ? (
+                  <ReadOnlyBox value={String(abilityScores[key])} />
+                ) : methodOption.kind === 'pool' ? (
+                  <select
+                    id={`ability-${key}`}
+                    style={{ ...INPUT_STYLE, padding: '0.35rem 0.5rem' }}
+                    value={poolAssignment[key] ?? ''}
+                    onChange={(event) => assignPoolValue(key, event.target.value === '' ? null : Number(event.target.value))}
+                  >
+                    <option value="">— choose —</option>
+                    {pool.map((value, index) => {
+                      const takenByOther = ABILITY_KEYS.some((otherKey) => otherKey !== key && poolAssignment[otherKey] === index);
+                      if (takenByOther) {
+                        return null;
+                      }
+                      return (
+                        <option key={index} value={index}>
+                          {value}
+                        </option>
+                      );
+                    })}
+                  </select>
+                ) : (
+                  <div style={{ alignItems: 'center', display: 'flex', gap: '0.35rem' }}>
+                    <button
+                      type="button"
+                      aria-label={`Decrease ${key}`}
+                      onClick={() => adjustPointBuyScore(key, -1)}
+                      disabled={abilityScores[key] <= POINT_BUY_MIN_SCORE}
+                      style={stepButtonStyle(abilityScores[key] > POINT_BUY_MIN_SCORE)}
+                    >
+                      −
+                    </button>
+                    <span style={{ flex: 1, fontWeight: 700, textAlign: 'center' }}>{abilityScores[key]}</span>
+                    <button
+                      type="button"
+                      aria-label={`Increase ${key}`}
+                      onClick={() => adjustPointBuyScore(key, 1)}
+                      disabled={
+                        abilityScores[key] >= POINT_BUY_MAX_SCORE ||
+                        pointBuyCost(abilityScores[key] + 1) - pointBuyCost(abilityScores[key]) > pointBuyRemaining
+                      }
+                      style={stepButtonStyle(
+                        abilityScores[key] < POINT_BUY_MAX_SCORE &&
+                          pointBuyCost(abilityScores[key] + 1) - pointBuyCost(abilityScores[key]) <= pointBuyRemaining
+                      )}
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
+                <div style={{ alignItems: 'center', display: 'flex', gap: '0.35rem', justifyContent: 'center' }}>
+                  {selectedRace.floatingBonusPoints > 0 ? (
+                    <button
+                      type="button"
+                      aria-label={`Decrease ${key}`}
+                      onClick={() => adjustAllocation(key, -1)}
+                      disabled={allocation[key] <= 0}
+                      style={stepButtonStyle(allocation[key] > 0)}
+                    >
+                      −
+                    </button>
+                  ) : null}
+                  <span style={{ fontWeight: 800, minWidth: 24, textAlign: 'center' }}>{calculatedScore(key)}</span>
+                  {selectedRace.floatingBonusPoints > 0 ? (
+                    <button
+                      type="button"
+                      aria-label={`Increase ${key}`}
+                      onClick={() => adjustAllocation(key, 1)}
+                      disabled={remainingPoints <= 0}
+                      style={stepButtonStyle(remainingPoints > 0)}
+                    >
+                      +
+                    </button>
+                  ) : null}
+                </div>
+              </div>
+            ))}
+
+            {(() => {
+              const fixed = ABILITY_KEYS.filter((key) => selectedRace.abilityAdjustments[key]).map(
+                (key) => `${(selectedRace.abilityAdjustments[key] as number) > 0 ? '+' : ''}${selectedRace.abilityAdjustments[key]} ${ABILITY_ABBREVIATIONS[key]}`
+              );
+              return fixed.length ? (
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.5rem 0 0' }}>
+                  {selectedRace.label} racial modifiers: {fixed.join(', ')}
+                </p>
+              ) : null;
+            })()}
+
+            {selectedRace.floatingBonusPoints > 0 ? (
+              <div
+                style={{
+                  alignItems: 'center',
+                  backgroundColor: 'var(--color-surface-2)',
+                  border: `1px solid ${remainingPoints > 0 ? 'var(--color-accent)' : 'var(--color-border)'}`,
+                  borderRadius: 8,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginTop: '0.75rem',
+                  padding: '0.6rem 0.75rem',
+                }}
+              >
+                <span style={{ fontSize: '0.85rem' }}>Ability enhancement points</span>
+                <span style={{ color: remainingPoints > 0 ? 'var(--color-accent)' : 'var(--color-text-muted)', fontWeight: 800 }}>
+                  {remainingPoints} remaining
+                </span>
+              </div>
+            ) : null}
+
+            {methodOption.kind === 'pointBuy' ? (
+              <div
+                style={{
+                  alignItems: 'center',
+                  backgroundColor: 'var(--color-surface-2)',
+                  border: `1px solid ${pointBuyRemaining >= 0 ? 'var(--color-accent)' : 'var(--color-error-border)'}`,
+                  borderRadius: 8,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginTop: '0.75rem',
+                  padding: '0.6rem 0.75rem',
+                }}
+              >
+                <span style={{ fontSize: '0.85rem' }}>Point buy</span>
+                <span style={{ color: pointBuyRemaining >= 0 ? 'var(--color-accent)' : 'var(--color-error)', fontWeight: 800 }}>
+                  {pointBuyRemaining} of {pointBuyPool} remaining
+                </span>
+              </div>
+            ) : null}
+
+            {methodOption.kind === 'pool' && unassignedPoolSlots > 0 ? (
+              <p style={{ color: 'var(--color-warn)', fontSize: '0.78rem', margin: '0.75rem 0 0' }}>
+                Assign all six generated scores to abilities ({unassignedPoolSlots} remaining).
               </p>
-            ) : null;
-          })()}
-
-          {selectedRace.floatingBonusPoints > 0 ? (
-            <div
-              style={{
-                alignItems: 'center',
-                backgroundColor: 'var(--color-surface-2)',
-                border: `1px solid ${remainingPoints > 0 ? 'var(--color-accent)' : 'var(--color-border)'}`,
-                borderRadius: 8,
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginTop: '0.75rem',
-                padding: '0.6rem 0.75rem',
+            ) : null}
+          </div>
+        );
+      case 'skills':
+        return (
+          <>
+            {/* Skills: a full list with + and - to add ranks; the remaining points show at the top of the dialog. */}
+            <ManageBox
+              title="Skills"
+              remaining={heldClasses.length === 0 ? undefined : skillPointsStatus(skillPointsTotal, skillPointsLeft).text}
+              summary={Object.entries(skillAllocation)
+                .filter(([, ranks]) => ranks > 0)
+                .map(([name, ranks]) => `${name}: ${ranks} rank${ranks === 1 ? '' : 's'}`)}
+              disabledReason={heldClasses.length === 0 ? 'Add a level first: skill points come from the class levels.' : undefined}
+              onManage={() => setSkillDialogOpen(true)}
+            />
+            <SkillAllocationDialog
+              open={skillDialogOpen}
+              onClose={() => setSkillDialogOpen(false)}
+              heldClasses={heldClasses}
+              classSkills={classSkillLookup(heldClasses, classFacts)}
+              characterLevel={characterLevel(levels)}
+              abilities={{
+                strength: abilityModifier(calculatedScore('strength')),
+                dexterity: abilityModifier(calculatedScore('dexterity')),
+                constitution: abilityModifier(calculatedScore('constitution')),
+                intelligence: abilityModifier(calculatedScore('intelligence')),
+                wisdom: abilityModifier(calculatedScore('wisdom')),
+                charisma: abilityModifier(calculatedScore('charisma')),
               }}
-            >
-              <span style={{ fontSize: '0.85rem' }}>Ability enhancement points</span>
-              <span style={{ color: remainingPoints > 0 ? 'var(--color-accent)' : 'var(--color-text-muted)', fontWeight: 800 }}>
-                {remainingPoints} remaining
-              </span>
-            </div>
-          ) : null}
-
-          {methodOption.kind === 'pointBuy' ? (
-            <div
-              style={{
-                alignItems: 'center',
-                backgroundColor: 'var(--color-surface-2)',
-                border: `1px solid ${pointBuyRemaining >= 0 ? 'var(--color-accent)' : 'var(--color-error-border)'}`,
-                borderRadius: 8,
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginTop: '0.75rem',
-                padding: '0.6rem 0.75rem',
+              totalPoints={skillPointsTotal}
+              allocation={skillAllocation}
+              featSkillBonuses={NO_FEAT_SKILL_BONUSES}
+              onAccept={(next) => {
+                setSkillAllocation(next);
+                setSkillsTouched(true);
+                setSkillDialogOpen(false);
               }}
-            >
-              <span style={{ fontSize: '0.85rem' }}>Point buy</span>
-              <span style={{ color: pointBuyRemaining >= 0 ? 'var(--color-accent)' : 'var(--color-error)', fontWeight: 800 }}>
-                {pointBuyRemaining} of {pointBuyPool} remaining
-              </span>
-            </div>
-          ) : null}
+            />
+          </>
+        );
+    }
+  }
 
-          {methodOption.kind === 'pool' && unassignedPoolSlots > 0 ? (
-            <p style={{ color: 'var(--color-warn)', fontSize: '0.78rem', margin: '0.75rem 0 0' }}>
-              Assign all six generated scores to abilities ({unassignedPoolSlots} remaining).
-            </p>
-          ) : null}
-        </div>
+  return (
+    <form onSubmit={handleSubmit} style={{ border: '1px solid var(--color-border)', borderRadius: 12, padding: '1.25rem' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem' }}>
+        {CREATE_COLUMNS.map((column) => (
+          <div key={column} data-create-column={column} style={CREATE_COLUMN_STYLES[column]}>
+            {boxesInColumn(CREATE_LAYOUT, column).map((box) => (
+              <div key={box.id} style={box.boxStyle}>
+                {renderCreateBox(box.id)}
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
 
       <button
