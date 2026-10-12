@@ -658,6 +658,11 @@ function assertRow(row, snapshot) {
   if (screenContains(snapshot, 'Loading')) {
     problems.push(`'Loading' still present after the row's wait budget`);
   }
+  // `headingExact`: one rendered h1-h3 must read exactly this text (trimmed textContent, from the
+  // probe's `headings`), so a stray prefix or suffix fails where a substring marker would pass.
+  if (row.headingExact !== undefined && !(snapshot?.headings ?? []).includes(row.headingExact)) {
+    problems.push(`no heading reads exactly '${row.headingExact}' (headings: ${JSON.stringify(snapshot?.headings ?? [])})`);
+  }
   for (const selectName of row.selectsNonEmpty ?? []) {
     const select = findSelect(snapshot, selectName);
     if (!select) {
