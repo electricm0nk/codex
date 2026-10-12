@@ -1861,6 +1861,33 @@ pub fn draft_spell_options(request: CreateCharacterRequest) -> Result<DraftSpell
     draft_spell_options_impl(&request)
 }
 
+/// Brief 2 E3: the sheet numbers the Create screen previews for a character that is not saved
+/// yet, from the same engine run the sheet reads once it is saved.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DraftSheetPreviewDto {
+    /// The engine's `initiative.total` row (`pilot_compute::INITIATIVE_TOTAL_ID`).
+    pub initiative: ExplanationDto,
+    /// The draft's carried load, as the sheet's `corpusDerived.encumbrance`.
+    pub encumbrance: EncumbranceDto,
+}
+
+fn draft_sheet_preview_impl(request: &CreateCharacterRequest) -> Result<DraftSheetPreviewDto, String> {
+    let (input, _) = build_create_input(request, FeatPolicy::Trust)
+        .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
+    let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
+    let initiative = map_explanations_dto(&receipt.base.explanations)
+        .into_iter()
+        .find(|row| row.id == codex::rules_core::pilot_compute::INITIATIVE_TOTAL_ID)
+        .ok_or_else(|| "the engine computed no initiative total for this draft".to_owned())?;
+    Ok(DraftSheetPreviewDto { initiative, encumbrance: map_encumbrance_dto(&receipt.corpus_derived.encumbrance) })
+}
+
+#[tauri::command]
+pub fn draft_sheet_preview(request: CreateCharacterRequest) -> Result<DraftSheetPreviewDto, String> {
+    draft_sheet_preview_impl(&request)
+}
+
 pub(crate) fn create_character_at_root(
     root: &Path,
     request: &CreateCharacterRequest,
@@ -8100,6 +8127,7 @@ mod tests {
             equipment: vec![record("e1", "Sunblade of the Order")],
             spells: vec![record("s1", "Ember Step")],
             devices: vec![record("d1", "Rod of Small Mercies")],
+            conditions: Vec::new(),
         };
         save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect("save");
         assert_eq!(saved_scores(&root), before, "no ability grant, so no score change");
@@ -8136,6 +8164,89 @@ mod tests {
         let err = save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect_err("a score of 0 is not playable");
         assert!(err.contains("wisdom"), "{err}");
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ---- Brief 2 E2: conditions on the custom record ------------------------------------------------
+
+    #[test]
+    fn a_custom_file_saved_before_conditions_existed_loads_with_no_conditions() {
+        let root = created_character("custom-old-file");
+        std::fs::write(root.join("custom.json"), r#"{"grants":[],"feats":[],"equipment":[],"spells":[],"devices":[]}"#).unwrap();
+        let loaded = load_character_custom_at_root(&root).expect("an old custom.json still loads");
+        assert!(loaded.conditions.is_empty(), "no conditions: {loaded:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn conditions_round_trip_through_custom_json_in_the_wire_shape() {
+        let root = created_character("custom-conditions");
+        let custom = CharacterCustomDto { conditions: vec!["Shaken".to_owned()], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, "2026-10-12T01:00:00Z").expect("save");
+        assert_eq!(load_character_custom_at_root(&root).unwrap().conditions, vec!["Shaken".to_owned()]);
+        let wire = serde_json::to_value(CharacterCustomDto::default()).unwrap();
+        assert_eq!(wire["conditions"], serde_json::json!([]), "an empty list crosses the boundary as []");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ---- Brief 2 E3: the Create screen's draft sheet preview ----------------------------------------
+
+    #[test]
+    fn the_draft_preview_encumbrance_matches_the_saved_sheet_for_the_same_character() {
+        // The Fighter's fixed loadout is a chain shirt and a longsword.
+        let request = request_for_class("race:human", "class:fighter", 1);
+        let preview = draft_sheet_preview_impl(&request).expect("preview");
+        assert!(
+            preview.encumbrance.per_item.iter().any(|item| item.item_id == "item:chain_shirt"),
+            "the chain shirt is carried: {:?}",
+            preview.encumbrance.per_item
+        );
+        assert!(preview.encumbrance.per_item.iter().any(|item| item.item_id == "item:longsword"), "and the longsword");
+        assert!(matches!(preview.encumbrance.level.as_str(), "Light" | "Medium"), "{}", preview.encumbrance.level);
+
+        let root = tempdir("draft-preview-vs-sheet");
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let sheet = load_saved_character_at_root(&root).expect("load");
+        assert_eq!(
+            serde_json::to_value(&preview.encumbrance).unwrap(),
+            serde_json::to_value(&sheet.corpus_derived.encumbrance).unwrap(),
+            "the Create preview and the sheet show the same encumbrance"
+        );
+        let sheet_initiative = sheet.explanations.iter().find(|row| row.id == "initiative.total").expect("the sheet carries the total");
+        assert_eq!(preview.initiative.value, sheet_initiative.value, "and the same initiative");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn the_draft_preview_initiative_adds_improved_initiative() {
+        let plain = draft_sheet_preview_impl(&request_for_class("race:human", "class:fighter", 1)).expect("preview");
+        assert_eq!(plain.initiative.id, "initiative.total");
+        assert_eq!(plain.initiative.value, 2, "Dex 14 -> +2");
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        request.selected_feats = vec![CreateFeatDto { feat_id: "Improved Initiative".to_owned(), target: None }];
+        let improved = draft_sheet_preview_impl(&request).expect("preview");
+        assert_eq!(improved.initiative.value - plain.initiative.value, 4, "Improved Initiative is +4");
+    }
+
+    #[test]
+    fn the_draft_preview_crosses_the_boundary_in_the_camel_case_wire_shape() {
+        let preview = draft_sheet_preview_impl(&request_for_class("race:human", "class:fighter", 1)).expect("preview");
+        let wire = serde_json::to_value(&preview).unwrap();
+        let keys: BTreeSet<&str> = wire.as_object().unwrap().keys().map(String::as_str).collect();
+        assert_eq!(keys, BTreeSet::from(["initiative", "encumbrance"]));
+        for key in ["id", "value", "detail"] {
+            assert!(wire["initiative"].get(key).is_some(), "initiative.{key}: {wire}");
+        }
+        for key in ["totalCarriedWeightLbs", "lightMaxLbs", "mediumMaxLbs", "heavyMaxLbs", "level", "loadArmorCheckPenalty", "perItem"] {
+            assert!(wire["encumbrance"].get(key).is_some(), "encumbrance.{key}: {wire}");
+        }
+    }
+
+    #[test]
+    fn the_draft_preview_reports_a_draft_that_cannot_be_built() {
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        request.selected_alternate_trait_keys = vec!["Not A Real Trait".to_owned()];
+        assert!(draft_sheet_preview_impl(&request).is_err(), "an unresolvable draft is an error, not a made-up preview");
     }
 
     #[test]
