@@ -851,6 +851,11 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         *slot = slot.saturating_add(bonus);
     }
 
+    // Brief 1 F3: a drawback's penalty on every skill the character has no ranks in (Meticulous,
+    // -2) -- `0` unless one is selected. Applied below to each total reported at 0 ranks.
+    let untrained_penalty =
+        crate::rules_core::trait_effects::untrained_skill_penalty_from_drawbacks(&input.chosen.selected_traits);
+
     let mut totals = BTreeMap::new();
     let mut untrained_use = BTreeMap::new();
     let mut diagnostics = Vec::new();
@@ -927,8 +932,8 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         };
 
         let ability_modifier = ability_mod as i8;
-        let misc_modifier =
-            trait_skill_bonuses.get(&allocation.skill_id).copied().unwrap_or(0);
+        let misc_modifier = trait_skill_bonuses.get(&allocation.skill_id).copied().unwrap_or(0)
+            + if ranks == 0 { untrained_penalty } else { 0 };
         let total_modifier = ranks as i8 + ability_modifier + class_skill_bonus + misc_modifier;
 
         if ranks == 0 {
@@ -980,7 +985,9 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
             continue;
         };
         let ability_modifier = ability_mod as i8;
-        let total_modifier = ability_modifier + bonus;
+        // No allocation entry, so 0 ranks: the untrained penalty applies.
+        let misc_modifier = *bonus + untrained_penalty;
+        let total_modifier = ability_modifier + misc_modifier;
         untrained_use.insert(skill_id.clone(), ability_modifier);
         totals.insert(
             skill_id.clone(),
@@ -988,7 +995,7 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
                 ranks: 0,
                 ability_modifier,
                 class_skill_bonus: 0,
-                misc_modifier: *bonus,
+                misc_modifier,
                 total_modifier,
             },
         );
@@ -1404,5 +1411,71 @@ mod at_34_e3_003_full_class_skill_list_tests {
         // class skill -- Perform is Bard-only, a class this module carries
         // no data for -- is honestly None, never a fabricated 3.
         assert_eq!(super::skill_bonus_is_grounded_for_display_name("Perform (Sing)"), None);
+    }
+}
+
+/// Brief 1 F3 (tranche-17-ui): `Drawback ~ Meticulous` -- "-2 penalty on skill checks for skills
+/// with which you're untrained" (corpus `BONUS:SKILL|<skill>|-2|!PRESKILL:1,<skill>=1`) -- moves
+/// every total this module reports for a skill with 0 ranks, and no other.
+#[cfg(test)]
+mod meticulous_drawback_tests {
+    use super::allocate_skill_ranks;
+    use crate::rules_core::character_input::{
+        AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SkillAllocation,
+    };
+
+    fn fighter(allocations: &[(&str, u8)], traits: &[&str]) -> CharacterInput {
+        CharacterInput {
+            case_id: None,
+            source_package_id: "test".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: "race:human".to_owned(),
+                class_levels: vec![CharacterClassLevel { class_id: "class:fighter".to_owned(), level: 1 }],
+                ability_scores: AbilityScores {
+                    strength: 14,
+                    dexterity: 12,
+                    constitution: 10,
+                    intelligence: 10,
+                    wisdom: 10,
+                    charisma: 10,
+                },
+                selected_feats: Vec::new(),
+                skill_allocations: allocations
+                    .iter()
+                    .map(|(skill_id, ranks)| SkillAllocation { skill_id: (*skill_id).to_owned(), ranks: *ranks })
+                    .collect(),
+                equipment_selections: Vec::new(),
+                selected_choices: Vec::new(),
+                selected_traits: traits.iter().map(|id| (*id).to_owned()).collect(),
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn meticulous_takes_two_from_untrained_skill_totals_only() {
+        let allocations = [("skill:climb", 1), ("skill:swim", 0)];
+        let without = allocate_skill_ranks(&fighter(&allocations, &["trait:trait_acrobat"]));
+        let with = allocate_skill_ranks(&fighter(&allocations, &["trait:trait_acrobat", "drawback:meticulous"]));
+
+        let total = |totals: &super::SkillTotals, id: &str| totals.totals.get(id).map(|t| t.total_modifier);
+        assert_eq!(total(&with, "skill:climb"), total(&without, "skill:climb"), "1 rank in Climb: trained, no penalty");
+        assert_eq!(total(&with, "skill:swim").zip(total(&without, "skill:swim")).map(|(a, b)| a - b), Some(-2), "0 ranks in Swim");
+        assert_eq!(
+            total(&with, "skill:acrobatics").zip(total(&without, "skill:acrobatics")).map(|(a, b)| a - b),
+            Some(-2),
+            "Acrobat's +1 Acrobatics total, untrained, also takes the -2"
+        );
+        assert_eq!(with.totals["skill:swim"].misc_modifier, -2, "folded into the misc modifier");
+    }
+
+    #[test]
+    fn another_drawback_changes_no_skill_total() {
+        let allocations = [("skill:climb", 1), ("skill:swim", 0)];
+        let without = allocate_skill_ranks(&fighter(&allocations, &[]));
+        let with = allocate_skill_ranks(&fighter(&allocations, &["drawback:vain"]));
+        assert_eq!(with.totals, without.totals, "Vain's penalty is situational: printed, never totalled");
     }
 }
