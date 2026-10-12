@@ -49,6 +49,7 @@ function verifiesLabelsAndSummaries() {
   assertEqual(grantTargetLabel('hit_points'), 'Hit points', 'hit points');
   assertEqual(grantTargetLabel('skill_points'), 'Skill points', 'skill points');
   assertEqual(customIsEmpty(EMPTY_CUSTOM), true, 'empty is empty');
+  assertEqual(EMPTY_CUSTOM.conditions.length, 0, 'a new character has no conditions (the sheet shows Normal)');
   const custom: CharacterCustom = {
     ...withGrants({ ...grant('g', 'ability:wisdom', 1), label: 'Boon of Pharasma' }),
     feats: [{ ...newRecord('f'), name: 'Racial Weapon Focus' }],

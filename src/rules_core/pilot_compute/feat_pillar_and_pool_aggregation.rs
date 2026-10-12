@@ -1774,6 +1774,61 @@ pub(super) fn ground_orphan_feat_facts(
     );
 }
 
+/// Brief 2 E1 (tranche-17-ui): the id of the character's initiative total, the number the sheet's
+/// Initiative box and the Create preview print.
+pub const INITIATIVE_TOTAL_ID: &str = "initiative.total";
+
+/// Every grounded, unconditional initiative record [`ground_initiative_total`] folds into the
+/// total, with the name its detail gives it. A multiclass mix carries a class's own line
+/// re-scoped `multiclass.<class>.<id>` (`multiclass_fold`), so those count too.
+///
+/// Deliberately NOT folded: `class_feature.uc.gunslinger.gunslinger_initiative` (needs a grit
+/// point at the moment of the check) and
+/// `class_feature.acg.swashbuckler.deed.swashbuckler_initiative_bonus` (needs a panache point; a
+/// `TEMPBONUS`, per its own record). Both stay on the sheet as their own rows.
+pub(super) const INITIATIVE_TOTAL_TERMS: &[(&str, &str)] = &[
+    ("feat.standalone.initiative_bonus", "Improved Initiative"),
+    ("trait.standalone.initiative_bonus", "traits"),
+    ("class_feature.apg.inquisitor.cunning_initiative_bonus", "Cunning Initiative"),
+    ("class_feature.apg.oracle.deaf_curse.initiative_penalty", "Deaf curse"),
+    ("class_feature.duelist.improved_reaction.initiative_bonus", "Improved Reaction"),
+    (
+        "class_feature.adventurers_guide.pathfinder_delver.vigilant_combatant.initiative_bonus",
+        "Vigilant Combatant",
+    ),
+];
+
+fn initiative_term_name(id: &str) -> Option<&'static str> {
+    let unscoped = id
+        .strip_prefix("multiclass.")
+        .and_then(|rest| rest.split_once('.'))
+        .map_or(id, |(_, original)| original);
+    INITIATIVE_TOTAL_TERMS.iter().find(|(term, _)| *term == unscoped).map(|(_, name)| *name)
+}
+
+/// Brief 2 E1: the character's initiative as a sheet total -- the Dexterity modifier plus every
+/// grounded initiative record already in `explanations` ([`INITIATIVE_TOTAL_TERMS`]). Called LAST
+/// in `compute_pilot_base_chassis`, after every producer of those records has run.
+pub(super) fn ground_initiative_total(dexterity_modifier: i16, explanations: &mut Vec<ComputationExplanation>) {
+    let mut total = dexterity_modifier;
+    let mut terms = vec![format!("Dexterity modifier {dexterity_modifier:+}")];
+    for explanation in explanations.iter() {
+        if let Some(name) = initiative_term_name(&explanation.id) {
+            total += explanation.value;
+            terms.push(format!("{name} {:+}", explanation.value));
+        }
+    }
+    explanations.push(ComputationExplanation {
+        id: INITIATIVE_TOTAL_ID.to_owned(),
+        value: total,
+        detail: format!(
+            "Initiative {total:+}: {}. Bonuses that hold only while a grit or panache point is \
+             held are listed on their own and not added here",
+            terms.join(", ")
+        ),
+    });
+}
+
 /// AT-34-E4-002's fifth trait-capability slice: standalone orphan facts
 /// derived from a character's SELECTED traits (unlike feats, traits carry
 /// no automatic-grant concept, so this reads `input.chosen.selected_traits`
@@ -3522,5 +3577,94 @@ mod converted_record_proficiency_fallback_tests {
             }
         }
         assert!(seen > 0, "the package carries WeaponAllOf selectors (Marksman's Martial + Ranged)");
+    }
+}
+
+#[cfg(test)]
+mod initiative_total_tests {
+    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, INITIATIVE_TOTAL_ID};
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    /// The GE-06 Human Fighter 1: Dexterity 14 (+2), no Improved Initiative, no traits.
+    fn fixture() -> CharacterInput {
+        load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE).character_input.expect("valid fixture")
+    }
+
+    fn as_class(class_id: &str, level: u8) -> CharacterInput {
+        let mut input = fixture();
+        input.chosen.class_levels = vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn value(input: &CharacterInput, id: &str) -> Option<i16> {
+        build_pilot_headless_receipt(input).computation.explanations.iter().find(|e| e.id == id).map(|e| e.value)
+    }
+
+    fn total(input: &CharacterInput) -> i16 {
+        let receipt = build_pilot_headless_receipt(input);
+        let rows: Vec<_> = receipt.computation.explanations.iter().filter(|e| e.id == INITIATIVE_TOTAL_ID).collect();
+        assert_eq!(rows.len(), 1, "exactly one initiative total row: {rows:?}");
+        rows[0].value
+    }
+
+    #[test]
+    fn the_initiative_id_is_the_one_the_brief_names() {
+        assert_eq!(INITIATIVE_TOTAL_ID, "initiative.total");
+    }
+
+    #[test]
+    fn a_character_with_no_initiative_bonus_has_its_dexterity_modifier() {
+        assert_eq!(total(&fixture()), 2, "Dex 14 -> +2");
+    }
+
+    #[test]
+    fn improved_initiative_adds_four_to_the_total() {
+        let mut input = fixture();
+        input.chosen.selected_feats.push("Improved Initiative".to_owned());
+        assert_eq!(value(&input, "feat.standalone.initiative_bonus"), Some(4), "the feat row is grounded");
+        assert_eq!(total(&input), 6, "Dex +2 + Improved Initiative +4");
+        let row = build_pilot_headless_receipt(&input)
+            .computation
+            .explanations
+            .into_iter()
+            .find(|e| e.id == INITIATIVE_TOTAL_ID)
+            .unwrap();
+        assert!(row.detail.contains("Improved Initiative"), "the detail names each term: {row:?}");
+    }
+
+    #[test]
+    fn a_trait_and_a_feat_both_fold_in() {
+        let mut input = fixture();
+        input.chosen.selected_feats.push("Improved Initiative".to_owned());
+        input.chosen.selected_traits.push("trait:trait_tactician".to_owned());
+        assert_eq!(value(&input, "trait.standalone.initiative_bonus"), Some(1), "Tactician is grounded");
+        assert_eq!(total(&input), 7, "Dex +2 + Improved Initiative +4 + Tactician +1");
+    }
+
+    #[test]
+    fn inquisitor_cunning_initiative_folds_in() {
+        let input = as_class("class:inquisitor", 1);
+        assert_eq!(value(&input, "class_feature.apg.inquisitor.cunning_initiative_bonus"), Some(1), "Wis 12 -> +1");
+        assert_eq!(total(&input), 3, "Dex +2 + Cunning Initiative +1");
+    }
+
+    #[test]
+    fn duelist_improved_reaction_folds_in() {
+        let input = as_class("class:duelist", 2);
+        assert_eq!(value(&input, "class_feature.duelist.improved_reaction.initiative_bonus"), Some(2));
+        assert_eq!(total(&input), 4, "Dex +2 + Improved Reaction +2");
+    }
+
+    /// Gunslinger Initiative needs a grit point at the moment of the check: a conditional bonus
+    /// the engine cannot see, so it is not folded into a standing total.
+    #[test]
+    fn a_conditional_initiative_bonus_is_not_folded_in() {
+        let input = as_class("class:gunslinger", 3);
+        assert_eq!(value(&input, "class_feature.uc.gunslinger.gunslinger_initiative"), Some(2), "the row exists");
+        assert_eq!(total(&input), 2, "Dex +2 only");
     }
 }

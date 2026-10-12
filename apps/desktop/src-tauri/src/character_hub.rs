@@ -1861,6 +1861,71 @@ pub fn draft_spell_options(request: CreateCharacterRequest) -> Result<DraftSpell
     draft_spell_options_impl(&request)
 }
 
+/// Brief 2 E3: the sheet numbers the Create screen previews for a character that is not saved
+/// yet, from the same engine run the sheet reads once it is saved.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DraftSheetPreviewDto {
+    /// The engine's `initiative.total` row (`pilot_compute::INITIATIVE_TOTAL_ID`).
+    pub initiative: ExplanationDto,
+    /// The draft's carried load, as the sheet's `corpusDerived.encumbrance`.
+    pub encumbrance: EncumbranceDto,
+}
+
+fn draft_sheet_preview_impl(request: &CreateCharacterRequest) -> Result<DraftSheetPreviewDto, String> {
+    let (input, _) = build_create_input(request, FeatPolicy::Trust)
+        .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
+    let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
+    let initiative = map_explanations_dto(&receipt.base.explanations)
+        .into_iter()
+        .find(|row| row.id == codex::rules_core::pilot_compute::INITIATIVE_TOTAL_ID)
+        .ok_or_else(|| "the engine computed no initiative total for this draft".to_owned())?;
+    Ok(DraftSheetPreviewDto { initiative, encumbrance: map_encumbrance_dto(&receipt.corpus_derived.encumbrance) })
+}
+
+#[tauri::command]
+pub fn draft_sheet_preview(request: CreateCharacterRequest) -> Result<DraftSheetPreviewDto, String> {
+    draft_sheet_preview_impl(&request)
+}
+
+/// Brief 2 L4b: what class level `from_level + 1` of `class_id` grants a character that is not
+/// saved yet, for the Create screen's per-level lines. The same engine call `preview_level_up`
+/// makes for a saved character (`compute_level_up_grants_for_class`), on the draft's input.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DraftLevelUpPreviewDto {
+    pub from_level: u8,
+    pub to_level: u8,
+    /// The engine's automatic grant names for this transition, verbatim. Empty is a real answer:
+    /// the engine grounds per-level grants for the eleven PF1 Core classes only.
+    pub automatic_features: Vec<String>,
+}
+
+fn draft_level_up_preview_impl(
+    request: &CreateCharacterRequest,
+    class_id: &str,
+    from_level: u8,
+) -> Result<DraftLevelUpPreviewDto, String> {
+    let (input, _) = build_create_input(request, FeatPolicy::Trust)
+        .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
+    let to_level = from_level.saturating_add(1);
+    let plan = compute_level_up_grants_for_class(&input, class_id, from_level, to_level);
+    Ok(DraftLevelUpPreviewDto {
+        from_level,
+        to_level,
+        automatic_features: plan.automatic_features.into_iter().map(|grant| grant.name).collect(),
+    })
+}
+
+#[tauri::command]
+pub fn draft_level_up_preview(
+    request: CreateCharacterRequest,
+    class_id: String,
+    from_level: u8,
+) -> Result<DraftLevelUpPreviewDto, String> {
+    draft_level_up_preview_impl(&request, &class_id, from_level)
+}
+
 pub(crate) fn create_character_at_root(
     root: &Path,
     request: &CreateCharacterRequest,
@@ -8100,6 +8165,7 @@ mod tests {
             equipment: vec![record("e1", "Sunblade of the Order")],
             spells: vec![record("s1", "Ember Step")],
             devices: vec![record("d1", "Rod of Small Mercies")],
+            conditions: Vec::new(),
         };
         save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect("save");
         assert_eq!(saved_scores(&root), before, "no ability grant, so no score change");
@@ -8136,6 +8202,89 @@ mod tests {
         let err = save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect_err("a score of 0 is not playable");
         assert!(err.contains("wisdom"), "{err}");
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ---- Brief 2 E2: conditions on the custom record ------------------------------------------------
+
+    #[test]
+    fn a_custom_file_saved_before_conditions_existed_loads_with_no_conditions() {
+        let root = created_character("custom-old-file");
+        std::fs::write(root.join("custom.json"), r#"{"grants":[],"feats":[],"equipment":[],"spells":[],"devices":[]}"#).unwrap();
+        let loaded = load_character_custom_at_root(&root).expect("an old custom.json still loads");
+        assert!(loaded.conditions.is_empty(), "no conditions: {loaded:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn conditions_round_trip_through_custom_json_in_the_wire_shape() {
+        let root = created_character("custom-conditions");
+        let custom = CharacterCustomDto { conditions: vec!["Shaken".to_owned()], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, "2026-10-12T01:00:00Z").expect("save");
+        assert_eq!(load_character_custom_at_root(&root).unwrap().conditions, vec!["Shaken".to_owned()]);
+        let wire = serde_json::to_value(CharacterCustomDto::default()).unwrap();
+        assert_eq!(wire["conditions"], serde_json::json!([]), "an empty list crosses the boundary as []");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ---- Brief 2 E3: the Create screen's draft sheet preview ----------------------------------------
+
+    #[test]
+    fn the_draft_preview_encumbrance_matches_the_saved_sheet_for_the_same_character() {
+        // The Fighter's fixed loadout is a chain shirt and a longsword.
+        let request = request_for_class("race:human", "class:fighter", 1);
+        let preview = draft_sheet_preview_impl(&request).expect("preview");
+        assert!(
+            preview.encumbrance.per_item.iter().any(|item| item.item_id == "item:chain_shirt"),
+            "the chain shirt is carried: {:?}",
+            preview.encumbrance.per_item
+        );
+        assert!(preview.encumbrance.per_item.iter().any(|item| item.item_id == "item:longsword"), "and the longsword");
+        assert!(matches!(preview.encumbrance.level.as_str(), "Light" | "Medium"), "{}", preview.encumbrance.level);
+
+        let root = tempdir("draft-preview-vs-sheet");
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let sheet = load_saved_character_at_root(&root).expect("load");
+        assert_eq!(
+            serde_json::to_value(&preview.encumbrance).unwrap(),
+            serde_json::to_value(&sheet.corpus_derived.encumbrance).unwrap(),
+            "the Create preview and the sheet show the same encumbrance"
+        );
+        let sheet_initiative = sheet.explanations.iter().find(|row| row.id == "initiative.total").expect("the sheet carries the total");
+        assert_eq!(preview.initiative.value, sheet_initiative.value, "and the same initiative");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn the_draft_preview_initiative_adds_improved_initiative() {
+        let plain = draft_sheet_preview_impl(&request_for_class("race:human", "class:fighter", 1)).expect("preview");
+        assert_eq!(plain.initiative.id, "initiative.total");
+        assert_eq!(plain.initiative.value, 2, "Dex 14 -> +2");
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        request.selected_feats = vec![CreateFeatDto { feat_id: "Improved Initiative".to_owned(), target: None }];
+        let improved = draft_sheet_preview_impl(&request).expect("preview");
+        assert_eq!(improved.initiative.value - plain.initiative.value, 4, "Improved Initiative is +4");
+    }
+
+    #[test]
+    fn the_draft_preview_crosses_the_boundary_in_the_camel_case_wire_shape() {
+        let preview = draft_sheet_preview_impl(&request_for_class("race:human", "class:fighter", 1)).expect("preview");
+        let wire = serde_json::to_value(&preview).unwrap();
+        let keys: BTreeSet<&str> = wire.as_object().unwrap().keys().map(String::as_str).collect();
+        assert_eq!(keys, BTreeSet::from(["initiative", "encumbrance"]));
+        for key in ["id", "value", "detail"] {
+            assert!(wire["initiative"].get(key).is_some(), "initiative.{key}: {wire}");
+        }
+        for key in ["totalCarriedWeightLbs", "lightMaxLbs", "mediumMaxLbs", "heavyMaxLbs", "level", "loadArmorCheckPenalty", "perItem"] {
+            assert!(wire["encumbrance"].get(key).is_some(), "encumbrance.{key}: {wire}");
+        }
+    }
+
+    #[test]
+    fn the_draft_preview_reports_a_draft_that_cannot_be_built() {
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        request.selected_alternate_trait_keys = vec!["Not A Real Trait".to_owned()];
+        assert!(draft_sheet_preview_impl(&request).is_err(), "an unresolvable draft is an error, not a made-up preview");
     }
 
     #[test]
@@ -13125,6 +13274,52 @@ mod tests {
         assert_eq!(preview.from_level, 0);
         assert_eq!(preview.to_level, 1);
         assert_eq!(preview.character_level, 4);
+    }
+
+    // ---- Brief 2 L4b: the Create screen's per-level class features ---------------------------------
+
+    /// The unsaved draft's Fighter 1 -> 2 reports the same engine grant names the saved
+    /// character's `preview_level_up` reports for the same character.
+    #[test]
+    fn the_draft_level_up_preview_names_the_same_fighter_level_2_grants_as_the_saved_path() {
+        let request = request_for("race:human", 1);
+        let draft = draft_level_up_preview_impl(&request, FIGHTER_CLASS_ID, 1).expect("draft preview");
+        assert_eq!((draft.from_level, draft.to_level), (1, 2));
+
+        let root = saved_root_for("draft-level-up-vs-saved", compose_character_input(&request));
+        let saved = preview_level_up_at_root(&root, FIGHTER_CLASS_ID).expect("saved preview");
+        let saved_names: Vec<String> = saved.automatic_features.iter().map(|grant| grant.name.clone()).collect();
+        assert_eq!(draft.automatic_features, saved_names, "the draft and the saved path agree");
+        assert!(draft.automatic_features.iter().any(|name| name.contains("bravery")), "{:?}", draft.automatic_features);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Create's first line is class level 1, a transition from class level 0.
+    #[test]
+    fn the_draft_level_up_preview_reports_a_first_class_level() {
+        let draft = draft_level_up_preview_impl(&request_for("race:human", 1), FIGHTER_CLASS_ID, 0).expect("draft preview");
+        assert_eq!((draft.from_level, draft.to_level), (0, 1));
+        assert!(
+            draft.automatic_features.iter().any(|name| name.contains("base_attack_bonus")),
+            "level 1 sets the base attack bonus: {:?}",
+            draft.automatic_features
+        );
+    }
+
+    #[test]
+    fn the_draft_level_up_preview_crosses_the_boundary_in_the_camel_case_wire_shape() {
+        let draft = draft_level_up_preview_impl(&request_for("race:human", 1), FIGHTER_CLASS_ID, 1).expect("draft preview");
+        let wire = serde_json::to_value(&draft).unwrap();
+        let keys: BTreeSet<&str> = wire.as_object().unwrap().keys().map(String::as_str).collect();
+        assert_eq!(keys, BTreeSet::from(["fromLevel", "toLevel", "automaticFeatures"]));
+        assert!(wire["automaticFeatures"].as_array().unwrap().iter().all(serde_json::Value::is_string), "{wire}");
+    }
+
+    #[test]
+    fn the_draft_level_up_preview_reports_a_draft_that_cannot_be_built() {
+        let mut request = request_for("race:human", 1);
+        request.selected_alternate_trait_keys = vec!["Not A Real Trait".to_owned()];
+        assert!(draft_level_up_preview_impl(&request, FIGHTER_CLASS_ID, 1).is_err(), "an unbuildable draft is an error");
     }
 }
 
