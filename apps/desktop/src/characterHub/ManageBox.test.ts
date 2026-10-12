@@ -21,6 +21,14 @@ function verifiesAnEmptyBoxSaysNothingIsChosenAndADisabledBoxExplainsWhy() {
   assert(disabled.includes('Loading feats…'), 'with the reason shown');
 }
 
+// Brief 1 F2: a box can name its button for what it does ("Swap racial traits"); "Manage" stays the default.
+function verifiesTheButtonCanBeRelabelled() {
+  const html = render({ manageLabel: 'Swap racial traits' });
+  assert(html.includes('>Swap racial traits<'), 'the new label');
+  assert(!html.includes('>Manage<'), 'instead of Manage');
+}
+
 verifiesTheBoxShowsItsTitleSummaryAndManageButton();
+verifiesTheButtonCanBeRelabelled();
 verifiesAnEmptyBoxSaysNothingIsChosenAndADisabledBoxExplainsWhy();
 console.log('ManageBox.test.ts: all assertions passed');

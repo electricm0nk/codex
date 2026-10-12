@@ -1081,6 +1081,7 @@ function CreateCharacterFields(props: {
           <ManageBox
             title="Racial Traits"
             remaining={racialTraitsCountLabel(racialTraitsPreview)}
+            manageLabel="Swap racial traits"
             summary={selectedAlternateTraitKeys.map(
               (key) => alternateTraitRows.find((row) => row.alternate.key === key)?.alternate.name ?? key
             )}
