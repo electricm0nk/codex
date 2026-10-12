@@ -31,8 +31,24 @@ const arcane = { Light: 0, Daze: 0, 'Magic Missile': 1, Sleep: 1, Invisibility: 
 const sorcerer = classLevels('class:sorcerer', arcane);
 const wizard = classLevels('class:wizard', arcane);
 const cleric = classLevels('class:cleric', { Light: 0, Bless: 1 });
+const extracts = { 'Cure Light Wounds': 1, Shield: 1, 'Cat\'s Grace': 2 };
 
-const input = (over: Partial<SpellDialogInput>): SpellDialogInput => ({ perDay: [], known: [], classLevels: [sorcerer, wizard, cleric], catalog, innate: [], ...over });
+const input = (over: Partial<SpellDialogInput>): SpellDialogInput => ({
+  perDay: [],
+  known: [],
+  classLevels: [
+    sorcerer,
+    wizard,
+    cleric,
+    classLevels('class:hunter', { Light: 0, Bless: 1 }),
+    classLevels('class:skald', arcane),
+    classLevels('class:alchemist', extracts),
+    classLevels('class:investigator', extracts),
+  ],
+  catalog,
+  innate: [],
+  ...over,
+});
 
 // Brief 1 F4/F5: a sorcerer's rows are `class_chassis.sorcerer.spontaneous.*`, and its quota is the
 // spells it KNOWS (4 cantrips, 2 1st at level 1), not the spells it casts per day.
@@ -151,6 +167,42 @@ function verifiesTheReloadKeyChangesWhenALevelIsAdded() {
   assertEqual(one, spellOptionsKey([{ classId: 'class:wizard', level: 1 }], 'race:human', scores, []), 'the same draft is the same key');
 }
 
+// Brief 1 F7: Hunter and Skald pick from their spells-known rows; Alchemist and Investigator from
+// their formula book (no 0-level extracts, nested pools like the wizard's spellbook).
+function verifiesHunterSkaldAlchemistAndInvestigatorGetAPicker() {
+  const spontaneous = creationSpellDialog(
+    input({
+      perDay: [row('class_chassis.hunter.spontaneous.base_spells_per_day.spell_level_1', 1), row('class_chassis.skald.spontaneous.base_spells_per_day.spell_level_1', 1)],
+      known: [
+        row('class_chassis.hunter.spontaneous.spells_known.spell_level_0', 4),
+        row('class_chassis.hunter.spontaneous.spells_known.spell_level_1', 2),
+        row('class_chassis.skald.spontaneous.spells_known.spell_level_1', 2),
+      ],
+    })
+  );
+  assertEqual(
+    JSON.stringify(spontaneous.groupLimits),
+    JSON.stringify({ 'hunter:0': 4, 'hunter:1': 2, 'skald:1': 2 }),
+    'each class quota is its spells known'
+  );
+  assertEqual(spontaneous.readOnly.length, 0, 'no "not counted yet" text for them any more');
+
+  for (const [book, token] of [['apg.alchemist', 'alchemist'], ['acg.investigator', 'investigator']] as const) {
+    const formulae = creationSpellDialog(
+      input({
+        perDay: [row(`class_spell.${book}.total_extracts_per_day.extract_level_1`, 2)],
+        known: [row(`class_spell.${book}.formula_book_size.extract_level_1_and_higher`, 7), row(`class_spell.${book}.formula_book_size.extract_level_2_and_higher`, 2)],
+      })
+    );
+    assertEqual(JSON.stringify(formulae.groupLimits), JSON.stringify({ [`${token}:1`]: 7, [`${token}:2`]: 2 }), `${token}: a quota per extract level`);
+    assertEqual(formulae.sharedLimits.map((shared) => `${shared.groups.join('+')}=${shared.limit}`).join(), `${token}:1+${token}:2=7`, `${token}: one book pool`);
+    assertEqual(formulae.items.filter((item) => item.group === `${token}:2`).map((item) => item.label).join(), "Cat's Grace", `${token}: 2nd-level formulae listed`);
+    assertEqual(formulae.readOnly.length, 0, `${token}: picker, not text`);
+    assertEqual(spellClassTokens([], [row(`class_spell.${book}.formula_book_size.extract_level_1_and_higher`, 7)]).join(), `class:${token}`, `${token}: the book names the class`);
+  }
+}
+
+verifiesHunterSkaldAlchemistAndInvestigatorGetAPicker();
 verifiesTheReloadKeyChangesWhenALevelIsAdded();
 verifiesASorcererPicksItsSpellsKnownPerLevel();
 verifiesTheClassTokensComeFromChassisAndKnownRows();

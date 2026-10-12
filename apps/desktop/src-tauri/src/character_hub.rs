@@ -1811,8 +1811,8 @@ pub struct DraftSpellOptionsDto {
     /// in corpus order, for the dialog's read-only Innate column. A trait the draft's alternates suppress is not listed.
     pub innate: Vec<String>,
     /// The engine's known-spell quotas for the draft: a spontaneous caster's
-    /// `*.spells_known.spell_level_<n>` rows and the wizard's `class_spell.wizard.spellbook_size.*`
-    /// rows. The Create screen picks KNOWN spells, so these, not `per_day`, are its quotas.
+    /// `*.spells_known.spell_level_<n>` rows and a book's size rows (the wizard's
+    /// `class_spell.wizard.spellbook_size.*`, the alchemist's/investigator's `*.formula_book_size.*`). The Create screen picks KNOWN spells, so these, not `per_day`, are its quotas.
     pub known: Vec<ExplanationDto>,
 }
 
@@ -1825,7 +1825,7 @@ fn draft_spell_options_impl(request: &CreateCharacterRequest) -> Result<DraftSpe
     let explanations = map_explanations_dto(&receipt.base.explanations);
     let known = explanations
         .iter()
-        .filter(|row| row.id.contains(".spells_known.") || row.id.starts_with("class_spell.wizard.spellbook_size."))
+        .filter(|row| row.id.contains(".spells_known.") || row.id.contains("_book_size."))
         .cloned()
         .collect();
     let per_day = explanations
@@ -8183,6 +8183,19 @@ mod tests {
         assert_eq!(known_value(&fifth, "class_spell.wizard.spellbook_size.spell_level_1_and_higher"), Some(13), "5 + 2 * 4: {:?}", fifth.known);
         assert_eq!(known_value(&fifth, "class_spell.wizard.spellbook_size.spell_level_3_and_higher"), Some(2), "{:?}", fifth.known);
         assert_eq!(known_value(&fifth, "class_spell.wizard.spellbook_size.spell_level_4_and_higher"), None, "a level-5 wizard casts up to 3rd");
+    }
+
+    #[test]
+    fn the_draft_spell_options_state_known_quotas_for_hunter_skald_and_investigator() {
+        // Brief 1 F7: these classes lost their picker under F5 for want of a known-spell row.
+        for (class_id, id, expected) in [
+            ("class:hunter", "class_chassis.hunter.spontaneous.spells_known.spell_level_1", 2),
+            ("class:skald", "class_chassis.skald.spontaneous.spells_known.spell_level_1", 2),
+            ("class:investigator", "class_spell.acg.investigator.formula_book_size.extract_level_1_and_higher", 2),
+        ] {
+            let options = draft_spell_options_impl(&request_for_class("race:human", class_id, 1)).expect("options");
+            assert_eq!(known_value(&options, id), Some(expected), "{class_id}: {:?}", options.known);
+        }
     }
 
     #[test]

@@ -12,8 +12,9 @@ import type { SharedLimit, TransferItem } from './transferListModel';
  * column.
  *
  * Authors no rules data. A spell's level for a class comes from `list_class_spell_levels`; a quota
- * comes from a `*.spells_known.spell_level_<n>` row (a spontaneous caster) or the wizard's
- * `class_spell.wizard.spellbook_size.*` rows. A caster that knows its whole list (Cleric, Druid ...)
+ * comes from a `*.spells_known.spell_level_<n>` row (a spontaneous caster) or a book's size rows
+ * (the wizard's `class_spell.wizard.spellbook_size.*`, the alchemist's and investigator's
+ * `*.formula_book_size.*`). A caster that knows its whole list (Cleric, Druid ...)
  * gets no picker: its spells per day are shown as text (operator ruling 2026-10-11). So does a caster
  * the engine states no known count for: per day is not a known-spell quota.
  */
@@ -50,8 +51,11 @@ const WHOLE_LIST_CASTERS = new Set(['cleric', 'druid', 'paladin', 'ranger', 'war
 /** `class_chassis.sorcerer.spontaneous.spells_known.spell_level_1`, `class_spell.acg.bloodrager.spells_known.spell_level_2`. */
 const KNOWN_ID = /^class_(?:spell|chassis)\.(?:.+\.)?(?!spontaneous\.)([a-z_]+)\.(?:spontaneous\.)?spells_known\.spell_level_(\d+)$/;
 
-/** `class_spell.wizard.spellbook_size.spell_level_0` and `..._spell_level_2_and_higher`. */
-const SPELLBOOK_ID = /^class_spell\.wizard\.spellbook_size\.spell_level_(\d+)(_and_higher)?$/;
+/**
+ * A spellbook or formula book's bounds: `class_spell.wizard.spellbook_size.spell_level_0`,
+ * `..._spell_level_2_and_higher`, `class_spell.apg.alchemist.formula_book_size.extract_level_1_and_higher`.
+ */
+const BOOK_ID = /^class_spell\.(?:.+\.)?([a-z_]+)\.(?:spellbook|formula_book)_size\.(?:spell|extract)_level_(\d+)(_and_higher)?$/;
 
 function titleCase(token: string): string {
   return token
@@ -73,27 +77,35 @@ function knownQuotas(known: readonly ExplanationDto[]): Quota[] {
   });
 }
 
-/** The wizard's spellbook bounds: level 0 is every cantrip; `<k>_and_higher` caps levels k and up together. */
-function spellbookBounds(known: readonly ExplanationDto[]): { cantrips: number | null; atOrAbove: Map<number, number> } {
-  let cantrips: number | null = null;
-  const atOrAbove = new Map<number, number>();
+interface BookBounds {
+  /** Level 0 when the book holds every cantrip (the wizard's), else `null`. */
+  cantrips: number | null;
+  /** `<k>_and_higher`: how many of the book's spells may be level k or higher. */
+  atOrAbove: Map<number, number>;
+}
+
+/** Each class's spellbook or formula book bounds, by class token. */
+function bookBounds(known: readonly ExplanationDto[]): Map<string, BookBounds> {
+  const books = new Map<string, BookBounds>();
   for (const row of known) {
-    const match = SPELLBOOK_ID.exec(row.id);
+    const match = BOOK_ID.exec(row.id);
     if (match === null) continue;
-    if (match[2] === undefined) {
-      cantrips = row.value;
+    const book = books.get(match[1]!) ?? { cantrips: null, atOrAbove: new Map<number, number>() };
+    if (match[3] === undefined) {
+      book.cantrips = row.value;
     } else {
-      atOrAbove.set(Number(match[1]), row.value);
+      book.atOrAbove.set(Number(match[2]), row.value);
     }
+    books.set(match[1]!, book);
   }
-  return { cantrips, atOrAbove };
+  return books;
 }
 
 /** The `class:<token>` ids the dialog needs spell lists for: every class with a per-day or known row. */
 export function spellClassTokens(perDay: readonly ExplanationDto[], known: readonly ExplanationDto[]): string[] {
   const tokens = new Set(buildSpellsPerDaySurface(perDay).rows.map((row) => row.classToken));
   for (const quota of knownQuotas(known)) tokens.add(quota.classToken);
-  if (spellbookBounds(known).cantrips !== null || spellbookBounds(known).atOrAbove.size > 0) tokens.add('wizard');
+  for (const token of bookBounds(known).keys()) tokens.add(token);
   return [...tokens].sort().map((token) => `class:${token}`);
 }
 
@@ -111,14 +123,20 @@ export function creationSpellDialog(input: SpellDialogInput): SpellDialog {
   const byKey = new Map(input.catalog.map((entry) => [entry.key, entry]));
 
   const quotas = knownQuotas(input.known);
-  const book = spellbookBounds(input.known);
-  if (book.cantrips !== null) quotas.push({ classToken: 'wizard', spellLevel: 0, count: book.cantrips });
-  for (const [spellLevel, count] of book.atOrAbove) quotas.push({ classToken: 'wizard', spellLevel, count });
-  const levels = [...book.atOrAbove.keys()].sort((a, b) => a - b);
-  for (const from of levels) {
-    const groups = levels.filter((level) => level >= from).map((level) => `wizard:${level}`);
-    if (groups.length > 1) {
-      sharedLimits.push({ key: `wizard:${from}+`, label: `Wizard spells of level ${from} or higher`, limit: book.atOrAbove.get(from)!, groups });
+  for (const [classToken, book] of bookBounds(input.known)) {
+    if (book.cantrips !== null) quotas.push({ classToken, spellLevel: 0, count: book.cantrips });
+    for (const [spellLevel, count] of book.atOrAbove) quotas.push({ classToken, spellLevel, count });
+    const levels = [...book.atOrAbove.keys()].sort((a, b) => a - b);
+    for (const from of levels) {
+      const groups = levels.filter((level) => level >= from).map((level) => `${classToken}:${level}`);
+      if (groups.length > 1) {
+        sharedLimits.push({
+          key: `${classToken}:${from}+`,
+          label: `${titleCase(classToken)} spells of level ${from} or higher`,
+          limit: book.atOrAbove.get(from)!,
+          groups,
+        });
+      }
     }
   }
 

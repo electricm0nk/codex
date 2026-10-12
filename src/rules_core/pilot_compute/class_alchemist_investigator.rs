@@ -508,6 +508,70 @@ pub(super) fn alchemist_base_extracts_per_day(level: u8) -> [Option<i16>; 6] {
     }
 }
 
+/// The formula book's size (Brief 1 F7), one `(id, count)` row per bound, for an Alchemist
+/// (`prefix = "apg.alchemist"`) or Investigator (`"acg.investigator"`), whose rule is the same:
+/// "two 1st-level formulae of his choice, plus a number of additional formulae equal to his
+/// Intelligence modifier. At each new [class] level, he gains one new formula of any level that he
+/// can create" (`advanced_players_guide/class_feature/alchemist/formulae.json`;
+/// `advanced_class_guide/class_feature/investigator/alchemy.json`). No 0-level extracts exist.
+///
+/// - `extract_level_1_and_higher`: `max(0, 2 + Int) + (level - 1)`, the whole book.
+/// - `extract_level_<k>_and_higher` (`k >= 2`): one per class level from 2 up to `level` whose
+///   highest creatable extract level (`per_day`'s last populated column) is at least `k`.
+///
+/// These nested bounds are the exact limit, as for the wizard's spellbook.
+pub(super) fn formula_book_size_rows(
+    prefix: &str,
+    level: u8,
+    intelligence_modifier: i16,
+    per_day: fn(u8) -> [Option<i16>; 6],
+) -> Vec<(String, i16)> {
+    let highest = |at: u8| per_day(at).iter().rposition(Option::is_some).map(|index| index as u8 + 1);
+    let Some(top) = highest(level) else {
+        return Vec::new();
+    };
+    (1..=top)
+        .map(|extract_level| {
+            let count = if extract_level == 1 {
+                (2 + intelligence_modifier).max(0) + i16::from(level) - 1
+            } else {
+                (2..=level).filter(|gained_at| highest(*gained_at).is_some_and(|h| h >= extract_level)).count() as i16
+            };
+            (format!("class_spell.{prefix}.formula_book_size.extract_level_{extract_level}_and_higher"), count)
+        })
+        .collect()
+}
+
+/// Pushes [`formula_book_size_rows`] as explanations, for every Alchemist/Investigator whether or
+/// not any formula is recorded yet (the Create screen asks before any is).
+pub(super) fn ground_formula_book_size(
+    prefix: &str,
+    class_name: &str,
+    level: u8,
+    intelligence_modifier: i16,
+    per_day: fn(u8) -> [Option<i16>; 6],
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    for (id, value) in formula_book_size_rows(prefix, level, intelligence_modifier, per_day) {
+        let detail = if id.ends_with("extract_level_1_and_higher") {
+            format!(
+                "{class_name} level {level} formula book: {value} formulae = 2 + Intelligence \
+                 modifier {intelligence_modifier} (never below 0) at 1st level, plus 1 per {class_name} \
+                 level after 1st (corpus: \"begins play with two 1st-level formulae ... plus a number \
+                 of additional formulae equal to his Intelligence modifier. At each new ... level, he \
+                 gains one new formula of any level that he can create\")"
+            )
+        } else {
+            format!(
+                "{class_name} level {level} formula book: at most {value} of its formulae may be this \
+                 extract level or higher -- one for each {class_name} level after 1st at which this \
+                 extract level could already be created"
+            )
+        };
+        explanations.push(ComputationExplanation { id, value, detail });
+    }
+}
+
 /// PF1 Advanced Player's Guide Alchemist extract save DC: `10 + extract
 /// level + Intelligence modifier` (deepening 2026-07-26, task #4),
 /// identical shape to Investigator's own extract save DC, kept as
@@ -1703,6 +1767,16 @@ pub(super) fn ground_or_block_investigator_class_features(
         ),
     });
 
+    // Brief 1 F7: the formula book's size, stated whether or not any formula is recorded yet.
+    ground_formula_book_size(
+        "acg.investigator",
+        "Investigator",
+        level,
+        ability_modifiers.intelligence,
+        investigator_base_extracts_per_day,
+        explanations,
+    );
+
     let extract_unmet = unmet_investigator_extract_conditions(input, level, ability_modifiers);
     if extract_unmet.is_empty() {
         ground_investigator_prepared_extracts(input, level, ability_modifiers, explanations);
@@ -2842,3 +2916,54 @@ mod investigator_dispatch_widening_safety_tests {
     }
 }
 
+
+/// Brief 1 F7 (tranche-17-ui): the formula book's size, the Create screen's known-extract quota.
+/// Corpus: `advanced_players_guide/class_feature/alchemist/formulae.json` and
+/// `advanced_class_guide/class_feature/investigator/alchemy.json` -- "two 1st-level formulae ...
+/// plus ... his Intelligence modifier. At each new ... level, he gains one new formula of any level
+/// that he can create."
+#[cfg(test)]
+mod formula_book_size_tests {
+    use super::{formula_book_size_rows, investigator_base_extracts_per_day, INVESTIGATOR_CLASS_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterClassLevel};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn value(rows: &[(String, i16)], suffix: &str) -> Option<i16> {
+        rows.iter().find(|(id, _)| id.ends_with(suffix)).map(|(_, v)| *v)
+    }
+
+    #[test]
+    fn a_level_1_book_holds_two_plus_int_first_level_formulae() {
+        let rows = formula_book_size_rows("acg.investigator", 1, 2, investigator_base_extracts_per_day);
+        assert_eq!(value(&rows, ".formula_book_size.extract_level_1_and_higher"), Some(4), "2 + Int 2: {rows:?}");
+        assert_eq!(value(&rows, ".formula_book_size.extract_level_2_and_higher"), None, "no 2nd-level extracts at level 1");
+        assert!(rows.iter().all(|(id, _)| id.starts_with("class_spell.acg.investigator.")), "{rows:?}");
+    }
+
+    #[test]
+    fn each_level_after_the_first_adds_one_formula_of_a_creatable_level() {
+        // Level 5, Int +1: 2 + 1 + 4 = 7; only the formulae gained at levels 4 and 5 (when 2nd-level
+        // extracts became creatable) can be 2nd level.
+        let rows = formula_book_size_rows("apg.alchemist", 5, 1, super::alchemist_base_extracts_per_day);
+        assert_eq!(value(&rows, ".formula_book_size.extract_level_1_and_higher"), Some(7), "{rows:?}");
+        assert_eq!(value(&rows, ".formula_book_size.extract_level_2_and_higher"), Some(2), "{rows:?}");
+        assert_eq!(value(&rows, ".formula_book_size.extract_level_3_and_higher"), None);
+    }
+
+    #[test]
+    fn a_draft_investigator_with_no_formulae_still_gets_its_book_size() {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE).character_input.expect("fixture");
+        input.chosen.class_levels = vec![CharacterClassLevel { class_id: INVESTIGATOR_CLASS_ID.to_owned(), level: 3 }];
+        let computation = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        let row = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.acg.investigator.formula_book_size.extract_level_1_and_higher")
+            .expect("book size stated with nothing recorded");
+        // Fixture Intelligence 10 (+0): 2 + 0 + 2.
+        assert_eq!(row.value, 4, "{row:?}");
+    }
+}

@@ -2093,6 +2093,22 @@ pub(super) fn ground_or_block_skald_spellcasting(
         ),
     });
 
+    // Brief 1 F7: the spells-known quota per spell level (the Create screen's picker).
+    for (spell_level, known) in skald_spells_known_table(skald_level).iter().enumerate() {
+        let Some(known) = known else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.skald.spontaneous.spells_known.spell_level_{spell_level}"),
+            value: *known,
+            detail: format!(
+                "Skald spells known at skald level {skald_level}, spell level {spell_level}: \
+                 {known}, transcribed from the corpus's KNOWN: column (acg_classes.lst:301-320). \
+                 The quota only: which spells are known is the player's choice"
+            ),
+        });
+    }
+
     let base_spells_per_day = skald_base_spells_per_day_table(skald_level);
     for (index, base_count) in base_spells_per_day.iter().enumerate() {
         let Some(base_count) = base_count else {
@@ -3388,6 +3404,41 @@ pub(super) fn bard_spell_level_access(level: u8) -> i16 {
 /// empty (zero known spells) posture as valid at any level, the same
 /// "zero selected spells is always valid" idiom every prepared/known
 /// caster class this session already uses.
+/// Skald's spells-known table (Brief 1 F7), one entry per spell level 0-6 (`None` for an
+/// inaccessible column), transcribed literally from the pinned PCGen oracle's `CLASS:Skald` level
+/// progression `KNOWN:` column, `acg_classes.lst:301-320`. Level 19's row (`6,6,5,6,5,5,4`) is
+/// copied as the oracle has it although its 2nd-level 5 is lower than level 18's 6.
+pub(super) fn skald_spells_known_table(level: u8) -> [Option<i16>; 7] {
+    let row: &[i16] = match level {
+        1 => &[4, 2],
+        2 => &[5, 3],
+        3 => &[6, 4],
+        4 => &[6, 4, 2],
+        5 => &[6, 4, 3],
+        6 => &[6, 4, 4],
+        7 => &[6, 5, 4, 2],
+        8 => &[6, 5, 4, 3],
+        9 => &[6, 5, 4, 4],
+        10 => &[6, 5, 5, 4, 2],
+        11 => &[6, 6, 5, 4, 3],
+        12 => &[6, 6, 5, 4, 4],
+        13 => &[6, 6, 5, 5, 4, 2],
+        14 => &[6, 6, 6, 5, 4, 3],
+        15 => &[6, 6, 6, 5, 4, 4],
+        16 => &[6, 6, 6, 5, 5, 4, 2],
+        17 => &[6, 6, 6, 6, 5, 4, 3],
+        18 => &[6, 6, 6, 6, 5, 4, 4],
+        19 => &[6, 6, 5, 6, 5, 5, 4],
+        20 => &[6, 6, 6, 6, 6, 5, 5],
+        _ => &[],
+    };
+    let mut table = [None; 7];
+    for (index, count) in row.iter().enumerate() {
+        table[index] = Some(*count);
+    }
+    table
+}
+
 pub(super) fn bard_spells_known_table(level: u8) -> [Option<i16>; 5] {
     match level {
         1 => [Some(4), Some(2), None, None, None],
@@ -5078,3 +5129,50 @@ mod bard_dispatch_widening_safety_tests {
     }
 }
 
+
+/// Brief 1 F7 (tranche-17-ui): the Skald's spells-known quota per spell level, the Create screen's
+/// picker quota, transcribed from `acg_classes.lst:301-320` `KNOWN:` (pinned PCGen oracle).
+#[cfg(test)]
+mod skald_spells_known_quota_tests {
+    use super::SKALD_CLASS_ID;
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterClassLevel};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn known(level: u8) -> Vec<(String, i16)> {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE).character_input.expect("fixture");
+        input.chosen.class_levels = vec![CharacterClassLevel { class_id: SKALD_CLASS_ID.to_owned(), level }];
+        crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input)
+            .explanations
+            .into_iter()
+            .filter(|e| e.id.starts_with("class_chassis.skald.spontaneous.spells_known."))
+            .map(|e| (e.id, e.value))
+            .collect()
+    }
+
+    fn at(rows: &[(String, i16)], spell_level: u8) -> Option<i16> {
+        let id = format!("class_chassis.skald.spontaneous.spells_known.spell_level_{spell_level}");
+        rows.iter().find(|(row, _)| *row == id).map(|(_, v)| *v)
+    }
+
+    #[test]
+    fn a_level_1_skald_knows_four_cantrips_and_two_first_level_spells() {
+        // acg_classes.lst:301 `KNOWN:4,2`.
+        let rows = known(1);
+        assert_eq!((at(&rows, 0), at(&rows, 1), at(&rows, 2)), (Some(4), Some(2), None), "{rows:?}");
+    }
+
+    #[test]
+    fn a_level_19_skald_reads_its_corpus_row_verbatim() {
+        // acg_classes.lst:319 `KNOWN:6,6,5,6,5,5,4` -- the 2nd-level 5 (level 18 has 6) is the
+        // oracle's own value, transcribed as-is and flagged in the Brief 1 receipt.
+        let rows = known(19);
+        assert_eq!(
+            (0..=7).map(|level| at(&rows, level)).collect::<Vec<_>>(),
+            vec![Some(6), Some(6), Some(5), Some(6), Some(5), Some(5), Some(4), None],
+            "{rows:?}"
+        );
+    }
+}
