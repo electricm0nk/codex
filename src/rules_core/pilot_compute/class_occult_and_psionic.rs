@@ -349,6 +349,8 @@ pub(super) fn compute_apg_class_chassis(
             ALCHEMIST_DISCOVERY_GRANT_LEVEL,
             explanations,
         );
+        // Brief 1 F7: the formula book's size, stated whether or not any formula is recorded.
+        ground_alchemist_formula_book_size(level, alchemist_intelligence_modifier, explanations);
         let extract_unmet =
             unmet_alchemist_extract_conditions(input, level, alchemist_intelligence_modifier);
         if extract_unmet.is_empty() {

@@ -572,6 +572,22 @@ pub(super) fn ground_formula_book_size(
     }
 }
 
+/// The Alchemist's formula book size ([`ground_formula_book_size`] over the Alchemist table).
+pub(super) fn ground_alchemist_formula_book_size(
+    level: u8,
+    intelligence_modifier: i16,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    ground_formula_book_size(
+        "apg.alchemist",
+        "Alchemist",
+        level,
+        intelligence_modifier,
+        alchemist_base_extracts_per_day,
+        explanations,
+    );
+}
+
 /// PF1 Advanced Player's Guide Alchemist extract save DC: `10 + extract
 /// level + Intelligence modifier` (deepening 2026-07-26, task #4),
 /// identical shape to Investigator's own extract save DC, kept as
@@ -2951,6 +2967,19 @@ mod formula_book_size_tests {
         assert_eq!(value(&rows, ".formula_book_size.extract_level_1_and_higher"), Some(7), "{rows:?}");
         assert_eq!(value(&rows, ".formula_book_size.extract_level_2_and_higher"), Some(2), "{rows:?}");
         assert_eq!(value(&rows, ".formula_book_size.extract_level_3_and_higher"), None);
+    }
+
+    #[test]
+    fn a_draft_alchemist_with_no_formulae_still_gets_its_book_size() {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE).character_input.expect("fixture");
+        input.chosen.class_levels = vec![CharacterClassLevel { class_id: super::ALCHEMIST_CLASS_ID.to_owned(), level: 1 }];
+        let computation = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        let row = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_spell.apg.alchemist.formula_book_size.extract_level_1_and_higher")
+            .expect("book size stated with nothing recorded");
+        assert_eq!(row.value, 2, "2 + Int 0: {row:?}");
     }
 
     #[test]

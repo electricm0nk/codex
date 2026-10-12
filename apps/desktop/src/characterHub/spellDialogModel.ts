@@ -123,8 +123,13 @@ export function creationSpellDialog(input: SpellDialogInput): SpellDialog {
   const byKey = new Map(input.catalog.map((entry) => [entry.key, entry]));
 
   const quotas = knownQuotas(input.known);
+  /** Book level-0 quotas: the book holds every cantrip (wizard, witch, arcanist). */
+  const allCantrips = new Set<string>();
   for (const [classToken, book] of bookBounds(input.known)) {
-    if (book.cantrips !== null) quotas.push({ classToken, spellLevel: 0, count: book.cantrips });
+    if (book.cantrips !== null) {
+      quotas.push({ classToken, spellLevel: 0, count: book.cantrips });
+      allCantrips.add(`${classToken}:0`);
+    }
     for (const [spellLevel, count] of book.atOrAbove) quotas.push({ classToken, spellLevel, count });
     const levels = [...book.atOrAbove.keys()].sort((a, b) => a - b);
     for (const from of levels) {
@@ -146,10 +151,9 @@ export function creationSpellDialog(input: SpellDialogInput): SpellDialog {
     const classId = `class:${quota.classToken}`;
     const group = `${quota.classToken}:${quota.spellLevel}`;
     groupLimits[group] = quota.count;
-    groupLabels[group] =
-      quota.classToken === 'wizard' && quota.spellLevel === 0
-        ? 'Wizard level 0 (all cantrips)'
-        : `${titleCase(quota.classToken)} level ${quota.spellLevel}`;
+    groupLabels[group] = allCantrips.has(group)
+      ? `${titleCase(quota.classToken)} level 0 (all cantrips)`
+      : `${titleCase(quota.classToken)} level ${quota.spellLevel}`;
     const list = input.classLevels.find((entry) => entry.classId === classId);
     for (const listed of list?.entries ?? []) {
       if (listed.level !== quota.spellLevel) continue;

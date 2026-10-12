@@ -44,6 +44,8 @@ const input = (over: Partial<SpellDialogInput>): SpellDialogInput => ({
     classLevels('class:skald', arcane),
     classLevels('class:alchemist', extracts),
     classLevels('class:investigator', extracts),
+    classLevels('class:witch', arcane),
+    classLevels('class:arcanist', arcane),
   ],
   catalog,
   innate: [],
@@ -202,6 +204,27 @@ function verifiesHunterSkaldAlchemistAndInvestigatorGetAPicker() {
   }
 }
 
+// Brief 1 F7: the Witch's familiar and the Arcanist's spellbook use the wizard's book rule (all
+// cantrips; nested pools), from their own `*.spellbook_size.*` rows.
+function verifiesWitchAndArcanistPickFromTheirBooks() {
+  for (const [prefix, token, name] of [['apg.witch', 'witch', 'Witch'], ['acg.arcanist', 'arcanist', 'Arcanist']] as const) {
+    const dialog = creationSpellDialog(
+      input({
+        known: [
+          row(`class_spell.${prefix}.spellbook_size.spell_level_0`, 2),
+          row(`class_spell.${prefix}.spellbook_size.spell_level_1_and_higher`, 5),
+          row(`class_spell.${prefix}.spellbook_size.spell_level_2_and_higher`, 2),
+        ],
+      })
+    );
+    assertEqual(JSON.stringify(dialog.groupLimits), JSON.stringify({ [`${token}:0`]: 2, [`${token}:1`]: 5, [`${token}:2`]: 2 }), `${token}: book quotas`);
+    assertEqual(dialog.groupLabels[`${token}:0`], `${name} level 0 (all cantrips)`, `${token}: the cantrip quota says it is every cantrip`);
+    assertEqual(dialog.sharedLimits.map((shared) => shared.label).join(), `${name} spells of level 1 or higher`, `${token}: one pool`);
+    assertEqual(dialog.readOnly.length, 0, `${token}: picker, not text`);
+  }
+}
+
+verifiesWitchAndArcanistPickFromTheirBooks();
 verifiesHunterSkaldAlchemistAndInvestigatorGetAPicker();
 verifiesTheReloadKeyChangesWhenALevelIsAdded();
 verifiesASorcererPicksItsSpellsKnownPerLevel();
