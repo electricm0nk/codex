@@ -189,7 +189,7 @@ const BRIDGE_TAG_ID = 'codex-community-theme-bridge';
 // `--color-*` token app-wide, making every themed surface render fully
 // transparent. `--wasp-color-*` (theme.css) is a separate token namespace
 // nothing ever overrides, so referencing it here carries no such risk.
-const BRIDGE_CSS = `
+export const COMMUNITY_THEME_BRIDGE_CSS = `
 body.theme-dark, body.theme-light {
   --color-page: var(--background-secondary, var(--wasp-color-page));
   --color-surface: var(--background-primary, var(--wasp-color-surface));
@@ -205,6 +205,20 @@ body.theme-dark, body.theme-light {
   --color-text-faint: var(--text-faint, var(--wasp-color-text-faint));
   --color-link: var(--text-accent, var(--wasp-color-link));
 }
+/* Obsidian themes mark NOTE headings with generated text (Ayu Mirage: \`h2:before { content: "H2 " }\`);
+   in this app it printed "H2" before every heading, so the markers are switched off. */
+body.theme-dark h1::before,
+body.theme-dark h2::before,
+body.theme-dark h3::before,
+body.theme-dark h4::before,
+body.theme-dark h5::before,
+body.theme-dark h6::before,
+body.theme-light h1::before,
+body.theme-light h2::before,
+body.theme-light h3::before,
+body.theme-light h4::before,
+body.theme-light h5::before,
+body.theme-light h6::before { content: none !important; }
 `;
 
 /** Re-injects (or removes) the active community theme's CSS. Call on boot and whenever the selection changes. */
@@ -230,7 +244,7 @@ export function applyActiveTheme(): void {
 
   const bridgeTag = existingBridge ?? document.createElement('style');
   bridgeTag.id = BRIDGE_TAG_ID;
-  bridgeTag.textContent = BRIDGE_CSS;
+  bridgeTag.textContent = COMMUNITY_THEME_BRIDGE_CSS;
   if (!existingBridge) {
     document.head.appendChild(bridgeTag);
   }
