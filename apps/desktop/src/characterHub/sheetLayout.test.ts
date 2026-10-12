@@ -61,6 +61,11 @@ function verifiesTheSquareBlockIsTwoByTwoSquares() {
   assertEqual(SQUARE_BLOCK_STYLE.display, 'grid', 'the 2x2 block is a grid');
   assertEqual(SQUARE_BLOCK_STYLE.gridTemplateColumns, '1fr 1fr', 'the 2x2 block has two equal columns');
   assertEqual(SQUARE_BOX_STYLE.aspectRatio, '1', 'each box in the 2x2 block is square');
+  // Brief 2 L2b: at full column width the squares are ~640px and push the stat block below the
+  // fold, so the block is capped (boxes ~170px) and left-aligned under the name, sheet and Create.
+  assertEqual(SQUARE_BLOCK_STYLE.maxWidth, '360px', 'the 2x2 block is capped at 360px');
+  assertEqual(SQUARE_BLOCK_STYLE.width, '100%', 'up to the cap it fills its column (never shrinks to content)');
+  assertEqual(SQUARE_BLOCK_STYLE.justifySelf, 'start', 'and sits at the left under the name');
 }
 
 function verifiesCreateHasItsOwnRegistry() {

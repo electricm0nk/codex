@@ -29,10 +29,11 @@ import {
 import { loadRaceRosterSurface, rosterErrorMessage, type RaceRosterSurface } from './raceRoster';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { LevelsPanel } from './LevelsPanel';
-import { LevelGainsPanel } from './panels/LevelGains';
+import { LevelGainsPanel, loadLevelFeatures, type LevelFeaturesState } from './panels/LevelGains';
 import { SquareBlock } from './panels/SquareBlock';
 import { draftPreviewKey, squareBlockForDraft, type DraftPreviewState } from './panels/createSheetBlock';
 import { loadDraftSheetPreview } from '../boundary/draftSheetPreview';
+import { loadDraftLevelUpPreview } from '../boundary/draftLevelUpPreview';
 import { CREATE_COLUMNS, CREATE_COLUMN_STYLES, CREATE_LAYOUT, boxesInColumn, type CreateBoxId } from './sheetLayout';
 import { ManageBox } from './ManageBox';
 import { TransferListDialog } from './TransferListDialog';
@@ -115,7 +116,7 @@ import {
   rollStraightAbilityScores,
   type AbilityScoreMethodId,
 } from './abilityScoreMethods';
-import { maxHitPoints } from './characterProgression';
+import { buildLevelEntries, maxHitPoints } from './characterProgression';
 
 const LABEL_STYLE: CSSProperties = {
   color: 'var(--color-text-secondary)',
@@ -411,6 +412,7 @@ export function CreateCharacterFields(props: {
   // Custom: GM grants and house-rule records; saved right after the character is created.
   const [custom, setCustom] = useState<CharacterCustom>(EMPTY_CUSTOM);
   const [draftPreview, setDraftPreview] = useState<DraftPreviewState>({ kind: 'noLevels' });
+  const [levelFeatures, setLevelFeatures] = useState<LevelFeaturesState>({ kind: 'loading' });
   const [customDialogOpen, setCustomDialogOpen] = useState(false);
   // AT-34-E4-002 (second slice): the player's resolved skill choice for
   // each selected fixed-choice open-slot trait, keyed by trait id. A trait
@@ -587,6 +589,15 @@ export function CreateCharacterFields(props: {
       })
       .catch((cause: unknown) => {
         if (!cancelled) setDraftPreview({ kind: 'error', message: cause instanceof Error ? cause.message : String(cause) });
+      });
+    // Brief 2 L4b: each Gains-per-level line's class features, one `draft_level_up_preview` per line.
+    setLevelFeatures({ kind: 'loading' });
+    loadLevelFeatures(buildLevelEntries(heldClasses), (classId, fromLevel) => loadDraftLevelUpPreview(draft, classId, fromLevel))
+      .then((byLevel) => {
+        if (!cancelled) setLevelFeatures({ kind: 'ready', byLevel });
+      })
+      .catch((cause: unknown) => {
+        if (!cancelled) setLevelFeatures({ kind: 'error', message: cause instanceof Error ? cause.message : String(cause) });
       });
     return () => {
       cancelled = true;
@@ -967,7 +978,14 @@ export function CreateCharacterFields(props: {
           />
         );
       case 'levelGains':
-        return <LevelGainsPanel heldClasses={heldClasses} intelligenceModifier={abilityModifier(calculatedScore('intelligence'))} isHuman={isHuman} />;
+        return (
+          <LevelGainsPanel
+            heldClasses={heldClasses}
+            intelligenceModifier={abilityModifier(calculatedScore('intelligence'))}
+            isHuman={isHuman}
+            classFeatures={levelFeatures}
+          />
+        );
       case 'identity':
         return (
           <>

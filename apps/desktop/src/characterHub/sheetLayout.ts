@@ -50,9 +50,18 @@ export const SHEET_LAYOUT: readonly LayoutBox<SheetBoxId, SheetColumn>[] = [
 
 /**
  * The 2x2 square block (Hit Points, Initiative, Encumbrance, Conditions) under the name: two equal
- * columns of square boxes. Rendered by Brief 2 L2 (sheet) and L5 (Create).
+ * columns of square boxes. Rendered by Brief 2 L2 (sheet) and L5 (Create). Capped at 360px (boxes
+ * about 170px) and left-aligned (L2b): at full column width the squares pushed the stat block below
+ * the fold. Retune the cap here.
  */
-export const SQUARE_BLOCK_STYLE: CSSProperties = { display: 'grid', gap: '0.6rem', gridTemplateColumns: '1fr 1fr' };
+export const SQUARE_BLOCK_STYLE: CSSProperties = {
+  display: 'grid',
+  gap: '0.6rem',
+  gridTemplateColumns: '1fr 1fr',
+  justifySelf: 'start',
+  maxWidth: '360px',
+  width: '100%',
+};
 export const SQUARE_BOX_STYLE: CSSProperties = { aspectRatio: '1' };
 
 /** The four boxes of the 2x2 block, read left to right, top to bottom. */

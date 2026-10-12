@@ -4,7 +4,7 @@ import { assert, assertEqual } from '../../testSupport/asserts';
 import { classRosterWire } from '../../testSupport/classRosterWire';
 import { installClassRoster } from '../classRoster';
 import { buildLevelEntries, describeLevelGains, type HeldClass } from '../characterProgression';
-import { LevelGainsPanel } from './LevelGains';
+import { LEVEL_FEATURES_LOADING, LevelGainsPanel, loadLevelFeatures } from './LevelGains';
 
 // Brief 2 L4: the read-only per-level summary under the Create screen's HP roller,
 // "Monk 1: +1 feat, +N skills, ...". Feat, skills and ability increase come from
@@ -56,9 +56,71 @@ function verifiesThePanelIsEmptyWithoutLevels() {
   assertEqual(html, '', 'no levels, no summary');
 }
 
+// Brief 2 L4b: each line also prints the engine's class features for that class level
+// (`draft_level_up_preview`, one call per line), verbatim; loading and refusals say so.
+
+function verifiesEachLineAppendsTheEnginesClassFeatures() {
+  const html = renderToStaticMarkup(
+    createElement(LevelGainsPanel, {
+      heldClasses: MONK_2_FIGHTER_2,
+      intelligenceModifier: 1,
+      isHuman: false,
+      classFeatures: { kind: 'ready', byLevel: { 1: ['flurry of blows'], 2: ['evasion'], 3: ['Fighter base_attack_bonus at level 1'], 4: [] } },
+    }),
+  );
+  assert(html.includes('Monk 1: +1 feat, +5 skills; class features: flurry of blows'), html);
+  assert(html.includes('Monk 2: +5 skills; class features: evasion'), html);
+  assert(html.includes('Fighter 1: +1 feat, +3 skills; class features: Fighter base_attack_bonus at level 1'), html);
+  assert(html.includes('Fighter 2: +3 skills, +1 ability score; class features: none reported by the engine'), 'an empty engine answer is printed as such');
+}
+
+function verifiesLoadingAndRefusalAreShownNotGuessed() {
+  const loading = renderToStaticMarkup(
+    createElement(LevelGainsPanel, { heldClasses: MONK_2_FIGHTER_2, intelligenceModifier: 1, isHuman: false, classFeatures: { kind: 'loading' } }),
+  );
+  assert(loading.includes(LEVEL_FEATURES_LOADING), 'loading is said');
+  assert(!loading.includes('class features:'), 'no feature text before the engine answers');
+  const refused = renderToStaticMarkup(
+    createElement(LevelGainsPanel, {
+      heldClasses: MONK_2_FIGHTER_2,
+      intelligenceModifier: 1,
+      isHuman: false,
+      classFeatures: { kind: 'error', message: 'Failed to load the draft level-up preview: no race' },
+    }),
+  );
+  assert(refused.includes('role="note"') && refused.includes('Failed to load the draft level-up preview: no race'), 'the refusal is shown');
+  assert(refused.includes('Monk 1: +1 feat, +5 skills<'), 'the universal gains still print');
+}
+
+async function verifiesTheLoaderAsksOnceperLineWithThePreviousClassLevel() {
+  const calls: string[] = [];
+  const byLevel = await loadLevelFeatures(buildLevelEntries(MONK_2_FIGHTER_2), async (classId, fromLevel) => {
+    calls.push(`${classId}@${fromLevel}`);
+    return { fromLevel, toLevel: fromLevel + 1, automaticFeatures: [`${classId} ${fromLevel + 1}`] };
+  });
+  assertEqual(calls.join(','), 'class:monk@0,class:monk@1,class:fighter@0,class:fighter@1', 'one call per line, from the class level before');
+  assertEqual(byLevel[3].join(), 'class:fighter 1', 'keyed by character level');
+  let thrown: unknown;
+  try {
+    await loadLevelFeatures(buildLevelEntries(MONK_2_FIGHTER_2), async () => {
+      throw new Error('refused');
+    });
+  } catch (cause) {
+    thrown = cause;
+  }
+  assert(thrown instanceof Error && thrown.message === 'refused', 'a refused call refuses the whole answer');
+}
+
 verifiesEachLevelReadsFeatSkillsAndAbilityIncrease();
+verifiesEachLineAppendsTheEnginesClassFeatures();
+verifiesLoadingAndRefusalAreShownNotGuessed();
 verifiesHumanBonusAndFloor();
 verifiesAnUnknownClassSaysUnknownSkills();
 verifiesThePanelListsOneLinePerLevelInOrder();
 verifiesThePanelIsEmptyWithoutLevels();
-console.log('levelGains.test.ts: all assertions passed');
+verifiesTheLoaderAsksOnceperLineWithThePreviousClassLevel()
+  .then(() => console.log('levelGains.test.ts: all assertions passed'))
+  .catch((error: unknown) => {
+    console.error(error);
+    process.exitCode = 1;
+  });

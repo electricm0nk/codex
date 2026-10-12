@@ -1888,6 +1888,44 @@ pub fn draft_sheet_preview(request: CreateCharacterRequest) -> Result<DraftSheet
     draft_sheet_preview_impl(&request)
 }
 
+/// Brief 2 L4b: what class level `from_level + 1` of `class_id` grants a character that is not
+/// saved yet, for the Create screen's per-level lines. The same engine call `preview_level_up`
+/// makes for a saved character (`compute_level_up_grants_for_class`), on the draft's input.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DraftLevelUpPreviewDto {
+    pub from_level: u8,
+    pub to_level: u8,
+    /// The engine's automatic grant names for this transition, verbatim. Empty is a real answer:
+    /// the engine grounds per-level grants for the eleven PF1 Core classes only.
+    pub automatic_features: Vec<String>,
+}
+
+fn draft_level_up_preview_impl(
+    request: &CreateCharacterRequest,
+    class_id: &str,
+    from_level: u8,
+) -> Result<DraftLevelUpPreviewDto, String> {
+    let (input, _) = build_create_input(request, FeatPolicy::Trust)
+        .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
+    let to_level = from_level.saturating_add(1);
+    let plan = compute_level_up_grants_for_class(&input, class_id, from_level, to_level);
+    Ok(DraftLevelUpPreviewDto {
+        from_level,
+        to_level,
+        automatic_features: plan.automatic_features.into_iter().map(|grant| grant.name).collect(),
+    })
+}
+
+#[tauri::command]
+pub fn draft_level_up_preview(
+    request: CreateCharacterRequest,
+    class_id: String,
+    from_level: u8,
+) -> Result<DraftLevelUpPreviewDto, String> {
+    draft_level_up_preview_impl(&request, &class_id, from_level)
+}
+
 pub(crate) fn create_character_at_root(
     root: &Path,
     request: &CreateCharacterRequest,
@@ -13236,6 +13274,52 @@ mod tests {
         assert_eq!(preview.from_level, 0);
         assert_eq!(preview.to_level, 1);
         assert_eq!(preview.character_level, 4);
+    }
+
+    // ---- Brief 2 L4b: the Create screen's per-level class features ---------------------------------
+
+    /// The unsaved draft's Fighter 1 -> 2 reports the same engine grant names the saved
+    /// character's `preview_level_up` reports for the same character.
+    #[test]
+    fn the_draft_level_up_preview_names_the_same_fighter_level_2_grants_as_the_saved_path() {
+        let request = request_for("race:human", 1);
+        let draft = draft_level_up_preview_impl(&request, FIGHTER_CLASS_ID, 1).expect("draft preview");
+        assert_eq!((draft.from_level, draft.to_level), (1, 2));
+
+        let root = saved_root_for("draft-level-up-vs-saved", compose_character_input(&request));
+        let saved = preview_level_up_at_root(&root, FIGHTER_CLASS_ID).expect("saved preview");
+        let saved_names: Vec<String> = saved.automatic_features.iter().map(|grant| grant.name.clone()).collect();
+        assert_eq!(draft.automatic_features, saved_names, "the draft and the saved path agree");
+        assert!(draft.automatic_features.iter().any(|name| name.contains("bravery")), "{:?}", draft.automatic_features);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Create's first line is class level 1, a transition from class level 0.
+    #[test]
+    fn the_draft_level_up_preview_reports_a_first_class_level() {
+        let draft = draft_level_up_preview_impl(&request_for("race:human", 1), FIGHTER_CLASS_ID, 0).expect("draft preview");
+        assert_eq!((draft.from_level, draft.to_level), (0, 1));
+        assert!(
+            draft.automatic_features.iter().any(|name| name.contains("base_attack_bonus")),
+            "level 1 sets the base attack bonus: {:?}",
+            draft.automatic_features
+        );
+    }
+
+    #[test]
+    fn the_draft_level_up_preview_crosses_the_boundary_in_the_camel_case_wire_shape() {
+        let draft = draft_level_up_preview_impl(&request_for("race:human", 1), FIGHTER_CLASS_ID, 1).expect("draft preview");
+        let wire = serde_json::to_value(&draft).unwrap();
+        let keys: BTreeSet<&str> = wire.as_object().unwrap().keys().map(String::as_str).collect();
+        assert_eq!(keys, BTreeSet::from(["fromLevel", "toLevel", "automaticFeatures"]));
+        assert!(wire["automaticFeatures"].as_array().unwrap().iter().all(serde_json::Value::is_string), "{wire}");
+    }
+
+    #[test]
+    fn the_draft_level_up_preview_reports_a_draft_that_cannot_be_built() {
+        let mut request = request_for("race:human", 1);
+        request.selected_alternate_trait_keys = vec!["Not A Real Trait".to_owned()];
+        assert!(draft_level_up_preview_impl(&request, FIGHTER_CLASS_ID, 1).is_err(), "an unbuildable draft is an error");
     }
 }
 
