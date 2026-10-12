@@ -51,6 +51,11 @@ Fix six defects/gaps on the Create-a-character screen and its Spells/Traits dial
 - Rule source: the quota formula for each class comes from its corpus class record under `data/corpus/` (CRB/APG/ACG). Do not use a remembered figure; cite the corpus line in the explanation detail. Shapes: Witch/Arcanist = book size (cantrips all; 1st-level base + Int mod at level 1, + per level after); Alchemist/Investigator = formula book (no cantrips; base + Int mod at level 1, + per level); Hunter/Skald = spontaneous spells-known table by class level.
 - Test first per class: a Rust test per class (level 1 and a higher level) + a front-end `spellDialogModel.test.ts` case with each class's row ids. Remove the "engine does not count known spells yet" line for these six once the rows exist.
 
+### F3b — Sheet skill rows must read engine totals (lead ruling 2026-10-11, per §29.1 "a magnitude is not wired until it moves on the twin the player reads")
+- Finding (lane, verified by reading): `CharacterSheet.tsx:702` sums each skill row on the frontend; only Climb/Intimidate/Swim read engine values. So Meticulous -2, and every existing trait skill bonus (Acrobat +1 etc.), never reach the sheet. The sheet skill rows are a twin (§29.2).
+- Change: the sheet's skill rows render the engine's per-skill totals (the `explanations` rows) instead of re-summing; the skills DTO carries them. Smallest change; no layout work (Brief 2). Test first: a sheet skills-model test with Meticulous and with Acrobat; a Rust DTO test.
+- Scope added (fifth widening): `apps/desktop/src/characterHub/CharacterSheet.tsx` (skill rows only, around line 702) + its skills model/test files, `apps/desktop/src-tauri/src/pf1_adapter.rs` (skills DTO), `character_hub.rs` (already in scope).
+
 ## Required reads
 `CreateCharacterForm.tsx` 440–560, 641–730, 1069–1280; `TransferListDialog.tsx`; `transferListModel.ts`; `spellDialogModel.ts`; `spellsPerDayModel.ts`; `manageItems.ts`; `loadCharacterTraits.ts`; `character_hub.rs` `draft_spell_options_impl` (~1817); `class_sorcerer_wizard.rs` ~2184–2419; `class_wizard_prepared_spellbook.rs` ~1295, 1545, 1599; `trait_effects.rs` ~239.
 
