@@ -187,4 +187,4 @@ loads slower than the row waits); its `headingExact` passed on every run.
 
 ## Not done
 
-- The full desktop suite was not rerun after the final two-test fix (the two tests were rerun).
+- (Closed by the lead 2026-10-12.) Full desktop suite rerun at 6966da45a0: `cd apps/desktop/src-tauri && CARGO_TARGET_DIR=/home/ubuntu/cargo-target/brief1 cargo test --no-fail-fast -- --test-threads=8` → 795 passed + 1 passed, 0 failed, 2 ignored (2 `test result` lines, summed with awk).
