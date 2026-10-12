@@ -1,10 +1,12 @@
-# Brief 1 — cycle receipt (create-character fixes, F1–F6)
+# Brief 1 — cycle receipt (create-character fixes, F1–F7 + F3b)
 
-Branch `ui-brief1` (worktree `.worktrees/brief1`), base `tranche-17-ui` @ 5f020b221b.
-Status: F2–F6 done. F1 did not reproduce (guard added). One open finding: Meticulous's −2 is in the
-engine's skill totals but the sheet's skill rows do not read those totals (see Blockers).
+Branch `ui-brief1` (worktree `.worktrees/brief1`), base `tranche-17-ui` @ 5f020b221b, merged with
+`tranche-17-ui` twice (8c4fad3170, ddd46db0d8). Not pushed.
 
-## Commits
+**Status: complete**, except the items under "Uncovered" and "Not done". F1 was reproduced and fixed.
+F2–F7 and F3b are done and verified.
+
+## Commits (`git log --oneline 5f020b221b..ui-brief1 --no-merges`, Brief 1 code commits only)
 
 | sha | subject |
 |---|---|
@@ -15,139 +17,146 @@ engine's skill totals but the sheet's skill rows do not read those totals (see B
 | 2d935014b7 | test(brief1-F1): forbid stray 'H2' on the Create screen smoke row |
 | ca4b4c3017 | docs(brief1): cycle receipt + retro events (first pass) |
 | bacfd9c43a | feat(brief1-F3): drawbacks in the trait picker, Meticulous -2 on untrained skill totals |
-| 7a7228e611 | feat(brief1-F2): ManageBox manageLabel; Racial Traits button reads 'Swap racial traits' |
-
-`git log --oneline tranche-17-ui..ui-brief1`
+| 7a7228e611 | feat(brief1-F2): ManageBox manageLabel; 'Swap racial traits' |
+| 5bf3dbb420 | docs(brief1): receipt second pass |
+| 1dcaa4a84d | test(brief1-F1): run.mjs headingExact check |
+| 15d3bd5acd | feat(brief1-F7): Hunter, Skald, Investigator known quotas (+ formula-book UI) |
+| 6d9cdc8194 | fix(brief1-F1): switch off community-theme heading markers |
+| 3085ec9c4e | feat(brief1-F3b): sheet skill rows add the engine's trait/drawback modifier |
+| 01cc6a1085 | feat(brief1-F7): Witch, Arcanist, Alchemist book-size quotas |
 
 ## Scope corrections
 
-- The brief named `src/rules_core/class_sorcerer_wizard.rs` and `class_wizard_prepared_spellbook.rs`;
-  they live in `src/rules_core/pilot_compute/`. Lead confirmed those are the granted files.
-- Lead granted (2026-10-11, option A) `apps/desktop/src-tauri/src/trait_picker.rs` (+ tests) and
-  `src/rules_core/skill_allocation.rs` (+ tests): the trait DTO is built in `trait_picker.rs`, and
-  Meticulous's untrained −2 is a skill-total change.
-- Lead granted `apps/desktop/src/characterHub/ManageBox.tsx` + `ManageBox.test.ts` for an optional
-  `manageLabel` prop only. No ui-smoke row clicks the Create screen's Manage buttons
-  (`grep -n '"Manage"' apps/desktop/scripts/ui-smoke/spec.json` → no match), so no row changed.
-- `tests/sd13_wizard_level1_prepared_spell_baseline.rs` was edited as the brief's "+ tests".
+- The brief named `src/rules_core/class_sorcerer_wizard.rs` / `class_wizard_prepared_spellbook.rs`;
+  they live in `src/rules_core/pilot_compute/`. Lead confirmed.
+- Granted 2026-10-11 (brief commits 3581fd8c74, b57ddf49f4, c23ec36b74, f348bf707b, 02d7e08a1c,
+  fe1980d2de, be6011ab8d): `trait_picker.rs`, `skill_allocation.rs` (F3); `ManageBox.tsx` (F2;
+  no ui-smoke row clicks the Create screen's Manage buttons: `grep -n '"Manage"'
+  apps/desktop/scripts/ui-smoke/spec.json` → no match); `run.mjs` (F1); `CharacterSheet.tsx`
+  skill rows, `skillsModel.ts`, `pf1_adapter.rs` (F3b; `pf1_adapter.rs` turned out not to need a
+  change: the mutation response carries no explanations and the sheet re-reads the detail);
+  `communityTheme.ts` (+ new `communityTheme.test.ts`), `uiProbe.ts` (F1); the four F7 class files
+  and `class_occult_and_psionic.rs` (one Alchemist call).
+- `tests/sd13_wizard_level1_prepared_spell_baseline.rs` and `uiSmokeProbe.test.ts` were edited as
+  the brief's "+ tests".
 
-## Files changed
+## F1 — "H2" before the title (fixed)
 
-- Engine: `src/rules_core/pilot_compute/class_wizard_prepared_spellbook.rs` (the brief's
-  `src/rules_core/class_wizard_prepared_spellbook.rs` lives under `pilot_compute/`),
-  `src/rules_core/trait_effects.rs`, `tests/sd13_wizard_level1_prepared_spell_baseline.rs`
-  (guard allowlist widened for the new `spellbook_size` rows; read as the brief's "+ tests").
-- Engine (second pass): `src/rules_core/skill_allocation.rs`.
-- Desktop Rust: `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/trait_picker.rs`.
-- Frontend (second pass): `ManageBox.tsx`.
-- Frontend: `spellsPerDayModel.ts`, `spellDialogModel.ts`, `transferListModel.ts`,
-  `TransferListDialog.tsx`, `manageItems.ts`, `creationRacialTraitsPreview.ts`,
-  `CreateCharacterForm.tsx`, `boundary/draftSpellOptions.ts`, `boundary/loadCharacterTraits.ts`.
-- `apps/desktop/scripts/ui-smoke/spec.json`, regenerated `docs/testing/ui-smoke-inventory.md`.
+- Cause: the app's only built-in community theme, Ayu Mirage (`BUILTIN_FEATURED_THEMES`,
+  `apps/desktop/src/settings/communityTheme.ts`), loads github
+  `bcdavasconcelos/Obsidian-Ayu_Mirage` `master/obsidian.css`, whose lines ~1759–1792 carry
+  unscoped `h1:before { content: "H1 " }` … `h6:before`, Obsidian note-heading markers.
+- Reproduced (before the fix): Settings → Appearance → Ayu Mirage, then the Create screen shows
+  "H2 Create a character". Screenshot `/home/ubuntu/cargo-target/brief1/f1b/create-ayu-mirage.png`.
+  Probe at the same moment: `headings ['Create a character']` (generated text is invisible to
+  textContent/innerText, so `headingExact` and `forbid: H2` both pass with the marker on screen).
+- Fix: the bridge stylesheet injected with every community theme sets `content: none !important`
+  on `h1::before`…`h6::before` under `body.theme-dark` / `body.theme-light`.
+- Guard: `uiProbe.ts` reports `headingMarkers` (computed `::before` content of h1–h3, via the
+  tested `headingMarkerText`); `run.mjs` `noHeadingMarkers: true` fails a row that draws any;
+  `create-character-render` uses it plus `headingExact: "Create a character"` and `forbid: ["H2"]`.
+- Confirmed after the fix, theme on: probe `headings ['Create a character'] markers []`; screenshot
+  `/home/ubuntu/cargo-target/brief1/f1c/create-ayu-mirage-fixed.png` shows the plain title.
+- The operator's built (release) app was not checked; the fix is in shipped CSS, not dev-only code.
 
-## Tests added
+## F3b — sheet skill rows (twin fix)
 
-- Rust engine: `wizard_spellbook_size_tests` (5), `trait_effects::drawback_tests` (5, incl. a
-  corpus-parity test over every `Drawback ~` file and one over Meticulous's BONUS tokens),
-  `skill_allocation::meticulous_drawback_tests` (2).
-- Rust desktop (second pass): `trait_picker::tests::every_drawback_is_offered_and_flagged_and_no_trait_is`;
-  `returns_every_flat_and_choice_skill_trait` now expects 53 + 17 = 70.
-- TS (second pass): `ManageBox.test.ts` (`verifiesTheButtonCanBeRelabelled`).
-- Rust desktop: `the_draft_spell_options_state_a_sorcerers_spells_known_per_level`,
-  `the_draft_spell_options_state_a_wizards_spellbook_size_and_it_grows_with_levels`,
-  `create_refuses_more_traits_than_the_rule_allows`.
-- TS: `spellsPerDayModel.test.ts` (Sorcerer chassis ids, sheet side), `spellDialogModel.test.ts`
-  (rewritten: sorcerer known, wizard pools, cleric read-only, witch gap, reload key),
-  `transferListModel.test.ts` (shared limits), `TransferListBody.test.ts` (pair per group; single
-  pair kept), `manageItems.test.ts` (drawback limits), `creationRacialTraitsPreview.test.ts` (count).
+- Ruling A asked the rows to show engine totals. The engine total (`allocate_skill_ranks`) has no
+  feat fold and grounds class skills for Fighter/Wizard/Rogue only, so printing it verbatim would
+  drop feat bonuses and class-skill bonuses the panel prints today. Smallest correct change: the
+  engine serves the part the panel lacked, each skill's trait/drawback modifier
+  (`skill_allocation::sheet_skill_trait_modifiers`), as `skill.trait_modifier.<skill>` rows on the
+  sheet's explanations; the panel adds it to each row (`traitSkillModifierFor`).
+- Live (Dwarf Fighter 1, Acrobat + Meticulous, Dex 14, Int 10, Cha 6): Acrobatics +1 (+2 Dex +1
+  Acrobat −2), Appraise −2, Bluff −4, Perception +0, Climb +5 (1 rank, no −2). Before this change
+  the rows had neither the +1 nor the −2.
 
-## Red evidence (TDD)
+## F7 — known quotas for six classes
 
-- TS: each new test was run before its implementation and failed for the intended reason, e.g.
-  `npx tsx src/characterHub/spellsPerDayModel.test.ts` → `expected paladin:1:1:total sorcerer:1:4:total, got ` ;
-  `transferListModel.test.ts` → `the 2nd-level group has room but the shared pool does not: expected false, got true`;
-  `TransferListBody.test.ts` → `one pair per spell level: expected 2, got 0`; the others failed on the missing export.
-- Rust desktop red run (`cargo test -p codex-desktop --bin codex-desktop -- the_draft_spell_options create_refuses_more_traits`,
-  log `/home/ubuntu/cargo-target/brief1/logs/red-desktop.log`): `1 passed; 3 failed` — sorcerer/wizard
-  `known` empty (`left: None right: Some(4)` / `Some(5)`), three traits `Saved` instead of `Blocked`.
-- Rust engine: written with the implementation; proved by mutation instead (drop the `2*(level-1)`
-  term and the explanation push) → `cargo test --lib wizard_spellbook_size_tests`: `2 passed; 3 failed`;
-  file restored after (log `root-mutation.log`).
+| class | rows | source |
+|---|---|---|
+| Hunter | `class_chassis.hunter.spontaneous.spells_known.spell_level_N` = KNOWN, minus 1 at levels 1+ | pinned PCGen oracle `acg_classes.lst:144-163`; `:143` "The KNOWN are 1 higher than in the book for levels 1+ because all the Summon Nature's Ally spells are automatically known in addition" |
+| Skald | `class_chassis.skald.spontaneous.spells_known.spell_level_N` | `acg_classes.lst:301-320` (new `skald_spells_known_table`) |
+| Investigator | `class_spell.acg.investigator.formula_book_size.extract_level_K_and_higher` | `data/corpus/advanced_class_guide/class_feature/investigator/alchemy.json` |
+| Alchemist | `class_spell.apg.alchemist.formula_book_size.*` | `data/corpus/advanced_players_guide/class_feature/alchemist/formulae.json` |
+| Witch | `class_spell.apg.witch.spellbook_size.*` | wizard rule, flagged (see Uncovered) |
+| Arcanist | `class_spell.acg.arcanist.spellbook_size.*` | wizard rule, flagged (see Uncovered) |
 
-## Red evidence, second pass (F3 completion, F2 label)
+Formula book: `max(0, 2 + Int) + (level − 1)`, nested by creatable extract level. Spellbook
+(wizard/witch/arcanist): every cantrip, `max(0, 3 + Int) + 2 × (level − 1)`, nested by castable
+level. Hunter and Skald no longer show the "engine does not state how many spells … knows" line.
 
-- `cargo test --lib -- meticulous drawback_tests` (log `red-f3-root.log`): `6 passed; 1 failed` —
-  `0 ranks in Swim: left Some(0) right Some(-2)`.
-- `cargo test -p codex-desktop --bin codex-desktop -- trait_picker` (log `red-f3-picker.log`):
-  `drawback:attached is offered` panicked; count `left: 53 right: 70`.
-- `npx tsx src/characterHub/ManageBox.test.ts` → `Error: the new label`.
+Oddities transcribed as the oracle has them: Hunter level 1 `KNOWN:4,3` (`acg_classes.lst:144`;
+quota 4 orisons, 2 first-level after the SNA adjustment); Skald level 19 `KNOWN:6,6,5,6,5,5,4`
+(`acg_classes.lst:319`; the 2nd-level 5 is below level 18's 6).
 
-## Verification, second pass (after all F3/F2 edits)
+## Tests added (all passes)
+
+- Rust engine: `wizard_spellbook_size_tests` (5), `trait_effects::drawback_tests` (5),
+  `skill_allocation::meticulous_drawback_tests` (2), `sheet_skill_trait_modifier_tests` (3),
+  `formula_book_size_tests` (4), `hunter_spells_known_quota_tests` (2),
+  `skald_spells_known_quota_tests` (2), `witch_arcanist_spellbook_size_tests` (2).
+- Rust desktop: sorcerer known, wizard spellbook, trait count, picker drawbacks,
+  `the_draft_spell_options_state_known_quotas_for_hunter_skald_and_investigator`,
+  `the_saved_sheet_carries_each_skills_trait_and_drawback_modifier`.
+- TS: `spellsPerDayModel`, `spellDialogModel` (sorcerer, wizard, cleric, witch gap → now picker,
+  hunter/skald/alchemist/investigator, witch/arcanist, reload key), `transferListModel`,
+  `TransferListBody`, `manageItems`, `creationRacialTraitsPreview`, `ManageBox`, `skillsModel`
+  (`verifiesTheTraitModifierRowIsAddedToTheSkill`), `communityTheme.test.ts`, `uiSmokeProbe`
+  (`headingMarkerText`).
+
+## Red evidence
+
+- Pass 1/2: see logs `red-desktop.log`, `red-f3-root.log`, `red-f3-picker.log`, `root-mutation.log`
+  (wizard spellbook proved by mutation: `2 passed; 3 failed`).
+- Pass 3: `red-f7.log` (hunter/skald/investigator draft: `2 passed; 5 failed`, rows absent);
+  `red-f7-desktop.log` (investigator known row filtered out); `red-f7b.log` (witch, arcanist,
+  alchemist: `0 passed; 3 failed`); `red-f3b-desktop.log` (`left: None right: Some(-1)`); TS reds:
+  `communityTheme.test.ts` assertion failed before the rule; `uiSmokeProbe`, `skillsModel` failed
+  on the missing export; `spellDialogModel` `alchemist: … got {}` and `Witch level 0 (all cantrips),
+  got Witch level 0`. `sheet_skill_trait_modifiers` and `formula_book_size_rows` unit tests were
+  written with their function (the behaviour tests above were red first).
+
+## Verification (final pass, after all edits)
 
 | command | result |
 |---|---|
-| `cargo test --locked -j 8 --no-fail-fast -- --test-threads=8` (repo root, log `root-full-2.log`) | 299 suites ok, 0 failed; 6538 passed, 0 failed |
-| `cargo test --locked -j 8 --no-fail-fast -p codex-desktop -- --test-threads=8` (log `desktop-full-2.log`) | 1 FAILED: `Running unittests src/main.rs` → `trait_picker::tests::every_flat_option_id_is_recognized_by_the_compute_path` ("drawback:attached ... not recognized by skill_bonuses_from_traits"). The guard now skips drawbacks (covered by their own test, which also asserts `trait_effects::is_drawback`). |
-| same, rerun (log `desktop-full-3.log`) | 2 suites ok, 0 failed; 785 passed, 0 failed |
-| `npm run typecheck` / `npm test` | exit 0 / `154/154 test files passed.` |
+| `cargo test --locked -j 8 --no-fail-fast -- --test-threads=8` (repo root, log `root-full-3.log`) | 299 suites ok, 0 failed; 6551 passed, 0 failed |
+| `cargo test --locked -j 8 --no-fail-fast -p codex-desktop -- --test-threads=8` (log `desktop-full-4.log`) | `Running unittests src/main.rs`: 793 passed, 2 failed (+ 1 other suite ok) |
+| rerun of the 2 failing tests (log `desktop-rerun-4.log`) | `5 passed; 0 failed` (filter `the_draft_spell_options the_saved_sheet_carries`) |
+| `npm run typecheck` / `npm test` | exit 0 / `156/156 test files passed.` |
+| `npm run ui-smoke:doc` | `Wrote docs/testing/ui-smoke-inventory.md (104 rows, 18 screens).` |
 
-Live app (Xvfb, `RUN_DESKTOP_AGENT=brief1`, `CODEX_REPO_ROOT=<worktree>`): Traits dialog lists
-70 options, 17 marked "(drawback)", status "Traits: 2 of 2 · Drawbacks: 1 of 1 remaining". A
-third trait was refused until Meticulous was taken; after that "Traits: 0 of 3 · Drawbacks: 0 of
-1", and the `>` button stayed disabled for Vain. Creating a Dwarf Fighter 1 with Acrobat, Bastard,
-Beast Bond and Meticulous answered "Meticulous Test is ready / Your character was computed and
-saved." The Racial Traits button reads "Swap racial traits". No "H2" in the page text. Screenshot
-`/home/ubuntu/cargo-target/brief1/f3/traits-drawback.png`. The smoke row itself was red on its
-first cold launch ("'Loading' still present after the row's wait budget": the class catalog took
-longer than the row waits); the same happened on the first pass. Not caused by this change.
+The 2 desktop failures, attributed: (1) `the_draft_spell_options_state_a_wizards_spellbook_size…`:
+my F7 commit 15d3bd5acd changed the known filter to `contains("_book_size.")`, which misses
+`spellbook_size.` — a real regression (wizard draft quotas empty), fixed to `contains("book_size.")`
+in 3085ec9c4e; (2) `the_saved_sheet_carries…`: the test assumed Swim untrained, but create gives a
+Fighter 1 rank each in Climb/Intimidate/Swim; the test now checks Appraise (−2) and Climb (none).
+Desktop total after the fix: 794 + 2 = 796 passed, 0 failed (derived from the two logs; the full
+desktop suite was not rerun). Counts: `awk '/^test result/{p+=$4; fl+=$6} END{print p, fl}' <log>`;
+suites: `awk '/^test result: ok/{ok++} /^test result: FAILED/{f++} END{print ok, f}' <log>`; logs in
+`/home/ubuntu/cargo-target/brief1/logs/`.
 
-## Verification, first pass (run once, after the first batch of edits)
+Earlier passes (superseded): pass 1 root 6535/0, desktop 784/0; pass 2 root 6538/0, desktop
+785/0 (after one picker-guard fix).
 
-| command | result |
-|---|---|
-| `cargo test --locked -j 8 --no-fail-fast -- --test-threads=8` (repo root) | 299 suites ok, 0 failed; 6535 passed, 0 failed |
-| `cargo test --locked -j 8 --no-fail-fast -p codex-desktop -- --test-threads=8` (apps/desktop/src-tauri) | 2 suites ok, 0 failed; 784 passed, 0 failed |
-| `npm run typecheck` | exit 0 |
-| `npm test` | `154/154 test files passed.` |
-| `npm run ui-smoke:doc` | `Wrote docs/testing/ui-smoke-inventory.md (103 rows, 18 screens).` |
-
-Counts derived with `awk '/^test result/{p+=$4; fl+=$6} END{print p, fl}' <log>` and
-`awk '/^test result: ok/{ok++} /^test result: FAILED/{f++} END{print ok, f}' <log>`
-(logs under `/home/ubuntu/cargo-target/brief1/logs/`). A first root run without `--no-fail-fast`
-stopped at `tests/sd13_wizard_level1_prepared_spell_baseline.rs` (1 failure: its "no fabricated
-spell explanation" guard rejected the new `class_spell.wizard.spellbook_size.*` rows); the guard
-was widened and the full run above is the one that counts. No `test result: FAILED` line remains.
-
-Live app check (Xvfb, `RUN_DESKTOP_AGENT=brief1`, `CODEX_REPO_ROOT` set to the worktree — without
-it the app read the corpus from the custom target dir and failed "No race could be read"): a
-level-5 Wizard (Int 10) Spells dialog showed one pair per level 0–3, "21 of 21" cantrips, level 1
-"11 of 11", level 2 "6 of 6", pools "level 1 or higher: 11 of 11 · level 2 or higher: 6 of 6",
-box "32 of 32 remaining". Screenshot `/home/ubuntu/cargo-target/brief1/f1/wizard5-spells.png`.
+Live app (Xvfb, `RUN_DESKTOP_AGENT=brief1`, `CODEX_REPO_ROOT=<worktree>`; without it the app reads
+the corpus from the custom target dir and shows "No race could be read"): level-5 Wizard spells
+dialog, Traits dialog with drawbacks, a saved Fighter with 3 traits + Meticulous, the F1 theme
+before/after, and the F3b skill rows (above). The `create-character-render` smoke row stays red on
+a cold launch only for "'Loading' still present after the row's wait budget" (the class catalog
+loads slower than the row waits); its `headingExact` passed on every run.
 
 ## Decisions
 
-- **Drawbacks (F3):** 17 records (`grep -rli "Drawback ~" data/corpus/ultimate_campaign | wc -l` = 17),
-  id `drawback:<file slug>`, descriptions verbatim (`%%` read as `%`). 16 are situational and are
-  printed as text. Meticulous's −2 (corpus: `BONUS:SKILL|<skill>|-2|!PRESKILL:1,<skill>=1` on every
-  skill) is `Drawback::untrained_skill_penalty` and `allocate_skill_ranks` adds it to every skill
-  total it reports at 0 ranks (allocated at 0, or present only through a trait bonus). A skill with
-  no reported total gets none: the engine reports no total for it at all.
-- **Count rule:** traits ≤ 2, or ≤ 3 with exactly one drawback; drawbacks ≤ 1. Checked in
-  `create_character_at_root` only (not in `build_create_input`), so draft dialogs keep computing.
-- **Wizard spellbook (F5):** `spell_level_0` = every level-0 entry of the wizard list
-  (21 in the live app); `spell_level_1_and_higher` = max(0, 3 + Int mod) + 2 × (level − 1);
-  `spell_level_k_and_higher` (k ≥ 2) = 2 × wizard levels 2..L whose highest castable level ≥ k.
-  The UI applies every bound as a shared pool. Opposed schools are not removed.
-- **No picker (read-only spells per day):** cleric, druid, paladin, ranger, warpriest, shaman,
-  antipaladin. Casters with per-day rows but no known rows (witch, arcanist, alchemist,
-  investigator, hunter, skald, …) are also read-only, with a sentence saying the engine has no
-  known count for them. This removes the old per-day picker for those classes (operator ruling:
-  quota = known, not per day).
-- **F6:** grouped pairs only when `pairPerGroup` is set (spells). Traits use group limits for
-  enforcement but keep one pair.
-- **F2:** count label `N innate · M replaced by alternates`; button "Swap racial traits".
-- **F1:** not reproduced. Spec row now carries `forbid: ["H2"]`. An exact heading-text check
-  needs `run.mjs` (out of scope).
+- Drawbacks: 17 (`grep -rli "Drawback ~" data/corpus/ultimate_campaign | wc -l`); id
+  `drawback:<slug>`; 16 printed text; Meticulous −2 computed on 0-rank skill totals.
+- Count rule: traits ≤ 2, or ≤ 3 with exactly one drawback; drawbacks ≤ 1; enforced in the dialog
+  and in `create_character_at_root`.
+- No picker (read-only per-day text): cleric, druid, paladin, ranger, warpriest, shaman,
+  antipaladin; any other caster with per-day rows but no known rows keeps the "not counted yet" line.
+- F6: grouped pairs only with `pairPerGroup` (spells).
+- F2: `N innate · M replaced by alternates`; "Swap racial traits".
 
 ## Four-check Wired Integration audit (`tranche-17-ui...HEAD`)
 
@@ -158,25 +167,24 @@ box "32 of 32 remaining". Screenshot `/home/ubuntu/cargo-target/brief1/f1/wizard
 4: OK_NO_WOULD_STRINGS
 ```
 
-## What the proof does NOT cover
+## Uncovered (what the proofs do not cover)
 
-- Multiclass casters (wizard rows exist only via `wizard_level_in_mix`; sorcerer rows only for single-class).
-- Cleric/Druid/Paladin/Ranger known-spell semantics beyond "shows per day as text".
-- Opposed-school cantrip exclusion; Int too low to cast a level.
-- Meticulous on the screen: see Blockers. Engine totals are tested; the sheet's skill rows are not.
-- F1: one dev build on Xvfb; the operator's build was not inspected.
-- Bloodrager/Bard known rows are parsed by the same regex but only Sorcerer is tested end to end.
+- **Witch and Arcanist book size use the wizard rule**, not a class-specific line (ruling A). Greps
+  that found no class line: `grep -rln "0-level witch spells\|witch spells plus\|0-level wizard spells plus\|all 0-level wizard" data/corpus ~/workspace/repos/pcgen/data/pathfinder`
+  → only `core_rulebook/class_feature/wizard/spellbooks.json` and `cr_abilities_class.lst`;
+  `grep -rlE "three 1st-level|plus three|0-level witch spells|spellbook containing" data/corpus/advanced_players_guide data/corpus/advanced_class_guide`
+  → only `lore_mystery/arcane_archivist.json`. The Witch familiar record says only "The familiar
+  stores all the spells that you know".
+- Hunter level 1 and Skald level 19 rows as above (oracle values, not checked against print).
+- The existing Hunter known-spell cap check (`unmet_hunter_known_spell_conditions`) still treats
+  KNOWN as the chosen cap (one more than the dialog allows); not changed.
+- Skill rows: Craft/Perform/Profession family rows get no trait modifier (their rows name no
+  subtype); trained-only skills at 0 ranks get none (the engine reports no total).
+- Multiclass casters; opposed-school cantrip exclusion; Int too low to cast a level.
+- F1: one dev build on Xvfb; the release build was not inspected.
+- Bloodrager/Bard known rows parse through the same regex; only Sorcerer, Hunter and Skald are
+  tested end to end.
 
-## Blockers / findings
+## Not done
 
-1. **Meticulous's −2 does not reach the skill rows the player reads.** It is computed into
-   `SkillTotals` (`allocate_skill_ranks`), but the desktop sheet does not read those totals:
-   `CharacterSheet.tsx:702` computes each row on the frontend as ability + ranks + class skill +
-   feat bonus (`skillModifier`), with engine values only for Climb/Intimidate/Swim from
-   `selected_skill_modifiers` (a different engine path). `grep -rln "printed_sheet_cell_map\|PrintedSheetCell"
-   apps/desktop` finds no consumer either. This is not new: the existing trait skill bonuses
-   (Acrobat's +1 etc.) are missing from those rows for the same reason. Closing it needs the sheet
-   to render the engine's skill totals: write scope to `CharacterSheet.tsx`, the skills DTO in
-   `character_hub.rs`/`pf1_adapter.rs`, and their tests. Escalated; not done here.
-2. **F1 exact heading assertion** needs `apps/desktop/scripts/ui-smoke/run.mjs` (the runner only
-   matches page text). The row's `forbid: ["H2"]` is the guard that is in scope.
+- The full desktop suite was not rerun after the final two-test fix (the two tests were rerun).
