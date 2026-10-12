@@ -15,6 +15,12 @@ Fix six defects/gaps on the Create-a-character screen and its Spells/Traits dial
 - It is real but not in the grep'd source, so diagnose in the running app first: use the `run-desktop` skill + the DEV DOM probe (`record_ui_probe`) to dump the DOM around the title and find the node whose text starts with `H2` (candidates: a wrapper that renders a tag name, a dev overlay, a font/icon ligature, a stale built bundle in `apps/desktop/dist`). Fix the source, not the symptom.
 - Then add an exact-match title assertion (`innerText === 'Create a character'` for the heading node). The ui-smoke row `create-character-render` (`spec.json:340`) matches `Create a character` as a substring, so a prefix passes today.
 
+#### F1 finding and ruling (lane diagnosis 2026-10-12; lead ruling A)
+- Cause (lane, by reading the theme CSS): the built-in community theme "Ayu Mirage" (`BUILTIN_FEATURED_THEMES`, `apps/desktop/src/settings/communityTheme.ts:101-103`) carries an unscoped Obsidian rule `h2:before { content: "H2 "; }` (and H1–H6). With that theme active, every `<h2>` in the app shows "H2 ". Dev runs used a fresh profile with no theme, so it never reproduced. Reproduce first by turning the theme on in the app, then fix.
+- Fix: in the bridge stylesheet, `h1::before … h6::before { content: none !important }` scoped to the app body, so Obsidian heading markers never show. Unit test pins the rule.
+- Guard: CSS `::before` text is not in `innerText`, so the exact-heading check alone would be a guard that does not exist (AGENTS rule 8). The DEV probe (`apps/desktop/src/testSupport/uiProbe.ts`) must report heading `::before` content via `getComputedStyle(h, '::before').content`, and the `create-character-render` smoke row checks it.
+- Scope added (sixth widening): `apps/desktop/src/settings/communityTheme.ts` (+ test), `apps/desktop/src/testSupport/uiProbe.ts`.
+
 ### F2 — Racial Traits panel is confusing
 - Innate list = `buildCreationRacialTraitsPreview` (`CreateCharacterForm.tsx:729`); count shown as `N innate`. "Manage" opens `TransferListDialog` "Racial traits: <race>" with `limit={null}` (no cap) over `alternateMenu` (`loadAlternateRacialTraitsRuntime`, line 641).
 - Defect (INFERRED): the `N innate` count does not change when picks replace innate traits, and "Manage" has no label saying these are replacements.
