@@ -1825,7 +1825,7 @@ fn draft_spell_options_impl(request: &CreateCharacterRequest) -> Result<DraftSpe
     let explanations = map_explanations_dto(&receipt.base.explanations);
     let known = explanations
         .iter()
-        .filter(|row| row.id.contains(".spells_known.") || row.id.contains("_book_size."))
+        .filter(|row| row.id.contains(".spells_known.") || row.id.contains("book_size."))
         .cloned()
         .collect();
     let per_day = explanations
@@ -2464,6 +2464,27 @@ pub(crate) fn character_level(input: &CharacterInput) -> u8 {
 /// temp-dir character root — the same `*_at_root` convention
 /// `level_up_character_at_root` / `set_skill_allocations_at_root` already
 /// established in this module.
+/// Brief 1 F3b: one `skill.trait_modifier.<skill>` row per sheet skill a trait or drawback moves
+/// (`skill_allocation::sheet_skill_trait_modifiers`). The sheet's Skills panel adds the value to
+/// that skill's row, so Acrobat's +1 and Meticulous's untrained -2 reach the number it prints.
+fn sheet_skill_trait_modifier_rows(input: &CharacterInput) -> Vec<ExplanationDto> {
+    codex::rules_core::skill_allocation::sheet_skill_trait_modifiers(input)
+        .into_iter()
+        .map(|(skill_id, value)| {
+            let skill = skill_id.trim_start_matches("skill:").to_owned();
+            ExplanationDto {
+                id: format!("skill.trait_modifier.{skill}"),
+                value: i16::from(value),
+                detail: format!(
+                    "{value:+} on {skill} from the character's traits and drawbacks (the engine's \
+                     skill-total misc modifier: trait skill bonuses, and Meticulous's -2 while \
+                     untrained)"
+                ),
+            }
+        })
+        .collect()
+}
+
 pub(crate) fn load_saved_character_at_root(
     root: &Path,
 ) -> Result<LoadSavedCharacterResponse, String> {
@@ -2484,7 +2505,8 @@ pub(crate) fn load_saved_character_at_root(
     // `corpus_receipt.corpus_derived.equipment_effects` IS the resolved
     // `EquippedActive` effect set. Reused rather than recomputed, matching
     // `contract::to_pilot_receipt`'s own reasoning for the identical pair.
-    let explanations = map_explanations_dto(&corpus_receipt.base.explanations);
+    let mut explanations = map_explanations_dto(&corpus_receipt.base.explanations);
+    explanations.extend(sheet_skill_trait_modifier_rows(&envelope.character_input));
     let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
         &envelope.character_input,
         corpus_fixture_bundle(),
@@ -8196,6 +8218,26 @@ mod tests {
             let options = draft_spell_options_impl(&request_for_class("race:human", class_id, 1)).expect("options");
             assert_eq!(known_value(&options, id), Some(expected), "{class_id}: {:?}", options.known);
         }
+    }
+
+    #[test]
+    fn the_saved_sheet_carries_each_skills_trait_and_drawback_modifier() {
+        // Brief 1 F3b: the sheet's skill rows add these engine rows, so Acrobat's +1 and
+        // Meticulous's untrained -2 reach the numbers the player reads.
+        let root = tempdir("sheet-trait-skill-modifiers");
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        request.selected_traits = vec!["trait:trait_acrobat".to_owned(), "drawback:meticulous".to_owned()];
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        let row = |skill: &str| {
+            loaded.explanations.iter().find(|e| e.id == format!("skill.trait_modifier.{skill}")).map(|e| e.value)
+        };
+        assert_eq!(row("acrobatics"), Some(-1), "+1 Acrobat, -2 untrained");
+        assert_eq!(row("appraise"), Some(-2), "untrained");
+        // Create gives a Fighter its default 1 rank in Climb, Intimidate and Swim: trained, no -2.
+        assert_eq!(row("climb"), None, "trained by the default allocation");
+        std::fs::remove_dir_all(&root).ok();
     }
 
     #[test]

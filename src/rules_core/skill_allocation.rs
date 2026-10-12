@@ -1010,6 +1010,44 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
     }
 }
 
+/// The desktop sheet's single-skill rows this module can total (Brief 1 F3b): every Core Rulebook
+/// skill except the Craft/Perform/Profession families, whose sheet rows name no subtype, plus
+/// every Knowledge subtype. Each id resolves through [`skill_key_ability_modifier`].
+pub const SHEET_SKILL_IDS: &[&str] = &[
+    "skill:acrobatics", "skill:appraise", "skill:bluff", "skill:climb", "skill:diplomacy",
+    "skill:disable_device", "skill:disguise", "skill:escape_artist", "skill:fly",
+    "skill:handle_animal", "skill:heal", "skill:intimidate", "skill:knowledge_arcana",
+    "skill:knowledge_dungeoneering", "skill:knowledge_engineering", "skill:knowledge_geography",
+    "skill:knowledge_history", "skill:knowledge_local", "skill:knowledge_nature",
+    "skill:knowledge_nobility", "skill:knowledge_planes", "skill:knowledge_religion",
+    "skill:linguistics", "skill:perception", "skill:ride", "skill:sense_motive",
+    "skill:sleight_of_hand", "skill:spellcraft", "skill:stealth", "skill:survival", "skill:swim",
+    "skill:use_magic_device",
+];
+
+/// The trait and drawback modifier on each [`SHEET_SKILL_IDS`] skill the character can use, as the
+/// sheet adds it to its row (Brief 1 F3b): the `misc_modifier` [`allocate_skill_ranks`] reports,
+/// and, for a usable skill with no allocation at all, the untrained drawback penalty (Meticulous)
+/// that total would carry. Zero entries are left out; a trained-only skill with no ranks has no
+/// total, so none.
+pub fn sheet_skill_trait_modifiers(input: &CharacterInput) -> BTreeMap<SkillId, i8> {
+    let totals = allocate_skill_ranks(input);
+    let untrained_penalty =
+        crate::rules_core::trait_effects::untrained_skill_penalty_from_drawbacks(&input.chosen.selected_traits);
+    let mut modifiers = BTreeMap::new();
+    for id in SHEET_SKILL_IDS {
+        let modifier = match totals.totals.get(*id) {
+            Some(total) => total.misc_modifier,
+            None if is_trained_only_skill(id) => 0,
+            None => untrained_penalty,
+        };
+        if modifier != 0 {
+            modifiers.insert((*id).to_owned(), modifier);
+        }
+    }
+    modifiers
+}
+
 /// Whether `skill_id` is a class skill for `class_id` under this module's
 /// class-skill lists (Fighter and Wizard now full, per [`class_skill_set`]'s
 /// own doc comment; Rogue at its existing bounded 5-skill list). `false`
@@ -1411,6 +1449,61 @@ mod at_34_e3_003_full_class_skill_list_tests {
         // class skill -- Perform is Bard-only, a class this module carries
         // no data for -- is honestly None, never a fabricated 3.
         assert_eq!(super::skill_bonus_is_grounded_for_display_name("Perform (Sing)"), None);
+    }
+}
+
+/// Brief 1 F3b (tranche-17-ui): the per-skill trait/drawback modifier the desktop sheet's skill
+/// rows add -- every sheet skill the engine can total, not only the allocated ones, so Meticulous
+/// reaches an untrained row and Acrobat's +1 reaches Acrobatics with no ranks.
+#[cfg(test)]
+mod sheet_skill_trait_modifier_tests {
+    use super::{sheet_skill_trait_modifiers, SHEET_SKILL_IDS};
+    use crate::rules_core::character_input::{
+        AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SkillAllocation,
+    };
+
+    fn fighter(traits: &[&str]) -> CharacterInput {
+        CharacterInput {
+            case_id: None,
+            source_package_id: "test".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: "race:human".to_owned(),
+                class_levels: vec![CharacterClassLevel { class_id: "class:fighter".to_owned(), level: 1 }],
+                ability_scores: AbilityScores { strength: 14, dexterity: 12, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 },
+                selected_feats: Vec::new(),
+                skill_allocations: vec![SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 1 }],
+                equipment_selections: Vec::new(),
+                selected_choices: Vec::new(),
+                selected_traits: traits.iter().map(|id| (*id).to_owned()).collect(),
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn acrobat_reaches_acrobatics_with_no_ranks() {
+        let modifiers = sheet_skill_trait_modifiers(&fighter(&["trait:trait_acrobat"]));
+        assert_eq!(modifiers.get("skill:acrobatics"), Some(&1), "{modifiers:?}");
+        assert_eq!(modifiers.get("skill:climb"), None, "no trait touches Climb");
+    }
+
+    #[test]
+    fn meticulous_reaches_every_untrained_sheet_skill_and_no_trained_one() {
+        let modifiers = sheet_skill_trait_modifiers(&fighter(&["trait:trait_acrobat", "drawback:meticulous"]));
+        assert_eq!(modifiers.get("skill:acrobatics"), Some(&-1), "+1 Acrobat, -2 untrained");
+        assert_eq!(modifiers.get("skill:swim"), Some(&-2), "untrained, never allocated");
+        assert_eq!(modifiers.get("skill:knowledge_local"), None, "trained only: no total at 0 ranks");
+        assert_eq!(modifiers.get("skill:climb"), None, "1 rank: trained");
+    }
+
+    #[test]
+    fn every_sheet_skill_id_is_one_this_module_totals() {
+        let ability = super::AbilityModifiers::default();
+        for id in SHEET_SKILL_IDS {
+            assert!(super::skill_key_ability_modifier(id, &ability).is_some(), "{id}");
+        }
     }
 }
 
