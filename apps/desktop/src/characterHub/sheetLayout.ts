@@ -66,7 +66,7 @@ export const SQUARE_BLOCK_LAYOUT: readonly LayoutBox<SquareBoxId, 'square'>[] = 
 ];
 
 /** Create screen boxes (Brief 2 L3 renders Create from this). */
-export type CreateBoxId = 'levels' | 'details' | 'abilities' | 'skills';
+export type CreateBoxId = 'levels' | 'levelGains' | 'identity' | 'sheetBlock' | 'details' | 'abilities' | 'skills';
 export type CreateColumn = 'left' | 'details' | 'abilities';
 
 /** Create's columns, left to right: progression rail, identity and choices, Abilities + Skills. */
@@ -82,8 +82,14 @@ export const CREATE_COLUMN_STYLES: Readonly<Record<CreateColumn, CSSProperties>>
 export const CREATE_LAYOUT: readonly LayoutBox<CreateBoxId, CreateColumn>[] = [
   // Far-left: the level-add dialog and HP roller (`LevelsPanel`).
   { id: 'levels', column: 'left', order: 0, boxStyle: { display: 'flex', flexDirection: 'column', gap: '0.5rem' } },
-  // Name, race, physical attributes and the Manage boxes (traits, feats, spells, equipment, custom).
-  { id: 'details', column: 'details', order: 0, boxStyle: { minWidth: 0 } },
+  // Under the HP roller: the read-only per-level summary (Brief 2 L4).
+  { id: 'levelGains', column: 'left', order: 1, boxStyle: { minWidth: 0 } },
+  // Character and player name, race.
+  { id: 'identity', column: 'details', order: 0, boxStyle: { minWidth: 0 } },
+  // Under the name, as on the sheet: the 2x2 Hit Points / Initiative / Encumbrance / Conditions block (Brief 2 L5).
+  { id: 'sheetBlock', column: 'details', order: 1, boxStyle: { marginBottom: '1rem', minWidth: 0 } },
+  // Level, alignment, physical attributes and the Manage boxes (traits, feats, spells, equipment, custom).
+  { id: 'details', column: 'details', order: 2, boxStyle: { minWidth: 0 } },
   { id: 'abilities', column: 'abilities', order: 0, boxStyle: ABILITY_ROWS },
   // Same column as Abilities: a Skills box listing known skills.
   { id: 'skills', column: 'abilities', order: 1, boxStyle: { display: 'flex', flexDirection: 'column', gap: '0.2rem' } },

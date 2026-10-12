@@ -54,22 +54,36 @@ export interface SquareBlockProps {
   encumbrance: EncumbranceDto | undefined;
   /** `CharacterCustom.conditions`. */
   conditions: readonly string[];
+  /**
+   * Why a value is absent, shown in its box in place of the em dash (or `Unknown` hit points):
+   * Create's draft preview is loading, has no level yet, or was refused by the engine. The sheet
+   * passes none and keeps its em dash.
+   */
+  absent?: string;
 }
 
 export function SquareBlock(props: SquareBlockProps) {
+  const absentValue = (fallback: string) =>
+    props.absent === undefined ? <p style={VALUE}>{fallback}</p> : <p role="note" style={NOTE}>{props.absent}</p>;
   function renderBox(id: SquareBoxId, style: CSSProperties): ReactNode {
     switch (id) {
       case 'hitPoints':
         return (
           <SquareBox title="Hit Points" style={style}>
-            <p style={VALUE}>{props.hp === null ? 'Unknown' : `${props.hp} / ${props.hp}`}</p>
+            {props.hp === null ? absentValue('Unknown') : <p style={VALUE}>{`${props.hp} / ${props.hp}`}</p>}
           </SquareBox>
         );
       case 'initiative':
         return (
           <SquareBox title="Initiative" style={style}>
-            <p style={{ ...VALUE, fontSize: '2rem' }}>{props.initiative ? fmt(props.initiative.value) : '—'}</p>
-            {props.initiative ? <p style={NOTE}>{props.initiative.detail}</p> : null}
+            {props.initiative ? (
+              <>
+                <p style={{ ...VALUE, fontSize: '2rem' }}>{fmt(props.initiative.value)}</p>
+                <p style={NOTE}>{props.initiative.detail}</p>
+              </>
+            ) : (
+              absentValue('—')
+            )}
           </SquareBox>
         );
       case 'encumbrance': {
@@ -83,7 +97,7 @@ export function SquareBlock(props: SquareBlockProps) {
                 <p style={NOTE}>Light / Med / Heavy {described.capacityLabel}</p>
               </>
             ) : (
-              <p style={VALUE}>—</p>
+              absentValue('—')
             )}
           </SquareBox>
         );

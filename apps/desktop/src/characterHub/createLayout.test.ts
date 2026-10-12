@@ -44,7 +44,16 @@ function verifiesTheCreateColumnsAreRegisteredLeftToRight() {
     assert(CREATE_COLUMNS.includes(box.column), `${box.id} sits in a column Create renders`);
     assert(CREATE_COLUMN_STYLES[box.column] !== undefined, `${box.column} has a column style`);
   }
-  assertEqual(boxesInColumn(CREATE_LAYOUT, 'left').map((box) => box.id).join('|'), 'levels', 'levels alone far-left');
+  assertEqual(
+    boxesInColumn(CREATE_LAYOUT, 'left').map((box) => box.id).join('|'),
+    'levels|levelGains',
+    'far-left: the levels panel, then the per-level summary under the HP roller',
+  );
+  assertEqual(
+    boxesInColumn(CREATE_LAYOUT, 'details').map((box) => box.id).join('|'),
+    'identity|sheetBlock|details',
+    'the 2x2 block sits under the name, as on the sheet',
+  );
   assertEqual(
     boxesInColumn(CREATE_LAYOUT, 'abilities').map((box) => box.id).join('|'),
     'abilities|skills',
@@ -82,7 +91,18 @@ function verifiesSkillsListsKnownSkillsAndKeepsManage() {
   assert(skillsBox.includes('Add a level first'), 'Skills explains it needs a level before ranks can be bought');
 }
 
+function verifiesTheTwoByTwoBlockRendersUnderTheName() {
+  const name = at('id="character-name"');
+  const block = at('aria-label="Initiative"');
+  assert(name < at('aria-label="Hit Points"') && at('aria-label="Hit Points"') < block, 'Hit Points then Initiative, under the name');
+  assert(block < at('aria-label="Encumbrance"') && at('aria-label="Encumbrance"') < at('aria-label="Conditions"'), '2x2 reading order');
+  assert(at('aria-label="Conditions"') < at('Physical Attributes'), 'the block sits above Physical Attributes');
+  assert(html.includes('Add a level first'), 'no levels yet: the engine boxes say a level is needed');
+  assert(html.includes('Normal'), 'no conditions reads Normal');
+}
+
 verifiesTheCreateColumnsAreRegisteredLeftToRight();
+verifiesTheTwoByTwoBlockRendersUnderTheName();
 verifiesTheLevelsPanelRendersFarLeft();
 verifiesSkillsSitsUnderAbilitiesInTheSameColumn();
 verifiesSkillsListsKnownSkillsAndKeepsManage();

@@ -29,6 +29,10 @@ import {
 import { loadRaceRosterSurface, rosterErrorMessage, type RaceRosterSurface } from './raceRoster';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { LevelsPanel } from './LevelsPanel';
+import { LevelGainsPanel } from './panels/LevelGains';
+import { SquareBlock } from './panels/SquareBlock';
+import { draftPreviewKey, squareBlockForDraft, type DraftPreviewState } from './panels/createSheetBlock';
+import { loadDraftSheetPreview } from '../boundary/draftSheetPreview';
 import { CREATE_COLUMNS, CREATE_COLUMN_STYLES, CREATE_LAYOUT, boxesInColumn, type CreateBoxId } from './sheetLayout';
 import { ManageBox } from './ManageBox';
 import { TransferListDialog } from './TransferListDialog';
@@ -406,6 +410,7 @@ export function CreateCharacterFields(props: {
   const [wealthError, setWealthError] = useState<string | null>(null);
   // Custom: GM grants and house-rule records; saved right after the character is created.
   const [custom, setCustom] = useState<CharacterCustom>(EMPTY_CUSTOM);
+  const [draftPreview, setDraftPreview] = useState<DraftPreviewState>({ kind: 'noLevels' });
   const [customDialogOpen, setCustomDialogOpen] = useState(false);
   // AT-34-E4-002 (second slice): the player's resolved skill choice for
   // each selected fixed-choice open-slot trait, keyed by trait id. A trait
@@ -563,6 +568,31 @@ export function CreateCharacterFields(props: {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [spellDialogOpen, spellKey]);
+
+  // Brief 2 L5: the engine's Initiative and Encumbrance for the unsaved draft (`draft_sheet_preview`),
+  // recomputed whenever the request changes (levels, abilities, race, traits, feats, equipment). A
+  // refusal is shown in the boxes, never replaced by a number.
+  const previewKey = draftPreviewKey(buildRequest());
+  useEffect(() => {
+    const draft = buildRequest();
+    if (draft === null) {
+      setDraftPreview({ kind: 'noLevels' });
+      return undefined;
+    }
+    let cancelled = false;
+    setDraftPreview({ kind: 'loading' });
+    loadDraftSheetPreview(draft)
+      .then((preview) => {
+        if (!cancelled) setDraftPreview({ kind: 'ready', preview });
+      })
+      .catch((cause: unknown) => {
+        if (!cancelled) setDraftPreview({ kind: 'error', message: cause instanceof Error ? cause.message : String(cause) });
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [previewKey]);
 
   function handleAddLevel(addedClassId: string) {
     const option = classOptions.find((candidate) => candidate.id === addedClassId);
@@ -936,7 +966,9 @@ export function CreateCharacterFields(props: {
             onRemove={(index) => setLevels((current) => removeLevel(current, index))}
           />
         );
-      case 'details':
+      case 'levelGains':
+        return <LevelGainsPanel heldClasses={heldClasses} intelligenceModifier={abilityModifier(calculatedScore('intelligence'))} isHuman={isHuman} />;
+      case 'identity':
         return (
           <>
             {/* Character name + Player name on one line */}
@@ -981,6 +1013,13 @@ export function CreateCharacterFields(props: {
                 </select>
               </div>
             </div>
+          </>
+        );
+      case 'sheetBlock':
+        return <SquareBlock {...squareBlockForDraft(draftPreview, maxHp, custom.conditions)} />;
+      case 'details':
+        return (
+          <>
             {props.classRosterNotice !== null ? (
               <p role="alert" style={{ color: 'var(--color-warn)', fontSize: '0.8rem', margin: '-0.5rem 0 0.5rem' }}>
                 {props.classRosterNotice} — offering the built-in list of {classOptions.length} classes instead.
