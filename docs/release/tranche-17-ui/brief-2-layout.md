@@ -1,6 +1,8 @@
 # Brief 2 — Layout rework, sheet + Create (items 7–13)
 
-STATUS: DRAFT for operator approval. No code written. Sequence AFTER Brief 1 lands (both edit `CreateCharacterForm.tsx` ~1069–1300). Line numbers below were derived at tranche-17-ui @e43e9e89c8 (before Brief 1); re-derive every one at dispatch time.
+STATUS: APPROVED by operator 2026-10-12 (Q3 = yes: build the engine draft-preview call). Brief 1 landed (29a04f716d). Anchors re-derived at tranche-17-ui @29a04f716d: `wc -l CharacterSheet.tsx` = 4895, `CreateCharacterForm.tsx` = 1712; `.sheet-cols` 4587; `IdentityPanel` 484, `AbilitiesPanel` 503, `InitiativeHpPanel` 556 (rendered 4775–4776 with `dexMod` from 4228), `EncumbrancePanel` 1752, `SkillsPanel` 4830; Create: `LevelsPanel` import 31, `heldClassKey` 456, `spellKey` 531, Racial Traits box 1082, Spells box 1255–1283. Brief 1 added `SkillsPanel` prop `explanations`, `TransferListDialog` `pairPerGroup`/`sharedLimits`, `ManageBox` `manageLabel`.
+
+Run shape (operator 2026-10-12: "create a workflow for that"): a Workflow with two worktrees. Lane E (engine, Rust, `.worktrees/brief2-engine`, branch `ui-brief2-engine`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-target/brief2-engine`) does E1–E3 below. Lane U (UI, `.worktrees/brief2`, branch `ui-brief2`, `CARGO_TARGET_DIR=/home/ubuntu/cargo-target/brief2`) does L0–L1 in parallel, then merges `ui-brief2-engine` and does L2–L5 serially. One final verification agent, one receipt agent.
 
 ## Objective
 Regroup the character sheet and the Create screen into stacked, rearrangeable boxes; make Create mirror the sheet.
@@ -42,13 +44,20 @@ Far-left: level-add dialog + HP roller (`LevelsPanel`, `rerollLevel`/`rollHitDie
 `Monk 1: +1 feat, +N skills, +1 Str…`. Source: `heldClassesOf(levels)` (`levelsModel.ts`) → `buildLevelEntries` (`characterProgression.ts`) for feat / skills / ability increase (pure front-end). Class features per level need `previewLevelUp` (async, per class). Informational only. Do not alter the HP roller.
 
 ### L5 — Create: Encumbrance + Initiative boxes
-Blocked on an engine preview call (Q3). Per blocker doctrine this is a DoD item, not a deferral: either the engine call is built here, or the operator rules otherwise.
+Operator ruled yes (Q3). Lane E builds the call; lane U renders the two boxes on Create from it, matching the sheet's 2x2 block.
+
+### Lane E — engine tasks (Rust first, one build pass)
+- E1 Initiative as an engine sheet total: one explanation row (id `initiative.total`, or the existing standalone initiative record if one exists; `grep -rn initiative src/rules_core/pilot_compute/feat_pillar_and_pool_aggregation.rs`) = Dex mod + `initiative_bonus_from_feats` (`src/rules_core/feat_effects.rs:484`) + every other grounded initiative bonus (trait rows, class rows such as Inquisitor cunning initiative). Sheet DTO carries it; `CharacterSheet.tsx:4228` `dexMod` shortcut is retired by lane U.
+- E2 `conditions: Vec<String>` on the custom record (`apps/desktop/src-tauri/src/character_custom.rs:67` `CharacterCustomDto`, `:217` request) with `#[serde(default)]` so old `custom.json` files load; TS `CharacterCustom.conditions: string[]` default `[]` (`customModel.ts:33–43`). Nothing writes it yet; the sheet shows `Normal` when empty.
+- E3 Draft preview command `draft_sheet_preview` (new Tauri command in `character_hub.rs`, registered in `main.rs` `invoke_handler`; boundary file `apps/desktop/src/boundary/draftSheetPreview.ts`): takes the same `CreateCharacterRequest` as `draft_spell_options_impl` (`character_hub.rs:1821`) and returns `{ initiative, encumbrance: EncumbranceDto }` computed by the real engine (`compute_encumbrance`, `src/rules_core/encumbrance.rs:370`; `map_encumbrance_dto`, `character_hub.rs:1251`). Tests first: Rust (Fighter draft with chain shirt + longsword → light/medium load matches the sheet's value for the same saved character; Improved Initiative draft → +4), TS boundary test with the wire shape.
 
 ## Required reads
 `CharacterSheet.tsx` 458–620, 1466–1500, 1743, 4219, 4280, 4578–4830; `CreateCharacterForm.tsx` 917–1500; `LevelsPanel.tsx`; `levelsModel.ts`; `characterProgression.ts`; `encumbranceTabModel.ts`; `customModel.ts`; `printLayout.ts`; `layout/screenLayout.ts`; `src/rules_core/encumbrance.rs` (~179).
 
 ## Allowed write scope
-`apps/desktop/src/characterHub/{CharacterSheet.tsx,CreateCharacterForm.tsx,LevelsPanel.tsx,levelsModel.ts,customModel.ts,printLayout.ts}` + new `sheetLayout.ts`, new shared panel files + tests; `apps/desktop/src/layout/*`; `ui-smoke/spec.json` + generated inventory; Rust only for `conditions` serde default and an encumbrance/initiative draft preview (`character_hub.rs`, `src/rules_core/encumbrance.rs`). Anything else: stop.
+Lane U: `apps/desktop/src/characterHub/{CharacterSheet.tsx,CreateCharacterForm.tsx,LevelsPanel.tsx,levelsModel.ts,customModel.ts,printLayout.ts,characterProgression.ts,encumbranceTabModel.ts}` + new `sheetLayout.ts`, new shared panel files (`apps/desktop/src/characterHub/panels/*`) + tests; `apps/desktop/src/layout/*`; `apps/desktop/src/boundary/draftSheetPreview.ts` (consume only); `apps/desktop/scripts/ui-smoke/spec.json` + generated `docs/testing/ui-smoke-inventory.md`.
+Lane E: `apps/desktop/src-tauri/src/{character_hub.rs,character_custom.rs,main.rs}`, new `apps/desktop/src/boundary/draftSheetPreview.ts` (+ test), `src/rules_core/{encumbrance.rs,feat_effects.rs}`, `src/rules_core/pilot_compute/feat_pillar_and_pool_aggregation.rs` (+ tests), and the one pilot_compute file that emits the initiative total if it lives elsewhere (name it in the receipt).
+Anything else: stop and report the exact path and defect; the lead widens scope or escalates.
 
 ## Non-goals
 No drag-and-drop (operator: "easy in code"). No custom-menu UI. No conditions editing or condition effects. No spell/trait changes (Brief 1). No starter characters (Brief 3).
@@ -63,4 +72,4 @@ Opus 5.5 for L0/L3/L5. Sonnet 5.5 for L1/L2/L4. Haiku 4.5 for housekeeping.
 ## Open questions
 1. (RESOLVED: engine-computed Initiative.)
 2. (RESOLVED: add `conditions` field now.)
-3. Create-time Encumbrance/Initiative: build the engine draft-preview call in this brief? Recommended: YES (L5 is in the DoD; without the call the Create screen cannot mirror the sheet's 2x2 grid).
+3. (RESOLVED 2026-10-12: operator approved building the engine draft-preview call, E3.)
