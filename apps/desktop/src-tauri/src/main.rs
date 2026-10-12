@@ -218,9 +218,13 @@ fn main() {
                 eprintln!("Failed to record installed-state: {err}");
             }
 
-            if let Err(err) = character_hub::seed_default_character_if_needed(app.handle()) {
+            // Brief 3 S1: a seed that fails is kept as app state for the Load screen
+            // (`list_starter_seed_errors`), not only printed.
+            let seed_errors = character_hub::seed_default_character_if_needed(app.handle());
+            for err in &seed_errors {
                 eprintln!("Failed to seed default character: {err}");
             }
+            app.manage(character_hub::StarterSeedErrors::new(seed_errors));
 
             // SD-36 F4b: the class creation roster is swept from the census (every class at
             // every level) once per process. Start that sweep now, off the UI thread, so the
@@ -271,6 +275,8 @@ fn main() {
             re_save_character,
             list_saved_characters,
             load_saved_character,
+            character_hub::restore_starter_characters,
+            character_hub::list_starter_seed_errors,
             preview_level_up,
             save_character_portrait,
             load_character_portrait,
