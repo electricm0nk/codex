@@ -75,6 +75,11 @@ pub struct CharacterCustomDto {
     pub spells: Vec<CustomRecordDto>,
     #[serde(default)]
     pub devices: Vec<CustomRecordDto>,
+    /// Brief 2 E2: the conditions the character is under (`"Shaken"`), shown on the sheet's
+    /// Conditions box (`Normal` when empty). `#[serde(default)]` so a `custom.json` saved before
+    /// this field existed loads with none.
+    #[serde(default)]
+    pub conditions: Vec<String>,
 }
 
 fn validate_records(kind: &str, records: &[CustomRecordDto], seen: &mut BTreeSet<String>) -> Result<(), String> {

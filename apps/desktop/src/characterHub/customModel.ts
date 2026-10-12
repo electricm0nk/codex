@@ -38,9 +38,11 @@ export interface CharacterCustom {
   equipment: CustomRecord[];
   spells: CustomRecord[];
   devices: CustomRecord[];
+  /** Conditions the character is under (`'Shaken'`); empty means the sheet shows `Normal`. */
+  conditions: string[];
 }
 
-export const EMPTY_CUSTOM: CharacterCustom = { grants: [], feats: [], equipment: [], spells: [], devices: [] };
+export const EMPTY_CUSTOM: CharacterCustom = { grants: [], feats: [], equipment: [], spells: [], devices: [], conditions: [] };
 
 export const CUSTOM_RECORD_KINDS: ReadonlyArray<{ kind: CustomRecordKind; singular: string; plural: string }> = [
   { kind: 'feats', singular: 'feat', plural: 'Feats' },
