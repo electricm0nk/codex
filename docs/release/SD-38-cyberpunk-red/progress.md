@@ -18,7 +18,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 
 | Field | Value |
 |---|---|
-| Workflow run id(s) | `wf_a9b94476-6a6` (task `wh7ev5lcg`), launched 2026-10-13 ~21:50 UTC with `args {DONE:[C0]}` (START = C1); script `artifacts/cycle_0/sd38-workflow.js` @ a53be2166a |
+| Workflow run id(s) | run 1 `wf_a9b94476-6a6` (task `wh7ev5lcg`, 2026-10-13 ~21:50 UTC, `args {DONE:[C0]}`): stopped at C1 dependency gate (C0 row still `ready`; gate correct). Run 2 `wf_c2267c33-f48` (task `wdpp3gh2w`, ~22:05 UTC, same args) after d899e53dde; script `artifacts/cycle_0/sd38-workflow.js` |
 | Script path | `artifacts/cycle_0/sd38-workflow.js` (written at launch; it is also the prefix backup) |
 | Pinned `tranche-18` SHA for wrong-base resets | the C1 bump commit (written by C1) |
 | Oracle | none for CPR (`decisions.md §23`); PF/SF gates keep `scripts/pcgen-oracle-pin.env` |
