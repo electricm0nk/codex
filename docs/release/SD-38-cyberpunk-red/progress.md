@@ -18,7 +18,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 
 | Field | Value |
 |---|---|
-| Workflow run id(s) | written at launch (one row per run, with its `START`) |
+| Workflow run id(s) | `wf_a9b94476-6a6` (task `wh7ev5lcg`), launched 2026-10-13 ~21:50 UTC with `args {DONE:[C0]}` (START = C1); script `artifacts/cycle_0/sd38-workflow.js` @ a53be2166a |
 | Script path | `artifacts/cycle_0/sd38-workflow.js` (written at launch; it is also the prefix backup) |
 | Pinned `tranche-18` SHA for wrong-base resets | the C1 bump commit (written by C1) |
 | Oracle | none for CPR (`decisions.md §23`); PF/SF gates keep `scripts/pcgen-oracle-pin.env` |
