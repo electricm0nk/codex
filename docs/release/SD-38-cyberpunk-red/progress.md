@@ -97,7 +97,7 @@ Row template (one row per card, appended in the card's closing commit):
 
 | Date | Card | Model | Status | Commit | Receipt | Seed deltas | Notes |
 |---|---|---|---|---|---|---|---|
-| 2026-10-13 | C1 | haiku | complete | 3d8a18c784 (bump; receipt and rows in the next commit) | `artifacts/cycle_1/C1_cycle_receipt.md` | not rendered (no Rust touched; see receipt) | tranche-18 cut from #398 head; 0.18.0 on 14 surfaces + pointer; A-grep predicate corrected (Cargo.lock crate lines) |
+| 2026-10-13 | C1 | haiku | complete | 706d8da680 (bump; receipt and rows in the next commit) | `artifacts/cycle_1/C1_cycle_receipt.md` | not rendered (no Rust touched; see receipt) | tranche-18 cut from #398 head; 0.18.0 on 14 surfaces + pointer; A-grep predicate corrected (Cargo.lock crate lines) |
 
 ## Epic reports
 
