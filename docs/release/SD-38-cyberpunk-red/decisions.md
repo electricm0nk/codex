@@ -51,7 +51,7 @@ does this without a ruling.
 - **Branch:** `tranche-18`, cut from `origin/develop` **after PR #398 (tranche-17-ui → develop)
   merges**. On 2026-10-13 PR #398 is open (`gh pr view 398 --json state,title` →
   `{"state":"OPEN","title":"Tranche 17 UI"}`), and `origin/develop` is `0b8a5757bf` (PR #397's
-  merge). Card C1 waits for #398 (SD-k).
+  merge). Card C1 does not wait for #398: the branch is cut from #398's head (SD-k, revised).
 - **Board:** local file `./kanban.md`, paired with `./progress.md` (Hermes retired 2026-08-01).
 - **Target version:** `0.18.0`, stamped by **card C1's single commit** on the same 14 surfaces SD-37's
   C1 bumped (`git show --name-only --format= 9d03a76996 | awk 'NF'` → 14 files):
@@ -462,7 +462,7 @@ decision, and `progress.md` Cycle 0.
 | SD-h | A `(kind, name)` collision inside Cyberpunk RED (e.g. Bodyweight Suit in armour and gear) | Keep both records with distinct `kind`; the catalog shows both |
 | SD-i | A usage-limit stop condition (`§16.3`) | Stop dispatching, write a resume receipt |
 | SD-j | No CI on `tranche-18` pushes | CI evidence = the closure PR's `pr-tests`, awaited by E7.11 |
-| SD-k | PR #398 not merged when C1 is ready | C1 waits. Every other card depends on C1, so the run writes a resume receipt and stops; the lead starts a new run with `START=C1` after #398 merges |
+| SD-k | PR #398 not merged when C1 is ready | **Revised 2026-10-13 (lead):** the lead cut `tranche-18` from `tranche-17-ui`'s tip `bb6107aee0`, which is PR #398's head; `git merge-base --is-ancestor origin/develop bb6107aee0` holds, so `tranche-18` already contains everything `develop` has plus #398's content. C1 does not wait for the merge. E7.11 checks `git merge-base --is-ancestor bb6107aee0 origin/develop` before opening the PR; if #398 landed as a squash (prior PRs #394–#397 were merge commits), E7.11 rebases `tranche-18` onto `origin/develop` first and records it |
 | SD-l | Rebase conflict | **`kanban.md`: never keep both sides** (two lanes editing adjacent rows conflict, and keeping both duplicates both rows: tested 2026-10-13 with `git merge-file --union`). Take the upstream file (`git checkout --ours -- docs/release/SD-38-cyberpunk-red/kanban.md`; in a rebase "ours" is `origin/tranche-18`), re-apply **only your own card's row**, then `awk -F'\|' '/^[\|] (C\|E)[0-9]/{gsub(/ /,"",$2);print $2}' kanban.md \| sort \| uniq -d` prints nothing and the 68-row check holds. **`progress.md`:** keep both sides in the append-only sections (Cycle log, Epic reports, Decisions taken on safe defaults, Open blockers); in the Summary table take upstream and re-count from `kanban.md`. Any other file: abort, `blocked-escalated` with the paths — except SD-p |
 | SD-m | The fresh-install check cannot run on this box (no display / no install rights) | E7.3 `blocked-escalated` with the exact operator action; the bundle waits at E7.5 |
 | SD-n | A page-image check is impossible (`pdftoppm` missing) | `blocked-escalated` on that lane's card only |

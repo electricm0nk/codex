@@ -27,7 +27,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 
 | Epic | Status | Cards complete | Notes |
 |---|---|---|---|
-| C | in progress | 0 of 2 | C0 closes with the lead's package commit; C1 waits for PR #398 |
+| C | in progress | 1 of 2 | C0 complete (1102f34aab); C1 next (SD-k revised: no wait on #398) |
 | E0 | waiting | 0 of 7 | |
 | E1 | waiting | 0 of 10 | |
 | E2 | waiting | 0 of 11 | |
@@ -74,7 +74,7 @@ might be days before i notice."* This receipt is the third of the three mirrors;
   ```
 - **Placeholder gate** (`workflow-instruction.md §9`) run over the staging copy; output classified in
   the lead's report; every hit is a class (a) schema/command placeholder or a class (b) deferred value.
-- **Status:** complete when the lead commits the package (kanban C0 `ready` until then).
+- **Status:** complete. Package committed 1102f34aab; script a53be2166a; run id 36d7c51beb; receipt `artifacts/cycle_0/C0_cycle_receipt.md`. First run `wf_a9b94476-6a6` stopped at C1's dependency gate (C0 was still `ready` on the board — the gate worked; R8 holds). Relaunched after this commit.
 
 ### Likely decision points and their safe defaults
 
